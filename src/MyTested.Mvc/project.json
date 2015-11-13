@@ -1,0 +1,18 @@
+﻿{
+  "version": "0.8.0-*",
+  "description": "MyMvc Class Library",
+  "authors": [ "Ivaylo Kenov" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
+  "dependencies": {
+    "Microsoft.AspNet.Mvc": "6.0.0-beta8",
+    "Microsoft.AspNet.Http": "1.0.0-beta8"
+  },
+
+  "frameworks": {
+    "dnx451": { },
+    "dnxcore50": { }
+  }
+}
