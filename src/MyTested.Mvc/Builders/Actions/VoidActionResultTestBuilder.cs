@@ -8,6 +8,7 @@
     using System;
     using System.Collections.Generic;
     using Common;
+    using ShouldHave;
 
     /// <summary>
     /// Used for testing void actions.
@@ -46,13 +47,12 @@
         /// <returns>Should have test builder.</returns>
         public IShouldHaveTestBuilder<VoidActionResult> ShouldHave()
         {
-            return null; // TODO: add
-            //return new ShouldHaveTestBuilder<VoidActionResult>(
-            //    this.Controller,
-            //    this.ActionName,
-            //    this.CaughtException,
-            //    VoidActionResult.Create(),
-            //    this.ActionLevelAttributes);
+            return new ShouldHaveTestBuilder<VoidActionResult>(
+                this.Controller,
+                this.ActionName,
+                this.CaughtException,
+                VoidActionResult.Create(),
+                this.ActionLevelAttributes);
         }
 
         /// <summary>
@@ -61,8 +61,7 @@
         /// <returns>Should throw test builder.</returns>
         public IShouldThrowTestBuilder ShouldThrow()
         {
-            return null; // TODO: add
-            // return new ShouldThrowTestBuilder(this.Controller, this.ActionName, this.CaughtException);
+            return new ShouldThrowTestBuilder(this.Controller, this.ActionName, this.CaughtException);
         }
     }
 }

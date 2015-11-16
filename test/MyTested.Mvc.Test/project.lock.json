@@ -1114,7 +1114,7 @@
           "lib/dnx451/Microsoft.Net.Http.Headers.dll": {}
         }
       },
-      "MyTested.Mvc/0.8.0": {
+      "MyTested.Mvc/0.1.0": {
         "type": "project",
         "framework": "DNX,Version=v4.5.1",
         "dependencies": {
@@ -2451,7 +2451,7 @@
           "lib/DNXCore50/Microsoft.Win32.Registry.dll": {}
         }
       },
-      "MyTested.Mvc/0.8.0": {
+      "MyTested.Mvc/0.1.0": {
         "type": "project",
         "framework": "DNXCore,Version=v5.0",
         "dependencies": {
@@ -4651,7 +4651,7 @@
           "lib/dnx451/Microsoft.Net.Http.Headers.dll": {}
         }
       },
-      "MyTested.Mvc/0.8.0": {
+      "MyTested.Mvc/0.1.0": {
         "type": "project",
         "framework": "DNX,Version=v4.5.1",
         "dependencies": {
@@ -6055,7 +6055,7 @@
           "lib/dnx451/Microsoft.Net.Http.Headers.dll": {}
         }
       },
-      "MyTested.Mvc/0.8.0": {
+      "MyTested.Mvc/0.1.0": {
         "type": "project",
         "framework": "DNX,Version=v4.5.1",
         "dependencies": {
@@ -7392,7 +7392,7 @@
           "lib/DNXCore50/Microsoft.Win32.Registry.dll": {}
         }
       },
-      "MyTested.Mvc/0.8.0": {
+      "MyTested.Mvc/0.1.0": {
         "type": "project",
         "framework": "DNXCore,Version=v5.0",
         "dependencies": {
@@ -9946,7 +9946,7 @@
           "lib/DNXCore50/Microsoft.Win32.Registry.dll": {}
         }
       },
-      "MyTested.Mvc/0.8.0": {
+      "MyTested.Mvc/0.1.0": {
         "type": "project",
         "framework": "DNXCore,Version=v5.0",
         "dependencies": {
@@ -11457,7 +11457,7 @@
     }
   },
   "libraries": {
-    "MyTested.Mvc/0.8.0": {
+    "MyTested.Mvc/0.1.0": {
       "type": "project",
       "path": "../../src/MyTested.Mvc/project.json"
     },
@@ -15841,7 +15841,7 @@
     "": [
       "xunit >= 2.1.0",
       "xunit.runner.dnx >= 2.1.0-beta6-build191",
-      "MyTested.Mvc >= 0.8.0"
+      "MyTested.Mvc >= 0.1.0"
     ],
     "DNX,Version=v4.5.1": [],
     "DNXCore,Version=v5.0": []

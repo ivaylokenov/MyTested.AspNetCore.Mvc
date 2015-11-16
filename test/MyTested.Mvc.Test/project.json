@@ -1,6 +1,6 @@
 {
-  "version": "0.8.0-*",
-  "description": "MyMvc.Test Class Library",
+  "version": "0.1.0-*",
+  "description": "MyTested.Mvc.Test Class Library",
   "authors": [ "Ivaylo Kenov" ],
   "tags": [ "" ],
   "projectUrl": "",
@@ -10,7 +10,7 @@
     "xunit": "2.1.0",
     "xunit.runner.dnx": "2.1.0-beta6-build191",
     "MyTested.Mvc": {
-      "version": "0.8.0",
+      "version": "0.1.0",
       "type": "build"
     }
   },

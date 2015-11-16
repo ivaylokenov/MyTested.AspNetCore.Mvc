@@ -31,19 +31,19 @@
         [Fact]
         public void ControllerWithoutConstructorFunctionShouldPopulateCorrectNewInstanceOfControllerType()
         {
-            var controller = MyMvc.Controller<WebApiController>().AndProvideTheController();
+            var controller = MyMvc.Controller<MvcController>().AndProvideTheController();
             
             Assert.NotNull(controller);
-            Assert.IsAssignableFrom<WebApiController>(controller);
+            Assert.IsAssignableFrom<MvcController>(controller);
         }
 
         [Fact]
         public void ControllerWithConstructorFunctionShouldPopulateCorrectNewInstanceOfControllerType()
         {
-            var controller = MyMvc.Controller(() => new WebApiController(new InjectedService())).AndProvideTheController();
+            var controller = MyMvc.Controller(() => new MvcController(new InjectedService())).AndProvideTheController();
 
             Assert.NotNull(controller);
-            Assert.IsAssignableFrom<WebApiController>(controller);
+            Assert.IsAssignableFrom<MvcController>(controller);
 
             Assert.NotNull(controller.InjectedService);
             Assert.IsAssignableFrom<InjectedService>(controller.InjectedService);
@@ -52,11 +52,11 @@
         [Fact]
         public void ControllerWithProvidedInstanceShouldPopulateCorrectInstanceOfControllerType()
         {
-            var instance = new WebApiController();
+            var instance = new MvcController();
             var controller = MyMvc.Controller(instance).AndProvideTheController();
 
             Assert.NotNull(controller);
-            Assert.IsAssignableFrom<WebApiController>(controller);
+            Assert.IsAssignableFrom<MvcController>(controller);
         }
 
         // TODO: ?

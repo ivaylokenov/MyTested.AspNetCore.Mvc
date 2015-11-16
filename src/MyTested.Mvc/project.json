@@ -1,6 +1,6 @@
 ﻿{
-  "version": "0.8.0-*",
-  "description": "MyMvc Class Library",
+  "version": "0.1.0-*",
+  "description": "MyTested.Mvc Class Library",
   "authors": [ "Ivaylo Kenov" ],
   "tags": [ "" ],
   "projectUrl": "",

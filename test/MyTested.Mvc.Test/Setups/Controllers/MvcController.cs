@@ -13,40 +13,41 @@
 
     // TODO:
     [Authorize(Roles = "Admin,Moderator" /*Users = "John,George"*/)]
+    [Route("Mvc")]
     //[RoutePrefix("/api/test")]
-    internal class WebApiController : Controller
+    internal class MvcController : Controller
     {
         private readonly ICollection<ResponseModel> responseModel;
 
-        public WebApiController()
+        public MvcController()
             : this(new InjectedService())
         {
         }
 
-        public WebApiController(IInjectedService injectedService)
+        public MvcController(IInjectedService injectedService)
         {
             this.InjectedService = injectedService;
             this.responseModel = TestObjectFactory.GetListOfResponseModels();
         }
 
-        public WebApiController(RequestModel requestModel)
+        public MvcController(RequestModel requestModel)
         {
             this.InjectedRequestModel = requestModel;
         }
 
-        public WebApiController(IInjectedService injectedService, RequestModel requestModel)
+        public MvcController(IInjectedService injectedService, RequestModel requestModel)
             : this(injectedService)
         {
             this.InjectedRequestModel = requestModel;
         }
 
-        public WebApiController(IInjectedService injectedService, IAnotherInjectedService anotherInjectedService)
+        public MvcController(IInjectedService injectedService, IAnotherInjectedService anotherInjectedService)
             : this(injectedService)
         {
             this.AnotherInjectedService = anotherInjectedService;
         }
 
-        public WebApiController(IInjectedService injectedService, IAnotherInjectedService anotherInjectedService, RequestModel requestModel)
+        public MvcController(IInjectedService injectedService, IAnotherInjectedService anotherInjectedService, RequestModel requestModel)
             : this(injectedService, anotherInjectedService)
         {
             this.InjectedRequestModel = requestModel;
