@@ -114,7 +114,7 @@
             string typeNameOfExpectedReturnValue,
             string typeNameOfActionResult)
         {
-            throw new HttpActionResultAssertionException(string.Format(
+            throw new ActionResultAssertionException(string.Format(
                     "When calling {0} action in {1} expected action result to be {2}, but instead received {3}.",
                     this.ActionName,
                     this.Controller.GetName(),

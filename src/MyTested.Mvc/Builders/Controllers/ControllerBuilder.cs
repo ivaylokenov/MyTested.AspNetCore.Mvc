@@ -11,15 +11,6 @@
     using System.Threading.Tasks;
     using Actions;
     using Common;
-    using Microsoft.AspNet.Mvc.ModelBinding.Validation;
-    using System.Collections.Generic;
-    using Microsoft.AspNet.Mvc.ModelBinding.Metadata;
-    using Microsoft.Framework.DependencyInjection;
-    using Microsoft.AspNet.Routing;
-    using Microsoft.AspNet.Mvc.Abstractions;
-    using Microsoft.AspNet.Mvc.ModelBinding;
-    using Microsoft.AspNet.Mvc.ViewFeatures;
-    using Microsoft.AspNet.Mvc.Formatters;
 
     /// <summary>
     /// Used for building the action which will be tested.
@@ -39,47 +30,52 @@
         public ControllerBuilder(TController controllerInstance)
         {
             this.Controller = controllerInstance;
-            // this.HttpRequest = new DefaultHttpContext().Request; // TODO: research how it can be implemented
+            this.HttpRequest = new DefaultHttpContext().Request; // TODO: research how it can be implemented
+
+            this.Controller.ActionContext = new ActionContext
+            {
+                HttpContext = new DefaultHttpContext()
+            };
 
             // TODO: for real this is how we configure controller?
-            var detailsProviders = new IMetadataDetailsProvider[]
-            {
-                new DefaultBindingMetadataProvider(new ModelBindingMessageProvider
-                {
-                    MissingBindRequiredValueAccessor = name => $"A value for the '{ name }' property was not provided.",
-                    MissingKeyOrValueAccessor = () => $"A value is required.",
-                    ValueMustNotBeNullAccessor = value => $"The value '{ value }' is invalid.",
-                }),
-                new DefaultValidationMetadataProvider(),
-                new DataAnnotationsMetadataProvider(),
-                // new DataMemberRequiredBindingMetadataProvider(), TODO: not available in version 8 but it is in the source code of MVC
-            };
+            //var detailsProviders = new IMetadataDetailsProvider[]
+            //{
+            //    new DefaultBindingMetadataProvider(new ModelBindingMessageProvider
+            //    {
+            //        MissingBindRequiredValueAccessor = name => $"A value for the '{ name }' property was not provided.",
+            //        MissingKeyOrValueAccessor = () => $"A value is required.",
+            //        ValueMustNotBeNullAccessor = value => $"The value '{ value }' is invalid.",
+            //    }),
+            //    new DefaultValidationMetadataProvider(),
+            //    new DataAnnotationsMetadataProvider(),
+            //    // new DataMemberRequiredBindingMetadataProvider(), TODO: not available in version 8 but it is in the source code of MVC
+            //};
 
-            var compositeDetailsProvider = new DefaultCompositeMetadataDetailsProvider(detailsProviders);
+            //var compositeDetailsProvider = new DefaultCompositeMetadataDetailsProvider(detailsProviders);
 
-            var metadataProvider = new DefaultModelMetadataProvider(compositeDetailsProvider);
-            var httpContext = new DefaultHttpContext();
-            var actionContext = new ActionContext(httpContext, new RouteData(), new ActionDescriptor());
+            //var metadataProvider = new DefaultModelMetadataProvider(compositeDetailsProvider);
+            //var httpContext = new DefaultHttpContext();
+            //var actionContext = new ActionContext(httpContext, new RouteData(), new ActionDescriptor());
 
-            var viewData = new ViewDataDictionary(metadataProvider, new ModelStateDictionary());
-            var tempData = new TempDataDictionary(new HttpContextAccessor(), new SessionStateTempDataProvider());
+            //var viewData = new ViewDataDictionary(metadataProvider, new ModelStateDictionary());
+            //var tempData = new TempDataDictionary(new HttpContextAccessor(), new SessionStateTempDataProvider());
 
-            var bindingContext = new ActionBindingContext()
-            {
-                ModelBinder = new GenericModelBinder(),
-                ValueProvider = new CompositeValueProvider(new IValueProvider[0]),
-                InputFormatters = new List<IInputFormatter>(),
-                ValidatorProvider = new DataAnnotationsModelValidatorProvider(
-                    options: null,
-                    stringLocalizerFactory: null)
-            };
+            //var bindingContext = new ActionBindingContext()
+            //{
+            //    ModelBinder = new GenericModelBinder(),
+            //    ValueProvider = new CompositeValueProvider(new IValueProvider[0]),
+            //    InputFormatters = new List<IInputFormatter>(),
+            //    ValidatorProvider = new DataAnnotationsModelValidatorProvider(
+            //        options: null,
+            //        stringLocalizerFactory: null)
+            //};
 
-            this.Controller.ActionContext = actionContext;
-            this.Controller.BindingContext = bindingContext;
-            this.Controller.MetadataProvider = metadataProvider;
-            this.Controller.ViewData = viewData;
-            this.Controller.TempData = tempData;
-            this.Controller.ObjectValidator = new DefaultObjectValidator(new IExcludeTypeValidationFilter[0], metadataProvider);
+            //this.Controller.ActionContext = actionContext;
+            //this.Controller.BindingContext = bindingContext;
+            //this.Controller.MetadataProvider = metadataProvider;
+            //this.Controller.ViewData = viewData;
+            //this.Controller.TempData = tempData;
+            //this.Controller.ObjectValidator = new DefaultObjectValidator(new IExcludeTypeValidationFilter[0], metadataProvider);
 
             this.HttpRequest = this.Controller.HttpContext.Request;
             this.enabledValidation = true;
