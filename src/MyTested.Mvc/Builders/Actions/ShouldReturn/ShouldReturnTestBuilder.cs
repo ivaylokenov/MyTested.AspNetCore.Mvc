@@ -102,7 +102,7 @@
         private void ValidateActionReturnType(params Type[] returnTypes)
         {
             var typeOfActionResult = this.ActionResult.GetType();
-            if (returnTypes.All(t => !Reflection.AreAssignableByGeneric(t, typeOfActionResult)))
+            if (returnTypes.All(t => !Reflection.AreAssignable(t, typeOfActionResult)))
             {
                 this.ThrowNewGenericHttpActionResultAssertionException(
                     string.Join(" or ", returnTypes.Select(t => t.ToFriendlyTypeName())),

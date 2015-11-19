@@ -5,7 +5,7 @@
     using Setups.Controllers;
     using Xunit;
     
-    public class ShouldReturnBadRequestTests
+    public class ShouldReturnHttpBadRequestTests
     {
         [Fact]
         public void ShouldReturnBadRequestShouldNotThrowExceptionWhenResultIsBadRequest()
@@ -51,7 +51,7 @@
                     .HttpBadRequest();
             });
 
-            Assert.Equal("When calling NotFoundAction action in MvcController expected action result to be BadRequestResult, but instead received NotFoundResult.", exception.Message);
+            Assert.Equal("When calling NotFoundAction action in MvcController expected action result to be BadRequestResult, but instead received HttpNotFoundResult.", exception.Message);
         }
     }
 }

@@ -16,7 +16,7 @@
         /// <returns>Bad request test builder.</returns>
         public IHttpBadRequestTestBuilder HttpBadRequest()
         {
-            if (this.ActionResult as BadRequestObjectResult != null)
+            if (this.ActionResult is BadRequestObjectResult)
             {
                 return this.ReturnBadRequestTestBuilder<BadRequestObjectResult>();
             }
