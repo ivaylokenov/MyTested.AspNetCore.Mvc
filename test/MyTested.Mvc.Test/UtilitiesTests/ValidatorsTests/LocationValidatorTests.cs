@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Test.UtilitiesTests.ValidatorsTests
+﻿namespace MyTested.Mvc.Tests.UtilitiesTests.ValidatorsTests
 {
     using System;
     using Setups;

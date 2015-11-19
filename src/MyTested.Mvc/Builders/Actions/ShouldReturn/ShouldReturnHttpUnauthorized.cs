@@ -11,7 +11,7 @@
         ///// Tests whether action result is UnauthorizedResult.
         ///// </summary>
         ///// <returns>Unauthorized result test builder.</returns>
-        //public IUnauthorizedTestBuilder Unauthorized()
+        //public IUnauthorizedTestBuilder HttpUnauthorized()
         //{
         //    var unathorizedResult = this.GetReturnObject<UnauthorizedResult>();
         //    return new UnauthorizedTestBuilder(

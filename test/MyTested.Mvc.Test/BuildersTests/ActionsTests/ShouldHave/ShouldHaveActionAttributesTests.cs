@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Test.BuildersTests.ActionsTests.ShouldHave
+﻿namespace MyTested.Mvc.Tests.BuildersTests.ActionsTests.ShouldHave
 {
     using Exceptions;
     using Setups.Controllers;

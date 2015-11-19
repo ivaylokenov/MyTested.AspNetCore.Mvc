@@ -5,6 +5,7 @@
     using System;
     using Exceptions;
     using Common.Extensions;
+    using Microsoft.AspNet.Authorization;
 
     /// <summary>
     /// Used for testing controller attributes.

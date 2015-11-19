@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Test.BuildersTests.ActionsTests.ShouldReturn
+﻿namespace MyTested.Mvc.Tests.BuildersTests.ActionsTests.ShouldReturn
 {
     using System.Collections.Generic;
     using Exceptions;

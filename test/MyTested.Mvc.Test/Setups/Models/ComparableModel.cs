@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Test.Setups.Models
+﻿namespace MyTested.Mvc.Tests.Setups.Models
 {
     using System;
 

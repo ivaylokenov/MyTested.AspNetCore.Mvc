@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Test
+﻿namespace MyTested.Mvc.Tests
 {
     using System.Collections.Generic;
     using Exceptions;

@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Test.UtilitiesTests
+﻿namespace MyTested.Mvc.Tests.UtilitiesTests
 {
     using System;
     using System.Collections.Generic;
@@ -11,7 +11,8 @@
     using Utilities;
     using Microsoft.AspNet.Mvc;
     using Xunit;
-    
+    using Microsoft.AspNet.Authorization;
+
     public class ExpressionParserTests
     {
         [Fact]
