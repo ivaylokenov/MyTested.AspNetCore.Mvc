@@ -1,6 +1,7 @@
 ﻿namespace MyTested.Mvc.Tests.BuildersTests.ActionsTests.ShouldReturn
 {
     using Exceptions;
+    using Setups;
     using Setups.Controllers;
     using Xunit;
     
@@ -19,31 +20,28 @@
         [Fact]
         public void ShouldReturnOkWithAsyncShouldThrowExceptionIfActionThrowsExceptionWithDefaultReturnValue()
         {
-            var exception = Assert.Throws<ActionCallAssertionException>(() =>
+            Test.AssertException<ActionCallAssertionException>(() =>
             {
                 MyMvc
                     .Controller<MvcController>()
                     .CallingAsync(c => c.ActionWithExceptionAsync())
                     .ShouldReturn()
                     .Ok();
-            });
-
-            Assert.Equal("AggregateException (containing NullReferenceException with 'Test exception message' message) was thrown but was not caught or expected.", exception.Message);
+            }, "AggregateException (containing NullReferenceException with 'Test exception message' message) was thrown but was not caught or expected.");
         }
 
         [Fact]
         public void ShouldReturnOkResultShouldThrowExceptionWithOtherThanOkResult()
         {
-            var exception = Assert.Throws<ActionResultAssertionException>(() =>
+            Test.AssertException<ActionResultAssertionException>(() =>
             {
+
                 MyMvc
                     .Controller<MvcController>()
                     .Calling(c => c.BadRequestAction())
                     .ShouldReturn()
                     .Ok();
-            });
-
-            Assert.Equal("When calling BadRequestAction action in MvcController expected action result to be HttpOkResult or HttpOkObjectResult, but instead received BadRequestResult.", exception.Message);
+            }, "When calling BadRequestAction action in MvcController expected action result to be HttpOkResult or HttpOkObjectResult, but instead received BadRequestResult.");
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace MyTested.Mvc.Tests.BuildersTests.ActionsTests.ShouldReturn
 {
     using Exceptions;
+    using Setups;
     using Setups.Controllers;
     using Xunit;
     
@@ -29,16 +30,14 @@
         [Fact]
         public void ShouldReturnCreatedShouldThrowExceptionWithBadRequestResult()
         {
-            var exception = Assert.Throws<ActionResultAssertionException>(() =>
+            Test.AssertException<ActionResultAssertionException>(() =>
             {
                 MyMvc
                     .Controller<MvcController>()
                     .Calling(c => c.BadRequestAction())
                     .ShouldReturn()
                     .Created();
-            });
-
-            Assert.Equal("When calling BadRequestAction action in MvcController expected action result to be CreatedResult or CreatedAtActionResult or CreatedAtRouteResult, but instead received BadRequestResult.", exception.Message);
+            }, "When calling BadRequestAction action in MvcController expected action result to be CreatedResult or CreatedAtActionResult or CreatedAtRouteResult, but instead received BadRequestResult.");
         }
     }
 }

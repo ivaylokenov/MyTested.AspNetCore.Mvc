@@ -1,6 +1,7 @@
 ﻿namespace MyTested.Mvc.Tests.BuildersTests.ActionsTests.ShouldHave
 {
     using Exceptions;
+    using Setups;
     using Setups.Controllers;
     using Xunit;
     
@@ -29,31 +30,27 @@
         [Fact]
         public void NoActionAttributesShouldThrowExceptionWithActionContainingAttributes()
         {
-            var exception = Assert.Throws<AttributeAssertionException>(() =>
+            Test.AssertException<AttributeAssertionException>(() =>
             {
                 MyMvc
                     .Controller<MvcController>()
                     .Calling(c => c.NormalActionWithAttributes())
                     .ShouldHave()
                     .NoActionAttributes();
-            });
-
-            Assert.Equal("When calling NormalActionWithAttributes action in MvcController expected action to not have any attributes, but it had some.", exception.Message);
+            }, "When calling NormalActionWithAttributes action in MvcController expected action to not have any attributes, but it had some.");
         }
 
         [Fact]
         public void NoActionAttributesShouldThrowExceptionWithVoidActionContainingAttributes()
         {
-            var exception = Assert.Throws<AttributeAssertionException>(() =>
+            Test.AssertException<AttributeAssertionException>(() =>
             {
                 MyMvc
                     .Controller<MvcController>()
                     .Calling(c => c.EmptyActionWithAttributes())
                     .ShouldHave()
                     .NoActionAttributes();
-            });
-
-            Assert.Equal("When calling EmptyActionWithAttributes action in MvcController expected action to not have any attributes, but it had some.", exception.Message);
+            }, "When calling EmptyActionWithAttributes action in MvcController expected action to not have any attributes, but it had some.");
         }
 
         [Fact]
@@ -69,16 +66,14 @@
         [Fact]
         public void ActionAttributesShouldThrowEceptionWithActionContainingNoAttributes()
         {
-            var exception = Assert.Throws<AttributeAssertionException>(() =>
+            Test.AssertException<AttributeAssertionException>(() =>
             {
                 MyMvc
                     .Controller<MvcController>()
                     .Calling(c => c.OkResultAction())
                     .ShouldHave()
                     .ActionAttributes();
-            });
-
-            Assert.Equal("When calling OkResultAction action in MvcController expected action to have at least 1 attribute, but in fact none was found.", exception.Message);
+            }, "When calling OkResultAction action in MvcController expected action to have at least 1 attribute, but in fact none was found.");
         }
 
         [Fact]
@@ -94,16 +89,14 @@
         [Fact]
         public void ActionAttributesShouldThrowEceptionWithVoidActionContainingNoAttributes()
         {
-            var exception = Assert.Throws<AttributeAssertionException>(() =>
+            Test.AssertException<AttributeAssertionException>(() =>
             {
                 MyMvc
                     .Controller<MvcController>()
                     .Calling(c => c.EmptyAction())
                     .ShouldHave()
                     .ActionAttributes();
-            });
-
-            Assert.Equal("When calling EmptyAction action in MvcController expected action to have at least 1 attribute, but in fact none was found.", exception.Message);
+            }, "When calling EmptyAction action in MvcController expected action to have at least 1 attribute, but in fact none was found.");
         }
 
         [Fact]
@@ -119,31 +112,27 @@
         [Fact]
         public void ActionAttributesShouldThrowEceptionWithActionContainingNumberOfAttributes()
         {
-            var exception = Assert.Throws<AttributeAssertionException>(() =>
+            Test.AssertException<AttributeAssertionException>(() =>
             {
                 MyMvc
                     .Controller<MvcController>()
                     .Calling(c => c.NormalActionWithAttributes())
                     .ShouldHave()
                     .ActionAttributes(withTotalNumberOf: 10);
-            });
-
-            Assert.Equal("When calling NormalActionWithAttributes action in MvcController expected action to have 10 attributes, but in fact found 3.", exception.Message);
+            }, "When calling NormalActionWithAttributes action in MvcController expected action to have 10 attributes, but in fact found 3.");
         }
 
         [Fact]
         public void ActionAttributesShouldThrowEceptionWithActionContainingNumberOfAttributesTestingWithOne()
         {
-            var exception = Assert.Throws<AttributeAssertionException>(() =>
+            Test.AssertException<AttributeAssertionException>(() =>
             {
                 MyMvc
                     .Controller<MvcController>()
                     .Calling(c => c.NormalActionWithAttributes())
                     .ShouldHave()
                     .ActionAttributes(withTotalNumberOf: 1);
-            });
-
-            Assert.Equal("When calling NormalActionWithAttributes action in MvcController expected action to have 1 attribute, but in fact found 3.", exception.Message);
+            }, "When calling NormalActionWithAttributes action in MvcController expected action to have 1 attribute, but in fact found 3.");
         }
     }
 }

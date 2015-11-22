@@ -41,16 +41,14 @@
         {
             var requestModelWithErrors = TestObjectFactory.GetRequestModelWithErrors();
             
-            var exception = Assert.Throws<ModelErrorAssertionException>(() =>
+            Test.AssertException<ModelErrorAssertionException>(() =>
             {
                 MyMvc
                     .Controller<MvcController>()
                     .Calling(c => c.ModelStateCheck(requestModelWithErrors))
                     .ShouldHave()
                     .ValidModelState();
-            });
-
-            Assert.Equal("When calling ModelStateCheck action in MvcController expected to have valid model state with no errors, but it had some.", exception.Message);
+            }, "When calling ModelStateCheck action in MvcController expected to have valid model state with no errors, but it had some.");
         }
 
         [Fact]
@@ -82,16 +80,14 @@
         {
             var requestModelWithErrors = TestObjectFactory.GetRequestModelWithErrors();
 
-            var exception = Assert.Throws<ModelErrorAssertionException>(() =>
+            Test.AssertException<ModelErrorAssertionException>(() =>
             {
                 MyMvc
                     .Controller<MvcController>()
                     .Calling(c => c.ModelStateCheck(requestModelWithErrors))
                     .ShouldHave()
                     .InvalidModelState(5);
-            });
-
-            Assert.Equal("When calling ModelStateCheck action in MvcController expected to have invalid model state with 5 errors, but in fact contained 2.", exception.Message);
+            }, "When calling ModelStateCheck action in MvcController expected to have invalid model state with 5 errors, but in fact contained 2.");
         }
 
         [Fact]
@@ -99,16 +95,14 @@
         {
             var requestModel = TestObjectFactory.GetValidRequestModel();
             
-            var exception = Assert.Throws<ModelErrorAssertionException>(() =>
+            Test.AssertException<ModelErrorAssertionException>(() =>
             {
                 MyMvc
                     .Controller<MvcController>()
                     .Calling(c => c.ModelStateCheck(requestModel))
                     .ShouldHave()
                     .InvalidModelState();
-            });
-
-            Assert.Equal("When calling ModelStateCheck action in MvcController expected to have invalid model state, but was in fact valid.", exception.Message);
+            }, "When calling ModelStateCheck action in MvcController expected to have invalid model state, but was in fact valid.");
         }
 
         [Fact]
@@ -116,16 +110,14 @@
         {
             var requestModel = TestObjectFactory.GetValidRequestModel();
 
-            var exception = Assert.Throws<ModelErrorAssertionException>(() =>
+            Test.AssertException<ModelErrorAssertionException>(() =>
             {
                 MyMvc
                     .Controller<MvcController>()
                     .Calling(c => c.ModelStateCheck(requestModel))
                     .ShouldHave()
                     .InvalidModelState(withNumberOfErrors: 5);
-            });
-
-            Assert.Equal("When calling ModelStateCheck action in MvcController expected to have invalid model state with 5 errors, but in fact contained 0.", exception.Message);
+            }, "When calling ModelStateCheck action in MvcController expected to have invalid model state with 5 errors, but in fact contained 0.");
         }
 
         [Fact]
@@ -163,7 +155,7 @@
         {
             var requestModelWithErrors = TestObjectFactory.GetRequestModelWithErrors();
 
-            var exception = Assert.Throws<ModelErrorAssertionException>(() =>
+            Test.AssertException<ModelErrorAssertionException>(() =>
             {
                 MyMvc
                     .Controller<MvcController>()
@@ -174,10 +166,7 @@
                     .ContainingModelStateErrorFor(r => r.Integer)
                     .ContainingModelStateErrorFor(r => r.RequiredString)
                     .AndProvideTheModel();
-            });
-
-            Assert.Equal("AndProvideTheModel can be used when there is response model from the action.", exception.Message);
-
+            }, "AndProvideTheModel can be used when there is response model from the action.");
         }
     }
 }
