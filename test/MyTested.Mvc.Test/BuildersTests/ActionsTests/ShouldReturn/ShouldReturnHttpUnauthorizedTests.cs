@@ -6,24 +6,24 @@
     public class ShouldReturnUnauthorizedTests
     {
         // TODO: add when unathorized is implemented
-        //[Test]
+        //[Fact]
         //public void ShouldReturnUnauthorizedShouldNotThrowExceptionWhenActionReturnsUnauthorizedResult()
         //{
-        //    MyWebApi
-        //        .Controller<WebApiController>()
+        //    MyMvc
+        //        .Controller<MvcController>()
         //        .Calling(c => c.UnauthorizedAction())
         //        .ShouldReturn()
         //        .Unauthorized();
         //}
 
-        //[Test]
+        //[Fact]
         //[ExpectedException(
         //    typeof(HttpActionResultAssertionException),
-        //    ExpectedMessage = "When calling BadRequestAction action in WebApiController expected action result to be UnauthorizedResult, but instead received BadRequestResult.")]
+        //    ExpectedMessage = "When calling BadRequestAction action in MvcController expected action result to be UnauthorizedResult, but instead received BadRequestResult.")]
         //public void ShouldReturnUnauthorizedShouldThrowExceptionWhenActionDoesNotReturnUnauthorizedResult()
         //{
-        //    MyWebApi
-        //        .Controller<WebApiController>()
+        //    MyMvc
+        //        .Controller<MvcController>()
         //        .Calling(c => c.BadRequestAction())
         //        .ShouldReturn()
         //        .Unauthorized();

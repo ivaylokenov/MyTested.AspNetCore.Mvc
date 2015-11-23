@@ -41,7 +41,7 @@
 
             //Assert.NotNull(httpRequestMessage);
             //Assert.Equal(HttpMethod.Get, httpRequestMessage.Method);
-            //Assert.IsTrue(httpRequestMessage.Headers.Contains("TestHeader"));
+            //Assert.True(httpRequestMessage.Headers.Contains("TestHeader"));
         }
 
         [Fact]

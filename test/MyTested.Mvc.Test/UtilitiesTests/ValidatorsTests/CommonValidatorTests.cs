@@ -46,22 +46,22 @@
         }
 
         [Fact]
-        public void CheckForExceptionShouldNotThrowIfExceptionIsNull()
+        public void CheckForExceptionShouldNotThrowIfExceptionNull()
         {
             CommonValidator.CheckForException(null);
         }
 
         [Fact]
-        public void CheckForExceptionShouldThrowIfExceptionIsNotNullWithEmptyMessage()
+        public void CheckForExceptionShouldThrowIfExceptionNotNullWithEmptyMessage()
         {
-            Test.AssertException<NullReferenceException>(() =>
+            Test.AssertException<ActionCallAssertionException>(() =>
             {
                 CommonValidator.CheckForException(new NullReferenceException(string.Empty));
             }, "NullReferenceException was thrown but was not caught or expected.");
         }
 
         [Fact]
-        public void CheckForExceptionShouldThrowIfExceptionIsNotNullWithMessage()
+        public void CheckForExceptionShouldThrowIfExceptionNotNullWithMessage()
         {
             Test.AssertException<ActionCallAssertionException>(() =>
             {

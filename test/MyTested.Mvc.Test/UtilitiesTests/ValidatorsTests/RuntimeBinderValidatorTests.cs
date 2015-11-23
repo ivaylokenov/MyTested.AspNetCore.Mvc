@@ -8,32 +8,32 @@
     public class RuntimeBinderValidatorTests
     {
         // TODO: ?
-        //[Test]
+        //[Fact]
         //public void ValidateBindingShouldNotThrowExceptionWithValidPropertyCall()
         //{
         //    var actionResultWithFormatters = new CreatedNegotiatedContentResult<int>(
-        //        TestObjectFactory.GetUri(), 5, MyWebApi.Controller<WebApiController>().AndProvideTheController());
+        //        TestObjectFactory.GetUri(), 5, MyMvc.Controller<MvcController>().AndProvideTheController());
 
         //    RuntimeBinderValidator.ValidateBinding(() =>
         //    {
         //        var contentNegotiator = (actionResultWithFormatters as dynamic).ContentNegotiator;
-        //        Assert.IsNotNull(contentNegotiator);
+        //        Assert.NotNull(contentNegotiator);
         //    });
         //}
 
-        //[Test]
+        //[Fact]
         //[ExpectedException(
         //    typeof(InvalidCallAssertionException),
         //    ExpectedMessage = "Expected action result to contain a 'ModelState' property to test, but in fact such property was not found.")]
         //public void ValidateBindingShouldThrowExceptionWithInvalidPropertyCall()
         //{
         //    var actionResultWithFormatters = new CreatedNegotiatedContentResult<int>(
-        //        TestObjectFactory.GetUri(), 5, MyWebApi.Controller<WebApiController>().AndProvideTheController());
+        //        TestObjectFactory.GetUri(), 5, MyMvc.Controller<MvcController>().AndProvideTheController());
 
         //    RuntimeBinderValidator.ValidateBinding(() =>
         //    {
         //        var contentNegotiator = (actionResultWithFormatters as dynamic).ModelState;
-        //        Assert.IsNotNull(contentNegotiator);
+        //        Assert.NotNull(contentNegotiator);
         //    });
         //}
     }

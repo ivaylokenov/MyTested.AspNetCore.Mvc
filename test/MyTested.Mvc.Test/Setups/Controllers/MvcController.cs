@@ -13,7 +13,7 @@
 
     // TODO:
     [Authorize(Roles = "Admin,Moderator" /*Users = "John,George"*/)]
-    [Route("Mvc")]
+    [Route("/api/test")]
     //[RoutePrefix("/api/test")]
     internal class MvcController : Controller
     {

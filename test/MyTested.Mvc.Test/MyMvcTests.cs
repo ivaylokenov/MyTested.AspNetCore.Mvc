@@ -18,7 +18,7 @@
         //    var configs = new List<HttpConfiguration>();
         //    for (int i = 0; i < 2; i++)
         //    {
-        //        var controller = MyWebApi.Controller<WebApiController>().AndProvideTheController();
+        //        var controller = MyMvc.Controller<MvcController>().AndProvideTheController();
         //        var actualConfig = controller.Configuration;
 
         //        Assert.NotNull(actualConfig);
@@ -76,7 +76,7 @@
         //[Fact]
         //public void HandlerWithoutConstructorFunctionShouldPopulateCorrectNewInstanceOfHandlerType()
         //{
-        //    var handler = MyWebApi
+        //    var handler = MyMvc
         //        .Handler<CustomMessageHandler>()
         //        .AndProvideTheHandler();
 
@@ -87,7 +87,7 @@
         //[Fact]
         //public void HandlerWithConstructorFunctionShouldPopulateCorrectNewInstanceOfHandlerType()
         //{
-        //    var handler = MyWebApi.Handler(() => new CustomMessageHandler()).AndProvideTheHandler();
+        //    var handler = MyMvc.Handler(() => new CustomMessageHandler()).AndProvideTheHandler();
 
         //    Assert.NotNull(handler);
         //    Assert.IsAssignableFrom<CustomMessageHandler>(handler);
@@ -97,7 +97,7 @@
         //public void HandlerWithProvidedInstanceShouldPopulateCorrectInstanceOfHandlerType()
         //{
         //    var instance = new CustomMessageHandler();
-        //    var controller = MyWebApi.Handler(instance).AndProvideTheHandler();
+        //    var controller = MyMvc.Handler(instance).AndProvideTheHandler();
 
         //    Assert.NotNull(controller);
         //    Assert.IsAssignableFrom<CustomMessageHandler>(controller);
@@ -106,23 +106,23 @@
         //[Fact]
         //public void IsRegisteredWithShouldWorkCorrectly()
         //{
-        //    MyWebApi.IsRegisteredWith(WebApiConfig.Register);
+        //    MyMvc.IsRegisteredWith(WebApiConfig.Register);
 
-        //    Assert.NotNull(MyWebApi.Configuration);
-        //    Assert.AreEqual(1, MyWebApi.Configuration.Routes.Count);
+        //    Assert.NotNull(MyMvc.Configuration);
+        //    Assert.Equal(1, MyMvc.Configuration.Routes.Count);
 
-        //    MyWebApi.IsUsing(TestObjectFactory.GetHttpConfigurationWithRoutes());
+        //    MyMvc.IsUsing(TestObjectFactory.GetHttpConfigurationWithRoutes());
         //}
 
         //[Fact]
         //public void IsUsingDefaultConfigurationShouldWorkCorrectly()
         //{
-        //    MyWebApi.IsUsingDefaultHttpConfiguration();
+        //    MyMvc.IsUsingDefaultHttpConfiguration();
 
-        //    Assert.NotNull(MyWebApi.Configuration);
-        //    Assert.AreEqual(0, MyWebApi.Configuration.Routes.Count);
+        //    Assert.NotNull(MyMvc.Configuration);
+        //    Assert.Equal(0, MyMvc.Configuration.Routes.Count);
 
-        //    MyWebApi.IsUsing(TestObjectFactory.GetHttpConfigurationWithRoutes());
+        //    MyMvc.IsUsing(TestObjectFactory.GetHttpConfigurationWithRoutes());
         //}
     }
 }
