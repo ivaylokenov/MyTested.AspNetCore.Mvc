@@ -26,12 +26,12 @@
         {
             string uriAsString = "http://somehost!@#?Query==true";
 
-            var exception = Assert.Throws<NullReferenceException>(() =>
+            Test.AssertException<NullReferenceException>(() =>
+            {
                 LocationValidator.ValidateAndGetWellFormedUriString(
                     uriAsString,
-                    TestObjectFactory.GetFailingValidationAction()));
-
-            Assert.Equal("location to be URI valid instead received http://somehost!@#?Query==true", exception.Message);
+                    TestObjectFactory.GetFailingValidationAction());
+            }, "location to be URI valid instead received http://somehost!@#?Query==true");
         }
 
         // TODO: ?

@@ -276,7 +276,7 @@
         public void CastToShouldThrowExceptionWhenCastIsNotPossible()
         {
             IEnumerable<int> original = new List<int>();
-            var exception = Assert.Throws<InvalidCastException>(() =>
+            Assert.Throws<InvalidCastException>(() =>
             {
                 typeof(IEnumerable<int>).CastTo<int>(original);
             });

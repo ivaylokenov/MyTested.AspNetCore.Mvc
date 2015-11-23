@@ -133,7 +133,7 @@
         [Fact]
         public void AndProvideShouldThrowExceptionIfActionIsVoid()
         {
-            var exception = Assert.Throws<InvalidOperationException>(() =>
+            Test.AssertException<InvalidOperationException>(() =>
             {
                 MyMvc
                     .Controller<MvcController>()
@@ -141,9 +141,7 @@
                     .ShouldHave()
                     .ValidModelState()
                     .AndProvideTheActionResult();
-            });
-
-            Assert.Equal("Void methods cannot provide action result because they do not have return value.", exception.Message);
+            }, "Void methods cannot provide action result because they do not have return value.");
         }
     }
 }

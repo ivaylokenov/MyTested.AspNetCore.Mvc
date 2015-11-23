@@ -25,8 +25,10 @@
         {
             var attributes = Reflection.GetCustomAttributes(new MvcController());
 
-            var exception = Assert.Throws<NullReferenceException>(() => AttributesValidator.ValidateNoAttributes(attributes, TestObjectFactory.GetFailingValidationActionWithTwoParameteres()));
-            Assert.Equal("not have any attributes it had some", exception.Message);
+            Test.AssertException<NullReferenceException>(() =>
+            {
+                AttributesValidator.ValidateNoAttributes(attributes, TestObjectFactory.GetFailingValidationActionWithTwoParameteres());
+            }, "not have any attributes it had some");
         }
 
         [Fact]
@@ -62,8 +64,10 @@
         {
             var attributes = Reflection.GetCustomAttributes(new MvcController());
 
-            var exception = Assert.Throws<NullReferenceException>(() => AttributesValidator.ValidateNumberOfAttributes(attributes, TestObjectFactory.GetFailingValidationActionWithTwoParameteres(), 3));
-            Assert.Equal("have 3 attributes in fact found 2", exception.Message);
+            Test.AssertException<NullReferenceException>(() =>
+            {
+                AttributesValidator.ValidateNumberOfAttributes(attributes, TestObjectFactory.GetFailingValidationActionWithTwoParameteres(), 3);
+            }, "have 3 attributes in fact found 2");
         }
 
         // TODO: fix?

@@ -4,6 +4,7 @@
     using Exceptions;
     using Setups.Controllers;
     using Xunit;
+    using Setups;
 
     public class VoidActionResultTestBuilderTests
     {
@@ -19,29 +20,25 @@
         [Fact]
         public void ShouldReturnEmptyShouldThrowExceptionIfActionThrowsException()
         {
-            var exception = Assert.Throws<ActionCallAssertionException>(() =>
+            Test.AssertException<ActionCallAssertionException>(() => 
             {
                 MyMvc
                     .Controller<MvcController>()
                     .Calling(c => c.EmptyActionWithException())
                     .ShouldReturnEmpty();
-            });
-
-            Assert.Equal("NullReferenceException with 'Test exception message' message was thrown but was not caught or expected.", exception.Message);
+            }, "NullReferenceException with 'Test exception message' message was thrown but was not caught or expected.");
         }
 
         [Fact]
         public void ShouldReturnEmptyWithAsyncShouldThrowExceptionIfActionThrowsException()
         {
-            var exception = Assert.Throws<ActionCallAssertionException>(() =>
+            Test.AssertException<ActionCallAssertionException>(() =>
             {
                 MyMvc
                     .Controller<MvcController>()
                     .CallingAsync(c => c.EmptyActionWithExceptionAsync())
                     .ShouldReturnEmpty();
-            });
-
-            Assert.Equal("AggregateException (containing NullReferenceException with 'Test exception message' message) was thrown but was not caught or expected.", exception.Message);
+            }, "AggregateException (containing NullReferenceException with 'Test exception message' message) was thrown but was not caught or expected.");
         }
 
         [Fact]
@@ -58,16 +55,14 @@
         [Fact]
         public void ShouldHaveModelStateShouldWorkCorrectly()
         {
-            var exception = Assert.Throws<ModelErrorAssertionException>(() =>
+            Test.AssertException<ModelErrorAssertionException>(() =>
             {
                 MyMvc
                     .Controller<MvcController>()
                     .Calling(c => c.EmptyAction())
                     .ShouldHave()
                     .InvalidModelState();
-            });
-
-            Assert.Equal("When calling EmptyAction action in MvcController expected to have invalid model state, but was in fact valid.", exception.Message);
+            }, "When calling EmptyAction action in MvcController expected to have invalid model state, but was in fact valid.");
         }
     }
 }
