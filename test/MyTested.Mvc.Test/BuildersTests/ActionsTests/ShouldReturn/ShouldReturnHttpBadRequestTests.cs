@@ -8,7 +8,7 @@
     public class ShouldReturnHttpBadRequestTests
     {
         [Fact]
-        public void ShouldReturnBadRequestShouldNotThrowExceptionWhenResultIsBadRequest()
+        public void ShouldReturnBadRequestShouldNotThrowExceptionWhenResultIsHttpBadRequest()
         {
             MyMvc
                 .Controller<MvcController>()

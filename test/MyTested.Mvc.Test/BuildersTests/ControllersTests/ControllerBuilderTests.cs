@@ -352,7 +352,7 @@
         //        .WithHttpRequestMessage(request => request.WithHeader("TestHeader", "TestHeaderValue"))
         //        .Calling(c => c.CustomRequestAction())
         //        .ShouldReturn()
-        //        .BadRequest();
+        //        .HttpBadRequest();
         //}
 
         //[Fact]
@@ -374,7 +374,7 @@
         //        .WithHttpRequestMessage(request => request.WithMethod(HttpMethod.Get))
         //        .Calling(c => c.CustomRequestAction())
         //        .ShouldReturn()
-        //        .BadRequest();
+        //        .HttpBadRequest();
         //}
 
         //[Fact]
@@ -387,7 +387,7 @@
         //        .WithHttpRequestMessage(request => request.WithMethod(HttpMethod.Get))
         //        .Calling(c => c.CustomRequestAction())
         //        .ShouldReturn()
-        //        .BadRequest()
+        //        .HttpBadRequest()
         //        .AndProvideTheController()
         //        .Configuration;
 
