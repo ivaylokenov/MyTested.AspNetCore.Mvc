@@ -14,7 +14,7 @@
     // TODO:
     [Authorize(Roles = "Admin,Moderator" /*Users = "John,George"*/)]
     [Route("/api/test")]
-    //[RoutePrefix("/api/test")]
+    // TODO: [RoutePrefix("/api/test")]
     internal class MvcController : Controller
     {
         private readonly ICollection<ResponseModel> responseModel;
