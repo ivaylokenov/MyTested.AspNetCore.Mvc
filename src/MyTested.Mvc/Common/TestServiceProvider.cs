@@ -1,25 +1,30 @@
 ﻿namespace MyTested.Mvc.Common
 {
-    using Microsoft.AspNet.Mvc;
     using Microsoft.Extensions.DependencyInjection;
     using System;
 
-    internal class TestServiceProvider
+    public class TestServiceProvider
     {
         private static IServiceCollection serviceCollection;
         private static IServiceProvider serviceProvider;
 
-        public static IServiceProvider Current => serviceProvider ?? serviceCollection.BuildServiceProvider();
+        public static IServiceProvider Current => serviceProvider ?? serviceCollection?.BuildServiceProvider();
 
-        public static void Setup(Action<IServiceCollection> servicesAction, Action<MvcOptions> setupAction)
+        public static void Setup(Action<IServiceCollection> servicesAction)
         {
             serviceCollection = new ServiceCollection();
-            serviceCollection.AddMvc(setupAction);
+            serviceCollection.AddMvc();
 
             if (servicesAction != null)
             {
                 servicesAction(serviceCollection);
             }
+        }
+
+        public static void Clear()
+        {
+            serviceCollection = null;
+            serviceProvider = null;
         }
     }
 }

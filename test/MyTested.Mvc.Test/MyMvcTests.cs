@@ -1,12 +1,18 @@
 ﻿namespace MyTested.Mvc.Tests
 {
-    using System.Collections.Generic;
     using Exceptions;
+    using Microsoft.Extensions.DependencyInjection;
     using Setups;
     using Setups.Controllers;
     using Setups.Services;
+    using System.Linq;
     using Xunit;
-    
+    using Common;
+    using Microsoft.AspNet.Mvc.Internal;
+    using Microsoft.Extensions.OptionsModel;
+    using Microsoft.AspNet.Mvc;
+    using System;
+
     public class MyMvcTests
     {
         // TODO: move tests
@@ -27,6 +33,103 @@
 
         //    Assert.AreSame(configs[0], configs[1]);
         //}
+
+        [Fact]
+        public void UsesDefaultServicesShouldPopulateDefaultServices()
+        {
+            MyMvc.IsUsingDefaultServices();
+
+            var markerService = TestServiceProvider.Current.GetRequiredService<MvcMarkerService>();
+
+            Assert.NotNull(markerService);
+
+            MyMvc.IsNotUsingServices();
+        }
+
+        [Fact]
+        public void IsUsingShouldAddServices()
+        {
+            MyMvc.IsUsing(TestObjectFactory.GetCustomServicesRegistrationAction());
+
+            var injectedService = TestServiceProvider.Current.GetRequiredService<IInjectedService>();
+            var anotherInjectedService = TestServiceProvider.Current.GetRequiredService<IAnotherInjectedService>();
+
+            Assert.NotNull(injectedService);
+            Assert.NotNull(anotherInjectedService);
+
+            MyMvc.IsNotUsingServices();
+        }
+
+        [Fact]
+        public void IsUsingShouldAddServicesWithOptions()
+        {
+            MyMvc.IsUsingDefaultServices();
+
+            var initialSetOptions = TestServiceProvider.Current.GetServices<IConfigureOptions<MvcOptions>>();
+
+            MyMvc.IsUsing(TestObjectFactory.GetCustomServicesWithOptionsRegistrationAction());
+
+            var injectedService = TestServiceProvider.Current.GetRequiredService<IInjectedService>();
+            var anotherInjectedService = TestServiceProvider.Current.GetRequiredService<IAnotherInjectedService>();
+
+            Assert.NotNull(injectedService);
+            Assert.NotNull(anotherInjectedService);
+
+            var setOptions = TestServiceProvider.Current.GetServices<IConfigureOptions<MvcOptions>>();
+
+            Assert.NotNull(setOptions);
+            Assert.Equal(initialSetOptions.Count() + 1, setOptions.Count());
+
+            MyMvc.IsNotUsingServices();
+        }
+
+        [Fact]
+        public void IsNotUsingServicesShouldSetServicesToNull()
+        {
+            MyMvc.IsNotUsingServices();
+
+            Assert.Null(TestServiceProvider.Current);
+        }
+
+        [Fact]
+        public void IsUsingShouldRecreateServicesEverytimeItIsInvoked()
+        {
+            MyMvc.IsUsingDefaultServices();
+            
+            var markerService = TestServiceProvider.Current.GetRequiredService<MvcMarkerService>();
+
+            Assert.NotNull(markerService);
+
+            MyMvc.IsNotUsingServices();
+            
+            Assert.Null(TestServiceProvider.Current);
+
+            MyMvc.IsUsing(TestObjectFactory.GetCustomServicesRegistrationAction());
+
+            var injectedService = TestServiceProvider.Current.GetRequiredService<IInjectedService>();
+            var anotherInjectedService = TestServiceProvider.Current.GetRequiredService<IAnotherInjectedService>();
+
+            Assert.NotNull(injectedService);
+            Assert.NotNull(anotherInjectedService);
+            
+            MyMvc.IsUsingDefaultServices();
+
+            Assert.Throws<InvalidOperationException>(() =>
+            {
+                injectedService = TestServiceProvider.Current.GetRequiredService<IInjectedService>();
+                anotherInjectedService = TestServiceProvider.Current.GetRequiredService<IAnotherInjectedService>();
+            });
+            
+            MyMvc.IsUsing(TestObjectFactory.GetCustomServicesRegistrationAction());
+
+            injectedService = TestServiceProvider.Current.GetRequiredService<IInjectedService>();
+            anotherInjectedService = TestServiceProvider.Current.GetRequiredService<IAnotherInjectedService>();
+
+            Assert.NotNull(injectedService);
+            Assert.NotNull(anotherInjectedService);
+
+            MyMvc.IsNotUsingServices();
+        }
 
         [Fact]
         public void ControllerWithoutConstructorFunctionShouldPopulateCorrectNewInstanceOfControllerType()
@@ -59,19 +162,18 @@
             Assert.IsAssignableFrom<MvcController>(controller);
         }
 
-        // TODO: ?
-        //[Fact]
-        //[ExpectedException(
-        //    typeof(UnresolvedDependenciesException),
-        //    ExpectedMessage = "NoParameterlessConstructorController could not be instantiated because it contains no constructor taking no parameters.")]
-        //public void ControllerWithNoParameterlessConstructorShouldThrowProperException()
-        //{
-        //    MyMvc
-        //        .Controller<NoParameterlessConstructorController>()
-        //        .Calling(c => c.OkAction())
-        //        .ShouldReturn()
-        //        .Ok();
-        //}
+        [Fact]
+        public void ControllerWithNoParameterlessConstructorShouldThrowProperException()
+        {
+            Test.AssertException<UnresolvedDependenciesException>(() =>
+            {
+                MyMvc
+                    .Controller<NoParameterlessConstructorController>()
+                    .Calling(c => c.OkAction())
+                    .ShouldReturn()
+                    .Ok();
+            }, "NoParameterlessConstructorController could not be instantiated because it contains no constructor taking no parameters.");
+        }
 
         //[Fact]
         //public void HandlerWithoutConstructorFunctionShouldPopulateCorrectNewInstanceOfHandlerType()

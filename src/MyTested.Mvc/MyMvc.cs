@@ -12,24 +12,30 @@
     /// </summary>
     public static class MyMvc
     {
-        public static void UsesDefaultServices()
+        public static void IsUsingDefaultServices()
         {
-            UsesDefaultServices(null);
+            IsUsing(null);
+        }
+        
+        public static void IsUsing(Action<IServiceCollection> services)
+        {
+            TestServiceProvider.Setup(services);
         }
 
-        public static void UsesDefaultServices(Action<MvcOptions> setupAction)
+        public static void IsUsing<TStartup>() where TStartup : class
         {
-            HasConfiguredServices(null, setupAction);
+
         }
 
-        public static void HasConfiguredServices(Action<IServiceCollection> services)
+        public static void IsUsing<TStartup>(Action<IServiceCollection> services)
+            where TStartup : class
         {
-            HasConfiguredServices(services, null);
-        }
 
-        public static void HasConfiguredServices(Action<IServiceCollection> services, Action<MvcOptions> setupAction)
+        }
+        
+        public static void IsNotUsingServices()
         {
-            TestServiceProvider.Setup(services, setupAction);
+            TestServiceProvider.Clear();
         }
         
         /// <summary>

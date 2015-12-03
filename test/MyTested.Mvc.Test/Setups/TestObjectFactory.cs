@@ -9,7 +9,9 @@
     using Newtonsoft.Json.Serialization;
     using Microsoft.AspNet.Http;
     using Microsoft.AspNet.Http.Internal;
-
+    using Microsoft.Extensions.DependencyInjection;
+    using Services;
+    using Microsoft.AspNet.Mvc;
     public static class TestObjectFactory
     {
         public const string MediaType = "application/json";
@@ -57,6 +59,29 @@
         //        new XmlMediaTypeFormatter()
         //    };
         //}
+
+        public static Action<IServiceCollection> GetCustomServicesRegistrationAction()
+        {
+            return services =>
+            {
+                services.AddTransient<IInjectedService, InjectedService>();
+                services.AddTransient<IAnotherInjectedService, AnotherInjectedService>();
+            };
+        }
+
+        public static Action<IServiceCollection> GetCustomServicesWithOptionsRegistrationAction()
+        {
+            return services =>
+            {
+                services.AddTransient<IInjectedService, InjectedService>();
+                services.AddTransient<IAnotherInjectedService, AnotherInjectedService>();
+                
+                services.Configure<MvcOptions>(options =>
+                {
+                    options.MaxModelValidationErrors = 10;
+                });
+            };
+        }
 
         public static HttpRequest GetCustomHttpRequestMessage()
         {
