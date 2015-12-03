@@ -178,138 +178,138 @@
             Assert.Equal(null, controllerUser.Identity.AuthenticationType);
             Assert.Equal(false, controllerUser.Identity.IsAuthenticated);
         }
-        
+
         // TODO: DI
-        //[Fact]
-        //public void WithResolvedDependencyForShouldChooseCorrectConstructorWithLessDependencies()
-        //{
-        //    var controller = MyMvc
-        //        .Controller<MvcController>()
-        //        .WithResolvedDependencyFor<IInjectedService>(new InjectedService())
-        //        .AndProvideTheController();
+        [Fact]
+        public void WithResolvedDependencyForShouldChooseCorrectConstructorWithLessDependencies()
+        {
+            var controller = MyMvc
+                .Controller<MvcController>()
+                .WithResolvedDependencyFor<IInjectedService>(new InjectedService())
+                .AndProvideTheController();
 
-        //    Assert.NotNull(controller);
-        //    Assert.NotNull(controller.InjectedService);
-        //    Assert.Null(controller.AnotherInjectedService);
-        //    Assert.Null(controller.InjectedRequestModel);
-        //}
+            Assert.NotNull(controller);
+            Assert.NotNull(controller.InjectedService);
+            Assert.Null(controller.AnotherInjectedService);
+            Assert.Null(controller.InjectedRequestModel);
+        }
 
-        //[Fact]
-        //public void WithResolvedDependencyForShouldChooseCorrectConstructorWithMoreDependencies()
-        //{
-        //    var controller = MyMvc
-        //        .Controller<MvcController>()
-        //        .WithResolvedDependencyFor<IAnotherInjectedService>(new AnotherInjectedService())
-        //        .WithResolvedDependencyFor<IInjectedService>(new InjectedService())
-        //        .AndProvideTheController();
+        [Fact]
+        public void WithResolvedDependencyForShouldChooseCorrectConstructorWithMoreDependencies()
+        {
+            var controller = MyMvc
+                .Controller<MvcController>()
+                .WithResolvedDependencyFor<IAnotherInjectedService>(new AnotherInjectedService())
+                .WithResolvedDependencyFor<IInjectedService>(new InjectedService())
+                .AndProvideTheController();
 
-        //    Assert.NotNull(controller);
-        //    Assert.NotNull(controller.InjectedService);
-        //    Assert.NotNull(controller.AnotherInjectedService);
-        //    Assert.Null(controller.InjectedRequestModel);
-        //}
+            Assert.NotNull(controller);
+            Assert.NotNull(controller.InjectedService);
+            Assert.NotNull(controller.AnotherInjectedService);
+            Assert.Null(controller.InjectedRequestModel);
+        }
 
-        //[Fact]
-        //public void WithResolvedDependencyForShouldChooseCorrectConstructorWithAllDependencies()
-        //{
-        //    var controller = MyMvc
-        //        .Controller<MvcController>()
-        //        .WithResolvedDependencyFor<IAnotherInjectedService>(new AnotherInjectedService())
-        //        .WithResolvedDependencyFor<RequestModel>(new RequestModel())
-        //        .WithResolvedDependencyFor<IInjectedService>(new InjectedService())
-        //        .AndProvideTheController();
+        [Fact]
+        public void WithResolvedDependencyForShouldChooseCorrectConstructorWithAllDependencies()
+        {
+            var controller = MyMvc
+                .Controller<MvcController>()
+                .WithResolvedDependencyFor<IAnotherInjectedService>(new AnotherInjectedService())
+                .WithResolvedDependencyFor<RequestModel>(new RequestModel())
+                .WithResolvedDependencyFor<IInjectedService>(new InjectedService())
+                .AndProvideTheController();
 
-        //    Assert.NotNull(controller);
-        //    Assert.NotNull(controller.InjectedService);
-        //    Assert.NotNull(controller.AnotherInjectedService);
-        //    Assert.NotNull(controller.InjectedRequestModel);
-        //}
+            Assert.NotNull(controller);
+            Assert.NotNull(controller.InjectedService);
+            Assert.NotNull(controller.AnotherInjectedService);
+            Assert.NotNull(controller.InjectedRequestModel);
+        }
 
-        //[Fact]
-        //public void WithResolvedDependencyForShouldContinueTheNormalExecutionFlowOfTestBuilders()
-        //{
-        //    MyMvc
-        //        .Controller<MvcController>()
-        //        .WithResolvedDependencyFor(new RequestModel())
-        //        .WithResolvedDependencyFor(new AnotherInjectedService())
-        //        .WithResolvedDependencyFor(new InjectedService())
-        //        .WithAuthenticatedUser()
-        //        .Calling(c => c.AuthorizedAction())
-        //        .ShouldReturn()
-        //        .Ok();
-        //}
+        [Fact]
+        public void WithResolvedDependencyForShouldContinueTheNormalExecutionFlowOfTestBuilders()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .WithResolvedDependencyFor(new RequestModel())
+                .WithResolvedDependencyFor(new AnotherInjectedService())
+                .WithResolvedDependencyFor(new InjectedService())
+                //.WithAuthenticatedUser() // TODO: ?
+                .Calling(c => c.AuthorizedAction())
+                .ShouldReturn()
+                .Ok();
+        }
 
-        //[Fact]
-        //public void AndAlsoShouldContinueTheNormalExecutionFlowOfTestBuilders()
-        //{
-        //    MyMvc
-        //        .Controller<MvcController>()
-        //        .WithResolvedDependencyFor(new RequestModel())
-        //        .AndAlso()
-        //        .WithResolvedDependencyFor(new AnotherInjectedService())
-        //        .AndAlso()
-        //        .WithResolvedDependencyFor(new InjectedService())
-        //        .AndAlso()
-        //        .WithAuthenticatedUser()
-        //        .Calling(c => c.AuthorizedAction())
-        //        .ShouldReturn()
-        //        .Ok();
-        //}
+        [Fact]
+        public void AndAlsoShouldContinueTheNormalExecutionFlowOfTestBuilders()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .WithResolvedDependencyFor(new RequestModel())
+                .AndAlso()
+                .WithResolvedDependencyFor(new AnotherInjectedService())
+                .AndAlso()
+                .WithResolvedDependencyFor(new InjectedService())
+                .AndAlso()
+                //.WithAuthenticatedUser() // TODO: ?
+                .Calling(c => c.AuthorizedAction())
+                .ShouldReturn()
+                .Ok();
+        }
 
-        //[Fact]
-        //public void WithResolvedDependenciesShouldWorkCorrectWithCollectionOfObjects()
-        //{
-        //    MyMvc
-        //        .Controller<MvcController>()
-        //        .WithResolvedDependencies(new List<object> { new RequestModel(), new AnotherInjectedService(), new InjectedService() })
-        //        .WithAuthenticatedUser()
-        //        .Calling(c => c.AuthorizedAction())
-        //        .ShouldReturn()
-        //        .Ok();
-        //}
+        [Fact]
+        public void WithResolvedDependenciesShouldWorkCorrectWithCollectionOfObjects()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .WithResolvedDependencies(new List<object> { new RequestModel(), new AnotherInjectedService(), new InjectedService() })
+                // .WithAuthenticatedUser() // TODO: ?
+                .Calling(c => c.AuthorizedAction())
+                .ShouldReturn()
+                .Ok();
+        }
 
-        //[Fact]
-        //public void WithResolvedDependenciesShouldWorkCorrectWithParamsOfObjects()
-        //{
-        //    MyMvc
-        //        .Controller<MvcController>()
-        //        .WithResolvedDependencies(new RequestModel(), new AnotherInjectedService(), new InjectedService())
-        //        .WithAuthenticatedUser()
-        //        .Calling(c => c.AuthorizedAction())
-        //        .ShouldReturn()
-        //        .Ok();
-        //}
+        [Fact]
+        public void WithResolvedDependenciesShouldWorkCorrectWithParamsOfObjects()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .WithResolvedDependencies(new RequestModel(), new AnotherInjectedService(), new InjectedService())
+               // .WithAuthenticatedUser() // TODO: ?
+                .Calling(c => c.AuthorizedAction())
+                .ShouldReturn()
+                .Ok();
+        }
 
-        //[Fact]
-        //[ExpectedException(
-        //    typeof(InvalidOperationException),
-        //    ExpectedMessage = "Dependency AnotherInjectedService is already registered for MvcController controller.")]
-        //public void WithResolvedDependencyForShouldThrowExceptionWhenSameDependenciesAreRegistered()
-        //{
-        //    MyMvc
-        //        .Controller<MvcController>()
-        //        .WithResolvedDependencyFor<RequestModel>(new RequestModel())
-        //        .WithResolvedDependencyFor<IAnotherInjectedService>(new AnotherInjectedService())
-        //        .WithResolvedDependencyFor<IInjectedService>(new InjectedService())
-        //        .WithResolvedDependencyFor<IAnotherInjectedService>(new AnotherInjectedService());
-        //}
+        [Fact]
+        public void WithResolvedDependencyForShouldThrowExceptionWhenSameDependenciesAreRegistered()
+        {
+            Test.AssertException<InvalidOperationException>(() =>
+            {
+                MyMvc
+                    .Controller<MvcController>()
+                    .WithResolvedDependencyFor<RequestModel>(new RequestModel())
+                    .WithResolvedDependencyFor<IAnotherInjectedService>(new AnotherInjectedService())
+                    .WithResolvedDependencyFor<IInjectedService>(new InjectedService())
+                    .WithResolvedDependencyFor<IAnotherInjectedService>(new AnotherInjectedService());
+            }, "Dependency AnotherInjectedService is already registered for MvcController controller.");
+        }
 
-        //[Fact]
-        //[ExpectedException(
-        //    typeof(UnresolvedDependenciesException),
-        //    ExpectedMessage = "MvcController could not be instantiated because it contains no constructor taking RequestModel, AnotherInjectedService, InjectedService, ResponseModel as parameters.")]
-        //public void WithResolvedDependencyForShouldThrowExceptionWhenNoConstructorExistsForDependencies()
-        //{
-        //    MyMvc
-        //        .Controller<MvcController>()
-        //        .WithResolvedDependencyFor<RequestModel>(new RequestModel())
-        //        .WithResolvedDependencyFor<IAnotherInjectedService>(new AnotherInjectedService())
-        //        .WithResolvedDependencyFor<IInjectedService>(new InjectedService())
-        //        .WithResolvedDependencyFor<ResponseModel>(new ResponseModel())
-        //        .Calling(c => c.OkResultAction())
-        //        .ShouldReturn()
-        //        .Ok();
-        //}
+        [Fact]
+        public void WithResolvedDependencyForShouldThrowExceptionWhenNoConstructorExistsForDependencies()
+        {
+            Test.AssertException<UnresolvedDependenciesException>(() =>
+            {
+                MyMvc
+                    .Controller<MvcController>()
+                    .WithResolvedDependencyFor<RequestModel>(new RequestModel())
+                    .WithResolvedDependencyFor<IAnotherInjectedService>(new AnotherInjectedService())
+                    .WithResolvedDependencyFor<IInjectedService>(new InjectedService())
+                    .WithResolvedDependencyFor<ResponseModel>(new ResponseModel())
+                    .Calling(c => c.OkResultAction())
+                    .ShouldReturn()
+                    .Ok();
+            }, "MvcController could not be instantiated because it contains no constructor taking RequestModel, AnotherInjectedService, InjectedService, ResponseModel as parameters.");
+        }
 
         // TODO: HTTP request builder
         //[Fact]
