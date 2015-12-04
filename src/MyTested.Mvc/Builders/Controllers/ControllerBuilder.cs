@@ -354,14 +354,13 @@
         {
             if (this.controller == null)
             {
-                if (this.aggregatedDependencies.Count == 0)
+                if (this.aggregatedDependencies.Any())
                 {
-                    var typeActivatorCache = TestServiceProvider.Current.GetRequiredService<ITypeActivatorCache>();
-                    this.controller = typeActivatorCache.CreateInstance<TController>(TestServiceProvider.Current, typeof(TController)); // TODO: refactor and extract, throw with good message if not valid or move to Reflection
+                    this.controller = Reflection.TryCreateInstance<TController>(this.aggregatedDependencies.Select(v => v.Value).ToArray());
                 }
                 else
                 {
-                    this.controller = Reflection.TryCreateInstance<TController>(this.aggregatedDependencies.Select(v => v.Value).ToArray());
+                    this.controller = TestServiceProvider.TryCreateInstance<TController>();
                 }
 
                 if (this.controller == null)

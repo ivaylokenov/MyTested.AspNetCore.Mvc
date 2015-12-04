@@ -40,7 +40,7 @@
         {
             MyMvc.IsUsingDefaultServices();
 
-            var markerService = TestServiceProvider.Current.GetRequiredService<MvcMarkerService>();
+            var markerService = TestServiceProvider.GetService<MvcMarkerService>();
 
             Assert.NotNull(markerService);
 
@@ -52,8 +52,8 @@
         {
             MyMvc.IsUsing(TestObjectFactory.GetCustomServicesRegistrationAction());
 
-            var injectedService = TestServiceProvider.Current.GetRequiredService<IInjectedService>();
-            var anotherInjectedService = TestServiceProvider.Current.GetRequiredService<IAnotherInjectedService>();
+            var injectedService = TestServiceProvider.GetService<IInjectedService>();
+            var anotherInjectedService = TestServiceProvider.GetService<IAnotherInjectedService>();
 
             Assert.NotNull(injectedService);
             Assert.NotNull(anotherInjectedService);
@@ -66,17 +66,17 @@
         {
             MyMvc.IsUsingDefaultServices();
 
-            var initialSetOptions = TestServiceProvider.Current.GetServices<IConfigureOptions<MvcOptions>>();
+            var initialSetOptions = TestServiceProvider.GetServices<IConfigureOptions<MvcOptions>>();
 
             MyMvc.IsUsing(TestObjectFactory.GetCustomServicesWithOptionsRegistrationAction());
 
-            var injectedService = TestServiceProvider.Current.GetRequiredService<IInjectedService>();
-            var anotherInjectedService = TestServiceProvider.Current.GetRequiredService<IAnotherInjectedService>();
+            var injectedService = TestServiceProvider.GetService<IInjectedService>();
+            var anotherInjectedService = TestServiceProvider.GetService<IAnotherInjectedService>();
 
             Assert.NotNull(injectedService);
             Assert.NotNull(anotherInjectedService);
 
-            var setOptions = TestServiceProvider.Current.GetServices<IConfigureOptions<MvcOptions>>();
+            var setOptions = TestServiceProvider.GetServices<IConfigureOptions<MvcOptions>>();
 
             Assert.NotNull(setOptions);
             Assert.Equal(initialSetOptions.Count() + 1, setOptions.Count());
@@ -89,7 +89,7 @@
         {
             MyMvc.IsUsing<CustomStartup>();
 
-            var injectedService = TestServiceProvider.Current.GetRequiredService<IInjectedService>();
+            var injectedService = TestServiceProvider.GetService<IInjectedService>();
 
             Assert.NotNull(injectedService);
             Assert.IsAssignableFrom(typeof(ReplaceableInjectedService), injectedService);
@@ -102,7 +102,7 @@
         {
             MyMvc.IsUsing<CustomStartupWithBuiltProvider>();
 
-            var injectedService = TestServiceProvider.Current.GetRequiredService<IInjectedService>();
+            var injectedService = TestServiceProvider.GetService<IInjectedService>();
 
             Assert.NotNull(injectedService);
             Assert.IsAssignableFrom(typeof(ReplaceableInjectedService), injectedService);
@@ -118,7 +118,7 @@
                 services.AddTransient<IInjectedService, InjectedService>();
             });
 
-            var injectedServices = TestServiceProvider.Current.GetRequiredService<IInjectedService>();
+            var injectedServices = TestServiceProvider.GetService<IInjectedService>();
 
             Assert.NotNull(injectedServices);;
             Assert.IsAssignableFrom(typeof(InjectedService), injectedServices);
@@ -148,7 +148,7 @@
         {
             MyMvc.IsUsingDefaultServices();
 
-            var markerService = TestServiceProvider.Current.GetRequiredService<MvcMarkerService>();
+            var markerService = TestServiceProvider.GetService<MvcMarkerService>();
 
             Assert.NotNull(markerService);
 
@@ -158,24 +158,23 @@
 
             MyMvc.IsUsing(TestObjectFactory.GetCustomServicesRegistrationAction());
 
-            var injectedService = TestServiceProvider.Current.GetRequiredService<IInjectedService>();
-            var anotherInjectedService = TestServiceProvider.Current.GetRequiredService<IAnotherInjectedService>();
+            var injectedService = TestServiceProvider.GetService<IInjectedService>();
+            var anotherInjectedService = TestServiceProvider.GetService<IAnotherInjectedService>();
 
             Assert.NotNull(injectedService);
             Assert.NotNull(anotherInjectedService);
 
             MyMvc.IsUsingDefaultServices();
 
-            Assert.Throws<InvalidOperationException>(() =>
+            Test.AssertException<NullReferenceException>(() =>
             {
-                injectedService = TestServiceProvider.Current.GetRequiredService<IInjectedService>();
-                anotherInjectedService = TestServiceProvider.Current.GetRequiredService<IAnotherInjectedService>();
-            });
+                injectedService = TestServiceProvider.GetRequiredService<IInjectedService>();
+            }, "IInjectedService could not be resolved from the services provider. Before running this test case, the service should be registered in the 'IsUsing' method and cannot be null.");
 
             MyMvc.IsUsing(TestObjectFactory.GetCustomServicesRegistrationAction());
 
-            injectedService = TestServiceProvider.Current.GetRequiredService<IInjectedService>();
-            anotherInjectedService = TestServiceProvider.Current.GetRequiredService<IAnotherInjectedService>();
+            injectedService = TestServiceProvider.GetService<IInjectedService>();
+            anotherInjectedService = TestServiceProvider.GetService<IAnotherInjectedService>();
 
             Assert.NotNull(injectedService);
             Assert.NotNull(anotherInjectedService);
@@ -246,7 +245,7 @@
                     .Calling(c => c.OkAction())
                     .ShouldReturn()
                     .Ok();
-            }, "NoParameterlessConstructorController could not be instantiated because it contains no constructor taking no parameters."); // TODO: proper exception message
+            }, "NoParameterlessConstructorController could not be instantiated because it contains no constructor taking no parameters.");
 
             MyMvc.IsNotUsingServices();
         }

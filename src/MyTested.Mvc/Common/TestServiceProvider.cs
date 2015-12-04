@@ -1,9 +1,11 @@
 ﻿namespace MyTested.Mvc.Common
 {
+    using Microsoft.AspNet.Mvc.Infrastructure;
     using Microsoft.Extensions.DependencyInjection;
     using System;
+    using System.Collections.Generic;
     using Utilities;
-
+    using Utilities.Validators;
     public class TestServiceProvider
     {
         private const string ConfigureServicesMethodName = "ConfigureServices";
@@ -56,6 +58,40 @@
             if (servicesAction != null)
             {
                 servicesAction(serviceCollection);
+            }
+        }
+
+        public static TInstance GetRequiredService<TInstance>()
+        {
+            var service = Current.GetService<TInstance>();
+            ServiceValidator.ValidateServiceExists(service);
+            return service;
+        }
+
+        public static TInstance GetService<TInstance>()
+        {
+            ServiceValidator.ValidateServices();
+            return Current.GetService<TInstance>();
+        }
+
+        public static IEnumerable<TInstance> GetServices<TInstance>()
+        {
+            ServiceValidator.ValidateServices();
+            return Current.GetServices<TInstance>();
+        }
+
+        public static TInstance TryCreateInstance<TInstance>()
+            where TInstance : class
+        {
+            var typeActivatorCache = GetRequiredService<ITypeActivatorCache>();
+
+            try
+            {
+                return typeActivatorCache.CreateInstance<TInstance>(Current, typeof(TInstance));
+            }
+            catch (InvalidOperationException)
+            {
+                return null;
             }
         }
 
