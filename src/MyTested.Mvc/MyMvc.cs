@@ -22,15 +22,15 @@
             TestServiceProvider.Setup(services);
         }
 
-        public static void IsUsing<TStartup>() where TStartup : class
+        public static void IsUsing<TStartup>() where TStartup : class, new()
         {
-
+            IsUsing<TStartup>(null);
         }
 
         public static void IsUsing<TStartup>(Action<IServiceCollection> services)
-            where TStartup : class
+            where TStartup : class, new()
         {
-
+            TestServiceProvider.Setup<TStartup>(services);
         }
         
         public static void IsNotUsingServices()
