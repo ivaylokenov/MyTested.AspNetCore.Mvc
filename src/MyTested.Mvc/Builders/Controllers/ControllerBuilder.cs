@@ -15,6 +15,8 @@
     using Common;
     using Exceptions;
     using Common.Extensions;
+    using Microsoft.AspNet.Mvc.Infrastructure;
+    using Microsoft.Extensions.DependencyInjection;
 
     /// <summary>
     /// Used for building the action which will be tested.
@@ -352,7 +354,16 @@
         {
             if (this.controller == null)
             {
-                this.controller = Reflection.TryCreateInstance<TController>(this.aggregatedDependencies.Select(v => v.Value).ToArray());
+                if (this.aggregatedDependencies.Count == 0)
+                {
+                    var typeActivatorCache = TestServiceProvider.Current.GetRequiredService<ITypeActivatorCache>();
+                    this.controller = typeActivatorCache.CreateInstance<TController>(TestServiceProvider.Current, typeof(TController)); // TODO: refactor and extract, throw with good message if not valid or move to Reflection
+                }
+                else
+                {
+                    this.controller = Reflection.TryCreateInstance<TController>(this.aggregatedDependencies.Select(v => v.Value).ToArray());
+                }
+
                 if (this.controller == null)
                 {
                     var friendlyDependenciesNames = this.aggregatedDependencies

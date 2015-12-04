@@ -12,6 +12,7 @@
     using Microsoft.Extensions.OptionsModel;
     using Microsoft.AspNet.Mvc;
     using System;
+    using Setups.Startups;
 
     public class MyMvcTests
     {
@@ -84,6 +85,57 @@
         }
 
         [Fact]
+        public void IsUsingWithStartUpClassShouldWorkCorrectlyWithAction()
+        {
+            MyMvc.IsUsing<CustomStartup>();
+
+            var injectedService = TestServiceProvider.Current.GetRequiredService<IInjectedService>();
+
+            Assert.NotNull(injectedService);
+            Assert.IsAssignableFrom(typeof(ReplaceableInjectedService), injectedService);
+
+            MyMvc.IsNotUsingServices();
+        }
+
+        [Fact]
+        public void IsUsingWithStartUpClassShouldWorkCorrectlyWithFunc()
+        {
+            MyMvc.IsUsing<CustomStartupWithBuiltProvider>();
+
+            var injectedService = TestServiceProvider.Current.GetRequiredService<IInjectedService>();
+
+            Assert.NotNull(injectedService);
+            Assert.IsAssignableFrom(typeof(ReplaceableInjectedService), injectedService);
+
+            MyMvc.IsNotUsingServices();
+        }
+
+        [Fact]
+        public void IsUsingWithAdditionalServicesShouldUseThem()
+        {
+            MyMvc.IsUsing<CustomStartup>(services =>
+            {
+                services.AddTransient<IInjectedService, InjectedService>();
+            });
+
+            var injectedServices = TestServiceProvider.Current.GetRequiredService<IInjectedService>();
+
+            Assert.NotNull(injectedServices);;
+            Assert.IsAssignableFrom(typeof(InjectedService), injectedServices);
+
+            MyMvc.IsNotUsingServices();
+        }
+
+        [Fact]
+        public void IsUsingWithWrongStartupClassShouldThrowException()
+        {
+            Test.AssertException<InvalidOperationException>(() =>
+            {
+                MyMvc.IsUsing<MvcController>();
+            }, "The provided MvcController class should have method named 'ConfigureServices' with void or IServiceProvider return type.");
+        }
+
+        [Fact]
         public void IsNotUsingServicesShouldSetServicesToNull()
         {
             MyMvc.IsNotUsingServices();
@@ -95,13 +147,13 @@
         public void IsUsingShouldRecreateServicesEverytimeItIsInvoked()
         {
             MyMvc.IsUsingDefaultServices();
-            
+
             var markerService = TestServiceProvider.Current.GetRequiredService<MvcMarkerService>();
 
             Assert.NotNull(markerService);
 
             MyMvc.IsNotUsingServices();
-            
+
             Assert.Null(TestServiceProvider.Current);
 
             MyMvc.IsUsing(TestObjectFactory.GetCustomServicesRegistrationAction());
@@ -111,7 +163,7 @@
 
             Assert.NotNull(injectedService);
             Assert.NotNull(anotherInjectedService);
-            
+
             MyMvc.IsUsingDefaultServices();
 
             Assert.Throws<InvalidOperationException>(() =>
@@ -119,7 +171,7 @@
                 injectedService = TestServiceProvider.Current.GetRequiredService<IInjectedService>();
                 anotherInjectedService = TestServiceProvider.Current.GetRequiredService<IAnotherInjectedService>();
             });
-            
+
             MyMvc.IsUsing(TestObjectFactory.GetCustomServicesRegistrationAction());
 
             injectedService = TestServiceProvider.Current.GetRequiredService<IInjectedService>();
@@ -135,7 +187,7 @@
         public void ControllerWithoutConstructorFunctionShouldPopulateCorrectNewInstanceOfControllerType()
         {
             var controller = MyMvc.Controller<MvcController>().AndProvideTheController();
-            
+
             Assert.NotNull(controller);
             Assert.IsAssignableFrom<MvcController>(controller);
         }
@@ -163,8 +215,30 @@
         }
 
         [Fact]
-        public void ControllerWithNoParameterlessConstructorShouldThrowProperException()
+        public void ControllerWithNoParameterlessConstructorAndWithRegisteredServicesShouldPopulateCorrectInstanceOfControllerType()
         {
+            MyMvc.IsUsing(services =>
+            {
+                services.AddTransient<IInjectedService, InjectedService>();
+                services.AddTransient<IAnotherInjectedService, AnotherInjectedService>();
+            });
+
+            var controller = MyMvc.Controller<NoParameterlessConstructorController>().AndProvideTheController();
+
+            Assert.NotNull(controller);
+            Assert.NotNull(controller.Service);
+            Assert.IsAssignableFrom<InjectedService>(controller.Service);
+            Assert.NotNull(controller.AnotherInjectedService);
+            Assert.IsAssignableFrom<AnotherInjectedService>(controller.AnotherInjectedService);
+
+            MyMvc.IsNotUsingServices();
+        }
+
+        [Fact]
+        public void ControllerWithNoParameterlessConstructorAndNoServicesShouldThrowProperException()
+        {
+            MyMvc.IsUsingDefaultServices();
+
             Test.AssertException<UnresolvedDependenciesException>(() =>
             {
                 MyMvc
@@ -172,7 +246,9 @@
                     .Calling(c => c.OkAction())
                     .ShouldReturn()
                     .Ok();
-            }, "NoParameterlessConstructorController could not be instantiated because it contains no constructor taking no parameters.");
+            }, "NoParameterlessConstructorController could not be instantiated because it contains no constructor taking no parameters."); // TODO: proper exception message
+
+            MyMvc.IsNotUsingServices();
         }
 
         //[Fact]

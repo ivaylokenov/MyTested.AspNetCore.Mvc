@@ -11,7 +11,7 @@
     using Microsoft.AspNet.Authorization;
     using Microsoft.AspNet.Mvc;
     using Microsoft.Extensions.DependencyInjection;
-    using Setups;
+    using Setups.Startups;
     public class ReflectionTests
     {
         [Fact]
