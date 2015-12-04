@@ -8,6 +8,7 @@
     using Builders.Contracts.Controllers;
     using Builders.Contracts.Actions;
     using System.Collections.Generic;
+    using Builders.Contracts;
 
     /// <summary>
     /// Used for building the action which will be tested.
@@ -71,20 +72,19 @@
         /// </summary>
         /// <returns>The same controller builder.</returns>
         IAndControllerBuilder<TController> WithoutValidation();
+        
+        /// <summary>
+        /// Sets default authenticated user to the built controller with "TestUser" username.
+        /// </summary>
+        /// <returns>The same controller builder.</returns>
+        IAndControllerBuilder<TController> WithAuthenticatedUser();
 
-        // TODO: add?
-        ///// <summary>
-        ///// Sets default authenticated user to the built controller with "TestUser" username.
-        ///// </summary>
-        ///// <returns>The same controller builder.</returns>
-        //IAndControllerBuilder<TController> WithAuthenticatedUser();
-
-        ///// <summary>
-        ///// Sets custom authenticated user using provided user builder.
-        ///// </summary>
-        ///// <param name="userBuilder">User builder to create mocked user object.</param>
-        ///// <returns>The same controller builder.</returns>
-        //IAndControllerBuilder<TController> WithAuthenticatedUser(Action<IUserBuilder> userBuilder);
+        /// <summary>
+        /// Sets custom authenticated user using provided user builder.
+        /// </summary>
+        /// <param name="userBuilder">User builder to create mocked user object.</param>
+        /// <returns>The same controller builder.</returns>
+        IAndControllerBuilder<TController> WithAuthenticatedUser(Action<IUserBuilder> userBuilder);
 
         /// <summary>
         /// Indicates which action should be invoked and tested.

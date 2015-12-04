@@ -6,6 +6,7 @@
     using System.Collections.Generic;
     using Utilities;
     using Utilities.Validators;
+
     public class TestServiceProvider
     {
         private const string ConfigureServicesMethodName = "ConfigureServices";

@@ -17,11 +17,12 @@
     using Common.Extensions;
     using Microsoft.AspNet.Mvc.Infrastructure;
     using Microsoft.Extensions.DependencyInjection;
-
-    /// <summary>
-    /// Used for building the action which will be tested.
-    /// </summary>
-    /// <typeparam name="TController">Class inheriting ASP.NET MVC 6 controller.</typeparam>
+    using Common.Identity;
+    using System.Security.Claims;
+    using Contracts;/// <summary>
+                    /// Used for building the action which will be tested.
+                    /// </summary>
+                    /// <typeparam name="TController">Class inheriting ASP.NET MVC 6 controller.</typeparam>
     public class ControllerBuilder<TController> : IAndControllerBuilder<TController>
         where TController : Controller
     {
@@ -40,12 +41,6 @@
             this.aggregatedDependencies = new Dictionary<Type, object>();
 
             this.Controller = controllerInstance;
-            this.HttpRequest = new DefaultHttpContext().Request; // TODO: research how it can be implemented
-
-            this.Controller.ActionContext = new ActionContext
-            {
-                HttpContext = new DefaultHttpContext()
-            };
 
             // TODO: for real this is how we configure controller?
             //var detailsProviders = new IMetadataDetailsProvider[]
@@ -87,7 +82,6 @@
             //this.Controller.TempData = tempData;
             //this.Controller.ObjectValidator = new DefaultObjectValidator(new IExcludeTypeValidationFilter[0], metadataProvider);
 
-            this.HttpRequest = this.Controller.HttpContext.Request;
             this.enabledValidation = true;
         }
 
@@ -120,7 +114,7 @@
         /// <returns>The same controller builder.</returns>
         public IAndControllerBuilder<TController> WithHttpContext(HttpContext context)
         {
-            this.HttpContext = context;
+            this.HttpContext = context; // TODO: is this needed? or set on the controller
             return this;
         }
 
@@ -131,7 +125,7 @@
         /// <returns>The same controller builder.</returns>
         public IAndControllerBuilder<TController> WithHttpRequest(HttpRequest request)
         {
-            this.HttpRequest = request;
+            this.HttpRequest = request; // set it on the controller
             return this;
         }
 
@@ -200,28 +194,28 @@
             return this;
         }
 
-        ///// <summary>
-        ///// Sets default authenticated user to the built controller with "TestUser" username.
-        ///// </summary>
-        ///// <returns>The same controller builder.</returns>
-        //public IAndControllerBuilder<TController> WithAuthenticatedUser()
-        //{
-        //    this.Controller.User = MockedIPrinciple.CreateDefaultAuthenticated();
-        //    return this;
-        //}
+        /// <summary>
+        /// Sets default authenticated user to the built controller with "TestUser" username.
+        /// </summary>
+        /// <returns>The same controller builder.</returns>
+        public IAndControllerBuilder<TController> WithAuthenticatedUser()
+        {
+            this.Controller.HttpContext.User = MockedClaimsPrincipal.CreateDefaultAuthenticated();
+            return this;
+        }
 
-        ///// <summary>
-        ///// Sets custom authenticated user using provided user builder.
-        ///// </summary>
-        ///// <param name="userBuilder">User builder to create mocked user object.</param>
-        ///// <returns>The same controller builder.</returns>
-        //public IAndControllerBuilder<TController> WithAuthenticatedUser(Action<IUserBuilder> userBuilder)
-        //{
-        //    var newUserBuilder = new UserBuilder();
-        //    userBuilder(newUserBuilder);
-        //    this.Controller.User = newUserBuilder.GetUser();
-        //    return this;
-        //}
+        /// <summary>
+        /// Sets custom authenticated user using provided user builder.
+        /// </summary>
+        /// <param name="userBuilder">User builder to create mocked user object.</param>
+        /// <returns>The same controller builder.</returns>
+        public IAndControllerBuilder<TController> WithAuthenticatedUser(Action<IUserBuilder> userBuilder)
+        {
+            var newUserBuilder = new UserBuilder();
+            userBuilder(newUserBuilder);
+            this.Controller.HttpContext.User = newUserBuilder.GetUser();
+            return this;
+        }
 
         /// <summary>
         /// Used for testing controller attributes.
@@ -416,11 +410,18 @@
 
         private void PrepareController()
         {
+            this.controller.ActionContext = new ActionContext
+            {
+                HttpContext = new DefaultHttpContext
+                {
+                    User = MockedClaimsPrincipal.CreateUnauthenticated()
+                }
+            };
+
             // TODO: add
             //this.controller.Request = this.HttpRequest;
             //this.controller.RequestContext = this.HttpRequestMessage.GetRequestContext();
             //this.controller.Configuration = this.HttpConfiguration ?? MyWebApi.Configuration ?? new HttpConfiguration();
-            //this.controller.User = MockedIPrinciple.CreateUnauthenticated();
         }
 
         private void ValidateModelState(LambdaExpression actionCall)

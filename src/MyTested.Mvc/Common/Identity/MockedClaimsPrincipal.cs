@@ -2,12 +2,13 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Claims;
     using System.Security.Principal;
 
     /// <summary>
     /// Mocked IPrinciple object.
     /// </summary>
-    public class MockedIPrinciple : IPrincipal
+    public class MockedClaimsPrincipal : ClaimsPrincipal
     {
         private const string DefaultUsername = "TestUser";
         private const string DefaultIPrincipalType = "Passport";
@@ -15,21 +16,21 @@
         private readonly IEnumerable<string> roles;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MockedIPrinciple" /> class.
+        /// Initializes a new instance of the <see cref="MockedClaimsPrincipal" /> class.
         /// </summary>
         /// <param name="username">Initial username.</param>
         /// <param name="principalType">Initial principal type.</param>
         /// <param name="roles">Initial user roles.</param>
-        public MockedIPrinciple(
+        public MockedClaimsPrincipal(
             string username = null,
             string principalType = null,
             IEnumerable<string> roles = null)
-        {
-            this.roles = roles ?? new HashSet<string>();
-            this.Identity = new MockedIIdentity(
+            : base(new MockedIIdentity(
                 username ?? DefaultUsername,
                 principalType ?? DefaultIPrincipalType,
-                true);
+                true))
+        {
+            this.roles = roles ?? new HashSet<string>();
         }
 
         /// <summary>
@@ -42,24 +43,18 @@
         /// Static constructor for creating default unauthenticated mocked user object.
         /// </summary>
         /// <returns>Unauthenticated IPrincipal.</returns>
-        public static IPrincipal CreateUnauthenticated()
+        public static ClaimsPrincipal CreateUnauthenticated()
         {
-            return new MockedIPrinciple
-            {
-                Identity = new MockedIIdentity()
-            };
+            return new ClaimsPrincipal(new MockedIIdentity());
         }
 
         /// <summary>
         /// Static constructor for creating default authenticated mocked user object with "TestUser" username.
         /// </summary>
         /// <returns>Authenticated IPrincipal.</returns>
-        public static IPrincipal CreateDefaultAuthenticated()
+        public static ClaimsPrincipal CreateDefaultAuthenticated()
         {
-            return new MockedIPrinciple()
-            {
-                Identity = new MockedIIdentity(DefaultUsername, DefaultIPrincipalType, true)
-            };
+            return new ClaimsPrincipal(new MockedIIdentity(DefaultUsername, DefaultIPrincipalType, true));
         }
 
         /// <summary>
@@ -67,7 +62,7 @@
         /// </summary>
         /// <param name="role">User role to check.</param>
         /// <returns>True or False.</returns>
-        public bool IsInRole(string role)
+        public override bool IsInRole(string role)
         {
             return this.roles.Contains(role);
         }

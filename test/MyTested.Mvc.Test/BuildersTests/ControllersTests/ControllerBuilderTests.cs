@@ -12,7 +12,7 @@
     using Setups.Services;
     using Xunit;
     using Microsoft.AspNet.Mvc;
-
+    using System.Security.Claims;
     public class ControllerBuilderTests
     {
         [Fact]
@@ -104,61 +104,61 @@
                 .ShouldHave()
                 .ValidModelState();
         }
+        
+        [Fact]
+        public void WithAuthenticatedUserShouldPopulateUserPropertyWithDefaultValues()
+        {
+            var controllerBuilder = MyMvc
+                .Controller<MvcController>()
+                .WithAuthenticatedUser();
 
-        // TODO: authentication?
-        //[Fact]
-        //public void WithAuthenticatedUserShouldPopulateUserPropertyWithDefaultValues()
-        //{
-        //    var controllerBuilder = MyMvc
-        //        .Controller<MvcController>()
-        //        .WithAuthenticatedUser();
+            controllerBuilder
+                .Calling(c => c.AuthorizedAction())
+                .ShouldReturn()
+                .Ok();
 
-        //    controllerBuilder
-        //        .Calling(c => c.AuthorizedAction())
-        //        .ShouldReturn()
-        //        .Ok();
+            var controllerUser = controllerBuilder.AndProvideTheController().User;
 
-        //    var controllerUser = controllerBuilder.AndProvideTheController().User;
+            Assert.Equal(false, controllerUser.IsInRole("Any"));
+            Assert.Equal("TestUser", controllerUser.Identity.Name);
+            Assert.True(controllerUser.HasClaim(ClaimTypes.Name, "TestUser"));
+            Assert.Equal("Passport", controllerUser.Identity.AuthenticationType);
+            Assert.Equal(true, controllerUser.Identity.IsAuthenticated);
+        }
 
-        //    Assert.Equal(false, controllerUser.IsInRole("Any"));
-        //    Assert.Equal("TestUser", controllerUser.Identity.Name);
-        //    Assert.Equal("Passport", controllerUser.Identity.AuthenticationType);
-        //    Assert.Equal(true, controllerUser.Identity.IsAuthenticated);
-        //}
+        [Fact]
+        public void WithAuthenticatedUserShouldPopulateProperUserWhenUserWithUserBuilder()
+        {
+            var controllerBuilder = MyMvc
+                .Controller<MvcController>()
+                .WithAuthenticatedUser(user => user
+                    .WithUsername("NewUserName")
+                    .WithAuthenticationType("Custom")
+                    .InRole("NormalUser")
+                    .InRoles("Moderator", "Administrator")
+                    .InRoles(new[]
+                    {
+                        "SuperUser",
+                        "MegaUser"
+                    }));
 
-        //[Fact]
-        //public void WithAuthenticatedUserShouldPopulateProperUserWhenUserWithUserBuilder()
-        //{
-        //    var controllerBuilder = MyMvc
-        //        .Controller<MvcController>()
-        //        .WithAuthenticatedUser(user => user
-        //            .WithUsername("NewUserName")
-        //            .WithAuthenticationType("Custom")
-        //            .InRole("NormalUser")
-        //            .InRoles("Moderator", "Administrator")
-        //            .InRoles(new[]
-        //            {
-        //                "SuperUser",
-        //                "MegaUser"
-        //            }));
+            controllerBuilder
+                .Calling(c => c.AuthorizedAction())
+                .ShouldReturn()
+                .Ok();
 
-        //    controllerBuilder
-        //        .Calling(c => c.AuthorizedAction())
-        //        .ShouldReturn()
-        //        .Ok();
+            var controllerUser = controllerBuilder.AndProvideTheController().User;
 
-        //    var controllerUser = controllerBuilder.AndProvideTheController().User;
-
-        //    Assert.Equal("NewUserName", controllerUser.Identity.Name);
-        //    Assert.Equal("Custom", controllerUser.Identity.AuthenticationType);
-        //    Assert.Equal(true, controllerUser.Identity.IsAuthenticated);
-        //    Assert.Equal(true, controllerUser.IsInRole("NormalUser"));
-        //    Assert.Equal(true, controllerUser.IsInRole("Moderator"));
-        //    Assert.Equal(true, controllerUser.IsInRole("Administrator"));
-        //    Assert.Equal(true, controllerUser.IsInRole("SuperUser"));
-        //    Assert.Equal(true, controllerUser.IsInRole("MegaUser"));
-        //    Assert.Equal(false, controllerUser.IsInRole("AnotherRole"));
-        //}
+            Assert.Equal("NewUserName", controllerUser.Identity.Name);
+            Assert.Equal("Custom", controllerUser.Identity.AuthenticationType);
+            Assert.Equal(true, controllerUser.Identity.IsAuthenticated);
+            Assert.Equal(true, controllerUser.IsInRole("NormalUser"));
+            Assert.Equal(true, controllerUser.IsInRole("Moderator"));
+            Assert.Equal(true, controllerUser.IsInRole("Administrator"));
+            Assert.Equal(true, controllerUser.IsInRole("SuperUser"));
+            Assert.Equal(true, controllerUser.IsInRole("MegaUser"));
+            Assert.Equal(false, controllerUser.IsInRole("AnotherRole"));
+        }
 
         [Fact]
         public void WithAuthenticatedNotCalledShouldNotHaveAuthorizedUser()
@@ -178,8 +178,7 @@
             Assert.Equal(null, controllerUser.Identity.AuthenticationType);
             Assert.Equal(false, controllerUser.Identity.IsAuthenticated);
         }
-
-        // TODO: DI
+        
         [Fact]
         public void WithResolvedDependencyForShouldChooseCorrectConstructorWithLessDependencies()
         {
@@ -233,7 +232,7 @@
                 .WithResolvedDependencyFor(new RequestModel())
                 .WithResolvedDependencyFor(new AnotherInjectedService())
                 .WithResolvedDependencyFor(new InjectedService())
-                //.WithAuthenticatedUser() // TODO: ?
+                .WithAuthenticatedUser()
                 .Calling(c => c.AuthorizedAction())
                 .ShouldReturn()
                 .Ok();
@@ -250,7 +249,7 @@
                 .AndAlso()
                 .WithResolvedDependencyFor(new InjectedService())
                 .AndAlso()
-                //.WithAuthenticatedUser() // TODO: ?
+                .WithAuthenticatedUser()
                 .Calling(c => c.AuthorizedAction())
                 .ShouldReturn()
                 .Ok();
@@ -262,7 +261,7 @@
             MyMvc
                 .Controller<MvcController>()
                 .WithResolvedDependencies(new List<object> { new RequestModel(), new AnotherInjectedService(), new InjectedService() })
-                // .WithAuthenticatedUser() // TODO: ?
+                .WithAuthenticatedUser()
                 .Calling(c => c.AuthorizedAction())
                 .ShouldReturn()
                 .Ok();
@@ -274,7 +273,7 @@
             MyMvc
                 .Controller<MvcController>()
                 .WithResolvedDependencies(new RequestModel(), new AnotherInjectedService(), new InjectedService())
-               // .WithAuthenticatedUser() // TODO: ?
+                .WithAuthenticatedUser()
                 .Calling(c => c.AuthorizedAction())
                 .ShouldReturn()
                 .Ok();
