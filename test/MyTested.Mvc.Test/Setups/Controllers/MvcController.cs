@@ -244,27 +244,23 @@
 
         public IActionResult ContentAction()
         {
-            return this.Content("content");
-            // return this.Content(HttpStatusCode.OK, this.responseModel);
+            return new ContentResult
+            {
+                Content = "content",
+                ContentType = new MediaTypeHeaderValue(MediaType.ApplicationJson),
+                StatusCode = 200
+            };
         }
 
         public IActionResult ContentActionWithMediaType()
         {
             return this.Content("content", new MediaTypeHeaderValue("text/plain"));
-            //return this.Content(
-            //    HttpStatusCode.OK,
-            //    this.responseModel,
-            //    TestObjectFactory.GetCustomMediaTypeFormatter(),
-            //    TestObjectFactory.MediaType);
         }
 
-        //public IActionResult ContentActionWithNullMediaType()
-        //{
-        //    return this.Content(
-        //        HttpStatusCode.OK,
-        //        this.responseModel,
-        //        TestObjectFactory.GetCustomMediaTypeFormatter());
-        //}
+        public IActionResult ContentActionWithNullMediaType()
+        {
+            return this.Content("content", (MediaTypeHeaderValue)null);
+        }
 
         //public IActionResult ContentActionWithCustomFormatters()
         //{

@@ -8,7 +8,7 @@
     using Setups.Controllers;
     using Setups.Models;
     using Xunit;
-    
+    using Microsoft.Net.Http.Headers;
     public class ContentTestBuilderTests
     {
         [Fact]
@@ -18,7 +18,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.ContentAction())
                 .ShouldReturn()
-                .Content()
+                .Content("content")
                 .WithStatusCode(HttpStatusCode.OK);
         }
 
@@ -31,7 +31,7 @@
                     .Controller<MvcController>()
                     .Calling(c => c.ContentAction())
                     .ShouldReturn()
-                    .Content()
+                    .Content("content")
                     .WithStatusCode(HttpStatusCode.NotFound);
             }, "When calling ContentAction action in MvcController expected to have 404 (NotFound) status code, but received 200 (OK).");
         }
@@ -43,86 +43,86 @@
                 .Controller<MvcController>()
                 .Calling(c => c.ContentActionWithMediaType())
                 .ShouldReturn()
+                .Content("content")
+                .WithMediaType(MediaType.TextPlain);
+        }
+
+        [Fact]
+        public void WithMediaTypeShouldNotThrowExceptionWithMediaTypeHeaderValue()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.ContentActionWithMediaType())
+                .ShouldReturn()
                 .Content()
-                .WithMediaType(TestObjectFactory.MediaType);
+                .WithMediaType(new MediaTypeHeaderValue(MediaType.TextPlain));
+        }
+
+        [Fact]
+        public void WithMediaTypeShouldNotThrowExceptionWithMediaTypeHeaderValueConstant()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.ContentActionWithMediaType())
+                .ShouldReturn()
+                .Content()
+                .WithMediaType(MediaType.TextPlain);
+        }
+
+        [Fact]
+        public void WithMediaTypeShouldThrowExceptionWithMediaTypeHeaderValue()
+        {
+            Test.AssertException<ContentResultAssertionException>(() =>
+            {
+                MyMvc
+                    .Controller<MvcController>()
+                    .Calling(c => c.ContentActionWithMediaType())
+                    .ShouldReturn()
+                    .Content()
+                    .WithMediaType(new MediaTypeHeaderValue(MediaType.ApplicationJson));
+            }, "When calling ContentActionWithMediaType action in MvcController expected content result MediaType to be application/json, but instead received text/plain.");
+        }
+
+        [Fact]
+        public void WithMediaTypeShouldThrowExceptionWithNullMediaTypeHeaderValue()
+        {
+            Test.AssertException<ContentResultAssertionException>(() =>
+            {
+                MyMvc
+                    .Controller<MvcController>()
+                    .Calling(c => c.ContentActionWithMediaType())
+                    .ShouldReturn()
+                    .Content()
+                    .WithMediaType((MediaTypeHeaderValue)null);
+            }, "When calling ContentActionWithMediaType action in MvcController expected content result MediaType to be null, but instead received text/plain.");
+        }
+
+        [Fact]
+        public void WithMediaTypeShouldThrowExceptionWithNullMediaTypeHeaderValueAndNullActual()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.ContentActionWithNullMediaType())
+                .ShouldReturn()
+                .Content()
+                .WithMediaType((MediaTypeHeaderValue)null);
+        }
+
+        [Fact]
+        public void WithMediaTypeShouldThrowExceptionWithMediaTypeHeaderValueAndNullActual()
+        {
+            Test.AssertException<ContentResultAssertionException>(() =>
+            {
+                MyMvc
+                    .Controller<MvcController>()
+                    .Calling(c => c.ContentActionWithNullMediaType())
+                    .ShouldReturn()
+                    .Content()
+                    .WithMediaType(new MediaTypeHeaderValue(TestObjectFactory.MediaType));
+            }, "When calling ContentActionWithNullMediaType action in MvcController expected content result MediaType to be application/json, but instead received null.");
         }
 
         // TODO: media type and response model
-        //[Fact]
-        //public void WithMediaTypeShouldNotThrowExceptionWithMediaTypeHeaderValue()
-        //{
-        //    MyMvc
-        //        .Controller<MvcController>()
-        //        .Calling(c => c.ContentActionWithMediaType())
-        //        .ShouldReturn()
-        //        .Content()
-        //        .WithMediaType(new MediaTypeHeaderValue(TestObjectFactory.MediaType));
-        //}
-
-        //[Fact]
-        //public void WithMediaTypeShouldNotThrowExceptionWithMediaTypeHeaderValueConstant()
-        //{
-        //    MyMvc
-        //        .Controller<MvcController>()
-        //        .Calling(c => c.ContentActionWithMediaType())
-        //        .ShouldReturn()
-        //        .Content()
-        //        .WithMediaType(MediaType.ApplicationJson);
-        //}
-
-        //[Fact]
-        //[ExpectedException(
-        //    typeof(ContentResultAssertionException),
-        //    ExpectedMessage = "When calling ContentActionWithMediaType action in MvcController expected content result MediaType to be text/plain, but instead received application/json.")]
-        //public void WithMediaTypeShouldThrowExceptionWithMediaTypeHeaderValue()
-        //{
-        //    MyMvc
-        //        .Controller<MvcController>()
-        //        .Calling(c => c.ContentActionWithMediaType())
-        //        .ShouldReturn()
-        //        .Content()
-        //        .WithMediaType(new MediaTypeHeaderValue("text/plain"));
-        //}
-
-        //[Fact]
-        //[ExpectedException(
-        //    typeof(ContentResultAssertionException),
-        //    ExpectedMessage = "When calling ContentActionWithMediaType action in MvcController expected content result MediaType to be null, but instead received application/json.")]
-        //public void WithMediaTypeShouldThrowExceptionWithNullMediaTypeHeaderValue()
-        //{
-        //    MyMvc
-        //        .Controller<MvcController>()
-        //        .Calling(c => c.ContentActionWithMediaType())
-        //        .ShouldReturn()
-        //        .Content()
-        //        .WithMediaType((MediaTypeHeaderValue)null);
-        //}
-
-        //[Fact]
-        //public void WithMediaTypeShouldThrowExceptionWithNullMediaTypeHeaderValueAndNullActual()
-        //{
-        //    MyMvc
-        //        .Controller<MvcController>()
-        //        .Calling(c => c.ContentActionWithNullMediaType())
-        //        .ShouldReturn()
-        //        .Content()
-        //        .WithMediaType((MediaTypeHeaderValue)null);
-        //}
-
-        //[Fact]
-        //[ExpectedException(
-        //    typeof(ContentResultAssertionException),
-        //    ExpectedMessage = "When calling ContentActionWithNullMediaType action in MvcController expected content result MediaType to be application/json, but instead received null.")]
-        //public void WithMediaTypeShouldThrowExceptionWithMediaTypeHeaderValueAndNullActual()
-        //{
-        //    MyMvc
-        //        .Controller<MvcController>()
-        //        .Calling(c => c.ContentActionWithNullMediaType())
-        //        .ShouldReturn()
-        //        .Content()
-        //        .WithMediaType(new MediaTypeHeaderValue(TestObjectFactory.MediaType));
-        //}
-
         //[Fact]
         //public void WithDefaultContentNegotiatorShouldNotThrowExceptionWhenActionReturnsDefaultContentNegotiator()
         //{
@@ -268,21 +268,10 @@
                 .Controller<MvcController>()
                 .Calling(c => c.ContentAction())
                 .ShouldReturn()
-                .Content()
+                .Content("content")
                 .WithStatusCode(HttpStatusCode.OK)
                 .AndAlso()
-                .WithResponseModelOfType<ICollection<ResponseModel>>();
-        }
-
-        [Fact]
-        public void WithResponseModelOfTypeShouldWorkCorrectly()
-        {
-            MyMvc
-                .Controller<MvcController>()
-                .Calling(c => c.ContentAction())
-                .ShouldReturn()
-                .Content()
-                .WithResponseModelOfType<ICollection<ResponseModel>>();
+                .WithMediaType(MediaType.ApplicationJson);
         }
     }
 }

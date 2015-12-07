@@ -13,6 +13,7 @@
     using Xunit;
     using Microsoft.AspNet.Mvc;
     using System.Security.Claims;
+
     public class ControllerBuilderTests
     {
         [Fact]

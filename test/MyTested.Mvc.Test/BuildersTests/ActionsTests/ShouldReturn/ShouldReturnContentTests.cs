@@ -14,7 +14,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.ContentAction())
                 .ShouldReturn()
-                .Content();
+                .Content("content");
         }
 
         [Fact]
@@ -24,7 +24,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.ContentActionWithMediaType())
                 .ShouldReturn()
-                .Content();
+                .Content("content");
         }
 
         [Fact]
@@ -36,7 +36,7 @@
                     .Controller<MvcController>()
                     .Calling(c => c.BadRequestAction())
                     .ShouldReturn()
-                    .Content();
+                    .Content("content");
             }, "When calling BadRequestAction action in MvcController expected action result to be ContentResult, but instead received BadRequestResult.");
         }
     }
