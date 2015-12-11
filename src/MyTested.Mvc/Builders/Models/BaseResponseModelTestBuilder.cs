@@ -7,7 +7,7 @@
     using Exceptions;
     using Utilities;
     using Microsoft.AspNet.Mvc;
-
+    using System.Reflection;
     /// <summary>
     /// Base class for all response model test builders.
     /// </summary>
@@ -38,36 +38,41 @@
         /// <returns>Builder for testing the response model errors.</returns>
         public IModelDetailsTestBuilder<TResponseModel> WithResponseModelOfType<TResponseModel>()
         {
-            // TODO: check
-
             var actionResultType = this.ActionResult.GetType();
-            //var negotiatedContentResultType = typeof(OkNegotiatedContentResult<TResponseModel>);
+            var objectResultType = typeof(ObjectResult);
 
-            //var negotiatedActionResultIsAssignable = Reflection.AreAssignable(
-            //    actionResultType,
-            //    negotiatedContentResultType);
-            //if (!negotiatedActionResultIsAssignable)
-            //{
-            //    if (actionResultType.IsGenericType)
-            //    {
-            //        var actualResponseDataType = actionResultType.GetGenericArguments()[0];
-            //        var expectedResponseDataType = typeof(TResponseModel);
+            var actualResponseDataType = actionResultType;
+            var expectedResponseDataType = typeof(TResponseModel);
+            
+            var objectResultIsAssignable = Reflection.AreAssignable(
+                objectResultType,
+                actionResultType);
 
-            //        var responseDataTypeIsAssignable = Reflection.AreAssignable(
-            //                expectedResponseDataType,
-            //                actualResponseDataType);
+            if (!objectResultIsAssignable)
+            {
+                if (actionResultType.GetTypeInfo().IsGenericType)
+                {
+                    actualResponseDataType = actionResultType.GetGenericArguments()[0];
+                }
+            }
+            else
+            {
+                actualResponseDataType = (this.ActionResult as ObjectResult)?.Value?.GetType();
+            }
+            
+            var responseDataTypeIsAssignable = Reflection.AreAssignable(
+                    expectedResponseDataType,
+                    actualResponseDataType);
 
-            //        if (!responseDataTypeIsAssignable)
-            //        {
-            //            throw new ResponseModelAssertionException(string.Format(
-            //                "When calling {0} action in {1} expected response model to be a {2}, but instead received a {3}.",
-            //                this.ActionName,
-            //                this.Controller.GetName(),
-            //                typeof(TResponseModel).ToFriendlyTypeName(),
-            //                actualResponseDataType.ToFriendlyTypeName()));
-            //        }
-            //    }
-            //}
+            if (!responseDataTypeIsAssignable)
+            {
+                throw new ResponseModelAssertionException(string.Format(
+                    "When calling {0} action in {1} expected response model to be a {2}, but instead received a {3}.",
+                    this.ActionName,
+                    this.Controller.GetName(),
+                    typeof(TResponseModel).ToFriendlyTypeName(),
+                    actualResponseDataType.ToFriendlyTypeName()));
+            }
 
             return new ModelDetailsTestBuilder<TResponseModel>(
                 this.Controller,

@@ -67,12 +67,12 @@
         {
             try
             {
-                return this.GetActionResultAsDynamic().Content;
+                return (TResponseModel)(this.ActionResult as ObjectResult)?.Value;
             }
-            catch (RuntimeBinderException)
+            catch (InvalidCastException)
             {
                 throw new ResponseModelAssertionException(string.Format(
-                    "When calling {0} action in {1} expected response model of type {2}, but instead received null.",
+                    "When calling {0} action in {1} expected response model to be a {2}, but instead received null.",
                     this.ActionName,
                     this.Controller.GetName(),
                     typeof(TResponseModel).ToFriendlyTypeName()));

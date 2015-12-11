@@ -9,6 +9,7 @@
     using Setups.Models;
     using Xunit;
     using Microsoft.Net.Http.Headers;
+
     public class ContentTestBuilderTests
     {
         [Fact]

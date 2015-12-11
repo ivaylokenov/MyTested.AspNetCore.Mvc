@@ -7,7 +7,8 @@
     using Setups.Models;
     using Xunit;
     using Setups;
-
+    using System;
+    using Xunit.Sdk;
     public class ResponseModelDetailsTestBuilderTests
     {
         [Fact]
@@ -26,20 +27,23 @@
                 });
         }
 
-        [Fact] // TODO: ? exception?
+        [Fact]
         public void WithResponseModelShouldThrowExceptionWithIncorrectAssertions()
         {
-            MyMvc
-                .Controller<MvcController>()
-                .Calling(c => c.OkResultWithResponse())
-                .ShouldReturn()
-                .Ok()
-                .WithResponseModelOfType<ICollection<ResponseModel>>()
-                .Passing(m =>
-                {
-                    Assert.Equal(1, m.First().IntegerValue);
-                    Assert.Equal(3, m.Count);
-                });
+            Assert.Throws<EqualException>(() =>
+            {
+                MyMvc
+                    .Controller<MvcController>()
+                    .Calling(c => c.OkResultWithResponse())
+                    .ShouldReturn()
+                    .Ok()
+                    .WithResponseModelOfType<ICollection<ResponseModel>>()
+                    .Passing(m =>
+                    {
+                        Assert.Equal(1, m.First().IntegerValue);
+                        Assert.Equal(3, m.Count);
+                    });
+            });
         }
 
         [Fact]

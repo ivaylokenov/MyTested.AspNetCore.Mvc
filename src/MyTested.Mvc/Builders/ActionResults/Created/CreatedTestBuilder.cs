@@ -91,7 +91,7 @@
         {
             LocationValidator.ValidateUri(
                 this.ActionResult,
-                location,
+                location.OriginalString,
                 this.ThrowNewCreatedResultAssertionException);
 
             return this;

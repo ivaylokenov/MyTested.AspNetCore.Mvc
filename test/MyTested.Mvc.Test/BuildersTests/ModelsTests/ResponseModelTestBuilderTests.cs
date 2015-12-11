@@ -54,7 +54,7 @@
                     .ShouldReturn()
                     .Ok()
                     .WithResponseModelOfType<ResponseModel>();
-            }, "When calling OkResultAction action in MvcController expected response model of type ResponseModel, but instead received null.");
+            }, "When calling OkResultAction action in MvcController expected response model to be a ResponseModel, but instead received null.");
         }
 
         [Fact]
@@ -68,7 +68,7 @@
                     .ShouldReturn()
                     .Ok()
                     .WithResponseModelOfType<ResponseModel>();
-            }, "When calling OkResultWithInterfaceResponse action in MvcController expected response model to be a ResponseModel, but instead received a ICollection<ResponseModel>.");
+            }, "When calling OkResultWithInterfaceResponse action in MvcController expected response model of type ResponseModel, but instead received a ICollection<ResponseModel>.");
         }
 
         [Fact]
@@ -82,7 +82,7 @@
                     .ShouldReturn()
                     .Ok()
                     .WithResponseModelOfType<ICollection<int>>();
-            }, "When calling OkResultWithInterfaceResponse action in MvcController expected response model to be a ICollection<Int32>, but instead received a ICollection<ResponseModel>.");
+            }, "When calling OkResultWithInterfaceResponse action in MvcController expected response model of type ICollection<Int32>, but instead received a ICollection<ResponseModel>.");
         }
 
         [Fact]
