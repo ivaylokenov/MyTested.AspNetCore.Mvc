@@ -414,7 +414,7 @@
             {
                 HttpContext = new DefaultHttpContext
                 {
-                    User = MockedClaimsPrincipal.CreateUnauthenticated()
+                    User = MockedClaimsPrincipal.CreateUnauthenticated(),
                 }
             };
 
