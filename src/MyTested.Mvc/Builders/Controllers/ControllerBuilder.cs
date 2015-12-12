@@ -19,10 +19,12 @@
     using Microsoft.Extensions.DependencyInjection;
     using Common.Identity;
     using System.Security.Claims;
-    using Contracts;/// <summary>
-                    /// Used for building the action which will be tested.
-                    /// </summary>
-                    /// <typeparam name="TController">Class inheriting ASP.NET MVC 6 controller.</typeparam>
+    using Contracts;
+
+    /// <summary>
+    /// Used for building the action which will be tested.
+    /// </summary>
+    /// <typeparam name="TController">Class inheriting ASP.NET MVC 6 controller.</typeparam>
     public class ControllerBuilder<TController> : IAndControllerBuilder<TController>
         where TController : Controller
     {

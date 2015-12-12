@@ -10,7 +10,7 @@
     using Models;
     using ActionResults.HttpBadRequest;
     using Microsoft.AspNet.Mvc;
-
+    using ActionResults.File;
     /// <summary>
     /// Used for testing action returned result.
     /// </summary>
@@ -53,6 +53,8 @@
         /// </summary>
         /// <returns>Created test builder.</returns>
         ICreatedTestBuilder Created();
+
+        IFileTestBuilder File();
 
         /// <summary>
         /// Tests whether action result is ContentResult.
