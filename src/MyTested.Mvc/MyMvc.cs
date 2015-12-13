@@ -3,14 +3,41 @@
     using System;
     using Utilities;
     using Microsoft.AspNet.Mvc;
-    using Builders.Contracts.Controllers;
     using Builders.Controllers;
+    using Microsoft.Extensions.DependencyInjection;
+    using Common;
 
     /// <summary>
     /// Starting point of the testing framework, which provides a way to specify the test case.
     /// </summary>
     public static class MyMvc
     {
+        public static void IsUsingDefaultServices()
+        {
+            IsUsing(null);
+        }
+        
+        public static void IsUsing(Action<IServiceCollection> services)
+        {
+            TestServiceProvider.Setup(services);
+        }
+
+        public static void IsUsing<TStartup>() where TStartup : class, new()
+        {
+            IsUsing<TStartup>(null);
+        }
+
+        public static void IsUsing<TStartup>(Action<IServiceCollection> services)
+            where TStartup : class, new()
+        {
+            TestServiceProvider.Setup<TStartup>(services);
+        }
+        
+        public static void IsNotUsingServices()
+        {
+            TestServiceProvider.Clear();
+        }
+        
         /// <summary>
         /// Selects controller on which the test will be executed. Controller is instantiated with default constructor.
         /// </summary>

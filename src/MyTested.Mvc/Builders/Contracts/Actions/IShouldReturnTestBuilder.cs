@@ -9,7 +9,8 @@
     using ActionResults.Json;
     using Models;
     using ActionResults.HttpBadRequest;
-
+    using Microsoft.AspNet.Mvc;
+    using ActionResults.File;
     /// <summary>
     /// Used for testing action returned result.
     /// </summary>
@@ -53,11 +54,20 @@
         /// <returns>Created test builder.</returns>
         ICreatedTestBuilder Created();
 
+        IFileTestBuilder File();
+
         /// <summary>
-        /// Tests whether action result is NegotiatedContentResult{T} or FormattedContentResult{T}.
+        /// Tests whether action result is ContentResult.
         /// </summary>
         /// <returns>Content test builder.</returns>
         IContentTestBuilder Content();
+
+        /// <summary>
+        /// Tests whether action result is ContentResult.
+        /// </summary>
+        /// <param name="content">Expected content as string.</param>
+        /// <returns>Content test builder.</returns>
+        IContentTestBuilder Content(string content);
 
         // TODO: ?
         ///// <summary>

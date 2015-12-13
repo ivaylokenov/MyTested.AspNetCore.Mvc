@@ -27,8 +27,11 @@
         public void GetMethodNameShouldThrowArgumentExceptionWithInvalidMethodCallExpression()
         {
             Expression<Func<int>> expression = () => 0;
-            var exception = Assert.Throws<ArgumentException>(() => ExpressionParser.GetMethodName(expression));
-            Assert.Equal("Provided expression is not a valid method call.", exception.Message);
+
+            Test.AssertException<ArgumentException>(() =>
+            {
+                ExpressionParser.GetMethodName(expression);
+            }, "Provided expression is not a valid method call.");
         }
 
         [Fact]
@@ -85,8 +88,11 @@
         public void ResolveMethodArgumentsShouldThrowArgumentExceptionWithInvalidMethodCallExpression()
         {
             Expression<Func<int>> expression = () => 0;
-            var exception = Assert.Throws<ArgumentException>(() => ExpressionParser.ResolveMethodArguments(expression));
-            Assert.Equal("Provided expression is not a valid method call.", exception.Message);
+
+            Test.AssertException<ArgumentException>(() =>
+            {
+                ExpressionParser.ResolveMethodArguments(expression);
+            }, "Provided expression is not a valid method call.");
         }
 
         [Fact]
@@ -102,8 +108,11 @@
         public void GetPropertyNameShouldThrowExceptionWithInvalidMemberExpression()
         {
             Expression<Func<MvcController, object>> expression = c => c.OkResultWithResponse();
-            var exception = Assert.Throws<ArgumentException>(() => ExpressionParser.GetPropertyName(expression));
-            Assert.Equal("Provided expression is not a valid member expression.", exception.Message);
+
+            Test.AssertException<ArgumentException>(() =>
+            {
+                ExpressionParser.GetPropertyName(expression);
+            }, "Provided expression is not a valid member expression.");
         }
 
         [Fact]

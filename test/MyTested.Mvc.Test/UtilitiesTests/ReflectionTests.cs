@@ -10,7 +10,8 @@
     using Xunit;
     using Microsoft.AspNet.Authorization;
     using Microsoft.AspNet.Mvc;
-
+    using Microsoft.Extensions.DependencyInjection;
+    using Setups.Startups;
     public class ReflectionTests
     {
         [Fact]
@@ -276,7 +277,7 @@
         public void CastToShouldThrowExceptionWhenCastIsNotPossible()
         {
             IEnumerable<int> original = new List<int>();
-            var exception = Assert.Throws<InvalidCastException>(() =>
+            Assert.Throws<InvalidCastException>(() =>
             {
                 typeof(IEnumerable<int>).CastTo<int>(original);
             });
@@ -819,6 +820,47 @@
             Assert.False(Reflection.AreDeeplyEqual(new List<int> { 1, 2, 3, 4 }, new[] { 1, 2, 3 }));
             Assert.False(Reflection.AreDeeplyEqual(new List<int>(), new object()));
             Assert.False(Reflection.AreDeeplyEqual(new object(), new List<int>()));
+        }
+
+        [Fact]
+        public void CreateDelegateShouldWorkCorrectlyWithAction()
+        {
+            var actionDelegate = Reflection.CreateDelegateFromMethod<Action<IServiceCollection>>(
+                new CustomStartup(),
+                m => m.Name == "ConfigureServices" && m.ReturnType == typeof(void));
+
+            Assert.NotNull(actionDelegate);
+        }
+
+        [Fact]
+        public void CreateDelegateShouldWorkCorrectlyWithFunc()
+        {
+            var actionDelegate = Reflection.CreateDelegateFromMethod<Func<IServiceCollection, IServiceProvider>>(
+                new CustomStartup(),
+                m => m.Name == "ConfigureServicesAndBuildProvider" && m.ReturnType == typeof(IServiceProvider));
+
+            Assert.NotNull(actionDelegate);
+        }
+
+        [Fact]
+        public void CreateDelegateShouldThrowExceptionIfGenericTypeIsNotCorrectDelegate()
+        {
+            Assert.Throws<ArgumentException>(() =>
+            {
+                var actionDelegate = Reflection.CreateDelegateFromMethod<Action<IServiceCollection>>(
+                new CustomStartup(),
+                m => m.Name == "ConfigureServicesAndBuildProvider" && m.ReturnType == typeof(IServiceProvider));
+            });
+        }
+
+        [Fact]
+        public void CreateDelegateShouldReturnNullIfGenericTypeIsNotDelegate()
+        {
+            var actionDelegate = Reflection.CreateDelegateFromMethod<CustomStartup>(
+                new CustomStartup(),
+                m => m.Name == "ConfigureServicesAndBuildProvider" && m.ReturnType == typeof(IServiceProvider));
+
+            Assert.Null(actionDelegate);
         }
     }
 }

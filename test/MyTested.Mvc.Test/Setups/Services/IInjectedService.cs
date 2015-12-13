@@ -1,6 +1,6 @@
 ﻿namespace MyTested.Mvc.Tests.Setups.Services
 {
-    internal interface IInjectedService
+    public interface IInjectedService
     {
     }
 }

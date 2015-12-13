@@ -38,18 +38,18 @@
         /// <param name="failedValidationAction">Action to call in case of failed validation.</param>
         public static void ValidateUri(
             dynamic actionResult,
-            Uri location,
+            string location,
             Action<string, string, string> failedValidationAction)
         {
             RuntimeBinderValidator.ValidateBinding(() =>
             {
-                var actualLocation = (Uri)actionResult.Location;
+                var actualLocation = GetUrlFromDynamic(actionResult);
                 if (location != actualLocation)
                 {
                     failedValidationAction(
                         "location",
-                        string.Format("to be {0}", location.OriginalString),
-                        string.Format("instead received {0}", actualLocation.OriginalString));
+                        string.Format("to be {0}", location),
+                        string.Format("instead received {0}", actualLocation));
                 }
             });
         }
@@ -67,14 +67,14 @@
         {
             RuntimeBinderValidator.ValidateBinding(() =>
             {
-                var actualUri = actionResult.Location as Uri;
+                var actualUri = GetUrlFromDynamic(actionResult);
 
                 var newUriTestBuilder = new MockedUriTestBuilder();
                 uriTestBuilder(newUriTestBuilder);
                 var expectedUri = newUriTestBuilder.GetMockedUri();
 
                 var validations = newUriTestBuilder.GetMockedUriValidations();
-                if (validations.Any(v => !v(expectedUri, actualUri)))
+                if (validations.Any(v => !v(expectedUri, new Uri(actualUri))))
                 {
                     failedValidationAction(
                         "URI",
@@ -82,6 +82,11 @@
                         "was in fact different");
                 }
             });
+        }
+
+        private static string GetUrlFromDynamic(dynamic actionResult)
+        {
+            return (string)(actionResult.Location ?? actionResult.Url);
         }
     }
 }

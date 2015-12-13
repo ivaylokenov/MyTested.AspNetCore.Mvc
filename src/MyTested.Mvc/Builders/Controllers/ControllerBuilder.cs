@@ -1,16 +1,25 @@
 ﻿namespace MyTested.Mvc.Builders.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using Contracts.Controllers;
     using Microsoft.AspNet.Mvc;
     using Microsoft.AspNet.Http;
     using Microsoft.AspNet.Http.Internal;
     using Utilities;
     using Contracts.Actions;
+    using System.Linq;
     using System.Linq.Expressions;
     using System.Threading.Tasks;
     using Actions;
     using Common;
+    using Exceptions;
+    using Common.Extensions;
+    using Microsoft.AspNet.Mvc.Infrastructure;
+    using Microsoft.Extensions.DependencyInjection;
+    using Common.Identity;
+    using System.Security.Claims;
+    using Contracts;
 
     /// <summary>
     /// Used for building the action which will be tested.
@@ -19,8 +28,10 @@
     public class ControllerBuilder<TController> : IAndControllerBuilder<TController>
         where TController : Controller
     {
-        private TController controller;
+        private readonly IDictionary<Type, object> aggregatedDependencies;
 
+        private TController controller;
+        private bool isPreparedForTesting;
         private bool enabledValidation;
 
         /// <summary>
@@ -29,13 +40,9 @@
         /// <param name="controllerInstance">Instance of the tested ASP.NET MVC 6 controller.</param>
         public ControllerBuilder(TController controllerInstance)
         {
-            this.Controller = controllerInstance;
-            this.HttpRequest = new DefaultHttpContext().Request; // TODO: research how it can be implemented
+            this.aggregatedDependencies = new Dictionary<Type, object>();
 
-            this.Controller.ActionContext = new ActionContext
-            {
-                HttpContext = new DefaultHttpContext()
-            };
+            this.Controller = controllerInstance;
 
             // TODO: for real this is how we configure controller?
             //var detailsProviders = new IMetadataDetailsProvider[]
@@ -77,7 +84,6 @@
             //this.Controller.TempData = tempData;
             //this.Controller.ObjectValidator = new DefaultObjectValidator(new IExcludeTypeValidationFilter[0], metadataProvider);
 
-            this.HttpRequest = this.Controller.HttpContext.Request;
             this.enabledValidation = true;
         }
 
@@ -89,7 +95,7 @@
         {
             get
             {
-                // TODO: dependency injection
+                this.BuildControllerIfNotExists();
                 return this.controller;
             }
 
@@ -110,7 +116,7 @@
         /// <returns>The same controller builder.</returns>
         public IAndControllerBuilder<TController> WithHttpContext(HttpContext context)
         {
-            this.HttpContext = context;
+            this.HttpContext = context; // TODO: is this needed? or set on the controller
             return this;
         }
 
@@ -121,7 +127,7 @@
         /// <returns>The same controller builder.</returns>
         public IAndControllerBuilder<TController> WithHttpRequest(HttpRequest request)
         {
-            this.HttpRequest = request;
+            this.HttpRequest = request; // set it on the controller
             return this;
         }
 
@@ -135,7 +141,50 @@
         }
 
         // TODO: HttpRequest builder
-        // TODO: dependency resolvers
+
+        /// <summary>
+        /// Tries to resolve constructor dependency of given type.
+        /// </summary>
+        /// <typeparam name="TDependency">Type of dependency to resolve.</typeparam>
+        /// <param name="dependency">Instance of dependency to inject into constructor.</param>
+        /// <returns>The same controller builder.</returns>
+        public IAndControllerBuilder<TController> WithResolvedDependencyFor<TDependency>(TDependency dependency)
+        {
+            var typeOfDependency = dependency.GetType();
+            if (this.aggregatedDependencies.ContainsKey(typeOfDependency))
+            {
+                throw new InvalidOperationException(string.Format(
+                    "Dependency {0} is already registered for {1} controller.",
+                    typeOfDependency.ToFriendlyTypeName(),
+                    typeof(TController).ToFriendlyTypeName()));
+            }
+
+            this.aggregatedDependencies.Add(typeOfDependency, dependency);
+            this.controller = null;
+            return this;
+        }
+
+        /// <summary>
+        /// Tries to resolve constructor dependencies by the provided collection of dependencies.
+        /// </summary>
+        /// <param name="dependencies">Collection of dependencies to inject into constructor.</param>
+        /// <returns>The same controller builder.</returns>
+        public IAndControllerBuilder<TController> WithResolvedDependencies(IEnumerable<object> dependencies)
+        {
+            dependencies.ForEach(d => this.WithResolvedDependencyFor(d));
+            return this;
+        }
+
+        /// <summary>
+        /// Tries to resolve constructor dependencies by the provided dependencies.
+        /// </summary>
+        /// <param name="dependencies">Dependencies to inject into constructor.</param>
+        /// <returns>The same controller builder.</returns>
+        public IAndControllerBuilder<TController> WithResolvedDependencies(params object[] dependencies)
+        {
+            dependencies.ForEach(d => this.WithResolvedDependencyFor(d));
+            return this;
+        }
 
         /// <summary>
         /// Disables ModelState validation for the action call.
@@ -147,7 +196,28 @@
             return this;
         }
 
-        // TODO: mock authenticated user
+        /// <summary>
+        /// Sets default authenticated user to the built controller with "TestUser" username.
+        /// </summary>
+        /// <returns>The same controller builder.</returns>
+        public IAndControllerBuilder<TController> WithAuthenticatedUser()
+        {
+            this.Controller.HttpContext.User = MockedClaimsPrincipal.CreateDefaultAuthenticated();
+            return this;
+        }
+
+        /// <summary>
+        /// Sets custom authenticated user using provided user builder.
+        /// </summary>
+        /// <param name="userBuilder">User builder to create mocked user object.</param>
+        /// <returns>The same controller builder.</returns>
+        public IAndControllerBuilder<TController> WithAuthenticatedUser(Action<IUserBuilder> userBuilder)
+        {
+            var newUserBuilder = new UserBuilder();
+            userBuilder(newUserBuilder);
+            this.Controller.HttpContext.User = newUserBuilder.GetUser();
+            return this;
+        }
 
         /// <summary>
         /// Used for testing controller attributes.
@@ -248,12 +318,10 @@
             return new VoidActionResultTestBuilder(this.Controller, actionInfo.ActionName, actionInfo.CaughtException, actionInfo.ActionAttributes);
         }
 
-
-
         /// <summary>
-        /// Gets ASP.NET Web API controller instance to be tested.
+        /// Gets ASP.NET MVC controller instance to be tested.
         /// </summary>
-        /// <returns>Instance of the ASP.NET Web API controller.</returns>
+        /// <returns>Instance of the ASP.NET MVC controller.</returns>
         public TController AndProvideTheController()
         {
             return this.Controller;
@@ -278,33 +346,40 @@
         //    return this.Controller.Configuration;
         //}
 
-        // TODO: add?
-        //private void BuildControllerIfNotExists()
-        //{
-        //    if (this.controller == null)
-        //    {
-        //        this.controller = Reflection.TryCreateInstance<TController>(this.aggregatedDependencies.Select(v => v.Value).ToArray());
-        //        if (this.controller == null)
-        //        {
-        //            var friendlyDependenciesNames = this.aggregatedDependencies
-        //                .Keys
-        //                .Select(k => k.ToFriendlyTypeName());
+        private void BuildControllerIfNotExists()
+        {
+            if (this.controller == null)
+            {
+                if (this.aggregatedDependencies.Any())
+                {
+                    this.controller = Reflection.TryCreateInstance<TController>(this.aggregatedDependencies.Select(v => v.Value).ToArray());
+                }
+                else
+                {
+                    this.controller = TestServiceProvider.TryCreateInstance<TController>();
+                }
 
-        //            var joinedFriendlyDependencies = string.Join(", ", friendlyDependenciesNames);
+                if (this.controller == null)
+                {
+                    var friendlyDependenciesNames = this.aggregatedDependencies
+                        .Keys
+                        .Select(k => k.ToFriendlyTypeName());
 
-        //            throw new UnresolvedDependenciesException(string.Format(
-        //                "{0} could not be instantiated because it contains no constructor taking {1} parameters.",
-        //                typeof(TController).ToFriendlyTypeName(),
-        //                this.aggregatedDependencies.Count == 0 ? "no" : string.Format("{0} as", joinedFriendlyDependencies)));
-        //        }
-        //    }
+                    var joinedFriendlyDependencies = string.Join(", ", friendlyDependenciesNames);
 
-        //    if (!this.isPreparedForTesting)
-        //    {
-        //        this.PrepareController();
-        //        this.isPreparedForTesting = true;
-        //    }
-        //}
+                    throw new UnresolvedDependenciesException(string.Format(
+                        "{0} could not be instantiated because it contains no constructor taking {1} parameters.",
+                        typeof(TController).ToFriendlyTypeName(),
+                        this.aggregatedDependencies.Count == 0 ? "no" : string.Format("{0} as", joinedFriendlyDependencies)));
+                }
+            }
+
+            if (!this.isPreparedForTesting)
+            {
+                this.PrepareController();
+                this.isPreparedForTesting = true;
+            }
+        }
 
         private ActionInfo<TActionResult> GetAndValidateActionResult<TActionResult>(Expression<Func<TController, TActionResult>> actionCall)
         {
@@ -337,11 +412,18 @@
 
         private void PrepareController()
         {
+            this.controller.ActionContext = new ActionContext
+            {
+                HttpContext = new DefaultHttpContext
+                {
+                    User = MockedClaimsPrincipal.CreateUnauthenticated(),
+                }
+            };
+
             // TODO: add
             //this.controller.Request = this.HttpRequest;
             //this.controller.RequestContext = this.HttpRequestMessage.GetRequestContext();
             //this.controller.Configuration = this.HttpConfiguration ?? MyWebApi.Configuration ?? new HttpConfiguration();
-            //this.controller.User = MockedIPrinciple.CreateUnauthenticated();
         }
 
         private void ValidateModelState(LambdaExpression actionCall)

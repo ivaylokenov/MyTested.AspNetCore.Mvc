@@ -1,22 +1,21 @@
 ﻿namespace MyTested.Mvc.Builders.ActionResults.Content
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Net;
     using Common.Extensions;
     using Exceptions;
     using Models;
-    using Utilities.Validators;
     using Contracts.ActionResults.Content;
     using Microsoft.AspNet.Mvc;
     using Microsoft.Net.Http.Headers;
+    using System.Text;
+    using Base;
 
     /// <summary>
     /// Used for testing content result.
     /// </summary>
     public class ContentTestBuilder
-        : BaseResponseModelTestBuilder<ContentResult>, IAndContentTestBuilder
+        : BaseTestBuilderWithActionResult<ContentResult>, IAndContentTestBuilder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ContentTestBuilder" /> class.
@@ -41,23 +40,20 @@
         /// <returns>The same content test builder.</returns>
         public IAndContentTestBuilder WithStatusCode(HttpStatusCode statusCode)
         {
-            // TODO: no generics
+            var actualStatusCode = (HttpStatusCode?)this.ActionResult.StatusCode;
+            if (actualStatusCode != statusCode)
+            {
+                var actualStatusCodeAsInt = (int?)actualStatusCode;
 
-            //RuntimeBinderValidator.ValidateBinding(() =>
-            //{
-            //    var actualStatusCode = (HttpStatusCode)this.GetActionResultAsDynamic().StatusCode;
-            //    if (actualStatusCode != statusCode)
-            //    {
-            //        throw new ContentResultAssertionException(string.Format(
-            //            "When calling {0} action in {1} expected to have {2} ({3}) status code, but received {4} ({5}).",
-            //            this.ActionName,
-            //            this.Controller.GetName(),
-            //            (int)statusCode,
-            //            statusCode,
-            //            (int)actualStatusCode,
-            //            actualStatusCode));
-            //    }
-            //});
+                throw new ContentResultAssertionException(string.Format(
+                    "When calling {0} action in {1} expected to have {2} ({3}) status code, but received {4} ({5}).",
+                    this.ActionName,
+                    this.Controller.GetName(),
+                    (int)statusCode,
+                    statusCode,
+                    actualStatusCode != null ? actualStatusCodeAsInt.ToString() : "no status code",
+                    actualStatusCode != null ? actualStatusCode.ToString() : "null"));
+            }
 
             return this;
         }
@@ -79,140 +75,47 @@
         /// <returns>The same content test builder.</returns>
         public IAndContentTestBuilder WithMediaType(MediaTypeHeaderValue mediaType)
         {
-            // TODO: check, no generics
-            //RuntimeBinderValidator.ValidateBinding(() =>
-            //{
-            //    var actualMediaType = this.GetActionResultAsDynamic().MediaType as MediaTypeHeaderValue;
-            //    if ((mediaType == null && actualMediaType != null)
-            //        || (mediaType != null && actualMediaType == null)
-            //        || (mediaType != null && mediaType.MediaType != actualMediaType.MediaType))
-            //    {
-            //        this.ThrowNewContentResultAssertionException(
-            //            "MediaType",
-            //            string.Format("to be {0}", mediaType != null ? mediaType.MediaType : "null"),
-            //            string.Format("instead received {0}", actualMediaType != null ? actualMediaType.MediaType : "null"));
-            //    }
-            //});
+            var actualMediaType = this.ActionResult.ContentType;
+            if ((mediaType == null && actualMediaType != null)
+                || (mediaType != null && actualMediaType == null)
+                || (mediaType != null && mediaType.MediaType != actualMediaType.MediaType))
+            {
+                this.ThrowNewContentResultAssertionException(
+                    "MediaType",
+                    string.Format("to be {0}", mediaType != null ? mediaType.MediaType : "null"),
+                    string.Format("instead received {0}", actualMediaType != null ? actualMediaType.MediaType : "null"));
+            }
 
             return this;
         }
 
         /// <summary>
-        /// Tests whether content result has the default content negotiator.
+        /// Tests whether content result has the default UTF8 encoding.
         /// </summary>
         /// <returns>The same content test builder.</returns>
-        public IAndContentTestBuilder WithDefaultContentNegotiator()
+        public IAndContentTestBuilder WithDefaultEncoding()
         {
-            // TODO: check, no generics
-            // return this.WithContentNegotiatorOfType<DefaultContentNegotiator>();
-            return null;
+            return this.WithEncoding(new UTF8Encoding(false, true));
         }
 
-        // TODO: check, no generics
         /// <summary>
-        /// Tests whether content result has specific type of content negotiator.
+        /// Tests whether content result has the same encoging as the provided Encoding.
         /// </summary>
-        /// <param name="contentNegotiator">Expected IContentNegotiator.</param>
         /// <returns>The same content test builder.</returns>
-        //public IAndContentTestBuilder WithContentNegotiator(IContentNegotiator contentNegotiator)
-        //{
-        //    //ContentNegotiatorValidator.ValidateContentNegotiator(
-        //    //    this.ActionResult,
-        //    //    contentNegotiator,
-        //    //    this.ThrowNewContentResultAssertionException);
+        public IAndContentTestBuilder WithEncoding(Encoding encoding)
+        {
+            var actualEncoding = this.ActionResult.ContentType.Encoding;
+            if (!encoding.Equals(actualEncoding))
+            {
+                this.ThrowNewContentResultAssertionException(
+                    "encoding",
+                    this.GetEncodingName(encoding),
+                    this.GetEncodingName(actualEncoding));
+            }
 
-        //    return this;
-        //}
-
-        /// <summary>
-        /// Tests whether content result has specific type of content negotiator by using generic definition.
-        /// </summary>
-        /// <typeparam name="TContentNegotiator">Type of IContentNegotiator.</typeparam>
-        /// <returns>The same content test builder.</returns>
-        //public IAndContentTestBuilder WithContentNegotiatorOfType<TContentNegotiator>()
-        //    where TContentNegotiator : IContentNegotiator, new()
-        //{
-        //    return this.WithContentNegotiator(Activator.CreateInstance<TContentNegotiator>());
-        //}
-
-            // TODO: formatters
-        /// <summary>
-        /// Tests whether content result contains the provided media type formatter.
-        /// </summary>
-        /// <param name="mediaTypeFormatter">Expected media type formatter.</param>
-        /// <returns>The same content test builder.</returns>
-        //public IAndContentTestBuilder ContainingMediaTypeFormatter(MediaTypeFormatter mediaTypeFormatter)
-        //{
-        //    MediaTypeFormatterValidator.ValidateMediaTypeFormatter(
-        //        this.ActionResult,
-        //        mediaTypeFormatter,
-        //        this.ThrowNewContentResultAssertionException);
-
-        //    return this;
-        //}
-
-            // TODO: no formatters
-
-        /// <summary>
-        /// Tests whether content result contains the provided type of media type formatter.
-        /// </summary>
-        /// <typeparam name="TMediaTypeFormatter">Type of MediaTypeFormatter.</typeparam>
-        /// <returns>The same content test builder.</returns>
-        //public IAndContentTestBuilder ContainingMediaTypeFormatterOfType<TMediaTypeFormatter>()
-        //    where TMediaTypeFormatter : MediaTypeFormatter, new()
-        //{
-        //    return this.ContainingMediaTypeFormatter(Activator.CreateInstance<TMediaTypeFormatter>());
-        //}
-
-        ///// <summary>
-        ///// Tests whether content result contains the default media type formatters provided by the framework.
-        ///// </summary>
-        ///// <returns>The same content test builder.</returns>
-        //public IAndContentTestBuilder ContainingDefaultFormatters()
-        //{
-        //    return this.ContainingMediaTypeFormatters(MediaTypeFormatterValidator.GetDefaultMediaTypeFormatters());
-        //}
-
-        ///// <summary>
-        ///// Tests whether content result contains exactly the same types of media type formatters as the provided collection.
-        ///// </summary>
-        ///// <param name="mediaTypeFormatters">Expected collection of media type formatters.</param>
-        ///// <returns>The same content test builder.</returns>
-        //public IAndContentTestBuilder ContainingMediaTypeFormatters(IEnumerable<MediaTypeFormatter> mediaTypeFormatters)
-        //{
-        //    MediaTypeFormatterValidator.ValidateMediaTypeFormatters(
-        //        this.ActionResult,
-        //        mediaTypeFormatters,
-        //        this.ThrowNewContentResultAssertionException);
-
-        //    return this;
-        //}
-
-        ///// <summary>
-        ///// Tests whether content result contains exactly the same types of media type formatters as the provided parameters.
-        ///// </summary>
-        ///// <param name="mediaTypeFormatters">Expected collection of media type formatters provided as parameters.</param>
-        ///// <returns>The same content test builder.</returns>
-        //public IAndContentTestBuilder ContainingMediaTypeFormatters(params MediaTypeFormatter[] mediaTypeFormatters)
-        //{
-        //    return this.ContainingMediaTypeFormatters(mediaTypeFormatters.AsEnumerable());
-        //}
-
-        ///// <summary>
-        ///// Tests whether content result contains the media type formatters provided by builder.
-        ///// </summary>
-        ///// <param name="formattersBuilder">Builder for expected media type formatters.</param>
-        ///// <returns>The same content test builder.</returns>
-        //public IAndContentTestBuilder ContainingMediaTypeFormatters(Action<IFormattersBuilder> formattersBuilder)
-        //{
-        //    MediaTypeFormatterValidator.ValidateMediaTypeFormattersBuilder(
-        //        this.ActionResult,
-        //        formattersBuilder,
-        //        this.ThrowNewContentResultAssertionException);
-
-        //    return this;
-        //}
-
+            return this;
+        }
+        
         /// <summary>
         /// AndAlso method for better readability when chaining content tests.
         /// </summary>
@@ -221,18 +124,23 @@
         {
             return this;
         }
+        
+        private string GetEncodingName(Encoding encoding)
+        {
+            var fullEncodingName = encoding.ToString();
+            var lastIndexOfDot = fullEncodingName.LastIndexOf(".", StringComparison.Ordinal);
+            return fullEncodingName.Substring(lastIndexOfDot + 1);
+        }
 
         private void ThrowNewContentResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
-            // TODO: is this needed?
-
-            //throw new ContentResultAssertionException(string.Format(
-            //        "When calling {0} action in {1} expected content result {2} {3}, but {4}.",
-            //        this.ActionName,
-            //        this.Controller.GetName(),
-            //        propertyName,
-            //        expectedValue,
-            //        actualValue));
+            throw new ContentResultAssertionException(string.Format(
+                    "When calling {0} action in {1} expected content result {2} {3}, but {4}.",
+                    this.ActionName,
+                    this.Controller.GetName(),
+                    propertyName,
+                    expectedValue,
+                    actualValue));
         }
     }
 }

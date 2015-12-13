@@ -6,7 +6,7 @@
     using Setups;
     using Utilities.Validators;
     using Xunit;
-    
+
     public class CommonValidatorTests
     {
         [Fact]
@@ -46,23 +46,27 @@
         }
 
         [Fact]
-        public void CheckForExceptionShouldNotThrowIfExceptionIsNull()
+        public void CheckForExceptionShouldNotThrowIfExceptionNull()
         {
             CommonValidator.CheckForException(null);
         }
 
         [Fact]
-        public void CheckForExceptionShouldThrowIfExceptionIsNotNullWithEmptyMessage()
+        public void CheckForExceptionShouldThrowIfExceptionNotNullWithEmptyMessage()
         {
-            var exception = Assert.Throws<ActionCallAssertionException>(() => CommonValidator.CheckForException(new NullReferenceException(string.Empty)));
-            Assert.Equal("NullReferenceException was thrown but was not caught or expected.", exception.Message);
+            Test.AssertException<ActionCallAssertionException>(() =>
+            {
+                CommonValidator.CheckForException(new NullReferenceException(string.Empty));
+            }, "NullReferenceException was thrown but was not caught or expected.");
         }
 
         [Fact]
-        public void CheckForExceptionShouldThrowIfExceptionIsNotNullWithMessage()
+        public void CheckForExceptionShouldThrowIfExceptionNotNullWithMessage()
         {
-            var exception = Assert.Throws<ActionCallAssertionException>(() => CommonValidator.CheckForException(new NullReferenceException("Test")));
-            Assert.Equal("NullReferenceException with 'Test' message was thrown but was not caught or expected.", exception.Message);
+            Test.AssertException<ActionCallAssertionException>(() =>
+            {
+                CommonValidator.CheckForException(new NullReferenceException("Test"));
+            }, "NullReferenceException with 'Test' message was thrown but was not caught or expected.");
         }
 
         [Fact]
@@ -74,9 +78,11 @@
                         new InvalidCastException("Cast test"),
                         new InvalidOperationException("Operation test")
                     });
-            
-            var exception = Assert.Throws<ActionCallAssertionException>(() => CommonValidator.CheckForException(aggregateException));
-            Assert.Equal("AggregateException (containing NullReferenceException with 'Null test' message, InvalidCastException with 'Cast test' message, InvalidOperationException with 'Operation test' message) was thrown but was not caught or expected.", exception.Message);
+
+            Test.AssertException<ActionCallAssertionException>(() =>
+            {
+                CommonValidator.CheckForException(aggregateException);
+            }, "AggregateException (containing NullReferenceException with 'Null test' message, InvalidCastException with 'Cast test' message, InvalidOperationException with 'Operation test' message) was thrown but was not caught or expected.");
         }
 
         [Fact]
@@ -136,8 +142,10 @@
         [Fact]
         public void CheckIfTypeCanBeNullShouldThrowExceptionWithStruct()
         {
-            var exception = Assert.Throws<ActionCallAssertionException>(() => CommonValidator.CheckIfTypeCanBeNull(typeof(int)));
-            Assert.Equal("Int32 cannot be null.", exception.Message);
+            Test.AssertException<ActionCallAssertionException>(() =>
+            {
+                CommonValidator.CheckIfTypeCanBeNull(typeof(int));
+            }, "Int32 cannot be null.");
         }
     }
 }

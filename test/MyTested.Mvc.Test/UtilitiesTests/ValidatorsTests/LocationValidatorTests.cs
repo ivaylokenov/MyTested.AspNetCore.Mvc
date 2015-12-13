@@ -26,12 +26,12 @@
         {
             string uriAsString = "http://somehost!@#?Query==true";
 
-            var exception = Assert.Throws<NullReferenceException>(() =>
+            Test.AssertException<NullReferenceException>(() =>
+            {
                 LocationValidator.ValidateAndGetWellFormedUriString(
                     uriAsString,
-                    TestObjectFactory.GetFailingValidationAction()));
-
-            Assert.Equal("location to be URI valid instead received http://somehost!@#?Query==true", exception.Message);
+                    TestObjectFactory.GetFailingValidationAction());
+            }, "location to be URI valid instead received http://somehost!@#?Query==true");
         }
 
         // TODO: ?
@@ -39,7 +39,7 @@
         //public void ValidateUrhouldNotThrowExceptionWithProperUriWithCorrectString()
         //{
         //    var actionResultWithLocation = new CreatedNegotiatedContentResult<int>(
-        //        TestObjectFactory.GetUri(), 5, MyWebApi.Controller<WebApiController>().AndProvideTheController());
+        //        TestObjectFactory.GetUri(), 5, MyMvc.Controller<MvcController>().AndProvideTheController());
 
         //    LocationValidator.ValidateUri(
         //        actionResultWithLocation,
@@ -54,7 +54,7 @@
         //public void ValidateUrhouldThrowExceptionWithIncorrectString()
         //{
         //    var actionResultWithLocation = new CreatedNegotiatedContentResult<int>(
-        //        TestObjectFactory.GetUri(), 5, MyWebApi.Controller<WebApiController>().AndProvideTheController());
+        //        TestObjectFactory.GetUri(), 5, MyMvc.Controller<MvcController>().AndProvideTheController());
 
         //    LocationValidator.ValidateUri(
         //        actionResultWithLocation,
@@ -66,7 +66,7 @@
         //public void ValidateLocationShouldNotThrowExceptionWithCorrectLocationBuilder()
         //{
         //    var actionResultWithLocation = new CreatedNegotiatedContentResult<int>(
-        //        TestObjectFactory.GetUri(), 5, MyWebApi.Controller<WebApiController>().AndProvideTheController());
+        //        TestObjectFactory.GetUri(), 5, MyMvc.Controller<MvcController>().AndProvideTheController());
 
         //    LocationValidator.ValidateLocation(
         //        actionResultWithLocation,
@@ -93,7 +93,7 @@
         //public void ValidateLocationShouldThrowExceptionWithIncorrectLocationBuilder()
         //{
         //    var actionResultWithLocation = new CreatedNegotiatedContentResult<int>(
-        //        TestObjectFactory.GetUri(), 5, MyWebApi.Controller<WebApiController>().AndProvideTheController());
+        //        TestObjectFactory.GetUri(), 5, MyMvc.Controller<MvcController>().AndProvideTheController());
 
         //    LocationValidator.ValidateLocation(
         //        actionResultWithLocation,

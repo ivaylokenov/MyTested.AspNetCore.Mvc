@@ -355,6 +355,22 @@
             return !AreDeeplyEqual(expected, actual);
         }
 
+        public static TDelegate CreateDelegateFromMethod<TDelegate>(object instance, Func<MethodInfo, bool> methodFilter)
+            where TDelegate : class
+        {
+            if (!typeof(TDelegate).GetTypeInfo().IsSubclassOf(typeof(Delegate)))
+            {
+                return null;
+            }
+
+            return instance
+                .GetType()
+                .GetTypeInfo()
+                .DeclaredMethods
+                .FirstOrDefault(methodFilter)
+                ?.CreateDelegate(typeof(TDelegate), instance) as TDelegate;
+        }
+
         private static ConstructorInfo GetConstructorByUnorderedParameters(this Type type, IEnumerable<Type> types)
         {
             var orderedTypes = types
