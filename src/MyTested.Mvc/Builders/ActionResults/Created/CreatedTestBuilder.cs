@@ -109,6 +109,7 @@
                 this.ActionResult,
                 uriTestBuilder,
                 this.ThrowNewCreatedResultAssertionException);
+
             return this;
         }
 

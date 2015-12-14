@@ -1,12 +1,9 @@
 ﻿namespace MyTested.Mvc.Tests.BuildersTests.ActionResultsTests.ContentTests
 {
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Net;
     using Exceptions;
     using Setups;
     using Setups.Controllers;
-    using Setups.Models;
     using Xunit;
     using Microsoft.Net.Http.Headers;
 
@@ -45,7 +42,7 @@
                 .Calling(c => c.ContentActionWithMediaType())
                 .ShouldReturn()
                 .Content("content")
-                .WithMediaType(MediaType.TextPlain);
+                .WithContentType(MediaType.TextPlain);
         }
 
         [Fact]
@@ -56,7 +53,7 @@
                 .Calling(c => c.ContentActionWithMediaType())
                 .ShouldReturn()
                 .Content()
-                .WithMediaType(new MediaTypeHeaderValue(MediaType.TextPlain));
+                .WithContentType(new MediaTypeHeaderValue(MediaType.TextPlain));
         }
 
         [Fact]
@@ -67,7 +64,7 @@
                 .Calling(c => c.ContentActionWithMediaType())
                 .ShouldReturn()
                 .Content()
-                .WithMediaType(MediaType.TextPlain);
+                .WithContentType(MediaType.TextPlain);
         }
 
         [Fact]
@@ -80,8 +77,8 @@
                     .Calling(c => c.ContentActionWithMediaType())
                     .ShouldReturn()
                     .Content()
-                    .WithMediaType(new MediaTypeHeaderValue(MediaType.ApplicationJson));
-            }, "When calling ContentActionWithMediaType action in MvcController expected content result MediaType to be application/json, but instead received text/plain.");
+                    .WithContentType(new MediaTypeHeaderValue(MediaType.ApplicationJson));
+            }, "When calling ContentActionWithMediaType action in MvcController expected content result ContentType to be application/json, but instead received text/plain.");
         }
 
         [Fact]
@@ -94,8 +91,8 @@
                     .Calling(c => c.ContentActionWithMediaType())
                     .ShouldReturn()
                     .Content()
-                    .WithMediaType((MediaTypeHeaderValue)null);
-            }, "When calling ContentActionWithMediaType action in MvcController expected content result MediaType to be null, but instead received text/plain.");
+                    .WithContentType((MediaTypeHeaderValue)null);
+            }, "When calling ContentActionWithMediaType action in MvcController expected content result ContentType to be null, but instead received text/plain.");
         }
 
         [Fact]
@@ -106,7 +103,7 @@
                 .Calling(c => c.ContentActionWithNullMediaType())
                 .ShouldReturn()
                 .Content()
-                .WithMediaType((MediaTypeHeaderValue)null);
+                .WithContentType((MediaTypeHeaderValue)null);
         }
 
         [Fact]
@@ -119,8 +116,8 @@
                     .Calling(c => c.ContentActionWithNullMediaType())
                     .ShouldReturn()
                     .Content()
-                    .WithMediaType(new MediaTypeHeaderValue(TestObjectFactory.MediaType));
-            }, "When calling ContentActionWithNullMediaType action in MvcController expected content result MediaType to be application/json, but instead received null.");
+                    .WithContentType(new MediaTypeHeaderValue(TestObjectFactory.MediaType));
+            }, "When calling ContentActionWithNullMediaType action in MvcController expected content result ContentType to be application/json, but instead received null.");
         }
 
         // TODO: media type and response model
@@ -272,7 +269,7 @@
                 .Content("content")
                 .WithStatusCode(HttpStatusCode.OK)
                 .AndAlso()
-                .WithMediaType(MediaType.ApplicationJson);
+                .WithContentType(MediaType.ApplicationJson);
         }
     }
 }

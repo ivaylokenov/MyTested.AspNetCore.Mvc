@@ -4,7 +4,6 @@
     using System.Net;
     using Common.Extensions;
     using Exceptions;
-    using Models;
     using Contracts.ActionResults.Content;
     using Microsoft.AspNet.Mvc;
     using Microsoft.Net.Http.Headers;
@@ -61,29 +60,29 @@
         /// <summary>
         /// Tests whether content result has the same content type as the provided string.
         /// </summary>
-        /// <param name="mediaType">Media type as string.</param>
+        /// <param name="contentType">ContentType type as string.</param>
         /// <returns>The same content test builder.</returns>
-        public IAndContentTestBuilder WithMediaType(string mediaType)
+        public IAndContentTestBuilder WithContentType(string contentType)
         {
-            return this.WithMediaType(new MediaTypeHeaderValue(mediaType));
+            return this.WithContentType(new MediaTypeHeaderValue(contentType));
         }
 
         /// <summary>
         /// Tests whether content result has the same content type as the provided MediaTypeHeaderValue.
         /// </summary>
-        /// <param name="mediaType">Media type as MediaTypeHeaderValue.</param>
+        /// <param name="contentType">Content type as MediaTypeHeaderValue.</param>
         /// <returns>The same content test builder.</returns>
-        public IAndContentTestBuilder WithMediaType(MediaTypeHeaderValue mediaType)
+        public IAndContentTestBuilder WithContentType(MediaTypeHeaderValue contentType)
         {
-            var actualMediaType = this.ActionResult.ContentType;
-            if ((mediaType == null && actualMediaType != null)
-                || (mediaType != null && actualMediaType == null)
-                || (mediaType != null && mediaType.MediaType != actualMediaType.MediaType))
+            var actualContentType = this.ActionResult.ContentType;
+            if ((contentType == null && actualContentType != null)
+                || (contentType != null && actualContentType == null)
+                || (contentType != null && contentType.MediaType != actualContentType.MediaType))
             {
                 this.ThrowNewContentResultAssertionException(
-                    "MediaType",
-                    string.Format("to be {0}", mediaType != null ? mediaType.MediaType : "null"),
-                    string.Format("instead received {0}", actualMediaType != null ? actualMediaType.MediaType : "null"));
+                    "ContentType",
+                    string.Format("to be {0}", contentType != null ? contentType.MediaType : "null"),
+                    string.Format("instead received {0}", actualContentType != null ? actualContentType.MediaType : "null"));
             }
 
             return this;

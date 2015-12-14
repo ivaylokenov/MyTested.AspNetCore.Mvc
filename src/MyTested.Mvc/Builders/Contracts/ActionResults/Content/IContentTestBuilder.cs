@@ -24,14 +24,14 @@
         /// </summary>
         /// <param name="mediaType">Media type as string.</param>
         /// <returns>The same content test builder.</returns>
-        IAndContentTestBuilder WithMediaType(string mediaType);
+        IAndContentTestBuilder WithContentType(string mediaType);
 
         /// <summary>
         /// Tests whether content result has the same content type as the provided MediaTypeHeaderValue.
         /// </summary>
         /// <param name="mediaType">Media type as MediaTypeHeaderValue.</param>
         /// <returns>The same content test builder.</returns>
-        IAndContentTestBuilder WithMediaType(MediaTypeHeaderValue mediaType);
+        IAndContentTestBuilder WithContentType(MediaTypeHeaderValue mediaType);
 
         /// <summary>
         /// Tests whether content result has the default UTF8 encoding.
