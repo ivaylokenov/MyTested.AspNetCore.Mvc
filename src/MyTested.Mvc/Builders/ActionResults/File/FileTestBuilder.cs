@@ -8,11 +8,17 @@
     using Utilities;
     using System;
     using System.IO;
+    using System.Linq;
 
     public class FileTestBuilder<TFileResult>
         : BaseTestBuilderWithActionResult<TFileResult>, IFileTestBuilder
         where TFileResult : FileResult
     {
+        private const string FileName = "file name";
+        private const string FileProvider = "file provider";
+        private const string FileStream = "file stream";
+        private const string FileContents = "file contents";
+
         /// <summary>
         /// Initializes a new instance of the <see cref="FileTestBuilder{TFileResult}" /> class.
         /// </summary>
@@ -58,12 +64,20 @@
 
         public IAndFileTestBuilder WithFileStream(Stream stream)
         {
-            return null;
+            var fileStreamResult = this.GetFileResult<FileStreamResult>(FileStream);
+            var expectedContents = this.GetByteArrayFromStream(stream);
+            var actualContents = this.GetByteArrayFromStream(fileStreamResult.FileStream);
+            if (!expectedContents.SequenceEqual(actualContents))
+            {
+                // TODO: exception
+            }
+
+            return this;
         }
 
         public IAndFileTestBuilder WithFileName(string fileName)
         {
-            var virtualFileResult = this.GetFileResult<VirtualFileResult>("file name");
+            var virtualFileResult = this.GetFileResult<VirtualFileResult>(FileName);
             if (fileName != virtualFileResult.FileName)
             {
                 // TODO: exception
@@ -72,14 +86,9 @@
             return this;
         }
 
-        public IAndFileTestBuilder WithDefaultFileProvider()
-        {
-            return null; // TODO:
-        }
-        
         public IAndFileTestBuilder WithFileProvider(IFileProvider fileProvider)
         {
-            var virtualFileResult = this.GetFileResult<VirtualFileResult>("file provider");
+            var virtualFileResult = this.GetFileResult<VirtualFileResult>(FileProvider);
             if (fileProvider != virtualFileResult.FileProvider)
             {
                 // TODO: exception
@@ -91,13 +100,24 @@
         public IAndFileTestBuilder WithFileProviderOfType<TFileProvider>()
             where TFileProvider : IFileProvider
         {
-            return this; // TODO:
+            var virtualFileResult = this.GetFileResult<VirtualFileResult>(FileProvider);
+            if (Reflection.AreDifferentTypes(typeof(TFileProvider), virtualFileResult.FileProvider.GetType()))
+            {
+                // TODO: exception
+            }
+
+            return this;
         }
 
         public IAndFileTestBuilder WithFileContents(byte[] fileContents)
         {
-            // fileContents.seq
-            return null;
+            var fileContentResult = this.GetFileResult<FileContentResult>(FileContents);
+            if (!fileContents.SequenceEqual(fileContentResult.FileContents))
+            {
+                // TODO: exception
+            }
+
+            return this;
         }
 
         /// <summary>
@@ -107,6 +127,15 @@
         public IFileTestBuilder AndAlso()
         {
             return this;
+        }
+
+        private byte[] GetByteArrayFromStream(Stream stream)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                stream.CopyTo(memoryStream);
+                return memoryStream.ToArray();
+            }
         }
 
         private TExpectedFileResult GetFileResult<TExpectedFileResult>(string containment)
