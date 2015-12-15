@@ -58,13 +58,14 @@
         /// <returns>The same file test builder.</returns>
         public IAndFileTestBuilder WithContentType(MediaTypeHeaderValue contentType)
         {
-            var actualContentType = this.ActionResult.ContentType;
-            if (contentType != actualContentType)
+            var expectedContentType = contentType?.MediaType;
+            var actualContentType = this.ActionResult.ContentType?.MediaType;
+            if (expectedContentType != actualContentType)
             {
                 this.ThrowNewFileResultAssertionException(
                     "ContentType",
                     string.Format("to be {0}", contentType != null ? contentType.MediaType : "null"),
-                    string.Format("instead received {0}", actualContentType != null ? actualContentType.MediaType : "null"));
+                    string.Format("instead received {0}", actualContentType != null ? actualContentType : "null"));
             }
 
             return this;
@@ -82,8 +83,8 @@
             {
                 this.ThrowNewFileResultAssertionException(
                     "FileDownloadName",
-                    string.Format("to be {0}", fileDownloadName != null ? fileDownloadName : "null"),
-                    string.Format("instead received {0}", actualFileDownloadName != null ? actualFileDownloadName : "null"));
+                    string.Format("to be '{0}'", fileDownloadName != null ? fileDownloadName : "null"),
+                    string.Format("instead received '{0}'", actualFileDownloadName != null ? actualFileDownloadName : "null"));
             }
 
             return this;

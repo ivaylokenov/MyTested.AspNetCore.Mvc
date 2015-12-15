@@ -217,6 +217,11 @@
             return this.Ok();
         }
 
+        public IActionResult FileWithVirtualPath()
+        {
+            return this.File("/Test", ContentType.ApplicationJson, "FileDownloadName");
+        }
+
         public IActionResult OkResultWithContentNegotiatorAction()
         {
             // TODO: ?
@@ -247,7 +252,7 @@
             return new ContentResult
             {
                 Content = "content",
-                ContentType = new MediaTypeHeaderValue(MediaType.ApplicationJson),
+                ContentType = new MediaTypeHeaderValue(ContentType.ApplicationJson),
                 StatusCode = 200
             };
         }

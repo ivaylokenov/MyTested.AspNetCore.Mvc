@@ -54,6 +54,10 @@
         /// <returns>Created test builder.</returns>
         ICreatedTestBuilder Created();
 
+        /// <summary>
+        /// Tests whether action result is FileStreamResult, VirtualFileResult or FileContentResult.
+        /// </summary>
+        /// <returns>File test builder.</returns>
         IFileTestBuilder File();
 
         /// <summary>

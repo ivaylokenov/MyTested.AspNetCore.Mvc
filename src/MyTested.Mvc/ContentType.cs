@@ -6,7 +6,7 @@
     /// <summary>
     /// Contains common MIME type values.
     /// </summary>
-    public static class MediaType
+    public static class ContentType
     {
         /// <summary>
         /// Represents text/plain (txt).
