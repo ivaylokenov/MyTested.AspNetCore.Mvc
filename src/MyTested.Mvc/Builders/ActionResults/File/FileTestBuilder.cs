@@ -95,7 +95,7 @@
         /// </summary>
         /// <param name="stream">File stream.</param>
         /// <returns>The same file test builder.</returns>
-        public IAndFileTestBuilder WithFileStream(Stream stream)
+        public IAndFileTestBuilder WithStream(Stream stream)
         {
             var fileStreamResult = this.GetFileResult<FileStreamResult>(FileStream);
             var expectedContents = this.GetByteArrayFromStream(stream);
@@ -124,8 +124,8 @@
             {
                 this.ThrowNewFileResultAssertionException(
                     "FileName",
-                    string.Format("to be {0}", fileName != null ? fileName : "null"),
-                    string.Format("instead received {0}", actualFileName != null ? actualFileName : "null"));
+                    string.Format("to be '{0}'", fileName != null ? fileName : "null"),
+                    string.Format("instead received '{0}'", actualFileName != null ? actualFileName : "null"));
             }
 
             return this;
@@ -176,7 +176,7 @@
         /// </summary>
         /// <typeparam name="fileContents">File contents as byte array.</param>
         /// <returns>The same file test builder.</returns>
-        public IAndFileTestBuilder WithFileContents(byte[] fileContents)
+        public IAndFileTestBuilder WithContents(byte[] fileContents)
         {
             var fileContentResult = this.GetFileResult<FileContentResult>(FileContents);
             if (!fileContents.SequenceEqual(fileContentResult.FileContents))

@@ -10,8 +10,8 @@
     using Microsoft.AspNet.Authorization;
     using Microsoft.Net.Http.Headers;
     using Newtonsoft.Json;
-
-    // TODO:
+    using System.IO;
+    using Common;    // TODO:
     [Authorize(Roles = "Admin,Moderator" /*Users = "John,George"*/)]
     [Route("/api/test")]
     // TODO: [RoutePrefix("/api/test")]
@@ -220,6 +220,24 @@
         public IActionResult FileWithVirtualPath()
         {
             return this.File("/Test", ContentType.ApplicationJson, "FileDownloadName");
+        }
+
+        public IActionResult FileWithStream()
+        {
+            return this.File(new MemoryStream(new byte[] { 1, 2, 3 }), ContentType.ApplicationJson);
+        }
+
+        public IActionResult FileWithFileProvider()
+        {
+            return new VirtualFileResult("Test", ContentType.ApplicationJson)
+            {
+                FileProvider = new CustomFileProvider()
+            };
+        }
+
+        public IActionResult FileWithContents()
+        {
+            return this.File(new byte[] { 1, 2, 3 }, ContentType.ApplicationJson);
         }
 
         public IActionResult OkResultWithContentNegotiatorAction()

@@ -3,7 +3,9 @@
     using Exceptions;
     using Microsoft.Net.Http.Headers;
     using Setups;
+    using Setups.Common;
     using Setups.Controllers;
+    using System.IO;
     using Xunit;
 
     public class FileTestBuilderTests
@@ -67,6 +69,133 @@
                     .File()
                     .WithFileDownloadName("InvalidDownloadName");
             }, "When calling FileWithVirtualPath action in MvcController expected file result FileDownloadName to be 'InvalidDownloadName', but instead received 'FileDownloadName'.");
+        }
+
+        [Fact]
+        public void WithStreamShouldNotThrowExceptionWithValidStreamContents()
+        {
+            // TODO:
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.FileWithStream())
+                .ShouldReturn()
+                .File()
+                .WithStream(new MemoryStream(new byte[] { 1, 2, 3 }));
+        }
+
+        [Fact]
+        public void WithFileNameShouldNotThrowExceptionWithValidFileName()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.FileWithVirtualPath())
+                .ShouldReturn()
+                .File()
+                .WithFileName("/Test");
+        }
+
+        [Fact]
+        public void WithFileNameShouldThrowExceptionWithInvalidFileName()
+        {
+            Test.AssertException<FileResultAssertionException>(() =>
+            {
+                MyMvc
+                    .Controller<MvcController>()
+                    .Calling(c => c.FileWithVirtualPath())
+                    .ShouldReturn()
+                    .File()
+                    .WithFileName("Invalid");
+            }, "When calling FileWithVirtualPath action in MvcController expected file result FileName to be 'Invalid', but instead received '/Test'.");
+        }
+
+        [Fact]
+        public void WithFileProviderShouldNotThrowExceptionWithValidFileProvider()
+        {
+            // TODO:
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.FileWithFileProvider())
+                .ShouldReturn()
+                .File()
+                .WithFileProvider(new CustomFileProvider());
+        }
+
+        [Fact]
+        public void WithFileProviderShouldThrowExceptionWithInvalidFileProvider()
+        {
+            Test.AssertException<FileResultAssertionException>(() =>
+            {
+                MyMvc
+                    .Controller<MvcController>()
+                    .Calling(c => c.FileWithFileProvider())
+                    .ShouldReturn()
+                    .File()
+                    .WithFileProvider(new CustomFileProvider());
+            }, "When calling FileWithFileProvider action in MvcController expected file result FileProvider to be the same as the provided one, but instead received different result.");
+        }
+
+        [Fact]
+        public void WithFileProviderOfTypeShouldNotThrowExceptionWithValidFileProvider()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.FileWithFileProvider())
+                .ShouldReturn()
+                .File()
+                .WithFileProviderOfType<CustomFileProvider>();
+        }
+
+        [Fact]
+        public void WithFileProviderOfTypeShouldThrowExceptionWithInvalidFileProvider()
+        {
+            // TODO:
+            Test.AssertException<FileResultAssertionException>(() =>
+            {
+                MyMvc
+                    .Controller<MvcController>()
+                    .Calling(c => c.FileWithFileProvider())
+                    .ShouldReturn()
+                    .File()
+                    .WithFileProviderOfType<CustomFileProvider>();
+            }, "When calling FileWithFileProvider action in MvcController expected file result FileProvider to be the same as the provided one, but instead received different result.");
+        }
+
+        [Fact]
+        public void WithFileContentsShouldNotThrowExceptionWithValidFileContents()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.FileWithContents())
+                .ShouldReturn()
+                .File()
+                .WithContents(new byte[] { 1, 2, 3 });
+        }
+
+        [Fact]
+        public void WithFileContentsOfTypeShouldThrowExceptionWithInvalidFileContents()
+        {
+            Test.AssertException<FileResultAssertionException>(() =>
+            {
+                MyMvc
+                    .Controller<MvcController>()
+                    .Calling(c => c.FileWithContents())
+                    .ShouldReturn()
+                    .File()
+                    .WithContents(new byte[] { 1, 2, 3, 4 });
+            }, "When calling FileWithContents action in MvcController expected file result FileContents to have contents as the provided ones, but instead received different result.");
+        }
+
+        [Fact]
+        public void AndAlsoShouldWorkCorrectly()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.FileWithContents())
+                .ShouldReturn()
+                .File()
+                .WithContents(new byte[] { 1, 2, 3 })
+                .AndAlso()
+                .WithContentType(ContentType.ApplicationJson);
         }
     }
 }

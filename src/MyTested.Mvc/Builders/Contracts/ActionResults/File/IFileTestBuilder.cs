@@ -32,7 +32,7 @@
         /// </summary>
         /// <param name="stream">File stream.</param>
         /// <returns>The same file test builder.</returns>
-        IAndFileTestBuilder WithFileStream(Stream stream);
+        IAndFileTestBuilder WithStream(Stream stream);
 
         /// <summary>
         /// Tests whether file result has the same file name as the provided one.
@@ -61,6 +61,6 @@
         /// </summary>
         /// <typeparam name="fileContents">File contents as byte array.</param>
         /// <returns>The same file test builder.</returns>
-        IAndFileTestBuilder WithFileContents(byte[] fileContents);
+        IAndFileTestBuilder WithContents(byte[] fileContents);
     }
 }
