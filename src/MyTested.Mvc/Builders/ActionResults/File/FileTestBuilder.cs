@@ -17,7 +17,7 @@
     /// </summary>
     /// <typeparam name="TFileResult">Result of type FileStreamResult, VirtualFileResult or FileContentResult.</typeparam>
     public class FileTestBuilder<TFileResult>
-        : BaseTestBuilderWithActionResult<TFileResult>, IFileTestBuilder
+        : BaseTestBuilderWithActionResult<TFileResult>, IAndFileTestBuilder
         where TFileResult : FileResult
     {
         private const string FileName = "file name";

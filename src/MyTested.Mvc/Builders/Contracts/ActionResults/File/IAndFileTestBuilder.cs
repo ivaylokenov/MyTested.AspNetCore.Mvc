@@ -3,7 +3,7 @@
     /// <summary>
     /// Used for adding AndAlso() method to the the file response tests.
     /// </summary>
-    public interface IAndFileTestBuilder
+    public interface IAndFileTestBuilder : IFileTestBuilder
     {
         /// <summary>
         /// AndAlso method for better readability when chaining file result tests.

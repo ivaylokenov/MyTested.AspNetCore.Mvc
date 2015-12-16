@@ -2,9 +2,10 @@
 {
     using Microsoft.AspNet.FileProviders;
     using Microsoft.Net.Http.Headers;
+    using Base;
     using System.IO;
 
-    public interface IFileTestBuilder : IAndFileTestBuilder
+    public interface IFileTestBuilder : IBaseTestBuilderWithCaughtException
     {
         /// <summary>
         /// Tests whether file result has the same content type as the provided one.

@@ -26,7 +26,7 @@
     /// </summary>
     /// <typeparam name="TController">Class inheriting ASP.NET MVC 6 controller.</typeparam>
     public class ControllerBuilder<TController> : IAndControllerBuilder<TController>
-        where TController : Controller
+        where TController : Controller // TODO: POCOController?
     {
         private readonly IDictionary<Type, object> aggregatedDependencies;
 

@@ -22,7 +22,7 @@
     {
         private const string ErrorMessage = "error message";
         private const string ModelStateDictionary = "model state dictionary";
-
+        // TODO: check for different kind of IActionResult without helper methods - like HttpStatusCodeResult
         /// <summary>
         /// Initializes a new instance of the <see cref="HttpBadRequestTestBuilder{TBadRequestResult}" /> class.
         /// </summary>

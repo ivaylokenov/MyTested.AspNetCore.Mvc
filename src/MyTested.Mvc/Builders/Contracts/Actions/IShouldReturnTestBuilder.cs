@@ -1,7 +1,6 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.Actions
 {
     using Base;
-    using HttpResponseMessages;
     using ActionResults.Ok;
     using System;
     using ActionResults.Created;
@@ -9,8 +8,9 @@
     using ActionResults.Json;
     using Models;
     using ActionResults.HttpBadRequest;
-    using Microsoft.AspNet.Mvc;
     using ActionResults.File;
+    using System.Net;
+
     /// <summary>
     /// Used for testing action returned result.
     /// </summary>
@@ -80,18 +80,18 @@
         ///// <returns>Redirect test builder.</returns>
         //IRedirectTestBuilder Redirect();
 
-        ///// <summary>
-        ///// Tests whether action result is StatusCodeResult.
-        ///// </summary>
-        ///// <returns>Base test builder with action result.</returns>
-        //IBaseTestBuilderWithActionResult<TActionResult> StatusCode();
+        /// <summary>
+        /// Tests whether action result is HttpStatusCodeResult.
+        /// </summary>
+        /// <returns>Base test builder with action result.</returns>
+        IBaseTestBuilderWithActionResult<TActionResult> StatusCode();
 
-        ///// <summary>
-        ///// Tests whether action result is StatusCodeResult and is the same as provided HttpStatusCode.
-        ///// </summary>
-        ///// <param name="statusCode">HttpStatusCode enumeration.</param>
-        ///// <returns>Base test builder with action result.</returns>
-        //IBaseTestBuilderWithActionResult<TActionResult> StatusCode(HttpStatusCode statusCode);
+        /// <summary>
+        /// Tests whether action result is HttpStatusCodeResult and is the same as provided HttpStatusCode.
+        /// </summary>
+        /// <param name="statusCode">HttpStatusCode enumeration.</param>
+        /// <returns>Base test builder with action result.</returns>
+        IBaseTestBuilderWithActionResult<TActionResult> StatusCode(HttpStatusCode statusCode);
 
         /// <summary>
         /// Tests whether action result is NotFoundResult.
@@ -112,11 +112,11 @@
         ///// <returns>Base test builder with action result.</returns>
         //IBaseTestBuilderWithActionResult<TActionResult> Conflict();
 
-        ///// <summary>
-        ///// Tests whether action result is UnauthorizedResult.
-        ///// </summary>
-        ///// <returns>Unauthorized result test builder.</returns>
-        //IUnauthorizedTestBuilder Unauthorized();
+        /// <summary>
+        /// Tests whether action result is HttpUnauthorizedResult.
+        /// </summary>
+        /// <returns>Base test builder with action result.</returns>
+        IBaseTestBuilderWithActionResult<TActionResult> HttpUnauthorized();
 
         ///// <summary>
         ///// Tests whether action result is InternalServerErrorResult or ExceptionResult.
