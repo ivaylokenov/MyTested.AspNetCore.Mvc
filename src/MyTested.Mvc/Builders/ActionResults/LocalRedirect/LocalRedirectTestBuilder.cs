@@ -9,6 +9,9 @@
     using Common.Extensions;
     using Exceptions;
 
+    /// <summary>
+    /// Used for testing local redirect result.
+    /// </summary>
     public class LocalRedirectTestBuilder : BaseTestBuilderWithActionResult<LocalRedirectResult>,
         IAndLocalRedirectTestBuilder
     {
@@ -28,6 +31,10 @@
         {
         }
 
+        /// <summary>
+        /// Tests whether local redirect result is permanent.
+        /// </summary>
+        /// <returns>The same local redirect test builder.</returns>
         public IAndLocalRedirectTestBuilder Permanent()
         {
             if (!this.ActionResult.Permanent)
@@ -41,6 +48,11 @@
             return this;
         }
 
+        /// <summary>
+        /// Tests whether local redirect result has specific URL provided as string.
+        /// </summary>
+        /// <param name="localUrl">Expected URL as string.</param>
+        /// <returns>The same local redirect test builder.</returns>
         public IAndLocalRedirectTestBuilder To(string localUrl)
         {
             var uri = LocationValidator.ValidateAndGetWellFormedUriString(
@@ -50,6 +62,11 @@
             return this.To(uri);
         }
 
+        /// <summary>
+        /// Tests whether local redirect result has specific URL provided as URI.
+        /// </summary>
+        /// <param name="localUrl">Expected URL as URI.</param>
+        /// <returns>The same local redirect test builder.</returns>
         public IAndLocalRedirectTestBuilder To(Uri localUrl)
         {
             LocationValidator.ValidateUri(
@@ -60,6 +77,11 @@
             return this;
         }
 
+        /// <summary>
+        /// Tests whether local redirect result has specific URL provided by builder.
+        /// </summary>
+        /// <param name="localUrlTestBuilder">Builder for expected URl.</param>
+        /// <returns>The same local redirect test builder.</returns>
         public IAndLocalRedirectTestBuilder To(Action<IUriTestBuilder> localUrlTestBuilder)
         {
             LocationValidator.ValidateLocation(
@@ -70,6 +92,10 @@
             return this;
         }
 
+        /// <summary>
+        /// AndAlso method for better readability when chaining local redirect result tests.
+        /// </summary>
+        /// <returns>Local redirect result test builder.</returns>
         public ILocalRedirectTestBuilder AndAlso()
         {
             return this;

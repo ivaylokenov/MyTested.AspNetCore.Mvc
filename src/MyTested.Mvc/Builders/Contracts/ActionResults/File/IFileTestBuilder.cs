@@ -5,6 +5,9 @@
     using Base;
     using System.IO;
 
+    /// <summary>
+    /// Used for testing file result.
+    /// </summary>
     public interface IFileTestBuilder : IBaseTestBuilderWithCaughtException
     {
         /// <summary>

@@ -10,6 +10,7 @@
     using ActionResults.HttpBadRequest;
     using ActionResults.File;
     using System.Net;
+    using ActionResults.LocalRedirect;
 
     /// <summary>
     /// Used for testing action returned result.
@@ -72,6 +73,12 @@
         /// <param name="content">Expected content as string.</param>
         /// <returns>Content test builder.</returns>
         IContentTestBuilder Content(string content);
+
+        /// <summary>
+        /// Tests whether action result is LocalRedirectResult.
+        /// </summary>
+        /// <returns>Local redirect test builder.</returns>
+        ILocalRedirectTestBuilder LocalRedirect();
 
         // TODO: ?
         ///// <summary>
