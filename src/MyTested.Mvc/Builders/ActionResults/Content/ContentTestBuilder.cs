@@ -2,7 +2,7 @@
 {
     using System;
     using System.Net;
-    using Common.Extensions;
+    using Internal.Extensions;
     using Exceptions;
     using Contracts.ActionResults.Content;
     using Microsoft.AspNet.Mvc;

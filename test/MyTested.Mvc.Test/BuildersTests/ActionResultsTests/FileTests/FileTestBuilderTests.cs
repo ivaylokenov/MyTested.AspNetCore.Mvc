@@ -1,6 +1,7 @@
 ﻿namespace MyTested.Mvc.Tests.BuildersTests.ActionResultsTests.FileTests
 {
     using Exceptions;
+    using Microsoft.AspNet.FileProviders;
     using Microsoft.Net.Http.Headers;
     using Setups;
     using Setups.Common;
@@ -74,7 +75,6 @@
         [Fact]
         public void WithStreamShouldNotThrowExceptionWithValidStreamContents()
         {
-            // TODO:
             MyMvc
                 .Controller<MvcController>()
                 .Calling(c => c.FileWithStream())
@@ -111,13 +111,15 @@
         [Fact]
         public void WithFileProviderShouldNotThrowExceptionWithValidFileProvider()
         {
-            // TODO:
+            var fileProvider = TestObjectFactory.GetFileProvider();
+
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.FileWithFileProvider())
+                .WithoutValidation()
+                .Calling(c => c.FileWithFileProvider(fileProvider))
                 .ShouldReturn()
                 .File()
-                .WithFileProvider(new CustomFileProvider());
+                .WithFileProvider(fileProvider);
         }
 
         [Fact]
@@ -127,7 +129,8 @@
             {
                 MyMvc
                     .Controller<MvcController>()
-                    .Calling(c => c.FileWithFileProvider())
+                    .WithoutValidation()
+                    .Calling(c => c.FileWithFileProvider(null))
                     .ShouldReturn()
                     .File()
                     .WithFileProvider(new CustomFileProvider());
@@ -139,7 +142,8 @@
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.FileWithFileProvider())
+                .WithoutValidation()
+                .Calling(c => c.FileWithFileProvider(null))
                 .ShouldReturn()
                 .File()
                 .WithFileProviderOfType<CustomFileProvider>();
@@ -148,16 +152,16 @@
         [Fact]
         public void WithFileProviderOfTypeShouldThrowExceptionWithInvalidFileProvider()
         {
-            // TODO:
             Test.AssertException<FileResultAssertionException>(() =>
             {
                 MyMvc
                     .Controller<MvcController>()
-                    .Calling(c => c.FileWithFileProvider())
+                    .WithoutValidation()
+                    .Calling(c => c.FileWithFileProvider(null))
                     .ShouldReturn()
                     .File()
-                    .WithFileProviderOfType<CustomFileProvider>();
-            }, "When calling FileWithFileProvider action in MvcController expected file result FileProvider to be the same as the provided one, but instead received different result.");
+                    .WithFileProviderOfType<IFileProvider>();
+            }, "When calling FileWithFileProvider action in MvcController expected file result FileProvider to be of IFileProvider type, but instead received CustomFileProvider.");
         }
 
         [Fact]

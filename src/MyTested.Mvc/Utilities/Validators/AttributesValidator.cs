@@ -1,7 +1,7 @@
 ﻿namespace MyTested.Mvc.Utilities.Validators
 {
     using Builders.Attributes;
-    using Common.Extensions;
+    using Internal.Extensions;
     using System;
     using System.Collections.Generic;
     using System.Linq;

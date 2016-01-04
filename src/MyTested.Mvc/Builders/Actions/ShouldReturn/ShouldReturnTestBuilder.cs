@@ -4,7 +4,7 @@
     using System.Linq;
     using System.Reflection;
     using Base;
-    using Common.Extensions;
+    using Internal.Extensions;
     using Contracts.Actions;
     using Exceptions;
     using Utilities;

@@ -1,7 +1,7 @@
 ﻿namespace MyTested.Mvc.Builders.Actions.ShouldHave
 {
     using System.Linq;
-    using Common.Extensions;
+    using Internal.Extensions;
     using Contracts.And;
     using Contracts.Models;
     using Exceptions;

@@ -4,7 +4,7 @@
     using Utilities.Validators;
     using Microsoft.AspNet.Mvc;
     using System.Collections.Generic;
-    using Common.Extensions;
+    using Internal.Extensions;
     using Exceptions;
 
     /// <summary>

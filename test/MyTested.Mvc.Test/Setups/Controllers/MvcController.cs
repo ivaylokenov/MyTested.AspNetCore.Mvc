@@ -12,6 +12,8 @@
     using Newtonsoft.Json;
     using System.IO;
     using Common;    // TODO:
+    using Microsoft.AspNet.FileProviders;
+    using Microsoft.AspNet.Http.Internal;
     [Authorize(Roles = "Admin,Moderator" /*Users = "John,George"*/)]
     [Route("/api/test")]
     // TODO: [RoutePrefix("/api/test")]
@@ -224,14 +226,14 @@
 
         public IActionResult FileWithStream()
         {
-            return this.File(new MemoryStream(new byte[] { 1, 2, 3 }), ContentType.ApplicationJson);
+            return this.File(new MemoryStream(new byte[] { 1, 2, 3 }), ContentType.ApplicationOctetStream);
         }
 
-        public IActionResult FileWithFileProvider()
+        public IActionResult FileWithFileProvider(IFileProvider fileProvider)
         {
             return new VirtualFileResult("Test", ContentType.ApplicationJson)
             {
-                FileProvider = new CustomFileProvider()
+                FileProvider = fileProvider ?? new CustomFileProvider()
             };
         }
 
@@ -438,12 +440,7 @@
         {
             return this.Json(this.responseModel);
         }
-
-        //public IActionResult JsonWithEncodingAction()
-        //{
-        //    return this.Json(this.responseModel, new JsonSerializerSettings(), Encoding.ASCII);
-        //}
-
+        
         public IActionResult JsonWithSettingsAction()
         {
             return this.Json(this.responseModel, TestObjectFactory.GetJsonSerializerSettings());

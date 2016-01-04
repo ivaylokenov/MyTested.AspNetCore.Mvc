@@ -2,7 +2,7 @@
 {
     using System;
     using System.Linq;
-    using Common.Extensions;
+    using Internal.Extensions;
     using Contracts.ExceptionErrors;
     using Exceptions;
     using Utilities;

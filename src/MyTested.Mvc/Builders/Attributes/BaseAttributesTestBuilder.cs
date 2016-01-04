@@ -6,7 +6,7 @@
     using System.Linq;
     using System;
     using Utilities;
-    using Common.Extensions;
+    using Internal.Extensions;
     using Microsoft.AspNet.Authorization;
 
     /// <summary>

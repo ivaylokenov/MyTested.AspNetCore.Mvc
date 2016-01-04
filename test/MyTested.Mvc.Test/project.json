@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0-*",
+  "version": "0.5.0",
   "description": "MyTested.Mvc.Tests Class Library",
   "authors": [ "Ivaylo Kenov" ],
   "tags": [ "" ],
@@ -7,17 +7,16 @@
   "licenseUrl": "",
 
   "dependencies": {
-    "xunit": "2.1.0",
-    "xunit.runner.dnx": "2.1.0-rc1-build204",
-    "StyleCop.Analyzers": "1.0.0-rc2",
+    "xunit": "2.2.0-beta1-build3239",
+    "xunit.runner.aspnet": "2.0.0-aspnet-rc2-16023",
     "MyTested.Mvc": {
-      "version": "0.1.0",
+      "version": "0.5.0",
       "type": "build"
     }
   },
 
   "commands": {
-    "test": "xunit.runner.dnx"
+    "test": "xunit.runner.aspnet"
   },
 
   "frameworks": {

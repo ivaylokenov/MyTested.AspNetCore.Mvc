@@ -1,7 +1,7 @@
 ﻿namespace MyTested.Mvc.Builders.Uris
 {
     using System;
-    using Common;
+    using Internal;
     using Contracts.Uris;
 
     using SystemUriBuilder = System.UriBuilder;

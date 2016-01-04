@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Common.Extensions
+﻿namespace MyTested.Mvc.Internal.Extensions
 {
     using System;
     using System.Collections.Generic;

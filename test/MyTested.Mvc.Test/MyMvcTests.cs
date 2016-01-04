@@ -7,15 +7,18 @@
     using Setups.Services;
     using System.Linq;
     using Xunit;
-    using Common;
+    using Internal;
     using Microsoft.AspNet.Mvc.Internal;
-    using Microsoft.Extensions.OptionsModel;
+    using Microsoft.Extensions.Options;
     using Microsoft.AspNet.Mvc;
     using System;
     using Setups.Startups;
 
+    [Collection(ServiceBasedTests)]
     public class MyMvcTests
     {
+        public const string ServiceBasedTests = "ServiceBasedTests";
+
         // TODO: move tests
 
         //[Fact]

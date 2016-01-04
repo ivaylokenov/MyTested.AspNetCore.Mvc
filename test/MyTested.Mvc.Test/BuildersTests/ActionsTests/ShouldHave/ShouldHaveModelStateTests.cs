@@ -155,7 +155,7 @@
         {
             var requestModelWithErrors = TestObjectFactory.GetRequestModelWithErrors();
 
-            Test.AssertException<ModelErrorAssertionException>(() =>
+            Test.AssertException<InvalidOperationException>(() =>
             {
                 MyMvc
                     .Controller<MvcController>()

@@ -2,7 +2,7 @@
 {
     using System;
     using Base;
-    using Common.Extensions;
+    using Internal.Extensions;
     using Contracts.Actions;
     using Contracts.ExceptionErrors;
     using ExceptionErrors;

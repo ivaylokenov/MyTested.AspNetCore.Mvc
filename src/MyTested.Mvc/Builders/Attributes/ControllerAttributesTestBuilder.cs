@@ -4,7 +4,7 @@
     using Contracts.Attributes;
     using System;
     using Exceptions;
-    using Common.Extensions;
+    using Internal.Extensions;
     using Microsoft.AspNet.Authorization;
 
     /// <summary>

@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Common
+﻿namespace MyTested.Mvc.Internal
 {
     /// <summary>
     /// Mocked URI object.

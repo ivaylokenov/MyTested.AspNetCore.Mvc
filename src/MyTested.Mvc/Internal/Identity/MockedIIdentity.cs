@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Common.Identity
+﻿namespace MyTested.Mvc.Internal.Identity
 {
     using System.Security.Principal;
 

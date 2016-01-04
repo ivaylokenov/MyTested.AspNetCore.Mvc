@@ -5,7 +5,7 @@
     using System.Globalization;
     using System.Runtime.Serialization.Formatters;
     using Base;
-    using Common.Extensions;
+    using Internal.Extensions;
     using Exceptions;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;

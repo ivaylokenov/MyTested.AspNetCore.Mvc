@@ -6,7 +6,7 @@
     using Contracts.Uris;
     using System;
     using Utilities.Validators;
-    using Common.Extensions;
+    using Internal.Extensions;
     using Exceptions;
 
     /// <summary>

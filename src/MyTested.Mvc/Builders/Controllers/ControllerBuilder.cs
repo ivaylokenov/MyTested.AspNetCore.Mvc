@@ -12,15 +12,22 @@
     using System.Linq.Expressions;
     using System.Threading.Tasks;
     using Actions;
-    using Common;
+    using Internal;
     using Exceptions;
-    using Common.Extensions;
+    using Internal.Extensions;
     using Microsoft.AspNet.Mvc.Infrastructure;
     using Microsoft.Extensions.DependencyInjection;
-    using Common.Identity;
+    using Internal.Identity;
     using System.Security.Claims;
     using Contracts;
-
+    using Microsoft.AspNet.Mvc.ModelBinding.Metadata;
+    using Microsoft.AspNet.Routing;
+    using Microsoft.AspNet.Mvc.Abstractions;
+    using Microsoft.AspNet.Mvc.ModelBinding;
+    using Microsoft.AspNet.Mvc.ViewFeatures;
+    using Microsoft.AspNet.Mvc.ModelBinding.Validation;
+    using Microsoft.Extensions.Options;
+    using Internal.Http;
     /// <summary>
     /// Used for building the action which will be tested.
     /// </summary>
@@ -41,49 +48,7 @@
         public ControllerBuilder(TController controllerInstance)
         {
             this.aggregatedDependencies = new Dictionary<Type, object>();
-
             this.Controller = controllerInstance;
-
-            // TODO: for real this is how we configure controller?
-            //var detailsProviders = new IMetadataDetailsProvider[]
-            //{
-            //    new DefaultBindingMetadataProvider(new ModelBindingMessageProvider
-            //    {
-            //        MissingBindRequiredValueAccessor = name => $"A value for the '{ name }' property was not provided.",
-            //        MissingKeyOrValueAccessor = () => $"A value is required.",
-            //        ValueMustNotBeNullAccessor = value => $"The value '{ value }' is invalid.",
-            //    }),
-            //    new DefaultValidationMetadataProvider(),
-            //    new DataAnnotationsMetadataProvider(),
-            //    // new DataMemberRequiredBindingMetadataProvider(), TODO: not available in version 8 but it is in the source code of MVC
-            //};
-
-            //var compositeDetailsProvider = new DefaultCompositeMetadataDetailsProvider(detailsProviders);
-
-            //var metadataProvider = new DefaultModelMetadataProvider(compositeDetailsProvider);
-            //var httpContext = new DefaultHttpContext();
-            //var actionContext = new ActionContext(httpContext, new RouteData(), new ActionDescriptor());
-
-            //var viewData = new ViewDataDictionary(metadataProvider, new ModelStateDictionary());
-            //var tempData = new TempDataDictionary(new HttpContextAccessor(), new SessionStateTempDataProvider());
-
-            //var bindingContext = new ActionBindingContext()
-            //{
-            //    ModelBinder = new GenericModelBinder(),
-            //    ValueProvider = new CompositeValueProvider(new IValueProvider[0]),
-            //    InputFormatters = new List<IInputFormatter>(),
-            //    ValidatorProvider = new DataAnnotationsModelValidatorProvider(
-            //        options: null,
-            //        stringLocalizerFactory: null)
-            //};
-
-            //this.Controller.ActionContext = actionContext;
-            //this.Controller.BindingContext = bindingContext;
-            //this.Controller.MetadataProvider = metadataProvider;
-            //this.Controller.ViewData = viewData;
-            //this.Controller.TempData = tempData;
-            //this.Controller.ObjectValidator = new DefaultObjectValidator(new IExcludeTypeValidationFilter[0], metadataProvider);
-
             this.enabledValidation = true;
         }
 
@@ -412,13 +377,52 @@
 
         private void PrepareController()
         {
-            this.controller.ActionContext = new ActionContext
+            this.controller.ControllerContext = new ControllerContext
             {
-                HttpContext = new DefaultHttpContext
+                HttpContext = new MockedHttpContext
                 {
                     User = MockedClaimsPrincipal.CreateUnauthenticated(),
-                }
+                },
+                ValidatorProviders = new[]
+                {
+                    new DataAnnotationsModelValidatorProvider(
+                        new ValidationAttributeAdapterProvider(),
+                        new OptionsManager<MvcDataAnnotationsLocalizationOptions>(Enumerable.Empty<IConfigureOptions<MvcDataAnnotationsLocalizationOptions>>()),
+                        stringLocalizerFactory: null),
+                },
             };
+
+            // TODO: extract to or put into injection system
+            var detailsProviders = new IMetadataDetailsProvider[]
+            {
+                new DefaultBindingMetadataProvider(new ModelBindingMessageProvider
+                {
+                    MissingBindRequiredValueAccessor = name => $"A value for the '{ name }' property was not provided.",
+                    MissingKeyOrValueAccessor = () => $"A value is required.",
+                    ValueMustNotBeNullAccessor = value => $"The value '{ value }' is invalid.",
+                }),
+                new DefaultValidationMetadataProvider(),
+                new DataAnnotationsMetadataProvider(),
+                // new DataMemberRequiredBindingMetadataProvider(), TODO: not available in version 8 but it is in the source code of MVC
+            };
+
+            var compositeDetailsProvider = new DefaultCompositeMetadataDetailsProvider(detailsProviders);
+
+            var metadataProvider = new DefaultModelMetadataProvider(compositeDetailsProvider);
+
+            this.controller.MetadataProvider = metadataProvider;
+            this.controller.ObjectValidator = new DefaultObjectValidator(metadataProvider);
+
+            //var httpContext = new DefaultHttpContext();
+            //var actionContext = new ActionContext(httpContext, new RouteData(), new ActionDescriptor());
+
+            //var viewData = new ViewDataDictionary(metadataProvider, new ModelStateDictionary());
+            //var tempData = new TempDataDictionary(this.controller.HttpContext, new SessionStateTempDataProvider());
+
+            //this.Controller.MetadataProvider = metadataProvider;
+            //this.Controller.ViewData = viewData;
+            //this.Controller.TempData = tempData;
+            //this.Controller.ObjectValidator = new DefaultObjectValidator(metadataProvider);
 
             // TODO: add
             //this.controller.Request = this.HttpRequest;

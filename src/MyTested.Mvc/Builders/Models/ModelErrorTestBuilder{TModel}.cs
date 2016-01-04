@@ -2,7 +2,7 @@
 {
     using System;
     using System.Linq.Expressions;
-    using Common.Extensions;
+    using Internal.Extensions;
     using Contracts.Models;
     using Exceptions;
     using Utilities;

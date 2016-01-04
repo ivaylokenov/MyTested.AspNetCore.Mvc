@@ -3,8 +3,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Security.Principal;
-    using Common.Extensions;
-    using Common.Identity;
+    using Internal.Extensions;
+    using Internal.Identity;
     using Contracts;
     using System.Security.Claims;
     /// <summary>

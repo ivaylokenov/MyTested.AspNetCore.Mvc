@@ -2,7 +2,7 @@
 {
     using System;
     using Base;
-    using Common.Extensions;
+    using Internal.Extensions;
     using Contracts.Models;
     using Exceptions;
     using Utilities;
@@ -50,10 +50,8 @@
 
             if (!objectResultIsAssignable)
             {
-                if (actionResultType.GetTypeInfo().IsGenericType)
-                {
-                    actualResponseDataType = actionResultType.GetGenericArguments()[0];
-                }
+                // JsonResult does not inherit ObjectResult
+                actualResponseDataType = (this.ActionResult as JsonResult)?.Value?.GetType();
             }
             else
             {
@@ -67,7 +65,7 @@
             if (!responseDataTypeIsAssignable)
             {
                 throw new ResponseModelAssertionException(string.Format(
-                    "When calling {0} action in {1} expected response model to be a {2}, but instead received a {3}.",
+                    "When calling {0} action in {1} expected response model to be of {2} type, but instead received {3}.",
                     this.ActionName,
                     this.Controller.GetName(),
                     typeof(TResponseModel).ToFriendlyTypeName(),

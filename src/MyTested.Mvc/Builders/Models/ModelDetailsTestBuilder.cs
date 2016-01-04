@@ -1,7 +1,7 @@
 ﻿namespace MyTested.Mvc.Builders.Models
 {
     using System;
-    using Common.Extensions;
+    using Internal.Extensions;
     using Contracts.Models;
     using Exceptions;
     using Utilities;

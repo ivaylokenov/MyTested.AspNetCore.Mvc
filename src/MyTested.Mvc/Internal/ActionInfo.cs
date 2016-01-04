@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Common
+﻿namespace MyTested.Mvc.Internal
 {
     using System;
     using System.Collections.Generic;

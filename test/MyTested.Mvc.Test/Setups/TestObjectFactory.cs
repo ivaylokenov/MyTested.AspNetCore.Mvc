@@ -12,6 +12,8 @@
     using Microsoft.Extensions.DependencyInjection;
     using Services;
     using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNet.FileProviders;
+    using Common;
     public static class TestObjectFactory
     {
         public const string MediaType = "application/json";
@@ -140,6 +142,11 @@
                 new ResponseModel { IntegerValue = 1, StringValue = "Test" },
                 new ResponseModel { IntegerValue = 2, StringValue = "Another Test" }
             };
+        }
+
+        public static IFileProvider GetFileProvider()
+        {
+            return new CustomFileProvider();
         }
 
         public static JsonSerializerSettings GetJsonSerializerSettings()

@@ -6,7 +6,7 @@
     using System.Collections.Generic;
     using Exceptions;
     using Base;
-    using Common.Extensions;
+    using Internal.Extensions;
     using Utilities.Validators;
     using ShouldHave;
     using ShouldReturn;

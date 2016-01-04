@@ -10,7 +10,7 @@
     using System.IO;
     using System.Linq;
     using Exceptions;
-    using Common.Extensions;
+    using Internal.Extensions;
 
     /// <summary>
     /// Used for testing file result.

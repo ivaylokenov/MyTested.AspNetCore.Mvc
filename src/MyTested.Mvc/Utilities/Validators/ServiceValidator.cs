@@ -1,6 +1,6 @@
 ﻿namespace MyTested.Mvc.Utilities.Validators
 {
-    using MyTested.Mvc.Common;
+    using MyTested.Mvc.Internal;
 
     public static class ServiceValidator
     {

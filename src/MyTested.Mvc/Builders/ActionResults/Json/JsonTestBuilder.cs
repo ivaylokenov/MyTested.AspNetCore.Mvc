@@ -2,13 +2,14 @@
 {
     using System;
     using System.Text;
-    using Common.Extensions;
+    using Internal.Extensions;
     using Exceptions;
     using Models;
     using Newtonsoft.Json;
-    using Utilities.Validators;
     using Contracts.ActionResults.Json;
     using Microsoft.AspNet.Mvc;
+    using Internal;
+    using Microsoft.Extensions.Options;
 
     /// <summary>
     /// Used for testing JSON results.
@@ -30,39 +31,6 @@
             JsonResult actionResult)
             : base(controller, actionName, caughtException, actionResult)
         {
-        }
-
-        /// <summary>
-        /// Tests whether JSON result has the default UTF8 encoding.
-        /// </summary>
-        /// <returns>The same JSON test builder.</returns>
-        public IAndJsonTestBuilder WithDefaultEncoding()
-        {
-            return this.WithEncoding(new UTF8Encoding(false, true));
-        }
-
-        /// <summary>
-        /// Tests whether JSON result has the provided encoding.
-        /// </summary>
-        /// <param name="encoding">Expected encoding to test with.</param>
-        /// <returns>The same JSON test builder.</returns>
-        public IAndJsonTestBuilder WithEncoding(Encoding encoding)
-        {
-            RuntimeBinderValidator.ValidateBinding(() =>
-            {
-                var actualEncoding = this.GetActionResultAsDynamic().Encoding as Encoding;
-                if (!encoding.Equals(actualEncoding))
-                {
-                    throw new JsonResultAssertionException(string.Format(
-                        "When calling {0} action in {1} expected JSON result encoding to be {2}, but instead received {3}.",
-                        this.ActionName,
-                        this.Controller.GetName(),
-                        this.GetEncodingName(encoding),
-                        this.GetEncodingName(actualEncoding)));
-                }
-            });
-
-            return this;
         }
 
         /// <summary>
@@ -92,18 +60,16 @@
         public IAndJsonTestBuilder WithJsonSerializerSettings(
             Action<IJsonSerializerSettingsTestBuilder> jsonSerializerSettingsBuilder)
         {
-            RuntimeBinderValidator.ValidateBinding(() =>
-            {
-                var actualJsonSerializerSettings =
-                this.GetActionResultAsDynamic().SerializerSettings as JsonSerializerSettings; // TODO: should not work, since the property will be available next version
+            var actualJsonSerializerSettings = this.ActionResult.SerializerSettings
+                ?? this.GetServiceDefaultSerializerSettings()
+                ?? new JsonSerializerSettings();
 
-                var newJsonSerializerSettingsTestBuilder = new JsonSerializerSettingsTestBuilder(this.Controller, this.ActionName);
-                jsonSerializerSettingsBuilder(newJsonSerializerSettingsTestBuilder);
-                var expectedJsonSerializerSettings = newJsonSerializerSettingsTestBuilder.GetJsonSerializerSettings();
+            var newJsonSerializerSettingsTestBuilder = new JsonSerializerSettingsTestBuilder(this.Controller, this.ActionName);
+            jsonSerializerSettingsBuilder(newJsonSerializerSettingsTestBuilder);
+            var expectedJsonSerializerSettings = newJsonSerializerSettingsTestBuilder.GetJsonSerializerSettings();
 
-                var validations = newJsonSerializerSettingsTestBuilder.GetJsonSerializerSettingsValidations();
-                validations.ForEach(v => v(expectedJsonSerializerSettings, actualJsonSerializerSettings));
-            });
+            var validations = newJsonSerializerSettingsTestBuilder.GetJsonSerializerSettingsValidations();
+            validations.ForEach(v => v(expectedJsonSerializerSettings, actualJsonSerializerSettings));
 
             return this;
         }
@@ -117,11 +83,9 @@
             return this;
         }
 
-        private string GetEncodingName(Encoding encoding)
+        private JsonSerializerSettings GetServiceDefaultSerializerSettings()
         {
-            var fullEncodingName = encoding.ToString();
-            var lastIndexOfDot = fullEncodingName.LastIndexOf(".", StringComparison.Ordinal);
-            return fullEncodingName.Substring(lastIndexOfDot + 1);
+            return TestServiceProvider.GetService<IOptions<MvcJsonOptions>>()?.Value?.SerializerSettings; // TODO: check the ?. operator
         }
 
         private void PopulateFullJsonSerializerSettingsTestBuilder(
@@ -129,7 +93,10 @@
             JsonSerializerSettings jsonSerializerSettings = null)
         {
             var contractResolver = jsonSerializerSettings != null ? jsonSerializerSettings.ContractResolver : null;
-            jsonSerializerSettings = jsonSerializerSettings ?? new JsonSerializerSettings();
+            jsonSerializerSettings = jsonSerializerSettings
+                ?? this.GetServiceDefaultSerializerSettings()
+                ?? new JsonSerializerSettings();
+
             jsonSerializerSettingsTestBuilder
                 .WithCulture(jsonSerializerSettings.Culture)
                 .WithContractResolver(contractResolver)

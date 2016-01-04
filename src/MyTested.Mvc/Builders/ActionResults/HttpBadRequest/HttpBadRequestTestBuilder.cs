@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Base;
-    using Common.Extensions;
+    using Internal.Extensions;
     using Contracts.Base;
     using Contracts.ActionResults.HttpBadRequest;
     using Contracts.Models;

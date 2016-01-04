@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Linq.Expressions;
     using Base;
-    using Common.Extensions;
+    using Internal.Extensions;
     using Contracts.Models;
     using Exceptions;
     using Microsoft.AspNet.Mvc;

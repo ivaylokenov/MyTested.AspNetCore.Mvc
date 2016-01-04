@@ -190,6 +190,11 @@
         /// <returns>Transformed name as string.</returns>
         public static string ToFriendlyTypeName(this Type type)
         {
+            if (type == null)
+            {
+                return "null";
+            }
+
             if (!type.GetTypeInfo().IsGenericType)
             {
                 return type.Name;

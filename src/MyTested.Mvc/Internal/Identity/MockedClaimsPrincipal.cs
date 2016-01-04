@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Common.Identity
+﻿namespace MyTested.Mvc.Internal.Identity
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -45,7 +45,7 @@
         /// <returns>Unauthenticated IPrincipal.</returns>
         public static ClaimsPrincipal CreateUnauthenticated()
         {
-            return new ClaimsPrincipal(new MockedIIdentity());
+            return new ClaimsPrincipal(new MockedIIdentity()); // TODO: make singleton
         }
 
         /// <summary>
@@ -54,7 +54,7 @@
         /// <returns>Authenticated IPrincipal.</returns>
         public static ClaimsPrincipal CreateDefaultAuthenticated()
         {
-            return new ClaimsPrincipal(new MockedIIdentity(DefaultUsername, DefaultIPrincipalType, true));
+            return new ClaimsPrincipal(new MockedIIdentity(DefaultUsername, DefaultIPrincipalType, true)); // TODO: make singleton
         }
 
         /// <summary>

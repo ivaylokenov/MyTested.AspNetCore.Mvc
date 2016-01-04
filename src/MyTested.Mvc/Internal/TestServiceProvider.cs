@@ -1,7 +1,9 @@
-﻿namespace MyTested.Mvc.Common
+﻿namespace MyTested.Mvc.Internal
 {
+    using Logging;
     using Microsoft.AspNet.Mvc.Infrastructure;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
     using Utilities;
@@ -19,6 +21,7 @@
         public static void Setup(Action<IServiceCollection> servicesAction)
         {
             serviceCollection = new ServiceCollection();
+            serviceCollection.AddSingleton<ILoggerFactory>(MockedLoggerFactory.Create());
             serviceCollection.AddMvc();
 
             if (servicesAction != null)
@@ -31,7 +34,8 @@
             where TStartup : class, new()
         {
             serviceCollection = new ServiceCollection();
-            
+            serviceCollection.AddSingleton<ILoggerFactory>(MockedLoggerFactory.Create()); // TODO: check if needed
+
             var configureAction = Reflection.CreateDelegateFromMethod<Action<IServiceCollection>>(
                 new TStartup(),
                 m => m.Name == ConfigureServicesMethodName && m.ReturnType == typeof(void));

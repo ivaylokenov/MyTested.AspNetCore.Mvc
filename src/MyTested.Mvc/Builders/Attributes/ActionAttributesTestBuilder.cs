@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Common.Extensions;
+    using Internal.Extensions;
     using Contracts.Attributes;
     using Exceptions;
     using Microsoft.AspNet.Mvc;

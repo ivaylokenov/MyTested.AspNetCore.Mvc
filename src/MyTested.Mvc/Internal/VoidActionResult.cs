@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Common
+﻿namespace MyTested.Mvc.Internal
 {
     /// <summary>
     /// Represents void action result in generic test builder.
@@ -11,7 +11,7 @@
         /// <returns>Void action result.</returns>
         public static VoidActionResult Create()
         {
-            return new VoidActionResult();
+            return new VoidActionResult(); // TODO: make singleton
         }
     }
 }

@@ -6,7 +6,7 @@
     using Microsoft.AspNet.Mvc;
     using System.Collections.Generic;
     using Utilities.Validators;
-    using Common.Extensions;
+    using Internal.Extensions;
     using Exceptions;
     using Contracts.Attributes;
     using System;

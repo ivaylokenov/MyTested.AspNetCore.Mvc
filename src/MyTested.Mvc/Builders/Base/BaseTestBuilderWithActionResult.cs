@@ -7,10 +7,10 @@
     using System;
     using System.Collections.Generic;
     using Exceptions;
-    using Common.Extensions;
+    using Internal.Extensions;
     using Contracts.And;
     using And;
-    using Common;
+    using Internal;
 
     /// <summary>
     /// Base class for all test builders with action result.

@@ -5,7 +5,7 @@
     using Microsoft.AspNet.Mvc;
     using Builders.Controllers;
     using Microsoft.Extensions.DependencyInjection;
-    using Common;
+    using Internal;
 
     /// <summary>
     /// Starting point of the testing framework, which provides a way to specify the test case.
