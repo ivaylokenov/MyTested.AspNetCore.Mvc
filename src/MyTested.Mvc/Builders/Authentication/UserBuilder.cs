@@ -1,16 +1,16 @@
-﻿namespace MyTested.Mvc.Builders
+﻿namespace MyTested.Mvc.Builders.Authentication
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Security.Principal;
     using Internal.Extensions;
     using Internal.Identity;
-    using Contracts;
+    using Contracts.Authentication;
     using System.Security.Claims;
+
     /// <summary>
     /// Used for building mocked Controller.User object.
     /// </summary>
-    public class UserBuilder : IUserBuilder
+    public class UserBuilder : IAndUserBuilder
     {
         private readonly ICollection<string> constructedRoles;
 
@@ -30,7 +30,7 @@
         /// </summary>
         /// <param name="username">The username to set.</param>
         /// <returns>The same user builder.</returns>
-        public IUserBuilder WithUsername(string username)
+        public IAndUserBuilder WithUsername(string username)
         {
             this.constructedUsername = username;
             return this;
@@ -41,7 +41,7 @@
         /// </summary>
         /// <param name="authenticationType">The authentication type to set.</param>
         /// <returns>The same user builder.</returns>
-        public IUserBuilder WithAuthenticationType(string authenticationType)
+        public IAndUserBuilder WithAuthenticationType(string authenticationType)
         {
             this.constructedAuthenticationType = authenticationType;
             return this;
@@ -52,7 +52,7 @@
         /// </summary>
         /// <param name="role">The user role to add.</param>
         /// <returns>The same user builder.</returns>
-        public IUserBuilder InRole(string role)
+        public IAndUserBuilder InRole(string role)
         {
             this.constructedRoles.Add(role);
             return this;
@@ -63,7 +63,7 @@
         /// </summary>
         /// <param name="roles">Collection of roles to add.</param>
         /// <returns>The same user builder.</returns>
-        public IUserBuilder InRoles(IEnumerable<string> roles)
+        public IAndUserBuilder InRoles(IEnumerable<string> roles)
         {
             roles.ForEach(role => this.constructedRoles.Add(role));
             return this;
@@ -74,9 +74,18 @@
         /// </summary>
         /// <param name="roles">Roles to add.</param>
         /// <returns>The same user builder.</returns>
-        public IUserBuilder InRoles(params string[] roles)
+        public IAndUserBuilder InRoles(params string[] roles)
         {
             return this.InRoles(roles.AsEnumerable());
+        }
+
+        /// <summary>
+        /// AndAlso method for better readability when building user.
+        /// </summary>
+        /// <returns>The same user builder.</returns>
+        public IUserBuilder AndAlso()
+        {
+            return this;
         }
 
         internal ClaimsPrincipal GetUser()

@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Builders.Contracts
+﻿namespace MyTested.Mvc.Builders.Contracts.Authentication
 {
     using System.Collections.Generic;
 
@@ -12,34 +12,34 @@
         /// </summary>
         /// <param name="username">The username to set.</param>
         /// <returns>The same user builder.</returns>
-        IUserBuilder WithUsername(string username);
+        IAndUserBuilder WithUsername(string username);
 
         /// <summary>
         /// Used for setting authentication type to the mocked user object.
         /// </summary>
         /// <param name="authenticationType">The authentication type to set.</param>
         /// <returns>The same user builder.</returns>
-        IUserBuilder WithAuthenticationType(string authenticationType);
+        IAndUserBuilder WithAuthenticationType(string authenticationType);
 
         /// <summary>
         /// Used for adding user role to the mocked user object.
         /// </summary>
         /// <param name="role">The user role to add.</param>
         /// <returns>The same user builder.</returns>
-        IUserBuilder InRole(string role);
+        IAndUserBuilder InRole(string role);
 
         /// <summary>
         /// Used for adding multiple user roles to the mocked user object.
         /// </summary>
         /// <param name="roles">Collection of roles to add.</param>
         /// <returns>The same user builder.</returns>
-        IUserBuilder InRoles(IEnumerable<string> roles);
+        IAndUserBuilder InRoles(IEnumerable<string> roles);
 
         /// <summary>
         /// Used for adding multiple user roles to the mocked user object.
         /// </summary>
         /// <param name="roles">Roles to add.</param>
         /// <returns>The same user builder.</returns>
-        IUserBuilder InRoles(params string[] roles);
+        IAndUserBuilder InRoles(params string[] roles);
     }
 }

@@ -11,6 +11,7 @@
     using ActionResults.File;
     using System.Net;
     using ActionResults.LocalRedirect;
+    using ActionResults.Challenge;
 
     /// <summary>
     /// Used for testing action returned result.
@@ -48,6 +49,12 @@
         /// </summary>
         /// <returns>Ok test builder.</returns>
         IOkTestBuilder Ok();
+
+        /// <summary>
+        /// Tests whether action result is ChallengeResult.
+        /// </summary>
+        /// <returns>Challenge test builder.</returns>
+        IChallengeTestBuilder Challenge();
 
         /// <summary>
         /// Tests whether action result is CreatedNegotiatedContentResult{T} or CreatedAtRouteNegotiatedContentResult{T}.

@@ -8,7 +8,7 @@
     using Builders.Contracts.Controllers;
     using Builders.Contracts.Actions;
     using System.Collections.Generic;
-    using Builders.Contracts;
+    using Builders.Contracts.Authentication;
 
     /// <summary>
     /// Used for building the action which will be tested.
@@ -84,7 +84,7 @@
         /// </summary>
         /// <param name="userBuilder">User builder to create mocked user object.</param>
         /// <returns>The same controller builder.</returns>
-        IAndControllerBuilder<TController> WithAuthenticatedUser(Action<IUserBuilder> userBuilder);
+        IAndControllerBuilder<TController> WithAuthenticatedUser(Action<IAndUserBuilder> userBuilder);
 
         /// <summary>
         /// Indicates which action should be invoked and tested.

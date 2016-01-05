@@ -1,7 +1,7 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.ActionResults.Json
 {
     /// <summary>
-    /// Used for adding AndAlso() method to the the JSON response tests.
+    /// Used for adding AndAlso() method to the JSON response tests.
     /// </summary>
     public interface IAndJsonTestBuilder : IJsonTestBuilder
     {

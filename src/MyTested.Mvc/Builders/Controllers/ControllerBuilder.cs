@@ -5,7 +5,6 @@
     using Contracts.Controllers;
     using Microsoft.AspNet.Mvc;
     using Microsoft.AspNet.Http;
-    using Microsoft.AspNet.Http.Internal;
     using Utilities;
     using Contracts.Actions;
     using System.Linq;
@@ -15,19 +14,15 @@
     using Internal;
     using Exceptions;
     using Internal.Extensions;
-    using Microsoft.AspNet.Mvc.Infrastructure;
-    using Microsoft.Extensions.DependencyInjection;
     using Internal.Identity;
-    using System.Security.Claims;
-    using Contracts;
     using Microsoft.AspNet.Mvc.ModelBinding.Metadata;
-    using Microsoft.AspNet.Routing;
-    using Microsoft.AspNet.Mvc.Abstractions;
     using Microsoft.AspNet.Mvc.ModelBinding;
-    using Microsoft.AspNet.Mvc.ViewFeatures;
     using Microsoft.AspNet.Mvc.ModelBinding.Validation;
     using Microsoft.Extensions.Options;
     using Internal.Http;
+    using Contracts.Authentication;
+    using Authentication;
+
     /// <summary>
     /// Used for building the action which will be tested.
     /// </summary>
@@ -176,7 +171,7 @@
         /// </summary>
         /// <param name="userBuilder">User builder to create mocked user object.</param>
         /// <returns>The same controller builder.</returns>
-        public IAndControllerBuilder<TController> WithAuthenticatedUser(Action<IUserBuilder> userBuilder)
+        public IAndControllerBuilder<TController> WithAuthenticatedUser(Action<IAndUserBuilder> userBuilder)
         {
             var newUserBuilder = new UserBuilder();
             userBuilder(newUserBuilder);

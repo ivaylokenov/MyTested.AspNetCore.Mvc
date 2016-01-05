@@ -488,7 +488,7 @@
         }
 
         [Fact]
-        public void AreDeepEqualShouldWorkCorrectlyWithCollections()
+        public void AreDeeplyEqualShouldWorkCorrectlyWithCollections()
         {
             Assert.True(Reflection.AreDeeplyEqual(
                 new List<NestedModel>
@@ -577,7 +577,7 @@
             };
 
             Assert.True(Reflection.AreDeeplyEqual(listOfNestedModels, arrayOfNestedModels));
-
+            
             Assert.True(Reflection.AreDeeplyEqual(
                 new NestedCollection
                 {
@@ -820,6 +820,66 @@
             Assert.False(Reflection.AreDeeplyEqual(new List<int> { 1, 2, 3, 4 }, new[] { 1, 2, 3 }));
             Assert.False(Reflection.AreDeeplyEqual(new List<int>(), new object()));
             Assert.False(Reflection.AreDeeplyEqual(new object(), new List<int>()));
+        }
+
+        [Fact]
+        public void AreDeeplyEqualShouldWorkCorrectlyWithDictionaries()
+        {
+            var firstDictionary = new Dictionary<string, string>
+            {
+                { "Key", "Value" },
+                { "AnotherKey", "AnotherValue" },
+            };
+
+            var secondDictionary = new Dictionary<string, string>
+            {
+                { "Key", "Value" },
+                { "AnotherKey", "AnotherValue" },
+            };
+
+            Assert.True(Reflection.AreDeeplyEqual(firstDictionary, secondDictionary));
+
+            firstDictionary = new Dictionary<string, string>
+            {
+                { "Key", "Value" },
+                { "AnotherKey", "Value" },
+            };
+
+            secondDictionary = new Dictionary<string, string>
+            {
+                { "Key", "Value" },
+                { "AnotherKey", "AnotherValue" },
+            };
+
+            Assert.False(Reflection.AreDeeplyEqual(firstDictionary, secondDictionary));
+
+            var firstDictionaryWithObject = new Dictionary<string, NestedModel>
+            {
+                { "Key", new NestedModel { Integer = 1, String = "Text" } },
+                { "AnotherKey", new NestedModel { Integer = 2, String = "AnotherText" } }
+            };
+
+            var secondDictionaryWithObject = new Dictionary<string, NestedModel>
+            {
+                { "Key", new NestedModel { Integer = 1, String = "Text" } },
+                { "AnotherKey", new NestedModel { Integer = 2, String = "AnotherText" } }
+            };
+
+            Assert.True(Reflection.AreDeeplyEqual(firstDictionaryWithObject, secondDictionaryWithObject));
+
+            firstDictionaryWithObject = new Dictionary<string, NestedModel>
+            {
+                { "Key", new NestedModel { Integer = 1, String = "Text" } },
+                { "AnotherKey", new NestedModel { Integer = 2, String = "Text" } }
+            };
+
+            secondDictionaryWithObject = new Dictionary<string, NestedModel>
+            {
+                { "Key", new NestedModel { Integer = 1, String = "Text" } },
+                { "AnotherKey", new NestedModel { Integer = 2, String = "AnotherText" } }
+            };
+
+            Assert.False(Reflection.AreDeeplyEqual(firstDictionaryWithObject, secondDictionaryWithObject));
         }
 
         [Fact]
