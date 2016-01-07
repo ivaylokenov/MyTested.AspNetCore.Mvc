@@ -44,7 +44,7 @@
             return this;
         }
 
-        // TODO: add to interface, add documentation
+        // TODO: add to interface, add documentation, unit tests
         public IAndChallengeTestBuilder ContainingAuthenticationSchemes(IEnumerable<string> authenticationSchemes)
         {
             AuthenticationValidator.ValidateAuthenticationSchemes(
@@ -72,6 +72,12 @@
 
         public IAndChallengeTestBuilder WithAuthenticationProperties(Action<IAuthenticationPropertiesTestBuilder> authenticationPropertiesBuilder)
         {
+            AuthenticationValidator.ValidateAuthenticationProperties(
+                this.ActionResult,
+                authenticationPropertiesBuilder,
+                this.Controller,
+                this.ActionName);
+
             return this;
         }
 

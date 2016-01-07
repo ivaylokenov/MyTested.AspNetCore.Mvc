@@ -1,6 +1,10 @@
 ﻿namespace MyTested.Mvc.Utilities.Validators
 {
+    using Builders.Authentication;
+    using Builders.Contracts.Authentication;
+    using Internal.Extensions;
     using Microsoft.AspNet.Http.Authentication;
+    using Microsoft.AspNet.Mvc;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -86,6 +90,23 @@
                     "to be the same as the provided one",
                     "instead received different result");
             }
+        }
+
+        // TODO: add documentation
+        public static void ValidateAuthenticationProperties(
+            dynamic actionResult,
+            Action<IAuthenticationPropertiesTestBuilder> authenticationPropertiesBuilder,
+            Controller controller,
+            string actionName)
+        {
+            var actualAuthenticationProperties = TryGetAuthenticationProperties(actionResult) ?? new AuthenticationProperties();
+
+            var newAuthenticationPropertiesTestBuilder = new AuthenticationPropertiesTestBuilder(controller, actionName);
+            authenticationPropertiesBuilder(newAuthenticationPropertiesTestBuilder);
+            var expectedAuthenticationProperties = newAuthenticationPropertiesTestBuilder.GetAuthenticationProperties();
+
+            var validations = newAuthenticationPropertiesTestBuilder.GetAuthenticationPropertiesValidations();
+            validations.ForEach(v => v(expectedAuthenticationProperties, actualAuthenticationProperties));
         }
 
         private static IList<string> SortAuthenticationSchemes(IEnumerable<string> authenticationSchemes)

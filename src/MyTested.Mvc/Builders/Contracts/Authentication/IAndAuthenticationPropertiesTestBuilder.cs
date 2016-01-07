@@ -1,6 +1,7 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.Authentication
 {
-    public interface IAndAuthenticationPropertiesTestBuilder
+    public interface IAndAuthenticationPropertiesTestBuilder : IAuthenticationPropertiesTestBuilder
     {
+        // TODO: add AndAlso
     }
 }
