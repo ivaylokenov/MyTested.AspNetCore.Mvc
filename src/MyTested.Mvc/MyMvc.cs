@@ -17,6 +17,7 @@
             IsUsing(null);
         }
         
+        // TODO: document these, add something for IApplicationBuilder
         public static void IsUsing(Action<IServiceCollection> services)
         {
             TestServiceProvider.Setup(services);
