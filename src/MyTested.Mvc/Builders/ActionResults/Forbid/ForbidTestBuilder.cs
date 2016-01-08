@@ -1,8 +1,8 @@
-﻿namespace MyTested.Mvc.Builders.ActionResults.Challenge
+﻿namespace MyTested.Mvc.Builders.ActionResults.Forbid
 {
     using Microsoft.AspNet.Mvc;
     using Base;
-    using Contracts.ActionResults.Challenge;
+    using Contracts.ActionResults.Forbid;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -13,64 +13,64 @@
     using Internal.Extensions;
 
     /// <summary>
-    /// Used for testing challenge result.
+    /// Used for testing forbid result.
     /// </summary>
-    public class ChallengeTestBuilder
-        : BaseTestBuilderWithActionResult<ChallengeResult>, IAndChallengeTestBuilder
+    public class ForbidTestBuilder
+        : BaseTestBuilderWithActionResult<ForbidResult>, IAndForbidTestBuilder
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ChallengeTestBuilder" /> class.
+        /// Initializes a new instance of the <see cref="ForbidTestBuilder" /> class.
         /// </summary>
         /// <param name="controller">Controller on which the action will be tested.</param>
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Caught exception during the action execution.</param>
         /// <param name="actionResult">Result from the tested action.</param>
-        public ChallengeTestBuilder(
+        public ForbidTestBuilder(
             Controller controller,
             string actionName,
             Exception caughtException,
-            ChallengeResult actionResult)
+            ForbidResult actionResult)
             : base(controller, actionName, caughtException, actionResult)
         {
         }
 
-        public IAndChallengeTestBuilder ContainingAuthenticationScheme(string authenticationScheme)
+        public IAndForbidTestBuilder ContainingAuthenticationScheme(string authenticationScheme)
         {
             AuthenticationValidator.ValidateAuthenticationScheme(
                 this.ActionResult,
                 authenticationScheme,
-                this.ThrowNewChallengeResultAssertionException);
+                this.ThrowNewForbidResultAssertionException);
 
             return this;
         }
 
         // TODO: add to interface, add documentation, unit tests
-        public IAndChallengeTestBuilder ContainingAuthenticationSchemes(IEnumerable<string> authenticationSchemes)
+        public IAndForbidTestBuilder ContainingAuthenticationSchemes(IEnumerable<string> authenticationSchemes)
         {
             AuthenticationValidator.ValidateAuthenticationSchemes(
                    this.ActionResult,
                    authenticationSchemes,
-                   this.ThrowNewChallengeResultAssertionException);
+                   this.ThrowNewForbidResultAssertionException);
 
             return this;
         }
 
-        public IAndChallengeTestBuilder ContainingAuthenticationSchemes(params string[] authenticationSchemes)
+        public IAndForbidTestBuilder ContainingAuthenticationSchemes(params string[] authenticationSchemes)
         {
             return this.ContainingAuthenticationSchemes(authenticationSchemes.AsEnumerable());
         }
 
-        public IAndChallengeTestBuilder WithAuthenticationProperties(AuthenticationProperties properties)
+        public IAndForbidTestBuilder WithAuthenticationProperties(AuthenticationProperties properties)
         {
             AuthenticationValidator.ValidateAuthenticationProperties(
                 this.ActionResult,
                 properties,
-                this.ThrowNewChallengeResultAssertionException);
+                this.ThrowNewForbidResultAssertionException);
 
             return this;
         }
 
-        public IAndChallengeTestBuilder WithAuthenticationProperties(Action<IAuthenticationPropertiesTestBuilder> authenticationPropertiesBuilder)
+        public IAndForbidTestBuilder WithAuthenticationProperties(Action<IAuthenticationPropertiesTestBuilder> authenticationPropertiesBuilder)
         {
             AuthenticationValidator.ValidateAuthenticationProperties(
                 this.ActionResult,
@@ -82,15 +82,15 @@
         }
 
         /// <summary>
-        /// AndAlso method for better readability when chaining challenge tests.
+        /// AndAlso method for better readability when chaining forbid tests.
         /// </summary>
-        /// <returns>The same challenge test builder.</returns>
-        public IChallengeTestBuilder AndAlso()
+        /// <returns>The same forbid test builder.</returns>
+        public IForbidTestBuilder AndAlso()
         {
             return this;
         }
 
-        private void ThrowNewChallengeResultAssertionException(string propertyName, string expectedValue, string actualValue)
+        private void ThrowNewForbidResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new ChallengeResultAssertionException(string.Format(
                     "When calling {0} action in {1} expected challenge result {2} {3}, but {4}.",
