@@ -33,16 +33,16 @@
         //        .WithErrorMessage();
         //}
 
-        //[Fact]
-        //public void WithErrorMessageShouldNotThrowExceptionWhenResultHasCorrentErrorMessage()
-        //{
-        //    MyMvc
-        //        .Controller<MvcController>()
-        //        .Calling(c => c.BadRequestWithErrorAction())
-        //        .ShouldReturn()
-        //        .HttpBadRequest()
-        //        .WithErrorMessage("Bad request");
-        //}
+        [Fact]
+        public void WithErrorMessageShouldNotThrowExceptionWhenResultHasCorrentErrorMessage()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.BadRequestWithErrorAction())
+                .ShouldReturn()
+                .HttpBadRequest()
+                .WithErrorMessage("Bad request");
+        }
 
         //[Fact]
         //[ExpectedException(

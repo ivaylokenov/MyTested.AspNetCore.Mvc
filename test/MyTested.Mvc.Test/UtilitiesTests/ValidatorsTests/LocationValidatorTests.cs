@@ -2,10 +2,10 @@
 {
     using System;
     using Setups;
-    using Setups.Controllers;
     using Utilities.Validators;
     using Xunit;
-    
+    using Microsoft.AspNet.Mvc;
+
     public class LocationValidatorTests
     {
         [Fact]
@@ -33,84 +33,79 @@
                     TestObjectFactory.GetFailingValidationAction());
             }, "location to be URI valid instead received http://somehost!@#?Query==true");
         }
+        
+        [Fact]
+        public void ValidateUrhouldNotThrowExceptionWithProperUriWithCorrectString()
+        {
+            var actionResultWithLocation = new CreatedResult(TestObjectFactory.GetUri(), "Test");
+            
+            LocationValidator.ValidateUri(
+                actionResultWithLocation,
+                TestObjectFactory.GetUri().OriginalString,
+                TestObjectFactory.GetFailingValidationAction());
+        }
 
-        // TODO: ?
-        //[Fact]
-        //public void ValidateUrhouldNotThrowExceptionWithProperUriWithCorrectString()
-        //{
-        //    var actionResultWithLocation = new CreatedNegotiatedContentResult<int>(
-        //        TestObjectFactory.GetUri(), 5, MyMvc.Controller<MvcController>().AndProvideTheController());
+        [Fact]
+        public void ValidateUrhouldThrowExceptionWithIncorrectString()
+        {
+            Test.AssertException<NullReferenceException>(() =>
+            {
+                var actionResultWithLocation = new CreatedResult(TestObjectFactory.GetUri(), "Test");
 
-        //    LocationValidator.ValidateUri(
-        //        actionResultWithLocation,
-        //        TestObjectFactory.GetUri(),
-        //        TestObjectFactory.GetFailingValidationAction());
-        //}
+                LocationValidator.ValidateUri(
+                    actionResultWithLocation,
+                    "http://somehost.com/",
+                    TestObjectFactory.GetFailingValidationAction());
+            }, "location to be http://somehost.com/ instead received http://somehost.com/someuri/1?query=Test");
+        }
 
-        //[Fact]
-        //[ExpectedException(
-        //   typeof(NullReferenceException),
-        //   ExpectedMessage = "location to be http://somehost.com/ instead received http://somehost.com/someuri/1?query=Test")]
-        //public void ValidateUrhouldThrowExceptionWithIncorrectString()
-        //{
-        //    var actionResultWithLocation = new CreatedNegotiatedContentResult<int>(
-        //        TestObjectFactory.GetUri(), 5, MyMvc.Controller<MvcController>().AndProvideTheController());
+        [Fact]
+        public void ValidateLocationShouldNotThrowExceptionWithCorrectLocationBuilder()
+        {
+            var actionResultWithLocation = new CreatedResult(TestObjectFactory.GetUri(), "Test");
 
-        //    LocationValidator.ValidateUri(
-        //        actionResultWithLocation,
-        //        new Uri("http://somehost.com/"),
-        //        TestObjectFactory.GetFailingValidationAction());
-        //}
+            LocationValidator.ValidateLocation(
+                actionResultWithLocation,
+                location =>
+                    location
+                        .WithHost("somehost.com")
+                        .AndAlso()
+                        .WithAbsolutePath("/someuri/1")
+                        .AndAlso()
+                        .WithPort(80)
+                        .AndAlso()
+                        .WithScheme("http")
+                        .AndAlso()
+                        .WithFragment(string.Empty)
+                        .AndAlso()
+                        .WithQuery("?query=Test"),
+                TestObjectFactory.GetFailingValidationAction());
+        }
 
-        //[Fact]
-        //public void ValidateLocationShouldNotThrowExceptionWithCorrectLocationBuilder()
-        //{
-        //    var actionResultWithLocation = new CreatedNegotiatedContentResult<int>(
-        //        TestObjectFactory.GetUri(), 5, MyMvc.Controller<MvcController>().AndProvideTheController());
+        [Fact]
+        public void ValidateLocationShouldThrowExceptionWithIncorrectLocationBuilder()
+        {
+            Test.AssertException<NullReferenceException>(() =>
+            {
+                var actionResultWithLocation = new CreatedResult(TestObjectFactory.GetUri(), "Test");
 
-        //    LocationValidator.ValidateLocation(
-        //        actionResultWithLocation,
-        //        location =>
-        //            location
-        //                .WithHost("somehost.com")
-        //                .AndAlso()
-        //                .WithAbsolutePath("/someuri/1")
-        //                .AndAlso()
-        //                .WithPort(80)
-        //                .AndAlso()
-        //                .WithScheme("http")
-        //                .AndAlso()
-        //                .WithFragment(string.Empty)
-        //                .AndAlso()
-        //                .WithQuery("?query=Test"),
-        //        TestObjectFactory.GetFailingValidationAction());
-        //}
-
-        //[Fact]
-        //[ExpectedException(
-        //   typeof(NullReferenceException),
-        //   ExpectedMessage = "URI to equal the provided one was in fact different")]
-        //public void ValidateLocationShouldThrowExceptionWithIncorrectLocationBuilder()
-        //{
-        //    var actionResultWithLocation = new CreatedNegotiatedContentResult<int>(
-        //        TestObjectFactory.GetUri(), 5, MyMvc.Controller<MvcController>().AndProvideTheController());
-
-        //    LocationValidator.ValidateLocation(
-        //        actionResultWithLocation,
-        //        location =>
-        //            location
-        //                .WithHost("somehost12.com")
-        //                .AndAlso()
-        //                .WithAbsolutePath("/someuri/1")
-        //                .AndAlso()
-        //                .WithPort(80)
-        //                .AndAlso()
-        //                .WithScheme("http")
-        //                .AndAlso()
-        //                .WithFragment(string.Empty)
-        //                .AndAlso()
-        //                .WithQuery("?query=Test"),
-        //        TestObjectFactory.GetFailingValidationAction());
-        //}
+                LocationValidator.ValidateLocation(
+                    actionResultWithLocation,
+                    location =>
+                        location
+                            .WithHost("somehost12.com")
+                            .AndAlso()
+                            .WithAbsolutePath("/someuri/1")
+                            .AndAlso()
+                            .WithPort(80)
+                            .AndAlso()
+                            .WithScheme("http")
+                            .AndAlso()
+                            .WithFragment(string.Empty)
+                            .AndAlso()
+                            .WithQuery("?query=Test"),
+                    TestObjectFactory.GetFailingValidationAction());
+            }, "URI to equal the provided one was in fact different");
+        }
     }
 }

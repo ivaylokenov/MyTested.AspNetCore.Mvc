@@ -1,40 +1,40 @@
 ﻿namespace MyTested.Mvc.Tests.UtilitiesTests.ValidatorsTests
 {
     using Exceptions;
+    using Microsoft.AspNet.Mvc;
     using Setups;
-    using Setups.Controllers;
     using Utilities.Validators;
-    
+    using Xunit;
+
     public class RuntimeBinderValidatorTests
     {
-        // TODO: ?
-        //[Fact]
-        //public void ValidateBindingShouldNotThrowExceptionWithValidPropertyCall()
-        //{
-        //    var actionResultWithFormatters = new CreatedNegotiatedContentResult<int>(
-        //        TestObjectFactory.GetUri(), 5, MyMvc.Controller<MvcController>().AndProvideTheController());
+        [Fact]
+        public void ValidateBindingShouldNotThrowExceptionWithValidPropertyCall()
+        {
+            var actionResultWithProperty = new HttpOkObjectResult("Test");
 
-        //    RuntimeBinderValidator.ValidateBinding(() =>
-        //    {
-        //        var contentNegotiator = (actionResultWithFormatters as dynamic).ContentNegotiator;
-        //        Assert.NotNull(contentNegotiator);
-        //    });
-        //}
+            RuntimeBinderValidator.ValidateBinding(() =>
+            {
+                var value = (actionResultWithProperty as dynamic).Value;
+                Assert.NotNull(value);
+                Assert.Equal("Test", value);
+            });
+        }
 
-        //[Fact]
-        //[ExpectedException(
-        //    typeof(InvalidCallAssertionException),
-        //    ExpectedMessage = "Expected action result to contain a 'ModelState' property to test, but in fact such property was not found.")]
-        //public void ValidateBindingShouldThrowExceptionWithInvalidPropertyCall()
-        //{
-        //    var actionResultWithFormatters = new CreatedNegotiatedContentResult<int>(
-        //        TestObjectFactory.GetUri(), 5, MyMvc.Controller<MvcController>().AndProvideTheController());
+        [Fact]
+        public void ValidateBindingShouldThrowExceptionWithInvalidPropertyCall()
+        {
+            Test.AssertException<InvalidCallAssertionException>(() =>
+            {
+                var actionResultWithProperty = new HttpOkObjectResult("Test");
 
-        //    RuntimeBinderValidator.ValidateBinding(() =>
-        //    {
-        //        var contentNegotiator = (actionResultWithFormatters as dynamic).ModelState;
-        //        Assert.NotNull(contentNegotiator);
-        //    });
-        //}
+                RuntimeBinderValidator.ValidateBinding(() =>
+                {
+                    var value = (actionResultWithProperty as dynamic).InvalidValue;
+                    Assert.NotNull(value);
+                    Assert.Equal("Test", value);
+                });
+            }, "Expected action result to contain a 'InvalidValue' property to test, but in fact such property was not found.");
+        }
     }
 }
