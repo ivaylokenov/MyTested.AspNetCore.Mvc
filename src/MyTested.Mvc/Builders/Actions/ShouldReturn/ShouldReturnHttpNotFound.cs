@@ -16,7 +16,7 @@
         public IBaseTestBuilderWithActionResult<TActionResult> NotFound()
         {
             this.ResultOfType<HttpNotFoundResult>();
-            return this.NewAndProvideTestBuilder(); // TODO: there are too types of HttpNotFound
+            return this.NewAndProvideTestBuilder(); // TODO: there are two types of HttpNotFound
         }
     }
 }

@@ -82,6 +82,12 @@
         IContentTestBuilder Content(string content);
 
         /// <summary>
+        /// Tests whether action result is NoContentResult.
+        /// </summary>
+        /// <returns>Base test builder with action result.</returns>
+        IBaseTestBuilderWithActionResult<TActionResult> NoContent();
+
+        /// <summary>
         /// Tests whether action result is LocalRedirectResult.
         /// </summary>
         /// <returns>Local redirect test builder.</returns>

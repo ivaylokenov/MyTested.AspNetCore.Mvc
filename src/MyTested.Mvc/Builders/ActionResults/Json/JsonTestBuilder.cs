@@ -1,9 +1,7 @@
 ﻿namespace MyTested.Mvc.Builders.ActionResults.Json
 {
     using System;
-    using System.Text;
     using Internal.Extensions;
-    using Exceptions;
     using Models;
     using Newtonsoft.Json;
     using Contracts.ActionResults.Json;

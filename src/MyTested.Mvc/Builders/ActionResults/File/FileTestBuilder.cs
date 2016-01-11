@@ -21,6 +21,7 @@
         where TFileResult : FileResult
     {
         private const string FileName = "file name";
+        private const string FilePath = "file path";
         private const string FileProvider = "file provider";
         private const string FileStream = "file stream";
         private const string FileContents = "file contents";
@@ -185,6 +186,26 @@
                    "FileContents",
                    "to have contents as the provided ones",
                    "instead received different result");
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether file result has the same physical file path as the provided one.
+        /// </summary>
+        /// <typeparam name="physicalPath">File physical path as string.</param>
+        /// <returns>The same file test builder.</returns>
+        public IAndFileTestBuilder WithPhysicalPath(string physicalPath)
+        {
+            var physicalFileResult = this.GetFileResult<PhysicalFileResult>(FilePath);
+            var actualPhysicalPath = physicalFileResult.FileName;
+            if (physicalPath != actualPhysicalPath)
+            {
+                this.ThrowNewFileResultAssertionException(
+                    "FileName",
+                    string.Format("to be '{0}'", physicalPath != null ? physicalPath : "null"),
+                    string.Format("instead received '{0}'", actualPhysicalPath != null ? actualPhysicalPath : "null"));
             }
 
             return this;

@@ -66,5 +66,12 @@
         /// <typeparam name="fileContents">File contents as byte array.</param>
         /// <returns>The same file test builder.</returns>
         IAndFileTestBuilder WithContents(byte[] fileContents);
+
+        /// <summary>
+        /// Tests whether file result has the same physical file path as the provided one.
+        /// </summary>
+        /// <typeparam name="physicalPath">File physical path as string.</param>
+        /// <returns>The same file test builder.</returns>
+        IAndFileTestBuilder WithPhysicalPath(string physicalPath);
     }
 }
