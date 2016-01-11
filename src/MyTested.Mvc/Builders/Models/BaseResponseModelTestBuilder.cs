@@ -7,7 +7,7 @@
     using Exceptions;
     using Utilities;
     using Microsoft.AspNet.Mvc;
-    using System.Reflection;
+
     /// <summary>
     /// Base class for all response model test builders.
     /// </summary>

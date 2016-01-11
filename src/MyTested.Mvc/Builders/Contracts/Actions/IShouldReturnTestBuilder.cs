@@ -12,6 +12,7 @@
     using System.Net;
     using ActionResults.LocalRedirect;
     using ActionResults.Challenge;
+    using ActionResults.HttpNotFound;
 
     /// <summary>
     /// Used for testing action returned result.
@@ -117,7 +118,7 @@
         /// Tests whether action result is NotFoundResult.
         /// </summary>
         /// <returns>Base test builder with action result.</returns>
-        IBaseTestBuilderWithActionResult<TActionResult> NotFound();
+        IHttpNotFoundTestBuilder NotFound();
 
         /// <summary>
         /// Tests whether action result is BadRequestResult, InvalidModelStateResult or BadRequestErrorMessageResult.

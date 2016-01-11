@@ -1,8 +1,6 @@
 ﻿namespace MyTested.Mvc.Builders.ActionResults.Ok
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Internal.Extensions;
     using Exceptions;
     using Models;

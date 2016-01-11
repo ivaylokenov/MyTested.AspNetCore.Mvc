@@ -6,7 +6,7 @@
     using System.Security.Principal;
 
     /// <summary>
-    /// Mocked IPrinciple object.
+    /// Mocked ClaimsPrinciple object.
     /// </summary>
     public class MockedClaimsPrincipal : ClaimsPrincipal
     {

@@ -1,7 +1,5 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.ActionResults.Ok
 {
-    using System;
-    using System.Collections.Generic;
     using Models;
 
     /// <summary>
@@ -14,8 +12,7 @@
         /// </summary>
         /// <returns>The same ok test builder.</returns>
         IAndOkTestBuilder WithNoResponseModel();
-
-
+        
         // TODO: formatters?
         ///// <summary>
         ///// Tests whether ok result has the default content negotiator.
