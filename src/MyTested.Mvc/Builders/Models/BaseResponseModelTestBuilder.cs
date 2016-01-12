@@ -15,6 +15,9 @@
     public abstract class BaseResponseModelTestBuilder<TActionResult>
         : BaseTestBuilderWithActionResult<TActionResult>, IBaseResponseModelTestBuilder
     {
+        private const string ErrorMessage = "When calling {0} action in {1} expected response model {2} to be the given model, but in fact it was a different.";
+        private const string OfTypeErrorMessage = "When calling {0} action in {1} expected response model to be of {2} type, but instead received {3}.";
+
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseResponseModelTestBuilder{TActionResult}" /> class.
         /// </summary>
@@ -29,7 +32,13 @@
             TActionResult actionResult)
             : base(controller, actionName, caughtException, actionResult)
         {
+            this.ErrorMessageFormat = ErrorMessage;
+            this.OfTypeErrorMessageFormat = OfTypeErrorMessage;
         }
+
+        protected string ErrorMessageFormat { get; set; }
+
+        protected string OfTypeErrorMessageFormat { get; set; }
 
         /// <summary>
         /// Tests whether certain type of response model is returned from the invoked action.
@@ -65,7 +74,7 @@
             if (!responseDataTypeIsAssignable)
             {
                 throw new ResponseModelAssertionException(string.Format(
-                    "When calling {0} action in {1} expected response model to be of {2} type, but instead received {3}.",
+                    this.OfTypeErrorMessageFormat,
                     this.ActionName,
                     this.Controller.GetName(),
                     typeof(TResponseModel).ToFriendlyTypeName(),
@@ -93,7 +102,7 @@
             if (Reflection.AreNotDeeplyEqual(expectedModel, actualModel))
             {
                 throw new ResponseModelAssertionException(string.Format(
-                            "When calling {0} action in {1} expected response model {2} to be the given model, but in fact it was a different model.",
+                            this.ErrorMessageFormat,
                             this.ActionName,
                             this.Controller.GetName(),
                             typeof(TResponseModel).ToFriendlyTypeName()));

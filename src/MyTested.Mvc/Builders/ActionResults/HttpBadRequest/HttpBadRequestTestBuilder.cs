@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Base;
     using Internal.Extensions;
     using Contracts.Base;
     using Contracts.ActionResults.HttpBadRequest;
@@ -17,12 +16,12 @@
     /// Used for testing HTTP bad request results.
     /// </summary>
     /// <typeparam name="TBadRequestResult">Type of bad request result - BadRequestResult or BadRequestObjectResult.</typeparam>
-    public class HttpBadRequestTestBuilder<TBadRequestResult> : BaseTestBuilderWithActionResult<TBadRequestResult>,
+    public class HttpBadRequestTestBuilder<TBadRequestResult> : BaseResponseModelTestBuilder<TBadRequestResult>,
         IHttpBadRequestTestBuilder
     {
-        private const string ErrorMessage = "error message";
-        private const string ModelStateDictionary = "model state dictionary";
-        // TODO: check for different kind of IActionResult without helper methods - like HttpStatusCodeResult
+        private const string ErrorMessage = "When calling {0} action in {1} expected HTTP bad request result error to be the given object, but in fact it was a different.";
+        private const string OfTypeErrorMessage = "When calling {0} action in {1} expected HTTP bad request result error to be of {2} type, but instead received {3}.";
+
         /// <summary>
         /// Initializes a new instance of the <see cref="HttpBadRequestTestBuilder{TBadRequestResult}" /> class.
         /// </summary>
@@ -37,115 +36,135 @@
             TBadRequestResult actionResult)
             : base(controller, actionName, caughtException, actionResult)
         {
+            this.ErrorMessageFormat = ErrorMessage;
+            this.OfTypeErrorMessageFormat = OfTypeErrorMessage;
         }
 
-        // TODO: check if applicable?
-        ///// <summary>
-        ///// Tests bad request result with specific error message using test builder.
-        ///// </summary>
-        ///// <returns>Bad request with error message test builder.</returns>
-        //public IBadRequestErrorMessageTestBuilder WithErrorMessage()
-        //{
-        //    var badRequestErrorMessageResult = this.GetBadRequestResult<BadRequestErrorMessageResult>(ErrorMessage);
-        //    return new BadRequestErrorMessageTestBuilder(
-        //        this.Controller,
-        //        this.ActionName,
-        //        this.CaughtException,
-        //        badRequestErrorMessageResult.Message);
-        //}
+        // TODO: documentations, interface, unit tests
+        public IModelDetailsTestBuilder<TError> WithError<TError>(TError error)
+        {
+            return this.WithResponseModel(error);
+        }
+
+        public IModelDetailsTestBuilder<TError> WithErrorOfType<TError>()
+        {
+            return this.WithResponseModelOfType<TError>();
+        }
 
         /// <summary>
-        /// Tests bad request result with specific error message provided by string.
+        /// Tests HTTP bad request result with specific error using test builder.
         /// </summary>
-        /// <param name="message">Expected error message from bad request result.</param>
-        /// <returns>Base test builder.</returns>
-        public IBaseTestBuilderWithCaughtException WithErrorMessage(string message)
+        /// <returns>Bad request with error message test builder.</returns>
+        public IHttpBadRequestErrorMessageTestBuilder WithErrorMessage()
         {
+            var badRequestObjectResultValue = this.GetBadRequestObjectResultValue() as string;
+            if (badRequestObjectResultValue == null)
+            {
+                this.ThrowNewHttpBadRequestResultAssertionException();
+            }
 
-            // TODO: serializable error
-            var badRequestErrorMessageResult = this.GetBadRequestResult<BadRequestObjectResult>(ErrorMessage);
-            //var actualMessage = badRequestErrorMessageResult.Message;
-            //this.ValidateErrorMessage(message, actualMessage);
+            return new HttpBadRequestErrorMessageTestBuilder(
+                this.Controller,
+                this.ActionName,
+                this.CaughtException,
+                badRequestObjectResultValue);
+        }
+
+        /// <summary>
+        /// Tests HTTP bad request result with specific text error message provided by string.
+        /// </summary>
+        /// <param name="message">Expected text error message from bad request result.</param>
+        /// <returns>Base test builder.</returns>
+        public IBaseTestBuilderWithCaughtException WithErrorMessage(string error)
+        {
+            var badRequestObjectResultValue = this.GetBadRequestObjectResultValue();
+            var actualMessage = badRequestObjectResultValue as string;
+            this.ValidateErrorMessage(error, actualMessage);
 
             return this.NewAndProvideTestBuilder();
         }
 
+        // TODO: everything!
+        public IBaseTestBuilderWithCaughtException WithModelState()
+        {
+            return this.WithModelState(this.Controller.ModelState);
+        }
+
         /// <summary>
-        /// Tests bad request result with specific model state dictionary.
+        /// Tests HTTP bad request result with specific model state dictionary.
         /// </summary>
         /// <param name="modelState">Model state dictionary to deeply compare to the actual one.</param>
         /// <returns>Base test builder.</returns>
         public IBaseTestBuilderWithCaughtException WithModelState(ModelStateDictionary modelState)
         {
-            // TODO: serializable error
-            //var invalidModelStateResult = this.GetBadRequestResult<BadRequestObjectResult>(ModelStateDictionary);
-            //var actualModelState = invalidModelStateResult.ModelState;
+            var badRequestObjectResultValue = this.GetBadRequestObjectResultValue();
+            var actualModelState = this.GetModelStateFromSerializableError(badRequestObjectResultValue);
 
-            //var expectedKeysCount = modelState.Keys.Count;
-            //var actualKeysCount = actualModelState.Keys.Count;
+            var expectedKeysCount = modelState.Keys.Count;
+            var actualKeysCount = actualModelState.Keys.Count;
 
-            //if (expectedKeysCount != actualKeysCount)
-            //{
-            //    throw new BadRequestResultAssertionException(string.Format(
-            //            "When calling {0} action in {1} expected bad request model state dictionary to contain {2} keys, but found {3}.",
-            //            this.ActionName,
-            //            this.Controller.GetName(),
-            //            expectedKeysCount,
-            //            actualKeysCount));
-            //}
+            if (expectedKeysCount != actualKeysCount)
+            {
+                throw new HttpBadRequestResultAssertionException(string.Format(
+                        "When calling {0} action in {1} expected HTTP bad request model state dictionary to contain {2} keys, but found {3}.",
+                        this.ActionName,
+                        this.Controller.GetName(),
+                        expectedKeysCount,
+                        actualKeysCount));
+            }
 
-            //var actualModelStateSortedKeys = actualModelState.Keys.OrderBy(k => k).ToList();
-            //var expectedModelStateSortedKeys = modelState.Keys.OrderBy(k => k).ToList();
+            var actualModelStateSortedKeys = actualModelState.Keys.OrderBy(k => k).ToList();
+            var expectedModelStateSortedKeys = modelState.Keys.OrderBy(k => k).ToList();
 
-            //foreach (var expectedKey in expectedModelStateSortedKeys)
-            //{
-            //    if (!actualModelState.ContainsKey(expectedKey))
-            //    {
-            //        throw new BadRequestResultAssertionException(string.Format(
-            //            "When calling {0} action in {1} expected bad request model state dictionary to contain {2} key, but none found.",
-            //            this.ActionName,
-            //            this.Controller.GetName(),
-            //            expectedKey));
-            //    }
+            foreach (var expectedKey in expectedModelStateSortedKeys)
+            {
+                if (!actualModelState.ContainsKey(expectedKey))
+                {
+                    throw new HttpBadRequestResultAssertionException(string.Format(
+                        "When calling {0} action in {1} expected HTTP bad request model state dictionary to contain {2} key, but none found.",
+                        this.ActionName,
+                        this.Controller.GetName(),
+                        expectedKey));
+                }
 
-            //    var actualSortedErrors = GetSortedErrorMessagesForModelStateKey(actualModelState[expectedKey].Errors);
-            //    var expectedSortedErrors = GetSortedErrorMessagesForModelStateKey(modelState[expectedKey].Errors);
+                var actualSortedErrors = GetSortedErrorMessagesForModelStateKey(actualModelState[expectedKey].Errors);
+                var expectedSortedErrors = GetSortedErrorMessagesForModelStateKey(modelState[expectedKey].Errors);
 
-            //    if (expectedSortedErrors.Count != actualSortedErrors.Count)
-            //    {
-            //        throw new BadRequestResultAssertionException(string.Format(
-            //            "When calling {0} action in {1} expected bad request model state dictionary to contain {2} errors for {3} key, but found {4}.",
-            //            this.ActionName,
-            //            this.Controller.GetName(),
-            //            expectedSortedErrors.Count,
-            //            expectedKey,
-            //            actualSortedErrors.Count));
-            //    }
+                if (expectedSortedErrors.Count != actualSortedErrors.Count)
+                {
+                    throw new HttpBadRequestResultAssertionException(string.Format(
+                        "When calling {0} action in {1} expected HTTP bad request model state dictionary to contain {2} errors for {3} key, but found {4}.",
+                        this.ActionName,
+                        this.Controller.GetName(),
+                        expectedSortedErrors.Count,
+                        expectedKey,
+                        actualSortedErrors.Count));
+                }
 
-            //    for (int i = 0; i < expectedSortedErrors.Count; i++)
-            //    {
-            //        var expectedError = expectedSortedErrors[i];
-            //        var actualError = actualSortedErrors[i];
-            //        this.ValidateErrorMessage(expectedError, actualError);
-            //    }
-            //}
+                for (int i = 0; i < expectedSortedErrors.Count; i++)
+                {
+                    var expectedError = expectedSortedErrors[i];
+                    var actualError = actualSortedErrors[i];
+                    this.ValidateErrorMessage(expectedError, actualError);
+                }
+            }
 
             return this.NewAndProvideTestBuilder();
         }
 
         /// <summary>
-        /// Tests bad request result for model state errors using test builder.
+        /// Tests HTTP bad request result for model state errors using test builder.
         /// </summary>
         /// <typeparam name="TRequestModel">Type of model for which the model state errors will be tested.</typeparam>
         /// <returns>Model error test builder.</returns>
         public IModelErrorTestBuilder<TRequestModel> WithModelStateFor<TRequestModel>()
         {
-            var invalidModelStateResult = this.GetBadRequestResult<BadRequestObjectResult>(ModelStateDictionary);
+            var badRequestObjectResultValue = this.GetBadRequestObjectResultValue();
             return new ModelErrorTestBuilder<TRequestModel>(
                 this.Controller,
                 this.ActionName,
-                this.CaughtException
-                /*modelState: invalidModelStateResult.ModelState*/); // TODO:: serializable error
+                this.CaughtException,
+                modelState: this.GetModelStateFromSerializableError(badRequestObjectResultValue));
         }
 
         private static IList<string> GetSortedErrorMessagesForModelStateKey(IEnumerable<ModelError> errors)
@@ -155,34 +174,60 @@
                 .Select(er => er.ErrorMessage)
                 .ToList();
         }
-
-        private TExpectedBadRequestResult GetBadRequestResult<TExpectedBadRequestResult>(string containment)
-            where TExpectedBadRequestResult : class
+        
+        private object GetBadRequestObjectResultValue()
         {
-            var actualBadRequestResult = this.ActionResult as TExpectedBadRequestResult;
+            var actualBadRequestResult = this.ActionResult as BadRequestObjectResult;
             if (actualBadRequestResult == null)
             {
                 throw new HttpBadRequestResultAssertionException(string.Format(
-                    "When calling {0} action in {1} expected bad request result to contain {2}, but it could not be found.",
+                    "When calling {0} action in {1} expected HTTP bad request result to contain error object, but it could not be found.",
                     this.ActionName,
-                    this.Controller.GetName(),
-                    containment));
+                    this.Controller.GetName()));
             }
 
-            return actualBadRequestResult;
+            return actualBadRequestResult.Value;
         }
 
         private void ValidateErrorMessage(string expectedMessage, string actualMessage)
         {
             if (expectedMessage != actualMessage)
             {
-                throw new HttpBadRequestResultAssertionException(string.Format(
-                    "When calling {0} action in {1} expected bad request with message '{2}', but instead received '{3}'.",
+                this.ThrowNewHttpBadRequestResultAssertionException(expectedMessage, actualMessage);
+            }
+        }
+
+        private ModelStateDictionary GetModelStateFromSerializableError(object error)
+        {
+            var serializableError = error as SerializableError;
+            if (serializableError == null)
+            {
+                this.ThrowNewHttpBadRequestResultAssertionException("model state dictionary", "other type of error");
+            }
+            
+            var result = new ModelStateDictionary();
+
+            foreach (var errorKeyValuePair in serializableError)
+            {
+                var errorKey = errorKeyValuePair.Key;
+                var errorValues = errorKeyValuePair.Value as string[];
+                if (errorValues != null)
+                {
+                    errorValues.ForEach(er => result.AddModelError(errorKey, er));
+                }
+            }
+
+            return result;
+        }
+
+        private void ThrowNewHttpBadRequestResultAssertionException(string expectedMessage = null, string actualMessage = null)
+        {
+            throw new HttpBadRequestResultAssertionException(string.Format(
+                    "When calling {0} action in {1} expected HTTP bad request with {2}, but instead received {3}.",
                     this.ActionName,
                     this.Controller.GetName(),
-                    expectedMessage,
-                    actualMessage));
-            }
+                    expectedMessage == null ? "error message" : $"message '{expectedMessage}'",
+                    actualMessage == null ? "non-string value" : $"'{actualMessage}'"));
         }
     }
 }
