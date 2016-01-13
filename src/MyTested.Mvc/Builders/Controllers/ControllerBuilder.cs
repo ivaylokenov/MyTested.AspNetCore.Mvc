@@ -40,11 +40,12 @@
         /// Initializes a new instance of the <see cref="ControllerBuilder{TController}" /> class.
         /// </summary>
         /// <param name="controllerInstance">Instance of the tested ASP.NET MVC 6 controller.</param>
-        public ControllerBuilder(TController controllerInstance)
+        public ControllerBuilder(TController controllerInstance = null)
         {
-            this.aggregatedDependencies = new Dictionary<Type, object>();
             this.Controller = controllerInstance;
+            this.HttpContext = new MockedHttpContext { User = MockedClaimsPrincipal.CreateUnauthenticated() }; // TODO: User may not be needed
             this.enabledValidation = true;
+            this.aggregatedDependencies = new Dictionary<Type, object>();
         }
 
         /// <summary>
@@ -369,24 +370,21 @@
 
             return ExpressionParser.GetMethodName(actionCall);
         }
-
+        
         private void PrepareController()
         {
             this.controller.ControllerContext = new ControllerContext
             {
-                HttpContext = new MockedHttpContext
-                {
-                    User = MockedClaimsPrincipal.CreateUnauthenticated(),
-                },
+                HttpContext = this.HttpContext,
                 ValidatorProviders = new[]
                 {
                     new DataAnnotationsModelValidatorProvider(
                         new ValidationAttributeAdapterProvider(),
                         new OptionsManager<MvcDataAnnotationsLocalizationOptions>(Enumerable.Empty<IConfigureOptions<MvcDataAnnotationsLocalizationOptions>>()),
                         stringLocalizerFactory: null),
-                },
+                }
             };
-
+            
             // TODO: extract to or put into injection system
             var detailsProviders = new IMetadataDetailsProvider[]
             {

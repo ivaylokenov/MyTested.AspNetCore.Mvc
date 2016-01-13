@@ -13,7 +13,9 @@
     using Xunit;
     using Microsoft.AspNet.Mvc;
     using System.Security.Claims;
+    using Microsoft.Extensions.DependencyInjection;
 
+    [Collection(MyMvcTests.ServiceBasedTests)]
     public class ControllerBuilderTests
     {
         [Fact]
@@ -309,6 +311,23 @@
                     .ShouldReturn()
                     .Ok();
             }, "MvcController could not be instantiated because it contains no constructor taking RequestModel, AnotherInjectedService, InjectedService, ResponseModel as parameters.");
+        }
+
+        [Fact]
+        public void ControllerActivatorShouldActivateControllerProperties()
+        {
+            // TODO: remove this, testing purposes
+            MyMvc.IsUsing(services =>
+            {
+                services.AddTransient<IInjectedService, InjectedService>();
+                services.AddTransient<IAnotherInjectedService, AnotherInjectedService>();
+            });
+
+            var controller = MyMvc
+                .Controller<NoParameterlessConstructorController>()
+                .AndProvideTheController();
+
+            MyMvc.IsNotUsingServices();
         }
 
         // TODO: HTTP request builder

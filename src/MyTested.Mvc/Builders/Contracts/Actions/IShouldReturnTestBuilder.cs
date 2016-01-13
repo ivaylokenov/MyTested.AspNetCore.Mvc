@@ -122,6 +122,12 @@
         IBaseTestBuilderWithActionResult<TActionResult> StatusCode(HttpStatusCode statusCode);
 
         /// <summary>
+        /// Tests whether action result is UnsupportedMediaTypeResult.
+        /// </summary>
+        /// <returns>Base test builder with action result.</returns>
+        IBaseTestBuilderWithActionResult<TActionResult> UnsupportedMediaType();
+
+        /// <summary>
         /// Tests whether action result is NotFoundResult.
         /// </summary>
         /// <returns>Base test builder with action result.</returns>

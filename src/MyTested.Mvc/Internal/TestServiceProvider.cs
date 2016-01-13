@@ -9,6 +9,7 @@
     using Utilities;
     using Utilities.Validators;
 
+    // TODO: docs
     public class TestServiceProvider
     {
         private const string ConfigureServicesMethodName = "ConfigureServices";
@@ -66,6 +67,8 @@
             }
         }
 
+        public static bool IsAvailable => Current != null;
+
         public static TInstance GetRequiredService<TInstance>()
         {
             var service = Current.GetService<TInstance>();
@@ -85,16 +88,26 @@
             return Current.GetServices<TInstance>();
         }
 
+        public static TInstance TryGetService<TInstance>()
+            where TInstance : class
+        {
+            if (IsAvailable)
+            {
+                return Current.GetService<TInstance>();
+            }
+
+            return null;
+        }
+        
         public static TInstance TryCreateInstance<TInstance>()
             where TInstance : class
         {
-            var typeActivatorCache = GetRequiredService<ITypeActivatorCache>();
-
             try
             {
+                var typeActivatorCache = GetRequiredService<ITypeActivatorCache>();
                 return typeActivatorCache.CreateInstance<TInstance>(Current, typeof(TInstance));
             }
-            catch (InvalidOperationException)
+            catch
             {
                 return null;
             }
