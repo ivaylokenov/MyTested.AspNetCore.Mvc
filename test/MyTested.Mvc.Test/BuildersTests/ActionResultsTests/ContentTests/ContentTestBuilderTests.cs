@@ -31,7 +31,7 @@
                     .ShouldReturn()
                     .Content("content")
                     .WithStatusCode(HttpStatusCode.NotFound);
-            }, "When calling ContentAction action in MvcController expected to have 404 (NotFound) status code, but received 200 (OK).");
+            }, "When calling ContentAction action in MvcController expected content result to have 404 (NotFound) status code, but received 200 (OK).");
         }
 
         [Fact]

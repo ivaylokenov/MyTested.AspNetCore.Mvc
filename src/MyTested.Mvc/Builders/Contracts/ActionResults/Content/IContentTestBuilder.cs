@@ -13,11 +13,18 @@
     public interface IContentTestBuilder : IBaseTestBuilderWithActionResult<ContentResult>
     {
         /// <summary>
+        /// Tests whether content result has the same status code as the provided one.
+        /// </summary>
+        /// <param name="statusCode">Status code.</param>
+        /// <returns>The same content test builder.</returns>
+        IAndContentTestBuilder WithStatusCode(int statusCode);
+
+        /// <summary>
         /// Tests whether content result has the same status code as the provided HttpStatusCode.
         /// </summary>
         /// <param name="statusCode">HttpStatusCode enumeration.</param>
         /// <returns>The same content test builder.</returns>
-        IAndContentTestBuilder WithStatusCode(HttpStatusCode statusCode); // TODO: status code is int?
+        IAndContentTestBuilder WithStatusCode(HttpStatusCode statusCode);
 
         /// <summary>
         /// Tests whether content result has the same content type as the provided string.

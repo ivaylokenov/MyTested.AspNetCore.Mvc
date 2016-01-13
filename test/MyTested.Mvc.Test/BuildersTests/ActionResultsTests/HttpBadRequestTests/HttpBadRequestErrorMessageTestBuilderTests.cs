@@ -32,7 +32,6 @@
                     .WithErrorMessage()
                     .ThatEquals("Bad");
             }, "When calling BadRequestWithErrorAction action in MvcController expected bad request error message to be 'Bad', but instead found 'Bad request'.");
-
         }
 
         [Fact]

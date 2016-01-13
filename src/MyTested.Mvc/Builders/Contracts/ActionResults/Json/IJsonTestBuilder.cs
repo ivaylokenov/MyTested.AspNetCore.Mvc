@@ -1,15 +1,29 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.ActionResults.Json
 {
     using System;
-    using System.Text;
     using Models;
     using Newtonsoft.Json;
+    using System.Net;
 
     /// <summary>
     /// Used for testing JSON results.
     /// </summary>
     public interface IJsonTestBuilder : IBaseResponseModelTestBuilder
     {
+        /// <summary>
+        /// Tests whether JSON result has the same status code as the provided one.
+        /// </summary>
+        /// <param name="statusCode">Status code.</param>
+        /// <returns>The same JSON test builder.</returns>
+        IAndJsonTestBuilder WithStatusCode(int statusCode);
+
+        /// <summary>
+        /// Tests whether JSON result has the same status code as the provided HttpStatusCode.
+        /// </summary>
+        /// <param name="statusCode">HttpStatusCode enumeration.</param>
+        /// <returns>The same JSON test builder.</returns>
+        IAndJsonTestBuilder WithStatusCode(HttpStatusCode statusCode);
+
         /// <summary>
         /// Tests whether JSON result has the default JSON serializer settings.
         /// </summary>

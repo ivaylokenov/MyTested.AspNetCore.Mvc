@@ -108,6 +108,13 @@
         IBaseTestBuilderWithActionResult<TActionResult> StatusCode();
 
         /// <summary>
+        /// Tests whether action result is HttpStatusCodeResult and is the same as provided one.
+        /// </summary>
+        /// <param name="statusCode">Status code.</param>
+        /// <returns>Base test builder with action result.</returns>
+        IBaseTestBuilderWithActionResult<TActionResult> StatusCode(int statusCode);
+
+        /// <summary>
         /// Tests whether action result is HttpStatusCodeResult and is the same as provided HttpStatusCode.
         /// </summary>
         /// <param name="statusCode">HttpStatusCode enumeration.</param>

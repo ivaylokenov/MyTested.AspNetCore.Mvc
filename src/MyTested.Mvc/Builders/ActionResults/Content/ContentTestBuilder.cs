@@ -9,7 +9,7 @@
     using Microsoft.Net.Http.Headers;
     using System.Text;
     using Base;
-
+    using Utilities.Validators;
     /// <summary>
     /// Used for testing content result.
     /// </summary>
@@ -31,6 +31,16 @@
             : base(controller, actionName, caughtException, actionResult)
         {
         }
+        
+        /// <summary>
+        /// Tests whether content result has the same status code as the provided one.
+        /// </summary>
+        /// <param name="statusCode">Status code.</param>
+        /// <returns>The same content test builder.</returns>
+        public IAndContentTestBuilder WithStatusCode(int statusCode)
+        {
+            return this.WithStatusCode((HttpStatusCode)statusCode);
+        }
 
         /// <summary>
         /// Tests whether content result has the same status code as the provided HttpStatusCode.
@@ -39,20 +49,10 @@
         /// <returns>The same content test builder.</returns>
         public IAndContentTestBuilder WithStatusCode(HttpStatusCode statusCode)
         {
-            var actualStatusCode = (HttpStatusCode?)this.ActionResult.StatusCode;
-            if (actualStatusCode != statusCode)
-            {
-                var actualStatusCodeAsInt = (int?)actualStatusCode;
-
-                throw new ContentResultAssertionException(string.Format(
-                    "When calling {0} action in {1} expected to have {2} ({3}) status code, but received {4} ({5}).",
-                    this.ActionName,
-                    this.Controller.GetName(),
-                    (int)statusCode,
-                    statusCode,
-                    actualStatusCode != null ? actualStatusCodeAsInt.ToString() : "no status code",
-                    actualStatusCode != null ? actualStatusCode.ToString() : "null"));
-            }
+            HttpStatusCodeValidator.ValidateHttpStatusCode(
+                statusCode,
+                this.ActionResult.StatusCode,
+                this.ThrowNewContentResultAssertionException);
 
             return this;
         }

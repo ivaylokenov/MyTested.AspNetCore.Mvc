@@ -8,6 +8,9 @@
     using Microsoft.AspNet.Mvc;
     using Internal;
     using Microsoft.Extensions.Options;
+    using System.Net;
+    using Exceptions;
+    using Utilities.Validators;
 
     /// <summary>
     /// Used for testing JSON results.
@@ -29,6 +32,31 @@
             JsonResult actionResult)
             : base(controller, actionName, caughtException, actionResult)
         {
+        }
+
+        /// <summary>
+        /// Tests whether JSON result has the same status code as the provided one.
+        /// </summary>
+        /// <param name="statusCode">Status code.</param>
+        /// <returns>The same JSON test builder.</returns>
+        public IAndJsonTestBuilder WithStatusCode(int statusCode)
+        {
+            return this.WithStatusCode((HttpStatusCode)statusCode);
+        }
+
+        /// <summary>
+        /// Tests whether JSON result has the same status code as the provided HttpStatusCode.
+        /// </summary>
+        /// <param name="statusCode">HttpStatusCode enumeration.</param>
+        /// <returns>The same JSON test builder.</returns>
+        public IAndJsonTestBuilder WithStatusCode(HttpStatusCode statusCode)
+        {
+            HttpStatusCodeValidator.ValidateHttpStatusCode(
+                statusCode,
+                this.ActionResult.StatusCode,
+                this.ThrowNewJsonResultAssertionException);
+
+            return this;
         }
 
         /// <summary>
@@ -112,6 +140,17 @@
                 .WithReferenceLoopHandling(jsonSerializerSettings.ReferenceLoopHandling)
                 .WithTypeNameAssemblyFormat(jsonSerializerSettings.TypeNameAssemblyFormat)
                 .WithTypeNameHandling(jsonSerializerSettings.TypeNameHandling);
+        }
+
+        private void ThrowNewJsonResultAssertionException(string propertyName, string expectedValue, string actualValue)
+        {
+            throw new JsonResultAssertionException(string.Format(
+                    "When calling {0} action in {1} expected JSON result {2} {3}, but {4}.",
+                    this.ActionName,
+                    this.Controller.GetName(),
+                    propertyName,
+                    expectedValue,
+                    actualValue));
         }
     }
 }

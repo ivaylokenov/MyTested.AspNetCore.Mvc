@@ -98,7 +98,7 @@
         public IBaseTestBuilderWithCaughtException WithModelState(ModelStateDictionary modelState)
         {
             var badRequestObjectResultValue = this.GetBadRequestObjectResultValue();
-            var actualModelState = this.GetModelStateFromSerializableError(badRequestObjectResultValue);
+            var actualModelState = this.GetModelStateFromSerializableError(badRequestObjectResultValue); // TODO: optimize?
 
             var expectedKeysCount = modelState.Keys.Count;
             var actualKeysCount = actualModelState.Keys.Count;
