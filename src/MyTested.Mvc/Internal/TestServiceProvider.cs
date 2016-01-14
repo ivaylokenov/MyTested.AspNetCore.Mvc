@@ -22,7 +22,7 @@
         public static void Setup(Action<IServiceCollection> servicesAction)
         {
             serviceCollection = new ServiceCollection();
-            serviceCollection.AddSingleton<ILoggerFactory>(MockedLoggerFactory.Create());
+            serviceCollection.AddSingleton<ILoggerFactory>(MockedLoggerFactory.Create()); // TODO: check if needed
             serviceCollection.AddMvc();
 
             if (servicesAction != null)

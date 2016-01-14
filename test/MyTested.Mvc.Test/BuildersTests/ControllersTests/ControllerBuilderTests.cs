@@ -14,8 +14,7 @@
     using Microsoft.AspNet.Mvc;
     using System.Security.Claims;
     using Microsoft.Extensions.DependencyInjection;
-
-    [Collection(MyMvcTests.ServiceBasedTests)]
+    
     public class ControllerBuilderTests
     {
         [Fact]
@@ -327,7 +326,7 @@
                 .Controller<NoParameterlessConstructorController>()
                 .AndProvideTheController();
 
-            MyMvc.IsNotUsingServices();
+            MyMvc.IsUsingDefaultServices();
         }
 
         // TODO: HTTP request builder

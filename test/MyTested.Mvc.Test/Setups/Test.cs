@@ -5,6 +5,8 @@
 
     public class Test
     {
+        private static object sync = new object();
+
         public static void AssertException<TException>(Action testCode, string expectedMessage)
             where TException : Exception
         {

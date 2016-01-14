@@ -15,14 +15,15 @@
     using Exceptions;
     using Internal.Extensions;
     using Internal.Identity;
-    using Microsoft.AspNet.Mvc.ModelBinding.Metadata;
     using Microsoft.AspNet.Mvc.ModelBinding;
     using Microsoft.AspNet.Mvc.ModelBinding.Validation;
     using Microsoft.Extensions.Options;
     using Internal.Http;
     using Contracts.Authentication;
     using Authentication;
-
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.AspNet.Mvc.Controllers;
+    using Microsoft.AspNet.Mvc.Infrastructure;
     /// <summary>
     /// Used for building the action which will be tested.
     /// </summary>
@@ -43,7 +44,8 @@
         public ControllerBuilder(TController controllerInstance = null)
         {
             this.Controller = controllerInstance;
-            this.HttpContext = new MockedHttpContext { User = MockedClaimsPrincipal.CreateUnauthenticated() }; // TODO: User may not be needed
+            this.HttpContext = new MockedHttpContext();
+
             this.enabledValidation = true;
             this.aggregatedDependencies = new Dictionary<Type, object>();
         }
@@ -77,7 +79,7 @@
         /// <returns>The same controller builder.</returns>
         public IAndControllerBuilder<TController> WithHttpContext(HttpContext context)
         {
-            this.HttpContext = context; // TODO: is this needed? or set on the controller
+            this.HttpContext = context; // TODO: is this needed? or set on the controller, other options?
             return this;
         }
 
@@ -373,38 +375,28 @@
         
         private void PrepareController()
         {
-            this.controller.ControllerContext = new ControllerContext
+            // TODO: provide default values, if missing
+            // TODO: extract or cache or whatever, think it
+            var services = this.HttpContext.RequestServices;
+            var options = services.GetRequiredService<IOptions<MvcOptions>>().Value;
+
+            // TODO: add all other properties on action call?
+            var controllerContext = new ControllerContext
             {
                 HttpContext = this.HttpContext,
-                ValidatorProviders = new[]
-                {
-                    new DataAnnotationsModelValidatorProvider(
-                        new ValidationAttributeAdapterProvider(),
-                        new OptionsManager<MvcDataAnnotationsLocalizationOptions>(Enumerable.Empty<IConfigureOptions<MvcDataAnnotationsLocalizationOptions>>()),
-                        stringLocalizerFactory: null),
-                }
+                ValidatorProviders = options.ModelValidatorProviders,
+                InputFormatters = options.InputFormatters,
+                ModelBinders = options.ModelBinders
             };
+
+            var controllerPropertyActivators = services.GetServices<IControllerPropertyActivator>();
+
+            controllerPropertyActivators.ForEach(a => a.Activate(controllerContext, this.controller));
             
-            // TODO: extract to or put into injection system
-            var detailsProviders = new IMetadataDetailsProvider[]
-            {
-                new DefaultBindingMetadataProvider(new ModelBindingMessageProvider
-                {
-                    MissingBindRequiredValueAccessor = name => $"A value for the '{ name }' property was not provided.",
-                    MissingKeyOrValueAccessor = () => $"A value is required.",
-                    ValueMustNotBeNullAccessor = value => $"The value '{ value }' is invalid.",
-                }),
-                new DefaultValidationMetadataProvider(),
-                new DataAnnotationsMetadataProvider(),
-                // new DataMemberRequiredBindingMetadataProvider(), TODO: not available in version 8 but it is in the source code of MVC
-            };
-
-            var compositeDetailsProvider = new DefaultCompositeMetadataDetailsProvider(detailsProviders);
-
-            var metadataProvider = new DefaultModelMetadataProvider(compositeDetailsProvider);
-
-            this.controller.MetadataProvider = metadataProvider;
-            this.controller.ObjectValidator = new DefaultObjectValidator(metadataProvider);
+            this.controller.MetadataProvider = services.GetRequiredService<IModelMetadataProvider>();
+            this.controller.ObjectValidator = services.GetRequiredService<IObjectModelValidator>();
+            
+            // TODO: setup action
 
             //var httpContext = new DefaultHttpContext();
             //var actionContext = new ActionContext(httpContext, new RouteData(), new ActionDescriptor());

@@ -1,4 +1,8 @@
-﻿namespace MyTested.Mvc.Tests
+﻿using Xunit;
+
+[assembly: CollectionBehavior(DisableTestParallelization = true)] // TODO: think whether parallel tests should be run and how to overcome it -> IsUsing is the problem here because it is called a couple of times
+
+namespace MyTested.Mvc.Tests
 {
     using Exceptions;
     using Microsoft.Extensions.DependencyInjection;
@@ -6,7 +10,6 @@
     using Setups.Controllers;
     using Setups.Services;
     using System.Linq;
-    using Xunit;
     using Internal;
     using Microsoft.AspNet.Mvc.Internal;
     using Microsoft.Extensions.Options;
@@ -14,11 +17,8 @@
     using System;
     using Setups.Startups;
 
-    [Collection(ServiceBasedTests)]
     public class MyMvcTests
     {
-        public const string ServiceBasedTests = "ServiceBasedTests";
-
         // TODO: move tests
 
         //[Fact]
@@ -46,8 +46,6 @@
             var markerService = TestServiceProvider.GetService<MvcMarkerService>();
 
             Assert.NotNull(markerService);
-
-            MyMvc.IsNotUsingServices();
         }
 
         [Fact]
@@ -61,7 +59,7 @@
             Assert.NotNull(injectedService);
             Assert.NotNull(anotherInjectedService);
 
-            MyMvc.IsNotUsingServices();
+            MyMvc.IsUsingDefaultServices();
         }
 
         [Fact]
@@ -84,7 +82,7 @@
             Assert.NotNull(setOptions);
             Assert.Equal(initialSetOptions.Count() + 1, setOptions.Count());
 
-            MyMvc.IsNotUsingServices();
+            MyMvc.IsUsingDefaultServices();
         }
 
         [Fact]
@@ -97,7 +95,7 @@
             Assert.NotNull(injectedService);
             Assert.IsAssignableFrom(typeof(ReplaceableInjectedService), injectedService);
 
-            MyMvc.IsNotUsingServices();
+            MyMvc.IsUsingDefaultServices();
         }
 
         [Fact]
@@ -110,7 +108,7 @@
             Assert.NotNull(injectedService);
             Assert.IsAssignableFrom(typeof(ReplaceableInjectedService), injectedService);
 
-            MyMvc.IsNotUsingServices();
+            MyMvc.IsUsingDefaultServices();
         }
 
         [Fact]
@@ -123,10 +121,10 @@
 
             var injectedServices = TestServiceProvider.GetService<IInjectedService>();
 
-            Assert.NotNull(injectedServices);;
+            Assert.NotNull(injectedServices); ;
             Assert.IsAssignableFrom(typeof(InjectedService), injectedServices);
 
-            MyMvc.IsNotUsingServices();
+            MyMvc.IsUsingDefaultServices();
         }
 
         [Fact]
@@ -144,6 +142,8 @@
             MyMvc.IsNotUsingServices();
 
             Assert.Null(TestServiceProvider.Current);
+
+            MyMvc.IsUsingDefaultServices();
         }
 
         [Fact]
@@ -182,7 +182,7 @@
             Assert.NotNull(injectedService);
             Assert.NotNull(anotherInjectedService);
 
-            MyMvc.IsNotUsingServices();
+            MyMvc.IsUsingDefaultServices();
         }
 
         [Fact]
@@ -233,7 +233,7 @@
             Assert.NotNull(controller.AnotherInjectedService);
             Assert.IsAssignableFrom<AnotherInjectedService>(controller.AnotherInjectedService);
 
-            MyMvc.IsNotUsingServices();
+            MyMvc.IsUsingDefaultServices();
         }
 
         [Fact]
@@ -250,7 +250,7 @@
                     .Ok();
             }, "NoParameterlessConstructorController could not be instantiated because it contains no constructor taking no parameters.");
 
-            MyMvc.IsNotUsingServices();
+            MyMvc.IsUsingDefaultServices();
         }
 
         //[Fact]

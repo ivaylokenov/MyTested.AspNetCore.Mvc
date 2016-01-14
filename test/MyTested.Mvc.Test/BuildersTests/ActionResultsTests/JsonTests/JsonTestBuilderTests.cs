@@ -7,8 +7,7 @@
     using Setups.Controllers;
     using Setups.Models;
     using Xunit;
-
-    [Collection(MyMvcTests.ServiceBasedTests)]
+    
     public class JsonTestBuilderTests
     {
         [Fact]
@@ -25,16 +24,12 @@
         [Fact]
         public void WithDefaultJsonSettingsShouldNotThrowExeptionWithDefaultJsonSettings()
         {
-            MyMvc.IsUsingDefaultServices();
-            
             MyMvc
                 .Controller<MvcController>()
                 .Calling(c => c.JsonAction())
                 .ShouldReturn()
                 .Json()
                 .WithDefaulJsonSerializerSettings();
-
-            MyMvc.IsNotUsingServices();
         }
 
         [Fact]

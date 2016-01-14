@@ -12,11 +12,16 @@
     /// </summary>
     public static class MyMvc
     {
+        static MyMvc()
+        {
+            IsUsingDefaultServices();
+        }
+
         public static void IsUsingDefaultServices()
         {
             IsUsing(null);
         }
-        
+
         // TODO: document these, add something for IApplicationBuilder
         public static void IsUsing(Action<IServiceCollection> services)
         {
@@ -27,7 +32,7 @@
         {
             IsUsing<TStartup>(null);
         }
-
+        // TODO: configurable HttpContext (global?)
         public static void IsUsing<TStartup>(Action<IServiceCollection> services)
             where TStartup : class, new()
         {
@@ -47,7 +52,7 @@
         public static IControllerBuilder<TController> Controller<TController>()
             where TController : Controller
         {
-            var controller = Reflection.TryCreateInstance<TController>();
+            var controller = Reflection.TryCreateInstance<TController>(); // TODO: optimize expressions and reflections, add cache where needed
             return Controller(() => controller);
         }
 
