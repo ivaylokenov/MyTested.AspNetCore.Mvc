@@ -26,45 +26,14 @@
         /// <param name="expectedModel">Expected model to be returned.</param>
         /// <returns>Builder for testing the response model errors.</returns>
         IModelDetailsTestBuilder<TResponseModel> WithResponseModel<TResponseModel>(TResponseModel expectedModel);
-
-        // TODO: find HttpContent
-        ///// <summary>
-        ///// Tests whether the content of the HTTP response message is of certain type.
-        ///// </summary>
-        ///// <typeparam name="TContentType">Type of expected HTTP content.</typeparam>
-        ///// <returns>The same HTTP response message test builder.</returns>
-        //IAndHttpResponseMessageTestBuilder WithContentOfType<TContentType>()
-        //    where TContentType : HttpContent;
-
+        
         /// <summary>
         /// Tests whether the content of the HTTP response message is the provided string.
         /// </summary>
         /// <param name="content">Expected string content.</param>
         /// <returns>The same HTTP response message test builder.</returns>
         IAndHttpResponseMessageTestBuilder WithStringContent(string content);
-
-        // TODO: find formatters - possible IOutputFormatter
-        ///// <summary>
-        ///// Tests whether the HTTP response message has the provided media type formatter.
-        ///// </summary>
-        ///// <param name="mediaTypeFormatter">Expected media type formatter.</param>
-        ///// <returns>The same HTTP response message test builder.</returns>
-        //IAndHttpResponseMessageTestBuilder WithMediaTypeFormatter(MediaTypeFormatter mediaTypeFormatter);
-
-        ///// <summary>
-        ///// Tests whether the HTTP response message has the provided type of media type formatter.
-        ///// </summary>
-        ///// <typeparam name="TMediaTypeFormatter">Type of MediaTypeFormatter.</typeparam>
-        ///// <returns>The same HTTP response message test builder.</returns>
-        //IAndHttpResponseMessageTestBuilder WithMediaTypeFormatterOfType<TMediaTypeFormatter>()
-        //    where TMediaTypeFormatter : MediaTypeFormatter, new();
-
-        /// <summary>
-        /// Tests whether the HTTP response message contains the default media type formatter provided by the framework.
-        /// </summary>
-        /// <returns>The same HTTP response message test builder.</returns>
-        IAndHttpResponseMessageTestBuilder WithDefaultMediaTypeFormatter();
-
+        
         /// <summary>
         /// Tests whether the HTTP response message contains response header with certain name.
         /// </summary>

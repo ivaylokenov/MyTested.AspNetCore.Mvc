@@ -21,8 +21,7 @@
         {
             IsUsing(null);
         }
-
-        // TODO: document these, add something for IApplicationBuilder
+        
         public static void IsUsing(Action<IServiceCollection> services)
         {
             TestServiceProvider.Setup(services);
@@ -32,16 +31,11 @@
         {
             IsUsing<TStartup>(null);
         }
-        // TODO: configurable HttpContext (global?)
+        
         public static void IsUsing<TStartup>(Action<IServiceCollection> services)
             where TStartup : class, new()
         {
             TestServiceProvider.Setup<TStartup>(services);
-        }
-        
-        public static void IsNotUsingServices()
-        {
-            TestServiceProvider.Clear();
         }
         
         /// <summary>
@@ -52,7 +46,7 @@
         public static IControllerBuilder<TController> Controller<TController>()
             where TController : Controller
         {
-            var controller = Reflection.TryCreateInstance<TController>(); // TODO: optimize expressions and reflections, add cache where needed
+            var controller = Reflection.TryCreateInstance<TController>();
             return Controller(() => controller);
         }
 
@@ -80,7 +74,5 @@
             var controllerInstance = construction();
             return new ControllerBuilder<TController>(controllerInstance);
         }
-
-        // TODO: add all other options
     }
 }

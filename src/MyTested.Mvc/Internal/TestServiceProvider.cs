@@ -8,8 +8,7 @@
     using System.Collections.Generic;
     using Utilities;
     using Utilities.Validators;
-
-    // TODO: docs
+    
     public class TestServiceProvider
     {
         private const string ConfigureServicesMethodName = "ConfigureServices";
@@ -21,8 +20,7 @@
 
         public static void Setup(Action<IServiceCollection> servicesAction)
         {
-            serviceCollection = new ServiceCollection();
-            serviceCollection.AddSingleton<ILoggerFactory>(MockedLoggerFactory.Create()); // TODO: check if needed
+            serviceCollection = GetInitialServiceCollection();
             serviceCollection.AddMvc();
 
             if (servicesAction != null)
@@ -34,8 +32,7 @@
         public static void Setup<TStartup>(Action<IServiceCollection> servicesAction)
             where TStartup : class, new()
         {
-            serviceCollection = new ServiceCollection();
-            serviceCollection.AddSingleton<ILoggerFactory>(MockedLoggerFactory.Create()); // TODO: check if needed
+            serviceCollection = GetInitialServiceCollection();
 
             var configureAction = Reflection.CreateDelegateFromMethod<Action<IServiceCollection>>(
                 new TStartup(),
@@ -117,6 +114,13 @@
         {
             serviceCollection = null;
             serviceProvider = null;
+        }
+
+        private static IServiceCollection GetInitialServiceCollection()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddSingleton<ILoggerFactory>(MockedLoggerFactory.Create());
+            return serviceCollection;
         }
     }
 }

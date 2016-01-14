@@ -8,7 +8,6 @@ namespace MyTested.Mvc.Utilities.Validators
     /// </summary>
     public static class HttpStatusCodeValidator
     {
-        // TODO: docs
         public static void ValidateHttpStatusCode(
             HttpStatusCode expectedHttpStatusCode,
             int? actualHttpStatusCode,

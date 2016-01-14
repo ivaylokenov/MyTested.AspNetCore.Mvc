@@ -91,8 +91,7 @@
                     "instead received different result");
             }
         }
-
-        // TODO: add documentation
+        
         public static void ValidateAuthenticationProperties(
             dynamic actionResult,
             Action<IAuthenticationPropertiesTestBuilder> authenticationPropertiesBuilder,

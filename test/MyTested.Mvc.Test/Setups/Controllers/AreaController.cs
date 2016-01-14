@@ -2,7 +2,7 @@
 {
     using Microsoft.AspNet.Mvc;
 
-    [Area("CustomArea")] // TODO: add test
+    [Area("CustomArea")]
     public class AreaController : Controller
     {
     }

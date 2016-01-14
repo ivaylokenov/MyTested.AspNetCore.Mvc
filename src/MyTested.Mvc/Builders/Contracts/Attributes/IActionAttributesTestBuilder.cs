@@ -54,57 +54,5 @@
         /// </summary>
         /// <returns>The same attributes test builder.</returns>
         IAndActionAttributesTestBuilder DisablingActionCall();
-
-        ///// <summary>
-        ///// Checks whether the collected attributes restrict the request to a specific HTTP method (AcceptVerbsAttribute or the specific HttpGetAttribute, HttpPostAttribute, etc.).
-        ///// </summary>
-        ///// <typeparam name="THttpMethod">Attribute of type IActionHttpMethodProvider.</typeparam>
-        ///// <returns>The same attributes test builder.</returns>
-        //IAndActionAttributesTestBuilder RestrictingForRequestsWithMethod<THttpMethod>()
-        //    where THttpMethod : Attribute, IActionHttpMethodProvider, new();
-
-        ///// <summary>
-        ///// Checks whether the collected attributes restrict the request to a specific HTTP method (AcceptVerbsAttribute or the specific HttpGetAttribute, HttpPostAttribute, etc.).
-        ///// </summary>
-        ///// <param name="httpMethod">HTTP method provided as string.</param>
-        ///// <returns>The same attributes test builder.</returns>
-        //IAndActionAttributesTestBuilder RestrictingForRequestsWithMethod(string httpMethod);
-
-        // TODO: ?
-        ///// <summary>
-        ///// Checks whether the collected attributes restrict the request to a specific HTTP method (AcceptVerbsAttribute or the specific HttpGetAttribute, HttpPostAttribute, etc.).
-        ///// </summary>
-        ///// <param name="httpMethod">HTTP method provided as HttpMethod class.</param>
-        ///// <returns>The same attributes test builder.</returns>
-        //IAndActionAttributesTestBuilder RestrictingForRequestsWithMethod(HttpMethod httpMethod);
-
-        ///// <summary>
-        ///// Checks whether the collected attributes restrict the request to a specific HTTP methods (AcceptVerbsAttribute or the specific HttpGetAttribute, HttpPostAttribute, etc.).
-        ///// </summary>
-        ///// <param name="httpMethods">HTTP methods provided as collection of strings.</param>
-        ///// <returns>The same attributes test builder.</returns>
-        //IAndActionAttributesTestBuilder RestrictingForRequestsWithMethods(IEnumerable<string> httpMethods);
-
-        ///// <summary>
-        ///// Checks whether the collected attributes restrict the request to a specific HTTP methods (AcceptVerbsAttribute or the specific HttpGetAttribute, HttpPostAttribute, etc.).
-        ///// </summary>
-        ///// <param name="httpMethods">HTTP methods provided as string parameters.</param>
-        ///// <returns>The same attributes test builder.</returns>
-        //IAndActionAttributesTestBuilder RestrictingForRequestsWithMethods(params string[] httpMethods);
-
-        // TODO: ?
-        ///// <summary>
-        ///// Checks whether the collected attributes restrict the request to a specific HTTP methods (AcceptVerbsAttribute or the specific HttpGetAttribute, HttpPostAttribute, etc.).
-        ///// </summary>
-        ///// <param name="httpMethods">HTTP methods provided as collection of HttpMethod classes.</param>
-        ///// <returns>The same attributes test builder.</returns>
-        //IAndActionAttributesTestBuilder RestrictingForRequestsWithMethods(IEnumerable<HttpMethod> httpMethods);
-
-        ///// <summary>
-        ///// Checks whether the collected attributes restrict the request to a specific HTTP methods (AcceptVerbsAttribute or the specific HttpGetAttribute, HttpPostAttribute, etc.).
-        ///// </summary>
-        ///// <param name="httpMethods">HTTP methods provided as parameters of HttpMethod class.</param>
-        ///// <returns>The same attributes test builder.</returns>
-        //IAndActionAttributesTestBuilder RestrictingForRequestsWithMethods(params HttpMethod[] httpMethods);
     }
 }

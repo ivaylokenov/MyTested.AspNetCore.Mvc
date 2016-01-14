@@ -89,18 +89,7 @@
         {
             return new DefaultHttpContext().Request;
         }
-
-        // TODO: is it needed?
-        //public static IContentNegotiator GetCustomContentNegotiator()
-        //{
-        //    return new CustomContentNegotiator();
-        //}
-
-        //public static MediaTypeFormatter GetCustomMediaTypeFormatter()
-        //{
-        //    return new CustomMediaTypeFormatter();
-        //}
-
+        
         public static Uri GetUri()
         {
             return new Uri("http://somehost.com/someuri/1?query=Test");

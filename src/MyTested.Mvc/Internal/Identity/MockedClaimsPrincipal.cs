@@ -38,23 +38,14 @@
         /// </summary>
         /// <value>IIdentity object.</value>
         public IIdentity Identity { get; private set; }
-
-        /// <summary>
-        /// Static constructor for creating default unauthenticated mocked user object.
-        /// </summary>
-        /// <returns>Unauthenticated IPrincipal.</returns>
-        public static ClaimsPrincipal CreateUnauthenticated()
-        {
-            return new ClaimsPrincipal(new MockedIIdentity()); // TODO: make singleton
-        }
-
+        
         /// <summary>
         /// Static constructor for creating default authenticated mocked user object with "TestUser" username.
         /// </summary>
         /// <returns>Authenticated IPrincipal.</returns>
         public static ClaimsPrincipal CreateDefaultAuthenticated()
         {
-            return new ClaimsPrincipal(new MockedIIdentity(DefaultUsername, DefaultIPrincipalType, true)); // TODO: make singleton
+            return new ClaimsPrincipal(new MockedIIdentity(DefaultUsername, DefaultIPrincipalType, true));
         }
 
         /// <summary>

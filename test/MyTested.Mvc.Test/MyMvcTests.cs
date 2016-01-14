@@ -1,6 +1,6 @@
 ﻿using Xunit;
 
-[assembly: CollectionBehavior(DisableTestParallelization = true)] // TODO: think whether parallel tests should be run and how to overcome it -> IsUsing is the problem here because it is called a couple of times
+[assembly: CollectionBehavior(DisableTestParallelization = true)]
 
 namespace MyTested.Mvc.Tests
 {
@@ -19,25 +19,6 @@ namespace MyTested.Mvc.Tests
 
     public class MyMvcTests
     {
-        // TODO: move tests
-
-        //[Fact]
-        //public void IsUsingShouldOverrideTheDefaultConfiguration()
-        //{
-        //    // run two test cases in order to check the configuration is global
-        //    var configs = new List<HttpConfiguration>();
-        //    for (int i = 0; i < 2; i++)
-        //    {
-        //        var controller = MyMvc.Controller<MvcController>().AndProvideTheController();
-        //        var actualConfig = controller.Configuration;
-
-        //        Assert.NotNull(actualConfig);
-        //        configs.Add(actualConfig);
-        //    }
-
-        //    Assert.AreSame(configs[0], configs[1]);
-        //}
-
         [Fact]
         public void UsesDefaultServicesShouldPopulateDefaultServices()
         {
@@ -135,17 +116,7 @@ namespace MyTested.Mvc.Tests
                 MyMvc.IsUsing<MvcController>();
             }, "The provided MvcController class should have method named 'ConfigureServices' with void or IServiceProvider return type.");
         }
-
-        [Fact]
-        public void IsNotUsingServicesShouldSetServicesToNull()
-        {
-            MyMvc.IsNotUsingServices();
-
-            Assert.Null(TestServiceProvider.Current);
-
-            MyMvc.IsUsingDefaultServices();
-        }
-
+        
         [Fact]
         public void IsUsingShouldRecreateServicesEverytimeItIsInvoked()
         {
@@ -154,11 +125,7 @@ namespace MyTested.Mvc.Tests
             var markerService = TestServiceProvider.GetService<MvcMarkerService>();
 
             Assert.NotNull(markerService);
-
-            MyMvc.IsNotUsingServices();
-
-            Assert.Null(TestServiceProvider.Current);
-
+            
             MyMvc.IsUsing(TestObjectFactory.GetCustomServicesRegistrationAction());
 
             var injectedService = TestServiceProvider.GetService<IInjectedService>();
@@ -252,57 +219,5 @@ namespace MyTested.Mvc.Tests
 
             MyMvc.IsUsingDefaultServices();
         }
-
-        //[Fact]
-        //public void HandlerWithoutConstructorFunctionShouldPopulateCorrectNewInstanceOfHandlerType()
-        //{
-        //    var handler = MyMvc
-        //        .Handler<CustomMessageHandler>()
-        //        .AndProvideTheHandler();
-
-        //    Assert.NotNull(handler);
-        //    Assert.IsAssignableFrom<CustomMessageHandler>(handler);
-        //}
-
-        //[Fact]
-        //public void HandlerWithConstructorFunctionShouldPopulateCorrectNewInstanceOfHandlerType()
-        //{
-        //    var handler = MyMvc.Handler(() => new CustomMessageHandler()).AndProvideTheHandler();
-
-        //    Assert.NotNull(handler);
-        //    Assert.IsAssignableFrom<CustomMessageHandler>(handler);
-        //}
-
-        //[Fact]
-        //public void HandlerWithProvidedInstanceShouldPopulateCorrectInstanceOfHandlerType()
-        //{
-        //    var instance = new CustomMessageHandler();
-        //    var controller = MyMvc.Handler(instance).AndProvideTheHandler();
-
-        //    Assert.NotNull(controller);
-        //    Assert.IsAssignableFrom<CustomMessageHandler>(controller);
-        //}
-
-        //[Fact]
-        //public void IsRegisteredWithShouldWorkCorrectly()
-        //{
-        //    MyMvc.IsRegisteredWith(WebApiConfig.Register);
-
-        //    Assert.NotNull(MyMvc.Configuration);
-        //    Assert.Equal(1, MyMvc.Configuration.Routes.Count);
-
-        //    MyMvc.IsUsing(TestObjectFactory.GetHttpConfigurationWithRoutes());
-        //}
-
-        //[Fact]
-        //public void IsUsingDefaultConfigurationShouldWorkCorrectly()
-        //{
-        //    MyMvc.IsUsingDefaultHttpConfiguration();
-
-        //    Assert.NotNull(MyMvc.Configuration);
-        //    Assert.Equal(0, MyMvc.Configuration.Routes.Count);
-
-        //    MyMvc.IsUsing(TestObjectFactory.GetHttpConfigurationWithRoutes());
-        //}
     }
 }

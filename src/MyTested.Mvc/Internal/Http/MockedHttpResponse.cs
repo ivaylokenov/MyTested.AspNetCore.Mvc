@@ -13,7 +13,6 @@
 
         public override void RegisterForDispose(IDisposable disposable)
         {
-            // TODO: think what to do here?
         }
     }
 }

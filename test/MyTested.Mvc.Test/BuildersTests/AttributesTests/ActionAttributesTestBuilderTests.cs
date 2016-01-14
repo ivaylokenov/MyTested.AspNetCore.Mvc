@@ -242,30 +242,7 @@
             },
             "When calling NormalActionWithAttributes action in MvcController expected action to have AuthorizeAttribute with allowed 'Admin' roles, but in fact found 'Admin,Moderator'.");
         }
-
-        //[Fact]
-        //public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithTheAttributeWithCorrectUsers()
-        //{
-        //    MyMvc
-        //        .Controller<MvcController>()
-        //        .Calling(c => c.NormalActionWithAttributes())
-        //        .ShouldHave()
-        //        .ActionAttributes(attributes => attributes.RestrictingForAuthorizedRequests(withAllowedUsers: "John,George"));
-        //}
-
-        //[Fact]
-        //[ExpectedException(
-        //    typeof(AttributeAssertionException),
-        //    ExpectedMessage = "When calling NormalActionWithAttributes action in MvcController expected action to have AuthorizeAttribute with allowed 'John' users, but in fact found 'John,George'.")]
-        //public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithActionWithoutTheAttributeWithIncorrectUsers()
-        //{
-        //    MyMvc
-        //        .Controller<MvcController>()
-        //        .Calling(c => c.NormalActionWithAttributes())
-        //        .ShouldHave()
-        //        .ActionAttributes(attributes => attributes.RestrictingForAuthorizedRequests(withAllowedUsers: "John"));
-        //}
-
+        
         [Fact]
         public void DisablingActionCallShouldNotThrowExceptionWithTheAttribute()
         {
@@ -289,111 +266,7 @@
             },
             "When calling NormalActionWithAttributes action in MvcController expected action to have NonActionAttribute, but in fact such was not found.");
         }
-
-        // TODO: HttpMethod implemented?
-        //[Fact]
-        //public void RestrictingForRequestsWithMethodWithGenericShouldWorkCorrectly()
-        //{
-        //    MyMvc
-        //        .Controller<MvcController>()
-        //        .Calling(c => c.NormalActionWithAttributes())
-        //        .ShouldHave()
-        //        .ActionAttributes(attributes => attributes.RestrictingForRequestsWithMethod<HttpGetAttribute>());
-        //}
-
-        //[Fact]
-        //public void RestrictingForRequestsWithMethodWithStringShouldWorkCorrectly()
-        //{
-        //    MyMvc
-        //        .Controller<MvcController>()
-        //        .Calling(c => c.NormalActionWithAttributes())
-        //        .ShouldHave()
-        //        .ActionAttributes(attributes => attributes.RestrictingForRequestsWithMethod("GET"));
-        //}
-
-        //[Fact]
-        //public void RestrictingForRequestsWithMethodWithHttpMethodClassShouldWorkCorrectly()
-        //{
-        //    MyMvc
-        //        .Controller<MvcController>()
-        //        .Calling(c => c.NormalActionWithAttributes())
-        //        .ShouldHave()
-        //        .ActionAttributes(attributes => attributes.RestrictingForRequestsWithMethod(HttpMethod.Get));
-        //}
-
-        //[Fact]
-        //public void RestrictingForRequestsWithMethodWithListOfStringsShouldWorkCorrectly()
-        //{
-        //    MyMvc
-        //        .Controller<MvcController>()
-        //        .Calling(c => c.NormalActionWithAttributes())
-        //        .ShouldHave()
-        //        .ActionAttributes(attributes => attributes.RestrictingForRequestsWithMethods(new List<string> { "GET", "HEAD" }));
-        //}
-
-        //[Fact]
-        //public void RestrictingForRequestsWithMethodWithParamsOfStringsShouldWorkCorrectly()
-        //{
-        //    MyMvc
-        //        .Controller<MvcController>()
-        //        .Calling(c => c.NormalActionWithAttributes())
-        //        .ShouldHave()
-        //        .ActionAttributes(attributes => attributes.RestrictingForRequestsWithMethods("GET", "HEAD"));
-        //}
-
-        //[Fact]
-        //public void RestrictingForRequestsWithMethodWithListOfHttpMethodsShouldWorkCorrectly()
-        //{
-        //    MyMvc
-        //        .Controller<MvcController>()
-        //        .Calling(c => c.NormalActionWithAttributes())
-        //        .ShouldHave()
-        //        .ActionAttributes(attributes => attributes.RestrictingForRequestsWithMethods(new List<HttpMethod> { HttpMethod.Get, HttpMethod.Head }));
-        //}
-
-        //[Fact]
-        //public void RestrictingForRequestsWithMethodWithParamsOfHttpMethodShouldWorkCorrectly()
-        //{
-        //    MyMvc
-        //        .Controller<MvcController>()
-        //        .Calling(c => c.NormalActionWithAttributes())
-        //        .ShouldHave()
-        //        .ActionAttributes(attributes => attributes.RestrictingForRequestsWithMethods(HttpMethod.Get, HttpMethod.Head));
-        //}
-
-        //[Fact]
-        //public void RestrictingForRequestsWithMethodWithListOfHttpMethodsShouldWorkCorrectlyWithDoubleAttributes()
-        //{
-        //    MyMvc
-        //        .Controller<MvcController>()
-        //        .Calling(c => c.VariousAttributesAction())
-        //        .ShouldHave()
-        //        .ActionAttributes(attributes => attributes.RestrictingForRequestsWithMethods(new List<HttpMethod>
-        //        {
-        //            HttpMethod.Get,
-        //            HttpMethod.Post,
-        //            HttpMethod.Delete
-        //        }));
-        //}
-
-        //[Fact]
-        //[ExpectedException(
-        //    typeof(AttributeAssertionException),
-        //    ExpectedMessage = "When calling VariousAttributesAction action in MvcController expected action to have attribute restricting requests for HTTP 'HEAD' method, but in fact none was found.")]
-        //public void RestrictingForRequestsWithMethodWithListOfHttpMethodsShouldWorkCorrectlyWithDoubleAttributesAndIncorrectMethods()
-        //{
-        //    MyMvc
-        //        .Controller<MvcController>()
-        //        .Calling(c => c.VariousAttributesAction())
-        //        .ShouldHave()
-        //        .ActionAttributes(attributes => attributes.RestrictingForRequestsWithMethods(new List<HttpMethod>
-        //        {
-        //            HttpMethod.Get,
-        //            HttpMethod.Head,
-        //            HttpMethod.Delete
-        //        }));
-        //}
-
+        
         [Fact]
         public void AndAlsoShouldWorkCorrectly()
         {

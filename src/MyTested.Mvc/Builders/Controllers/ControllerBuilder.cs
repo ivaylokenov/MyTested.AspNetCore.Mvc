@@ -23,17 +23,18 @@
     using Authentication;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.AspNet.Mvc.Controllers;
-    using Microsoft.AspNet.Mvc.Infrastructure;
+
     /// <summary>
     /// Used for building the action which will be tested.
     /// </summary>
     /// <typeparam name="TController">Class inheriting ASP.NET MVC 6 controller.</typeparam>
     public class ControllerBuilder<TController> : IAndControllerBuilder<TController>
-        where TController : Controller // TODO: POCOController?
+        where TController : Controller
     {
         private readonly IDictionary<Type, object> aggregatedDependencies;
 
         private TController controller;
+        private Action<TController> controllerSetupAction;
         private bool isPreparedForTesting;
         private bool enabledValidation;
 
@@ -51,7 +52,7 @@
         }
 
         /// <summary>
-        /// Gets the ASP.NET Web API controller instance to be tested.
+        /// Gets the ASP.NET MVC 6 controller instance to be tested.
         /// </summary>
         /// <value>Instance of the ASP.NET MVC 6 controller.</value>
         public TController Controller
@@ -79,7 +80,7 @@
         /// <returns>The same controller builder.</returns>
         public IAndControllerBuilder<TController> WithHttpContext(HttpContext context)
         {
-            this.HttpContext = context; // TODO: is this needed? or set on the controller, other options?
+            this.HttpContext = context;
             return this;
         }
 
@@ -90,21 +91,10 @@
         /// <returns>The same controller builder.</returns>
         public IAndControllerBuilder<TController> WithHttpRequest(HttpRequest request)
         {
-            this.HttpRequest = request; // set it on the controller
+            this.HttpRequest = request;
             return this;
         }
-
-        /// <summary>
-        /// AndAlso method for better readability when building controller instance.
-        /// </summary>
-        /// <returns>The same controller builder.</returns>
-        public IAndControllerBuilder<TController> AndAlso()
-        {
-            return this;
-        }
-
-        // TODO: HttpRequest builder
-
+        
         /// <summary>
         /// Tries to resolve constructor dependency of given type.
         /// </summary>
@@ -179,6 +169,26 @@
             var newUserBuilder = new UserBuilder();
             userBuilder(newUserBuilder);
             this.Controller.HttpContext.User = newUserBuilder.GetUser();
+            return this;
+        }
+
+        /// <summary>
+        /// Sets custom properties to the controller using action delegate.
+        /// </summary>
+        /// <param name="controllerSetup">Action delegate to use for controller setup.</param>
+        /// <returns>The same controller test builder.</returns>
+        public IAndControllerBuilder<TController> WithSetup(Action<TController> controllerSetup)
+        {
+            this.controllerSetupAction = controllerSetup;
+            return this;
+        }
+        
+        /// <summary>
+        /// AndAlso method for better readability when building controller instance.
+        /// </summary>
+        /// <returns>The same controller builder.</returns>
+        public IAndControllerBuilder<TController> AndAlso()
+        {
             return this;
         }
 
@@ -298,17 +308,7 @@
         {
             return this.HttpRequest;
         }
-
-        // TODO: ?
-        ///// <summary>
-        ///// Gets the HTTP request message used in the testing.
-        ///// </summary>
-        ///// <returns>Instance of HttpRequestMessage.</returns>
-        //public HttpConfiguration AndProvideTheHttpConfiguration()
-        //{
-        //    return this.Controller.Configuration;
-        //}
-
+        
         private void BuildControllerIfNotExists()
         {
             if (this.controller == null)
@@ -375,12 +375,9 @@
         
         private void PrepareController()
         {
-            // TODO: provide default values, if missing
-            // TODO: extract or cache or whatever, think it
             var services = this.HttpContext.RequestServices;
             var options = services.GetRequiredService<IOptions<MvcOptions>>().Value;
-
-            // TODO: add all other properties on action call?
+            
             var controllerContext = new ControllerContext
             {
                 HttpContext = this.HttpContext,
@@ -396,23 +393,10 @@
             this.controller.MetadataProvider = services.GetRequiredService<IModelMetadataProvider>();
             this.controller.ObjectValidator = services.GetRequiredService<IObjectModelValidator>();
             
-            // TODO: setup action
-
-            //var httpContext = new DefaultHttpContext();
-            //var actionContext = new ActionContext(httpContext, new RouteData(), new ActionDescriptor());
-
-            //var viewData = new ViewDataDictionary(metadataProvider, new ModelStateDictionary());
-            //var tempData = new TempDataDictionary(this.controller.HttpContext, new SessionStateTempDataProvider());
-
-            //this.Controller.MetadataProvider = metadataProvider;
-            //this.Controller.ViewData = viewData;
-            //this.Controller.TempData = tempData;
-            //this.Controller.ObjectValidator = new DefaultObjectValidator(metadataProvider);
-
-            // TODO: add
-            //this.controller.Request = this.HttpRequest;
-            //this.controller.RequestContext = this.HttpRequestMessage.GetRequestContext();
-            //this.controller.Configuration = this.HttpConfiguration ?? MyWebApi.Configuration ?? new HttpConfiguration();
+            if (this.controllerSetupAction != null)
+            {
+                controllerSetupAction(this.controller);
+            }
         }
 
         private void ValidateModelState(LambdaExpression actionCall)

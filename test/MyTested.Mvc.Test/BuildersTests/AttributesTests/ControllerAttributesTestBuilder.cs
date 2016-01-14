@@ -113,50 +113,7 @@
                     .Attributes(attributes => attributes.ChangingRouteTo("api/test"));
             }, "When testing AreaController was expected to have RouteAttribute, but in fact such was not found.");
         }
-
-        // TODO: route prefix?
-        //[Fact]
-        //public void ChangingRoutePrefixToShouldNotThrowExceptionWithCorrectTheAttribute()
-        //{
-        //    MyMvc
-        //        .Controller<MvcController>()
-        //        .ShouldHave()
-        //        .Attributes(attributes => attributes.ChangingRoutePrefixTo("/api/test"));
-        //}
-
-        //[Fact]
-        //public void ChangingRoutePrefixToShouldNotThrowExceptionWithCorrectTheAttributeAndCaseDifference()
-        //{
-        //    MyMvc
-        //        .Controller<MvcController>()
-        //        .ShouldHave()
-        //        .Attributes(attributes => attributes.ChangingRoutePrefixTo("/api/Test"));
-        //}
-
-        //[Fact]
-        //[ExpectedException(
-        //    typeof(AttributeAssertionException),
-        //    ExpectedMessage = "When testing MvcController was expected to have RoutePrefixAttribute with '/api/another' prefix, but in fact found '/api/test'.")]
-        //public void ChangingRoutePrefixToShouldThrowExceptionWithControllerWithTheAttributeAndWrongPrefix()
-        //{
-        //    MyMvc
-        //        .Controller<MvcController>()
-        //        .ShouldHave()
-        //        .Attributes(attributes => attributes.ChangingRoutePrefixTo("/api/another"));
-        //}
-
-        //[Fact]
-        //[ExpectedException(
-        //    typeof(AttributeAssertionException),
-        //    ExpectedMessage = "When testing AttributesController was expected to have RoutePrefixAttribute, but in fact such was not found.")]
-        //public void ChangingActionNameToShouldThrowExceptionWithActionWithoutTheAttribute()
-        //{
-        //    MyMvc
-        //        .Controller<AttributesController>()
-        //        .ShouldHave()
-        //        .Attributes(attributes => attributes.ChangingRoutePrefixTo("/api/test"));
-        //}
-
+        
         [Fact]
         public void AllowingAnonymousRequestsShouldNotThrowExceptionWithTheAttribute()
         {
@@ -219,29 +176,7 @@
                     .Attributes(attributes => attributes.RestrictingForAuthorizedRequests(withAllowedRoles: "Admin"));
             }, "When testing MvcController was expected to have AuthorizeAttribute with allowed 'Admin' roles, but in fact found 'Admin,Moderator'.");
         }
-
-        // TODO: with allowed users?
-        //[Fact]
-        //public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithTheAttributeWithCorrectUsers()
-        //{
-        //    MyMvc
-        //        .Controller<MvcController>()
-        //        .ShouldHave()
-        //        .Attributes(attributes => attributes.RestrictingForAuthorizedRequests(withAllowedUsers: "John,George"));
-        //}
-
-        //[Fact]
-        //[ExpectedException(
-        //    typeof(AttributeAssertionException),
-        //    ExpectedMessage = "When testing MvcController was expected to have AuthorizeAttribute with allowed 'John' users, but in fact found 'John,George'.")]
-        //public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithControllerWithoutTheAttributeWithIncorrectUsers()
-        //{
-        //    MyMvc
-        //        .Controller<MvcController>()
-        //        .ShouldHave()
-        //        .Attributes(attributes => attributes.RestrictingForAuthorizedRequests(withAllowedUsers: "John"));
-        //}
-
+        
         [Fact]
         public void AndAlsoShouldWorkCorrectly()
         {

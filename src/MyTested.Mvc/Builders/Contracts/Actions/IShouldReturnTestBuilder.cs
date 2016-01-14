@@ -37,14 +37,7 @@
         /// </summary>
         /// <returns>Base test builder with action result.</returns>
         IBaseTestBuilderWithActionResult<TActionResult> NotNull();
-
-        // TODO: may not be used
-        ///// <summary>
-        ///// Tests whether action result is HttpResponseMessage.
-        ///// </summary>
-        ///// <returns>HTTP response message test builder.</returns>
-        //IHttpResponseMessageTestBuilder HttpResponseMessage();
-
+        
         /// <summary>
         /// Tests whether action result is OkResult or OkNegotiatedContentResult{T}.
         /// </summary>
@@ -93,14 +86,7 @@
         /// </summary>
         /// <returns>Local redirect test builder.</returns>
         ILocalRedirectTestBuilder LocalRedirect();
-
-        // TODO: ?
-        ///// <summary>
-        ///// Tests whether action result is RedirectResult or RedirectToRouteResult.
-        ///// </summary>
-        ///// <returns>Redirect test builder.</returns>
-        //IRedirectTestBuilder Redirect();
-
+        
         /// <summary>
         /// Tests whether action result is HttpStatusCodeResult.
         /// </summary>
@@ -138,26 +124,13 @@
         /// </summary>
         /// <returns>Bad request test builder.</returns>
         IHttpBadRequestTestBuilder HttpBadRequest();
-
-        // TODO: ?
-        ///// <summary>
-        ///// Tests whether action result is ConflictResult.
-        ///// </summary>
-        ///// <returns>Base test builder with action result.</returns>
-        //IBaseTestBuilderWithActionResult<TActionResult> Conflict();
-
+        
         /// <summary>
         /// Tests whether action result is HttpUnauthorizedResult.
         /// </summary>
         /// <returns>Base test builder with action result.</returns>
         IBaseTestBuilderWithActionResult<TActionResult> HttpUnauthorized();
-
-        ///// <summary>
-        ///// Tests whether action result is InternalServerErrorResult or ExceptionResult.
-        ///// </summary>
-        ///// <returns>Internal server error test builder.</returns>
-        //IInternalServerErrorTestBuilder InternalServerError();
-
+        
         /// <summary>
         /// Tests whether action result is JSON Result.
         /// </summary>

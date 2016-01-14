@@ -11,12 +11,11 @@
     using Microsoft.Net.Http.Headers;
     using Newtonsoft.Json;
     using System.IO;
-    using Common;    // TODO:
+    using Common;
     using Microsoft.AspNet.FileProviders;
 
-    [Authorize(Roles = "Admin,Moderator" /*Users = "John,George"*/)]
+    [Authorize(Roles = "Admin,Moderator")]
     [Route("/api/test")]
-    // TODO: [RoutePrefix("/api/test")]
     public class MvcController : Controller
     {
         private readonly ICollection<ResponseModel> responseModel;
@@ -75,106 +74,7 @@
 
             return this.HttpBadRequest();
         }
-
-        public IActionResult CommonHeaderAction()
-        {
-            // TODO: ?
-            //if (this.Request.Headers.Accept.Contains(new MediaTypeWithQualityHeaderValue(MediaType.ApplicationJson)))
-            //{
-            //    return this.Ok();
-            //}
-
-            return this.HttpBadRequest();
-        }
-
-        // TODO: ?
-        //public HttpResponseMessage HttpResponseMessageAction()
-        //{
-        //    var response = new HttpResponseMessage(HttpStatusCode.OK)
-        //    {
-        //        ReasonPhrase = "Custom reason phrase",
-        //        Version = new Version(1, 1),
-        //        Content = new ObjectContent(this.responseModel.GetType(), this.responseModel, TestObjectFactory.GetCustomMediaTypeFormatter()),
-        //        RequestMessage = this.Request
-        //    };
-
-        //    response.Headers.Add("TestHeader", "TestHeaderValue");
-        //    response.Content.Headers.Add("TestHeader", "TestHeaderValue");
-
-        //    return response;
-        //}
-
-        //public HttpResponseMessage HttpResponseMessageGenericObjectContentAction()
-        //{
-        //    return new HttpResponseMessage(HttpStatusCode.OK)
-        //    {
-        //        Content = new ObjectContent<IEnumerable<ResponseModel>>(this.responseModel, new JsonMediaTypeFormatter())
-        //    };
-        //}
-
-        //public HttpResponseMessage HttpResponseMessageWithStringContent()
-        //{
-        //    return new HttpResponseMessage
-        //    {
-        //        Content = new StringContent("Test string")
-        //    };
-        //}
-
-        //public HttpResponseMessage HttpResponseMessageWithResponseModelAction()
-        //{
-        //    return this.Request.CreateResponse(HttpStatusCode.BadRequest, this.responseModel);
-        //}
-
-        //public HttpResponseMessage HttpResponseMessageWithMediaTypeFormatter()
-        //{
-        //    return this.Request.CreateResponse(
-        //        HttpStatusCode.OK,
-        //        this.responseModel,
-        //        TestObjectFactory.GetCustomMediaTypeFormatter());
-        //}
-
-        //public HttpResponseMessage HttpResponseMessageWithoutContent()
-        //{
-        //    return new HttpResponseMessage(HttpStatusCode.NoContent);
-        //}
-
-        //public HttpResponseMessage HttpResponseMessageWithMediaType()
-        //{
-        //    return this.Request.CreateResponse(
-        //        HttpStatusCode.OK,
-        //        this.responseModel,
-        //        MediaType.ApplicationJson);
-        //}
-
-        //public HttpResponseMessage HttpResponseMessageWithFormatterAndMediaType()
-        //{
-        //    return this.Request.CreateResponse(
-        //        HttpStatusCode.OK,
-        //        this.responseModel,
-        //        TestObjectFactory.GetCustomMediaTypeFormatter(),
-        //        MediaType.ApplicationJson);
-        //}
-
-        //public HttpResponseMessage HttpResponseError()
-        //{
-        //    return this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new InvalidOperationException("Error"));
-        //}
-
-        //public HttpResponseMessage HttpResponseErrorWithHttpError()
-        //{
-        //    return this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError("Error"));
-        //}
-
-        //public HttpResponseMessage HttpResponseErrorWithModelState()
-        //{
-        //    return this.Request.CreateErrorResponse(HttpStatusCode.OK, this.ModelState);
-        //}
-
-        //public HttpResponseMessage HttpResponseErrorWithStringMessage()
-        //{
-        //    return this.Request.CreateErrorResponse(HttpStatusCode.OK, "Error");
-        //}
-
+        
         public void EmptyAction()
         {
         }
@@ -193,9 +93,8 @@
         public void EmptyActionWithAttributes()
         {
         }
-
-        // TODO: ?
-        [Authorize(Roles = "Admin,Moderator" /*Users = "John,George"*/)]
+        
+        [Authorize(Roles = "Admin,Moderator")]
         [HttpGet]
         [HttpHead]
         public IActionResult NormalActionWithAttributes()
@@ -244,12 +143,7 @@
 
         public IActionResult OkResultWithContentNegotiatorAction()
         {
-            // TODO: ?
-            return new HttpOkObjectResult(
-                5);
-                //TestObjectFactory.GetCustomContentNegotiator(),
-                //TestObjectFactory.GetCustomHttpRequestMessage(),
-                //TestObjectFactory.GetFormatters());
+            return new HttpOkObjectResult(5);
         }
 
         public void EmptyActionWithException()

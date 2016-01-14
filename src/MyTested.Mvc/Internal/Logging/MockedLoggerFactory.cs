@@ -6,7 +6,7 @@
     {
         public static MockedLoggerFactory Create()
         {
-            return new MockedLoggerFactory(); // TODO: make singleton
+            return new MockedLoggerFactory();
         }
 
         public void AddProvider(ILoggerProvider provider)

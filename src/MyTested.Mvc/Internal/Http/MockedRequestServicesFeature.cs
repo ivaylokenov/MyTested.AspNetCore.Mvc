@@ -3,8 +3,7 @@
     using Microsoft.AspNet.Http.Features.Internal;
     using Microsoft.Extensions.DependencyInjection;
     using System;
-
-    // TODO: document
+    
     public class MockedRequestServicesFeature : IServiceProvidersFeature, IDisposable
     {
         private IServiceProvider globalServices;

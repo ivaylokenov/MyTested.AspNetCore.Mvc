@@ -22,15 +22,7 @@
         /// </summary>
         /// <returns>Controller test builder.</returns>
         IControllerTestBuilder ShouldHave();
-
-        // TODO: with HttpContext?
-        ///// <summary>
-        ///// Sets the HTTP configuration for the current test case.
-        ///// </summary>
-        ///// <param name="config">Instance of HttpConfiguration.</param>
-        ///// <returns>The same controller builder.</returns>
-        //IAndControllerBuilder<TController> WithHttpConfiguration(HttpConfiguration config);
-
+        
         /// <summary>
         /// Adds HTTP request message to the tested controller.
         /// </summary>
@@ -87,6 +79,13 @@
         IAndControllerBuilder<TController> WithAuthenticatedUser(Action<IAndUserBuilder> userBuilder);
 
         /// <summary>
+        /// Sets custom properties to the controller using action delegate.
+        /// </summary>
+        /// <param name="controllerSetup">Action delegate to use for controller setup.</param>
+        /// <returns>The same controller test builder.</returns>
+        IAndControllerBuilder<TController> WithSetup(Action<TController> controllerSetup);
+
+        /// <summary>
         /// Indicates which action should be invoked and tested.
         /// </summary>
         /// <typeparam name="TActionResult">Type of result from action.</typeparam>
@@ -121,14 +120,7 @@
         /// </summary>
         /// <returns>Instance of the ASP.NET Web API controller.</returns>
         TController AndProvideTheController();
-
-        // TODO: ?
-        ///// <summary>
-        ///// Gets the HTTP configuration used in the testing.
-        ///// </summary>
-        ///// <returns>Instance of HttpConfiguration.</returns>
-        //HttpConfiguration AndProvideTheHttpConfiguration();
-
+        
         /// <summary>
         /// Gets the HTTP request message used in the testing.
         /// </summary>

@@ -101,29 +101,5 @@
                     .AggregateException(3);
             }, "When calling ActionWithAggregateException action in MvcController expected AggregateException to contain 3 inner exceptions, but in fact contained 2.");
         }
-
-        // TODO: ?
-        //[Fact]
-        //public void ShouldThrowHttpResponseExceptionShouldCatchAndValidateHttpResponseException()
-        //{
-        //    MyMvc
-        //        .Controller<MvcController>()
-        //        .Calling(c => c.ActionWithHttpResponseException())
-        //        .ShouldThrow()
-        //        .HttpResponseException();
-        //}
-
-        //[Fact]
-        //[ExpectedException(
-        //    typeof(InvalidExceptionAssertionException),
-        //    ExpectedMessage = "When calling ActionWithException action in MvcController expected HttpResponseException, but instead received NullReferenceException.")]
-        //public void ShouldThrowHttpResponseExceptionShouldThrowIfTheExceptionIsNotValidType()
-        //{
-        //    MyMvc
-        //        .Controller<MvcController>()
-        //        .Calling(c => c.ActionWithException())
-        //        .ShouldThrow()
-        //        .HttpResponseException();
-        //}
     }
 }

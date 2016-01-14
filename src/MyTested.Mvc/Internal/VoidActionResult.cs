@@ -11,7 +11,7 @@
         /// <returns>Void action result.</returns>
         public static VoidActionResult Create()
         {
-            return new VoidActionResult(); // TODO: make singleton
+            return new VoidActionResult();
         }
     }
 }

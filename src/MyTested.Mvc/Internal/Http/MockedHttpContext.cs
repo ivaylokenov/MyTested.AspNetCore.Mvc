@@ -13,7 +13,6 @@
         public MockedHttpContext()
         {
             this.httpResponse = new MockedHttpResponse(this, this.Features);
-            this.User = MockedClaimsPrincipal.CreateUnauthenticated(); // TODO: User may not be needed
             this.PrepareRequestServices();
         }
 

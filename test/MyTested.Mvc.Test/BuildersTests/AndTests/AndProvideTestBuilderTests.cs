@@ -5,62 +5,24 @@
     using Setups;
     using Setups.Controllers;
     using Xunit;
-    
+    using Microsoft.AspNet.Mvc;
     public class AndProvideTestBuilderTests
     {
         [Fact]
         public void AndProvideShouldReturnProperController()
         {
-            // TODO: HttpBadRequest builder?
-            //var controller = MyMvc
-            //    .Controller<MvcController>()
-            //    .Calling(c => c.BadRequestWithErrorAction())
-            //    .ShouldReturn()
-            //    .HttpBadRequest()
-            //    .WithErrorMessage()
-            //    .AndProvideTheController();
+            var controller = MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.BadRequestWithErrorAction())
+                .ShouldReturn()
+                .HttpBadRequest()
+                .WithErrorMessage()
+                .AndProvideTheController();
 
-            //Assert.NotNull(controller);
-            //Assert.IsAssignableFrom<MvcController>(controller);
+            Assert.NotNull(controller);
+            Assert.IsAssignableFrom<MvcController>(controller);
         }
-
-        [Fact]
-        public void AndProvideShouldReturnProperHttpRequestMessage()
-        {
-            // TODO: HttpRequest builder
-            //var httpRequestMessage = MyMvc
-            //    .Controller<MvcController>()
-            //    .WithHttpRequestMessage(request
-            //        => request
-            //            .WithMethod(HttpMethod.Get)
-            //            .WithHeader("TestHeader", "TestHeaderValue"))
-            //    .Calling(c => c.HttpResponseMessageAction())
-            //    .ShouldReturn()
-            //    .HttpResponseMessage()
-            //    .AndProvideTheHttpRequestMessage();
-
-            //Assert.NotNull(httpRequestMessage);
-            //Assert.Equal(HttpMethod.Get, httpRequestMessage.Method);
-            //Assert.True(httpRequestMessage.Headers.Contains("TestHeader"));
-        }
-
-        [Fact]
-        public void AndProvideShouldReturnProperHttpConfiguration()
-        {
-            // TODO: http config/context
-            //var config = TestObjectFactory.GetHttpConfigurationWithRoutes();
-
-            //var actualConfig = MyMvc
-            //    .Controller<MvcController>()
-            //    .WithHttpConfiguration(config)
-            //    .Calling(c => c.OkResultAction())
-            //    .ShouldReturn()
-            //    .Ok()
-            //    .AndProvideTheHttpConfiguration();
-
-            //Assert.AreSame(config, actualConfig);
-        }
-
+        
         [Fact]
         public void AndProvideTheControllerAttributesShouldReturnProperAttributes()
         {
@@ -76,16 +38,15 @@
         [Fact]
         public void AndProvideShouldReturnProperActionName()
         {
-            // TODO: badrequest builder?
-            //var actionName = MyMvc
-            //    .Controller<MvcController>()
-            //    .Calling(c => c.BadRequestWithErrorAction())
-            //    .ShouldReturn()
-            //    .HttpBadRequest()
-            //    .WithErrorMessage()
-            //    .AndProvideTheActionName();
+            var actionName = MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.BadRequestWithErrorAction())
+                .ShouldReturn()
+                .HttpBadRequest()
+                .WithErrorMessage()
+                .AndProvideTheActionName();
 
-            //Assert.Equal("BadRequestWithErrorAction", actionName);
+            Assert.Equal("BadRequestWithErrorAction", actionName);
         }
 
         [Fact]
@@ -104,16 +65,15 @@
         [Fact]
         public void AndProvideShouldReturnProperActionResult()
         {
-            // TODO: examine?
-            //var actionResult = MyMvc
-            //    .Controller<MvcController>()
-            //    .Calling(c => c.OkResultAction())
-            //    .ShouldReturn()
-            //    .Ok()
-            //    .AndProvideTheActionResult();
+            var actionResult = MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.OkResultAction())
+                .ShouldReturn()
+                .StatusCode()
+                .AndProvideTheActionResult();
 
-            //Assert.NotNull(actionResult);
-            //Assert.IsAssignableFrom<StatusCodeResult>(actionResult);
+            Assert.NotNull(actionResult);
+            Assert.IsAssignableFrom<HttpStatusCodeResult>(actionResult);
         }
 
         [Fact]
