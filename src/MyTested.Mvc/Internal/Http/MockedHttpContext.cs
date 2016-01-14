@@ -5,6 +5,7 @@
     using Microsoft.AspNet.Http.Features;
     using Microsoft.AspNet.Http.Features.Internal;
     using Microsoft.AspNet.Http.Internal;
+    using Microsoft.AspNet.Routing;
 
     public class MockedHttpContext : DefaultHttpContext
     {

@@ -1,14 +1,17 @@
 ﻿namespace MyTested.Mvc.Internal
 {
+    using Caching;
+    using Contracts;
     using Logging;
     using Microsoft.AspNet.Mvc.Infrastructure;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.DependencyInjection.Extensions;
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
     using Utilities;
     using Utilities.Validators;
-    
+
     public class TestServiceProvider
     {
         private const string ConfigureServicesMethodName = "ConfigureServices";
@@ -119,7 +122,8 @@
         private static IServiceCollection GetInitialServiceCollection()
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.AddSingleton<ILoggerFactory>(MockedLoggerFactory.Create());
+            serviceCollection.TryAddSingleton<ILoggerFactory>(MockedLoggerFactory.Create());
+            serviceCollection.TryAddSingleton<IControllerActionDescriptorCache, ControllerActionDescriptorCache>();
             return serviceCollection;
         }
     }

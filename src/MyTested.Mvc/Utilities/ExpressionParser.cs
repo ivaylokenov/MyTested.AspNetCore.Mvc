@@ -13,14 +13,25 @@
     public static class ExpressionParser
     {
         /// <summary>
+        /// Parses method info from method call lambda expression.
+        /// </summary>
+        /// <param name="expression">Expression to be parsed.</param>
+        /// <returns>Method info.</returns>
+        public static MethodInfo GetMethodInfo(LambdaExpression expression)
+        {
+            var methodCallExpression = GetMethodCallExpression(expression);
+            return methodCallExpression.Method;
+        }
+
+        /// <summary>
         /// Parses method name from method call lambda expression.
         /// </summary>
         /// <param name="expression">Expression to be parsed.</param>
         /// <returns>Method name as string.</returns>
         public static string GetMethodName(LambdaExpression expression)
         {
-            var methodCallExpression = GetMethodCallExpression(expression);
-            return methodCallExpression.Method.Name;
+            var methodInfo = GetMethodInfo(expression); // TODO: is this needed anymore?
+            return methodInfo.Name;
         }
 
         /// <summary>

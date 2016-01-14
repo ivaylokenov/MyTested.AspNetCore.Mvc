@@ -23,11 +23,11 @@
     using Authentication;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.AspNet.Mvc.Controllers;
-
-    /// <summary>
-    /// Used for building the action which will be tested.
-    /// </summary>
-    /// <typeparam name="TController">Class inheriting ASP.NET MVC 6 controller.</typeparam>
+    using Internal.Contracts;
+    using Microsoft.AspNet.Routing;    /// <summary>
+                                       /// Used for building the action which will be tested.
+                                       /// </summary>
+                                       /// <typeparam name="TController">Class inheriting ASP.NET MVC 6 controller.</typeparam>
     public class ControllerBuilder<TController> : IAndControllerBuilder<TController>
         where TController : Controller
     {
@@ -72,6 +72,8 @@
         public HttpRequest HttpRequest { get; private set; }
 
         public HttpContext HttpContext { get; private set; }
+
+        private IServiceProvider Services => this.HttpContext.RequestServices;
 
         /// <summary>
         /// Sets the HTTP context for the current test case.
@@ -344,7 +346,7 @@
             }
         }
 
-        private ActionInfo<TActionResult> GetAndValidateActionResult<TActionResult>(Expression<Func<TController, TActionResult>> actionCall)
+        private TestActionDescriptor<TActionResult> GetAndValidateActionResult<TActionResult>(Expression<Func<TController, TActionResult>> actionCall)
         {
             var actionName = this.GetAndValidateAction(actionCall);
             var actionResult = default(TActionResult);
@@ -360,38 +362,47 @@
                 caughtException = exception;
             }
 
-            return new ActionInfo<TActionResult>(actionName, actionAttributes, actionResult, caughtException);
+            return new TestActionDescriptor<TActionResult>(actionName, actionAttributes, actionResult, caughtException);
         }
 
         private string GetAndValidateAction(LambdaExpression actionCall)
         {
+            var methodInfo = ExpressionParser.GetMethodInfo(actionCall);
+
+            var controllerActionDescriptorCache = this.Services.GetService<IControllerActionDescriptorCache>();
+            if (controllerActionDescriptorCache != null)
+            {
+                this.Controller.ControllerContext.ActionDescriptor
+                    = controllerActionDescriptorCache.GetActionDescriptor(methodInfo);
+            }
+
             if (this.enabledValidation)
             {
                 this.ValidateModelState(actionCall);
             }
 
-            return ExpressionParser.GetMethodName(actionCall);
+            return methodInfo.Name;
         }
         
         private void PrepareController()
         {
-            var services = this.HttpContext.RequestServices;
-            var options = services.GetRequiredService<IOptions<MvcOptions>>().Value;
+            var options = this.Services.GetRequiredService<IOptions<MvcOptions>>().Value;
             
             var controllerContext = new ControllerContext
             {
                 HttpContext = this.HttpContext,
+                RouteData = this.HttpContext.GetRouteData(), // TODO: map route data
                 ValidatorProviders = options.ModelValidatorProviders,
                 InputFormatters = options.InputFormatters,
                 ModelBinders = options.ModelBinders
             };
 
-            var controllerPropertyActivators = services.GetServices<IControllerPropertyActivator>();
+            var controllerPropertyActivators = this.Services.GetServices<IControllerPropertyActivator>();
 
             controllerPropertyActivators.ForEach(a => a.Activate(controllerContext, this.controller));
             
-            this.controller.MetadataProvider = services.GetRequiredService<IModelMetadataProvider>();
-            this.controller.ObjectValidator = services.GetRequiredService<IObjectModelValidator>();
+            this.controller.MetadataProvider = this.Services.GetRequiredService<IModelMetadataProvider>();
+            this.controller.ObjectValidator = this.Services.GetRequiredService<IObjectModelValidator>();
             
             if (this.controllerSetupAction != null)
             {

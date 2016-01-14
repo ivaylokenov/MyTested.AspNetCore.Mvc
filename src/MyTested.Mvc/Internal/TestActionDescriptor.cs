@@ -7,16 +7,16 @@
     /// Contains information about invoked action.
     /// </summary>
     /// <typeparam name="TActionResult">The action return type.</typeparam>
-    public class ActionInfo<TActionResult>
+    public class TestActionDescriptor<TActionResult>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ActionInfo{TActionResult}" /> class.
+        /// Initializes a new instance of the <see cref="TestActionDescriptor{TActionResult}" /> class.
         /// </summary>
         /// <param name="actionName">Name of the action.</param>
         /// <param name="actionAttributes">Collection of action attributes.</param>
         /// <param name="actionResult">Action return value.</param>
         /// <param name="caughtException">Caught exception during action execution.</param>
-        public ActionInfo(string actionName, IEnumerable<object> actionAttributes, TActionResult actionResult, Exception caughtException)
+        public TestActionDescriptor(string actionName, IEnumerable<object> actionAttributes, TActionResult actionResult, Exception caughtException)
         {
             this.ActionName = actionName;
             this.ActionAttributes = actionAttributes;
