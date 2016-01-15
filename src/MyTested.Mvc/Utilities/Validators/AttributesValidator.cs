@@ -1,10 +1,10 @@
 ﻿namespace MyTested.Mvc.Utilities.Validators
 {
-    using Builders.Attributes;
-    using Internal.Extensions;
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Builders.Attributes;
+    using Internal.Extensions;
 
     /// <summary>
     /// Validator class containing attributes validation logic.

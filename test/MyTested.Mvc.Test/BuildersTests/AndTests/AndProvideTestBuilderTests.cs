@@ -2,10 +2,11 @@
 {
     using System;
     using System.Linq;
+    using Microsoft.AspNet.Mvc;
     using Setups;
     using Setups.Controllers;
     using Xunit;
-    using Microsoft.AspNet.Mvc;
+
     public class AndProvideTestBuilderTests
     {
         [Fact]
@@ -93,15 +94,17 @@
         [Fact]
         public void AndProvideShouldThrowExceptionIfActionIsVoid()
         {
-            Test.AssertException<InvalidOperationException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.EmptyActionWithException())
-                    .ShouldHave()
-                    .ValidModelState()
-                    .AndProvideTheActionResult();
-            }, "Void methods cannot provide action result because they do not have return value.");
+            Test.AssertException<InvalidOperationException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.EmptyActionWithException())
+                        .ShouldHave()
+                        .ValidModelState()
+                        .AndProvideTheActionResult();
+                }, 
+                "Void methods cannot provide action result because they do not have return value.");
         }
     }
 }

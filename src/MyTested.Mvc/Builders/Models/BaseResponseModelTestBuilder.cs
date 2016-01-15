@@ -2,11 +2,11 @@
 {
     using System;
     using Base;
-    using Internal.Extensions;
     using Contracts.Models;
     using Exceptions;
-    using Utilities;
+    using Internal.Extensions;
     using Microsoft.AspNet.Mvc;
+    using Utilities;
 
     /// <summary>
     /// Base class for all response model test builders.

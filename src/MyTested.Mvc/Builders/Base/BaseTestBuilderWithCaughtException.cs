@@ -1,10 +1,10 @@
 ﻿namespace MyTested.Mvc.Builders.Base
 {
-    using Contracts.Base;
-    using And;
-    using Microsoft.AspNet.Mvc;
     using System;
     using System.Collections.Generic;
+    using And;
+    using Contracts.Base;
+    using Microsoft.AspNet.Mvc;
 
     /// <summary>
     /// Base class for test builders with caught exception.

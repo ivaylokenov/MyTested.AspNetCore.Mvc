@@ -2,13 +2,13 @@
 {
     using System;
     using System.Linq.Expressions;
-    using Internal.Extensions;
     using Contracts.Models;
     using Exceptions;
-    using Utilities;
-    using Utilities.Validators;
+    using Internal.Extensions;
     using Microsoft.AspNet.Mvc;
     using Microsoft.AspNet.Mvc.ModelBinding;
+    using Utilities;
+    using Utilities.Validators;
 
     /// <summary>
     /// Used for testing the model errors.

@@ -2,29 +2,29 @@
 {
     using System;
     using System.Collections.Generic;
-    using Contracts.Controllers;
-    using Microsoft.AspNet.Mvc;
-    using Microsoft.AspNet.Http;
-    using Utilities;
-    using Contracts.Actions;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Threading.Tasks;
     using Actions;
-    using Internal;
+    using Authentication;
+    using Contracts.Actions;
+    using Contracts.Authentication;
+    using Contracts.Controllers;
     using Exceptions;
+    using Internal;
+    using Internal.Contracts;
     using Internal.Extensions;
+    using Internal.Http;
     using Internal.Identity;
+    using Microsoft.AspNet.Http;
+    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNet.Mvc.Controllers;
     using Microsoft.AspNet.Mvc.ModelBinding;
     using Microsoft.AspNet.Mvc.ModelBinding.Validation;
-    using Microsoft.Extensions.Options;
-    using Internal.Http;
-    using Contracts.Authentication;
-    using Authentication;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.AspNet.Mvc.Controllers;
-    using Internal.Contracts;
     using Microsoft.AspNet.Routing;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Options;
+    using Utilities;
 
     /// <summary>
     /// Used for building the action which will be tested.
@@ -80,7 +80,7 @@
         /// <summary>
         /// Sets the HTTP context for the current test case.
         /// </summary>
-        /// <param name="config">Instance of HttpContext.</param>
+        /// <param name="context">Instance of HttpContext.</param>
         /// <returns>The same controller builder.</returns>
         public IAndControllerBuilder<TController> WithHttpContext(HttpContext context)
         {
@@ -91,7 +91,7 @@
         /// <summary>
         /// Adds HTTP request to the tested controller.
         /// </summary>
-        /// <param name="requestMessage">Instance of HttpRequest.</param>
+        /// <param name="request">Instance of HttpRequest.</param>
         /// <returns>The same controller builder.</returns>
         public IAndControllerBuilder<TController> WithHttpRequest(HttpRequest request)
         {
@@ -408,7 +408,7 @@
 
             if (this.controllerSetupAction != null)
             {
-                controllerSetupAction(this.controller);
+                this.controllerSetupAction(this.controller);
             }
         }
 

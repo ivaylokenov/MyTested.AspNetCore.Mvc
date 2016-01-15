@@ -2,17 +2,17 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
-    using Models;
-    using Services;
-    using Microsoft.AspNet.Mvc;
-    using Microsoft.AspNet.Authorization;
-    using Microsoft.Net.Http.Headers;
-    using Newtonsoft.Json;
-    using System.IO;
     using Common;
+    using Microsoft.AspNet.Authorization;
     using Microsoft.AspNet.FileProviders;
+    using Microsoft.AspNet.Mvc;
+    using Microsoft.Net.Http.Headers;
+    using Models;
+    using Newtonsoft.Json;
+    using Services;
 
     [Authorize(Roles = "Admin,Moderator")]
     [Route("/api/test")]
@@ -180,32 +180,12 @@
         {
             return this.Content("content", (MediaTypeHeaderValue)null);
         }
-
-        //public IActionResult ContentActionWithCustomFormatters()
-        //{
-        //    return new NegotiatedContentResult<int>(
-        //        HttpStatusCode.OK,
-        //        5,
-        //        TestObjectFactory.GetCustomContentNegotiator(),
-        //        TestObjectFactory.GetCustomHttpRequestMessage(),
-        //        TestObjectFactory.GetFormatters());
-        //}
-
+        
         public IActionResult CreatedAction()
         {
             return this.Created(TestObjectFactory.GetUri().OriginalString, this.responseModel);
         }
-
-        //public IActionResult CreatedActionWithCustomContentNegotiator()
-        //{
-        //    return new CreatedNegotiatedContentResult<ICollection<ResponseModel>>(
-        //        TestObjectFactory.GetUri(),
-        //        this.responseModel,
-        //        TestObjectFactory.GetCustomContentNegotiator(),
-        //        TestObjectFactory.GetCustomHttpRequestMessage(),
-        //        TestObjectFactory.GetFormatters());
-        //}
-
+        
         public IActionResult CreatedActionWithUri()
         {
             return this.Created(TestObjectFactory.GetUri(), this.responseModel);
@@ -250,17 +230,7 @@
         {
             throw new AggregateException(new NullReferenceException(), new InvalidOperationException());
         }
-
-        //public IActionResult ActionWithHttpResponseException()
-        //{
-        //    throw new HttpResponseException(HttpStatusCode.NotFound);
-        //}
-
-        //public IActionResult ActionWithHttpResponseExceptionAndHttpResponseMessageException()
-        //{
-        //    throw new HttpResponseException(this.Request.CreateResponse(HttpStatusCode.InternalServerError));
-        //}
-
+        
         public async Task EmptyActionWithExceptionAsync()
         {
             await Task.Run(() => this.ThrowNewNullReferenceException());
@@ -344,17 +314,7 @@
         {
             return this.Json(this.responseModel, jsonSerializerSettings);
         }
-
-        //public IActionResult ConflictAction()
-        //{
-        //    return this.Conflict();
-        //}
-
-        //public IActionResult StatusCodeAction()
-        //{
-        //    return this.StatusCode(HttpStatusCode.Redirect);
-        //}
-
+        
         public IActionResult CustomModelStateError()
         {
             this.ModelState.AddModelError("Test", "Test error");
@@ -381,36 +341,7 @@
         {
             return this.HttpUnauthorized();
         }
-
-        //public IActionResult UnauthorizedActionWithChallenges()
-        //{
-        //    return this.Unauthorized(new[]
-        //    {
-        //        new AuthenticationHeaderValue("TestScheme", "TestParameter"),
-        //        new AuthenticationHeaderValue("Basic"),
-        //        new AuthenticationHeaderValue("YetAnotherScheme", "YetAnotherParameter")
-        //    });
-        //}
-
-        //public IActionResult InternalServerErrorAction()
-        //{
-        //    return this.InternalServerError();
-        //}
-
-        //public IActionResult InternalServerErrorWithExceptionAction()
-        //{
-        //    try
-        //    {
-        //        this.ThrowNewNullReferenceException();
-        //    }
-        //    catch (NullReferenceException ex)
-        //    {
-        //        return this.InternalServerError(ex);
-        //    }
-
-        //    return this.Ok();
-        //}
-
+        
         public bool GenericStructAction()
         {
             return true;

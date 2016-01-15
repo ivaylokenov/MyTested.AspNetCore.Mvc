@@ -2,12 +2,12 @@
 {
     using System;
     using Builders.Attributes;
+    using Builders.Authentication;
     using Setups;
     using Setups.Controllers;
     using Utilities;
     using Utilities.Validators;
     using Xunit;
-    using Builders.Authentication;
 
     public class AttributesValidatorTests
     {
@@ -24,10 +24,12 @@
         {
             var attributes = Reflection.GetCustomAttributes(new MvcController());
 
-            Test.AssertException<NullReferenceException>(() =>
-            {
-                AttributesValidator.ValidateNoAttributes(attributes, TestObjectFactory.GetFailingValidationActionWithTwoParameteres());
-            }, "not have any attributes it had some");
+            Test.AssertException<NullReferenceException>(
+                () =>
+                {
+                    AttributesValidator.ValidateNoAttributes(attributes, TestObjectFactory.GetFailingValidationActionWithTwoParameteres());
+                },
+                "not have any attributes it had some");
         }
 
         [Fact]
@@ -49,12 +51,14 @@
         [Fact]
         public void ValidateAnyNumberOfAttributesShouldFailWithNoAttributes()
         {
-            Test.AssertException<NullReferenceException>(() =>
-            {
-                var attributes = Reflection.GetCustomAttributes(new UserBuilder());
+            Test.AssertException<NullReferenceException>(
+                () =>
+                {
+                    var attributes = Reflection.GetCustomAttributes(new UserBuilder());
 
-                AttributesValidator.ValidateNumberOfAttributes(attributes, TestObjectFactory.GetFailingValidationActionWithTwoParameteres());
-            }, "have at least 1 attribute in fact none was found");
+                    AttributesValidator.ValidateNumberOfAttributes(attributes, TestObjectFactory.GetFailingValidationActionWithTwoParameteres());
+                }, 
+                "have at least 1 attribute in fact none was found");
         }
 
         [Fact]
@@ -62,10 +66,12 @@
         {
             var attributes = Reflection.GetCustomAttributes(new MvcController());
 
-            Test.AssertException<NullReferenceException>(() =>
-            {
-                AttributesValidator.ValidateNumberOfAttributes(attributes, TestObjectFactory.GetFailingValidationActionWithTwoParameteres(), 3);
-            }, "have 3 attributes in fact found 2");
+            Test.AssertException<NullReferenceException>(
+                () =>
+                {
+                    AttributesValidator.ValidateNumberOfAttributes(attributes, TestObjectFactory.GetFailingValidationActionWithTwoParameteres(), 3);
+                },
+                "have 3 attributes in fact found 2");
         }
         
         [Fact]

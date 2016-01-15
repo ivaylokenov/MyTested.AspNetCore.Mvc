@@ -1,8 +1,8 @@
 ﻿namespace MyTested.Mvc.Builders.And
 {
+    using System;
     using Base;
     using Microsoft.AspNet.Mvc;
-    using System;
 
     /// <summary>
     /// Provides controller and action information.

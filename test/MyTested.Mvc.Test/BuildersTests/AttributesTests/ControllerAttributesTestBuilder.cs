@@ -20,14 +20,15 @@
         [Fact]
         public void ContainingAttributeOfTypeShouldThrowExceptionWithControllerWithoutTheAttribute()
         {
-            Test.AssertException<AttributeAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .ShouldHave()
-                    .Attributes(attributes => attributes.ContainingAttributeOfType<AllowAnonymousAttribute>());
-            }, "When testing MvcController was expected to have AllowAnonymousAttribute, but in fact such was not found.");
-
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .ShouldHave()
+                        .Attributes(attributes => attributes.ContainingAttributeOfType<AllowAnonymousAttribute>());
+                }, 
+                "When testing MvcController was expected to have AllowAnonymousAttribute, but in fact such was not found.");
         }
 
         [Fact]
@@ -51,13 +52,15 @@
         [Fact]
         public void ChangingRouteToShouldThrowExceptionWithControllerWithTheAttributeAndWrongTemplate()
         {
-            Test.AssertException<AttributeAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<AttributesController>()
-                    .ShouldHave()
-                    .Attributes(attributes => attributes.ChangingRouteTo("api/another"));
-            }, "When testing AttributesController was expected to have RouteAttribute with 'api/another' template, but in fact found 'api/test'.");
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<AttributesController>()
+                        .ShouldHave()
+                        .Attributes(attributes => attributes.ChangingRouteTo("api/another"));
+                }, 
+                "When testing AttributesController was expected to have RouteAttribute with 'api/another' template, but in fact found 'api/test'.");
         }
 
         [Fact]
@@ -72,13 +75,15 @@
         [Fact]
         public void ChangingRouteToShouldThrowExceptionWithActionWithTheAttributeAndWrongName()
         {
-            Test.AssertException<AttributeAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<AttributesController>()
-                    .ShouldHave()
-                    .Attributes(attributes => attributes.ChangingRouteTo("api/test", withName: "AnotherRoute"));
-            }, "When testing AttributesController was expected to have RouteAttribute with 'AnotherRoute' name, but in fact found 'TestRouteAttributes'.");
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<AttributesController>()
+                        .ShouldHave()
+                        .Attributes(attributes => attributes.ChangingRouteTo("api/test", withName: "AnotherRoute"));
+                }, 
+                "When testing AttributesController was expected to have RouteAttribute with 'AnotherRoute' name, but in fact found 'TestRouteAttributes'.");
         }
 
         [Fact]
@@ -93,25 +98,29 @@
         [Fact]
         public void ChangingRouteToShouldThrowExceptionWithActionWithTheAttributeAndWrongOrder()
         {
-            Test.AssertException<AttributeAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<AttributesController>()
-                    .ShouldHave()
-                    .Attributes(attributes => attributes.ChangingRouteTo("api/test", withOrder: 2));
-            }, "When testing AttributesController was expected to have RouteAttribute with order of 2, but in fact found 1.");
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<AttributesController>()
+                        .ShouldHave()
+                        .Attributes(attributes => attributes.ChangingRouteTo("api/test", withOrder: 2));
+                },
+                "When testing AttributesController was expected to have RouteAttribute with order of 2, but in fact found 1.");
         }
 
         [Fact]
         public void ChangingRouteToShouldThrowExceptionWithActionWithoutTheAttribute()
         {
-            Test.AssertException<AttributeAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<AreaController>()
-                    .ShouldHave()
-                    .Attributes(attributes => attributes.ChangingRouteTo("api/test"));
-            }, "When testing AreaController was expected to have RouteAttribute, but in fact such was not found.");
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<AreaController>()
+                        .ShouldHave()
+                        .Attributes(attributes => attributes.ChangingRouteTo("api/test"));
+                },
+                "When testing AreaController was expected to have RouteAttribute, but in fact such was not found.");
         }
         
         [Fact]
@@ -126,13 +135,15 @@
         [Fact]
         public void AllowingAnonymousRequestsShouldThrowExceptionWithControllerWithoutTheAttribute()
         {
-            Test.AssertException<AttributeAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .ShouldHave()
-                    .Attributes(attributes => attributes.AllowingAnonymousRequests());
-            }, "When testing MvcController was expected to have AllowAnonymousAttribute, but in fact such was not found.");
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .ShouldHave()
+                        .Attributes(attributes => attributes.AllowingAnonymousRequests());
+                },
+                "When testing MvcController was expected to have AllowAnonymousAttribute, but in fact such was not found.");
         }
 
         [Fact]
@@ -147,13 +158,15 @@
         [Fact]
         public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithControllerWithoutTheAttribute()
         {
-            Test.AssertException<AttributeAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<AttributesController>()
-                    .ShouldHave()
-                    .Attributes(attributes => attributes.RestrictingForAuthorizedRequests());
-            }, "When testing AttributesController was expected to have AuthorizeAttribute, but in fact such was not found.");
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<AttributesController>()
+                        .ShouldHave()
+                        .Attributes(attributes => attributes.RestrictingForAuthorizedRequests());
+                },
+                "When testing AttributesController was expected to have AuthorizeAttribute, but in fact such was not found.");
         }
 
         [Fact]
@@ -168,13 +181,15 @@
         [Fact]
         public void RestrictingForAuthorizedRequestsShouldThrowExceptionWithControllerWithoutTheAttributeWithIncorrectRoles()
         {
-            Test.AssertException<AttributeAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .ShouldHave()
-                    .Attributes(attributes => attributes.RestrictingForAuthorizedRequests(withAllowedRoles: "Admin"));
-            }, "When testing MvcController was expected to have AuthorizeAttribute with allowed 'Admin' roles, but in fact found 'Admin,Moderator'.");
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .ShouldHave()
+                        .Attributes(attributes => attributes.RestrictingForAuthorizedRequests(withAllowedRoles: "Admin"));
+                }, 
+                "When testing MvcController was expected to have AuthorizeAttribute with allowed 'Admin' roles, but in fact found 'Admin,Moderator'.");
         }
         
         [Fact]

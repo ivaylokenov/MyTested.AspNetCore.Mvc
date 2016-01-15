@@ -20,28 +20,31 @@
         [Fact]
         public void ShouldReturnOkWithAsyncShouldThrowExceptionIfActionThrowsExceptionWithDefaultReturnValue()
         {
-            Test.AssertException<ActionCallAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .CallingAsync(c => c.ActionWithExceptionAsync())
-                    .ShouldReturn()
-                    .Ok();
-            }, "AggregateException (containing NullReferenceException with 'Test exception message' message) was thrown but was not caught or expected.");
+            Test.AssertException<ActionCallAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .CallingAsync(c => c.ActionWithExceptionAsync())
+                        .ShouldReturn()
+                        .Ok();
+                }, 
+                "AggregateException (containing NullReferenceException with 'Test exception message' message) was thrown but was not caught or expected.");
         }
 
         [Fact]
         public void ShouldReturnOkResultShouldThrowExceptionWithOtherThanOkResult()
         {
-            Test.AssertException<ActionResultAssertionException>(() =>
-            {
-
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.BadRequestAction())
-                    .ShouldReturn()
-                    .Ok();
-            }, "When calling BadRequestAction action in MvcController expected action result to be HttpOkResult or HttpOkObjectResult, but instead received BadRequestResult.");
+            Test.AssertException<ActionResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.BadRequestAction())
+                        .ShouldReturn()
+                        .Ok();
+                }, 
+                "When calling BadRequestAction action in MvcController expected action result to be HttpOkResult or HttpOkObjectResult, but instead received BadRequestResult.");
         }
     }
 }

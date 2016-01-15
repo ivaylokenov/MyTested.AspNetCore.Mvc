@@ -1,8 +1,8 @@
 ﻿namespace MyTested.Mvc.Builders.Actions.ShouldReturn
 {
+    using ActionResults.HttpBadRequest;
     using Contracts.ActionResults.HttpBadRequest;
     using Microsoft.AspNet.Mvc;
-    using ActionResults.HttpBadRequest;
 
     /// <summary>
     /// Class containing methods for testing BadRequestResult or BadRequestObjectResult.

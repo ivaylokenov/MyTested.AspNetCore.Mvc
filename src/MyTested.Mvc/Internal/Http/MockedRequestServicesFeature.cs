@@ -1,8 +1,8 @@
 ﻿namespace MyTested.Mvc.Internal.Http
 {
+    using System;
     using Microsoft.AspNet.Http.Features.Internal;
     using Microsoft.Extensions.DependencyInjection;
-    using System;
     
     public class MockedRequestServicesFeature : IServiceProvidersFeature, IDisposable
     {
@@ -28,13 +28,14 @@
             {
                 if (!this.requestServicesSet)
                 {
-                    this.scope = globalServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
-                    this.requestServices = scope.ServiceProvider;
+                    this.scope = this.globalServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
+                    this.requestServices = this.scope.ServiceProvider;
                     this.requestServicesSet = true;
                 }
 
                 return this.requestServices;
             }
+
             set
             {
                 this.requestServices = value;

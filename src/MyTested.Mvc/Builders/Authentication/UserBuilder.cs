@@ -2,10 +2,10 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Claims;
+    using Contracts.Authentication;
     using Internal.Extensions;
     using Internal.Identity;
-    using Contracts.Authentication;
-    using System.Security.Claims;
 
     /// <summary>
     /// Used for building mocked Controller.User object.

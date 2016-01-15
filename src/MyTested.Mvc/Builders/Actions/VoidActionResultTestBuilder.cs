@@ -1,14 +1,14 @@
 ﻿namespace MyTested.Mvc.Builders.Actions
 {
+    using System;
+    using System.Collections.Generic;
     using Base;
     using Contracts.Actions;
     using Contracts.Base;
-    using Utilities.Validators;
-    using Microsoft.AspNet.Mvc;
-    using System;
-    using System.Collections.Generic;
     using Internal;
+    using Microsoft.AspNet.Mvc;
     using ShouldHave;
+    using Utilities.Validators;
 
     /// <summary>
     /// Used for testing void actions.

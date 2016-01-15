@@ -2,11 +2,11 @@
 {
     using System.Collections.Generic;
     using Exceptions;
+    using Microsoft.AspNet.Mvc;
+    using Setups;
     using Setups.Controllers;
     using Setups.Models;
     using Xunit;
-    using Microsoft.AspNet.Mvc;
-    using Setups;
 
     public class ShouldReturnTests
     {
@@ -93,14 +93,16 @@
         [Fact]
         public void ShouldReturnShouldThrowExceptionWithClassTypesAndTypeOfAndInterfaceReturnWithInterface()
         {
-            Test.AssertException<ActionResultAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.GenericInterfaceAction())
-                    .ShouldReturn()
-                    .ResultOfType(typeof(ICollection<>));
-            }, "When calling GenericInterfaceAction action in MvcController expected action result to be ICollection<T>, but instead received ResponseModel.");
+            Test.AssertException<ActionResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.GenericInterfaceAction())
+                        .ShouldReturn()
+                        .ResultOfType(typeof(ICollection<>));
+                }, 
+                "When calling GenericInterfaceAction action in MvcController expected action result to be ICollection<T>, but instead received ResponseModel.");
         }
 
         [Fact]
@@ -156,14 +158,16 @@
         [Fact]
         public void ShouldReturnShouldNotExceptionWithOtherGenericResult()
         {
-            Test.AssertException<ActionResultAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.GenericActionWithListCollection())
-                    .ShouldReturn()
-                    .ResultOfType<HashSet<ResponseModel>>();
-            }, "When calling GenericActionWithListCollection action in MvcController expected action result to be HashSet<ResponseModel>, but instead received List<ResponseModel>.");
+            Test.AssertException<ActionResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.GenericActionWithListCollection())
+                        .ShouldReturn()
+                        .ResultOfType<HashSet<ResponseModel>>();
+                }, 
+                "When calling GenericActionWithListCollection action in MvcController expected action result to be HashSet<ResponseModel>, but instead received List<ResponseModel>.");
         }
 
         [Fact]
@@ -199,14 +203,16 @@
         [Fact]
         public void ShouldReturnShouldThrowExceptionWithOtherGenericResultWithTypeOf()
         {
-            Test.AssertException<ActionResultAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.GenericActionWithListCollection())
-                    .ShouldReturn()
-                    .ResultOfType(typeof(HashSet<ResponseModel>));
-            }, "When calling GenericActionWithListCollection action in MvcController expected action result to be HashSet<ResponseModel>, but instead received List<ResponseModel>.");
+            Test.AssertException<ActionResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.GenericActionWithListCollection())
+                        .ShouldReturn()
+                        .ResultOfType(typeof(HashSet<ResponseModel>));
+                },
+                "When calling GenericActionWithListCollection action in MvcController expected action result to be HashSet<ResponseModel>, but instead received List<ResponseModel>.");
         }
 
         [Fact]
@@ -232,14 +238,16 @@
         [Fact]
         public void ShouldReturnShouldThrowExceptionWithDifferentWrongGenericDefinitionAndTypeOf()
         {
-            Test.AssertException<ActionResultAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.GenericActionWithCollection())
-                    .ShouldReturn()
-                    .ResultOfType(typeof(HashSet<>));
-            }, "When calling GenericActionWithCollection action in MvcController expected action result to be HashSet<T>, but instead received List<ResponseModel>.");
+            Test.AssertException<ActionResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.GenericActionWithCollection())
+                        .ShouldReturn()
+                        .ResultOfType(typeof(HashSet<>));
+                }, 
+                "When calling GenericActionWithCollection action in MvcController expected action result to be HashSet<T>, but instead received List<ResponseModel>.");
         }
 
         [Fact]
@@ -275,27 +283,31 @@
         [Fact]
         public void ShouldReturnShouldThrowExceptionWithCollectionOfClassTypesWithInterface()
         {
-            Test.AssertException<ActionResultAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.GenericActionWithCollection())
-                    .ShouldReturn()
-                    .ResultOfType<ICollection<IResponseModel>>();
-            }, "When calling GenericActionWithCollection action in MvcController expected action result to be ICollection<IResponseModel>, but instead received List<ResponseModel>.");
+            Test.AssertException<ActionResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.GenericActionWithCollection())
+                        .ShouldReturn()
+                        .ResultOfType<ICollection<IResponseModel>>();
+                }, 
+                "When calling GenericActionWithCollection action in MvcController expected action result to be ICollection<IResponseModel>, but instead received List<ResponseModel>.");
         }
 
         [Fact]
         public void ShouldReturnShouldThrowExceptionWithCollectionOfClassTypesAndTypeOfWithInterface()
         {
-            Test.AssertException<ActionResultAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.GenericActionWithCollection())
-                    .ShouldReturn()
-                    .ResultOfType(typeof(ICollection<IResponseModel>));
-            }, "When calling GenericActionWithCollection action in MvcController expected action result to be ICollection<IResponseModel>, but instead received List<ResponseModel>.");
+            Test.AssertException<ActionResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.GenericActionWithCollection())
+                        .ShouldReturn()
+                        .ResultOfType(typeof(ICollection<IResponseModel>));
+                }, 
+                "When calling GenericActionWithCollection action in MvcController expected action result to be ICollection<IResponseModel>, but instead received List<ResponseModel>.");
         }
 
         [Fact]
@@ -333,93 +345,107 @@
         [Fact]
         public void ShouldReturnShouldThrowExceptionIfActionThrowsExceptionWithDefaultReturnValue()
         {
-            Test.AssertException<ActionCallAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.ActionWithException())
-                    .ShouldReturn()
-                    .ResultOfType<IActionResult>();
-            }, "NullReferenceException with 'Test exception message' message was thrown but was not caught or expected.");
+            Test.AssertException<ActionCallAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.ActionWithException())
+                        .ShouldReturn()
+                        .ResultOfType<IActionResult>();
+                }, 
+                "NullReferenceException with 'Test exception message' message was thrown but was not caught or expected.");
         }
 
         [Fact]
         public void ShouldReturnWithAsyncShouldThrowExceptionIfActionThrowsExceptionWithDefaultReturnValue()
         {
-            Test.AssertException<ActionCallAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .CallingAsync(c => c.ActionWithExceptionAsync())
-                    .ShouldReturn()
-                    .ResultOfType<IActionResult>();
-            }, "AggregateException (containing NullReferenceException with 'Test exception message' message) was thrown but was not caught or expected.");
+            Test.AssertException<ActionCallAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .CallingAsync(c => c.ActionWithExceptionAsync())
+                        .ShouldReturn()
+                        .ResultOfType<IActionResult>();
+                }, 
+                "AggregateException (containing NullReferenceException with 'Test exception message' message) was thrown but was not caught or expected.");
         }
 
         [Fact]
         public void ShouldReturnShouldThrowExceptionWithModelDetailsTestsWithGenericDefinitionAndIncorrectAssertion()
         {
-            Test.AssertException<ResponseModelAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.GenericActionWithCollection())
-                    .ShouldReturn()
-                    .ResultOfType<ICollection<ResponseModel>>()
-                    .Passing(c => c.Count == 1);
-            }, "When calling GenericActionWithCollection action in MvcController expected response model ICollection<ResponseModel> to pass the given condition, but it failed.");
+            Test.AssertException<ResponseModelAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.GenericActionWithCollection())
+                        .ShouldReturn()
+                        .ResultOfType<ICollection<ResponseModel>>()
+                        .Passing(c => c.Count == 1);
+                }, 
+                "When calling GenericActionWithCollection action in MvcController expected response model ICollection<ResponseModel> to pass the given condition, but it failed.");
         }
 
         [Fact]
         public void ShouldReturnShouldThrowExceptionWithDifferentResult()
         {
-            Test.AssertException<ActionResultAssertionException>(() =>
-            {
-                MyMvc
-                   .Controller<MvcController>()
-                   .Calling(c => c.GenericActionWithCollection())
-                   .ShouldReturn()
-                   .ResultOfType<ResponseModel>();
-            }, "When calling GenericActionWithCollection action in MvcController expected action result to be ResponseModel, but instead received List<ResponseModel>.");
+            Test.AssertException<ActionResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                       .Controller<MvcController>()
+                       .Calling(c => c.GenericActionWithCollection())
+                       .ShouldReturn()
+                       .ResultOfType<ResponseModel>();
+                }, 
+                "When calling GenericActionWithCollection action in MvcController expected action result to be ResponseModel, but instead received List<ResponseModel>.");
         }
 
         [Fact]
         public void ShouldReturnShouldThrowExceptionWithDifferentResultAndTypeOf()
         {
-            Test.AssertException<ActionResultAssertionException>(() =>
-            {
-                MyMvc
-                   .Controller<MvcController>()
-                   .Calling(c => c.GenericActionWithCollection())
-                   .ShouldReturn()
-                   .ResultOfType(typeof(ResponseModel));
-            }, "When calling GenericActionWithCollection action in MvcController expected action result to be ResponseModel, but instead received List<ResponseModel>.");
+            Test.AssertException<ActionResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                       .Controller<MvcController>()
+                       .Calling(c => c.GenericActionWithCollection())
+                       .ShouldReturn()
+                       .ResultOfType(typeof(ResponseModel));
+                },
+                "When calling GenericActionWithCollection action in MvcController expected action result to be ResponseModel, but instead received List<ResponseModel>.");
         }
 
         [Fact]
         public void ShouldReturnShouldThrowExceptionWithDifferentGenericResult()
         {
-            Test.AssertException<ActionResultAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.GenericActionWithCollection())
-                    .ShouldReturn()
-                    .ResultOfType<ICollection<int>>();
-            }, "When calling GenericActionWithCollection action in MvcController expected action result to be ICollection<Int32>, but instead received List<ResponseModel>.");
+            Test.AssertException<ActionResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.GenericActionWithCollection())
+                        .ShouldReturn()
+                        .ResultOfType<ICollection<int>>();
+                }, 
+                "When calling GenericActionWithCollection action in MvcController expected action result to be ICollection<Int32>, but instead received List<ResponseModel>.");
         }
 
         [Fact]
         public void ShouldReturnShouldThrowExceptionWithDifferentGenericResultAndTypeOf()
         {
-            Test.AssertException<ActionResultAssertionException>(() =>
-            {
-                MyMvc
-                   .Controller<MvcController>()
-                   .Calling(c => c.GenericActionWithCollection())
-                   .ShouldReturn()
-                   .ResultOfType(typeof(ICollection<int>));
-            }, "When calling GenericActionWithCollection action in MvcController expected action result to be ICollection<Int32>, but instead received List<ResponseModel>.");
+            Test.AssertException<ActionResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                       .Controller<MvcController>()
+                       .Calling(c => c.GenericActionWithCollection())
+                       .ShouldReturn()
+                       .ResultOfType(typeof(ICollection<int>));
+                }, 
+                "When calling GenericActionWithCollection action in MvcController expected action result to be ICollection<Int32>, but instead received List<ResponseModel>.");
         }
 
         [Fact]

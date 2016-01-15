@@ -1,10 +1,10 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.Actions
 {
-    using Base;
-    using And;
-    using Models;
     using System;
+    using And;
     using Attributes;
+    using Base;
+    using Models;
 
     /// <summary>
     /// Used for testing action attributes and model state.

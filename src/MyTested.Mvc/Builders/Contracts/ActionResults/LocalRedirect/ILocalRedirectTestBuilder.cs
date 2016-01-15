@@ -1,7 +1,7 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.ActionResults.LocalRedirect
 {
-    using Uris;
     using System;
+    using Uris;
 
     /// <summary>
     /// Used for testing local redirect result.
@@ -31,7 +31,7 @@
         /// <summary>
         /// Tests whether local redirect result has specific URL provided by builder.
         /// </summary>
-        /// <param name="localUrlTestBuilder">Builder for expected URl.</param>
+        /// <param name="localUrlTestBuilder">Builder for expected URL.</param>
         /// <returns>The same local redirect test builder.</returns>
         IAndLocalRedirectTestBuilder To(Action<IUriTestBuilder> localUrlTestBuilder);
     }

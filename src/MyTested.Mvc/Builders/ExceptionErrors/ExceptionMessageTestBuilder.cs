@@ -2,9 +2,9 @@
 {
     using System;
     using Base;
-    using Internal.Extensions;
     using Contracts.ExceptionErrors;
     using Exceptions;
+    using Internal.Extensions;
     using Microsoft.AspNet.Mvc;
 
     /// <summary>

@@ -24,17 +24,19 @@
         [Fact]
         public void ValidateBindingShouldThrowExceptionWithInvalidPropertyCall()
         {
-            Test.AssertException<InvalidCallAssertionException>(() =>
-            {
-                var actionResultWithProperty = new HttpOkObjectResult("Test");
-
-                RuntimeBinderValidator.ValidateBinding(() =>
+            Test.AssertException<InvalidCallAssertionException>(
+                () =>
                 {
-                    var value = (actionResultWithProperty as dynamic).InvalidValue;
-                    Assert.NotNull(value);
-                    Assert.Equal("Test", value);
-                });
-            }, "Expected action result to contain a 'InvalidValue' property to test, but in fact such property was not found.");
+                    var actionResultWithProperty = new HttpOkObjectResult("Test");
+
+                    RuntimeBinderValidator.ValidateBinding(() =>
+                    {
+                        var value = (actionResultWithProperty as dynamic).InvalidValue;
+                        Assert.NotNull(value);
+                        Assert.Equal("Test", value);
+                    });
+                }, 
+                "Expected action result to contain a 'InvalidValue' property to test, but in fact such property was not found.");
         }
     }
 }

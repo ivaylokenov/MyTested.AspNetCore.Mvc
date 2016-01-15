@@ -1,16 +1,16 @@
 ﻿namespace MyTested.Mvc.Builders.ActionResults.Forbid
 {
-    using Microsoft.AspNet.Mvc;
-    using Base;
-    using Contracts.ActionResults.Forbid;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.AspNet.Http.Authentication;
+    using Base;
+    using Contracts.ActionResults.Forbid;
     using Contracts.Authentication;
-    using Utilities.Validators;
     using Exceptions;
     using Internal.Extensions;
+    using Microsoft.AspNet.Http.Authentication;
+    using Microsoft.AspNet.Mvc;
+    using Utilities.Validators;
 
     /// <summary>
     /// Used for testing forbid result.

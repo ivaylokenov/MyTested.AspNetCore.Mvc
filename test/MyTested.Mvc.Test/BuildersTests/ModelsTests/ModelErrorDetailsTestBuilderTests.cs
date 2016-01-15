@@ -37,18 +37,20 @@
         {
             var requestModelWithErrors = TestObjectFactory.GetRequestModelWithErrors();
 
-            Test.AssertException<ModelErrorAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.ModelStateCheck(requestModelWithErrors))
-                    .ShouldHave()
-                    .ModelStateFor<RequestModel>()
-                    .ContainingNoModelStateErrorFor(m => m.NonRequiredString)
-                    .AndAlso()
-                    .ContainingModelStateErrorFor(m => m.RequiredString).ThatEquals("RequiredString field is required.")
-                    .ContainingModelStateErrorFor(m => m.Integer).ThatEquals(string.Format("Integer must be between {0} and {1}.", 1, int.MaxValue));
-            }, "When calling ModelStateCheck action in MvcController expected error message for key RequiredString to be 'RequiredString field is required.', but instead found 'The RequiredString field is required.'.");
+            Test.AssertException<ModelErrorAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.ModelStateCheck(requestModelWithErrors))
+                        .ShouldHave()
+                        .ModelStateFor<RequestModel>()
+                        .ContainingNoModelStateErrorFor(m => m.NonRequiredString)
+                        .AndAlso()
+                        .ContainingModelStateErrorFor(m => m.RequiredString).ThatEquals("RequiredString field is required.")
+                        .ContainingModelStateErrorFor(m => m.Integer).ThatEquals(string.Format("Integer must be between {0} and {1}.", 1, int.MaxValue));
+                }, 
+                "When calling ModelStateCheck action in MvcController expected error message for key RequiredString to be 'RequiredString field is required.', but instead found 'The RequiredString field is required.'.");
         }
 
         [Fact]
@@ -71,17 +73,19 @@
         {
             var requestModelWithErrors = TestObjectFactory.GetRequestModelWithErrors();
 
-            Test.AssertException<ModelErrorAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.ModelStateCheck(requestModelWithErrors))
-                    .ShouldHave()
-                    .ModelStateFor<RequestModel>()
-                    .ContainingNoModelStateErrorFor(m => m.NonRequiredString)
-                    .ContainingModelStateErrorFor(m => m.RequiredString).BeginningWith("RequiredString")
-                    .ContainingModelStateErrorFor(m => m.Integer).BeginningWith("Integer");
-            }, "When calling ModelStateCheck action in MvcController expected error message for key 'RequiredString' to begin with 'RequiredString', but instead found 'The RequiredString field is required.'.");
+            Test.AssertException<ModelErrorAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.ModelStateCheck(requestModelWithErrors))
+                        .ShouldHave()
+                        .ModelStateFor<RequestModel>()
+                        .ContainingNoModelStateErrorFor(m => m.NonRequiredString)
+                        .ContainingModelStateErrorFor(m => m.RequiredString).BeginningWith("RequiredString")
+                        .ContainingModelStateErrorFor(m => m.Integer).BeginningWith("Integer");
+                }, 
+                "When calling ModelStateCheck action in MvcController expected error message for key 'RequiredString' to begin with 'RequiredString', but instead found 'The RequiredString field is required.'.");
         }
 
         [Fact]
@@ -104,17 +108,19 @@
         {
             var requestModelWithErrors = TestObjectFactory.GetRequestModelWithErrors();
 
-            Test.AssertException<ModelErrorAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.ModelStateCheck(requestModelWithErrors))
-                    .ShouldHave()
-                    .ModelStateFor<RequestModel>()
-                    .ContainingNoModelStateErrorFor(m => m.NonRequiredString)
-                    .ContainingModelStateErrorFor(m => m.RequiredString).EndingWith("required!")
-                    .ContainingModelStateErrorFor(m => m.Integer).EndingWith(string.Format("{0} and {1}!", 1, int.MaxValue));
-            }, "When calling ModelStateCheck action in MvcController expected error message for key 'RequiredString' to end with 'required!', but instead found 'The RequiredString field is required.'.");
+            Test.AssertException<ModelErrorAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.ModelStateCheck(requestModelWithErrors))
+                        .ShouldHave()
+                        .ModelStateFor<RequestModel>()
+                        .ContainingNoModelStateErrorFor(m => m.NonRequiredString)
+                        .ContainingModelStateErrorFor(m => m.RequiredString).EndingWith("required!")
+                        .ContainingModelStateErrorFor(m => m.Integer).EndingWith(string.Format("{0} and {1}!", 1, int.MaxValue));
+                }, 
+                "When calling ModelStateCheck action in MvcController expected error message for key 'RequiredString' to end with 'required!', but instead found 'The RequiredString field is required.'.");
         }
 
         [Fact]
@@ -137,17 +143,19 @@
         {
             var requestModelWithErrors = TestObjectFactory.GetRequestModelWithErrors();
 
-            Test.AssertException<ModelErrorAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.ModelStateCheck(requestModelWithErrors))
-                    .ShouldHave()
-                    .ModelStateFor<RequestModel>()
-                    .ContainingNoModelStateErrorFor(m => m.NonRequiredString)
-                    .ContainingModelStateErrorFor(m => m.RequiredString).Containing("invalid")
-                    .ContainingModelStateErrorFor(m => m.Integer).Containing("invalid");
-            }, "When calling ModelStateCheck action in MvcController expected error message for key 'RequiredString' to contain 'invalid', but instead found 'The RequiredString field is required.'.");
+            Test.AssertException<ModelErrorAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.ModelStateCheck(requestModelWithErrors))
+                        .ShouldHave()
+                        .ModelStateFor<RequestModel>()
+                        .ContainingNoModelStateErrorFor(m => m.NonRequiredString)
+                        .ContainingModelStateErrorFor(m => m.RequiredString).Containing("invalid")
+                        .ContainingModelStateErrorFor(m => m.Integer).Containing("invalid");
+                },
+                "When calling ModelStateCheck action in MvcController expected error message for key 'RequiredString' to contain 'invalid', but instead found 'The RequiredString field is required.'.");
         }
     }
 }

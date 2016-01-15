@@ -1,7 +1,7 @@
 ﻿namespace MyTested.Mvc.Builders.Actions.ShouldReturn
 {
-    using Microsoft.AspNet.Mvc;
     using Contracts.Base;
+    using Microsoft.AspNet.Mvc;
 
     /// <summary>
     /// Class containing methods for testing NoContentResult.

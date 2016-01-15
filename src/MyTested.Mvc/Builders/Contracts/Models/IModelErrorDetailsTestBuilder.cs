@@ -1,8 +1,8 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.Models
 {
-    using Base;
     using System;
     using System.Linq.Expressions;
+    using Base;
 
     /// <summary>
     /// Used for testing specific model errors.

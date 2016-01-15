@@ -2,8 +2,8 @@
 {
     using System;
     using Contracts.Base;
-    using Utilities.Validators;
     using Microsoft.AspNet.Mvc;
+    using Utilities.Validators;
 
     /// <summary>
     /// Base class for all test builders with model.

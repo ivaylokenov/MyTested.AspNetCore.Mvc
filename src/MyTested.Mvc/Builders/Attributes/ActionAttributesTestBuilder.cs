@@ -1,14 +1,11 @@
 ﻿namespace MyTested.Mvc.Builders.Attributes
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Internal.Extensions;
     using Contracts.Attributes;
     using Exceptions;
-    using Microsoft.AspNet.Mvc;
-    using Microsoft.AspNet.Mvc.Infrastructure;
+    using Internal.Extensions;
     using Microsoft.AspNet.Authorization;
+    using Microsoft.AspNet.Mvc;
 
     /// <summary>
     /// Used for testing action attributes.

@@ -1,10 +1,10 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.ActionResults.Created
 {
+    using System;
+    using System.Linq.Expressions;
     using Microsoft.AspNet.Mvc;
     using Models;
     using Uris;
-    using System;
-    using System.Linq.Expressions;
 
     /// <summary>
     /// Used for testing created results.

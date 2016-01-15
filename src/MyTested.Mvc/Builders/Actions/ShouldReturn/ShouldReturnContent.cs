@@ -1,10 +1,10 @@
 ﻿namespace MyTested.Mvc.Builders.Actions.ShouldReturn
 {
-    using Microsoft.AspNet.Mvc;
-    using Contracts.ActionResults.Content;
     using ActionResults.Content;
-    using Internal.Extensions;
+    using Contracts.ActionResults.Content;
     using Exceptions;
+    using Internal.Extensions;
+    using Microsoft.AspNet.Mvc;
 
     /// <summary>
     /// Class containing methods for testing ContentResult.

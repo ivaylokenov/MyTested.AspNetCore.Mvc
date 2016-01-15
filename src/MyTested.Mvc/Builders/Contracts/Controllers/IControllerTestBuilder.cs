@@ -1,8 +1,8 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.Controllers
 {
-    using Base;
-    using Attributes;
     using System;
+    using Attributes;
+    using Base;
 
     public interface IControllerTestBuilder
     {

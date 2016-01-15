@@ -1,21 +1,20 @@
 ﻿namespace MyTested.Mvc.Builders.ActionResults.Json
 {
     using System;
+    using System.Net;
+    using Contracts.ActionResults.Json;
+    using Exceptions;
+    using Internal;
     using Internal.Extensions;
+    using Microsoft.AspNet.Mvc;
+    using Microsoft.Extensions.Options;
     using Models;
     using Newtonsoft.Json;
-    using Contracts.ActionResults.Json;
-    using Microsoft.AspNet.Mvc;
-    using Internal;
-    using Microsoft.Extensions.Options;
-    using System.Net;
-    using Exceptions;
     using Utilities.Validators;
 
     /// <summary>
     /// Used for testing JSON results.
     /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC 6 controller.</typeparam>
     public class JsonTestBuilder : BaseResponseModelTestBuilder<JsonResult>, IAndJsonTestBuilder
     {
         /// <summary>

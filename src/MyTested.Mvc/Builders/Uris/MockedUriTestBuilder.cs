@@ -2,8 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
-    using Internal;
     using Contracts.Uris;
+    using Internal;
 
     /// <summary>
     /// Used for testing URI location in a created result.

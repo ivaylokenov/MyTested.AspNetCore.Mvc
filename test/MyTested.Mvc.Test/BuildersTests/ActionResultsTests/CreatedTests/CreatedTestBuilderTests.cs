@@ -7,7 +7,7 @@
     using Setups.Controllers;
     using Setups.Models;
     using Xunit;
-    
+
     public class CreatedTestBuilderTests
     {
         [Fact]
@@ -24,29 +24,33 @@
         [Fact]
         public void AtLocationWithStringShouldThrowExceptionIfTheLocationIsIncorrect()
         {
-            Test.AssertException<CreatedResultAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.CreatedAction())
-                    .ShouldReturn()
-                    .Created()
-                    .AtLocation("http://somehost.com/");
-            }, "When calling CreatedAction action in MvcController expected created result location to be http://somehost.com/, but instead received http://somehost.com/someuri/1?query=Test.");
+            Test.AssertException<CreatedResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.CreatedAction())
+                        .ShouldReturn()
+                        .Created()
+                        .AtLocation("http://somehost.com/");
+                },
+                "When calling CreatedAction action in MvcController expected created result location to be http://somehost.com/, but instead received http://somehost.com/someuri/1?query=Test.");
         }
 
         [Fact]
         public void AtLocationWithStringShouldThrowExceptionIfTheLocationIsNotValid()
         {
-            Test.AssertException<CreatedResultAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.CreatedAction())
-                    .ShouldReturn()
-                    .Created()
-                    .AtLocation("http://somehost!@#?Query==true");
-            }, "When calling CreatedAction action in MvcController expected created result location to be URI valid, but instead received http://somehost!@#?Query==true.");
+            Test.AssertException<CreatedResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.CreatedAction())
+                        .ShouldReturn()
+                        .Created()
+                        .AtLocation("http://somehost!@#?Query==true");
+                }, 
+                "When calling CreatedAction action in MvcController expected created result location to be URI valid, but instead received http://somehost!@#?Query==true.");
         }
 
         [Fact]
@@ -63,15 +67,17 @@
         [Fact]
         public void AtLocationWithUriShouldThrowExceptionIfTheLocationIsIncorrect()
         {
-            Test.AssertException<CreatedResultAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.CreatedAction())
-                    .ShouldReturn()
-                    .Created()
-                    .AtLocation(new Uri("http://somehost.com/"));
-            }, "When calling CreatedAction action in MvcController expected created result location to be http://somehost.com/, but instead received http://somehost.com/someuri/1?query=Test.");
+            Test.AssertException<CreatedResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.CreatedAction())
+                        .ShouldReturn()
+                        .Created()
+                        .AtLocation(new Uri("http://somehost.com/"));
+                }, 
+                "When calling CreatedAction action in MvcController expected created result location to be http://somehost.com/, but instead received http://somehost.com/someuri/1?query=Test.");
         }
 
         [Fact]
@@ -100,29 +106,31 @@
         [Fact]
         public void AtLocationWithBuilderShouldThrowExceptionIfTheLocationIsIncorrect()
         {
-            Test.AssertException<CreatedResultAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.CreatedAction())
-                    .ShouldReturn()
-                    .Created()
-                    .AtLocation(location =>
-                        location
-                            .WithHost("somehost12.com")
-                            .AndAlso()
-                            .WithAbsolutePath("/someuri/1")
-                            .AndAlso()
-                            .WithPort(80)
-                            .AndAlso()
-                            .WithScheme("http")
-                            .AndAlso()
-                            .WithFragment(string.Empty)
-                            .AndAlso()
-                            .WithQuery("?query=Test"));
-            }, "When calling CreatedAction action in MvcController expected created result URI to equal the provided one, but was in fact different.");
+            Test.AssertException<CreatedResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.CreatedAction())
+                        .ShouldReturn()
+                        .Created()
+                        .AtLocation(location =>
+                            location
+                                .WithHost("somehost12.com")
+                                .AndAlso()
+                                .WithAbsolutePath("/someuri/1")
+                                .AndAlso()
+                                .WithPort(80)
+                                .AndAlso()
+                                .WithScheme("http")
+                                .AndAlso()
+                                .WithFragment(string.Empty)
+                                .AndAlso()
+                                .WithQuery("?query=Test"));
+                }, 
+                "When calling CreatedAction action in MvcController expected created result URI to equal the provided one, but was in fact different.");
         }
-        
+
         [Fact]
         public void WithResponseModelOfTypeShouldWorkCorrectly()
         {

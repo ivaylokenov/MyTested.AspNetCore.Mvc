@@ -26,16 +26,18 @@
         [Fact]
         public void WithCultureShouldThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<JsonResultAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.JsonWithSettingsAction())
-                    .ShouldReturn()
-                    .Json()
-                    .WithJsonSerializerSettings(s =>
-                        s.WithCulture(CultureInfo.CurrentCulture));
-            }, "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have 'English (United States)' culture, but in fact found 'Invariant Language (Invariant Country)'.");
+            Test.AssertException<JsonResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.JsonWithSettingsAction())
+                        .ShouldReturn()
+                        .Json()
+                        .WithJsonSerializerSettings(s =>
+                            s.WithCulture(CultureInfo.CurrentCulture));
+                }, 
+                "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have 'English (United States)' culture, but in fact found 'Invariant Language (Invariant Country)'.");
         }
 
         [Fact]
@@ -69,16 +71,18 @@
         [Fact]
         public void WithContractResolverOfTypeShouldThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<JsonResultAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.JsonWithSettingsAction())
-                    .ShouldReturn()
-                    .Json()
-                    .WithJsonSerializerSettings(s =>
-                        s.WithContractResolverOfType<DefaultContractResolver>());
-            }, "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have DefaultContractResolver, but in fact found CamelCasePropertyNamesContractResolver.");
+            Test.AssertException<JsonResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.JsonWithSettingsAction())
+                        .ShouldReturn()
+                        .Json()
+                        .WithJsonSerializerSettings(s =>
+                            s.WithContractResolverOfType<DefaultContractResolver>());
+                }, 
+                "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have DefaultContractResolver, but in fact found CamelCasePropertyNamesContractResolver.");
         }
 
         [Fact]
@@ -112,16 +116,18 @@
         [Fact]
         public void WithContractResolverShouldThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<JsonResultAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.JsonWithSettingsAction())
-                    .ShouldReturn()
-                    .Json()
-                    .WithJsonSerializerSettings(s =>
-                        s.WithContractResolver(new DefaultContractResolver()));
-            }, "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have DefaultContractResolver, but in fact found CamelCasePropertyNamesContractResolver.");
+            Test.AssertException<JsonResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.JsonWithSettingsAction())
+                        .ShouldReturn()
+                        .Json()
+                        .WithJsonSerializerSettings(s =>
+                            s.WithContractResolver(new DefaultContractResolver()));
+                }, 
+                "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have DefaultContractResolver, but in fact found CamelCasePropertyNamesContractResolver.");
         }
 
         [Fact]
@@ -155,16 +161,18 @@
         [Fact]
         public void WithConstructorHandlingShouldThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<JsonResultAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.JsonWithSettingsAction())
-                    .ShouldReturn()
-                    .Json()
-                    .WithJsonSerializerSettings(s =>
-                        s.WithConstructorHandling(ConstructorHandling.Default));
-            }, "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Default constructor handling, but in fact found AllowNonPublicDefaultConstructor.");
+            Test.AssertException<JsonResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.JsonWithSettingsAction())
+                        .ShouldReturn()
+                        .Json()
+                        .WithJsonSerializerSettings(s =>
+                            s.WithConstructorHandling(ConstructorHandling.Default));
+                }, 
+                "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Default constructor handling, but in fact found AllowNonPublicDefaultConstructor.");
         }
 
         [Fact]
@@ -198,16 +206,18 @@
         [Fact]
         public void WithDateFormatHandlingShouldThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<JsonResultAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.JsonWithSettingsAction())
-                    .ShouldReturn()
-                    .Json()
-                    .WithJsonSerializerSettings(s =>
-                        s.WithDateFormatHandling(DateFormatHandling.IsoDateFormat));
-            }, "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have IsoDateFormat date format handling, but in fact found MicrosoftDateFormat.");
+            Test.AssertException<JsonResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.JsonWithSettingsAction())
+                        .ShouldReturn()
+                        .Json()
+                        .WithJsonSerializerSettings(s =>
+                            s.WithDateFormatHandling(DateFormatHandling.IsoDateFormat));
+                }, 
+                "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have IsoDateFormat date format handling, but in fact found MicrosoftDateFormat.");
         }
 
         [Fact]
@@ -241,17 +251,18 @@
         [Fact]
         public void WithDateParseHandlingShouldThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<JsonResultAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.JsonWithSettingsAction())
-                    .ShouldReturn()
-                    .Json()
-                    .WithJsonSerializerSettings(s =>
-                        s.WithDateParseHandling(DateParseHandling.DateTime));
-            }, "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have DateTime date parse handling, but in fact found DateTimeOffset.");
-
+            Test.AssertException<JsonResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.JsonWithSettingsAction())
+                        .ShouldReturn()
+                        .Json()
+                        .WithJsonSerializerSettings(s =>
+                            s.WithDateParseHandling(DateParseHandling.DateTime));
+                }, 
+                "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have DateTime date parse handling, but in fact found DateTimeOffset.");
         }
 
         [Fact]
@@ -285,16 +296,18 @@
         [Fact]
         public void WithDateTimeZoneHandlingShouldThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<JsonResultAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.JsonWithSettingsAction())
-                    .ShouldReturn()
-                    .Json()
-                    .WithJsonSerializerSettings(s =>
-                        s.WithDateTimeZoneHandling(DateTimeZoneHandling.Local));
-            }, "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Local date time zone handling, but in fact found Utc.");
+            Test.AssertException<JsonResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.JsonWithSettingsAction())
+                        .ShouldReturn()
+                        .Json()
+                        .WithJsonSerializerSettings(s =>
+                            s.WithDateTimeZoneHandling(DateTimeZoneHandling.Local));
+                }, 
+                "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Local date time zone handling, but in fact found Utc.");
         }
 
         [Fact]
@@ -328,16 +341,18 @@
         [Fact]
         public void WithDefaultValueHandlingShouldThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<JsonResultAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.JsonWithSettingsAction())
-                    .ShouldReturn()
-                    .Json()
-                    .WithJsonSerializerSettings(s =>
-                        s.WithDefaultValueHandling(DefaultValueHandling.Include));
-            }, "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Include default value handling, but in fact found Ignore.");
+            Test.AssertException<JsonResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.JsonWithSettingsAction())
+                        .ShouldReturn()
+                        .Json()
+                        .WithJsonSerializerSettings(s =>
+                            s.WithDefaultValueHandling(DefaultValueHandling.Include));
+                }, 
+                "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Include default value handling, but in fact found Ignore.");
         }
 
         [Fact]
@@ -371,16 +386,18 @@
         [Fact]
         public void WithFormattingShouldThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<JsonResultAssertionException>(() =>
-            {
-                MyMvc
-                   .Controller<MvcController>()
-                   .Calling(c => c.JsonWithSettingsAction())
-                   .ShouldReturn()
-                   .Json()
-                   .WithJsonSerializerSettings(s =>
-                       s.WithFormatting(Formatting.None));
-            }, "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have None formatting, but in fact found Indented.");
+            Test.AssertException<JsonResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                       .Controller<MvcController>()
+                       .Calling(c => c.JsonWithSettingsAction())
+                       .ShouldReturn()
+                       .Json()
+                       .WithJsonSerializerSettings(s =>
+                           s.WithFormatting(Formatting.None));
+                }, 
+                "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have None formatting, but in fact found Indented.");
         }
 
         [Fact]
@@ -414,16 +431,18 @@
         [Fact]
         public void WithMaxDepthShouldThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<JsonResultAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.JsonWithSettingsAction())
-                    .ShouldReturn()
-                    .Json()
-                    .WithJsonSerializerSettings(s =>
-                        s.WithMaxDepth(int.MaxValue));
-            }, "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have 2147483647 max depth, but in fact found 2.");
+            Test.AssertException<JsonResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.JsonWithSettingsAction())
+                        .ShouldReturn()
+                        .Json()
+                        .WithJsonSerializerSettings(s =>
+                            s.WithMaxDepth(int.MaxValue));
+                }, 
+                "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have 2147483647 max depth, but in fact found 2.");
         }
 
         [Fact]
@@ -457,16 +476,18 @@
         [Fact]
         public void WithMissingMemberHandlingShouldThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<JsonResultAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.JsonWithSettingsAction())
-                    .ShouldReturn()
-                    .Json()
-                    .WithJsonSerializerSettings(s =>
-                        s.WithMissingMemberHandling(MissingMemberHandling.Error));
-            }, "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Error missing member handling, but in fact found Ignore.");
+            Test.AssertException<JsonResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.JsonWithSettingsAction())
+                        .ShouldReturn()
+                        .Json()
+                        .WithJsonSerializerSettings(s =>
+                            s.WithMissingMemberHandling(MissingMemberHandling.Error));
+                }, 
+                "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Error missing member handling, but in fact found Ignore.");
         }
 
         [Fact]
@@ -500,16 +521,18 @@
         [Fact]
         public void WithNullValueHandlingShouldThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<JsonResultAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.JsonWithSettingsAction())
-                    .ShouldReturn()
-                    .Json()
-                    .WithJsonSerializerSettings(s =>
-                        s.WithNullValueHandling(NullValueHandling.Include));
-            }, "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Include null value handling, but in fact found Ignore.");
+            Test.AssertException<JsonResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.JsonWithSettingsAction())
+                        .ShouldReturn()
+                        .Json()
+                        .WithJsonSerializerSettings(s =>
+                            s.WithNullValueHandling(NullValueHandling.Include));
+                }, 
+                "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Include null value handling, but in fact found Ignore.");
         }
 
         [Fact]
@@ -543,18 +566,18 @@
         [Fact]
         public void WithObjectCreationHandlingShouldThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<JsonResultAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.JsonWithSettingsAction())
-                    .ShouldReturn()
-                    .Json()
-                    .WithJsonSerializerSettings(s =>
-                        s.WithObjectCreationHandling(ObjectCreationHandling.Auto));
-            }, "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Auto object creation handling, but in fact found Replace.");
-
-
+            Test.AssertException<JsonResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.JsonWithSettingsAction())
+                        .ShouldReturn()
+                        .Json()
+                        .WithJsonSerializerSettings(s =>
+                            s.WithObjectCreationHandling(ObjectCreationHandling.Auto));
+                }, 
+                "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Auto object creation handling, but in fact found Replace.");
         }
 
         [Fact]
@@ -588,16 +611,18 @@
         [Fact]
         public void WithPreserveReferencesHandlingShouldThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<JsonResultAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.JsonWithSettingsAction())
-                    .ShouldReturn()
-                    .Json()
-                    .WithJsonSerializerSettings(s =>
-                        s.WithPreserveReferencesHandling(PreserveReferencesHandling.Objects));
-            }, "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Objects preserve references handling, but in fact found Arrays.");
+            Test.AssertException<JsonResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.JsonWithSettingsAction())
+                        .ShouldReturn()
+                        .Json()
+                        .WithJsonSerializerSettings(s =>
+                            s.WithPreserveReferencesHandling(PreserveReferencesHandling.Objects));
+                }, 
+                "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Objects preserve references handling, but in fact found Arrays.");
         }
 
         [Fact]
@@ -631,16 +656,18 @@
         [Fact]
         public void WithReferenceLoopHandlingShouldThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<JsonResultAssertionException>(() =>
-            {
-                MyMvc
-                   .Controller<MvcController>()
-                   .Calling(c => c.JsonWithSettingsAction())
-                   .ShouldReturn()
-                   .Json()
-                   .WithJsonSerializerSettings(s =>
-                       s.WithReferenceLoopHandling(ReferenceLoopHandling.Ignore));
-            }, "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Ignore reference loop handling, but in fact found Serialize.");
+            Test.AssertException<JsonResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                       .Controller<MvcController>()
+                       .Calling(c => c.JsonWithSettingsAction())
+                       .ShouldReturn()
+                       .Json()
+                       .WithJsonSerializerSettings(s =>
+                           s.WithReferenceLoopHandling(ReferenceLoopHandling.Ignore));
+                }, 
+                "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Ignore reference loop handling, but in fact found Serialize.");
         }
 
         [Fact]
@@ -674,16 +701,18 @@
         [Fact]
         public void WithTypeNameAssemblyFormatShouldThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<JsonResultAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.JsonWithSettingsAction())
-                    .ShouldReturn()
-                    .Json()
-                    .WithJsonSerializerSettings(s =>
-                        s.WithTypeNameAssemblyFormat(FormatterAssemblyStyle.Full));
-            }, "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Full type name assembly format, but in fact found Simple.");
+            Test.AssertException<JsonResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.JsonWithSettingsAction())
+                        .ShouldReturn()
+                        .Json()
+                        .WithJsonSerializerSettings(s =>
+                            s.WithTypeNameAssemblyFormat(FormatterAssemblyStyle.Full));
+                }, 
+                "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Full type name assembly format, but in fact found Simple.");
         }
 
         [Fact]
@@ -717,16 +746,18 @@
         [Fact]
         public void WithTypeNameHandlingShouldThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<JsonResultAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.JsonWithSettingsAction())
-                    .ShouldReturn()
-                    .Json()
-                    .WithJsonSerializerSettings(s =>
-                        s.WithTypeNameHandling(TypeNameHandling.Auto));
-            }, "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Auto type name handling, but in fact found None.");
+            Test.AssertException<JsonResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.JsonWithSettingsAction())
+                        .ShouldReturn()
+                        .Json()
+                        .WithJsonSerializerSettings(s =>
+                            s.WithTypeNameHandling(TypeNameHandling.Auto));
+                }, 
+                "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Auto type name handling, but in fact found None.");
         }
 
         [Fact]
@@ -764,20 +795,22 @@
         [Fact]
         public void AndAlsoShouldThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<JsonResultAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.JsonWithSettingsAction())
-                    .ShouldReturn()
-                    .Json()
-                    .WithJsonSerializerSettings(s => s
-                        .WithFormatting(Formatting.Indented)
-                        .AndAlso()
-                        .WithMaxDepth(2)
-                        .AndAlso()
-                        .WithConstructorHandling(ConstructorHandling.Default));
-            }, "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Default constructor handling, but in fact found AllowNonPublicDefaultConstructor.");
+            Test.AssertException<JsonResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.JsonWithSettingsAction())
+                        .ShouldReturn()
+                        .Json()
+                        .WithJsonSerializerSettings(s => s
+                            .WithFormatting(Formatting.Indented)
+                            .AndAlso()
+                            .WithMaxDepth(2)
+                            .AndAlso()
+                            .WithConstructorHandling(ConstructorHandling.Default));
+                }, 
+                "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Default constructor handling, but in fact found AllowNonPublicDefaultConstructor.");
         }
     }
 }

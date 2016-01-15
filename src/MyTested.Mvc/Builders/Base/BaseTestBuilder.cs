@@ -1,10 +1,10 @@
 ﻿namespace MyTested.Mvc.Builders.Base
 {
-    using Contracts.Base;
-    using Utilities.Validators;
-    using Microsoft.AspNet.Mvc;
     using System.Collections.Generic;
+    using Contracts.Base;
     using Microsoft.AspNet.Http;
+    using Microsoft.AspNet.Mvc;
+    using Utilities.Validators;
 
     public class BaseTestBuilder : IBaseTestBuilder
     {

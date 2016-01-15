@@ -5,13 +5,13 @@
     using System.Linq;
     using System.Linq.Expressions;
     using Internal;
+    using Microsoft.AspNet.Authorization;
+    using Microsoft.AspNet.Mvc;
     using Setups;
     using Setups.Controllers;
     using Setups.Models;
     using Utilities;
-    using Microsoft.AspNet.Mvc;
     using Xunit;
-    using Microsoft.AspNet.Authorization;
 
     public class ExpressionParserTests
     {
@@ -28,10 +28,12 @@
         {
             Expression<Func<int>> expression = () => 0;
 
-            Test.AssertException<ArgumentException>(() =>
-            {
-                ExpressionParser.GetMethodName(expression);
-            }, "Provided expression is not a valid method call.");
+            Test.AssertException<ArgumentException>(
+                () =>
+                {
+                    ExpressionParser.GetMethodName(expression);
+                }, 
+                "Provided expression is not a valid method call.");
         }
 
         [Fact]
@@ -89,10 +91,12 @@
         {
             Expression<Func<int>> expression = () => 0;
 
-            Test.AssertException<ArgumentException>(() =>
-            {
-                ExpressionParser.ResolveMethodArguments(expression);
-            }, "Provided expression is not a valid method call.");
+            Test.AssertException<ArgumentException>(
+                () =>
+                {
+                    ExpressionParser.ResolveMethodArguments(expression);
+                }, 
+                "Provided expression is not a valid method call.");
         }
 
         [Fact]
@@ -109,10 +113,12 @@
         {
             Expression<Func<MvcController, object>> expression = c => c.OkResultWithResponse();
 
-            Test.AssertException<ArgumentException>(() =>
-            {
-                ExpressionParser.GetPropertyName(expression);
-            }, "Provided expression is not a valid member expression.");
+            Test.AssertException<ArgumentException>(
+                () =>
+                {
+                    ExpressionParser.GetPropertyName(expression);
+                }, 
+                "Provided expression is not a valid member expression.");
         }
 
         [Fact]

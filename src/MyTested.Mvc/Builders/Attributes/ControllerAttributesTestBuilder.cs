@@ -1,11 +1,11 @@
 ﻿namespace MyTested.Mvc.Builders.Attributes
 {
-    using Microsoft.AspNet.Mvc;
-    using Contracts.Attributes;
     using System;
+    using Contracts.Attributes;
     using Exceptions;
     using Internal.Extensions;
     using Microsoft.AspNet.Authorization;
+    using Microsoft.AspNet.Mvc;
 
     /// <summary>
     /// Used for testing controller attributes.

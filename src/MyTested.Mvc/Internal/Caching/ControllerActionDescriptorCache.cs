@@ -1,11 +1,11 @@
 ﻿namespace MyTested.Mvc.Internal.Caching
 {
-    using Contracts;
-    using Microsoft.AspNet.Mvc.Controllers;
-    using Microsoft.AspNet.Mvc.Infrastructure;
     using System.Collections.Concurrent;
     using System.Linq;
     using System.Reflection;
+    using Contracts;
+    using Microsoft.AspNet.Mvc.Controllers;
+    using Microsoft.AspNet.Mvc.Infrastructure;
 
     public class ControllerActionDescriptorCache : IControllerActionDescriptorCache
     {

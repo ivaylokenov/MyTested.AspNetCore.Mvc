@@ -1,15 +1,15 @@
 ﻿namespace MyTested.Mvc.Builders.Actions
 {
-    using Microsoft.AspNet.Mvc;
-    using Contracts.Actions;
     using System;
     using System.Collections.Generic;
-    using Exceptions;
     using Base;
+    using Contracts.Actions;
+    using Exceptions;
     using Internal.Extensions;
-    using Utilities.Validators;
+    using Microsoft.AspNet.Mvc;
     using ShouldHave;
     using ShouldReturn;
+    using Utilities.Validators;
 
     /// <summary>
     /// Used for building the action result which will be tested.

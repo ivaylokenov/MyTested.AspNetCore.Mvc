@@ -19,13 +19,15 @@
         [Fact]
         public void NoAttributesShouldThrowExceptionWithControllerContainingAttributes()
         {
-            Test.AssertException<AttributeAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .ShouldHave()
-                    .NoAttributes();
-            }, "When testing MvcController was expected to not have any attributes, but it had some.");
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .ShouldHave()
+                        .NoAttributes();
+                }, 
+                "When testing MvcController was expected to not have any attributes, but it had some.");
         }
 
         [Fact]
@@ -40,13 +42,15 @@
         [Fact]
         public void AttributesShouldThrowEceptionWithControllerContainingNoAttributes()
         {
-            Test.AssertException<AttributeAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<NoAttributesController>()
-                    .ShouldHave()
-                    .Attributes();
-            }, "When testing NoAttributesController was expected to have at least 1 attribute, but in fact none was found.");
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<NoAttributesController>()
+                        .ShouldHave()
+                        .Attributes();
+                }, 
+                "When testing NoAttributesController was expected to have at least 1 attribute, but in fact none was found.");
         }
 
         [Fact]
@@ -61,25 +65,29 @@
         [Fact]
         public void AttributesShouldThrowEceptionWithControllerContainingNumberOfAttributes()
         {
-            Test.AssertException<AttributeAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .ShouldHave()
-                    .Attributes(withTotalNumberOf: 10);
-            }, "When testing MvcController was expected to have 10 attributes, but in fact found 2.");
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .ShouldHave()
+                        .Attributes(withTotalNumberOf: 10);
+                }, 
+                "When testing MvcController was expected to have 10 attributes, but in fact found 2.");
         }
 
         [Fact]
         public void AttributesShouldThrowEceptionWithControllerContainingNumberOfAttributesTestingWithOne()
         {
-            Test.AssertException<AttributeAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .ShouldHave()
-                    .Attributes(withTotalNumberOf: 1);
-            }, "When testing MvcController was expected to have 1 attribute, but in fact found 2.");
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .ShouldHave()
+                        .Attributes(withTotalNumberOf: 1);
+                },
+                "When testing MvcController was expected to have 1 attribute, but in fact found 2.");
         }
     }
 }

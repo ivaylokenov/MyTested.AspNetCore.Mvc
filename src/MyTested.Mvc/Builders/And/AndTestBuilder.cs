@@ -1,12 +1,12 @@
 ﻿namespace MyTested.Mvc.Builders.And
 {
-    using Base;
-    using Contracts.Actions;
-    using Actions;
-    using Microsoft.AspNet.Mvc;
     using System;
     using System.Collections.Generic;
+    using Actions;
+    using Base;
+    using Contracts.Actions;
     using Contracts.And;
+    using Microsoft.AspNet.Mvc;
 
     /// <summary>
     /// Class containing AndAlso() method allowing additional assertions after model state tests.

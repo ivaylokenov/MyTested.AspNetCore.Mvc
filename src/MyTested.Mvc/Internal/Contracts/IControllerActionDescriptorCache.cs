@@ -1,7 +1,7 @@
 ﻿namespace MyTested.Mvc.Internal.Contracts
 {
-    using Microsoft.AspNet.Mvc.Controllers;
     using System.Reflection;
+    using Microsoft.AspNet.Mvc.Controllers;
 
     public interface IControllerActionDescriptorCache
     {

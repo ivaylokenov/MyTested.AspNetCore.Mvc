@@ -1,9 +1,9 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.ActionResults.Json
 {
     using System;
+    using System.Net;
     using Models;
     using Newtonsoft.Json;
-    using System.Net;
 
     /// <summary>
     /// Used for testing JSON results.

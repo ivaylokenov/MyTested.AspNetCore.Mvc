@@ -1,8 +1,8 @@
-﻿using System;
-using System.Net;
-
-namespace MyTested.Mvc.Utilities.Validators
+﻿namespace MyTested.Mvc.Utilities.Validators
 {
+    using System;
+    using System.Net;
+
     /// <summary>
     /// Validator class containing HTTP status code validation logic.
     /// </summary>
@@ -18,13 +18,15 @@ namespace MyTested.Mvc.Utilities.Validators
             {
                 var actualStatusCodeAsInt = (int?)actualStatusCode;
 
+                var receivedErrorMessage = string.Format(
+                    "received {0} ({1})",
+                    actualStatusCode != null ? actualStatusCodeAsInt.ToString() : "no status code",
+                    actualStatusCode != null ? actualStatusCode.ToString() : "null");
+
                 failedValidationAction(
                     "to have",
                     $"{(int)expectedHttpStatusCode} ({expectedHttpStatusCode}) status code",
-                    string.Format(
-                        "received {0} ({1})", 
-                        actualStatusCode != null ? actualStatusCodeAsInt.ToString() : "no status code",
-                        actualStatusCode != null ? actualStatusCode.ToString() : "null"));
+                    receivedErrorMessage);
             }
         }
     }

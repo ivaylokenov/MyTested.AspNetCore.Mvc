@@ -20,27 +20,31 @@
         [Fact]
         public void ShouldReturnNullShouldThrowExceptionWhenReturnValueNotNullable()
         {
-            Test.AssertException<ActionCallAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.GenericStructAction())
-                    .ShouldReturn()
-                    .Null();
-            }, "Boolean cannot be null.");
+            Test.AssertException<ActionCallAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.GenericStructAction())
+                        .ShouldReturn()
+                        .Null();
+                },
+                "Boolean cannot be null.");
         }
 
         [Fact]
         public void ShouldReturnNullShouldThrowExceptionWhenReturnValueNotNull()
         {
-            Test.AssertException<ActionResultAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.OkResultAction())
-                    .ShouldReturn()
-                    .Null();
-            }, "When calling OkResultAction action in MvcController expected action result to be null, but instead received IActionResult.");
+            Test.AssertException<ActionResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.OkResultAction())
+                        .ShouldReturn()
+                        .Null();
+                }, 
+                "When calling OkResultAction action in MvcController expected action result to be null, but instead received IActionResult.");
         }
 
         [Fact]
@@ -56,28 +60,31 @@
         [Fact]
         public void ShouldReturnNotNullShouldThrowExceptionWhenReturnValueNotNullable()
         {
-            Test.AssertException<ActionCallAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.GenericStructAction())
-                    .ShouldReturn()
-                    .NotNull();
-            }, "Boolean cannot be null.");
-
+            Test.AssertException<ActionCallAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.GenericStructAction())
+                        .ShouldReturn()
+                        .NotNull();
+                }, 
+                "Boolean cannot be null.");
         }
 
         [Fact]
         public void ShouldReturnNotNullShouldThrowExceptionWhenReturnValueNotNull()
         {
-            Test.AssertException<ActionResultAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.NullAction())
-                    .ShouldReturn()
-                    .NotNull();
-            }, "When calling NullAction action in MvcController expected action result to be not null, but it was IActionResult object.");
+            Test.AssertException<ActionResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.NullAction())
+                        .ShouldReturn()
+                        .NotNull();
+                }, 
+                "When calling NullAction action in MvcController expected action result to be not null, but it was IActionResult object.");
         }
 
         [Fact]
@@ -103,14 +110,16 @@
         [Fact]
         public void ShouldReturnDefaultShouldThrowExceptionWhenReturnValueIsNotDefault()
         {
-            Test.AssertException<ActionResultAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.OkResultAction())
-                    .ShouldReturn()
-                    .DefaultValue();
-            }, "When calling OkResultAction action in MvcController expected action result to be the default value of IActionResult, but in fact it was not.");
+            Test.AssertException<ActionResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.OkResultAction())
+                        .ShouldReturn()
+                        .DefaultValue();
+                }, 
+                "When calling OkResultAction action in MvcController expected action result to be the default value of IActionResult, but in fact it was not.");
         }
     }
 }

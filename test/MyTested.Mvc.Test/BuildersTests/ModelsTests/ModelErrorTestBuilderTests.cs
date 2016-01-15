@@ -28,16 +28,18 @@
         {
             var requestBodyWithErrors = TestObjectFactory.GetRequestModelWithErrors();
 
-            Test.AssertException<ModelErrorAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.OkResultActionWithRequestBody(1, requestBodyWithErrors))
-                    .ShouldReturn()
-                    .Ok()
-                    .WithResponseModelOfType<ICollection<ResponseModel>>()
-                    .ContainingNoModelStateErrors();
-            }, "When calling OkResultActionWithRequestBody action in MvcController expected to have valid model state with no errors, but it had some.");
+            Test.AssertException<ModelErrorAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.OkResultActionWithRequestBody(1, requestBodyWithErrors))
+                        .ShouldReturn()
+                        .Ok()
+                        .WithResponseModelOfType<ICollection<ResponseModel>>()
+                        .ContainingNoModelStateErrors();
+                }, 
+                "When calling OkResultActionWithRequestBody action in MvcController expected to have valid model state with no errors, but it had some.");
         }
 
         [Fact]
@@ -59,16 +61,18 @@
         {
             var requestBody = TestObjectFactory.GetValidRequestModel();
 
-            Test.AssertException<ModelErrorAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.ModelStateCheck(requestBody))
-                    .ShouldReturn()
-                    .Ok()
-                    .WithResponseModel(requestBody)
-                    .ContainingModelStateError("Name");
-            }, "When calling ModelStateCheck action in MvcController expected to have a model error against key Name, but none found.");
+            Test.AssertException<ModelErrorAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.ModelStateCheck(requestBody))
+                        .ShouldReturn()
+                        .Ok()
+                        .WithResponseModel(requestBody)
+                        .ContainingModelStateError("Name");
+                }, 
+                "When calling ModelStateCheck action in MvcController expected to have a model error against key Name, but none found.");
         }
 
         [Fact]
@@ -90,16 +94,18 @@
         {
             var requestBody = TestObjectFactory.GetValidRequestModel();
 
-            Test.AssertException<ModelErrorAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.ModelStateCheck(requestBody))
-                    .ShouldReturn()
-                    .Ok()
-                    .WithResponseModel(requestBody)
-                    .ContainingModelStateErrorFor(r => r.RequiredString);
-            }, "When calling ModelStateCheck action in MvcController expected to have a model error against key RequiredString, but none found.");
+            Test.AssertException<ModelErrorAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.ModelStateCheck(requestBody))
+                        .ShouldReturn()
+                        .Ok()
+                        .WithResponseModel(requestBody)
+                        .ContainingModelStateErrorFor(r => r.RequiredString);
+                }, 
+                "When calling ModelStateCheck action in MvcController expected to have a model error against key RequiredString, but none found.");
         }
 
         [Fact]
@@ -121,16 +127,18 @@
         {
             var requestBodyWithErrors = TestObjectFactory.GetRequestModelWithErrors();
 
-            Test.AssertException<ModelErrorAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.ModelStateCheck(requestBodyWithErrors))
-                    .ShouldReturn()
-                    .Ok()
-                    .WithResponseModel(requestBodyWithErrors)
-                    .ContainingNoModelStateErrorFor(r => r.RequiredString);
-            }, "When calling ModelStateCheck action in MvcController expected to have no model errors against key RequiredString, but found some.");
+            Test.AssertException<ModelErrorAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.ModelStateCheck(requestBodyWithErrors))
+                        .ShouldReturn()
+                        .Ok()
+                        .WithResponseModel(requestBodyWithErrors)
+                        .ContainingNoModelStateErrorFor(r => r.RequiredString);
+                }, 
+                "When calling ModelStateCheck action in MvcController expected to have no model errors against key RequiredString, but found some.");
         }
 
         [Fact]
@@ -153,17 +161,19 @@
         {
             var requestBodyWithErrors = TestObjectFactory.GetRequestModelWithErrors();
 
-            Test.AssertException<ModelErrorAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.ModelStateCheck(requestBodyWithErrors))
-                    .ShouldReturn()
-                    .Ok()
-                    .WithResponseModel(requestBodyWithErrors)
-                    .ContainingNoModelStateErrorFor(r => r.Integer)
-                    .ContainingNoModelStateErrorFor(r => r.RequiredString);
-            }, "When calling ModelStateCheck action in MvcController expected to have no model errors against key Integer, but found some.");
+            Test.AssertException<ModelErrorAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.ModelStateCheck(requestBodyWithErrors))
+                        .ShouldReturn()
+                        .Ok()
+                        .WithResponseModel(requestBodyWithErrors)
+                        .ContainingNoModelStateErrorFor(r => r.Integer)
+                        .ContainingNoModelStateErrorFor(r => r.RequiredString);
+                },
+                "When calling ModelStateCheck action in MvcController expected to have no model errors against key Integer, but found some.");
         }
 
         [Fact]

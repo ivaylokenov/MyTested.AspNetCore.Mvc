@@ -1,13 +1,13 @@
 ﻿namespace MyTested.Mvc.Builders.Attributes
 {
-    using Microsoft.AspNet.Mvc;
-    using Base;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System;
-    using Utilities;
+    using Base;
     using Internal.Extensions;
     using Microsoft.AspNet.Authorization;
+    using Microsoft.AspNet.Mvc;
+    using Utilities;
 
     /// <summary>
     /// Base class for all attribute test builders.

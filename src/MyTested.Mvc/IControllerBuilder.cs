@@ -1,14 +1,14 @@
 ﻿namespace MyTested.Mvc
 {
-    using Microsoft.AspNet.Mvc;
     using System;
-    using System.Linq.Expressions;
-    using Microsoft.AspNet.Http;
-    using System.Threading.Tasks;
-    using Builders.Contracts.Controllers;
-    using Builders.Contracts.Actions;
     using System.Collections.Generic;
+    using System.Linq.Expressions;
+    using System.Threading.Tasks;
+    using Builders.Contracts.Actions;
     using Builders.Contracts.Authentication;
+    using Builders.Contracts.Controllers;
+    using Microsoft.AspNet.Http;
+    using Microsoft.AspNet.Mvc;
 
     /// <summary>
     /// Used for building the action which will be tested.
@@ -29,14 +29,7 @@
         /// <param name="requestMessage">Instance of HttpRequestMessage.</param>
         /// <returns>The same controller builder.</returns>
         IAndControllerBuilder<TController> WithHttpRequest(HttpRequest requestMessage);
-
-        ///// <summary>
-        ///// Adds HTTP request message to the tested controller.
-        ///// </summary>
-        ///// <param name="httpRequestBuilder">Builder for HTTP request message.</param>
-        ///// <returns>The same controller builder.</returns>
-        //IAndControllerBuilder<TController> WithHttpRequestMessage(Action<IHttpRequestMessageBuilder> httpRequestBuilder);
-
+        
         /// <summary>
         /// Tries to resolve constructor dependency of given type.
         /// </summary>

@@ -2,10 +2,10 @@
 {
     using System;
     using Attributes;
-    using Internal.Extensions;
     using Contracts.And;
     using Contracts.Attributes;
     using Exceptions;
+    using Internal.Extensions;
     using Utilities.Validators;
 
     /// <summary>

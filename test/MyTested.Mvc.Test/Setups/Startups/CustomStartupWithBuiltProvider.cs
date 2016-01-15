@@ -1,8 +1,8 @@
 ﻿namespace MyTested.Mvc.Tests.Setups.Startups
 {
+    using System;
     using Microsoft.Extensions.DependencyInjection;
     using Services;
-    using System;
 
     public class CustomStartupWithBuiltProvider
     {

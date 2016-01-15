@@ -4,64 +4,21 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.Runtime.Serialization.Formatters;
+    using Common;
+    using Microsoft.AspNet.FileProviders;
+    using Microsoft.AspNet.Http;
+    using Microsoft.AspNet.Http.Internal;
+    using Microsoft.AspNet.Mvc;
+    using Microsoft.Extensions.DependencyInjection;
     using Models;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
-    using Microsoft.AspNet.Http;
-    using Microsoft.AspNet.Http.Internal;
-    using Microsoft.Extensions.DependencyInjection;
     using Services;
-    using Microsoft.AspNet.Mvc;
-    using Microsoft.AspNet.FileProviders;
-    using Common;
+
     public static class TestObjectFactory
     {
         public const string MediaType = "application/json";
-
-        //public static HttpConfiguration GetHttpConfigurationWithRoutes()
-        //{
-        //    var config = new HttpConfiguration { IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always };
-
-        //    config.MapHttpAttributeRoutes();
-
-        //    config.Routes.MapHttpRoute(
-        //        name: "HeaderRoute",
-        //        routeTemplate: "api/HeaderRoute",
-        //        defaults: new { controller = "Route", action = "HeaderRoute" },
-        //        constraints: new { controller = new HeaderRouteConstraint("CustomHeader", "CustomHeaderValue") });
-
-        //    config.Routes.MapHttpRoute(
-        //        name: "TestRoute",
-        //        routeTemplate: "api/{controller}/{action}/{id}",
-        //        defaults: new { id = RouteParameter.Optional });
-
-        //    config.Routes.MapHttpRoute(
-        //        name: "Ignored",
-        //        routeTemplate: "api/IgnoredRoute",
-        //        defaults: new { controller = "Route", action = "GetMethod" },
-        //        constraints: null,
-        //        handler: new StopRoutingHandler());
-
-        //    config.Routes.MapHttpRoute(
-        //        name: "Redirect",
-        //        routeTemplate: "api/Redirect/{action}",
-        //        defaults: new { controller = "NoAttributes" });
-
-        //    return config;
-        //}
-
-        //public static IEnumerable<MediaTypeFormatter> GetFormatters()
-        //{
-        //    return new List<MediaTypeFormatter>
-        //    {
-        //        new BsonMediaTypeFormatter(),
-        //        new FormUrlEncodedMediaTypeFormatter(),
-        //        new JQueryMvcFormUrlEncodedFormatter(),
-        //        new JsonMediaTypeFormatter(),
-        //        new XmlMediaTypeFormatter()
-        //    };
-        //}
-
+        
         public static Action<IServiceCollection> GetCustomServicesRegistrationAction()
         {
             return services =>

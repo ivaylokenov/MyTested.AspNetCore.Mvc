@@ -1,5 +1,7 @@
 ﻿namespace MyTested.Mvc.Internal
 {
+    using System;
+    using System.Collections.Generic;
     using Caching;
     using Contracts;
     using Logging;
@@ -7,8 +9,6 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
     using Microsoft.Extensions.Logging;
-    using System;
-    using System.Collections.Generic;
     using Utilities;
     using Utilities.Validators;
 
@@ -20,6 +20,8 @@
         private static IServiceProvider serviceProvider;
 
         public static IServiceProvider Current => serviceProvider ?? serviceCollection?.BuildServiceProvider();
+
+        public static bool IsAvailable => Current != null;
 
         public static void Setup(Action<IServiceCollection> servicesAction)
         {
@@ -66,8 +68,6 @@
                 servicesAction(serviceCollection);
             }
         }
-
-        public static bool IsAvailable => Current != null;
 
         public static TInstance GetRequiredService<TInstance>()
         {

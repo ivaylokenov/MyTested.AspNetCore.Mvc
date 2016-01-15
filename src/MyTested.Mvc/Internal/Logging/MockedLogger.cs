@@ -1,7 +1,7 @@
 ﻿namespace MyTested.Mvc.Internal.Logging
 {
-    using Microsoft.Extensions.Logging;
     using System;
+    using Microsoft.Extensions.Logging;
 
     public class MockedLogger : ILogger
     {

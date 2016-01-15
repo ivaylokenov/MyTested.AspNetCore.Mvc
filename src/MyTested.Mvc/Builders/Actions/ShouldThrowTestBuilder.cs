@@ -2,11 +2,11 @@
 {
     using System;
     using Base;
-    using Internal.Extensions;
     using Contracts.Actions;
     using Contracts.ExceptionErrors;
     using ExceptionErrors;
     using Exceptions;
+    using Internal.Extensions;
     using Microsoft.AspNet.Mvc;
 
     /// <summary>

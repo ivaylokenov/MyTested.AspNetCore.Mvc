@@ -1,16 +1,15 @@
 ﻿namespace MyTested.Mvc.Builders.Base
 {
-    using Contracts.Base;
-    using Utilities;
-    using Microsoft.AspNet.Mvc;
-    using Microsoft.CSharp.RuntimeBinder;
     using System;
     using System.Collections.Generic;
-    using Exceptions;
-    using Internal.Extensions;
-    using Contracts.And;
     using And;
+    using Contracts.And;
+    using Contracts.Base;
+    using Exceptions;
     using Internal;
+    using Internal.Extensions;
+    using Microsoft.AspNet.Mvc;
+    using Utilities;
 
     /// <summary>
     /// Base class for all test builders with action result.

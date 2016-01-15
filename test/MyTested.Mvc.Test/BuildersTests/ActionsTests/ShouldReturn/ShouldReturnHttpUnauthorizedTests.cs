@@ -20,14 +20,16 @@
         [Fact]
         public void ShouldReturnUnauthorizedShouldThrowExceptionWhenActionDoesNotReturnUnauthorizedResult()
         {
-            Test.AssertException<ActionResultAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.BadRequestAction())
-                    .ShouldReturn()
-                    .HttpUnauthorized();
-            }, "When calling BadRequestAction action in MvcController expected action result to be HttpUnauthorizedResult, but instead received BadRequestResult.");
+            Test.AssertException<ActionResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.BadRequestAction())
+                        .ShouldReturn()
+                        .HttpUnauthorized();
+                }, 
+                "When calling BadRequestAction action in MvcController expected action result to be HttpUnauthorizedResult, but instead received BadRequestResult.");
         }
     }
 }

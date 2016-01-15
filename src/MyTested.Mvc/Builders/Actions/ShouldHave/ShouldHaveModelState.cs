@@ -1,10 +1,10 @@
 ﻿namespace MyTested.Mvc.Builders.Actions.ShouldHave
 {
     using System.Linq;
-    using Internal.Extensions;
     using Contracts.And;
     using Contracts.Models;
     using Exceptions;
+    using Internal.Extensions;
     using Models;
 
     /// <summary>

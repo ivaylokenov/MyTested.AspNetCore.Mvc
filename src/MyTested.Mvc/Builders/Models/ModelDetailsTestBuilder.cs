@@ -1,11 +1,11 @@
 ﻿namespace MyTested.Mvc.Builders.Models
 {
     using System;
-    using Internal.Extensions;
     using Contracts.Models;
     using Exceptions;
-    using Utilities;
+    using Internal.Extensions;
     using Microsoft.AspNet.Mvc;
+    using Utilities;
 
     /// <summary>
     /// Used for testing the response model members.

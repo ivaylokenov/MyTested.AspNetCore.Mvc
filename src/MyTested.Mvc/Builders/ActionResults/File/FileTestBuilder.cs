@@ -1,16 +1,16 @@
 ﻿namespace MyTested.Mvc.Builders.ActionResults.File
 {
+    using System;
+    using System.IO;
+    using System.Linq;
     using Base;
     using Contracts.ActionResults.File;
+    using Exceptions;
+    using Internal.Extensions;
     using Microsoft.AspNet.FileProviders;
     using Microsoft.AspNet.Mvc;
     using Microsoft.Net.Http.Headers;
     using Utilities;
-    using System;
-    using System.IO;
-    using System.Linq;
-    using Exceptions;
-    using Internal.Extensions;
 
     /// <summary>
     /// Used for testing file result.
@@ -154,7 +154,7 @@
         /// <summary>
         /// Tests whether file result has the same file provider type as the provided one.
         /// </summary>
-        /// <typeparam name="TFileProvider">File provider of type IFileProvider.</param>
+        /// <typeparam name="TFileProvider">File provider of type IFileProvider.</typeparam>
         /// <returns>The same file test builder.</returns>
         public IAndFileTestBuilder WithFileProviderOfType<TFileProvider>()
             where TFileProvider : IFileProvider
@@ -175,7 +175,7 @@
         /// <summary>
         /// Tests whether file result has the same file contents as the provided byte array.
         /// </summary>
-        /// <typeparam name="fileContents">File contents as byte array.</param>
+        /// <param name="fileContents">File contents as byte array.</param>
         /// <returns>The same file test builder.</returns>
         public IAndFileTestBuilder WithContents(byte[] fileContents)
         {
@@ -194,7 +194,7 @@
         /// <summary>
         /// Tests whether file result has the same physical file path as the provided one.
         /// </summary>
-        /// <typeparam name="physicalPath">File physical path as string.</param>
+        /// <param name="physicalPath">File physical path as string.</param>
         /// <returns>The same file test builder.</returns>
         public IAndFileTestBuilder WithPhysicalPath(string physicalPath)
         {

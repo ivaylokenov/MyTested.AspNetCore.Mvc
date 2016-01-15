@@ -1,11 +1,11 @@
 ﻿namespace MyTested.Mvc
 {
     using System;
-    using Utilities;
-    using Microsoft.AspNet.Mvc;
     using Builders.Controllers;
-    using Microsoft.Extensions.DependencyInjection;
     using Internal;
+    using Microsoft.AspNet.Mvc;
+    using Microsoft.Extensions.DependencyInjection;
+    using Utilities;
 
     /// <summary>
     /// Starting point of the testing framework, which provides a way to specify the test case.

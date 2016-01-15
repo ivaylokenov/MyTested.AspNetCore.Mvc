@@ -3,18 +3,17 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Claims;
     using Builders.Contracts.Actions;
     using Builders.Contracts.Base;
     using Exceptions;
+    using Microsoft.AspNet.Mvc;
     using Setups;
     using Setups.Controllers;
     using Setups.Models;
     using Setups.Services;
     using Xunit;
-    using Microsoft.AspNet.Mvc;
-    using System.Security.Claims;
-    using Microsoft.Extensions.DependencyInjection;
-    
+
     public class ControllerBuilderTests
     {
         [Fact]
@@ -284,32 +283,36 @@
         [Fact]
         public void WithResolvedDependencyForShouldThrowExceptionWhenSameDependenciesAreRegistered()
         {
-            Test.AssertException<InvalidOperationException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .WithResolvedDependencyFor<RequestModel>(new RequestModel())
-                    .WithResolvedDependencyFor<IAnotherInjectedService>(new AnotherInjectedService())
-                    .WithResolvedDependencyFor<IInjectedService>(new InjectedService())
-                    .WithResolvedDependencyFor<IAnotherInjectedService>(new AnotherInjectedService());
-            }, "Dependency AnotherInjectedService is already registered for MvcController controller.");
+            Test.AssertException<InvalidOperationException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .WithResolvedDependencyFor<RequestModel>(new RequestModel())
+                        .WithResolvedDependencyFor<IAnotherInjectedService>(new AnotherInjectedService())
+                        .WithResolvedDependencyFor<IInjectedService>(new InjectedService())
+                        .WithResolvedDependencyFor<IAnotherInjectedService>(new AnotherInjectedService());
+                },
+                "Dependency AnotherInjectedService is already registered for MvcController controller.");
         }
 
         [Fact]
         public void WithResolvedDependencyForShouldThrowExceptionWhenNoConstructorExistsForDependencies()
         {
-            Test.AssertException<UnresolvedDependenciesException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .WithResolvedDependencyFor<RequestModel>(new RequestModel())
-                    .WithResolvedDependencyFor<IAnotherInjectedService>(new AnotherInjectedService())
-                    .WithResolvedDependencyFor<IInjectedService>(new InjectedService())
-                    .WithResolvedDependencyFor<ResponseModel>(new ResponseModel())
-                    .Calling(c => c.OkResultAction())
-                    .ShouldReturn()
-                    .Ok();
-            }, "MvcController could not be instantiated because it contains no constructor taking RequestModel, AnotherInjectedService, InjectedService, ResponseModel as parameters.");
+            Test.AssertException<UnresolvedDependenciesException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .WithResolvedDependencyFor<RequestModel>(new RequestModel())
+                        .WithResolvedDependencyFor<IAnotherInjectedService>(new AnotherInjectedService())
+                        .WithResolvedDependencyFor<IInjectedService>(new InjectedService())
+                        .WithResolvedDependencyFor<ResponseModel>(new ResponseModel())
+                        .Calling(c => c.OkResultAction())
+                        .ShouldReturn()
+                        .Ok();
+                }, 
+                "MvcController could not be instantiated because it contains no constructor taking RequestModel, AnotherInjectedService, InjectedService, ResponseModel as parameters.");
         }
         
         private void CheckActionResultTestBuilder<TActionResult>(

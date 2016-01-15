@@ -30,14 +30,16 @@
         [Fact]
         public void ShouldReturnCreatedShouldThrowExceptionWithBadRequestResult()
         {
-            Test.AssertException<ActionResultAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.BadRequestAction())
-                    .ShouldReturn()
-                    .Created();
-            }, "When calling BadRequestAction action in MvcController expected action result to be CreatedResult or CreatedAtActionResult or CreatedAtRouteResult, but instead received BadRequestResult.");
+            Test.AssertException<ActionResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.BadRequestAction())
+                        .ShouldReturn()
+                        .Created();
+                }, 
+                "When calling BadRequestAction action in MvcController expected action result to be CreatedResult or CreatedAtActionResult or CreatedAtRouteResult, but instead received BadRequestResult.");
         }
     }
 }

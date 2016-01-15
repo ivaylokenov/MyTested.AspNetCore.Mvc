@@ -3,10 +3,10 @@
     using System.Collections.Generic;
     using System.Linq;
     using Exceptions;
+    using Setups;
     using Setups.Controllers;
     using Setups.Models;
     using Xunit;
-    using Setups;
 
     public class ResponseModelTestBuilderTests
     {
@@ -46,43 +46,49 @@
         [Fact]
         public void WithResponseModelShouldThrowExceptionWithNoResponseModel()
         {
-            Test.AssertException<ResponseModelAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.OkResultAction())
-                    .ShouldReturn()
-                    .Ok()
-                    .WithResponseModelOfType<ResponseModel>();
-            }, "When calling OkResultAction action in MvcController expected response model to be of ResponseModel type, but instead received null.");
+            Test.AssertException<ResponseModelAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.OkResultAction())
+                        .ShouldReturn()
+                        .Ok()
+                        .WithResponseModelOfType<ResponseModel>();
+                }, 
+                "When calling OkResultAction action in MvcController expected response model to be of ResponseModel type, but instead received null.");
         }
 
         [Fact]
         public void WithResponseModelShouldThrowExceptionWithIncorrectResponseModel()
         {
-            Test.AssertException<ResponseModelAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.OkResultWithInterfaceResponse())
-                    .ShouldReturn()
-                    .Ok()
-                    .WithResponseModelOfType<ResponseModel>();
-            }, "When calling OkResultWithInterfaceResponse action in MvcController expected response model to be of ResponseModel type, but instead received List<ResponseModel>.");
+            Test.AssertException<ResponseModelAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.OkResultWithInterfaceResponse())
+                        .ShouldReturn()
+                        .Ok()
+                        .WithResponseModelOfType<ResponseModel>();
+                }, 
+                "When calling OkResultWithInterfaceResponse action in MvcController expected response model to be of ResponseModel type, but instead received List<ResponseModel>.");
         }
 
         [Fact]
         public void WithResponseModelShouldThrowExceptionWithIncorrectGenericTypeArgument()
         {
-            Test.AssertException<ResponseModelAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.OkResultWithInterfaceResponse())
-                    .ShouldReturn()
-                    .Ok()
-                    .WithResponseModelOfType<ICollection<int>>();
-            }, "When calling OkResultWithInterfaceResponse action in MvcController expected response model to be of ICollection<Int32> type, but instead received List<ResponseModel>.");
+            Test.AssertException<ResponseModelAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.OkResultWithInterfaceResponse())
+                        .ShouldReturn()
+                        .Ok()
+                        .WithResponseModelOfType<ICollection<int>>();
+                }, 
+                "When calling OkResultWithInterfaceResponse action in MvcController expected response model to be of ICollection<Int32> type, but instead received List<ResponseModel>.");
         }
 
         [Fact]
@@ -119,15 +125,17 @@
             var another = controller.ResponseModel.ToList();
             another.Add(new ResponseModel());
 
-            Test.AssertException<ResponseModelAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.OkResultWithResponse())
-                    .ShouldReturn()
-                    .Ok()
-                    .WithResponseModel(another);
-            }, "When calling OkResultWithResponse action in MvcController expected response model List<ResponseModel> to be the given model, but in fact it was a different.");
+            Test.AssertException<ResponseModelAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.OkResultWithResponse())
+                        .ShouldReturn()
+                        .Ok()
+                        .WithResponseModel(another);
+                }, 
+                "When calling OkResultWithResponse action in MvcController expected response model List<ResponseModel> to be the given model, but in fact it was a different.");
         }
 
         [Fact]
@@ -144,15 +152,17 @@
         [Fact]
         public void WithNoResponseModelShouldThrowExceptionWhenResponseModelExists()
         {
-            Test.AssertException<ResponseModelAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.OkResultWithResponse())
-                    .ShouldReturn()
-                    .Ok()
-                    .WithNoResponseModel();
-            }, "When calling OkResultWithResponse action in MvcController expected to not have response model but in fact response model was found.");
+            Test.AssertException<ResponseModelAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.OkResultWithResponse())
+                        .ShouldReturn()
+                        .Ok()
+                        .WithNoResponseModel();
+                }, 
+                "When calling OkResultWithResponse action in MvcController expected to not have response model but in fact response model was found.");
         }
     }
 }

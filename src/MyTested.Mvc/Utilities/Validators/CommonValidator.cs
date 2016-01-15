@@ -1,11 +1,11 @@
 ﻿namespace MyTested.Mvc.Utilities.Validators
 {
-    using Exceptions;
-    using Internal.Extensions;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
+    using Exceptions;
+    using Internal.Extensions;
 
     /// <summary>
     /// Validator class containing common validation logic.

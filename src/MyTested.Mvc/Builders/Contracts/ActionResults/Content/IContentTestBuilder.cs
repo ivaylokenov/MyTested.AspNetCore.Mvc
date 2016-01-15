@@ -1,11 +1,10 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.ActionResults.Content
 {
     using System.Net;
-    using Models;
     using System.Text;
-    using Microsoft.Net.Http.Headers;
     using Base;
     using Microsoft.AspNet.Mvc;
+    using Microsoft.Net.Http.Headers;
 
     /// <summary>
     /// Used for testing content result.
@@ -47,8 +46,9 @@
         IAndContentTestBuilder WithDefaultEncoding();
 
         /// <summary>
-        /// Tests whether content result has the same encoging as the provided Encoding.
+        /// Tests whether content result has the same encoding as the provided Encoding.
         /// </summary>
+        /// <param name="encoding">Expected encoding.</param>
         /// <returns>The same content test builder.</returns>
         IAndContentTestBuilder WithEncoding(Encoding encoding);
     }

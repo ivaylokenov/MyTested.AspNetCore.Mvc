@@ -1,11 +1,11 @@
 ﻿namespace MyTested.Mvc.Builders.ActionResults.Ok
 {
     using System;
-    using Internal.Extensions;
-    using Exceptions;
-    using Models;
     using Contracts.ActionResults.Ok;
+    using Exceptions;
+    using Internal.Extensions;
     using Microsoft.AspNet.Mvc;
+    using Models;
 
     /// <summary>
     /// Used for testing OK result.

@@ -3,14 +3,14 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Internal.Extensions;
-    using Contracts.Base;
     using Contracts.ActionResults.HttpBadRequest;
+    using Contracts.Base;
     using Contracts.Models;
-    using Models;
+    using Exceptions;
+    using Internal.Extensions;
     using Microsoft.AspNet.Mvc;
     using Microsoft.AspNet.Mvc.ModelBinding;
-    using Exceptions;
+    using Models;
 
     /// <summary>
     /// Used for testing HTTP bad request results.
@@ -72,7 +72,7 @@
         /// <summary>
         /// Tests HTTP bad request result with specific text error message provided by string.
         /// </summary>
-        /// <param name="message">Expected text error message from bad request result.</param>
+        /// <param name="error">Expected text error message from bad request result.</param>
         /// <returns>Base test builder.</returns>
         public IBaseTestBuilderWithCaughtException WithErrorMessage(string error)
         {

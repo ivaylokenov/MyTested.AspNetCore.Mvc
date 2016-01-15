@@ -2,11 +2,11 @@
 {
     using System;
     using Base;
-    using Internal.Extensions;
     using Contracts.ExceptionErrors;
     using Exceptions;
-    using Utilities;
+    using Internal.Extensions;
     using Microsoft.AspNet.Mvc;
+    using Utilities;
 
     /// <summary>
     /// Used for testing expected exceptions.

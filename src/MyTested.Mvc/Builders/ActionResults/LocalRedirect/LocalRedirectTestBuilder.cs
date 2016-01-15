@@ -1,13 +1,13 @@
 ﻿namespace MyTested.Mvc.Builders.ActionResults.LocalRedirect
 {
-    using Microsoft.AspNet.Mvc;
+    using System;
     using Base;
     using Contracts.ActionResults.LocalRedirect;
     using Contracts.Uris;
-    using System;
-    using Utilities.Validators;
-    using Internal.Extensions;
     using Exceptions;
+    using Internal.Extensions;
+    using Microsoft.AspNet.Mvc;
+    using Utilities.Validators;
 
     /// <summary>
     /// Used for testing local redirect result.
@@ -80,7 +80,7 @@
         /// <summary>
         /// Tests whether local redirect result has specific URL provided by builder.
         /// </summary>
-        /// <param name="localUrlTestBuilder">Builder for expected URl.</param>
+        /// <param name="localUrlTestBuilder">Builder for expected URL.</param>
         /// <returns>The same local redirect test builder.</returns>
         public IAndLocalRedirectTestBuilder To(Action<IUriTestBuilder> localUrlTestBuilder)
         {

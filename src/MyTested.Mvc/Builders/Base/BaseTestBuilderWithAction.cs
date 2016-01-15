@@ -1,11 +1,11 @@
 ﻿namespace MyTested.Mvc.Builders.Base
 {
-    using Contracts.Base;
-    using Utilities.Validators;
-    using Microsoft.AspNet.Mvc;
     using System.Collections.Generic;
-    using Internal.Extensions;
+    using Contracts.Base;
     using Exceptions;
+    using Internal.Extensions;
+    using Microsoft.AspNet.Mvc;
+    using Utilities.Validators;
 
     /// <summary>
     /// Base class for all test builders with action call.

@@ -2,10 +2,10 @@
 {
     using System;
     using Base;
-    using Internal.Extensions;
-    using Contracts.Base;
     using Contracts.ActionResults.HttpBadRequest;
+    using Contracts.Base;
     using Exceptions;
+    using Internal.Extensions;
     using Microsoft.AspNet.Mvc;
 
     /// <summary>

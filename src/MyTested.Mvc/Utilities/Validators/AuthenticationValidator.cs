@@ -1,13 +1,13 @@
 ﻿namespace MyTested.Mvc.Utilities.Validators
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Builders.Authentication;
     using Builders.Contracts.Authentication;
     using Internal.Extensions;
     using Microsoft.AspNet.Http.Authentication;
     using Microsoft.AspNet.Mvc;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
 
     /// <summary>
     /// Validator class containing authentication validation logic.

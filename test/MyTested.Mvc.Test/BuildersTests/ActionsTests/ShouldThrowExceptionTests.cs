@@ -2,9 +2,9 @@
 {
     using System;
     using Exceptions;
+    using Setups;
     using Setups.Controllers;
     using Xunit;
-    using Setups;
 
     public class ShouldThrowExceptionTests
     {
@@ -21,14 +21,16 @@
         [Fact]
         public void ShouldThrowExceptionShouldThrowIfNoExceptionIsCaught()
         {
-            Test.AssertException<ActionCallAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.OkResultAction())
-                    .ShouldThrow()
-                    .Exception();
-            }, "When calling OkResultAction action in MvcController thrown exception was expected, but in fact none was caught.");
+            Test.AssertException<ActionCallAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.OkResultAction())
+                        .ShouldThrow()
+                        .Exception();
+                }, 
+                "When calling OkResultAction action in MvcController thrown exception was expected, but in fact none was caught.");
         }
 
         [Fact]
@@ -45,15 +47,17 @@
         [Fact]
         public void ShouldThrowExceptionShouldThrowWithInvalidTypeOfException()
         {
-            Test.AssertException<InvalidExceptionAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.ActionWithException())
-                    .ShouldThrow()
-                    .Exception()
-                    .OfType<InvalidOperationException>();
-            }, "When calling ActionWithException action in MvcController expected InvalidOperationException, but instead received NullReferenceException.");
+            Test.AssertException<InvalidExceptionAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.ActionWithException())
+                        .ShouldThrow()
+                        .Exception()
+                        .OfType<InvalidOperationException>();
+                },
+                "When calling ActionWithException action in MvcController expected InvalidOperationException, but instead received NullReferenceException.");
         }
 
         [Fact]
@@ -69,14 +73,16 @@
         [Fact]
         public void ShouldThrowAggregateExceptionShouldThrowIfTheExceptionIsNotValidType()
         {
-            Test.AssertException<InvalidExceptionAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.ActionWithException())
-                    .ShouldThrow()
-                    .AggregateException();
-            }, "When calling ActionWithException action in MvcController expected AggregateException, but instead received NullReferenceException.");
+            Test.AssertException<InvalidExceptionAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.ActionWithException())
+                        .ShouldThrow()
+                        .AggregateException();
+                }, 
+                "When calling ActionWithException action in MvcController expected AggregateException, but instead received NullReferenceException.");
         }
 
         [Fact]
@@ -92,14 +98,16 @@
         [Fact]
         public void ShouldThrowAggregateExceptionShouldCatchAndValidateAggregateExceptionWithWrongNumberOfInnerExceptions()
         {
-            Test.AssertException<InvalidExceptionAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.ActionWithAggregateException())
-                    .ShouldThrow()
-                    .AggregateException(3);
-            }, "When calling ActionWithAggregateException action in MvcController expected AggregateException to contain 3 inner exceptions, but in fact contained 2.");
+            Test.AssertException<InvalidExceptionAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.ActionWithAggregateException())
+                        .ShouldThrow()
+                        .AggregateException(3);
+                }, 
+                "When calling ActionWithAggregateException action in MvcController expected AggregateException to contain 3 inner exceptions, but in fact contained 2.");
         }
     }
 }

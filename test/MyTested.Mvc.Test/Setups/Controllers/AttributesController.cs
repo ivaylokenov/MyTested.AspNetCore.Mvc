@@ -2,7 +2,6 @@
 {
     using Microsoft.AspNet.Authorization;
     using Microsoft.AspNet.Mvc;
-    using System.Reflection;
 
     [AllowAnonymous]
     [Route("api/test", Name = "TestRouteAttributes", Order = 1)]

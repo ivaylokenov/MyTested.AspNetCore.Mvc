@@ -1,7 +1,6 @@
 ﻿namespace MyTested.Mvc
 {
     using System.Diagnostics.CodeAnalysis;
-    // TODO: suppress message?
 
     /// <summary>
     /// Contains common MIME type values.

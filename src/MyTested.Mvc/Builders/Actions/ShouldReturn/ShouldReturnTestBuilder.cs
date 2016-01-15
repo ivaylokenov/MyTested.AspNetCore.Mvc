@@ -4,12 +4,12 @@
     using System.Linq;
     using System.Reflection;
     using Base;
-    using Internal.Extensions;
     using Contracts.Actions;
     using Exceptions;
+    using Internal.Extensions;
+    using Microsoft.AspNet.Mvc;
     using Utilities;
     using Utilities.Validators;
-    using Microsoft.AspNet.Mvc;
 
     /// <summary>
     /// Used for testing returned action result.

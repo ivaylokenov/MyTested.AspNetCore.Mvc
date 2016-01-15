@@ -3,12 +3,12 @@
     using System.Collections.Generic;
     using System.Linq;
     using Exceptions;
+    using Setups;
     using Setups.Controllers;
     using Setups.Models;
     using Xunit;
-    using Setups;
-    using System;
     using Xunit.Sdk;
+
     public class ResponseModelDetailsTestBuilderTests
     {
         [Fact]
@@ -30,20 +30,21 @@
         [Fact]
         public void WithResponseModelShouldThrowExceptionWithIncorrectAssertions()
         {
-            Assert.Throws<EqualException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.OkResultWithResponse())
-                    .ShouldReturn()
-                    .Ok()
-                    .WithResponseModelOfType<ICollection<ResponseModel>>()
-                    .Passing(m =>
-                    {
-                        Assert.Equal(1, m.First().IntegerValue);
-                        Assert.Equal(3, m.Count);
-                    });
-            });
+            Assert.Throws<EqualException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.OkResultWithResponse())
+                        .ShouldReturn()
+                        .Ok()
+                        .WithResponseModelOfType<ICollection<ResponseModel>>()
+                        .Passing(m =>
+                        {
+                            Assert.Equal(1, m.First().IntegerValue);
+                            Assert.Equal(3, m.Count);
+                        });
+                });
         }
 
         [Fact]
@@ -61,16 +62,18 @@
         [Fact]
         public void WithResponseModelShouldThrowExceptionWithWrongPredicate()
         {
-            Test.AssertException<ResponseModelAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.OkResultWithResponse())
-                    .ShouldReturn()
-                    .Ok()
-                    .WithResponseModelOfType<IList<ResponseModel>>()
-                    .Passing(m => m.First().IntegerValue == 2);
-            }, "When calling OkResultWithResponse action in MvcController expected response model IList<ResponseModel> to pass the given condition, but it failed.");
+            Test.AssertException<ResponseModelAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.OkResultWithResponse())
+                        .ShouldReturn()
+                        .Ok()
+                        .WithResponseModelOfType<IList<ResponseModel>>()
+                        .Passing(m => m.First().IntegerValue == 2);
+                }, 
+                "When calling OkResultWithResponse action in MvcController expected response model IList<ResponseModel> to pass the given condition, but it failed.");
         }
     }
 }

@@ -4,8 +4,8 @@
     using System.Collections.Generic;
     using System.Net;
     using Base;
-    using Models;
     using Microsoft.AspNet.Http;
+    using Models;
 
     /// <summary>
     /// Used for testing HTTP response message results.

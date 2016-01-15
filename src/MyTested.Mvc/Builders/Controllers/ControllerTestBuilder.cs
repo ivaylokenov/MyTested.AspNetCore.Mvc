@@ -1,16 +1,16 @@
 ﻿namespace MyTested.Mvc.Builders.Controllers
 {
-    using Base;
-    using Contracts.Controllers;
-    using Contracts.Base;
-    using Microsoft.AspNet.Mvc;
-    using System.Collections.Generic;
-    using Utilities.Validators;
-    using Internal.Extensions;
-    using Exceptions;
-    using Contracts.Attributes;
     using System;
+    using System.Collections.Generic;
     using Attributes;
+    using Base;
+    using Contracts.Attributes;
+    using Contracts.Base;
+    using Contracts.Controllers;
+    using Exceptions;
+    using Internal.Extensions;
+    using Microsoft.AspNet.Mvc;
+    using Utilities.Validators;
 
     /// <summary>
     /// Used for testing controllers.

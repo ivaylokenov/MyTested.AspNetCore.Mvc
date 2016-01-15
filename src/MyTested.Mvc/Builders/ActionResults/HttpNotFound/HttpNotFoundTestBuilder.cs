@@ -1,12 +1,12 @@
 ﻿namespace MyTested.Mvc.Builders.ActionResults.HttpNotFound
 {
+    using System;
     using Contracts.ActionResults.HttpNotFound;
+    using Contracts.Base;
+    using Exceptions;
+    using Internal.Extensions;
     using Microsoft.AspNet.Mvc;
     using Models;
-    using System;
-    using Contracts.Base;
-    using Internal.Extensions;
-    using Exceptions;
 
     /// <summary>
     /// Used for testing HTTP not found result.

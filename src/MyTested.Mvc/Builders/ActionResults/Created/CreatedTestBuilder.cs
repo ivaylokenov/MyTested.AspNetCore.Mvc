@@ -2,13 +2,13 @@
 {
     using System;
     using System.Linq.Expressions;
-    using Internal.Extensions;
+    using Contracts.ActionResults.Created;
     using Contracts.Uris;
     using Exceptions;
+    using Internal.Extensions;
+    using Microsoft.AspNet.Mvc;
     using Models;
     using Utilities.Validators;
-    using Contracts.ActionResults.Created;
-    using Microsoft.AspNet.Mvc;
 
     /// <summary>
     /// Used for testing created results.
@@ -112,7 +112,6 @@
         private IAndCreatedTestBuilder AtRoute<TController>(LambdaExpression actionCall)
             where TController : Controller
         {
-            this.ThrowNewCreatedResultAssertionException("", "", "NOT IMPLEMENTED");
             return this;
         }
 

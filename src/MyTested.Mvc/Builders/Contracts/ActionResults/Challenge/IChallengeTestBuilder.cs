@@ -1,9 +1,9 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.ActionResults.Challenge
 {
-    using Authentication;
-    using Microsoft.AspNet.Http.Authentication;
     using System;
     using System.Collections.Generic;
+    using Authentication;
+    using Microsoft.AspNet.Http.Authentication;
 
     /// <summary>
     /// Used for testing challenge result.

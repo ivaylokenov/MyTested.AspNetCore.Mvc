@@ -1,18 +1,18 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.Actions
 {
-    using Base;
-    using ActionResults.Ok;
     using System;
-    using ActionResults.Created;
-    using ActionResults.Content;
-    using ActionResults.Json;
-    using Models;
-    using ActionResults.HttpBadRequest;
-    using ActionResults.File;
     using System.Net;
-    using ActionResults.LocalRedirect;
     using ActionResults.Challenge;
+    using ActionResults.Content;
+    using ActionResults.Created;
+    using ActionResults.File;
+    using ActionResults.HttpBadRequest;
     using ActionResults.HttpNotFound;
+    using ActionResults.Json;
+    using ActionResults.LocalRedirect;
+    using ActionResults.Ok;
+    using Base;
+    using Models;
 
     /// <summary>
     /// Used for testing action returned result.

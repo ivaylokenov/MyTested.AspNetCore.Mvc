@@ -2,14 +2,15 @@
 {
     using System;
     using System.Net;
-    using Internal.Extensions;
-    using Exceptions;
-    using Contracts.ActionResults.Content;
-    using Microsoft.AspNet.Mvc;
-    using Microsoft.Net.Http.Headers;
     using System.Text;
     using Base;
+    using Contracts.ActionResults.Content;
+    using Exceptions;
+    using Internal.Extensions;
+    using Microsoft.AspNet.Mvc;
+    using Microsoft.Net.Http.Headers;
     using Utilities.Validators;
+
     /// <summary>
     /// Used for testing content result.
     /// </summary>
@@ -98,8 +99,9 @@
         }
 
         /// <summary>
-        /// Tests whether content result has the same encoging as the provided Encoding.
+        /// Tests whether content result has the same encoding as the provided Encoding.
         /// </summary>
+        /// <param name="encoding">Expected encoding.</param>
         /// <returns>The same content test builder.</returns>
         public IAndContentTestBuilder WithEncoding(Encoding encoding)
         {

@@ -5,14 +5,14 @@
     using System.Globalization;
     using System.Runtime.Serialization.Formatters;
     using Base;
-    using Internal.Extensions;
+    using Contracts.ActionResults.Json;
     using Exceptions;
+    using Internal.Extensions;
+    using Microsoft.AspNet.Mvc;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using Utilities;
     using Utilities.Validators;
-    using Contracts.ActionResults.Json;
-    using Microsoft.AspNet.Mvc;
 
     /// <summary>
     /// Used for testing JSON serializer settings in a JSON result.

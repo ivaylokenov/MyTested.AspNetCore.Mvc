@@ -1,13 +1,13 @@
 ﻿namespace MyTested.Mvc.Builders.Authentication
 {
+    using System;
+    using System.Collections.Generic;
     using Base;
     using Exceptions;
     using Internal.Extensions;
     using Microsoft.AspNet.Http.Authentication;
     using Microsoft.AspNet.Mvc;
     using MyTested.Mvc.Builders.Contracts.Authentication;
-    using System;
-    using System.Collections.Generic;
 
     public class AuthenticationPropertiesTestBuilder : BaseTestBuilderWithAction, IAndAuthenticationPropertiesTestBuilder
     {

@@ -20,14 +20,16 @@
         [Fact]
         public void ShouldReturnJsonShouldThrowExceptionIfResultIsNotJson()
         {
-            Test.AssertException<ActionResultAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.BadRequestAction())
-                    .ShouldReturn()
-                    .Json();
-            }, "When calling BadRequestAction action in MvcController expected action result to be JsonResult, but instead received BadRequestResult.");
+            Test.AssertException<ActionResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.BadRequestAction())
+                        .ShouldReturn()
+                        .Json();
+                }, 
+                "When calling BadRequestAction action in MvcController expected action result to be JsonResult, but instead received BadRequestResult.");
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿namespace MyTested.Mvc.Builders.Actions.ShouldReturn
 {
-    using Internal.Extensions;
     using Contracts.Base;
     using Exceptions;
+    using Internal.Extensions;
     using Utilities;
     using Utilities.Validators;
 

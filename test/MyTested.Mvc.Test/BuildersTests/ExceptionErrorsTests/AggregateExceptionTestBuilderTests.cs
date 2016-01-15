@@ -2,9 +2,9 @@
 {
     using System;
     using Exceptions;
+    using Setups;
     using Setups.Controllers;
     using Xunit;
-    using Setups;
 
     public class AggregateExceptionTestBuilderTests
     {
@@ -22,16 +22,17 @@
         [Fact]
         public void ContainingInnerExceptionOfTypeShouldThrowIfInnerExceptionIsNotCorrect()
         {
-            Test.AssertException<InvalidExceptionAssertionException>(() =>
-            {
-                MyMvc
-                    .Controller<MvcController>()
-                    .Calling(c => c.ActionWithAggregateException())
-                    .ShouldThrow()
-                    .AggregateException()
-                    .ContainingInnerExceptionOfType<ArgumentException>();
-            }, "When calling ActionWithAggregateException action in MvcController expected AggregateException to contain ArgumentException, but none was found.");
-
+            Test.AssertException<InvalidExceptionAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.ActionWithAggregateException())
+                        .ShouldThrow()
+                        .AggregateException()
+                        .ContainingInnerExceptionOfType<ArgumentException>();
+                }, 
+                "When calling ActionWithAggregateException action in MvcController expected AggregateException to contain ArgumentException, but none was found.");
         }
 
         [Fact]

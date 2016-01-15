@@ -7,7 +7,7 @@
     public class MockedHttpResponse : DefaultHttpResponse
     {
         public MockedHttpResponse(DefaultHttpContext context, IFeatureCollection features)
-            : base (context, features)
+            : base(context, features)
         {
         }
 

@@ -12,7 +12,7 @@
         /// </summary>
         /// <param name="message">Message for System.Exception class.</param>
         public FileResultAssertionException(string message)
-            :base(message)
+            : base(message)
         {
         }
     }

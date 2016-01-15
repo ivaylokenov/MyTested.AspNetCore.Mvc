@@ -3,15 +3,16 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Setups.Controllers;
-    using Setups.Models;
-    using Setups.Services;
-    using Utilities;
-    using Xunit;
     using Microsoft.AspNet.Authorization;
     using Microsoft.AspNet.Mvc;
     using Microsoft.Extensions.DependencyInjection;
+    using Setups.Controllers;
+    using Setups.Models;
+    using Setups.Services;
     using Setups.Startups;
+    using Utilities;
+    using Xunit;
+
     public class ReflectionTests
     {
         [Fact]

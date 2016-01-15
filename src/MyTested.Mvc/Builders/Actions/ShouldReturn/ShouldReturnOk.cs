@@ -1,8 +1,8 @@
 ﻿namespace MyTested.Mvc.Builders.Actions.ShouldReturn
 {
-    using Microsoft.AspNet.Mvc;
-    using Contracts.ActionResults.Ok;
     using ActionResults.Ok;
+    using Contracts.ActionResults.Ok;
+    using Microsoft.AspNet.Mvc;
 
     /// <summary>
     /// Class containing methods for testing HttpOkResult or HttpOkObjectResult.
