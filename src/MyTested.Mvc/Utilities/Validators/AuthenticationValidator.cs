@@ -65,7 +65,7 @@
                 {
                     failedValidationAction(
                         "authentication schemes",
-                        $"to have {expectedAuthenticationSchemes[i]}",
+                        $"to contain {expectedAuthenticationSchemes[i]}",
                         "none was found");
                 }
             }

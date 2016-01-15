@@ -118,6 +118,16 @@
             return this.Ok();
         }
 
+        public IActionResult ChallengeResultAction()
+        {
+            return this.Challenge();
+        }
+
+        public IActionResult ChallengeWithAuthenticationSchemes()
+        {
+            return this.Challenge(new List<string> { AuthenticationScheme.Basic, AuthenticationScheme.NTLM });
+        }
+
         public IActionResult FileWithVirtualPath()
         {
             return this.File("/Test", ContentType.ApplicationJson, "FileDownloadName");

@@ -314,6 +314,71 @@
                 }, 
                 "MvcController could not be instantiated because it contains no constructor taking RequestModel, AnotherInjectedService, InjectedService, ResponseModel as parameters.");
         }
+
+        [Fact]
+        public void PrepareControllerShouldSetCorrectPropertiesWithDefaultServices()
+        {
+            var controller = MyMvc
+                .Controller<MvcController>()
+                .AndProvideTheController();
+
+            Assert.NotNull(controller);
+            Assert.NotNull(controller.HttpContext);
+            Assert.NotNull(controller.ControllerContext);
+            Assert.NotNull(controller.ControllerContext.HttpContext);
+            Assert.NotNull(controller.ControllerContext.InputFormatters);
+            Assert.NotEmpty(controller.ControllerContext.InputFormatters);
+            Assert.NotNull(controller.ControllerContext.ModelBinders);
+            Assert.NotEmpty(controller.ControllerContext.ModelBinders);
+            Assert.NotNull(controller.ControllerContext.ValidatorProviders);
+            Assert.NotEmpty(controller.ControllerContext.ValidatorProviders);
+            Assert.NotNull(controller.ControllerContext.ValueProviders);
+            Assert.NotNull(controller.ViewBag);
+            Assert.NotNull(controller.ViewData);
+            Assert.NotNull(controller.TempData);
+            Assert.NotNull(controller.Resolver);
+            Assert.NotNull(controller.Request);
+            Assert.NotNull(controller.Response);
+            Assert.NotNull(controller.MetadataProvider);
+            Assert.NotNull(controller.ModelState);
+            Assert.NotNull(controller.ObjectValidator);
+            Assert.NotNull(controller.Url);
+            Assert.NotNull(controller.User);
+            Assert.Null(controller.ControllerContext.ActionDescriptor);
+        }
+
+        [Fact]
+        public void PrepareControllerShouldSetCorrectPropertiesWithCustomSetup()
+        {
+            var controller = MyMvc
+                .Controller<MvcController>()
+                .WithSetup(c =>
+                {
+                    c.ControllerContext = new ControllerContext();
+                })
+                .AndProvideTheController();
+
+            Assert.NotNull(controller);
+            Assert.NotNull(controller.ControllerContext);
+            Assert.Null(controller.ControllerContext.HttpContext);
+            Assert.Empty(controller.ControllerContext.InputFormatters);
+            Assert.Empty(controller.ControllerContext.ModelBinders);
+            Assert.Empty(controller.ControllerContext.ValidatorProviders);
+        }
+
+        [Fact]
+        public void CallingShouldPopulateCorrectActionDescriptor()
+        {
+            var controller = MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.OkResultAction())
+                .AndProvideTheController();
+
+            Assert.NotNull(controller);
+            Assert.NotNull(controller.ControllerContext);
+            Assert.NotNull(controller.ControllerContext.ActionDescriptor);
+            Assert.Equal("OkResultAction", controller.ControllerContext.ActionDescriptor.Name);
+        }
         
         private void CheckActionResultTestBuilder<TActionResult>(
             IActionResultTestBuilder<TActionResult> actionResultTestBuilder,
