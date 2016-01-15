@@ -53,31 +53,7 @@
 
             return this;
         }
-
-        // TODO: RoutePrefix was moved to single Route attribute
-        ///// <summary>
-        ///// Checks whether the collected attributes contain RoutePrefixAttribute.
-        ///// </summary>
-        ///// <param name="prefix">Expected overridden route prefix of the controller.</param>
-        ///// <returns>The same attributes test builder.</returns>
-        //public IAndControllerAttributesTestBuilder ChangingRoutePrefixTo(string prefix)
-        //{
-        //    this.ContainingAttributeOfType<RoutePrefixAttribute>();
-        //    this.Validations.Add(attrs =>
-        //    {
-        //        var routePrefixAttribute = this.GetAttributeOfType<RoutePrefixAttribute>(attrs);
-        //        var actualRoutePrefix = routePrefixAttribute.Prefix;
-        //        if (prefix != actualRoutePrefix)
-        //        {
-        //            this.ThrowNewAttributeAssertionException(
-        //                string.Format("{0} with '{1}' prefix", routePrefixAttribute.GetName(), prefix),
-        //                string.Format("in fact found '{0}'", actualRoutePrefix));
-        //        }
-        //    });
-
-        //    return this;
-        //}
-
+        
         /// <summary>
         /// Checks whether the collected attributes contain AllowAnonymousAttribute.
         /// </summary>
@@ -98,9 +74,7 @@
             this.RestrictingForAuthorizedRequests(
                 this.ThrowNewAttributeAssertionException,
                 withAllowedRoles);
-
-            // TODO: authorize attribute has policy and schemes
-
+            
             return this;
         }
 

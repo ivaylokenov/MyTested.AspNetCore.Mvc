@@ -66,19 +66,5 @@
                 this.ActionName,
                 aggregateException);
         }
-
-        // TODO: HttpResponseException?
-        ///// <summary>
-        ///// Tests whether action throws any HttpResponseException.
-        ///// </summary>
-        ///// <returns>HttpResponseException test builder.</returns>
-        //public IHttpResponseExceptionTestBuilder HttpResponseException()
-        //{
-        //    this.exceptionTestBuilder.OfType<HttpResponseException>();
-        //    return new HttpResponseExceptionTestBuilder(
-        //        this.Controller,
-        //        this.ActionName,
-        //        this.CaughtException as HttpResponseException);
-        //}
     }
 }

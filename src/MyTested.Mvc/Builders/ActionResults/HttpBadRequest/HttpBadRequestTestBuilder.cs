@@ -39,8 +39,7 @@
             this.ErrorMessageFormat = ErrorMessage;
             this.OfTypeErrorMessageFormat = OfTypeErrorMessage;
         }
-
-        // TODO: documentations, interface, unit tests
+        
         public IModelDetailsTestBuilder<TError> WithError<TError>(TError error)
         {
             return this.WithResponseModel(error);
@@ -83,8 +82,7 @@
 
             return this.NewAndProvideTestBuilder();
         }
-
-        // TODO: everything!
+        
         public IBaseTestBuilderWithCaughtException WithModelState()
         {
             return this.WithModelState(this.Controller.ModelState);
@@ -98,7 +96,7 @@
         public IBaseTestBuilderWithCaughtException WithModelState(ModelStateDictionary modelState)
         {
             var badRequestObjectResultValue = this.GetBadRequestObjectResultValue();
-            var actualModelState = this.GetModelStateFromSerializableError(badRequestObjectResultValue); // TODO: optimize?
+            var actualModelState = this.GetModelStateFromSerializableError(badRequestObjectResultValue);
 
             var expectedKeysCount = modelState.Keys.Count;
             var actualKeysCount = actualModelState.Keys.Count;

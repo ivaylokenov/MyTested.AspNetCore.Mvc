@@ -111,7 +111,7 @@
 
         private JsonSerializerSettings GetServiceDefaultSerializerSettings()
         {
-            return TestServiceProvider.GetService<IOptions<MvcJsonOptions>>()?.Value?.SerializerSettings; // TODO: check the ?. operator
+            return TestServiceProvider.GetService<IOptions<MvcJsonOptions>>()?.Value?.SerializerSettings;
         }
 
         private void PopulateFullJsonSerializerSettingsTestBuilder(

@@ -27,8 +27,7 @@
             this.authenticationProperties = new AuthenticationProperties();
             this.validations = new List<Action<AuthenticationProperties, AuthenticationProperties>>();
         }
-
-        // TODO: documentation
+        
         public IAndAuthenticationPropertiesTestBuilder WithAllowRefresh(bool? allowRefresh)
         {
             this.authenticationProperties.AllowRefresh = allowRefresh;
@@ -160,7 +159,11 @@
             return this;
         }
 
-        public IAndAuthenticationPropertiesTestBuilder AndAlso()
+        /// <summary>
+        /// AndAlso method for better readability when testing authentication properties.
+        /// </summary>
+        /// <returns>The same authentication properties test builder.</returns>
+        public IAuthenticationPropertiesTestBuilder AndAlso()
         {
             return this;
         }

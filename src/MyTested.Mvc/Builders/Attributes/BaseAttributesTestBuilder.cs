@@ -125,8 +125,6 @@
                         }
                     });
                 }
-
-                // TODO: AuthorizeAttribute no longer has users - test policy and schemes
             }
         }
 

@@ -43,8 +43,7 @@
 
             return this;
         }
-
-        // TODO: add to interface, add documentation, unit tests
+        
         public IAndForbidTestBuilder ContainingAuthenticationSchemes(IEnumerable<string> authenticationSchemes)
         {
             AuthenticationValidator.ValidateAuthenticationSchemes(

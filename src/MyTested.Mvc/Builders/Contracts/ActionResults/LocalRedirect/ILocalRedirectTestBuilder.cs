@@ -34,7 +34,5 @@
         /// <param name="localUrlTestBuilder">Builder for expected URl.</param>
         /// <returns>The same local redirect test builder.</returns>
         IAndLocalRedirectTestBuilder To(Action<IUriTestBuilder> localUrlTestBuilder);
-
-        // TODO: add route redirects
     }
 }

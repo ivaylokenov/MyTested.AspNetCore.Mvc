@@ -30,7 +30,7 @@
         /// <returns>Method name as string.</returns>
         public static string GetMethodName(LambdaExpression expression)
         {
-            var methodInfo = GetMethodInfo(expression); // TODO: is this needed anymore?
+            var methodInfo = GetMethodInfo(expression);
             return methodInfo.Name;
         }
 

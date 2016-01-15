@@ -34,44 +34,7 @@
             : base(controller, actionName, caughtException, actionResult)
         {
         }
-
-        // TODO: objects?
-        // TODO: content negotiator?
-        ///// <summary>
-        ///// Tests whether created result has the default content negotiator.
-        ///// </summary>
-        ///// <returns>The same created test builder.</returns>
-        //public IAndCreatedTestBuilder WithDefaultContentNegotiator()
-        //{
-        //    return this.WithContentNegotiatorOfType<DefaultContentNegotiator>();
-        //}
-
-        ///// <summary>
-        ///// Tests whether created result has specific type of content negotiator.
-        ///// </summary>
-        ///// <param name="contentNegotiator">Expected IContentNegotiator.</param>
-        ///// <returns>The same created test builder.</returns>
-        //public IAndCreatedTestBuilder WithContentNegotiator(IContentNegotiator contentNegotiator)
-        //{
-        //    ContentNegotiatorValidator.ValidateContentNegotiator(
-        //        this.ActionResult,
-        //        contentNegotiator,
-        //        this.ThrowNewCreatedResultAssertionException);
-
-        //    return this;
-        //}
-
-        ///// <summary>
-        ///// Tests whether created result has specific type of content negotiator by using generic definition.
-        ///// </summary>
-        ///// <typeparam name="TContentNegotiator">Type of IContentNegotiator.</typeparam>
-        ///// <returns>The same created test builder.</returns>
-        //public IAndCreatedTestBuilder WithContentNegotiatorOfType<TContentNegotiator>()
-        //    where TContentNegotiator : IContentNegotiator, new()
-        //{
-        //    return this.WithContentNegotiator(Activator.CreateInstance<TContentNegotiator>());
-        //}
-
+        
         /// <summary>
         /// Tests whether created result has specific location provided by string.
         /// </summary>
@@ -136,83 +99,7 @@
         {
             return this.AtRoute<TController>(actionCall);
         }
-
-        // TODO: formatters?
-        ///// <summary>
-        ///// Tests whether created result contains the provided media type formatter.
-        ///// </summary>
-        ///// <param name="mediaTypeFormatter">Expected media type formatter.</param>
-        ///// <returns>The same created test builder.</returns>
-        //public IAndCreatedTestBuilder ContainingMediaTypeFormatter(MediaTypeFormatter mediaTypeFormatter)
-        //{
-        //    MediaTypeFormatterValidator.ValidateMediaTypeFormatter(
-        //        this.ActionResult,
-        //        mediaTypeFormatter,
-        //        this.ThrowNewCreatedResultAssertionException);
-
-        //    return this;
-        //}
-
-        ///// <summary>
-        ///// Tests whether created result contains the provided type of media type formatter.
-        ///// </summary>
-        ///// <typeparam name="TMediaTypeFormatter">Type of MediaTypeFormatter.</typeparam>
-        ///// <returns>The same created test builder.</returns>
-        //public IAndCreatedTestBuilder ContainingMediaTypeFormatterOfType<TMediaTypeFormatter>()
-        //    where TMediaTypeFormatter : MediaTypeFormatter, new()
-        //{
-        //    return this.ContainingMediaTypeFormatter(Activator.CreateInstance<TMediaTypeFormatter>());
-        //}
-
-        ///// <summary>
-        ///// Tests whether created result contains the default media type formatters provided by the framework.
-        ///// </summary>
-        ///// <returns>The same created test builder.</returns>
-        //public IAndCreatedTestBuilder ContainingDefaultFormatters()
-        //{
-        //    return this.ContainingMediaTypeFormatters(MediaTypeFormatterValidator.GetDefaultMediaTypeFormatters());
-        //}
-
-        ///// <summary>
-        ///// Tests whether created result contains exactly the same types of media type formatters as the provided collection.
-        ///// </summary>
-        ///// <param name="mediaTypeFormatters">Expected collection of media type formatters.</param>
-        ///// <returns>The same created test builder.</returns>
-        //public IAndCreatedTestBuilder ContainingMediaTypeFormatters(IEnumerable<MediaTypeFormatter> mediaTypeFormatters)
-        //{
-        //    MediaTypeFormatterValidator.ValidateMediaTypeFormatters(
-        //        this.ActionResult,
-        //        mediaTypeFormatters,
-        //        this.ThrowNewCreatedResultAssertionException);
-
-        //    return this;
-        //}
-
-        ///// <summary>
-        ///// Tests whether created result contains exactly the same types of media type formatters as the provided parameters.
-        ///// </summary>
-        ///// <param name="mediaTypeFormatters">Expected collection of media type formatters provided as parameters.</param>
-        ///// <returns>The same created test builder.</returns>
-        //public IAndCreatedTestBuilder ContainingMediaTypeFormatters(params MediaTypeFormatter[] mediaTypeFormatters)
-        //{
-        //    return this.ContainingMediaTypeFormatters(mediaTypeFormatters.AsEnumerable());
-        //}
-
-        ///// <summary>
-        ///// Tests whether created result contains the media type formatters provided by builder.
-        ///// </summary>
-        ///// <param name="formattersBuilder">Builder for expected media type formatters.</param>
-        ///// <returns>The same created test builder.</returns>
-        //public IAndCreatedTestBuilder ContainingMediaTypeFormatters(Action<IFormattersBuilder> formattersBuilder)
-        //{
-        //    MediaTypeFormatterValidator.ValidateMediaTypeFormattersBuilder(
-        //        this.ActionResult,
-        //        formattersBuilder,
-        //        this.ThrowNewCreatedResultAssertionException);
-
-        //    return this;
-        //}
-
+        
         /// <summary>
         /// AndAlso method for better readability when chaining created tests.
         /// </summary>
@@ -225,18 +112,7 @@
         private IAndCreatedTestBuilder AtRoute<TController>(LambdaExpression actionCall)
             where TController : Controller
         {
-            // TODO: ?
-            //RuntimeBinderValidator.ValidateBinding(() =>
-            //{
-            //    var createdAtRouteResult = this.GetActionResultAsDynamic();
-            //    RouteValidator.Validate<TController>(
-            //        createdAtRouteResult.Request,
-            //        createdAtRouteResult.RouteName,
-            //        createdAtRouteResult.RouteValues,
-            //        actionCall,
-            //        new Action<string, string, string>(this.ThrowNewCreatedResultAssertionException));
-            //});
-
+            this.ThrowNewCreatedResultAssertionException("", "", "NOT IMPLEMENTED");
             return this;
         }
 

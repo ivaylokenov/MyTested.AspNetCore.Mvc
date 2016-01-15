@@ -36,10 +36,12 @@
 
         private void ValidateActionReturnType(Type typeOfExpectedReturnValue, bool canBeAssignable = false, bool allowDifferentGenericTypeDefinitions = false)
         {
-            // TODO: GetTypeInfo should be called once and not many times in this method
             CommonValidator.CheckForException(this.CaughtException);
 
+            var typeInfoOfExpectedReturnValue = typeOfExpectedReturnValue.GetTypeInfo();
+
             var typeOfActionResult = ActionResult.GetType();
+            var typeInfoOfActionResult = typeOfActionResult.GetTypeInfo();
 
             var isAssignableCheck = canBeAssignable && Reflection.AreNotAssignable(typeOfExpectedReturnValue, typeOfActionResult);
             if (isAssignableCheck && allowDifferentGenericTypeDefinitions
@@ -47,7 +49,7 @@
             {
                 isAssignableCheck = Reflection.AreAssignableByGeneric(typeOfExpectedReturnValue, typeOfActionResult);
 
-                if (!isAssignableCheck && !typeOfActionResult.GetTypeInfo().IsGenericType)
+                if (!isAssignableCheck && !typeInfoOfActionResult.IsGenericType)
                 {
                     isAssignableCheck = true;
                 }
@@ -71,16 +73,16 @@
                 }
             }
 
-            if (invalid && typeOfExpectedReturnValue.GetTypeInfo().IsGenericTypeDefinition && typeOfActionResult.GetTypeInfo().IsGenericType)
+            if (invalid && typeInfoOfExpectedReturnValue.IsGenericTypeDefinition && typeInfoOfActionResult.IsGenericType)
             {
-                var actionResultGenericDefinition = typeOfActionResult.GetTypeInfo().GetGenericTypeDefinition();
+                var actionResultGenericDefinition = typeInfoOfActionResult.GetGenericTypeDefinition();
                 if (actionResultGenericDefinition == typeOfExpectedReturnValue)
                 {
                     invalid = false;
                 }
             }
 
-            if (invalid && typeOfExpectedReturnValue.GetTypeInfo().IsGenericType && typeOfActionResult.GetTypeInfo().IsGenericType)
+            if (invalid && typeInfoOfExpectedReturnValue.IsGenericType && typeInfoOfActionResult.IsGenericType)
             {
                 invalid = !Reflection.AreAssignableByGeneric(typeOfExpectedReturnValue, typeOfActionResult);
             }

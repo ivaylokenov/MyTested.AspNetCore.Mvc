@@ -24,10 +24,12 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.AspNet.Mvc.Controllers;
     using Internal.Contracts;
-    using Microsoft.AspNet.Routing;    /// <summary>
-                                       /// Used for building the action which will be tested.
-                                       /// </summary>
-                                       /// <typeparam name="TController">Class inheriting ASP.NET MVC 6 controller.</typeparam>
+    using Microsoft.AspNet.Routing;
+
+    /// <summary>
+    /// Used for building the action which will be tested.
+    /// </summary>
+    /// <typeparam name="TController">Class inheriting ASP.NET MVC 6 controller.</typeparam>
     public class ControllerBuilder<TController> : IAndControllerBuilder<TController>
         where TController : Controller
     {
@@ -96,7 +98,7 @@
             this.HttpRequest = request;
             return this;
         }
-        
+
         /// <summary>
         /// Tries to resolve constructor dependency of given type.
         /// </summary>
@@ -184,7 +186,7 @@
             this.controllerSetupAction = controllerSetup;
             return this;
         }
-        
+
         /// <summary>
         /// AndAlso method for better readability when building controller instance.
         /// </summary>
@@ -310,7 +312,7 @@
         {
             return this.HttpRequest;
         }
-        
+
         private void BuildControllerIfNotExists()
         {
             if (this.controller == null)
@@ -383,15 +385,15 @@
 
             return methodInfo.Name;
         }
-        
+
         private void PrepareController()
         {
             var options = this.Services.GetRequiredService<IOptions<MvcOptions>>().Value;
-            
+
             var controllerContext = new ControllerContext
             {
                 HttpContext = this.HttpContext,
-                RouteData = this.HttpContext.GetRouteData(), // TODO: map route data
+                RouteData = this.HttpContext.GetRouteData(),
                 ValidatorProviders = options.ModelValidatorProviders,
                 InputFormatters = options.InputFormatters,
                 ModelBinders = options.ModelBinders
@@ -400,10 +402,10 @@
             var controllerPropertyActivators = this.Services.GetServices<IControllerPropertyActivator>();
 
             controllerPropertyActivators.ForEach(a => a.Activate(controllerContext, this.controller));
-            
+
             this.controller.MetadataProvider = this.Services.GetRequiredService<IModelMetadataProvider>();
             this.controller.ObjectValidator = this.Services.GetRequiredService<IObjectModelValidator>();
-            
+
             if (this.controllerSetupAction != null)
             {
                 controllerSetupAction(this.controller);
