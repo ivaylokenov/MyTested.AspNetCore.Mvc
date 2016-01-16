@@ -1,12 +1,14 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.ActionResults.LocalRedirect
 {
     using System;
+    using Base;
+    using Microsoft.AspNet.Mvc;
     using Uris;
 
     /// <summary>
     /// Used for testing local redirect result.
     /// </summary>
-    public interface ILocalRedirectTestBuilder
+    public interface ILocalRedirectTestBuilder : IBaseTestBuilderWithActionResult<LocalRedirectResult>
     {
         /// <summary>
         /// Tests whether local redirect result is permanent.

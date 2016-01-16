@@ -12,6 +12,7 @@
     using ActionResults.Json;
     using ActionResults.LocalRedirect;
     using ActionResults.Ok;
+    using ActionResults.Redirect;
     using Base;
     using Models;
 
@@ -131,6 +132,12 @@
         /// </summary>
         /// <returns>File test builder.</returns>
         IPhysicalFileTestBuilder PhysicalFile();
+
+        /// <summary>
+        /// Tests whether action result is RedirectResult, RedirectToActionResult or RedirectToRouteResult.
+        /// </summary>
+        /// <returns>Redirect test builder.</returns>
+        IRedirectTestBuilder Redirect();
 
         /// <summary>
         /// Tests whether action result is HttpStatusCodeResult.

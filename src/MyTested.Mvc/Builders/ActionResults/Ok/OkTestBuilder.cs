@@ -10,12 +10,12 @@
     /// <summary>
     /// Used for testing OK result.
     /// </summary>
-    /// <typeparam name="TActionResult">Type of OK result - HttpOkResult or HttpOkObjectResult.</typeparam>
-    public class OkTestBuilder<TActionResult>
-        : BaseResponseModelTestBuilder<TActionResult>, IAndOkTestBuilder
+    /// <typeparam name="THttpOkResult">Type of OK result - HttpOkResult or HttpOkObjectResult.</typeparam>
+    public class OkTestBuilder<THttpOkResult>
+        : BaseResponseModelTestBuilder<THttpOkResult>, IAndOkTestBuilder
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="OkTestBuilder{TActionResult}" /> class.
+        /// Initializes a new instance of the <see cref="OkTestBuilder{THttpOkResult}" /> class.
         /// </summary>
         /// <param name="controller">Controller on which the action will be tested.</param>
         /// <param name="actionName">Name of the tested action.</param>
@@ -25,7 +25,7 @@
             Controller controller,
             string actionName,
             Exception caughtException,
-            TActionResult actionResult)
+            THttpOkResult actionResult)
             : base(controller, actionName, caughtException, actionResult)
         {
         }
