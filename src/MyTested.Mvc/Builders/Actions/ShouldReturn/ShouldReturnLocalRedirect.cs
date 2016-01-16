@@ -16,12 +16,12 @@
         /// <returns>Local redirect test builder.</returns>
         public ILocalRedirectTestBuilder LocalRedirect()
         {
-            var localRedirectResult = this.GetReturnObject<LocalRedirectResult>();
+            this.ValidateActionReturnType<LocalRedirectResult>();
             return new LocalRedirectTestBuilder(
                 this.Controller,
                 this.ActionName,
                 this.CaughtException,
-                localRedirectResult);
+                this.ActionResult as LocalRedirectResult);
         }
     }
 }

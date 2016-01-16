@@ -16,7 +16,7 @@
         /// <returns>Forbid test builder.</returns>
         public IForbidTestBuilder Forbid()
         {
-            this.ValidateActionReturnType(typeof(ForbidResult));
+            this.ValidateActionReturnType<ForbidResult>();
             return new ForbidTestBuilder(
                 this.Controller,
                 this.ActionName,

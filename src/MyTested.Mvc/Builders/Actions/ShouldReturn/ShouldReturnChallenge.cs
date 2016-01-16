@@ -16,7 +16,7 @@
         /// <returns>Challenge test builder.</returns>
         public IChallengeTestBuilder Challenge()
         {
-            this.ValidateActionReturnType(typeof(ChallengeResult));
+            this.ValidateActionReturnType<ChallengeResult>();
             return new ChallengeTestBuilder(
                 this.Controller,
                 this.ActionName,

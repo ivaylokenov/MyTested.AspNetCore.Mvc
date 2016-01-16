@@ -15,7 +15,7 @@
         /// <returns>Base test builder with action result.</returns>
         public IBaseTestBuilderWithActionResult<TActionResult> NoContent()
         {
-            this.GetReturnObject<NoContentResult>();
+            this.ValidateActionReturnType<NoContentResult>();
             return this.NewAndProvideTestBuilder();
         }
     }

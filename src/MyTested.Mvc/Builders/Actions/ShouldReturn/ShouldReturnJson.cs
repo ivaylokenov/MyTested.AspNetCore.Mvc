@@ -16,7 +16,7 @@
         /// <returns>JSON test builder.</returns>
         public IJsonTestBuilder Json()
         {
-            this.ResultOfType<JsonResult>();
+            this.ValidateActionReturnType<JsonResult>();
             return new JsonTestBuilder(
                 this.Controller,
                 this.ActionName,

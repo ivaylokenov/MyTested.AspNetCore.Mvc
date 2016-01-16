@@ -15,7 +15,7 @@
         /// <returns>Base test builder with action result.</returns>
         public IBaseTestBuilderWithActionResult<TActionResult> HttpUnauthorized()
         {
-            this.ResultOfType<HttpUnauthorizedResult>();
+            this.ValidateActionReturnType<HttpUnauthorizedResult>();
             return this.NewAndProvideTestBuilder();
         }
     }

@@ -18,7 +18,7 @@
         /// <returns>Content test builder.</returns>
         public IContentTestBuilder Content()
         {
-            this.ValidateActionReturnType(typeof(ContentResult));
+            this.ValidateActionReturnType<ContentResult>();
             return new ContentTestBuilder(
                 this.Controller,
                 this.ActionName,

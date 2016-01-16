@@ -15,7 +15,7 @@
         /// <returns>Base test builder with action result.</returns>
         public IBaseTestBuilderWithActionResult<TActionResult> Empty()
         {
-            this.ResultOfType<EmptyResult>();
+            this.ValidateActionReturnType<EmptyResult>();
             return this.NewAndProvideTestBuilder();
         }
     }

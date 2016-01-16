@@ -15,7 +15,7 @@
         /// <returns>Base test builder with action result.</returns>
         public IBaseTestBuilderWithActionResult<TActionResult> UnsupportedMediaType()
         {
-            this.ResultOfType<UnsupportedMediaTypeResult>();
+            this.ValidateActionReturnType<UnsupportedMediaTypeResult>();
             return this.NewAndProvideTestBuilder();
         }
     }

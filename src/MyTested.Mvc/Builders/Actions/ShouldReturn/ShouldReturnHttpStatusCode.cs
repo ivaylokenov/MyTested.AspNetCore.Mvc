@@ -19,7 +19,7 @@
         /// <returns>Base test builder with action result.</returns>
         public IBaseTestBuilderWithActionResult<TActionResult> StatusCode()
         {
-            this.ResultOfType<HttpStatusCodeResult>();
+            this.ValidateActionReturnType<HttpStatusCodeResult>();
             return this.NewAndProvideTestBuilder();
         }
 
