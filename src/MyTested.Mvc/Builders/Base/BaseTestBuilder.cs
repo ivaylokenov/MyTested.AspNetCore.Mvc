@@ -6,7 +6,7 @@
     using Microsoft.AspNet.Mvc;
     using Utilities.Validators;
 
-    public class BaseTestBuilder : IBaseTestBuilder
+    public abstract class BaseTestBuilder : IBaseTestBuilder
     {
         private Controller controller;
 

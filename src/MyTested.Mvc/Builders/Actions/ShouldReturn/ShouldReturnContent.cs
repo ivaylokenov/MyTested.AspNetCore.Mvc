@@ -27,7 +27,7 @@
         }
 
         /// <summary>
-        /// Tests whether action result is ContentResult.
+        /// Tests whether action result is ContentResult with expected content.
         /// </summary>
         /// <param name="content">Expected content as string.</param>
         /// <returns>Content result test builder.</returns>

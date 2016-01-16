@@ -11,7 +11,7 @@
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <summary>
-        /// Tests whether action result is FileStreamResult, VirtualFileResult, FileContentResult or PhysicalFileResult.
+        /// Tests whether action result is FileStreamResult, VirtualFileResult or FileContentResult.
         /// </summary>
         /// <returns>File test builder.</returns>
         public IFileTestBuilder File()
@@ -25,13 +25,22 @@
             {
                 return this.ReturnFileTestBuilder<FileStreamResult>();
             }
-
-            if (this.ActionResult is PhysicalFileResult)
-            {
-                return this.ReturnFileTestBuilder<PhysicalFileResult>();
-            }
-
+            
             return this.ReturnFileTestBuilder<FileContentResult>();
+        }
+
+        /// <summary>
+        /// Tests whether action result is PhysicalFileResult.
+        /// </summary>
+        /// <returns>File test builder.</returns>
+        public IPhysicalFileTestBuilder PhysicalFile()
+        {
+            this.ValidateActionReturnType<PhysicalFileResult>();
+            return new PhysicalFileTestBuilder(
+                this.Controller,
+                this.ActionName,
+                this.CaughtException,
+                this.ActionResult as PhysicalFileResult);
         }
 
         private IFileTestBuilder ReturnFileTestBuilder<TFileResult>()

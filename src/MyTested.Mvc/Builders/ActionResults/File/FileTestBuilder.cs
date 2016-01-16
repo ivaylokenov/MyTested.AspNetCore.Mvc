@@ -3,7 +3,6 @@
     using System;
     using System.IO;
     using System.Linq;
-    using Base;
     using Contracts.ActionResults.File;
     using Exceptions;
     using Internal.Extensions;
@@ -17,11 +16,10 @@
     /// </summary>
     /// <typeparam name="TFileResult">Result of type FileStreamResult, VirtualFileResult or FileContentResult.</typeparam>
     public class FileTestBuilder<TFileResult>
-        : BaseTestBuilderWithActionResult<TFileResult>, IAndFileTestBuilder
+        : BaseFileTestBuilder<TFileResult>, IAndFileTestBuilder
         where TFileResult : FileResult
     {
         private const string FileName = "file name";
-        private const string FilePath = "file path";
         private const string FileProvider = "file provider";
         private const string FileStream = "file stream";
         private const string FileContents = "file contents";
@@ -59,16 +57,7 @@
         /// <returns>The same file test builder.</returns>
         public IAndFileTestBuilder WithContentType(MediaTypeHeaderValue contentType)
         {
-            var expectedContentType = contentType?.MediaType;
-            var actualContentType = this.ActionResult.ContentType?.MediaType;
-            if (expectedContentType != actualContentType)
-            {
-                this.ThrowNewFileResultAssertionException(
-                    "ContentType",
-                    string.Format("to be {0}", contentType != null ? contentType.MediaType : "null"),
-                    string.Format("instead received {0}", actualContentType != null ? actualContentType : "null"));
-            }
-
+            this.ValidateContentType(contentType);
             return this;
         }
 
@@ -79,15 +68,7 @@
         /// <returns>The same file test builder.</returns>
         public IAndFileTestBuilder WithFileDownloadName(string fileDownloadName)
         {
-            var actualFileDownloadName = this.ActionResult.FileDownloadName;
-            if (fileDownloadName != actualFileDownloadName)
-            {
-                this.ThrowNewFileResultAssertionException(
-                    "FileDownloadName",
-                    string.Format("to be '{0}'", fileDownloadName != null ? fileDownloadName : "null"),
-                    string.Format("instead received '{0}'", actualFileDownloadName != null ? actualFileDownloadName : "null"));
-            }
-
+            this.ValidateFileDownloadName(fileDownloadName);
             return this;
         }
 
@@ -192,26 +173,6 @@
         }
 
         /// <summary>
-        /// Tests whether file result has the same physical file path as the provided one.
-        /// </summary>
-        /// <param name="physicalPath">File physical path as string.</param>
-        /// <returns>The same file test builder.</returns>
-        public IAndFileTestBuilder WithPhysicalPath(string physicalPath)
-        {
-            var physicalFileResult = this.GetFileResult<PhysicalFileResult>(FilePath);
-            var actualPhysicalPath = physicalFileResult.FileName;
-            if (physicalPath != actualPhysicalPath)
-            {
-                this.ThrowNewFileResultAssertionException(
-                    "FileName",
-                    string.Format("to be '{0}'", physicalPath != null ? physicalPath : "null"),
-                    string.Format("instead received '{0}'", actualPhysicalPath != null ? actualPhysicalPath : "null"));
-            }
-
-            return this;
-        }
-
-        /// <summary>
         /// AndAlso method for better readability when chaining file result tests.
         /// </summary>
         /// <returns>File result test builder.</returns>
@@ -243,17 +204,6 @@
             }
 
             return actualFileResult;
-        }
-        
-        private void ThrowNewFileResultAssertionException(string propertyName, string expectedValue, string actualValue)
-        {
-            throw new FileResultAssertionException(string.Format(
-                    "When calling {0} action in {1} expected file result {2} {3}, but {4}.",
-                    this.ActionName,
-                    this.Controller.GetName(),
-                    propertyName,
-                    expectedValue,
-                    actualValue));
         }
     }
 }

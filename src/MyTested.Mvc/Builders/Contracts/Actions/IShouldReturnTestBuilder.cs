@@ -6,6 +6,7 @@
     using ActionResults.Content;
     using ActionResults.Created;
     using ActionResults.File;
+    using ActionResults.Forbid;
     using ActionResults.HttpBadRequest;
     using ActionResults.HttpNotFound;
     using ActionResults.Json;
@@ -39,10 +40,18 @@
         IBaseTestBuilderWithActionResult<TActionResult> NotNull();
         
         /// <summary>
-        /// Tests whether action result is OkResult or OkNegotiatedContentResult{T}.
+        /// Tests whether action result is of the provided generic type.
         /// </summary>
-        /// <returns>Ok test builder.</returns>
-        IOkTestBuilder Ok();
+        /// <typeparam name="TResponseModel">Expected response type.</typeparam>
+        /// <returns>Response model details test builder.</returns>
+        IModelDetailsTestBuilder<TActionResult> ResultOfType<TResponseModel>();
+
+        /// <summary>
+        /// Tests whether action result is of the provided type.
+        /// </summary>
+        /// <param name="returnType">Expected return type.</param>
+        /// <returns>Response model details test builder.</returns>
+        IModelDetailsTestBuilder<TActionResult> ResultOfType(Type returnType);
 
         /// <summary>
         /// Tests whether action result is ChallengeResult.
@@ -51,7 +60,20 @@
         IChallengeTestBuilder Challenge();
 
         /// <summary>
-        /// Tests whether action result is CreatedNegotiatedContentResult{T} or CreatedAtRouteNegotiatedContentResult{T}.
+        /// Tests whether action result is ContentResult.
+        /// </summary>
+        /// <returns>Content test builder.</returns>
+        IContentTestBuilder Content();
+
+        /// <summary>
+        /// Tests whether action result is ContentResult with expected content.
+        /// </summary>
+        /// <param name="content">Expected content as string.</param>
+        /// <returns>Content test builder.</returns>
+        IContentTestBuilder Content(string content);
+
+        /// <summary>
+        /// Tests whether action result is CreatedResult, CreatedAtActionResult or CreatedAtRouteResult.
         /// </summary>
         /// <returns>Created test builder.</returns>
         ICreatedTestBuilder Created();
@@ -63,17 +85,40 @@
         IFileTestBuilder File();
 
         /// <summary>
-        /// Tests whether action result is ContentResult.
+        /// Tests whether action result is ForbidResult.
         /// </summary>
-        /// <returns>Content test builder.</returns>
-        IContentTestBuilder Content();
+        /// <returns>Forbid test builder.</returns>
+        IForbidTestBuilder Forbid();
 
         /// <summary>
-        /// Tests whether action result is ContentResult.
+        /// Tests whether action result is HttpOkResult or HttpOkObjectResult.
         /// </summary>
-        /// <param name="content">Expected content as string.</param>
-        /// <returns>Content test builder.</returns>
-        IContentTestBuilder Content(string content);
+        /// <returns>Ok test builder.</returns>
+        IOkTestBuilder Ok();
+        
+        /// <summary>
+        /// Tests whether action result is BadRequestResult, InvalidModelStateResult or BadRequestErrorMessageResult.
+        /// </summary>
+        /// <returns>Bad request test builder.</returns>
+        IHttpBadRequestTestBuilder HttpBadRequest();
+        
+        /// <summary>
+        /// Tests whether action result is NotFoundResult.
+        /// </summary>
+        /// <returns>Base test builder with action result.</returns>
+        IHttpNotFoundTestBuilder NotFound();
+        
+        /// <summary>
+        /// Tests whether action result is HttpUnauthorizedResult.
+        /// </summary>
+        /// <returns>Base test builder with action result.</returns>
+        IBaseTestBuilderWithActionResult<TActionResult> HttpUnauthorized();
+        
+        /// <summary>
+        /// Tests whether action result is LocalRedirectResult.
+        /// </summary>
+        /// <returns>Local redirect test builder.</returns>
+        ILocalRedirectTestBuilder LocalRedirect();
 
         /// <summary>
         /// Tests whether action result is NoContentResult.
@@ -82,11 +127,11 @@
         IBaseTestBuilderWithActionResult<TActionResult> NoContent();
 
         /// <summary>
-        /// Tests whether action result is LocalRedirectResult.
+        /// Tests whether action result is PhysicalFileResult.
         /// </summary>
-        /// <returns>Local redirect test builder.</returns>
-        ILocalRedirectTestBuilder LocalRedirect();
-        
+        /// <returns>File test builder.</returns>
+        IPhysicalFileTestBuilder PhysicalFile();
+
         /// <summary>
         /// Tests whether action result is HttpStatusCodeResult.
         /// </summary>
@@ -106,49 +151,23 @@
         /// <param name="statusCode">HttpStatusCode enumeration.</param>
         /// <returns>Base test builder with action result.</returns>
         IBaseTestBuilderWithActionResult<TActionResult> StatusCode(HttpStatusCode statusCode);
+        
+        /// <summary>
+        /// Tests whether action result is EmptyResult.
+        /// </summary>
+        /// <returns>Base test builder with action result.</returns>
+        IBaseTestBuilderWithActionResult<TActionResult> Empty();
 
         /// <summary>
         /// Tests whether action result is UnsupportedMediaTypeResult.
         /// </summary>
         /// <returns>Base test builder with action result.</returns>
         IBaseTestBuilderWithActionResult<TActionResult> UnsupportedMediaType();
-
-        /// <summary>
-        /// Tests whether action result is NotFoundResult.
-        /// </summary>
-        /// <returns>Base test builder with action result.</returns>
-        IHttpNotFoundTestBuilder NotFound();
-
-        /// <summary>
-        /// Tests whether action result is BadRequestResult, InvalidModelStateResult or BadRequestErrorMessageResult.
-        /// </summary>
-        /// <returns>Bad request test builder.</returns>
-        IHttpBadRequestTestBuilder HttpBadRequest();
-        
-        /// <summary>
-        /// Tests whether action result is HttpUnauthorizedResult.
-        /// </summary>
-        /// <returns>Base test builder with action result.</returns>
-        IBaseTestBuilderWithActionResult<TActionResult> HttpUnauthorized();
         
         /// <summary>
         /// Tests whether action result is JSON Result.
         /// </summary>
         /// <returns>JSON test builder.</returns>
         IJsonTestBuilder Json();
-
-        /// <summary>
-        /// Tests whether action result is of the provided generic type.
-        /// </summary>
-        /// <typeparam name="TResponseModel">Expected response type.</typeparam>
-        /// <returns>Response model details test builder.</returns>
-        IModelDetailsTestBuilder<TActionResult> ResultOfType<TResponseModel>();
-
-        /// <summary>
-        /// Tests whether action result is of the provided type.
-        /// </summary>
-        /// <param name="returnType">Expected return type.</param>
-        /// <returns>Response model details test builder.</returns>
-        IModelDetailsTestBuilder<TActionResult> ResultOfType(Type returnType);
     }
 }
