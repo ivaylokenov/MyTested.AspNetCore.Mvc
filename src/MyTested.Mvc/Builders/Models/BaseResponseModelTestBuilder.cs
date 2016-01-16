@@ -59,8 +59,8 @@
 
             if (!objectResultIsAssignable)
             {
-                // JsonResult does not inherit ObjectResult
-                actualResponseDataType = (this.ActionResult as JsonResult)?.Value?.GetType();
+                // action result do not inherit ObjectResult
+                actualResponseDataType = this.GetNonObjectResultModelType();
             }
             else
             {
@@ -113,6 +113,26 @@
                 this.ActionName,
                 this.CaughtException,
                 actualModel);
+        }
+
+        private Type GetNonObjectResultModelType()
+        {
+            if (this.ActionResult is JsonResult)
+            {
+                return (this.ActionResult as JsonResult)?.Value?.GetType();
+            }
+
+            if (this.ActionResult is ViewResult)
+            {
+                return (this.ActionResult as ViewResult)?.Model?.GetType();
+            }
+
+            if (this.ActionResult is PartialViewResult)
+            {
+                return (this.ActionResult as PartialViewResult)?.ViewData?.Model?.GetType();
+            }
+
+            return null;
         }
     }
 }

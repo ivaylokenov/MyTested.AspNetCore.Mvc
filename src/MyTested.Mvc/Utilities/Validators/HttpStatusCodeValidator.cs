@@ -19,7 +19,7 @@
                 var actualStatusCodeAsInt = (int?)actualStatusCode;
 
                 var receivedErrorMessage = string.Format(
-                    "received {0} ({1})",
+                    "instead received {0} ({1})",
                     actualStatusCode != null ? actualStatusCodeAsInt.ToString() : "no status code",
                     actualStatusCode != null ? actualStatusCode.ToString() : "null");
 
