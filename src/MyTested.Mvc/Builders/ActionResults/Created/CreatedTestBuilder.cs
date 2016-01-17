@@ -17,6 +17,7 @@
     public class CreatedTestBuilder<TCreatedResult>
         : BaseResponseModelTestBuilder<TCreatedResult>, IAndCreatedTestBuilder
     {
+        private const string Location = "location";
         private const string RouteName = "route name";
 
         /// <summary>
@@ -53,6 +54,7 @@
         /// <returns>The same created test builder.</returns>
         public IAndCreatedTestBuilder AtLocation(Uri location)
         {
+            var createdResult = this.GetCreatedResult<CreatedResult>(Location);
             LocationValidator.ValidateUri(
                 this.ActionResult,
                 location.OriginalString,
@@ -68,11 +70,44 @@
         /// <returns>The same created test builder.</returns>
         public IAndCreatedTestBuilder AtLocation(Action<IUriTestBuilder> uriTestBuilder)
         {
+            var createdResult = this.GetCreatedResult<CreatedResult>(Location);
             LocationValidator.ValidateLocation(
                 this.ActionResult,
                 uriTestBuilder,
                 this.ThrowNewCreatedResultAssertionException);
 
+            return this;
+        }
+
+        public IAndCreatedTestBuilder AtAction(string actionName)
+        {
+            var createdAtActionResult = this.GetCreatedResult<CreatedAtActionResult>("ActionName");
+            var actualActionName = createdAtActionResult.ActionName;
+
+            if (actionName != actualActionName)
+            {
+                this.ThrowNewCreatedResultAssertionException(
+                    "to have",
+                    $"'{actionName}' action name",
+                    string.Format("instead received '{0}'", actualActionName != null ? actualActionName : "null"));
+            }
+
+            return this;
+        }
+
+        public IAndCreatedTestBuilder AtController(string controllerName)
+        {
+            var createdAtActionResult = this.GetCreatedResult<CreatedAtActionResult>("ControllerName");
+            var actualControllerName = createdAtActionResult.ActionName;
+
+            if (controllerName != actualControllerName)
+            {
+                this.ThrowNewCreatedResultAssertionException(
+                    "to have",
+                    $"'{controllerName}' controller name",
+                    string.Format("instead received '{0}'", actualControllerName != null ? actualControllerName : "null"));
+            }
+            
             return this;
         }
 
@@ -107,6 +142,21 @@
         public ICreatedTestBuilder AndAlso()
         {
             return this;
+        }
+
+        private TExpectedCreatedResult GetCreatedResult<TExpectedCreatedResult>(string containment)
+            where TExpectedCreatedResult : class
+        {
+            var actualRedirectResult = this.ActionResult as TExpectedCreatedResult;
+            if (actualRedirectResult == null)
+            {
+                this.ThrowNewCreatedResultAssertionException(
+                    "to contain",
+                    containment,
+                    "it could not be found");
+            }
+
+            return actualRedirectResult;
         }
 
         private IAndCreatedTestBuilder AtRoute<TController>(LambdaExpression actionCall)

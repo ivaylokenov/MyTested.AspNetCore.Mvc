@@ -110,11 +110,10 @@
             var actualRedirectResult = this.ActionResult as TExpectedRedirectResult;
             if (actualRedirectResult == null)
             {
-                throw new RedirectResultAssertionException(string.Format(
-                    "When calling {0} action in {1} expected redirect result to contain {2}, but it could not be found.",
-                    this.ActionName,
-                    this.Controller.GetName(),
-                    containment));
+                this.ThrowNewRedirectResultAssertionException(
+                    "to contain",
+                    containment,
+                    "it could not be found");
             }
 
             return actualRedirectResult;
