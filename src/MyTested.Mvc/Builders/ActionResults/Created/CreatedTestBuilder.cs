@@ -25,13 +25,13 @@
         /// <param name="controller">Controller on which the action will be tested.</param>
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Caught exception during the action execution.</param>
-        /// <param name="actionResult">Result from the tested action.</param>
+        /// <param name="createdResult">Result from the tested action.</param>
         public CreatedTestBuilder(
             Controller controller,
             string actionName,
             Exception caughtException,
-            TCreatedResult actionResult)
-            : base(controller, actionName, caughtException, actionResult)
+            TCreatedResult createdResult)
+            : base(controller, actionName, caughtException, createdResult)
         {
         }
         

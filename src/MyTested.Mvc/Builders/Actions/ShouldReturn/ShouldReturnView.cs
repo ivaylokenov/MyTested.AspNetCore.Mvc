@@ -5,6 +5,7 @@
     using Exceptions;
     using Microsoft.AspNet.Mvc;
     using Utilities;
+
     /// <summary>
     /// Class containing methods for testing ViewResult or PartialViewResult.
     /// </summary>

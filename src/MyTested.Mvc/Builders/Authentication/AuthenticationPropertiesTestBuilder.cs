@@ -134,8 +134,8 @@
                 if (expectedItems != actualItems)
                 {
                     this.ThrowNewAuthenticationPropertiesAssertionException(
-                        string.Format("{0} items", expectedItems),
-                        string.Format("in fact found {0}", actualItems));
+                        $"{expectedItems} items",
+                        $"in fact found {actualItems}");
                 }
             });
 

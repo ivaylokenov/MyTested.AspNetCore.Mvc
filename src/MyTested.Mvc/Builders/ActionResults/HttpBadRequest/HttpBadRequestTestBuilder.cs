@@ -15,8 +15,8 @@
     /// <summary>
     /// Used for testing HTTP bad request results.
     /// </summary>
-    /// <typeparam name="TBadRequestResult">Type of bad request result - BadRequestResult or BadRequestObjectResult.</typeparam>
-    public class HttpBadRequestTestBuilder<TBadRequestResult> : BaseResponseModelTestBuilder<TBadRequestResult>,
+    /// <typeparam name="THttpBadRequestResult">Type of bad request result - BadRequestResult or BadRequestObjectResult.</typeparam>
+    public class HttpBadRequestTestBuilder<THttpBadRequestResult> : BaseResponseModelTestBuilder<THttpBadRequestResult>,
         IHttpBadRequestTestBuilder
     {
         private const string ErrorMessage = "When calling {0} action in {1} expected HTTP bad request result error to be the given object, but in fact it was a different.";
@@ -28,13 +28,13 @@
         /// <param name="controller">Controller on which the action will be tested.</param>
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Caught exception during the action execution.</param>
-        /// <param name="actionResult">Result from the tested action.</param>
+        /// <param name="httpBadRequestResult">Result from the tested action.</param>
         public HttpBadRequestTestBuilder(
             Controller controller,
             string actionName,
             Exception caughtException,
-            TBadRequestResult actionResult)
-            : base(controller, actionName, caughtException, actionResult)
+            THttpBadRequestResult httpBadRequestResult)
+            : base(controller, actionName, caughtException, httpBadRequestResult)
         {
             this.ErrorMessageFormat = ErrorMessage;
             this.OfTypeErrorMessageFormat = OfTypeErrorMessage;

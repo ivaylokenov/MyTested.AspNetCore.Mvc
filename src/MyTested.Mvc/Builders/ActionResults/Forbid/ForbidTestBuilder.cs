@@ -24,13 +24,13 @@
         /// <param name="controller">Controller on which the action will be tested.</param>
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Caught exception during the action execution.</param>
-        /// <param name="actionResult">Result from the tested action.</param>
+        /// <param name="forbidResult">Result from the tested action.</param>
         public ForbidTestBuilder(
             Controller controller,
             string actionName,
             Exception caughtException,
-            ForbidResult actionResult)
-            : base(controller, actionName, caughtException, actionResult)
+            ForbidResult forbidResult)
+            : base(controller, actionName, caughtException, forbidResult)
         {
         }
 

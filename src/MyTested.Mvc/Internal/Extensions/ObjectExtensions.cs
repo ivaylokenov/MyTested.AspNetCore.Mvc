@@ -14,6 +14,11 @@
         /// <returns>Friendly name as string.</returns>
         public static string GetName(this object obj)
         {
+            if (obj == null)
+            {
+                return "null";
+            }
+
             return obj.GetType().ToFriendlyTypeName();
         }
     }

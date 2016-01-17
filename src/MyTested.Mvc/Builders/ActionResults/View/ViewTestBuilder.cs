@@ -3,8 +3,7 @@
     using System;
     using Contracts.ActionResults.View;
     using Microsoft.AspNet.Mvc;
-    using Models;
-    using Contracts.Models;
+    using Base;
     using System.Net;
     using Utilities.Validators;
     using Exceptions;
@@ -17,36 +16,26 @@
     /// Used for testing view results.
     /// </summary>
     public class ViewTestBuilder<TViewResult>
-        : BaseResponseModelTestBuilder<TViewResult>, IAndViewTestBuilder
+        : BaseTestBuilderWithViewFeature<TViewResult>, IAndViewTestBuilder
     {
         private string viewType;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ViewTestBuilder" /> class.
+        /// Initializes a new instance of the <see cref="ViewTestBuilder{TViewResult}" /> class.
         /// </summary>
         /// <param name="controller">Controller on which the action will be tested.</param>
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Caught exception during the action execution.</param>
-        /// <param name="actionResult">Result from the tested action.</param>
+        /// <param name="viewResult">Result from the tested action.</param>
         public ViewTestBuilder(
             Controller controller,
             string actionName,
             Exception caughtException,
-            TViewResult actionResult,
+            TViewResult viewResult,
             string viewType)
-            : base(controller, actionName, caughtException, actionResult)
+            : base(controller, actionName, caughtException, viewResult)
         {
             this.viewType = viewType;
-        }
-
-        public IModelDetailsTestBuilder<TModel> WithModel<TModel>(TModel model)
-        {
-            return this.WithResponseModel(model);
-        }
-
-        public IModelDetailsTestBuilder<TModel> WithModelOfType<TModel>()
-        {
-            return this.WithResponseModelOfType<TModel>();
         }
 
         /// <summary>
@@ -127,7 +116,9 @@
             where TViewEngine : IViewEngine
         {
             var actualViewEngine = this.GetViewEngine();
-            if (Reflection.AreDifferentTypes(typeof(TViewEngine), actualViewEngine.GetType()))
+
+            if (actualViewEngine == null
+                || Reflection.AreDifferentTypes(typeof(TViewEngine), actualViewEngine.GetType()))
             {
                 this.ThrowNewViewResultAssertionException(
                     "ViewEngine",
@@ -147,7 +138,7 @@
             return this;
         }
 
-        private IViewEngine GetViewEngine()
+        protected IViewEngine GetViewEngine()
         {
             IViewEngine viewEngine = null;
             RuntimeBinderValidator.ValidateBinding(() =>
@@ -158,7 +149,7 @@
             return viewEngine;
         }
 
-        private void ThrowNewViewResultAssertionException(string propertyName, string expectedViewName, string actualViewName)
+        protected void ThrowNewViewResultAssertionException(string propertyName, string expectedViewName, string actualViewName)
         {
             throw new ViewResultAssertionException(string.Format(
                     "When calling {0} action in {1} expected {2} result {3} {4}, but {5}.",

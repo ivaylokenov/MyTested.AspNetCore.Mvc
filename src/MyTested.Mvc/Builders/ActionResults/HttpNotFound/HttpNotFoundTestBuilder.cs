@@ -11,9 +11,9 @@
     /// <summary>
     /// Used for testing HTTP not found result.
     /// </summary>
-    /// <typeparam name="TActionResult">Type of not found result - HttpNotFoundResult or HttpNotFoundObjectResult.</typeparam>
-    public class HttpNotFoundTestBuilder<TActionResult>
-        : BaseResponseModelTestBuilder<TActionResult>, IHttpNotFoundTestBuilder
+    /// <typeparam name="THttpNotFoundResult">Type of not found result - HttpNotFoundResult or HttpNotFoundObjectResult.</typeparam>
+    public class HttpNotFoundTestBuilder<THttpNotFoundResult>
+        : BaseResponseModelTestBuilder<THttpNotFoundResult>, IHttpNotFoundTestBuilder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="HttpNotFoundTestBuilder{TActionResult}" /> class.
@@ -21,13 +21,13 @@
         /// <param name="controller">Controller on which the action will be tested.</param>
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Caught exception during the action execution.</param>
-        /// <param name="actionResult">Result from the tested action.</param>
+        /// <param name="httpNotFoundResult">Result from the tested action.</param>
         public HttpNotFoundTestBuilder(
             Controller controller,
             string actionName,
             Exception caughtException,
-            TActionResult actionResult)
-            : base(controller, actionName, caughtException, actionResult)
+            THttpNotFoundResult httpNotFoundResult)
+            : base(controller, actionName, caughtException, httpNotFoundResult)
         {
         }
 
