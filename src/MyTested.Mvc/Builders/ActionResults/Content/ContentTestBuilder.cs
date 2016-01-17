@@ -75,16 +75,10 @@
         /// <returns>The same content test builder.</returns>
         public IAndContentTestBuilder WithContentType(MediaTypeHeaderValue contentType)
         {
-            var actualContentType = this.ActionResult.ContentType;
-            if ((contentType == null && actualContentType != null)
-                || (contentType != null && actualContentType == null)
-                || (contentType != null && contentType.MediaType != actualContentType.MediaType))
-            {
-                this.ThrowNewContentResultAssertionException(
-                    "ContentType",
-                    string.Format("to be {0}", contentType != null ? contentType.MediaType : "null"),
-                    string.Format("instead received {0}", actualContentType != null ? actualContentType.MediaType : "null"));
-            }
+            ContentTypeValidator.ValidateContentType(
+                contentType,
+                this.ActionResult.ContentType,
+                this.ThrowNewContentResultAssertionException);
 
             return this;
         }

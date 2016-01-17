@@ -29,5 +29,19 @@
                     receivedErrorMessage);
             }
         }
+
+        public static void ValidateHttpStatusCode(
+            dynamic actionResult,
+            HttpStatusCode expectedHttpStatusCode,
+            Action<string, string, string> failedValidationAction)
+        {
+            RuntimeBinderValidator.ValidateBinding(() =>
+            {
+                ValidateHttpStatusCode(
+                    expectedHttpStatusCode,
+                    (int?)actionResult.StatusCode,
+                    failedValidationAction);
+            });
+        }
     }
 }

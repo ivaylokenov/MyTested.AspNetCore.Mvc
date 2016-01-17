@@ -6,6 +6,7 @@
     using Microsoft.AspNet.Mvc;
     using Microsoft.Net.Http.Headers;
     using MyTested.Mvc.Builders.Base;
+    using Utilities.Validators;
 
     /// <summary>
     /// Base class for all test builders with file action result.
@@ -32,15 +33,10 @@
 
         protected void ValidateContentType(MediaTypeHeaderValue contentType)
         {
-            var expectedContentType = contentType?.MediaType;
-            var actualContentType = this.ActionResult.ContentType?.MediaType;
-            if (expectedContentType != actualContentType)
-            {
-                this.ThrowNewFileResultAssertionException(
-                    "ContentType",
-                    string.Format("to be {0}", contentType != null ? contentType.MediaType : "null"),
-                    string.Format("instead received {0}", actualContentType != null ? actualContentType : "null"));
-            }
+            ContentTypeValidator.ValidateContentType(
+                this.ActionResult,
+                contentType,
+                this.ThrowNewFileResultAssertionException);
         }
 
         protected void ValidateFileDownloadName(string fileDownloadName)

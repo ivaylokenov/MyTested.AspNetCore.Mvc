@@ -4,7 +4,7 @@
     using Contracts.ActionResults.View;
     using Exceptions;
     using Microsoft.AspNet.Mvc;
-
+    using Utilities;
     /// <summary>
     /// Class containing methods for testing ViewResult or PartialViewResult.
     /// </summary>
@@ -27,18 +27,20 @@
         /// <returns>View test builder.</returns>
         public IViewTestBuilder View(string viewName)
         {
+            var viewType = "view";
             var viewResult = this.GetReturnObject<ViewResult>();
             var actualViewName = viewResult.ViewName;
             if (viewName != actualViewName)
             {
-                this.ThrowNewViewResultAssertionException("view", viewName, actualViewName);
+                this.ThrowNewViewResultAssertionException(viewType, viewName, actualViewName);
             }
 
             return new ViewTestBuilder<ViewResult>(
                 this.Controller,
                 this.ActionName,
                 this.CaughtException,
-                viewResult);
+                viewResult,
+                viewType);
         }
 
         /// <summary>
@@ -57,25 +59,22 @@
         /// <returns>View test builder.</returns>
         public IViewTestBuilder PartialView(string viewName)
         {
+            var viewType = "partial view";
             var viewResult = this.GetReturnObject<PartialViewResult>();
             var actualViewName = viewResult.ViewName;
             if (viewName != actualViewName)
             {
-                this.ThrowNewViewResultAssertionException("partial view", viewName, actualViewName);
+                this.ThrowNewViewResultAssertionException(viewType, viewName, actualViewName);
             }
 
             return new ViewTestBuilder<PartialViewResult>(
                 this.Controller,
                 this.ActionName,
                 this.CaughtException,
-                viewResult);
+                viewResult,
+                viewType);
         }
-
-        private string GetFriendlyViewName(string viewName)
-        {
-            return viewName == null ? "the default one" : $"'{viewName}'";
-        }
-
+        
         private void ThrowNewViewResultAssertionException(string viewType, string expectedViewName, string actualViewName)
         {
             throw new ViewResultAssertionException(string.Format(
@@ -83,8 +82,8 @@
                     this.ActionName,
                     this.Controller,
                     viewType,
-                    this.GetFriendlyViewName(expectedViewName),
-                    this.GetFriendlyViewName(actualViewName)));
+                    ViewTestHelper.GetFriendlyViewName(expectedViewName),
+                    ViewTestHelper.GetFriendlyViewName(actualViewName)));
         }
     }
 }
