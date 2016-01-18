@@ -11,6 +11,9 @@
     using Microsoft.Net.Http.Headers;
     using Utilities;
 
+    /// <summary>
+    /// Used for testing view component results.
+    /// </summary>
     public class ViewComponentTestBuilder
         : ViewTestBuilder<ViewComponentResult>, IAndViewComponentTestBuilder
     {
@@ -98,6 +101,12 @@
             return this;
         }
 
+        /// <summary>
+        /// Tests whether view component result will be invoked with an argument equal to the provided one.
+        /// </summary>
+        /// <typeparam name="TArgument">Type of the argument.</typeparam>
+        /// <param name="argument">Argument object.</param>
+        /// <returns>The same view component test builder.</returns>
         public IAndViewComponentTestBuilder WithArgument<TArgument>(TArgument argument)
         {
             var sameArgument = this.viewComponentArguments.FirstOrDefault(arg => Reflection.AreDeeplyEqual(argument, arg));
@@ -113,6 +122,11 @@
             return this;
         }
 
+        /// <summary>
+        /// Tests whether view component result will be invoked with an argument of the provided type.
+        /// </summary>
+        /// <typeparam name="TArgument">Type of the argument.</typeparam>
+        /// <returns>The same view component test builder.</returns>
         public IAndViewComponentTestBuilder WithArgumentOfType<TArgument>()
         {
             var expectedType = typeof(TArgument);
@@ -129,6 +143,11 @@
             return this;
         }
 
+        /// <summary>
+        /// Tests whether view component result will be invoked with the provided arguments.
+        /// </summary>
+        /// <param name="arguments">Argument objects as enumerable.</param>
+        /// <returns>The same view component test builder.</returns>
         public IAndViewComponentTestBuilder WithArguments(IEnumerable<object> arguments)
         {
             var argumentsList = arguments.ToList();
@@ -148,6 +167,11 @@
             return this;
         }
 
+        /// <summary>
+        /// Tests whether view component result will be invoked with the provided arguments.
+        /// </summary>
+        /// <param name="arguments">Argument objects.</param>
+        /// <returns>The same view component test builder.</returns>
         public IAndViewComponentTestBuilder WithArguments(params object[] arguments)
         {
             return this.WithArguments(arguments.AsEnumerable());
@@ -156,7 +180,7 @@
         /// <summary>
         /// AndAlso method for better readability when chaining view component result tests.
         /// </summary>
-        /// <returns>view component result test builder.</returns>
+        /// <returns>The same view component test builder.</returns>
         public new IViewComponentTestBuilder AndAlso()
         {
             return this;

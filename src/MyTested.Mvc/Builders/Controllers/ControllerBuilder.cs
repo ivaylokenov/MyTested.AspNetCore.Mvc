@@ -71,9 +71,9 @@
             }
         }
 
-        public HttpRequest HttpRequest { get; private set; }
+        private HttpRequest HttpRequest { get; set; }
 
-        public HttpContext HttpContext { get; private set; }
+        private HttpContext HttpContext { get; set; }
 
         private IServiceProvider Services => this.HttpContext.RequestServices;
 

@@ -9,6 +9,9 @@
     using Microsoft.AspNet.Mvc;
     using MyTested.Mvc.Builders.Contracts.Authentication;
 
+    /// <summary>
+    /// Used for testing authentication properties.
+    /// </summary>
     public class AuthenticationPropertiesTestBuilder : BaseTestBuilderWithAction, IAndAuthenticationPropertiesTestBuilder
     {
         private readonly AuthenticationProperties authenticationProperties;
@@ -28,6 +31,11 @@
             this.validations = new List<Action<AuthenticationProperties, AuthenticationProperties>>();
         }
         
+        /// <summary>
+        /// Tests whether authentication properties has the same allow refresh value as the provided one.
+        /// </summary>
+        /// <param name="allowRefresh">Expected allow refresh value.</param>
+        /// <returns>The same authentication properties test builder.</returns>
         public IAndAuthenticationPropertiesTestBuilder WithAllowRefresh(bool? allowRefresh)
         {
             this.authenticationProperties.AllowRefresh = allowRefresh;
@@ -44,6 +52,11 @@
             return this;
         }
 
+        /// <summary>
+        /// Tests whether authentication properties has the same expires value as the provided one.
+        /// </summary>
+        /// <param name="expiresUtc">Expected expires value.</param>
+        /// <returns>The same authentication properties test builder.</returns>
         public IAndAuthenticationPropertiesTestBuilder WithExpires(DateTimeOffset? expiresUtc)
         {
             this.authenticationProperties.ExpiresUtc = expiresUtc;
@@ -60,6 +73,11 @@
             return this;
         }
 
+        /// <summary>
+        /// Tests whether authentication properties has the same is persistent value as the provided one.
+        /// </summary>
+        /// <param name="isPersistent">Expected is persistent value.</param>
+        /// <returns>The same authentication properties test builder.</returns>
         public IAndAuthenticationPropertiesTestBuilder WithIsPersistent(bool isPersistent)
         {
             this.authenticationProperties.IsPersistent = isPersistent;
@@ -76,6 +94,11 @@
             return this;
         }
 
+        /// <summary>
+        /// Tests whether authentication properties has the same issued value as the provided one.
+        /// </summary>
+        /// <param name="issuedUtc">Expected issued value.</param>
+        /// <returns>The same authentication properties test builder.</returns>
         public IAndAuthenticationPropertiesTestBuilder WithIssued(DateTimeOffset? issuedUtc)
         {
             this.authenticationProperties.IssuedUtc = issuedUtc;
@@ -92,6 +115,11 @@
             return this;
         }
 
+        /// <summary>
+        /// Tests whether authentication properties contains the provided item key.
+        /// </summary>
+        /// <param name="itemKey">Expected item key.</param>
+        /// <returns>The same authentication properties test builder.</returns>
         public IAndAuthenticationPropertiesTestBuilder WithItem(string itemKey)
         {
             this.authenticationProperties.Items.Add(itemKey, string.Empty);
@@ -108,6 +136,12 @@
             return this;
         }
 
+        /// <summary>
+        /// Tests whether authentication properties contains the provided item key and value.
+        /// </summary>
+        /// <param name="itemKey">Expected item key.</param>
+        /// <param name="itemValue">Expected item value.</param>
+        /// <returns>The same authentication properties test builder.</returns>
         public IAndAuthenticationPropertiesTestBuilder WithItem(string itemKey, string itemValue)
         {
             this.authenticationProperties.Items.Add(itemKey, itemValue);
@@ -124,6 +158,11 @@
             return this;
         }
 
+        /// <summary>
+        /// Tests whether authentication properties contains the provided items.
+        /// </summary>
+        /// <param name="items">Expected items as dictionary.</param>
+        /// <returns>The same authentication properties test builder.</returns>
         public IAndAuthenticationPropertiesTestBuilder WithItems(IDictionary<string, string> items)
         {
             this.validations.Add((expected, actual) =>
@@ -143,6 +182,11 @@
             return this;
         }
 
+        /// <summary>
+        /// Tests whether authentication properties has the same redirect URI as the provided one.
+        /// </summary>
+        /// <param name="redirectUri">Expected redirect URI.</param>
+        /// <returns>The same authentication properties test builder.</returns>
         public IAndAuthenticationPropertiesTestBuilder WithRedirectUri(string redirectUri)
         {
             this.authenticationProperties.RedirectUri = redirectUri;

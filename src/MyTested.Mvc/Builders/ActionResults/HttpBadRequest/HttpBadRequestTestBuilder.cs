@@ -40,11 +40,22 @@
             this.OfTypeErrorMessageFormat = OfTypeErrorMessage;
         }
         
+        /// <summary>
+        /// Tests whether HTTP bad request result contains deeply equal error value as the provided error object.
+        /// </summary>
+        /// <typeparam name="TError">Type of error object.</typeparam>
+        /// <param name="error">Error object.</param>
+        /// <returns>Model details test builder.</returns>
         public IModelDetailsTestBuilder<TError> WithError<TError>(TError error)
         {
             return this.WithResponseModel(error);
         }
 
+        /// <summary>
+        /// Tests whether HTTP bad request result contains error object of the provided type.
+        /// </summary>
+        /// <typeparam name="TError">Type of error object.</typeparam>
+        /// <returns>Model details test builder.</returns>
         public IModelDetailsTestBuilder<TError> WithErrorOfType<TError>()
         {
             return this.WithResponseModelOfType<TError>();
@@ -83,6 +94,10 @@
             return this.NewAndProvideTestBuilder();
         }
         
+        /// <summary>
+        /// Tests whether HTTP bad request result contains the controller's ModelState dictionary as object error.
+        /// </summary>
+        /// <returns>Base test builder with caught exception.</returns>
         public IBaseTestBuilderWithCaughtException WithModelState()
         {
             return this.WithModelState(this.Controller.ModelState);

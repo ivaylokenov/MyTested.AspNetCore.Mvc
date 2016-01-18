@@ -11,6 +11,7 @@
     /// <summary>
     /// Base class for all test builders with file action result.
     /// </summary>
+    /// <typeparam name="TFileResult">Type inheriting FileResult.</typeparam>
     public abstract class BaseFileTestBuilder<TFileResult> :
         BaseTestBuilderWithActionResult<TFileResult>
         where TFileResult : FileResult
@@ -31,6 +32,10 @@
         {
         }
 
+        /// <summary>
+        /// Validates whether file result has the provided content type.
+        /// </summary>
+        /// <param name="contentType">Content type as MediaTypeHeaderValue.</param>
         protected void ValidateContentType(MediaTypeHeaderValue contentType)
         {
             ContentTypeValidator.ValidateContentType(
@@ -39,6 +44,10 @@
                 this.ThrowNewFileResultAssertionException);
         }
 
+        /// <summary>
+        /// Validates whether file result has the provided file download name.
+        /// </summary>
+        /// <param name="fileDownloadName">File download name as string.</param>
         protected void ValidateFileDownloadName(string fileDownloadName)
         {
             var actualFileDownloadName = this.ActionResult.FileDownloadName;
@@ -51,6 +60,12 @@
             }
         }
 
+        /// <summary>
+        /// Throws new FireResultAssertionException.
+        /// </summary>
+        /// <param name="propertyName">Failed property name.</param>
+        /// <param name="expectedValue">Expected property value.</param>
+        /// <param name="actualValue">Actual property value.</param>
         protected void ThrowNewFileResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new FileResultAssertionException(string.Format(

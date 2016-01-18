@@ -34,6 +34,11 @@
         {
         }
 
+        /// <summary>
+        /// Tests whether forbid result contains specific authentication scheme provided by string.
+        /// </summary>
+        /// <param name="authenticationScheme">Expected authentication scheme as string.</param>
+        /// <returns>The same forbid test builder.</returns>
         public IAndForbidTestBuilder ContainingAuthenticationScheme(string authenticationScheme)
         {
             AuthenticationValidator.ValidateAuthenticationScheme(
@@ -43,7 +48,12 @@
 
             return this;
         }
-        
+
+        /// <summary>
+        /// Tests whether forbid result has the provided enumerable of authentication schemes.
+        /// </summary>
+        /// <param name="authenticationSchemes">Expected authentication schemes as enumerable.</param>
+        /// <returns>The same forbid test builder.</returns>
         public IAndForbidTestBuilder ContainingAuthenticationSchemes(IEnumerable<string> authenticationSchemes)
         {
             AuthenticationValidator.ValidateAuthenticationSchemes(
@@ -54,11 +64,21 @@
             return this;
         }
 
+        /// <summary>
+        /// Tests whether forbid result has the provided parameters of authentication schemes.
+        /// </summary>
+        /// <param name="authenticationSchemes">Expected authentication schemes as string parameters.</param>
+        /// <returns>The same forbid test builder.</returns>
         public IAndForbidTestBuilder ContainingAuthenticationSchemes(params string[] authenticationSchemes)
         {
             return this.ContainingAuthenticationSchemes(authenticationSchemes.AsEnumerable());
         }
 
+        /// <summary>
+        /// Tests whether forbid result has the provided authentication properties.
+        /// </summary>
+        /// <param name="properties">Expected authentication properties.</param>
+        /// <returns>The same forbid test builder.</returns>
         public IAndForbidTestBuilder WithAuthenticationProperties(AuthenticationProperties properties)
         {
             AuthenticationValidator.ValidateAuthenticationProperties(
@@ -69,6 +89,11 @@
             return this;
         }
 
+        /// <summary>
+        /// Tests whether forbid result has the provided authentication properties provided as builder.
+        /// </summary>
+        /// <param name="authenticationPropertiesBuilder">Expected authentication properties.</param>
+        /// <returns>The same forbid test builder.</returns>
         public IAndForbidTestBuilder WithAuthenticationProperties(Action<IAuthenticationPropertiesTestBuilder> authenticationPropertiesBuilder)
         {
             AuthenticationValidator.ValidateAuthenticationProperties(

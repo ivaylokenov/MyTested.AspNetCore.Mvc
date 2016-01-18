@@ -4,6 +4,9 @@
     using Attributes;
     using Base;
 
+    /// <summary>
+    /// Used for testing controllers.
+    /// </summary>
     public interface IControllerTestBuilder
     {
         /// <summary>
