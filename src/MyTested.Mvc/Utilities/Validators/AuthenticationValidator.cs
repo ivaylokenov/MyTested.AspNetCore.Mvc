@@ -72,7 +72,7 @@
         }
 
         /// <summary>
-        /// Validates whether Properties is the same as the provided ones from action result containing such property.
+        /// Validates whether Properties are the same as the provided ones from action result containing such property.
         /// </summary>
         /// <param name="actionResult">Action result with Properties.</param>
         /// <param name="properties">Expected authentication properties.</param>
@@ -91,7 +91,14 @@
                     "instead received different result");
             }
         }
-        
+
+        /// <summary>
+        /// Validates whether Properties are the same as the provided ones from action result containing such property by using a builder.
+        /// </summary>
+        /// <param name="actionResult">Action result with Properties.</param>
+        /// <param name="authenticationPropertiesBuilder">Authentication properties builder.</param>
+        /// <param name="controller">Controller type for error messages.</param>
+        /// <param name="actionName">Action name for error messages.</param>
         public static void ValidateAuthenticationProperties(
             dynamic actionResult,
             Action<IAuthenticationPropertiesTestBuilder> authenticationPropertiesBuilder,

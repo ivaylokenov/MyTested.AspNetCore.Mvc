@@ -68,7 +68,7 @@
         {
             var actionResult = MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.OkResultAction())
+                .Calling(c => c.StatusCodeAction())
                 .ShouldReturn()
                 .StatusCode()
                 .AndProvideTheActionResult();

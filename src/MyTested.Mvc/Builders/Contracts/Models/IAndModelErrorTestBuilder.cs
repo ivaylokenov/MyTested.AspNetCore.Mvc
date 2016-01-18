@@ -3,7 +3,7 @@
     /// <summary>
     /// Used for adding AndAlso() method to the the model error tests.
     /// </summary>
-    /// <typeparam name="TModel">Model from invoked action in ASP.NET MVC 6 controller.</typeparam>
+    /// <typeparam name="TModel">Model from invoked action in ASP.NET MVC controller.</typeparam>
     public interface IAndModelErrorTestBuilder<TModel> : IModelErrorTestBuilder<TModel>
     {
         /// <summary>

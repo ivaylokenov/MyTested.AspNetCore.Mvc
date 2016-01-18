@@ -7,7 +7,7 @@
     /// <summary>
     /// Provides controller, action and action result information.
     /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC 6 controller.</typeparam>
+    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
     public class AndProvideTestBuilder<TActionResult> : BaseTestBuilderWithActionResult<TActionResult>
     {
         /// <summary>

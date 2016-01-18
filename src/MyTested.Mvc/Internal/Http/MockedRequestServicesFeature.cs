@@ -4,6 +4,9 @@
     using Microsoft.AspNet.Http.Features.Internal;
     using Microsoft.Extensions.DependencyInjection;
     
+    /// <summary>
+    /// Mocked request services feature.
+    /// </summary>
     public class MockedRequestServicesFeature : IServiceProvidersFeature, IDisposable
     {
         private IServiceProvider globalServices;
@@ -12,6 +15,10 @@
 
         private bool requestServicesSet;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MockedRequestServicesFeature" /> class.
+        /// </summary>
+        /// <param name="globalServices">Global application services provider.</param>
         public MockedRequestServicesFeature(IServiceProvider globalServices)
         {
             if (globalServices == null)
@@ -22,6 +29,10 @@
             this.globalServices = globalServices;
         }
 
+        /// <summary>
+        /// Gets or sets scoped request services based on the global ones.
+        /// </summary>
+        /// <value>Service provider.</value>
         public IServiceProvider RequestServices
         {
             get
@@ -43,6 +54,9 @@
             }
         }
 
+        /// <summary>
+        /// Disposes the current scoped request services.
+        /// </summary>
         public void Dispose()
         {
             this.scope?.Dispose();

@@ -1,9 +1,9 @@
 ﻿namespace MyTested.Mvc.Tests.BuildersTests.ActionResultsTests.ChallengeTests
 {
+    using System.Collections.Generic;
     using Exceptions;
     using Setups;
     using Setups.Controllers;
-    using System.Collections.Generic;
     using Xunit;
 
     public class ChallengeTestBuilderTests

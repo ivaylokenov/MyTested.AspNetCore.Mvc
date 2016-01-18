@@ -118,6 +118,11 @@
             return this.Ok();
         }
 
+        public IActionResult StatusCodeAction()
+        {
+            return new HttpStatusCodeResult(405);
+        }
+
         public IActionResult ChallengeResultAction()
         {
             return this.Challenge();

@@ -361,6 +361,13 @@
             return !AreDeeplyEqual(expected, actual);
         }
 
+        /// <summary>
+        /// Creates a delegate from an object by providing MethodInfo filter.
+        /// </summary>
+        /// <typeparam name="TDelegate">Type of delegate to create.</typeparam>
+        /// <param name="instance">Object to get method from.</param>
+        /// <param name="methodFilter">Filter to find the method.</param>
+        /// <returns>Delegate of type TDelegate.</returns>
         public static TDelegate CreateDelegateFromMethod<TDelegate>(object instance, Func<MethodInfo, bool> methodFilter)
             where TDelegate : class
         {

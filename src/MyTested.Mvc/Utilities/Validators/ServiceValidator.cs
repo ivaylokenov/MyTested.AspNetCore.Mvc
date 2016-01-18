@@ -2,8 +2,14 @@
 {
     using MyTested.Mvc.Internal;
 
+    /// <summary>
+    /// Validator class containing application services validation logic.
+    /// </summary>
     public static class ServiceValidator
     {
+        /// <summary>
+        /// Validates whether application services are registered.
+        /// </summary>
         public static void ValidateServices()
         {
             CommonValidator.CheckForNullReference(
@@ -11,6 +17,11 @@
                 string.Format("'IsUsing' method should be called before running this test case. MyMvc must be configured and services"));
         }
 
+        /// <summary>
+        /// Validates whether service exists.
+        /// </summary>
+        /// <typeparam name="TService">Type of service to validate.</typeparam>
+        /// <param name="service">Service object to validate.</param>
         public static void ValidateServiceExists<TService>(TService service)
         {
             CommonValidator.CheckForNullReference(
