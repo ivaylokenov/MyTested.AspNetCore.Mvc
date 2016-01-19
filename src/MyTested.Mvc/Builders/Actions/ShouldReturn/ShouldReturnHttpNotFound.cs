@@ -11,10 +11,10 @@
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <summary>
-        /// Tests whether action result is HttpNotFoundResult.
+        /// Tests whether action result is HttpNotFoundResult or HttpNotFoundObjectResult.
         /// </summary>
         /// <returns>Base test builder with action result.</returns>
-        public IHttpNotFoundTestBuilder NotFound()
+        public IHttpNotFoundTestBuilder HttpNotFound()
         {
             this.ValidateActionReturnType(typeof(HttpNotFoundResult), typeof(HttpNotFoundObjectResult));
             return new HttpNotFoundTestBuilder<TActionResult>(

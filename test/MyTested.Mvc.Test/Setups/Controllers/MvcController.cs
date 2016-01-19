@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Text;
     using System.Threading.Tasks;
     using Common;
     using Microsoft.AspNet.Authorization;
@@ -133,6 +134,36 @@
             return this.Challenge(new List<string> { AuthenticationScheme.Basic, AuthenticationScheme.NTLM });
         }
 
+        public IActionResult ChallengeWithAuthenticationProperties()
+        {
+            return this.Challenge(TestObjectFactory.GetAuthenticationProperties());
+        }
+
+        public IActionResult ChallengeWithEmptyAuthenticationProperties()
+        {
+            return this.Challenge(TestObjectFactory.GetEmptyAuthenticationProperties());
+        }
+
+        public IActionResult ForbidResultAction()
+        {
+            return this.Forbid();
+        }
+
+        public IActionResult ForbidWithAuthenticationSchemes()
+        {
+            return this.Forbid(new List<string> { AuthenticationScheme.Basic, AuthenticationScheme.NTLM });
+        }
+
+        public IActionResult ForbidWithAuthenticationProperties()
+        {
+            return this.Forbid(TestObjectFactory.GetAuthenticationProperties());
+        }
+
+        public IActionResult ForbidWithEmptyAuthenticationProperties()
+        {
+            return this.Forbid(TestObjectFactory.GetEmptyAuthenticationProperties());
+        }
+
         public IActionResult FileWithVirtualPath()
         {
             return this.File("/Test", ContentType.ApplicationJson, "FileDownloadName");
@@ -151,9 +182,19 @@
             };
         }
 
+        public IActionResult FileWithNullProvider()
+        {
+            return new VirtualFileResult("Test", ContentType.ApplicationJson);
+        }
+        
         public IActionResult FileWithContents()
         {
             return this.File(new byte[] { 1, 2, 3 }, ContentType.ApplicationJson);
+        }
+
+        public IActionResult PhysicalFileResult()
+        {
+            return this.PhysicalFile("/test/file", ContentType.ApplicationJson, "FileDownloadName");
         }
 
         public IActionResult OkResultWithContentNegotiatorAction()
@@ -178,14 +219,19 @@
 
         public IActionResult ContentAction()
         {
+            var mediaTypeHeaderValue = new MediaTypeHeaderValue(ContentType.ApplicationJson)
+            {
+                Encoding = Encoding.ASCII
+            };
+
             return new ContentResult
             {
                 Content = "content",
-                ContentType = new MediaTypeHeaderValue(ContentType.ApplicationJson),
+                ContentType = mediaTypeHeaderValue,
                 StatusCode = 200
             };
         }
-
+        
         public IActionResult ContentActionWithMediaType()
         {
             return this.Content("content", new MediaTypeHeaderValue("text/plain"));
@@ -315,6 +361,11 @@
             return this.HttpBadRequest(this.ModelState);
         }
 
+        public IActionResult BadRequestWithCustomError()
+        {
+            return this.HttpBadRequest(this.responseModel);
+        }
+
         public IActionResult JsonAction()
         {
             return this.Json(this.responseModel);
@@ -336,9 +387,14 @@
             return this.Ok(this.responseModel);
         }
 
-        public IActionResult NotFoundAction()
+        public IActionResult HttpNotFoundAction()
         {
             return this.HttpNotFound();
+        }
+
+        public IActionResult HttpNotFoundWithObjectAction()
+        {
+            return this.HttpNotFound("test");
         }
 
         [Authorize]

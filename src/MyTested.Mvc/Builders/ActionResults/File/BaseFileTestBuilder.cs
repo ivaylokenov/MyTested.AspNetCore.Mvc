@@ -55,8 +55,8 @@
             {
                 this.ThrowNewFileResultAssertionException(
                     "FileDownloadName",
-                    string.Format("to be '{0}'", fileDownloadName != null ? fileDownloadName : "null"),
-                    string.Format("instead received '{0}'", actualFileDownloadName != null ? actualFileDownloadName : "null"));
+                    string.Format("to be {0}", fileDownloadName != null ? $"'{fileDownloadName}'" : "null"),
+                    string.Format("instead received {0}", actualFileDownloadName != string.Empty ? $"'{actualFileDownloadName}'" : "empty string"));
             }
         }
 

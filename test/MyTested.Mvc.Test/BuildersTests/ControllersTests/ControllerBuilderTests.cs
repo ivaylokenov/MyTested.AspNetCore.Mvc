@@ -136,6 +136,7 @@
                     .WithUsername("NewUserName")
                     .WithAuthenticationType("Custom")
                     .InRole("NormalUser")
+                    .AndAlso()
                     .InRoles("Moderator", "Administrator")
                     .InRoles(new[]
                     {
@@ -170,7 +171,7 @@
             controllerBuilder
                 .Calling(c => c.AuthorizedAction())
                 .ShouldReturn()
-                .NotFound();
+                .HttpNotFound();
 
             var controllerUser = controllerBuilder.AndProvideTheController().User;
 

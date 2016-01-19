@@ -14,6 +14,8 @@
     /// </summary>
     public class AuthenticationPropertiesTestBuilder : BaseTestBuilderWithAction, IAndAuthenticationPropertiesTestBuilder
     {
+        private const int DefaultItemsCount = 5;
+
         private readonly AuthenticationProperties authenticationProperties;
         private readonly ICollection<Action<AuthenticationProperties, AuthenticationProperties>> validations;
 
@@ -44,7 +46,7 @@
                 if (expected.AllowRefresh != actual.AllowRefresh)
                 {
                     this.ThrowNewAuthenticationPropertiesAssertionException(
-                        expected.AllowRefresh == null ? "not have allow refresh value" : string.Format("allow refresh value of '{0}'", expected.AllowRefresh),
+                        expected.AllowRefresh == null ? "not have allow refresh value" : string.Format("have allow refresh value of '{0}'", expected.AllowRefresh),
                         string.Format("in fact found '{0}'", actual.AllowRefresh == null ? "null" : actual.AllowRefresh.ToString()));
                 }
             });
@@ -65,7 +67,7 @@
                 if (expected.ExpiresUtc != actual.ExpiresUtc)
                 {
                     this.ThrowNewAuthenticationPropertiesAssertionException(
-                        expected.ExpiresUtc == null ? "not have expires value" : string.Format("expires value of '{0}'", expected.ExpiresUtc),
+                        expected.ExpiresUtc == null ? "not have expires value" : string.Format("have expires value of '{0}'", expected.ExpiresUtc),
                         string.Format("in fact found '{0}'", actual.ExpiresUtc == null ? "null" : actual.ExpiresUtc.ToString()));
                 }
             });
@@ -86,8 +88,8 @@
                 if (expected.IsPersistent != actual.IsPersistent)
                 {
                     this.ThrowNewAuthenticationPropertiesAssertionException(
-                        string.Format("is persistent value of '{0}'", expected.IsPersistent),
-                        string.Format("in fact found '{0}'", actual.IsPersistent));
+                        $"have is persistent value of '{expected.IsPersistent}'",
+                        $"in fact found '{actual.IsPersistent}'");
                 }
             });
 
@@ -107,7 +109,7 @@
                 if (expected.IssuedUtc != actual.IssuedUtc)
                 {
                     this.ThrowNewAuthenticationPropertiesAssertionException(
-                        expected.IssuedUtc == null ? "not have issued value" : string.Format("issued value of '{0}'", expected.IssuedUtc),
+                        expected.IssuedUtc == null ? "not have issued value" : string.Format("have issued value of '{0}'", expected.IssuedUtc),
                         string.Format("in fact found '{0}'", actual.IssuedUtc == null ? "null" : actual.IssuedUtc.ToString()));
                 }
             });
@@ -128,7 +130,7 @@
                 if (!actual.Items.ContainsKey(itemKey))
                 {
                     this.ThrowNewAuthenticationPropertiesAssertionException(
-                        string.Format("item with key '{0}'", itemKey),
+                        $"have item with key '{itemKey}'",
                         "such was not found");
                 }
             });
@@ -147,11 +149,14 @@
             this.authenticationProperties.Items.Add(itemKey, itemValue);
             this.validations.Add((expected, actual) =>
             {
-                if (!actual.Items.ContainsKey(itemKey) || actual.Items[itemKey] != itemValue)
+                var itemExists = actual.Items.ContainsKey(itemKey);
+                var actualValue = itemExists ? actual.Items[itemKey] : null;
+
+                if (!itemExists || actualValue != itemValue)
                 {
                     this.ThrowNewAuthenticationPropertiesAssertionException(
-                        string.Format("item with key '{0}'", itemKey),
-                        "such was not found");
+                        $"have item with key '{itemKey}' and value '{itemValue}'",
+                        $"{(itemExists ? $"the value was '{actualValue}'" : "such was not found")}");
                 }
             });
 
@@ -168,12 +173,12 @@
             this.validations.Add((expected, actual) =>
             {
                 var expectedItems = expected.Items.Count;
-                var actualItems = actual.Items.Count;
+                var actualItems = actual.Items.Count - DefaultItemsCount;
 
                 if (expectedItems != actualItems)
                 {
                     this.ThrowNewAuthenticationPropertiesAssertionException(
-                        $"{expectedItems} items",
+                        $"have {expectedItems} custom {(expectedItems != 1 ? "items" : "item")}",
                         $"in fact found {actualItems}");
                 }
             });
@@ -195,7 +200,7 @@
                 if (expected.RedirectUri != actual.RedirectUri)
                 {
                     this.ThrowNewAuthenticationPropertiesAssertionException(
-                        string.Format("'{0}' redirect URI", expected.RedirectUri),
+                        expected.RedirectUri == null ? "not have redirect URI value" : $"have '{expected.RedirectUri}' redirect URI",
                         string.Format("in fact found '{0}'", actual.RedirectUri == null ? "null" : actual.RedirectUri));
                 }
             });
@@ -225,7 +230,7 @@
         private void ThrowNewAuthenticationPropertiesAssertionException(string expectedValue, string actualValue)
         {
             throw new AuthenticationPropertiesAssertionException(string.Format(
-                        "When calling {0} action in {1} expected authentication properties to have {2}, but {3}.",
+                        "When calling {0} action in {1} expected authentication properties to {2}, but {3}.",
                         this.ActionName,
                         this.Controller.GetName(),
                         expectedValue,

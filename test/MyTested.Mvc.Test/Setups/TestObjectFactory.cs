@@ -7,6 +7,7 @@
     using Common;
     using Microsoft.AspNet.FileProviders;
     using Microsoft.AspNet.Http;
+    using Microsoft.AspNet.Http.Authentication;
     using Microsoft.AspNet.Http.Internal;
     using Microsoft.AspNet.Mvc;
     using Microsoft.Extensions.DependencyInjection;
@@ -40,6 +41,28 @@
                     options.MaxModelValidationErrors = 10;
                 });
             };
+        }
+
+        public static AuthenticationProperties GetAuthenticationProperties()
+        {
+            var authenticationProperties = new AuthenticationProperties
+            {
+                AllowRefresh = true,
+                ExpiresUtc = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)),
+                IsPersistent = true,
+                IssuedUtc = new DateTimeOffset(new DateTime(2015, 1, 1, 1, 1, 1)),
+                RedirectUri = "test"
+            };
+
+            authenticationProperties.Items.Add("TestKeyItem", "TestValueItem");
+            authenticationProperties.Items.Add("AnotherTestKeyItem", "AnotherTestValueItem");
+
+            return authenticationProperties;
+        }
+
+        public static AuthenticationProperties GetEmptyAuthenticationProperties()
+        {
+            return new AuthenticationProperties();
         }
 
         public static HttpRequest GetCustomHttpRequestMessage()

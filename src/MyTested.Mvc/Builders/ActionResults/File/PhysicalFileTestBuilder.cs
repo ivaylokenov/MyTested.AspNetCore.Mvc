@@ -71,8 +71,8 @@
             {
                 this.ThrowNewFileResultAssertionException(
                     "FileName",
-                    string.Format("to be '{0}'", physicalPath != null ? physicalPath : "null"),
-                    string.Format("instead received '{0}'", actualPhysicalPath != null ? actualPhysicalPath : "null"));
+                    string.Format("to be {0}", physicalPath != null ? $"'{physicalPath}'" : "null"),
+                    $"instead received '{actualPhysicalPath}'");
             }
 
             return this;

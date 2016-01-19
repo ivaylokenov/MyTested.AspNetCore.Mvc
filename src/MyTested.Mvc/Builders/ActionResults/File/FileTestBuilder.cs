@@ -106,8 +106,8 @@
             {
                 this.ThrowNewFileResultAssertionException(
                     "FileName",
-                    string.Format("to be '{0}'", fileName != null ? fileName : "null"),
-                    string.Format("instead received '{0}'", actualFileName != null ? actualFileName : "null"));
+                    $"to be '{fileName}'",
+                    $"instead received '{actualFileName}'");
             }
 
             return this;

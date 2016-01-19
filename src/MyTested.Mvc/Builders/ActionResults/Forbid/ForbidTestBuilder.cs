@@ -116,8 +116,8 @@
 
         private void ThrowNewForbidResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
-            throw new ChallengeResultAssertionException(string.Format(
-                    "When calling {0} action in {1} expected challenge result {2} {3}, but {4}.",
+            throw new ForbidResultAssertionException(string.Format(
+                    "When calling {0} action in {1} expected forbid result {2} {3}, but {4}.",
                     this.ActionName,
                     this.Controller.GetName(),
                     propertyName,
