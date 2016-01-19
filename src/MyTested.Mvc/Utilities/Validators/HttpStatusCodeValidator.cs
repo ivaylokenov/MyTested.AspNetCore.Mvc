@@ -8,6 +8,12 @@
     /// </summary>
     public static class HttpStatusCodeValidator
     {
+        /// <summary>
+        /// Validates whether two HTTP status codes are the same.
+        /// </summary>
+        /// <param name="expectedHttpStatusCode">Expected HTTP status code.</param>
+        /// <param name="actualHttpStatusCode">Actual HTTP status code.</param>
+        /// <param name="failedValidationAction">Action to call in case of failed validation.</param>
         public static void ValidateHttpStatusCode(
             HttpStatusCode expectedHttpStatusCode,
             int? actualHttpStatusCode,
@@ -30,6 +36,12 @@
             }
         }
 
+        /// <summary>
+        /// Validates whether StatusCode is the same as the provided one from action result containing such property.
+        /// </summary>
+        /// <param name="actionResult">Action result with StatusCode.</param>
+        /// <param name="expectedHttpStatusCode">Expected HTTP status code.</param>
+        /// <param name="failedValidationAction">Action to call in case of failed validation.</param>
         public static void ValidateHttpStatusCode(
             dynamic actionResult,
             HttpStatusCode expectedHttpStatusCode,

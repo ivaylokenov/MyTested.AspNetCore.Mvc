@@ -3,7 +3,7 @@
     using System.Collections.Generic;
 
     /// <summary>
-    /// Base class for all test builders with action call.
+    /// Base interface for all test builders with action call.
     /// </summary>
     public interface IBaseTestBuilderWithAction : IBaseTestBuilder
     {

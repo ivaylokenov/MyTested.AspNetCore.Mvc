@@ -77,6 +77,22 @@
         }
 
         [Fact]
+        public void WithFileDownloadNameShouldThrowExceptionWithEmptyFileDownloadName()
+        {
+            Test.AssertException<FileResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.FileWithStream())
+                        .ShouldReturn()
+                        .File()
+                        .WithFileDownloadName(null);
+                },
+                "When calling FileWithStream action in MvcController expected file result FileDownloadName to be null, but instead received empty string.");
+        }
+
+        [Fact]
         public void WithStreamShouldNotThrowExceptionWithValidStreamContents()
         {
             MyMvc
@@ -85,6 +101,22 @@
                 .ShouldReturn()
                 .File()
                 .WithStream(new MemoryStream(new byte[] { 1, 2, 3 }));
+        }
+
+        [Fact]
+        public void WithStreamShouldThrowExceptionWithInvalidStream()
+        {
+            Test.AssertException<FileResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.FileWithStream())
+                        .ShouldReturn()
+                        .File()
+                        .WithStream(new MemoryStream(new byte[] { 1, 2 }));
+                },
+                "When calling FileWithStream action in MvcController expected file result FileStream to have contents as the provided one, but instead received different result.");
         }
 
         [Fact]
@@ -126,6 +158,34 @@
                 .ShouldReturn()
                 .File()
                 .WithFileProvider(fileProvider);
+        }
+
+        [Fact]
+        public void WithFileProviderShouldNotThrowExceptionWithNullFileProvider()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .WithoutValidation()
+                .Calling(c => c.FileWithNullProvider())
+                .ShouldReturn()
+                .File()
+                .WithFileProvider(null);
+        }
+
+        [Fact]
+        public void FileShouldThrowWhenPropertyDoesNotExist()
+        {
+            Test.AssertException<FileResultAssertionException>(
+                   () =>
+                   {
+                       MyMvc
+                           .Controller<MvcController>()
+                           .Calling(c => c.FileWithVirtualPath())
+                           .ShouldReturn()
+                           .File()
+                           .WithContents(new byte[0]);
+                   },
+                   "When calling FileWithVirtualPath action in MvcController expected file result to contain file contents, but it could not be found.");
         }
 
         [Fact]
@@ -172,6 +232,23 @@
                         .WithFileProviderOfType<IFileProvider>();
                 }, 
                 "When calling FileWithFileProvider action in MvcController expected file result FileProvider to be of IFileProvider type, but instead received CustomFileProvider.");
+        }
+
+        [Fact]
+        public void WithFileProviderOfTypeShouldNotThrowExceptionWithNullFileProvider()
+        {
+            Test.AssertException<FileResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .WithoutValidation()
+                        .Calling(c => c.FileWithNullProvider())
+                        .ShouldReturn()
+                        .File()
+                        .WithFileProviderOfType<CustomFileProvider>();
+                },
+                "When calling FileWithNullProvider action in MvcController expected file result FileProvider to be of CustomFileProvider type, but instead received null.");
         }
 
         [Fact]

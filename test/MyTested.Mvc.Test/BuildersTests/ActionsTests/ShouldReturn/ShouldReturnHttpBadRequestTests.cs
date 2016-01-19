@@ -47,7 +47,7 @@
                 {
                     MyMvc
                         .Controller<MvcController>()
-                        .Calling(c => c.NotFoundAction())
+                        .Calling(c => c.HttpNotFoundAction())
                         .ShouldReturn()
                         .HttpBadRequest();
                 },

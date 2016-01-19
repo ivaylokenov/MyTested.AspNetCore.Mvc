@@ -79,6 +79,11 @@
             return this;
         }
 
+        /// <summary>
+        /// Tests whether created at action result has specific action name.
+        /// </summary>
+        /// <param name="actionName">Expected action name.</param>
+        /// <returns>The same created test builder.</returns>
         public IAndCreatedTestBuilder AtAction(string actionName)
         {
             var createdAtActionResult = this.GetCreatedResult<CreatedAtActionResult>("ActionName");
@@ -95,6 +100,11 @@
             return this;
         }
 
+        /// <summary>
+        /// Tests whether created at action result has specific controller name.
+        /// </summary>
+        /// <param name="controllerName">Expected controller name.</param>
+        /// <returns>The same created test builder.</returns>
         public IAndCreatedTestBuilder AtController(string controllerName)
         {
             var createdAtActionResult = this.GetCreatedResult<CreatedAtActionResult>("ControllerName");

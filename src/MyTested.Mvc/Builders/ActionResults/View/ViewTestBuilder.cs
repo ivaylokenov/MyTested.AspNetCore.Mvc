@@ -1,20 +1,21 @@
 ﻿namespace MyTested.Mvc.Builders.ActionResults.View
 {
     using System;
-    using Contracts.ActionResults.View;
-    using Microsoft.AspNet.Mvc;
-    using Base;
     using System.Net;
-    using Utilities.Validators;
+    using Base;
+    using Contracts.ActionResults.View;
     using Exceptions;
-    using Utilities;
-    using Microsoft.Net.Http.Headers;
-    using Microsoft.AspNet.Mvc.ViewEngines;
     using Internal.Extensions;
+    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNet.Mvc.ViewEngines;
+    using Microsoft.Net.Http.Headers;
+    using Utilities;
+    using Utilities.Validators;
 
     /// <summary>
     /// Used for testing view results.
     /// </summary>
+    /// <typeparam name="TViewResult">Type of view result - ViewResult or PartialViewResult.</typeparam>
     public class ViewTestBuilder<TViewResult>
         : BaseTestBuilderWithViewFeature<TViewResult>, IAndViewTestBuilder
     {
@@ -27,6 +28,7 @@
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Caught exception during the action execution.</param>
         /// <param name="viewResult">Result from the tested action.</param>
+        /// <param name="viewType">View type name.</param>
         public ViewTestBuilder(
             Controller controller,
             string actionName,
@@ -138,6 +140,10 @@
             return this;
         }
 
+        /// <summary>
+        /// Gets the view engine instance from a view result.
+        /// </summary>
+        /// <returns>Type of IViewEngine.</returns>
         protected IViewEngine GetViewEngine()
         {
             IViewEngine viewEngine = null;
@@ -149,7 +155,13 @@
             return viewEngine;
         }
 
-        protected void ThrowNewViewResultAssertionException(string propertyName, string expectedViewName, string actualViewName)
+        /// <summary>
+        /// Throws new ViewResultAssertionException.
+        /// </summary>
+        /// <param name="propertyName">Failed property.</param>
+        /// <param name="expectedValue">Expected property value.</param>
+        /// <param name="actualValue">Actual property value.</param>
+        protected void ThrowNewViewResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new ViewResultAssertionException(string.Format(
                     "When calling {0} action in {1} expected {2} result {3} {4}, but {5}.",
@@ -157,8 +169,8 @@
                     this.Controller,
                     this.viewType,
                     propertyName,
-                    ViewTestHelper.GetFriendlyViewName(expectedViewName),
-                    ViewTestHelper.GetFriendlyViewName(actualViewName)));
+                    expectedValue,
+                    actualValue));
         }
     }
 }

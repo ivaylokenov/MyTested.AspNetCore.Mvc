@@ -1,9 +1,9 @@
 ﻿namespace MyTested.Mvc.Tests.BuildersTests.ActionResultsTests.ChallengeTests
 {
+    using System.Collections.Generic;
     using Exceptions;
     using Setups;
     using Setups.Controllers;
-    using System.Collections.Generic;
     using Xunit;
 
     public class ChallengeTestBuilderTests
@@ -87,6 +87,50 @@
                 .ShouldReturn()
                 .Challenge()
                 .ContainingAuthenticationSchemes(AuthenticationScheme.Basic, AuthenticationScheme.NTLM);
+        }
+
+        [Fact]
+        public void ShouldReturnChallengeShouldNotThrowExceptionWithValidAuthenticationProperties()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.ChallengeWithAuthenticationProperties())
+                .ShouldReturn()
+                .Challenge()
+                .WithAuthenticationProperties(TestObjectFactory.GetAuthenticationProperties());
+        }
+
+        [Fact]
+        public void ShouldReturnChallengeShouldThrowExceptionWithInvalidAuthenticationProperties()
+        {
+            Test.AssertException<ChallengeResultAssertionException>(
+                () =>
+                {
+                    var authenticationProperties = TestObjectFactory.GetAuthenticationProperties();
+
+                    authenticationProperties.AllowRefresh = false;
+
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.ChallengeWithAuthenticationProperties())
+                        .ShouldReturn()
+                        .Challenge()
+                        .WithAuthenticationProperties(authenticationProperties);
+                },
+                "When calling ChallengeWithAuthenticationProperties action in MvcController expected challenge result authentication properties to be the same as the provided one, but instead received different result.");
+        }
+
+        [Fact]
+        public void AndAlsoShouldWorkCorrectly()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.ChallengeWithAuthenticationSchemes())
+                .ShouldReturn()
+                .Challenge()
+                .ContainingAuthenticationScheme(AuthenticationScheme.Basic)
+                .AndAlso()
+                .ContainingAuthenticationScheme(AuthenticationScheme.NTLM);
         }
     }
 }

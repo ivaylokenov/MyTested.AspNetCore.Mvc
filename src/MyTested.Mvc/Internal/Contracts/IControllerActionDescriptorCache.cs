@@ -3,8 +3,16 @@
     using System.Reflection;
     using Microsoft.AspNet.Mvc.Controllers;
 
+    /// <summary>
+    /// Caches controller action descriptors by MethodInfo.
+    /// </summary>
     public interface IControllerActionDescriptorCache
     {
+        /// <summary>
+        /// Gets the controller action descriptor for the provided method info.
+        /// </summary>
+        /// <param name="methodInfo">Method info of the controller action descriptor to get.</param>
+        /// <returns>Controller action descriptor.</returns>
         ControllerActionDescriptor GetActionDescriptor(MethodInfo methodInfo);
     }
 }

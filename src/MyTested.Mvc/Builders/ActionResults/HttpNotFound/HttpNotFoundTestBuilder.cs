@@ -32,7 +32,7 @@
         }
 
         /// <summary>
-        /// Tests whether no response model is returned from the invoked action.
+        /// Tests whether no response model is returned from the HTTP not found result.
         /// </summary>
         /// <returns>Base test builder with action.</returns>
         public IBaseTestBuilderWithCaughtException WithNoResponseModel()
@@ -41,7 +41,7 @@
             if (actualResult == null)
             {
                 throw new ResponseModelAssertionException(string.Format(
-                        "When calling {0} action in {1} expected to not have response model but in fact response model was found.",
+                        "When calling {0} action in {1} expected to not have response model, but in fact response model was found.",
                         this.ActionName,
                         this.Controller.GetName()));
             }

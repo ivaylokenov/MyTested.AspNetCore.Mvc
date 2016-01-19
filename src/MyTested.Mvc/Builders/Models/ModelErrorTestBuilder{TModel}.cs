@@ -13,7 +13,7 @@
     /// <summary>
     /// Used for testing the model errors.
     /// </summary>
-    /// <typeparam name="TModel">Model from invoked action in ASP.NET MVC 6 controller.</typeparam>
+    /// <typeparam name="TModel">Model from invoked action in ASP.NET MVC controller.</typeparam>
     public class ModelErrorTestBuilder<TModel> : ModelErrorTestBuilder, IAndModelErrorTestBuilder<TModel>
     {
         /// <summary>

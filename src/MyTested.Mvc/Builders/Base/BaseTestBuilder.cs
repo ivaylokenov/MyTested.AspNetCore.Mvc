@@ -6,6 +6,9 @@
     using Microsoft.AspNet.Mvc;
     using Utilities.Validators;
 
+    /// <summary>
+    /// Base class for all test builder.
+    /// </summary>
     public abstract class BaseTestBuilder : IBaseTestBuilder
     {
         private Controller controller;
@@ -46,7 +49,7 @@
         /// <summary>
         /// Gets the controller on which the action is tested.
         /// </summary>
-        /// <returns>ASP.NET MVC 6 controller on which the action is tested.</returns>
+        /// <returns>ASP.NET MVC controller on which the action is tested.</returns>
         public Controller AndProvideTheController()
         {
             return this.Controller;

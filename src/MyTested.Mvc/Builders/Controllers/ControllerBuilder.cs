@@ -29,7 +29,7 @@
     /// <summary>
     /// Used for building the action which will be tested.
     /// </summary>
-    /// <typeparam name="TController">Class inheriting ASP.NET MVC 6 controller.</typeparam>
+    /// <typeparam name="TController">Class inheriting ASP.NET MVC controller.</typeparam>
     public class ControllerBuilder<TController> : IAndControllerBuilder<TController>
         where TController : Controller
     {
@@ -43,7 +43,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="ControllerBuilder{TController}" /> class.
         /// </summary>
-        /// <param name="controllerInstance">Instance of the tested ASP.NET MVC 6 controller.</param>
+        /// <param name="controllerInstance">Instance of the tested ASP.NET MVC controller.</param>
         public ControllerBuilder(TController controllerInstance = null)
         {
             this.Controller = controllerInstance;
@@ -54,9 +54,9 @@
         }
 
         /// <summary>
-        /// Gets the ASP.NET MVC 6 controller instance to be tested.
+        /// Gets the ASP.NET MVC controller instance to be tested.
         /// </summary>
-        /// <value>Instance of the ASP.NET MVC 6 controller.</value>
+        /// <value>Instance of the ASP.NET MVC controller.</value>
         public TController Controller
         {
             get
@@ -71,9 +71,9 @@
             }
         }
 
-        public HttpRequest HttpRequest { get; private set; }
+        private HttpRequest HttpRequest { get; set; }
 
-        public HttpContext HttpContext { get; private set; }
+        private HttpContext HttpContext { get; set; }
 
         private IServiceProvider Services => this.HttpContext.RequestServices;
 

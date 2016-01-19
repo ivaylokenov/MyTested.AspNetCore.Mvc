@@ -40,33 +40,57 @@
             this.OfTypeErrorMessageFormat = OfTypeErrorMessage;
         }
         
+        /// <summary>
+        /// Tests whether HTTP bad request result contains deeply equal error value as the provided error object.
+        /// </summary>
+        /// <typeparam name="TError">Type of error object.</typeparam>
+        /// <param name="error">Error object.</param>
+        /// <returns>Model details test builder.</returns>
         public IModelDetailsTestBuilder<TError> WithError<TError>(TError error)
         {
             return this.WithResponseModel(error);
         }
 
+        /// <summary>
+        /// Tests whether HTTP bad request result contains error object of the provided type.
+        /// </summary>
+        /// <typeparam name="TError">Type of error object.</typeparam>
+        /// <returns>Model details test builder.</returns>
         public IModelDetailsTestBuilder<TError> WithErrorOfType<TError>()
         {
             return this.WithResponseModelOfType<TError>();
         }
 
         /// <summary>
-        /// Tests HTTP bad request result with specific error using test builder.
+        /// Tests whether no specific error is returned from the HTTP bad request result.
+        /// </summary>
+        /// <returns>Base test builder.</returns>
+        public IBaseTestBuilderWithCaughtException WithNoError()
+        {
+            var actualResult = this.ActionResult as BadRequestResult;
+            if (actualResult == null)
+            {
+                throw new ResponseModelAssertionException(string.Format(
+                        "When calling {0} action in {1} expected HTTP bad request result to not have error message, but in fact such was found.",
+                        this.ActionName,
+                        this.Controller.GetName()));
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Tests HTTP bad request result with specific text error using test builder.
         /// </summary>
         /// <returns>Bad request with error message test builder.</returns>
         public IHttpBadRequestErrorMessageTestBuilder WithErrorMessage()
         {
-            var badRequestObjectResultValue = this.GetBadRequestObjectResultValue() as string;
-            if (badRequestObjectResultValue == null)
-            {
-                this.ThrowNewHttpBadRequestResultAssertionException();
-            }
-
+            var actualErrorMessage = this.GetBadRequestErrorMessage();
             return new HttpBadRequestErrorMessageTestBuilder(
                 this.Controller,
                 this.ActionName,
                 this.CaughtException,
-                badRequestObjectResultValue);
+                actualErrorMessage);
         }
 
         /// <summary>
@@ -76,16 +100,19 @@
         /// <returns>Base test builder.</returns>
         public IBaseTestBuilderWithCaughtException WithErrorMessage(string error)
         {
-            var badRequestObjectResultValue = this.GetBadRequestObjectResultValue();
-            var actualMessage = badRequestObjectResultValue as string;
-            this.ValidateErrorMessage(error, actualMessage);
+            var actualErrorMessage = this.GetBadRequestErrorMessage();
+            this.ValidateErrorMessage(error, actualErrorMessage);
 
             return this.NewAndProvideTestBuilder();
         }
         
-        public IBaseTestBuilderWithCaughtException WithModelState()
+        /// <summary>
+        /// Tests whether HTTP bad request result contains the controller's ModelState dictionary as object error.
+        /// </summary>
+        /// <returns>Base test builder with caught exception.</returns>
+        public IBaseTestBuilderWithCaughtException WithModelStateError()
         {
-            return this.WithModelState(this.Controller.ModelState);
+            return this.WithModelStateError(this.Controller.ModelState);
         }
 
         /// <summary>
@@ -93,7 +120,7 @@
         /// </summary>
         /// <param name="modelState">Model state dictionary to deeply compare to the actual one.</param>
         /// <returns>Base test builder.</returns>
-        public IBaseTestBuilderWithCaughtException WithModelState(ModelStateDictionary modelState)
+        public IBaseTestBuilderWithCaughtException WithModelStateError(ModelStateDictionary modelState)
         {
             var badRequestObjectResultValue = this.GetBadRequestObjectResultValue();
             var actualModelState = this.GetModelStateFromSerializableError(badRequestObjectResultValue);
@@ -155,7 +182,7 @@
         /// </summary>
         /// <typeparam name="TRequestModel">Type of model for which the model state errors will be tested.</typeparam>
         /// <returns>Model error test builder.</returns>
-        public IModelErrorTestBuilder<TRequestModel> WithModelStateFor<TRequestModel>()
+        public IModelErrorTestBuilder<TRequestModel> WithModelStateErrorFor<TRequestModel>()
         {
             var badRequestObjectResultValue = this.GetBadRequestObjectResultValue();
             return new ModelErrorTestBuilder<TRequestModel>(
@@ -187,11 +214,22 @@
             return actualBadRequestResult.Value;
         }
 
+        private string GetBadRequestErrorMessage()
+        {
+            var errorMessage = this.GetBadRequestObjectResultValue() as string;
+            if (errorMessage == null)
+            {
+                this.ThrowNewHttpBadRequestResultAssertionException();
+            }
+
+            return errorMessage;
+        }
+
         private void ValidateErrorMessage(string expectedMessage, string actualMessage)
         {
             if (expectedMessage != actualMessage)
             {
-                this.ThrowNewHttpBadRequestResultAssertionException(expectedMessage, actualMessage);
+                this.ThrowNewHttpBadRequestResultAssertionException($"message '{expectedMessage}'", $"'{actualMessage}'");
             }
         }
 
@@ -200,7 +238,7 @@
             var serializableError = error as SerializableError;
             if (serializableError == null)
             {
-                this.ThrowNewHttpBadRequestResultAssertionException("model state dictionary", "other type of error");
+                this.ThrowNewHttpBadRequestResultAssertionException("model state dictionary as error", "other type of error");
             }
             
             var result = new ModelStateDictionary();
@@ -221,11 +259,11 @@
         private void ThrowNewHttpBadRequestResultAssertionException(string expectedMessage = null, string actualMessage = null)
         {
             throw new HttpBadRequestResultAssertionException(string.Format(
-                    "When calling {0} action in {1} expected HTTP bad request with {2}, but instead received {3}.",
+                    "When calling {0} action in {1} expected HTTP bad request result with {2}, but instead received {3}.",
                     this.ActionName,
                     this.Controller.GetName(),
-                    expectedMessage == null ? "error message" : $"message '{expectedMessage}'",
-                    actualMessage == null ? "non-string value" : $"'{actualMessage}'"));
+                    expectedMessage == null ? "error message" : $"{expectedMessage}",
+                    actualMessage == null ? "non-string value" : $"{actualMessage}"));
         }
     }
 }

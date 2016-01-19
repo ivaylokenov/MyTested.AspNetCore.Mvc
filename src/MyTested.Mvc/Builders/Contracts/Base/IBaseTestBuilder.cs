@@ -12,7 +12,7 @@
         /// <summary>
         /// Gets the controller on which the action is tested.
         /// </summary>
-        /// <returns>ASP.NET MVC 6 controller on which the action is tested.</returns>
+        /// <returns>ASP.NET MVC controller on which the action is tested.</returns>
         Controller AndProvideTheController();
 
         /// <summary>

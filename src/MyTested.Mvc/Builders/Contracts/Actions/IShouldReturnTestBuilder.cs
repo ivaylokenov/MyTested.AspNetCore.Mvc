@@ -102,12 +102,12 @@
         /// </summary>
         /// <returns>Bad request test builder.</returns>
         IHttpBadRequestTestBuilder HttpBadRequest();
-        
+
         /// <summary>
-        /// Tests whether action result is NotFoundResult.
+        /// Tests whether action result is HttpNotFoundResult or HttpNotFoundObjectResult
         /// </summary>
         /// <returns>Base test builder with action result.</returns>
-        IHttpNotFoundTestBuilder NotFound();
+        IHttpNotFoundTestBuilder HttpNotFound();
         
         /// <summary>
         /// Tests whether action result is HttpUnauthorizedResult.

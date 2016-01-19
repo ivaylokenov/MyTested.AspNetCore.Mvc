@@ -11,7 +11,7 @@
     /// <summary>
     /// Class containing AndAlso() method allowing additional assertions after model state tests.
     /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC 6 controller.</typeparam>
+    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
     public class AndTestBuilder<TActionResult> : BaseTestBuilderWithActionResult<TActionResult>,
         IAndTestBuilder<TActionResult>
     {

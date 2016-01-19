@@ -11,7 +11,7 @@
     /// <summary>
     /// Base class for all response model test builders.
     /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC 6 controller.</typeparam>
+    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
     public abstract class BaseResponseModelTestBuilder<TActionResult>
         : BaseTestBuilderWithActionResult<TActionResult>, IBaseResponseModelTestBuilder
     {
@@ -36,8 +36,16 @@
             this.OfTypeErrorMessageFormat = OfTypeErrorMessage;
         }
 
+        /// <summary>
+        /// Gets or sets the error message format for the response model assertions.
+        /// </summary>
+        /// <value>String value.</value>
         protected string ErrorMessageFormat { get; set; }
 
+        /// <summary>
+        /// Gets or sets the error message format for the response model type assertions.
+        /// </summary>
+        /// <value>String value.</value>
         protected string OfTypeErrorMessageFormat { get; set; }
 
         /// <summary>

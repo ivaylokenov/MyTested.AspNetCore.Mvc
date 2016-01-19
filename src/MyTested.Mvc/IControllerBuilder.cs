@@ -13,7 +13,7 @@
     /// <summary>
     /// Used for building the action which will be tested.
     /// </summary>
-    /// <typeparam name="TController">Class inheriting ASP.NET MVC 6 controller.</typeparam>
+    /// <typeparam name="TController">Class inheriting ASP.NET MVC controller.</typeparam>
     public interface IControllerBuilder<TController>
         where TController : Controller
     {

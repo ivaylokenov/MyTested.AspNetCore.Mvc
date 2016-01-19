@@ -14,7 +14,7 @@
     /// <summary>
     /// Used for building the action result which will be tested.
     /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC 6 controller.</typeparam>
+    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
     public class ActionResultTestBuilder<TActionResult>
         : BaseTestBuilderWithActionResult<TActionResult>, IActionResultTestBuilder<TActionResult>
     {

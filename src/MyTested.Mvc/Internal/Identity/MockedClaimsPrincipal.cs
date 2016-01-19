@@ -37,7 +37,7 @@
         /// Gets the IIdentity of the IPrinciple.
         /// </summary>
         /// <value>IIdentity object.</value>
-        public IIdentity Identity { get; private set; }
+        public new IIdentity Identity { get; private set; }
         
         /// <summary>
         /// Static constructor for creating default authenticated mocked user object with "TestUser" username.

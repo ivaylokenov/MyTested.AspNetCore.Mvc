@@ -7,14 +7,14 @@
     /// <summary>
     /// Class containing methods for testing HttpNotFoundResult or HttpNotFoundObjectResult.
     /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC 6 controller.</typeparam>
+    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <summary>
-        /// Tests whether action result is HttpNotFoundResult.
+        /// Tests whether action result is HttpNotFoundResult or HttpNotFoundObjectResult.
         /// </summary>
         /// <returns>Base test builder with action result.</returns>
-        public IHttpNotFoundTestBuilder NotFound()
+        public IHttpNotFoundTestBuilder HttpNotFound()
         {
             this.ValidateActionReturnType(typeof(HttpNotFoundResult), typeof(HttpNotFoundObjectResult));
             return new HttpNotFoundTestBuilder<TActionResult>(

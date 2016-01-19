@@ -1,5 +1,6 @@
 ﻿namespace MyTested.Mvc.Tests.BuildersTests.ActionResultsTests.HttpBadRequestTests
 {
+    using System.Collections.Generic;
     using Exceptions;
     using Microsoft.AspNet.Mvc.ModelBinding;
     using Setups;
@@ -9,6 +10,55 @@
 
     public class HttpBadRequestTestBuilderTests
     {
+        [Fact]
+        public void WithErrorShouldNotThrowExceptionWithCorrectErrorObject()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.BadRequestWithCustomError())
+                .ShouldReturn()
+                .HttpBadRequest()
+                .WithError(TestObjectFactory.GetListOfResponseModels());
+        }
+
+        [Fact]
+        public void WithErrorOfTypeShouldNotThrowExceptionWithCorrectErrorObject()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.BadRequestWithCustomError())
+                .ShouldReturn()
+                .HttpBadRequest()
+                .WithErrorOfType<List<ResponseModel>>();
+        }
+
+        [Fact]
+        public void WithNoErrorShouldNotThrowExceptionWithNoError()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.BadRequestAction())
+                .ShouldReturn()
+                .HttpBadRequest()
+                .WithNoError();
+        }
+
+        [Fact]
+        public void WithNoErrorShouldThrowExceptionWithError()
+        {
+            Test.AssertException<ResponseModelAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.BadRequestWithCustomError())
+                        .ShouldReturn()
+                        .HttpBadRequest()
+                        .WithNoError();
+                },
+                "When calling BadRequestWithCustomError action in MvcController expected HTTP bad request result to not have error message, but in fact such was found.");
+        }
+
         [Fact]
         public void WithErrorMessageShouldNotThrowExceptionWhenResultHasErrorMessage()
         {
@@ -60,7 +110,38 @@
                         .HttpBadRequest()
                         .WithErrorMessage("Good request");
                 }, 
-                "When calling BadRequestWithErrorAction action in MvcController expected HTTP bad request with message 'Good request', but instead received 'Bad request'.");
+                "When calling BadRequestWithErrorAction action in MvcController expected HTTP bad request result with message 'Good request', but instead received 'Bad request'.");
+        }
+
+        [Fact]
+        public void WithErrorMessageShouldThrowExceptionWhenResultIsNotString()
+        {
+            Test.AssertException<HttpBadRequestResultAssertionException>(
+                () =>
+                {
+                    var requestModelWithErrors = TestObjectFactory.GetRequestModelWithErrors();
+
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
+                        .ShouldReturn()
+                        .HttpBadRequest()
+                        .WithErrorMessage("Good request");
+                },
+                "When calling BadRequestWithModelState action in MvcController expected HTTP bad request result with error message, but instead received non-string value.");
+        }
+
+        [Fact]
+        public void WithModelStateShouldNotThrowExceptionWhenModelStateHasDefaultErrors()
+        {
+            var requestModelWithErrors = TestObjectFactory.GetRequestModelWithErrors();
+
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
+                .ShouldReturn()
+                .HttpBadRequest()
+                .WithModelStateError();
         }
 
         [Fact]
@@ -76,7 +157,7 @@
                 .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
                 .ShouldReturn()
                 .HttpBadRequest()
-                .WithModelState(modelState);
+                .WithModelStateError(modelState);
         }
 
         [Fact]
@@ -95,9 +176,27 @@
                         .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
                         .ShouldReturn()
                         .HttpBadRequest()
-                        .WithModelState(modelState);
+                        .WithModelStateError(modelState);
                 }, 
                 "When calling BadRequestWithModelState action in MvcController expected HTTP bad request model state dictionary to contain String key, but none found.");
+        }
+
+        [Fact]
+        public void WithModelStateShouldThrowExceptionWhenErrorIsNotModelState()
+        {
+            Test.AssertException<HttpBadRequestResultAssertionException>(
+                () =>
+                {
+                    var modelState = new ModelStateDictionary();
+
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.BadRequestWithErrorAction())
+                        .ShouldReturn()
+                        .HttpBadRequest()
+                        .WithModelStateError(modelState);
+                },
+                "When calling BadRequestWithErrorAction action in MvcController expected HTTP bad request result with model state dictionary as error, but instead received other type of error.");
         }
 
         [Fact]
@@ -115,7 +214,7 @@
                         .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
                         .ShouldReturn()
                         .HttpBadRequest()
-                        .WithModelState(modelState);
+                        .WithModelStateError(modelState);
                 }, 
                 "When calling BadRequestWithModelState action in MvcController expected HTTP bad request model state dictionary to contain 1 keys, but found 2.");
         }
@@ -137,7 +236,7 @@
                         .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
                         .ShouldReturn()
                         .HttpBadRequest()
-                        .WithModelState(modelState);
+                        .WithModelStateError(modelState);
                 }, 
                 "When calling BadRequestWithModelState action in MvcController expected HTTP bad request model state dictionary to contain 3 keys, but found 2.");
         }
@@ -158,9 +257,9 @@
                         .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
                         .ShouldReturn()
                         .HttpBadRequest()
-                        .WithModelState(modelState);
+                        .WithModelStateError(modelState);
                 },
-                "When calling BadRequestWithModelState action in MvcController expected HTTP bad request with message 'The RequiredString field is not required.', but instead received 'The RequiredString field is required.'.");
+                "When calling BadRequestWithModelState action in MvcController expected HTTP bad request result with message 'The RequiredString field is not required.', but instead received 'The RequiredString field is required.'.");
         }
 
         [Fact]
@@ -180,7 +279,7 @@
                         .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
                         .ShouldReturn()
                         .HttpBadRequest()
-                        .WithModelState(modelState);
+                        .WithModelStateError(modelState);
                 }, 
                 "When calling BadRequestWithModelState action in MvcController expected HTTP bad request model state dictionary to contain 2 errors for RequiredString key, but found 1.");
         }
@@ -198,7 +297,7 @@
                 .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
                 .ShouldReturn()
                 .HttpBadRequest()
-                .WithModelStateFor<RequestModel>()
+                .WithModelStateErrorFor<RequestModel>()
                 .ContainingModelStateErrorFor(m => m.Integer).ThatEquals("The field Integer must be between 1 and 2147483647.")
                 .AndAlso()
                 .ContainingModelStateErrorFor(m => m.RequiredString).BeginningWith("The RequiredString")

@@ -89,7 +89,7 @@
         /// <returns>The same content test builder.</returns>
         public IAndContentTestBuilder WithDefaultEncoding()
         {
-            return this.WithEncoding(new UTF8Encoding(false, true));
+            return this.WithEncoding(null);
         }
 
         /// <summary>
@@ -99,13 +99,13 @@
         /// <returns>The same content test builder.</returns>
         public IAndContentTestBuilder WithEncoding(Encoding encoding)
         {
-            var actualEncoding = this.ActionResult.ContentType.Encoding;
-            if (!encoding.Equals(actualEncoding))
+            var actualEncoding = this.ActionResult.ContentType?.Encoding;
+            if (encoding != actualEncoding && !encoding.Equals(actualEncoding))
             {
                 this.ThrowNewContentResultAssertionException(
                     "encoding",
-                    this.GetEncodingName(encoding),
-                    this.GetEncodingName(actualEncoding));
+                    $"to be {this.GetEncodingName(encoding)}",
+                    $"instead received {this.GetEncodingName(actualEncoding)}");
             }
 
             return this;
@@ -122,9 +122,14 @@
         
         private string GetEncodingName(Encoding encoding)
         {
+            if (encoding == null)
+            {
+                return "null";
+            }
+
             var fullEncodingName = encoding.ToString();
             var lastIndexOfDot = fullEncodingName.LastIndexOf(".", StringComparison.Ordinal);
-            return fullEncodingName.Substring(lastIndexOfDot + 1);
+            return fullEncodingName.Substring(lastIndexOfDot + 1).Replace("Encoding", string.Empty);
         }
 
         private void ThrowNewContentResultAssertionException(string propertyName, string expectedValue, string actualValue)

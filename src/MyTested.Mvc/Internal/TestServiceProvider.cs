@@ -12,6 +12,9 @@
     using Utilities;
     using Utilities.Validators;
 
+    /// <summary>
+    /// Provides global application services.
+    /// </summary>
     public class TestServiceProvider
     {
         private const string ConfigureServicesMethodName = "ConfigureServices";
@@ -19,10 +22,22 @@
         private static IServiceCollection serviceCollection;
         private static IServiceProvider serviceProvider;
 
+        /// <summary>
+        /// Gets the current service provider.
+        /// </summary>
+        /// <value>Type of IServiceProvider.</value>
         public static IServiceProvider Current => serviceProvider ?? serviceCollection?.BuildServiceProvider();
 
+        /// <summary>
+        /// Gets whether the global services are available.
+        /// </summary>
+        /// <value>True of False.</value>
         public static bool IsAvailable => Current != null;
 
+        /// <summary>
+        /// Setups application services. Initially adds all MVC default services then runs the provided action.
+        /// </summary>
+        /// <param name="servicesAction">Services action used to register custom application services.</param>
         public static void Setup(Action<IServiceCollection> servicesAction)
         {
             serviceCollection = GetInitialServiceCollection();
@@ -34,6 +49,11 @@
             }
         }
 
+        /// <summary>
+        /// Setups application services with the provided Startup class and then runs the provided action.
+        /// </summary>
+        /// <typeparam name="TStartup">Startup class of the tested web application.</typeparam>
+        /// <param name="servicesAction">Services action used to register custom application services.</param>
         public static void Setup<TStartup>(Action<IServiceCollection> servicesAction)
             where TStartup : class, new()
         {
@@ -69,6 +89,11 @@
             }
         }
 
+        /// <summary>
+        /// Gets required service. Throws exception if such is not found or there are no registered services.
+        /// </summary>
+        /// <typeparam name="TInstance">Type of requested service.</typeparam>
+        /// <returns>Instance of TInstance type.</returns>
         public static TInstance GetRequiredService<TInstance>()
         {
             var service = Current.GetService<TInstance>();
@@ -76,18 +101,33 @@
             return service;
         }
 
+        /// <summary>
+        /// Gets service. Returns null if such is not found. Throws exception if there are no registered services.
+        /// </summary>
+        /// <typeparam name="TInstance">Type of requested service.</typeparam>
+        /// <returns>Instance of TInstance type.</returns>
         public static TInstance GetService<TInstance>()
         {
             ServiceValidator.ValidateServices();
             return Current.GetService<TInstance>();
         }
 
+        /// <summary>
+        /// Gets collection of services. Returns null if no service of this type is not found. Throws exception if there are no registered services.
+        /// </summary>
+        /// <typeparam name="TInstance">Type of requested service.</typeparam>
+        /// <returns>Instance of TInstance type.</returns>
         public static IEnumerable<TInstance> GetServices<TInstance>()
         {
             ServiceValidator.ValidateServices();
             return Current.GetServices<TInstance>();
         }
 
+        /// <summary>
+        /// Tries to get service. Returns null if such is not found or no services are registered.
+        /// </summary>
+        /// <typeparam name="TInstance">Type of requested service.</typeparam>
+        /// <returns>Instance of TInstance type.</returns>
         public static TInstance TryGetService<TInstance>()
             where TInstance : class
         {
@@ -98,7 +138,12 @@
 
             return null;
         }
-        
+
+        /// <summary>
+        /// Tries to create instance of the provided type. Returns null if not successful.
+        /// </summary>
+        /// <typeparam name="TInstance">Type to create.</typeparam>
+        /// <returns>Instance of TInstance type.</returns>
         public static TInstance TryCreateInstance<TInstance>()
             where TInstance : class
         {
@@ -113,6 +158,9 @@
             }
         }
 
+        /// <summary>
+        /// Clears the global service collection.
+        /// </summary>
         public static void Clear()
         {
             serviceCollection = null;

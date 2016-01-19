@@ -5,6 +5,9 @@
     using Microsoft.AspNet.Mvc.ViewEngines;
     using Microsoft.Net.Http.Headers;
 
+    /// <summary>
+    /// Used for testing view results.
+    /// </summary>
     public interface IViewTestBuilder : IBaseTestBuilderWithViewFeature
     {
         /// <summary>

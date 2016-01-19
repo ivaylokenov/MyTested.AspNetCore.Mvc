@@ -6,6 +6,9 @@
     using Microsoft.AspNet.Mvc.ViewEngines;
     using Microsoft.Net.Http.Headers;
 
+    /// <summary>
+    /// Used for testing view component results.
+    /// </summary>
     public interface IViewComponentTestBuilder : IBaseTestBuilderWithViewFeature
     {
         /// <summary>
@@ -51,12 +54,33 @@
         IAndViewComponentTestBuilder WithViewEngineOfType<TViewEngine>()
             where TViewEngine : IViewEngine;
 
+        /// <summary>
+        /// Tests whether view component result will be invoked with an argument equal to the provided one.
+        /// </summary>
+        /// <typeparam name="TArgument">Type of the argument.</typeparam>
+        /// <param name="argument">Argument object.</param>
+        /// <returns>The same view component test builder.</returns>
         IAndViewComponentTestBuilder WithArgument<TArgument>(TArgument argument);
 
+        /// <summary>
+        /// Tests whether view component result will be invoked with an argument of the provided type.
+        /// </summary>
+        /// <typeparam name="TArgument">Type of the argument.</typeparam>
+        /// <returns>The same view component test builder.</returns>
         IAndViewComponentTestBuilder WithArgumentOfType<TArgument>();
 
+        /// <summary>
+        /// Tests whether view component result will be invoked with the provided arguments.
+        /// </summary>
+        /// <param name="arguments">Argument objects as enumerable.</param>
+        /// <returns>The same view component test builder.</returns>
         IAndViewComponentTestBuilder WithArguments(IEnumerable<object> arguments);
 
+        /// <summary>
+        /// Tests whether view component result will be invoked with the provided arguments.
+        /// </summary>
+        /// <param name="arguments">Argument objects.</param>
+        /// <returns>The same view component test builder.</returns>
         IAndViewComponentTestBuilder WithArguments(params object[] arguments);
     }
 }
