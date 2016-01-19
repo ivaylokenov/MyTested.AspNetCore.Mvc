@@ -1,14 +1,15 @@
 ﻿namespace MyTested.Mvc.Builders.ActionResults.Redirect
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq.Expressions;
     using Base;
     using Contracts.ActionResults.Redirect;
-    using Contracts.Base;
     using Contracts.Uris;
     using Exceptions;
     using Internal.Extensions;
     using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNet.Routing;
     using Utilities.Validators;
 
     /// <summary>
@@ -16,7 +17,7 @@
     /// </summary>
     /// <typeparam name="TRedirectResult">Type of redirect result - RedirectResult, RedirectToAction or RedirectToRouteResult.</typeparam>
     public class RedirectTestBuilder<TRedirectResult>
-        : BaseTestBuilderWithActionResult<TRedirectResult>, IRedirectTestBuilder
+        : BaseTestBuilderWithActionResult<TRedirectResult>, IAndRedirectTestBuilder
     {
         private const string Location = "location";
         private const string RouteName = "route name";
@@ -36,28 +37,49 @@
             : base(controller, actionName, caughtException, redirectResult)
         {
         }
-        
+
+        /// <summary>
+        /// Tests whether redirect result is permanent.
+        /// </summary>
+        /// <returns>The same redirect test builder.</returns>
+        public IAndRedirectTestBuilder Permanent()
+        {
+            RuntimeBinderValidator.ValidateBinding(() =>
+            {
+                var dynamicActionResult = this.GetActionResultAsDynamic();
+                if (!dynamicActionResult.Permanent)
+                {
+                    this.ThrowNewRedirectResultAssertionException(
+                        string.Empty,
+                        "to be permanent",
+                        "but in fact it was not");
+                }
+            });
+
+            return this;
+        }
+
         /// <summary>
         /// Tests whether redirect result has specific location provided by string.
         /// </summary>
         /// <param name="location">Expected location as string.</param>
-        /// <returns>Base test builder.</returns>
-        public IBaseTestBuilderWithCaughtException AtLocation(string location)
+        /// <returns>The same redirect test builder.</returns>
+        public IAndRedirectTestBuilder ToLocation(string location)
         {
             var uri = LocationValidator.ValidateAndGetWellFormedUriString(location, this.ThrowNewRedirectResultAssertionException);
-            return this.AtLocation(uri);
+            return this.ToLocation(uri);
         }
 
         /// <summary>
         /// Tests whether redirect result has specific location provided by URI.
         /// </summary>
         /// <param name="location">Expected location as URI.</param>
-        /// <returns>Base test builder.</returns>
-        public IBaseTestBuilderWithCaughtException AtLocation(Uri location)
+        /// <returns>The same redirect test builder.</returns>
+        public IAndRedirectTestBuilder ToLocation(Uri location)
         {
             var redirrectResult = this.GetRedirectResult<RedirectResult>(Location);
             LocationValidator.ValidateUri(
-                redirrectResult,
+                this.ActionResult,
                 location.OriginalString,
                 this.ThrowNewRedirectResultAssertionException);
 
@@ -68,25 +90,160 @@
         /// Tests whether redirect result has specific location provided by builder.
         /// </summary>
         /// <param name="uriTestBuilder">Builder for expected URI.</param>
-        /// <returns>Base test builder.</returns>
-        public IBaseTestBuilderWithCaughtException AtLocation(Action<IUriTestBuilder> uriTestBuilder)
+        /// <returns>The same redirect test builder.</returns>
+        public IAndRedirectTestBuilder ToLocation(Action<IUriTestBuilder> uriTestBuilder)
         {
             var redirrectResult = this.GetRedirectResult<RedirectResult>(Location);
             LocationValidator.ValidateLocation(
-                redirrectResult,
+                this.ActionResult,
                 uriTestBuilder,
+                this.ThrowNewRedirectResultAssertionException);
+
+            return this;
+        }
+        
+        /// <summary>
+        /// Tests whether redirect at action result has specific action name.
+        /// </summary>
+        /// <param name="actionName">Expected action name.</param>
+        /// <returns>The same redirect test builder.</returns>
+        public IAndRedirectTestBuilder ToAction(string actionName)
+        {
+            var redirectAtActionResult = this.GetRedirectResult<RedirectToActionResult>("action name");
+            RouteActionResultValidator.ValidateActionName(
+                redirectAtActionResult,
+                actionName,
                 this.ThrowNewRedirectResultAssertionException);
 
             return this;
         }
 
         /// <summary>
+        /// Tests whether redirect at action result has specific controller name.
+        /// </summary>
+        /// <param name="controllerName">Expected controller name.</param>
+        /// <returns>The same redirect test builder.</returns>
+        public IAndRedirectTestBuilder ToController(string controllerName)
+        {
+            var redirectAtActionResult = this.GetRedirectResult<RedirectToActionResult>("controller name");
+            RouteActionResultValidator.ValidateControllerName(
+                redirectAtActionResult,
+                controllerName,
+                this.ThrowNewRedirectResultAssertionException);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether redirect at route result has specific route name.
+        /// </summary>
+        /// <param name="routeName">Expected route name.</param>
+        /// <returns>The same redirect test builder.</returns>
+        public IAndRedirectTestBuilder WithRouteName(string routeName)
+        {
+            var redirectAtRouteResult = this.GetRedirectResult<RedirectToRouteResult>("route name");
+            RouteActionResultValidator.ValidateRouteName(
+                redirectAtRouteResult,
+                routeName,
+                this.ThrowNewRedirectResultAssertionException);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether redirect result contains specific route key.
+        /// </summary>
+        /// <param name="key">Expected route key.</param>
+        /// <returns>The same redirect test builder.</returns>
+        public IAndRedirectTestBuilder WithRouteValue(string key)
+        {
+            RouteActionResultValidator.ValidateRouteValue(
+                this.ActionResult,
+                key,
+                this.ThrowNewRedirectResultAssertionException);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether redirect result contains specific route key and value.
+        /// </summary>
+        /// <param name="key">Expected route key.</param>
+        /// <param name="value">Expected route value.</param>
+        /// <returns>The same redirect test builder.</returns>
+        public IAndRedirectTestBuilder WithRouteValue(string key, object value)
+        {
+            RouteActionResultValidator.ValidateRouteValue(
+                this.ActionResult,
+                key,
+                value,
+                this.ThrowNewRedirectResultAssertionException);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether redirect result contains the provided route values.
+        /// </summary>
+        /// <param name="routeValues">Expected route value dictionary.</param>
+        /// <returns>The same redirect test builder.</returns>
+        public IAndRedirectTestBuilder WithRouteValues(object routeValues)
+        {
+            return this.WithRouteValues(new RouteValueDictionary(routeValues));
+        }
+
+        /// <summary>
+        /// Tests whether redirect result contains the provided route values.
+        /// </summary>
+        /// <param name="routeValues">Expected route value dictionary.</param>
+        /// <returns>The same redirect test builder.</returns>
+        public IAndRedirectTestBuilder WithRouteValues(IDictionary<string, object> routeValues)
+        {
+            RouteActionResultValidator.ValidateRouteValues(
+                this.ActionResult,
+                routeValues,
+                this.ThrowNewRedirectResultAssertionException);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether redirect result has the same URL helper as the provided one.
+        /// </summary>
+        /// <param name="urlHelper">URL helper of type IUrlHelper.</param>
+        /// <returns>The same redirect test builder.</returns>
+        public IAndRedirectTestBuilder WithUrlHelper(IUrlHelper urlHelper)
+        {
+            RouteActionResultValidator.ValidateUrlHelper(
+                this.ActionResult,
+                urlHelper,
+                this.ThrowNewRedirectResultAssertionException);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether redirect result has the same URL helper type as the provided one.
+        /// </summary>
+        /// <typeparam name="TUrlHelper">URL helper of type IUrlHelper.</typeparam>
+        /// <returns>The same redirect test builder.</returns>
+        public IAndRedirectTestBuilder WithUrlHelperOfType<TUrlHelper>()
+            where TUrlHelper : IUrlHelper
+        {
+            RouteActionResultValidator.ValidateUrlHelperOfType<TUrlHelper>(
+                this.ActionResult,
+                this.ThrowNewRedirectResultAssertionException);
+
+            return this;
+        }
+        
+        /// <summary>
         /// Tests whether redirect result redirects to specific action.
         /// </summary>
         /// <typeparam name="TController">Type of expected redirect controller.</typeparam>
         /// <param name="actionCall">Method call expression indicating the expected redirect action.</param>
-        /// <returns>Base test builder.</returns>
-        public IBaseTestBuilderWithCaughtException To<TController>(Expression<Func<TController, object>> actionCall)
+        /// <returns>The same redirect test builder.</returns>
+        public IAndRedirectTestBuilder To<TController>(Expression<Func<TController, object>> actionCall)
             where TController : Controller
         {
             return this.RedirectTo<TController>(actionCall);
@@ -97,11 +254,20 @@
         /// </summary>
         /// <typeparam name="TController">Type of expected redirect controller.</typeparam>
         /// <param name="actionCall">Method call expression indicating the expected redirect action.</param>
-        /// <returns>Base test builder.</returns>
-        public IBaseTestBuilderWithCaughtException To<TController>(Expression<Action<TController>> actionCall)
+        /// <returns>The same redirect test builder.</returns>
+        public IAndRedirectTestBuilder To<TController>(Expression<Action<TController>> actionCall)
             where TController : Controller
         {
             return this.RedirectTo<TController>(actionCall);
+        }
+
+        /// <summary>
+        /// AndAlso method for better readability when chaining redirect result tests.
+        /// </summary>
+        /// <returns>Redirect result test builder.</returns>
+        public IRedirectTestBuilder AndAlso()
+        {
+            return this;
         }
 
         private TExpectedRedirectResult GetRedirectResult<TExpectedRedirectResult>(string containment)
@@ -119,7 +285,7 @@
             return actualRedirectResult;
         }
 
-        private IBaseTestBuilderWithCaughtException RedirectTo<TController>(LambdaExpression actionCall)
+        private IAndRedirectTestBuilder RedirectTo<TController>(LambdaExpression actionCall)
             where TController : Controller
         {
             return this;

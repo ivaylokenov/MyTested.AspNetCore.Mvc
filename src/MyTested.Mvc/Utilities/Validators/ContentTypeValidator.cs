@@ -41,13 +41,13 @@
             MediaTypeHeaderValue expectedContentType,
             Action<string, string, string> failedValidationAction)
         {
-            RuntimeBinderValidator.ValidateBinding((Action)(() =>
+            RuntimeBinderValidator.ValidateBinding(() =>
             {
                 ValidateContentType(
                     expectedContentType,
                     (MediaTypeHeaderValue)actionResult.ContentType,
                     failedValidationAction);
-            }));
+            });
         }
     }
 }

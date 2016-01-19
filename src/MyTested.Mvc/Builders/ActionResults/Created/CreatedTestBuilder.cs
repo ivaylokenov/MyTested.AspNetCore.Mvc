@@ -1,12 +1,14 @@
 ﻿namespace MyTested.Mvc.Builders.ActionResults.Created
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq.Expressions;
     using Contracts.ActionResults.Created;
     using Contracts.Uris;
     using Exceptions;
     using Internal.Extensions;
     using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNet.Routing;
     using Models;
     using Utilities.Validators;
 
@@ -19,6 +21,8 @@
     {
         private const string Location = "location";
         private const string RouteName = "route name";
+        private const string RouteValues = "route values";
+        private const string UrlHelper = "URL helper";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreatedTestBuilder{TCreatedResult}" /> class.
@@ -35,7 +39,7 @@
             : base(controller, actionName, caughtException, createdResult)
         {
         }
-        
+
         /// <summary>
         /// Tests whether created result has specific location provided by string.
         /// </summary>
@@ -56,7 +60,7 @@
         {
             var createdResult = this.GetCreatedResult<CreatedResult>(Location);
             LocationValidator.ValidateUri(
-                this.ActionResult,
+                createdResult,
                 location.OriginalString,
                 this.ThrowNewCreatedResultAssertionException);
 
@@ -72,7 +76,7 @@
         {
             var createdResult = this.GetCreatedResult<CreatedResult>(Location);
             LocationValidator.ValidateLocation(
-                this.ActionResult,
+                createdResult,
                 uriTestBuilder,
                 this.ThrowNewCreatedResultAssertionException);
 
@@ -86,16 +90,11 @@
         /// <returns>The same created test builder.</returns>
         public IAndCreatedTestBuilder AtAction(string actionName)
         {
-            var createdAtActionResult = this.GetCreatedResult<CreatedAtActionResult>("ActionName");
-            var actualActionName = createdAtActionResult.ActionName;
-
-            if (actionName != actualActionName)
-            {
-                this.ThrowNewCreatedResultAssertionException(
-                    "to have",
-                    $"'{actionName}' action name",
-                    string.Format("instead received '{0}'", actualActionName != null ? actualActionName : "null"));
-            }
+            var createdAtActionResult = this.GetCreatedResult<CreatedAtActionResult>("action name");
+            RouteActionResultValidator.ValidateActionName(
+                createdAtActionResult,
+                actionName,
+                this.ThrowNewCreatedResultAssertionException);
 
             return this;
         }
@@ -107,17 +106,115 @@
         /// <returns>The same created test builder.</returns>
         public IAndCreatedTestBuilder AtController(string controllerName)
         {
-            var createdAtActionResult = this.GetCreatedResult<CreatedAtActionResult>("ControllerName");
-            var actualControllerName = createdAtActionResult.ActionName;
+            var createdAtActionResult = this.GetCreatedResult<CreatedAtActionResult>("controller name");
+            RouteActionResultValidator.ValidateControllerName(
+                createdAtActionResult,
+                controllerName,
+                this.ThrowNewCreatedResultAssertionException);
 
-            if (controllerName != actualControllerName)
-            {
-                this.ThrowNewCreatedResultAssertionException(
-                    "to have",
-                    $"'{controllerName}' controller name",
-                    string.Format("instead received '{0}'", actualControllerName != null ? actualControllerName : "null"));
-            }
-            
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether created at route result has specific route name.
+        /// </summary>
+        /// <param name="routeName">Expected route name.</param>
+        /// <returns>The same created test builder.</returns>
+        public IAndCreatedTestBuilder WithRouteName(string routeName)
+        {
+            var createdAtRouteResult = this.GetCreatedResult<CreatedAtRouteResult>("route name");
+            RouteActionResultValidator.ValidateRouteName(
+                createdAtRouteResult,
+                routeName,
+                this.ThrowNewCreatedResultAssertionException);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether created result contains specific route key.
+        /// </summary>
+        /// <param name="key">Expected route key.</param>
+        /// <returns>The same created test builder.</returns>
+        public IAndCreatedTestBuilder WithRouteValue(string key)
+        {
+            RouteActionResultValidator.ValidateRouteValue(
+                this.ActionResult,
+                key,
+                this.ThrowNewCreatedResultAssertionException);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether created result contains specific route key and value.
+        /// </summary>
+        /// <param name="key">Expected route key.</param>
+        /// <param name="value">Expected route value.</param>
+        /// <returns>The same created test builder.</returns>
+        public IAndCreatedTestBuilder WithRouteValue(string key, object value)
+        {
+            RouteActionResultValidator.ValidateRouteValue(
+                this.ActionResult,
+                key,
+                value,
+                this.ThrowNewCreatedResultAssertionException);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether created result contains the provided route values.
+        /// </summary>
+        /// <param name="routeValues">Expected route value dictionary.</param>
+        /// <returns>The same created test builder.</returns>
+        public IAndCreatedTestBuilder WithRouteValues(object routeValues)
+        {
+            return this.WithRouteValues(new RouteValueDictionary(routeValues));
+        }
+
+        /// <summary>
+        /// Tests whether created result contains the provided route values.
+        /// </summary>
+        /// <param name="routeValues">Expected route value dictionary.</param>
+        /// <returns>The same created test builder.</returns>
+        public IAndCreatedTestBuilder WithRouteValues(IDictionary<string, object> routeValues)
+        {
+            RouteActionResultValidator.ValidateRouteValues(
+                this.ActionResult,
+                routeValues,
+                this.ThrowNewCreatedResultAssertionException);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether created result has the same URL helper as the provided one.
+        /// </summary>
+        /// <param name="urlHelper">URL helper of type IUrlHelper.</param>
+        /// <returns>The same created test builder.</returns>
+        public IAndCreatedTestBuilder WithUrlHelper(IUrlHelper urlHelper)
+        {
+            RouteActionResultValidator.ValidateUrlHelper(
+                this.ActionResult,
+                urlHelper,
+                this.ThrowNewCreatedResultAssertionException);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether created result has the same URL helper type as the provided one.
+        /// </summary>
+        /// <typeparam name="TUrlHelper">URL helper of type IUrlHelper.</typeparam>
+        /// <returns>The same created test builder.</returns>
+        public IAndCreatedTestBuilder WithUrlHelperOfType<TUrlHelper>()
+            where TUrlHelper : IUrlHelper
+        {
+            RouteActionResultValidator.ValidateUrlHelperOfType<TUrlHelper>(
+                this.ActionResult,
+                this.ThrowNewCreatedResultAssertionException);
+
             return this;
         }
 
@@ -144,11 +241,11 @@
         {
             return this.AtRoute<TController>(actionCall);
         }
-        
+
         /// <summary>
         /// AndAlso method for better readability when chaining created tests.
         /// </summary>
-        /// <returns>The same created test builder.</returns>
+        /// <returns>Created test builder.</returns>
         public ICreatedTestBuilder AndAlso()
         {
             return this;

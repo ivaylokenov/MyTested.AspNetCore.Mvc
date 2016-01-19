@@ -51,7 +51,7 @@
                         .ShouldReturn()
                         .HttpBadRequest();
                 },
-                "When calling NotFoundAction action in MvcController expected action result to be BadRequestResult, but instead received HttpNotFoundResult.");
+                "When calling HttpNotFoundAction action in MvcController expected action result to be BadRequestResult, but instead received HttpNotFoundResult.");
         }
     }
 }

@@ -109,9 +109,9 @@
         IVoidActionResultTestBuilder CallingAsync(Expression<Func<TController, Task>> actionCall);
 
         /// <summary>
-        /// Gets ASP.NET Web API controller instance to be tested.
+        /// Gets ASP.NET MVC 6 controller instance to be tested.
         /// </summary>
-        /// <returns>Instance of the ASP.NET Web API controller.</returns>
+        /// <returns>Instance of the ASP.NET MVC 6 controller.</returns>
         TController AndProvideTheController();
         
         /// <summary>

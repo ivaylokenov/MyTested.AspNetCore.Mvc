@@ -14,7 +14,7 @@
     /// <summary>
     /// Base class for all test builders with action result.
     /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Web API controller.</typeparam>
+    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC 6 controller.</typeparam>
     public abstract class BaseTestBuilderWithActionResult<TActionResult>
         : BaseTestBuilderWithCaughtException, IBaseTestBuilderWithActionResult<TActionResult>
     {

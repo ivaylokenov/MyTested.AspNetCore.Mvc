@@ -122,7 +122,7 @@
                 this.CaughtException,
                 actualModel);
         }
-
+        
         private Type GetNonObjectResultModelType()
         {
             if (this.ActionResult is JsonResult)

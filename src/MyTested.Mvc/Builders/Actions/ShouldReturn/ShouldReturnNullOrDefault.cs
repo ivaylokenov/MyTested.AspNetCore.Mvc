@@ -9,7 +9,7 @@
     /// <summary>
     /// Class containing methods for testing null or default value result.
     /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Web API controller.</typeparam>
+    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC 6 controller.</typeparam>
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <summary>
