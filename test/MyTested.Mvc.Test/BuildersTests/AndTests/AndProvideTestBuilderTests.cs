@@ -68,13 +68,13 @@
         {
             var actionResult = MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.OkResultAction())
+                .Calling(c => c.LocalRedirect("URL"))
                 .ShouldReturn()
-                .StatusCode()
+                .LocalRedirect()
                 .AndProvideTheActionResult();
 
             Assert.NotNull(actionResult);
-            Assert.IsAssignableFrom<HttpStatusCodeResult>(actionResult);
+            Assert.IsAssignableFrom<LocalRedirectResult>(actionResult);
         }
 
         [Fact]
