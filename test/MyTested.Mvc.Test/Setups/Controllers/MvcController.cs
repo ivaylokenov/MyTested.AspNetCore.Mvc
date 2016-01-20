@@ -75,7 +75,7 @@
 
             return this.HttpBadRequest();
         }
-        
+
         public void EmptyAction()
         {
         }
@@ -94,7 +94,7 @@
         public void EmptyActionWithAttributes()
         {
         }
-        
+
         [Authorize(Roles = "Admin,Moderator")]
         [HttpGet]
         [HttpHead]
@@ -186,7 +186,7 @@
         {
             return new VirtualFileResult("Test", ContentType.ApplicationJson);
         }
-        
+
         public IActionResult FileWithContents()
         {
             return this.File(new byte[] { 1, 2, 3 }, ContentType.ApplicationJson);
@@ -231,7 +231,7 @@
                 StatusCode = 200
             };
         }
-        
+
         public IActionResult ContentActionWithMediaType()
         {
             return this.Content("content", new MediaTypeHeaderValue("text/plain"));
@@ -241,15 +241,36 @@
         {
             return this.Content("content", (MediaTypeHeaderValue)null);
         }
-        
+
         public IActionResult CreatedAction()
         {
             return this.Created(TestObjectFactory.GetUri().OriginalString, this.responseModel);
         }
-        
+
         public IActionResult CreatedActionWithUri()
         {
             return this.Created(TestObjectFactory.GetUri(), this.responseModel);
+        }
+
+        public IActionResult CreatedAtActionResult()
+        {
+            return this.CreatedAtAction("MyAction", "MyController", new { id = 1, text = "sometext" }, this.responseModel);
+        }
+
+        public IActionResult CreatedAtActionWithCustomHelperResult(IUrlHelper urlHelper)
+        {
+            return new CreatedAtActionResult(
+                "MyAction", 
+                "MyController", 
+                new
+                {
+                    id = 1,
+                    text = "sometext"
+                }, 
+                this.responseModel)
+                {
+                    UrlHelper = urlHelper
+                };
         }
 
         public IActionResult CreatedAtRouteAction()
@@ -291,7 +312,7 @@
         {
             throw new AggregateException(new NullReferenceException(), new InvalidOperationException());
         }
-        
+
         public async Task EmptyActionWithExceptionAsync()
         {
             await Task.Run(() => this.ThrowNewNullReferenceException());
@@ -370,7 +391,16 @@
         {
             return this.Json(this.responseModel);
         }
-        
+
+        public IActionResult JsonWithStatusCodeAction()
+        {
+            return new JsonResult(this.responseModel)
+            {
+                StatusCode = 200,
+                ContentType = new MediaTypeHeaderValue(ContentType.ApplicationXml)
+            };
+        }
+
         public IActionResult JsonWithSettingsAction()
         {
             return this.Json(this.responseModel, TestObjectFactory.GetJsonSerializerSettings());
@@ -380,7 +410,7 @@
         {
             return this.Json(this.responseModel, jsonSerializerSettings);
         }
-        
+
         public IActionResult CustomModelStateError()
         {
             this.ModelState.AddModelError("Test", "Test error");
@@ -412,7 +442,7 @@
         {
             return this.HttpUnauthorized();
         }
-        
+
         public bool GenericStructAction()
         {
             return true;

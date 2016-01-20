@@ -8,6 +8,7 @@
     using Internal.Extensions;
     using Microsoft.AspNet.Mvc;
     using Microsoft.Extensions.Options;
+    using Microsoft.Net.Http.Headers;
     using Models;
     using Newtonsoft.Json;
     using Utilities.Validators;
@@ -53,6 +54,31 @@
             HttpStatusCodeValidator.ValidateHttpStatusCode(
                 statusCode,
                 this.ActionResult.StatusCode,
+                this.ThrowNewJsonResultAssertionException);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether JSON result has the same content type as the provided string.
+        /// </summary>
+        /// <param name="contentType">ContentType type as string.</param>
+        /// <returns>The same JSON test builder.</returns>
+        public IAndJsonTestBuilder WithContentType(string contentType)
+        {
+            return this.WithContentType(new MediaTypeHeaderValue(contentType));
+        }
+
+        /// <summary>
+        /// Tests whether JSON result has the same content type as the provided MediaTypeHeaderValue.
+        /// </summary>
+        /// <param name="contentType">Content type as MediaTypeHeaderValue.</param>
+        /// <returns>The same JSON test builder.</returns>
+        public IAndJsonTestBuilder WithContentType(MediaTypeHeaderValue contentType)
+        {
+            ContentTypeValidator.ValidateContentType(
+                contentType,
+                this.ActionResult.ContentType,
                 this.ThrowNewJsonResultAssertionException);
 
             return this;

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Net;
+    using Microsoft.Net.Http.Headers;
     using Models;
     using Newtonsoft.Json;
 
@@ -23,6 +24,20 @@
         /// <param name="statusCode">HttpStatusCode enumeration.</param>
         /// <returns>The same JSON test builder.</returns>
         IAndJsonTestBuilder WithStatusCode(HttpStatusCode statusCode);
+        
+        /// <summary>
+        /// Tests whether JSON result has the same content type as the provided string.
+        /// </summary>
+        /// <param name="contentType">ContentType type as string.</param>
+        /// <returns>The same JSON test builder.</returns>
+        IAndJsonTestBuilder WithContentType(string contentType);
+        
+        /// <summary>
+        /// Tests whether JSON result has the same content type as the provided MediaTypeHeaderValue.
+        /// </summary>
+        /// <param name="contentType">Content type as MediaTypeHeaderValue.</param>
+        /// <returns>The same JSON test builder.</returns>
+        IAndJsonTestBuilder WithContentType(MediaTypeHeaderValue contentType);
 
         /// <summary>
         /// Tests whether JSON result has the default JSON serializer settings.

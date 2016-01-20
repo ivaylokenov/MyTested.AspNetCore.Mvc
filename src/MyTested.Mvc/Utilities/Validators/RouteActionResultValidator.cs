@@ -1,11 +1,21 @@
 ﻿namespace MyTested.Mvc.Utilities.Validators
 {
-    using Internal.Extensions;
-    using Microsoft.AspNet.Mvc;
     using System;
     using System.Collections.Generic;
+    using Internal.Extensions;
+    using Microsoft.AspNet.Mvc;
+
+    /// <summary>
+    /// Validator class containing validation logic action results with route specific information.
+    /// </summary>
     public static class RouteActionResultValidator
     {
+        /// <summary>
+        /// Validates whether ActionName is the same as the provided one from action result containing such property.
+        /// </summary>
+        /// <param name="actionResult">Action result with ActionName.</param>
+        /// <param name="actionName">Expected action name.</param>
+        /// <param name="failedValidationAction">Action to call in case of failed validation.</param>
         public static void ValidateActionName(
             dynamic actionResult,
             string actionName,
@@ -24,6 +34,12 @@
             });
         }
 
+        /// <summary>
+        /// Validates whether ControllerName is the same as the provided one from action result containing such property.
+        /// </summary>
+        /// <param name="actionResult">Action result with ControllerName.</param>
+        /// <param name="controllerName">Expected controller name.</param>
+        /// <param name="failedValidationAction">Action to call in case of failed validation.</param>
         public static void ValidateControllerName(
             dynamic actionResult,
             string controllerName,
@@ -42,6 +58,12 @@
             });
         }
 
+        /// <summary>
+        /// Validates whether RouteName is the same as the provided one from action result containing such property.
+        /// </summary>
+        /// <param name="actionResult">Action result with RouteName.</param>
+        /// <param name="routeName">Expected route name.</param>
+        /// <param name="failedValidationAction">Action to call in case of failed validation.</param>
         public static void ValidateRouteName(
             dynamic actionResult,
             string routeName,
@@ -61,6 +83,12 @@
             });
         }
 
+        /// <summary>
+        /// Validates whether RouteValues contains route item with key as the provided one from action result containing such property.
+        /// </summary>
+        /// <param name="actionResult">Action result with RouteValues.</param>
+        /// <param name="key">Expected route item key.</param>
+        /// <param name="failedValidationAction">Action to call in case of failed validation.</param>
         public static void ValidateRouteValue(
             dynamic actionResult,
             string key,
@@ -78,6 +106,13 @@
             });
         }
 
+        /// <summary>
+        /// Validates whether RouteValues contains route item with key and value as the provided ones from action result containing such property.
+        /// </summary>
+        /// <param name="actionResult">Action result with RouteValues.</param>
+        /// <param name="key">Expected route item key.</param>
+        /// <param name="value">Expected route item value.</param>
+        /// <param name="failedValidationAction">Action to call in case of failed validation.</param>
         public static void ValidateRouteValue(
             dynamic actionResult,
             string key,
@@ -95,12 +130,18 @@
                 {
                     failedValidationAction(
                         "route values",
-                        $"to have item with key '{key}' and the provided value",
+                        $"to have item with '{key}' key and the provided value",
                         $"{(itemExists ? $"the value was different" : "such was not found")}");
                 }
             });
         }
 
+        /// <summary>
+        /// Validates whether RouteValues contains the same route items as the provided ones from action result containing such property.
+        /// </summary>
+        /// <param name="actionResult">Action result with RouteValues.</param>
+        /// <param name="routeValues">Expected route value dictionary.</param>
+        /// <param name="failedValidationAction">Action to call in case of failed validation.</param>
         public static void ValidateRouteValues(
             dynamic actionResult,
             IDictionary<string, object> routeValues,
@@ -117,7 +158,7 @@
                 {
                     failedValidationAction(
                         "route values",
-                        $"to have {expectedItems} custom {(expectedItems != 1 ? "items" : "item")}",
+                        $"to have {expectedItems} {(expectedItems != 1 ? "items" : "item")}",
                         $"in fact found {actualItems}");
                 }
 
@@ -129,6 +170,12 @@
             });
         }
 
+        /// <summary>
+        /// Validates whether UrlHelper contains the same value as the provided one from action result containing such property.
+        /// </summary>
+        /// <param name="actionResult">Action result with UrlHelper.</param>
+        /// <param name="urlHelper">Expected URL helper.</param>
+        /// <param name="failedValidationAction">Action to call in case of failed validation.</param>
         public static void ValidateUrlHelper(
             dynamic actionResult,
             IUrlHelper urlHelper,
@@ -146,6 +193,12 @@
             });
         }
 
+        /// <summary>
+        /// Validates whether UrlHelper contains the same type as the provided one from action result containing such property.
+        /// </summary>
+        /// <typeparam name="TUrlHelper">Type of IUrlHelper.</typeparam>
+        /// <param name="actionResult">Action result with UrlHelper.</param>
+        /// <param name="failedValidationAction">Action to call in case of failed validation.</param>
         public static void ValidateUrlHelperOfType<TUrlHelper>(
             dynamic actionResult,
             Action<string, string, string> failedValidationAction)
@@ -153,7 +206,7 @@
         {
             RuntimeBinderValidator.ValidateBinding(() =>
             {
-                var actualUrlHelper = actionResult.UrlHelper;
+                var actualUrlHelper = (IUrlHelper)actionResult.UrlHelper;
 
                 if (actualUrlHelper == null ||
                     Reflection.AreDifferentTypes(typeof(TUrlHelper), actualUrlHelper.GetType()))

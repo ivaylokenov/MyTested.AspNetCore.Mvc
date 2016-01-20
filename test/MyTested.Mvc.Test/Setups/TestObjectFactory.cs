@@ -60,6 +60,11 @@
             return authenticationProperties;
         }
 
+        public static IUrlHelper GetCustomUrlHelper()
+        {
+            return new CustomUrlHelper();
+        }
+
         public static AuthenticationProperties GetEmptyAuthenticationProperties()
         {
             return new AuthenticationProperties();

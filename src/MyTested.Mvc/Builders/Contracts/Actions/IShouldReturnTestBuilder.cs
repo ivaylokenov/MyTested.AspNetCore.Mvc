@@ -104,7 +104,7 @@
         IHttpBadRequestTestBuilder HttpBadRequest();
 
         /// <summary>
-        /// Tests whether action result is HttpNotFoundResult or HttpNotFoundObjectResult
+        /// Tests whether action result is HttpNotFoundResult or HttpNotFoundObjectResult.
         /// </summary>
         /// <returns>Base test builder with action result.</returns>
         IHttpNotFoundTestBuilder HttpNotFound();
