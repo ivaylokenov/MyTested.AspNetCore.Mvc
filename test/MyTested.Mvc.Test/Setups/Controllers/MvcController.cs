@@ -411,6 +411,16 @@
             return this.Json(this.responseModel, jsonSerializerSettings);
         }
 
+        public IActionResult LocalRedirectAction()
+        {
+            return this.LocalRedirect("/local/test");
+        }
+
+        public IActionResult LocalRedirectPermanentAction()
+        {
+            return this.LocalRedirectPermanent("/local/test");
+        }
+
         public IActionResult CustomModelStateError()
         {
             this.ModelState.AddModelError("Test", "Test error");

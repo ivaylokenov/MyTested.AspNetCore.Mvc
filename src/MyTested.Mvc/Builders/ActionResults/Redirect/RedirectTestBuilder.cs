@@ -64,10 +64,10 @@
         /// </summary>
         /// <param name="location">Expected location as string.</param>
         /// <returns>The same redirect test builder.</returns>
-        public IAndRedirectTestBuilder ToLocation(string location)
+        public IAndRedirectTestBuilder ToUrl(string location)
         {
             var uri = LocationValidator.ValidateAndGetWellFormedUriString(location, this.ThrowNewRedirectResultAssertionException);
-            return this.ToLocation(uri);
+            return this.ToUrl(uri);
         }
 
         /// <summary>
@@ -75,7 +75,7 @@
         /// </summary>
         /// <param name="location">Expected location as URI.</param>
         /// <returns>The same redirect test builder.</returns>
-        public IAndRedirectTestBuilder ToLocation(Uri location)
+        public IAndRedirectTestBuilder ToUrl(Uri location)
         {
             var redirrectResult = this.GetRedirectResult<RedirectResult>(Location);
             LocationValidator.ValidateUri(
@@ -91,7 +91,7 @@
         /// </summary>
         /// <param name="uriTestBuilder">Builder for expected URI.</param>
         /// <returns>The same redirect test builder.</returns>
-        public IAndRedirectTestBuilder ToLocation(Action<IUriTestBuilder> uriTestBuilder)
+        public IAndRedirectTestBuilder ToUrl(Action<IUriTestBuilder> uriTestBuilder)
         {
             var redirrectResult = this.GetRedirectResult<RedirectResult>(Location);
             LocationValidator.ValidateLocation(

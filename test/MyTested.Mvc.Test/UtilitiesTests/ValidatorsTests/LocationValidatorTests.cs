@@ -33,7 +33,7 @@
                         uriAsString,
                         TestObjectFactory.GetFailingValidationAction());
                 }, 
-                "location to be URI valid instead received http://somehost!@#?Query==true");
+                "location to be URI valid instead received 'http://somehost!@#?Query==true'");
         }
         
         [Fact]
@@ -60,7 +60,7 @@
                         "http://somehost.com/",
                         TestObjectFactory.GetFailingValidationAction());
                 }, 
-                "location to be http://somehost.com/ instead received http://somehost.com/someuri/1?query=Test");
+                "location to be 'http://somehost.com/' instead received 'http://somehost.com/someuri/1?query=Test'");
         }
 
         [Fact]

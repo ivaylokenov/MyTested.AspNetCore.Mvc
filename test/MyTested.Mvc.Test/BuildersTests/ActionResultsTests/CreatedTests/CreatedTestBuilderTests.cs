@@ -36,7 +36,7 @@
                         .Created()
                         .AtLocation("http://somehost.com/");
                 },
-                "When calling CreatedAction action in MvcController expected created result location to be http://somehost.com/, but instead received http://somehost.com/someuri/1?query=Test.");
+                "When calling CreatedAction action in MvcController expected created result location to be 'http://somehost.com/', but instead received 'http://somehost.com/someuri/1?query=Test'.");
         }
 
         [Fact]
@@ -52,7 +52,7 @@
                         .Created()
                         .AtLocation("http://somehost!@#?Query==true");
                 }, 
-                "When calling CreatedAction action in MvcController expected created result location to be URI valid, but instead received http://somehost!@#?Query==true.");
+                "When calling CreatedAction action in MvcController expected created result location to be URI valid, but instead received 'http://somehost!@#?Query==true'.");
         }
 
         [Fact]
@@ -79,7 +79,7 @@
                         .Created()
                         .AtLocation(new Uri("http://somehost.com/"));
                 }, 
-                "When calling CreatedAction action in MvcController expected created result location to be http://somehost.com/, but instead received http://somehost.com/someuri/1?query=Test.");
+                "When calling CreatedAction action in MvcController expected created result location to be 'http://somehost.com/', but instead received 'http://somehost.com/someuri/1?query=Test'.");
         }
 
         [Fact]

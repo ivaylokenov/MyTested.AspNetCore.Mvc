@@ -384,6 +384,17 @@
                 ?.CreateDelegate(typeof(TDelegate), instance) as TDelegate;
         }
 
+        /// <summary>
+        /// Checks whether property with the provided name exists in a dynamic object.
+        /// </summary>
+        /// <param name="dynamicObject">Dynamic object to check.</param>
+        /// <param name="propertyName">Property name to check.</param>
+        /// <returns>True or False.</returns>
+        public static bool DynamicPropertyExists(dynamic dynamicObject, string propertyName)
+        {
+            return dynamicObject.GetType().GetProperty(propertyName) != null;
+        }
+
         private static ConstructorInfo GetConstructorByUnorderedParameters(this Type type, IEnumerable<Type> types)
         {
             var orderedTypes = types

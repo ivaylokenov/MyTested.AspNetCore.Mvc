@@ -21,20 +21,13 @@
         /// </summary>
         /// <param name="localUrl">Expected URL as string.</param>
         /// <returns>The same local redirect test builder.</returns>
-        IAndLocalRedirectTestBuilder To(string localUrl);
+        IAndLocalRedirectTestBuilder ToUrl(string localUrl);
 
         /// <summary>
         /// Tests whether local redirect result has specific URL provided as URI.
         /// </summary>
         /// <param name="localUrl">Expected URL as URI.</param>
         /// <returns>The same local redirect test builder.</returns>
-        IAndLocalRedirectTestBuilder To(Uri localUrl);
-
-        /// <summary>
-        /// Tests whether local redirect result has specific URL provided by builder.
-        /// </summary>
-        /// <param name="localUrlTestBuilder">Builder for expected URL.</param>
-        /// <returns>The same local redirect test builder.</returns>
-        IAndLocalRedirectTestBuilder To(Action<IUriTestBuilder> localUrlTestBuilder);
+        IAndLocalRedirectTestBuilder ToUrl(Uri localUrl);
     }
 }

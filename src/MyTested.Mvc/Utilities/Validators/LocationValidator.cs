@@ -24,7 +24,7 @@
                 failedValidationAction(
                     "location",
                     "to be URI valid",
-                    string.Format("instead received {0}", location));
+                    string.Format("instead received '{0}'", location));
             }
 
             return new Uri(location, UriKind.RelativeOrAbsolute);
@@ -48,8 +48,8 @@
                 {
                     failedValidationAction(
                         "location",
-                        string.Format("to be {0}", location),
-                        string.Format("instead received {0}", actualLocation));
+                        string.Format("to be '{0}'", location),
+                        string.Format("instead received '{0}'", actualLocation));
                 }
             });
         }
@@ -72,9 +72,9 @@
                 var newUriTestBuilder = new MockedUriTestBuilder();
                 uriTestBuilder(newUriTestBuilder);
                 var expectedUri = newUriTestBuilder.GetMockedUri();
-
+                
                 var validations = newUriTestBuilder.GetMockedUriValidations();
-                if (validations.Any(v => !v(expectedUri, new Uri(actualUri))))
+                if (validations.Any(v => !v(expectedUri, new Uri(actualUri, UriKind.RelativeOrAbsolute))))
                 {
                     failedValidationAction(
                         "URI",
@@ -86,7 +86,12 @@
 
         private static string GetUrlFromDynamic(dynamic actionResult)
         {
-            return (string)(actionResult.Location ?? actionResult.Url);
+            if (Reflection.DynamicPropertyExists(actionResult, "Location"))
+            {
+                return actionResult.Location;
+            }
+
+            return actionResult.Url;
         }
     }
 }

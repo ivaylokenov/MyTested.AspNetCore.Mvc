@@ -40,9 +40,9 @@
             if (!this.ActionResult.Permanent)
             {
                 this.ThrowNewRedirectResultAssertionException(
-                    string.Empty,
-                    "to be permanent",
-                    "but in fact it was not");
+                    "to",
+                    "be permanent",
+                    "in fact it was not");
             }
 
             return this;
@@ -53,13 +53,13 @@
         /// </summary>
         /// <param name="localUrl">Expected URL as string.</param>
         /// <returns>The same local redirect test builder.</returns>
-        public IAndLocalRedirectTestBuilder To(string localUrl)
+        public IAndLocalRedirectTestBuilder ToUrl(string localUrl)
         {
             var uri = LocationValidator.ValidateAndGetWellFormedUriString(
                 localUrl,
                 this.ThrowNewRedirectResultAssertionException);
 
-            return this.To(uri);
+            return this.ToUrl(uri);
         }
 
         /// <summary>
@@ -67,31 +67,16 @@
         /// </summary>
         /// <param name="localUrl">Expected URL as URI.</param>
         /// <returns>The same local redirect test builder.</returns>
-        public IAndLocalRedirectTestBuilder To(Uri localUrl)
+        public IAndLocalRedirectTestBuilder ToUrl(Uri localUrl)
         {
             LocationValidator.ValidateUri(
                 this.ActionResult,
-                localUrl.ToString(),
+                localUrl.OriginalString,
                 this.ThrowNewRedirectResultAssertionException);
 
             return this;
         }
-
-        /// <summary>
-        /// Tests whether local redirect result has specific URL provided by builder.
-        /// </summary>
-        /// <param name="localUrlTestBuilder">Builder for expected URL.</param>
-        /// <returns>The same local redirect test builder.</returns>
-        public IAndLocalRedirectTestBuilder To(Action<IUriTestBuilder> localUrlTestBuilder)
-        {
-            LocationValidator.ValidateLocation(
-                this.ActionResult,
-                localUrlTestBuilder,
-                this.ThrowNewRedirectResultAssertionException);
-
-            return this;
-        }
-
+        
         /// <summary>
         /// AndAlso method for better readability when chaining local redirect result tests.
         /// </summary>

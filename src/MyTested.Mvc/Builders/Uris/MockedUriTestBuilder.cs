@@ -49,7 +49,16 @@
         /// <returns>The same URI test builder.</returns>
         public override IAndUriTestBuilder WithAbsolutePath(string absolutePath)
         {
-            this.validations.Add((expected, actual) => expected.AbsolutePath == actual.AbsolutePath);
+            this.validations.Add((expected, actual) =>
+            {
+                if (actual.IsAbsoluteUri)
+                {
+                    return expected.AbsolutePath == actual.AbsolutePath;
+                }
+
+                return expected.AbsolutePath == actual.OriginalString;
+            });
+
             return base.WithAbsolutePath(absolutePath);
         }
 

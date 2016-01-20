@@ -16,21 +16,21 @@
         /// </summary>
         /// <param name="location">Expected location as string.</param>
         /// <returns>The same redirect test builder.</returns>
-        IAndRedirectTestBuilder ToLocation(string location);
+        IAndRedirectTestBuilder ToUrl(string location);
 
         /// <summary>
         /// Tests whether redirect result has specific location provided by URI.
         /// </summary>
         /// <param name="location">Expected location as URI.</param>
         /// <returns>The same redirect test builder.</returns>
-        IAndRedirectTestBuilder ToLocation(Uri location);
+        IAndRedirectTestBuilder ToUrl(Uri location);
 
         /// <summary>
         /// Tests whether redirect result has specific location provided by builder.
         /// </summary>
         /// <param name="uriTestBuilder">Builder for expected URI.</param>
         /// <returns>The same redirect test builder.</returns>
-        IAndRedirectTestBuilder ToLocation(Action<IUriTestBuilder> uriTestBuilder);
+        IAndRedirectTestBuilder ToUrl(Action<IUriTestBuilder> uriTestBuilder);
 
         /// <summary>
         /// Tests whether redirect result redirects to specific action.
