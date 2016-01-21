@@ -66,6 +66,44 @@
 
         public RequestModel InjectedRequestModel { get; private set; }
 
+        public IActionResult DefaultView()
+        {
+            return this.View();
+        }
+
+        public IActionResult IndexView()
+        {
+            return this.View("Index", this.responseModel);
+        }
+
+        public IActionResult CustomViewResult()
+        {
+            return new ViewResult
+            {
+                StatusCode = 500,
+                ContentType = new MediaTypeHeaderValue(ContentType.ApplicationXml)
+            };
+        }
+
+        public IActionResult DefaultPartialView()
+        {
+            return this.PartialView(this.responseModel);
+        }
+
+        public IActionResult IndexPartialView()
+        {
+            return this.PartialView("_IndexPartial", this.responseModel);
+        }
+
+        public IActionResult CustomPartialViewResult()
+        {
+            return new PartialViewResult
+            {
+                StatusCode = 500,
+                ContentType = new MediaTypeHeaderValue(ContentType.ApplicationXml)
+            };
+        }
+
         public IActionResult CustomRequestAction()
         {
             if (this.Request.Method == "POST" && this.Request.Headers.ContainsKey("TestHeader"))
@@ -283,14 +321,34 @@
             return this.CreatedAtRoute("Redirect", new { action = "VoidAction" }, this.responseModel);
         }
 
-        public IActionResult RedirectAction()
+        public IActionResult RedirectPermanentAction()
         {
-            return this.Redirect(TestObjectFactory.GetUri().OriginalString);
+            return this.RedirectPermanent(TestObjectFactory.GetUri().OriginalString);
         }
 
         public IActionResult RedirectActionWithUri()
         {
             return this.Redirect(TestObjectFactory.GetUri().OriginalString);
+        }
+
+        public IActionResult RedirectToActionResult()
+        {
+            return new RedirectToActionResult("MyAction", "MyController", new { id = 1, text = "sometext" });
+        }
+
+        public IActionResult RedirectToActionWithCustomUrlHelperResult(IUrlHelper urlHelper)
+        {
+            return new RedirectToActionResult(
+                "MyAction",
+                "MyController",
+                new
+                {
+                    id = 1,
+                    text = "sometext"
+                })
+                {
+                    UrlHelper = urlHelper
+                };
         }
 
         public IActionResult RedirectToRouteAction()

@@ -58,27 +58,6 @@
         }
 
         /// <summary>
-        /// Gets response model from action result.
-        /// </summary>
-        /// <typeparam name="TResponseModel">Type of response model.</typeparam>
-        /// <returns>The response model.</returns>
-        protected TResponseModel GetActualModel<TResponseModel>()
-        {
-            try
-            {
-                return (TResponseModel)(this.ActionResult as ObjectResult)?.Value;
-            }
-            catch (InvalidCastException)
-            {
-                throw new ResponseModelAssertionException(string.Format(
-                    "When calling {0} action in {1} expected response model to be a {2}, but instead received null.",
-                    this.ActionName,
-                    this.Controller.GetName(),
-                    typeof(TResponseModel).ToFriendlyTypeName()));
-            }
-        }
-
-        /// <summary>
         /// Initializes new instance of builder providing AndAlso method.
         /// </summary>
         /// <returns>Test builder with AndAlso method.</returns>

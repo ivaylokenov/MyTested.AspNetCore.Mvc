@@ -55,25 +55,8 @@
         /// <returns>Builder for testing the response model errors.</returns>
         public IModelDetailsTestBuilder<TResponseModel> WithResponseModelOfType<TResponseModel>()
         {
-            var actionResultType = this.ActionResult.GetType();
-            var objectResultType = typeof(ObjectResult);
-
-            var actualResponseDataType = actionResultType;
+            var actualResponseDataType = this.GetActualModel()?.GetType();
             var expectedResponseDataType = typeof(TResponseModel);
-            
-            var objectResultIsAssignable = Reflection.AreAssignable(
-                objectResultType,
-                actionResultType);
-
-            if (!objectResultIsAssignable)
-            {
-                // action result do not inherit ObjectResult
-                actualResponseDataType = this.GetNonObjectResultModelType();
-            }
-            else
-            {
-                actualResponseDataType = (this.ActionResult as ObjectResult)?.Value?.GetType();
-            }
             
             var responseDataTypeIsAssignable = Reflection.AreAssignable(
                     expectedResponseDataType,
@@ -123,21 +106,42 @@
                 actualModel);
         }
         
-        private Type GetNonObjectResultModelType()
+        private TResponseModel GetActualModel<TResponseModel>()
         {
+            try
+            {
+                return (TResponseModel)this.GetActualModel();
+            }
+            catch (InvalidCastException)
+            {
+                throw new ResponseModelAssertionException(string.Format(
+                    "When calling {0} action in {1} expected response model to be a {2}, but instead received null.",
+                    this.ActionName,
+                    this.Controller.GetName(),
+                    typeof(TResponseModel).ToFriendlyTypeName()));
+            }
+        }
+
+        private object GetActualModel()
+        {
+            if (this.ActionResult is ObjectResult)
+            {
+                return (this.ActionResult as ObjectResult)?.Value;
+            }
+
             if (this.ActionResult is JsonResult)
             {
-                return (this.ActionResult as JsonResult)?.Value?.GetType();
+                return (this.ActionResult as JsonResult)?.Value;
             }
 
             if (this.ActionResult is ViewResult)
             {
-                return (this.ActionResult as ViewResult)?.Model?.GetType();
+                return (this.ActionResult as ViewResult)?.Model;
             }
 
             if (this.ActionResult is PartialViewResult)
             {
-                return (this.ActionResult as PartialViewResult)?.ViewData?.Model?.GetType();
+                return (this.ActionResult as PartialViewResult)?.ViewData?.Model;
             }
 
             return null;

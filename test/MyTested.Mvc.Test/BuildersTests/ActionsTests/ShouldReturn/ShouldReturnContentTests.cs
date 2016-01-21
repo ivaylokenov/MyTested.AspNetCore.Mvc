@@ -28,6 +28,21 @@
         }
 
         [Fact]
+        public void ShouldReturnContentShouldThrowExceptionWithIncorrectContent()
+        {
+            Test.AssertException<ContentResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.ContentAction())
+                        .ShouldReturn()
+                        .Content("incorrect");
+                },
+                "When calling ContentAction action in MvcController expected content result to contain 'incorrect', but instead received 'content'.");
+        }
+
+        [Fact]
         public void ShouldReturnContentShouldThrowExceptionWithBadRequestResult()
         {
             Test.AssertException<ActionResultAssertionException>(

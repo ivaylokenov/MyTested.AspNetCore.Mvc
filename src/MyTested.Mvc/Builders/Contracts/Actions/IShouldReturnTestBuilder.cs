@@ -13,6 +13,7 @@
     using ActionResults.LocalRedirect;
     using ActionResults.Ok;
     using ActionResults.Redirect;
+    using ActionResults.View;
     using Base;
     using Models;
 
@@ -128,6 +129,19 @@
         IBaseTestBuilderWithActionResult<TActionResult> NoContent();
 
         /// <summary>
+        /// Tests whether action result is PartialViewResult with default view name.
+        /// </summary>
+        /// <returns>View test builder.</returns>
+        IViewTestBuilder PartialView();
+        
+        /// <summary>
+        /// Tests whether action result is PartialViewResult with the specified view name.
+        /// </summary>
+        /// <param name="viewName">Expected partial view name.</param>
+        /// <returns>View test builder.</returns>
+        IViewTestBuilder PartialView(string viewName);
+
+        /// <summary>
         /// Tests whether action result is PhysicalFileResult.
         /// </summary>
         /// <returns>File test builder.</returns>
@@ -138,6 +152,19 @@
         /// </summary>
         /// <returns>Redirect test builder.</returns>
         IRedirectTestBuilder Redirect();
+
+        /// <summary>
+        /// Tests whether action result is ViewResult with default view name.
+        /// </summary>
+        /// <returns>View test builder.</returns>
+        IViewTestBuilder View();
+
+        /// <summary>
+        /// Tests whether action result is ViewResult with the specified view name.
+        /// </summary>
+        /// <param name="viewName">Expected view name.</param>
+        /// <returns>View test builder.</returns>
+        IViewTestBuilder View(string viewName);
 
         /// <summary>
         /// Tests whether action result is HttpStatusCodeResult.

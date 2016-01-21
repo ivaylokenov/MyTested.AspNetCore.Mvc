@@ -39,7 +39,7 @@
             if (content != contentResult.Content)
             {
                 throw new ContentResultAssertionException(string.Format(
-                        "When calling {0} action in {1} expected content result Content to be '{2}', but instead received '{3}'.",
+                        "When calling {0} action in {1} expected content result to contain '{2}', but instead received '{3}'.",
                         this.ActionName,
                         this.Controller.GetName(),
                         content,

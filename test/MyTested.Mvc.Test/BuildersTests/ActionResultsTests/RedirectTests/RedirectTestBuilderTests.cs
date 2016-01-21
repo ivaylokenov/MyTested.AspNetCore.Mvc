@@ -1,58 +1,83 @@
-﻿namespace MyTested.Mvc.Tests.BuildersTests.ActionResultsTests.CreatedTests
+﻿namespace MyTested.Mvc.Tests.BuildersTests.ActionResultsTests.RedirectTests
 {
-    using System;
-    using System.Collections.Generic;
     using Exceptions;
     using Microsoft.AspNet.Mvc;
     using Setups;
     using Setups.Common;
     using Setups.Controllers;
-    using Setups.Models;
+    using System;
     using Xunit;
 
-    public class CreatedTestBuilderTests
+    public class RedirectTestBuilderTests
     {
+        [Fact]
+        public void PermanentShouldNotThrowExceptionWhenRedirectIsPermanent()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.RedirectPermanentAction())
+                .ShouldReturn()
+                .Redirect()
+                .Permanent();
+        }
+
+        [Fact]
+        public void PermanentShouldThrowExceptionWhenRedirectIsNotPermanent()
+        {
+            Test.AssertException<RedirectResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.RedirectToActionResult())
+                        .ShouldReturn()
+                        .Redirect()
+                        .Permanent();
+                },
+                "When calling RedirectToActionResult action in MvcController expected redirect result to be permanent, but in fact it was not.");
+        }
+
         [Fact]
         public void AtLocationWithStringShouldNotThrowExceptionIfTheLocationIsCorrect()
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.CreatedAction())
+                .Calling(c => c.RedirectActionWithUri())
                 .ShouldReturn()
-                .Created()
-                .AtLocation("http://somehost.com/someuri/1?query=Test");
+                .Redirect()
+                .ToUrl("http://somehost.com/someuri/1?query=Test");
         }
 
         [Fact]
         public void AtLocationWithStringShouldThrowExceptionIfTheLocationIsIncorrect()
         {
-            Test.AssertException<CreatedResultAssertionException>(
+            Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
-                        .Calling(c => c.CreatedAction())
+                        .Calling(c => c.RedirectActionWithUri())
                         .ShouldReturn()
-                        .Created()
-                        .AtLocation("http://somehost.com/");
+                        .Redirect()
+                        .ToUrl("http://somehost.com/");
                 },
-                "When calling CreatedAction action in MvcController expected created result location to be 'http://somehost.com/', but instead received 'http://somehost.com/someuri/1?query=Test'.");
+                "When calling RedirectActionWithUri action in MvcController expected redirect result location to be 'http://somehost.com/', but instead received 'http://somehost.com/someuri/1?query=Test'.");
         }
 
         [Fact]
         public void AtLocationWithStringShouldThrowExceptionIfTheLocationIsNotValid()
         {
-            Test.AssertException<CreatedResultAssertionException>(
+            Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
-                        .Calling(c => c.CreatedAction())
+                        .Calling(c => c.RedirectActionWithUri())
                         .ShouldReturn()
-                        .Created()
-                        .AtLocation("http://somehost!@#?Query==true");
-                }, 
-                "When calling CreatedAction action in MvcController expected created result location to be URI valid, but instead received 'http://somehost!@#?Query==true'.");
+                        .Redirect()
+                        .ToUrl("http://somehost!@#?Query==true");
+                },
+                "When calling RedirectActionWithUri action in MvcController expected redirect result location to be URI valid, but instead received 'http://somehost!@#?Query==true'.");
         }
 
         [Fact]
@@ -60,26 +85,26 @@
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.CreatedAction())
+                .Calling(c => c.RedirectActionWithUri())
                 .ShouldReturn()
-                .Created()
-                .AtLocation(new Uri("http://somehost.com/someuri/1?query=Test"));
+                .Redirect()
+                .ToUrl(new Uri("http://somehost.com/someuri/1?query=Test"));
         }
 
         [Fact]
         public void AtLocationWithUriShouldThrowExceptionIfTheLocationIsIncorrect()
         {
-            Test.AssertException<CreatedResultAssertionException>(
+            Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
-                        .Calling(c => c.CreatedAction())
+                        .Calling(c => c.RedirectActionWithUri())
                         .ShouldReturn()
-                        .Created()
-                        .AtLocation(new Uri("http://somehost.com/"));
-                }, 
-                "When calling CreatedAction action in MvcController expected created result location to be 'http://somehost.com/', but instead received 'http://somehost.com/someuri/1?query=Test'.");
+                        .Redirect()
+                        .ToUrl(new Uri("http://somehost.com/"));
+                },
+                "When calling RedirectActionWithUri action in MvcController expected redirect result location to be 'http://somehost.com/', but instead received 'http://somehost.com/someuri/1?query=Test'.");
         }
 
         [Fact]
@@ -87,10 +112,10 @@
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.CreatedAction())
+                .Calling(c => c.RedirectActionWithUri())
                 .ShouldReturn()
-                .Created()
-                .AtLocation(location =>
+                .Redirect()
+                .ToUrl(location =>
                     location
                         .WithHost("somehost.com")
                         .AndAlso()
@@ -108,15 +133,15 @@
         [Fact]
         public void AtLocationWithBuilderShouldThrowExceptionIfTheLocationIsIncorrect()
         {
-            Test.AssertException<CreatedResultAssertionException>(
+            Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
-                        .Calling(c => c.CreatedAction())
+                        .Calling(c => c.RedirectActionWithUri())
                         .ShouldReturn()
-                        .Created()
-                        .AtLocation(location =>
+                        .Redirect()
+                        .ToUrl(location =>
                             location
                                 .WithHost("somehost12.com")
                                 .AndAlso()
@@ -129,8 +154,8 @@
                                 .WithFragment(string.Empty)
                                 .AndAlso()
                                 .WithQuery("?query=Test"));
-                }, 
-                "When calling CreatedAction action in MvcController expected created result URI to equal the provided one, but was in fact different.");
+                },
+                "When calling RedirectActionWithUri action in MvcController expected redirect result URI to equal the provided one, but was in fact different.");
         }
 
         [Fact]
@@ -138,26 +163,26 @@
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.CreatedAtActionResult())
+                .Calling(c => c.RedirectToActionResult())
                 .ShouldReturn()
-                .Created()
-                .AtAction("MyAction");
+                .Redirect()
+                .ToAction("MyAction");
         }
 
         [Fact]
         public void AtActionShouldThrowExceptionWithIncorrectActionName()
         {
-            Test.AssertException<CreatedResultAssertionException>(
+            Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
                     MyMvc
                     .Controller<MvcController>()
-                    .Calling(c => c.CreatedAtActionResult())
+                    .Calling(c => c.RedirectToActionResult())
                     .ShouldReturn()
-                    .Created()
-                    .AtAction("Action");
+                    .Redirect()
+                    .ToAction("Action");
                 },
-                "When calling CreatedAtActionResult action in MvcController expected created result to have 'Action' action name, but instead received 'MyAction'.");
+                "When calling RedirectToActionResult action in MvcController expected redirect result to have 'Action' action name, but instead received 'MyAction'.");
         }
 
         [Fact]
@@ -165,53 +190,53 @@
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.CreatedAtActionResult())
+                .Calling(c => c.RedirectToActionResult())
                 .ShouldReturn()
-                .Created()
-                .AtController("MyController");
+                .Redirect()
+                .ToController("MyController");
         }
 
         [Fact]
         public void AtControllerShouldThrowExceptionWithIncorrectControllerName()
         {
-            Test.AssertException<CreatedResultAssertionException>(
+            Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
                     MyMvc
                     .Controller<MvcController>()
-                    .Calling(c => c.CreatedAtActionResult())
+                    .Calling(c => c.RedirectToActionResult())
                     .ShouldReturn()
-                    .Created()
-                    .AtController("Controller");
-                }, 
-                "When calling CreatedAtActionResult action in MvcController expected created result to have 'Controller' controller name, but instead received 'MyController'.");
+                    .Redirect()
+                    .ToController("Controller");
+                },
+                "When calling RedirectToActionResult action in MvcController expected redirect result to have 'Controller' controller name, but instead received 'MyController'.");
         }
-        
+
         [Fact]
         public void WithRouteNameShouldNotThrowExceptionWithCorrectRouteName()
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.CreatedAtRouteAction())
+                .Calling(c => c.RedirectToRouteAction())
                 .ShouldReturn()
-                .Created()
+                .Redirect()
                 .WithRouteName("Redirect");
         }
 
         [Fact]
         public void WithRouteNameShouldThrowExceptionWithIncorrectRouteName()
         {
-            Test.AssertException<CreatedResultAssertionException>(
+            Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
-                        .Calling(c => c.CreatedAtRouteAction())
+                        .Calling(c => c.RedirectToRouteAction())
                         .ShouldReturn()
-                        .Created()
+                        .Redirect()
                         .WithRouteName("MyRedirect");
-                }, 
-                "When calling CreatedAtRouteAction action in MvcController expected created result to have 'MyRedirect' route name, but instead received 'Redirect'.");
+                },
+                "When calling RedirectToRouteAction action in MvcController expected redirect result to have 'MyRedirect' route name, but instead received 'Redirect'.");
         }
 
         [Fact]
@@ -219,112 +244,112 @@
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.CreatedAtActionResult())
+                .Calling(c => c.RedirectToActionResult())
                 .ShouldReturn()
-                .Created()
+                .Redirect()
                 .WithRouteValue("id");
         }
 
         [Fact]
         public void WithRouteValueShouldThrowExceptionWithIncorrectRouteValue()
         {
-            Test.AssertException<CreatedResultAssertionException>(
+            Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
-                        .Calling(c => c.CreatedAtActionResult())
+                        .Calling(c => c.RedirectToActionResult())
                         .ShouldReturn()
-                        .Created()
+                        .Redirect()
                         .WithRouteValue("incorrect");
-                }, 
-                "When calling CreatedAtActionResult action in MvcController expected created result route values to have item with key 'incorrect', but such was not found.");
+                },
+                "When calling RedirectToActionResult action in MvcController expected redirect result route values to have item with key 'incorrect', but such was not found.");
         }
-        
+
         [Fact]
         public void WithRouteValueWithValueShouldNotThrowExceptionWithCorrectRouteValue()
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.CreatedAtActionResult())
+                .Calling(c => c.RedirectToActionResult())
                 .ShouldReturn()
-                .Created()
+                .Redirect()
                 .WithRouteValue("id", 1);
         }
 
         [Fact]
         public void WithRouteValueWithValueShouldThrowExceptionWithIncorrectRouteKey()
         {
-            Test.AssertException<CreatedResultAssertionException>(
+            Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
-                        .Calling(c => c.CreatedAtActionResult())
+                        .Calling(c => c.RedirectToActionResult())
                         .ShouldReturn()
-                        .Created()
+                        .Redirect()
                         .WithRouteValue("incorrect", 1);
-                }, 
-                "When calling CreatedAtActionResult action in MvcController expected created result route values to have item with 'incorrect' key and the provided value, but such was not found.");
+                },
+                "When calling RedirectToActionResult action in MvcController expected redirect result route values to have item with 'incorrect' key and the provided value, but such was not found.");
         }
 
         [Fact]
         public void WithRouteValueWithValueShouldThrowExceptionWithIncorrectRouteValue()
         {
-            Test.AssertException<CreatedResultAssertionException>(
+            Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
-                        .Calling(c => c.CreatedAtActionResult())
+                        .Calling(c => c.RedirectToActionResult())
                         .ShouldReturn()
-                        .Created()
+                        .Redirect()
                         .WithRouteValue("id", 2);
                 },
-                "When calling CreatedAtActionResult action in MvcController expected created result route values to have item with 'id' key and the provided value, but the value was different.");
+                "When calling RedirectToActionResult action in MvcController expected redirect result route values to have item with 'id' key and the provided value, but the value was different.");
         }
-        
+
         [Fact]
         public void WithRouteValuesWithObjectShouldNotThrowExceptionWithCorrectRouteValues()
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.CreatedAtActionResult())
+                .Calling(c => c.RedirectToActionResult())
                 .ShouldReturn()
-                .Created()
+                .Redirect()
                 .WithRouteValues(new { id = 1, text = "sometext" });
         }
 
         [Fact]
         public void WithRouteValuesWithObjectShouldThrowExceptionWithIncorrectRouteValues()
         {
-            Test.AssertException<CreatedResultAssertionException>(
+            Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
-                        .Calling(c => c.CreatedAtActionResult())
+                        .Calling(c => c.RedirectToActionResult())
                         .ShouldReturn()
-                        .Created()
+                        .Redirect()
                         .WithRouteValues(new { id = 1 });
-                }, 
-                "When calling CreatedAtActionResult action in MvcController expected created result route values to have 1 item, but in fact found 2.");
+                },
+                "When calling RedirectToActionResult action in MvcController expected redirect result route values to have 1 item, but in fact found 2.");
         }
-        
+
         [Fact]
         public void WithRouteValuesWithObjectShouldThrowExceptionWithIncorrectMoreRouteValues()
         {
-            Test.AssertException<CreatedResultAssertionException>(
+            Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
-                        .Calling(c => c.CreatedAtActionResult())
+                        .Calling(c => c.RedirectToActionResult())
                         .ShouldReturn()
-                        .Created()
+                        .Redirect()
                         .WithRouteValues(new { id = 1, second = 5, another = "test" });
-                }, 
-                "When calling CreatedAtActionResult action in MvcController expected created result route values to have 3 items, but in fact found 2.");
+                },
+                "When calling RedirectToActionResult action in MvcController expected redirect result route values to have 3 items, but in fact found 2.");
         }
 
         [Fact]
@@ -334,28 +359,28 @@
 
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.CreatedAtActionWithCustomHelperResult(urlHelper))
+                .Calling(c => c.RedirectToActionWithCustomUrlHelperResult(urlHelper))
                 .ShouldReturn()
-                .Created()
+                .Redirect()
                 .WithUrlHelper(urlHelper);
         }
 
         [Fact]
         public void WithCustomUrlHelperShouldThrowExceptionWithIncorrectUrlHelper()
         {
-            Test.AssertException<CreatedResultAssertionException>(
+            Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
                     var urlHelper = TestObjectFactory.GetCustomUrlHelper();
 
                     MyMvc
                         .Controller<MvcController>()
-                        .Calling(c => c.CreatedAtActionWithCustomHelperResult(urlHelper))
+                        .Calling(c => c.RedirectToActionWithCustomUrlHelperResult(urlHelper))
                         .ShouldReturn()
-                        .Created()
+                        .Redirect()
                         .WithUrlHelper(null);
-                }, 
-                "When calling CreatedAtActionWithCustomHelperResult action in MvcController expected created result UrlHelper to be the same as the provided one, but instead received different result.");
+                },
+                "When calling RedirectToActionWithCustomUrlHelperResult action in MvcController expected redirect result UrlHelper to be the same as the provided one, but instead received different result.");
         }
 
         [Fact]
@@ -365,82 +390,71 @@
 
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.CreatedAtActionWithCustomHelperResult(urlHelper))
+                .Calling(c => c.RedirectToActionWithCustomUrlHelperResult(urlHelper))
                 .ShouldReturn()
-                .Created()
+                .Redirect()
                 .WithUrlHelperOfType<CustomUrlHelper>();
         }
 
         [Fact]
         public void WithCustomUrlHelperOfTypeShouldThrowExceptionWithIncorrectUrlHelper()
         {
-            Test.AssertException<CreatedResultAssertionException>(
+            Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
                     var urlHelper = TestObjectFactory.GetCustomUrlHelper();
 
                     MyMvc
                         .Controller<MvcController>()
-                        .Calling(c => c.CreatedAtActionWithCustomHelperResult(urlHelper))
+                        .Calling(c => c.RedirectToActionWithCustomUrlHelperResult(urlHelper))
                         .ShouldReturn()
-                        .Created()
+                        .Redirect()
                         .WithUrlHelperOfType<IUrlHelper>();
                 },
-                "When calling CreatedAtActionWithCustomHelperResult action in MvcController expected created result UrlHelper to be of IUrlHelper type, but instead received CustomUrlHelper.");
+                "When calling RedirectToActionWithCustomUrlHelperResult action in MvcController expected redirect result UrlHelper to be of IUrlHelper type, but instead received CustomUrlHelper.");
         }
 
         [Fact]
         public void WithCustomUrlHelperOfTypeShouldThrowExceptionWithNoUrlHelper()
         {
-            Test.AssertException<CreatedResultAssertionException>(
+            Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
-                        .Calling(c => c.CreatedAtActionResult())
+                        .Calling(c => c.RedirectToActionResult())
                         .ShouldReturn()
-                        .Created()
+                        .Redirect()
                         .WithUrlHelperOfType<IUrlHelper>();
                 },
-                "When calling CreatedAtActionResult action in MvcController expected created result UrlHelper to be of IUrlHelper type, but instead received null.");
+                "When calling RedirectToActionResult action in MvcController expected redirect result UrlHelper to be of IUrlHelper type, but instead received null.");
         }
 
         [Fact]
         public void EverySpecificMethodShouldThrowExceptionWhenSuchPropertyIsNotFound()
         {
-            Test.AssertException<CreatedResultAssertionException>(
+            Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
-                        .Calling(c => c.CreatedAtRouteAction())
+                        .Calling(c => c.RedirectToRouteAction())
                         .ShouldReturn()
-                        .Created()
-                        .AtController("Controller");
-                }, 
-                "When calling CreatedAtRouteAction action in MvcController expected created result to contain controller name, but it could not be found.");
+                        .Redirect()
+                        .ToController("Controller");
+                },
+                "When calling RedirectToRouteAction action in MvcController expected redirect result to contain controller name, but it could not be found.");
         }
         
-        [Fact]
-        public void WithResponseModelOfTypeShouldWorkCorrectly()
-        {
-            MyMvc
-                .Controller<MvcController>()
-                .Calling(c => c.CreatedAction())
-                .ShouldReturn()
-                .Created()
-                .WithResponseModelOfType<ICollection<ResponseModel>>();
-        }
-
         [Fact]
         public void AtShouldWorkCorrectlyWithCorrectActionCall()
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.CreatedAtRouteAction())
+                .Calling(c => c.RedirectToActionResult())
                 .ShouldReturn()
-                .Created()
-                .At<NoAttributesController>(c => c.WithParameter(1));
+                .Redirect()
+                .To<NoAttributesController>(c => c.WithParameter(1));
         }
 
         [Fact]
@@ -448,10 +462,10 @@
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.CreatedAtRouteVoidAction())
+                .Calling(c => c.RedirectToRouteVoidAction())
                 .ShouldReturn()
-                .Created()
-                .At<NoAttributesController>(c => c.VoidAction());
+                .Redirect()
+                .To<NoAttributesController>(c => c.VoidAction());
         }
 
         [Fact]
@@ -459,12 +473,12 @@
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.CreatedAtActionResult())
+                .Calling(c => c.RedirectToActionResult())
                 .ShouldReturn()
-                .Created()
-                .AtAction("MyAction")
+                .Redirect()
+                .ToAction("MyAction")
                 .AndAlso()
-                .AtController("MyController");
+                .ToController("MyController");
         }
     }
 }

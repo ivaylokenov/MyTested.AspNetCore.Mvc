@@ -1,0 +1,80 @@
+﻿namespace MyTested.Mvc.Tests.BuildersTests.ActionsTests.ShouldReturn
+{
+    using Exceptions;
+    using Setups;
+    using Setups.Controllers;
+    using Xunit;
+
+    public class ShouldReturnViewTests
+    {
+        [Fact]
+        public void ShouldReturnViewShouldNotThrowExceptionWithDefaultView()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.DefaultView())
+                .ShouldReturn()
+                .View();
+        }
+
+        [Fact]
+        public void ShouldReturnViewWithNameShouldNotThrowExceptionWithCorrectName()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.IndexView())
+                .ShouldReturn()
+                .View("Index");
+        }
+
+        [Fact]
+        public void ShouldReturnViewShouldThrowExceptionIfActionResultIsNotViewResult()
+        {
+            Test.AssertException<ActionResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                       .Controller<MvcController>()
+                       .Calling(c => c.BadRequestAction())
+                       .ShouldReturn()
+                       .View();
+                },
+                "When calling BadRequestAction action in MvcController expected action result to be ViewResult, but instead received BadRequestResult.");
+        }
+        
+        [Fact]
+        public void ShouldReturnPartialViewShouldNotThrowExceptionWithDefaultPartialView()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.DefaultPartialView())
+                .ShouldReturn()
+                .PartialView();
+        }
+
+        [Fact]
+        public void ShouldReturnPartialViewWithNameShouldNotThrowExceptionWithCorrectName()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.IndexPartialView())
+                .ShouldReturn()
+                .PartialView("_IndexPartial");
+        }
+
+        [Fact]
+        public void ShouldReturnPartialViewShouldThrowExceptionIfActionResultIsNotPartialViewResult()
+        {
+            Test.AssertException<ActionResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                       .Controller<MvcController>()
+                       .Calling(c => c.DefaultView())
+                       .ShouldReturn()
+                       .PartialView();
+                },
+                "When calling DefaultView action in MvcController expected action result to be PartialViewResult, but instead received ViewResult.");
+        }
+    }
+}

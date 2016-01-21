@@ -166,7 +166,7 @@
             throw new ViewResultAssertionException(string.Format(
                     "When calling {0} action in {1} expected {2} result {3} {4}, but {5}.",
                     this.ActionName,
-                    this.Controller,
+                    this.Controller.GetName(),
                     this.viewType,
                     propertyName,
                     expectedValue,

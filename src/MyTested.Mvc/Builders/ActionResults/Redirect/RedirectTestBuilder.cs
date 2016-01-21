@@ -50,9 +50,9 @@
                 if (!dynamicActionResult.Permanent)
                 {
                     this.ThrowNewRedirectResultAssertionException(
-                        string.Empty,
-                        "to be permanent",
-                        "but in fact it was not");
+                        "to",
+                        "be permanent",
+                        "in fact it was not");
                 }
             });
 
