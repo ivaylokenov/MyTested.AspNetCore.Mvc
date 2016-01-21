@@ -3,8 +3,10 @@
     using System.Collections.Generic;
     using System.Net;
     using Exceptions;
+    using Microsoft.AspNet.Mvc.ViewEngines;
     using Microsoft.Net.Http.Headers;
     using Setups;
+    using Setups.Common;
     using Setups.Controllers;
     using Setups.Models;
     using Xunit;
@@ -212,6 +214,109 @@
                         .WithContentType(new MediaTypeHeaderValue(TestObjectFactory.MediaType));
                 },
                 "When calling DefaultView action in MvcController expected view result ContentType to be application/json, but instead received null.");
+        }
+
+
+        [Fact]
+        public void WithViewEngineShouldNotThrowExceptionWithValidViewEngine()
+        {
+            var viewEngine = TestObjectFactory.GetViewEngine();
+
+            MyMvc
+                .Controller<MvcController>()
+                .WithoutValidation()
+                .Calling(c => c.ViewWithViewEngine(viewEngine))
+                .ShouldReturn()
+                .View()
+                .WithViewEngine(viewEngine);
+        }
+
+        [Fact]
+        public void WithViewEngineShouldNotThrowExceptionWithNullViewEngine()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .WithoutValidation()
+                .Calling(c => c.DefaultView())
+                .ShouldReturn()
+                .View()
+                .WithViewEngine(null);
+        }
+        
+        [Fact]
+        public void WithViewEngineShouldThrowExceptionWithInvalidViewEngine()
+        {
+            Test.AssertException<ViewResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .WithoutValidation()
+                        .Calling(c => c.ViewWithViewEngine(null))
+                        .ShouldReturn()
+                        .View()
+                        .WithViewEngine(new CustomViewEngine());
+                },
+                "When calling ViewWithViewEngine action in MvcController expected view result ViewEngine to be the same as the provided one, but instead received different result.");
+        }
+
+        [Fact]
+        public void WithViewEngineOfTypeShouldNotThrowExceptionWithValidViewEngine()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .WithoutValidation()
+                .Calling(c => c.ViewWithViewEngine(new CustomViewEngine()))
+                .ShouldReturn()
+                .View()
+                .WithViewEngineOfType<CustomViewEngine>();
+        }
+
+        [Fact]
+        public void WithViewEngineOfTypeShouldThrowExceptionWithInvalidViewEngine()
+        {
+            Test.AssertException<ViewResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .WithoutValidation()
+                        .Calling(c => c.ViewWithViewEngine(new CustomViewEngine()))
+                        .ShouldReturn()
+                        .View()
+                        .WithViewEngineOfType<IViewEngine>();
+                },
+                "When calling ViewWithViewEngine action in MvcController expected view result ViewEngine to be of IViewEngine type, but instead received CustomViewEngine.");
+        }
+
+        [Fact]
+        public void WithViewEngineOfTypeShouldNotThrowExceptionWithNullViewEngine()
+        {
+            Test.AssertException<ViewResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .WithoutValidation()
+                        .Calling(c => c.DefaultView())
+                        .ShouldReturn()
+                        .View()
+                        .WithViewEngineOfType<CustomViewEngine>();
+                },
+                "When calling DefaultView action in MvcController expected view result ViewEngine to be of CustomViewEngine type, but instead received null.");
+        }
+
+        [Fact]
+        public void AndAlsoShouldWorkCorrectly()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.CustomViewResult())
+                .ShouldReturn()
+                .View()
+                .WithContentType(ContentType.ApplicationXml)
+                .AndAlso()
+                .WithStatusCode(500);
         }
 
         // TODO: Add the same for partial views

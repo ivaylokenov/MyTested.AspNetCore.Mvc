@@ -15,7 +15,7 @@
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using Services;
-
+    using Microsoft.AspNet.Mvc.ViewEngines;
     public static class TestObjectFactory
     {
         public const string MediaType = "application/json";
@@ -63,6 +63,11 @@
         public static IUrlHelper GetCustomUrlHelper()
         {
             return new CustomUrlHelper();
+        }
+
+        public static IViewEngine GetViewEngine()
+        {
+            return new CustomViewEngine();
         }
 
         public static AuthenticationProperties GetEmptyAuthenticationProperties()

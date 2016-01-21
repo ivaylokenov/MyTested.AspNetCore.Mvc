@@ -14,7 +14,7 @@
     using Models;
     using Newtonsoft.Json;
     using Services;
-
+    using Microsoft.AspNet.Mvc.ViewEngines;
     [Authorize(Roles = "Admin,Moderator")]
     [Route("/api/test")]
     public class MvcController : Controller
@@ -81,7 +81,16 @@
             return new ViewResult
             {
                 StatusCode = 500,
-                ContentType = new MediaTypeHeaderValue(ContentType.ApplicationXml)
+                ContentType = new MediaTypeHeaderValue(ContentType.ApplicationXml),
+                ViewEngine = new CustomViewEngine()
+            };
+        }
+
+        public IActionResult ViewWithViewEngine(IViewEngine viewEngine)
+        {
+            return new ViewResult
+            {
+                ViewEngine = viewEngine
             };
         }
 
