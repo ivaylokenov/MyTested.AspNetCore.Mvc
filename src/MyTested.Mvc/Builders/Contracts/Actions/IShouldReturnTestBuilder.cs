@@ -165,6 +165,33 @@
         /// <param name="viewName">Expected view name.</param>
         /// <returns>View test builder.</returns>
         IViewTestBuilder View(string viewName);
+        
+        /// <summary>
+        /// Tests whether action result is ViewComponentResult.
+        /// </summary>
+        /// <returns>View component test builder.</returns>
+        IViewComponentTestBuilder ViewComponent();
+        
+        /// <summary>
+        /// Tests whether action result is ViewComponentResult with the specified view component name.
+        /// </summary>
+        /// <param name="viewComponentName">Expected view component name.</param>
+        /// <returns>View component test builder.</returns>
+        IViewComponentTestBuilder ViewComponent(string viewComponentName);
+        
+        /// <summary>
+        /// Tests whether action result is ViewComponentResult with the specified view component type.
+        /// </summary>
+        /// <param name="viewComponentType">Expected view component type.</param>
+        /// <returns>View component test builder.</returns>
+        IViewComponentTestBuilder ViewComponent(Type viewComponentType);
+
+        /// <summary>
+        /// Tests whether action result is ViewComponentResult with the specified view component type.
+        /// </summary>
+        /// <typeparam name="TViewComponentType">Expected view component type.</typeparam>
+        /// <returns>View component test builder.</returns>
+        IViewComponentTestBuilder ViewComponent<TViewComponentType>();
 
         /// <summary>
         /// Tests whether action result is HttpStatusCodeResult.

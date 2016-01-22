@@ -1,11 +1,11 @@
 ﻿namespace MyTested.Mvc.Tests.BuildersTests.ActionResultsTests.RedirectTests
 {
+    using System;
     using Exceptions;
     using Microsoft.AspNet.Mvc;
     using Setups;
     using Setups.Common;
     using Setups.Controllers;
-    using System;
     using Xunit;
 
     public class RedirectTestBuilderTests

@@ -10,12 +10,13 @@
     using Microsoft.AspNet.Http.Authentication;
     using Microsoft.AspNet.Http.Internal;
     using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNet.Mvc.ViewEngines;
     using Microsoft.Extensions.DependencyInjection;
     using Models;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using Services;
-    using Microsoft.AspNet.Mvc.ViewEngines;
+
     public static class TestObjectFactory
     {
         public const string MediaType = "application/json";

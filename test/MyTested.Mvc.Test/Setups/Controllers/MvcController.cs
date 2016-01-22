@@ -10,11 +10,12 @@
     using Microsoft.AspNet.Authorization;
     using Microsoft.AspNet.FileProviders;
     using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNet.Mvc.ViewEngines;
     using Microsoft.Net.Http.Headers;
     using Models;
     using Newtonsoft.Json;
     using Services;
-    using Microsoft.AspNet.Mvc.ViewEngines;
+
     [Authorize(Roles = "Admin,Moderator")]
     [Route("/api/test")]
     public class MvcController : Controller
@@ -96,7 +97,7 @@
 
         public IActionResult DefaultPartialView()
         {
-            return this.PartialView(this.responseModel);
+            return this.PartialView();
         }
 
         public IActionResult IndexPartialView()
@@ -109,7 +110,52 @@
             return new PartialViewResult
             {
                 StatusCode = 500,
-                ContentType = new MediaTypeHeaderValue(ContentType.ApplicationXml)
+                ContentType = new MediaTypeHeaderValue(ContentType.ApplicationXml),
+                ViewEngine = new CustomViewEngine()
+            };
+        }
+        
+        public IActionResult PartialViewWithViewEngine(IViewEngine viewEngine)
+        {
+            return new PartialViewResult
+            {
+                ViewEngine = viewEngine
+            };
+        }
+
+        public IActionResult ViewComponentResultByName()
+        {
+            return this.ViewComponent("TestComponent", 1, "text");
+        }
+
+        public IActionResult ViewComponentResultByType()
+        {
+            return this.ViewComponent(typeof(CustomViewComponent), this.responseModel);
+        }
+
+        public IActionResult ViewComponentWithIncorrectArguments()
+        {
+            return new ViewComponentResult
+            {
+                Arguments = this.responseModel
+            };
+        }
+
+        public IActionResult CustomViewComponentResult()
+        {
+            return new ViewComponentResult
+            {
+                StatusCode = 500,
+                ContentType = new MediaTypeHeaderValue(ContentType.ApplicationXml),
+                ViewEngine = new CustomViewEngine()
+            };
+        }
+
+        public IActionResult ViewComponentWithViewEngine(IViewEngine viewEngine)
+        {
+            return new ViewComponentResult
+            {
+                ViewEngine = viewEngine
             };
         }
 

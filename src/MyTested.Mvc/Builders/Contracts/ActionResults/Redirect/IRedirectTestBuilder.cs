@@ -1,11 +1,12 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.ActionResults.Redirect
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq.Expressions;
     using Base;
     using Microsoft.AspNet.Mvc;
     using Uris;
-    using System.Collections.Generic;
+
     /// <summary>
     /// Used for testing redirect results.
     /// </summary>

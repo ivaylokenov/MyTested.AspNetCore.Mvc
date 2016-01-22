@@ -31,7 +31,7 @@
             string actionName,
             Exception caughtException,
             ViewComponentResult viewComponentResult)
-            : base(controller, actionName, caughtException, viewComponentResult, "view component result")
+            : base(controller, actionName, caughtException, viewComponentResult, "view component")
         {
             this.viewComponentArguments = this.GetArguments();
         }
@@ -136,7 +136,7 @@
             {
                 this.ThrowNewViewResultAssertionException(
                     "with at least one argument",
-                    $"to be of {expectedType} type",
+                    $"to be of {expectedType.Name} type",
                     "none was found");
             }
 
@@ -163,7 +163,20 @@
                     $"in fact found {actualArgumentsCount}");
             }
 
-            argumentsList.ForEach(arg => this.WithArgument(arg));
+            for (int i = 0; i < expectedArgumentsCount; i++)
+            {
+                var expectedArgument = argumentsList[i];
+                var actualArgument = this.viewComponentArguments[i];
+
+                if (Reflection.AreNotDeeplyEqual(expectedArgument, actualArgument))
+                {
+                    this.ThrowNewViewResultAssertionException(
+                        $"to have argument on position {i}",
+                        "equal to the given one on the same position",
+                        "in fact it was different");
+                }
+            }
+
             return this;
         }
 
@@ -189,17 +202,15 @@
         private object[] GetArguments()
         {
             var actionResultArguments = this.ActionResult.Arguments;
-            var result = actionResultArguments as object[];
-
-            if (result == null)
+            if (actionResultArguments != null && actionResultArguments.GetType() != typeof(object[]))
             {
                 this.ThrowNewViewResultAssertionException(
-                    "ViewEngine",
-                    "to be of array of objects",
+                    "Arguments",
+                    "to be array of objects",
                     $"instead received {actionResultArguments.GetName()}");
             }
 
-            return result;
+            return actionResultArguments as object[];
         }
     }
 }
