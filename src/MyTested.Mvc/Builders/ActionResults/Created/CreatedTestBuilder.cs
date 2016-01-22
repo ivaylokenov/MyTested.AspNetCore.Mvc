@@ -3,13 +3,13 @@
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
+    using Base;
     using Contracts.ActionResults.Created;
     using Contracts.Uris;
     using Exceptions;
     using Internal.Extensions;
     using Microsoft.AspNet.Mvc;
     using Microsoft.AspNet.Routing;
-    using Models;
     using Utilities.Validators;
 
     /// <summary>
@@ -17,7 +17,7 @@
     /// </summary>
     /// <typeparam name="TCreatedResult">Type of created result - CreatedAtActionResult or CreatedAtRouteResult.</typeparam>
     public class CreatedTestBuilder<TCreatedResult>
-        : BaseResponseModelTestBuilder<TCreatedResult>, IAndCreatedTestBuilder
+        : BaseTestBuilderWithResponseModel<TCreatedResult>, IAndCreatedTestBuilder
     {
         private const string Location = "location";
         private const string RouteName = "route name";
@@ -250,6 +250,9 @@
         {
             return this;
         }
+
+        protected override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)
+            => this.ThrowNewCreatedResultAssertionException(propertyName, expectedValue, actualValue);
 
         private TExpectedCreatedResult GetCreatedResult<TExpectedCreatedResult>(string containment)
             where TExpectedCreatedResult : class

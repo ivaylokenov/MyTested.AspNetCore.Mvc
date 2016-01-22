@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Base;
     using Contracts.ActionResults.HttpBadRequest;
     using Contracts.Base;
     using Contracts.Models;
@@ -16,7 +17,7 @@
     /// Used for testing HTTP bad request results.
     /// </summary>
     /// <typeparam name="THttpBadRequestResult">Type of bad request result - BadRequestResult or BadRequestObjectResult.</typeparam>
-    public class HttpBadRequestTestBuilder<THttpBadRequestResult> : BaseResponseModelTestBuilder<THttpBadRequestResult>,
+    public class HttpBadRequestTestBuilder<THttpBadRequestResult> : BaseTestBuilderWithResponseModel<THttpBadRequestResult>,
         IHttpBadRequestTestBuilder
     {
         private const string ErrorMessage = "When calling {0} action in {1} expected HTTP bad request result error to be the given object, but in fact it was a different.";
@@ -192,6 +193,9 @@
                 modelState: this.GetModelStateFromSerializableError(badRequestObjectResultValue));
         }
 
+        protected override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)
+            => this.ThrowNewHttpBadRequestResultAssertionException(propertyName, expectedValue, actualValue);
+        
         private static IList<string> GetSortedErrorMessagesForModelStateKey(IEnumerable<ModelError> errors)
         {
             return errors
@@ -219,7 +223,7 @@
             var errorMessage = this.GetBadRequestObjectResultValue() as string;
             if (errorMessage == null)
             {
-                this.ThrowNewHttpBadRequestResultAssertionException();
+                this.ThrowNewHttpBadRequestResultAssertionExceptionWithMessage();
             }
 
             return errorMessage;
@@ -229,7 +233,7 @@
         {
             if (expectedMessage != actualMessage)
             {
-                this.ThrowNewHttpBadRequestResultAssertionException($"message '{expectedMessage}'", $"'{actualMessage}'");
+                this.ThrowNewHttpBadRequestResultAssertionExceptionWithMessage($"message '{expectedMessage}'", $"'{actualMessage}'");
             }
         }
 
@@ -238,7 +242,7 @@
             var serializableError = error as SerializableError;
             if (serializableError == null)
             {
-                this.ThrowNewHttpBadRequestResultAssertionException("model state dictionary as error", "other type of error");
+                this.ThrowNewHttpBadRequestResultAssertionExceptionWithMessage("model state dictionary as error", "other type of error");
             }
             
             var result = new ModelStateDictionary();
@@ -256,14 +260,23 @@
             return result;
         }
 
-        private void ThrowNewHttpBadRequestResultAssertionException(string expectedMessage = null, string actualMessage = null)
+        private void ThrowNewHttpBadRequestResultAssertionExceptionWithMessage(string expectedMessage = null, string actualMessage = null)
+        {
+            this.ThrowNewHttpBadRequestResultAssertionException(
+                "with",
+                expectedMessage == null ? "error message" : $"{expectedMessage}",
+                $"instead received {(actualMessage == null ? "non-string value" : $"{actualMessage}")}");
+        }
+        
+        private void ThrowNewHttpBadRequestResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new HttpBadRequestResultAssertionException(string.Format(
-                    "When calling {0} action in {1} expected HTTP bad request result with {2}, but instead received {3}.",
+                    "When calling {0} action in {1} expected HTTP bad request result {2} {3}, but {4}.",
                     this.ActionName,
                     this.Controller.GetName(),
-                    expectedMessage == null ? "error message" : $"{expectedMessage}",
-                    actualMessage == null ? "non-string value" : $"{actualMessage}"));
+                    propertyName,
+                    expectedValue,
+                    actualValue));
         }
     }
 }

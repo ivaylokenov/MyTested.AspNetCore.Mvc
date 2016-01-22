@@ -1,11 +1,11 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.ActionResults.Ok
 {
-    using Models;
+    using Base;
 
     /// <summary>
     /// Used for testing ok result.
     /// </summary>
-    public interface IOkTestBuilder : IBaseResponseModelTestBuilder
+    public interface IOkTestBuilder : IBaseTestBuilderWithResponseModel
     {
         /// <summary>
         /// Tests whether no response model is returned from the invoked action.

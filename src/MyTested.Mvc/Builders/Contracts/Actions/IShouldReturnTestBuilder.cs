@@ -197,21 +197,21 @@
         /// Tests whether action result is HttpStatusCodeResult.
         /// </summary>
         /// <returns>Base test builder with action result.</returns>
-        IBaseTestBuilderWithActionResult<TActionResult> StatusCode();
+        IBaseTestBuilderWithActionResult<TActionResult> HttpStatusCode();
 
         /// <summary>
         /// Tests whether action result is HttpStatusCodeResult and is the same as provided one.
         /// </summary>
         /// <param name="statusCode">Status code.</param>
         /// <returns>Base test builder with action result.</returns>
-        IBaseTestBuilderWithActionResult<TActionResult> StatusCode(int statusCode);
+        IBaseTestBuilderWithActionResult<TActionResult> HttpStatusCode(int statusCode);
 
         /// <summary>
         /// Tests whether action result is HttpStatusCodeResult and is the same as provided HttpStatusCode.
         /// </summary>
         /// <param name="statusCode">HttpStatusCode enumeration.</param>
         /// <returns>Base test builder with action result.</returns>
-        IBaseTestBuilderWithActionResult<TActionResult> StatusCode(HttpStatusCode statusCode);
+        IBaseTestBuilderWithActionResult<TActionResult> HttpStatusCode(HttpStatusCode statusCode);
         
         /// <summary>
         /// Tests whether action result is EmptyResult.

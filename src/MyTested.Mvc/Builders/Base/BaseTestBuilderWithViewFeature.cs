@@ -11,7 +11,7 @@
     /// </summary>
     /// <typeparam name="TViewResult">Type of view result - ViewResult, PartialViewResult or ViewComponentResult.</typeparam>
     public abstract class BaseTestBuilderWithViewFeature<TViewResult>
-        : BaseResponseModelTestBuilder<TViewResult>, IBaseTestBuilderWithViewFeature
+        : BaseTestBuilderWithResponseModel<TViewResult>, IBaseTestBuilderWithViewFeature
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseTestBuilderWithViewFeature{TActionResult}" /> class.

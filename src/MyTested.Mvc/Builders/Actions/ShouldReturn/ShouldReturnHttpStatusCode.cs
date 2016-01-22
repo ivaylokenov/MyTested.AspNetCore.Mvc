@@ -17,7 +17,7 @@
         /// Tests whether action result is HttpStatusCodeResult.
         /// </summary>
         /// <returns>Base test builder with action result.</returns>
-        public IBaseTestBuilderWithActionResult<TActionResult> StatusCode()
+        public IBaseTestBuilderWithActionResult<TActionResult> HttpStatusCode()
         {
             this.ValidateActionReturnType<HttpStatusCodeResult>();
             return this.NewAndProvideTestBuilder();
@@ -28,9 +28,9 @@
         /// </summary>
         /// <param name="statusCode">Status code.</param>
         /// <returns>Base test builder with action result.</returns>
-        public IBaseTestBuilderWithActionResult<TActionResult> StatusCode(int statusCode)
+        public IBaseTestBuilderWithActionResult<TActionResult> HttpStatusCode(int statusCode)
         {
-            return this.StatusCode((HttpStatusCode)statusCode);
+            return this.HttpStatusCode((HttpStatusCode)statusCode);
         }
 
         /// <summary>
@@ -38,7 +38,7 @@
         /// </summary>
         /// <param name="statusCode">HttpStatusCode enumeration.</param>
         /// <returns>Base test builder with action result.</returns>
-        public IBaseTestBuilderWithActionResult<TActionResult> StatusCode(HttpStatusCode statusCode)
+        public IBaseTestBuilderWithActionResult<TActionResult> HttpStatusCode(HttpStatusCode statusCode)
         {
             var statusCodeResult = this.GetReturnObject<HttpStatusCodeResult>();
 

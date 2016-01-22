@@ -63,16 +63,6 @@
             var strictlyEqualCheck = !canBeAssignable && Reflection.AreDifferentTypes(typeOfExpectedReturnValue, typeOfActionResult);
 
             var invalid = isAssignableCheck || strictlyEqualCheck;
-            if (strictlyEqualCheck)
-            {
-                var genericTypeDefinitionCheck = Reflection.AreAssignableByGeneric(typeOfExpectedReturnValue, typeOfActionResult);
-
-                if (genericTypeDefinitionCheck)
-                {
-                    invalid = false;
-                }
-            }
-
             if (invalid && typeInfoOfExpectedReturnValue.IsGenericTypeDefinition && typeInfoOfActionResult.IsGenericType)
             {
                 var actionResultGenericDefinition = typeInfoOfActionResult.GetGenericTypeDefinition();

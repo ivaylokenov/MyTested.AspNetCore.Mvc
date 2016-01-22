@@ -140,6 +140,9 @@
             return this;
         }
 
+        protected override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)
+            => this.ThrowNewViewResultAssertionException(propertyName, expectedValue, actualValue);
+
         /// <summary>
         /// Gets the view engine instance from a view result.
         /// </summary>

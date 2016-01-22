@@ -2,6 +2,7 @@
 {
     using System;
     using System.Net;
+    using Base;
     using Contracts.ActionResults.Json;
     using Exceptions;
     using Internal;
@@ -9,14 +10,13 @@
     using Microsoft.AspNet.Mvc;
     using Microsoft.Extensions.Options;
     using Microsoft.Net.Http.Headers;
-    using Models;
     using Newtonsoft.Json;
     using Utilities.Validators;
 
     /// <summary>
     /// Used for testing JSON results.
     /// </summary>
-    public class JsonTestBuilder : BaseResponseModelTestBuilder<JsonResult>, IAndJsonTestBuilder
+    public class JsonTestBuilder : BaseTestBuilderWithResponseModel<JsonResult>, IAndJsonTestBuilder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonTestBuilder" /> class.
@@ -133,6 +133,9 @@
         {
             return this;
         }
+
+        protected override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)
+            => this.ThrowNewJsonResultAssertionException(propertyName, expectedValue, actualValue);
 
         private JsonSerializerSettings GetServiceDefaultSerializerSettings()
         {

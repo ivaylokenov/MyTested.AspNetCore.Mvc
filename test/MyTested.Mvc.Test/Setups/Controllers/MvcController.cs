@@ -169,6 +169,23 @@
             return this.HttpBadRequest();
         }
 
+        public IActionResult EmptyResultAction()
+        {
+            return new EmptyResult();
+        }
+
+        public IActionResult NoContentResultAction()
+        {
+            return new NoContentResult();
+        }
+
+        public IActionResult UnsupportedMediaTypeResultAction()
+        {
+            return new UnsupportedMediaTypeResult();
+        }
+
+
+
         public void EmptyAction()
         {
         }
@@ -214,7 +231,7 @@
 
         public IActionResult StatusCodeAction()
         {
-            return new HttpStatusCodeResult(405);
+            return new HttpStatusCodeResult(500);
         }
 
         public IActionResult ChallengeResultAction()

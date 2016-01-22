@@ -3,14 +3,14 @@
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
+    using Base;
     using Microsoft.AspNet.Mvc;
-    using Models;
     using Uris;
 
     /// <summary>
     /// Used for testing created results.
     /// </summary>
-    public interface ICreatedTestBuilder : IBaseResponseModelTestBuilder
+    public interface ICreatedTestBuilder : IBaseTestBuilderWithResponseModel
     {
         /// <summary>
         /// Tests whether created result has specific location provided by string.

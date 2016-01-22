@@ -1,31 +1,34 @@
-﻿namespace MyTested.Mvc.Builders.Models
+﻿namespace MyTested.Mvc.Builders.Base
 {
     using System;
-    using Base;
+    using Contracts.Base;
     using Contracts.Models;
     using Exceptions;
     using Internal.Extensions;
     using Microsoft.AspNet.Mvc;
+    using Models;
     using Utilities;
+    using System.Net;
+    using Utilities.Validators;
 
     /// <summary>
     /// Base class for all response model test builders.
     /// </summary>
     /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
-    public abstract class BaseResponseModelTestBuilder<TActionResult>
-        : BaseTestBuilderWithActionResult<TActionResult>, IBaseResponseModelTestBuilder
+    public abstract class BaseTestBuilderWithResponseModel<TActionResult>
+        : BaseTestBuilderWithActionResult<TActionResult>, IBaseTestBuilderWithResponseModel
     {
         private const string ErrorMessage = "When calling {0} action in {1} expected response model {2} to be the given model, but in fact it was a different.";
         private const string OfTypeErrorMessage = "When calling {0} action in {1} expected response model to be of {2} type, but instead received {3}.";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseResponseModelTestBuilder{TActionResult}" /> class.
+        /// Initializes a new instance of the <see cref="BaseTestBuilderWithResponseModel{TActionResult}" /> class.
         /// </summary>
         /// <param name="controller">Controller on which the action will be tested.</param>
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Caught exception during the action execution.</param>
         /// <param name="actionResult">Result from the tested action.</param>
-        protected BaseResponseModelTestBuilder(
+        protected BaseTestBuilderWithResponseModel(
             Controller controller,
             string actionName,
             Exception caughtException,
@@ -57,7 +60,7 @@
         {
             var actualResponseDataType = this.GetActualModel()?.GetType();
             var expectedResponseDataType = typeof(TResponseModel);
-            
+
             var responseDataTypeIsAssignable = Reflection.AreAssignable(
                     expectedResponseDataType,
                     actualResponseDataType);
@@ -105,7 +108,30 @@
                 this.CaughtException,
                 actualModel);
         }
-        
+
+        /// <summary>
+        /// Tests whether action result has the same status code as the provided one.
+        /// </summary>
+        /// <param name="statusCode">Status code.</param>
+        protected void ValidateStatusCode(int statusCode)
+        {
+            this.ValidateStatusCode((HttpStatusCode)statusCode);
+        }
+
+        /// <summary>
+        /// Tests whether action result has the same status code as the provided HttpStatusCode.
+        /// </summary>
+        /// <param name="statusCode">HttpStatusCode enumeration.</param>
+        protected void ValidateStatusCode(HttpStatusCode statusCode)
+        {
+            HttpStatusCodeValidator.ValidateHttpStatusCode(
+                this.ActionResult,
+                statusCode,
+                this.ThrowNewFailedValidationException);
+        }
+
+        protected abstract void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue);
+
         private TResponseModel GetActualModel<TResponseModel>()
         {
             try

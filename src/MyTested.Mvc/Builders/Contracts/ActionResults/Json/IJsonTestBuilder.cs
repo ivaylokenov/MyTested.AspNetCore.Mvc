@@ -2,14 +2,14 @@
 {
     using System;
     using System.Net;
+    using Base;
     using Microsoft.Net.Http.Headers;
-    using Models;
     using Newtonsoft.Json;
 
     /// <summary>
     /// Used for testing JSON results.
     /// </summary>
-    public interface IJsonTestBuilder : IBaseResponseModelTestBuilder
+    public interface IJsonTestBuilder : IBaseTestBuilderWithResponseModel
     {
         /// <summary>
         /// Tests whether JSON result has the same status code as the provided one.

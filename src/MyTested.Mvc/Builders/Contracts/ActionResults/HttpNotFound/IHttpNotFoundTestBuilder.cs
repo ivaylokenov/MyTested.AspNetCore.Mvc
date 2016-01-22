@@ -1,12 +1,11 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.ActionResults.HttpNotFound
 {
     using Base;
-    using Models;
 
     /// <summary>
     /// Used for testing HTTP not found result.
     /// </summary>
-    public interface IHttpNotFoundTestBuilder : IBaseResponseModelTestBuilder
+    public interface IHttpNotFoundTestBuilder : IBaseTestBuilderWithResponseModel
     {
         /// <summary>
         /// Tests whether no response model is returned from the invoked action.

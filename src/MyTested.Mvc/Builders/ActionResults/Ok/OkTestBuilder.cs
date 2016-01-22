@@ -1,18 +1,18 @@
 ﻿namespace MyTested.Mvc.Builders.ActionResults.Ok
 {
     using System;
+    using Base;
     using Contracts.ActionResults.Ok;
     using Exceptions;
     using Internal.Extensions;
     using Microsoft.AspNet.Mvc;
-    using Models;
 
     /// <summary>
     /// Used for testing OK result.
     /// </summary>
     /// <typeparam name="THttpOkResult">Type of OK result - HttpOkResult or HttpOkObjectResult.</typeparam>
     public class OkTestBuilder<THttpOkResult>
-        : BaseResponseModelTestBuilder<THttpOkResult>, IAndOkTestBuilder
+        : BaseTestBuilderWithResponseModel<THttpOkResult>, IAndOkTestBuilder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="OkTestBuilder{THttpOkResult}" /> class.
@@ -47,7 +47,7 @@
 
             return this;
         }
-        
+
         /// <summary>
         /// AndAlso method for better readability when chaining ok tests.
         /// </summary>
@@ -56,6 +56,9 @@
         {
             return this;
         }
+
+        protected override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)
+            => this.ThrowNewOkResultAssertionException(propertyName, expectedValue, actualValue);
 
         private void ThrowNewOkResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {

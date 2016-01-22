@@ -1,19 +1,19 @@
 ﻿namespace MyTested.Mvc.Builders.ActionResults.HttpNotFound
 {
     using System;
+    using Base;
     using Contracts.ActionResults.HttpNotFound;
     using Contracts.Base;
     using Exceptions;
     using Internal.Extensions;
     using Microsoft.AspNet.Mvc;
-    using Models;
 
     /// <summary>
     /// Used for testing HTTP not found result.
     /// </summary>
     /// <typeparam name="THttpNotFoundResult">Type of not found result - HttpNotFoundResult or HttpNotFoundObjectResult.</typeparam>
     public class HttpNotFoundTestBuilder<THttpNotFoundResult>
-        : BaseResponseModelTestBuilder<THttpNotFoundResult>, IHttpNotFoundTestBuilder
+        : BaseTestBuilderWithResponseModel<THttpNotFoundResult>, IHttpNotFoundTestBuilder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="HttpNotFoundTestBuilder{TActionResult}" /> class.
@@ -47,6 +47,20 @@
             }
 
             return this;
+        }
+
+        protected override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)
+            => this.ThrowNewHttpNotFoundResultAssertionException(propertyName, expectedValue, actualValue);
+
+        private void ThrowNewHttpNotFoundResultAssertionException(string propertyName, string expectedValue, string actualValue)
+        {
+            throw new HttpNotFoundResultAssertionException(string.Format(
+                    "When calling {0} action in {1} expected HTTP not found result {2} {3}, but {4}.",
+                    this.ActionName,
+                    this.Controller.GetName(),
+                    propertyName,
+                    expectedValue,
+                    actualValue));
         }
     }
 }
