@@ -3,16 +3,17 @@
     using System;
     using Base;
     using Contracts.ActionResults.HttpNotFound;
-    using Contracts.Base;
     using Exceptions;
     using Internal.Extensions;
     using Microsoft.AspNet.Mvc;
     using System.Net;
     using Microsoft.Net.Http.Headers;
-    using System.Collections.Generic;/// <summary>
-                                     /// Used for testing HTTP not found result.
-                                     /// </summary>
-                                     /// <typeparam name="THttpNotFoundResult">Type of not found result - HttpNotFoundResult or HttpNotFoundObjectResult.</typeparam>
+    using System.Collections.Generic;
+
+    /// <summary>
+    /// Used for testing HTTP not found result.
+    /// </summary>
+    /// <typeparam name="THttpNotFoundResult">Type of not found result - HttpNotFoundResult or HttpNotFoundObjectResult.</typeparam>
     public class HttpNotFoundTestBuilder<THttpNotFoundResult>
         : BaseTestBuilderWithResponseModel<THttpNotFoundResult>, IAndHttpNotFoundTestBuilder
     {
@@ -145,7 +146,7 @@
         {
             return this;
         }
-        
+
         protected override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)
             => this.ThrowNewHttpNotFoundResultAssertionException(propertyName, expectedValue, actualValue);
 

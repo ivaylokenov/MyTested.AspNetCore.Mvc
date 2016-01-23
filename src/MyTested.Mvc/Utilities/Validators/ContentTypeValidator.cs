@@ -61,7 +61,7 @@
             if (!contentTypes.Contains(expectedContentType))
             {
                 failedValidationAction(
-                    "ContentTypes",
+                    "content types",
                     $"to contain {expectedContentType.MediaType}",
                     "such was not found");
             }
@@ -97,9 +97,9 @@
             }
         }
 
-        private static IList<MediaTypeHeaderValue> SortContentTypes(IEnumerable<MediaTypeHeaderValue> contentType)
+        private static IList<MediaTypeHeaderValue> SortContentTypes(IEnumerable<MediaTypeHeaderValue> contentTypes)
         {
-            return contentType
+            return contentTypes
                 .OrderBy(m => m.MediaType)
                 .ToList();
         }

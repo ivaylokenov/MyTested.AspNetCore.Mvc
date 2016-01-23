@@ -12,10 +12,13 @@
     using System.Net;
     using Utilities.Validators;
     using Microsoft.Net.Http.Headers;
-    using System.Collections.Generic;    /// <summary>
-                                         /// Base class for all response model test builders.
-                                         /// </summary>
-                                         /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
+    using System.Collections.Generic;
+    using Microsoft.AspNet.Mvc.Formatters;
+
+    /// <summary>
+    /// Base class for all response model test builders.
+    /// </summary>
+    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
     public abstract class BaseTestBuilderWithResponseModel<TActionResult>
         : BaseTestBuilderWithActionResult<TActionResult>, IBaseTestBuilderWithResponseModel
     {
@@ -167,6 +170,35 @@
             this.ValidateContentTypes(contentTypes.AsEnumerable());
         }
 
+        protected void ValidateContainingOfOutputFormatter(IOutputFormatter outputFormatter)
+        {
+            OutputFormatterValidator.ValidateContainingOfOutputFormatter(
+                this.GetObjectResult(),
+                outputFormatter,
+                this.ThrowNewFailedValidationException);
+        }
+
+        protected void ValidateContainingOutputFormatterOfType<TOutputFormatter>()
+            where TOutputFormatter : IOutputFormatter
+        {
+            OutputFormatterValidator.ValidateContainingOutputFormatterOfType<TOutputFormatter>(
+                this.GetObjectResult(),
+                this.ThrowNewFailedValidationException);
+        }
+
+        protected void ValidateOutputFormatters(IEnumerable<IOutputFormatter> outputFormatters)
+        {
+            OutputFormatterValidator.ValidateOutputFormatters(
+                this.GetObjectResult(),
+                outputFormatters,
+                this.ThrowNewFailedValidationException);
+        }
+
+        protected void ValidateOutputFormatters(params IOutputFormatter[] outputFormatters)
+        {
+            this.ValidateOutputFormatters(outputFormatters.AsEnumerable());
+        }
+
         protected abstract void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue);
 
         private TResponseModel GetActualModel<TResponseModel>()
@@ -183,6 +215,20 @@
                     this.Controller.GetName(),
                     typeof(TResponseModel).ToFriendlyTypeName()));
             }
+        }
+
+        private ObjectResult GetObjectResult()
+        {
+            var objectResult = this.ActionResult as ObjectResult;
+            if (objectResult == null)
+            {
+                throw new ActionResultAssertionException(string.Format(
+                    "When calling {0} action in {1} expected action result to inherit from ObjectResult, but it did not.",
+                    this.ActionName,
+                    this.Controller.GetName()));
+            }
+
+            return objectResult;
         }
 
         private object GetActualModel()
