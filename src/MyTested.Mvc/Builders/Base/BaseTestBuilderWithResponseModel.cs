@@ -1,6 +1,7 @@
 ﻿namespace MyTested.Mvc.Builders.Base
 {
     using System;
+    using System.Linq;
     using Contracts.Base;
     using Contracts.Models;
     using Exceptions;
@@ -10,11 +11,11 @@
     using Utilities;
     using System.Net;
     using Utilities.Validators;
-
-    /// <summary>
-    /// Base class for all response model test builders.
-    /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
+    using Microsoft.Net.Http.Headers;
+    using System.Collections.Generic;    /// <summary>
+                                         /// Base class for all response model test builders.
+                                         /// </summary>
+                                         /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
     public abstract class BaseTestBuilderWithResponseModel<TActionResult>
         : BaseTestBuilderWithActionResult<TActionResult>, IBaseTestBuilderWithResponseModel
     {
@@ -128,6 +129,42 @@
                 this.ActionResult,
                 statusCode,
                 this.ThrowNewFailedValidationException);
+        }
+
+        protected void ValidateContainingOfContentType(string contentType)
+        {
+            this.ValidateContainingOfContentType(new MediaTypeHeaderValue(contentType));
+        }
+
+        protected void ValidateContainingOfContentType(MediaTypeHeaderValue contentType)
+        {
+            ContentTypeValidator.ValidateContainingOfContentType(
+                this.ActionResult,
+                contentType,
+                this.ThrowNewFailedValidationException);
+        }
+
+        protected void ValidateContentTypes(IEnumerable<string> contentTypes)
+        {
+            this.ValidateContentTypes(contentTypes.Select(ct => new MediaTypeHeaderValue(ct)));
+        }
+
+        protected void ValidateContentTypes(params string[] contentTypes)
+        {
+            this.ValidateContentTypes(contentTypes.AsEnumerable());
+        }
+
+        protected void ValidateContentTypes(IEnumerable<MediaTypeHeaderValue> contentTypes)
+        {
+            ContentTypeValidator.ValidateContentTypes(
+                this.ActionResult,
+                contentTypes,
+                this.ThrowNewFailedValidationException);
+        }
+
+        protected void ValidateContentTypes(params MediaTypeHeaderValue[] contentTypes)
+        {
+            this.ValidateContentTypes(contentTypes.AsEnumerable());
         }
 
         protected abstract void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue);

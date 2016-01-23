@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
+    using System.Net;
     using Base;
     using Contracts.ActionResults.Created;
     using Contracts.Uris;
@@ -11,7 +12,7 @@
     using Microsoft.AspNet.Mvc;
     using Microsoft.AspNet.Routing;
     using Utilities.Validators;
-
+    using Microsoft.Net.Http.Headers;
     /// <summary>
     /// Used for testing created results.
     /// </summary>
@@ -38,6 +39,93 @@
             TCreatedResult createdResult)
             : base(controller, actionName, caughtException, createdResult)
         {
+        }
+
+        /// <summary>
+        /// Tests whether created result has the same status code as the provided one.
+        /// </summary>
+        /// <param name="statusCode">Status code.</param>
+        /// <returns>The same created test builder.</returns>
+        public IAndCreatedTestBuilder WithStatusCode(int statusCode)
+        {
+            return this.WithStatusCode((HttpStatusCode)statusCode);
+        }
+
+        /// <summary>
+        /// Tests whether created has the same status code as the provided HttpStatusCode.
+        /// </summary>
+        /// <param name="statusCode">HttpStatusCode enumeration.</param>
+        /// <returns>The same created test builder.</returns>
+        public IAndCreatedTestBuilder WithStatusCode(HttpStatusCode statusCode)
+        {
+            this.ValidateStatusCode(statusCode);
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether created result contains the content type provided as string.
+        /// </summary>
+        /// <param name="contentType">Content type as string.</param>
+        /// <returns>The same created test builder.</returns>
+        public IAndCreatedTestBuilder ContainingContentType(string contentType)
+        {
+            this.ValidateContainingOfContentType(contentType);
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether created result contains the content type provided as MediaTypeHeaderValue.
+        /// </summary>
+        /// <param name="contentType">Content type as MediaTypeHeaderValue.</param>
+        /// <returns>The same created test builder.</returns>
+        public IAndCreatedTestBuilder ContainingContentType(MediaTypeHeaderValue contentType)
+        {
+            this.ValidateContainingOfContentType(contentType);
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether created result contains the same content types provided as enumerable of strings.
+        /// </summary>
+        /// <param name="contentTypes">Content types as enumerable of strings.</param>
+        /// <returns>The same created test builder.</returns>
+        public IAndCreatedTestBuilder ContainingContentTypes(IEnumerable<string> contentTypes)
+        {
+            this.ValidateContentTypes(contentTypes);
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether created result contains the same content types provided as string parameters.
+        /// </summary>
+        /// <param name="contentTypes">Content types as string parameters.</param>
+        /// <returns>The same created test builder.</returns>
+        public IAndCreatedTestBuilder ContainingContentTypes(params string[] contentTypes)
+        {
+            this.ValidateContentTypes(contentTypes);
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether created result contains the same content types provided as enumerable of MediaTypeHeaderValue.
+        /// </summary>
+        /// <param name="contentTypes">Content types as enumerable of MediaTypeHeaderValue.</param>
+        /// <returns>The same created test builder.</returns>
+        public IAndCreatedTestBuilder ContainingContentTypes(IEnumerable<MediaTypeHeaderValue> contentTypes)
+        {
+            this.ValidateContentTypes(contentTypes);
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether created result contains the same content types provided as MediaTypeHeaderValue parameters.
+        /// </summary>
+        /// <param name="contentTypes">Content types as MediaTypeHeaderValue parameters.</param>
+        /// <returns>The same created test builder.</returns>
+        public IAndCreatedTestBuilder ContainingContentTypes(params MediaTypeHeaderValue[] contentTypes)
+        {
+            this.ValidateContentTypes(contentTypes);
+            return this;
         }
 
         /// <summary>

@@ -6,11 +6,12 @@
     using Exceptions;
     using Internal.Extensions;
     using Microsoft.AspNet.Mvc;
-
-    /// <summary>
-    /// Used for testing OK result.
-    /// </summary>
-    /// <typeparam name="THttpOkResult">Type of OK result - HttpOkResult or HttpOkObjectResult.</typeparam>
+    using System.Net;
+    using Microsoft.Net.Http.Headers;
+    using System.Collections.Generic;/// <summary>
+                                     /// Used for testing OK result.
+                                     /// </summary>
+                                     /// <typeparam name="THttpOkResult">Type of OK result - HttpOkResult or HttpOkObjectResult.</typeparam>
     public class OkTestBuilder<THttpOkResult>
         : BaseTestBuilderWithResponseModel<THttpOkResult>, IAndOkTestBuilder
     {
@@ -45,6 +46,93 @@
                         this.Controller.GetName()));
             }
 
+            return this;
+        }
+        
+        /// <summary>
+        /// Tests whether OK result has the same status code as the provided one.
+        /// </summary>
+        /// <param name="statusCode">Status code.</param>
+        /// <returns>The same OK test builder.</returns>
+        public IAndOkTestBuilder WithStatusCode(int statusCode)
+        {
+            return this.WithStatusCode((HttpStatusCode)statusCode);
+        }
+
+        /// <summary>
+        /// Tests whether OK result has the same status code as the provided HttpStatusCode.
+        /// </summary>
+        /// <param name="statusCode">HttpStatusCode enumeration.</param>
+        /// <returns>The same OK test builder.</returns>
+        public IAndOkTestBuilder WithStatusCode(HttpStatusCode statusCode)
+        {
+            this.ValidateStatusCode(statusCode);
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether OK result contains the content type provided as string.
+        /// </summary>
+        /// <param name="contentType">Content type as string.</param>
+        /// <returns>The same OK test builder.</returns>
+        public IAndOkTestBuilder ContainingContentType(string contentType)
+        {
+            this.ValidateContainingOfContentType(contentType);
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether OK result contains the content type provided as MediaTypeHeaderValue.
+        /// </summary>
+        /// <param name="contentType">Content type as MediaTypeHeaderValue.</param>
+        /// <returns>The same OK test builder.</returns>
+        public IAndOkTestBuilder ContainingContentType(MediaTypeHeaderValue contentType)
+        {
+            this.ValidateContainingOfContentType(contentType);
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether OK result contains the same content types provided as enumerable of strings.
+        /// </summary>
+        /// <param name="contentTypes">Content types as enumerable of strings.</param>
+        /// <returns>The same OK test builder.</returns>
+        public IAndOkTestBuilder ContainingContentTypes(IEnumerable<string> contentTypes)
+        {
+            this.ValidateContentTypes(contentTypes);
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether OK result contains the same content types provided as string parameters.
+        /// </summary>
+        /// <param name="contentTypes">Content types as string parameters.</param>
+        /// <returns>The same OK test builder.</returns>
+        public IAndOkTestBuilder ContainingContentTypes(params string[] contentTypes)
+        {
+            this.ValidateContentTypes(contentTypes);
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether OK result contains the same content types provided as enumerable of MediaTypeHeaderValue.
+        /// </summary>
+        /// <param name="contentTypes">Content types as enumerable of MediaTypeHeaderValue.</param>
+        /// <returns>The same OK test builder.</returns>
+        public IAndOkTestBuilder ContainingContentTypes(IEnumerable<MediaTypeHeaderValue> contentTypes)
+        {
+            this.ValidateContentTypes(contentTypes);
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether OK result contains the same content types provided as MediaTypeHeaderValue parameters.
+        /// </summary>
+        /// <param name="contentTypes">Content types as MediaTypeHeaderValue parameters.</param>
+        /// <returns>The same OK test builder.</returns>
+        public IAndOkTestBuilder ContainingContentTypes(params MediaTypeHeaderValue[] contentTypes)
+        {
+            this.ValidateContentTypes(contentTypes);
             return this;
         }
 

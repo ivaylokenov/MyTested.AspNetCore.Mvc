@@ -28,16 +28,16 @@
         /// <summary>
         /// Tests whether content result has the same content type as the provided string.
         /// </summary>
-        /// <param name="mediaType">Media type as string.</param>
+        /// <param name="contenType">Content type as string.</param>
         /// <returns>The same content test builder.</returns>
-        IAndContentTestBuilder WithContentType(string mediaType);
+        IAndContentTestBuilder WithContentType(string contenType);
 
         /// <summary>
         /// Tests whether content result has the same content type as the provided MediaTypeHeaderValue.
         /// </summary>
-        /// <param name="mediaType">Media type as MediaTypeHeaderValue.</param>
+        /// <param name="contenType">Content type as MediaTypeHeaderValue.</param>
         /// <returns>The same content test builder.</returns>
-        IAndContentTestBuilder WithContentType(MediaTypeHeaderValue mediaType);
+        IAndContentTestBuilder WithContentType(MediaTypeHeaderValue contenType);
 
         /// <summary>
         /// Tests whether content result has the default UTF8 encoding.

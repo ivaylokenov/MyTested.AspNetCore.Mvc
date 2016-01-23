@@ -108,7 +108,7 @@
         /// Tests whether action result is HttpNotFoundResult or HttpNotFoundObjectResult.
         /// </summary>
         /// <returns>Base test builder with action result.</returns>
-        IHttpNotFoundTestBuilder HttpNotFound();
+        IAndHttpNotFoundTestBuilder HttpNotFound();
         
         /// <summary>
         /// Tests whether action result is HttpUnauthorizedResult.

@@ -1,6 +1,8 @@
 ﻿namespace MyTested.Mvc.Utilities.Validators
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Microsoft.Net.Http.Headers;
 
     /// <summary>
@@ -48,6 +50,70 @@
                     (MediaTypeHeaderValue)actionResult.ContentType,
                     failedValidationAction);
             });
+        }
+
+        public static void ValidateContainingOfContentType(
+            dynamic actionResult,
+            MediaTypeHeaderValue expectedContentType,
+            Action<string, string, string> failedValidationAction)
+        {
+            var contentTypes = TryGetContentTypesList(actionResult);
+            if (!contentTypes.Contains(expectedContentType))
+            {
+                failedValidationAction(
+                    "ContentTypes",
+                    $"to contain {expectedContentType.MediaType}",
+                    "such was not found");
+            }
+        }
+
+        public static void ValidateContentTypes(
+            dynamic actionResult,
+            IEnumerable<MediaTypeHeaderValue> contentTypes,
+            Action<string, string, string> failedValidationAction)
+        {
+            var actualContentTypes = SortContentTypes(TryGetContentTypesList(actionResult));
+            var expectedContentTypes = SortContentTypes(contentTypes);
+
+            if (actualContentTypes.Count != expectedContentTypes.Count)
+            {
+                failedValidationAction(
+                    "content types",
+                    $"to be {expectedContentTypes.Count}",
+                    $"instead found {actualContentTypes.Count}");
+            }
+
+            for (int i = 0; i < actualContentTypes.Count; i++)
+            {
+                var actualMediaTypeFormatter = actualContentTypes[i]?.MediaType;
+                var expectedMediaTypeFormatter = expectedContentTypes[i]?.MediaType;
+                if (actualMediaTypeFormatter != expectedMediaTypeFormatter)
+                {
+                    failedValidationAction(
+                        "content types",
+                        $"to contain {expectedContentTypes[i]}",
+                        "none was found");
+                }
+            }
+        }
+
+        private static IList<MediaTypeHeaderValue> SortContentTypes(IEnumerable<MediaTypeHeaderValue> contentType)
+        {
+            return contentType
+                .OrderBy(m => m.MediaType)
+                .ToList();
+        }
+
+        private static IList<MediaTypeHeaderValue> TryGetContentTypesList(dynamic actionResult)
+        {
+            IList<MediaTypeHeaderValue> contentTypes = null;
+
+            RuntimeBinderValidator.ValidateBinding(() =>
+            {
+                contentTypes = (IList<MediaTypeHeaderValue>)actionResult.ContentTypes;
+            });
+
+            return contentTypes;
         }
     }
 }

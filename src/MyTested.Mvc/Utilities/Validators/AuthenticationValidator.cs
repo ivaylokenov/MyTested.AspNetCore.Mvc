@@ -25,13 +25,13 @@
             string authenticationScheme,
             Action<string, string, string> failedValidationAction)
         {
-            var actualAuthenticationSchemes = TryGetAuthenticationSchemes(actionResult) as IList<string>;
+            var actualAuthenticationSchemes = TryGetAuthenticationSchemes(actionResult);
             if (!actualAuthenticationSchemes.Contains(authenticationScheme))
             {
                 failedValidationAction(
-                        "authentication schemes",
-                        $"to contain {authenticationScheme}",
-                        "none was found");
+                    "authentication schemes",
+                    $"to contain {authenticationScheme}",
+                    "none was found");
             }
         }
 

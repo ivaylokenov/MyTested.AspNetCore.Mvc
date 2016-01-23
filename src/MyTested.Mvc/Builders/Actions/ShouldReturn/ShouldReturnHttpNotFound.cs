@@ -14,7 +14,7 @@
         /// Tests whether action result is HttpNotFoundResult or HttpNotFoundObjectResult.
         /// </summary>
         /// <returns>Base test builder with action result.</returns>
-        public IHttpNotFoundTestBuilder HttpNotFound()
+        public IAndHttpNotFoundTestBuilder HttpNotFound()
         {
             this.ValidateActionReturnType(typeof(HttpNotFoundResult), typeof(HttpNotFoundObjectResult));
             return new HttpNotFoundTestBuilder<TActionResult>(

@@ -11,6 +11,6 @@
         /// Tests whether no response model is returned from the invoked action.
         /// </summary>
         /// <returns>Base test builder with action.</returns>
-        IBaseTestBuilderWithCaughtException WithNoResponseModel();
+        IAndHttpNotFoundTestBuilder WithNoResponseModel();
     }
 }
