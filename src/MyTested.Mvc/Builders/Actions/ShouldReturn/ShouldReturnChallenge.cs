@@ -16,12 +16,12 @@
         /// <returns>Challenge test builder.</returns>
         public IChallengeTestBuilder Challenge()
         {
-            this.ValidateActionReturnType<ChallengeResult>();
+            var challengeResult = this.GetReturnObject<ChallengeResult>();
             return new ChallengeTestBuilder(
                 this.Controller,
                 this.ActionName,
                 this.CaughtException,
-                this.ActionResult as ChallengeResult);
+                challengeResult);
         }
     }
 }

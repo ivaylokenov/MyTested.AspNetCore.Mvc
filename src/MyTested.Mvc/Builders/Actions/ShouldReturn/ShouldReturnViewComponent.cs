@@ -18,12 +18,12 @@
         /// <returns>View component test builder.</returns>
         public IViewComponentTestBuilder ViewComponent()
         {
-            this.ValidateActionReturnType<ViewComponentResult>();
+            var viewCompomentResult = this.GetReturnObject<ViewComponentResult>();
             return new ViewComponentTestBuilder(
                 this.Controller,
                 this.ActionName,
                 this.CaughtException,
-                this.ActionResult as ViewComponentResult);
+                viewCompomentResult);
         }
 
         /// <summary>

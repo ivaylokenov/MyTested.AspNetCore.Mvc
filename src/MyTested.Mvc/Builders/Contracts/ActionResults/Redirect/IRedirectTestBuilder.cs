@@ -10,7 +10,7 @@
     /// <summary>
     /// Used for testing redirect results.
     /// </summary>
-    public interface IRedirectTestBuilder : IBaseTestBuilderWithCaughtException
+    public interface IRedirectTestBuilder : IBaseTestBuilderWithActionResult<ActionResult>
     {
         /// <summary>
         /// Tests whether redirect result is permanent.

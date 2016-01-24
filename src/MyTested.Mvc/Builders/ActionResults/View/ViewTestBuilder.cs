@@ -18,6 +18,7 @@
     /// <typeparam name="TViewResult">Type of view result - ViewResult or PartialViewResult.</typeparam>
     public class ViewTestBuilder<TViewResult>
         : BaseTestBuilderWithViewFeature<TViewResult>, IAndViewTestBuilder
+        where TViewResult : ActionResult
     {
         private string viewType;
 

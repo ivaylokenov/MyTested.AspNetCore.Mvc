@@ -3,13 +3,15 @@
     using System;
     using System.Net;
     using Base;
+    using Microsoft.AspNet.Mvc;
     using Microsoft.Net.Http.Headers;
     using Newtonsoft.Json;
 
     /// <summary>
     /// Used for testing JSON results.
     /// </summary>
-    public interface IJsonTestBuilder : IBaseTestBuilderWithResponseModel
+    public interface IJsonTestBuilder : IBaseTestBuilderWithResponseModel,
+        IBaseTestBuilderWithActionResult<JsonResult>
     {
         /// <summary>
         /// Tests whether JSON result has the same status code as the provided one.

@@ -16,12 +16,12 @@
         /// <returns>Forbid test builder.</returns>
         public IForbidTestBuilder Forbid()
         {
-            this.ValidateActionReturnType<ForbidResult>();
+            var forbidResult = this.GetReturnObject<ForbidResult>();
             return new ForbidTestBuilder(
                 this.Controller,
                 this.ActionName,
                 this.CaughtException,
-                this.ActionResult as ForbidResult);
+                forbidResult);
         }
     }
 }

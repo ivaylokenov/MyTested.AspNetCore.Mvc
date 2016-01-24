@@ -43,7 +43,7 @@
         private TReturnObject GetReturnObject<TReturnObject>()
             where TReturnObject : class
         {
-            this.ValidateActionReturnType<TReturnObject>(true);
+            this.ValidateActionReturnType<TReturnObject>();
             return this.ActionResult as TReturnObject;
         }
     }

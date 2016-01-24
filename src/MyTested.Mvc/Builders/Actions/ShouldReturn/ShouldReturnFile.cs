@@ -35,12 +35,12 @@
         /// <returns>File test builder.</returns>
         public IPhysicalFileTestBuilder PhysicalFile()
         {
-            this.ValidateActionReturnType<PhysicalFileResult>();
+            var physicalFileResult = this.GetReturnObject<PhysicalFileResult>();
             return new PhysicalFileTestBuilder(
                 this.Controller,
                 this.ActionName,
                 this.CaughtException,
-                this.ActionResult as PhysicalFileResult);
+                physicalFileResult);
         }
 
         private IFileTestBuilder ReturnFileTestBuilder<TFileResult>()

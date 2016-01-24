@@ -16,12 +16,23 @@
         /// <returns>Ok test builder.</returns>
         public IOkTestBuilder Ok()
         {
-            this.ValidateActionReturnType(typeof(HttpOkResult), typeof(HttpOkObjectResult));
-            return new OkTestBuilder<TActionResult>(
+            if (this.ActionResult is HttpOkObjectResult)
+            {
+                return this.ReturnHttpOkTestBuilder<HttpOkObjectResult>();
+            }
+
+            return this.ReturnHttpOkTestBuilder<HttpOkResult>();
+        }
+        
+        private IOkTestBuilder ReturnHttpOkTestBuilder<THttpOkResult>()
+            where THttpOkResult : ActionResult
+        {
+            var createdResult = this.GetReturnObject<THttpOkResult>();
+            return new OkTestBuilder<THttpOkResult>(
                 this.Controller,
                 this.ActionName,
                 this.CaughtException,
-                this.ActionResult);
+                createdResult);
         }
     }
 }

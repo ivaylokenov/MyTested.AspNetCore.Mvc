@@ -16,12 +16,12 @@
         /// <returns>JSON test builder.</returns>
         public IJsonTestBuilder Json()
         {
-            this.ValidateActionReturnType<JsonResult>();
+            var jsonResult = this.GetReturnObject<JsonResult>();
             return new JsonTestBuilder(
                 this.Controller,
                 this.ActionName,
                 this.CaughtException,
-                this.ActionResult as JsonResult);
+                jsonResult);
         }
     }
 }

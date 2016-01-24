@@ -4,7 +4,6 @@
     using Contracts.Base;
     using Contracts.Models;
     using Microsoft.AspNet.Mvc;
-    using Models;
 
     /// <summary>
     /// Base class for all test builders with view features.
@@ -12,6 +11,7 @@
     /// <typeparam name="TViewResult">Type of view result - ViewResult, PartialViewResult or ViewComponentResult.</typeparam>
     public abstract class BaseTestBuilderWithViewFeature<TViewResult>
         : BaseTestBuilderWithResponseModel<TViewResult>, IBaseTestBuilderWithViewFeature
+        where TViewResult : ActionResult
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseTestBuilderWithViewFeature{TActionResult}" /> class.
@@ -48,6 +48,11 @@
         public IModelDetailsTestBuilder<TModel> WithModelOfType<TModel>()
         {
             return this.WithResponseModelOfType<TModel>();
+        }
+
+        public new ActionResult AndProvideTheActionResult()
+        {
+            return this.ActionResult;
         }
     }
 }

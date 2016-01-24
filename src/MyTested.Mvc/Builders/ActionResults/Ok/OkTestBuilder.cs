@@ -9,12 +9,15 @@
     using System.Net;
     using Microsoft.Net.Http.Headers;
     using System.Collections.Generic;
-    using Microsoft.AspNet.Mvc.Formatters;/// <summary>
-                                          /// Used for testing OK result.
-                                          /// </summary>
-                                          /// <typeparam name="THttpOkResult">Type of OK result - HttpOkResult or HttpOkObjectResult.</typeparam>
+    using Microsoft.AspNet.Mvc.Formatters;
+
+    /// <summary>
+    /// Used for testing OK result.
+    /// </summary>
+    /// <typeparam name="THttpOkResult">Type of OK result - HttpOkResult or HttpOkObjectResult.</typeparam>
     public class OkTestBuilder<THttpOkResult>
         : BaseTestBuilderWithResponseModel<THttpOkResult>, IAndOkTestBuilder
+        where THttpOkResult : ActionResult
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="OkTestBuilder{THttpOkResult}" /> class.
@@ -49,7 +52,7 @@
 
             return this;
         }
-        
+
         /// <summary>
         /// Tests whether OK result has the same status code as the provided one.
         /// </summary>
@@ -189,6 +192,11 @@
         public IOkTestBuilder AndAlso()
         {
             return this;
+        }
+
+        public new ActionResult AndProvideTheActionResult()
+        {
+            return this.ActionResult;
         }
 
         protected override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)

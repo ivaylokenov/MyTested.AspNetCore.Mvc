@@ -1,11 +1,12 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.Base
 {
+    using Microsoft.AspNet.Mvc;
     using Models;
 
     /// <summary>
     /// Base interface for all test builder with view features.
     /// </summary>
-    public interface IBaseTestBuilderWithViewFeature : IBaseTestBuilderWithCaughtException
+    public interface IBaseTestBuilderWithViewFeature : IBaseTestBuilderWithActionResult<ActionResult>
     {
         /// <summary>
         /// Tests whether view result contains deeply equal model object as the provided one.

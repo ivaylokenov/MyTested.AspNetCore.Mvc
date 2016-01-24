@@ -30,7 +30,7 @@
         }
 
         private IRedirectTestBuilder ReturnRedirectTestBuilder<TRedirectResult>()
-            where TRedirectResult : class
+            where TRedirectResult : ActionResult
         {
             var redirectResult = this.GetReturnObject<TRedirectResult>();
             return new RedirectTestBuilder<TRedirectResult>(

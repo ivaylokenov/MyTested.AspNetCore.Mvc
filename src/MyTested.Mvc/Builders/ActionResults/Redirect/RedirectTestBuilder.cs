@@ -18,6 +18,7 @@
     /// <typeparam name="TRedirectResult">Type of redirect result - RedirectResult, RedirectToAction or RedirectToRouteResult.</typeparam>
     public class RedirectTestBuilder<TRedirectResult>
         : BaseTestBuilderWithActionResult<TRedirectResult>, IAndRedirectTestBuilder
+        where TRedirectResult : ActionResult
     {
         private const string Location = "location";
         private const string RouteName = "route name";
@@ -300,6 +301,11 @@
                     propertyName,
                     expectedValue,
                     actualValue));
+        }
+
+        public new ActionResult AndProvideTheActionResult()
+        {
+            return this.ActionResult;
         }
     }
 }

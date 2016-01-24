@@ -18,12 +18,12 @@
         /// <returns>Content test builder.</returns>
         public IContentTestBuilder Content()
         {
-            this.ValidateActionReturnType<ContentResult>();
+            var contentResult = this.GetReturnObject<ContentResult>();
             return new ContentTestBuilder(
                 this.Controller,
                 this.ActionName,
                 this.CaughtException,
-                this.ActionResult as ContentResult);
+                contentResult);
         }
 
         /// <summary>
