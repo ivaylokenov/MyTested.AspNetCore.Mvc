@@ -16,12 +16,28 @@
         /// <returns>Created test builder.</returns>
         public ICreatedTestBuilder Created()
         {
-            this.ValidateActionReturnType(typeof(CreatedResult), typeof(CreatedAtActionResult), typeof(CreatedAtRouteResult));
-            return new CreatedTestBuilder<TActionResult>(
+            if (this.ActionResult is CreatedAtActionResult)
+            {
+                return this.ReturnCreatedTestBuilder<CreatedAtActionResult>();
+            }
+
+            if (this.ActionResult is CreatedAtRouteResult)
+            {
+                return this.ReturnCreatedTestBuilder<CreatedAtRouteResult>();
+            }
+
+            return this.ReturnCreatedTestBuilder<CreatedResult>();
+        }
+
+        private ICreatedTestBuilder ReturnCreatedTestBuilder<TCreatedResult>()
+            where TCreatedResult : ObjectResult
+        {
+            var createdResult = this.GetReturnObject<TCreatedResult>();
+            return new CreatedTestBuilder<TCreatedResult>(
                 this.Controller,
                 this.ActionName,
                 this.CaughtException,
-                this.ActionResult);
+                createdResult);
         }
     }
 }

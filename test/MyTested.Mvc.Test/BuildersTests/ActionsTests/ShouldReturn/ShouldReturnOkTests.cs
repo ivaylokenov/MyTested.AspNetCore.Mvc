@@ -46,5 +46,20 @@
                 }, 
                 "When calling BadRequestAction action in MvcController expected action result to be HttpOkResult or HttpOkObjectResult, but instead received BadRequestResult.");
         }
+
+        [Fact]
+        public void ShouldReturnOkResultShouldThrowExceptionWithInheritedOkResult()
+        {
+            Test.AssertException<ActionResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                    .Controller<MvcController>()
+                    .Calling(c => c.CustomActionResult())
+                    .ShouldReturn()
+                    .Ok();
+                },
+                "When calling CustomActionResult action in MvcController expected action result to be HttpOkResult or HttpOkObjectResult, but instead received CustomActionResult.");
+        }
     }
 }

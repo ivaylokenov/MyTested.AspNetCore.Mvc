@@ -8,10 +8,11 @@
     using Microsoft.AspNet.Mvc;
     using System.Net;
     using Microsoft.Net.Http.Headers;
-    using System.Collections.Generic;/// <summary>
-                                     /// Used for testing OK result.
-                                     /// </summary>
-                                     /// <typeparam name="THttpOkResult">Type of OK result - HttpOkResult or HttpOkObjectResult.</typeparam>
+    using System.Collections.Generic;
+    using Microsoft.AspNet.Mvc.Formatters;/// <summary>
+                                          /// Used for testing OK result.
+                                          /// </summary>
+                                          /// <typeparam name="THttpOkResult">Type of OK result - HttpOkResult or HttpOkObjectResult.</typeparam>
     public class OkTestBuilder<THttpOkResult>
         : BaseTestBuilderWithResponseModel<THttpOkResult>, IAndOkTestBuilder
     {
@@ -133,6 +134,51 @@
         public IAndOkTestBuilder ContainingContentTypes(params MediaTypeHeaderValue[] contentTypes)
         {
             this.ValidateContentTypes(contentTypes);
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether OK result contains the provided output formatter.
+        /// </summary>
+        /// <param name="outputFormatter">Instance of IOutputFormatter.</param>
+        /// <returns>The same OK test builder.</returns>
+        public IAndOkTestBuilder ContainingOutputFormatter(IOutputFormatter outputFormatter)
+        {
+            this.ValidateContainingOfOutputFormatter(outputFormatter);
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether OK result contains output formatter of the provided type.
+        /// </summary>
+        /// <typeparam name="TOutputFormatter">Type of IOutputFormatter.</typeparam>
+        /// <returns>The same OK test builder.</returns>
+        public IAndOkTestBuilder ContainingOutputFormatterOfType<TOutputFormatter>()
+            where TOutputFormatter : IOutputFormatter
+        {
+            this.ValidateContainingOutputFormatterOfType<TOutputFormatter>();
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether OK result contains the provided output formatters.
+        /// </summary>
+        /// <param name="outputFormatters">Enumerable of IOutputFormatter.</param>
+        /// <returns>The same OK test builder.</returns>
+        public IAndOkTestBuilder ContainingOutputFormatters(IEnumerable<IOutputFormatter> outputFormatters)
+        {
+            this.ValidateOutputFormatters(outputFormatters);
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether OK result contains the provided output formatters.
+        /// </summary>
+        /// <param name="outputFormatters">Output formatter parameters.</param>
+        /// <returns>The same OK test builder.</returns>
+        public IAndOkTestBuilder ContainingOutputFormatters(params IOutputFormatter[] outputFormatters)
+        {
+            this.ValidateOutputFormatters(outputFormatters);
             return this;
         }
 

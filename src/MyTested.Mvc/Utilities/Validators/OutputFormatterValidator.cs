@@ -31,7 +31,7 @@
             var outputFormatters = objectResult.Formatters;
             var typeOfExpectedOutputFormatter = typeof(TOutputFormatter);
 
-            if (outputFormatters.All(f => f.GetType() != typeOfExpectedOutputFormatter))
+            if (outputFormatters.All(f => Reflection.AreDifferentTypes(f.GetType(), typeOfExpectedOutputFormatter)))
             {
                 failedValidationAction(
                     "output formatters",

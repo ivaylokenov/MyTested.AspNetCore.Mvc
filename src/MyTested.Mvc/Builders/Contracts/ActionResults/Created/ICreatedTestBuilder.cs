@@ -10,7 +10,8 @@
     /// <summary>
     /// Used for testing created results.
     /// </summary>
-    public interface ICreatedTestBuilder : IBaseTestBuilderWithResponseModel
+    public interface ICreatedTestBuilder : IBaseTestBuilderWithResponseModel,
+        IBaseTestBuilderWithActionResult<ObjectResult>
     {
         /// <summary>
         /// Tests whether created result has specific location provided by string.

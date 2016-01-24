@@ -3,12 +3,14 @@
     using System;
     using System.Collections.Generic;
     using Authentication;
+    using Base;
     using Microsoft.AspNet.Http.Authentication;
+    using Microsoft.AspNet.Mvc;
 
     /// <summary>
     /// Used for testing forbid result.
     /// </summary>
-    public interface IForbidTestBuilder
+    public interface IForbidTestBuilder : IBaseTestBuilderWithActionResult<ForbidResult>
     {
         /// <summary>
         /// Tests whether forbid result contains specific authentication scheme provided by string.

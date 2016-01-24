@@ -25,7 +25,7 @@
         }
 
         private IHttpBadRequestTestBuilder ReturnBadRequestTestBuilder<TBadRequestResult>()
-            where TBadRequestResult : class
+            where TBadRequestResult : ActionResult
         {
             var badRequestResult = this.GetReturnObject<TBadRequestResult>();
             return new HttpBadRequestTestBuilder<TBadRequestResult>(

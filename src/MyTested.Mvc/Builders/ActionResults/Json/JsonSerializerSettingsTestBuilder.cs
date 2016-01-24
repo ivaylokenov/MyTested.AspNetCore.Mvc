@@ -46,11 +46,11 @@
             this.jsonSerializerSettings.Culture = culture;
             this.validations.Add((expected, actual) =>
             {
-                if (expected.Culture.DisplayName != actual.Culture.DisplayName)
+                if (expected.Culture?.DisplayName != actual.Culture?.DisplayName)
                 {
                     this.ThrowNewJsonResultAssertionException(
-                        string.Format("'{0}' culture", expected.Culture.DisplayName),
-                        string.Format("in fact found '{0}'", actual.Culture.DisplayName));
+                        $"{(expected.Culture != null ? $"'{expected.Culture.DisplayName}'" : "default")} culture",
+                        $"in fact found {(actual.Culture != null ? $"'{actual.Culture.DisplayName}'" : "default one")}");
                 }
             });
 
@@ -67,11 +67,11 @@
             this.jsonSerializerSettings.ContractResolver = contractResolver;
             this.validations.Add((expected, actual) =>
             {
-                if (Reflection.AreDifferentTypes(expected.ContractResolver, actual.ContractResolver))
+                if (expected.ContractResolver != actual.ContractResolver)
                 {
                     this.ThrowNewJsonResultAssertionException(
-                        string.Format("{0}", expected.ContractResolver.GetName()),
-                        string.Format("in fact found {0}", actual.ContractResolver.GetName()));
+                        $"the same contract resolver as the provided one",
+                        $"in fact it was different");
                 }
             });
 
@@ -84,9 +84,29 @@
         /// <typeparam name="TContractResolver">Expected ContractResolver type.</typeparam>
         /// <returns>The same JSON serializer settings test builder.</returns>
         public IAndJsonSerializerSettingsTestBuilder WithContractResolverOfType<TContractResolver>()
-            where TContractResolver : IContractResolver, new()
+            where TContractResolver : IContractResolver
         {
-            return this.WithContractResolver(Activator.CreateInstance<TContractResolver>());
+            return this.WithContractResolverOfType(typeof(TContractResolver));
+        }
+
+        /// <summary>
+        /// Tests the ContractResolver property in a JSON serializer settings object by using a provided type.
+        /// </summary>
+        /// <param name="contractResolverType">Expected ContractResolver type.</param>
+        /// <returns>The same JSON serializer settings test builder.</returns>
+        public IAndJsonSerializerSettingsTestBuilder WithContractResolverOfType(Type contractResolverType)
+        {
+            this.validations.Add((expected, actual) =>
+            {
+                if (Reflection.AreDifferentTypes(contractResolverType, actual.ContractResolver?.GetType()))
+                {
+                    this.ThrowNewJsonResultAssertionException(
+                        $"{contractResolverType.Name}",
+                        $"in fact found {actual.ContractResolver.GetName()}");
+                }
+            });
+
+            return this;
         }
 
         /// <summary>
@@ -102,8 +122,8 @@
                 if (!CommonValidator.CheckEquality(expected.ConstructorHandling, actual.ConstructorHandling))
                 {
                     this.ThrowNewJsonResultAssertionException(
-                        string.Format("{0} constructor handling", expected.ConstructorHandling),
-                        string.Format("in fact found {0}", actual.ConstructorHandling));
+                        $"{expected.ConstructorHandling} constructor handling",
+                        $"in fact found {actual.ConstructorHandling}");
                 }
             });
 
@@ -123,8 +143,8 @@
                 if (!CommonValidator.CheckEquality(expected.DateFormatHandling, actual.DateFormatHandling))
                 {
                     this.ThrowNewJsonResultAssertionException(
-                        string.Format("{0} date format handling", expected.DateFormatHandling),
-                        string.Format("in fact found {0}", actual.DateFormatHandling));
+                        $"{expected.DateFormatHandling} date format handling",
+                        $"in fact found {actual.DateFormatHandling}");
                 }
             });
 
@@ -144,8 +164,8 @@
                 if (!CommonValidator.CheckEquality(expected.DateParseHandling, actual.DateParseHandling))
                 {
                     this.ThrowNewJsonResultAssertionException(
-                        string.Format("{0} date parse handling", expected.DateParseHandling),
-                        string.Format("in fact found {0}", actual.DateParseHandling));
+                        $"{expected.DateParseHandling} date parse handling",
+                        $"in fact found {actual.DateParseHandling}");
                 }
             });
 
@@ -165,8 +185,8 @@
                 if (!CommonValidator.CheckEquality(expected.DateTimeZoneHandling, actual.DateTimeZoneHandling))
                 {
                     this.ThrowNewJsonResultAssertionException(
-                        string.Format("{0} date time zone handling", expected.DateTimeZoneHandling),
-                        string.Format("in fact found {0}", actual.DateTimeZoneHandling));
+                        $"{expected.DateTimeZoneHandling} date time zone handling",
+                        $"in fact found {actual.DateTimeZoneHandling}");
                 }
             });
 
@@ -186,8 +206,8 @@
                 if (!CommonValidator.CheckEquality(expected.DefaultValueHandling, actual.DefaultValueHandling))
                 {
                     this.ThrowNewJsonResultAssertionException(
-                        string.Format("{0} default value handling", expected.DefaultValueHandling),
-                        string.Format("in fact found {0}", actual.DefaultValueHandling));
+                        $"{expected.DefaultValueHandling} default value handling",
+                        $"in fact found {actual.DefaultValueHandling}");
                 }
             });
 
@@ -207,8 +227,8 @@
                 if (!CommonValidator.CheckEquality(expected.Formatting, actual.Formatting))
                 {
                     this.ThrowNewJsonResultAssertionException(
-                        string.Format("{0} formatting", expected.Formatting),
-                        string.Format("in fact found {0}", actual.Formatting));
+                        $"{expected.Formatting} formatting",
+                        $"in fact found {actual.Formatting}");
                 }
             });
 
@@ -228,8 +248,8 @@
                 if (!CommonValidator.CheckEquality(expected.MaxDepth, actual.MaxDepth))
                 {
                     this.ThrowNewJsonResultAssertionException(
-                        string.Format("{0} max depth", expected.MaxDepth),
-                        string.Format("in fact found {0}", actual.MaxDepth));
+                        $"{(expected.MaxDepth != null ? expected.MaxDepth.ToString() : "no")} max depth",
+                        $"in fact found {(actual.MaxDepth != null ? actual.MaxDepth.ToString() : "none")}");
                 }
             });
 
@@ -249,8 +269,8 @@
                 if (!CommonValidator.CheckEquality(expected.MissingMemberHandling, actual.MissingMemberHandling))
                 {
                     this.ThrowNewJsonResultAssertionException(
-                        string.Format("{0} missing member handling", expected.MissingMemberHandling),
-                        string.Format("in fact found {0}", actual.MissingMemberHandling));
+                        $"{expected.MissingMemberHandling} missing member handling",
+                        $"in fact found {actual.MissingMemberHandling}");
                 }
             });
 
@@ -270,8 +290,8 @@
                 if (!CommonValidator.CheckEquality(expected.NullValueHandling, actual.NullValueHandling))
                 {
                     this.ThrowNewJsonResultAssertionException(
-                        string.Format("{0} null value handling", expected.NullValueHandling),
-                        string.Format("in fact found {0}", actual.NullValueHandling));
+                        $"{expected.NullValueHandling} null value handling",
+                        $"in fact found {actual.NullValueHandling}");
                 }
             });
 
@@ -291,8 +311,8 @@
                 if (!CommonValidator.CheckEquality(expected.ObjectCreationHandling, actual.ObjectCreationHandling))
                 {
                     this.ThrowNewJsonResultAssertionException(
-                        string.Format("{0} object creation handling", expected.ObjectCreationHandling),
-                        string.Format("in fact found {0}", actual.ObjectCreationHandling));
+                        $"{expected.ObjectCreationHandling} object creation handling",
+                        $"in fact found {actual.ObjectCreationHandling}");
                 }
             });
 
@@ -314,8 +334,8 @@
                         actual.PreserveReferencesHandling))
                 {
                     this.ThrowNewJsonResultAssertionException(
-                        string.Format("{0} preserve references handling", expected.PreserveReferencesHandling),
-                        string.Format("in fact found {0}", actual.PreserveReferencesHandling));
+                        $"{expected.PreserveReferencesHandling} preserve references handling",
+                        $"in fact found {actual.PreserveReferencesHandling}");
                 }
             });
 
@@ -335,8 +355,8 @@
                 if (!CommonValidator.CheckEquality(expected.ReferenceLoopHandling, actual.ReferenceLoopHandling))
                 {
                     this.ThrowNewJsonResultAssertionException(
-                        string.Format("{0} reference loop handling", expected.ReferenceLoopHandling),
-                        string.Format("in fact found {0}", actual.ReferenceLoopHandling));
+                        $"{expected.ReferenceLoopHandling} reference loop handling",
+                        $"in fact found {actual.ReferenceLoopHandling}");
                 }
             });
 
@@ -356,8 +376,8 @@
                 if (!CommonValidator.CheckEquality(expected.TypeNameAssemblyFormat, actual.TypeNameAssemblyFormat))
                 {
                     this.ThrowNewJsonResultAssertionException(
-                        string.Format("{0} type name assembly format", expected.TypeNameAssemblyFormat),
-                        string.Format("in fact found {0}", actual.TypeNameAssemblyFormat));
+                        $"{expected.TypeNameAssemblyFormat} type name assembly format",
+                        $"in fact found {actual.TypeNameAssemblyFormat}");
                 }
             });
 
@@ -377,8 +397,8 @@
                 if (!CommonValidator.CheckEquality(expected.TypeNameHandling, actual.TypeNameHandling))
                 {
                     this.ThrowNewJsonResultAssertionException(
-                        string.Format("{0} type name handling", expected.TypeNameHandling),
-                        string.Format("in fact found {0}", actual.TypeNameHandling));
+                        $"{expected.TypeNameHandling} type name handling",
+                        $"in fact found {actual.TypeNameHandling}");
                 }
             });
             return this;

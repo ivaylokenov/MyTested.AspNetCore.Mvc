@@ -183,6 +183,15 @@
             return this;
         }
 
+        /// <summary>
+        /// Gets the tested file result.
+        /// </summary>
+        /// <returns>Tested file result.</returns>
+        public new FileResult AndProvideTheActionResult()
+        {
+            return this.ActionResult;
+        }
+
         private byte[] GetByteArrayFromStream(Stream stream)
         {
             using (var memoryStream = new MemoryStream())

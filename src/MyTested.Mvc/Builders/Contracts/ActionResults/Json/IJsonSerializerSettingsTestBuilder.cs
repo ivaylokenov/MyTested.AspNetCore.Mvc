@@ -1,5 +1,6 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.ActionResults.Json
 {
+    using System;
     using System.Globalization;
     using System.Runtime.Serialization.Formatters;
     using Newtonsoft.Json;
@@ -30,7 +31,14 @@
         /// <typeparam name="TContractResolver">Expected ContractResolver type.</typeparam>
         /// <returns>The same JSON serializer settings test builder.</returns>
         IAndJsonSerializerSettingsTestBuilder WithContractResolverOfType<TContractResolver>()
-             where TContractResolver : IContractResolver, new();
+             where TContractResolver : IContractResolver;
+        
+        /// <summary>
+        /// Tests the ContractResolver property in a JSON serializer settings object by using a provided type.
+        /// </summary>
+        /// <param name="contractResolverType">Expected ContractResolver type.</param>
+        /// <returns>The same JSON serializer settings test builder.</returns>
+        IAndJsonSerializerSettingsTestBuilder WithContractResolverOfType(Type contractResolverType);
 
         /// <summary>
         /// Tests the ConstructorHandling property in a JSON serializer settings object.

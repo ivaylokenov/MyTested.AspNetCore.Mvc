@@ -13,12 +13,16 @@
     using Microsoft.AspNet.Routing;
     using Utilities.Validators;
     using Microsoft.Net.Http.Headers;
+    using Microsoft.AspNet.Mvc.Formatters;
+    using Contracts.Base;
+
     /// <summary>
     /// Used for testing created results.
     /// </summary>
     /// <typeparam name="TCreatedResult">Type of created result - CreatedAtActionResult or CreatedAtRouteResult.</typeparam>
     public class CreatedTestBuilder<TCreatedResult>
         : BaseTestBuilderWithResponseModel<TCreatedResult>, IAndCreatedTestBuilder
+        where TCreatedResult : ObjectResult
     {
         private const string Location = "location";
         private const string RouteName = "route name";
@@ -125,6 +129,51 @@
         public IAndCreatedTestBuilder ContainingContentTypes(params MediaTypeHeaderValue[] contentTypes)
         {
             this.ValidateContentTypes(contentTypes);
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether created result contains the provided output formatter.
+        /// </summary>
+        /// <param name="outputFormatter">Instance of IOutputFormatter.</param>
+        /// <returns>The same created test builder.</returns>
+        public IAndCreatedTestBuilder ContainingOutputFormatter(IOutputFormatter outputFormatter)
+        {
+            this.ValidateContainingOfOutputFormatter(outputFormatter);
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether created result contains output formatter of the provided type.
+        /// </summary>
+        /// <typeparam name="TOutputFormatter">Type of IOutputFormatter.</typeparam>
+        /// <returns>The same created test builder.</returns>
+        public IAndCreatedTestBuilder ContainingOutputFormatterOfType<TOutputFormatter>()
+            where TOutputFormatter : IOutputFormatter
+        {
+            this.ValidateContainingOutputFormatterOfType<TOutputFormatter>();
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether created result contains the provided output formatters.
+        /// </summary>
+        /// <param name="outputFormatters">Enumerable of IOutputFormatter.</param>
+        /// <returns>The same created test builder.</returns>
+        public IAndCreatedTestBuilder ContainingOutputFormatters(IEnumerable<IOutputFormatter> outputFormatters)
+        {
+            this.ValidateOutputFormatters(outputFormatters);
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether created result contains the provided output formatters.
+        /// </summary>
+        /// <param name="outputFormatters">Output formatter parameters.</param>
+        /// <returns>The same created test builder.</returns>
+        public IAndCreatedTestBuilder ContainingOutputFormatters(params IOutputFormatter[] outputFormatters)
+        {
+            this.ValidateOutputFormatters(outputFormatters);
             return this;
         }
 
@@ -337,6 +386,11 @@
         public ICreatedTestBuilder AndAlso()
         {
             return this;
+        }
+
+        public new ObjectResult AndProvideTheActionResult()
+        {
+            return this.ActionResult;
         }
 
         protected override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)

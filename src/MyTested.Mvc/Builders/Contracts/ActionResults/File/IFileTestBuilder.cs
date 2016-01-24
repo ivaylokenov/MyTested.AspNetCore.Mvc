@@ -4,11 +4,12 @@
     using Base;
     using Microsoft.AspNet.FileProviders;
     using Microsoft.Net.Http.Headers;
+    using Microsoft.AspNet.Mvc;
 
     /// <summary>
     /// Used for testing file result.
     /// </summary>
-    public interface IFileTestBuilder : IBaseTestBuilderWithCaughtException
+    public interface IFileTestBuilder : IBaseTestBuilderWithActionResult<FileResult>
     {
         /// <summary>
         /// Tests whether file result has the same content type as the provided one.

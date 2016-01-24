@@ -3,12 +3,14 @@
     using System;
     using System.Collections.Generic;
     using Authentication;
+    using Base;
     using Microsoft.AspNet.Http.Authentication;
+    using Microsoft.AspNet.Mvc;
 
     /// <summary>
     /// Used for testing challenge result.
     /// </summary>
-    public interface IChallengeTestBuilder
+    public interface IChallengeTestBuilder : IBaseTestBuilderWithActionResult<ChallengeResult>
     {
         /// <summary>
         /// Tests whether challenge result contains specific authentication scheme provided by string.

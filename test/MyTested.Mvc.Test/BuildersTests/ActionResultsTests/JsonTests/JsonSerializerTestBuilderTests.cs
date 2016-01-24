@@ -104,13 +104,15 @@
         [Fact]
         public void WithContractResolverShouldNotThrowExceptionWithCorrectValue()
         {
+            var jsonSettings = TestObjectFactory.GetJsonSerializerSettings();
+
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.JsonWithSettingsAction())
+                .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
                 .ShouldReturn()
                 .Json()
                 .WithJsonSerializerSettings(s =>
-                    s.WithContractResolver(new CamelCasePropertyNamesContractResolver()));
+                    s.WithContractResolver(jsonSettings.ContractResolver));
         }
 
         [Fact]
@@ -127,15 +129,16 @@
                         .WithJsonSerializerSettings(s =>
                             s.WithContractResolver(new DefaultContractResolver()));
                 }, 
-                "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have DefaultContractResolver, but in fact found CamelCasePropertyNamesContractResolver.");
+                "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have the same contract resolver as the provided one, but in fact it was different.");
         }
 
         [Fact]
         public void WithContractResolverShouldValidateOnlyTheProperty()
         {
             var jsonSerializerSettings = TestObjectFactory.GetJsonSerializerSettings();
+            var contractResolver = new CamelCasePropertyNamesContractResolver();
             jsonSerializerSettings.MaxDepth = int.MaxValue;
-            jsonSerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            jsonSerializerSettings.ContractResolver = contractResolver;
 
             MyMvc
                 .Controller<MvcController>()
@@ -143,7 +146,7 @@
                 .ShouldReturn()
                 .Json()
                 .WithJsonSerializerSettings(s =>
-                    s.WithContractResolver(new CamelCasePropertyNamesContractResolver()));
+                    s.WithContractResolver(contractResolver));
         }
 
         [Fact]

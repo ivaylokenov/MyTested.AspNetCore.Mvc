@@ -146,14 +146,13 @@
             IJsonSerializerSettingsTestBuilder jsonSerializerSettingsTestBuilder,
             JsonSerializerSettings jsonSerializerSettings = null)
         {
-            var contractResolver = jsonSerializerSettings != null ? jsonSerializerSettings.ContractResolver : null;
             jsonSerializerSettings = jsonSerializerSettings
                 ?? this.GetServiceDefaultSerializerSettings()
                 ?? new JsonSerializerSettings();
 
             jsonSerializerSettingsTestBuilder
                 .WithCulture(jsonSerializerSettings.Culture)
-                .WithContractResolver(contractResolver)
+                .WithContractResolverOfType(jsonSerializerSettings.ContractResolver?.GetType())
                 .WithConstructorHandling(jsonSerializerSettings.ConstructorHandling)
                 .WithDateFormatHandling(jsonSerializerSettings.DateFormatHandling)
                 .WithDateParseHandling(jsonSerializerSettings.DateParseHandling)

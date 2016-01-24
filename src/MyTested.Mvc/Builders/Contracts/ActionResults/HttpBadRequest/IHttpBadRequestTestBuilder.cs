@@ -1,13 +1,14 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.ActionResults.HttpBadRequest
 {
     using Base;
+    using Microsoft.AspNet.Mvc;
     using Microsoft.AspNet.Mvc.ModelBinding;
     using Models;
 
     /// <summary>
     /// Used for testing HTTP bad request results.
     /// </summary>
-    public interface IHttpBadRequestTestBuilder : IBaseTestBuilderWithCaughtException
+    public interface IHttpBadRequestTestBuilder : IBaseTestBuilderWithActionResult<ActionResult>
     {
         /// <summary>
         /// Tests whether HTTP bad request result contains deeply equal error value as the provided error object.

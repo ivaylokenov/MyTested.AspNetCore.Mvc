@@ -50,7 +50,7 @@
         /// <param name="fileDownloadName">File download name as string.</param>
         protected void ValidateFileDownloadName(string fileDownloadName)
         {
-            var actualFileDownloadName = this.ActionResult.FileDownloadName;
+            var actualFileDownloadName = (this.ActionResult as FileResult)?.FileDownloadName;
             if (fileDownloadName != actualFileDownloadName)
             {
                 this.ThrowNewFileResultAssertionException(

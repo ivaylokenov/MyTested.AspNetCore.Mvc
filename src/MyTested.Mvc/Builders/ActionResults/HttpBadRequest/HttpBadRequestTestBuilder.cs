@@ -13,12 +13,16 @@
     using Models;
     using System.Net;
     using Microsoft.Net.Http.Headers;
+    using Microsoft.AspNet.Mvc.Formatters;
+    using Contracts.Base;
+
     /// <summary>
     /// Used for testing HTTP bad request results.
     /// </summary>
     /// <typeparam name="THttpBadRequestResult">Type of bad request result - BadRequestResult or BadRequestObjectResult.</typeparam>
     public class HttpBadRequestTestBuilder<THttpBadRequestResult>
         : BaseTestBuilderWithResponseModel<THttpBadRequestResult>, IAndHttpBadRequestTestBuilder
+        where THttpBadRequestResult : ActionResult
     {
         private const string ErrorMessage = "When calling {0} action in {1} expected HTTP bad request result error to be the given object, but in fact it was a different.";
         private const string OfTypeErrorMessage = "When calling {0} action in {1} expected HTTP bad request result error to be of {2} type, but instead received {3}.";
@@ -40,7 +44,7 @@
             this.ErrorMessageFormat = ErrorMessage;
             this.OfTypeErrorMessageFormat = OfTypeErrorMessage;
         }
-        
+
         /// <summary>
         /// Tests whether HTTP bad request result contains deeply equal error value as the provided error object.
         /// </summary>
@@ -168,6 +172,51 @@
         }
 
         /// <summary>
+        /// Tests whether HTTP bad request result contains the provided output formatter.
+        /// </summary>
+        /// <param name="outputFormatter">Instance of IOutputFormatter.</param>
+        /// <returns>The same HTTP bad request test builder.</returns>
+        public IAndHttpBadRequestTestBuilder ContainingOutputFormatter(IOutputFormatter outputFormatter)
+        {
+            this.ValidateContainingOfOutputFormatter(outputFormatter);
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether HTTP bad request result contains output formatter of the provided type.
+        /// </summary>
+        /// <typeparam name="TOutputFormatter">Type of IOutputFormatter.</typeparam>
+        /// <returns>The same HTTP bad request test builder.</returns>
+        public IAndHttpBadRequestTestBuilder ContainingOutputFormatterOfType<TOutputFormatter>()
+            where TOutputFormatter : IOutputFormatter
+        {
+            this.ValidateContainingOutputFormatterOfType<TOutputFormatter>();
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether HTTP bad request result contains the provided output formatters.
+        /// </summary>
+        /// <param name="outputFormatters">Enumerable of IOutputFormatter.</param>
+        /// <returns>The same HTTP bad request test builder.</returns>
+        public IAndHttpBadRequestTestBuilder ContainingOutputFormatters(IEnumerable<IOutputFormatter> outputFormatters)
+        {
+            this.ValidateOutputFormatters(outputFormatters);
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether HTTP bad request result contains the provided output formatters.
+        /// </summary>
+        /// <param name="outputFormatters">Output formatter parameters.</param>
+        /// <returns>The same HTTP bad request test builder.</returns>
+        public IAndHttpBadRequestTestBuilder ContainingOutputFormatters(params IOutputFormatter[] outputFormatters)
+        {
+            this.ValidateOutputFormatters(outputFormatters);
+            return this;
+        }
+
+        /// <summary>
         /// Tests HTTP bad request result with specific text error using test builder.
         /// </summary>
         /// <returns>Bad request with error message test builder.</returns>
@@ -290,9 +339,14 @@
             return this;
         }
 
+        public new ActionResult AndProvideTheActionResult()
+        {
+            return this.ActionResult;
+        }
+
         protected override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)
             => this.ThrowNewHttpBadRequestResultAssertionException(propertyName, expectedValue, actualValue);
-        
+
         private static IList<string> GetSortedErrorMessagesForModelStateKey(IEnumerable<ModelError> errors)
         {
             return errors
@@ -300,7 +354,7 @@
                 .Select(er => er.ErrorMessage)
                 .ToList();
         }
-        
+
         private object GetBadRequestObjectResultValue()
         {
             var actualBadRequestResult = this.ActionResult as BadRequestObjectResult;
@@ -341,7 +395,7 @@
             {
                 this.ThrowNewHttpBadRequestResultAssertionExceptionWithMessage("model state dictionary as error", "other type of error");
             }
-            
+
             var result = new ModelStateDictionary();
 
             foreach (var errorKeyValuePair in serializableError)
@@ -364,7 +418,7 @@
                 expectedMessage == null ? "error message" : $"{expectedMessage}",
                 $"instead received {(actualMessage == null ? "non-string value" : $"{actualMessage}")}");
         }
-        
+
         private void ThrowNewHttpBadRequestResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new HttpBadRequestResultAssertionException(string.Format(

@@ -159,6 +159,11 @@
             };
         }
 
+        public IActionResult CustomActionResult()
+        {
+            return new CustomActionResult();
+        }
+
         public IActionResult CustomRequestAction()
         {
             if (this.Request.Method == "POST" && this.Request.Headers.ContainsKey("TestHeader"))
@@ -274,7 +279,7 @@
             return this.Forbid(TestObjectFactory.GetEmptyAuthenticationProperties());
         }
 
-        public IActionResult FileWithVirtualPath()
+        public FileResult FileWithVirtualPath()
         {
             return this.File("/Test", ContentType.ApplicationJson, "FileDownloadName");
         }

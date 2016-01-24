@@ -18,6 +18,16 @@
         }
 
         [Fact]
+        public void ShouldReturnCreatedShouldNotThrowExceptionWithCreatedAtActionResult()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.CreatedAtActionResult())
+                .ShouldReturn()
+                .Created();
+        }
+
+        [Fact]
         public void ShouldReturnCreatedShouldNotThrowExceptionWithCreatedAtRouteResult()
         {
             MyMvc
@@ -39,7 +49,7 @@
                         .ShouldReturn()
                         .Created();
                 }, 
-                "When calling BadRequestAction action in MvcController expected action result to be CreatedResult or CreatedAtActionResult or CreatedAtRouteResult, but instead received BadRequestResult.");
+                "When calling BadRequestAction action in MvcController expected action result to be CreatedResult, but instead received BadRequestResult.");
         }
     }
 }

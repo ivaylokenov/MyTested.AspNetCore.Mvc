@@ -9,6 +9,7 @@
     using System.Net;
     using Microsoft.Net.Http.Headers;
     using System.Collections.Generic;
+    using Microsoft.AspNet.Mvc.Formatters;
 
     /// <summary>
     /// Used for testing HTTP not found result.
@@ -16,6 +17,7 @@
     /// <typeparam name="THttpNotFoundResult">Type of not found result - HttpNotFoundResult or HttpNotFoundObjectResult.</typeparam>
     public class HttpNotFoundTestBuilder<THttpNotFoundResult>
         : BaseTestBuilderWithResponseModel<THttpNotFoundResult>, IAndHttpNotFoundTestBuilder
+        where THttpNotFoundResult : ActionResult
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="HttpNotFoundTestBuilder{TActionResult}" /> class.
@@ -139,12 +141,62 @@
         }
 
         /// <summary>
+        /// Tests whether HTTP not found result contains the provided output formatter.
+        /// </summary>
+        /// <param name="outputFormatter">Instance of IOutputFormatter.</param>
+        /// <returns>The same HTTP not found test builder.</returns>
+        public IAndHttpNotFoundTestBuilder ContainingOutputFormatter(IOutputFormatter outputFormatter)
+        {
+            this.ValidateContainingOfOutputFormatter(outputFormatter);
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether HTTP not found result contains output formatter of the provided type.
+        /// </summary>
+        /// <typeparam name="TOutputFormatter">Type of IOutputFormatter.</typeparam>
+        /// <returns>The same HTTP not found test builder.</returns>
+        public IAndHttpNotFoundTestBuilder ContainingOutputFormatterOfType<TOutputFormatter>()
+            where TOutputFormatter : IOutputFormatter
+        {
+            this.ValidateContainingOutputFormatterOfType<TOutputFormatter>();
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether HTTP not found result contains the provided output formatters.
+        /// </summary>
+        /// <param name="outputFormatters">Enumerable of IOutputFormatter.</param>
+        /// <returns>The same HTTP not found test builder.</returns>
+        public IAndHttpNotFoundTestBuilder ContainingOutputFormatters(IEnumerable<IOutputFormatter> outputFormatters)
+        {
+            this.ValidateOutputFormatters(outputFormatters);
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether HTTP not found result contains the provided output formatters.
+        /// </summary>
+        /// <param name="outputFormatters">Output formatter parameters.</param>
+        /// <returns>The same HTTP not found test builder.</returns>
+        public IAndHttpNotFoundTestBuilder ContainingOutputFormatters(params IOutputFormatter[] outputFormatters)
+        {
+            this.ValidateOutputFormatters(outputFormatters);
+            return this;
+        }
+
+        /// <summary>
         /// AndAlso method for better readability when chaining HTTP not found result tests.
         /// </summary>
         /// <returns>HTTP not found result test builder.</returns>
         public IAndHttpNotFoundTestBuilder AndAlso()
         {
             return this;
+        }
+
+        public new ActionResult AndProvideTheActionResult()
+        {
+            return this.ActionResult;
         }
 
         protected override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)

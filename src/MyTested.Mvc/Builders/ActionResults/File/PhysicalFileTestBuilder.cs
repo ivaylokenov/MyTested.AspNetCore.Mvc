@@ -66,7 +66,7 @@
         /// <returns>The same file test builder.</returns>
         public IAndPhysicalFileTestBuilder WithPhysicalPath(string physicalPath)
         {
-            var actualPhysicalPath = this.ActionResult.FileName;
+            var actualPhysicalPath = (this.ActionResult as PhysicalFileResult)?.FileName;
             if (physicalPath != actualPhysicalPath)
             {
                 this.ThrowNewFileResultAssertionException(

@@ -1,11 +1,13 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.ActionResults.File
 {
+    using Base;
+    using Microsoft.AspNet.Mvc;
     using Microsoft.Net.Http.Headers;
 
     /// <summary>
     /// Used for testing physical file result.
     /// </summary>
-    public interface IPhysicalFileTestBuilder
+    public interface IPhysicalFileTestBuilder : IBaseTestBuilderWithActionResult<PhysicalFileResult>
     {
         /// <summary>
         /// Tests whether file result has the same content type as the provided one.
