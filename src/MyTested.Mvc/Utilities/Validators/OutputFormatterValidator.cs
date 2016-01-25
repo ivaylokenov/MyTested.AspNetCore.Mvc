@@ -7,8 +7,17 @@
     using Microsoft.AspNet.Mvc;
     using Microsoft.AspNet.Mvc.Formatters;
 
+    /// <summary>
+    /// Validator class containing output formatter validation logic.
+    /// </summary>
     public static class OutputFormatterValidator
     {
+        /// <summary>
+        /// Validates whether object result Formatters contains the provided output formatter.
+        /// </summary>
+        /// <param name="objectResult">Object result to test.</param>
+        /// <param name="expectedOutputFormatter">Expected output formatter.</param>
+        /// <param name="failedValidationAction">Action to call in case of failed validation.</param>
         public static void ValidateContainingOfOutputFormatter(
             ObjectResult objectResult,
             IOutputFormatter expectedOutputFormatter,
@@ -19,11 +28,17 @@
             {
                 failedValidationAction(
                     "output formatters",
-                    $"to contain {expectedOutputFormatter.GetName()} formatter",
+                    $"to contain the provided formatter",
                     "such was not found");
             }
         }
 
+        /// <summary>
+        /// Validates whether object result Formatters contains the provided type of output formatter.
+        /// </summary>
+        /// <typeparam name="TOutputFormatter">Type of expected output formatter.</typeparam>
+        /// <param name="objectResult">Object result to test.</param>
+        /// <param name="failedValidationAction">Action to call in case of failed validation.</param>
         public static void ValidateContainingOutputFormatterOfType<TOutputFormatter>(
             ObjectResult objectResult,
             Action<string, string, string> failedValidationAction)
@@ -40,6 +55,12 @@
             }
         }
 
+        /// <summary>
+        /// Validates whether object result Formatters contains the provided output formatters.
+        /// </summary>
+        /// <param name="objectResult">Object result to test.</param>
+        /// <param name="outputFormatters">Expected output formatters.</param>
+        /// <param name="failedValidationAction">Action to call in case of failed validation.</param>
         public static void ValidateOutputFormatters(
             ObjectResult objectResult,
             IEnumerable<IOutputFormatter> outputFormatters,
@@ -52,7 +73,7 @@
             {
                 failedValidationAction(
                     "output formatters",
-                    $"to be {expectedOutputFormatters.Count}",
+                    $"to have {expectedOutputFormatters.Count} {(expectedOutputFormatters.Count != 1 ? "items" : "item")}",
                     $"instead found {actualOutputFormatters.Count}");
             }
 

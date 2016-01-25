@@ -10,11 +10,10 @@
     using Exceptions;
     using Internal.Extensions;
     using Microsoft.AspNet.Mvc;
-    using Microsoft.AspNet.Routing;
-    using Utilities.Validators;
-    using Microsoft.Net.Http.Headers;
     using Microsoft.AspNet.Mvc.Formatters;
-    using Contracts.Base;
+    using Microsoft.AspNet.Routing;
+    using Microsoft.Net.Http.Headers;
+    using Utilities.Validators;
 
     /// <summary>
     /// Used for testing created results.
@@ -52,7 +51,8 @@
         /// <returns>The same created test builder.</returns>
         public IAndCreatedTestBuilder WithStatusCode(int statusCode)
         {
-            return this.WithStatusCode((HttpStatusCode)statusCode);
+            this.ValidateStatusCode(statusCode);
+            return this;
         }
 
         /// <summary>
@@ -388,11 +388,21 @@
             return this;
         }
 
+        /// <summary>
+        /// Gets the action result which will be tested.
+        /// </summary>
+        /// <returns>Action result to be tested.</returns>
         public new ObjectResult AndProvideTheActionResult()
         {
             return this.ActionResult;
         }
 
+        /// <summary>
+        /// Throws new created result assertion exception for the provided property name, expected value and actual value.
+        /// </summary>
+        /// <param name="propertyName">Property name on which the testing failed.</param>
+        /// <param name="expectedValue">Expected value of the tested property.</param>
+        /// <param name="actualValue">Actual value of the tested property.</param>
         protected override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)
             => this.ThrowNewCreatedResultAssertionException(propertyName, expectedValue, actualValue);
 

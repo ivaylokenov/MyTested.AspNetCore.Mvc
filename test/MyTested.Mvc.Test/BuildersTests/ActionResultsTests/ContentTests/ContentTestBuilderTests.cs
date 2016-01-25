@@ -163,6 +163,22 @@
         }
 
         [Fact]
+        public void WithCustomEncodingShouldThrowExceptionWithNullContentType()
+        {
+            Test.AssertException<ContentResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.ContentActionWithNullMediaType())
+                        .ShouldReturn()
+                        .Content()
+                        .WithEncoding(Encoding.ASCII);
+                },
+                "When calling ContentActionWithNullMediaType action in MvcController expected content result encoding to be ASCII, but instead received null.");
+        }
+
+        [Fact]
         public void WithCustomEncodingShouldThrowExceptionWhenActionReturnsIncorrectEncoding()
         {
             Test.AssertException<ContentResultAssertionException>(

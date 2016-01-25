@@ -9,7 +9,9 @@
     using Common;
     using Microsoft.AspNet.Authorization;
     using Microsoft.AspNet.FileProviders;
+    using Microsoft.AspNet.Http;
     using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNet.Mvc.Formatters;
     using Microsoft.AspNet.Mvc.ViewEngines;
     using Microsoft.Net.Http.Headers;
     using Models;
@@ -173,7 +175,26 @@
 
             return this.HttpBadRequest();
         }
+        
+        public IActionResult FullHttpBadRequestAction()
+        {
+            return new BadRequestObjectResult(this.responseModel)
+            {
+                ContentTypes = new List<MediaTypeHeaderValue> { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) },
+                StatusCode = StatusCodes.Status201Created,
+                Formatters = new FormatterCollection<IOutputFormatter> { new JsonOutputFormatter(), new CustomOutputFormatter() },
+                DeclaredType = typeof(List<ResponseModel>),
+            };
+        }
 
+        public IActionResult HttpBadRequestActionWithFormatter(IOutputFormatter formatter)
+        {
+            return new BadRequestObjectResult(this.responseModel)
+            {
+                Formatters = new FormatterCollection<IOutputFormatter> { formatter }
+            };
+        }
+        
         public IActionResult EmptyResultAction()
         {
             return new EmptyResult();
@@ -188,9 +209,7 @@
         {
             return new UnsupportedMediaTypeResult();
         }
-
-
-
+        
         public void EmptyAction()
         {
         }
@@ -232,6 +251,25 @@
         public IActionResult OkResultAction()
         {
             return this.Ok();
+        }
+        
+        public IActionResult FullOkAction()
+        {
+            return new HttpOkObjectResult(this.responseModel)
+            {
+                ContentTypes = new List<MediaTypeHeaderValue> { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) },
+                StatusCode = StatusCodes.Status201Created,
+                Formatters = new FormatterCollection<IOutputFormatter> { new JsonOutputFormatter(), new CustomOutputFormatter() },
+                DeclaredType = typeof(List<ResponseModel>),
+            };
+        }
+
+        public IActionResult OkActionWithFormatter(IOutputFormatter formatter)
+        {
+            return new HttpOkObjectResult(this.responseModel)
+            {
+                Formatters = new FormatterCollection<IOutputFormatter> { formatter }
+            };
         }
 
         public IActionResult StatusCodeAction()
@@ -360,6 +398,25 @@
         public IActionResult CreatedAction()
         {
             return this.Created(TestObjectFactory.GetUri().OriginalString, this.responseModel);
+        }
+
+        public IActionResult FullCreatedAction()
+        {
+            return new CreatedResult(TestObjectFactory.GetUri(), this.responseModel)
+            {
+                ContentTypes = new List<MediaTypeHeaderValue> { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) },
+                StatusCode = StatusCodes.Status201Created,
+                Formatters = new FormatterCollection<IOutputFormatter> { new JsonOutputFormatter(), new CustomOutputFormatter() },
+                DeclaredType = typeof(List<ResponseModel>),
+            };
+        }
+
+        public IActionResult CreatedActionWithFormatter(IOutputFormatter formatter)
+        {
+            return new CreatedResult(TestObjectFactory.GetUri(), this.responseModel)
+            {
+                Formatters = new FormatterCollection<IOutputFormatter> { formatter }
+            };
         }
 
         public IActionResult CreatedActionWithUri()
@@ -570,6 +627,25 @@
         public IActionResult HttpNotFoundWithObjectAction()
         {
             return this.HttpNotFound("test");
+        }
+
+        public IActionResult FullHttpNotFoundAction()
+        {
+            return new HttpNotFoundObjectResult(this.responseModel)
+            {
+                ContentTypes = new List<MediaTypeHeaderValue> { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) },
+                StatusCode = StatusCodes.Status201Created,
+                Formatters = new FormatterCollection<IOutputFormatter> { new JsonOutputFormatter(), new CustomOutputFormatter() },
+                DeclaredType = typeof(List<ResponseModel>),
+            };
+        }
+
+        public IActionResult HttpNotFoundActionWithFormatter(IOutputFormatter formatter)
+        {
+            return new HttpNotFoundObjectResult(this.responseModel)
+            {
+                Formatters = new FormatterCollection<IOutputFormatter> { formatter }
+            };
         }
 
         [Authorize]

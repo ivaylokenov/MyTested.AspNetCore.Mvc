@@ -134,6 +134,12 @@
             return this;
         }
 
+        /// <summary>
+        /// Throws new JSON result assertion exception for the provided property name, expected value and actual value.
+        /// </summary>
+        /// <param name="propertyName">Property name on which the testing failed..</param>
+        /// <param name="expectedValue">Expected value of the tested property.</param>
+        /// <param name="actualValue">Actual value of the tested property.</param>
         protected override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)
             => this.ThrowNewJsonResultAssertionException(propertyName, expectedValue, actualValue);
 

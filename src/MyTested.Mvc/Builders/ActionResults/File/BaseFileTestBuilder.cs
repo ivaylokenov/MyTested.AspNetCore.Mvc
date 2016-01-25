@@ -33,6 +33,15 @@
         }
 
         /// <summary>
+        /// Gets the tested file result.
+        /// </summary>
+        /// <returns>Tested file result.</returns>
+        public new FileResult AndProvideTheActionResult()
+        {
+            return this.ActionResult;
+        }
+        
+        /// <summary>
         /// Validates whether file result has the provided content type.
         /// </summary>
         /// <param name="contentType">Content type as MediaTypeHeaderValue.</param>

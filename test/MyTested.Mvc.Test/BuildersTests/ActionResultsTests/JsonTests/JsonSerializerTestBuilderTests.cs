@@ -39,7 +39,7 @@
                 }, 
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have 'English (United States)' culture, but in fact found 'Invariant Language (Invariant Country)'.");
         }
-
+        
         [Fact]
         public void WithCultureShouldValidateOnlyTheProperty()
         {
@@ -446,6 +446,43 @@
                             s.WithMaxDepth(int.MaxValue));
                 }, 
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have 2147483647 max depth, but in fact found 2.");
+        }
+
+        [Fact]
+        public void WithNullMaxDepthShouldThrowExceptionWithIncorrectValue()
+        {
+            Test.AssertException<JsonResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.JsonWithSettingsAction())
+                        .ShouldReturn()
+                        .Json()
+                        .WithJsonSerializerSettings(s =>
+                            s.WithMaxDepth(null));
+                },
+                "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have no max depth, but in fact found 2.");
+        }
+
+        [Fact]
+        public void WithMaxDepthShouldThrowExceptionWithNullValue()
+        {
+            Test.AssertException<JsonResultAssertionException>(
+                () =>
+                {
+                    var jsonSerializerSettings = TestObjectFactory.GetJsonSerializerSettings();
+                    jsonSerializerSettings.MaxDepth = null;
+
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
+                        .ShouldReturn()
+                        .Json()
+                        .WithJsonSerializerSettings(s =>
+                            s.WithMaxDepth(int.MaxValue));
+                },
+                "When calling JsonWithSpecificSettingsAction action in MvcController expected JSON result serializer settings to have 2147483647 max depth, but in fact found none.");
         }
 
         [Fact]

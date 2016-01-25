@@ -1,8 +1,12 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.ActionResults.HttpBadRequest
 {
+    using System.Collections.Generic;
+    using System.Net;
     using Base;
     using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNet.Mvc.Formatters;
     using Microsoft.AspNet.Mvc.ModelBinding;
+    using Microsoft.Net.Http.Headers;
     using Models;
 
     /// <summary>
@@ -47,7 +51,7 @@
         /// <summary>
         /// Tests whether HTTP bad request result contains the controller's ModelState dictionary as object error.
         /// </summary>
-        /// <returns>Base test builder with caught exception.</returns>
+        /// <returns>The same HTTP bad request test builder.</returns>
         IAndHttpBadRequestTestBuilder WithModelStateError();
 
         /// <summary>
@@ -63,5 +67,90 @@
         /// <typeparam name="TRequestModel">Type of model for which the model state errors will be tested.</typeparam>
         /// <returns>The same HTTP bad request test builder.</returns>
         IModelErrorTestBuilder<TRequestModel> WithModelStateErrorFor<TRequestModel>();
+        
+        /// <summary>
+        /// Tests whether HTTP bad request result has the same status code as the provided one.
+        /// </summary>
+        /// <param name="statusCode">Status code.</param>
+        /// <returns>The same HTTP bad request test builder.</returns>
+        IAndHttpBadRequestTestBuilder WithStatusCode(int statusCode);
+
+        /// <summary>
+        /// Tests whether HTTP bad request has the same status code as the provided HttpStatusCode.
+        /// </summary>
+        /// <param name="statusCode">HttpStatusCode enumeration.</param>
+        /// <returns>The same HTTP bad request test builder.</returns>
+        IAndHttpBadRequestTestBuilder WithStatusCode(HttpStatusCode statusCode);
+
+        /// <summary>
+        /// Tests whether HTTP bad request result contains the content type provided as string.
+        /// </summary>
+        /// <param name="contentType">Content type as string.</param>
+        /// <returns>The same HTTP bad request test builder.</returns>
+        IAndHttpBadRequestTestBuilder ContainingContentType(string contentType);
+
+        /// <summary>
+        /// Tests whether HTTP bad request result contains the content type provided as MediaTypeHeaderValue.
+        /// </summary>
+        /// <param name="contentType">Content type as MediaTypeHeaderValue.</param>
+        /// <returns>The same HTTP bad request test builder.</returns>
+        IAndHttpBadRequestTestBuilder ContainingContentType(MediaTypeHeaderValue contentType);
+
+        /// <summary>
+        /// Tests whether HTTP bad request result contains the same content types provided as enumerable of strings.
+        /// </summary>
+        /// <param name="contentTypes">Content types as enumerable of strings.</param>
+        /// <returns>The same HTTP bad request test builder.</returns>
+        IAndHttpBadRequestTestBuilder ContainingContentTypes(IEnumerable<string> contentTypes);
+
+        /// <summary>
+        /// Tests whether HTTP bad request result contains the same content types provided as string parameters.
+        /// </summary>
+        /// <param name="contentTypes">Content types as string parameters.</param>
+        /// <returns>The same HTTP bad request test builder.</returns>
+        IAndHttpBadRequestTestBuilder ContainingContentTypes(params string[] contentTypes);
+
+        /// <summary>
+        /// Tests whether HTTP bad request result contains the same content types provided as enumerable of MediaTypeHeaderValue.
+        /// </summary>
+        /// <param name="contentTypes">Content types as enumerable of MediaTypeHeaderValue.</param>
+        /// <returns>The same HTTP bad request test builder.</returns>
+        IAndHttpBadRequestTestBuilder ContainingContentTypes(IEnumerable<MediaTypeHeaderValue> contentTypes);
+
+        /// <summary>
+        /// Tests whether HTTP bad request result contains the same content types provided as MediaTypeHeaderValue parameters.
+        /// </summary>
+        /// <param name="contentTypes">Content types as MediaTypeHeaderValue parameters.</param>
+        /// <returns>The same HTTP bad request test builder.</returns>
+        IAndHttpBadRequestTestBuilder ContainingContentTypes(params MediaTypeHeaderValue[] contentTypes);
+
+        /// <summary>
+        /// Tests whether HTTP bad request result contains the provided output formatter.
+        /// </summary>
+        /// <param name="outputFormatter">Instance of IOutputFormatter.</param>
+        /// <returns>The same HTTP bad request test builder.</returns>
+        IAndHttpBadRequestTestBuilder ContainingOutputFormatter(IOutputFormatter outputFormatter);
+
+        /// <summary>
+        /// Tests whether HTTP bad request result contains output formatter of the provided type.
+        /// </summary>
+        /// <typeparam name="TOutputFormatter">Type of IOutputFormatter.</typeparam>
+        /// <returns>The same HTTP bad request test builder.</returns>
+        IAndHttpBadRequestTestBuilder ContainingOutputFormatterOfType<TOutputFormatter>()
+            where TOutputFormatter : IOutputFormatter;
+
+        /// <summary>
+        /// Tests whether HTTP bad request result contains the provided output formatters.
+        /// </summary>
+        /// <param name="outputFormatters">Enumerable of IOutputFormatter.</param>
+        /// <returns>The same HTTP bad request test builder.</returns>
+        IAndHttpBadRequestTestBuilder ContainingOutputFormatters(IEnumerable<IOutputFormatter> outputFormatters);
+
+        /// <summary>
+        /// Tests whether HTTP bad request result contains the provided output formatters.
+        /// </summary>
+        /// <param name="outputFormatters">Output formatter parameters.</param>
+        /// <returns>The same HTTP bad request test builder.</returns>
+        IAndHttpBadRequestTestBuilder ContainingOutputFormatters(params IOutputFormatter[] outputFormatters);
     }
 }

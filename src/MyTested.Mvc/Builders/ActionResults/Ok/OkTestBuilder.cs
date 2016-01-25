@@ -1,15 +1,15 @@
 ﻿namespace MyTested.Mvc.Builders.ActionResults.Ok
 {
     using System;
+    using System.Collections.Generic;
+    using System.Net;
     using Base;
     using Contracts.ActionResults.Ok;
     using Exceptions;
     using Internal.Extensions;
     using Microsoft.AspNet.Mvc;
-    using System.Net;
-    using Microsoft.Net.Http.Headers;
-    using System.Collections.Generic;
     using Microsoft.AspNet.Mvc.Formatters;
+    using Microsoft.Net.Http.Headers;
 
     /// <summary>
     /// Used for testing OK result.
@@ -60,7 +60,8 @@
         /// <returns>The same OK test builder.</returns>
         public IAndOkTestBuilder WithStatusCode(int statusCode)
         {
-            return this.WithStatusCode((HttpStatusCode)statusCode);
+            this.ValidateStatusCode(statusCode);
+            return this;
         }
 
         /// <summary>
@@ -194,11 +195,21 @@
             return this;
         }
 
+        /// <summary>
+        /// Gets the action result which will be tested.
+        /// </summary>
+        /// <returns>Action result to be tested.</returns>
         public new ActionResult AndProvideTheActionResult()
         {
             return this.ActionResult;
         }
 
+        /// <summary>
+        /// Throws new OK result assertion exception for the provided property name, expected value and actual value.
+        /// </summary>
+        /// <param name="propertyName">Property name on which the testing failed..</param>
+        /// <param name="expectedValue">Expected value of the tested property.</param>
+        /// <param name="actualValue">Actual value of the tested property.</param>
         protected override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)
             => this.ThrowNewOkResultAssertionException(propertyName, expectedValue, actualValue);
 

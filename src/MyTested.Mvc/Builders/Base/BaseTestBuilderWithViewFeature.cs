@@ -49,7 +49,11 @@
         {
             return this.WithResponseModelOfType<TModel>();
         }
-
+        
+        /// <summary>
+        /// Gets the action result which will be tested.
+        /// </summary>
+        /// <returns>Action result to be tested.</returns>
         public new ActionResult AndProvideTheActionResult()
         {
             return this.ActionResult;

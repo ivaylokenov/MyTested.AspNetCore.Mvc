@@ -199,11 +199,6 @@
             return this;
         }
 
-        public new ViewComponentResult AndProvideTheActionResult()
-        {
-            return this.ActionResult;
-        }
-
         private object[] GetArguments()
         {
             var actionResultArguments = this.ActionResult.Arguments;

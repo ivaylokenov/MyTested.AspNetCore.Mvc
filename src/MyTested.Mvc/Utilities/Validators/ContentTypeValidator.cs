@@ -52,6 +52,12 @@
             });
         }
 
+        /// <summary>
+        /// Validates whether action result ContentTypes contains the provided content type from action result containing such property.
+        /// </summary>
+        /// <param name="actionResult">Action result with ContentTypes.</param>
+        /// <param name="expectedContentType">Expected content type.</param>
+        /// <param name="failedValidationAction">Action to call in case of failed validation.</param>
         public static void ValidateContainingOfContentType(
             dynamic actionResult,
             MediaTypeHeaderValue expectedContentType,
@@ -67,6 +73,12 @@
             }
         }
 
+        /// <summary>
+        /// Validates whether action result ContentTypes contains the provided content types from action result containing such property.
+        /// </summary>
+        /// <param name="actionResult">Action result with ContentTypes.</param>
+        /// <param name="contentTypes">Expected content types.</param>
+        /// <param name="failedValidationAction">Action to call in case of failed validation.</param>
         public static void ValidateContentTypes(
             dynamic actionResult,
             IEnumerable<MediaTypeHeaderValue> contentTypes,
@@ -79,7 +91,7 @@
             {
                 failedValidationAction(
                     "content types",
-                    $"to be {expectedContentTypes.Count}",
+                    $"to have {expectedContentTypes.Count} {(expectedContentTypes.Count != 1 ? "items" : "item")}",
                     $"instead found {actualContentTypes.Count}");
             }
 
@@ -91,7 +103,7 @@
                 {
                     failedValidationAction(
                         "content types",
-                        $"to contain {expectedContentTypes[i]}",
+                        $"to contain {expectedMediaTypeFormatter}",
                         "none was found");
                 }
             }

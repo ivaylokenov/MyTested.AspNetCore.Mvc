@@ -1,9 +1,14 @@
 ﻿namespace MyTested.Mvc.Tests.BuildersTests.ActionResultsTests.HttpBadRequestTests
 {
     using System.Collections.Generic;
+    using System.Net;
     using Exceptions;
+    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNet.Mvc.Formatters;
     using Microsoft.AspNet.Mvc.ModelBinding;
+    using Microsoft.Net.Http.Headers;
     using Setups;
+    using Setups.Common;
     using Setups.Controllers;
     using Setups.Models;
     using Xunit;
@@ -307,6 +312,425 @@
                 .ContainingModelStateErrorFor(m => m.RequiredString).Containing("field")
                 .AndAlso()
                 .ContainingNoModelStateErrorFor(m => m.NonRequiredString);
+        }
+        
+        [Fact]
+        public void WithStatusCodeShouldNotThrowExceptionWithCorrectStatusCode()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.FullHttpBadRequestAction())
+                .ShouldReturn()
+                .HttpBadRequest()
+                .WithStatusCode(201);
+        }
+
+        [Fact]
+        public void WithStatusCodeAsEnumShouldNotThrowExceptionWithCorrectStatusCode()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.FullHttpBadRequestAction())
+                .ShouldReturn()
+                .HttpBadRequest()
+                .WithStatusCode(HttpStatusCode.Created);
+        }
+
+        [Fact]
+        public void WithStatusCodeAsEnumShouldThrowExceptionWithIncorrectStatusCode()
+        {
+            Test.AssertException<HttpBadRequestResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.FullHttpBadRequestAction())
+                        .ShouldReturn()
+                        .HttpBadRequest()
+                        .WithStatusCode(HttpStatusCode.OK);
+                },
+                "When calling FullHttpBadRequestAction action in MvcController expected HTTP bad request result to have 200 (OK) status code, but instead received 201 (Created).");
+        }
+
+        [Fact]
+        public void ContainingContentTypeShouldNotThrowExceptionWithCorrectValue()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.FullHttpBadRequestAction())
+                .ShouldReturn()
+                .HttpBadRequest()
+                .ContainingContentType(ContentType.ApplicationJson);
+        }
+
+        [Fact]
+        public void ContainingContentTypeAsMediaTypeHeaderValueShouldNotThrowExceptionWithCorrectValue()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.FullHttpBadRequestAction())
+                .ShouldReturn()
+                .HttpBadRequest()
+                .ContainingContentType(new MediaTypeHeaderValue(ContentType.ApplicationJson));
+        }
+        
+        [Fact]
+        public void ContainingContentTypeAsMediaTypeHeaderValueShouldThrowExceptionWithIncorrectValue()
+        {
+            Test.AssertException<HttpBadRequestResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                       .Controller<MvcController>()
+                       .Calling(c => c.FullHttpBadRequestAction())
+                       .ShouldReturn()
+                       .HttpBadRequest()
+                       .ContainingContentType(new MediaTypeHeaderValue(ContentType.ApplicationOctetStream));
+                },
+                "When calling FullHttpBadRequestAction action in MvcController expected HTTP bad request result content types to contain application/octet-stream, but such was not found.");
+        }
+
+        [Fact]
+        public void ContainingContentTypesAsStringValueShouldNotThrowExceptionWithCorrectValue()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.FullHttpBadRequestAction())
+                .ShouldReturn()
+                .HttpBadRequest()
+                .ContainingContentTypes(new List<string>
+                {
+                    ContentType.ApplicationJson,
+                    ContentType.ApplicationXml
+                });
+        }
+
+        [Fact]
+        public void ContainingContentTypesAsStringShouldNotThrowExceptionWithCorrectParametersValue()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.FullHttpBadRequestAction())
+                .ShouldReturn()
+                .HttpBadRequest()
+                .ContainingContentTypes(ContentType.ApplicationJson, ContentType.ApplicationXml);
+        }
+
+        [Fact]
+        public void ContainingContentTypesStringValueShouldNotThrowExceptionWithIncorrectValue()
+        {
+            Test.AssertException<HttpBadRequestResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.FullHttpBadRequestAction())
+                        .ShouldReturn()
+                        .HttpBadRequest()
+                        .ContainingContentTypes(new List<string>
+                        {
+                            ContentType.ApplicationOctetStream,
+                            ContentType.ApplicationXml
+                        });
+                },
+                "When calling FullHttpBadRequestAction action in MvcController expected HTTP bad request result content types to contain application/octet-stream, but none was found.");
+        }
+
+        [Fact]
+        public void ContainingContentTypesAsStringValueShouldNotThrowExceptionWithIncorrectCount()
+        {
+            Test.AssertException<HttpBadRequestResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.FullHttpBadRequestAction())
+                        .ShouldReturn()
+                        .HttpBadRequest()
+                        .ContainingContentTypes(new List<string>
+                        {
+                            ContentType.ApplicationXml
+                        });
+                },
+                "When calling FullHttpBadRequestAction action in MvcController expected HTTP bad request result content types to have 1 item, but instead found 2.");
+        }
+
+        [Fact]
+        public void ContainingContentTypesAsStringValueShouldNotThrowExceptionWithIncorrectCountWithMoreThanOneItem()
+        {
+            Test.AssertException<HttpBadRequestResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.FullHttpBadRequestAction())
+                        .ShouldReturn()
+                        .HttpBadRequest()
+                        .ContainingContentTypes(new List<string>
+                        {
+                            ContentType.ApplicationXml,
+                            ContentType.ApplicationJson,
+                            ContentType.ApplicationZip
+                        });
+                },
+                "When calling FullHttpBadRequestAction action in MvcController expected HTTP bad request result content types to have 3 items, but instead found 2.");
+        }
+
+        [Fact]
+        public void ContainingContentTypesAsMediaTypeHeaderValueShouldNotThrowExceptionWithCorrectValue()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.FullHttpBadRequestAction())
+                .ShouldReturn()
+                .HttpBadRequest()
+                .ContainingContentTypes(new List<MediaTypeHeaderValue>
+                {
+                    new MediaTypeHeaderValue(ContentType.ApplicationJson),
+                    new MediaTypeHeaderValue(ContentType.ApplicationXml)
+                });
+        }
+
+        [Fact]
+        public void ContainingContentTypesAsMediaTypeHeaderValueShouldNotThrowExceptionWithCorrectParametersValue()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.FullHttpBadRequestAction())
+                .ShouldReturn()
+                .HttpBadRequest()
+                .ContainingContentTypes(new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml));
+        }
+
+        [Fact]
+        public void ContainingContentTypesAsMediaTypeHeaderValueShouldNotThrowExceptionWithIncorrectValue()
+        {
+            Test.AssertException<HttpBadRequestResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.FullHttpBadRequestAction())
+                        .ShouldReturn()
+                        .HttpBadRequest()
+                        .ContainingContentTypes(new List<MediaTypeHeaderValue>
+                        {
+                            new MediaTypeHeaderValue(ContentType.ApplicationOctetStream),
+                            new MediaTypeHeaderValue(ContentType.ApplicationXml)
+                        });
+                },
+                "When calling FullHttpBadRequestAction action in MvcController expected HTTP bad request result content types to contain application/octet-stream, but none was found.");
+        }
+
+        [Fact]
+        public void ContainingContentTypesAsMediaTypeHeaderValueShouldNotThrowExceptionWithIncorrectCount()
+        {
+            Test.AssertException<HttpBadRequestResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.FullHttpBadRequestAction())
+                        .ShouldReturn()
+                        .HttpBadRequest()
+                        .ContainingContentTypes(new List<MediaTypeHeaderValue>
+                        {
+                            new MediaTypeHeaderValue(ContentType.ApplicationXml)
+                        });
+                },
+                "When calling FullHttpBadRequestAction action in MvcController expected HTTP bad request result content types to have 1 item, but instead found 2.");
+        }
+
+        [Fact]
+        public void ContainingContentTypesAsMediaTypeHeaderValueValueShouldNotThrowExceptionWithIncorrectCountWithMoreThanOneItem()
+        {
+            Test.AssertException<HttpBadRequestResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.FullHttpBadRequestAction())
+                        .ShouldReturn()
+                        .HttpBadRequest()
+                        .ContainingContentTypes(new List<MediaTypeHeaderValue>
+                        {
+                            new MediaTypeHeaderValue(ContentType.ApplicationXml),
+                            new MediaTypeHeaderValue(ContentType.ApplicationJson),
+                            new MediaTypeHeaderValue(ContentType.ApplicationZip)
+                        });
+                },
+                "When calling FullHttpBadRequestAction action in MvcController expected HTTP bad request result content types to have 3 items, but instead found 2.");
+        }
+
+        [Fact]
+        public void ContainingOutputFormatterShouldNotThrowExceptionWithCorrectValue()
+        {
+            var formatter = TestObjectFactory.GetOutputFormatter();
+
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.HttpBadRequestActionWithFormatter(formatter))
+                .ShouldReturn()
+                .HttpBadRequest()
+                .ContainingOutputFormatter(formatter);
+        }
+
+        [Fact]
+        public void ContainingOutputFormatterShouldThrowExceptionWithIncorrectValue()
+        {
+            Test.AssertException<HttpBadRequestResultAssertionException>(
+                () =>
+                {
+                    var formatter = TestObjectFactory.GetOutputFormatter();
+
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.HttpBadRequestActionWithFormatter(formatter))
+                        .ShouldReturn()
+                        .HttpBadRequest()
+                        .ContainingOutputFormatter(new JsonOutputFormatter());
+                },
+                "When calling HttpBadRequestActionWithFormatter action in MvcController expected HTTP bad request result output formatters to contain the provided formatter, but such was not found.");
+        }
+
+        [Fact]
+        public void ContainingOutputFormatterOfTypeShouldNotThrowExceptionWithCorrectValue()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.FullHttpBadRequestAction())
+                .ShouldReturn()
+                .HttpBadRequest()
+                .ContainingOutputFormatterOfType<JsonOutputFormatter>();
+        }
+
+        [Fact]
+        public void ContainingOutputFormatterOfTypeShouldThrowExceptionWithIncorrectValue()
+        {
+            Test.AssertException<HttpBadRequestResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.FullHttpBadRequestAction())
+                        .ShouldReturn()
+                        .HttpBadRequest()
+                        .ContainingOutputFormatterOfType<IOutputFormatter>();
+                },
+                "When calling FullHttpBadRequestAction action in MvcController expected HTTP bad request result output formatters to contain formatter of IOutputFormatter type, but such was not found.");
+        }
+
+        [Fact]
+        public void ContainingOutputFormattersShouldNotThrowExceptionWithCorrectValue()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.FullHttpBadRequestAction())
+                .ShouldReturn()
+                .HttpBadRequest()
+                .ContainingOutputFormatters(new List<IOutputFormatter>
+                {
+                    new JsonOutputFormatter(),
+                    new CustomOutputFormatter()
+                });
+        }
+
+        [Fact]
+        public void ContainingOutputFormattersShouldNotThrowExceptionWithCorrectParametersValue()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.FullHttpBadRequestAction())
+                .ShouldReturn()
+                .HttpBadRequest()
+                .ContainingOutputFormatters(new JsonOutputFormatter(), new CustomOutputFormatter());
+        }
+
+        [Fact]
+        public void ContainingOutputFormattersShouldThrowExceptionWithIncorrectValue()
+        {
+            Test.AssertException<HttpBadRequestResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.FullHttpBadRequestAction())
+                        .ShouldReturn()
+                        .HttpBadRequest()
+                        .ContainingOutputFormatters(new List<IOutputFormatter>
+                        {
+                            new JsonOutputFormatter(),
+                            new HttpNotAcceptableOutputFormatter()
+                        });
+                },
+                "When calling FullHttpBadRequestAction action in MvcController expected HTTP bad request result output formatters to contain formatter of HttpNotAcceptableOutputFormatter type, but none was found.");
+        }
+
+        [Fact]
+        public void ContainingOutputFormattersShouldThrowExceptionWithIncorrectCount()
+        {
+            Test.AssertException<HttpBadRequestResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.FullHttpBadRequestAction())
+                        .ShouldReturn()
+                        .HttpBadRequest()
+                        .ContainingOutputFormatters(new List<IOutputFormatter>
+                        {
+                            new JsonOutputFormatter()
+                        });
+                },
+                "When calling FullHttpBadRequestAction action in MvcController expected HTTP bad request result output formatters to have 1 item, but instead found 2.");
+        }
+
+        [Fact]
+        public void ContainingOutputFormattersShouldThrowExceptionWithIncorrectCountWithMoreThanOneItem()
+        {
+            Test.AssertException<HttpBadRequestResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.FullHttpBadRequestAction())
+                        .ShouldReturn()
+                        .HttpBadRequest()
+                        .ContainingOutputFormatters(new List<IOutputFormatter>
+                        {
+                            new JsonOutputFormatter(),
+                            new CustomOutputFormatter(),
+                            new JsonOutputFormatter()
+                        });
+                },
+                "When calling FullHttpBadRequestAction action in MvcController expected HTTP bad request result output formatters to have 3 items, but instead found 2.");
+        }
+
+        [Fact]
+        public void AndAlsoShouldWorkCorrectly()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.FullHttpBadRequestAction())
+                .ShouldReturn()
+                .HttpBadRequest()
+                .WithStatusCode(201)
+                .AndAlso()
+                .ContainingOutputFormatters(new JsonOutputFormatter(), new CustomOutputFormatter());
+        }
+
+        [Fact]
+        public void AndProvideTheActionResultShouldWorkCorrectly()
+        {
+            var actionResult = MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.FullHttpBadRequestAction())
+                .ShouldReturn()
+                .HttpBadRequest()
+                .AndProvideTheActionResult();
+
+            Assert.NotNull(actionResult);
+            Assert.IsAssignableFrom<BadRequestObjectResult>(actionResult);
         }
     }
 }

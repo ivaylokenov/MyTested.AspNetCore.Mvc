@@ -1,19 +1,19 @@
 ﻿namespace MyTested.Mvc.Builders.Base
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
+    using System.Net;
     using Contracts.Base;
     using Contracts.Models;
     using Exceptions;
     using Internal.Extensions;
     using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNet.Mvc.Formatters;
+    using Microsoft.Net.Http.Headers;
     using Models;
     using Utilities;
-    using System.Net;
     using Utilities.Validators;
-    using Microsoft.Net.Http.Headers;
-    using System.Collections.Generic;
-    using Microsoft.AspNet.Mvc.Formatters;
 
     /// <summary>
     /// Base class for all response model test builders.
@@ -134,11 +134,19 @@
                 this.ThrowNewFailedValidationException);
         }
 
+        /// <summary>
+        /// Tests whether action result contains the same content type as the provided one.
+        /// </summary>
+        /// <param name="contentType">Expected content type as string.</param>
         protected void ValidateContainingOfContentType(string contentType)
         {
             this.ValidateContainingOfContentType(new MediaTypeHeaderValue(contentType));
         }
 
+        /// <summary>
+        /// Tests whether action result contains the same content type as the provided MediaTypeHeaderValue.
+        /// </summary>
+        /// <param name="contentType">Expected content type as MediaTypeHeaderValue.</param>
         protected void ValidateContainingOfContentType(MediaTypeHeaderValue contentType)
         {
             ContentTypeValidator.ValidateContainingOfContentType(
@@ -147,16 +155,28 @@
                 this.ThrowNewFailedValidationException);
         }
 
+        /// <summary>
+        /// Tests whether action result contains the same content types as the provided ones.
+        /// </summary>
+        /// <param name="contentTypes">Expected content types as enumerable of strings.</param>
         protected void ValidateContentTypes(IEnumerable<string> contentTypes)
         {
             this.ValidateContentTypes(contentTypes.Select(ct => new MediaTypeHeaderValue(ct)));
         }
 
+        /// <summary>
+        /// Tests whether action result contains the same content types as the provided ones.
+        /// </summary>
+        /// <param name="contentTypes">Expected content types as string parameters.</param>
         protected void ValidateContentTypes(params string[] contentTypes)
         {
             this.ValidateContentTypes(contentTypes.AsEnumerable());
         }
 
+        /// <summary>
+        /// Tests whether action result contains the same content types as the provided ones.
+        /// </summary>
+        /// <param name="contentTypes">Expected content types as enumerable of MediaTypeHeaderValue.</param>
         protected void ValidateContentTypes(IEnumerable<MediaTypeHeaderValue> contentTypes)
         {
             ContentTypeValidator.ValidateContentTypes(
@@ -165,11 +185,19 @@
                 this.ThrowNewFailedValidationException);
         }
 
+        /// <summary>
+        /// Tests whether action result contains the same content types as the provided ones.
+        /// </summary>
+        /// <param name="contentTypes">Expected content types as MediaTypeHeaderValue parameters.</param>
         protected void ValidateContentTypes(params MediaTypeHeaderValue[] contentTypes)
         {
             this.ValidateContentTypes(contentTypes.AsEnumerable());
         }
 
+        /// <summary>
+        /// Tests whether action result contains the same output formatter as the provided one.
+        /// </summary>
+        /// <param name="outputFormatter">Expected instance of IOutputFormatter.</param>
         protected void ValidateContainingOfOutputFormatter(IOutputFormatter outputFormatter)
         {
             OutputFormatterValidator.ValidateContainingOfOutputFormatter(
@@ -178,6 +206,10 @@
                 this.ThrowNewFailedValidationException);
         }
 
+        /// <summary>
+        /// Tests whether action result contains type of output formatter as the provided one.
+        /// </summary>
+        /// <typeparam name="TOutputFormatter">Expected type of IOutputFormatter.</typeparam>
         protected void ValidateContainingOutputFormatterOfType<TOutputFormatter>()
             where TOutputFormatter : IOutputFormatter
         {
@@ -186,6 +218,10 @@
                 this.ThrowNewFailedValidationException);
         }
 
+        /// <summary>
+        /// Tests whether action result contains the same output formatters as the provided ones.
+        /// </summary>
+        /// <param name="outputFormatters">Expected enumerable of IOutputFormatter.</param>
         protected void ValidateOutputFormatters(IEnumerable<IOutputFormatter> outputFormatters)
         {
             OutputFormatterValidator.ValidateOutputFormatters(
@@ -194,11 +230,21 @@
                 this.ThrowNewFailedValidationException);
         }
 
+        /// <summary>
+        /// Tests whether action result contains the same output formatters as the provided ones.
+        /// </summary>
+        /// <param name="outputFormatters">Expected IOutputFormatter parameters.</param>
         protected void ValidateOutputFormatters(params IOutputFormatter[] outputFormatters)
         {
             this.ValidateOutputFormatters(outputFormatters.AsEnumerable());
         }
 
+        /// <summary>
+        /// When overridden in a derived class, it will be used to throw failed validation exception.
+        /// </summary>
+        /// <param name="propertyName">Property name on which the testing failed.</param>
+        /// <param name="expectedValue">Expected value of the tested property.</param>
+        /// <param name="actualValue">Actual value of the tested property.</param>
         protected abstract void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue);
 
         private TResponseModel GetActualModel<TResponseModel>()

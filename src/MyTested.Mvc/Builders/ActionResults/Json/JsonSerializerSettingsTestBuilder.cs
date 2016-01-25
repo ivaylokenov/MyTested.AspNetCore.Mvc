@@ -46,11 +46,11 @@
             this.jsonSerializerSettings.Culture = culture;
             this.validations.Add((expected, actual) =>
             {
-                if (expected.Culture?.DisplayName != actual.Culture?.DisplayName)
+                if (expected.Culture.DisplayName != actual.Culture.DisplayName)
                 {
                     this.ThrowNewJsonResultAssertionException(
-                        $"{(expected.Culture != null ? $"'{expected.Culture.DisplayName}'" : "default")} culture",
-                        $"in fact found {(actual.Culture != null ? $"'{actual.Culture.DisplayName}'" : "default one")}");
+                        $"'{expected.Culture.DisplayName}' culture",
+                        $"in fact found '{actual.Culture.DisplayName}'");
                 }
             });
 

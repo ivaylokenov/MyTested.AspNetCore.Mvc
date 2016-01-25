@@ -10,6 +10,7 @@
     using Microsoft.AspNet.Http.Authentication;
     using Microsoft.AspNet.Http.Internal;
     using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNet.Mvc.Formatters;
     using Microsoft.AspNet.Mvc.ViewEngines;
     using Microsoft.Extensions.DependencyInjection;
     using Models;
@@ -81,6 +82,11 @@
             return new DefaultHttpContext().Request;
         }
         
+        public static IOutputFormatter GetOutputFormatter()
+        {
+            return new JsonOutputFormatter();
+        }
+
         public static Uri GetUri()
         {
             return new Uri("http://somehost.com/someuri/1?query=Test");

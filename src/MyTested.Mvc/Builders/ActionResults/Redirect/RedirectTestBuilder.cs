@@ -271,6 +271,15 @@
             return this;
         }
 
+        /// <summary>
+        /// Gets the action result which will be tested.
+        /// </summary>
+        /// <returns>Action result to be tested.</returns>
+        public new ActionResult AndProvideTheActionResult()
+        {
+            return this.ActionResult;
+        }
+
         private TExpectedRedirectResult GetRedirectResult<TExpectedRedirectResult>(string containment)
             where TExpectedRedirectResult : class
         {
@@ -301,11 +310,6 @@
                     propertyName,
                     expectedValue,
                     actualValue));
-        }
-
-        public new ActionResult AndProvideTheActionResult()
-        {
-            return this.ActionResult;
         }
     }
 }

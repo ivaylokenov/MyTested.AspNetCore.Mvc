@@ -23,6 +23,7 @@
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Caught exception during the action execution.</param>
         /// <param name="actualMessage">Actual text error message received from bad request result.</param>
+        /// <param name="httpBadRequestTestBuilder">HTTP bad request test builder.</param>
         public HttpBadRequestErrorMessageTestBuilder(
             Controller controller,
             string actionName,

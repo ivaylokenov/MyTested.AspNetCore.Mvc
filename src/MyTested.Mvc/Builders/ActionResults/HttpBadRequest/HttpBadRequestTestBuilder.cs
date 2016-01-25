@@ -91,7 +91,8 @@
         /// <returns>The same HTTP bad request test builder.</returns>
         public IAndHttpBadRequestTestBuilder WithStatusCode(int statusCode)
         {
-            return this.WithStatusCode((HttpStatusCode)statusCode);
+            this.ValidateStatusCode(statusCode);
+            return this;
         }
 
         /// <summary>

@@ -3,6 +3,7 @@
     using System.IO;
     using Exceptions;
     using Microsoft.AspNet.FileProviders;
+    using Microsoft.AspNet.Mvc;
     using Microsoft.Net.Http.Headers;
     using Setups;
     using Setups.Common;
@@ -289,6 +290,20 @@
                 .WithContents(new byte[] { 1, 2, 3 })
                 .AndAlso()
                 .WithContentType(ContentType.ApplicationJson);
+        }
+
+        [Fact]
+        public void AndProvideTheActionResultShouldWorkCorrectly()
+        {
+            var actionResult = MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.FileWithContents())
+                .ShouldReturn()
+                .File()
+                .AndProvideTheActionResult();
+
+            Assert.NotNull(actionResult);
+            Assert.IsAssignableFrom<FileResult>(actionResult);
         }
     }
 }

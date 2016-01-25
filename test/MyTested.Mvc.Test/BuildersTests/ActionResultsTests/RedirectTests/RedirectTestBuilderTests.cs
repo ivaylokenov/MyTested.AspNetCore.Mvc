@@ -480,5 +480,19 @@
                 .AndAlso()
                 .ToController("MyController");
         }
+
+        [Fact]
+        public void AndProvideTheActionResultShouldWorkCorrectly()
+        {
+            var actionResult = MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.RedirectToActionResult())
+                .ShouldReturn()
+                .Redirect()
+                .AndProvideTheActionResult();
+
+            Assert.NotNull(actionResult);
+            Assert.IsAssignableFrom<RedirectToActionResult>(actionResult);
+        }
     }
 }

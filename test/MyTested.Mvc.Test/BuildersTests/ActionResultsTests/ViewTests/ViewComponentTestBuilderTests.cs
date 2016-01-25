@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Net;
     using Exceptions;
+    using Microsoft.AspNet.Mvc;
     using Microsoft.AspNet.Mvc.ViewEngines;
     using Microsoft.Net.Http.Headers;
     using Setups;
@@ -365,6 +366,20 @@
                 .WithContentType(ContentType.ApplicationXml)
                 .AndAlso()
                 .WithStatusCode(500);
+        }
+
+        [Fact]
+        public void AndProvideTheActionResultShouldWorkCorrectly()
+        {
+            var actionResult = MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.ViewComponentResultByName())
+                .ShouldReturn()
+                .ViewComponent()
+                .AndProvideTheActionResult();
+
+            Assert.NotNull(actionResult);
+            Assert.IsAssignableFrom<ViewComponentResult>(actionResult);
         }
     }
 }
