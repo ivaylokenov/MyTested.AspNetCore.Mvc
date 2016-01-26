@@ -36,7 +36,7 @@
         }
 
         /// <summary>
-        /// Gets model from invoked action in ASP.NET MVC 6 controller.
+        /// Gets model from invoked action in ASP.NET MVC controller.
         /// </summary>
         /// <value>Model from invoked action.</value>
         protected TModel Model { get; private set; }

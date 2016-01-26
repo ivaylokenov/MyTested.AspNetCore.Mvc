@@ -78,24 +78,29 @@
         private IServiceProvider Services => this.HttpContext.RequestServices;
 
         /// <summary>
-        /// Sets the HTTP context for the current test case.
+        /// Sets the HTTP context for the current test case. If no request services are set on the provided context, the globally configured ones are initialized.
         /// </summary>
-        /// <param name="context">Instance of HttpContext.</param>
+        /// <param name="httpContext">Instance of HttpContext.</param>
         /// <returns>The same controller builder.</returns>
-        public IAndControllerBuilder<TController> WithHttpContext(HttpContext context)
+        public IAndControllerBuilder<TController> WithHttpContext(HttpContext httpContext)
         {
-            this.HttpContext = context;
+            this.HttpContext = httpContext;
+            if (this.HttpContext.RequestServices == null)
+            {
+                MockedHttpContext.PrepareRequestServices(this.HttpContext);
+            }
+
             return this;
         }
 
         /// <summary>
         /// Adds HTTP request to the tested controller.
         /// </summary>
-        /// <param name="request">Instance of HttpRequest.</param>
+        /// <param name="httpRequest">Instance of HttpRequest.</param>
         /// <returns>The same controller builder.</returns>
-        public IAndControllerBuilder<TController> WithHttpRequest(HttpRequest request)
+        public IAndControllerBuilder<TController> WithHttpRequest(HttpRequest httpRequest)
         {
-            this.HttpRequest = request;
+            this.HttpRequest = httpRequest;
             return this;
         }
 
@@ -303,14 +308,23 @@
         {
             return this.Controller;
         }
-
+        
         /// <summary>
-        /// Gets the HTTP configuration used in the testing.
+        /// Gets the HTTP request message with which the action will be tested.
         /// </summary>
-        /// <returns>Instance of HttpConfiguration.</returns>
-        public HttpRequest AndProvideTheHttpRequestMessage()
+        /// <returns>HttpRequest from the tested controller.</returns>
+        public HttpRequest AndProvideTheHttpRequest()
         {
             return this.HttpRequest;
+        }
+
+        /// <summary>
+        /// Gets the HTTP context with which the action will be tested.
+        /// </summary>
+        /// <returns>HttpContext from the tested controller.</returns>
+        public HttpContext AndProvideTheHttpContext()
+        {
+            return this.HttpContext;
         }
 
         private void BuildControllerIfNotExists()

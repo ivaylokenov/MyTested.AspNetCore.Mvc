@@ -22,7 +22,14 @@
         /// </summary>
         /// <returns>Controller test builder.</returns>
         IControllerTestBuilder ShouldHave();
-        
+
+        /// <summary>
+        /// Sets the HTTP context for the current test case.
+        /// </summary>
+        /// <param name="httpContext">Instance of HttpContext.</param>
+        /// <returns>The same controller builder.</returns>
+        IAndControllerBuilder<TController> WithHttpContext(HttpContext httpContext);
+
         /// <summary>
         /// Adds HTTP request message to the tested controller.
         /// </summary>
@@ -109,15 +116,21 @@
         IVoidActionResultTestBuilder CallingAsync(Expression<Func<TController, Task>> actionCall);
 
         /// <summary>
-        /// Gets ASP.NET MVC 6 controller instance to be tested.
+        /// Gets ASP.NET MVC controller instance to be tested.
         /// </summary>
-        /// <returns>Instance of the ASP.NET MVC 6 controller.</returns>
+        /// <returns>Instance of the ASP.NET MVC controller.</returns>
         TController AndProvideTheController();
-        
+
         /// <summary>
-        /// Gets the HTTP request message used in the testing.
+        /// Gets the HTTP request message with which the action will be tested.
         /// </summary>
-        /// <returns>Instance of HttpRequestMessage.</returns>
-        HttpRequest AndProvideTheHttpRequestMessage();
+        /// <returns>HttpRequest from the tested controller.</returns>
+        HttpRequest AndProvideTheHttpRequest();
+
+        /// <summary>
+        /// Gets the HTTP context with which the action will be tested.
+        /// </summary>
+        /// <returns>HttpContext from the tested controller.</returns>
+        HttpContext AndProvideTheHttpContext();
     }
 }

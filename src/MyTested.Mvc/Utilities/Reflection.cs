@@ -276,7 +276,7 @@
         /// <param name="expected">Expected object.</param>
         /// <param name="actual">Actual object.</param>
         /// <returns>True or false.</returns>
-        /// <remarks>This method is used for the route testing. Since the ASP.NET MVC 6 model binder creates new instances, circular references are not checked.</remarks>
+        /// <remarks>This method is used for the route testing. Since the ASP.NET MVC model binder creates new instances, circular references are not checked.</remarks>
         public static bool AreDeeplyEqual(object expected, object actual)
         {
             if (expected == null && actual == null)
@@ -355,7 +355,7 @@
         /// <param name="expected">Expected object.</param>
         /// <param name="actual">Actual object.</param>
         /// <returns>True or false.</returns>
-        /// <remarks>This method is used for the route testing. Since the ASP.NET MVC 6 model binder creates new instances, circular references are not checked.</remarks>
+        /// <remarks>This method is used for the route testing. Since the ASP.NET MVC model binder creates new instances, circular references are not checked.</remarks>
         public static bool AreNotDeeplyEqual(object expected, object actual)
         {
             return !AreDeeplyEqual(expected, actual);

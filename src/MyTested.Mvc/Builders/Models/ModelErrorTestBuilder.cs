@@ -30,7 +30,7 @@
         }
 
         /// <summary>
-        /// Gets validated model state of the provided ASP.NET MVC 6 controller instance.
+        /// Gets validated model state of the provided ASP.NET MVC controller instance.
         /// </summary>
         /// <value>Model state dictionary containing all validation errors.</value>
         protected ModelStateDictionary ModelState { get; private set; }

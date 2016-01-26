@@ -18,7 +18,7 @@
         public MockedHttpContext()
         {
             this.httpResponse = new MockedHttpResponse(this, this.Features);
-            this.PrepareRequestServices();
+            PrepareRequestServices(this);
         }
 
         /// <summary>
@@ -27,7 +27,7 @@
         /// <value>Object of HttpResponse type.</value>
         public override HttpResponse Response => this.httpResponse;
 
-        private void PrepareRequestServices()
+        internal static void PrepareRequestServices(HttpContext httpContext)
         {
             if (!TestServiceProvider.IsAvailable)
             {
@@ -36,7 +36,7 @@
             
             using (var feature = new MockedRequestServicesFeature(TestServiceProvider.Current))
             {
-                this.Features.Set<IServiceProvidersFeature>(feature);
+                httpContext.Features.Set<IServiceProvidersFeature>(feature);
             }
         }
     }
