@@ -12,7 +12,7 @@
     public class MockedHttpRequest : HttpRequest
     {
         private readonly IHeaderDictionary headerDictionary;
-        private readonly FormFileCollection formFileCollection;
+        private readonly FormFileCollection formFiles;
         private readonly Dictionary<string, string> cookieValues;
         private readonly Dictionary<string, StringValues> formValues;
         private readonly Dictionary<string, StringValues> queryValues;
@@ -22,7 +22,7 @@
         public MockedHttpRequest()
         {
             this.headerDictionary = new HeaderDictionary();
-            this.formFileCollection = new FormFileCollection();
+            this.formFiles = new FormFileCollection();
             this.cookieValues = new Dictionary<string, string>();
             this.formValues = new Dictionary<string, StringValues>();
             this.queryValues = new Dictionary<string, StringValues>();
@@ -72,9 +72,24 @@
             this.cookieValues[name] = value;
         }
 
+        public void AddFormField(string name, string value)
+        {
+            this.formValues.Add(name, value);
+        }
+
+        public void AddFormFile(IFormFile file)
+        {
+            this.formFiles.Add(file);
+        }
+
+        public void AddQueryValue(string name, string value)
+        {
+            this.queryValues.Add(name, value);
+        }
+
         public HttpRequest Initialize()
         {
-            this.Form = new FormCollection(this.formValues, this.formFileCollection);
+            this.Form = new FormCollection(this.formValues, this.formFiles);
             this.Cookies = new RequestCookieCollection(this.cookieValues);
             this.Query = new QueryCollection(this.queryValues);
             this.formFeature = new FormFeature(this.Form);

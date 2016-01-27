@@ -104,5 +104,16 @@
         {
             return this.MockedUri;
         }
+
+        internal Uri GetUri()
+        {
+            var uriBuilder = new SystemUriBuilder(
+                this.MockedUri.Scheme,
+                this.MockedUri.Host,
+                this.MockedUri.Port,
+                this.MockedUri.AbsolutePath);
+
+            return uriBuilder.Uri;
+        }
     }
 }

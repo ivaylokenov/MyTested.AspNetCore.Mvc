@@ -6,7 +6,7 @@
     using Internal;
 
     /// <summary>
-    /// Used for testing URI location in a created result.
+    /// Used for testing URI location in an action result.
     /// </summary>
     public class MockedUriTestBuilder : MockedUriBuilder
     {

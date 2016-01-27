@@ -1,7 +1,7 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.Uris
 {
     /// <summary>
-    /// Used for adding AndAlso() method to the the URI tests.
+    /// Used for adding AndAlso() method to the URI tests.
     /// </summary>
     public interface IAndUriTestBuilder : IUriTestBuilder
     {
