@@ -12,7 +12,6 @@
     using System.Linq;
     using Internal.Extensions;
     using Microsoft.AspNet.Http;
-    using Microsoft.AspNet.Http.Features.Internal;
     using Exceptions;
 
     /// <summary>
@@ -27,7 +26,10 @@
         /// </summary>
         public HttpRequestBuilder()
         {
-            this.request = new MockedHttpRequest();
+            this.request = new MockedHttpRequest
+            {
+                Scheme = "http"
+            };
         }
 
         /// <summary>
@@ -118,6 +120,17 @@
         public IAndHttpRequestBuilder WithFormField(string name, IEnumerable<string> values)
         {
             return this.WithFormField(name, new StringValues(values.ToArray()));
+        }
+
+        /// <summary>
+        /// Adds form field to the built HTTP request.
+        /// </summary>
+        /// <param name="name">Name of the form field.</param>
+        /// <param name="values">Collection of values for the form field.</param>
+        /// <returns>The same HTTP request builder.</returns>
+        public IAndHttpRequestBuilder WithFormField(string name, params string[] values)
+        {
+            return this.WithFormField(name, values.AsEnumerable());
         }
 
         /// <summary>
@@ -225,6 +238,17 @@
         /// Adds header to the built HTTP request.
         /// </summary>
         /// <param name="name">Name of the header.</param>
+        /// <param name="values">Collection of values for the header.</param>
+        /// <returns>The same HTTP request builder.</returns>
+        public IAndHttpRequestBuilder WithHeader(string name, params string[] values)
+        {
+            return this.WithHeader(name, values.AsEnumerable());
+        }
+
+        /// <summary>
+        /// Adds header to the built HTTP request.
+        /// </summary>
+        /// <param name="name">Name of the header.</param>
         /// <param name="values">Collection of string values for the header.</param>
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithHeader(string name, StringValues values)
@@ -326,7 +350,7 @@
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithPathBase(string pathBase)
         {
-            return this.WithPathBase(pathBase);
+            return this.WithPathBase(new PathString(pathBase));
         }
 
         /// <summary>
@@ -372,6 +396,17 @@
         public IAndHttpRequestBuilder WithQuery(string name, IEnumerable<string> values)
         {
             return this.WithQuery(name, new StringValues(values.ToArray()));
+        }
+
+        /// <summary>
+        /// Adds query value to the built HTTP request.
+        /// </summary>
+        /// <param name="name">Name of the query.</param>
+        /// <param name="values">Collection of values for the query.</param>
+        /// <returns>The same HTTP request builder.</returns>
+        public IAndHttpRequestBuilder WithQuery(string name, params string[] values)
+        {
+            return this.WithQuery(name, values.AsEnumerable());
         }
 
         /// <summary>
@@ -426,7 +461,7 @@
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithQueryString(string queryString)
         {
-            return this.WithQueryString(queryString);
+            return this.WithQueryString(new QueryString(queryString));
         }
 
         /// <summary>
@@ -484,7 +519,8 @@
             return this.WithHost(HostString.FromUriComponent(location))
                 .WithPath(PathString.FromUriComponent(location))
                 .WithPathBase(PathString.FromUriComponent(location))
-                .WithQueryString(QueryString.FromUriComponent(location));
+                .WithQueryString(QueryString.FromUriComponent(location))
+                .WithScheme(location.Scheme);
         }
 
         /// <summary>
@@ -509,9 +545,53 @@
             return this;
         }
 
-        internal void ApplyTo(HttpRequest request)
+        internal void ApplyTo(HttpRequest httpRequest)
         {
+            this.request.Initialize();
 
+            httpRequest.Body = this.request.Body;
+            httpRequest.ContentLength = this.request.ContentLength;
+            httpRequest.ContentType = this.request.ContentType;
+            httpRequest.Method = this.request.Method;
+            httpRequest.Protocol = this.request.Protocol;
+            httpRequest.Scheme = this.request.Scheme;
+
+            if (this.request.Host.HasValue)
+            {
+                httpRequest.Host = this.request.Host;
+            }
+
+            if (this.request.Path.HasValue)
+            {
+                httpRequest.Path = this.request.Path;
+            }
+
+            if (this.request.PathBase.HasValue)
+            {
+                httpRequest.PathBase = this.request.PathBase;
+            }
+
+            if (this.request.QueryString.HasValue)
+            {
+                httpRequest.QueryString = this.request.QueryString;
+            }
+
+            if (this.request.Cookies.Any())
+            {
+                httpRequest.Cookies = this.request.Cookies;
+            }
+
+            if (this.request.Form.Any())
+            {
+                httpRequest.Form = this.request.Form;
+            }
+
+            if (this.request.Query.Any())
+            {
+                httpRequest.Query = this.request.Query;
+            }
+            
+            this.request.Headers.ForEach(h => httpRequest.Headers.Add(h));
         }
 
         private void ThrowNewInvalidHttpRequestMessageException(string propertyName, string expectedValue, string actualValue)

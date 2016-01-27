@@ -70,6 +70,14 @@
         /// <param name="values">Collection of values for the form field.</param>
         /// <returns>The same HTTP request builder.</returns>
         IAndHttpRequestBuilder WithFormField(string name, IEnumerable<string> values);
+        
+        /// <summary>
+        /// Adds form field to the built HTTP request.
+        /// </summary>
+        /// <param name="name">Name of the form field.</param>
+        /// <param name="values">Collection of values for the form field.</param>
+        /// <returns>The same HTTP request builder.</returns>
+        IAndHttpRequestBuilder WithFormField(string name, params string[] values);
 
         /// <summary>
         /// Adds form field to the built HTTP request.
@@ -136,6 +144,14 @@
         /// <param name="values">Collection of values for the header.</param>
         /// <returns>The same HTTP request builder.</returns>
         IAndHttpRequestBuilder WithHeader(string name, IEnumerable<string> values);
+
+        /// <summary>
+        /// Adds header to the built HTTP request.
+        /// </summary>
+        /// <param name="name">Name of the header.</param>
+        /// <param name="values">Collection of values for the header.</param>
+        /// <returns>The same HTTP request builder.</returns>
+        IAndHttpRequestBuilder WithHeader(string name, params string[] values);
 
         /// <summary>
         /// Adds header to the built HTTP request.
@@ -237,6 +253,14 @@
         /// <param name="values">Collection of values for the query.</param>
         /// <returns>The same HTTP request builder.</returns>
         IAndHttpRequestBuilder WithQuery(string name, IEnumerable<string> values);
+
+        /// <summary>
+        /// Adds query value to the built HTTP request.
+        /// </summary>
+        /// <param name="name">Name of the query.</param>
+        /// <param name="values">Collection of values for the query.</param>
+        /// <returns>The same HTTP request builder.</returns>
+        IAndHttpRequestBuilder WithQuery(string name, params string[] values);
 
         /// <summary>
         /// Adds query value to the built HTTP request.

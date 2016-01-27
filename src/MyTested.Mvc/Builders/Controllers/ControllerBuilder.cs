@@ -25,6 +25,8 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Options;
     using Utilities;
+    using Contracts.Http;
+    using Http;
 
     /// <summary>
     /// Used for building the action which will be tested.
@@ -71,9 +73,9 @@
             }
         }
 
-        private HttpRequest HttpRequest { get; set; }
+        private MockedHttpContext HttpContext { get; set; }
 
-        private HttpContext HttpContext { get; set; }
+        private HttpRequest HttpRequest => this.HttpContext.Request;
 
         private IServiceProvider Services => this.HttpContext.RequestServices;
 
@@ -84,12 +86,7 @@
         /// <returns>The same controller builder.</returns>
         public IAndControllerBuilder<TController> WithHttpContext(HttpContext httpContext)
         {
-            this.HttpContext = httpContext;
-            if (this.HttpContext.RequestServices == null)
-            {
-                MockedHttpContext.PrepareRequestServices(this.HttpContext);
-            }
-
+            this.HttpContext = new MockedHttpContext(httpContext);
             return this;
         }
 
@@ -100,7 +97,20 @@
         /// <returns>The same controller builder.</returns>
         public IAndControllerBuilder<TController> WithHttpRequest(HttpRequest httpRequest)
         {
-            this.HttpRequest = httpRequest;
+            this.HttpContext.CustomRequest = httpRequest;
+            return this;
+        }
+
+        /// <summary>
+        /// Adds HTTP request to the tested controller by using builder.
+        /// </summary>
+        /// <param name="httpRequestBuilder">HTTP request builder.</param>
+        /// <returns>The same controller builder.</returns>
+        public IAndControllerBuilder<TController> WithHttpRequest(Action<IHttpRequestBuilder> httpRequestBuilder)
+        {
+            var newHttpRequestBuilder = new HttpRequestBuilder();
+            httpRequestBuilder(newHttpRequestBuilder);
+            newHttpRequestBuilder.ApplyTo(this.HttpRequest);
             return this;
         }
 
@@ -308,14 +318,14 @@
         {
             return this.Controller;
         }
-        
+
         /// <summary>
-        /// Gets the HTTP request message with which the action will be tested.
+        /// Gets the HTTP request with which the action will be tested.
         /// </summary>
         /// <returns>HttpRequest from the tested controller.</returns>
         public HttpRequest AndProvideTheHttpRequest()
         {
-            return this.HttpRequest;
+            return this.Controller.Request;
         }
 
         /// <summary>
@@ -324,7 +334,7 @@
         /// <returns>HttpContext from the tested controller.</returns>
         public HttpContext AndProvideTheHttpContext()
         {
-            return this.HttpContext;
+            return this.Controller.HttpContext;
         }
 
         private void BuildControllerIfNotExists()
@@ -403,7 +413,7 @@
         private void PrepareController()
         {
             var options = this.Services.GetRequiredService<IOptions<MvcOptions>>().Value;
-
+            
             var controllerContext = new ControllerContext
             {
                 HttpContext = this.HttpContext,

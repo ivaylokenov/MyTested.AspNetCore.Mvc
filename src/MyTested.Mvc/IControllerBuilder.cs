@@ -9,7 +9,7 @@
     using Builders.Contracts.Controllers;
     using Microsoft.AspNet.Http;
     using Microsoft.AspNet.Mvc;
-
+    using Builders.Contracts.Http;
     /// <summary>
     /// Used for building the action which will be tested.
     /// </summary>
@@ -36,7 +36,14 @@
         /// <param name="requestMessage">Instance of HttpRequestMessage.</param>
         /// <returns>The same controller builder.</returns>
         IAndControllerBuilder<TController> WithHttpRequest(HttpRequest requestMessage);
-        
+
+        /// <summary>
+        /// Adds HTTP request to the tested controller by using builder.
+        /// </summary>
+        /// <param name="httpRequestBuilder">HTTP request builder.</param>
+        /// <returns>The same controller builder.</returns>
+        IAndControllerBuilder<TController> WithHttpRequest(Action<IHttpRequestBuilder> httpRequestBuilder);
+
         /// <summary>
         /// Tries to resolve constructor dependency of given type.
         /// </summary>
