@@ -1,24 +1,24 @@
-﻿namespace MyTested.Mvc.Tests.BuildersTests.ActionsTests.ShouldReturn
+﻿namespace MyTested.Mvc.Tests.BuildersTests.ActionsTests.ShouldReturnTests
 {
     using Exceptions;
     using Setups;
     using Setups.Controllers;
     using Xunit;
 
-    public class ShouldReturnChallengeTests
+    public class ShouldReturnEmptyTests
     {
         [Fact]
-        public void ShouldReturnChallengeShouldNotThrowExceptionIfResultIsChallenge()
+        public void ShouldReturnEmptyShouldNotThrowExceptionWhenActionReturnsEmptyResult()
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.ChallengeResultAction())
+                .Calling(c => c.EmptyResultAction())
                 .ShouldReturn()
-                .Challenge();
+                .Empty();
         }
 
         [Fact]
-        public void ShouldReturnChallengeShouldThrowExceptionIfResultIsNotChallenge()
+        public void ShouldReturnEmptyShouldThrowExceptionWhenActionDoesNotReturnEmptyResult()
         {
             Test.AssertException<ActionResultAssertionException>(
                 () =>
@@ -27,9 +27,9 @@
                         .Controller<MvcController>()
                         .Calling(c => c.BadRequestAction())
                         .ShouldReturn()
-                        .Challenge();
+                        .Empty();
                 },
-                "When calling BadRequestAction action in MvcController expected action result to be ChallengeResult, but instead received BadRequestResult.");
+                "When calling BadRequestAction action in MvcController expected action result to be EmptyResult, but instead received BadRequestResult.");
         }
     }
 }

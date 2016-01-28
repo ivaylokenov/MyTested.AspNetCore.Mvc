@@ -524,6 +524,16 @@
             return this.Ok(this.responseModel);
         }
 
+        public IActionResult WithRequest()
+        {
+            if (this.Request.Form.Any(f => f.Key == "Test"))
+            {
+                return Ok();
+            }
+
+            return this.HttpBadRequest();
+        }
+
         public IActionResult ModelStateCheck(RequestModel model)
         {
             if (ModelState.IsValid)

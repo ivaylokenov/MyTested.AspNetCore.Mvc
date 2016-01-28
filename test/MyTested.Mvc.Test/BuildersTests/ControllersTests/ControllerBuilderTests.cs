@@ -13,7 +13,9 @@
     using Setups.Models;
     using Setups.Services;
     using Xunit;
-
+    using Microsoft.AspNet.Http.Internal;
+    using Microsoft.Extensions.DependencyInjection;
+    using Internal.Http;
     public class ControllerBuilderTests
     {
         [Fact]
@@ -380,7 +382,62 @@
             Assert.NotNull(controller.ControllerContext.ActionDescriptor);
             Assert.Equal("OkResultAction", controller.ControllerContext.ActionDescriptor.Name);
         }
+
+        [Fact]
+        public void WithHttpContextShouldPopulateCustomHttpContext()
+        {
+            var httpContext = new DefaultHttpContext();
+            httpContext.Request.Scheme = "Custom";
+
+            var controllerBuilder = MyMvc
+                .Controller<MvcController>()
+                .WithHttpContext(httpContext);
+
+            var controller = controllerBuilder
+                .AndProvideTheController();
+
+            var setHttpContext = controllerBuilder
+                .AndProvideTheHttpContext();
+
+            Assert.Equal("Custom", controller.HttpContext.Request.Scheme);
+            Assert.Equal("Custom", setHttpContext.Request.Scheme);
+            Assert.Same(httpContext.Response, controller.HttpContext.Response);
+            Assert.Same(httpContext.Response, setHttpContext.Response);
+            Assert.Same(httpContext.Items, controller.HttpContext.Items);
+            Assert.Same(httpContext.Items, setHttpContext.Items);
+            Assert.Same(httpContext.Features, controller.HttpContext.Features);
+            Assert.Same(httpContext.Features, setHttpContext.Features);
+            Assert.Same(httpContext.RequestServices, controller.HttpContext.RequestServices);
+            Assert.Same(httpContext.RequestServices, setHttpContext.RequestServices);
+            // Assert.Same(httpContext.Session, controller.HttpContext.Session);
+            // Assert.Same(httpContext.Session, setHttpContext.Session);
+            Assert.Same(httpContext.TraceIdentifier, controller.HttpContext.TraceIdentifier);
+            Assert.Same(httpContext.TraceIdentifier, setHttpContext.TraceIdentifier);
+            Assert.Same(httpContext.User, controller.HttpContext.User);
+            Assert.Same(httpContext.User, setHttpContext.User);
+        }
         
+        [Fact]
+        public void WithRequestShouldNotWorkWithDefaultRequestAction()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.WithRequest())
+                .ShouldReturn()
+                .HttpBadRequest();
+        }
+
+        [Fact]
+        public void WithRequestShouldWorkWithSetRequestAction()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .WithHttpRequest(req => req.WithFormField("Test", "TestValue"))
+                .Calling(c => c.WithRequest())
+                .ShouldReturn()
+                .Ok();
+        }
+
         private void CheckActionResultTestBuilder<TActionResult>(
             IActionResultTestBuilder<TActionResult> actionResultTestBuilder,
             string expectedActionName)

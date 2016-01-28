@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Tests.BuildersTests.ActionsTests.ShouldReturn
+﻿namespace MyTested.Mvc.Tests.BuildersTests.ActionsTests.ShouldReturnTests
 {
     using Exceptions;
     using Microsoft.AspNet.Mvc;
