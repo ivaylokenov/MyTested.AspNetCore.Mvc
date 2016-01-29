@@ -54,19 +54,13 @@
         /// Gets the action name which will be tested.
         /// </summary>
         /// <returns>Action name to be tested.</returns>
-        public string AndProvideTheActionName()
-        {
-            return this.ActionName;
-        }
+        public string AndProvideTheActionName() => this.ActionName;
 
         /// <summary>
         /// Gets the action attributes on the called action.
         /// </summary>
         /// <returns>IEnumerable of object representing the attributes or null, if no attributes were collected on the action.</returns>
-        public IEnumerable<object> AndProvideTheActionAttributes()
-        {
-            return this.ActionLevelAttributes;
-        }
+        public IEnumerable<object> AndProvideTheActionAttributes() => this.ActionLevelAttributes;
 
         /// <summary>
         /// Tests whether the tested action's model state is valid.

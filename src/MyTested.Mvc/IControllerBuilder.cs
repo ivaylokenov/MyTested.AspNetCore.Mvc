@@ -7,9 +7,10 @@
     using Builders.Contracts.Actions;
     using Builders.Contracts.Authentication;
     using Builders.Contracts.Controllers;
+    using Builders.Contracts.Http;
     using Microsoft.AspNet.Http;
     using Microsoft.AspNet.Mvc;
-    using Builders.Contracts.Http;
+
     /// <summary>
     /// Used for building the action which will be tested.
     /// </summary>

@@ -35,28 +35,18 @@
         /// <typeparam name="TModel">Type of model object.</typeparam>
         /// <param name="model">Model object.</param>
         /// <returns>Model details test builder.</returns>
-        public IModelDetailsTestBuilder<TModel> WithModel<TModel>(TModel model)
-        {
-            return this.WithResponseModel(model);
-        }
+        public IModelDetailsTestBuilder<TModel> WithModel<TModel>(TModel model) => this.WithResponseModel(model);
 
         /// <summary>
         /// Tests whether view result contains model object of the provided type.
         /// </summary>
         /// <typeparam name="TModel">Type of model object.</typeparam>
         /// <returns>Model details test builder.</returns>
-        public IModelDetailsTestBuilder<TModel> WithModelOfType<TModel>()
-        {
-            return this.WithResponseModelOfType<TModel>();
-        }
-        
+        public IModelDetailsTestBuilder<TModel> WithModelOfType<TModel>() => this.WithResponseModelOfType<TModel>();
         /// <summary>
         /// Gets the action result which will be tested.
         /// </summary>
         /// <returns>Action result to be tested.</returns>
-        public new ActionResult AndProvideTheActionResult()
-        {
-            return this.ActionResult;
-        }
+        public new ActionResult AndProvideTheActionResult() => this.ActionResult;
     }
 }

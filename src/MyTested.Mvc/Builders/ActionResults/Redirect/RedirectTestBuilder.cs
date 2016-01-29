@@ -189,9 +189,7 @@
         /// <param name="routeValues">Expected route value dictionary.</param>
         /// <returns>The same redirect test builder.</returns>
         public IAndRedirectTestBuilder WithRouteValues(object routeValues)
-        {
-            return this.WithRouteValues(new RouteValueDictionary(routeValues));
-        }
+            => this.WithRouteValues(new RouteValueDictionary(routeValues));
 
         /// <summary>
         /// Tests whether redirect result contains the provided route values.
@@ -245,10 +243,7 @@
         /// <param name="actionCall">Method call expression indicating the expected redirect action.</param>
         /// <returns>The same redirect test builder.</returns>
         public IAndRedirectTestBuilder To<TController>(Expression<Func<TController, object>> actionCall)
-            where TController : Controller
-        {
-            return this.RedirectTo<TController>(actionCall);
-        }
+            where TController : Controller => this.RedirectTo<TController>(actionCall);
 
         /// <summary>
         /// Tests whether redirect result redirects to specific action.
@@ -257,28 +252,19 @@
         /// <param name="actionCall">Method call expression indicating the expected redirect action.</param>
         /// <returns>The same redirect test builder.</returns>
         public IAndRedirectTestBuilder To<TController>(Expression<Action<TController>> actionCall)
-            where TController : Controller
-        {
-            return this.RedirectTo<TController>(actionCall);
-        }
+            where TController : Controller => this.RedirectTo<TController>(actionCall);
 
         /// <summary>
         /// AndAlso method for better readability when chaining redirect result tests.
         /// </summary>
         /// <returns>Redirect result test builder.</returns>
-        public IRedirectTestBuilder AndAlso()
-        {
-            return this;
-        }
+        public IRedirectTestBuilder AndAlso() => this;
 
         /// <summary>
         /// Gets the action result which will be tested.
         /// </summary>
         /// <returns>Action result to be tested.</returns>
-        public new ActionResult AndProvideTheActionResult()
-        {
-            return this.ActionResult;
-        }
+        public new ActionResult AndProvideTheActionResult() => this.ActionResult;
 
         private TExpectedRedirectResult GetRedirectResult<TExpectedRedirectResult>(string containment)
             where TExpectedRedirectResult : class

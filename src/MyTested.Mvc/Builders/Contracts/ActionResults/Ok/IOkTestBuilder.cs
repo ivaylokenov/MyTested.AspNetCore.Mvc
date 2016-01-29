@@ -4,8 +4,8 @@
     using System.Net;
     using Base;
     using Microsoft.AspNet.Mvc;
-    using Microsoft.Net.Http.Headers;
     using Microsoft.AspNet.Mvc.Formatters;
+    using Microsoft.Net.Http.Headers;
 
     /// <summary>
     /// Used for testing ok result.

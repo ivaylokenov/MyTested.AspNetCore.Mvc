@@ -9,7 +9,7 @@
     /// Base class for all test builders with model.
     /// </summary>
     /// <typeparam name="TModel">Model returned from action result.</typeparam>
-    public abstract class BaseTestBuilderWithModel<TModel> : BaseTestBuilderWithCaughtException, IBaseTestBuilderWithModel<TModel>
+    public abstract class BaseTestBuilderWithModel<TModel> : BaseTestBuilderWithInvokedAction, IBaseTestBuilderWithModel<TModel>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseTestBuilderWithModel{TModel}" /> class.

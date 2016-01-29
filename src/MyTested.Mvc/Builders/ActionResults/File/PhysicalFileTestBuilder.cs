@@ -33,9 +33,7 @@
         /// <param name="contentType">Content type as string.</param>
         /// <returns>The same file test builder.</returns>
         public IAndPhysicalFileTestBuilder WithContentType(string contentType)
-        {
-            return this.WithContentType(new MediaTypeHeaderValue(contentType));
-        }
+            => this.WithContentType(new MediaTypeHeaderValue(contentType));
 
         /// <summary>
         /// Tests whether file result has the same content type as the provided one.
@@ -82,9 +80,6 @@
         /// AndAlso method for better readability when chaining physical file result tests.
         /// </summary>
         /// <returns>Physical file result test builder.</returns>
-        public IPhysicalFileTestBuilder AndAlso()
-        {
-            return this;
-        }
+        public IPhysicalFileTestBuilder AndAlso() => this;
     }
 }

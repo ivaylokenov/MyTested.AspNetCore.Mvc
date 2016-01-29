@@ -47,9 +47,7 @@
         /// <param name="statusCode">Status code.</param>
         /// <returns>The same view test builder.</returns>
         public IAndViewTestBuilder WithStatusCode(int statusCode)
-        {
-            return this.WithStatusCode((HttpStatusCode)statusCode);
-        }
+            => this.WithStatusCode((HttpStatusCode)statusCode);
 
         /// <summary>
         /// Tests whether view result has the same status code as the provided HttpStatusCode.
@@ -72,9 +70,7 @@
         /// <param name="contentType">ContentType type as string.</param>
         /// <returns>The same view test builder.</returns>
         public IAndViewTestBuilder WithContentType(string contentType)
-        {
-            return this.WithContentType(new MediaTypeHeaderValue(contentType));
-        }
+            => this.WithContentType(new MediaTypeHeaderValue(contentType));
 
         /// <summary>
         /// Tests whether view result has the same content type as the provided MediaTypeHeaderValue.
@@ -136,10 +132,7 @@
         /// AndAlso method for better readability when chaining view result tests.
         /// </summary>
         /// <returns>View result test builder.</returns>
-        public IViewTestBuilder AndAlso()
-        {
-            return this;
-        }
+        public IViewTestBuilder AndAlso() => this;
 
         /// <summary>
         /// Throws new view result assertion exception for the provided property name, expected value and actual value.

@@ -1,7 +1,18 @@
 <StyleCopSettings Version="105">
   <GlobalSettings>
     <CollectionProperty Name="RecognizedWords">
+      <Value>avi</Value>
+      <Value>css</Value>
+      <Value>js</Value>
       <Value>Json</Value>
+      <Value>mp</Value>
+      <Value>ogg</Value>
+      <Value>png</Value>
+      <Value>qt</Value>
+      <Value>quicktime</Value>
+      <Value>vorbis</Value>
+      <Value>x-javascript</Value>
+      <Value>x-www-form-urlencoded</Value>
     </CollectionProperty>
   </GlobalSettings>
   <Analyzers>

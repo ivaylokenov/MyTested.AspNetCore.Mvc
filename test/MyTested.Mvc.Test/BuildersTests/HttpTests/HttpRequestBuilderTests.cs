@@ -1,10 +1,10 @@
 ﻿namespace MyTested.Mvc.Tests.BuildersTests.HttpTests
 {
+    using System.Collections.Generic;
+    using System.IO;
     using Microsoft.AspNet.Http.Features.Internal;
     using Microsoft.AspNet.Http.Internal;
     using Setups.Controllers;
-    using System.Collections.Generic;
-    using System.IO;
     using Xunit;
 
     public class HttpRequestBuilderTests

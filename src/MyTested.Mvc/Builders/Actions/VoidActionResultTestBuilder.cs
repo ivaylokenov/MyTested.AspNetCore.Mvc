@@ -13,7 +13,7 @@
     /// <summary>
     /// Used for testing void actions.
     /// </summary>
-    public class VoidActionResultTestBuilder : BaseTestBuilderWithCaughtException, IVoidActionResultTestBuilder
+    public class VoidActionResultTestBuilder : BaseTestBuilderWithInvokedAction, IVoidActionResultTestBuilder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="VoidActionResultTestBuilder" /> class.
@@ -35,7 +35,7 @@
         /// Tests whether action result is void.
         /// </summary>
         /// <returns>Base test builder.</returns>
-        public IBaseTestBuilderWithCaughtException ShouldReturnEmpty()
+        public IBaseTestBuilderWithInvokedAction ShouldReturnEmpty()
         {
             CommonValidator.CheckForException(this.CaughtException);
             return this.NewAndProvideTestBuilder();

@@ -528,7 +528,7 @@
         {
             if (this.Request.Form.Any(f => f.Key == "Test"))
             {
-                return Ok();
+                return this.Ok();
             }
 
             return this.HttpBadRequest();

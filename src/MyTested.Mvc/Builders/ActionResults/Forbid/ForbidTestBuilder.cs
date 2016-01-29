@@ -70,9 +70,7 @@
         /// <param name="authenticationSchemes">Expected authentication schemes as string parameters.</param>
         /// <returns>The same forbid test builder.</returns>
         public IAndForbidTestBuilder ContainingAuthenticationSchemes(params string[] authenticationSchemes)
-        {
-            return this.ContainingAuthenticationSchemes(authenticationSchemes.AsEnumerable());
-        }
+            => this.ContainingAuthenticationSchemes(authenticationSchemes.AsEnumerable());
 
         /// <summary>
         /// Tests whether forbid result has the provided authentication properties.
@@ -109,10 +107,7 @@
         /// AndAlso method for better readability when chaining forbid tests.
         /// </summary>
         /// <returns>The same forbid test builder.</returns>
-        public IForbidTestBuilder AndAlso()
-        {
-            return this;
-        }
+        public IForbidTestBuilder AndAlso() => this;
 
         private void ThrowNewForbidResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {

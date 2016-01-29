@@ -190,19 +190,13 @@
         /// AndAlso method for better readability when chaining HTTP not found result tests.
         /// </summary>
         /// <returns>HTTP not found result test builder.</returns>
-        public IAndHttpNotFoundTestBuilder AndAlso()
-        {
-            return this;
-        }
+        public IAndHttpNotFoundTestBuilder AndAlso() => this;
 
         /// <summary>
         /// Gets the action result which will be tested.
         /// </summary>
         /// <returns>Action result to be tested.</returns>
-        public new ActionResult AndProvideTheActionResult()
-        {
-            return this.ActionResult;
-        }
+        public new ActionResult AndProvideTheActionResult() => this.ActionResult;
 
         /// <summary>
         /// Throws new HTTP not found result assertion exception for the provided property name, expected value and actual value.

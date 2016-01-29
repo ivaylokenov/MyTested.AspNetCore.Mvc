@@ -11,7 +11,7 @@
     /// Used for testing specific exception messages.
     /// </summary>
     public class ExceptionMessageTestBuilder
-        : BaseTestBuilderWithCaughtException, IExceptionMessageTestBuilder
+        : BaseTestBuilderWithInvokedAction, IExceptionMessageTestBuilder
     {
         private readonly IAndExceptionTestBuilder exceptionTestBuilder;
         private readonly string actualMessage;

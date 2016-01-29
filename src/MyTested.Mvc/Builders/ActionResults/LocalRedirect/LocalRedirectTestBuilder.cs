@@ -76,15 +76,12 @@
 
             return this;
         }
-        
+
         /// <summary>
         /// AndAlso method for better readability when chaining local redirect result tests.
         /// </summary>
         /// <returns>Local redirect result test builder.</returns>
-        public ILocalRedirectTestBuilder AndAlso()
-        {
-            return this;
-        }
+        public ILocalRedirectTestBuilder AndAlso() => this;
         
         private void ThrowNewRedirectResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {

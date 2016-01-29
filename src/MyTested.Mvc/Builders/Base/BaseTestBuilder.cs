@@ -50,36 +50,24 @@
         /// Gets the controller on which the action is tested.
         /// </summary>
         /// <returns>ASP.NET MVC controller on which the action is tested.</returns>
-        public Controller AndProvideTheController()
-        {
-            return this.Controller;
-        }
+        public Controller AndProvideTheController() => this.Controller;
 
         /// <summary>
         /// Gets the HTTP request message with which the action will be tested.
         /// </summary>
         /// <returns>HttpRequest from the tested controller.</returns>
-        public HttpRequest AndProvideTheHttpRequest()
-        {
-            return this.Controller.Request;
-        }
+        public HttpRequest AndProvideTheHttpRequest() => this.Controller.Request;
 
         /// <summary>
         /// Gets the HTTP context with which the action will be tested.
         /// </summary>
         /// <returns>HttpContext from the tested controller.</returns>
-        public HttpContext AndProvideTheHttpContext()
-        {
-            return this.Controller.HttpContext;
-        }
+        public HttpContext AndProvideTheHttpContext() => this.Controller.HttpContext;
 
         /// <summary>
         /// Gets the attributes on the tested controller.
         /// </summary>
         /// <returns>IEnumerable of object representing the attributes or null, if no attributes were collected on the controller.</returns>
-        public IEnumerable<object> AndProvideTheControllerAttributes()
-        {
-            return this.ControllerLevelAttributes;
-        }
+        public IEnumerable<object> AndProvideTheControllerAttributes() => this.ControllerLevelAttributes;
     }
 }

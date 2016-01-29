@@ -10,7 +10,9 @@
     using Contracts.Actions;
     using Contracts.Authentication;
     using Contracts.Controllers;
+    using Contracts.Http;
     using Exceptions;
+    using Http;
     using Internal;
     using Internal.Contracts;
     using Internal.Extensions;
@@ -25,8 +27,6 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Options;
     using Utilities;
-    using Contracts.Http;
-    using Http;
 
     /// <summary>
     /// Used for building the action which will be tested.

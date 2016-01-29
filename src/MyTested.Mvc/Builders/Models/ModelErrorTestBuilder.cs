@@ -10,7 +10,7 @@
     /// <summary>
     /// Used for testing the model errors.
     /// </summary>
-    public class ModelErrorTestBuilder : BaseTestBuilderWithCaughtException, IModelErrorTestBuilder
+    public class ModelErrorTestBuilder : BaseTestBuilderWithInvokedAction, IModelErrorTestBuilder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelErrorTestBuilder" /> class.
@@ -39,7 +39,7 @@
         /// Tests whether tested action's model state is valid.
         /// </summary>
         /// <returns>Base test builder.</returns>
-        public IBaseTestBuilderWithCaughtException ContainingNoModelStateErrors()
+        public IBaseTestBuilderWithInvokedAction ContainingNoModelStateErrors()
         {
             this.CheckValidModelState();
             return this.NewAndProvideTestBuilder();

@@ -5,28 +5,12 @@
     using System.Net;
     using Base;
     using Microsoft.AspNet.Http;
-    using Models;
 
     /// <summary>
-    /// Used for testing HTTP response message results.
+    /// Used for testing the HTTP response.
     /// </summary>
-    public interface IHttpResponseTestBuilder : IBaseTestBuilderWithCaughtException
+    public interface IHttpResponseTestBuilder : IBaseTestBuilderWithInvokedAction
     {
-        /// <summary>
-        /// Tests whether certain type of response model is returned from the HTTP response message object content.
-        /// </summary>
-        /// <typeparam name="TResponseModel">Type of the response model.</typeparam>
-        /// <returns>Builder for testing the response model errors.</returns>
-        IModelDetailsTestBuilder<TResponseModel> WithResponseModelOfType<TResponseModel>();
-
-        /// <summary>
-        /// Tests whether a deeply equal object to the provided one is returned from the HTTP response message object content.
-        /// </summary>
-        /// <typeparam name="TResponseModel">Type of the response model.</typeparam>
-        /// <param name="expectedModel">Expected model to be returned.</param>
-        /// <returns>Builder for testing the response model errors.</returns>
-        IModelDetailsTestBuilder<TResponseModel> WithResponseModel<TResponseModel>(TResponseModel expectedModel);
-        
         /// <summary>
         /// Tests whether the content of the HTTP response message is the provided string.
         /// </summary>
@@ -63,37 +47,7 @@
         /// <param name="headers">Dictionary containing response headers.</param>
         /// <returns>The same HTTP response message test builder.</returns>
         IAndHttpResponseTestBuilder ContainingHeaders(IDictionary<string, IEnumerable<string>> headers);
-
-        /// <summary>
-        /// Tests whether the HTTP response message contains content header with certain name.
-        /// </summary>
-        /// <param name="name">Name of expected content header.</param>
-        /// <returns>The same HTTP response message test builder.</returns>
-        IAndHttpResponseTestBuilder ContainingContentHeader(string name);
-
-        /// <summary>
-        /// Tests whether the HTTP response message contains content header with certain name and value.
-        /// </summary>
-        /// <param name="name">Name of expected content header.</param>
-        /// <param name="value">Value of expected content header.</param>
-        /// <returns>The same HTTP response message test builder.</returns>
-        IAndHttpResponseTestBuilder ContainingContentHeader(string name, string value);
-
-        /// <summary>
-        /// Tests whether the HTTP response message contains content header with certain name and collection of value.
-        /// </summary>
-        /// <param name="name">Name of expected content header.</param>
-        /// <param name="values">Collection of values in the expected content header.</param>
-        /// <returns>The same HTTP response message test builder.</returns>
-        IAndHttpResponseTestBuilder ContainingContentHeader(string name, IEnumerable<string> values);
-
-        /// <summary>
-        /// Tests whether the HTTP response message contains content headers provided by dictionary.
-        /// </summary>
-        /// <param name="headers">Dictionary containing content headers.</param>
-        /// <returns>The same HTTP response message test builder.</returns>
-        IAndHttpResponseTestBuilder ContainingContentHeaders(IDictionary<string, IEnumerable<string>> headers);
-
+        
         /// <summary>
         /// Tests whether HTTP response message status code is the same as the provided HttpStatusCode.
         /// </summary>

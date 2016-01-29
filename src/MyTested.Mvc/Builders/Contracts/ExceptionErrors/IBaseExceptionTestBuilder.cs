@@ -5,7 +5,7 @@
     /// <summary>
     /// Used for testing expected exception messages.
     /// </summary>
-    public interface IBaseExceptionTestBuilder : IBaseTestBuilderWithCaughtException
+    public interface IBaseExceptionTestBuilder : IBaseTestBuilderWithInvokedAction
     {
         /// <summary>
         /// Tests exception message using test builder.

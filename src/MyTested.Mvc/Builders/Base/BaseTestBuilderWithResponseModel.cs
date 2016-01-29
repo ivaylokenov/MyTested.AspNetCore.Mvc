@@ -235,9 +235,7 @@
         /// </summary>
         /// <param name="outputFormatters">Expected IOutputFormatter parameters.</param>
         protected void ValidateOutputFormatters(params IOutputFormatter[] outputFormatters)
-        {
-            this.ValidateOutputFormatters(outputFormatters.AsEnumerable());
-        }
+            => this.ValidateOutputFormatters(outputFormatters.AsEnumerable());
 
         /// <summary>
         /// When overridden in a derived class, it will be used to throw failed validation exception.

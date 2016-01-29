@@ -11,7 +11,7 @@
     /// <summary>
     /// Used for testing expected exceptions.
     /// </summary>
-    public class ExceptionTestBuilder : BaseTestBuilderWithCaughtException, IAndExceptionTestBuilder
+    public class ExceptionTestBuilder : BaseTestBuilderWithInvokedAction, IAndExceptionTestBuilder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ExceptionTestBuilder" /> class.

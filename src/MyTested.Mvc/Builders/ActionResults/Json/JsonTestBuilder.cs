@@ -40,9 +40,7 @@
         /// <param name="statusCode">Status code.</param>
         /// <returns>The same JSON test builder.</returns>
         public IAndJsonTestBuilder WithStatusCode(int statusCode)
-        {
-            return this.WithStatusCode((HttpStatusCode)statusCode);
-        }
+            => this.WithStatusCode((HttpStatusCode)statusCode);
 
         /// <summary>
         /// Tests whether JSON result has the same status code as the provided HttpStatusCode.
@@ -65,9 +63,7 @@
         /// <param name="contentType">ContentType type as string.</param>
         /// <returns>The same JSON test builder.</returns>
         public IAndJsonTestBuilder WithContentType(string contentType)
-        {
-            return this.WithContentType(new MediaTypeHeaderValue(contentType));
-        }
+            => this.WithContentType(new MediaTypeHeaderValue(contentType));
 
         /// <summary>
         /// Tests whether JSON result has the same content type as the provided MediaTypeHeaderValue.
@@ -89,9 +85,7 @@
         /// </summary>
         /// <returns>The same JSON test builder.</returns>
         public IAndJsonTestBuilder WithDefaulJsonSerializerSettings()
-        {
-            return this.WithJsonSerializerSettings(s => this.PopulateFullJsonSerializerSettingsTestBuilder(s));
-        }
+            => this.WithJsonSerializerSettings(s => this.PopulateFullJsonSerializerSettingsTestBuilder(s));
 
         /// <summary>
         /// Tests whether JSON result has the provided JSON serializer settings.
@@ -99,9 +93,7 @@
         /// <param name="jsonSerializerSettings">Expected JSON serializer settings to test with.</param>
         /// <returns>The same JSON test builder.</returns>
         public IAndJsonTestBuilder WithJsonSerializerSettings(JsonSerializerSettings jsonSerializerSettings)
-        {
-            return this.WithJsonSerializerSettings(s => this.PopulateFullJsonSerializerSettingsTestBuilder(s, jsonSerializerSettings));
-        }
+            => this.WithJsonSerializerSettings(s => this.PopulateFullJsonSerializerSettingsTestBuilder(s, jsonSerializerSettings));
 
         /// <summary>
         /// Tests whether JSON result has JSON serializer settings by using builder.
@@ -129,10 +121,7 @@
         /// AndAlso method for better readability when chaining JSON result tests.
         /// </summary>
         /// <returns>JSON result test builder.</returns>
-        public IJsonTestBuilder AndAlso()
-        {
-            return this;
-        }
+        public IJsonTestBuilder AndAlso() => this;
 
         /// <summary>
         /// Throws new JSON result assertion exception for the provided property name, expected value and actual value.
@@ -144,9 +133,7 @@
             => this.ThrowNewJsonResultAssertionException(propertyName, expectedValue, actualValue);
 
         private JsonSerializerSettings GetServiceDefaultSerializerSettings()
-        {
-            return TestServiceProvider.GetService<IOptions<MvcJsonOptions>>()?.Value?.SerializerSettings;
-        }
+            => TestServiceProvider.GetService<IOptions<MvcJsonOptions>>()?.Value?.SerializerSettings;
 
         private void PopulateFullJsonSerializerSettingsTestBuilder(
             IJsonSerializerSettingsTestBuilder jsonSerializerSettingsTestBuilder,

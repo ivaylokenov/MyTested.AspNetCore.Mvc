@@ -42,9 +42,7 @@
         /// <param name="statusCode">Status code.</param>
         /// <returns>The same view component test builder.</returns>
         public new IAndViewComponentTestBuilder WithStatusCode(int statusCode)
-        {
-            return this.WithStatusCode((HttpStatusCode)statusCode);
-        }
+            => this.WithStatusCode((HttpStatusCode)statusCode);
 
         /// <summary>
         /// Tests whether view component result has the same status code as the provided HttpStatusCode.
@@ -63,9 +61,7 @@
         /// <param name="contentType">ContentType type as string.</param>
         /// <returns>The same view component test builder.</returns>
         public new IAndViewComponentTestBuilder WithContentType(string contentType)
-        {
-            return this.WithContentType(new MediaTypeHeaderValue(contentType));
-        }
+            => this.WithContentType(new MediaTypeHeaderValue(contentType));
 
         /// <summary>
         /// Tests whether view component result has the same content type as the provided MediaTypeHeaderValue.
@@ -186,18 +182,13 @@
         /// <param name="arguments">Argument objects.</param>
         /// <returns>The same view component test builder.</returns>
         public IAndViewComponentTestBuilder WithArguments(params object[] arguments)
-        {
-            return this.WithArguments(arguments.AsEnumerable());
-        }
+            => this.WithArguments(arguments.AsEnumerable());
 
         /// <summary>
         /// AndAlso method for better readability when chaining view component result tests.
         /// </summary>
         /// <returns>The same view component test builder.</returns>
-        public new IViewComponentTestBuilder AndAlso()
-        {
-            return this;
-        }
+        public new IViewComponentTestBuilder AndAlso() => this;
 
         private object[] GetArguments()
         {

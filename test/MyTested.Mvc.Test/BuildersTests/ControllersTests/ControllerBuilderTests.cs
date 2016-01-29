@@ -7,15 +7,14 @@
     using Builders.Contracts.Actions;
     using Builders.Contracts.Base;
     using Exceptions;
+    using Microsoft.AspNet.Http.Internal;
     using Microsoft.AspNet.Mvc;
     using Setups;
     using Setups.Controllers;
     using Setups.Models;
     using Setups.Services;
     using Xunit;
-    using Microsoft.AspNet.Http.Internal;
-    using Microsoft.Extensions.DependencyInjection;
-    using Internal.Http;
+
     public class ControllerBuilderTests
     {
         [Fact]
@@ -449,7 +448,7 @@
             Assert.IsAssignableFrom<HttpOkResult>(actionResult);
         }
 
-        private void CheckActionName(IBaseTestBuilderWithCaughtException testBuilder, string expectedActionName)
+        private void CheckActionName(IBaseTestBuilderWithInvokedAction testBuilder, string expectedActionName)
         {
             var actionName = testBuilder.AndProvideTheActionName();
 

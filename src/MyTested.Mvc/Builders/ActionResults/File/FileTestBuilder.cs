@@ -45,10 +45,8 @@
         /// </summary>
         /// <param name="contentType">Content type as string.</param>
         /// <returns>The same file test builder.</returns>
-        public IAndFileTestBuilder WithContentType(string contentType)
-        {
-            return this.WithContentType(new MediaTypeHeaderValue(contentType));
-        }
+        public IAndFileTestBuilder WithContentType(string contentType) 
+            => this.WithContentType(new MediaTypeHeaderValue(contentType));
 
         /// <summary>
         /// Tests whether file result has the same content type as the provided one.
@@ -178,10 +176,7 @@
         /// AndAlso method for better readability when chaining file result tests.
         /// </summary>
         /// <returns>File result test builder.</returns>
-        public IFileTestBuilder AndAlso()
-        {
-            return this;
-        }
+        public IFileTestBuilder AndAlso() => this;
 
         private byte[] GetByteArrayFromStream(Stream stream)
         {

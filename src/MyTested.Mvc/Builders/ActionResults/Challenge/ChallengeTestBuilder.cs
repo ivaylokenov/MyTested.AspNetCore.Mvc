@@ -70,9 +70,7 @@
         /// <param name="authenticationSchemes">Expected authentication schemes as string parameters.</param>
         /// <returns>The same challenge test builder.</returns>
         public IAndChallengeTestBuilder ContainingAuthenticationSchemes(params string[] authenticationSchemes)
-        {
-            return this.ContainingAuthenticationSchemes(authenticationSchemes.AsEnumerable());
-        }
+            => this.ContainingAuthenticationSchemes(authenticationSchemes.AsEnumerable());
 
         /// <summary>
         /// Tests whether challenge result has the provided authentication properties.
@@ -109,10 +107,7 @@
         /// AndAlso method for better readability when chaining challenge tests.
         /// </summary>
         /// <returns>The same challenge test builder.</returns>
-        public IChallengeTestBuilder AndAlso()
-        {
-            return this;
-        }
+        public IChallengeTestBuilder AndAlso() => this;
 
         private void ThrowNewChallengeResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {

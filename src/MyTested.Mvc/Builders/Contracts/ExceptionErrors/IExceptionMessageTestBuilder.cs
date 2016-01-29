@@ -5,7 +5,7 @@
     /// <summary>
     /// Used for testing specific exception messages.
     /// </summary>
-    public interface IExceptionMessageTestBuilder : IBaseTestBuilderWithCaughtException
+    public interface IExceptionMessageTestBuilder : IBaseTestBuilderWithInvokedAction
     {
         /// <summary>
         /// Tests whether particular exception message is equal to given message.

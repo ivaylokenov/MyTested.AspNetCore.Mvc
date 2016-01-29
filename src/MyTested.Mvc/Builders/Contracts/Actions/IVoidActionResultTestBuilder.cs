@@ -6,13 +6,13 @@
     /// <summary>
     /// Used for testing void actions.
     /// </summary>
-    public interface IVoidActionResultTestBuilder : IBaseTestBuilderWithCaughtException
+    public interface IVoidActionResultTestBuilder : IBaseTestBuilderWithInvokedAction
     {
         /// <summary>
         /// Tests whether action result is void.
         /// </summary>
         /// <returns>Base test builder.</returns>
-        IBaseTestBuilderWithCaughtException ShouldReturnEmpty();
+        IBaseTestBuilderWithInvokedAction ShouldReturnEmpty();
 
         /// <summary>
         /// Used for testing action attributes and model state.

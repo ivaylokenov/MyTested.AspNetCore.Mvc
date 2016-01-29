@@ -84,10 +84,7 @@
         /// <typeparam name="TContractResolver">Expected ContractResolver type.</typeparam>
         /// <returns>The same JSON serializer settings test builder.</returns>
         public IAndJsonSerializerSettingsTestBuilder WithContractResolverOfType<TContractResolver>()
-            where TContractResolver : IContractResolver
-        {
-            return this.WithContractResolverOfType(typeof(TContractResolver));
-        }
+            where TContractResolver : IContractResolver => this.WithContractResolverOfType(typeof(TContractResolver));
 
         /// <summary>
         /// Tests the ContractResolver property in a JSON serializer settings object by using a provided type.
@@ -408,20 +405,12 @@
         /// AndAlso method for better readability when chaining JSON serializer settings test builder.
         /// </summary>
         /// <returns>JSON serializer settings test builder.</returns>
-        public IJsonSerializerSettingsTestBuilder AndAlso()
-        {
-            return this;
-        }
+        public IJsonSerializerSettingsTestBuilder AndAlso() => this;
 
-        internal JsonSerializerSettings GetJsonSerializerSettings()
-        {
-            return this.jsonSerializerSettings;
-        }
+        internal JsonSerializerSettings GetJsonSerializerSettings() => this.jsonSerializerSettings;
 
         internal ICollection<Action<JsonSerializerSettings, JsonSerializerSettings>> GetJsonSerializerSettingsValidations()
-        {
-            return this.validations;
-        }
+            => this.validations;
 
         private void ThrowNewJsonResultAssertionException(string expectedValue, string actualValue)
         {

@@ -16,7 +16,7 @@
     /// </summary>
     /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
     public abstract class BaseTestBuilderWithActionResult<TActionResult>
-        : BaseTestBuilderWithCaughtException, IBaseTestBuilderWithActionResult<TActionResult>
+        : BaseTestBuilderWithInvokedAction, IBaseTestBuilderWithActionResult<TActionResult>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseTestBuilderWithActionResult{TActionResult}" /> class.

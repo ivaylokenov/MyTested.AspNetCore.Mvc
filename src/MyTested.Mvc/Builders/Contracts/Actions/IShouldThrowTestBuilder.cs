@@ -6,7 +6,7 @@
     /// <summary>
     /// Used for testing whether action throws exception.
     /// </summary>
-    public interface IShouldThrowTestBuilder : IBaseTestBuilderWithCaughtException
+    public interface IShouldThrowTestBuilder : IBaseTestBuilderWithInvokedAction
     {
         /// <summary>
         /// Tests whether action throws any exception.

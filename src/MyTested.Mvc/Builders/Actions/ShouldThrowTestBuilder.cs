@@ -12,7 +12,7 @@
     /// <summary>
     /// Used for testing whether action throws exception.
     /// </summary>
-    public class ShouldThrowTestBuilder : BaseTestBuilderWithCaughtException, IShouldThrowTestBuilder
+    public class ShouldThrowTestBuilder : BaseTestBuilderWithInvokedAction, IShouldThrowTestBuilder
     {
         private readonly IExceptionTestBuilder exceptionTestBuilder;
 

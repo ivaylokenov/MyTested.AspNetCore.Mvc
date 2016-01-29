@@ -5,12 +5,12 @@
     /// <summary>
     /// Used for testing model errors.
     /// </summary>
-    public interface IModelErrorTestBuilder : IBaseTestBuilderWithCaughtException
+    public interface IModelErrorTestBuilder : IBaseTestBuilderWithInvokedAction
     {
         /// <summary>
         /// Tests whether tested action's model state is valid.
         /// </summary>
         /// <returns>Base test builder.</returns>
-        IBaseTestBuilderWithCaughtException ContainingNoModelStateErrors();
+        IBaseTestBuilderWithInvokedAction ContainingNoModelStateErrors();
     }
 }

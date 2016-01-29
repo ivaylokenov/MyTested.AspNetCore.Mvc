@@ -11,7 +11,7 @@
     /// Used for testing specific bad request text error messages.
     /// </summary>
     public class HttpBadRequestErrorMessageTestBuilder
-        : BaseTestBuilderWithCaughtException, IHttpBadRequestErrorMessageTestBuilder
+        : BaseTestBuilderWithInvokedAction, IHttpBadRequestErrorMessageTestBuilder
     {
         private readonly string actualMessage;
         private readonly IAndHttpBadRequestTestBuilder httpBadRequestTestBuilder;

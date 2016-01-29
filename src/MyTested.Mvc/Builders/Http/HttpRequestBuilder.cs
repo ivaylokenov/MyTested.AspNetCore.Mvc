@@ -3,16 +3,16 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using Contracts.Http;
     using Contracts.Uris;
+    using Exceptions;
+    using Internal.Extensions;
     using Internal.Http;
+    using Microsoft.AspNet.Http;
+    using Microsoft.Extensions.Primitives;
     using Uris;
     using Utilities.Validators;
-    using Microsoft.Extensions.Primitives;
-    using System.Linq;
-    using Internal.Extensions;
-    using Microsoft.AspNet.Http;
-    using Exceptions;
 
     /// <summary>
     /// Used for building HTTP request message.
@@ -46,7 +46,7 @@
         /// <summary>
         /// Adds content length to the built HTTP request.
         /// </summary>
-        /// <param name="contentLength">Content length as nullable long.</param>
+        /// <param name="contentLength">Content length as null-able long.</param>
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithContentLength(long? contentLength)
         {
@@ -446,7 +446,7 @@
         /// <summary>
         /// Adds collection of query values to the built HTTP request.
         /// </summary>
-        /// <param name="headers">Dictionary of query values to add.</param>
+        /// <param name="query">Dictionary of query values to add.</param>
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithQuery(IQueryCollection query)
         {
@@ -457,7 +457,7 @@
         /// <summary>
         /// Adds query string to the built HTTP request.
         /// </summary>
-        /// <param name="pathBase">Path base as string.</param>
+        /// <param name="queryString">Path base as string.</param>
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithQueryString(string queryString)
         {
@@ -467,7 +467,7 @@
         /// <summary>
         /// Adds query string to the built HTTP request.
         /// </summary>
-        /// <param name="pathBase">Query string as QueryString.</param>
+        /// <param name="queryString">Query string as QueryString.</param>
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithQueryString(QueryString queryString)
         {

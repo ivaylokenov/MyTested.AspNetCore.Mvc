@@ -5,7 +5,7 @@
     /// <summary>
     /// Base interface for all response model test builders.
     /// </summary>
-    public interface IBaseTestBuilderWithResponseModel : IBaseTestBuilderWithCaughtException
+    public interface IBaseTestBuilderWithResponseModel : IBaseTestBuilderWithInvokedAction
     {
         /// <summary>
         /// Tests whether response model is returned from the invoked action.

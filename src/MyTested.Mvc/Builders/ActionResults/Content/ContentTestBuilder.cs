@@ -39,9 +39,7 @@
         /// <param name="statusCode">Status code.</param>
         /// <returns>The same content test builder.</returns>
         public IAndContentTestBuilder WithStatusCode(int statusCode)
-        {
-            return this.WithStatusCode((HttpStatusCode)statusCode);
-        }
+            => this.WithStatusCode((HttpStatusCode)statusCode);
 
         /// <summary>
         /// Tests whether content result has the same status code as the provided HttpStatusCode.
@@ -64,9 +62,7 @@
         /// <param name="contentType">ContentType type as string.</param>
         /// <returns>The same content test builder.</returns>
         public IAndContentTestBuilder WithContentType(string contentType)
-        {
-            return this.WithContentType(new MediaTypeHeaderValue(contentType));
-        }
+            => this.WithContentType(new MediaTypeHeaderValue(contentType));
 
         /// <summary>
         /// Tests whether content result has the same content type as the provided MediaTypeHeaderValue.
@@ -87,10 +83,7 @@
         /// Tests whether content result has the default UTF8 encoding.
         /// </summary>
         /// <returns>The same content test builder.</returns>
-        public IAndContentTestBuilder WithDefaultEncoding()
-        {
-            return this.WithEncoding(null);
-        }
+        public IAndContentTestBuilder WithDefaultEncoding() => this.WithEncoding(null);
 
         /// <summary>
         /// Tests whether content result has the same encoding as the provided Encoding.
@@ -110,15 +103,12 @@
 
             return this;
         }
-        
+
         /// <summary>
         /// AndAlso method for better readability when chaining content tests.
         /// </summary>
         /// <returns>The same content test builder.</returns>
-        public IContentTestBuilder AndAlso()
-        {
-            return this;
-        }
+        public IContentTestBuilder AndAlso() => this;
         
         private string GetEncodingName(Encoding encoding)
         {

@@ -5,7 +5,7 @@
     /// <summary>
     /// Used for testing specific bad request text error messages.
     /// </summary>
-    public interface IHttpBadRequestErrorMessageTestBuilder : IBaseTestBuilderWithCaughtException
+    public interface IHttpBadRequestErrorMessageTestBuilder : IBaseTestBuilderWithInvokedAction
     {
         /// <summary>
         /// Tests whether particular error message is equal to given message.

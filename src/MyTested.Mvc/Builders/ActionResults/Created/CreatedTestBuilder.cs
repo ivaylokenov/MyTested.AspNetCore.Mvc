@@ -306,9 +306,7 @@
         /// <param name="routeValues">Expected route value dictionary.</param>
         /// <returns>The same created test builder.</returns>
         public IAndCreatedTestBuilder WithRouteValues(object routeValues)
-        {
-            return this.WithRouteValues(new RouteValueDictionary(routeValues));
-        }
+            => this.WithRouteValues(new RouteValueDictionary(routeValues));
 
         /// <summary>
         /// Tests whether created result contains the provided route values.
@@ -362,10 +360,7 @@
         /// <param name="actionCall">Method call expression indicating the expected action.</param>
         /// <returns>The same created test builder.</returns>
         public IAndCreatedTestBuilder At<TController>(Expression<Func<TController, object>> actionCall)
-            where TController : Controller
-        {
-            return this.AtRoute<TController>(actionCall);
-        }
+            where TController : Controller => this.AtRoute<TController>(actionCall);
 
         /// <summary>
         /// Tests whether created result returns created at specific action.
@@ -374,28 +369,19 @@
         /// <param name="actionCall">Method call expression indicating the expected action.</param>
         /// <returns>The same created test builder.</returns>
         public IAndCreatedTestBuilder At<TController>(Expression<Action<TController>> actionCall)
-            where TController : Controller
-        {
-            return this.AtRoute<TController>(actionCall);
-        }
+            where TController : Controller => this.AtRoute<TController>(actionCall);
 
         /// <summary>
         /// AndAlso method for better readability when chaining created tests.
         /// </summary>
         /// <returns>Created test builder.</returns>
-        public ICreatedTestBuilder AndAlso()
-        {
-            return this;
-        }
+        public ICreatedTestBuilder AndAlso() => this;
 
         /// <summary>
         /// Gets the action result which will be tested.
         /// </summary>
         /// <returns>Action result to be tested.</returns>
-        public new ObjectResult AndProvideTheActionResult()
-        {
-            return this.ActionResult;
-        }
+        public new ObjectResult AndProvideTheActionResult() => this.ActionResult;
 
         /// <summary>
         /// Throws new created result assertion exception for the provided property name, expected value and actual value.

@@ -7,7 +7,7 @@
     /// <summary>
     /// Provides controller and action information.
     /// </summary>
-    public class AndProvideTestBuilder : BaseTestBuilderWithCaughtException
+    public class AndProvideTestBuilder : BaseTestBuilderWithInvokedAction
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AndProvideTestBuilder" /> class.

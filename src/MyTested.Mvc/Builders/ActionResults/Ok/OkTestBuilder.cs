@@ -190,19 +190,13 @@
         /// AndAlso method for better readability when chaining ok tests.
         /// </summary>
         /// <returns>The same ok test builder.</returns>
-        public IOkTestBuilder AndAlso()
-        {
-            return this;
-        }
+        public IOkTestBuilder AndAlso() => this;
 
         /// <summary>
         /// Gets the action result which will be tested.
         /// </summary>
         /// <returns>Action result to be tested.</returns>
-        public new ActionResult AndProvideTheActionResult()
-        {
-            return this.ActionResult;
-        }
+        public new ActionResult AndProvideTheActionResult() => this.ActionResult;
 
         /// <summary>
         /// Throws new OK result assertion exception for the provided property name, expected value and actual value.
