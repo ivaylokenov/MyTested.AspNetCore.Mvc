@@ -4,7 +4,7 @@
     using Microsoft.AspNet.Mvc;
     using Microsoft.Net.Http.Headers;
     using MyTested.Mvc.Builders.Contracts.ActionResults.File;
-
+    using Internal.Extensions;
     /// <summary>
     /// Used for testing physical file result.
     /// </summary>
@@ -69,7 +69,7 @@
             {
                 this.ThrowNewFileResultAssertionException(
                     "FileName",
-                    string.Format("to be {0}", physicalPath != null ? $"'{physicalPath}'" : "null"),
+                    $"to be {physicalPath.GetErrorMessageName()}",
                     $"instead received '{actualPhysicalPath}'");
             }
 

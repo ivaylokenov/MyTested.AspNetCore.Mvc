@@ -1,5 +1,6 @@
 ﻿namespace MyTested.Mvc.Utilities.Validators
 {
+    using Internal.Extensions;
     using System;
     using System.Net;
 
@@ -22,12 +23,10 @@
             var actualStatusCode = (HttpStatusCode?)actualHttpStatusCode;
             if (actualStatusCode != expectedHttpStatusCode)
             {
-                var actualStatusCodeAsInt = (int?)actualStatusCode;
-
                 var receivedErrorMessage = string.Format(
                     "instead received {0} ({1})",
-                    actualStatusCode != null ? actualStatusCodeAsInt.ToString() : "no status code",
-                    actualStatusCode != null ? actualStatusCode.ToString() : "null");
+                    actualHttpStatusCode.GetErrorMessageName(false, "no status code"),
+                    actualStatusCode.GetErrorMessageName(false));
 
                 failedValidationAction(
                     "to have",

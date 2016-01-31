@@ -48,8 +48,8 @@
                     "When calling {0} action in {1} expected to have invalid model state{2}, {3}.",
                     this.ActionName,
                     this.Controller.GetName(),
-                    withNumberOfErrors == null ? string.Empty : string.Format(" with {0} errors", withNumberOfErrors),
-                    withNumberOfErrors == null ? "but was in fact valid" : string.Format("but in fact contained {0}", actualModelStateErrors)));
+                    withNumberOfErrors == null ? string.Empty : $" with {withNumberOfErrors} errors",
+                    withNumberOfErrors == null ? "but was in fact valid" : $"but in fact contained {actualModelStateErrors}"));
             }
 
             return this.NewAndTestBuilder();

@@ -1,7 +1,5 @@
 ﻿namespace MyTested.Mvc
 {
-    using System.Diagnostics.CodeAnalysis;
-
     /// <summary>
     /// Contains common MIME type values.
     /// </summary>

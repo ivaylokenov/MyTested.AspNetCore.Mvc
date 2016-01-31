@@ -23,13 +23,13 @@
         {
             RuntimeBinderValidator.ValidateBinding(() =>
             {
-                var actualActionName = actionResult.ActionName;
+                var actualActionName = (string)actionResult.ActionName;
                 if (actionName != actualActionName)
                 {
                     failedValidationAction(
                         "to have",
                         $"'{actionName}' action name",
-                        string.Format("instead received '{0}'", actualActionName != null ? actualActionName : "null"));
+                        $"instead received {actualActionName.GetErrorMessageName()}");
                 }
             });
         }
@@ -47,13 +47,13 @@
         {
             RuntimeBinderValidator.ValidateBinding(() =>
             {
-                var actualControllerName = actionResult.ControllerName;
+                var actualControllerName = (string)actionResult.ControllerName;
                 if (controllerName != actualControllerName)
                 {
                     failedValidationAction(
                         "to have",
                         $"'{controllerName}' controller name",
-                        string.Format("instead received '{0}'", actualControllerName != null ? actualControllerName : "null"));
+                        $"instead received {actualControllerName.GetErrorMessageName()}");
                 }
             });
         }
@@ -78,7 +78,7 @@
                     failedValidationAction(
                         "to have",
                         $"'{routeName}' route name",
-                        string.Format("instead received '{0}'", actualRouteName != null ? actualRouteName : "null"));
+                        $"instead received '{actualRouteName.GetErrorMessageName()}'");
                 }
             });
         }

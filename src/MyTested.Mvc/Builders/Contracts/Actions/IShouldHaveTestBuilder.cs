@@ -4,6 +4,7 @@
     using And;
     using Attributes;
     using Base;
+    using Http;
     using Models;
 
     /// <summary>
@@ -51,5 +52,11 @@
         /// <param name="withNumberOfErrors">Expected number of errors. If default null is provided, the test builder checks only if any errors are found.</param>
         /// <returns>Test builder with AndAlso method.</returns>
         IAndTestBuilder<TActionResult> InvalidModelState(int? withNumberOfErrors = null);
+
+        /// <summary>
+        /// Checks whether the tested action applies additional features to the HTTP response.
+        /// </summary>
+        /// <returns>HTTP response test builder.</returns>
+        IHttpResponseTestBuilder HttpResponse();
     }
 }

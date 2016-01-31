@@ -242,11 +242,14 @@
             this.jsonSerializerSettings.MaxDepth = maxDepth;
             this.validations.Add((expected, actual) =>
             {
-                if (!CommonValidator.CheckEquality(expected.MaxDepth, actual.MaxDepth))
+                var expectedMaxDepth = expected.MaxDepth;
+                var actualMaxDepth = actual.MaxDepth;
+
+                if (!CommonValidator.CheckEquality(expectedMaxDepth, actualMaxDepth))
                 {
                     this.ThrowNewJsonResultAssertionException(
-                        $"{(expected.MaxDepth != null ? expected.MaxDepth.ToString() : "no")} max depth",
-                        $"in fact found {(actual.MaxDepth != null ? actual.MaxDepth.ToString() : "none")}");
+                        $"{expectedMaxDepth.GetErrorMessageName(false, "no")} max depth",
+                        $"in fact found {actualMaxDepth.GetErrorMessageName(false, "none")}");
                 }
             });
 

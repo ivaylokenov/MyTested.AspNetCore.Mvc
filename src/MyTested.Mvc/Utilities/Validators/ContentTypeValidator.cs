@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.Net.Http.Headers;
-
+    using Internal.Extensions;
     /// <summary>
     /// Validator class containing content type validation logic.
     /// </summary>
@@ -27,8 +27,8 @@
             {
                 failedValidationAction(
                     "ContentType",
-                    string.Format("to be {0}", expectedContentType != null ? expectedContentType.MediaType : "null"),
-                    string.Format("instead received {0}", actualContentType != null ? actualContentType.MediaType : "null"));
+                    $"to be {(expectedContentType != null ? expectedContentType.MediaType.GetErrorMessageName() : "null")}",
+                    $"instead received {(actualContentType != null ? actualContentType.MediaType.GetErrorMessageName() : "null")}");
             }
         }
 

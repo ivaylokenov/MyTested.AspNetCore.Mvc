@@ -98,7 +98,7 @@
                         .ViewComponent()
                         .WithContentType(new MediaTypeHeaderValue(ContentType.ApplicationJson));
                 },
-                "When calling CustomViewComponentResult action in MvcController expected view component result ContentType to be application/json, but instead received application/xml.");
+                "When calling CustomViewComponentResult action in MvcController expected view component result ContentType to be 'application/json', but instead received 'application/xml'.");
         }
 
         [Fact]
@@ -114,7 +114,7 @@
                         .ViewComponent()
                         .WithContentType((MediaTypeHeaderValue)null);
                 },
-                "When calling CustomViewComponentResult action in MvcController expected view component result ContentType to be null, but instead received application/xml.");
+                "When calling CustomViewComponentResult action in MvcController expected view component result ContentType to be null, but instead received 'application/xml'.");
         }
 
         [Fact]
@@ -141,7 +141,7 @@
                         .ViewComponent()
                         .WithContentType(new MediaTypeHeaderValue(TestObjectFactory.MediaType));
                 },
-                "When calling ViewComponentResultByName action in MvcController expected view component result ContentType to be application/json, but instead received null.");
+                "When calling ViewComponentResultByName action in MvcController expected view component result ContentType to be 'application/json', but instead received null.");
         }
 
         [Fact]

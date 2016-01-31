@@ -47,7 +47,7 @@
                         .File()
                         .WithContentType(new MediaTypeHeaderValue(ContentType.ApplicationXml));
                 }, 
-                "When calling FileWithVirtualPath action in MvcController expected file result ContentType to be application/xml, but instead received application/json.");
+                "When calling FileWithVirtualPath action in MvcController expected file result ContentType to be 'application/xml', but instead received 'application/json'.");
         }
 
         [Fact]

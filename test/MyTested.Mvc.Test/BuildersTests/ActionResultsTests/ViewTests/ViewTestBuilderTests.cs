@@ -171,7 +171,7 @@
                         .View()
                         .WithContentType(new MediaTypeHeaderValue(ContentType.ApplicationJson));
                 },
-                "When calling CustomViewResult action in MvcController expected view result ContentType to be application/json, but instead received application/xml.");
+                "When calling CustomViewResult action in MvcController expected view result ContentType to be 'application/json', but instead received 'application/xml'.");
         }
 
         [Fact]
@@ -187,7 +187,7 @@
                         .View()
                         .WithContentType((MediaTypeHeaderValue)null);
                 },
-                "When calling CustomViewResult action in MvcController expected view result ContentType to be null, but instead received application/xml.");
+                "When calling CustomViewResult action in MvcController expected view result ContentType to be null, but instead received 'application/xml'.");
         }
 
         [Fact]
@@ -214,7 +214,7 @@
                         .View()
                         .WithContentType(new MediaTypeHeaderValue(TestObjectFactory.MediaType));
                 },
-                "When calling DefaultView action in MvcController expected view result ContentType to be application/json, but instead received null.");
+                "When calling DefaultView action in MvcController expected view result ContentType to be 'application/json', but instead received null.");
         }
         
         [Fact]
@@ -471,7 +471,7 @@
                         .PartialView()
                         .WithContentType(new MediaTypeHeaderValue(ContentType.ApplicationJson));
                 },
-                "When calling CustomPartialViewResult action in MvcController expected partial view result ContentType to be application/json, but instead received application/xml.");
+                "When calling CustomPartialViewResult action in MvcController expected partial view result ContentType to be 'application/json', but instead received 'application/xml'.");
         }
 
         [Fact]
@@ -487,7 +487,7 @@
                         .PartialView()
                         .WithContentType((MediaTypeHeaderValue)null);
                 },
-                "When calling CustomPartialViewResult action in MvcController expected partial view result ContentType to be null, but instead received application/xml.");
+                "When calling CustomPartialViewResult action in MvcController expected partial view result ContentType to be null, but instead received 'application/xml'.");
         }
 
         [Fact]
@@ -514,7 +514,7 @@
                         .PartialView()
                         .WithContentType(new MediaTypeHeaderValue(TestObjectFactory.MediaType));
                 },
-                "When calling DefaultPartialView action in MvcController expected partial view result ContentType to be application/json, but instead received null.");
+                "When calling DefaultPartialView action in MvcController expected partial view result ContentType to be 'application/json', but instead received null.");
         }
         
         [Fact]

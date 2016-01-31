@@ -94,7 +94,7 @@
                         .Json()
                         .WithContentType(ContentType.ApplicationJson);
                 },
-                "When calling JsonWithStatusCodeAction action in MvcController expected JSON result ContentType to be application/json, but instead received application/xml.");
+                "When calling JsonWithStatusCodeAction action in MvcController expected JSON result ContentType to be 'application/json', but instead received 'application/xml'.");
         }
 
         [Fact]

@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using Base;
     using Contracts.Actions;
+    using Contracts.Http;
+    using Http;
     using Microsoft.AspNet.Mvc;
 
     /// <summary>
@@ -29,6 +31,19 @@
             IEnumerable<object> actionAttributes)
             : base(controller, actionName, caughtException, actionResult, actionAttributes)
         {
+        }
+
+        /// <summary>
+        /// Checks whether the tested action applies additional features to the HTTP response.
+        /// </summary>
+        /// <returns>HTTP response test builder.</returns>
+        public IHttpResponseTestBuilder HttpResponse()
+        {
+            return new HttpResponseTestBuilder(
+                this.Controller,
+                this.ActionName,
+                this.CaughtException,
+                this.Controller.Response);
         }
     }
 }

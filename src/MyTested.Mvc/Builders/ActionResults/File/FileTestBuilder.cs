@@ -78,8 +78,8 @@
         public IAndFileTestBuilder WithStream(Stream stream)
         {
             var fileStreamResult = this.GetFileResult<FileStreamResult>(FileStream);
-            var expectedContents = this.GetByteArrayFromStream(stream);
-            var actualContents = this.GetByteArrayFromStream(fileStreamResult.FileStream);
+            var expectedContents = stream.ToByteArray();
+            var actualContents = fileStreamResult.FileStream.ToByteArray();
             if (!expectedContents.SequenceEqual(actualContents))
             {
                 this.ThrowNewFileResultAssertionException(
@@ -177,16 +177,7 @@
         /// </summary>
         /// <returns>File result test builder.</returns>
         public IFileTestBuilder AndAlso() => this;
-
-        private byte[] GetByteArrayFromStream(Stream stream)
-        {
-            using (var memoryStream = new MemoryStream())
-            {
-                stream.CopyTo(memoryStream);
-                return memoryStream.ToArray();
-            }
-        }
-
+        
         private TExpectedFileResult GetFileResult<TExpectedFileResult>(string containment)
             where TExpectedFileResult : class
         {
