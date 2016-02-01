@@ -65,7 +65,7 @@
         /// </summary>
         /// <param name="key">Expected route key.</param>
         /// <returns>The same redirect test builder.</returns>
-        IAndRedirectTestBuilder WithRouteValue(string key);
+        IAndRedirectTestBuilder ContainingRouteValue(string key);
         
         /// <summary>
         /// Tests whether redirect result contains specific route key and value.
@@ -73,21 +73,21 @@
         /// <param name="key">Expected route key.</param>
         /// <param name="value">Expected route value.</param>
         /// <returns>The same redirect test builder.</returns>
-        IAndRedirectTestBuilder WithRouteValue(string key, object value);
+        IAndRedirectTestBuilder ContainingRouteValue(string key, object value);
         
         /// <summary>
         /// Tests whether redirect result contains the provided route values.
         /// </summary>
         /// <param name="routeValues">Expected route value dictionary.</param>
         /// <returns>The same redirect test builder.</returns>
-        IAndRedirectTestBuilder WithRouteValues(object routeValues);
+        IAndRedirectTestBuilder ContainingRouteValues(object routeValues);
 
         /// <summary>
         /// Tests whether redirect result contains the provided route values.
         /// </summary>
         /// <param name="routeValues">Expected route value dictionary.</param>
         /// <returns>The same redirect test builder.</returns>
-        IAndRedirectTestBuilder WithRouteValues(IDictionary<string, object> routeValues);
+        IAndRedirectTestBuilder ContainingRouteValues(IDictionary<string, object> routeValues);
         
         /// <summary>
         /// Tests whether redirect result has the same URL helper as the provided one.

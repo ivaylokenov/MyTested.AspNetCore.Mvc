@@ -273,7 +273,7 @@
         /// </summary>
         /// <param name="key">Expected route key.</param>
         /// <returns>The same created test builder.</returns>
-        public IAndCreatedTestBuilder WithRouteValue(string key)
+        public IAndCreatedTestBuilder ContainingRouteValue(string key)
         {
             RouteActionResultValidator.ValidateRouteValue(
                 this.ActionResult,
@@ -289,7 +289,7 @@
         /// <param name="key">Expected route key.</param>
         /// <param name="value">Expected route value.</param>
         /// <returns>The same created test builder.</returns>
-        public IAndCreatedTestBuilder WithRouteValue(string key, object value)
+        public IAndCreatedTestBuilder ContainingRouteValue(string key, object value)
         {
             RouteActionResultValidator.ValidateRouteValue(
                 this.ActionResult,
@@ -305,15 +305,15 @@
         /// </summary>
         /// <param name="routeValues">Expected route value dictionary.</param>
         /// <returns>The same created test builder.</returns>
-        public IAndCreatedTestBuilder WithRouteValues(object routeValues)
-            => this.WithRouteValues(new RouteValueDictionary(routeValues));
+        public IAndCreatedTestBuilder ContainingRouteValues(object routeValues)
+            => this.ContainingRouteValues(new RouteValueDictionary(routeValues));
 
         /// <summary>
         /// Tests whether created result contains the provided route values.
         /// </summary>
         /// <param name="routeValues">Expected route value dictionary.</param>
         /// <returns>The same created test builder.</returns>
-        public IAndCreatedTestBuilder WithRouteValues(IDictionary<string, object> routeValues)
+        public IAndCreatedTestBuilder ContainingRouteValues(IDictionary<string, object> routeValues)
         {
             RouteActionResultValidator.ValidateRouteValues(
                 this.ActionResult,

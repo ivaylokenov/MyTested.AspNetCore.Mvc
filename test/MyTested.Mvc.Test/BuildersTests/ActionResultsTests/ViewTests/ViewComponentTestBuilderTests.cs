@@ -253,7 +253,7 @@
                 .Calling(c => c.ViewComponentResultByType())
                 .ShouldReturn()
                 .ViewComponent()
-                .WithArgument(responseModels);
+                .ContainingArgument(responseModels);
         }
         
         [Fact]
@@ -267,7 +267,7 @@
                            .Calling(c => c.ViewComponentResultByType())
                            .ShouldReturn()
                            .ViewComponent()
-                           .WithArgument(1);
+                           .ContainingArgument(1);
                    },
                    "When calling ViewComponentResultByType action in MvcController expected view component result with at least one argument to be the given one, but none was found.");
         }
@@ -282,7 +282,7 @@
                 .Calling(c => c.ViewComponentResultByType())
                 .ShouldReturn()
                 .ViewComponent()
-                .WithArgumentOfType<List<ResponseModel>>();
+                .ContainingArgumentOfType<List<ResponseModel>>();
         }
 
         [Fact]
@@ -296,7 +296,7 @@
                            .Calling(c => c.ViewComponentResultByType())
                            .ShouldReturn()
                            .ViewComponent()
-                           .WithArgumentOfType<int>();
+                           .ContainingArgumentOfType<int>();
                    },
                    "When calling ViewComponentResultByType action in MvcController expected view component result with at least one argument to be of Int32 type, but none was found.");
         }
@@ -309,22 +309,22 @@
                 .Calling(c => c.ViewComponentResultByName())
                 .ShouldReturn()
                 .ViewComponent()
-                .WithArguments(1, "text");
+                .ContainingArguments(1, "text");
         }
         
         [Fact]
         public void WithArgumentsShouldThrowExceptionWithIncorrectArgumentsCount()
         {
             Test.AssertException<ViewResultAssertionException>(
-                   () =>
+(System.Action)                   (() =>
                    {
                        MyMvc
                         .Controller<MvcController>()
                         .Calling(c => c.ViewComponentResultByName())
                         .ShouldReturn()
                         .ViewComponent()
-                        .WithArguments(1, "text", 15);
-                   },
+                        .ContainingArguments(1, "text", 15);
+                   }),
                    "When calling ViewComponentResultByName action in MvcController expected view component result Arguments to have 3 items, but in fact found 2.");
         }
 
@@ -332,15 +332,15 @@
         public void WithArgumentsShouldThrowExceptionWithIncorrectArguments()
         {
             Test.AssertException<ViewResultAssertionException>(
-                   () =>
+(System.Action)                   (() =>
                    {
                        MyMvc
                         .Controller<MvcController>()
                         .Calling(c => c.ViewComponentResultByName())
                         .ShouldReturn()
                         .ViewComponent()
-                        .WithArguments(1, "incorrect");
-                   },
+                        .ContainingArguments(1, "incorrect");
+                   }),
                    "When calling ViewComponentResultByName action in MvcController expected view component result to have argument on position 1 equal to the given one on the same position, but in fact it was different.");
         }
 
@@ -352,7 +352,7 @@
                 .Calling(c => c.ViewComponentResultByName())
                 .ShouldReturn()
                 .ViewComponent()
-                .WithArguments(new List<object> { 1, "text" });
+                .ContainingArguments(new List<object> { 1, "text" });
         }
 
         [Fact]

@@ -25,7 +25,7 @@
             string authenticationScheme,
             Action<string, string, string> failedValidationAction)
         {
-            var actualAuthenticationSchemes = TryGetAuthenticationSchemes(actionResult);
+            var actualAuthenticationSchemes = (IList<string>)TryGetAuthenticationSchemes(actionResult);
             if (!actualAuthenticationSchemes.Contains(authenticationScheme))
             {
                 failedValidationAction(
@@ -46,7 +46,7 @@
             IEnumerable<string> authenticationSchemes,
             Action<string, string, string> failedValidationAction)
         {
-            var actualAuthenticationSchemes = SortAuthenticationSchemes(TryGetAuthenticationSchemes(actionResult));
+            var actualAuthenticationSchemes = (IList<string>)SortAuthenticationSchemes(TryGetAuthenticationSchemes(actionResult));
             var expectedAuthenticationSchemes = SortAuthenticationSchemes(authenticationSchemes);
 
             if (actualAuthenticationSchemes.Count != expectedAuthenticationSchemes.Count)
@@ -82,7 +82,7 @@
             AuthenticationProperties properties,
             Action<string, string, string> failedValidationAction)
         {
-            var actualProperties = TryGetAuthenticationProperties(actionResult);
+            var actualProperties = (AuthenticationProperties)TryGetAuthenticationProperties(actionResult);
             if (Reflection.AreNotDeeplyEqual(properties, actualProperties))
             {
                 failedValidationAction(
@@ -105,7 +105,8 @@
             Controller controller,
             string actionName)
         {
-            var actualAuthenticationProperties = TryGetAuthenticationProperties(actionResult) ?? new AuthenticationProperties();
+            var actualAuthenticationProperties = 
+                (AuthenticationProperties)TryGetAuthenticationProperties(actionResult) ?? new AuthenticationProperties();
 
             var newAuthenticationPropertiesTestBuilder = new AuthenticationPropertiesTestBuilder(controller, actionName);
             authenticationPropertiesBuilder(newAuthenticationPropertiesTestBuilder);

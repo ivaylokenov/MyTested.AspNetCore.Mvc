@@ -103,7 +103,7 @@
         /// <typeparam name="TArgument">Type of the argument.</typeparam>
         /// <param name="argument">Argument object.</param>
         /// <returns>The same view component test builder.</returns>
-        public IAndViewComponentTestBuilder WithArgument<TArgument>(TArgument argument)
+        public IAndViewComponentTestBuilder ContainingArgument<TArgument>(TArgument argument)
         {
             var sameArgument = this.viewComponentArguments.FirstOrDefault(arg => Reflection.AreDeeplyEqual(argument, arg));
 
@@ -123,7 +123,7 @@
         /// </summary>
         /// <typeparam name="TArgument">Type of the argument.</typeparam>
         /// <returns>The same view component test builder.</returns>
-        public IAndViewComponentTestBuilder WithArgumentOfType<TArgument>()
+        public IAndViewComponentTestBuilder ContainingArgumentOfType<TArgument>()
         {
             var expectedType = typeof(TArgument);
             var argumentOfSameType = this.viewComponentArguments.FirstOrDefault(arg => arg.GetType() == expectedType);
@@ -144,7 +144,7 @@
         /// </summary>
         /// <param name="arguments">Argument objects as enumerable.</param>
         /// <returns>The same view component test builder.</returns>
-        public IAndViewComponentTestBuilder WithArguments(IEnumerable<object> arguments)
+        public IAndViewComponentTestBuilder ContainingArguments(IEnumerable<object> arguments)
         {
             var argumentsList = arguments.ToList();
 
@@ -181,8 +181,8 @@
         /// </summary>
         /// <param name="arguments">Argument objects.</param>
         /// <returns>The same view component test builder.</returns>
-        public IAndViewComponentTestBuilder WithArguments(params object[] arguments)
-            => this.WithArguments(arguments.AsEnumerable());
+        public IAndViewComponentTestBuilder ContainingArguments(params object[] arguments)
+            => this.ContainingArguments(arguments.AsEnumerable());
 
         /// <summary>
         /// AndAlso method for better readability when chaining view component result tests.

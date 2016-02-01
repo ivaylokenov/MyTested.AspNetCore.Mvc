@@ -63,7 +63,7 @@
             MediaTypeHeaderValue expectedContentType,
             Action<string, string, string> failedValidationAction)
         {
-            var contentTypes = TryGetContentTypesList(actionResult);
+            var contentTypes = (IList<MediaTypeHeaderValue>)TryGetContentTypesList(actionResult);
             if (!contentTypes.Contains(expectedContentType))
             {
                 failedValidationAction(
@@ -84,7 +84,7 @@
             IEnumerable<MediaTypeHeaderValue> contentTypes,
             Action<string, string, string> failedValidationAction)
         {
-            var actualContentTypes = SortContentTypes(TryGetContentTypesList(actionResult));
+            var actualContentTypes = (IList<MediaTypeHeaderValue>)SortContentTypes(TryGetContentTypesList(actionResult));
             var expectedContentTypes = SortContentTypes(contentTypes);
 
             if (actualContentTypes.Count != expectedContentTypes.Count)

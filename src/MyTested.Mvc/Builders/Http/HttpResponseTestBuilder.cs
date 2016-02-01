@@ -112,16 +112,16 @@
         /// <summary>
         /// Tests whether HTTP response message contains cookie with the same name as the provided one.
         /// </summary>
-        /// <param name="name">Expected cookie name.</param>
+        /// <param name="key">Expected cookie name.</param>
         /// <returns>The same HTTP response message test builder.</returns>
-        public IAndHttpResponseTestBuilder ContainingCookie(string name)
+        public IAndHttpResponseTestBuilder ContainingCookie(string key)
         {
-            var cookie = this.GetCookieByName(name);
+            var cookie = this.GetCookieByKey(key);
             if (cookie == null)
             {
                 this.ThrowNewHttpResponseAssertionException(
                     "cookies",
-                    $"to contain cookie with '{name}' name",
+                    $"to contain cookie with '{key}' name",
                     "such was not found");
             }
 
@@ -131,19 +131,19 @@
         /// <summary>
         /// Tests whether HTTP response message contains cookie with the same name and value as the provided ones.
         /// </summary>
-        /// <param name="name">Expected cookie name.</param>
+        /// <param name="key">Expected cookie name.</param>
         /// <param name="value">Expected cookie value.</param>
         /// <returns>The same HTTP response message test builder.</returns>
-        public IAndHttpResponseTestBuilder ContainingCookie(string name, string value)
+        public IAndHttpResponseTestBuilder ContainingCookie(string key, string value)
         {
-            this.ContainingCookie(name);
-            var cookie = this.GetCookieByName(name);
+            this.ContainingCookie(key);
+            var cookie = this.GetCookieByKey(key);
 
             if (cookie.Value != value)
             {
                 this.ThrowNewHttpResponseAssertionException(
                     "cookies",
-                    $"to contain cookie with '{name}' name and '{value}' value",
+                    $"to contain cookie with '{key}' name and '{value}' value",
                     $"the value was '{cookie.Value}'");
             }
 
@@ -153,27 +153,38 @@
         /// <summary>
         /// Tests whether HTTP response message contains cookie with the same name, value and options as the provided ones.
         /// </summary>
-        /// <param name="name">Expected cookie name.</param>
+        /// <param name="key">Expected cookie name.</param>
         /// <param name="value">Expected cookie value.</param>
         /// <param name="options">Expected cookie options.</param>
         /// <returns>The same HTTP response message test builder.</returns>
-        public IAndHttpResponseTestBuilder ContainingCookie(string name, string value, CookieOptions options)
+        public IAndHttpResponseTestBuilder ContainingCookie(string key, string value, CookieOptions options)
         {
-            this.ContainingCookie(name, value);
-            var cookie = this.GetCookieByName(name);
+            this.ContainingCookie(key, value);
+            var cookie = this.GetCookieByKey(key);
             var cookieOptions = this.GetCookieOptions(cookie);
 
             if (Reflection.AreNotDeeplyEqual(options, cookieOptions))
             {
+                var expectedCookie = new SetCookieHeaderValue(
+                    Uri.EscapeDataString(key),
+                    Uri.EscapeDataString(value))
+                {
+                    Domain = options.Domain,
+                    Path = options.Path,
+                    Expires = options.Expires,
+                    Secure = options.Secure,
+                    HttpOnly = options.HttpOnly,
+                };
+
                 this.ThrowNewHttpResponseAssertionException(
                     "cookies",
-                    $"to contain cookie with the provided options",
-                    $"in fact they were different");
+                    $"to contain cookie with the provided options - '{expectedCookie.ToString()}'",
+                    $"in fact they were different - '{cookie.ToString()}'");
             }
 
             return this;
         }
-
+        
         /// <summary>
         /// Tests whether HTTP response message contains the provided dictionary of cookies.
         /// </summary>
@@ -333,7 +344,7 @@
             this.ContainingHeader(HttpHeader.SetCookie);
             var cookieHeader = this.httpResponse.Headers[HttpHeader.SetCookie];
 
-            if (cookieHeader.Any())
+            if (!cookieHeader.Any())
             {
                 this.ThrowNewHttpResponseAssertionException(
                     "to have",
@@ -353,7 +364,7 @@
             return setCookieHeaderValue;
         }
 
-        private SetCookieHeaderValue GetCookieByName(string name) => this.GetAllCookies().FirstOrDefault(c => c.Name == name);
+        private SetCookieHeaderValue GetCookieByKey(string key) => this.GetAllCookies().FirstOrDefault(c => c.Name == key);
 
         private CookieOptions GetCookieOptions(SetCookieHeaderValue cookie)
             => new CookieOptions

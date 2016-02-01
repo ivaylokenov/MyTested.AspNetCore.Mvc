@@ -225,7 +225,7 @@
                 .Calling(c => c.CreatedAtActionResult())
                 .ShouldReturn()
                 .Created()
-                .WithRouteValue("id");
+                .ContainingRouteValue("id");
         }
 
         [Fact]
@@ -239,7 +239,7 @@
                         .Calling(c => c.CreatedAtActionResult())
                         .ShouldReturn()
                         .Created()
-                        .WithRouteValue("incorrect");
+                        .ContainingRouteValue("incorrect");
                 },
                 "When calling CreatedAtActionResult action in MvcController expected created result route values to have item with key 'incorrect', but such was not found.");
         }
@@ -252,22 +252,22 @@
                 .Calling(c => c.CreatedAtActionResult())
                 .ShouldReturn()
                 .Created()
-                .WithRouteValue("id", 1);
+                .ContainingRouteValue("id", 1);
         }
 
         [Fact]
         public void WithRouteValueWithValueShouldThrowExceptionWithIncorrectRouteKey()
         {
             Test.AssertException<CreatedResultAssertionException>(
-                () =>
+(Action)(() =>
                 {
                     MyMvc
                         .Controller<MvcController>()
                         .Calling(c => c.CreatedAtActionResult())
                         .ShouldReturn()
                         .Created()
-                        .WithRouteValue("incorrect", 1);
-                },
+                        .ContainingRouteValue("incorrect", 1);
+                }),
                 "When calling CreatedAtActionResult action in MvcController expected created result route values to have item with 'incorrect' key and the provided value, but such was not found.");
         }
 
@@ -275,15 +275,15 @@
         public void WithRouteValueWithValueShouldThrowExceptionWithIncorrectRouteValue()
         {
             Test.AssertException<CreatedResultAssertionException>(
-                () =>
+(Action)(() =>
                 {
                     MyMvc
                         .Controller<MvcController>()
                         .Calling(c => c.CreatedAtActionResult())
                         .ShouldReturn()
                         .Created()
-                        .WithRouteValue("id", 2);
-                },
+                        .ContainingRouteValue("id", 2);
+                }),
                 "When calling CreatedAtActionResult action in MvcController expected created result route values to have item with 'id' key and the provided value, but the value was different.");
         }
 
@@ -295,7 +295,7 @@
                 .Calling(c => c.CreatedAtActionResult())
                 .ShouldReturn()
                 .Created()
-                .WithRouteValues(new { id = 1, text = "sometext" });
+                .ContainingRouteValues(new { id = 1, text = "sometext" });
         }
 
         [Fact]
@@ -309,7 +309,7 @@
                         .Calling(c => c.CreatedAtActionResult())
                         .ShouldReturn()
                         .Created()
-                        .WithRouteValues(new { id = 1 });
+                        .ContainingRouteValues(new { id = 1 });
                 },
                 "When calling CreatedAtActionResult action in MvcController expected created result route values to have 1 item, but in fact found 2.");
         }
@@ -325,7 +325,7 @@
                         .Calling(c => c.CreatedAtActionResult())
                         .ShouldReturn()
                         .Created()
-                        .WithRouteValues(new { id = 1, second = 5, another = "test" });
+                        .ContainingRouteValues(new { id = 1, second = 5, another = "test" });
                 },
                 "When calling CreatedAtActionResult action in MvcController expected created result route values to have 3 items, but in fact found 2.");
         }

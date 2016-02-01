@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// Method argument information containing name, type and value for an method parameter.
+    /// Method argument information containing name, type and value for a method parameter.
     /// </summary>
     public class MethodArgumentInfo
     {

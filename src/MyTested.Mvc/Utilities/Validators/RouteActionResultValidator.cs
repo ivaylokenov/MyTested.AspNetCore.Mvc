@@ -71,14 +71,14 @@
         {
             RuntimeBinderValidator.ValidateBinding(() =>
             {
-                var actualRouteName = actionResult.RouteName;
+                var actualRouteName = (string)actionResult.RouteName;
 
                 if (routeName != actualRouteName)
                 {
                     failedValidationAction(
                         "to have",
                         $"'{routeName}' route name",
-                        $"instead received '{actualRouteName.GetErrorMessageName()}'");
+                        $"instead received {actualRouteName.GetErrorMessageName()}");
                 }
             });
         }
@@ -96,7 +96,7 @@
         {
             RuntimeBinderValidator.ValidateBinding(() =>
             {
-                if (!actionResult.RouteValues.ContainsKey(key))
+                if (!((IDictionary<string, object>)actionResult.RouteValues).ContainsKey(key))
                 {
                     failedValidationAction(
                         "route values",
@@ -121,7 +121,7 @@
         {
             RuntimeBinderValidator.ValidateBinding(() =>
             {
-                var routeValues = actionResult.RouteValues;
+                var routeValues = (IDictionary<string, object>)actionResult.RouteValues;
 
                 var itemExists = routeValues.ContainsKey(key);
                 var actualValue = itemExists ? routeValues[key] : null;
@@ -149,7 +149,7 @@
         {
             RuntimeBinderValidator.ValidateBinding(() =>
             {
-                var actualRouteValues = actionResult.RouteValues;
+                var actualRouteValues = (IDictionary<string, object>)actionResult.RouteValues;
 
                 var expectedItems = routeValues.Count;
                 var actualItems = actualRouteValues.Count;
@@ -183,7 +183,7 @@
         {
             RuntimeBinderValidator.ValidateBinding(() =>
             {
-                if (urlHelper != actionResult.UrlHelper)
+                if (urlHelper != (IUrlHelper)actionResult.UrlHelper)
                 {
                     failedValidationAction(
                         "UrlHelper",

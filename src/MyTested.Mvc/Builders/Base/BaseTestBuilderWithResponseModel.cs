@@ -62,7 +62,7 @@
         /// <returns>Builder for testing the response model errors.</returns>
         public IModelDetailsTestBuilder<TResponseModel> WithResponseModelOfType<TResponseModel>()
         {
-            var actualResponseDataType = this.GetActualModel()?.GetType();
+            var actualResponseDataType = this.GetReturnType();
             var expectedResponseDataType = typeof(TResponseModel);
 
             var responseDataTypeIsAssignable = Reflection.AreAssignable(
@@ -298,6 +298,20 @@
             }
 
             return null;
+        }
+
+        private Type GetReturnType()
+        {
+            if (this.ActionResult is ObjectResult)
+            {
+                var declaredType = (this.ActionResult as ObjectResult)?.DeclaredType;
+                if (declaredType != null)
+                {
+                    return declaredType;
+                }
+            }
+
+            return this.GetActualModel()?.GetType();
         }
     }
 }

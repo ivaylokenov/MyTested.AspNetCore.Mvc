@@ -63,7 +63,7 @@
         /// </summary>
         /// <param name="key">Expected route key.</param>
         /// <returns>The same created test builder.</returns>
-        IAndCreatedTestBuilder WithRouteValue(string key);
+        IAndCreatedTestBuilder ContainingRouteValue(string key);
 
         /// <summary>
         /// Tests whether created result contains specific route key and value.
@@ -71,21 +71,21 @@
         /// <param name="key">Expected route key.</param>
         /// <param name="value">Expected route value.</param>
         /// <returns>The same created test builder.</returns>
-        IAndCreatedTestBuilder WithRouteValue(string key, object value);
+        IAndCreatedTestBuilder ContainingRouteValue(string key, object value);
 
         /// <summary>
         /// Tests whether created result contains the provided route values.
         /// </summary>
         /// <param name="routeValues">Expected route value dictionary.</param>
         /// <returns>The same created test builder.</returns>
-        IAndCreatedTestBuilder WithRouteValues(object routeValues);
+        IAndCreatedTestBuilder ContainingRouteValues(object routeValues);
 
         /// <summary>
         /// Tests whether created result contains the provided route values.
         /// </summary>
         /// <param name="routeValues">Expected route value dictionary.</param>
         /// <returns>The same created test builder.</returns>
-        IAndCreatedTestBuilder WithRouteValues(IDictionary<string, object> routeValues);
+        IAndCreatedTestBuilder ContainingRouteValues(IDictionary<string, object> routeValues);
 
         /// <summary>
         /// Tests whether created result has the same URL helper as the provided one.

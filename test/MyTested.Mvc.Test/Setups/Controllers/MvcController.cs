@@ -175,6 +175,17 @@
 
             return this.HttpBadRequest();
         }
+
+        public void CustomVoidResponseAction()
+        {
+            this.SetCustomResponse();
+        }
+
+        public IActionResult CustomResponseAction()
+        {
+            this.SetCustomResponse();
+            return this.Ok();
+        }
         
         public IActionResult FullHttpBadRequestAction()
         {
@@ -707,6 +718,19 @@
         private void ThrowNewNullReferenceException()
         {
             throw new NullReferenceException("Test exception message");
+        }
+
+        private void SetCustomResponse()
+        {
+            var response = this.Response;
+            response.ContentType = ContentType.ApplicationJson;
+            response.StatusCode = HttpStatusCode.InternalServerError;
+            response.Headers.Add("TestHeader", "TestHeaderValue");
+            response.Cookies.Append("TestCookie", "TestCookieValue", new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true
+            });
         }
     }
 }

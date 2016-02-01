@@ -60,27 +60,27 @@
         /// <typeparam name="TArgument">Type of the argument.</typeparam>
         /// <param name="argument">Argument object.</param>
         /// <returns>The same view component test builder.</returns>
-        IAndViewComponentTestBuilder WithArgument<TArgument>(TArgument argument);
+        IAndViewComponentTestBuilder ContainingArgument<TArgument>(TArgument argument);
 
         /// <summary>
         /// Tests whether view component result will be invoked with an argument of the provided type.
         /// </summary>
         /// <typeparam name="TArgument">Type of the argument.</typeparam>
         /// <returns>The same view component test builder.</returns>
-        IAndViewComponentTestBuilder WithArgumentOfType<TArgument>();
+        IAndViewComponentTestBuilder ContainingArgumentOfType<TArgument>();
 
         /// <summary>
         /// Tests whether view component result will be invoked with the provided arguments.
         /// </summary>
         /// <param name="arguments">Argument objects as enumerable.</param>
         /// <returns>The same view component test builder.</returns>
-        IAndViewComponentTestBuilder WithArguments(IEnumerable<object> arguments);
+        IAndViewComponentTestBuilder ContainingArguments(IEnumerable<object> arguments);
 
         /// <summary>
         /// Tests whether view component result will be invoked with the provided arguments.
         /// </summary>
         /// <param name="arguments">Argument objects.</param>
         /// <returns>The same view component test builder.</returns>
-        IAndViewComponentTestBuilder WithArguments(params object[] arguments);
+        IAndViewComponentTestBuilder ContainingArguments(params object[] arguments);
     }
 }

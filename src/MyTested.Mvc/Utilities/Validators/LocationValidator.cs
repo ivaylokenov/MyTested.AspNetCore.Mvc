@@ -43,7 +43,7 @@
         {
             RuntimeBinderValidator.ValidateBinding(() =>
             {
-                var actualLocation = GetUrlFromDynamic(actionResult);
+                var actualLocation = (string)GetUrlFromDynamic(actionResult);
                 if (location != actualLocation)
                 {
                     failedValidationAction(
@@ -67,7 +67,7 @@
         {
             RuntimeBinderValidator.ValidateBinding(() =>
             {
-                var actualUri = GetUrlFromDynamic(actionResult);
+                var actualUri = (string)GetUrlFromDynamic(actionResult);
 
                 var newUriTestBuilder = new MockedUriTestBuilder();
                 uriTestBuilder(newUriTestBuilder);
