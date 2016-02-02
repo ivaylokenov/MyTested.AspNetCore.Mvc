@@ -1,8 +1,10 @@
 ﻿namespace MyTested.Mvc
 {
     using System;
+    using Builders;
+    using Builders.Contracts.Application;
     using Builders.Controllers;
-    using Internal;
+    using Internal.Application;
     using Microsoft.AspNet.Mvc;
     using Microsoft.Extensions.DependencyInjection;
     using Utilities;
@@ -17,6 +19,17 @@
             IsUsingDefaultServices();
         }
 
+        public static IApplicationConfigurationBuilder IsUsingDefaultConfiguration()
+        {
+            return new ApplicationConfigurationBuilder(null);
+        }
+
+        public static IApplicationConfigurationBuilder StartsFrom<TStartup>()
+            where TStartup : class, new()
+        {
+            return new ApplicationConfigurationBuilder(typeof(TStartup));
+        }
+
         /// <summary>
         /// Registers default  ASP.NET MVC application services.
         /// </summary>
@@ -24,7 +37,7 @@
         {
             IsUsing(null);
         }
-        
+
         /// <summary>
         /// Registers default ASP.NET MVC application services and adds custom ones by using the provided action.
         /// </summary>
@@ -53,7 +66,7 @@
         {
             TestServiceProvider.Setup<TStartup>(services);
         }
-        
+
         /// <summary>
         /// Selects controller on which the test will be executed. Controller is instantiated with default constructor.
         /// </summary>

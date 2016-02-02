@@ -1,5 +1,6 @@
 ﻿namespace MyTested.Mvc.Internal.Http
 {
+    using Internal.Application;
     using Microsoft.AspNet.Http;
     using Microsoft.AspNet.Http.Features;
     using Microsoft.AspNet.Http.Features.Internal;

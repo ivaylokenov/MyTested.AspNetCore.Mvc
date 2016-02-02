@@ -5,7 +5,7 @@
     using Base;
     using Contracts.ActionResults.Json;
     using Exceptions;
-    using Internal;
+    using Internal.Application;
     using Internal.Extensions;
     using Microsoft.AspNet.Mvc;
     using Microsoft.Extensions.Options;

@@ -7,7 +7,7 @@ namespace MyTested.Mvc.Tests
     using System;
     using System.Linq;
     using Exceptions;
-    using Internal;
+    using Internal.Application;
     using Microsoft.AspNet.Mvc;
     using Microsoft.AspNet.Mvc.Internal;
     using Microsoft.Extensions.DependencyInjection;

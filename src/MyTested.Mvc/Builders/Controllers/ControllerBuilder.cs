@@ -14,6 +14,7 @@
     using Exceptions;
     using Http;
     using Internal;
+    using Internal.Application;
     using Internal.Contracts;
     using Internal.Extensions;
     using Internal.Http;

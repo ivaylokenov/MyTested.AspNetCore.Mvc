@@ -1,6 +1,6 @@
 ﻿namespace MyTested.Mvc.Utilities.Validators
 {
-    using MyTested.Mvc.Internal;
+    using Internal.Application;
 
     /// <summary>
     /// Validator class containing application services validation logic.
