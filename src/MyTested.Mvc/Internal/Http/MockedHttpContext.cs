@@ -73,7 +73,7 @@
 
         private void PrepareRequestServices()
         {
-            if (!TestServiceProvider.IsAvailable || this.RequestServices != null)
+            if (this.RequestServices != null)
             {
                 return;
             }

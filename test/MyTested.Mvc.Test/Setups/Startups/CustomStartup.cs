@@ -1,6 +1,7 @@
 ﻿namespace MyTested.Mvc.Tests.Setups.Startups
 {
     using System;
+    using Microsoft.AspNet.Builder;
     using Microsoft.Extensions.DependencyInjection;
     using Services;
 
@@ -8,7 +9,13 @@
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc();
             services.AddTransient<IInjectedService, ReplaceableInjectedService>();
+        }
+
+        public void Configure(IApplicationBuilder app)
+        {
+            app.UseMvcWithDefaultRoute();
         }
 
         public IServiceProvider ConfigureServicesAndBuildProvider(IServiceCollection services)

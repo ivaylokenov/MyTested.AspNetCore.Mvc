@@ -16,13 +16,14 @@ namespace MyTested.Mvc.Tests
     using Setups.Controllers;
     using Setups.Services;
     using Setups.Startups;
-
+    using Microsoft.AspNet.Routing;
+    using Microsoft.AspNet.Builder;
     public class MyMvcTests
     {
         [Fact]
         public void UsesDefaultServicesShouldPopulateDefaultServices()
         {
-            MyMvc.IsUsingDefaultServices();
+            MyMvc.IsUsingDefaultConfiguration();
 
             var markerService = TestServiceProvider.GetService<MvcMarkerService>();
 
@@ -32,7 +33,9 @@ namespace MyTested.Mvc.Tests
         [Fact]
         public void IsUsingShouldAddServices()
         {
-            MyMvc.IsUsing(TestObjectFactory.GetCustomServicesRegistrationAction());
+            MyMvc
+                .IsUsingDefaultConfiguration()
+                .WithServices(TestObjectFactory.GetCustomServicesRegistrationAction());
 
             var injectedService = TestServiceProvider.GetService<IInjectedService>();
             var anotherInjectedService = TestServiceProvider.GetService<IAnotherInjectedService>();
@@ -40,17 +43,18 @@ namespace MyTested.Mvc.Tests
             Assert.NotNull(injectedService);
             Assert.NotNull(anotherInjectedService);
 
-            MyMvc.IsUsingDefaultServices();
+            MyMvc.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void IsUsingShouldAddServicesWithOptions()
         {
-            MyMvc.IsUsingDefaultServices();
+            MyMvc.IsUsingDefaultConfiguration();
 
             var initialSetOptions = TestServiceProvider.GetServices<IConfigureOptions<MvcOptions>>();
 
-            MyMvc.IsUsing(TestObjectFactory.GetCustomServicesWithOptionsRegistrationAction());
+            MyMvc.IsUsingDefaultConfiguration()
+                .WithServices(TestObjectFactory.GetCustomServicesWithOptionsRegistrationAction());
 
             var injectedService = TestServiceProvider.GetService<IInjectedService>();
             var anotherInjectedService = TestServiceProvider.GetService<IAnotherInjectedService>();
@@ -63,49 +67,51 @@ namespace MyTested.Mvc.Tests
             Assert.NotNull(setOptions);
             Assert.Equal(initialSetOptions.Count() + 1, setOptions.Count());
 
-            MyMvc.IsUsingDefaultServices();
+            MyMvc.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void IsUsingWithStartUpClassShouldWorkCorrectlyWithAction()
         {
-            MyMvc.IsUsing<CustomStartup>();
+            MyMvc.StartsFrom<CustomStartup>();
 
             var injectedService = TestServiceProvider.GetService<IInjectedService>();
 
             Assert.NotNull(injectedService);
             Assert.IsAssignableFrom(typeof(ReplaceableInjectedService), injectedService);
 
-            MyMvc.IsUsingDefaultServices();
+            MyMvc.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void IsUsingWithStartUpClassShouldWorkCorrectlyWithFunc()
         {
-            MyMvc.IsUsing<CustomStartupWithBuiltProvider>();
+            MyMvc.StartsFrom<CustomStartupWithBuiltProvider>();
 
             var injectedService = TestServiceProvider.GetService<IInjectedService>();
 
             Assert.NotNull(injectedService);
             Assert.IsAssignableFrom(typeof(ReplaceableInjectedService), injectedService);
 
-            MyMvc.IsUsingDefaultServices();
+            MyMvc.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void IsUsingWithAdditionalServicesShouldUseThem()
         {
-            MyMvc.IsUsing<CustomStartup>(services =>
-            {
-                services.AddTransient<IInjectedService, InjectedService>();
-            });
+            MyMvc
+                .StartsFrom<CustomStartup>()
+                .WithServices(services =>
+                {
+                    services.AddTransient<IInjectedService, InjectedService>();
+                });
 
             var injectedServices = TestServiceProvider.GetService<IInjectedService>();
 
             Assert.NotNull(injectedServices);
             Assert.IsAssignableFrom(typeof(InjectedService), injectedServices);
 
-            MyMvc.IsUsingDefaultServices();
+            MyMvc.IsUsingDefaultConfiguration();
         }
 
         [Fact]
@@ -114,21 +120,24 @@ namespace MyTested.Mvc.Tests
             Test.AssertException<InvalidOperationException>(
                 () =>
                 {
-                    MyMvc.IsUsing<MvcController>();
+                    MyMvc.StartsFrom<MvcController>();
+                    TestServiceProvider.GetService<IInjectedService>();
                 },
-                "The provided MvcController class should have method named 'ConfigureServices' with void or IServiceProvider return type.");
+                "A public method named 'ConfigureTests' or 'Configure' could not be found in the 'MyTested.Mvc.Tests.Setups.Controllers.MvcController' type.");
         }
 
         [Fact]
         public void IsUsingShouldRecreateServicesEverytimeItIsInvoked()
         {
-            MyMvc.IsUsingDefaultServices();
+            MyMvc.IsUsingDefaultConfiguration();
 
             var markerService = TestServiceProvider.GetService<MvcMarkerService>();
 
             Assert.NotNull(markerService);
 
-            MyMvc.IsUsing(TestObjectFactory.GetCustomServicesRegistrationAction());
+            MyMvc
+                .IsUsingDefaultConfiguration()
+                .WithServices(TestObjectFactory.GetCustomServicesRegistrationAction());
 
             var injectedService = TestServiceProvider.GetService<IInjectedService>();
             var anotherInjectedService = TestServiceProvider.GetService<IAnotherInjectedService>();
@@ -136,7 +145,7 @@ namespace MyTested.Mvc.Tests
             Assert.NotNull(injectedService);
             Assert.NotNull(anotherInjectedService);
 
-            MyMvc.IsUsingDefaultServices();
+            MyMvc.IsUsingDefaultConfiguration();
 
             Test.AssertException<NullReferenceException>(
                 () =>
@@ -145,7 +154,8 @@ namespace MyTested.Mvc.Tests
                 },
                 "IInjectedService could not be resolved from the services provider. Before running this test case, the service should be registered in the 'IsUsing' method and cannot be null.");
 
-            MyMvc.IsUsing(TestObjectFactory.GetCustomServicesRegistrationAction());
+            MyMvc.IsUsingDefaultConfiguration()
+                .WithServices(TestObjectFactory.GetCustomServicesRegistrationAction());
 
             injectedService = TestServiceProvider.GetService<IInjectedService>();
             anotherInjectedService = TestServiceProvider.GetService<IAnotherInjectedService>();
@@ -153,7 +163,7 @@ namespace MyTested.Mvc.Tests
             Assert.NotNull(injectedService);
             Assert.NotNull(anotherInjectedService);
 
-            MyMvc.IsUsingDefaultServices();
+            MyMvc.IsUsingDefaultConfiguration();
         }
 
         [Fact]
@@ -190,11 +200,12 @@ namespace MyTested.Mvc.Tests
         [Fact]
         public void ControllerWithNoParameterlessConstructorAndWithRegisteredServicesShouldPopulateCorrectInstanceOfControllerType()
         {
-            MyMvc.IsUsing(services =>
-            {
-                services.AddTransient<IInjectedService, InjectedService>();
-                services.AddTransient<IAnotherInjectedService, AnotherInjectedService>();
-            });
+            MyMvc.IsUsingDefaultConfiguration()
+                .WithServices(services =>
+                {
+                    services.AddTransient<IInjectedService, InjectedService>();
+                    services.AddTransient<IAnotherInjectedService, AnotherInjectedService>();
+                });
 
             var controller = MyMvc.Controller<NoParameterlessConstructorController>().AndProvideTheController();
 
@@ -204,13 +215,13 @@ namespace MyTested.Mvc.Tests
             Assert.NotNull(controller.AnotherInjectedService);
             Assert.IsAssignableFrom<AnotherInjectedService>(controller.AnotherInjectedService);
 
-            MyMvc.IsUsingDefaultServices();
+            MyMvc.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void ControllerWithNoParameterlessConstructorAndNoServicesShouldThrowProperException()
         {
-            MyMvc.IsUsingDefaultServices();
+            MyMvc.IsUsingDefaultConfiguration();
 
             Test.AssertException<UnresolvedDependenciesException>(
                 () =>
@@ -223,7 +234,165 @@ namespace MyTested.Mvc.Tests
                 }, 
                 "NoParameterlessConstructorController could not be instantiated because it contains no constructor taking no parameters.");
 
-            MyMvc.IsUsingDefaultServices();
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void DefaultConfigShouldSetMvc()
+        {
+            MyMvc.IsUsingDefaultConfiguration();
+            
+            var service = TestServiceProvider.GetRequiredService<MvcMarkerService>();
+
+            Assert.NotNull(service);
+        }
+
+        [Fact]
+        public void DefaultConfigShouldSetDefaultRoutes()
+        {
+            MyMvc.IsUsingDefaultConfiguration();
+
+            var routes = TestApplication.Router as RouteCollection;
+
+            Assert.NotNull(routes);
+            Assert.Equal(2, routes.Count);
+        }
+
+        [Fact]
+        public void DefaultConfigAndAdditionalServicesShouldWorkCorrectly()
+        {
+            MyMvc
+                .IsUsingDefaultConfiguration()
+                .WithServices(services =>
+                {
+                    services.AddMvc();
+                });
+
+            var service = TestServiceProvider.GetRequiredService<MvcMarkerService>();
+
+            Assert.NotNull(service);
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void DefaultConfigAndAdditionalApplicationShouldWorkCorrectly()
+        {
+            var set = false;
+
+            MyMvc
+                .IsUsingDefaultConfiguration()
+                .WithApplication(app =>
+                {
+                    set = true;
+                });
+            
+            Assert.NotNull(TestApplication.Services);
+            Assert.True(set);
+        }
+
+        [Fact]
+        public void DefaultConfigAndAdditionalRoutesShouldSetOnlyThem()
+        {
+            MyMvc
+                .IsUsingDefaultConfiguration()
+                .WithRoutes(routes =>
+                {
+                    routes.MapRoute(
+                        name: "another",
+                        template: "{controller=Home}/{action=Index}/{id?}");
+                });
+            
+            var setRoutes = TestApplication.Router as RouteCollection;
+
+            Assert.NotNull(setRoutes);
+            Assert.Equal(3, setRoutes.Count);
+        }
+
+        [Fact]
+        public void CustomStartupShouldSetServicesAndRoutesCorrectly()
+        {
+            MyMvc.StartsFrom<CustomStartup>();
+
+            var service = TestApplication.Services.GetRequiredService<IInjectedService>();
+
+            Assert.NotNull(service);
+
+            var routes = TestApplication.Router as RouteCollection;
+
+            Assert.NotNull(routes);
+            Assert.Equal(2, routes.Count);
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void CustomStartupWithAdditionalServiceShouldSetThem()
+        {
+            MyMvc.StartsFrom<CustomStartup>()
+                .WithServices(services =>
+                {
+                    services.AddTransient<IAnotherInjectedService, AnotherInjectedService>();
+                });
+
+            var service = TestApplication.Services.GetRequiredService<IAnotherInjectedService>();
+
+            Assert.NotNull(service);
+
+            var routes = TestApplication.Router as RouteCollection;
+
+            Assert.NotNull(routes);
+            Assert.Equal(2, routes.Count);
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+        
+        [Fact]
+        public void CustomStartupWithAdditionalApplicationShouldWorkCorrectly()
+        {
+            var set = false;
+
+            MyMvc.StartsFrom<CustomStartup>()
+                .WithApplication(app =>
+                {
+                    set = true;
+                });
+
+            var service = TestApplication.Services.GetRequiredService<IInjectedService>();
+
+            Assert.NotNull(service);
+
+            Assert.True(set);
+
+            var routes = TestApplication.Router as RouteCollection;
+
+            Assert.NotNull(routes);
+            Assert.Equal(2, routes.Count);
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void WithCustomStartupAndAdditionalRoutesShouldWorkCorrectly()
+        {
+            MyMvc.StartsFrom<CustomStartup>()
+                .WithRoutes(routes =>
+                {
+                    routes.MapRoute(
+                        name: "another",
+                        template: "{controller=Home}/{action=Index}/{id?}");
+                });
+
+            var service = TestApplication.Services.GetRequiredService<IInjectedService>();
+
+            Assert.NotNull(service);
+            
+            var routesCollection = TestApplication.Router as RouteCollection;
+
+            Assert.NotNull(routesCollection);
+            Assert.Equal(3, routesCollection.Count);
+
+            MyMvc.IsUsingDefaultConfiguration();
         }
     }
 }

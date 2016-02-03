@@ -4,9 +4,7 @@
     using Builders;
     using Builders.Contracts.Application;
     using Builders.Controllers;
-    using Internal.Application;
     using Microsoft.AspNet.Mvc;
-    using Microsoft.Extensions.DependencyInjection;
     using Utilities;
 
     /// <summary>
@@ -16,55 +14,27 @@
     {
         static MyMvc()
         {
-            IsUsingDefaultServices();
+            IsUsingDefaultConfiguration();
         }
 
+        /// <summary>
+        /// Sets default configuration on the tested application. Calls 'AddMvc' on the services collection and 'UseMvc' on the application builder.
+        /// </summary>
+        /// <returns>Application configuration builder.</returns>
         public static IApplicationConfigurationBuilder IsUsingDefaultConfiguration()
         {
             return new ApplicationConfigurationBuilder(null);
         }
 
+        /// <summary>
+        /// Configures the tested application with the provided startup class.
+        /// </summary>
+        /// <typeparam name="TStartup">Type of startup class.</typeparam>
+        /// <returns>Application configuration builder.</returns>
         public static IApplicationConfigurationBuilder StartsFrom<TStartup>()
             where TStartup : class, new()
         {
             return new ApplicationConfigurationBuilder(typeof(TStartup));
-        }
-
-        /// <summary>
-        /// Registers default  ASP.NET MVC application services.
-        /// </summary>
-        public static void IsUsingDefaultServices()
-        {
-            IsUsing(null);
-        }
-
-        /// <summary>
-        /// Registers default ASP.NET MVC application services and adds custom ones by using the provided action.
-        /// </summary>
-        /// <param name="services">Action which configures the application services.</param>
-        public static void IsUsing(Action<IServiceCollection> services)
-        {
-            TestServiceProvider.Setup(services);
-        }
-
-        /// <summary>
-        /// Registers ASP.NET MVC application services by using the provided Startup class.
-        /// </summary>
-        /// <typeparam name="TStartup">Class containing public 'ConfigureServices' method.</typeparam>
-        public static void IsUsing<TStartup>() where TStartup : class, new()
-        {
-            IsUsing<TStartup>(null);
-        }
-
-        /// <summary>
-        /// Registers ASP.NET MVC application services by using the provided Startup class and adds custom ones by using the provided action.
-        /// </summary>
-        /// <typeparam name="TStartup">Class containing public 'ConfigureServices' method.</typeparam>
-        /// <param name="services">Action which configures the application services.</param>
-        public static void IsUsing<TStartup>(Action<IServiceCollection> services)
-            where TStartup : class, new()
-        {
-            TestServiceProvider.Setup<TStartup>(services);
         }
 
         /// <summary>
