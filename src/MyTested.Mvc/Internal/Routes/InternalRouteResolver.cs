@@ -1,16 +1,16 @@
 ﻿namespace MyTested.Mvc.Internal.Routes
 {
-    using Microsoft.AspNet.Routing;
+    using Microsoft.AspNetCore.Routing;
     using Internal.Application;
-    using Microsoft.AspNet.Mvc;
-    using Microsoft.AspNet.Mvc.Controllers;
-    using Microsoft.AspNet.Mvc.Infrastructure;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Controllers;
+    using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Contracts;
     using System;
-    using Microsoft.AspNet.Mvc.Abstractions;
-    /// <summary>
-    /// Used for resolving HTTP request to a route.
-    /// </summary>
+    using Microsoft.AspNetCore.Mvc.Abstractions;
+    using Microsoft.AspNetCore.Mvc.Internal;    /// <summary>
+                                                /// Used for resolving HTTP request to a route.
+                                                /// </summary>
     public static class InternalRouteResolver
     {
         private const string UnresolvedRouteFormat = "it could not be resolved: '{0}'";
@@ -31,7 +31,7 @@
             ActionDescriptor actionDescriptor;
             try
             {
-                actionDescriptor = actionSelector.SelectAsync(routeContext).Result;
+                actionDescriptor = actionSelector.Select(routeContext);
             }
             catch (Exception ex)
             {

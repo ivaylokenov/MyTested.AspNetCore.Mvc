@@ -1,6 +1,6 @@
 ﻿namespace MyTested.Mvc.Tests.Setups.Common
 {
-    using Microsoft.AspNet.Mvc.Abstractions;
+    using Microsoft.AspNetCore.Mvc.Abstractions;
 
     public class CustomActionInvokerProvider : IActionInvokerProvider
     {

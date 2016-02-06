@@ -9,9 +9,9 @@
     using Contracts.Uris;
     using Exceptions;
     using Internal.Extensions;
-    using Microsoft.AspNet.Mvc;
-    using Microsoft.AspNet.Mvc.Formatters;
-    using Microsoft.AspNet.Routing;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Formatters;
+    using Microsoft.AspNetCore.Routing;
     using Microsoft.Net.Http.Headers;
     using Utilities.Validators;
 

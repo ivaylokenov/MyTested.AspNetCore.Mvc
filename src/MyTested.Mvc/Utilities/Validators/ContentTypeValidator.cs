@@ -5,6 +5,8 @@
     using System.Linq;
     using Microsoft.Net.Http.Headers;
     using Internal.Extensions;
+    using Microsoft.AspNetCore.Mvc.Formatters;
+
     /// <summary>
     /// Validator class containing content type validation logic.
     /// </summary>
@@ -17,18 +19,16 @@
         /// <param name="actualContentType">Actual content type.</param>
         /// <param name="failedValidationAction">Action to call in case of failed validation.</param>
         public static void ValidateContentType(
-            MediaTypeHeaderValue expectedContentType,
-            MediaTypeHeaderValue actualContentType,
+            string expectedContentType,
+            string actualContentType,
             Action<string, string, string> failedValidationAction)
         {
-            if ((expectedContentType == null && actualContentType != null)
-                || (expectedContentType != null && actualContentType == null)
-                || (expectedContentType != null && expectedContentType.MediaType != actualContentType.MediaType))
+            if (expectedContentType != actualContentType)
             {
                 failedValidationAction(
                     "ContentType",
-                    $"to be {(expectedContentType != null ? expectedContentType.MediaType.GetErrorMessageName() : "null")}",
-                    $"instead received {(actualContentType != null ? actualContentType.MediaType.GetErrorMessageName() : "null")}");
+                    $"to be {expectedContentType.GetErrorMessageName()}",
+                    $"instead received {actualContentType.GetErrorMessageName()}");
             }
         }
 
@@ -40,14 +40,14 @@
         /// <param name="failedValidationAction">Action to call in case of failed validation.</param>
         public static void ValidateContentType(
             dynamic actionResult,
-            MediaTypeHeaderValue expectedContentType,
+            string expectedContentType,
             Action<string, string, string> failedValidationAction)
         {
             RuntimeBinderValidator.ValidateBinding(() =>
             {
                 ValidateContentType(
                     expectedContentType,
-                    (MediaTypeHeaderValue)actionResult.ContentType,
+                    (string)actionResult.ContentType,
                     failedValidationAction);
             });
         }
@@ -63,8 +63,8 @@
             MediaTypeHeaderValue expectedContentType,
             Action<string, string, string> failedValidationAction)
         {
-            var contentTypes = (IList<MediaTypeHeaderValue>)TryGetContentTypesList(actionResult);
-            if (!contentTypes.Contains(expectedContentType))
+            var contentTypes = (MediaTypeCollection)TryGetContentTypesCollection(actionResult);
+            if (!contentTypes.Contains(expectedContentType.MediaType))
             {
                 failedValidationAction(
                     "content types",
@@ -84,8 +84,8 @@
             IEnumerable<MediaTypeHeaderValue> contentTypes,
             Action<string, string, string> failedValidationAction)
         {
-            var actualContentTypes = (IList<MediaTypeHeaderValue>)SortContentTypes(TryGetContentTypesList(actionResult));
-            var expectedContentTypes = SortContentTypes(contentTypes);
+            var actualContentTypes = (IList<string>)SortContentTypes(TryGetContentTypesCollection(actionResult));
+            var expectedContentTypes = SortContentTypes(contentTypes.Select(m => m.MediaType));
 
             if (actualContentTypes.Count != expectedContentTypes.Count)
             {
@@ -97,32 +97,32 @@
 
             for (int i = 0; i < actualContentTypes.Count; i++)
             {
-                var actualMediaTypeFormatter = actualContentTypes[i]?.MediaType;
-                var expectedMediaTypeFormatter = expectedContentTypes[i]?.MediaType;
-                if (actualMediaTypeFormatter != expectedMediaTypeFormatter)
+                var actualContentType = actualContentTypes[i];
+                var expectedContentType = expectedContentTypes[i];
+                if (actualContentType != expectedContentType)
                 {
                     failedValidationAction(
                         "content types",
-                        $"to contain {expectedMediaTypeFormatter}",
+                        $"to contain {expectedContentType}",
                         "none was found");
                 }
             }
         }
 
-        private static IList<MediaTypeHeaderValue> SortContentTypes(IEnumerable<MediaTypeHeaderValue> contentTypes)
+        private static IList<string> SortContentTypes(IEnumerable<string> contentTypes)
         {
             return contentTypes
-                .OrderBy(m => m.MediaType)
+                .OrderBy(m => m)
                 .ToList();
         }
 
-        private static IList<MediaTypeHeaderValue> TryGetContentTypesList(dynamic actionResult)
+        private static IEnumerable<string> TryGetContentTypesCollection(dynamic actionResult)
         {
-            IList<MediaTypeHeaderValue> contentTypes = null;
+            MediaTypeCollection contentTypes = null;
 
             RuntimeBinderValidator.ValidateBinding(() =>
             {
-                contentTypes = (IList<MediaTypeHeaderValue>)actionResult.ContentTypes;
+                contentTypes = (MediaTypeCollection)actionResult.ContentTypes;
             });
 
             return contentTypes;

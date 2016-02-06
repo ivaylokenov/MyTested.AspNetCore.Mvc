@@ -4,8 +4,8 @@
     using System.Collections.Generic;
     using Authentication;
     using Base;
-    using Microsoft.AspNet.Http.Authentication;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Http.Authentication;
+    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
     /// Used for testing challenge result.

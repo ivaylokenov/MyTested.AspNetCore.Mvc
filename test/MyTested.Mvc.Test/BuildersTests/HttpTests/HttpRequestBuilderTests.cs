@@ -2,8 +2,8 @@
 {
     using System.Collections.Generic;
     using System.IO;
-    using Microsoft.AspNet.Http.Features.Internal;
-    using Microsoft.AspNet.Http.Internal;
+    using Microsoft.AspNetCore.Http.Features.Internal;
+    using Microsoft.AspNetCore.Http.Internal;
     using Setups.Controllers;
     using Xunit;
 

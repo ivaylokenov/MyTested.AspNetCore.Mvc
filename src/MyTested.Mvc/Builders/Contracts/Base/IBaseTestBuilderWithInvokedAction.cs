@@ -1,6 +1,6 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.Base
 {
-    using Microsoft.AspNet.Http;
+    using Microsoft.AspNetCore.Http;
     using System;
 
     /// <summary>

@@ -5,19 +5,20 @@
     using Caching;
     using Contracts;
     using Logging;
-    using Microsoft.AspNet.Builder;
-    using Microsoft.AspNet.Hosting.Internal;
-    using Microsoft.AspNet.Hosting.Startup;
-    using Microsoft.AspNet.Http;
-    using Microsoft.AspNet.Mvc.Routing;
-    using Microsoft.AspNet.Routing;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting.Internal;
+    using Microsoft.AspNetCore.Hosting.Startup;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc.Routing;
+    using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
     using Microsoft.Extensions.Logging;
-    using Microsoft.AspNet.Mvc.Abstractions;
+    using Microsoft.AspNetCore.Mvc.Abstractions;
     using Routes;
     using System.Linq;
     using System.Diagnostics;
+    using Microsoft.AspNetCore.Mvc.Internal;
     public static class TestApplication
     {
         private static readonly RequestDelegate NullHandler = (c) => Task.FromResult(0);

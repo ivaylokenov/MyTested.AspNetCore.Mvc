@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq.Expressions;
     using Base;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Uris;
 
     /// <summary>

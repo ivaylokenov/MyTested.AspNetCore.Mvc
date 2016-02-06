@@ -7,12 +7,11 @@
   "licenseUrl": "",
 
   "dependencies": {
-    "xunit": "2.2.0-beta1-build3239",
-    "xunit.runner.aspnet": "2.0.0-aspnet-rc2-16023",
     "MyTested.Mvc": {
       "version": "0.5.0",
       "type": "build"
-    }
+    },
+    "xunit.runner.aspnet": "2.0.0-aspnet-*"
   },
 
   "commands": {
@@ -20,7 +19,6 @@
   },
 
   "frameworks": {
-    "dnx451": { },
-    "dnxcore50": { }
+    "dnx451": { }
   }
 }

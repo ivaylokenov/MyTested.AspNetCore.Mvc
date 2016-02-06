@@ -1,7 +1,7 @@
 ﻿namespace MyTested.Mvc.Tests.UtilitiesTests.ValidatorsTests
 {
     using Exceptions;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Setups;
     using Utilities.Validators;
     using Xunit;

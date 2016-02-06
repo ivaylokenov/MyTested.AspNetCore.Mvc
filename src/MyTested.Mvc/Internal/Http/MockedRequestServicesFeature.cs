@@ -1,7 +1,7 @@
 ﻿namespace MyTested.Mvc.Internal.Http
 {
     using System;
-    using Microsoft.AspNet.Http.Features.Internal;
+    using Microsoft.AspNetCore.Http.Features.Internal;
     using Microsoft.Extensions.DependencyInjection;
     
     /// <summary>

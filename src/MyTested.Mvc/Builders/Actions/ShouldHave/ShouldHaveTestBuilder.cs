@@ -6,7 +6,7 @@
     using Contracts.Actions;
     using Contracts.Http;
     using Http;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
     /// Used for testing action attributes and model state.

@@ -1,7 +1,7 @@
 ﻿namespace MyTested.Mvc.Tests.BuildersTests.AttributesTests
 {
     using Exceptions;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Setups;
     using Setups.Controllers;
     using Xunit;

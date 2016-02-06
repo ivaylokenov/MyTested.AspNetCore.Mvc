@@ -2,7 +2,7 @@
 {
     using ActionResults.Forbid;
     using Contracts.ActionResults.Forbid;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
     /// Class containing methods for testing ForbidResult.

@@ -3,7 +3,7 @@
     using System;
     using System.Net;
     using Base;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.Net.Http.Headers;
     using Newtonsoft.Json;
 

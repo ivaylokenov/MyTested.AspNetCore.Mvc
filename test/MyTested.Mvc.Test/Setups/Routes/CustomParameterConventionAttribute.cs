@@ -1,8 +1,8 @@
 ﻿namespace MyTested.Mvc.Tests.Setups.Routes
 {
     using System;
-    using Microsoft.AspNet.Mvc.ApplicationModels;
-    using Microsoft.AspNet.Mvc.ModelBinding;
+    using Microsoft.AspNetCore.Mvc.ApplicationModels;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
 
     public class CustomParameterConventionAttribute : Attribute, IParameterModelConvention
     {

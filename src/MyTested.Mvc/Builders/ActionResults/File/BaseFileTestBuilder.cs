@@ -3,7 +3,7 @@
     using System;
     using Exceptions;
     using Internal.Extensions;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.Net.Http.Headers;
     using MyTested.Mvc.Builders.Base;
     using Utilities.Validators;
@@ -41,8 +41,8 @@
         /// <summary>
         /// Validates whether file result has the provided content type.
         /// </summary>
-        /// <param name="contentType">Content type as MediaTypeHeaderValue.</param>
-        protected void ValidateContentType(MediaTypeHeaderValue contentType)
+        /// <param name="contentType">Content type as string.</param>
+        protected void ValidateContentType(string contentType)
         {
             ContentTypeValidator.ValidateContentType(
                 this.ActionResult,

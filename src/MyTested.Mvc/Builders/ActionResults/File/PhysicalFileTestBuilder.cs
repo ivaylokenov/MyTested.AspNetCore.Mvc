@@ -1,7 +1,7 @@
 ﻿namespace MyTested.Mvc.Builders.ActionResults.File
 {
     using System;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.Net.Http.Headers;
     using MyTested.Mvc.Builders.Contracts.ActionResults.File;
     using Internal.Extensions;
@@ -33,7 +33,10 @@
         /// <param name="contentType">Content type as string.</param>
         /// <returns>The same file test builder.</returns>
         public IAndPhysicalFileTestBuilder WithContentType(string contentType)
-            => this.WithContentType(new MediaTypeHeaderValue(contentType));
+        {
+            this.ValidateContentType(contentType);
+            return this;
+        }
 
         /// <summary>
         /// Tests whether file result has the same content type as the provided one.
@@ -41,10 +44,7 @@
         /// <param name="contentType">Content type as MediaTypeHeaderValue.</param>
         /// <returns>The same file test builder.</returns>
         public IAndPhysicalFileTestBuilder WithContentType(MediaTypeHeaderValue contentType)
-        {
-            this.ValidateContentType(contentType);
-            return this;
-        }
+            => this.WithContentType(contentType?.MediaType);
 
         /// <summary>
         /// Tests whether file result has the same file download name as the provided one.

@@ -5,8 +5,8 @@
     using System.Linq.Expressions;
     using System.Net;
     using Base;
-    using Microsoft.AspNet.Mvc;
-    using Microsoft.AspNet.Mvc.Formatters;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.Net.Http.Headers;
     using Uris;
 

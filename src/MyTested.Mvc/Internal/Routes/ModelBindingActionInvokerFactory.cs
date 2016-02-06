@@ -1,13 +1,13 @@
 ﻿namespace MyTested.Mvc.Internal.Routes
 {
     using Contracts;
-    using Microsoft.AspNet.Mvc;
-    using Microsoft.AspNet.Mvc.Abstractions;
-    using Microsoft.AspNet.Mvc.Controllers;
-    using Microsoft.AspNet.Mvc.Filters;
-    using Microsoft.AspNet.Mvc.Formatters;
-    using Microsoft.AspNet.Mvc.ModelBinding;
-    using Microsoft.AspNet.Mvc.ModelBinding.Validation;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Abstractions;
+    using Microsoft.AspNetCore.Mvc.Controllers;
+    using Microsoft.AspNetCore.Mvc.Formatters;
+    using Microsoft.AspNetCore.Mvc.Internal;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
+    using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
     using System.Collections.Generic;
@@ -18,7 +18,7 @@
     {
         private readonly IControllerActionArgumentBinder argumentBinder;
         private readonly IControllerFactory controllerFactory;
-        private readonly IFilterProvider[] filterProviders;
+        private readonly FilterCache filterCache;
         private readonly IReadOnlyList<IInputFormatter> inputFormatters;
         private readonly IReadOnlyList<IModelBinder> modelBinders;
         private readonly IReadOnlyList<IModelValidatorProvider> modelValidatorProviders;
@@ -29,7 +29,7 @@
 
         public ModelBindingActionInvokerFactory(
             IControllerFactory controllerFactory,
-            IEnumerable<IFilterProvider> filterProviders,
+            FilterCache filterCache,
             IControllerActionArgumentBinder argumentBinder,
             IOptions<MvcOptions> optionsAccessor,
             ILoggerFactory loggerFactory,
@@ -37,7 +37,7 @@
         {
             this.controllerFactory = controllerFactory;
             this.argumentBinder = argumentBinder;
-            this.filterProviders = filterProviders.OrderBy(item => item.Order).ToArray();
+            this.filterCache = filterCache;
             this.inputFormatters = optionsAccessor.Value.InputFormatters.ToArray();
             this.modelBinders = optionsAccessor.Value.ModelBinders.ToArray();
             this.modelValidatorProviders = optionsAccessor.Value.ModelValidatorProviders.ToArray();
@@ -53,7 +53,7 @@
         {
             return new ModelBindingActionInvoker(
                 actionContext,
-                this.filterProviders,
+                this.filterCache,
                 this.controllerFactory,
                 controllerActionDescriptor,
                 this.inputFormatters,

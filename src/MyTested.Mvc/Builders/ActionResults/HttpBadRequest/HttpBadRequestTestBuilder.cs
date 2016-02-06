@@ -8,13 +8,12 @@
     using Contracts.Models;
     using Exceptions;
     using Internal.Extensions;
-    using Microsoft.AspNet.Mvc;
-    using Microsoft.AspNet.Mvc.ModelBinding;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Models;
     using System.Net;
     using Microsoft.Net.Http.Headers;
-    using Microsoft.AspNet.Mvc.Formatters;
-    using Contracts.Base;
+    using Microsoft.AspNetCore.Mvc.Formatters;
 
     /// <summary>
     /// Used for testing HTTP bad request results.

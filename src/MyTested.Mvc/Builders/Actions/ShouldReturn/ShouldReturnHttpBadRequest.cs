@@ -2,7 +2,7 @@
 {
     using ActionResults.HttpBadRequest;
     using Contracts.ActionResults.HttpBadRequest;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
     /// Class containing methods for testing BadRequestResult or BadRequestObjectResult.

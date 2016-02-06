@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Internal.Extensions;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
     /// Validator class containing validation logic action results with route specific information.

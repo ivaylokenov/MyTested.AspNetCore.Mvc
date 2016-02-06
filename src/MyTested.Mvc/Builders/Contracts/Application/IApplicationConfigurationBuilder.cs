@@ -1,8 +1,8 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.Application
 {
     using System;
-    using Microsoft.AspNet.Builder;
-    using Microsoft.AspNet.Routing;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.DependencyInjection;
 
     /// <summary>

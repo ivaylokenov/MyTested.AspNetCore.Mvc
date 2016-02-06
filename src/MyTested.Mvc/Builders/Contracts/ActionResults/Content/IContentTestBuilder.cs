@@ -3,7 +3,7 @@
     using System.Net;
     using System.Text;
     using Base;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.Net.Http.Headers;
 
     /// <summary>
@@ -38,18 +38,5 @@
         /// <param name="contenType">Content type as MediaTypeHeaderValue.</param>
         /// <returns>The same content test builder.</returns>
         IAndContentTestBuilder WithContentType(MediaTypeHeaderValue contenType);
-
-        /// <summary>
-        /// Tests whether content result has the default UTF8 encoding.
-        /// </summary>
-        /// <returns>The same content test builder.</returns>
-        IAndContentTestBuilder WithDefaultEncoding();
-
-        /// <summary>
-        /// Tests whether content result has the same encoding as the provided Encoding.
-        /// </summary>
-        /// <param name="encoding">Expected encoding.</param>
-        /// <returns>The same content test builder.</returns>
-        IAndContentTestBuilder WithEncoding(Encoding encoding);
     }
 }

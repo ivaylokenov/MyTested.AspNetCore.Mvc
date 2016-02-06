@@ -2,7 +2,7 @@
 {
     using ActionResults.LocalRedirect;
     using Contracts.ActionResults.LocalRedirect;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
     /// Class containing methods for testing LocalRedirectResult.

@@ -1,10 +1,19 @@
 ﻿namespace MyTested.Mvc.Tests.Setups.Common
 {
-    using Microsoft.AspNet.Mvc;
-    using Microsoft.AspNet.Mvc.Routing;
+    using System;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Routing;
 
     public class CustomUrlHelper : IUrlHelper
     {
+        public ActionContext ActionContext
+        {
+            get
+            {
+                return null;
+            }
+        }
+
         public string Action(UrlActionContext actionContext)
         {
             return null;

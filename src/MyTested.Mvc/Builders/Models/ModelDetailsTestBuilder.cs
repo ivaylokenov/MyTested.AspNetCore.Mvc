@@ -4,7 +4,7 @@
     using Contracts.Models;
     using Exceptions;
     using Internal.Extensions;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Utilities;
 
     /// <summary>

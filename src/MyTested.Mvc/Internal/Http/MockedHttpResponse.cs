@@ -1,8 +1,8 @@
 ﻿namespace MyTested.Mvc.Internal.Http
 {
     using System;
-    using Microsoft.AspNet.Http.Features;
-    using Microsoft.AspNet.Http.Internal;
+    using Microsoft.AspNetCore.Http.Features;
+    using Microsoft.AspNetCore.Http.Internal;
 
     /// <summary>
     /// Mocked HTTP response.

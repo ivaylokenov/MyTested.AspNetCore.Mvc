@@ -6,7 +6,7 @@
     using Base;
     using Contracts.Actions;
     using Contracts.And;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
     /// Class containing AndAlso() method allowing additional assertions after model state tests.

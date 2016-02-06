@@ -8,8 +8,8 @@ namespace MyTested.Mvc.Tests
     using System.Linq;
     using Exceptions;
     using Internal.Application;
-    using Microsoft.AspNet.Mvc;
-    using Microsoft.AspNet.Mvc.Internal;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Options;
     using Setups;
@@ -17,11 +17,11 @@ namespace MyTested.Mvc.Tests
     using Setups.Controllers;
     using Setups.Services;
     using Setups.Startups;
-    using Microsoft.AspNet.Routing;
-    using Microsoft.AspNet.Builder;
-    using Microsoft.AspNet.Mvc.Abstractions;
+    using Microsoft.AspNetCore.Routing;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Mvc.Abstractions;
     using Internal.Contracts;
-    using Microsoft.AspNet.Mvc.Controllers;
+    using Microsoft.AspNetCore.Mvc.Controllers;
     using Internal.Routes;
     using Microsoft.Extensions.DependencyInjection.Extensions;
     public class MyMvcTests

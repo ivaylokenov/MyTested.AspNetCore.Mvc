@@ -9,8 +9,8 @@
     using Contracts.Http;
     using Internal.Extensions;
     using Exceptions;
-    using Microsoft.AspNet.Mvc;
-    using Microsoft.AspNet.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Primitives;
     using Utilities.Validators;
     using Microsoft.Net.Http.Headers;

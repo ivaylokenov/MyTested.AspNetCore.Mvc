@@ -6,8 +6,8 @@
     using Contracts.ActionResults.View;
     using Exceptions;
     using Internal.Extensions;
-    using Microsoft.AspNet.Mvc;
-    using Microsoft.AspNet.Mvc.ViewEngines;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.ViewEngines;
     using Microsoft.Net.Http.Headers;
     using Utilities;
     using Utilities.Validators;
@@ -70,14 +70,6 @@
         /// <param name="contentType">ContentType type as string.</param>
         /// <returns>The same view test builder.</returns>
         public IAndViewTestBuilder WithContentType(string contentType)
-            => this.WithContentType(new MediaTypeHeaderValue(contentType));
-
-        /// <summary>
-        /// Tests whether view result has the same content type as the provided MediaTypeHeaderValue.
-        /// </summary>
-        /// <param name="contentType">Content type as MediaTypeHeaderValue.</param>
-        /// <returns>The same view test builder.</returns>
-        public IAndViewTestBuilder WithContentType(MediaTypeHeaderValue contentType)
         {
             ContentTypeValidator.ValidateContentType(
                 this.ActionResult,
@@ -86,6 +78,14 @@
 
             return this;
         }
+
+        /// <summary>
+        /// Tests whether view result has the same content type as the provided MediaTypeHeaderValue.
+        /// </summary>
+        /// <param name="contentType">Content type as MediaTypeHeaderValue.</param>
+        /// <returns>The same view test builder.</returns>
+        public IAndViewTestBuilder WithContentType(MediaTypeHeaderValue contentType)
+            => this.WithContentType(contentType?.MediaType);
 
         /// <summary>
         /// Tests whether view result has the same view engine as the provided one.

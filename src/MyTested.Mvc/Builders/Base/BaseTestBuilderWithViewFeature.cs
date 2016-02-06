@@ -3,7 +3,7 @@
     using System;
     using Contracts.Base;
     using Contracts.Models;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
     /// Base class for all test builders with view features.

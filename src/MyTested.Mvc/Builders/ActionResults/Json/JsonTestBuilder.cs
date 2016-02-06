@@ -7,7 +7,7 @@
     using Exceptions;
     using Internal.Application;
     using Internal.Extensions;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Options;
     using Microsoft.Net.Http.Headers;
     using Newtonsoft.Json;
@@ -63,14 +63,6 @@
         /// <param name="contentType">ContentType type as string.</param>
         /// <returns>The same JSON test builder.</returns>
         public IAndJsonTestBuilder WithContentType(string contentType)
-            => this.WithContentType(new MediaTypeHeaderValue(contentType));
-
-        /// <summary>
-        /// Tests whether JSON result has the same content type as the provided MediaTypeHeaderValue.
-        /// </summary>
-        /// <param name="contentType">Content type as MediaTypeHeaderValue.</param>
-        /// <returns>The same JSON test builder.</returns>
-        public IAndJsonTestBuilder WithContentType(MediaTypeHeaderValue contentType)
         {
             ContentTypeValidator.ValidateContentType(
                 contentType,
@@ -80,6 +72,14 @@
             return this;
         }
 
+        /// <summary>
+        /// Tests whether JSON result has the same content type as the provided MediaTypeHeaderValue.
+        /// </summary>
+        /// <param name="contentType">Content type as MediaTypeHeaderValue.</param>
+        /// <returns>The same JSON test builder.</returns>
+        public IAndJsonTestBuilder WithContentType(MediaTypeHeaderValue contentType)
+            => this.WithContentType(contentType?.MediaType);
+        
         /// <summary>
         /// Tests whether JSON result has the default JSON serializer settings.
         /// </summary>

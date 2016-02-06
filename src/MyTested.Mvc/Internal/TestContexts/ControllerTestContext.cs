@@ -1,7 +1,7 @@
 ﻿namespace MyTested.Mvc.Internal.TestContexts
 {
     using System.Collections.Generic;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
     public class ControllerTestContext
     {

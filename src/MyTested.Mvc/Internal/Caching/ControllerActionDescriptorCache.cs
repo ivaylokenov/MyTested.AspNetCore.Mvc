@@ -5,8 +5,8 @@
     using System.Linq;
     using System.Reflection;
     using Contracts;
-    using Microsoft.AspNet.Mvc.Controllers;
-    using Microsoft.AspNet.Mvc.Infrastructure;
+    using Microsoft.AspNetCore.Mvc.Controllers;
+    using Microsoft.AspNetCore.Mvc.Infrastructure;
 
     /// <summary>
     /// Caches controller action descriptors by MethodInfo.
@@ -20,7 +20,7 @@
         /// Initializes a new instance of the <see cref="ControllerActionDescriptorCache" /> class.
         /// </summary>
         /// <param name="provider">Action descriptors collection provider.</param>
-        public ControllerActionDescriptorCache(IActionDescriptorsCollectionProvider provider)
+        public ControllerActionDescriptorCache(IActionDescriptorCollectionProvider provider)
         {
             this.PrepareCache(provider);
         }
@@ -38,7 +38,7 @@
             return controllerActionDescriptor;
         }
 
-        private void PrepareCache(IActionDescriptorsCollectionProvider provider)
+        private void PrepareCache(IActionDescriptorCollectionProvider provider)
         {
             var controllerActionDescriptors = provider
                 .ActionDescriptors

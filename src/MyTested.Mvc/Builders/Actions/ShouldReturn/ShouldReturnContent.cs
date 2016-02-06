@@ -4,7 +4,7 @@
     using Contracts.ActionResults.Content;
     using Exceptions;
     using Internal.Extensions;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
     /// Class containing methods for testing ContentResult.

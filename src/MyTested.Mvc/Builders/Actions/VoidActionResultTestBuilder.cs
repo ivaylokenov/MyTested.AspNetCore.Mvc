@@ -6,7 +6,7 @@
     using Contracts.Actions;
     using Contracts.Base;
     using Internal;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using ShouldHave;
     using Utilities.Validators;
 

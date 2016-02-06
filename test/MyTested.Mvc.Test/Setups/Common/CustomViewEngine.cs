@@ -1,8 +1,8 @@
 ﻿namespace MyTested.Mvc.Tests.Setups.Common
 {
     using System;
-    using Microsoft.AspNet.Mvc;
-    using Microsoft.AspNet.Mvc.ViewEngines;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.ViewEngines;
 
     public class CustomViewEngine : IViewEngine
     {

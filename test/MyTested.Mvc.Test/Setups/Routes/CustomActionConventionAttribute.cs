@@ -1,7 +1,7 @@
 ﻿namespace MyTested.Mvc.Tests.Setups.Routes
 {
     using System;
-    using Microsoft.AspNet.Mvc.ApplicationModels;
+    using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
     public class CustomActionConventionAttribute : Attribute, IActionModelConvention
     {

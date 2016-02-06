@@ -4,8 +4,8 @@
     using System.Collections.Generic;
     using And;
     using Contracts.Base;
-    using Microsoft.AspNet.Http;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
     /// Base class for test builders with caught exception.

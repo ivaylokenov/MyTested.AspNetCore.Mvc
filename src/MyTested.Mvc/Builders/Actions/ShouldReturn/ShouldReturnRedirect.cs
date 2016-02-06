@@ -2,7 +2,7 @@
 {
     using ActionResults.Redirect;
     using Contracts.ActionResults.Redirect;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
     /// Class containing methods for testing RedirectResult, RedirectToActionResult or RedirectToRouteResult.

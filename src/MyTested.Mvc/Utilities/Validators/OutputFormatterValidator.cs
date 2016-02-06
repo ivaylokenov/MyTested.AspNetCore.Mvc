@@ -4,8 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using Internal.Extensions;
-    using Microsoft.AspNet.Mvc;
-    using Microsoft.AspNet.Mvc.Formatters;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Formatters;
 
     /// <summary>
     /// Validator class containing output formatter validation logic.

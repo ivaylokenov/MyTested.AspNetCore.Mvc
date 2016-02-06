@@ -1,6 +1,6 @@
 ﻿namespace MyTested.Mvc.Tests.Setups.Controllers
 {
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
     [Area("CustomArea")]
     public class AreaController : Controller

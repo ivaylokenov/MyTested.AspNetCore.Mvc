@@ -1,6 +1,6 @@
 ﻿namespace MyTested.Mvc.Tests.Setups.Common
 {
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
     public class CustomActionResult : HttpOkResult
     {

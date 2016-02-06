@@ -2,7 +2,7 @@
 {
     using Builders.Contracts.Http;
     using Builders.Contracts.Routes;
-    using Microsoft.AspNet.Http;
+    using Microsoft.AspNetCore.Http;
     using System;
 
     /// <summary>

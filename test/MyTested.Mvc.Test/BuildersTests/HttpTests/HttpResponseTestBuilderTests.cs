@@ -1,6 +1,6 @@
 ﻿namespace MyTested.Mvc.Tests.BuildersTests.HttpTests
 {
-    using Microsoft.AspNet.Http;
+    using Microsoft.AspNetCore.Http;
     using Setups.Controllers;
     using Xunit;
 

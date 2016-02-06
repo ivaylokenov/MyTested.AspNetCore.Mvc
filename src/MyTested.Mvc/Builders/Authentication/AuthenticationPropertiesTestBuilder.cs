@@ -5,8 +5,8 @@
     using Base;
     using Exceptions;
     using Internal.Extensions;
-    using Microsoft.AspNet.Http.Authentication;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Http.Authentication;
+    using Microsoft.AspNetCore.Mvc;
     using MyTested.Mvc.Builders.Contracts.Authentication;
 
     /// <summary>

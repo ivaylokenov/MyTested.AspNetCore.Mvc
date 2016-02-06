@@ -5,7 +5,7 @@
     using Contracts.ActionResults.HttpBadRequest;
     using Exceptions;
     using Internal.Extensions;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
     /// Used for testing specific bad request text error messages.

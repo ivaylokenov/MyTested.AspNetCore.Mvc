@@ -1,7 +1,7 @@
 ﻿namespace MyTested.Mvc.Tests.Setups.Startups
 {
     using System;
-    using Microsoft.AspNet.Builder;
+    using Microsoft.AspNetCore.Builder;
     using Microsoft.Extensions.DependencyInjection;
     using Services;
 

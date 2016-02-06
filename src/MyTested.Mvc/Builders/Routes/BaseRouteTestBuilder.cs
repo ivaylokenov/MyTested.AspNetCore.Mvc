@@ -1,6 +1,6 @@
 ﻿namespace MyTested.Mvc.Builders.Routes
 {
-    using Microsoft.AspNet.Routing;
+    using Microsoft.AspNetCore.Routing;
     using System;
     /// <summary>
     /// Base class for all route test builders.

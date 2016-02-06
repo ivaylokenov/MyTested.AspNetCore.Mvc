@@ -1,10 +1,10 @@
 ﻿namespace MyTested.Mvc.Internal.Http
 {
     using Internal.Application;
-    using Microsoft.AspNet.Http;
-    using Microsoft.AspNet.Http.Features;
-    using Microsoft.AspNet.Http.Features.Internal;
-    using Microsoft.AspNet.Http.Internal;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Http.Features;
+    using Microsoft.AspNetCore.Http.Features.Internal;
+    using Microsoft.AspNetCore.Http.Internal;
 
     /// <summary>
     /// Mocked HTTP context object.

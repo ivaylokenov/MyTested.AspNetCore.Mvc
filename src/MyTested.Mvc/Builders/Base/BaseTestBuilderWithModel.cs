@@ -2,7 +2,7 @@
 {
     using System;
     using Contracts.Base;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Utilities.Validators;
 
     /// <summary>

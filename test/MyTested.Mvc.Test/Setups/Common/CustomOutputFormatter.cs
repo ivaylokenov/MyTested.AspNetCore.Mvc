@@ -1,7 +1,7 @@
 ﻿namespace MyTested.Mvc.Tests.Setups.Common
 {
     using System.Threading.Tasks;
-    using Microsoft.AspNet.Mvc.Formatters;
+    using Microsoft.AspNetCore.Mvc.Formatters;
 
     public class CustomOutputFormatter : IOutputFormatter
     {

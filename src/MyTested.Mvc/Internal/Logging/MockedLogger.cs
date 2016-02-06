@@ -39,5 +39,18 @@
         {
             return false;
         }
+
+        /// <summary>
+        /// Does nothing. Used for testing purposes.
+        /// </summary>
+        /// <typeparam name="TState">Type of log state. Not used.</typeparam>
+        /// <param name="logLevel">Not used log level parameter. Used for testing with ILogger service.</param>
+        /// <param name="eventId">Not used event ID parameter. Used for testing with ILogger service.</param>
+        /// <param name="state">Not used state parameter. Used for testing with ILogger service.</param>
+        /// <param name="exception">Not used exception parameter. Used for testing with ILogger service.</param>
+        /// <param name="formatter">Not used formatter parameter. Used for testing with ILogger service.</param>
+        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
+        {
+        }
     }
 }

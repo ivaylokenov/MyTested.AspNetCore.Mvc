@@ -1,8 +1,8 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.Base
 {
     using System.Collections.Generic;
-    using Microsoft.AspNet.Http;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
     /// Base interface for all test builders.

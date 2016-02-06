@@ -2,7 +2,7 @@
 {
     using ActionResults.Json;
     using Contracts.ActionResults.Json;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
     /// Class containing methods for testing JsonResult.

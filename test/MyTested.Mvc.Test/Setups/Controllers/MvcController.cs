@@ -7,12 +7,12 @@
     using System.Text;
     using System.Threading.Tasks;
     using Common;
-    using Microsoft.AspNet.Authorization;
-    using Microsoft.AspNet.FileProviders;
-    using Microsoft.AspNet.Http;
-    using Microsoft.AspNet.Mvc;
-    using Microsoft.AspNet.Mvc.Formatters;
-    using Microsoft.AspNet.Mvc.ViewEngines;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.Extensions.FileProviders;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Formatters;
+    using Microsoft.AspNetCore.Mvc.ViewEngines;
     using Microsoft.Net.Http.Headers;
     using Models;
     using Newtonsoft.Json;
@@ -84,7 +84,7 @@
             return new ViewResult
             {
                 StatusCode = 500,
-                ContentType = new MediaTypeHeaderValue(ContentType.ApplicationXml),
+                ContentType = ContentType.ApplicationXml,
                 ViewEngine = new CustomViewEngine()
             };
         }
@@ -112,7 +112,7 @@
             return new PartialViewResult
             {
                 StatusCode = 500,
-                ContentType = new MediaTypeHeaderValue(ContentType.ApplicationXml),
+                ContentType = ContentType.ApplicationXml,
                 ViewEngine = new CustomViewEngine()
             };
         }
@@ -148,7 +148,7 @@
             return new ViewComponentResult
             {
                 StatusCode = 500,
-                ContentType = new MediaTypeHeaderValue(ContentType.ApplicationXml),
+                ContentType = ContentType.ApplicationXml,
                 ViewEngine = new CustomViewEngine()
             };
         }
@@ -191,7 +191,7 @@
         {
             return new BadRequestObjectResult(this.responseModel)
             {
-                ContentTypes = new List<MediaTypeHeaderValue> { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) },
+                ContentTypes = new MediaTypeCollection { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) },
                 StatusCode = StatusCodes.Status201Created,
                 Formatters = new FormatterCollection<IOutputFormatter> { new JsonOutputFormatter(), new CustomOutputFormatter() },
                 DeclaredType = typeof(List<ResponseModel>),
@@ -268,7 +268,7 @@
         {
             return new HttpOkObjectResult(this.responseModel)
             {
-                ContentTypes = new List<MediaTypeHeaderValue> { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) },
+                ContentTypes = new MediaTypeCollection { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) },
                 StatusCode = StatusCodes.Status201Created,
                 Formatters = new FormatterCollection<IOutputFormatter> { new JsonOutputFormatter(), new CustomOutputFormatter() },
                 DeclaredType = typeof(List<ResponseModel>),
@@ -383,15 +383,10 @@
 
         public IActionResult ContentAction()
         {
-            var mediaTypeHeaderValue = new MediaTypeHeaderValue(ContentType.ApplicationJson)
-            {
-                Encoding = Encoding.ASCII
-            };
-
             return new ContentResult
             {
                 Content = "content",
-                ContentType = mediaTypeHeaderValue,
+                ContentType = ContentType.ApplicationJson,
                 StatusCode = 200
             };
         }
@@ -415,7 +410,7 @@
         {
             return new CreatedResult(TestObjectFactory.GetUri(), this.responseModel)
             {
-                ContentTypes = new List<MediaTypeHeaderValue> { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) },
+                ContentTypes = new MediaTypeCollection { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) },
                 StatusCode = StatusCodes.Status201Created,
                 Formatters = new FormatterCollection<IOutputFormatter> { new JsonOutputFormatter(), new CustomOutputFormatter() },
                 DeclaredType = typeof(List<ResponseModel>),
@@ -610,7 +605,7 @@
             return new JsonResult(this.responseModel)
             {
                 StatusCode = 200,
-                ContentType = new MediaTypeHeaderValue(ContentType.ApplicationXml)
+                ContentType = ContentType.ApplicationXml
             };
         }
 
@@ -654,7 +649,7 @@
         {
             return new HttpNotFoundObjectResult(this.responseModel)
             {
-                ContentTypes = new List<MediaTypeHeaderValue> { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) },
+                ContentTypes = new MediaTypeCollection { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) },
                 StatusCode = StatusCodes.Status201Created,
                 Formatters = new FormatterCollection<IOutputFormatter> { new JsonOutputFormatter(), new CustomOutputFormatter() },
                 DeclaredType = typeof(List<ResponseModel>),

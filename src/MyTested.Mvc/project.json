@@ -7,12 +7,12 @@
   "licenseUrl": "",
 
   "dependencies": {
-    "Microsoft.AspNet.Mvc": "6.0.0-rc2-16770",
-    "Microsoft.AspNet.TestHost": "1.0.0-rc2-16161"
+    "Microsoft.AspNetCore.Mvc": "1.0.0-rc2-*",
+    "Microsoft.AspNetCore.TestHost": "1.0.0-rc2-*"
   },
 
   "frameworks": {
     "net451": { },
-    "dotnet5.5": { }
+    "dotnet5.6": { }
   }
 }

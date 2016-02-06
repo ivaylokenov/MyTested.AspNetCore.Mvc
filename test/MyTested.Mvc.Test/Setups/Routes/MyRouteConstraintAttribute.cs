@@ -1,6 +1,6 @@
 ﻿namespace MyTested.Mvc.Tests.Setups.Routes
 {
-    using Microsoft.AspNet.Mvc.Infrastructure;
+    using Microsoft.AspNetCore.Mvc.Routing;
 
     public class MyRouteConstraintAttribute : RouteConstraintAttribute
     {

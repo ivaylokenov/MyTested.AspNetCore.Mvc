@@ -4,8 +4,8 @@
     using System.Linq.Expressions;
     using Contracts.Routes;
     using Utilities;
-    using Microsoft.AspNet.Mvc;
-    using Microsoft.AspNet.Routing;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Routing;
     using Internal.Routes;
     using Exceptions;
     using Internal.Extensions;

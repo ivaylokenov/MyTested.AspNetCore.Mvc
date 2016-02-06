@@ -1,7 +1,7 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.ActionResults.File
 {
     using Base;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.Net.Http.Headers;
 
     /// <summary>

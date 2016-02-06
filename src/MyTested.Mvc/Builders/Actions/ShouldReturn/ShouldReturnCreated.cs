@@ -2,7 +2,7 @@
 {
     using ActionResults.Created;
     using Contracts.ActionResults.Created;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
     /// Class containing methods for testing CreatedResult, CreatedAtActionResult or CreatedAtRouteResult.

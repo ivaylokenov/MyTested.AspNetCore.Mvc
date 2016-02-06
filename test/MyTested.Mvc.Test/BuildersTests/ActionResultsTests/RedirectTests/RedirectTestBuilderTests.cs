@@ -2,7 +2,7 @@
 {
     using System;
     using Exceptions;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Setups;
     using Setups.Common;
     using Setups.Controllers;

@@ -7,7 +7,7 @@
     using ExceptionErrors;
     using Exceptions;
     using Internal.Extensions;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
     /// Used for testing whether action throws exception.

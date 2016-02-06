@@ -4,7 +4,7 @@
     using Builders;
     using Builders.Contracts.Application;
     using Builders.Controllers;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Utilities;
     using Builders.Routes;
     using Internal.Application;    /// <summary>

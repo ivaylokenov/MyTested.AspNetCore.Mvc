@@ -5,7 +5,7 @@
     using Contracts.ExceptionErrors;
     using Exceptions;
     using Internal.Extensions;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
     /// Used for testing specific exception messages.

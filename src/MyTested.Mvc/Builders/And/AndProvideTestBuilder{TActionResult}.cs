@@ -2,7 +2,7 @@
 {
     using System;
     using Base;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
     /// Provides controller, action and action result information.

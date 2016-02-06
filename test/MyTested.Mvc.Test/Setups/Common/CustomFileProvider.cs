@@ -1,7 +1,7 @@
 ﻿namespace MyTested.Mvc.Tests.Setups.Common
 {
     using System;
-    using Microsoft.AspNet.FileProviders;
+    using Microsoft.Extensions.FileProviders;
     using Microsoft.Extensions.Primitives;
 
     public class CustomFileProvider : IFileProvider

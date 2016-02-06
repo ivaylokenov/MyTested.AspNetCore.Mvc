@@ -7,7 +7,7 @@
     using Contracts.ActionResults.Content;
     using Exceptions;
     using Internal.Extensions;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.Net.Http.Headers;
     using Utilities.Validators;
 
@@ -62,14 +62,6 @@
         /// <param name="contentType">ContentType type as string.</param>
         /// <returns>The same content test builder.</returns>
         public IAndContentTestBuilder WithContentType(string contentType)
-            => this.WithContentType(new MediaTypeHeaderValue(contentType));
-
-        /// <summary>
-        /// Tests whether content result has the same content type as the provided MediaTypeHeaderValue.
-        /// </summary>
-        /// <param name="contentType">Content type as MediaTypeHeaderValue.</param>
-        /// <returns>The same content test builder.</returns>
-        public IAndContentTestBuilder WithContentType(MediaTypeHeaderValue contentType)
         {
             ContentTypeValidator.ValidateContentType(
                 contentType,
@@ -80,30 +72,13 @@
         }
 
         /// <summary>
-        /// Tests whether content result has the default UTF8 encoding.
+        /// Tests whether content result has the same content type as the provided MediaTypeHeaderValue.
         /// </summary>
+        /// <param name="contentType">Content type as MediaTypeHeaderValue.</param>
         /// <returns>The same content test builder.</returns>
-        public IAndContentTestBuilder WithDefaultEncoding() => this.WithEncoding(null);
-
-        /// <summary>
-        /// Tests whether content result has the same encoding as the provided Encoding.
-        /// </summary>
-        /// <param name="encoding">Expected encoding.</param>
-        /// <returns>The same content test builder.</returns>
-        public IAndContentTestBuilder WithEncoding(Encoding encoding)
-        {
-            var actualEncoding = this.ActionResult.ContentType?.Encoding;
-            if (encoding != actualEncoding && !encoding.Equals(actualEncoding))
-            {
-                this.ThrowNewContentResultAssertionException(
-                    "encoding",
-                    $"to be {this.GetEncodingName(encoding)}",
-                    $"instead received {this.GetEncodingName(actualEncoding)}");
-            }
-
-            return this;
-        }
-
+        public IAndContentTestBuilder WithContentType(MediaTypeHeaderValue contentType)
+            => this.WithContentType(contentType?.MediaType);
+        
         /// <summary>
         /// AndAlso method for better readability when chaining content tests.
         /// </summary>

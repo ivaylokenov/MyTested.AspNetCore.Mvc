@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Net;
     using Base;
-    using Microsoft.AspNet.Mvc.ViewEngines;
+    using Microsoft.AspNetCore.Mvc.ViewEngines;
     using Microsoft.Net.Http.Headers;
 
     /// <summary>

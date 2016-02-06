@@ -9,7 +9,7 @@
     using Exceptions;
     using Internal.Extensions;
     using Internal.Http;
-    using Microsoft.AspNet.Http;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Primitives;
     using Uris;
     using Utilities.Validators;

@@ -1,7 +1,7 @@
 ﻿namespace MyTested.Mvc.Tests.Setups.Controllers
 {
-    using Microsoft.AspNet.Authorization;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
 
     [AllowAnonymous]
     [Route("api/test", Name = "TestRouteAttributes", Order = 1)]

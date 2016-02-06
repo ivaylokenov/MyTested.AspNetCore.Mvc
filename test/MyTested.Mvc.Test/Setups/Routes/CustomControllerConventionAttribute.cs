@@ -1,6 +1,6 @@
 ﻿namespace MyTested.Mvc.Tests.Setups.Routes
 {
-    using Microsoft.AspNet.Mvc.ApplicationModels;
+    using Microsoft.AspNetCore.Mvc.ApplicationModels;
     using System;
 
     public class CustomControllerConventionAttribute : Attribute, IControllerModelConvention

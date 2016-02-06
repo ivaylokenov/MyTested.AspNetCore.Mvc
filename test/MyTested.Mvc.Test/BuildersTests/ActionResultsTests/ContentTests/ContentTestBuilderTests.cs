@@ -139,77 +139,7 @@
                 }, 
                 "When calling ContentActionWithNullMediaType action in MvcController expected content result ContentType to be 'application/json', but instead received null.");
         }
-
-        [Fact]
-        public void WithDefaultEncodingShouldNotThrowExceptionWhenActionReturnsDefaultEncoding()
-        {
-            MyMvc
-                .Controller<MvcController>()
-                .Calling(c => c.ContentActionWithMediaType())
-                .ShouldReturn()
-                .Content()
-                .WithDefaultEncoding();
-        }
         
-        [Fact]
-        public void WithCustomEncodingShouldNotThrowExceptionWhenActionReturnsCorrectEncoding()
-        {
-            MyMvc
-                .Controller<MvcController>()
-                .Calling(c => c.ContentAction())
-                .ShouldReturn()
-                .Content()
-                .WithEncoding(Encoding.ASCII);
-        }
-
-        [Fact]
-        public void WithCustomEncodingShouldThrowExceptionWithNullContentType()
-        {
-            Test.AssertException<ContentResultAssertionException>(
-                () =>
-                {
-                    MyMvc
-                        .Controller<MvcController>()
-                        .Calling(c => c.ContentActionWithNullMediaType())
-                        .ShouldReturn()
-                        .Content()
-                        .WithEncoding(Encoding.ASCII);
-                },
-                "When calling ContentActionWithNullMediaType action in MvcController expected content result encoding to be ASCII, but instead received null.");
-        }
-
-        [Fact]
-        public void WithCustomEncodingShouldThrowExceptionWhenActionReturnsIncorrectEncoding()
-        {
-            Test.AssertException<ContentResultAssertionException>(
-                () =>
-                {
-                    MyMvc
-                        .Controller<MvcController>()
-                        .Calling(c => c.ContentAction())
-                        .ShouldReturn()
-                        .Content()
-                        .WithEncoding(Encoding.UTF8);
-                }, 
-                "When calling ContentAction action in MvcController expected content result encoding to be UTF8, but instead received ASCII.");
-        }
-
-        [Fact]
-        public void WithCustomEncodingShouldThrowExceptionWhenActionReturnsNullEncoding()
-        {
-            Test.AssertException<ContentResultAssertionException>(
-                () =>
-                {
-                    MyMvc
-                        .Controller<MvcController>()
-                        .Calling(c => c.ContentActionWithMediaType())
-                        .ShouldReturn()
-                        .Content()
-                        .WithEncoding(Encoding.UTF8);
-                }, 
-                "When calling ContentActionWithMediaType action in MvcController expected content result encoding to be UTF8, but instead received null.");
-        }
-
         [Fact]
         public void AndAlsoShouldWorkCorrectly()
         {

@@ -2,7 +2,7 @@
 {
     using ActionResults.HttpNotFound;
     using Contracts.ActionResults.HttpNotFound;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
     /// Class containing methods for testing HttpNotFoundResult or HttpNotFoundObjectResult.

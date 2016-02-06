@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.AspNet.Mvc.Infrastructure;
+    using Microsoft.AspNetCore.Mvc.Infrastructure;
 
     /// <summary>
     /// Used for testing action attributes.

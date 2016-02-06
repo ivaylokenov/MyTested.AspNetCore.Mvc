@@ -5,7 +5,7 @@
     using System.IO;
     using System.Net;
     using Base;
-    using Microsoft.AspNet.Http;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Primitives;
 
     /// <summary>

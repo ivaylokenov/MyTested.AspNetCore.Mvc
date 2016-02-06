@@ -7,8 +7,8 @@
     using Builders.Contracts.Actions;
     using Builders.Contracts.Base;
     using Exceptions;
-    using Microsoft.AspNet.Http.Internal;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Http.Internal;
+    using Microsoft.AspNetCore.Mvc;
     using Setups;
     using Setups.Controllers;
     using Setups.Models;

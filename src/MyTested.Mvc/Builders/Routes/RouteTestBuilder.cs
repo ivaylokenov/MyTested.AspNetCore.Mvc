@@ -3,8 +3,8 @@
     using System;
     using Contracts.Routes;
     using Contracts.Http;
-    using Microsoft.AspNet.Routing;
-    using Microsoft.AspNet.Http;
+    using Microsoft.AspNetCore.Routing;
+    using Microsoft.AspNetCore.Http;
     using Http;
     using Internal.Http;
 

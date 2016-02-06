@@ -6,8 +6,8 @@
     using System.Net;
     using Contracts.ActionResults.View;
     using Internal.Extensions;
-    using Microsoft.AspNet.Mvc;
-    using Microsoft.AspNet.Mvc.ViewEngines;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.ViewEngines;
     using Microsoft.Net.Http.Headers;
     using Utilities;
 
@@ -61,7 +61,10 @@
         /// <param name="contentType">ContentType type as string.</param>
         /// <returns>The same view component test builder.</returns>
         public new IAndViewComponentTestBuilder WithContentType(string contentType)
-            => this.WithContentType(new MediaTypeHeaderValue(contentType));
+        {
+            base.WithContentType(contentType);
+            return this;
+        }
 
         /// <summary>
         /// Tests whether view component result has the same content type as the provided MediaTypeHeaderValue.
@@ -69,10 +72,7 @@
         /// <param name="contentType">Content type as MediaTypeHeaderValue.</param>
         /// <returns>The same view component test builder.</returns>
         public new IAndViewComponentTestBuilder WithContentType(MediaTypeHeaderValue contentType)
-        {
-            base.WithContentType(contentType);
-            return this;
-        }
+            => this.WithContentType(contentType?.MediaType);
 
         /// <summary>
         /// Tests whether view component result has the same view engine as the provided one.

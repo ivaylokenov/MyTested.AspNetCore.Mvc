@@ -4,8 +4,8 @@
     using Contracts.Attributes;
     using Exceptions;
     using Internal.Extensions;
-    using Microsoft.AspNet.Authorization;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
     /// Used for testing action attributes.

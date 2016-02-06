@@ -3,7 +3,7 @@
     using System;
     using ActionResults.View;
     using Contracts.ActionResults.View;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Utilities;
 
     /// <summary>

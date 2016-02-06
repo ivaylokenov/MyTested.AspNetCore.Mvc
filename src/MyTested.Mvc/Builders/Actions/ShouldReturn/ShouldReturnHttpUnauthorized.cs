@@ -1,7 +1,7 @@
 ﻿namespace MyTested.Mvc.Builders.Actions.ShouldReturn
 {
     using Contracts.Base;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
     /// Class containing methods for testing HttpUnauthorizedResult.

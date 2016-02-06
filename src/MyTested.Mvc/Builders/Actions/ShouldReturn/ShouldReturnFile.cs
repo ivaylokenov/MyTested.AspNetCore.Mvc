@@ -1,7 +1,7 @@
 ﻿namespace MyTested.Mvc.Builders.Actions.ShouldReturn
 {
     using ActionResults.File;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using MyTested.Mvc.Builders.Contracts.ActionResults.File;
 
     /// <summary>

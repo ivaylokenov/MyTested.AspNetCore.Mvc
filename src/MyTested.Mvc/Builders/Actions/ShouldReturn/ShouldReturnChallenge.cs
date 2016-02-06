@@ -2,7 +2,7 @@
 {
     using ActionResults.Challenge;
     using Contracts.ActionResults.Challenge;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
     /// Class containing methods for testing ChallengeResult.

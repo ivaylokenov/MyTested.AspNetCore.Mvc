@@ -3,8 +3,8 @@
     using System;
     using Contracts.Application;
     using Internal.Application;
-    using Microsoft.AspNet.Builder;
-    using Microsoft.AspNet.Routing;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.DependencyInjection;
 
     /// <summary>

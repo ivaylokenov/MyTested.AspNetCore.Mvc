@@ -2,8 +2,8 @@
 {
     using System.IO;
     using Base;
-    using Microsoft.AspNet.FileProviders;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.Extensions.FileProviders;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.Net.Http.Headers;
 
     /// <summary>

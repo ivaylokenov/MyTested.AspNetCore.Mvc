@@ -6,8 +6,8 @@
     using Builders.Authentication;
     using Builders.Contracts.Authentication;
     using Internal.Extensions;
-    using Microsoft.AspNet.Http.Authentication;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Http.Authentication;
+    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
     /// Validator class containing authentication validation logic.

@@ -8,8 +8,8 @@
     using Contracts.Authentication;
     using Exceptions;
     using Internal.Extensions;
-    using Microsoft.AspNet.Http.Authentication;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Http.Authentication;
+    using Microsoft.AspNetCore.Mvc;
     using Utilities.Validators;
 
     /// <summary>

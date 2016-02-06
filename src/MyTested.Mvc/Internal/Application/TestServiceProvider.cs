@@ -2,10 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.AspNet.Mvc.Infrastructure;
+    using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.Extensions.DependencyInjection;
     using Utilities.Validators;
-
+    using Microsoft.AspNetCore.Mvc.Internal;
     /// <summary>
     /// Provides global application services.
     /// </summary>

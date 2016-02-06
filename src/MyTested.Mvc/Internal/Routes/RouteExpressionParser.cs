@@ -2,13 +2,13 @@
 {
     using System;
     using System.Linq.Expressions;
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Application;
     using Contracts;
-    using Microsoft.AspNet.Mvc.Controllers;
+    using Microsoft.AspNetCore.Mvc.Controllers;
     using System.Reflection;
     using System.Collections.Generic;
-    using Microsoft.AspNet.Routing;
+    using Microsoft.AspNetCore.Routing;
     using Utilities;
 
     public static class RouteExpressionParser

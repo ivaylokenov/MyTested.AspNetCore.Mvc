@@ -1,6 +1,6 @@
 ﻿namespace MyTested.Mvc.Tests.Setups.Routes
 {
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
     [MyRouteConstraint("controller", "CustomController")]
     public class RouteConstraintController

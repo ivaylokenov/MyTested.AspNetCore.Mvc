@@ -1,6 +1,6 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.Routes
 {
-    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Linq.Expressions;
 

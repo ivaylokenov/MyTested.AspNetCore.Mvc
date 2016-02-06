@@ -8,8 +8,8 @@
     using Contracts.Uris;
     using Exceptions;
     using Internal.Extensions;
-    using Microsoft.AspNet.Mvc;
-    using Microsoft.AspNet.Routing;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Routing;
     using Utilities.Validators;
 
     /// <summary>

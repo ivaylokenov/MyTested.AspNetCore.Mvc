@@ -1,8 +1,8 @@
 ﻿namespace MyTested.Mvc.Internal.Contracts
 {
-    using Microsoft.AspNet.Mvc;
-    using Microsoft.AspNet.Mvc.Abstractions;
-    using Microsoft.AspNet.Mvc.Controllers;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Abstractions;
+    using Microsoft.AspNetCore.Mvc.Controllers;
 
     public interface IModelBindingActionInvokerFactory
     {

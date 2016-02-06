@@ -1,7 +1,7 @@
 ﻿namespace MyTested.Mvc.Internal.Contracts
 {
     using System.Reflection;
-    using Microsoft.AspNet.Mvc.Controllers;
+    using Microsoft.AspNetCore.Mvc.Controllers;
 
     /// <summary>
     /// Caches controller action descriptors by MethodInfo.
