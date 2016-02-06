@@ -6,10 +6,10 @@
     using Builders.Controllers;
     using Microsoft.AspNet.Mvc;
     using Utilities;
-
-    /// <summary>
-    /// Starting point of the ASP.NET MVC testing framework, which provides a way to specify the test case.
-    /// </summary>
+    using Builders.Routes;
+    using Internal.Application;    /// <summary>
+                                   /// Starting point of the ASP.NET MVC testing framework, which provides a way to specify the test case.
+                                   /// </summary>
     public static class MyMvc
     {
         static MyMvc()
@@ -35,6 +35,15 @@
             where TStartup : class, new()
         {
             return new ApplicationConfigurationBuilder(typeof(TStartup));
+        }
+        
+        /// <summary>
+        /// Starts a route test.
+        /// </summary>
+        /// <returns>Route test builder.</returns>
+        public static IRouteTestBuilder Routes()
+        {
+            return new RouteTestBuilder(TestApplication.Router, TestApplication.RouteServices);
         }
 
         /// <summary>

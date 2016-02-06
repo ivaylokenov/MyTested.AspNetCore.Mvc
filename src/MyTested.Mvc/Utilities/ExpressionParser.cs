@@ -39,7 +39,7 @@
         /// </summary>
         /// <param name="expression">Expression to be parsed.</param>
         /// <returns>Collection of method argument information.</returns>
-        public static IEnumerable<MethodArgumentInfo> ResolveMethodArguments(LambdaExpression expression)
+        public static IEnumerable<MethodArgumentContext> ResolveMethodArguments(LambdaExpression expression)
         {
             var methodCallExpression = GetMethodCallExpression(expression);
             return methodCallExpression.Arguments
@@ -50,7 +50,7 @@
                         a.Name,
                         Value = Expression.Lambda(m).Compile().DynamicInvoke()
                     })
-                .Select(ma => new MethodArgumentInfo
+                .Select(ma => new MethodArgumentContext
                 {
                     Name = ma.Name,
                     Type = ma.Value != null ? ma.Value.GetType() : null,
@@ -87,7 +87,7 @@
         }
 
         /// <summary>
-        /// Gets method call expression from a lambda expression.
+        /// Gets instance method call expression from a lambda expression.
         /// </summary>
         /// <param name="expression">The lambda expression as MethodCallExpression.</param>
         /// <returns>Method call expression.</returns>
@@ -96,7 +96,13 @@
             var methodCallExpression = expression.Body as MethodCallExpression;
             if (methodCallExpression == null)
             {
-                throw new ArgumentException("Provided expression is not a valid method call.");
+                throw new InvalidOperationException("Provided expression is not valid - expected instance method call but instead received other type of expression.");
+            }
+
+            var objectInstance = methodCallExpression.Object;
+            if (objectInstance == null)
+            {
+                throw new InvalidOperationException("Provided expression is not valid - expected instance method call but instead received static method call.");
             }
 
             return methodCallExpression;

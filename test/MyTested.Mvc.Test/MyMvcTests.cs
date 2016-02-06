@@ -13,11 +13,17 @@ namespace MyTested.Mvc.Tests
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Options;
     using Setups;
+    using Setups.Common;
     using Setups.Controllers;
     using Setups.Services;
     using Setups.Startups;
     using Microsoft.AspNet.Routing;
     using Microsoft.AspNet.Builder;
+    using Microsoft.AspNet.Mvc.Abstractions;
+    using Internal.Contracts;
+    using Microsoft.AspNet.Mvc.Controllers;
+    using Internal.Routes;
+    using Microsoft.Extensions.DependencyInjection.Extensions;
     public class MyMvcTests
     {
         [Fact]
@@ -391,6 +397,71 @@ namespace MyTested.Mvc.Tests
 
             Assert.NotNull(routesCollection);
             Assert.Equal(3, routesCollection.Count);
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void WithoutAdditionalServicesTheDefaultActionInvokersShouldBeSet()
+        {
+            MyMvc.IsUsingDefaultConfiguration();
+
+            var services = TestApplication.Services;
+            var actionInvokerProviders = services.GetServices<IActionInvokerProvider>();
+            var modelBindingActionInvokerFactory = services.GetService<IModelBindingActionInvokerFactory>();
+
+            Assert.Equal(1, actionInvokerProviders.Count());
+            Assert.True(actionInvokerProviders.Any(a => a.GetType() == typeof(ControllerActionInvokerProvider)));
+            Assert.Null(modelBindingActionInvokerFactory);
+
+            var routeServices = TestApplication.RouteServices;
+            var routeActionInvokerProviders = routeServices.GetServices<IActionInvokerProvider>();
+            var routeModelBindingActionInvokerFactory = routeServices.GetService<IModelBindingActionInvokerFactory>();
+            
+            Assert.Equal(2, routeActionInvokerProviders.Count());
+
+            var routeActionInvokerProvidersList = routeActionInvokerProviders.OrderByDescending(r => r.Order).ToList();
+
+            Assert.True(routeActionInvokerProvidersList[0].GetType() == typeof(ModelBindingActionInvokerProvider));
+            Assert.True(routeActionInvokerProvidersList[1].GetType() == typeof(ControllerActionInvokerProvider));
+            Assert.NotNull(routeModelBindingActionInvokerFactory);
+            Assert.IsAssignableFrom<ModelBindingActionInvokerFactory>(routeModelBindingActionInvokerFactory);
+            
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void WithCustomImplementationsForTheRouteTestingTheCorrectServicesShouldBeSet()
+        {
+            MyMvc
+                .IsUsingDefaultConfiguration()
+                .WithServices(customServices =>
+                {
+                    customServices.TryAddEnumerable(
+                        ServiceDescriptor.Transient<IActionInvokerProvider, CustomActionInvokerProvider>());
+                    customServices.TryAddSingleton<IModelBindingActionInvokerFactory, CustomModelBindingActionInvokerFactory>();
+                });
+
+            var services = TestApplication.Services;
+            var actionInvokerProviders = services.GetServices<IActionInvokerProvider>();
+            var modelBindingActionInvokerFactory = services.GetService<IModelBindingActionInvokerFactory>();
+
+            Assert.Equal(1, actionInvokerProviders.Count());
+            Assert.True(actionInvokerProviders.Any(a => a.GetType() == typeof(ControllerActionInvokerProvider)));
+            Assert.Null(modelBindingActionInvokerFactory);
+
+            var routeServices = TestApplication.RouteServices;
+            var routeActionInvokerProviders = routeServices.GetServices<IActionInvokerProvider>();
+            var routeModelBindingActionInvokerFactory = routeServices.GetService<IModelBindingActionInvokerFactory>();
+
+            Assert.Equal(2, routeActionInvokerProviders.Count());
+
+            var routeActionInvokerProvidersList = routeActionInvokerProviders.OrderByDescending(r => r.Order).ToList();
+
+            Assert.True(routeActionInvokerProvidersList[0].GetType() == typeof(CustomActionInvokerProvider));
+            Assert.True(routeActionInvokerProvidersList[1].GetType() == typeof(ControllerActionInvokerProvider));
+            Assert.NotNull(routeModelBindingActionInvokerFactory);
+            Assert.IsAssignableFrom<CustomModelBindingActionInvokerFactory>(routeModelBindingActionInvokerFactory);
 
             MyMvc.IsUsingDefaultConfiguration();
         }

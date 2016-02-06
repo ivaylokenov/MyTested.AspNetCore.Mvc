@@ -14,7 +14,10 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
     using Microsoft.Extensions.Logging;
-
+    using Microsoft.AspNet.Mvc.Abstractions;
+    using Routes;
+    using System.Linq;
+    using System.Diagnostics;
     public static class TestApplication
     {
         private static readonly RequestDelegate NullHandler = (c) => Task.FromResult(0);
@@ -24,6 +27,7 @@
         private static StartupLoader startupLoader;
 
         private static IServiceProvider serviceProvider;
+        private static IServiceProvider routeServiceProvider;
         private static IRouter router;
 
         static TestApplication()
@@ -68,6 +72,19 @@
             }
         }
 
+        public static IServiceProvider RouteServices
+        {
+            get
+            {
+                if (!initialiazed)
+                {
+                    Initialize();
+                }
+
+                return routeServiceProvider;
+            }
+        }
+
         public static IRouter Router
         {
             get
@@ -100,6 +117,9 @@
         private static IServiceCollection GetInitialServiceCollection()
         {
             var serviceCollection = new ServiceCollection();
+            var diagnosticSource = new DiagnosticListener("MyTested.Mvc");
+            serviceCollection.TryAddSingleton<DiagnosticSource>(diagnosticSource);
+            serviceCollection.TryAddSingleton(diagnosticSource);
             serviceCollection.TryAddSingleton<ILoggerFactory>(MockedLoggerFactory.Create());
             serviceCollection.TryAddSingleton<IControllerActionDescriptorCache, ControllerActionDescriptorCache>();
             return serviceCollection;
@@ -115,13 +135,41 @@
             {
                 serviceCollection.AddMvc();
             }
-
+            
             if (AdditionalServices != null)
             {
                 AdditionalServices(serviceCollection);
             }
 
+            PrepareRouteServices(serviceCollection);
+
             serviceProvider = serviceCollection.BuildServiceProvider();
+        }
+
+        private static void PrepareRouteServices(IServiceCollection serviceCollection)
+        {
+            var modelBindingActionInvokerFactoryType = typeof(IModelBindingActionInvokerFactory);
+
+            if (!serviceCollection.Any(s => s.ServiceType == modelBindingActionInvokerFactoryType))
+            {
+                serviceCollection.TryAddEnumerable(
+                    ServiceDescriptor.Transient<IActionInvokerProvider, ModelBindingActionInvokerProvider>());
+                serviceCollection.TryAddSingleton<IModelBindingActionInvokerFactory, ModelBindingActionInvokerFactory>();
+            }
+
+            routeServiceProvider = serviceCollection.BuildServiceProvider();
+
+            var modelBindingActionInvokerFactory = serviceCollection.FirstOrDefault(s => s.ServiceType == modelBindingActionInvokerFactoryType);
+            if (modelBindingActionInvokerFactory != null)
+            {
+                serviceCollection.Remove(modelBindingActionInvokerFactory);
+            }
+
+            var actionInvokerProviders = serviceCollection.Where(s => s.ServiceType == typeof(IActionInvokerProvider)).ToList();
+            if (actionInvokerProviders.Count > 1)
+            {
+                serviceCollection.Remove(actionInvokerProviders.LastOrDefault());
+            }
         }
 
         private static void PrepareApplicationAndRoutes(StartupMethods startupMethods)
@@ -157,7 +205,7 @@
                 routeBuilder.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
-
+                
                 routeBuilder.Routes.Insert(0, AttributeRouting.CreateAttributeMegaRoute(
                     routeBuilder.DefaultHandler,
                     serviceProvider));
@@ -171,6 +219,7 @@
             initialiazed = false;
             startupType = null;
             serviceProvider = null;
+            routeServiceProvider = null;
             router = null;
             AdditionalServices = null;
             AdditionalConfiguration = null;

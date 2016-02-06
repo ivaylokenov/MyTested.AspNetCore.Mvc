@@ -5,7 +5,7 @@
     /// <summary>
     /// Method argument information containing name, type and value for a method parameter.
     /// </summary>
-    public class MethodArgumentInfo
+    public class MethodArgumentContext
     {
         /// <summary>
         /// Gets or sets the name of the argument.

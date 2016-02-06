@@ -28,12 +28,25 @@
         {
             Expression<Func<int>> expression = () => 0;
 
-            Test.AssertException<ArgumentException>(
+            Test.AssertException<InvalidOperationException>(
                 () =>
                 {
                     ExpressionParser.GetMethodName(expression);
-                }, 
-                "Provided expression is not a valid method call.");
+                },
+                "Provided expression is not valid - expected instance method call but instead received other type of expression.");
+        }
+
+        [Fact]
+        public void GetMethodNameShouldThrowExceptionWithStaticMethodCall()
+        {
+            Expression<Func<int>> expression = () => int.Parse("0");
+
+            Test.AssertException<InvalidOperationException>(
+                () =>
+                {
+                    ExpressionParser.GetMethodName(expression);
+                },
+                "Provided expression is not valid - expected instance method call but instead received static method call.");
         }
 
         [Fact]
@@ -45,7 +58,7 @@
 
             var result = ExpressionParser.ResolveMethodArguments(expression);
 
-            var arguments = result as IList<MethodArgumentInfo> ?? result.ToArray();
+            var arguments = result as IList<MethodArgumentContext> ?? result.ToArray();
             var firstArgument = arguments.First();
             var secondArgument = arguments.Last();
             var secondArgumentAsRequestModel = secondArgument.Value as RequestModel;
@@ -91,12 +104,12 @@
         {
             Expression<Func<int>> expression = () => 0;
 
-            Test.AssertException<ArgumentException>(
+            Test.AssertException<InvalidOperationException>(
                 () =>
                 {
                     ExpressionParser.ResolveMethodArguments(expression);
-                }, 
-                "Provided expression is not a valid method call.");
+                },
+                "Provided expression is not valid - expected instance method call but instead received other type of expression.");
         }
 
         [Fact]
