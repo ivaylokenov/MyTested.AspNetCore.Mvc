@@ -1,5 +1,6 @@
 ﻿namespace MyTested.Mvc.Internal.Caching
 {
+    using System;
     using System.Collections.Concurrent;
     using System.Linq;
     using System.Reflection;
@@ -31,10 +32,10 @@
         /// <returns>Controller action descriptor.</returns>
         public ControllerActionDescriptor GetActionDescriptor(MethodInfo methodInfo)
         {
-            ControllerActionDescriptor result = null;
-            Cache.TryGetValue(methodInfo, out result);
-
-            return result;
+            ControllerActionDescriptor controllerActionDescriptor = null;
+            Cache.TryGetValue(methodInfo, out controllerActionDescriptor);
+            
+            return controllerActionDescriptor;
         }
 
         private void PrepareCache(IActionDescriptorsCollectionProvider provider)

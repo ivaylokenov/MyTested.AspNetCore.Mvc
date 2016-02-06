@@ -15,15 +15,6 @@
         /// <typeparam name="TController">Type of expected resolved controller.</typeparam>
         /// <param name="actionCall">Method call expression indicating the expected resolved action.</param>
         /// <returns>The same route test builder.</returns>
-        IAndResolvedRouteTestBuilder To<TController>(Expression<Func<TController, object>> actionCall)
-            where TController : Controller;
-
-        /// <summary>
-        /// Tests whether the built route is resolved to the action provided by the expression.
-        /// </summary>
-        /// <typeparam name="TController">Type of expected resolved controller.</typeparam>
-        /// <param name="actionCall">Method call expression indicating the expected resolved action.</param>
-        /// <returns>The same route test builder.</returns>
         IAndResolvedRouteTestBuilder To<TController>(Expression<Action<TController>> actionCall)
             where TController : Controller;
 

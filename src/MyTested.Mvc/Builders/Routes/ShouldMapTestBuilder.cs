@@ -34,19 +34,7 @@
         {
             this.routeContext = routeContext;
         }
-
-        /// <summary>
-        /// Tests whether the built route is resolved to the action provided by the expression.
-        /// </summary>
-        /// <typeparam name="TController">Type of expected resolved controller.</typeparam>
-        /// <param name="actionCall">Method call expression indicating the expected resolved action.</param>
-        /// <returns>The same route test builder.</returns>
-        public IAndResolvedRouteTestBuilder To<TController>(Expression<Func<TController, object>> actionCall)
-            where TController : Controller
-        {
-            return this.ResolveTo<TController>(actionCall);
-        }
-
+        
         /// <summary>
         /// Tests whether the built route is resolved to the action provided by the expression.
         /// </summary>
@@ -56,7 +44,9 @@
         public IAndResolvedRouteTestBuilder To<TController>(Expression<Action<TController>> actionCall)
             where TController : Controller
         {
-            return this.ResolveTo<TController>(actionCall);
+            this.actionCallExpression = actionCall;
+            this.ValidateRouteInformation<TController>();
+            return this;
         }
 
         /// <summary>
@@ -104,15 +94,7 @@
         {
             return this;
         }
-
-        private IAndResolvedRouteTestBuilder ResolveTo<TController>(LambdaExpression actionCall)
-            where TController : Controller
-        {
-            this.actionCallExpression = actionCall;
-            this.ValidateRouteInformation<TController>();
-            return this;
-        }
-
+        
         private void ValidateRouteInformation<TController>()
             where TController : Controller
         {

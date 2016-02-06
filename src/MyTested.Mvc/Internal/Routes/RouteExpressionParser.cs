@@ -19,7 +19,6 @@
         public static ExpressionParsedRouteContext Parse<TController>(
             LambdaExpression actionCallExpression,
             object additionalRouteValues = null)
-            where TController : Controller
         {
             var methodCallExpression = ExpressionParser.GetMethodCallExpression(actionCallExpression);
 
@@ -29,6 +28,11 @@
 
             var controllerActionDescriptorCache = TestServiceProvider.GetRequiredService<IControllerActionDescriptorCache>();
             var controllerActionDescriptor = controllerActionDescriptorCache.GetActionDescriptor(methodInfo);
+            
+            if (controllerActionDescriptor == null)
+            {
+                throw new InvalidOperationException($"Method {methodInfo.Name} in class {methodInfo.DeclaringType.Name} is not a valid controller action.");
+            }
 
             var controllerName = controllerActionDescriptor.ControllerName;
             var actionName = controllerActionDescriptor.Name;
