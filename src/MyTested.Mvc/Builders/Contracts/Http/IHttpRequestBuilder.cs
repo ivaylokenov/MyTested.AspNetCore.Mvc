@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Primitives;
     using Uris;
+    using System.Text;
 
     /// <summary>
     /// Used for building HTTP request message.
@@ -17,7 +18,52 @@
         /// </summary>
         /// <param name="stream">Body as stream.</param>
         /// <returns>The same HTTP request builder.</returns>
-        IAndHttpRequestBuilder WithBody(Stream stream);
+        IAndHttpRequestBuilder WithBody(Stream body);
+        
+        /// <summary>
+        /// Adds string body to the built HTTP request.
+        /// </summary>
+        /// <param name="stream">Body as string. If no content type is set on the request, 'text/plain' will be used. Uses UTF8 encoding.</param>
+        /// <returns>The same HTTP request builder.</returns>
+        IAndHttpRequestBuilder WithStringBody(string body);
+
+        /// <summary>
+        /// Adds string body to the built HTTP request.
+        /// </summary>
+        /// <param name="stream">Body as string. If no content type is set on the request, 'text/plain' will be used.</param>
+        /// <param name="encoding">Encoding to use for the body.</param>
+        /// <returns>The same HTTP request builder.</returns>
+        IAndHttpRequestBuilder WithStringBody(string body, Encoding encoding);
+
+        /// <summary>
+        /// Adds JSON body to the built HTTP request.
+        /// </summary>
+        /// <param name="jsonBody">JSON body as string. Sets 'application/json' to the content type. Uses UTF8 encoding.</param>
+        /// <returns>The same HTTP request builder.</returns>
+        IAndHttpRequestBuilder WithJsonBody(string jsonBody);
+
+        /// <summary>
+        /// Adds JSON body to the built HTTP request.
+        /// </summary>
+        /// <param name="jsonBody">JSON body as string. Sets 'application/json' to the content type.</param>
+        /// <param name="encoding">Encoding to use for the body.</param>
+        /// <returns>The same HTTP request builder.</returns>
+        IAndHttpRequestBuilder WithJsonBody(string jsonBody, Encoding encoding);
+
+        /// <summary>
+        /// Adds JSON body to the built HTTP request.
+        /// </summary>
+        /// <param name="jsonBody">Object to seriallize using the built-in JSON formatters in ASP.NET MVC. Sets 'application/json' to the content type. Uses UTF8 encoding.</param>
+        /// <returns>The same HTTP request builder.</returns>
+        IAndHttpRequestBuilder WithJsonBody(object jsonBody);
+
+        /// <summary>
+        /// Adds JSON body to the built HTTP request.
+        /// </summary>
+        /// <param name="jsonBody">Object to seriallize using the built-in JSON formatters in ASP.NET MVC. Sets 'application/json' to the content type.</param>
+        /// <param name="encoding">Encoding to use for the body.</param>
+        /// <returns>The same HTTP request builder.</returns>
+        IAndHttpRequestBuilder WithJsonBody(object jsonBody, Encoding encoding);
 
         /// <summary>
         /// Adds content length to the built HTTP request.

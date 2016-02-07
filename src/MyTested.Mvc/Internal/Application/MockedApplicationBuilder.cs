@@ -9,6 +9,7 @@
     using Microsoft.AspNetCore.Http.Features;
     using Microsoft.AspNetCore.Routing;
     using System.Reflection;
+
     public class MockedApplicationBuilder : IApplicationBuilder
     {
         private const string ServerFeaturesPropertyName = "server.Features";

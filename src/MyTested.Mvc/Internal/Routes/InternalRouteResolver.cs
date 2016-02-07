@@ -8,9 +8,11 @@
     using Contracts;
     using System;
     using Microsoft.AspNetCore.Mvc.Abstractions;
-    using Microsoft.AspNetCore.Mvc.Internal;    /// <summary>
-                                                /// Used for resolving HTTP request to a route.
-                                                /// </summary>
+    using Microsoft.AspNetCore.Mvc.Internal;
+
+    /// <summary>
+    /// Used for resolving HTTP request to a route.
+    /// </summary>
     public static class InternalRouteResolver
     {
         private const string UnresolvedRouteFormat = "it could not be resolved: '{0}'";

@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Tests.InternalTests
+﻿namespace MyTested.Mvc.Tests.InternalTests.RoutesTests
 {
     using Internal.Routes;
     using Setups.Routes;

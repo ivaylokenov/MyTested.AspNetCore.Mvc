@@ -9,7 +9,6 @@
     using Microsoft.AspNetCore.Hosting.Internal;
     using Microsoft.AspNetCore.Hosting.Startup;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc.Routing;
     using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -19,6 +18,7 @@
     using System.Linq;
     using System.Diagnostics;
     using Microsoft.AspNetCore.Mvc.Internal;
+
     public static class TestApplication
     {
         private static readonly RequestDelegate NullHandler = (c) => Task.FromResult(0);
@@ -119,10 +119,13 @@
         {
             var serviceCollection = new ServiceCollection();
             var diagnosticSource = new DiagnosticListener("MyTested.Mvc");
+
             serviceCollection.TryAddSingleton<DiagnosticSource>(diagnosticSource);
             serviceCollection.TryAddSingleton(diagnosticSource);
             serviceCollection.TryAddSingleton<ILoggerFactory>(MockedLoggerFactory.Create());
+
             serviceCollection.TryAddSingleton<IControllerActionDescriptorCache, ControllerActionDescriptorCache>();
+            
             return serviceCollection;
         }
 

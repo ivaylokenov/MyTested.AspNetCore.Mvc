@@ -12,5 +12,10 @@
                 return memoryStream.ToArray();
             }
         }
+
+        public static void Restart(this Stream stream)
+        {
+            stream.Position = 0;
+        }
     }
 }
