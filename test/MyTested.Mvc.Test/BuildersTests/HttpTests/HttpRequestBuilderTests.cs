@@ -6,7 +6,7 @@
     using Microsoft.AspNetCore.Http.Internal;
     using Setups.Controllers;
     using Xunit;
-
+    using Setups.Models;
     public class HttpRequestBuilderTests
     {
         [Fact]
@@ -140,6 +140,120 @@
             Assert.Equal(1, builtRequest.Query.Count);
             Assert.Equal("1.0", builtRequest.Query["version"]);
             Assert.Equal("https", builtRequest.Scheme);
+        }
+        
+        [Fact]
+        public void WithStringBodyShouldWorkCorrectly()
+        {
+            var builtRequest = MyMvc
+                .Controller<MvcController>()
+                .WithHttpRequest(request => request
+                    .WithStringBody("test"))
+                .AndProvideTheHttpRequest();
+
+            using (var reader = new StreamReader(builtRequest.Body))
+            {
+                var body = reader.ReadToEnd();
+                Assert.Equal("test", body);
+                Assert.Equal(ContentType.TextPlain, builtRequest.ContentType);
+                Assert.Equal(reader.BaseStream.Length, builtRequest.ContentLength);
+            }
+        }
+
+        [Fact]
+        public void WithStringBodyShouldWorkCorrectlyAndRespectContentTypeAndLength()
+        {
+            var builtRequest = MyMvc
+                .Controller<MvcController>()
+                .WithHttpRequest(request => request
+                    .WithContentType(ContentType.ApplicationXml)
+                    .WithContentLength(100)
+                    .WithStringBody("test"))
+                .AndProvideTheHttpRequest();
+
+            using (var reader = new StreamReader(builtRequest.Body))
+            {
+                var body = reader.ReadToEnd();
+                Assert.Equal("test", body);
+                Assert.Equal(ContentType.ApplicationXml, builtRequest.ContentType);
+                Assert.Equal(100, builtRequest.ContentLength);
+            }
+        }
+
+        [Fact]
+        public void WithJsonBodyAsStringShouldWorkCorrectly()
+        {
+            var builtRequest = MyMvc
+                .Controller<MvcController>()
+                .WithHttpRequest(request => request
+                    .WithJsonBody(@"{""id"":1}"))
+                .AndProvideTheHttpRequest();
+
+            using (var reader = new StreamReader(builtRequest.Body))
+            {
+                var body = reader.ReadToEnd();
+                Assert.Equal(@"{""id"":1}", body);
+                Assert.Equal(ContentType.ApplicationJson, builtRequest.ContentType);
+                Assert.Equal(reader.BaseStream.Length, builtRequest.ContentLength);
+            }
+        }
+
+        [Fact]
+        public void WithJsonBodyAsStringShouldWorkCorrectlyAndRespectContentTypeAndLength()
+        {
+            var builtRequest = MyMvc
+                .Controller<MvcController>()
+                .WithHttpRequest(request => request
+                    .WithContentType(ContentType.ApplicationXml)
+                    .WithContentLength(100)
+                    .WithJsonBody(@"{""id"":1}"))
+                .AndProvideTheHttpRequest();
+
+            using (var reader = new StreamReader(builtRequest.Body))
+            {
+                var body = reader.ReadToEnd();
+                Assert.Equal(@"{""id"":1}", body);
+                Assert.Equal(ContentType.ApplicationXml, builtRequest.ContentType);
+                Assert.Equal(100, builtRequest.ContentLength);
+            }
+        }
+
+        [Fact]
+        public void WithJsonBodyShouldWorkCorrectly()
+        {
+            var builtRequest = MyMvc
+                .Controller<MvcController>()
+                .WithHttpRequest(request => request
+                    .WithJsonBody(new RequestModel { Integer = 1, RequiredString = "Text" }))
+                .AndProvideTheHttpRequest();
+
+            using (var reader = new StreamReader(builtRequest.Body))
+            {
+                var body = reader.ReadToEnd();
+                Assert.Equal(@"{""Integer"":1,""RequiredString"":""Text"",""NonRequiredString"":null,""NotValidateInteger"":0}", body);
+                Assert.Equal(ContentType.ApplicationJson, builtRequest.ContentType);
+                Assert.Equal(reader.BaseStream.Length, builtRequest.ContentLength);
+            }
+        }
+
+        [Fact]
+        public void WithJsonBodyShouldWorkCorrectlyAndRespectContentTypeAndLength()
+        {
+            var builtRequest = MyMvc
+                .Controller<MvcController>()
+                .WithHttpRequest(request => request
+                    .WithContentType(ContentType.ApplicationXml)
+                    .WithContentLength(100)
+                    .WithJsonBody(@"{""id"":1}"))
+                .AndProvideTheHttpRequest();
+
+            using (var reader = new StreamReader(builtRequest.Body))
+            {
+                var body = reader.ReadToEnd();
+                Assert.Equal(@"{""id"":1}", body);
+                Assert.Equal(ContentType.ApplicationXml, builtRequest.ContentType);
+                Assert.Equal(100, builtRequest.ContentLength);
+            }
         }
     }
 }

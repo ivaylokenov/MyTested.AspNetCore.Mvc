@@ -51,7 +51,7 @@
         /// <summary>
         /// Adds string body to the built HTTP request.
         /// </summary>
-        /// <param name="stream">Body as string. If no content type is set on the request, 'text/plain' will be used. Uses UTF8 encoding.</param>
+        /// <param name="body">Body as string. If no content type is set on the request, 'text/plain' will be used. Uses UTF8 encoding.</param>
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithStringBody(string body)
         {
@@ -59,9 +59,9 @@
         }
 
         /// <summary>
-        /// Adds string body to the built HTTP request.
+        /// Adds string body to the built HTTP request. If no content type is set on the request, 'text/plain' will be used.
         /// </summary>
-        /// <param name="stream">Body as string. If no content type is set on the request, 'text/plain' will be used.</param>
+        /// <param name="stream">Body as string.</param>
         /// <param name="encoding">Encoding to use for the body.</param>
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithStringBody(string body, Encoding encoding)
@@ -81,9 +81,9 @@
         }
 
         /// <summary>
-        /// Adds JSON body to the built HTTP request.
+        /// Adds JSON body to the built HTTP request. Sets 'application/json' to the content type. Uses UTF8 encoding.
         /// </summary>
-        /// <param name="jsonBody">JSON body as string. Sets 'application/json' to the content type. Uses UTF8 encoding.</param>
+        /// <param name="jsonBody">JSON body as string.</param>
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithJsonBody(string jsonBody)
         {
@@ -91,22 +91,22 @@
         }
 
         /// <summary>
-        /// Adds JSON body to the built HTTP request.
+        /// Adds JSON body to the built HTTP request. If no content type is set on the request, 'application/json' will be used.
         /// </summary>
-        /// <param name="jsonBody">JSON body as string. Sets 'application/json' to the content type.</param>
+        /// <param name="jsonBody">JSON body as string.</param>
         /// <param name="encoding">Encoding to use for the body.</param>
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithJsonBody(string jsonBody, Encoding encoding)
         {
             return this
-                .WithContentType(ContentType.ApplicationJson)
+                .WithContentType(this.request.ContentType ?? ContentType.ApplicationJson)
                 .WithStringBody(jsonBody, encoding);
         }
 
         /// <summary>
-        /// Adds JSON body to the built HTTP request.
+        /// Adds JSON body to the built HTTP request. If no content type is set on the request, 'application/json' will be used. Uses UTF8 encoding.
         /// </summary>
-        /// <param name="jsonBody">Object to seriallize using the built-in JSON formatters in ASP.NET MVC. Sets 'application/json' to the content type. Uses UTF8 encoding.</param>
+        /// <param name="jsonBody">Object to seriallize using the built-in JSON formatters in ASP.NET MVC.</param>
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithJsonBody(object jsonBody)
         {
@@ -114,9 +114,9 @@
         }
 
         /// <summary>
-        /// Adds JSON body to the built HTTP request.
+        /// Adds JSON body to the built HTTP request. If no content type is set on the request, 'application/json' will be used.
         /// </summary>
-        /// <param name="jsonBody">Object to seriallize using the built-in JSON formatters in ASP.NET MVC. Sets 'application/json' to the content type.</param>
+        /// <param name="jsonBody">Object to seriallize using the built-in JSON formatters in ASP.NET MVC.</param>
         /// <param name="encoding">Encoding to use for the body.</param>
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithJsonBody(object jsonBody, Encoding encoding)
@@ -131,7 +131,7 @@
             stream.Restart();
 
             return this
-                .WithContentType(ContentType.ApplicationJson)
+                .WithContentType(this.request.ContentType ?? ContentType.ApplicationJson)
                 .WithContentLength(this.request.ContentLength ?? stream.Length)
                 .WithBody(stream);
         }
