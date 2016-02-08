@@ -50,10 +50,11 @@
         /// <summary>
         /// Adds body to the built HTTP request by trying to format the provided object based on the content type and the configured formatters. Uses UTF8 encoding.
         /// </summary>
+        /// <typeparam name="TBody">Type of body.</typeparam>
         /// <param name="body">Body as object.</param>
         /// <param name="contentType">Content type to use for formatting.</param>
         /// <returns>The same HTTP request builder.</returns>
-        public IAndHttpRequestBuilder WithBody(object body, string contentType)
+        public IAndHttpRequestBuilder WithBody<TBody>(TBody body, string contentType)
         {
             return this.WithBody(body, contentType, defaultEncoding);
         }
@@ -61,11 +62,12 @@
         /// <summary>
         /// Adds body to the built HTTP request by trying to format the provided object based on the content type and the configured formatters.
         /// </summary>
+        /// <typeparam name="TBody">Type of body.</typeparam>
         /// <param name="body">Body as object.</param>
         /// <param name="contentType">Content type to use for formatting.</param>
         /// <param name="encoding">Encoding to use for the body.</param>
         /// <returns>The same HTTP request builder.</returns>
-        public IAndHttpRequestBuilder WithBody(object body, string contentType, Encoding encoding)
+        public IAndHttpRequestBuilder WithBody<TBody>(TBody body, string contentType, Encoding encoding)
         {
             var stream = FormattersHelper.WriteToStream(body, contentType, encoding);
 

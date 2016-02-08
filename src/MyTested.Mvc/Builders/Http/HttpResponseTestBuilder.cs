@@ -15,7 +15,7 @@
     using Utilities.Validators;
     using Microsoft.Net.Http.Headers;
     using Utilities;
-
+    using System.Text;
     /// <summary>
     /// Used for testing the HTTP response.
     /// </summary>
@@ -58,6 +58,46 @@
                     "instead received different result");
             }
 
+            return this;
+        }
+
+        public IAndHttpResponseTestBuilder WithBody<TBody>(TBody body, string contentType)
+        {
+            return this;
+        }
+
+        public IAndHttpResponseTestBuilder WithBody<TBody>(TBody body, string contentType, Encoding encoding)
+        {
+            return this;
+        }
+
+        public IAndHttpResponseTestBuilder WithStringBody(string body)
+        {
+            return this;
+        }
+
+        public IAndHttpResponseTestBuilder WithStringBody(string body, Encoding encoding)
+        {
+            return this;
+        }
+
+        public IAndHttpResponseTestBuilder WithJsonBody(string jsonBody)
+        {
+            return this;
+        }
+
+        public IAndHttpResponseTestBuilder WithJsonBody(string jsonBody, Encoding encoding)
+        {
+            return this;
+        }
+
+        public IAndHttpResponseTestBuilder WithJsonBody(object jsonBody)
+        {
+            return this;
+        }
+
+        public IAndHttpResponseTestBuilder WithJsonBody(object jsonBody, Encoding encoding)
+        {
             return this;
         }
 
