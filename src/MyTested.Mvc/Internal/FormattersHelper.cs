@@ -1,0 +1,87 @@
+﻿namespace MyTested.Mvc.Internal
+{
+    using Application;
+    using Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Formatters;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
+    using Microsoft.Extensions.Options;
+    using Microsoft.Extensions.Primitives;
+    using System.Collections.Concurrent;
+    using System.IO;
+    using System.Linq;
+    using System.Text;
+    using Utilities.Extensions;
+    using Utilities.Validators;
+
+    public static class FormattersHelper
+    {
+        private static ConcurrentDictionary<string, IInputFormatter> inputFormatters
+            = new ConcurrentDictionary<string, IInputFormatter>();
+
+        private static ConcurrentDictionary<string, IOutputFormatter> outputFormatters
+            = new ConcurrentDictionary<string, IOutputFormatter>();
+        
+        public static TModel ReadFromStream<TModel>(Stream stream, string contentType, Encoding encoding)
+        {
+            stream.Restart();
+
+            // formatters do not support non HTTP context processing
+            var httpContext = new MockedHttpContext();
+            httpContext.Request.Body = stream;
+            httpContext.Request.ContentType = contentType;
+
+            var modelMetadataProvider = TestServiceProvider.GetRequiredService<IModelMetadataProvider>();
+            var modelMetadata = modelMetadataProvider.GetMetadataForType(typeof(TModel));
+
+            var inputFormatterContext = new InputFormatterContext(
+                httpContext,
+                string.Empty,
+                new ModelStateDictionary(),
+                modelMetadata,
+                (str, enc) => new StreamReader(httpContext.Request.Body, encoding));
+
+            var inputFormatter = inputFormatters.GetOrAdd(contentType, _ =>
+            {
+                var mvcOptions = TestServiceProvider.GetRequiredService<IOptions<MvcOptions>>();
+                var formatter = mvcOptions.Value?.InputFormatters?.FirstOrDefault(f => f.CanRead(inputFormatterContext));
+                ServiceValidator.ValidateFormatterExists(formatter, contentType);
+
+                return formatter;
+            });
+
+            return (TModel)inputFormatter.ReadAsync(inputFormatterContext).Result.Model;
+        }
+
+        public static Stream WriteToStream(object value, string contentType, Encoding encoding)
+        {
+            // formatters do not support non HTTP context processing
+            var httpContext = new MockedHttpContext();
+            httpContext.Response.Body = new MemoryStream();
+
+            var outputFormatterCanWriteContext = new OutputFormatterWriteContext(
+                httpContext,
+                (str, enc) => new StreamWriter(httpContext.Response.Body, encoding),
+                value?.GetType(),
+                value)
+            {
+                ContentType = new StringSegment(contentType)
+            };
+
+            var outputFormatter = outputFormatters.GetOrAdd(contentType, _ =>
+            {
+                var mvcOptions = TestServiceProvider.GetRequiredService<IOptions<MvcOptions>>();
+
+                var formatter = mvcOptions.Value?.OutputFormatters?.FirstOrDefault(f => f.CanWriteResult(outputFormatterCanWriteContext));
+                ServiceValidator.ValidateFormatterExists(formatter, contentType);
+
+                return formatter;
+            });
+            
+            outputFormatter.WriteAsync(outputFormatterCanWriteContext).Wait();
+
+            // copy memory stream because formatters close the original one
+            return new MemoryStream(((MemoryStream)httpContext.Response.Body).ToArray());
+        }
+    }
+}

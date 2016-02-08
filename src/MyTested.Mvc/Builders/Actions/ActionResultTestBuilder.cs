@@ -5,7 +5,7 @@
     using Base;
     using Contracts.Actions;
     using Exceptions;
-    using Internal.Extensions;
+    using Utilities.Extensions;
     using Microsoft.AspNetCore.Mvc;
     using ShouldHave;
     using ShouldReturn;

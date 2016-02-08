@@ -43,6 +43,7 @@
         /// <typeparam name="TModel">Type of model object.</typeparam>
         /// <returns>Model details test builder.</returns>
         public IModelDetailsTestBuilder<TModel> WithModelOfType<TModel>() => this.WithResponseModelOfType<TModel>();
+
         /// <summary>
         /// Gets the action result which will be tested.
         /// </summary>

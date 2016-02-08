@@ -1,6 +1,6 @@
 ﻿namespace MyTested.Mvc.Internal.Routes
 {
-    using Extensions;
+    using Utilities.Extensions;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.AspNetCore.Routing;
     using System.Collections.Generic;

@@ -3,7 +3,7 @@
     using System;
     using Contracts.Attributes;
     using Exceptions;
-    using Internal.Extensions;
+    using Utilities.Extensions;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 

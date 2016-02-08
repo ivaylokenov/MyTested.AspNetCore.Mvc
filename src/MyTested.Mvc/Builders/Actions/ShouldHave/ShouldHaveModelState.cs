@@ -4,7 +4,7 @@
     using Contracts.And;
     using Contracts.Models;
     using Exceptions;
-    using Internal.Extensions;
+    using Utilities.Extensions;
     using Models;
 
     /// <summary>

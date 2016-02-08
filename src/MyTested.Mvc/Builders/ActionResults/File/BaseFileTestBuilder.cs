@@ -2,7 +2,7 @@
 {
     using System;
     using Exceptions;
-    using Internal.Extensions;
+    using Utilities.Extensions;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Net.Http.Headers;
     using MyTested.Mvc.Builders.Base;

@@ -21,6 +21,23 @@
         IAndHttpRequestBuilder WithBody(Stream body);
 
         /// <summary>
+        /// Adds body to the built HTTP request by trying to format the provided object based on the content type and the configured formatters. Uses UTF8 encoding.
+        /// </summary>
+        /// <param name="body">Body as object.</param>
+        /// <param name="contentType">Content type to use for formatting.</param>
+        /// <returns>The same HTTP request builder.</returns>
+        IAndHttpRequestBuilder WithBody(object body, string contentType);
+
+        /// <summary>
+        /// Adds body to the built HTTP request by trying to format the provided object based on the content type and the configured formatters.
+        /// </summary>
+        /// <param name="body">Body as object.</param>
+        /// <param name="contentType">Content type to use for formatting.</param>
+        /// <param name="encoding">Encoding to use for the body.</param>
+        /// <returns>The same HTTP request builder.</returns>
+        IAndHttpRequestBuilder WithBody(object body, string contentType, Encoding encoding);
+
+        /// <summary>
         /// Adds string body to the built HTTP request. If no content type is set on the request, 'text/plain' will be used. Uses UTF8 encoding.
         /// </summary>
         /// <param name="body">Body as string.</param>

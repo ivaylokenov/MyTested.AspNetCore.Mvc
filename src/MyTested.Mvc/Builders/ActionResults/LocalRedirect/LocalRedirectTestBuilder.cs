@@ -5,7 +5,7 @@
     using Contracts.ActionResults.LocalRedirect;
     using Contracts.Uris;
     using Exceptions;
-    using Internal.Extensions;
+    using Utilities.Extensions;
     using Microsoft.AspNetCore.Mvc;
     using Utilities.Validators;
 

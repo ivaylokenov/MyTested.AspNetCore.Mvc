@@ -15,9 +15,6 @@
     /// </summary>
     public class TestServiceProvider
     {
-        private static IDictionary<Type, IOutputFormatter> outputFormatters
-            = new Dictionary<Type, IOutputFormatter>();
-
         /// <summary>
         /// Gets the current service provider.
         /// </summary>
@@ -46,28 +43,6 @@
         {
             ServiceValidator.ValidateServices();
             return Current.GetService<TInstance>();
-        }
-
-        /// <summary>
-        /// Gets output formatter from the registered MVC options.
-        /// </summary>
-        /// <typeparam name="TFormatter">Type of formatter to get.</typeparam>
-        /// <returns>Formatter of TFormatter type.</returns>
-        public static TFormatter GetOutputFormatter<TFormatter>()
-            where TFormatter : IOutputFormatter
-        {
-            var typeOfFormatter = typeof(TFormatter);
-            if (!outputFormatters.ContainsKey(typeOfFormatter))
-            {
-                var mvcOptions = GetRequiredService<IOptions<MvcOptions>>();
-
-                var formatter = mvcOptions.Value?.OutputFormatters?.FirstOrDefault(f => f.GetType() == typeOfFormatter);
-                ServiceValidator.ValidateServiceExists(formatter);
-
-                outputFormatters.Add(typeOfFormatter, formatter);
-            }
-
-            return (TFormatter)outputFormatters[typeOfFormatter];
         }
 
         /// <summary>

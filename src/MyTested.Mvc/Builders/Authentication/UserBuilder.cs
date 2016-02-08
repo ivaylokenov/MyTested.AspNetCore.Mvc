@@ -4,7 +4,7 @@
     using System.Linq;
     using System.Security.Claims;
     using Contracts.Authentication;
-    using Internal.Extensions;
+    using Utilities.Extensions;
     using Internal.Identity;
 
     /// <summary>

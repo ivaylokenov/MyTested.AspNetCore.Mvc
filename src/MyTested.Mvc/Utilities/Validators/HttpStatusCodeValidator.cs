@@ -1,6 +1,6 @@
 ﻿namespace MyTested.Mvc.Utilities.Validators
 {
-    using Internal.Extensions;
+    using Utilities.Extensions;
     using System;
     using System.Net;
 

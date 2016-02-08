@@ -7,7 +7,7 @@
     using Contracts.ActionResults.Redirect;
     using Contracts.Uris;
     using Exceptions;
-    using Internal.Extensions;
+    using Utilities.Extensions;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Routing;
     using Utilities.Validators;

@@ -6,7 +6,7 @@
     using Contracts.ActionResults.Json;
     using Exceptions;
     using Internal.Application;
-    using Internal.Extensions;
+    using Utilities.Extensions;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Options;
     using Microsoft.Net.Http.Headers;

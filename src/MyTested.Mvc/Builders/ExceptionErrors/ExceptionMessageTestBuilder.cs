@@ -4,7 +4,7 @@
     using Base;
     using Contracts.ExceptionErrors;
     using Exceptions;
-    using Internal.Extensions;
+    using Utilities.Extensions;
     using Microsoft.AspNetCore.Mvc;
 
     /// <summary>

@@ -6,7 +6,7 @@
     using Contracts.ExceptionErrors;
     using ExceptionErrors;
     using Exceptions;
-    using Internal.Extensions;
+    using Utilities.Extensions;
     using Microsoft.AspNetCore.Mvc;
 
     /// <summary>

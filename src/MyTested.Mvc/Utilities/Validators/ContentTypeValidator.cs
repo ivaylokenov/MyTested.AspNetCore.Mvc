@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.Net.Http.Headers;
-    using Internal.Extensions;
+    using Utilities.Extensions;
     using Microsoft.AspNetCore.Mvc.Formatters;
 
     /// <summary>

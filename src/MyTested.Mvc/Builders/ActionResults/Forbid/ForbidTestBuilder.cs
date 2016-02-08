@@ -7,7 +7,7 @@
     using Contracts.ActionResults.Forbid;
     using Contracts.Authentication;
     using Exceptions;
-    using Internal.Extensions;
+    using Utilities.Extensions;
     using Microsoft.AspNetCore.Http.Authentication;
     using Microsoft.AspNetCore.Mvc;
     using Utilities.Validators;

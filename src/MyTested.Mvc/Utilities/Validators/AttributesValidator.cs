@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Builders.Attributes;
-    using Internal.Extensions;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Validator class containing attributes validation logic.

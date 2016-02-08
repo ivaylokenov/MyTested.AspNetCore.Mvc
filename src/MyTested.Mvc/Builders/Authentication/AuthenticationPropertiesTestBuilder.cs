@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using Base;
     using Exceptions;
-    using Internal.Extensions;
+    using Utilities.Extensions;
     using Microsoft.AspNetCore.Http.Authentication;
     using Microsoft.AspNetCore.Mvc;
     using MyTested.Mvc.Builders.Contracts.Authentication;

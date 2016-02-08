@@ -5,7 +5,7 @@
     using Contracts.And;
     using Contracts.Attributes;
     using Exceptions;
-    using Internal.Extensions;
+    using Utilities.Extensions;
     using Utilities.Validators;
 
     /// <summary>

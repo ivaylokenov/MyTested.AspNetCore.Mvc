@@ -7,15 +7,14 @@
     using Contracts.Http;
     using Contracts.Uris;
     using Exceptions;
-    using Internal.Extensions;
+    using Utilities.Extensions;
     using Internal.Http;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Primitives;
     using Uris;
     using Utilities.Validators;
-    using Internal.Application;
-    using Microsoft.AspNetCore.Mvc.Formatters;
     using System.Text;
+    using Internal;
 
     /// <summary>
     /// Used for building HTTP request message.
@@ -49,6 +48,34 @@
         }
 
         /// <summary>
+        /// Adds body to the built HTTP request by trying to format the provided object based on the content type and the configured formatters. Uses UTF8 encoding.
+        /// </summary>
+        /// <param name="body">Body as object.</param>
+        /// <param name="contentType">Content type to use for formatting.</param>
+        /// <returns>The same HTTP request builder.</returns>
+        public IAndHttpRequestBuilder WithBody(object body, string contentType)
+        {
+            return this.WithBody(body, contentType, defaultEncoding);
+        }
+
+        /// <summary>
+        /// Adds body to the built HTTP request by trying to format the provided object based on the content type and the configured formatters.
+        /// </summary>
+        /// <param name="body">Body as object.</param>
+        /// <param name="contentType">Content type to use for formatting.</param>
+        /// <param name="encoding">Encoding to use for the body.</param>
+        /// <returns>The same HTTP request builder.</returns>
+        public IAndHttpRequestBuilder WithBody(object body, string contentType, Encoding encoding)
+        {
+            var stream = FormattersHelper.WriteToStream(body, contentType, encoding);
+
+            return this
+                .WithContentType(this.request.ContentType ?? contentType)
+                .WithContentLength(this.request.ContentLength ?? stream.Length)
+                .WithBody(stream);
+        }
+
+        /// <summary>
         /// Adds string body to the built HTTP request.
         /// </summary>
         /// <param name="body">Body as string. If no content type is set on the request, 'text/plain' will be used. Uses UTF8 encoding.</param>
@@ -66,18 +93,7 @@
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithStringBody(string body, Encoding encoding)
         {
-            var stream = new MemoryStream();
-            var streamWriter = new StreamWriter(stream, encoding);
-
-            streamWriter.Write(body);
-            streamWriter.Flush();
-
-            stream.Restart();
-
-            return this
-                .WithContentType(this.request.ContentType ?? ContentType.TextPlain)
-                .WithContentLength(this.request.ContentLength ?? stream.Length)
-                .WithBody(stream);
+            return this.WithBody(body, ContentType.TextPlain, encoding);
         }
 
         /// <summary>
@@ -121,19 +137,7 @@
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithJsonBody(object jsonBody, Encoding encoding)
         {
-            var stream = new MemoryStream();
-            var streamWriter = new StreamWriter(stream, encoding);
-
-            var jsonFormatter = TestServiceProvider.GetOutputFormatter<JsonOutputFormatter>();
-            jsonFormatter.WriteObject(streamWriter, jsonBody);
-            streamWriter.Flush();
-
-            stream.Restart();
-
-            return this
-                .WithContentType(this.request.ContentType ?? ContentType.ApplicationJson)
-                .WithContentLength(this.request.ContentLength ?? stream.Length)
-                .WithBody(stream);
+            return this.WithBody(jsonBody, ContentType.ApplicationJson, encoding);
         }
 
         /// <summary>
@@ -689,7 +693,7 @@
 
         private void ThrowNewInvalidHttpRequestMessageException(string propertyName, string expectedValue, string actualValue)
         {
-            throw new InvalidHttpRequestMessageException(string.Format(
+            throw new InvalidHttpRequestException(string.Format(
                 "When building HttpRequest expected {0} to be {1}, but instead received {2}.",
                 propertyName,
                 expectedValue,

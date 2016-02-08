@@ -5,7 +5,7 @@
     using System.Linq;
     using Builders.Authentication;
     using Builders.Contracts.Authentication;
-    using Internal.Extensions;
+    using Utilities.Extensions;
     using Microsoft.AspNetCore.Http.Authentication;
     using Microsoft.AspNetCore.Mvc;
 

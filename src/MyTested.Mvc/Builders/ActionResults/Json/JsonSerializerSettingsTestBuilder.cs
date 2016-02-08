@@ -7,7 +7,7 @@
     using Base;
     using Contracts.ActionResults.Json;
     using Exceptions;
-    using Internal.Extensions;
+    using Utilities.Extensions;
     using Microsoft.AspNetCore.Mvc;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;

@@ -1,5 +1,6 @@
-﻿namespace MyTested.Mvc.Internal.Extensions
+﻿namespace MyTested.Mvc.Utilities.Extensions
 {
+    using Internal;
     using System.Collections.Generic;
     using System.Linq;
 

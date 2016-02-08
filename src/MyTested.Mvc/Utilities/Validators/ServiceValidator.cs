@@ -26,7 +26,19 @@
         {
             CommonValidator.CheckForNullReference(
                 service,
-                $"{typeof(TService).Name} could not be resolved from the services provider. Before running this test case, the service should be registered in the 'IsUsing' method and");
+                $"{typeof(TService).Name} could not be resolved from the services provider. Before running this test case, the service should be registered in the 'StartsFrom' method and");
+        }
+
+        /// <summary>
+        /// Validates whether formatter exists.
+        /// </summary>
+        /// <param name="formatter">Formatter to validate.</param>
+        /// <param name="contentType">Content type for which a formatter was not resolved.</param>
+        public static void ValidateFormatterExists(object formatter, string contentType)
+        {
+            CommonValidator.CheckForNullReference(
+                formatter,
+                $"Formatter able to process '{contentType}' could not be resolved from the services provider. Before running this test case, the formatter should be registered in the 'StartsFrom' method and");
         }
     }
 }

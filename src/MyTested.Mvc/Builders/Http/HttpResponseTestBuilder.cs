@@ -7,7 +7,7 @@
     using System.Net;
     using Base;
     using Contracts.Http;
-    using Internal.Extensions;
+    using Utilities.Extensions;
     using Exceptions;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Http;

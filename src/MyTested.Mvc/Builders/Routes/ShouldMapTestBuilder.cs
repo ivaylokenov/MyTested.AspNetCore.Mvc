@@ -8,7 +8,7 @@
     using Microsoft.AspNetCore.Routing;
     using Internal.Routes;
     using Exceptions;
-    using Internal.Extensions;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Used for building and testing a route.

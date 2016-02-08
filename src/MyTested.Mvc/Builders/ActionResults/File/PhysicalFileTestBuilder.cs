@@ -4,7 +4,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Net.Http.Headers;
     using MyTested.Mvc.Builders.Contracts.ActionResults.File;
-    using Internal.Extensions;
+    using Utilities.Extensions;
     /// <summary>
     /// Used for testing physical file result.
     /// </summary>

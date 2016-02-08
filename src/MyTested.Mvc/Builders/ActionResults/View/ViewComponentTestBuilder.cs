@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Net;
     using Contracts.ActionResults.View;
-    using Internal.Extensions;
+    using Utilities.Extensions;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ViewEngines;
     using Microsoft.Net.Http.Headers;

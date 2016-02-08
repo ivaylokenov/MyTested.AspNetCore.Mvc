@@ -3,7 +3,7 @@
     using ActionResults.Content;
     using Contracts.ActionResults.Content;
     using Exceptions;
-    using Internal.Extensions;
+    using Utilities.Extensions;
     using Microsoft.AspNetCore.Mvc;
 
     /// <summary>

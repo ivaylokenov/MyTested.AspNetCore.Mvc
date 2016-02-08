@@ -2,7 +2,7 @@
 {
     using Contracts.Base;
     using Exceptions;
-    using Internal.Extensions;
+    using Utilities.Extensions;
     using Utilities;
     using Utilities.Validators;
 

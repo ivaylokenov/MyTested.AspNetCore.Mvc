@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Utilities
+﻿namespace MyTested.Mvc.Internal
 {
     /// <summary>
     /// Class containing helper logic for view test builders.

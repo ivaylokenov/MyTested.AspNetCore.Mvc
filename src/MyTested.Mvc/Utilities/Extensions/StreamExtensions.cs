@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Internal.Extensions
+﻿namespace MyTested.Mvc.Utilities.Extensions
 {
     using System.IO;
 

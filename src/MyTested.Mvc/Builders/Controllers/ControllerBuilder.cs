@@ -16,7 +16,7 @@
     using Internal;
     using Internal.Application;
     using Internal.Contracts;
-    using Internal.Extensions;
+    using Utilities.Extensions;
     using Internal.Http;
     using Internal.Identity;
     using Microsoft.AspNetCore.Http;

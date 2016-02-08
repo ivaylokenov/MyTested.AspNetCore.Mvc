@@ -7,7 +7,7 @@
     using Contracts.ActionResults.HttpBadRequest;
     using Contracts.Models;
     using Exceptions;
-    using Internal.Extensions;
+    using Utilities.Extensions;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Models;

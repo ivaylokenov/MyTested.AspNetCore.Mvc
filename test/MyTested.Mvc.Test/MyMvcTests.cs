@@ -158,7 +158,7 @@ namespace MyTested.Mvc.Tests
                 {
                     injectedService = TestServiceProvider.GetRequiredService<IInjectedService>();
                 },
-                "IInjectedService could not be resolved from the services provider. Before running this test case, the service should be registered in the 'IsUsing' method and cannot be null.");
+                "IInjectedService could not be resolved from the services provider. Before running this test case, the service should be registered in the 'StartsFrom' method and cannot be null.");
 
             MyMvc.IsUsingDefaultConfiguration()
                 .WithServices(TestObjectFactory.GetCustomServicesRegistrationAction());

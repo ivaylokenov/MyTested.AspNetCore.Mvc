@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Reflection;
     using Exceptions;
-    using Internal.Extensions;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Validator class containing common validation logic.
@@ -23,7 +23,7 @@
         {
             if (value == null)
             {
-                throw new NullReferenceException(string.Format("{0} cannot be null.", errorMessageName));
+                throw new NullReferenceException($"{errorMessageName} cannot be null.");
             }
         }
 
@@ -38,7 +38,7 @@
         {
             if (string.IsNullOrWhiteSpace(value))
             {
-                throw new NullReferenceException(string.Format("{0} cannot be null or white space.", errorMessageName));
+                throw new NullReferenceException($"{errorMessageName} cannot be null or white space.");
             }
         }
 
@@ -71,10 +71,9 @@
                 {
                     var innerExceptions = exceptionAsAggregateException
                         .InnerExceptions
-                        .Select(ex =>
-                            string.Format("{0}{1}", ex.GetName(), FormatExceptionMessage(ex.Message)));
+                        .Select(ex => $"{ex.GetName()}{FormatExceptionMessage(ex.Message)}");
 
-                    message = string.Format(" (containing {0})", string.Join(", ", innerExceptions));
+                    message = $" (containing {string.Join(", ", innerExceptions)})";
                 }
 
                 throw new ActionCallAssertionException(string.Format(
@@ -116,9 +115,7 @@
             bool canBeNull = !type.GetTypeInfo().IsValueType || (Nullable.GetUnderlyingType(type) != null);
             if (!canBeNull)
             {
-                throw new ActionCallAssertionException(string.Format(
-                    "{0} cannot be null.",
-                    type.ToFriendlyTypeName()));
+                throw new ActionCallAssertionException($"{type.ToFriendlyTypeName()} cannot be null.");
             }
         }
 
@@ -126,7 +123,7 @@
         {
             return string.IsNullOrWhiteSpace(message)
                  ? string.Empty
-                 : string.Format(" with '{0}' message", message);
+                 : $" with '{message}' message";
         }
     }
 }

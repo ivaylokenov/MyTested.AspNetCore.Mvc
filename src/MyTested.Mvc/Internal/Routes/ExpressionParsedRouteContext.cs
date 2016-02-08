@@ -1,6 +1,6 @@
 ﻿namespace MyTested.Mvc.Internal.Routes
 {
-    using Extensions;
+    using Utilities.Extensions;
     using System;
     using System.Collections.Generic;
 

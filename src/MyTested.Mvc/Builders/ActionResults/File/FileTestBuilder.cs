@@ -5,7 +5,7 @@
     using System.Linq;
     using Contracts.ActionResults.File;
     using Exceptions;
-    using Internal.Extensions;
+    using Utilities.Extensions;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Net.Http.Headers;
     using Utilities;

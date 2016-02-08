@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using Internal.Extensions;
+    using Utilities.Extensions;
     using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
