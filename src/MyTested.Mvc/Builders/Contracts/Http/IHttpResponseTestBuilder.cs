@@ -7,7 +7,7 @@
     using Base;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Primitives;
-
+    using System.Text;
     /// <summary>
     /// Used for testing the HTTP response.
     /// </summary>
@@ -19,6 +19,89 @@
         /// <param name="body">Expected stream body.</param>
         /// <returns>The same HTTP response message test builder.</returns>
         IAndHttpResponseTestBuilder WithBody(Stream body);
+
+        /// <summary>
+        /// Tests whether HTTP response message body has the same type as the provided one. Body is parsed from the configured formatters and provided content type. Uses UTF8 encoding.
+        /// </summary>
+        /// <typeparam name="TBody">Expected type of body to test.</typeparam>
+        /// <param name="contentType">Expected content type as string.</param>
+        /// <returns>The same HTTP response message test builder.</returns>
+        IAndHttpResponseTestBuilder WithBodyOfType<TBody>(string contentType);
+        
+        /// <summary>
+        /// Tests whether HTTP response message body has the same type as the provided one. Body is parsed from the configured formatters and provided content type.
+        /// </summary>
+        /// <typeparam name="TBody">Expected type of body to test.</typeparam>
+        /// <param name="contentType">Expected content type as string.</param>
+        /// <param name="encoding">Encoding of the body.</param>
+        /// <returns>The same HTTP response message test builder.</returns>
+        IAndHttpResponseTestBuilder WithBodyOfType<TBody>(string contentType, Encoding encoding);
+
+        /// <summary>
+        /// Tests whether HTTP response message body has deeply equal value as the provided one. Body is parsed from the configured formatters and provided content type. Uses UTF8 encoding.
+        /// </summary>
+        /// <typeparam name="TBody">Expected type of body to test.</typeparam>
+        /// <param name="body">Expected body object.</param>
+        /// <param name="contentType">Expected content type as string.</param>
+        /// <returns>The same HTTP response message test builder.</returns>
+        IAndHttpResponseTestBuilder WithBody<TBody>(TBody body, string contentType);
+        
+        /// <summary>
+        /// Tests whether HTTP response message body has deeply equal value as the provided one. Body is parsed from the configured formatters and provided content type.
+        /// </summary>
+        /// <typeparam name="TBody">Expected type of body to test.</typeparam>
+        /// <param name="body">Expected body object.</param>
+        /// <param name="contentType">Expected content type as string.</param>
+        /// <param name="encoding">Encoding of the body.</param>
+        /// <returns>The same HTTP response message test builder.</returns>
+        IAndHttpResponseTestBuilder WithBody<TBody>(TBody body, string contentType, Encoding encoding);
+
+        /// <summary>
+        /// Tests whether HTTP response message body is equal to the provided string. Body is parsed from the configured formatters and 'text/plain' content type. Uses UTF8 encoding.
+        /// </summary>
+        /// <param name="body">Expected body as string.</param>
+        /// <returns>The same HTTP response message test builder.</returns>
+        IAndHttpResponseTestBuilder WithStringBody(string body);
+
+        /// <summary>
+        /// Tests whether HTTP response message body is equal to the provided string. Body is parsed from the configured formatters and 'text/plain' content type.
+        /// </summary>
+        /// <param name="body">Expected body as string.</param>
+        /// <param name="encoding">Encoding of the body.</param>
+        /// <returns>The same HTTP response message test builder.</returns>
+        IAndHttpResponseTestBuilder WithStringBody(string body, Encoding encoding);
+
+        /// <summary>
+        /// Tests whether HTTP response message body is equal to the provided JSON string. Body is parsed from the configured formatters and 'application/json' content type. Uses UTF8 encoding.
+        /// </summary>
+        /// <param name="jsonBody">Expected body as JSON string.</param>
+        /// <returns>The same HTTP response message test builder.</returns>
+        IAndHttpResponseTestBuilder WithJsonBody(string jsonBody);
+
+        /// <summary>
+        /// Tests whether HTTP response message body is equal to the provided JSON string. Body is parsed from the configured formatters and 'application/json' content type.
+        /// </summary>
+        /// <param name="jsonBody">Expected body as JSON string.</param>
+        /// <param name="encoding">Encoding of the body.</param>
+        /// <returns>The same HTTP response message test builder.</returns>
+        IAndHttpResponseTestBuilder WithJsonBody(string jsonBody, Encoding encoding);
+
+        /// <summary>
+        /// Tests whether HTTP response message body is deeply equal to the provided object. Body is parsed from the configured formatters and 'application/json' content type. Uses UTF8 encoding.
+        /// </summary>
+        /// <typeparam name="TBody">Expected type of body to test.</typeparam>
+        /// <param name="jsonBody">Expected body as object.</param>
+        /// <returns>The same HTTP response message test builder.</returns>
+        IAndHttpResponseTestBuilder WithJsonBody<TBody>(TBody jsonBody);
+
+        /// <summary>
+        /// Tests whether HTTP response message body is equal to the provided JSON string. Body is parsed from the configured formatters and 'application/json' content type.
+        /// </summary>
+        /// <typeparam name="TBody">Expected type of body to test.</typeparam>
+        /// <param name="jsonBody">Expected body as object.</param>
+        /// <param name="encoding">Encoding of the body.</param>
+        /// <returns>The same HTTP response message test builder.</returns>
+        IAndHttpResponseTestBuilder WithJsonBody<TBody>(TBody jsonBody, Encoding encoding);
 
         /// <summary>
         /// Tests whether HTTP response message content length is the same as the provided one.

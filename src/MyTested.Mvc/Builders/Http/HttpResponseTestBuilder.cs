@@ -16,13 +16,19 @@
     using Microsoft.Net.Http.Headers;
     using Utilities;
     using System.Text;
+    using Internal;
+
     /// <summary>
     /// Used for testing the HTTP response.
     /// </summary>
     public class HttpResponseTestBuilder : BaseTestBuilderWithInvokedAction,
         IAndHttpResponseTestBuilder
     {
+        private static Encoding defaultEncoding = Encoding.UTF8;
+
         private HttpResponse httpResponse;
+        private bool contentTypeTested;
+        private bool contentLengthTested;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HttpResponseTestBuilder" /> class.
@@ -61,44 +67,146 @@
             return this;
         }
 
+        /// <summary>
+        /// Tests whether HTTP response message body has the same type as the provided one. Body is parsed from the configured formatters and provided content type. Uses UTF8 encoding.
+        /// </summary>
+        /// <typeparam name="TBody">Expected type of body to test.</typeparam>
+        /// <param name="contentType">Expected content type as string.</param>
+        /// <returns>The same HTTP response message test builder.</returns>
+        public IAndHttpResponseTestBuilder WithBodyOfType<TBody>(string contentType)
+        {
+            return this.WithBodyOfType<TBody>(contentType, defaultEncoding);
+        }
+
+        /// <summary>
+        /// Tests whether HTTP response message body has the same type as the provided one. Body is parsed from the configured formatters and provided content type.
+        /// </summary>
+        /// <typeparam name="TBody">Expected type of body to test.</typeparam>
+        /// <param name="contentType">Expected content type as string.</param>
+        /// <param name="encoding">Encoding of the body.</param>
+        /// <returns>The same HTTP response message test builder.</returns>
+        public IAndHttpResponseTestBuilder WithBodyOfType<TBody>(string contentType, Encoding encoding)
+        {
+            var parsedBody = FormattersHelper.ReadFromStream<TBody>(this.httpResponse.Body, contentType, encoding);
+
+            var actualBodyDataType = parsedBody?.GetType();
+            var expectedBodyDataType = typeof(TBody);
+
+            var responseDataTypeIsAssignable = Reflection.AreAssignable(
+                    expectedBodyDataType,
+                    actualBodyDataType);
+
+            if (!responseDataTypeIsAssignable)
+            {
+                this.ThrowNewHttpResponseAssertionException(
+                    "body",
+                    $"to be of {typeof(TBody).ToFriendlyTypeName()} type",
+                    $"instead received {actualBodyDataType.ToFriendlyTypeName()}");
+            }
+            
+            return this.WithContentType(contentType);
+        }
+
+        /// <summary>
+        /// Tests whether HTTP response message body has deeply equal value as the provided one. Body is parsed from the configured formatters and provided content type. Uses UTF8 encoding.
+        /// </summary>
+        /// <typeparam name="TBody">Expected type of body to test.</typeparam>
+        /// <param name="body">Expected body object.</param>
+        /// <param name="contentType">Expected content type as string.</param>
+        /// <returns>The same HTTP response message test builder.</returns>
         public IAndHttpResponseTestBuilder WithBody<TBody>(TBody body, string contentType)
         {
-            return this;
+            return this.WithBody(body, contentType, defaultEncoding);
         }
 
+        /// <summary>
+        /// Tests whether HTTP response message body has deeply equal value as the provided one. Body is parsed from the configured formatters and provided content type.
+        /// </summary>
+        /// <typeparam name="TBody">Expected type of body to test.</typeparam>
+        /// <param name="body">Expected body object.</param>
+        /// <param name="contentType">Expected content type as string.</param>
+        /// <param name="encoding">Encoding of the body.</param>
+        /// <returns>The same HTTP response message test builder.</returns>
         public IAndHttpResponseTestBuilder WithBody<TBody>(TBody body, string contentType, Encoding encoding)
         {
-            return this;
+            var parsedBody = FormattersHelper.ReadFromStream<TBody>(this.httpResponse.Body, contentType, encoding);
+            
+            if (Reflection.AreNotDeeplyEqual(body, parsedBody))
+            {
+                this.ThrowNewHttpResponseAssertionException(
+                    "body",
+                    "to be the given object",
+                    "in fact it was different");
+            }
+
+            return this.WithContentType(contentType);
         }
 
+        /// <summary>
+        /// Tests whether HTTP response message body is equal to the provided string. Body is parsed from the configured formatters and 'text/plain' content type. Uses UTF8 encoding.
+        /// </summary>
+        /// <param name="body">Expected body as string.</param>
+        /// <returns>The same HTTP response message test builder.</returns>
         public IAndHttpResponseTestBuilder WithStringBody(string body)
         {
-            return this;
+            return this.WithStringBody(body, defaultEncoding);
         }
 
+        /// <summary>
+        /// Tests whether HTTP response message body is equal to the provided string. Body is parsed from the configured formatters and 'text/plain' content type.
+        /// </summary>
+        /// <param name="body">Expected body as string.</param>
+        /// <param name="encoding">Encoding of the body.</param>
+        /// <returns>The same HTTP response message test builder.</returns>
         public IAndHttpResponseTestBuilder WithStringBody(string body, Encoding encoding)
         {
-            return this;
+            return this.WithBody(body, ContentType.TextPlain, encoding);
         }
 
+        /// <summary>
+        /// Tests whether HTTP response message body is equal to the provided JSON string. Body is parsed from the configured formatters and 'application/json' content type. Uses UTF8 encoding.
+        /// </summary>
+        /// <param name="jsonBody">Expected body as JSON string.</param>
+        /// <returns>The same HTTP response message test builder.</returns>
         public IAndHttpResponseTestBuilder WithJsonBody(string jsonBody)
         {
-            return this;
+            return this.WithJsonBody(jsonBody, defaultEncoding);
         }
 
+        /// <summary>
+        /// Tests whether HTTP response message body is equal to the provided JSON string. Body is parsed from the configured formatters and 'application/json' content type.
+        /// </summary>
+        /// <param name="jsonBody">Expected body as JSON string.</param>
+        /// <param name="encoding">Encoding of the body.</param>
+        /// <returns>The same HTTP response message test builder.</returns>
         public IAndHttpResponseTestBuilder WithJsonBody(string jsonBody, Encoding encoding)
         {
-            return this;
+            return this
+                .WithContentType(ContentType.ApplicationJson)
+                .WithStringBody(jsonBody, encoding);
         }
 
-        public IAndHttpResponseTestBuilder WithJsonBody(object jsonBody)
+        /// <summary>
+        /// Tests whether HTTP response message body is deeply equal to the provided object. Body is parsed from the configured formatters and 'application/json' content type. Uses UTF8 encoding.
+        /// </summary>
+        /// <typeparam name="TBody">Expected type of body to test.</typeparam>
+        /// <param name="jsonBody">Expected body as object.</param>
+        /// <returns>The same HTTP response message test builder.</returns>
+        public IAndHttpResponseTestBuilder WithJsonBody<TBody>(TBody jsonBody)
         {
-            return this;
+            return this.WithJsonBody(jsonBody, defaultEncoding);
         }
 
-        public IAndHttpResponseTestBuilder WithJsonBody(object jsonBody, Encoding encoding)
+        /// <summary>
+        /// Tests whether HTTP response message body is equal to the provided JSON string. Body is parsed from the configured formatters and 'application/json' content type.
+        /// </summary>
+        /// <typeparam name="TBody">Expected type of body to test.</typeparam>
+        /// <param name="jsonBody">Expected body as object.</param>
+        /// <param name="encoding">Encoding of the body.</param>
+        /// <returns>The same HTTP response message test builder.</returns>
+        public IAndHttpResponseTestBuilder WithJsonBody<TBody>(TBody jsonBody, Encoding encoding)
         {
-            return this;
+            return this.WithBody(jsonBody, ContentType.ApplicationJson, encoding);
         }
 
         /// <summary>
@@ -108,6 +216,8 @@
         /// <returns>The same HTTP response message test builder.</returns>
         public IAndHttpResponseTestBuilder WithContentLength(long? contentLenght)
         {
+            this.contentLengthTested = true;
+
             var actualContentLength = this.httpResponse.ContentLength;
             if (contentLenght != actualContentLength)
             {
@@ -127,6 +237,13 @@
         /// <returns>The same HTTP response message test builder.</returns>
         public IAndHttpResponseTestBuilder WithContentType(string contentType)
         {
+            if (contentTypeTested)
+            {
+                return this;
+            }
+
+            this.contentTypeTested = true;
+
             var actualContentType = this.httpResponse.ContentType;
             if (contentType != this.httpResponse.ContentType)
             {
