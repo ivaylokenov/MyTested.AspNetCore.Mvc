@@ -1,5 +1,5 @@
 {
-  "version": "0.5.0",
+  "version": "1.0.0",
   "description": "MyTested.Mvc.Tests Class Library",
   "authors": [ "Ivaylo Kenov" ],
   "tags": [ "" ],
@@ -8,10 +8,10 @@
 
   "dependencies": {
     "MyTested.Mvc": {
-      "version": "0.5.0",
+      "version": "1.0.0-*",
       "type": "build"
     },
-    "xunit.runner.aspnet": "2.0.0-aspnet-*"
+    "xunit.runner.aspnet": "2.0.0-aspnet-rc2-16105"
   },
 
   "commands": {

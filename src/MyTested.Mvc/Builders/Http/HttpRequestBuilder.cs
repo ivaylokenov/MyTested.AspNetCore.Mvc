@@ -55,9 +55,7 @@
         /// <param name="contentType">Content type to use for formatting.</param>
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithBody<TBody>(TBody body, string contentType)
-        {
-            return this.WithBody(body, contentType, defaultEncoding);
-        }
+            => this.WithBody(body, contentType, defaultEncoding);
 
         /// <summary>
         /// Adds body to the built HTTP request by trying to format the provided object based on the content type and the configured formatters.
@@ -83,9 +81,7 @@
         /// <param name="body">Body as string. If no content type is set on the request, 'text/plain' will be used. Uses UTF8 encoding.</param>
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithStringBody(string body)
-        {
-            return this.WithStringBody(body, defaultEncoding);
-        }
+            => this.WithStringBody(body, defaultEncoding);
 
         /// <summary>
         /// Adds string body to the built HTTP request. If no content type is set on the request, 'text/plain' will be used.
@@ -94,9 +90,7 @@
         /// <param name="encoding">Encoding to use for the body.</param>
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithStringBody(string body, Encoding encoding)
-        {
-            return this.WithBody(body, ContentType.TextPlain, encoding);
-        }
+            => this.WithBody(body, ContentType.TextPlain, encoding);
 
         /// <summary>
         /// Adds JSON body to the built HTTP request. Sets 'application/json' to the content type. Uses UTF8 encoding.
@@ -104,9 +98,7 @@
         /// <param name="jsonBody">JSON body as string.</param>
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithJsonBody(string jsonBody)
-        {
-            return this.WithJsonBody(jsonBody, defaultEncoding);
-        }
+            => this.WithJsonBody(jsonBody, defaultEncoding);
 
         /// <summary>
         /// Adds JSON body to the built HTTP request. If no content type is set on the request, 'application/json' will be used.
@@ -127,9 +119,7 @@
         /// <param name="jsonBody">Object to seriallize using the built-in JSON formatters in ASP.NET MVC.</param>
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithJsonBody(object jsonBody)
-        {
-            return this.WithJsonBody(jsonBody, defaultEncoding);
-        }
+            => this.WithJsonBody(jsonBody, defaultEncoding);
 
         /// <summary>
         /// Adds JSON body to the built HTTP request. If no content type is set on the request, 'application/json' will be used.
@@ -138,9 +128,7 @@
         /// <param name="encoding">Encoding to use for the body.</param>
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithJsonBody(object jsonBody, Encoding encoding)
-        {
-            return this.WithBody(jsonBody, ContentType.ApplicationJson, encoding);
-        }
+            => this.WithBody(jsonBody, ContentType.ApplicationJson, encoding);
 
         /// <summary>
         /// Adds content length to the built HTTP request.
@@ -217,9 +205,7 @@
         /// <param name="values">Collection of values for the form field.</param>
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithFormField(string name, IEnumerable<string> values)
-        {
-            return this.WithFormField(name, new StringValues(values.ToArray()));
-        }
+            => this.WithFormField(name, new StringValues(values.ToArray()));
 
         /// <summary>
         /// Adds form field to the built HTTP request.
@@ -228,9 +214,7 @@
         /// <param name="values">Collection of values for the form field.</param>
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithFormField(string name, params string[] values)
-        {
-            return this.WithFormField(name, values.AsEnumerable());
-        }
+            => this.WithFormField(name, values.AsEnumerable());
 
         /// <summary>
         /// Adds form field to the built HTTP request.
@@ -294,9 +278,7 @@
         /// <param name="formFiles">Form file parameters.</param>
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithFormFiles(params IFormFile[] formFiles)
-        {
-            return this.WithFormFiles(formFiles.AsEnumerable());
-        }
+            => this.WithFormFiles(formFiles.AsEnumerable());
 
         /// <summary>
         /// Adds form values and files to the built HTTP request.
@@ -329,9 +311,7 @@
         /// <param name="values">Collection of values for the header.</param>
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithHeader(string name, IEnumerable<string> values)
-        {
-            return this.WithHeader(name, new StringValues(values.ToArray()));
-        }
+            => this.WithHeader(name, new StringValues(values.ToArray()));
 
         /// <summary>
         /// Adds header to the built HTTP request.
@@ -340,9 +320,7 @@
         /// <param name="values">Collection of values for the header.</param>
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithHeader(string name, params string[] values)
-        {
-            return this.WithHeader(name, values.AsEnumerable());
-        }
+            => this.WithHeader(name, values.AsEnumerable());
 
         /// <summary>
         /// Adds header to the built HTTP request.
@@ -395,9 +373,7 @@
         /// <param name="host">Host as string.</param>
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithHost(string host)
-        {
-            return this.WithHost(new HostString(host));
-        }
+            => this.WithHost(new HostString(host));
 
         /// <summary>
         /// Adds host to the built HTTP request.
@@ -427,9 +403,7 @@
         /// <param name="path">Path as string.</param>
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithPath(string path)
-        {
-            return this.WithPath(new PathString(path));
-        }
+            => this.WithPath(new PathString(path));
 
         /// <summary>
         /// Adds path to the built HTTP request.
@@ -448,9 +422,7 @@
         /// <param name="pathBase">Path base as string.</param>
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithPathBase(string pathBase)
-        {
-            return this.WithPathBase(new PathString(pathBase));
-        }
+            => this.WithPathBase(new PathString(pathBase));
 
         /// <summary>
         /// Adds path base to the built HTTP request.
@@ -493,9 +465,7 @@
         /// <param name="values">Collection of values for the query.</param>
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithQuery(string name, IEnumerable<string> values)
-        {
-            return this.WithQuery(name, new StringValues(values.ToArray()));
-        }
+            => this.WithQuery(name, new StringValues(values.ToArray()));
 
         /// <summary>
         /// Adds query value to the built HTTP request.
@@ -504,9 +474,7 @@
         /// <param name="values">Collection of values for the query.</param>
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithQuery(string name, params string[] values)
-        {
-            return this.WithQuery(name, values.AsEnumerable());
-        }
+            => this.WithQuery(name, values.AsEnumerable());
 
         /// <summary>
         /// Adds query value to the built HTTP request.
@@ -559,9 +527,7 @@
         /// <param name="queryString">Path base as string.</param>
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithQueryString(string queryString)
-        {
-            return this.WithQueryString(new QueryString(queryString));
-        }
+            => this.WithQueryString(new QueryString(queryString));
 
         /// <summary>
         /// Adds query string to the built HTTP request.
@@ -590,9 +556,7 @@
         /// </summary>
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithHttps()
-        {
-            return this.WithScheme("https");
-        }
+            => this.WithScheme("https");
 
         /// <summary>
         /// Adds all URI components to the built HTTP request by extracting them from the provided location.
@@ -614,13 +578,11 @@
         /// <param name="location">Location as URI.</param>
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithLocation(Uri location)
-        {
-            return this.WithHost(HostString.FromUriComponent(location))
+            => this.WithHost(HostString.FromUriComponent(location))
                 .WithPath(PathString.FromUriComponent(location))
                 .WithPathBase(PathString.FromUriComponent(location))
                 .WithQueryString(QueryString.FromUriComponent(location))
                 .WithScheme(location.Scheme);
-        }
 
         /// <summary>
         /// Adds all URI components to the built HTTP request by extracting them from the provided location.
@@ -639,10 +601,7 @@
         /// AndAlso method for better readability when building HTTP request.
         /// </summary>
         /// <returns>The same HTTP request builder.</returns>
-        public IHttpRequestBuilder AndAlso()
-        {
-            return this;
-        }
+        public IHttpRequestBuilder AndAlso() => this;
 
         internal void ApplyTo(HttpRequest httpRequest)
         {

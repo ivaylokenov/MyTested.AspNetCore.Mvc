@@ -127,7 +127,7 @@
 
         public IActionResult ViewComponentResultByName()
         {
-            return this.ViewComponent("TestComponent", 1, "text");
+            return this.ViewComponent("TestComponent", new { id = 1, test = "text" });
         }
 
         public IActionResult ViewComponentResultByType()
@@ -720,7 +720,7 @@
             var response = this.Response;
             response.Body = new MemoryStream();
             var writer = new StreamWriter(response.Body);
-            writer.WriteLine(@"{""Integer"":1,""RequiredString"":""Text""}");
+            writer.Write(@"{""Integer"":1,""RequiredString"":""Text""}");
             writer.Flush();
 
             response.Body.Position = 0;

@@ -7,10 +7,12 @@
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.Extensions.Options;
     using Microsoft.Extensions.Primitives;
+    using System;
     using System.Collections.Concurrent;
     using System.IO;
     using System.Linq;
     using System.Text;
+    using Utilities;
     using Utilities.Extensions;
     using Utilities.Validators;
 
@@ -31,8 +33,9 @@
             httpContext.Request.Body = stream;
             httpContext.Request.ContentType = contentType;
 
+            var typeOfModel = typeof(TModel);
             var modelMetadataProvider = TestServiceProvider.GetRequiredService<IModelMetadataProvider>();
-            var modelMetadata = modelMetadataProvider.GetMetadataForType(typeof(TModel));
+            var modelMetadata = modelMetadataProvider.GetMetadataForType(typeOfModel);
 
             var inputFormatterContext = new InputFormatterContext(
                 httpContext,
@@ -50,7 +53,16 @@
                 return formatter;
             });
 
-            return (TModel)inputFormatter.ReadAsync(inputFormatterContext).Result.Model;
+            var result = inputFormatter.ReadAsync(inputFormatterContext).Result.Model;
+
+            try
+            {
+                return (TModel)result;
+            }
+            catch (InvalidCastException)
+            {
+                throw new InvalidDataException($"Expected stream content to be formatted to {typeOfModel.ToFriendlyTypeName()} when using '{contentType}', but instead received {result.GetName()}.");
+            }
         }
 
         public static Stream WriteToStream(object value, string contentType, Encoding encoding)

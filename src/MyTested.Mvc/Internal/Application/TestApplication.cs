@@ -20,6 +20,7 @@
     using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.AspNetCore.Mvc;
     using Formatters;
+    using Microsoft.AspNetCore.Mvc.Formatters;
     public static class TestApplication
     {
         private static readonly RequestDelegate NullHandler = (c) => Task.FromResult(0);
@@ -129,12 +130,16 @@
 
             serviceCollection.Configure<MvcOptions>(options =>
             {
-                // options.InputFormatters.Add(new StringInputFormatter()); TODO: add with next version
+                var inputFormatters = options.InputFormatters.OfType<TextInputFormatter>();
+                if (!inputFormatters.Any(f => f.SupportedMediaTypes.Contains(ContentType.TextPlain)))
+                {
+                    options.InputFormatters.Add(new StringInputFormatter());
+                }
             });
-            
+
             return serviceCollection;
         }
-        
+
         private static void PrepareServices(IServiceCollection serviceCollection, StartupMethods startupMethods)
         {
             if (startupMethods?.ConfigureServicesDelegate != null)
@@ -145,7 +150,7 @@
             {
                 serviceCollection.AddMvc();
             }
-            
+
             if (AdditionalServices != null)
             {
                 AdditionalServices(serviceCollection);
@@ -215,7 +220,7 @@
                 routeBuilder.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
-                
+
                 routeBuilder.Routes.Insert(0, AttributeRouting.CreateAttributeMegaRoute(
                     routeBuilder.DefaultHandler,
                     serviceProvider));

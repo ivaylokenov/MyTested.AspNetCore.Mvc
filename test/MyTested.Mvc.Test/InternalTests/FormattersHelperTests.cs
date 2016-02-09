@@ -51,9 +51,26 @@
                     streamWriter.WriteLine(@"test");
                     streamWriter.Flush();
 
+                    FormattersHelper.ReadFromStream<RequestModel>(stream, ContentType.TextHtml, Encoding.UTF8);
+                },
+                "Formatter able to process 'text/html' could not be resolved from the services provider. Before running this test case, the formatter should be registered in the 'StartsFrom' method and cannot be null.");
+        }
+
+        [Fact]
+        public void ReadFromStreamShouldThrowExceptionIfNoModelIsDifferentType()
+        {
+            Test.AssertException<InvalidDataException>(
+                () =>
+                {
+                    var stream = new MemoryStream();
+                    var streamWriter = new StreamWriter(stream);
+                    streamWriter.WriteLine(@"test");
+                    streamWriter.Flush();
+
                     FormattersHelper.ReadFromStream<RequestModel>(stream, ContentType.TextPlain, Encoding.UTF8);
                 },
-                "Formatter able to process 'text/plain' could not be resolved from the services provider. Before running this test case, the formatter should be registered in the 'StartsFrom' method and cannot be null.");
+                "Expected stream content to be formatted to RequestModel when using 'text/plain', but instead received String.");
+
         }
 
         [Fact]
