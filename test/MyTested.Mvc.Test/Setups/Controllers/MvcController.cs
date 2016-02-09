@@ -718,6 +718,13 @@
         private void SetCustomResponse()
         {
             var response = this.Response;
+            response.Body = new MemoryStream();
+            var writer = new StreamWriter(response.Body);
+            writer.WriteLine(@"{""Integer"":1,""RequiredString"":""Text""}");
+            writer.Flush();
+
+            response.Body.Position = 0;
+
             response.ContentType = ContentType.ApplicationJson;
             response.StatusCode = HttpStatusCode.InternalServerError;
             response.Headers.Add("TestHeader", "TestHeaderValue");

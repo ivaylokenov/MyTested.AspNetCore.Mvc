@@ -14,7 +14,7 @@
     using Uris;
     using Utilities.Validators;
     using System.Text;
-    using Internal;
+    using Internal.Formatters;
 
     /// <summary>
     /// Used for building HTTP request message.

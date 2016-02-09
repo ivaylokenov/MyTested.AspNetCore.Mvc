@@ -1,6 +1,6 @@
 ﻿namespace MyTested.Mvc.Tests.InternalTests
 {
-    using Internal;
+    using Internal.Formatters;
     using Setups;
     using Setups.Models;
     using System;

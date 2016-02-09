@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Internal
+﻿namespace MyTested.Mvc.Internal.Formatters
 {
     using Application;
     using Http;

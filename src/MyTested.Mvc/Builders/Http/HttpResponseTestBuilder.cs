@@ -16,7 +16,7 @@
     using Microsoft.Net.Http.Headers;
     using Utilities;
     using System.Text;
-    using Internal;
+    using Internal.Formatters;
 
     /// <summary>
     /// Used for testing the HTTP response.
@@ -559,7 +559,7 @@
         private void ThrowNewHttpResponseAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new HttpResponseAssertionException(string.Format(
-                "When calling {0} action in {1} expected HTTP response result {2} {3}, but {4}.",
+                "When calling {0} action in {1} expected HTTP response {2} {3}, but {4}.",
                 this.ActionName,
                 this.Controller.GetName(),
                 propertyName,

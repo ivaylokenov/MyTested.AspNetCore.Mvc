@@ -18,7 +18,8 @@
     using System.Linq;
     using System.Diagnostics;
     using Microsoft.AspNetCore.Mvc.Internal;
-
+    using Microsoft.AspNetCore.Mvc;
+    using Formatters;
     public static class TestApplication
     {
         private static readonly RequestDelegate NullHandler = (c) => Task.FromResult(0);
@@ -125,10 +126,15 @@
             serviceCollection.TryAddSingleton<ILoggerFactory>(MockedLoggerFactory.Create());
 
             serviceCollection.TryAddSingleton<IControllerActionDescriptorCache, ControllerActionDescriptorCache>();
+
+            serviceCollection.Configure<MvcOptions>(options =>
+            {
+                // options.InputFormatters.Add(new StringInputFormatter()); TODO: add with next version
+            });
             
             return serviceCollection;
         }
-
+        
         private static void PrepareServices(IServiceCollection serviceCollection, StartupMethods startupMethods)
         {
             if (startupMethods?.ConfigureServicesDelegate != null)
