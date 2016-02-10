@@ -55,6 +55,22 @@
             where TViewEngine : IViewEngine;
 
         /// <summary>
+        /// Tests whether view component result will be invoked with an argument with the same name as the provided one.
+        /// </summary>
+        /// <param name="name">Name of the argument.</param>
+        /// <param name="value">Expected argument value.</param>
+        /// <returns>The same view component test builder.</returns>
+        IAndViewComponentTestBuilder ContainingArgument(string name);
+
+        /// <summary>
+        /// Tests whether view component result will be invoked with an argument deeply equal to the provided one.
+        /// </summary>
+        /// <param name="name">Name of the argument.</param>
+        /// <param name="value">Expected argument value.</param>
+        /// <returns>The same view component test builder.</returns>
+        IAndViewComponentTestBuilder ContainingArgument(string name, object value);
+
+        /// <summary>
         /// Tests whether view component result will be invoked with an argument equal to the provided one.
         /// </summary>
         /// <typeparam name="TArgument">Type of the argument.</typeparam>
@@ -68,19 +84,19 @@
         /// <typeparam name="TArgument">Type of the argument.</typeparam>
         /// <returns>The same view component test builder.</returns>
         IAndViewComponentTestBuilder ContainingArgumentOfType<TArgument>();
+        
+        /// <summary>
+        /// Tests whether view component result will be invoked with the provided arguments.
+        /// </summary>
+        /// <param name="arguments">Arguments object.</param>
+        /// <returns>The same view component test builder.</returns>
+        IAndViewComponentTestBuilder ContainingArguments(object arguments);
 
         /// <summary>
         /// Tests whether view component result will be invoked with the provided arguments.
         /// </summary>
-        /// <param name="arguments">Argument objects as enumerable.</param>
+        /// <param name="arguments">Argument objects as dictionary.</param>
         /// <returns>The same view component test builder.</returns>
-        IAndViewComponentTestBuilder ContainingArguments(IEnumerable<object> arguments);
-
-        /// <summary>
-        /// Tests whether view component result will be invoked with the provided arguments.
-        /// </summary>
-        /// <param name="arguments">Argument objects.</param>
-        /// <returns>The same view component test builder.</returns>
-        IAndViewComponentTestBuilder ContainingArguments(params object[] arguments);
+        IAndViewComponentTestBuilder ContainingArguments(IDictionary<string, object> arguments);
     }
 }

@@ -132,7 +132,7 @@
 
         public IActionResult ViewComponentResultByType()
         {
-            return this.ViewComponent(typeof(CustomViewComponent), this.responseModel);
+            return this.ViewComponent(typeof(CustomViewComponent), new { model = this.responseModel });
         }
 
         public IActionResult ViewComponentWithIncorrectArguments()

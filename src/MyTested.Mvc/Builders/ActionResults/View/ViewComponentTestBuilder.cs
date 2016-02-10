@@ -10,14 +10,14 @@
     using Microsoft.AspNetCore.Mvc.ViewEngines;
     using Microsoft.Net.Http.Headers;
     using Utilities;
-
+    using Microsoft.AspNetCore.Routing;
     /// <summary>
     /// Used for testing view component results.
     /// </summary>
     public class ViewComponentTestBuilder
         : ViewTestBuilder<ViewComponentResult>, IAndViewComponentTestBuilder
     {
-        private readonly object[] viewComponentArguments;
+        private readonly IDictionary<string, object> viewComponentArguments;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ViewComponentTestBuilder" /> class.
@@ -33,9 +33,10 @@
             ViewComponentResult viewComponentResult)
             : base(controller, actionName, caughtException, viewComponentResult, "view component")
         {
-            this.viewComponentArguments = this.GetArguments();
+            // uses internal reflection caching
+            this.viewComponentArguments = new RouteValueDictionary(this.ActionResult.Arguments);
         }
-        
+
         /// <summary>
         /// Tests whether view component result has the same status code as the provided one.
         /// </summary>
@@ -98,6 +99,47 @@
         }
 
         /// <summary>
+        /// Tests whether view component result will be invoked with an argument with the same name as the provided one.
+        /// </summary>
+        /// <param name="name">Name of the argument.</param>
+        /// <param name="value">Expected argument value.</param>
+        /// <returns>The same view component test builder.</returns>
+        public IAndViewComponentTestBuilder ContainingArgument(string name)
+        {
+            if (!this.viewComponentArguments.ContainsKey(name))
+            {
+                this.ThrowNewViewResultAssertionException(
+                    "arguments",
+                    $"to have item with key '{name}'",
+                    "such was not found");
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether view component result will be invoked with an argument deeply equal to the provided one.
+        /// </summary>
+        /// <param name="name">Name of the argument.</param>
+        /// <param name="value">Expected argument value.</param>
+        /// <returns>The same view component test builder.</returns>
+        public IAndViewComponentTestBuilder ContainingArgument(string name, object value)
+        {
+            var itemExists = this.viewComponentArguments.ContainsKey(name);
+            var actualValue = itemExists ? this.viewComponentArguments[name] : null;
+
+            if (!itemExists || Reflection.AreNotDeeplyEqual(value, actualValue))
+            {
+                this.ThrowNewViewResultAssertionException(
+                    "arguments",
+                    $"to have item with '{name}' key and the provided value",
+                    $"{(itemExists ? $"the value was different" : "such was not found")}");
+            }
+
+            return this;
+        }
+
+        /// <summary>
         /// Tests whether view component result will be invoked with an argument equal to the provided one.
         /// </summary>
         /// <typeparam name="TArgument">Type of the argument.</typeparam>
@@ -105,7 +147,7 @@
         /// <returns>The same view component test builder.</returns>
         public IAndViewComponentTestBuilder ContainingArgument<TArgument>(TArgument argument)
         {
-            var sameArgument = this.viewComponentArguments.FirstOrDefault(arg => Reflection.AreDeeplyEqual(argument, arg));
+            var sameArgument = this.viewComponentArguments.Values.FirstOrDefault(arg => Reflection.AreDeeplyEqual(argument, arg));
 
             if (sameArgument == null)
             {
@@ -126,7 +168,7 @@
         public IAndViewComponentTestBuilder ContainingArgumentOfType<TArgument>()
         {
             var expectedType = typeof(TArgument);
-            var argumentOfSameType = this.viewComponentArguments.FirstOrDefault(arg => arg.GetType() == expectedType);
+            var argumentOfSameType = this.viewComponentArguments.Values.FirstOrDefault(arg => arg.GetType() == expectedType);
 
             if (argumentOfSameType == null)
             {
@@ -142,66 +184,38 @@
         /// <summary>
         /// Tests whether view component result will be invoked with the provided arguments.
         /// </summary>
-        /// <param name="arguments">Argument objects as enumerable.</param>
+        /// <param name="arguments">Arguments object.</param>
         /// <returns>The same view component test builder.</returns>
-        public IAndViewComponentTestBuilder ContainingArguments(IEnumerable<object> arguments)
-        {
-            var argumentsList = arguments.ToList();
-
-            var expectedArgumentsCount = argumentsList.Count;
-            var actualArgumentsCount = this.viewComponentArguments.Length;
-
-            if (expectedArgumentsCount != actualArgumentsCount)
-            {
-                this.ThrowNewViewResultAssertionException(
-                    "Arguments",
-                    $"to have {expectedArgumentsCount} items",
-                    $"in fact found {actualArgumentsCount}");
-            }
-
-            for (int i = 0; i < expectedArgumentsCount; i++)
-            {
-                var expectedArgument = argumentsList[i];
-                var actualArgument = this.viewComponentArguments[i];
-
-                if (Reflection.AreNotDeeplyEqual(expectedArgument, actualArgument))
-                {
-                    this.ThrowNewViewResultAssertionException(
-                        $"to have argument on position {i}",
-                        "equal to the given one on the same position",
-                        "in fact it was different");
-                }
-            }
-
-            return this;
-        }
+        public IAndViewComponentTestBuilder ContainingArguments(object arguments)
+            => this.ContainingArguments(new RouteValueDictionary(arguments));
 
         /// <summary>
         /// Tests whether view component result will be invoked with the provided arguments.
         /// </summary>
-        /// <param name="arguments">Argument objects.</param>
+        /// <param name="arguments">Argument objects as dictionary.</param>
         /// <returns>The same view component test builder.</returns>
-        public IAndViewComponentTestBuilder ContainingArguments(params object[] arguments)
-            => this.ContainingArguments(arguments.AsEnumerable());
+        public IAndViewComponentTestBuilder ContainingArguments(IDictionary<string, object> arguments)
+        {
+            var expectedItems = arguments.Count;
+            var actualItems = this.viewComponentArguments.Count;
+
+            if (expectedItems != actualItems)
+            {
+                this.ThrowNewViewResultAssertionException(
+                    "arguments",
+                    $"to have {expectedItems} {(expectedItems != 1 ? "items" : "item")}",
+                    $"in fact found {actualItems}");
+            }
+
+            arguments.ForEach(item => this.ContainingArgument(item.Key, item.Value));
+
+            return this;
+        }
 
         /// <summary>
         /// AndAlso method for better readability when chaining view component result tests.
         /// </summary>
         /// <returns>The same view component test builder.</returns>
         public new IViewComponentTestBuilder AndAlso() => this;
-
-        private object[] GetArguments()
-        {
-            var actionResultArguments = this.ActionResult.Arguments;
-            if (actionResultArguments != null && actionResultArguments.GetType() != typeof(object[]))
-            {
-                this.ThrowNewViewResultAssertionException(
-                    "Arguments",
-                    "to be array of objects",
-                    $"instead received {actionResultArguments.GetName()}");
-            }
-
-            return actionResultArguments as object[];
-        }
     }
 }

@@ -51,7 +51,7 @@
                 },
                 "When calling CustomViewComponentResult action in MvcController expected view component result to have 404 (NotFound) status code, but instead received 500 (InternalServerError).");
         }
-        
+
         [Fact]
         public void WithMediaTypeShouldNotThrowExceptionWithString()
         {
@@ -227,22 +227,7 @@
                 },
                 "When calling ViewComponentResultByName action in MvcController expected view component result ViewEngine to be of CustomViewEngine type, but instead received null.");
         }
-
-        [Fact]
-        public void WithArgumentsShouldThrowExceptionWithIncorrectArgumentsType()
-        {
-            Test.AssertException<ViewResultAssertionException>(
-                   () =>
-                   {
-                       MyMvc
-                           .Controller<MvcController>()
-                           .Calling(c => c.ViewComponentWithIncorrectArguments())
-                           .ShouldReturn()
-                           .ViewComponent();
-                   },
-                   "When calling ViewComponentWithIncorrectArguments action in MvcController expected view component result Arguments to be array of objects, but instead received List<ResponseModel>.");
-        }
-
+        
         [Fact]
         public void WithArgumentShouldNotThrowExceptionWithCorrectArgument()
         {
@@ -255,7 +240,7 @@
                 .ViewComponent()
                 .ContainingArgument(responseModels);
         }
-        
+
         [Fact]
         public void WithArgumentShouldThrowExceptionWithIncorrectArgument()
         {
@@ -309,50 +294,50 @@
                 .Calling(c => c.ViewComponentResultByName())
                 .ShouldReturn()
                 .ViewComponent()
-                .ContainingArguments(1, "text");
+                .ContainingArguments(new { id = 1, test = "text" });
         }
-        
+
         [Fact]
         public void WithArgumentsShouldThrowExceptionWithIncorrectArgumentsCount()
         {
             Test.AssertException<ViewResultAssertionException>(
-(System.Action)                   (() =>
-                   {
-                       MyMvc
-                        .Controller<MvcController>()
-                        .Calling(c => c.ViewComponentResultByName())
-                        .ShouldReturn()
-                        .ViewComponent()
-                        .ContainingArguments(1, "text", 15);
-                   }),
-                   "When calling ViewComponentResultByName action in MvcController expected view component result Arguments to have 3 items, but in fact found 2.");
+                    (() =>
+                    {
+                        MyMvc
+                         .Controller<MvcController>()
+                         .Calling(c => c.ViewComponentResultByName())
+                         .ShouldReturn()
+                         .ViewComponent()
+                         .ContainingArguments(new { id = 1, text = "text", incorrect = 15 });
+                    }),
+                   "When calling ViewComponentResultByName action in MvcController expected view component result arguments to have 3 items, but in fact found 2.");
         }
 
         [Fact]
         public void WithArgumentsShouldThrowExceptionWithIncorrectArguments()
         {
             Test.AssertException<ViewResultAssertionException>(
-(System.Action)                   (() =>
-                   {
-                       MyMvc
-                        .Controller<MvcController>()
-                        .Calling(c => c.ViewComponentResultByName())
-                        .ShouldReturn()
-                        .ViewComponent()
-                        .ContainingArguments(1, "incorrect");
-                   }),
-                   "When calling ViewComponentResultByName action in MvcController expected view component result to have argument on position 1 equal to the given one on the same position, but in fact it was different.");
+                    (() =>
+                    {
+                        MyMvc
+                         .Controller<MvcController>()
+                         .Calling(c => c.ViewComponentResultByName())
+                         .ShouldReturn()
+                         .ViewComponent()
+                         .ContainingArguments(new { id = 1, test = "incorrect" });
+                    }),
+                   "When calling ViewComponentResultByName action in MvcController expected view component result arguments to have item with 'test' key and the provided value, but the value was different.");
         }
 
         [Fact]
-        public void WithArgumentsShouldThrowExceptionWithCorrectArgumentsAsEnumerable()
+        public void WithArgumentsShouldThrowExceptionWithCorrectArgumentsAsDictionary()
         {
             MyMvc
                 .Controller<MvcController>()
                 .Calling(c => c.ViewComponentResultByName())
                 .ShouldReturn()
                 .ViewComponent()
-                .ContainingArguments(new List<object> { 1, "text" });
+                .ContainingArguments(new Dictionary<string, object> { ["id"] = 1, ["test"] = "text" });
         }
 
         [Fact]
