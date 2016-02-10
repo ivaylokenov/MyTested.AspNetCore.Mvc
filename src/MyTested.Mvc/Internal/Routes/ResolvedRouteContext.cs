@@ -93,14 +93,5 @@
         /// </summary>
         /// <value>Instance of ModelStateDictionary.</value>
         public ModelStateDictionary ModelState { get; private set; }
-
-        /// <summary>
-        /// Gets a value indicating whether the current route is not resolved because of not allowed method.
-        /// </summary>
-        /// <value>True or false.</value>
-        public bool MethodIsNotAllowed
-        {
-            get { return this.UnresolvedError != null && this.UnresolvedError.Contains("Method Not Allowed"); }
-        }
     }
 }

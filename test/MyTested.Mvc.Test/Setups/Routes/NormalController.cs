@@ -18,7 +18,18 @@
             return null;
         }
 
-        public IActionResult ActionWithMultipleParameters(int id, string text, RequestModel model)
+        public IActionResult ActionWithStringParameters(string id)
+        {
+            return null;
+        }
+
+        [HttpPost]
+        public IActionResult ActionWithModel(int id, [FromBody]RequestModel model)
+        {
+            return null;
+        }
+
+        public IActionResult ActionWithMultipleParameters(int id, string text, [FromBody]RequestModel model)
         {
             return null;
         }
@@ -28,13 +39,24 @@
             return null;
         }
 
-        public IActionResult ActionWithOverloads(int id)
+        public IActionResult ActionWithOverloads(int? id)
         {
             return null;
         }
 
         [ActionName("AnotherName")]
         public IActionResult ActionWithChangedName()
+        {
+            return null;
+        }
+
+        public IActionResult QueryString(string first, int second)
+        {
+            return null;
+        }
+
+        [HttpGet]
+        public IActionResult GetMethod()
         {
             return null;
         }

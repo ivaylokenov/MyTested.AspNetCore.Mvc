@@ -17,12 +17,7 @@
         /// <returns>The same route test builder.</returns>
         IAndResolvedRouteTestBuilder To<TController>(Expression<Action<TController>> actionCall)
             where TController : Controller;
-
-        /// <summary>
-        /// Tests whether the built route cannot be resolved because of not allowed method.
-        /// </summary>
-        void ToNotAllowedMethod();
-
+        
         /// <summary>
         /// Tests whether the built route cannot be resolved.
         /// </summary>

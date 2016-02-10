@@ -50,20 +50,6 @@
         }
 
         /// <summary>
-        /// Tests whether the built route cannot be resolved because of not allowed method.
-        /// </summary>
-        public void ToNotAllowedMethod()
-        {
-            var actualInfo = this.GetActualRouteInfo();
-            if (!actualInfo.MethodIsNotAllowed)
-            {
-                this.ThrowNewRouteAssertionException(
-                    string.Format("not allow method '{0}'", this.routeContext.HttpContext.Request.Method),
-                    actualInfo.IsResolved ? "in fact it was allowed" : actualInfo.UnresolvedError);
-            }
-        }
-
-        /// <summary>
         /// Tests whether the built route cannot be resolved.
         /// </summary>
         public void ToNonExistingRoute()
