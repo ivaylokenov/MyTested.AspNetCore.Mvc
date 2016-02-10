@@ -2,22 +2,11 @@
 {
     using Internal.Application;
     using Internal.Http;
-    using Internal.Logging;
     using Internal.Routes;
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Builder.Internal;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Http.Internal;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Infrastructure;
-    using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.AspNetCore.Routing;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.DependencyInjection.Extensions;
-    using Microsoft.Extensions.Logging;
     using Setups.Routes;
     using System.IO;
-    using System.Threading.Tasks;
     using Xunit;
 
     public class InternalRouteResolverTests

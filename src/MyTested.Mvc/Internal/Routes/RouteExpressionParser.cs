@@ -2,7 +2,6 @@
 {
     using System;
     using System.Linq.Expressions;
-    using Microsoft.AspNetCore.Mvc;
     using Application;
     using Contracts;
     using Microsoft.AspNetCore.Mvc.Controllers;

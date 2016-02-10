@@ -1,8 +1,6 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.Attributes
 {
     using System;
-    using System.Collections.Generic;
-    using Microsoft.AspNetCore.Mvc.Infrastructure;
 
     /// <summary>
     /// Used for testing action attributes.

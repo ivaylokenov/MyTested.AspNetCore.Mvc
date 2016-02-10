@@ -1,7 +1,6 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.ActionResults.Content
 {
     using System.Net;
-    using System.Text;
     using Base;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Net.Http.Headers;

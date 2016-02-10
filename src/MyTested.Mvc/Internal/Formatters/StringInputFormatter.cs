@@ -5,8 +5,6 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.Net.Http.Headers;
-    using Http;
-    using Microsoft.AspNetCore.Mvc.ModelBinding;
 
     public class StringInputFormatter : TextInputFormatter
     {

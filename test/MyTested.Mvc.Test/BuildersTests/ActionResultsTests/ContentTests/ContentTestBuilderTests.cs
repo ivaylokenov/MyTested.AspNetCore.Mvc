@@ -1,7 +1,6 @@
 ﻿namespace MyTested.Mvc.Tests.BuildersTests.ActionResultsTests.ContentTests
 {
     using System.Net;
-    using System.Text;
     using Exceptions;
     using Microsoft.Net.Http.Headers;
     using Setups;

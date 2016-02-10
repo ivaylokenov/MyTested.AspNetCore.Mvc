@@ -3,7 +3,6 @@
     using System;
     using Base;
     using Contracts.ActionResults.LocalRedirect;
-    using Contracts.Uris;
     using Exceptions;
     using Utilities.Extensions;
     using Microsoft.AspNetCore.Mvc;

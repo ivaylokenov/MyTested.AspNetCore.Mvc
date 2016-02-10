@@ -21,7 +21,6 @@ namespace MyTested.Mvc.Tests
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Mvc.Abstractions;
     using Internal.Contracts;
-    using Microsoft.AspNetCore.Mvc.Controllers;
     using Internal.Routes;
     using Microsoft.Extensions.DependencyInjection.Extensions;
     public class MyMvcTests

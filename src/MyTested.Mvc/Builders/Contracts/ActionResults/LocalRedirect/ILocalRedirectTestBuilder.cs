@@ -3,7 +3,6 @@
     using System;
     using Base;
     using Microsoft.AspNetCore.Mvc;
-    using Uris;
 
     /// <summary>
     /// Used for testing local redirect result.

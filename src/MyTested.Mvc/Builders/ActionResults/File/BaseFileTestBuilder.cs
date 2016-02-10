@@ -4,7 +4,6 @@
     using Exceptions;
     using Utilities.Extensions;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Net.Http.Headers;
     using MyTested.Mvc.Builders.Base;
     using Utilities.Validators;
 

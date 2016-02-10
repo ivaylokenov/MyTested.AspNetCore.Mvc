@@ -1,6 +1,5 @@
 ﻿namespace MyTested.Mvc.Tests.Setups.Common
 {
-    using System;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ViewEngines;
 
