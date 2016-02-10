@@ -18,11 +18,7 @@
 
             Assert.Equal(controllerName, result.ControllerName);
             Assert.Equal(actionName, result.Action);
-            Assert.Equal(2, result.RouteValues.Count);
-            Assert.True(result.RouteValues.ContainsKey("controller"));
-            Assert.Equal(controllerName, result.RouteValues["controller"].Value);
-            Assert.True(result.RouteValues.ContainsKey("action"));
-            Assert.Equal(actionName, result.RouteValues["action"].Value);
+            Assert.Equal(0, result.ActionArguments.Count);
         }
 
         [Theory]
@@ -34,13 +30,24 @@
 
             Assert.Equal(controllerName, result.ControllerName);
             Assert.Equal(actionName, result.Action);
-            Assert.Equal(routeValues.Count, result.RouteValues.Count);
+            Assert.Equal(routeValues.Count, result.ActionArguments.Count);
 
             foreach (var routeValue in routeValues)
             {
-                Assert.True(result.RouteValues.ContainsKey(routeValue.Key));
-                Assert.Equal(routeValue.Value, result.RouteValues[routeValue.Key].Value);
+                Assert.True(result.ActionArguments.ContainsKey(routeValue.Key));
+                Assert.Equal(routeValue.Value, result.ActionArguments[routeValue.Key].Value);
             }
+        }
+
+        [Fact]
+        public void ParseControllerAndActionWithRouteAttributeControllerActionNameAndParametersAreParsed()
+        {
+            Expression<Action<RouteController>> expr = c => c.Index();
+            var result = RouteExpressionParser.Parse<PocoController>(expr);
+
+            Assert.Equal("Route", result.ControllerName);
+            Assert.Equal("Index", result.Action);
+            Assert.Equal(0, result.ActionArguments.Count);
         }
 
         [Fact]
@@ -51,16 +58,12 @@
 
             Assert.Equal("Normal", result.ControllerName);
             Assert.Equal("ActionWithMultipleParameters", result.Action);
-            Assert.Equal(5, result.RouteValues.Count);
-            Assert.True(result.RouteValues.ContainsKey("controller"));
-            Assert.Equal("Normal", result.RouteValues["controller"].Value);
-            Assert.True(result.RouteValues.ContainsKey("action"));
-            Assert.Equal("ActionWithMultipleParameters", result.RouteValues["action"].Value);
-            Assert.Equal(1, result.RouteValues["id"].Value);
-            Assert.Equal("string", result.RouteValues["text"].Value);
-            Assert.IsAssignableFrom<RequestModel>(result.RouteValues["model"].Value);
+            Assert.Equal(3, result.ActionArguments.Count);
+            Assert.Equal(1, result.ActionArguments["id"].Value);
+            Assert.Equal("string", result.ActionArguments["text"].Value);
+            Assert.IsAssignableFrom<RequestModel>(result.ActionArguments["model"].Value);
 
-            var model = (RequestModel)result.RouteValues["model"].Value;
+            var model = (RequestModel)result.ActionArguments["model"].Value;
             Assert.Equal(1, model.Integer);
             Assert.Equal("Text", model.String);
         }
@@ -73,13 +76,9 @@
 
             Assert.Equal("Poco", result.ControllerName);
             Assert.Equal("Action", result.Action);
-            Assert.Equal(3, result.RouteValues.Count);
-            Assert.True(result.RouteValues.ContainsKey("controller"));
-            Assert.Equal("Poco", result.RouteValues["controller"].Value);
-            Assert.True(result.RouteValues.ContainsKey("action"));
-            Assert.Equal("Action", result.RouteValues["action"].Value);
-            Assert.True(result.RouteValues.ContainsKey("id"));
-            Assert.Equal(1, result.RouteValues["id"].Value);
+            Assert.Equal(1, result.ActionArguments.Count);
+            Assert.True(result.ActionArguments.ContainsKey("id"));
+            Assert.Equal(1, result.ActionArguments["id"].Value);
         }
 
         [Fact]
@@ -90,15 +89,11 @@
 
             Assert.Equal("InArea", result.ControllerName);
             Assert.Equal("Action", result.Action);
-            Assert.Equal(4, result.RouteValues.Count);
-            Assert.True(result.RouteValues.ContainsKey("controller"));
-            Assert.Equal("InArea", result.RouteValues["controller"].Value);
-            Assert.True(result.RouteValues.ContainsKey("action"));
-            Assert.Equal("Action", result.RouteValues["action"].Value);
-            Assert.True(result.RouteValues.ContainsKey("id"));
-            Assert.Equal(1, result.RouteValues["id"].Value);
-            Assert.True(result.RouteValues.ContainsKey("area"));
-            Assert.Equal("MyArea", result.RouteValues["area"].Value);
+            Assert.Equal(2, result.ActionArguments.Count);
+            Assert.True(result.ActionArguments.ContainsKey("id"));
+            Assert.Equal(1, result.ActionArguments["id"].Value);
+            Assert.True(result.ActionArguments.ContainsKey("area"));
+            Assert.Equal("MyArea", result.ActionArguments["area"].Value);
         }
 
         [Fact]
@@ -109,17 +104,13 @@
 
             Assert.Equal("CustomController", result.ControllerName);
             Assert.Equal("CustomAction", result.Action);
-            Assert.Equal(5, result.RouteValues.Count);
-            Assert.True(result.RouteValues.ContainsKey("controller"));
-            Assert.Equal("CustomController", result.RouteValues["controller"].Value);
-            Assert.True(result.RouteValues.ContainsKey("action"));
-            Assert.Equal("CustomAction", result.RouteValues["action"].Value);
-            Assert.True(result.RouteValues.ContainsKey("id"));
-            Assert.Equal("5", result.RouteValues["id"].Value);
-            Assert.True(result.RouteValues.ContainsKey("key"));
-            Assert.Equal("value", result.RouteValues["key"].Value);
-            Assert.True(result.RouteValues.ContainsKey("anotherId"));
-            Assert.Equal(2, result.RouteValues["anotherId"].Value);
+            Assert.Equal(3, result.ActionArguments.Count);
+            Assert.True(result.ActionArguments.ContainsKey("id"));
+            Assert.Equal("5", result.ActionArguments["id"].Value);
+            Assert.True(result.ActionArguments.ContainsKey("key"));
+            Assert.Equal("value", result.ActionArguments["key"].Value);
+            Assert.True(result.ActionArguments.ContainsKey("anotherId"));
+            Assert.Equal(2, result.ActionArguments["anotherId"].Value);
         }
 
         [Fact]
@@ -130,13 +121,9 @@
 
             Assert.Equal("ChangedController", result.ControllerName);
             Assert.Equal("ChangedAction", result.Action);
-            Assert.Equal(3, result.RouteValues.Count);
-            Assert.True(result.RouteValues.ContainsKey("controller"));
-            Assert.Equal("ChangedController", result.RouteValues["controller"].Value);
-            Assert.True(result.RouteValues.ContainsKey("action"));
-            Assert.Equal("ChangedAction", result.RouteValues["action"].Value);
-            Assert.True(result.RouteValues.ContainsKey("ChangedParameter"));
-            Assert.Equal(1, result.RouteValues["ChangedParameter"].Value);
+            Assert.Equal(1, result.ActionArguments.Count);
+            Assert.True(result.ActionArguments.ContainsKey("ChangedParameter"));
+            Assert.Equal(1, result.ActionArguments["ChangedParameter"].Value);
         }
 
         [Fact]
@@ -207,28 +194,28 @@
                     c => c.ActionWithOverloads(1),
                     controllerName,
                     actionName,
-                    new Dictionary<string, object> { ["controller"] = controllerName, ["action"] = actionName, ["id"] = 1 });
+                    new Dictionary<string, object> { ["id"] = 1 });
 
                 actionName = "ActionWithOverloads";
                 data.Add(
                     c => c.ActionWithOverloads(With.No<int>()),
                     controllerName,
                     actionName,
-                    new Dictionary<string, object> { ["controller"] = controllerName, ["action"] = actionName });
+                    new Dictionary<string, object> { });
 
                 actionName = "ActionWithOverloads";
                 data.Add(
                     c => c.ActionWithOverloads(GetInt()),
                     controllerName,
                     actionName,
-                    new Dictionary<string, object> { ["controller"] = controllerName, ["action"] = actionName, ["id"] = 1 });
+                    new Dictionary<string, object> { ["id"] = 1 });
 
                 actionName = "ActionWithMultipleParameters";
                 data.Add(
                     c => c.ActionWithMultipleParameters(1, "string", null),
                     controllerName,
                     actionName,
-                    new Dictionary<string, object> { ["controller"] = controllerName, ["action"] = actionName, ["id"] = 1, ["text"] = "string", ["model"] = null });
+                    new Dictionary<string, object> { ["id"] = 1, ["text"] = "string", ["model"] = null });
 
                 return data;
             }

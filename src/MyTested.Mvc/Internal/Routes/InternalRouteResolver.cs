@@ -1,7 +1,6 @@
 ﻿namespace MyTested.Mvc.Internal.Routes
 {
     using Microsoft.AspNetCore.Routing;
-    using Internal.Application;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Controllers;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -9,6 +8,7 @@
     using System;
     using Microsoft.AspNetCore.Mvc.Abstractions;
     using Microsoft.AspNetCore.Mvc.Internal;
+    using Microsoft.Extensions.DependencyInjection;
 
     /// <summary>
     /// Used for resolving HTTP request to a route.
@@ -23,12 +23,12 @@
         /// <param name="router">IRouter to resolve route values.</param>
         /// <param name="routeContext">RouteContext to use for resolving the route values.</param>
         /// <returns>Resolved route information.</returns>
-        public static ResolvedRouteContext Resolve(IRouter router, RouteContext routeContext)
+        public static ResolvedRouteContext Resolve(IServiceProvider services, IRouter router, RouteContext routeContext)
         {
             router.RouteAsync(routeContext).Wait();
-
-            var actionSelector = TestServiceProvider.GetRequiredService<IActionSelector>();
-            var actionInvokerFactory = TestServiceProvider.GetRequiredService<IActionInvokerFactory>();
+            
+            var actionSelector = services.GetRequiredService<IActionSelector>();
+            var actionInvokerFactory = services.GetRequiredService<IActionInvokerFactory>();
 
             ActionDescriptor actionDescriptor;
             try

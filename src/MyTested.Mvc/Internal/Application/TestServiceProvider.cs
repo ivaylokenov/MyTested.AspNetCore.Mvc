@@ -2,13 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Microsoft.Extensions.DependencyInjection;
     using Utilities.Validators;
     using Microsoft.AspNetCore.Mvc.Internal;
-    using Microsoft.AspNetCore.Mvc.Formatters;
-    using Microsoft.Extensions.Options;
-    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
     /// Provides global application services.
@@ -16,10 +12,10 @@
     public class TestServiceProvider
     {
         /// <summary>
-        /// Gets the current service provider.
+        /// Gets the global service provider.
         /// </summary>
         /// <value>Type of IServiceProvider.</value>
-        public static IServiceProvider Current => TestApplication.Services;
+        public static IServiceProvider Global => TestApplication.Services;
 
         /// <summary>
         /// Gets required service. Throws exception if such is not found or there are no registered services.
@@ -29,7 +25,7 @@
         public static TInstance GetRequiredService<TInstance>()
         {
             ServiceValidator.ValidateServices();
-            var service = Current.GetService<TInstance>();
+            var service = Global.GetService<TInstance>();
             ServiceValidator.ValidateServiceExists(service);
             return service;
         }
@@ -42,7 +38,7 @@
         public static TInstance GetService<TInstance>()
         {
             ServiceValidator.ValidateServices();
-            return Current.GetService<TInstance>();
+            return Global.GetService<TInstance>();
         }
 
         /// <summary>
@@ -53,7 +49,7 @@
         public static IEnumerable<TInstance> GetServices<TInstance>()
         {
             ServiceValidator.ValidateServices();
-            return Current.GetServices<TInstance>();
+            return Global.GetServices<TInstance>();
         }
 
         /// <summary>
@@ -64,7 +60,7 @@
         public static TInstance TryGetService<TInstance>()
             where TInstance : class
         {
-            return Current.GetService<TInstance>();
+            return Global.GetService<TInstance>();
         }
 
         /// <summary>
@@ -78,7 +74,7 @@
             try
             {
                 var typeActivatorCache = GetRequiredService<ITypeActivatorCache>();
-                return typeActivatorCache.CreateInstance<TInstance>(Current, typeof(TInstance));
+                return typeActivatorCache.CreateInstance<TInstance>(Global, typeof(TInstance));
             }
             catch
             {

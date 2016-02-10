@@ -29,9 +29,11 @@
         {
             this.IsResolved = true;
             this.ControllerType = controllerType;
+            this.ControllerName = controllerName;
             this.Action = action;
+            this.ActionArguments = routeValues.ToDetailedValues();
             this.RouteData = routeData;
-            this.RouteValues = routeValues.ToDetailedValues();
+            this.ModelState = modelState;
         }
 
         /// <summary>
@@ -75,10 +77,10 @@
         public string Action { get; private set; }
 
         /// <summary>
-        /// Gets the resolved route values for the current route.
+        /// Gets the resolved action arguments for the current route.
         /// </summary>
-        /// <value>Dictionary of route values.</value>
-        public IDictionary<string, MethodArgumentContext> RouteValues { get; private set; }
+        /// <value>Dictionary of action arguments.</value>
+        public IDictionary<string, MethodArgumentContext> ActionArguments { get; private set; }
 
         /// <summary>
         /// Gets the resolved route data for the current route.

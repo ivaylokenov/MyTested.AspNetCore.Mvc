@@ -120,9 +120,9 @@
                     actualRouteValues.Action));
             }
 
-            expectedRouteValues.RouteValues.ForEach(arg =>
+            expectedRouteValues.ActionArguments.ForEach(arg =>
             {
-                if (!actualRouteValues.RouteValues.ContainsKey(arg.Key))
+                if (!actualRouteValues.ActionArguments.ContainsKey(arg.Key))
                 {
                     this.ThrowNewRouteAssertionException(actual: string.Format(
                         "the '{0}' parameter could not be found",
@@ -130,7 +130,7 @@
                 }
 
                 var expectedArgumentInfo = arg.Value;
-                var actualArgumentInfo = actualRouteValues.RouteValues[arg.Key];
+                var actualArgumentInfo = actualRouteValues.ActionArguments[arg.Key];
                 if (Reflection.AreNotDeeplyEqual(expectedArgumentInfo.Value, actualArgumentInfo.Value))
                 {
                     this.ThrowNewRouteAssertionException(actual: string.Format(
@@ -150,7 +150,7 @@
         private ResolvedRouteContext GetActualRouteInfo()
         {
             return this.actualRouteInfo ??
-                   (this.actualRouteInfo = InternalRouteResolver.Resolve(this.Router, this.routeContext));
+                   (this.actualRouteInfo = InternalRouteResolver.Resolve(this.Services, this.Router, this.routeContext));
         }
 
         private void ThrowNewRouteAssertionException(string expected = null, string actual = null)

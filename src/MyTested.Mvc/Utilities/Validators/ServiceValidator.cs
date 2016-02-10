@@ -13,7 +13,7 @@
         public static void ValidateServices()
         {
             CommonValidator.CheckForNullReference(
-                TestServiceProvider.Current,
+                TestServiceProvider.Global,
                 string.Format("'StartsFrom' method should be called before running this test case. MyMvc must be configured and services"));
         }
 

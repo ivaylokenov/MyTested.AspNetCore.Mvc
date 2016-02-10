@@ -24,7 +24,7 @@
             this.ControllerType = controllerType;
             this.ControllerName = controllerName;
             this.Action = action;
-            this.RouteValues = routeValues.ToDetailedValues();
+            this.ActionArguments = routeValues.ToDetailedValues();
         }
 
         /// <summary>
@@ -46,9 +46,9 @@
         public string Action { get; private set; }
 
         /// <summary>
-        /// Gets the route values from the parsed expression.
+        /// Gets the action arguments from the parsed expression.
         /// </summary>
-        /// <value>Dictionary of route values.</value>
-        public IDictionary<string, MethodArgumentContext> RouteValues { get; private set; }
+        /// <value>Dictionary of action arguments.</value>
+        public IDictionary<string, MethodArgumentContext> ActionArguments { get; private set; }
     }
 }

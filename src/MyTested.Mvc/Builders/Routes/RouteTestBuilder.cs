@@ -35,7 +35,7 @@
         public IShouldMapTestBuilder ShouldMap(string location)
         {
             return this.ShouldMap(request => request
-                .WithPath(location)
+                .WithLocation(location)
                 .WithMethod(GetMethod));
         }
 

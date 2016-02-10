@@ -71,9 +71,7 @@
             }
 
             ApplyAdditionaRouteValues(additionalRouteValues, routeValues);
-
-            AddControllerAndActionToRouteValues(controllerName, actionName, routeValues);
-
+            
             return new ExpressionParsedRouteContext(
                 controllerType,
                 controllerName,
@@ -158,12 +156,6 @@
                     result[additionalRouteValue.Key] = additionalRouteValue.Value;
                 }
             }
-        }
-
-        private static void AddControllerAndActionToRouteValues(string controllerName, string actionName, IDictionary<string, object> routeValues)
-        {
-            routeValues["controller"] = controllerName;
-            routeValues["action"] = actionName;
         }
     }
 }

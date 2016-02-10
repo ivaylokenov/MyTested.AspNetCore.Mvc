@@ -13,6 +13,11 @@
             return null;
         }
 
+        public IActionResult ActionWithParameters(int id)
+        {
+            return null;
+        }
+
         public IActionResult ActionWithMultipleParameters(int id, string text, RequestModel model)
         {
             return null;
@@ -38,5 +43,4 @@
         {
         }
     }
-
 }

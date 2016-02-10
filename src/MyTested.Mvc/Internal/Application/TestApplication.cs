@@ -21,6 +21,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Formatters;
     using Microsoft.AspNetCore.Mvc.Formatters;
+
     public static class TestApplication
     {
         private static readonly RequestDelegate NullHandler = (c) => Task.FromResult(0);
@@ -201,8 +202,10 @@
                 AdditionalConfiguration(applicationBuilder);
             }
 
-            var routeBuilder = new RouteBuilder(applicationBuilder);
-            routeBuilder.DefaultHandler = new RouteHandler(NullHandler);
+            var routeBuilder = new RouteBuilder(applicationBuilder)
+            {
+                DefaultHandler = new RouteHandler(NullHandler)
+            };
 
             for (int i = 0; i < applicationBuilder.Routes.Count; i++)
             {

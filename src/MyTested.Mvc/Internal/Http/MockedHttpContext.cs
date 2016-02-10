@@ -78,7 +78,7 @@
                 return;
             }
 
-            using (var feature = new MockedRequestServicesFeature(TestServiceProvider.Current))
+            using (var feature = new MockedRequestServicesFeature(TestServiceProvider.Global))
             {
                 this.Features.Set<IServiceProvidersFeature>(feature);
             }
