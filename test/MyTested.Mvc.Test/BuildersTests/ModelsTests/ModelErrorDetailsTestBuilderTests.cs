@@ -26,7 +26,7 @@
                 .ContainingNoModelStateErrorFor(m => m.NotValidateInteger)
                 .AndAlso()
                 .ContainingModelStateError("RequiredString")
-                .ContainingModelStateErrorFor(m => m.Integer).ThatEquals(string.Format("The field Integer must be between {0} and {1}.", 1, int.MaxValue))
+                .ContainingModelStateErrorFor(m => m.Integer).ThatEquals($"The field Integer must be between {1} and {int.MaxValue}.")
                 .ContainingModelStateError("RequiredString")
                 .ContainingModelStateError("Integer")
                 .ContainingNoModelStateErrorFor(m => m.NotValidateInteger);
@@ -100,7 +100,7 @@
                 .ModelStateFor<RequestModel>()
                 .ContainingNoModelStateErrorFor(m => m.NonRequiredString)
                 .ContainingModelStateErrorFor(m => m.RequiredString).EndingWith("required.")
-                .ContainingModelStateErrorFor(m => m.Integer).EndingWith(string.Format("{0} and {1}.", 1, int.MaxValue));
+                .ContainingModelStateErrorFor(m => m.Integer).EndingWith($"{1} and {int.MaxValue}.");
         }
 
         [Fact]
@@ -118,7 +118,7 @@
                         .ModelStateFor<RequestModel>()
                         .ContainingNoModelStateErrorFor(m => m.NonRequiredString)
                         .ContainingModelStateErrorFor(m => m.RequiredString).EndingWith("required!")
-                        .ContainingModelStateErrorFor(m => m.Integer).EndingWith(string.Format("{0} and {1}!", 1, int.MaxValue));
+                        .ContainingModelStateErrorFor(m => m.Integer).EndingWith($"{1} and {int.MaxValue}!");
                 }, 
                 "When calling ModelStateCheck action in MvcController expected error message for key 'RequiredString' to end with 'required!', but instead found 'The RequiredString field is required.'.");
         }

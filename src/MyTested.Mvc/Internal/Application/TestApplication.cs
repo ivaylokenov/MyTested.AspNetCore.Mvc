@@ -151,7 +151,7 @@
             {
                 serviceCollection.AddMvc();
             }
-
+            
             if (AdditionalServices != null)
             {
                 AdditionalServices(serviceCollection);

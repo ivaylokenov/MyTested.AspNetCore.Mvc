@@ -362,7 +362,7 @@
                     throw new UnresolvedDependenciesException(string.Format(
                         "{0} could not be instantiated because it contains no constructor taking {1} parameters.",
                         typeof(TController).ToFriendlyTypeName(),
-                        this.aggregatedDependencies.Count == 0 ? "no" : string.Format("{0} as", joinedFriendlyDependencies)));
+                        this.aggregatedDependencies.Count == 0 ? "no" : $"{joinedFriendlyDependencies} as"));
                 }
             }
 

@@ -204,7 +204,7 @@
             var friendlyGenericName = type.Name.Split('`')[0];
             var joinedGenericArgumentNames = string.Join(", ", genericArgumentNames);
 
-            return string.Format("{0}<{1}>", friendlyGenericName, joinedGenericArgumentNames);
+            return $"{friendlyGenericName}<{joinedGenericArgumentNames}>";
         }
 
         /// <summary>

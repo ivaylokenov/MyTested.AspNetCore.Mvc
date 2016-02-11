@@ -24,7 +24,7 @@
                 failedValidationAction(
                     "location",
                     "to be URI valid",
-                    string.Format("instead received '{0}'", location));
+                    $"instead received '{location}'");
             }
 
             return new Uri(location, UriKind.RelativeOrAbsolute);
@@ -48,8 +48,8 @@
                 {
                     failedValidationAction(
                         "location",
-                        string.Format("to be '{0}'", location),
-                        string.Format("instead received '{0}'", actualLocation));
+                        $"to be '{location}'",
+                        $"instead received '{actualLocation}'");
                 }
             });
         }

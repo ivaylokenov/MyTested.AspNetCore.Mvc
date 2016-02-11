@@ -51,11 +51,8 @@
             if (withTotalNumberOf.HasValue && actualNumberOfActionAttributes != withTotalNumberOf)
             {
                 failedValidationAction(
-                    string.Format(
-                        "have {0} {1}",
-                        withTotalNumberOf,
-                        withTotalNumberOf != 1 ? "attributes" : "attribute"),
-                    string.Format("in fact found {0}", actualNumberOfActionAttributes));
+                    $"have {withTotalNumberOf} {(withTotalNumberOf != 1 ? "attributes" : "attribute")}",
+                    $"in fact found {actualNumberOfActionAttributes}");
             }
         }
 

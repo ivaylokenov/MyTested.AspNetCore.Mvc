@@ -94,12 +94,12 @@
 
         public static Action<string, string> GetFailingValidationActionWithTwoParameteres()
         {
-            return (x, y) => { throw new NullReferenceException(string.Format("{0} {1}", x, y)); };
+            return (x, y) => { throw new NullReferenceException($"{x} {y}"); };
         }
 
         public static Action<string, string, string> GetFailingValidationAction()
         {
-            return (x, y, z) => { throw new NullReferenceException(string.Format("{0} {1} {2}", x, y, z)); };
+            return (x, y, z) => { throw new NullReferenceException($"{x} {y} {z}"); };
         }
 
         public static RequestModel GetNullRequestModel()

@@ -2,14 +2,15 @@
 {
     using Microsoft.AspNetCore.Mvc;
 
-    public class HomeController : Controller
+    [Area("Files")]
+    public class FilesController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Test(string fileName)
         {
             return this.View();
         }
-
-        public IActionResult Contact(int id)
+        
+        public IActionResult Download(string fileName)
         {
             return this.View();
         }

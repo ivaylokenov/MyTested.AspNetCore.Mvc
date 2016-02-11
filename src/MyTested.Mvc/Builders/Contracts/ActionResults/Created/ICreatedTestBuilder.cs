@@ -101,16 +101,7 @@
         /// <returns>The same created test builder.</returns>
         IAndCreatedTestBuilder WithUrlHelperOfType<TUrlHelper>()
             where TUrlHelper : IUrlHelper;
-
-        /// <summary>
-        /// Tests whether created result returns created at specific action.
-        /// </summary>
-        /// <typeparam name="TController">Type of expected controller.</typeparam>
-        /// <param name="actionCall">Method call expression indicating the expected action.</param>
-        /// <returns>The same created test builder.</returns>
-        IAndCreatedTestBuilder At<TController>(Expression<Func<TController, object>> actionCall)
-            where TController : Controller;
-
+        
         /// <summary>
         /// Tests whether created result returns created at specific action.
         /// </summary>

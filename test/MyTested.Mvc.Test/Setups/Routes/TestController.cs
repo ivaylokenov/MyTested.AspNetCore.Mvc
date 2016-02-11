@@ -2,14 +2,14 @@
 {
     using Microsoft.AspNetCore.Mvc;
 
-    public class HomeController : Controller
+    public class TestController : Controller
     {
         public IActionResult Index()
         {
             return this.View();
         }
 
-        public IActionResult Contact(int id)
+        public IActionResult WithDataToken(string random)
         {
             return this.View();
         }

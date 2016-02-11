@@ -9,12 +9,14 @@
     using Internal.Routes;
     using Exceptions;
     using Utilities.Extensions;
-
+    using System.Linq;
     /// <summary>
     /// Used for building and testing a route.
     /// </summary>
     public class ShouldMapTestBuilder : BaseRouteTestBuilder, IAndShouldMapTestBuilder, IAndResolvedRouteTestBuilder
     {
+        private const string ExpectedModelStateErrorMessage = "have valid model state with no errors";
+
         private readonly RouteContext routeContext;
 
         private LambdaExpression actionCallExpression;
@@ -34,7 +36,14 @@
         {
             this.routeContext = routeContext;
         }
-        
+
+
+
+        // TODO: tocontroller as string, to aaction as string, to controller type, route values
+
+
+
+
         /// <summary>
         /// Tests whether the built route is resolved to the action provided by the expression.
         /// </summary>
@@ -59,8 +68,59 @@
             {
                 this.ThrowNewRouteAssertionException(
                     "be non-existing",
-                    string.Format("in fact it was {0}", "resolved successfully"));
+                    "in fact it was resolved successfully");
             }
+        }
+        
+        /// <summary>
+        /// Tests whether the resolved route will have valid model state.
+        /// </summary>
+        /// <returns>The same route test builder.</returns>
+        public IAndResolvedRouteTestBuilder ToValidModelState()
+        {
+            var actualInfo = this.GetActualRouteInfo();
+            if (!actualInfo.IsResolved)
+            {
+                this.ThrowNewRouteAssertionException(
+                    ExpectedModelStateErrorMessage,
+                    actualInfo.UnresolvedError);
+            }
+
+            if (!actualInfo.ModelState.IsValid)
+            {
+                this.ThrowNewRouteAssertionException(
+                    ExpectedModelStateErrorMessage,
+                    "it had some");
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether the resolved route will have invalid model state.
+        /// </summary>
+        /// <param name="withNumberOfErrors">Expected number of errors. If default null is provided, the test builder checks only if any errors are found.</param>
+        /// <returns>The same route test builder.</returns>
+        public IAndResolvedRouteTestBuilder ToInvalidModelState(int? withNumberOfErrors = null)
+        {
+            var actualInfo = this.GetActualRouteInfo();
+            if (!actualInfo.IsResolved)
+            {
+                this.ThrowNewRouteAssertionException(
+                    "have invalid model state",
+                    actualInfo.UnresolvedError);
+            }
+
+            var actualModelStateErrors = actualInfo.ModelState.Values.SelectMany(c => c.Errors).Count();
+            if (actualModelStateErrors == 0
+                || (withNumberOfErrors != null && actualModelStateErrors != withNumberOfErrors))
+            {
+                this.ThrowNewRouteAssertionException(
+                    $"have invalid model state{(withNumberOfErrors == null ? string.Empty : $" with {withNumberOfErrors} errors")}",
+                    withNumberOfErrors == null ? "was in fact valid" : $"in fact contained {actualModelStateErrors}");
+            }
+
+            return this;
         }
 
         /// <summary>

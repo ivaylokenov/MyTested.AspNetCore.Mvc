@@ -76,24 +76,24 @@
                 if (template.ToLower() != actualTemplate.ToLower())
                 {
                     failedValidationAction(
-                                string.Format("{0} with '{1}' template", routeAttribute.GetName(), template),
-                                string.Format("in fact found '{0}'", actualTemplate));
+                        $"{routeAttribute.GetName()} with '{template}' template",
+                        $"in fact found '{actualTemplate}'");
                 }
 
                 var actualName = routeAttribute.Name;
                 if (!string.IsNullOrEmpty(withName) && withName != actualName)
                 {
                     failedValidationAction(
-                                string.Format("{0} with '{1}' name", routeAttribute.GetName(), withName),
-                                string.Format("in fact found '{0}'", actualName));
+                        $"{routeAttribute.GetName()} with '{withName}' name",
+                        $"in fact found '{actualName}'");
                 }
 
                 var actualOrder = routeAttribute.Order;
                 if (withOrder.HasValue && withOrder != actualOrder)
                 {
                     failedValidationAction(
-                                string.Format("{0} with order of {1}", routeAttribute.GetName(), withOrder),
-                                string.Format("in fact found {0}", actualOrder));
+                        $"{routeAttribute.GetName()} with order of {withOrder}",
+                        $"in fact found {actualOrder}");
                 }
             });
         }
@@ -120,8 +120,8 @@
                         if (withAllowedRoles != actualRoles)
                         {
                             failedValidationAction(
-                                string.Format("{0} with allowed '{1}' roles", authorizeAttribute.GetName(), withAllowedRoles),
-                                string.Format("in fact found '{0}'", actualRoles));
+                                $"{authorizeAttribute.GetName()} with allowed '{withAllowedRoles}' roles",
+                                $"in fact found '{actualRoles}'");
                         }
                     });
                 }

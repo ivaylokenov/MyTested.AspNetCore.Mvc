@@ -14,7 +14,7 @@
     using Microsoft.AspNetCore.Routing;
     using Microsoft.Net.Http.Headers;
     using Utilities.Validators;
-
+    using Microsoft.AspNetCore.Mvc.Internal;
     /// <summary>
     /// Used for testing created results.
     /// </summary>
@@ -352,16 +352,7 @@
 
             return this;
         }
-
-        /// <summary>
-        /// Tests whether created result returns created at specific action.
-        /// </summary>
-        /// <typeparam name="TController">Type of expected controller.</typeparam>
-        /// <param name="actionCall">Method call expression indicating the expected action.</param>
-        /// <returns>The same created test builder.</returns>
-        public IAndCreatedTestBuilder At<TController>(Expression<Func<TController, object>> actionCall)
-            where TController : Controller => this.AtRoute<TController>(actionCall);
-
+        
         /// <summary>
         /// Tests whether created result returns created at specific action.
         /// </summary>

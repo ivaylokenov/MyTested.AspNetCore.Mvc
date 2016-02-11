@@ -46,8 +46,8 @@
                 if (expected.AllowRefresh != actual.AllowRefresh)
                 {
                     this.ThrowNewAuthenticationPropertiesAssertionException(
-                        expected.AllowRefresh == null ? "not have allow refresh value" : string.Format("have allow refresh value of '{0}'", expected.AllowRefresh),
-                        string.Format("in fact found '{0}'", actual.AllowRefresh == null ? "null" : actual.AllowRefresh.ToString()));
+                        expected.AllowRefresh == null ? "not have allow refresh value" : $"have allow refresh value of '{expected.AllowRefresh}'",
+                        $"in fact found '{(actual.AllowRefresh == null ? "null" : actual.AllowRefresh.ToString())}'");
                 }
             });
 
@@ -67,8 +67,8 @@
                 if (expected.ExpiresUtc != actual.ExpiresUtc)
                 {
                     this.ThrowNewAuthenticationPropertiesAssertionException(
-                        expected.ExpiresUtc == null ? "not have expires value" : string.Format("have expires value of '{0}'", expected.ExpiresUtc),
-                        string.Format("in fact found '{0}'", actual.ExpiresUtc == null ? "null" : actual.ExpiresUtc.ToString()));
+                        expected.ExpiresUtc == null ? "not have expires value" : $"have expires value of '{expected.ExpiresUtc}'",
+                        $"in fact found '{(actual.ExpiresUtc == null ? "null" : actual.ExpiresUtc.ToString())}'");
                 }
             });
 
@@ -109,8 +109,8 @@
                 if (expected.IssuedUtc != actual.IssuedUtc)
                 {
                     this.ThrowNewAuthenticationPropertiesAssertionException(
-                        expected.IssuedUtc == null ? "not have issued value" : string.Format("have issued value of '{0}'", expected.IssuedUtc),
-                        string.Format("in fact found '{0}'", actual.IssuedUtc == null ? "null" : actual.IssuedUtc.ToString()));
+                        expected.IssuedUtc == null ? "not have issued value" : $"have issued value of '{expected.IssuedUtc}'",
+                        $"in fact found '{(actual.IssuedUtc == null ? "null" : actual.IssuedUtc.ToString())}'");
                 }
             });
 
@@ -201,7 +201,7 @@
                 {
                     this.ThrowNewAuthenticationPropertiesAssertionException(
                         expected.RedirectUri == null ? "not have redirect URI value" : $"have '{expected.RedirectUri}' redirect URI",
-                        string.Format("in fact found '{0}'", actual.RedirectUri == null ? "null" : actual.RedirectUri));
+                        $"in fact found '{(actual.RedirectUri == null ? "null" : actual.RedirectUri)}'");
                 }
             });
 

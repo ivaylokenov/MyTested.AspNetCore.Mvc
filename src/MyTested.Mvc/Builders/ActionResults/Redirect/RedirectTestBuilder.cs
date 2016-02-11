@@ -242,15 +242,6 @@
         /// <typeparam name="TController">Type of expected redirect controller.</typeparam>
         /// <param name="actionCall">Method call expression indicating the expected redirect action.</param>
         /// <returns>The same redirect test builder.</returns>
-        public IAndRedirectTestBuilder To<TController>(Expression<Func<TController, object>> actionCall)
-            where TController : Controller => this.RedirectTo<TController>(actionCall);
-
-        /// <summary>
-        /// Tests whether redirect result redirects to specific action.
-        /// </summary>
-        /// <typeparam name="TController">Type of expected redirect controller.</typeparam>
-        /// <param name="actionCall">Method call expression indicating the expected redirect action.</param>
-        /// <returns>The same redirect test builder.</returns>
         public IAndRedirectTestBuilder To<TController>(Expression<Action<TController>> actionCall)
             where TController : Controller => this.RedirectTo<TController>(actionCall);
 

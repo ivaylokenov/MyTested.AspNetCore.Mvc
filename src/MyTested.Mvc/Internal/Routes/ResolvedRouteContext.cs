@@ -17,7 +17,7 @@
         /// <param name="controllerType">Resolved controller type for the current route.</param>
         /// <param name="action">Resolved action name for the current route.</param>
         /// <param name="routeValues">Resolved dictionary of the action arguments for the current route.</param>
-        /// <param name="httpMessageHandler">Resolved HttpMessageHandler for the current route.</param>
+        /// <param name="routeData">Resolved HttpMessageHandler for the current route.</param>
         /// <param name="modelState">Resolved model state validation for the current route.</param>
         public ResolvedRouteContext(
             TypeInfo controllerType,

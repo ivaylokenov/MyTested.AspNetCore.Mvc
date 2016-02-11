@@ -14,7 +14,7 @@
         {
             CommonValidator.CheckForNullReference(
                 TestServiceProvider.Global,
-                string.Format("'StartsFrom' method should be called before running this test case. MyMvc must be configured and services"));
+                "'StartsFrom' method should be called before running this test case. MyMvc must be configured and services");
         }
 
         /// <summary>

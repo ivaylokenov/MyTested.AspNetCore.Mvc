@@ -22,7 +22,7 @@
         }
 
         [Theory]
-        [MemberData(nameof(NormalActionssWithParametersData))]
+        [MemberData(nameof(NormalActionsWithParametersData))]
         public void ParseControllerAndActionWithPrimitiveParametersControllerActionNameAndParametersAreParsed(
             Expression<Action<NormalController>> action, string controllerName, string actionName, IDictionary<string, object> routeValues)
         {
@@ -182,7 +182,7 @@
             Expression<Action<NormalController>>,
             string,
             string,
-            IDictionary<string, object>> NormalActionssWithParametersData
+            IDictionary<string, object>> NormalActionsWithParametersData
         {
             get
             {
@@ -195,15 +195,19 @@
                     controllerName,
                     actionName,
                     new Dictionary<string, object> { ["id"] = 1 });
-
-                actionName = "ActionWithOverloads";
+                
+                data.Add(
+                    c => c.ActionWithOverloads(With.No<int?>()),
+                    controllerName,
+                    actionName,
+                    new Dictionary<string, object> { });
+                
                 data.Add(
                     c => c.ActionWithOverloads(With.No<int>()),
                     controllerName,
                     actionName,
                     new Dictionary<string, object> { });
 
-                actionName = "ActionWithOverloads";
                 data.Add(
                     c => c.ActionWithOverloads(GetInt()),
                     controllerName,

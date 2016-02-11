@@ -109,10 +109,17 @@
                 var methodParameterName = methodParameterNames[i].Name;
                 if (parameterDescriptors.ContainsKey(methodParameterName))
                 {
-                    methodParameterName = parameterDescriptors[methodParameterName];
+                    methodParameterName = parameterDescriptors[methodParameterName] ?? methodParameterName;
                 }
 
                 var expressionArgument = arguments[i];
+
+                if (expressionArgument.NodeType == ExpressionType.Convert)
+                {
+                    // Expression of which contains converting from type to type
+                    var expressionArgumentAsUnary = (UnaryExpression)expressionArgument;
+                    expressionArgument = expressionArgumentAsUnary.Operand;
+                }
 
                 if (expressionArgument.NodeType == ExpressionType.Call)
                 {

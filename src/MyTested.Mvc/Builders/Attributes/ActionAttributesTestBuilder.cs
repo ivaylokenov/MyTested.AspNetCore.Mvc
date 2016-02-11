@@ -52,8 +52,8 @@
                 if (actionName != actualActionName)
                 {
                     this.ThrowNewAttributeAssertionException(
-                        string.Format("{0} with '{1}' name", actionNameAttribute.GetName(), actionName),
-                        string.Format("in fact found '{0}'", actualActionName));
+                        $"{actionNameAttribute.GetName()} with '{actionName}' name",
+                        $"in fact found '{actualActionName}'");
                 }
             });
 
