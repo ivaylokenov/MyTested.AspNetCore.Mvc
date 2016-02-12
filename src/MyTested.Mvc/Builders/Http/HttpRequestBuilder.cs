@@ -578,11 +578,29 @@
         /// <param name="location">Location as URI.</param>
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithLocation(Uri location)
-            => this.WithHost(HostString.FromUriComponent(location))
-                .WithPath(PathString.FromUriComponent(location))
-                .WithPathBase(PathString.FromUriComponent(location))
-                .WithQueryString(QueryString.FromUriComponent(location))
-                .WithScheme(location.Scheme);
+        {
+            Uri uri;
+            if (location.IsAbsoluteUri)
+            {
+                uri = new Uri(location.OriginalString, UriKind.Absolute);
+            }
+            else
+            {
+                uri = new Uri(new Uri("http://localhost"), location);
+            }
+
+            if (location.IsAbsoluteUri)
+            {
+                this
+                    .WithHost(HostString.FromUriComponent(uri))
+                    .WithScheme(uri.Scheme);
+            }
+
+            return this
+                .WithPathBase(PathString.FromUriComponent(uri))
+                .WithPath(PathString.FromUriComponent(uri.AbsolutePath))
+                .WithQueryString(QueryString.FromUriComponent(uri.Query));
+        }
 
         /// <summary>
         /// Adds all URI components to the built HTTP request by extracting them from the provided location.

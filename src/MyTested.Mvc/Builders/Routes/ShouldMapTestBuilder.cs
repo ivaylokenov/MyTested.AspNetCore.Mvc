@@ -10,10 +10,12 @@
     using Exceptions;
     using Utilities.Extensions;
     using System.Linq;
+    using System.Collections.Generic;
+
     /// <summary>
     /// Used for building and testing a route.
     /// </summary>
-    public class ShouldMapTestBuilder : BaseRouteTestBuilder, IAndShouldMapTestBuilder, IAndResolvedRouteTestBuilder
+    public class ShouldMapTestBuilder : BaseRouteTestBuilder, IShouldMapTestBuilder, IAndResolvedRouteTestBuilder
     {
         private const string ExpectedModelStateErrorMessage = "have valid model state with no errors";
 
@@ -37,12 +39,168 @@
             this.routeContext = routeContext;
         }
 
+        public IAndResolvedRouteTestBuilder ToAction(string actionName)
+        {
+            var actualInfo = this.GetActualRouteInfo();
+            var actualActionName = actualInfo.Action;
 
+            if (actionName != actualActionName)
+            {
+                this.ThrowNewRouteAssertionException(
+                    $"match {actionName} action",
+                    $"in fact mathed {actualActionName}");
+            }
 
-        // TODO: tocontroller as string, to aaction as string, to controller type, route values
+            return this;
+        }
 
+        public IAndResolvedRouteTestBuilder ToController(string controllerName)
+        {
+            var actualInfo = this.GetActualRouteInfo();
+            var actualControllerName = actualInfo.ControllerName;
 
+            if (controllerName != actualControllerName)
+            {
+                this.ThrowNewRouteAssertionException(
+                    $"match {controllerName} controller",
+                    $"in fact mathed {actualControllerName}");
+            }
 
+            return this;
+        }
+
+        public IAndResolvedRouteTestBuilder ToRouteValue(string key)
+        {
+            var actualInfo = this.GetActualRouteInfo();
+            if (!actualInfo.RouteData.Values.ContainsKey(key))
+            {
+                this.ThrowNewRouteAssertionException(actual: string.Format(
+                    "the '{0}' route value could not be found",
+                    key));
+            }
+
+            return this;
+        }
+
+        public IAndResolvedRouteTestBuilder ToRouteValue(string key, object value)
+        {
+            this.ToRouteValue(key);
+
+            var actualInfo = this.GetActualRouteInfo();
+
+            object routeValue;
+            if (actualInfo.ActionArguments.ContainsKey(key))
+            {
+                routeValue = actualInfo.ActionArguments[key].Value;
+            }
+            else
+            {
+                routeValue = actualInfo.RouteData.Values[key];
+            }
+
+            if (Reflection.AreNotDeeplyEqual(value, routeValue))
+            {
+                this.ThrowNewRouteAssertionException(actual: string.Format(
+                    "the '{0}' route value was different",
+                    key));
+            }
+
+            return this;
+        }
+
+        public IAndResolvedRouteTestBuilder ToRouteValues(object routeValues)
+            => this.ToRouteValues(new RouteValueDictionary(routeValues));
+
+        public IAndResolvedRouteTestBuilder ToRouteValues(IDictionary<string, object> routeValues)
+        {
+            if (this.actionCallExpression == null)
+            {
+                var actualInfo = this.GetActualRouteInfo();
+
+                var expectedItems = routeValues.Count;
+                var actualItems = actualInfo.RouteData.Values.Count;
+
+                if (expectedItems != actualItems)
+                {
+                    this.ThrowNewRouteAssertionException(
+                        $"have {expectedItems} {(expectedItems != 1 ? "route values" : "route value")}",
+                        $"in fact found {actualItems}");
+                }
+            }
+
+            routeValues.ForEach(rv => this.ToRouteValue(rv.Key, rv.Value));
+
+            return this;
+        }
+
+        public IAndResolvedRouteTestBuilder ToDataToken(string key)
+        {
+            var actualInfo = this.GetActualRouteInfo();
+            if (!actualInfo.RouteData.DataTokens.ContainsKey(key))
+            {
+                this.ThrowNewRouteAssertionException(actual: string.Format(
+                    "the '{0}' data token could not be found",
+                    key));
+            }
+
+            return this;
+        }
+
+        public IAndResolvedRouteTestBuilder ToDataToken(string key, object value)
+        {
+            this.ToDataToken(key);
+
+            var actualInfo = this.GetActualRouteInfo();
+            var routeValue = actualInfo.RouteData.DataTokens[key];
+
+            if (Reflection.AreNotDeeplyEqual(value, routeValue))
+            {
+                this.ThrowNewRouteAssertionException(actual: string.Format(
+                    "the '{0}' data token was different",
+                    key));
+            }
+
+            return this;
+        }
+
+        public IAndResolvedRouteTestBuilder ToDataTokens(object dataTokens)
+            => this.ToDataTokens(new RouteValueDictionary(dataTokens));
+
+        public IAndResolvedRouteTestBuilder ToDataTokens(IDictionary<string, object> dataTokens)
+        {
+            var actualInfo = this.GetActualRouteInfo();
+
+            var expectedItems = dataTokens.Count;
+            var actualItems = actualInfo.RouteData.DataTokens.Count;
+
+            if (expectedItems != actualItems)
+            {
+                this.ThrowNewRouteAssertionException(
+                    $"have {expectedItems} {(expectedItems != 1 ? "data tokens" : "data token")}",
+                    $"in fact found {actualItems}");
+            }
+
+            dataTokens.ForEach(rv => this.ToRouteValue(rv.Key, rv.Value));
+
+            return this;
+        }
+
+        public IAndResolvedRouteTestBuilder To<TController>()
+            where TController : Controller
+        {
+            var actualInfo = this.GetActualRouteInfo();
+            var expectedControllerType = typeof(TController);
+            var actualControllerType = actualInfo.ControllerType;
+
+            if (Reflection.AreDifferentTypes(expectedControllerType, actualControllerType))
+            {
+                this.ThrowNewRouteAssertionException(
+                    $"match {expectedControllerType.GetName()}",
+                    $"in fact mathed {actualControllerType}");
+            }
+
+            return this;
+        }
 
         /// <summary>
         /// Tests whether the built route is resolved to the action provided by the expression.
@@ -71,7 +229,7 @@
                     "in fact it was resolved successfully");
             }
         }
-        
+
         /// <summary>
         /// Tests whether the resolved route will have valid model state.
         /// </summary>
@@ -124,15 +282,6 @@
         }
 
         /// <summary>
-        /// And method for better readability when building route HTTP request message.
-        /// </summary>
-        /// <returns>The same controller builder.</returns>
-        public IShouldMapTestBuilder And()
-        {
-            return this;
-        }
-
-        /// <summary>
         /// AndAlso method for better readability when building route tests.
         /// </summary>
         /// <returns>The same route builder.</returns>
@@ -140,7 +289,7 @@
         {
             return this;
         }
-        
+
         private void ValidateRouteInformation<TController>()
             where TController : Controller
         {
@@ -166,24 +315,7 @@
                     actualRouteValues.Action));
             }
 
-            expectedRouteValues.ActionArguments.ForEach(arg =>
-            {
-                if (!actualRouteValues.ActionArguments.ContainsKey(arg.Key))
-                {
-                    this.ThrowNewRouteAssertionException(actual: string.Format(
-                        "the '{0}' parameter could not be found",
-                        arg.Key));
-                }
-
-                var expectedArgumentInfo = arg.Value;
-                var actualArgumentInfo = actualRouteValues.ActionArguments[arg.Key];
-                if (Reflection.AreNotDeeplyEqual(expectedArgumentInfo.Value, actualArgumentInfo.Value))
-                {
-                    this.ThrowNewRouteAssertionException(actual: string.Format(
-                        "the '{0}' parameter was different",
-                        arg.Key));
-                }
-            });
+            expectedRouteValues.ActionArguments.ForEach(arg => this.ToRouteValue(arg.Key, arg.Value.Value));
         }
 
         private ExpressionParsedRouteContext GetExpectedRouteInfo<TController>()
@@ -206,7 +338,7 @@
                 expected = string.Format(
                     "match {0} action in {1}",
                     this.expectedRouteInfo.Action,
-                    this.expectedRouteInfo.ControllerType);
+                    this.expectedRouteInfo.ControllerType.ToFriendlyTypeName());
             }
 
             throw new RouteAssertionException(string.Format(

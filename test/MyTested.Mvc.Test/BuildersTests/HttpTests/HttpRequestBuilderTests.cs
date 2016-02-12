@@ -255,5 +255,80 @@
                 Assert.Equal(100, builtRequest.ContentLength);
             }
         }
+
+        [Fact]
+        public void WithLocationShouldWorkWithAbsoluteUri()
+        {
+            var builtRequest = MyMvc
+                .Controller<MvcController>()
+                .WithHttpRequest(request => request.WithLocation("http://mytestedasp.net"))
+                .AndProvideTheHttpRequest();
+
+            Assert.Equal("mytestedasp.net:80", builtRequest.Host.Value);
+            Assert.Equal("/", builtRequest.PathBase);
+            Assert.Equal("http", builtRequest.Scheme);
+            Assert.Equal("/", builtRequest.Path);
+            Assert.Equal(string.Empty, builtRequest.QueryString.Value);
+        }
+
+        [Fact]
+        public void WithLocationShouldWorkWithAbsoluteUriAndQueryString()
+        {
+            var builtRequest = MyMvc
+                .Controller<MvcController>()
+                .WithHttpRequest(request => request.WithLocation("http://mytestedasp.net?test=text"))
+                .AndProvideTheHttpRequest();
+
+            Assert.Equal("mytestedasp.net:80", builtRequest.Host.Value);
+            Assert.Equal("/", builtRequest.PathBase);
+            Assert.Equal("http", builtRequest.Scheme);
+            Assert.Equal("/", builtRequest.Path);
+            Assert.Equal("?test=text", builtRequest.QueryString.Value);
+        }
+
+        [Fact]
+        public void WithLocationShouldWorkWithRelativeUri()
+        {
+            var builtRequest = MyMvc
+                .Controller<MvcController>()
+                .WithHttpRequest(request => request.WithLocation("/Home/Index"))
+                .AndProvideTheHttpRequest();
+
+            Assert.Equal(null, builtRequest.Host.Value);
+            Assert.Equal("/Home/Index", builtRequest.PathBase);
+            Assert.Equal("http", builtRequest.Scheme);
+            Assert.Equal("/Home/Index", builtRequest.Path);
+            Assert.Equal(string.Empty, builtRequest.QueryString.Value);
+        }
+
+        [Fact]
+        public void WithLocationShouldWorkWithRelativeUriAndQueryString()
+        {
+            var builtRequest = MyMvc
+                .Controller<MvcController>()
+                .WithHttpRequest(request => request.WithLocation("/Home/Index?test=text"))
+                .AndProvideTheHttpRequest();
+
+            Assert.Equal(null, builtRequest.Host.Value);
+            Assert.Equal("/Home/Index", builtRequest.PathBase);
+            Assert.Equal("http", builtRequest.Scheme);
+            Assert.Equal("/Home/Index", builtRequest.Path);
+            Assert.Equal("?test=text", builtRequest.QueryString.Value);
+        }
+
+        [Fact]
+        public void WithLocationShouldWorkWithFullUriAndQueryString()
+        {
+            var builtRequest = MyMvc
+                .Controller<MvcController>()
+                .WithHttpRequest(request => request.WithLocation("http://mytestedasp.net/Home/Index?test=text"))
+                .AndProvideTheHttpRequest();
+
+            Assert.Equal("mytestedasp.net:80", builtRequest.Host.Value);
+            Assert.Equal("/Home/Index", builtRequest.PathBase);
+            Assert.Equal("http", builtRequest.Scheme);
+            Assert.Equal("/Home/Index", builtRequest.Path);
+            Assert.Equal("?test=text", builtRequest.QueryString.Value);
+        }
     }
 }
