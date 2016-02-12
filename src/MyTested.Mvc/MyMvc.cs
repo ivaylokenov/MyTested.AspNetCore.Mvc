@@ -7,9 +7,11 @@
     using Microsoft.AspNetCore.Mvc;
     using Utilities;
     using Builders.Routes;
-    using Internal.Application;    /// <summary>
-                                   /// Starting point of the ASP.NET MVC testing framework, which provides a way to specify the test case.
-                                   /// </summary>
+    using Internal.Application;
+
+    /// <summary>
+    /// Starting point of the ASP.NET MVC testing framework, which provides a way to specify the test case.
+    /// </summary>
     public static class MyMvc
     {
         static MyMvc()
@@ -36,7 +38,7 @@
         {
             return new ApplicationConfigurationBuilder(typeof(TStartup));
         }
-        
+
         /// <summary>
         /// Starts a route test.
         /// </summary>

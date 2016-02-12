@@ -39,7 +39,7 @@
 
             private set
             {
-                CommonValidator.CheckForNullReference(value, errorMessageName: "Controller");
+                CommonValidator.CheckForNullReference(value, nameof(this.Controller));
                 this.controller = value;
             }
         }

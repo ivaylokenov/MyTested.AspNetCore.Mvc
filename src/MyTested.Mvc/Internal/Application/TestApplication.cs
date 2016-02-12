@@ -21,11 +21,14 @@
     using Microsoft.AspNetCore.Mvc;
     using Formatters;
     using Microsoft.AspNetCore.Mvc.Formatters;
+    using Microsoft.Extensions.PlatformAbstractions;
+    using System.Reflection;
 
     public static class TestApplication
     {
         private static readonly RequestDelegate NullHandler = (c) => Task.FromResult(0);
-
+        private static readonly HostingEnvironment Environment = new HostingEnvironment { EnvironmentName = "Tests" };
+        
         private static bool initialiazed;
         private static Type startupType;
         private static StartupLoader startupLoader;
@@ -36,12 +39,8 @@
 
         static TestApplication()
         {
-            startupLoader = new StartupLoader(
-                new ServiceCollection().BuildServiceProvider(),
-                new HostingEnvironment
-                {
-                    EnvironmentName = "Tests"
-                });
+            startupLoader = GetNewStartupLoader();
+            startupType = FindDefaultStartupType();
         }
 
         internal static Type StartupType
@@ -231,7 +230,48 @@
 
             router = routeBuilder.Build();
         }
+        
+        private static StartupLoader GetNewStartupLoader()
+        {
+            return new StartupLoader(new ServiceCollection().BuildServiceProvider(), Environment);
+        }
 
+        private static Type FindDefaultStartupType()
+        {
+            var applicationName = PlatformServices.Default.Application.ApplicationName;
+            var libraryManager = DnxPlatformServices.Default.LibraryManager;
+
+            var startupTypes = libraryManager
+                .GetLibrary(applicationName)
+                .Assemblies
+                .Select(a => Assembly.Load(new AssemblyName(a.Name)))
+                .SelectMany(a =>
+                {
+                    var startupName = $"{Environment.EnvironmentName}Startup";
+
+                    // check root of the package
+                    var type =
+                        a.GetType(startupName) ??
+                        a.GetType(applicationName + "." + startupName);
+
+                    if (type != null)
+                    {
+                        return new[] { type };
+                    }
+                    
+                    // full scan
+                    return a.DefinedTypes.Where(t => t.Name == startupName).Select(t => t.AsType());
+                })
+                .ToArray();
+
+            if (startupTypes.Length == 1)
+            {
+                return startupTypes.First();
+            }
+
+            return null;
+        }
+        
         private static void Reset()
         {
             initialiazed = false;
