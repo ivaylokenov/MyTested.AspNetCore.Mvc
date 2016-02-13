@@ -72,7 +72,7 @@
         public IAndResolvedRouteTestBuilder ToRouteValue(string key)
         {
             var actualInfo = this.GetActualRouteInfo();
-            if (!actualInfo.RouteData.Values.ContainsKey(key))
+            if (!actualInfo.ActionArguments.ContainsKey(key) && !actualInfo.RouteData.Values.ContainsKey(key))
             {
                 this.ThrowNewRouteAssertionException(actual: string.Format(
                     "the '{0}' route value could not be found",
@@ -209,7 +209,6 @@
         /// <param name="actionCall">Method call expression indicating the expected resolved action.</param>
         /// <returns>The same route test builder.</returns>
         public IAndResolvedRouteTestBuilder To<TController>(Expression<Action<TController>> actionCall)
-            where TController : Controller
         {
             this.actionCallExpression = actionCall;
             this.ValidateRouteInformation<TController>();
@@ -291,7 +290,6 @@
         }
 
         private void ValidateRouteInformation<TController>()
-            where TController : Controller
         {
             var expectedRouteValues = this.GetExpectedRouteInfo<TController>();
             var actualRouteValues = this.GetActualRouteInfo();
@@ -319,7 +317,6 @@
         }
 
         private ExpressionParsedRouteContext GetExpectedRouteInfo<TController>()
-            where TController : Controller
         {
             return this.expectedRouteInfo ??
                    (this.expectedRouteInfo = RouteExpressionParser.Parse<TController>(this.actionCallExpression));

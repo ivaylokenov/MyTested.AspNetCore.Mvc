@@ -43,7 +43,7 @@
         public void ParseControllerAndActionWithRouteAttributeControllerActionNameAndParametersAreParsed()
         {
             Expression<Action<RouteController>> expr = c => c.Index();
-            var result = RouteExpressionParser.Parse<PocoController>(expr);
+            var result = RouteExpressionParser.Parse<RouteController>(expr);
 
             Assert.Equal("Route", result.ControllerName);
             Assert.Equal("Index", result.Action);

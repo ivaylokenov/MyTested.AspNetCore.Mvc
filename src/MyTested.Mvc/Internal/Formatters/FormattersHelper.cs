@@ -65,7 +65,7 @@
             }
         }
 
-        public static Stream WriteToStream(object value, string contentType, Encoding encoding)
+        public static Stream WriteToStream<TBody>(TBody value, string contentType, Encoding encoding)
         {
             // formatters do not support non HTTP context processing
             var httpContext = new MockedHttpContext();
@@ -94,6 +94,18 @@
 
             // copy memory stream because formatters close the original one
             return new MemoryStream(((MemoryStream)httpContext.Response.Body).ToArray());
+        }
+
+        public static Stream WriteAsStringToStream<TBody>(TBody value, string contentType, Encoding encoding)
+        {
+            var stream = WriteToStream(value, contentType, encoding);
+
+            using (var streamReader = new StreamReader(stream))
+            {
+                var streamAsString = streamReader.ReadToEnd();
+
+                return WriteToStream(streamAsString, ContentType.TextPlain, encoding);
+            }
         }
     }
 }

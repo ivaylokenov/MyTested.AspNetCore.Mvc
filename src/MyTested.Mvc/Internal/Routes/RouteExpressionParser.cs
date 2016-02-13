@@ -116,7 +116,7 @@
 
                 if (expressionArgument.NodeType == ExpressionType.Convert)
                 {
-                    // Expression of which contains converting from type to type
+                    // Expression which contains converting from type to type
                     var expressionArgumentAsUnary = (UnaryExpression)expressionArgument;
                     expressionArgument = expressionArgumentAsUnary.Operand;
                 }

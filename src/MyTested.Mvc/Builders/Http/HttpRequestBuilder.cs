@@ -32,7 +32,7 @@
         {
             this.request = new MockedHttpRequest
             {
-                Scheme = "http"
+                Scheme = HttpScheme.Http
             };
         }
 
@@ -67,7 +67,7 @@
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithBody<TBody>(TBody body, string contentType, Encoding encoding)
         {
-            var stream = FormattersHelper.WriteToStream(body, contentType, encoding);
+            var stream = FormattersHelper.WriteAsStringToStream(body, contentType, encoding);
 
             return this
                 .WithContentType(this.request.ContentType ?? contentType)

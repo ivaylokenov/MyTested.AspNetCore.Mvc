@@ -13,8 +13,6 @@
     /// </summary>
     public class RouteTestBuilder : BaseRouteTestBuilder, IRouteTestBuilder
     {
-        private const string GetMethod = "GET";
-
         private MockedHttpContext httpContext;
 
         /// <summary>
@@ -36,7 +34,7 @@
         {
             return this.ShouldMap(request => request
                 .WithLocation(location)
-                .WithMethod(GetMethod));
+                .WithMethod(HttpMethod.Get));
         }
 
         /// <summary>
@@ -48,7 +46,7 @@
         {
             return this.ShouldMap(request => request
                 .WithLocation(location)
-                .WithMethod(GetMethod));
+                .WithMethod(HttpMethod.Get));
         }
 
         /// <summary>
