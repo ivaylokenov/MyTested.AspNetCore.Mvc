@@ -78,7 +78,7 @@
         }
 
         [Fact]
-        public void ToShouldResolveCorrectControllerAndActionWithRequestModelAsObject()
+        public void ToShouldResolveCorrectControllerAndActionWithRequestModelAsInstance()
         {
             MyMvc
                 .Routes()
@@ -86,6 +86,22 @@
                     .WithLocation("/Normal/ActionWithMultipleParameters/1")
                     .WithMethod(HttpMethod.Post)
                     .WithJsonBody(new RequestModel { Integer = 1, String = "Text" }))
+                .To<NormalController>(c => c.ActionWithMultipleParameters(1, With.No<string>(), new RequestModel
+                {
+                    Integer = 1,
+                    String = "Text"
+                }));
+        }
+
+        [Fact]
+        public void ToShouldResolveCorrectControllerAndActionWithRequestModelAsObject()
+        {
+            MyMvc
+                .Routes()
+                .ShouldMap(request => request
+                    .WithLocation("/Normal/ActionWithMultipleParameters/1")
+                    .WithMethod(HttpMethod.Post)
+                    .WithJsonBody(new { Integer = 1, String = "Text" }))
                 .To<NormalController>(c => c.ActionWithMultipleParameters(1, With.No<string>(), new RequestModel
                 {
                     Integer = 1,
@@ -144,6 +160,24 @@
                 .To<DefaultController>(c => c.Download("Test"));
 
             MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void ToShouldResolveCorrectControllerAndActionWithRouteConstraints()
+        {
+            MyMvc
+                .Routes()
+                .ShouldMap("/Normal/ActionWithConstraint/5")
+                .To<NormalController>(c => c.ActionWithConstraint(5));
+        }
+
+        [Fact]
+        public void ToShouldResolveCorrectControllerAndActionWithConventions()
+        {
+            MyMvc
+                .Routes()
+                .ShouldMap("/ChangedController/ChangedAction?ChangedParameter=1")
+                .To<ConventionsController>(c => c.ConventionsAction(1));
         }
     }
 }

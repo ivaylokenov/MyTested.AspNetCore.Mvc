@@ -61,6 +61,12 @@
             return null;
         }
 
+        [MyRouteConstraint("id", "5")]
+        public IActionResult ActionWithConstraint(int id)
+        {
+            return null;
+        }
+
         public void VoidAction()
         {
         }

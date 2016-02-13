@@ -98,7 +98,7 @@
                 routeValue = actualInfo.RouteData.Values[key];
             }
 
-            if (Reflection.AreNotDeeplyEqual(value, routeValue))
+            if (value.ToString() != routeValue.ToString() && Reflection.AreNotDeeplyEqual(value, routeValue))
             {
                 this.ThrowNewRouteAssertionException(actual: string.Format(
                     "the '{0}' route value was different",
