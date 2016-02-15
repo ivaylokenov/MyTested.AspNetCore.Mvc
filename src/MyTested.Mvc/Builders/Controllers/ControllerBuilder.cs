@@ -22,13 +22,12 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Controllers;
-    using Microsoft.AspNetCore.Mvc.ModelBinding;
-    using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
     using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Options;
     using Utilities;
-
+    using Utilities.Validators;
+    using Internal.Routes;
     /// <summary>
     /// Used for building the action which will be tested.
     /// </summary>
@@ -87,6 +86,7 @@
         /// <returns>The same controller builder.</returns>
         public IAndControllerBuilder<TController> WithHttpContext(HttpContext httpContext)
         {
+            CommonValidator.CheckForNullReference(httpContext, nameof(HttpContext));
             this.HttpContext = new MockedHttpContext(httpContext);
             return this;
         }
@@ -98,6 +98,7 @@
         /// <returns>The same controller builder.</returns>
         public IAndControllerBuilder<TController> WithHttpRequest(HttpRequest httpRequest)
         {
+            CommonValidator.CheckForNullReference(httpRequest, nameof(HttpRequest));
             this.HttpContext.CustomRequest = httpRequest;
             return this;
         }
@@ -415,6 +416,11 @@
         {
             var options = this.Services.GetRequiredService<IOptions<MvcOptions>>().Value;
             
+            if (this.HttpContext.Request?.Path != null)
+            {
+                InternalRouteResolver.ResolveRouteData(TestApplication.Router, new RouteContext(this.HttpContext));
+            }
+
             var controllerContext = new ControllerContext
             {
                 HttpContext = this.HttpContext,
@@ -427,9 +433,6 @@
             var controllerPropertyActivators = this.Services.GetServices<IControllerPropertyActivator>();
 
             controllerPropertyActivators.ForEach(a => a.Activate(controllerContext, this.controller));
-
-            this.controller.MetadataProvider = this.Services.GetRequiredService<IModelMetadataProvider>();
-            this.controller.ObjectValidator = this.Services.GetRequiredService<IObjectModelValidator>();
 
             if (this.controllerSetupAction != null)
             {

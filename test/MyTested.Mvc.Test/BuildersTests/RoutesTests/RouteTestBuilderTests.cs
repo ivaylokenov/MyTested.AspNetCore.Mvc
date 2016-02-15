@@ -16,7 +16,7 @@
                 .ShouldMap("/")
                 .To<HomeController>(c => c.Index());
         }
-        
+
         [Fact]
         public void ToShouldResolveCorrectControllerAndActionWithPartialPath()
         {
@@ -127,7 +127,7 @@
                 .ShouldMap("/AttributeController/AttributeAction")
                 .To<RouteController>(c => c.Index());
         }
-        
+
         [Fact]
         public void ToShouldResolveCorrectControllerAndActionWithRouteAttributesWithParameter()
         {

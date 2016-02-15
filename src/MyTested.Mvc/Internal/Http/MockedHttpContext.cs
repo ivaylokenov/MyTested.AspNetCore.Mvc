@@ -5,7 +5,7 @@
     using Microsoft.AspNetCore.Http.Features;
     using Microsoft.AspNetCore.Http.Features.Internal;
     using Microsoft.AspNetCore.Http.Internal;
-
+    using System;
     /// <summary>
     /// Mocked HTTP context object.
     /// </summary>

@@ -26,8 +26,8 @@
         /// <returns>Resolved route information.</returns>
         public static ResolvedRouteContext Resolve(IServiceProvider services, IRouter router, RouteContext routeContext)
         {
-            router.RouteAsync(routeContext).Wait();
-            
+            ResolveRouteData(router, routeContext);
+
             var actionSelector = services.GetRequiredService<IActionSelector>();
             var actionInvokerFactory = services.GetRequiredService<IActionInvokerFactory>();
 
@@ -77,6 +77,16 @@
                 modelBindingActionInvoker.BoundActionArguments,
                 actionContext.RouteData,
                 actionContext.ModelState);
+        }
+
+        public static void ResolveRouteData(IRouter router, RouteContext routeContext)
+        {
+            router.RouteAsync(routeContext).Wait();
+
+            routeContext.HttpContext.Features[typeof(IRoutingFeature)] = new MockedRoutingFeature
+            {
+                RouteData = routeContext.RouteData
+            };
         }
     }
 }

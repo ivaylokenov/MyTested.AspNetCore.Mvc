@@ -437,6 +437,17 @@
                 .Ok();
         }
 
+        [Fact]
+        public void RouteDataShouldBePopulatedWhenRequestAndPathAreProvided()
+        {
+            var controller = MyMvc
+                .Controller<MvcController>()
+                .WithHttpRequest(req => req.WithPath("/Mvc/WithRouteData/1"))
+                .Calling(c => c.WithRouteData(1))
+                .ShouldReturn()
+                .View();
+        }
+
         private void CheckActionResultTestBuilder<TActionResult>(
             IActionResultTestBuilder<TActionResult> actionResultTestBuilder,
             string expectedActionName)

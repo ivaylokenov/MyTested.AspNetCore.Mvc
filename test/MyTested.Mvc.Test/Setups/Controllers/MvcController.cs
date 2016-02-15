@@ -375,6 +375,18 @@
             return null;
         }
 
+        public IActionResult WithRouteData(int id)
+        {
+            if (this.RouteData.Values["controller"].ToString() == "Mvc"
+                && this.RouteData.Values["action"].ToString() == "WithRouteData"
+                && this.RouteData.Values["id"].ToString() == "1")
+            {
+                return this.View();
+            }
+
+            throw new InvalidOperationException();
+        }
+
         public int DefaultStructAction()
         {
             return 0;
