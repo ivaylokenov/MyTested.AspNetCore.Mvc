@@ -16,7 +16,7 @@
         /// <param name="location">Location as string.</param>
         /// <returns>Route test builder.</returns>
         IShouldMapTestBuilder ShouldMap(string location);
-
+        
         /// <summary>
         /// Sets the route location to test.
         /// </summary>

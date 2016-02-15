@@ -1,6 +1,8 @@
 ﻿namespace MyTested.Mvc.Tests.Setups.Routes
 {
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Infrastructure;
+    using Microsoft.AspNetCore.Mvc.Routing;
 
     public class NormalController : Controller
     {
@@ -63,6 +65,37 @@
 
         [MyRouteConstraint("id", "5")]
         public IActionResult ActionWithConstraint(int id)
+        {
+            return null;
+        }
+
+        public IActionResult FromRouteAction([FromRoute]RequestModel model)
+        {
+            return null;
+        }
+
+        public IActionResult FromQueryAction([FromQuery]RequestModel model)
+        {
+            return null;
+        }
+
+        public IActionResult FromFormAction([FromForm]RequestModel model)
+        {
+            return null;
+        }
+
+        public IActionResult FromHeaderAction([FromHeader]string myHeader)
+        {
+            return null;
+        }
+
+        public IActionResult FromServicesAction([FromServices]IActionSelector actionSelector)
+        {
+            return null;
+        }
+
+        [HttpPost]
+        public IActionResult UltimateModelBinding(ModelBindingModel model, [FromServices]IUrlHelperFactory urlHelper)
         {
             return null;
         }

@@ -17,7 +17,8 @@
 
         public static ExpressionParsedRouteContext Parse<TController>(
             LambdaExpression actionCallExpression,
-            object additionalRouteValues = null)
+            object additionalRouteValues = null,
+            bool considerParameterDescriptors = false)
         {
             var methodCallExpression = ExpressionParser.GetMethodCallExpression(actionCallExpression);
 
@@ -36,7 +37,7 @@
             var controllerName = controllerActionDescriptor.ControllerName;
             var actionName = controllerActionDescriptor.Name;
 
-            var routeValues = GetRouteValues(methodInfo, methodCallExpression, controllerActionDescriptor);
+            var routeValues = GetRouteValues(methodInfo, methodCallExpression, controllerActionDescriptor, considerParameterDescriptors);
 
             // If there is a route constraint with specific expected value, add it to the result.
             var routeConstraints = controllerActionDescriptor.RouteConstraints;
@@ -81,7 +82,8 @@
         private static IDictionary<string, object> GetRouteValues(
             MethodInfo methodInfo,
             MethodCallExpression methodCallExpression,
-            ControllerActionDescriptor controllerActionDescriptor)
+            ControllerActionDescriptor controllerActionDescriptor,
+            bool considerParameterDescriptors)
         {
             var result = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
 
@@ -91,23 +93,26 @@
                 return result;
             }
 
-            var methodParameterNames = methodInfo.GetParameters();
+            var methodParameters = methodInfo.GetParameters();
 
             var parameterDescriptors = new Dictionary<string, string>();
-            var parameters = controllerActionDescriptor.Parameters;
-            for (int i = 0; i < parameters.Count; i++)
+            if (considerParameterDescriptors)
             {
-                var parameter = parameters[i];
-                if (parameter.BindingInfo != null)
+                var parameters = controllerActionDescriptor.Parameters;
+                for (int i = 0; i < parameters.Count; i++)
                 {
-                    parameterDescriptors.Add(parameter.Name, parameter.BindingInfo.BinderModelName);
+                    var parameter = parameters[i];
+                    if (parameter.BindingInfo != null)
+                    {
+                        parameterDescriptors.Add(parameter.Name, parameter.BindingInfo.BinderModelName);
+                    }
                 }
             }
 
             for (var i = 0; i < arguments.Count; i++)
             {
-                var methodParameterName = methodParameterNames[i].Name;
-                if (parameterDescriptors.ContainsKey(methodParameterName))
+                var methodParameterName = methodParameters[i].Name;
+                if (considerParameterDescriptors && parameterDescriptors.ContainsKey(methodParameterName))
                 {
                     methodParameterName = parameterDescriptors[methodParameterName] ?? methodParameterName;
                 }

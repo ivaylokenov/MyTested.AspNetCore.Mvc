@@ -98,7 +98,17 @@
                 routeValue = actualInfo.RouteData.Values[key];
             }
 
-            if (value.ToString() != routeValue.ToString() && Reflection.AreNotDeeplyEqual(value, routeValue))
+            var invalid = false;
+            if (value is string || routeValue is string)
+            {
+                invalid = value.ToString() != routeValue.ToString();
+            }
+            else
+            {
+                invalid = Reflection.AreNotDeeplyEqual(value, routeValue);
+            }
+
+            if (invalid)
             {
                 this.ThrowNewRouteAssertionException(actual: string.Format(
                     "the '{0}' route value was different",

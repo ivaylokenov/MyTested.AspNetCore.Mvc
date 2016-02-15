@@ -117,13 +117,26 @@
         public void ParseCustomConventionsCustomConventionsAreParsed()
         {
             Expression<Action<ConventionsController>> expr = c => c.ConventionsAction(1);
-            var result = RouteExpressionParser.Parse<ConventionsController>(expr);
+            var result = RouteExpressionParser.Parse<ConventionsController>(expr, considerParameterDescriptors: true);
 
             Assert.Equal("ChangedController", result.ControllerName);
             Assert.Equal("ChangedAction", result.Action);
             Assert.Equal(1, result.ActionArguments.Count);
             Assert.True(result.ActionArguments.ContainsKey("ChangedParameter"));
             Assert.Equal(1, result.ActionArguments["ChangedParameter"].Value);
+        }
+
+        [Fact]
+        public void ParseCustomConventionsCustomConventionsAreParsedWithNoParameters()
+        {
+            Expression<Action<ConventionsController>> expr = c => c.ConventionsAction(1);
+            var result = RouteExpressionParser.Parse<ConventionsController>(expr);
+
+            Assert.Equal("ChangedController", result.ControllerName);
+            Assert.Equal("ChangedAction", result.Action);
+            Assert.Equal(1, result.ActionArguments.Count);
+            Assert.True(result.ActionArguments.ContainsKey("id"));
+            Assert.Equal(1, result.ActionArguments["id"].Value);
         }
 
         [Fact]

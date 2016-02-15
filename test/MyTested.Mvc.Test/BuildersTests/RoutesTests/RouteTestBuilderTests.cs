@@ -1,8 +1,9 @@
 ﻿namespace MyTested.Mvc.Tests.BuildersTests.RoutesTests
 {
+    using Microsoft.AspNetCore.Mvc.Infrastructure;
+    using Microsoft.AspNetCore.Mvc.Routing;
     using Setups.Routes;
     using Setups.Startups;
-    using System.Text;
     using Xunit;
 
     public class RouteTestBuilderTests
@@ -126,6 +127,15 @@
                 .ShouldMap("/AttributeController/AttributeAction")
                 .To<RouteController>(c => c.Index());
         }
+        
+        [Fact]
+        public void ToShouldResolveCorrectControllerAndActionWithRouteAttributesWithParameter()
+        {
+            MyMvc
+                .Routes()
+                .ShouldMap("/AttributeController/Action/1")
+                .To<RouteController>(c => c.Action(1));
+        }
 
         [Fact]
         public void ToShouldResolveCorrectControllerAndActionWithPocoController()
@@ -178,6 +188,115 @@
                 .Routes()
                 .ShouldMap("/ChangedController/ChangedAction?ChangedParameter=1")
                 .To<ConventionsController>(c => c.ConventionsAction(1));
+        }
+
+        [Fact]
+        public void ToShouldResolveNonExistingRouteWithInvalidGetMethod()
+        {
+            MyMvc
+                .Routes()
+                .ShouldMap("/Normal/ActionWithModel/1")
+                .ToNonExistingRoute();
+        }
+
+        [Fact]
+        public void ToShouldResolveCorrectControllerAndActionWithCorrectHttpMethod()
+        {
+            MyMvc
+                .Routes()
+                .ShouldMap(request => request
+                    .WithMethod(HttpMethod.Post)
+                    .WithLocation("/Normal/ActionWithModel/1"))
+                .To<NormalController>(c => c.ActionWithModel(1, With.No<RequestModel>()));
+        }
+
+        [Fact]
+        public void ToShouldResolveCorrectControllerAndActionWithFromRouteAction()
+        {
+            MyMvc.StartsFrom<RoutesStartup>();
+
+            MyMvc
+                .Routes()
+                .ShouldMap("/CustomRoute")
+                .To<NormalController>(c => c.FromRouteAction(new RequestModel
+                {
+                    Integer = 1,
+                    String = "test"
+                }));
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void ToShouldResolveCorrectControllerAndActionWithFromQueryAction()
+        {
+            MyMvc
+                .Routes()
+                .ShouldMap("/Normal/FromQueryAction?Integer=1&String=test")
+                .To<NormalController>(c => c.FromQueryAction(new RequestModel
+                {
+                    Integer = 1,
+                    String = "test"
+                }));
+        }
+
+        [Fact]
+        public void ToShouldResolveCorrectControllerAndActionWithFromFormAction()
+        {
+            MyMvc
+                .Routes()
+                .ShouldMap(request => request
+                    .WithLocation("/Normal/FromFormAction")
+                    .WithFormField("Integer", "1")
+                    .WithFormField("String", "test"))
+                .To<NormalController>(c => c.FromFormAction(new RequestModel
+                {
+                    Integer = 1,
+                    String = "test"
+                }));
+        }
+
+        [Fact]
+        public void ToShouldResolveCorrectControllerAndActionWithFromHeaderAction()
+        {
+            MyMvc
+                .Routes()
+                .ShouldMap(request => request
+                    .WithLocation("/Normal/FromHeaderAction")
+                    .WithHeader("MyHeader", "MyHeaderValue"))
+                .To<NormalController>(c => c.FromHeaderAction("MyHeaderValue"));
+        }
+
+        [Fact]
+        public void ToShouldResolveCorrectControllerAndActionWithFromServicesAction()
+        {
+            MyMvc
+                .Routes()
+                .ShouldMap("/Normal/FromServicesAction")
+                .To<NormalController>(c => c.FromServicesAction(From.Services<IActionSelector>()));
+        }
+
+        [Fact]
+        public void UltimateCrazyModelBindingTest()
+        {
+            MyMvc
+                .Routes()
+                .ShouldMap(request => request
+                    .WithLocation("/Normal/UltimateModelBinding/100?myQuery=Test")
+                    .WithMethod(HttpMethod.Post)
+                    .WithJsonBody(new { Integer = 1, String = "MyBodyValue" })
+                    .WithFormField("MyField", "MyFieldValue")
+                    .WithHeader("MyHeader", "MyHeaderValue"))
+                .To<NormalController>(c => c.UltimateModelBinding(
+                    new ModelBindingModel
+                    {
+                        Body = new RequestModel { Integer = 1, String = "MyBodyValue" },
+                        Form = "MyFieldValue",
+                        Route = 100,
+                        Query = "Test",
+                        Header = "MyHeaderValue"
+                    },
+                    From.Services<IUrlHelperFactory>()));
         }
     }
 }

@@ -20,6 +20,11 @@
                     template: "Files/{controller=Default}/{action=Test}/{fileName=None}");
 
                 routes.MapRoute(
+                    name: "custom",
+                    template: "CustomRoute",
+                    defaults: new { controller = "Normal", action = "FromRouteAction", integer = 1, @string = "test" });
+
+                routes.MapRoute(
                     name: "test",
                     template: "Test/{action=Index}/{id?}",
                     defaults: new { controller = "Test" },
