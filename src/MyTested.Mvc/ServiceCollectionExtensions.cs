@@ -134,6 +134,7 @@
             
             serviceCollection
                 .Where(predicate)
+                .ToArray()
                 .ForEach(s => serviceCollection.Remove(s));
         }
     }

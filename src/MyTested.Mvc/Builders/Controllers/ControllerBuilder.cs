@@ -445,7 +445,10 @@
             var arguments = ExpressionParser.ResolveMethodArguments(actionCall);
             foreach (var argument in arguments)
             {
-                this.Controller.TryValidateModel(argument.Value);
+                if (argument.Value != null)
+                {
+                    this.Controller.TryValidateModel(argument.Value);
+                }
             }
         }
     }

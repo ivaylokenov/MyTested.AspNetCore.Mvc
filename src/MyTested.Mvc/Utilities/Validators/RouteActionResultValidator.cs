@@ -207,7 +207,6 @@
             RuntimeBinderValidator.ValidateBinding(() =>
             {
                 var actualUrlHelper = (IUrlHelper)actionResult.UrlHelper;
-
                 if (actualUrlHelper == null ||
                     Reflection.AreDifferentTypes(typeof(TUrlHelper), actualUrlHelper.GetType()))
                 {

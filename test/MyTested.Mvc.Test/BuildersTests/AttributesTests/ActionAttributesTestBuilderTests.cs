@@ -4,6 +4,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Setups;
     using Setups.Controllers;
+    using Setups.Models;
     using Xunit;
 
     public class ActionAttributesTestBuilderTests
@@ -285,6 +286,16 @@
                         .AndAlso()
                         .DisablingActionCall()
                         .ChangingActionNameTo("NormalAction"));
+        }
+        
+        [Fact]
+        public void WithNoShouldWorkCorrectly()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.EmptyActionWithParameters(With.No<int>(), With.No<RequestModel>()))
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes.ChangingActionNameTo("Test"));
         }
     }
 }

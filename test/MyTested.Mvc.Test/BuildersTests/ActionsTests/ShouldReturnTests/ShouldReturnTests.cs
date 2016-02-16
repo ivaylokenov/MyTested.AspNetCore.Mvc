@@ -457,5 +457,14 @@
                 .ShouldReturn()
                 .ResultOfType<List<ResponseModel>>();
         }
+
+        [Fact]
+        public void WithShouldWorkCorrectly()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.EmptyActionWithParameters(With.No<int>(), With.No<RequestModel>()))
+                .ShouldReturnEmpty();
+        }
     }
 }

@@ -224,6 +224,7 @@
         {
         }
 
+        [ActionName("Test")]
         public void EmptyActionWithParameters(int id, RequestModel model)
         {
         }
