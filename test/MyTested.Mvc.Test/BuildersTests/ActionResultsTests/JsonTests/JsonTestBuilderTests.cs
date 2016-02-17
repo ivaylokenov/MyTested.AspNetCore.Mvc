@@ -7,7 +7,7 @@
     using Setups.Controllers;
     using Setups.Models;
     using Xunit;
-
+    using Microsoft.Net.Http.Headers;
     public class JsonTestBuilderTests
     {
         [Fact]
@@ -95,6 +95,33 @@
                         .WithContentType(ContentType.ApplicationJson);
                 },
                 "When calling JsonWithStatusCodeAction action in MvcController expected JSON result ContentType to be 'application/json', but instead received 'application/xml'.");
+        }
+
+        [Fact]
+        public void WithContentTypeAsMediaTypeHeaderValueShouldNotThrowExceptionWithCorrectContentType()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.JsonWithStatusCodeAction())
+                .ShouldReturn()
+                .Json()
+                .WithContentType(new MediaTypeHeaderValue(ContentType.ApplicationXml));
+        }
+
+        [Fact]
+        public void WithContentTypeAsMediaTypeHeaderValueShouldThrowExceptionWithNullContentType()
+        {
+            Test.AssertException<JsonResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.JsonWithStatusCodeAction())
+                        .ShouldReturn()
+                        .Json()
+                        .WithContentType((MediaTypeHeaderValue)null);
+                },
+                "When calling JsonWithStatusCodeAction action in MvcController expected JSON result ContentType to be null, but instead received 'application/xml'.");
         }
 
         [Fact]

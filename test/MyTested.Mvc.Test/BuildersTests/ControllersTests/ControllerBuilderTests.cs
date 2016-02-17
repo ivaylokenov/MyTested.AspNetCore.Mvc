@@ -14,7 +14,8 @@
     using Setups.Models;
     using Setups.Services;
     using Xunit;
-
+    using Internal.Http;
+    using Microsoft.Extensions.Primitives;
     public class ControllerBuilderTests
     {
         [Fact]
@@ -432,6 +433,20 @@
             MyMvc
                 .Controller<MvcController>()
                 .WithHttpRequest(req => req.WithFormField("Test", "TestValue"))
+                .Calling(c => c.WithRequest())
+                .ShouldReturn()
+                .Ok();
+        }
+
+        [Fact]
+        public void WithRequestAsObjectShouldWorkWithSetRequestAction()
+        {
+            var httpContext = new MockedHttpContext();
+            httpContext.Request.Form = new FormCollection(new Dictionary<string, StringValues> { ["Test"] = "TestValue" });
+
+            MyMvc
+                .Controller<MvcController>()
+                .WithHttpRequest(httpContext.Request)
                 .Calling(c => c.WithRequest())
                 .ShouldReturn()
                 .Ok();

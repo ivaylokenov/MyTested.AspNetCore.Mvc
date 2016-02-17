@@ -115,7 +115,7 @@
                 ViewEngine = new CustomViewEngine()
             };
         }
-        
+
         public IActionResult PartialViewWithViewEngine(IViewEngine viewEngine)
         {
             return new PartialViewResult
@@ -185,7 +185,27 @@
             this.SetCustomResponse();
             return this.Ok();
         }
-        
+
+        public IActionResult CustomResponseBodyWithBytesAction()
+        {
+            this.SetCustomResponse();
+            this.Response.Body = new MemoryStream(new byte[] { 1, 2, 3 });
+            return this.Ok();
+        }
+
+        public IActionResult CustomResponseBodyWithStringBody()
+        {
+            this.SetCustomResponse();
+            this.Response.Body = new MemoryStream();
+            this.Response.ContentType = ContentType.TextPlain;
+
+            var writer = new StreamWriter(this.Response.Body);
+            writer.Write("Test");
+            writer.Flush();
+
+            return this.Ok();
+        }
+
         public IActionResult FullHttpBadRequestAction()
         {
             return new BadRequestObjectResult(this.responseModel)
@@ -204,7 +224,7 @@
                 Formatters = new FormatterCollection<IOutputFormatter> { formatter }
             };
         }
-        
+
         public IActionResult EmptyResultAction()
         {
             return new EmptyResult();
@@ -219,7 +239,7 @@
         {
             return new UnsupportedMediaTypeResult();
         }
-        
+
         public void EmptyAction()
         {
         }
@@ -263,7 +283,7 @@
         {
             return this.Ok();
         }
-        
+
         public IActionResult FullOkAction()
         {
             return new HttpOkObjectResult(this.responseModel)
@@ -450,17 +470,17 @@
         public IActionResult CreatedAtActionWithCustomHelperResult(IUrlHelper urlHelper)
         {
             return new CreatedAtActionResult(
-                "MyAction", 
-                "MyController", 
+                "MyAction",
+                "MyController",
                 new
                 {
                     id = 1,
                     text = "sometext"
-                }, 
+                },
                 this.responseModel)
-                {
-                    UrlHelper = urlHelper
-                };
+            {
+                UrlHelper = urlHelper
+            };
         }
 
         public IActionResult CreatedAtRouteAction()
@@ -498,9 +518,9 @@
                     id = 1,
                     text = "sometext"
                 })
-                {
-                    UrlHelper = urlHelper
-                };
+            {
+                UrlHelper = urlHelper
+            };
         }
 
         public IActionResult RedirectToRouteAction()
@@ -735,16 +755,26 @@
             writer.Write(@"{""Integer"":1,""RequiredString"":""Text""}");
             writer.Flush();
 
-            response.Body.Position = 0;
-
             response.ContentType = ContentType.ApplicationJson;
             response.StatusCode = HttpStatusCode.InternalServerError;
             response.Headers.Add("TestHeader", "TestHeaderValue");
             response.Cookies.Append("TestCookie", "TestCookieValue", new CookieOptions
             {
                 HttpOnly = true,
-                Secure = true
+                Secure = true,
+                Domain = "testdomain.com",
+                Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)),
+                Path = "/"
             });
+            response.Cookies.Append("AnotherCookie", "TestCookieValue", new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                Domain = "testdomain.com",
+                Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)),
+                Path = "/"
+            });
+            response.ContentLength = 100;
         }
     }
 }

@@ -59,7 +59,7 @@
             {
                 this.ThrowNewHttpResponseAssertionException(
                     "body",
-                    "to have contents as the provided one",
+                    "to have contents as the provided ones",
                     "instead received different result");
             }
 
@@ -84,21 +84,16 @@
         /// <returns>The same HTTP response message test builder.</returns>
         public IAndHttpResponseTestBuilder WithBodyOfType<TBody>(string contentType, Encoding encoding)
         {
-            var parsedBody = FormattersHelper.ReadFromStream<TBody>(this.httpResponse.Body, contentType, encoding);
-
-            var actualBodyDataType = parsedBody?.GetType();
-            var expectedBodyDataType = typeof(TBody);
-
-            var responseDataTypeIsAssignable = Reflection.AreAssignable(
-                    expectedBodyDataType,
-                    actualBodyDataType);
-
-            if (!responseDataTypeIsAssignable)
+            try
+            {
+                FormattersHelper.ReadFromStream<TBody>(this.httpResponse.Body, contentType, encoding);
+            }
+            catch (InvalidDataException)
             {
                 this.ThrowNewHttpResponseAssertionException(
                     "body",
-                    $"to be of {typeof(TBody).ToFriendlyTypeName()} type",
-                    $"instead received {actualBodyDataType.ToFriendlyTypeName()}");
+                    $"to be of {typeof(TBody).ToFriendlyTypeName()} type when using '{contentType}'",
+                    $"in fact it was not");
             }
 
             return this.WithContentType(contentType);
@@ -204,8 +199,8 @@
             {
                 this.ThrowNewHttpResponseAssertionException(
                     "content length",
-                    $"to be {contentLenght.GetErrorMessageName()}",
-                    $"instead received {actualContentLength.GetErrorMessageName()}");
+                    $"to be {contentLenght.GetErrorMessageName(includeQuotes: false)}",
+                    $"instead received {actualContentLength.GetErrorMessageName(includeQuotes: false)}");
             }
 
             return this;
@@ -244,7 +239,25 @@
         /// <returns>The same HTTP response message test builder.</returns>
         public IAndHttpResponseTestBuilder ContainingCookie(Action<IResponseCookieTestBuilder> cookieBuilder)
         {
-            throw new NotImplementedException();
+            var newResponseCookieTestBuilder = new ResponseCookieTestBuilder();
+            cookieBuilder(newResponseCookieTestBuilder);
+            var expectedCookie = newResponseCookieTestBuilder.GetResponseCookie();
+
+            var expectedCookieName = expectedCookie.Name;
+            this.ContainingCookie(expectedCookieName);
+            var actualCookie = this.GetCookieByKey(expectedCookieName);
+
+            var validations = newResponseCookieTestBuilder.GetResponseCookieValidations();
+
+            if (validations.Any(v => !v(expectedCookie, actualCookie)))
+            {
+                this.ThrowNewHttpResponseAssertionException(
+                    "cookies",
+                    $"to contain cookie with '{expectedCookieName}' name and '{expectedCookie}' value",
+                    $"the value was '{actualCookie}'");
+            }
+
+            return this;
         }
 
         /// <summary>
@@ -316,8 +329,8 @@
 
                 this.ThrowNewHttpResponseAssertionException(
                     "cookies",
-                    $"to contain cookie with the provided options - '{expectedCookie.ToString()}'",
-                    $"in fact they were different - '{cookie.ToString()}'");
+                    $"to contain cookie with the provided options - '{expectedCookie}'",
+                    $"in fact they were different - '{cookie}'");
             }
 
             return this;
@@ -330,6 +343,16 @@
         /// <returns>The same HTTP response message test builder.</returns>
         public IAndHttpResponseTestBuilder ContainingCookies(IDictionary<string, string> cookies)
         {
+            var expectedCookiesCount = cookies.Count;
+            var actualCookiesCount = this.GetAllCookies().Count;
+            if (expectedCookiesCount != actualCookiesCount)
+            {
+                this.ThrowNewHttpResponseAssertionException(
+                    "headers",
+                    $"to have {expectedCookiesCount} {(expectedCookiesCount != 1 ? "items" : "item")}",
+                    $"instead found {actualCookiesCount}");
+            }
+
             cookies.ForEach(c => this.ContainingCookie(c.Key, c.Value));
             return this;
         }
@@ -524,7 +547,7 @@
         private void ValidateHeadersCount(int expectedCount)
         {
             var actualHeadersCount = this.httpResponse.Headers.Count;
-            if (expectedCount != this.httpResponse.Headers.Count)
+            if (expectedCount != actualHeadersCount)
             {
                 this.ThrowNewHttpResponseAssertionException(
                     "headers",

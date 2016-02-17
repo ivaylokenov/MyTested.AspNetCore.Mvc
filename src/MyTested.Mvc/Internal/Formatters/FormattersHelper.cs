@@ -23,7 +23,7 @@
 
         private static ConcurrentDictionary<string, IOutputFormatter> outputFormatters
             = new ConcurrentDictionary<string, IOutputFormatter>();
-        
+
         public static TModel ReadFromStream<TModel>(Stream stream, string contentType, Encoding encoding)
         {
             stream.Restart();
@@ -59,7 +59,7 @@
             {
                 return (TModel)result;
             }
-            catch (InvalidCastException)
+            catch (Exception)
             {
                 throw new InvalidDataException($"Expected stream content to be formatted to {typeOfModel.ToFriendlyTypeName()} when using '{contentType}', but instead received {result.GetName()}.");
             }
@@ -89,7 +89,7 @@
 
                 return formatter;
             });
-            
+
             outputFormatter.WriteAsync(outputFormatterCanWriteContext).Wait();
 
             // copy memory stream because formatters close the original one

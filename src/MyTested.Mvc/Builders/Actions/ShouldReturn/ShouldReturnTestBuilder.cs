@@ -89,18 +89,7 @@
         {
             this.ValidateActionReturnType(typeof(TExpectedType), canBeAssignable, allowDifferentGenericTypeDefinitions);
         }
-
-        private void ValidateActionReturnType(params Type[] returnTypes)
-        {
-            var typeOfActionResult = this.ActionResult.GetType();
-            if (returnTypes.All(t => Reflection.AreDifferentTypes(t, typeOfActionResult)))
-            {
-                this.ThrowNewGenericHttpActionResultAssertionException(
-                    string.Join(" or ", returnTypes.Select(t => t.ToFriendlyTypeName())),
-                    typeOfActionResult.ToFriendlyTypeName());
-            }
-        }
-
+        
         private void ThrowNewGenericHttpActionResultAssertionException(
             string typeNameOfExpectedReturnValue,
             string typeNameOfActionResult)

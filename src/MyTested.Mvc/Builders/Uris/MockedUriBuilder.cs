@@ -76,6 +76,11 @@
         /// <returns>The same URI test builder.</returns>
         public virtual IAndUriTestBuilder WithQuery(string query)
         {
+            if (!query.StartsWith("?"))
+            {
+                throw new ArgumentException("Query string must start with the '?' symbol.");
+            }
+
             this.MockedUri.Query = query;
             return this;
         }
@@ -110,8 +115,9 @@
             var uriBuilder = new SystemUriBuilder(
                 this.MockedUri.Scheme,
                 this.MockedUri.Host,
-                this.MockedUri.Port,
-                this.MockedUri.AbsolutePath);
+                this.MockedUri.Port ?? 80,
+                this.MockedUri.AbsolutePath,
+                this.MockedUri.Query);
 
             return uriBuilder.Uri;
         }

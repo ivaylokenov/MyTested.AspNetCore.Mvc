@@ -74,12 +74,13 @@
                 var expectedUri = newUriTestBuilder.GetMockedUri();
                 
                 var validations = newUriTestBuilder.GetMockedUriValidations();
-                if (validations.Any(v => !v(expectedUri, new Uri(actualUri, UriKind.RelativeOrAbsolute))))
+                var actualUriWithUnknownKind = new Uri(actualUri, UriKind.RelativeOrAbsolute);
+                if (validations.Any(v => !v(expectedUri, actualUriWithUnknownKind)))
                 {
                     failedValidationAction(
                         "URI",
-                        "to equal the provided one",
-                        "was in fact different");
+                        $"to be '{expectedUri}'",
+                        $"was in fact '{actualUriWithUnknownKind.OriginalString}'");
                 }
             });
         }

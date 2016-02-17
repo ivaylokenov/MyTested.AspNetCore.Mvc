@@ -227,7 +227,66 @@
                 },
                 "When calling ViewComponentResultByName action in MvcController expected view component result ViewEngine to be of CustomViewEngine type, but instead received null.");
         }
-        
+
+        [Fact]
+        public void WithArgumentShouldNotThrowExceptionWithCorrectArgumentName()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.ViewComponentResultByType())
+                .ShouldReturn()
+                .ViewComponent()
+                .ContainingArgument("model");
+        }
+
+        [Fact]
+        public void WithArgumentShouldThrowExceptionWithIncorrectArgumentName()
+        {
+            Test.AssertException<ViewResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.ViewComponentResultByType())
+                        .ShouldReturn()
+                        .ViewComponent()
+                        .ContainingArgument("id");
+                },
+                "When calling ViewComponentResultByType action in MvcController expected view component result arguments to have item with key 'id', but such was not found.");
+        }
+
+        [Fact]
+        public void WithArgumentWithSameKeyAndDiffeentValueShouldThrowException()
+        {
+            Test.AssertException<ViewResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.ViewComponentResultByType())
+                        .ShouldReturn()
+                        .ViewComponent()
+                        .ContainingArgument("model", new { model = 1 });
+                },
+                "When calling ViewComponentResultByType action in MvcController expected view component result arguments to have item with 'model' key and the provided value, but the value was different.");
+        }
+
+        [Fact]
+        public void WithArgumentWithSameKeyAndDiffeentNameShouldThrowException()
+        {
+            Test.AssertException<ViewResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.ViewComponentResultByType())
+                        .ShouldReturn()
+                        .ViewComponent()
+                        .ContainingArgument("id", new { model = 1 });
+                },
+                "When calling ViewComponentResultByType action in MvcController expected view component result arguments to have item with 'id' key and the provided value, but such was not found.");
+        }
+
         [Fact]
         public void WithArgumentShouldNotThrowExceptionWithCorrectArgument()
         {

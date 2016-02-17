@@ -110,8 +110,8 @@
                                 .AndAlso()
                                 .WithQuery("?query=Test"),
                         TestObjectFactory.GetFailingValidationAction());
-                }, 
-                "URI to equal the provided one was in fact different");
+                },
+                "URI to be 'http://somehost12.com/someuri/1?query=Test' was in fact 'http://somehost.com/someuri/1?query=Test'");
         }
     }
 }

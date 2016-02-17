@@ -85,18 +85,6 @@
         /// <returns>The same content test builder.</returns>
         public IContentTestBuilder AndAlso() => this;
         
-        private string GetEncodingName(Encoding encoding)
-        {
-            if (encoding == null)
-            {
-                return "null";
-            }
-
-            var fullEncodingName = encoding.ToString();
-            var lastIndexOfDot = fullEncodingName.LastIndexOf(".", StringComparison.Ordinal);
-            return fullEncodingName.Substring(lastIndexOfDot + 1).Replace("Encoding", string.Empty);
-        }
-
         private void ThrowNewContentResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new ContentResultAssertionException(string.Format(

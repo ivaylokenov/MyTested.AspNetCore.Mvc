@@ -133,7 +133,7 @@
                                 .AndAlso()
                                 .WithQuery("?query=Test"));
                 },
-                "When calling CreatedAction action in MvcController expected created result URI to equal the provided one, but was in fact different.");
+                "When calling CreatedAction action in MvcController expected created result URI to be 'http://somehost12.com/someuri/1?query=Test', but was in fact 'http://somehost.com/someuri/1?query=Test'.");
         }
 
         [Fact]

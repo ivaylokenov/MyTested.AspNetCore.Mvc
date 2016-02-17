@@ -155,7 +155,7 @@
                                 .AndAlso()
                                 .WithQuery("?query=Test"));
                 },
-                "When calling RedirectActionWithUri action in MvcController expected redirect result URI to equal the provided one, but was in fact different.");
+                "When calling RedirectActionWithUri action in MvcController expected redirect result URI to be 'http://somehost12.com/someuri/1?query=Test', but was in fact 'http://somehost.com/someuri/1?query=Test'.");
         }
 
         [Fact]

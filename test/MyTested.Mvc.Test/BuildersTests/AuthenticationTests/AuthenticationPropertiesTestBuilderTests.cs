@@ -49,7 +49,7 @@
                         .Challenge()
                         .WithAuthenticationProperties(auth => auth.WithAllowRefresh(false));
                 },
-                "When calling ChallengeWithEmptyAuthenticationProperties action in MvcController expected authentication properties to have allow refresh value of 'False', but in fact found 'null'.");
+                "When calling ChallengeWithEmptyAuthenticationProperties action in MvcController expected authentication properties to have allow refresh value of 'False', but in fact found null.");
         }
 
         [Fact]
@@ -108,7 +108,7 @@
                         .Challenge()
                         .WithAuthenticationProperties(auth => auth.WithExpires(new DateTimeOffset(new DateTime(2015, 1, 1, 1, 1, 1))));
                 },
-                "When calling ChallengeWithEmptyAuthenticationProperties action in MvcController expected authentication properties to have expires value of '12/31/2014 11:01:01 PM +00:00', but in fact found 'null'.");
+                "When calling ChallengeWithEmptyAuthenticationProperties action in MvcController expected authentication properties to have expires value of '12/31/2014 11:01:01 PM +00:00', but in fact found null.");
         }
 
         [Fact]
@@ -194,7 +194,7 @@
                         .Challenge()
                         .WithAuthenticationProperties(auth => auth.WithIssued(new DateTimeOffset(new DateTime(2014, 1, 1, 1, 1, 1))));
                 },
-                "When calling ChallengeWithEmptyAuthenticationProperties action in MvcController expected authentication properties to have issued value of '12/31/2013 11:01:01 PM +00:00', but in fact found 'null'.");
+                "When calling ChallengeWithEmptyAuthenticationProperties action in MvcController expected authentication properties to have issued value of '12/31/2013 11:01:01 PM +00:00', but in fact found null.");
         }
 
         [Fact]
@@ -398,7 +398,7 @@
                         .Forbid()
                         .WithAuthenticationProperties(auth => auth.WithRedirectUri("another"));
                 },
-                "When calling ForbidWithEmptyAuthenticationProperties action in MvcController expected authentication properties to have 'another' redirect URI, but in fact found 'null'.");
+                "When calling ForbidWithEmptyAuthenticationProperties action in MvcController expected authentication properties to have 'another' redirect URI, but in fact found null.");
         }
 
         [Fact]

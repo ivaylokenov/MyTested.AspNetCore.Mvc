@@ -7,6 +7,7 @@
     using Contracts.Http;
     using Http;
     using Microsoft.AspNetCore.Mvc;
+    using Utilities.Validators;
 
     /// <summary>
     /// Used for testing action attributes and model state.
@@ -39,6 +40,8 @@
         /// <returns>HTTP response test builder.</returns>
         public IHttpResponseTestBuilder HttpResponse()
         {
+            CommonValidator.CheckForException(this.CaughtException);
+
             return new HttpResponseTestBuilder(
                 this.Controller,
                 this.ActionName,

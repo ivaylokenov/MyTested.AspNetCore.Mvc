@@ -1,4 +1,6 @@
-﻿namespace MyTested.Mvc.Internal
+﻿using System.Text;
+
+namespace MyTested.Mvc.Internal
 {
     /// <summary>
     /// Mocked URI object.
@@ -15,7 +17,7 @@
         /// Gets or sets the port of the mocked URI.
         /// </summary>
         /// <value>Port as integer.</value>
-        public int Port { get; set; }
+        public int? Port { get; set; }
 
         /// <summary>
         /// Gets or sets the absolute path of the mocked URI.
@@ -40,5 +42,17 @@
         /// </summary>
         /// <value>Document fragment as string.</value>
         public string Fragment { get; set; }
+
+        public override string ToString()
+        {
+            var result = new StringBuilder();
+            var scheme = this.Scheme ?? "http";
+            var port = this.Port == null || this.Port == 80 ? string.Empty : $":{this.Port}";
+            var path = string.IsNullOrEmpty(this.AbsolutePath) ? string.Empty : $"/{this.AbsolutePath.Trim('/')}";
+            var query = string.IsNullOrEmpty(this.Query) ? string.Empty : $"?{this.Query.Trim('?')}";
+            var fragment = string.IsNullOrEmpty(this.Fragment) ? string.Empty : $"#{this.Fragment.Trim('#')}";
+
+            return $"{scheme}://{this.Host}{port}{path}{query}{fragment}";
+        }
     }
 }

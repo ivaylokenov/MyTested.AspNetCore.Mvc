@@ -673,7 +673,7 @@
         private void ThrowNewInvalidHttpRequestMessageException(string propertyName, string expectedValue, string actualValue)
         {
             throw new InvalidHttpRequestException(string.Format(
-                "When building HttpRequest expected {0} to be {1}, but instead received {2}.",
+                "When building HttpRequest expected {0} {1}, but {2}.",
                 propertyName,
                 expectedValue,
                 actualValue));

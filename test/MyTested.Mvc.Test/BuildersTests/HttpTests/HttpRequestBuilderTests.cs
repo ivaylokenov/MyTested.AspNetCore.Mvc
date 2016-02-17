@@ -7,6 +7,10 @@
     using Setups.Controllers;
     using Xunit;
     using Setups.Models;
+    using Microsoft.Extensions.Primitives;
+    using Setups;
+    using System;
+    using Exceptions;
     public class HttpRequestBuilderTests
     {
         [Fact]
@@ -19,12 +23,13 @@
                     { "MyRequestCookie", "MyRequestCookieValue" },
                     { "AnotherRequestCookie", "AnotherRequestCookieValue" }
                 });
+
             var files = new[]
             {
                 new FormFile(stream, 0, 0, "FirstFile", "FirstFileName"),
                 new FormFile(stream, 0, 0, "SecondFile", "SecondFileName"),
             };
-            
+
             var builtRequest = MyMvc
                 .Controller<MvcController>()
                 .WithHttpRequest(request => request
@@ -87,7 +92,7 @@
             Assert.Equal(2, builtRequest.Form.Files.Count);
             Assert.Same(files[0], builtRequest.Form.Files[0]);
             Assert.Same(files[1], builtRequest.Form.Files[1]);
-            
+
             Assert.Equal(8, builtRequest.Headers.Count);
             Assert.Equal("MyHeaderValue", builtRequest.Headers["MyHeader"]);
             Assert.Equal("FirstHeaderValue,SecondHeaderValue", builtRequest.Headers["MultiHeader"]);
@@ -108,6 +113,167 @@
         }
 
         [Fact]
+        public void WithBodyShouldWorkCorrectly()
+        {
+            var builtRequest = MyMvc
+                .Controller<MvcController>()
+                .WithHttpRequest(request => request
+                    .WithBody(new { Id = 1, String = "Test" }, ContentType.ApplicationJson))
+                .AndProvideTheHttpRequest();
+
+            using (var reader = new StreamReader(builtRequest.Body))
+            {
+                var result = reader.ReadToEnd();
+
+                Assert.Equal(@"{""Id"":1,""String"":""Test""}", result);
+            }
+        }
+
+        [Fact]
+        public void WithFormAsDictionaryShouldWorkCorrectly()
+        {
+            var builtRequest = MyMvc
+                .Controller<MvcController>()
+                .WithHttpRequest(request => request
+                    .WithFormFields(new Dictionary<string, IEnumerable<string>>
+                    {
+                        ["Field"] = new List<string> { "FieldValue" },
+                        ["AnotherField"] = new List<string> { "AnotherFieldValue", "SecondFieldValue" },
+                    }))
+                .AndProvideTheHttpRequest();
+
+            Assert.Equal(2, builtRequest.Form.Count);
+            Assert.Equal("FieldValue", builtRequest.Form["Field"]);
+            Assert.Equal("AnotherFieldValue,SecondFieldValue", builtRequest.Form["AnotherField"]);
+        }
+
+        [Fact]
+        public void WithFormAsDictionaryAndStringValuesShouldWorkCorrectly()
+        {
+            var builtRequest = MyMvc
+                .Controller<MvcController>()
+                .WithHttpRequest(request => request
+                    .WithFormFields(new Dictionary<string, StringValues>
+                    {
+                        ["Field"] = new StringValues("FieldValue"),
+                        ["AnotherField"] = new StringValues(new[] { "AnotherFieldValue", "SecondFieldValue" }),
+                    }))
+                .AndProvideTheHttpRequest();
+
+            Assert.Equal(2, builtRequest.Form.Count);
+            Assert.Equal("FieldValue", builtRequest.Form["Field"]);
+            Assert.Equal("AnotherFieldValue,SecondFieldValue", builtRequest.Form["AnotherField"]);
+        }
+
+        [Fact]
+        public void WithFormShouldWorkCorrectly()
+        {
+            var stream = new MemoryStream();
+            var files = new FormFileCollection
+            {
+                new FormFile(stream, 0, 0, "FirstFile", "FirstFileName"),
+                new FormFile(stream, 0, 0, "SecondFile", "SecondFileName"),
+            };
+
+            var builtRequest = MyMvc
+                .Controller<MvcController>()
+                .WithHttpRequest(request => request
+                    .WithForm(new FormCollection(new Dictionary<string, StringValues>
+                    {
+                        ["Field"] = new StringValues("FieldValue"),
+                        ["AnotherField"] = new StringValues(new[] { "AnotherFieldValue", "SecondFieldValue" }),
+                    }, files)))
+                .AndProvideTheHttpRequest();
+
+            Assert.Equal(2, builtRequest.Form.Count);
+            Assert.Equal("FieldValue", builtRequest.Form["Field"]);
+            Assert.Equal("AnotherFieldValue,SecondFieldValue", builtRequest.Form["AnotherField"]);
+            Assert.Equal(2, builtRequest.Form.Files.Count);
+            Assert.Same(files[0], builtRequest.Form.Files[0]);
+            Assert.Same(files[1], builtRequest.Form.Files[1]);
+        }
+
+        [Fact]
+        public void WithHeadersAsDictionaryShouldWorkCorrectly()
+        {
+            var builtRequest = MyMvc
+                .Controller<MvcController>()
+                .WithHttpRequest(request => request
+                    .WithHeaders(new Dictionary<string, IEnumerable<string>>
+                    {
+                        ["Header"] = new List<string> { "HeaderValue" },
+                        ["AnotherHeader"] = new List<string> { "AnotherHeaderValue", "SecondHeaderValue" },
+                    }))
+                .AndProvideTheHttpRequest();
+
+            Assert.Equal(2, builtRequest.Headers.Count);
+            Assert.Equal("HeaderValue", builtRequest.Headers["Header"]);
+            Assert.Equal("AnotherHeaderValue,SecondHeaderValue", builtRequest.Headers["AnotherHeader"]);
+        }
+
+        [Fact]
+        public void WithHeadersAsDictionaryWithStringValuesShouldWorkCorrectly()
+        {
+            var builtRequest = MyMvc
+                .Controller<MvcController>()
+                .WithHttpRequest(request => request
+                    .WithHeaders(new Dictionary<string, StringValues>
+                    {
+                        ["Header"] = new StringValues("HeaderValue"),
+                        ["AnotherHeader"] = new StringValues(new[] { "AnotherHeaderValue", "SecondHeaderValue" }),
+                    }))
+                .AndProvideTheHttpRequest();
+
+            Assert.Equal(2, builtRequest.Headers.Count);
+            Assert.Equal("HeaderValue", builtRequest.Headers["Header"]);
+            Assert.Equal("AnotherHeaderValue,SecondHeaderValue", builtRequest.Headers["AnotherHeader"]);
+        }
+
+        [Fact]
+        public void WithHeadersShouldWorkCorrectly()
+        {
+            var builtRequest = MyMvc
+                .Controller<MvcController>()
+                .WithHttpRequest(request => request
+                    .WithHeaders(new HeaderDictionary(new Dictionary<string, StringValues>
+                    {
+                        ["Header"] = new StringValues("HeaderValue"),
+                        ["AnotherHeader"] = new StringValues(new[] { "AnotherHeaderValue", "SecondHeaderValue" })
+                    })))
+                .AndProvideTheHttpRequest();
+
+            Assert.Equal(2, builtRequest.Headers.Count);
+            Assert.Equal("HeaderValue", builtRequest.Headers["Header"]);
+            Assert.Equal("AnotherHeaderValue,SecondHeaderValue", builtRequest.Headers["AnotherHeader"]);
+        }
+
+        [Fact]
+        public void WithQueryAsKeyValuePairShouldWorkCorrectly()
+        {
+            var builtRequest = MyMvc
+                .Controller<MvcController>()
+                .WithHttpRequest(request => request
+                    .WithQuery("Query", "QueryValue"))
+                .AndProvideTheHttpRequest();
+
+            Assert.Equal(1, builtRequest.Query.Count);
+            Assert.Equal("QueryValue", builtRequest.Query["Query"]);
+        }
+
+        [Fact]
+        public void WithQueryAsKeyMultipleValuesPairShouldWorkCorrectly()
+        {
+            var builtRequest = MyMvc
+                .Controller<MvcController>()
+                .WithHttpRequest(request => request
+                    .WithQuery("Query", "QueryValue", "AnotherQueryValue"))
+                .AndProvideTheHttpRequest();
+
+            Assert.Equal(1, builtRequest.Query.Count);
+            Assert.Equal("QueryValue,AnotherQueryValue", builtRequest.Query["Query"]);
+        }
+
+        [Fact]
         public void WithQueryShouldWorkCorrectly()
         {
             var builtRequest = MyMvc
@@ -118,6 +284,41 @@
                         { "MyDictQuery", new[] { "MyDictQueryValue" } },
                         { "AnotherDictQuery", new[] { "AnotherDictQueryValue" } }
                     }))
+                .AndProvideTheHttpRequest();
+
+            Assert.Equal(2, builtRequest.Query.Count);
+            Assert.Equal("MyDictQueryValue", builtRequest.Query["MyDictQuery"]);
+            Assert.Equal("AnotherDictQueryValue", builtRequest.Query["AnotherDictQuery"]);
+        }
+
+        [Fact]
+        public void WithQueryAsDictionaryWithStringValuesShouldWorkCorrectly()
+        {
+            var builtRequest = MyMvc
+                .Controller<MvcController>()
+                .WithHttpRequest(request => request
+                    .WithQuery(new Dictionary<string, StringValues>
+                    {
+                        { "MyDictQuery", new[] { "MyDictQueryValue" } },
+                        { "AnotherDictQuery", new[] { "AnotherDictQueryValue" } }
+                    }))
+                .AndProvideTheHttpRequest();
+
+            Assert.Equal(2, builtRequest.Query.Count);
+            Assert.Equal("MyDictQueryValue", builtRequest.Query["MyDictQuery"]);
+            Assert.Equal("AnotherDictQueryValue", builtRequest.Query["AnotherDictQuery"]);
+        }
+        [Fact]
+        public void WithQueryAsCollectionShouldWorkCorrectly()
+        {
+            var builtRequest = MyMvc
+                .Controller<MvcController>()
+                .WithHttpRequest(request => request
+                    .WithQuery(new QueryCollection(new Dictionary<string, StringValues>
+                    {
+                        { "MyDictQuery", new[] { "MyDictQueryValue" } },
+                        { "AnotherDictQuery", new[] { "AnotherDictQueryValue" } }
+                    })))
                 .AndProvideTheHttpRequest();
 
             Assert.Equal(2, builtRequest.Query.Count);
@@ -141,7 +342,65 @@
             Assert.Equal("1.0", builtRequest.Query["version"]);
             Assert.Equal("https", builtRequest.Scheme);
         }
-        
+
+        [Fact]
+        public void WithLocationAsBuilderShouldSetCorrectProperties()
+        {
+            var builtRequest = MyMvc
+                .Controller<MvcController>()
+                .WithHttpRequest(request => request
+                    .WithLocation(location => location
+                        .WithHost("mytestesasp.net")
+                        .WithPort(1337)
+                        .WithScheme("https")
+                        .WithAbsolutePath("api/Projects/MyTested.Mvc")
+                        .WithQuery("?version=1.0")))
+                .AndProvideTheHttpRequest();
+
+            Assert.Equal("mytestesasp.net:1337", builtRequest.Host.Value);
+            Assert.Equal("/api/Projects/MyTested.Mvc", builtRequest.Path);
+            Assert.Equal("/api/Projects/MyTested.Mvc", builtRequest.PathBase);
+            Assert.Equal("?version=1.0", builtRequest.QueryString.Value);
+            Assert.Equal(1, builtRequest.Query.Count);
+            Assert.Equal("1.0", builtRequest.Query["version"]);
+            Assert.Equal("https", builtRequest.Scheme);
+        }
+
+        [Fact]
+        public void WithLocationAsBuilderShouldThrowExceptionWithIncorrectQuery()
+        {
+            Test.AssertException<ArgumentException>(
+                () =>
+                {
+                    var builtRequest = MyMvc
+                        .Controller<MvcController>()
+                        .WithHttpRequest(request => request
+                            .WithLocation(location => location
+                                .WithHost("mytestesasp.net")
+                                .WithPort(1337)
+                                .WithScheme("https")
+                                .WithAbsolutePath("api/Projects/MyTested.Mvc")
+                                .WithQuery("version=1.0")))
+                        .AndProvideTheHttpRequest();
+                },
+                "Query string must start with the '?' symbol.");
+        }
+
+        [Fact]
+        public void WithInvalidLocationAsBuilderShouldThrowExceptionWithIncorrectLocation()
+        {
+            Test.AssertException<InvalidHttpRequestException>(
+                () =>
+                {
+                    var builtRequest = MyMvc
+                        .Controller<MvcController>()
+                        .WithHttpRequest(request => request
+                            .WithLocation("!@#invalid!@#"))
+                        .AndProvideTheHttpRequest();
+                },
+                "When building HttpRequest expected location to be URI valid, but instead received '!@#invalid!@#'.");
+        }
+
         [Fact]
         public void WithStringBodyShouldWorkCorrectly()
         {
