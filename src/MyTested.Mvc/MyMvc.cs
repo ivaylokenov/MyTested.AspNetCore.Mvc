@@ -56,7 +56,7 @@
         public static IControllerBuilder<TController> Controller<TController>()
             where TController : Controller
         {
-            var controller = Reflection.TryCreateInstance<TController>();
+            var controller = Reflection.TryFastCreateInstance<TController>();
             return Controller(() => controller);
         }
 

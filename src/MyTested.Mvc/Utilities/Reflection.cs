@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
@@ -12,6 +13,8 @@
     /// </summary>
     public static class Reflection
     {
+        private static readonly ConcurrentDictionary<Type, ConstructorInfo> typesWithOneConstructorCache = new ConcurrentDictionary<Type, ConstructorInfo>();
+
         /// <summary>
         /// Checks whether two objects have the same types.
         /// </summary>
@@ -207,6 +210,19 @@
             return $"{friendlyGenericName}<{joinedGenericArgumentNames}>";
         }
 
+        public static T TryFastCreateInstance<T>()
+            where T : class
+        {
+            try
+            {
+                return New<T>.Instance();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         /// <summary>
         /// Tries to create instance of type T by using the provided unordered constructor parameters.
         /// </summary>
@@ -225,6 +241,11 @@
             }
             catch (Exception)
             {
+                if (constructorParameters == null || constructorParameters.Length == 0)
+                {
+                    return instance;
+                }
+
                 var constructorParameterTypes = constructorParameters
                     .Select(cp => cp.GetType())
                     .ToList();
@@ -397,12 +418,25 @@
 
         private static ConstructorInfo GetConstructorByUnorderedParameters(this Type type, IEnumerable<Type> types)
         {
+            ConstructorInfo cachedConstructor;
+            if (typesWithOneConstructorCache.TryGetValue(type, out cachedConstructor))
+            {
+                return cachedConstructor;
+            }
+
+            var allConstructors = type.GetConstructors();
+            if (allConstructors.Length == 1)
+            {
+                var singleConstructor = allConstructors[0];
+                typesWithOneConstructorCache.TryAdd(type, singleConstructor);
+                return singleConstructor;
+            }
+
             var orderedTypes = types
                 .OrderBy(t => t.FullName)
                 .ToList();
-
-            var constructor = type
-                .GetConstructors()
+            
+            var constructor = allConstructors
                 .Where(c =>
                 {
                     var parameters = c.GetParameters()
@@ -510,6 +544,11 @@
             }
 
             return true;
+        }
+
+        private static class New<T>
+        {
+            public static readonly Func<T> Instance = Expression.Lambda<Func<T>>(Expression.New(typeof(T))).Compile();
         }
     }
 }

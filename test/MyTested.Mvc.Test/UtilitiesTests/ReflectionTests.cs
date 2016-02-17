@@ -320,6 +320,22 @@
         }
 
         [Fact]
+        public void TryFastCreateInstanceShouldReturnInstanceWhenTypeHasDefaultConstructor()
+        {
+            var instance = Reflection.TryFastCreateInstance<MvcController>();
+
+            Assert.NotNull(instance);
+        }
+
+        [Fact]
+        public void TryFastCreateInstanceShouldReturnNullWhenTypeDoNotHaveDefaultConstructor()
+        {
+            var instance = Reflection.TryFastCreateInstance<NoParameterlessConstructorController>();
+
+            Assert.Null(instance);
+        }
+
+        [Fact]
         public void TryGetInstanceShouldReturnObjectWithDefaultConstructorWhenNoParametersAreProvided()
         {
             var instance = Reflection.TryCreateInstance<MvcController>();
