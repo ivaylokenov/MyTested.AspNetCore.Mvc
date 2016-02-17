@@ -53,7 +53,7 @@
                 .Select(ma => new MethodArgumentContext
                 {
                     Name = ma.Name,
-                    Type = ma.Value != null ? ma.Value.GetType() : null,
+                    Type = ma.Value?.GetType(),
                     Value = ma.Value
                 })
                 .ToList();
