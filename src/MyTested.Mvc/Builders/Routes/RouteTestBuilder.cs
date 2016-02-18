@@ -3,11 +3,11 @@
     using System;
     using Contracts.Routes;
     using Contracts.Http;
-    using Microsoft.AspNetCore.Routing;
     using Microsoft.AspNetCore.Http;
     using Http;
     using Internal.Http;
     using Internal.TestContexts;
+
     /// <summary>
     /// Used for building a route test.
     /// </summary>
