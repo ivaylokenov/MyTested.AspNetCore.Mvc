@@ -232,7 +232,7 @@
                     c => c.ActionWithMultipleParameters(1, "string", null),
                     controllerName,
                     actionName,
-                    new Dictionary<string, object> { ["id"] = 1, ["text"] = "string", ["model"] = null });
+                    new Dictionary<string, object> { ["id"] = 1, ["text"] = "string" });
 
                 return data;
             }

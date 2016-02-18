@@ -14,6 +14,8 @@
     public static class Reflection
     {
         private static readonly ConcurrentDictionary<Type, ConstructorInfo> typesWithOneConstructorCache = new ConcurrentDictionary<Type, ConstructorInfo>();
+        private static readonly ConcurrentDictionary<Type, IEnumerable<object>> typeAttributesCache = new ConcurrentDictionary<Type, IEnumerable<object>>();
+        private static readonly ConcurrentDictionary<MethodInfo, IEnumerable<object>> methodAttributesCache = new ConcurrentDictionary<MethodInfo, IEnumerable<object>>();
 
         /// <summary>
         /// Checks whether two objects have the same types.
@@ -288,7 +290,19 @@
         /// <returns>IEnumerable of objects representing the custom attributes.</returns>
         public static IEnumerable<object> GetCustomAttributes(object obj)
         {
-            return obj.GetType().GetTypeInfo().GetCustomAttributes(true);
+            var type = obj.GetType();
+            return typeAttributesCache.GetOrAdd(type, _ =>
+            {
+                return type.GetTypeInfo().GetCustomAttributes(true);
+            });
+        }
+
+        public static IEnumerable<object> GetCustomAttributes(MethodInfo method)
+        {
+            return methodAttributesCache.GetOrAdd(method, _ =>
+            {
+                return method.GetCustomAttributes(true);
+            });
         }
 
         /// <summary>

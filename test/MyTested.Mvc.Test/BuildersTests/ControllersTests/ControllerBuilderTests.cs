@@ -455,7 +455,7 @@
         [Fact]
         public void RouteDataShouldBePopulatedWhenRequestAndPathAreProvided()
         {
-            var controller = MyMvc
+            MyMvc
                 .Controller<MvcController>()
                 .WithHttpRequest(req => req.WithPath("/Mvc/WithRouteData/1"))
                 .Calling(c => c.WithRouteData(1))

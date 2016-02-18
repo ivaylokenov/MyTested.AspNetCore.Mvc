@@ -48,7 +48,7 @@
                     (m, a) => new
                     {
                         a.Name,
-                        Value = Expression.Lambda(m).Compile().DynamicInvoke()
+                        Value = ResolveExpressionValue(m)
                     })
                 .Select(ma => new MethodArgumentContext
                 {
@@ -59,6 +59,42 @@
                 .ToList();
         }
 
+        public static object ResolveExpressionValue(Expression expression)
+        {
+            if (expression.NodeType == ExpressionType.Convert)
+            {
+                // Expression which contains converting from type to type
+                var expressionArgumentAsUnary = (UnaryExpression)expression;
+                expression = expressionArgumentAsUnary.Operand;
+            }
+
+            if (expression.NodeType == ExpressionType.Call)
+            {
+                // Expression of type c => c.Action(With.No<int>()) - value should be ignored and can be skipped.
+                var expressionArgumentAsMethodCall = (MethodCallExpression)expression;
+                if (expressionArgumentAsMethodCall.Object == null
+                    && expressionArgumentAsMethodCall.Method.DeclaringType == typeof(With))
+                {
+                    return null;
+                }
+            }
+
+            object value;
+            if (expression.NodeType == ExpressionType.Constant)
+            {
+                // Expression of type c => c.Action({const}) - value can be extracted without compiling.
+                value = ((ConstantExpression)expression).Value;
+            }
+            else
+            {
+                // Expresion needs compiling because it is not of constant type.
+                var convertExpression = Expression.Convert(expression, typeof(object));
+                value = Expression.Lambda<Func<object>>(convertExpression).Compile().Invoke();
+            }
+
+            return value;
+        }
+
         /// <summary>
         /// Retrieves custom attributes on a method from method call lambda expression.
         /// </summary>
@@ -67,7 +103,7 @@
         public static IEnumerable<object> GetMethodAttributes(LambdaExpression expression)
         {
             var methodCallExpression = GetMethodCallExpression(expression);
-            return methodCallExpression.Method.GetCustomAttributes(true);
+            return Reflection.GetCustomAttributes(methodCallExpression.Method);
         }
 
         /// <summary>

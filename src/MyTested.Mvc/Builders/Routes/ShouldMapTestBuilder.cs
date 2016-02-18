@@ -190,7 +190,7 @@
                     $"in fact found {actualItems}");
             }
 
-            dataTokens.ForEach(rv => this.ToRouteValue(rv.Key, rv.Value));
+            dataTokens.ForEach(rv => this.ToDataToken(rv.Key, rv.Value));
 
             return this;
         }

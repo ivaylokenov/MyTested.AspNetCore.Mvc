@@ -117,37 +117,10 @@
                     methodParameterName = parameterDescriptors[methodParameterName] ?? methodParameterName;
                 }
 
-                var expressionArgument = arguments[i];
-
-                if (expressionArgument.NodeType == ExpressionType.Convert)
+                var value = ExpressionParser.ResolveExpressionValue(arguments[i]);
+                if (value == null)
                 {
-                    // Expression which contains converting from type to type
-                    var expressionArgumentAsUnary = (UnaryExpression)expressionArgument;
-                    expressionArgument = expressionArgumentAsUnary.Operand;
-                }
-
-                if (expressionArgument.NodeType == ExpressionType.Call)
-                {
-                    // Expression of type c => c.Action(With.No<int>()) - value should be ignored and can be skipped.
-                    var expressionArgumentAsMethodCall = (MethodCallExpression)expressionArgument;
-                    if (expressionArgumentAsMethodCall.Object == null
-                        && expressionArgumentAsMethodCall.Method.DeclaringType == typeof(With))
-                    {
-                        continue;
-                    }
-                }
-
-                object value;
-                if (expressionArgument.NodeType == ExpressionType.Constant)
-                {
-                    // Expression of type c => c.Action({const}) - value can be extracted without compiling.
-                    value = ((ConstantExpression)expressionArgument).Value;
-                }
-                else
-                {
-                    // Expresion needs compiling because it is not of constant type.
-                    var convertExpression = Expression.Convert(expressionArgument, typeof(object));
-                    value = Expression.Lambda<Func<object>>(convertExpression).Compile().Invoke();
+                    continue;
                 }
 
                 result[methodParameterName] = value;
