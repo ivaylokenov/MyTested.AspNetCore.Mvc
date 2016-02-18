@@ -138,7 +138,7 @@
         public void GetMethodAttributesShouldReturnProperAttributes()
         {
             Expression<Func<MvcController, object>> expression = c => c.VariousAttributesAction();
-            var attributes = ExpressionParser.GetMethodAttributes(expression).Select(a => a.GetType()).ToList();
+            var attributes = Reflection.GetCustomAttributes(((MethodCallExpression)expression.Body).Method).Select(a => a.GetType()).ToList();
 
             var expectedTypes = new List<Type>
             {

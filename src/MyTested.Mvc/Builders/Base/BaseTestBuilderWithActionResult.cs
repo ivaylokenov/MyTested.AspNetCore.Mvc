@@ -1,13 +1,12 @@
 ﻿namespace MyTested.Mvc.Builders.Base
 {
     using System;
-    using System.Collections.Generic;
     using And;
     using Contracts.And;
     using Contracts.Base;
     using Internal;
-    using Microsoft.AspNetCore.Mvc;
     using Utilities;
+    using Internal.TestContexts;
 
     /// <summary>
     /// Base class for all test builders with action result.
@@ -24,22 +23,16 @@
         /// <param name="caughtException">Caught exception during the action execution.</param>
         /// <param name="actionResult">Result from the tested action.</param>
         /// <param name="actionAttributes">Collected action attributes from the method call.</param>
-        protected BaseTestBuilderWithActionResult(
-            Controller controller,
-            string actionName,
-            Exception caughtException,
-            TActionResult actionResult,
-            IEnumerable<object> actionAttributes = null)
-            : base(controller, actionName, caughtException, actionAttributes)
+        protected BaseTestBuilderWithActionResult(ControllerTestContext testContext)
+            : base(testContext)
         {
-            this.ActionResult = actionResult;
         }
 
         /// <summary>
         /// Gets the action result which will be tested.
         /// </summary>
         /// <value>Action result to be tested.</value>
-        internal TActionResult ActionResult { get; private set; }
+        internal TActionResult ActionResult => this.TestContext.ActionResultAs<TActionResult>();
 
         /// <summary>
         /// Gets the action result which will be tested.
@@ -61,12 +54,7 @@
         /// <returns>Test builder with AndAlso method.</returns>
         protected IAndTestBuilder<TActionResult> NewAndTestBuilder()
         {
-            return new AndTestBuilder<TActionResult>(
-                this.Controller,
-                this.ActionName,
-                this.CaughtException,
-                this.ActionResult,
-                this.ActionLevelAttributes);
+            return new AndTestBuilder<TActionResult>(this.TestContext);
         }
 
         /// <summary>
@@ -75,11 +63,7 @@
         /// <returns>Base test builder with action result.</returns>
         protected new IBaseTestBuilderWithActionResult<TActionResult> NewAndProvideTestBuilder()
         {
-            return new AndProvideTestBuilder<TActionResult>(
-                this.Controller,
-                this.ActionName,
-                this.CaughtException,
-                this.ActionResult);
+            return new AndProvideTestBuilder<TActionResult>(this.TestContext);
         }
 
         /// <summary>

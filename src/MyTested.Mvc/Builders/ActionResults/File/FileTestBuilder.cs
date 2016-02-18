@@ -1,6 +1,5 @@
 ﻿namespace MyTested.Mvc.Builders.ActionResults.File
 {
-    using System;
     using System.IO;
     using System.Linq;
     using Contracts.ActionResults.File;
@@ -10,6 +9,8 @@
     using Microsoft.Net.Http.Headers;
     using Utilities;
     using Microsoft.Extensions.FileProviders;
+    using Internal.TestContexts;
+
     /// <summary>
     /// Used for testing file result.
     /// </summary>
@@ -30,12 +31,8 @@
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Caught exception during the action execution.</param>
         /// <param name="fileResult">Result from the tested action.</param>
-        public FileTestBuilder(
-            Controller controller,
-            string actionName,
-            Exception caughtException,
-            TFileResult fileResult)
-            : base(controller, actionName, caughtException, fileResult)
+        public FileTestBuilder(ControllerTestContext testContext)
+            : base(testContext)
         {
         }
 
@@ -176,13 +173,13 @@
         /// </summary>
         /// <returns>File result test builder.</returns>
         public IFileTestBuilder AndAlso() => this;
-        
+
         private TExpectedFileResult GetFileResult<TExpectedFileResult>(string containment)
             where TExpectedFileResult : class
         {
             var actualFileResult = this.ActionResult as TExpectedFileResult;
             if (actualFileResult == null)
-            {      
+            {
                 throw new FileResultAssertionException(string.Format(
                     "When calling {0} action in {1} expected file result to contain {2}, but it could not be found.",
                     this.ActionName,

@@ -1,8 +1,7 @@
 ﻿namespace MyTested.Mvc.Builders.And
 {
-    using System;
     using Base;
-    using Microsoft.AspNetCore.Mvc;
+    using Internal.TestContexts;
 
     /// <summary>
     /// Provides controller, action and action result information.
@@ -17,12 +16,8 @@
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Caught exception during the action execution.</param>
         /// <param name="actionResult">Result from the tested action.</param>
-        public AndProvideTestBuilder(
-            Controller controller,
-            string actionName,
-            Exception caughtException,
-            TActionResult actionResult)
-            : base(controller, actionName, caughtException, actionResult)
+        public AndProvideTestBuilder(ControllerTestContext testContext)
+            : base(testContext)
         {
         }
     }

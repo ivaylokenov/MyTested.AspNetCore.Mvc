@@ -1,5 +1,6 @@
 ﻿namespace MyTested.Mvc.Utilities.Extensions
 {
+    using System;
     using Utilities;
 
     /// <summary>
@@ -7,6 +8,18 @@
     /// </summary>
     public static class ObjectExtensions
     {
+        public static T TryCastTo<T>(this object obj)
+        {
+            try
+            {
+                return (T)obj;
+            }
+            catch (InvalidCastException)
+            {
+                return default(T);
+            }
+        }
+
         /// <summary>
         /// Gets friendly type name of object. Useful for generic types.
         /// </summary>

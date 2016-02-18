@@ -12,7 +12,7 @@
     using Microsoft.Net.Http.Headers;
     using Newtonsoft.Json;
     using Utilities.Validators;
-
+    using Internal.TestContexts;
     /// <summary>
     /// Used for testing JSON results.
     /// </summary>
@@ -25,12 +25,8 @@
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Caught exception during the action execution.</param>
         /// <param name="jsonResult">Result from the tested action.</param>
-        public JsonTestBuilder(
-            Controller controller,
-            string actionName,
-            Exception caughtException,
-            JsonResult jsonResult)
-            : base(controller, actionName, caughtException, jsonResult)
+        public JsonTestBuilder(ControllerTestContext testContext)
+            : base(testContext)
         {
         }
 
@@ -79,7 +75,7 @@
         /// <returns>The same JSON test builder.</returns>
         public IAndJsonTestBuilder WithContentType(MediaTypeHeaderValue contentType)
             => this.WithContentType(contentType?.MediaType);
-        
+
         /// <summary>
         /// Tests whether JSON result has the default JSON serializer settings.
         /// </summary>
@@ -107,7 +103,7 @@
                 ?? this.GetServiceDefaultSerializerSettings()
                 ?? new JsonSerializerSettings();
 
-            var newJsonSerializerSettingsTestBuilder = new JsonSerializerSettingsTestBuilder(this.Controller, this.ActionName);
+            var newJsonSerializerSettingsTestBuilder = new JsonSerializerSettingsTestBuilder(this.TestContext);
             jsonSerializerSettingsBuilder(newJsonSerializerSettingsTestBuilder);
             var expectedJsonSerializerSettings = newJsonSerializerSettingsTestBuilder.GetJsonSerializerSettings();
 

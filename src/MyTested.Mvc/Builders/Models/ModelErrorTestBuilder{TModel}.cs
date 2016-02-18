@@ -5,10 +5,10 @@
     using Contracts.Models;
     using Exceptions;
     using Utilities.Extensions;
-    using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Utilities;
     using Utilities.Validators;
+    using Internal.TestContexts;
 
     /// <summary>
     /// Used for testing the model errors.
@@ -25,21 +25,17 @@
         /// <param name="model">Model returned from action result.</param>
         /// <param name="modelState">Optional model state dictionary to use the class with. Default is controller's model state.</param>
         public ModelErrorTestBuilder(
-            Controller controller,
-            string actionName,
-            Exception caughtException,
-            TModel model = default(TModel),
+            ControllerTestContext testContext,
             ModelStateDictionary modelState = null)
-            : base(controller, actionName, caughtException, modelState)
+            : base(testContext, modelState)
         {
-            this.Model = model;
         }
 
         /// <summary>
         /// Gets model from invoked action in ASP.NET MVC controller.
         /// </summary>
         /// <value>Model from invoked action.</value>
-        protected TModel Model { get; private set; }
+        protected TModel Model => this.TestContext.ModelAs<TModel>();
 
         /// <summary>
         /// Tests whether tested action's model state contains error by key.
@@ -54,12 +50,9 @@
                     "When calling {0} action in {1} expected to have a model error against key {2}, but none found.",
                     errorKey);
             }
-
+            
             return new ModelErrorDetailsTestBuilder<TModel>(
-                this.Controller,
-                this.ActionName,
-                this.CaughtException,
-                this.Model,
+                this.TestContext,
                 this,
                 errorKey,
                 this.ModelState[errorKey].Errors);
@@ -77,10 +70,7 @@
             this.ContainingModelStateError(memberName);
 
             return new ModelErrorDetailsTestBuilder<TModel>(
-                this.Controller,
-                this.ActionName,
-                this.CaughtException,
-                this.Model,
+                this.TestContext,
                 this,
                 memberName,
                 this.ModelState[memberName].Errors);

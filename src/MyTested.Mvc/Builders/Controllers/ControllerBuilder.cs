@@ -28,8 +28,10 @@
     using Utilities;
     using Utilities.Validators;
     using Internal.Routes;
+    using Internal.TestContexts;
+
     /// <summary>
-    /// Used for building the action which will be tested.
+    /// Used for building the controller which will be tested.
     /// </summary>
     /// <typeparam name="TController">Class inheriting ASP.NET MVC controller.</typeparam>
     public class ControllerBuilder<TController> : IAndControllerBuilder<TController>
@@ -37,19 +39,18 @@
     {
         private readonly IDictionary<Type, object> aggregatedDependencies;
 
-        private TController controller;
+        private ControllerTestContext testContext;
         private Action<TController> controllerSetupAction;
         private bool isPreparedForTesting;
         private bool enabledValidation;
-
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="ControllerBuilder{TController}" /> class.
         /// </summary>
-        /// <param name="controllerInstance">Instance of the tested ASP.NET MVC controller.</param>
-        public ControllerBuilder(TController controllerInstance = null)
+        /// <param name="testContext"></param>
+        public ControllerBuilder(ControllerTestContext testContext)
         {
-            this.Controller = controllerInstance;
-            this.HttpContext = new MockedHttpContext();
+            this.TestContext = testContext;
 
             this.enabledValidation = true;
             this.aggregatedDependencies = new Dictionary<Type, object>();
@@ -59,21 +60,29 @@
         /// Gets the ASP.NET MVC controller instance to be tested.
         /// </summary>
         /// <value>Instance of the ASP.NET MVC controller.</value>
-        public TController Controller
+        private TController Controller
         {
             get
             {
                 this.BuildControllerIfNotExists();
-                return this.controller;
-            }
-
-            private set
-            {
-                this.controller = value;
+                return this.TestContext.ControllerAs<TController>();
             }
         }
 
-        private MockedHttpContext HttpContext { get; set; }
+        private ControllerTestContext TestContext
+        {
+            get
+            {
+                return this.testContext;
+            }
+            set
+            {
+                CommonValidator.CheckForNullReference(value, nameof(TestContext));
+                this.testContext = value;
+            }
+        }
+
+        private MockedHttpContext HttpContext => this.TestContext.MockedHttpContext;
 
         private HttpRequest HttpRequest => this.HttpContext.Request;
 
@@ -87,7 +96,7 @@
         public IAndControllerBuilder<TController> WithHttpContext(HttpContext httpContext)
         {
             CommonValidator.CheckForNullReference(httpContext, nameof(HttpContext));
-            this.HttpContext = new MockedHttpContext(httpContext);
+            this.TestContext.HttpContext = httpContext;
             return this;
         }
 
@@ -134,7 +143,7 @@
             }
 
             this.aggregatedDependencies.Add(typeOfDependency, dependency);
-            this.controller = null;
+            this.TestContext.Controller = null;
             return this;
         }
 
@@ -219,8 +228,7 @@
         /// <returns>Controller test builder.</returns>
         public IControllerTestBuilder ShouldHave()
         {
-            var attributes = Reflection.GetCustomAttributes(this.Controller);
-            return new ControllerTestBuilder(this.Controller, attributes);
+            return new ControllerTestBuilder(this.TestContext);
         }
 
         /// <summary>
@@ -232,12 +240,8 @@
         public IActionResultTestBuilder<TActionResult> Calling<TActionResult>(Expression<Func<TController, TActionResult>> actionCall)
         {
             var actionInfo = this.GetAndValidateActionResult(actionCall);
-            return new ActionResultTestBuilder<TActionResult>(
-                this.Controller,
-                actionInfo.ActionName,
-                actionInfo.CaughtException,
-                actionInfo.ActionResult,
-                actionInfo.ActionAttributes);
+            this.TestContext.Apply(actionInfo);
+            return new ActionResultTestBuilder<TActionResult>(this.TestContext);
         }
 
         /// <summary>
@@ -260,12 +264,10 @@
                 actionInfo.CaughtException = aggregateException;
             }
 
-            return new ActionResultTestBuilder<TActionResult>(
-                this.Controller,
-                actionInfo.ActionName,
-                actionInfo.CaughtException,
-                actionResult,
-                actionInfo.ActionAttributes);
+            this.TestContext.Apply(actionInfo);
+            this.TestContext.ActionResult = actionResult;
+
+            return new ActionResultTestBuilder<TActionResult>(this.TestContext);
         }
 
         /// <summary>
@@ -276,7 +278,6 @@
         public IVoidActionResultTestBuilder Calling(Expression<Action<TController>> actionCall)
         {
             var actionName = this.GetAndValidateAction(actionCall);
-            var actionAttributes = ExpressionParser.GetMethodAttributes(actionCall);
             Exception caughtException = null;
 
             try
@@ -288,7 +289,11 @@
                 caughtException = exception;
             }
 
-            return new VoidActionResultTestBuilder(this.Controller, actionName, caughtException, actionAttributes);
+            this.TestContext.ActionName = actionName;
+            this.TestContext.Action = ExpressionParser.GetMethodInfo(actionCall);
+            this.TestContext.CaughtException = caughtException;
+
+            return new VoidActionResultTestBuilder(this.TestContext);
         }
 
         /// <summary>
@@ -309,7 +314,8 @@
                 actionInfo.CaughtException = aggregateException;
             }
 
-            return new VoidActionResultTestBuilder(this.Controller, actionInfo.ActionName, actionInfo.CaughtException, actionInfo.ActionAttributes);
+            this.TestContext.Apply(actionInfo);
+            return new VoidActionResultTestBuilder(this.TestContext);
         }
 
         /// <summary>
@@ -341,18 +347,19 @@
 
         private void BuildControllerIfNotExists()
         {
-            if (this.controller == null)
+            var controller = this.TestContext.Controller;
+            if (controller == null)
             {
                 if (this.aggregatedDependencies.Any())
                 {
-                    this.controller = Reflection.TryCreateInstance<TController>(this.aggregatedDependencies.Select(v => v.Value).ToArray());
+                    controller = Reflection.TryCreateInstance<TController>(this.aggregatedDependencies.Select(v => v.Value).ToArray());
                 }
                 else
                 {
-                    this.controller = TestServiceProvider.TryCreateInstance<TController>();
+                    controller = TestServiceProvider.TryCreateInstance<TController>();
                 }
 
-                if (this.controller == null)
+                if (controller == null)
                 {
                     var friendlyDependenciesNames = this.aggregatedDependencies
                         .Keys
@@ -365,6 +372,8 @@
                         typeof(TController).ToFriendlyTypeName(),
                         this.aggregatedDependencies.Count == 0 ? "no" : $"{joinedFriendlyDependencies} as"));
                 }
+
+                this.TestContext.Controller = controller;
             }
 
             if (!this.isPreparedForTesting)
@@ -377,8 +386,8 @@
         private TestActionDescriptor<TActionResult> GetAndValidateActionResult<TActionResult>(Expression<Func<TController, TActionResult>> actionCall)
         {
             var actionName = this.GetAndValidateAction(actionCall);
+            var action = ExpressionParser.GetMethodInfo(actionCall);
             var actionResult = default(TActionResult);
-            var actionAttributes = ExpressionParser.GetMethodAttributes(actionCall);
             Exception caughtException = null;
 
             try
@@ -390,7 +399,7 @@
                 caughtException = exception;
             }
 
-            return new TestActionDescriptor<TActionResult>(actionName, actionAttributes, actionResult, caughtException);
+            return new TestActionDescriptor<TActionResult>(actionName, action, actionResult, caughtException);
         }
 
         private string GetAndValidateAction(LambdaExpression actionCall)
@@ -432,11 +441,11 @@
 
             var controllerPropertyActivators = this.Services.GetServices<IControllerPropertyActivator>();
 
-            controllerPropertyActivators.ForEach(a => a.Activate(controllerContext, this.controller));
+            controllerPropertyActivators.ForEach(a => a.Activate(controllerContext, this.TestContext.Controller));
 
             if (this.controllerSetupAction != null)
             {
-                this.controllerSetupAction(this.controller);
+                this.controllerSetupAction(this.TestContext.ControllerAs<TController>());
             }
         }
 

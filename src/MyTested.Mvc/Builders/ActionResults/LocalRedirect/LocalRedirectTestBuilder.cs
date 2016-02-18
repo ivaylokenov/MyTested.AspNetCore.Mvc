@@ -7,7 +7,7 @@
     using Utilities.Extensions;
     using Microsoft.AspNetCore.Mvc;
     using Utilities.Validators;
-
+    using Internal.TestContexts;
     /// <summary>
     /// Used for testing local redirect result.
     /// </summary>
@@ -21,12 +21,8 @@
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Caught exception during the action execution.</param>
         /// <param name="localRedirectResult">Result from the tested action.</param>
-        public LocalRedirectTestBuilder(
-            Controller controller,
-            string actionName,
-            Exception caughtException,
-            LocalRedirectResult localRedirectResult)
-            : base(controller, actionName, caughtException, localRedirectResult)
+        public LocalRedirectTestBuilder(ControllerTestContext testContext)
+            : base(testContext)
         {
         }
 

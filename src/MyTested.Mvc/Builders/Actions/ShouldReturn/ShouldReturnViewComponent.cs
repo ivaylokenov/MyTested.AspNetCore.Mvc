@@ -18,12 +18,8 @@
         /// <returns>View component test builder.</returns>
         public IViewComponentTestBuilder ViewComponent()
         {
-            var viewCompomentResult = this.GetReturnObject<ViewComponentResult>();
-            return new ViewComponentTestBuilder(
-                this.Controller,
-                this.ActionName,
-                this.CaughtException,
-                viewCompomentResult);
+            this.TestContext.ActionResult = this.GetReturnObject<ViewComponentResult>();
+            return new ViewComponentTestBuilder(this.TestContext);
         }
 
         /// <summary>
@@ -44,11 +40,8 @@
                     actualViewComponentName);
             }
 
-            return new ViewComponentTestBuilder(
-                this.Controller,
-                this.ActionName,
-                this.CaughtException,
-                viewComponentResult);
+            this.TestContext.ActionResult = viewComponentResult;
+            return new ViewComponentTestBuilder(this.TestContext);
         }
 
         /// <summary>
@@ -69,11 +62,8 @@
                     actualViewComponentType.ToFriendlyTypeName());
             }
 
-            return new ViewComponentTestBuilder(
-                this.Controller,
-                this.ActionName,
-                this.CaughtException,
-                viewComponentResult);
+            this.TestContext.ActionResult = viewComponentResult;
+            return new ViewComponentTestBuilder(this.TestContext);
         }
 
         /// <summary>

@@ -27,12 +27,8 @@
         private IHttpBadRequestTestBuilder ReturnBadRequestTestBuilder<TBadRequestResult>()
             where TBadRequestResult : ActionResult
         {
-            var badRequestResult = this.GetReturnObject<TBadRequestResult>();
-            return new HttpBadRequestTestBuilder<TBadRequestResult>(
-                this.Controller,
-                this.ActionName,
-                this.CaughtException,
-                badRequestResult);
+            this.TestContext.ActionResult = this.GetReturnObject<TBadRequestResult>();
+            return new HttpBadRequestTestBuilder<TBadRequestResult>(this.TestContext);
         }
     }
 }

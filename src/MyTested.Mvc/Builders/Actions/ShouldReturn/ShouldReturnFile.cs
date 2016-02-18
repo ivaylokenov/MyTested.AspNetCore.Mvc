@@ -35,23 +35,15 @@
         /// <returns>File test builder.</returns>
         public IPhysicalFileTestBuilder PhysicalFile()
         {
-            var physicalFileResult = this.GetReturnObject<PhysicalFileResult>();
-            return new PhysicalFileTestBuilder(
-                this.Controller,
-                this.ActionName,
-                this.CaughtException,
-                physicalFileResult);
+            this.TestContext.ActionResult = this.GetReturnObject<PhysicalFileResult>();
+            return new PhysicalFileTestBuilder(this.TestContext);
         }
 
         private IFileTestBuilder ReturnFileTestBuilder<TFileResult>()
             where TFileResult : FileResult
         {
-            var fileResult = this.GetReturnObject<TFileResult>();
-            return new FileTestBuilder<TFileResult>(
-                this.Controller,
-                this.ActionName,
-                this.CaughtException,
-                fileResult);
+            this.TestContext.ActionResult = this.GetReturnObject<TFileResult>();
+            return new FileTestBuilder<TFileResult>(this.TestContext);
         }
     }
 }

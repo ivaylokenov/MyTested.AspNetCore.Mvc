@@ -5,7 +5,8 @@
     using Microsoft.AspNetCore.Http.Features;
     using Microsoft.AspNetCore.Http.Features.Internal;
     using Microsoft.AspNetCore.Http.Internal;
-    using System;
+    using Utilities.Validators;
+
     /// <summary>
     /// Mocked HTTP context object.
     /// </summary>
@@ -32,6 +33,8 @@
         public MockedHttpContext(HttpContext context)
             : this(context.Features)
         {
+            CommonValidator.CheckForNullReference(context, nameof(HttpContext));
+
             this.httpRequest = context.Request;
             this.httpResponse = context.Response;
             this.Items = context.Items;

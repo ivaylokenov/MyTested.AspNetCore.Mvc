@@ -27,12 +27,8 @@
         private IOkTestBuilder ReturnHttpOkTestBuilder<THttpOkResult>()
             where THttpOkResult : ActionResult
         {
-            var createdResult = this.GetReturnObject<THttpOkResult>();
-            return new OkTestBuilder<THttpOkResult>(
-                this.Controller,
-                this.ActionName,
-                this.CaughtException,
-                createdResult);
+            this.TestContext.ActionResult = this.GetReturnObject<THttpOkResult>();
+            return new OkTestBuilder<THttpOkResult>(this.TestContext);
         }
     }
 }

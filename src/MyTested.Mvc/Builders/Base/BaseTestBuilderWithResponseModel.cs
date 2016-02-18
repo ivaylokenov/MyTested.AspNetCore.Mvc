@@ -14,7 +14,7 @@
     using Models;
     using Utilities;
     using Utilities.Validators;
-
+    using Internal.TestContexts;
     /// <summary>
     /// Base class for all response model test builders.
     /// </summary>
@@ -32,12 +32,8 @@
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Caught exception during the action execution.</param>
         /// <param name="actionResult">Result from the tested action.</param>
-        protected BaseTestBuilderWithResponseModel(
-            Controller controller,
-            string actionName,
-            Exception caughtException,
-            TActionResult actionResult)
-            : base(controller, actionName, caughtException, actionResult)
+        protected BaseTestBuilderWithResponseModel(ControllerTestContext testContext)
+            : base(testContext)
         {
             this.ErrorMessageFormat = ErrorMessage;
             this.OfTypeErrorMessageFormat = OfTypeErrorMessage;
@@ -79,11 +75,8 @@
                     actualResponseDataType.ToFriendlyTypeName()));
             }
 
-            return new ModelDetailsTestBuilder<TResponseModel>(
-                this.Controller,
-                this.ActionName,
-                this.CaughtException,
-                this.GetActualModel<TResponseModel>());
+            this.TestContext.Model = this.GetActualModel<TResponseModel>();
+            return new ModelDetailsTestBuilder<TResponseModel>(this.TestContext);
         }
 
         /// <summary>
@@ -106,11 +99,8 @@
                             typeof(TResponseModel).ToFriendlyTypeName()));
             }
 
-            return new ModelDetailsTestBuilder<TResponseModel>(
-                this.Controller,
-                this.ActionName,
-                this.CaughtException,
-                actualModel);
+            this.TestContext.Model = actualModel;
+            return new ModelDetailsTestBuilder<TResponseModel>(this.TestContext);
         }
 
         /// <summary>

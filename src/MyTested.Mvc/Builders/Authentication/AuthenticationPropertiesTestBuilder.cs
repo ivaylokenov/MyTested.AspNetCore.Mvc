@@ -6,9 +6,8 @@
     using Exceptions;
     using Utilities.Extensions;
     using Microsoft.AspNetCore.Http.Authentication;
-    using Microsoft.AspNetCore.Mvc;
     using MyTested.Mvc.Builders.Contracts.Authentication;
-
+    using Internal.TestContexts;
     /// <summary>
     /// Used for testing authentication properties.
     /// </summary>
@@ -24,10 +23,8 @@
         /// </summary>
         /// <param name="controller">Controller on which the action will be tested.</param>
         /// <param name="actionName">Name of the tested action.</param>
-        public AuthenticationPropertiesTestBuilder(
-            Controller controller,
-            string actionName)
-            : base(controller, actionName)
+        public AuthenticationPropertiesTestBuilder(ControllerTestContext testContext)
+            :base(testContext)
         {
             this.authenticationProperties = new AuthenticationProperties();
             this.validations = new List<Action<AuthenticationProperties, AuthenticationProperties>>();

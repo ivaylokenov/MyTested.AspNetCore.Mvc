@@ -7,7 +7,7 @@
     using ExceptionErrors;
     using Exceptions;
     using Utilities.Extensions;
-    using Microsoft.AspNetCore.Mvc;
+    using Internal.TestContexts;
 
     /// <summary>
     /// Used for testing whether action throws exception.
@@ -22,13 +22,10 @@
         /// <param name="controller">Controller on which the action will be tested.</param>
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Caught exception during the action execution.</param>
-        public ShouldThrowTestBuilder(
-            Controller controller,
-            string actionName,
-            Exception caughtException)
-            : base(controller, actionName, caughtException)
+        public ShouldThrowTestBuilder(ControllerTestContext testContext)
+            : base(testContext)
         {
-            this.exceptionTestBuilder = new ExceptionTestBuilder(this.Controller, this.ActionName, this.CaughtException);
+            this.exceptionTestBuilder = new ExceptionTestBuilder(this.TestContext);
         }
 
         /// <summary>
@@ -61,10 +58,7 @@
                     innerExceptionsCount));
             }
 
-            return new AggregateExceptionTestBuilder(
-                this.Controller,
-                this.ActionName,
-                aggregateException);
+            return new AggregateExceptionTestBuilder(this.TestContext);
         }
     }
 }

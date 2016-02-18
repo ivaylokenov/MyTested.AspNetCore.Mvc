@@ -4,8 +4,8 @@
     using Contracts.Models;
     using Exceptions;
     using Utilities.Extensions;
-    using Microsoft.AspNetCore.Mvc;
     using Utilities;
+    using Internal.TestContexts;
 
     /// <summary>
     /// Used for testing the response model members.
@@ -21,12 +21,8 @@
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Caught exception during the action execution.</param>
         /// <param name="responseModel">Response model from invoked action.</param>
-        public ModelDetailsTestBuilder(
-            Controller controller,
-            string actionName,
-            Exception caughtException,
-            TResponseModel responseModel)
-            : base(controller, actionName, caughtException, responseModel)
+        public ModelDetailsTestBuilder(ControllerTestContext testContext)
+            : base(testContext)
         {
         }
 
@@ -38,11 +34,7 @@
         public IModelErrorTestBuilder<TResponseModel> Passing(Action<TResponseModel> assertions)
         {
             assertions(this.Model);
-            return new ModelErrorTestBuilder<TResponseModel>(
-                this.Controller,
-                this.ActionName,
-                this.CaughtException,
-                this.Model);
+            return new ModelErrorTestBuilder<TResponseModel>(this.TestContext);
         }
 
         /// <summary>
@@ -61,11 +53,7 @@
                             typeof(TResponseModel).ToFriendlyTypeName()));
             }
 
-            return new ModelErrorTestBuilder<TResponseModel>(
-                this.Controller,
-                this.ActionName,
-                this.CaughtException,
-                this.Model);
+            return new ModelErrorTestBuilder<TResponseModel>(this.TestContext);
         }
     }
 }

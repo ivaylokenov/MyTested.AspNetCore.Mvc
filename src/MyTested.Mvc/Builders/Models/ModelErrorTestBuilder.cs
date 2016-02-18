@@ -1,11 +1,11 @@
 ﻿namespace MyTested.Mvc.Builders.Models
 {
-    using System;
     using Base;
     using Contracts.Base;
     using Contracts.Models;
-    using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
+    using Internal.TestContexts;
+    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
     /// Used for testing the model errors.
@@ -20,13 +20,11 @@
         /// <param name="caughtException">Caught exception during the action execution.</param>
         /// <param name="modelState">Optional model state dictionary to use the class with. Default is controller's model state.</param>
         public ModelErrorTestBuilder(
-            Controller controller,
-            string actionName,
-            Exception caughtException,
+            ControllerTestContext testContext,
             ModelStateDictionary modelState = null)
-            : base(controller, actionName, caughtException)
+            : base(testContext)
         {
-            this.ModelState = modelState ?? controller.ModelState;
+            this.ModelState = modelState ?? testContext.ControllerAs<Controller>().ModelState;
         }
 
         /// <summary>

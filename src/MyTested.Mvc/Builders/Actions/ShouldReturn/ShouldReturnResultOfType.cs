@@ -18,11 +18,7 @@
         public IModelDetailsTestBuilder<TActionResult> ResultOfType(Type returnType)
         {
             this.ValidateActionReturnType(returnType, true, true);
-            return new ModelDetailsTestBuilder<TActionResult>(
-                this.Controller,
-                this.ActionName,
-                this.CaughtException,
-                this.ActionResult);
+            return new ModelDetailsTestBuilder<TActionResult>(this.TestContext);
         }
 
         /// <summary>
@@ -33,11 +29,7 @@
         public IModelDetailsTestBuilder<TActionResult> ResultOfType<TResponseModel>()
         {
             this.ValidateActionReturnType<TResponseModel>(true);
-            return new ModelDetailsTestBuilder<TActionResult>(
-                this.Controller,
-                this.ActionName,
-                this.CaughtException,
-                this.ActionResult);
+            return new ModelDetailsTestBuilder<TActionResult>(this.TestContext);
         }
 
         private TReturnObject GetReturnObject<TReturnObject>()

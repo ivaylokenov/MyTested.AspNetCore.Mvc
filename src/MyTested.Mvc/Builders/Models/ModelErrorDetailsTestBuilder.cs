@@ -8,9 +8,8 @@
     using Contracts.Models;
     using Exceptions;
     using Utilities.Extensions;
-    using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
-
+    using Internal.TestContexts;
     /// <summary>
     /// Used for testing specific model errors.
     /// </summary>
@@ -32,14 +31,11 @@
         /// <param name="errorKey">Key in ModelStateDictionary corresponding to this particular error.</param>
         /// <param name="aggregatedErrors">All errors found in ModelStateDictionary for given error key.</param>
         public ModelErrorDetailsTestBuilder(
-            Controller controller,
-            string actionName,
-            Exception caughtException,
-            TModel model,
+            ControllerTestContext testContext,
             IAndModelErrorTestBuilder<TModel> modelErrorTestBuilder,
             string errorKey,
             IEnumerable<ModelError> aggregatedErrors)
-            : base(controller, actionName, caughtException, model)
+            : base(testContext)
         {
             this.modelErrorTestBuilder = modelErrorTestBuilder;
             this.currentErrorKey = errorKey;

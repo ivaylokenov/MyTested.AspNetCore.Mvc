@@ -16,12 +16,8 @@
         /// <returns>Forbid test builder.</returns>
         public IForbidTestBuilder Forbid()
         {
-            var forbidResult = this.GetReturnObject<ForbidResult>();
-            return new ForbidTestBuilder(
-                this.Controller,
-                this.ActionName,
-                this.CaughtException,
-                forbidResult);
+            this.TestContext.ActionResult = this.GetReturnObject<ForbidResult>();
+            return new ForbidTestBuilder(this.TestContext);
         }
     }
 }

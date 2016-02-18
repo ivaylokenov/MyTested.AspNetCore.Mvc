@@ -37,12 +37,7 @@
                 this.ThrowNewViewResultAssertionException(viewType, viewName, actualViewName);
             }
 
-            return new ViewTestBuilder<ViewResult>(
-                this.Controller,
-                this.ActionName,
-                this.CaughtException,
-                viewResult,
-                viewType);
+            return new ViewTestBuilder<ViewResult>(this.TestContext, viewType);
         }
 
         /// <summary>
@@ -69,12 +64,7 @@
                 this.ThrowNewViewResultAssertionException(viewType, viewName, actualViewName);
             }
 
-            return new ViewTestBuilder<PartialViewResult>(
-                this.Controller,
-                this.ActionName,
-                this.CaughtException,
-                viewResult,
-                viewType);
+            return new ViewTestBuilder<PartialViewResult>(this.TestContext, viewType);
         }
         
         private void ThrowNewViewResultAssertionException(string viewType, string expectedViewName, string actualViewName)

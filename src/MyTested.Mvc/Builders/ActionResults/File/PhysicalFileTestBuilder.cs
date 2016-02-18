@@ -1,10 +1,11 @@
 ﻿namespace MyTested.Mvc.Builders.ActionResults.File
 {
-    using System;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Net.Http.Headers;
     using MyTested.Mvc.Builders.Contracts.ActionResults.File;
     using Utilities.Extensions;
+    using Internal.TestContexts;
+
     /// <summary>
     /// Used for testing physical file result.
     /// </summary>
@@ -18,15 +19,11 @@
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Caught exception during the action execution.</param>
         /// <param name="physicalFileResult">Result from the tested action.</param>
-        public PhysicalFileTestBuilder(
-            Controller controller,
-            string actionName,
-            Exception caughtException,
-            PhysicalFileResult physicalFileResult)
-            : base(controller, actionName, caughtException, physicalFileResult)
+        public PhysicalFileTestBuilder(ControllerTestContext testContext)
+            : base(testContext)
         {
         }
-        
+
         /// <summary>
         /// Tests whether file result has the same content type as the provided one.
         /// </summary>

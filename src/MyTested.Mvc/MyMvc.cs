@@ -8,7 +8,7 @@
     using Utilities;
     using Builders.Routes;
     using Internal.Application;
-
+    using Internal.TestContexts;
     /// <summary>
     /// Starting point of the ASP.NET MVC testing framework, which provides a way to specify the test case.
     /// </summary>
@@ -81,8 +81,7 @@
         public static IControllerBuilder<TController> Controller<TController>(Func<TController> construction)
             where TController : Controller
         {
-            var controllerInstance = construction();
-            return new ControllerBuilder<TController>(controllerInstance);
+            return new ControllerBuilder<TController>(new ControllerTestContext { Controller = construction() });
         }
     }
 }

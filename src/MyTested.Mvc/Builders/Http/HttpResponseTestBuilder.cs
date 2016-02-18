@@ -9,7 +9,6 @@
     using Contracts.Http;
     using Utilities.Extensions;
     using Exceptions;
-    using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Primitives;
     using Utilities.Validators;
@@ -17,6 +16,7 @@
     using Utilities;
     using System.Text;
     using Internal.Formatters;
+    using Internal.TestContexts;
 
     /// <summary>
     /// Used for testing the HTTP response.
@@ -36,14 +36,10 @@
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Caught exception during the action execution.</param>
         /// <param name="httpResponse">HTTP response after the tested action.</param>
-        public HttpResponseTestBuilder(
-            Controller controller,
-            string actionName,
-            Exception caughtException,
-            HttpResponse httpResponse)
-            : base(controller, actionName, caughtException)
+        public HttpResponseTestBuilder(ControllerTestContext testContext)
+            : base(testContext)
         {
-            this.httpResponse = httpResponse;
+            this.httpResponse = testContext.HttpResponse;
         }
 
         /// <summary>

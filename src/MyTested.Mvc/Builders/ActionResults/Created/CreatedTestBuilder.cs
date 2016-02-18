@@ -14,11 +14,10 @@
     using Microsoft.AspNetCore.Routing;
     using Microsoft.Net.Http.Headers;
     using Utilities.Validators;
-    using Microsoft.AspNetCore.Mvc.Internal;
-    /// <summary>
-    /// Used for testing created results.
-    /// </summary>
-    /// <typeparam name="TCreatedResult">Type of created result - CreatedAtActionResult or CreatedAtRouteResult.</typeparam>
+    using Internal.TestContexts;    /// <summary>
+                                    /// Used for testing created results.
+                                    /// </summary>
+                                    /// <typeparam name="TCreatedResult">Type of created result - CreatedAtActionResult or CreatedAtRouteResult.</typeparam>
     public class CreatedTestBuilder<TCreatedResult>
         : BaseTestBuilderWithResponseModel<TCreatedResult>, IAndCreatedTestBuilder
         where TCreatedResult : ObjectResult
@@ -35,12 +34,8 @@
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Caught exception during the action execution.</param>
         /// <param name="createdResult">Result from the tested action.</param>
-        public CreatedTestBuilder(
-            Controller controller,
-            string actionName,
-            Exception caughtException,
-            TCreatedResult createdResult)
-            : base(controller, actionName, caughtException, createdResult)
+        public CreatedTestBuilder(ControllerTestContext testContext)
+            : base(testContext)
         {
         }
 

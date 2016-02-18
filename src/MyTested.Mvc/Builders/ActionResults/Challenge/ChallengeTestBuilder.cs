@@ -11,6 +11,7 @@
     using Microsoft.AspNetCore.Http.Authentication;
     using Microsoft.AspNetCore.Mvc;
     using Utilities.Validators;
+    using Internal.TestContexts;
 
     /// <summary>
     /// Used for testing challenge result.
@@ -25,12 +26,8 @@
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Caught exception during the action execution.</param>
         /// <param name="challengeResult">Result from the tested action.</param>
-        public ChallengeTestBuilder(
-            Controller controller,
-            string actionName,
-            Exception caughtException,
-            ChallengeResult challengeResult)
-            : base(controller, actionName, caughtException, challengeResult)
+        public ChallengeTestBuilder(ControllerTestContext testContext)
+            : base(testContext)
         {
         }
 
@@ -95,10 +92,8 @@
         public IAndChallengeTestBuilder WithAuthenticationProperties(Action<IAuthenticationPropertiesTestBuilder> authenticationPropertiesBuilder)
         {
             AuthenticationValidator.ValidateAuthenticationProperties(
-                this.ActionResult,
                 authenticationPropertiesBuilder,
-                this.Controller,
-                this.ActionName);
+                this.TestContext);
 
             return this;
         }

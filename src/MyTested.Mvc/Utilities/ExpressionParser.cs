@@ -94,18 +94,7 @@
 
             return value;
         }
-
-        /// <summary>
-        /// Retrieves custom attributes on a method from method call lambda expression.
-        /// </summary>
-        /// <param name="expression">Expression to be parsed.</param>
-        /// <returns>Collection of attributes as objects.</returns>
-        public static IEnumerable<object> GetMethodAttributes(LambdaExpression expression)
-        {
-            var methodCallExpression = GetMethodCallExpression(expression);
-            return Reflection.GetCustomAttributes(methodCallExpression.Method);
-        }
-
+        
         /// <summary>
         /// Parses member name from member lambda expression.
         /// </summary>

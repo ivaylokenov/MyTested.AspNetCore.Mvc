@@ -1,12 +1,10 @@
 ﻿namespace MyTested.Mvc.Builders.ActionResults.HttpBadRequest
 {
-    using System;
     using Base;
     using Contracts.ActionResults.HttpBadRequest;
     using Exceptions;
     using Utilities.Extensions;
-    using Microsoft.AspNetCore.Mvc;
-
+    using Internal.TestContexts;
     /// <summary>
     /// Used for testing specific bad request text error messages.
     /// </summary>
@@ -25,12 +23,10 @@
         /// <param name="actualMessage">Actual text error message received from bad request result.</param>
         /// <param name="httpBadRequestTestBuilder">HTTP bad request test builder.</param>
         public HttpBadRequestErrorMessageTestBuilder(
-            Controller controller,
-            string actionName,
-            Exception caughtException,
+            ControllerTestContext testContext,
             string actualMessage,
             IAndHttpBadRequestTestBuilder httpBadRequestTestBuilder)
-            : base(controller, actionName, caughtException)
+            : base(testContext)
         {
             this.actualMessage = actualMessage;
             this.httpBadRequestTestBuilder = httpBadRequestTestBuilder;

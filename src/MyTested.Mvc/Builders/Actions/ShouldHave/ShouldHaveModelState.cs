@@ -20,7 +20,7 @@
         /// <returns>Response model test builder.</returns>
         public IModelErrorTestBuilder<TRequestModel> ModelStateFor<TRequestModel>()
         {
-            return new ModelErrorTestBuilder<TRequestModel>(this.Controller, this.ActionName, this.CaughtException);
+            return new ModelErrorTestBuilder<TRequestModel>(this.TestContext);
         }
 
         /// <summary>

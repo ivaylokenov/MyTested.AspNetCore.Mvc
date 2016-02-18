@@ -1,15 +1,13 @@
 ﻿namespace MyTested.Mvc.Builders.Actions
 {
-    using System;
-    using System.Collections.Generic;
     using Base;
     using Contracts.Actions;
     using Exceptions;
     using Utilities.Extensions;
-    using Microsoft.AspNetCore.Mvc;
     using ShouldHave;
     using ShouldReturn;
     using Utilities.Validators;
+    using Internal.TestContexts;
 
     /// <summary>
     /// Used for building the action result which will be tested.
@@ -26,13 +24,8 @@
         /// <param name="caughtException">Caught exception during the action execution.</param>
         /// <param name="actionResult">Result from the tested action.</param>
         /// <param name="actionAttributes">Collected action attributes from the method call.</param>
-        public ActionResultTestBuilder(
-            Controller controller,
-            string actionName,
-            Exception caughtException,
-            TActionResult actionResult,
-            IEnumerable<object> actionAttributes)
-            : base(controller, actionName, caughtException, actionResult, actionAttributes)
+        public ActionResultTestBuilder(ControllerTestContext testContext)
+            : base(testContext)
         {
         }
 
@@ -42,12 +35,7 @@
         /// <returns>Should have test builder.</returns>
         public IShouldHaveTestBuilder<TActionResult> ShouldHave()
         {
-            return new ShouldHaveTestBuilder<TActionResult>(
-                this.Controller,
-                this.ActionName,
-                this.CaughtException,
-                this.ActionResult,
-                this.ActionLevelAttributes);
+            return new ShouldHaveTestBuilder<TActionResult>(this.TestContext);
         }
 
         /// <summary>
@@ -64,7 +52,7 @@
                     this.Controller.GetName()));
             }
             
-            return new ShouldThrowTestBuilder(this.Controller, this.ActionName, this.CaughtException);
+            return new ShouldThrowTestBuilder(this.TestContext);
         }
 
         /// <summary>
@@ -74,12 +62,7 @@
         public IShouldReturnTestBuilder<TActionResult> ShouldReturn()
         {
             CommonValidator.CheckForException(this.CaughtException);
-
-            return new ShouldReturnTestBuilder<TActionResult>(
-                this.Controller,
-                this.ActionName,
-                this.CaughtException,
-                this.ActionResult);
+            return new ShouldReturnTestBuilder<TActionResult>(this.TestContext);
         }
     }
 }

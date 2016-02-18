@@ -1,8 +1,6 @@
 ﻿namespace MyTested.Mvc.Builders.ActionResults.Content
 {
-    using System;
     using System.Net;
-    using System.Text;
     using Base;
     using Contracts.ActionResults.Content;
     using Exceptions;
@@ -10,6 +8,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Net.Http.Headers;
     using Utilities.Validators;
+    using Internal.TestContexts;
 
     /// <summary>
     /// Used for testing content result.
@@ -24,12 +23,8 @@
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Caught exception during the action execution.</param>
         /// <param name="contentResult">Result from the tested action.</param>
-        public ContentTestBuilder(
-            Controller controller,
-            string actionName,
-            Exception caughtException,
-            ContentResult contentResult)
-            : base(controller, actionName, caughtException, contentResult)
+        public ContentTestBuilder(ControllerTestContext testContext)
+            : base(testContext)
         {
         }
         

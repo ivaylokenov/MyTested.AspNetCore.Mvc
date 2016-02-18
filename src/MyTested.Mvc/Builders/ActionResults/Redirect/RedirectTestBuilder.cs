@@ -11,6 +11,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Routing;
     using Utilities.Validators;
+    using Internal.TestContexts;
 
     /// <summary>
     /// Used for testing redirect results.
@@ -30,12 +31,8 @@
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Caught exception during the action execution.</param>
         /// <param name="redirectResult">Result from the tested action.</param>
-        public RedirectTestBuilder(
-            Controller controller,
-            string actionName,
-            Exception caughtException,
-            TRedirectResult redirectResult)
-            : base(controller, actionName, caughtException, redirectResult)
+        public RedirectTestBuilder(ControllerTestContext testContext)
+            : base(testContext)
         {
         }
 

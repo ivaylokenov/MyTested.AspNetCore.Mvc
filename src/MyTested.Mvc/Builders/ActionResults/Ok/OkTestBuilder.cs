@@ -1,6 +1,5 @@
 ﻿namespace MyTested.Mvc.Builders.ActionResults.Ok
 {
-    using System;
     using System.Collections.Generic;
     using System.Net;
     using Base;
@@ -10,6 +9,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.Net.Http.Headers;
+    using Internal.TestContexts;
 
     /// <summary>
     /// Used for testing OK result.
@@ -26,12 +26,8 @@
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Caught exception during the action execution.</param>
         /// <param name="httpOkResult">Result from the tested action.</param>
-        public OkTestBuilder(
-            Controller controller,
-            string actionName,
-            Exception caughtException,
-            THttpOkResult httpOkResult)
-            : base(controller, actionName, caughtException, httpOkResult)
+        public OkTestBuilder(ControllerTestContext testContext)
+            : base(testContext)
         {
         }
 

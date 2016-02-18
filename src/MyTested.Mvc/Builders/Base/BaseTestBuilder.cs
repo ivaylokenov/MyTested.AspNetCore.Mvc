@@ -5,46 +5,45 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Utilities.Validators;
+    using Internal.TestContexts;
 
     /// <summary>
     /// Base class for all test builder.
     /// </summary>
     public abstract class BaseTestBuilder : IBaseTestBuilder
     {
-        private Controller controller;
-
+        private ControllerTestContext testContext;
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseTestBuilder" /> class.
         /// </summary>
-        /// <param name="controller">Controller on which will be tested.</param>
-        /// <param name="controllerAttributes">Collected attributes from the tested controller.</param>
-        protected BaseTestBuilder(
-            Controller controller,
-            IEnumerable<object> controllerAttributes = null)
+        /// <param name="testContext"></param>
+        protected BaseTestBuilder(ControllerTestContext testContext)
         {
-            this.Controller = controller;
-            this.ControllerLevelAttributes = controllerAttributes;
+            this.TestContext = testContext;
         }
 
         /// <summary>
         /// Gets the controller on which the action will be tested.
         /// </summary>
         /// <value>Controller on which the action will be tested.</value>
-        internal Controller Controller
+        internal Controller Controller => this.TestContext.ControllerAs<Controller>();
+
+        internal IEnumerable<object> ControllerLevelAttributes => this.TestContext.ControllerAttributes;
+
+        protected ControllerTestContext TestContext
         {
             get
             {
-                return this.controller;
+                return this.testContext;
             }
-
             private set
             {
-                CommonValidator.CheckForNullReference(value, nameof(this.Controller));
-                this.controller = value;
+                CommonValidator.CheckForNullReference(value, nameof(TestContext));
+                CommonValidator.CheckForNullReference(value.Controller, nameof(Controller));
+                this.testContext = value;
             }
         }
-
-        internal IEnumerable<object> ControllerLevelAttributes { get; private set; }
 
         /// <summary>
         /// Gets the controller on which the action is tested.

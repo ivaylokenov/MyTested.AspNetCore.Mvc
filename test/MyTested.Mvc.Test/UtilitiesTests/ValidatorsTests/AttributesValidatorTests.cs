@@ -1,7 +1,6 @@
 ﻿namespace MyTested.Mvc.Tests.UtilitiesTests.ValidatorsTests
 {
     using System;
-    using Builders.Attributes;
     using Builders.Authentication;
     using Setups;
     using Setups.Controllers;
@@ -47,7 +46,7 @@
 
             AttributesValidator.ValidateNumberOfAttributes(attributes, TestObjectFactory.GetFailingValidationActionWithTwoParameteres(), 2);
         }
-        
+
         [Fact]
         public void ValidateAnyNumberOfAttributesShouldFailWithNoAttributes()
         {
@@ -57,7 +56,7 @@
                     var attributes = Reflection.GetCustomAttributes(new UserBuilder());
 
                     AttributesValidator.ValidateNumberOfAttributes(attributes, TestObjectFactory.GetFailingValidationActionWithTwoParameteres());
-                }, 
+                },
                 "have at least 1 attribute in fact none was found");
         }
 
@@ -72,17 +71,6 @@
                     AttributesValidator.ValidateNumberOfAttributes(attributes, TestObjectFactory.GetFailingValidationActionWithTwoParameteres(), 3);
                 },
                 "have 3 attributes in fact found 2");
-        }
-        
-        [Fact]
-        public void ValidateAttributesShouldWorkCorrectly()
-        {
-            var attributes = Reflection.GetCustomAttributes(new MvcController());
-
-            AttributesValidator.ValidateAttributes(
-                attributes,
-                new ActionAttributesTestBuilder(new MvcController(), "Test"),
-                TestObjectFactory.GetFailingValidationActionWithTwoParameteres());
         }
     }
 }

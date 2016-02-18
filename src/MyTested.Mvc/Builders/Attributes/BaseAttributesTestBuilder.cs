@@ -8,7 +8,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Utilities;
-
+    using Internal.TestContexts;
     /// <summary>
     /// Base class for all attribute test builders.
     /// </summary>
@@ -17,9 +17,8 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseAttributesTestBuilder" /> class.
         /// </summary>
-        /// <param name="controller">Controller which will be tested.</param>
-        protected BaseAttributesTestBuilder(Controller controller)
-            : base(controller)
+        protected BaseAttributesTestBuilder(ControllerTestContext testContext)
+            : base(testContext)
         {
             this.Validations = new List<Action<IEnumerable<object>>>();
         }

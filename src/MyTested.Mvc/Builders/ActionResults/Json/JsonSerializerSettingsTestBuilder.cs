@@ -8,11 +8,11 @@
     using Contracts.ActionResults.Json;
     using Exceptions;
     using Utilities.Extensions;
-    using Microsoft.AspNetCore.Mvc;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using Utilities;
     using Utilities.Validators;
+    using Internal.TestContexts;
 
     /// <summary>
     /// Used for testing JSON serializer settings in a JSON result.
@@ -27,10 +27,8 @@
         /// </summary>
         /// <param name="controller">Controller on which the action will be tested.</param>
         /// <param name="actionName">Name of the tested action.</param>
-        public JsonSerializerSettingsTestBuilder(
-            Controller controller,
-            string actionName)
-            : base(controller, actionName)
+        public JsonSerializerSettingsTestBuilder(ControllerTestContext testContext)
+            : base(testContext)
         {
             this.jsonSerializerSettings = new JsonSerializerSettings();
             this.validations = new List<Action<JsonSerializerSettings, JsonSerializerSettings>>();

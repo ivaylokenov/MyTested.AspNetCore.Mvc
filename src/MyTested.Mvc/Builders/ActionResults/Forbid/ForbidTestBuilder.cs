@@ -11,7 +11,7 @@
     using Microsoft.AspNetCore.Http.Authentication;
     using Microsoft.AspNetCore.Mvc;
     using Utilities.Validators;
-
+    using Internal.TestContexts;
     /// <summary>
     /// Used for testing forbid result.
     /// </summary>
@@ -25,12 +25,8 @@
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Caught exception during the action execution.</param>
         /// <param name="forbidResult">Result from the tested action.</param>
-        public ForbidTestBuilder(
-            Controller controller,
-            string actionName,
-            Exception caughtException,
-            ForbidResult forbidResult)
-            : base(controller, actionName, caughtException, forbidResult)
+        public ForbidTestBuilder(ControllerTestContext testContext)
+            : base(testContext)
         {
         }
 
@@ -95,10 +91,8 @@
         public IAndForbidTestBuilder WithAuthenticationProperties(Action<IAuthenticationPropertiesTestBuilder> authenticationPropertiesBuilder)
         {
             AuthenticationValidator.ValidateAuthenticationProperties(
-                this.ActionResult,
                 authenticationPropertiesBuilder,
-                this.Controller,
-                this.ActionName);
+                this.TestContext);
 
             return this;
         }

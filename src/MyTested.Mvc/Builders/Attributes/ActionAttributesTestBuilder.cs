@@ -6,23 +6,19 @@
     using Utilities.Extensions;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Internal.TestContexts;
 
     /// <summary>
     /// Used for testing action attributes.
     /// </summary>
     public class ActionAttributesTestBuilder : BaseAttributesTestBuilder, IAndActionAttributesTestBuilder
     {
-        private readonly string testedActionName;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ActionAttributesTestBuilder" /> class.
         /// </summary>
-        /// <param name="controller">Controller on which the attributes will be tested.</param>
-        /// <param name="actionName">Name of the tested action.</param>
-        public ActionAttributesTestBuilder(Controller controller, string actionName)
-            : base(controller)
+        public ActionAttributesTestBuilder(ControllerTestContext testContext)
+            : base(testContext)
         {
-            this.testedActionName = actionName;
         }
 
         /// <summary>
@@ -127,7 +123,7 @@
         {
             throw new AttributeAssertionException(string.Format(
                         "When calling {0} action in {1} expected action to have {2}, but {3}.",
-                        this.testedActionName,
+                        this.TestContext.ActionName,
                         this.Controller.GetName(),
                         expectedValue,
                         actualValue));

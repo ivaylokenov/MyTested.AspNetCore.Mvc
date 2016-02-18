@@ -1,6 +1,5 @@
 ﻿namespace MyTested.Mvc.Builders.ActionResults.View
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
@@ -11,9 +10,9 @@
     using Microsoft.Net.Http.Headers;
     using Utilities;
     using Microsoft.AspNetCore.Routing;
-    /// <summary>
-    /// Used for testing view component results.
-    /// </summary>
+    using Internal.TestContexts;    /// <summary>
+                                    /// Used for testing view component results.
+                                    /// </summary>
     public class ViewComponentTestBuilder
         : ViewTestBuilder<ViewComponentResult>, IAndViewComponentTestBuilder
     {
@@ -26,12 +25,8 @@
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Caught exception during the action execution.</param>
         /// <param name="viewComponentResult">Result from the tested action.</param>
-        public ViewComponentTestBuilder(
-            Controller controller,
-            string actionName,
-            Exception caughtException,
-            ViewComponentResult viewComponentResult)
-            : base(controller, actionName, caughtException, viewComponentResult, "view component")
+        public ViewComponentTestBuilder(ControllerTestContext testContext)
+            : base(testContext, "view component")
         {
             // uses internal reflection caching
             this.viewComponentArguments = new RouteValueDictionary(this.ActionResult.Arguments);

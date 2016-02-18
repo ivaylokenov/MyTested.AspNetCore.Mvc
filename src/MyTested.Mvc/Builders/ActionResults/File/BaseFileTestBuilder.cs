@@ -1,12 +1,11 @@
 ﻿namespace MyTested.Mvc.Builders.ActionResults.File
 {
-    using System;
     using Exceptions;
     using Utilities.Extensions;
     using Microsoft.AspNetCore.Mvc;
     using MyTested.Mvc.Builders.Base;
     using Utilities.Validators;
-
+    using Internal.TestContexts;
     /// <summary>
     /// Base class for all test builders with file action result.
     /// </summary>
@@ -22,12 +21,8 @@
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Caught exception during the action execution.</param>
         /// <param name="fileResult">Result from the tested action.</param>
-        public BaseFileTestBuilder(
-            Controller controller,
-            string actionName,
-            Exception caughtException,
-            TFileResult fileResult)
-            : base(controller, actionName, caughtException, fileResult)
+        public BaseFileTestBuilder(ControllerTestContext testContext)
+            : base(testContext)
         {
         }
 

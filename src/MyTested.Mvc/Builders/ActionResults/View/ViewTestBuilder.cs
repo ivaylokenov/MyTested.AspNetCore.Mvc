@@ -1,6 +1,5 @@
 ﻿namespace MyTested.Mvc.Builders.ActionResults.View
 {
-    using System;
     using System.Net;
     using Base;
     using Contracts.ActionResults.View;
@@ -11,7 +10,7 @@
     using Microsoft.Net.Http.Headers;
     using Utilities;
     using Utilities.Validators;
-
+    using Internal.TestContexts;
     /// <summary>
     /// Used for testing view results.
     /// </summary>
@@ -31,12 +30,9 @@
         /// <param name="viewResult">Result from the tested action.</param>
         /// <param name="viewType">View type name.</param>
         public ViewTestBuilder(
-            Controller controller,
-            string actionName,
-            Exception caughtException,
-            TViewResult viewResult,
+            ControllerTestContext testContext,
             string viewType)
-            : base(controller, actionName, caughtException, viewResult)
+            : base(testContext)
         {
             this.viewType = viewType;
         }

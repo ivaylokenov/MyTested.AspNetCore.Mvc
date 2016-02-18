@@ -1,12 +1,11 @@
 ﻿namespace MyTested.Mvc.Builders.ExceptionErrors
 {
-    using System;
     using Base;
     using Contracts.ExceptionErrors;
     using Exceptions;
     using Utilities.Extensions;
-    using Microsoft.AspNetCore.Mvc;
     using Utilities;
+    using Internal.TestContexts;
 
     /// <summary>
     /// Used for testing expected exceptions.
@@ -19,8 +18,8 @@
         /// <param name="controller">Controller on which the action will be tested.</param>
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="exception">Actual received exception.</param>
-        public ExceptionTestBuilder(Controller controller, string actionName, Exception exception)
-            : base(controller, actionName, exception)
+        public ExceptionTestBuilder(ControllerTestContext testContext)
+            :base(testContext)
         {
         }
 
@@ -53,9 +52,7 @@
         public IExceptionMessageTestBuilder WithMessage()
         {
             return new ExceptionMessageTestBuilder(
-                this.Controller,
-                this.ActionName,
-                this.CaughtException,
+                this.TestContext,
                 this);
         }
 

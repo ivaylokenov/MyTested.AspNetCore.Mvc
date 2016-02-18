@@ -1,11 +1,10 @@
 ﻿namespace MyTested.Mvc.Builders.Base
 {
     using System;
-    using System.Collections.Generic;
     using And;
     using Contracts.Base;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
+    using Internal.TestContexts;
 
     /// <summary>
     /// Base class for test builders with caught exception.
@@ -20,17 +19,12 @@
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Caught exception during the action execution.</param>
         /// <param name="actionAttributes">Collected action attributes from the method call.</param>
-        protected BaseTestBuilderWithInvokedAction(
-            Controller controller,
-            string actionName,
-            Exception caughtException,
-            IEnumerable<object> actionAttributes = null)
-            : base(controller, actionName, actionAttributes)
+        protected BaseTestBuilderWithInvokedAction(ControllerTestContext testContext)
+            : base(testContext)
         {
-            this.CaughtException = caughtException;
         }
 
-        internal Exception CaughtException { get; private set; }
+        internal Exception CaughtException => this.TestContext.CaughtException;
 
         /// <summary>
         /// Gets the thrown exception in the tested action.
@@ -49,6 +43,6 @@
         /// </summary>
         /// <returns>Base test builder.</returns>
         protected IBaseTestBuilderWithInvokedAction NewAndProvideTestBuilder()
-            => new AndProvideTestBuilder(this.Controller, this.ActionName, this.CaughtException);
+            => new AndProvideTestBuilder(this.TestContext);
     }
 }

@@ -27,12 +27,8 @@
         private IHttpNotFoundTestBuilder ReturnHttpNotFoundTestBuilder<THttpNotFoundResult>()
             where THttpNotFoundResult : ActionResult
         {
-            var httpNotFoundResult = this.GetReturnObject<THttpNotFoundResult>();
-            return new HttpNotFoundTestBuilder<THttpNotFoundResult>(
-                this.Controller,
-                this.ActionName,
-                this.CaughtException,
-                httpNotFoundResult);
+            this.TestContext.ActionResult = this.GetReturnObject<THttpNotFoundResult>();
+            return new HttpNotFoundTestBuilder<THttpNotFoundResult>(this.TestContext);
         }
     }
 }

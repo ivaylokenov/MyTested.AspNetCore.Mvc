@@ -5,7 +5,7 @@
     using Exceptions;
     using Utilities.Extensions;
     using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
+    using Internal.TestContexts;
 
     /// <summary>
     /// Used for testing controller attributes.
@@ -15,9 +15,8 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="ControllerAttributesTestBuilder" /> class.
         /// </summary>
-        /// <param name="controller">Controller which will be tested.</param>
-        public ControllerAttributesTestBuilder(Controller controller)
-            : base(controller)
+        public ControllerAttributesTestBuilder(ControllerTestContext testContext)
+            : base(testContext)
         {
         }
 

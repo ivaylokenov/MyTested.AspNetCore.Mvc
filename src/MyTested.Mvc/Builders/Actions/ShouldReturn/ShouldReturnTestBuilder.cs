@@ -1,15 +1,14 @@
 ﻿namespace MyTested.Mvc.Builders.Actions.ShouldReturn
 {
     using System;
-    using System.Linq;
     using System.Reflection;
     using Base;
     using Contracts.Actions;
     using Exceptions;
     using Utilities.Extensions;
-    using Microsoft.AspNetCore.Mvc;
     using Utilities;
     using Utilities.Validators;
+    using Internal.TestContexts;
 
     /// <summary>
     /// Used for testing returned action result.
@@ -25,12 +24,8 @@
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Caught exception during the action execution.</param>
         /// <param name="actionResult">Result from the tested action.</param>
-        public ShouldReturnTestBuilder(
-            Controller controller,
-            string actionName,
-            Exception caughtException,
-            TActionResult actionResult)
-            : base(controller, actionName, caughtException, actionResult)
+        public ShouldReturnTestBuilder(ControllerTestContext testContext)
+            : base(testContext)
         {
         }
 
@@ -40,7 +35,7 @@
 
             var typeInfoOfExpectedReturnValue = typeOfExpectedReturnValue.GetTypeInfo();
 
-            var typeOfActionResult = ActionResult.GetType();
+            var typeOfActionResult = this.ActionResult.GetType();
             var typeInfoOfActionResult = typeOfActionResult.GetTypeInfo();
 
             var isAssignableCheck = canBeAssignable && Reflection.AreNotAssignable(typeOfExpectedReturnValue, typeOfActionResult);
@@ -89,7 +84,7 @@
         {
             this.ValidateActionReturnType(typeof(TExpectedType), canBeAssignable, allowDifferentGenericTypeDefinitions);
         }
-        
+
         private void ThrowNewGenericHttpActionResultAssertionException(
             string typeNameOfExpectedReturnValue,
             string typeNameOfActionResult)

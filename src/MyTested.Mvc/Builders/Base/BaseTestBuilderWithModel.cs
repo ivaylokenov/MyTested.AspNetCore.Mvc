@@ -1,9 +1,8 @@
 ﻿namespace MyTested.Mvc.Builders.Base
 {
-    using System;
     using Contracts.Base;
-    using Microsoft.AspNetCore.Mvc;
     using Utilities.Validators;
+    using Internal.TestContexts;
 
     /// <summary>
     /// Base class for all test builders with model.
@@ -18,13 +17,12 @@
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Caught exception during the action execution.</param>
         /// <param name="model">Model returned from action result.</param>
-        protected BaseTestBuilderWithModel(Controller controller, string actionName, Exception caughtException, TModel model)
-            : base(controller, actionName, caughtException)
+        protected BaseTestBuilderWithModel(ControllerTestContext testContext)
+            : base(testContext)
         {
-            this.Model = model;
         }
 
-        internal TModel Model { get; private set; }
+        internal TModel Model => this.TestContext.ModelAs<TModel>();
 
         /// <summary>
         /// Gets the model returned from an action result.

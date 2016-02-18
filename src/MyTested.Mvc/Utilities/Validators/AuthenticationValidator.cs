@@ -7,8 +7,7 @@
     using Builders.Contracts.Authentication;
     using Utilities.Extensions;
     using Microsoft.AspNetCore.Http.Authentication;
-    using Microsoft.AspNetCore.Mvc;
-
+    using Internal.TestContexts;
     /// <summary>
     /// Validator class containing authentication validation logic.
     /// </summary>
@@ -100,15 +99,14 @@
         /// <param name="controller">Controller type for error messages.</param>
         /// <param name="actionName">Action name for error messages.</param>
         public static void ValidateAuthenticationProperties(
-            dynamic actionResult,
             Action<IAuthenticationPropertiesTestBuilder> authenticationPropertiesBuilder,
-            Controller controller,
-            string actionName)
+            ControllerTestContext testContext)
         {
+            var actionResult = testContext.ActionResultAs<dynamic>();
             var actualAuthenticationProperties = 
                 (AuthenticationProperties)TryGetAuthenticationProperties(actionResult) ?? new AuthenticationProperties();
 
-            var newAuthenticationPropertiesTestBuilder = new AuthenticationPropertiesTestBuilder(controller, actionName);
+            var newAuthenticationPropertiesTestBuilder = new AuthenticationPropertiesTestBuilder(testContext);
             authenticationPropertiesBuilder(newAuthenticationPropertiesTestBuilder);
             var expectedAuthenticationProperties = newAuthenticationPropertiesTestBuilder.GetAuthenticationProperties();
 

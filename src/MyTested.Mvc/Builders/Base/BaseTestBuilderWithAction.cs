@@ -4,51 +4,28 @@
     using Contracts.Base;
     using Exceptions;
     using Utilities.Extensions;
-    using Microsoft.AspNetCore.Mvc;
-    using Utilities.Validators;
+    using Internal.TestContexts;
 
     /// <summary>
     /// Base class for all test builders with action call.
     /// </summary>
     public abstract class BaseTestBuilderWithAction : BaseTestBuilder, IBaseTestBuilderWithAction
     {
-        private string actionName;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseTestBuilderWithAction" /> class.
         /// </summary>
-        /// <param name="controller">Controller on which the action will be tested.</param>
-        /// <param name="actionName">Name of the tested action.</param>
-        /// <param name="actionAttributes">Collected action attributes from the method call.</param>
-        protected BaseTestBuilderWithAction(
-            Controller controller,
-            string actionName,
-            IEnumerable<object> actionAttributes = null)
-            : base(controller)
+        protected BaseTestBuilderWithAction(ControllerTestContext testContext)
+            : base(testContext)
         {
-            this.ActionName = actionName;
-            this.ActionLevelAttributes = actionAttributes;
         }
 
         /// <summary>
         /// Gets the action name which will be tested.
         /// </summary>
         /// <value>Action name to be tested.</value>
-        internal string ActionName
-        {
-            get
-            {
-                return this.actionName;
-            }
+        internal string ActionName => this.TestContext.ActionName;
 
-            private set
-            {
-                CommonValidator.CheckForNotWhiteSpaceString(value, errorMessageName: "ActionName");
-                this.actionName = value;
-            }
-        }
-
-        internal IEnumerable<object> ActionLevelAttributes { get; private set; }
+        internal IEnumerable<object> ActionLevelAttributes => this.TestContext.ActionAttributes;
 
         /// <summary>
         /// Gets the action name which will be tested.

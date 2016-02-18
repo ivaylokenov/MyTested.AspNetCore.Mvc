@@ -5,8 +5,8 @@
     using Contracts.ExceptionErrors;
     using Exceptions;
     using Utilities.Extensions;
-    using Microsoft.AspNetCore.Mvc;
     using Utilities;
+    using Internal.TestContexts;
 
     /// <summary>
     /// Used for testing AggregateException.
@@ -21,13 +21,10 @@
         /// <param name="controller">Controller on which the action will be tested.</param>
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Actual received aggregate exception.</param>
-        public AggregateExceptionTestBuilder(
-            Controller controller,
-            string actionName,
-            AggregateException caughtException)
-            : base(controller, actionName, caughtException)
+        public AggregateExceptionTestBuilder(ControllerTestContext testContext)
+            :base(testContext)
         {
-            this.aggregateException = caughtException;
+            this.aggregateException = testContext.CaughtExceptionAs<AggregateException>();
         }
 
         /// <summary>

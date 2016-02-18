@@ -32,12 +32,8 @@
         private ICreatedTestBuilder ReturnCreatedTestBuilder<TCreatedResult>()
             where TCreatedResult : ObjectResult
         {
-            var createdResult = this.GetReturnObject<TCreatedResult>();
-            return new CreatedTestBuilder<TCreatedResult>(
-                this.Controller,
-                this.ActionName,
-                this.CaughtException,
-                createdResult);
+            this.TestContext.ActionResult = this.GetReturnObject<TCreatedResult>();
+            return new CreatedTestBuilder<TCreatedResult>(this.TestContext);
         }
     }
 }

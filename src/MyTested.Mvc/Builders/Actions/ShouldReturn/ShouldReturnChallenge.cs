@@ -16,12 +16,8 @@
         /// <returns>Challenge test builder.</returns>
         public IChallengeTestBuilder Challenge()
         {
-            var challengeResult = this.GetReturnObject<ChallengeResult>();
-            return new ChallengeTestBuilder(
-                this.Controller,
-                this.ActionName,
-                this.CaughtException,
-                challengeResult);
+            this.TestContext.ActionResult = this.GetReturnObject<ChallengeResult>();
+            return new ChallengeTestBuilder(this.TestContext);
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿namespace MyTested.Mvc.Builders.ActionResults.HttpNotFound
 {
-    using System;
     using System.Collections.Generic;
     using System.Net;
     using Base;
@@ -10,7 +9,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.Net.Http.Headers;
-
+    using Internal.TestContexts;
     /// <summary>
     /// Used for testing HTTP not found result.
     /// </summary>
@@ -26,12 +25,8 @@
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Caught exception during the action execution.</param>
         /// <param name="httpNotFoundResult">Result from the tested action.</param>
-        public HttpNotFoundTestBuilder(
-            Controller controller,
-            string actionName,
-            Exception caughtException,
-            THttpNotFoundResult httpNotFoundResult)
-            : base(controller, actionName, caughtException, httpNotFoundResult)
+        public HttpNotFoundTestBuilder(ControllerTestContext testContext)
+            : base(testContext)
         {
         }
 

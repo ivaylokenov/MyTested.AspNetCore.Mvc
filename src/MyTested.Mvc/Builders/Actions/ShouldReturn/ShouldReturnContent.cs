@@ -18,12 +18,8 @@
         /// <returns>Content test builder.</returns>
         public IContentTestBuilder Content()
         {
-            var contentResult = this.GetReturnObject<ContentResult>();
-            return new ContentTestBuilder(
-                this.Controller,
-                this.ActionName,
-                this.CaughtException,
-                contentResult);
+            this.TestContext.ActionResult = this.GetReturnObject<ContentResult>();
+            return new ContentTestBuilder(this.TestContext);
         }
 
         /// <summary>
@@ -46,11 +42,8 @@
                         actualContent));
             }
 
-            return new ContentTestBuilder(
-                this.Controller,
-                this.ActionName,
-                this.CaughtException,
-                contentResult);
+            this.TestContext.ActionResult = contentResult;
+            return new ContentTestBuilder(this.TestContext);
         }
     }
 }

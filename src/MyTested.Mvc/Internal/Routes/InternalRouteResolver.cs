@@ -9,7 +9,6 @@
     using Microsoft.AspNetCore.Mvc.Abstractions;
     using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.Extensions.DependencyInjection;
-    using System.Linq;
     using Utilities.Extensions;
     /// <summary>
     /// Used for resolving HTTP request to a route.

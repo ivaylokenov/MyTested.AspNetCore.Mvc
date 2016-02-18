@@ -12,7 +12,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
-    /// Used for building the action which will be tested.
+    /// Used for building the controller which will be tested.
     /// </summary>
     /// <typeparam name="TController">Class inheriting ASP.NET MVC controller.</typeparam>
     public interface IControllerBuilder<TController>

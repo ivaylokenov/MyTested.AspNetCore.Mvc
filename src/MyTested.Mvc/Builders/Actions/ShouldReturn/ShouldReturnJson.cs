@@ -16,12 +16,8 @@
         /// <returns>JSON test builder.</returns>
         public IJsonTestBuilder Json()
         {
-            var jsonResult = this.GetReturnObject<JsonResult>();
-            return new JsonTestBuilder(
-                this.Controller,
-                this.ActionName,
-                this.CaughtException,
-                jsonResult);
+            this.TestContext.ActionResult = this.GetReturnObject<JsonResult>();
+            return new JsonTestBuilder(this.TestContext);
         }
     }
 }

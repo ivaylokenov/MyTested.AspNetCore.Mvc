@@ -1,14 +1,12 @@
 ﻿namespace MyTested.Mvc.Builders.Actions
 {
-    using System;
-    using System.Collections.Generic;
     using Base;
     using Contracts.Actions;
     using Contracts.Base;
     using Internal;
-    using Microsoft.AspNetCore.Mvc;
     using ShouldHave;
     using Utilities.Validators;
+    using Internal.TestContexts;
 
     /// <summary>
     /// Used for testing void actions.
@@ -22,12 +20,8 @@
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Caught exception during the action execution.</param>
         /// <param name="actionAttributes">Collected action attributes from the method call.</param>
-        public VoidActionResultTestBuilder(
-            Controller controller,
-            string actionName,
-            Exception caughtException,
-            IEnumerable<object> actionAttributes)
-            : base(controller, actionName, caughtException, actionAttributes)
+        public VoidActionResultTestBuilder(ControllerTestContext testContext)
+            : base(testContext)
         {
         }
 
@@ -47,12 +41,8 @@
         /// <returns>Should have test builder.</returns>
         public IShouldHaveTestBuilder<VoidActionResult> ShouldHave()
         {
-            return new ShouldHaveTestBuilder<VoidActionResult>(
-                this.Controller,
-                this.ActionName,
-                this.CaughtException,
-                VoidActionResult.Create(),
-                this.ActionLevelAttributes);
+            this.TestContext.ActionResult = VoidActionResult.Create();
+            return new ShouldHaveTestBuilder<VoidActionResult>(this.TestContext);
         }
 
         /// <summary>
@@ -61,7 +51,7 @@
         /// <returns>Should throw test builder.</returns>
         public IShouldThrowTestBuilder ShouldThrow()
         {
-            return new ShouldThrowTestBuilder(this.Controller, this.ActionName, this.CaughtException);
+            return new ShouldThrowTestBuilder(this.TestContext);
         }
     }
 }

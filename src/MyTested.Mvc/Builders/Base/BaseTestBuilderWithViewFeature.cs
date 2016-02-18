@@ -1,10 +1,9 @@
 ﻿namespace MyTested.Mvc.Builders.Base
 {
-    using System;
     using Contracts.Base;
     using Contracts.Models;
     using Microsoft.AspNetCore.Mvc;
-
+    using Internal.TestContexts;
     /// <summary>
     /// Base class for all test builders with view features.
     /// </summary>
@@ -20,12 +19,8 @@
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Caught exception during the action execution.</param>
         /// <param name="viewResult">Result from the tested action.</param>
-        protected BaseTestBuilderWithViewFeature(
-            Controller controller,
-            string actionName,
-            Exception caughtException,
-            TViewResult viewResult)
-            : base(controller, actionName, caughtException, viewResult)
+        protected BaseTestBuilderWithViewFeature(ControllerTestContext testContext)
+            : base(testContext)
         {
         }
         

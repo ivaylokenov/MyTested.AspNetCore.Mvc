@@ -1,7 +1,6 @@
 ﻿namespace MyTested.Mvc.Builders.Controllers
 {
     using System;
-    using System.Collections.Generic;
     using Attributes;
     using Base;
     using Contracts.Attributes;
@@ -9,8 +8,8 @@
     using Contracts.Controllers;
     using Exceptions;
     using Utilities.Extensions;
-    using Microsoft.AspNetCore.Mvc;
     using Utilities.Validators;
+    using Internal.TestContexts;
 
     /// <summary>
     /// Used for testing controllers.
@@ -20,12 +19,9 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="ControllerTestBuilder" /> class.
         /// </summary>
-        /// <param name="controller">Controller which will be tested.</param>
-        /// <param name="controllerAttributes">Collected attributes from the tested controller.</param>
-        public ControllerTestBuilder(
-            Controller controller,
-            IEnumerable<object> controllerAttributes)
-            : base(controller, controllerAttributes)
+        /// <param name="testContext"></param>
+        public ControllerTestBuilder(ControllerTestContext testContext)
+            : base(testContext)
         {
         }
 
@@ -64,7 +60,7 @@
         /// <returns>Base test builder.</returns>
         public IBaseTestBuilder Attributes(Action<IControllerAttributesTestBuilder> attributesTestBuilder)
         {
-            var newAttributesTestBuilder = new ControllerAttributesTestBuilder(this.Controller);
+            var newAttributesTestBuilder = new ControllerAttributesTestBuilder(this.TestContext);
             attributesTestBuilder(newAttributesTestBuilder);
 
             AttributesValidator.ValidateAttributes(

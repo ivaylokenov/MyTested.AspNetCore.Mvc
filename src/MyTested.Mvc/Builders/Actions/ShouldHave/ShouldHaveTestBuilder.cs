@@ -1,13 +1,11 @@
 ﻿namespace MyTested.Mvc.Builders.Actions.ShouldHave
 {
-    using System;
-    using System.Collections.Generic;
     using Base;
     using Contracts.Actions;
     using Contracts.Http;
     using Http;
-    using Microsoft.AspNetCore.Mvc;
     using Utilities.Validators;
+    using Internal.TestContexts;
 
     /// <summary>
     /// Used for testing action attributes and model state.
@@ -24,13 +22,8 @@
         /// <param name="caughtException">Caught exception during the action execution.</param>
         /// <param name="actionResult">Result from the tested action.</param>
         /// <param name="actionAttributes">Collected action attributes from the method call.</param>
-        public ShouldHaveTestBuilder(
-            Controller controller,
-            string actionName,
-            Exception caughtException,
-            TActionResult actionResult,
-            IEnumerable<object> actionAttributes)
-            : base(controller, actionName, caughtException, actionResult, actionAttributes)
+        public ShouldHaveTestBuilder(ControllerTestContext testContext)
+            : base(testContext)
         {
         }
 
@@ -41,12 +34,7 @@
         public IHttpResponseTestBuilder HttpResponse()
         {
             CommonValidator.CheckForException(this.CaughtException);
-
-            return new HttpResponseTestBuilder(
-                this.Controller,
-                this.ActionName,
-                this.CaughtException,
-                this.Controller.Response);
+            return new HttpResponseTestBuilder(this.TestContext);
         }
     }
 }

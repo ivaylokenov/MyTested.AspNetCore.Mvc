@@ -1,6 +1,5 @@
 ﻿namespace MyTested.Mvc.Builders.ActionResults.HttpBadRequest
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Base;
@@ -14,7 +13,7 @@
     using System.Net;
     using Microsoft.Net.Http.Headers;
     using Microsoft.AspNetCore.Mvc.Formatters;
-
+    using Internal.TestContexts;
     /// <summary>
     /// Used for testing HTTP bad request results.
     /// </summary>
@@ -33,12 +32,8 @@
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Caught exception during the action execution.</param>
         /// <param name="httpBadRequestResult">Result from the tested action.</param>
-        public HttpBadRequestTestBuilder(
-            Controller controller,
-            string actionName,
-            Exception caughtException,
-            THttpBadRequestResult httpBadRequestResult)
-            : base(controller, actionName, caughtException, httpBadRequestResult)
+        public HttpBadRequestTestBuilder(ControllerTestContext testContext)
+            : base(testContext)
         {
             this.ErrorMessageFormat = ErrorMessage;
             this.OfTypeErrorMessageFormat = OfTypeErrorMessage;
@@ -224,9 +219,7 @@
         {
             var actualErrorMessage = this.GetBadRequestErrorMessage();
             return new HttpBadRequestErrorMessageTestBuilder(
-                this.Controller,
-                this.ActionName,
-                this.CaughtException,
+                this.TestContext,
                 actualErrorMessage,
                 this);
         }
@@ -322,12 +315,10 @@
         /// <returns>Model error test builder.</returns>
         public IModelErrorTestBuilder<TRequestModel> WithModelStateErrorFor<TRequestModel>()
         {
-            var badRequestObjectResultValue = this.GetBadRequestObjectResultValue();
+            this.TestContext.Model = this.GetBadRequestObjectResultValue();
             return new ModelErrorTestBuilder<TRequestModel>(
-                this.Controller,
-                this.ActionName,
-                this.CaughtException,
-                modelState: this.GetModelStateFromSerializableError(badRequestObjectResultValue));
+                this.TestContext,
+                modelState: this.GetModelStateFromSerializableError(this.TestContext.Model));
         }
 
         /// <summary>

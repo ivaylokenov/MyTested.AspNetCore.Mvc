@@ -49,7 +49,7 @@
         /// <returns>Test builder with AndAlso method.</returns>
         public IAndTestBuilder<TActionResult> ActionAttributes(Action<IActionAttributesTestBuilder> attributesTestBuilder)
         {
-            var newAttributesTestBuilder = new ActionAttributesTestBuilder(this.Controller, this.ActionName);
+            var newAttributesTestBuilder = new ActionAttributesTestBuilder(this.TestContext);
             attributesTestBuilder(newAttributesTestBuilder);
 
             AttributesValidator.ValidateAttributes(
