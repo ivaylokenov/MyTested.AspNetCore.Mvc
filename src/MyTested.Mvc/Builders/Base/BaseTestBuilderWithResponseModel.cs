@@ -15,6 +15,7 @@
     using Utilities;
     using Utilities.Validators;
     using Internal.TestContexts;
+
     /// <summary>
     /// Base class for all response model test builders.
     /// </summary>

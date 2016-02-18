@@ -1,7 +1,5 @@
 ﻿namespace MyTested.Mvc.Internal.TestContexts
 {
-    using Http;
-    using Microsoft.AspNetCore.Http;
     using System;
     using System.Collections.Generic;
     using System.Reflection;
@@ -9,35 +7,14 @@
     using Utilities.Extensions;
     using Utilities.Validators;
 
-    public class ControllerTestContext
+    public class ControllerTestContext : HttpTestContext
     {
-        private MockedHttpContext mockedHttpContext;
         private IEnumerable<object> controllerAttributes;
         private string actionName;
         private MethodInfo action;
         private IEnumerable<object> actionAttributes;
         private object model;
-
-        public ControllerTestContext()
-        {
-            this.mockedHttpContext = new MockedHttpContext();
-        }
-
-        public HttpContext HttpContext
-        {
-            get
-            {
-                return this.mockedHttpContext;
-            }
-
-            internal set
-            {
-                this.mockedHttpContext = new MockedHttpContext(value);
-            }
-        }
-
-        public HttpResponse HttpResponse => this.HttpContext.Response;
-
+        
         public object Controller { get; internal set; }
 
         public IEnumerable<object> ControllerAttributes
@@ -115,9 +92,7 @@
                 this.model = value;
             }
         }
-
-        internal MockedHttpContext MockedHttpContext => this.mockedHttpContext;
-
+        
         internal TController ControllerAs<TController>()
             where TController : class => this.Controller as TController;
 

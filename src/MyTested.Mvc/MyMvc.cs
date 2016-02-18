@@ -45,7 +45,11 @@
         /// <returns>Route test builder.</returns>
         public static IRouteTestBuilder Routes()
         {
-            return new RouteTestBuilder(TestApplication.Router, TestApplication.RouteServices);
+            return new RouteTestBuilder(new RouteTestContext
+            {
+                Router = TestApplication.Router,
+                Services = TestApplication.RouteServices
+            });
         }
 
         /// <summary>

@@ -11,6 +11,7 @@
     using Utilities.Extensions;
     using System.Linq;
     using System.Collections.Generic;
+    using Internal.TestContexts;
 
     /// <summary>
     /// Used for building and testing a route.
@@ -18,9 +19,7 @@
     public class ShouldMapTestBuilder : BaseRouteTestBuilder, IShouldMapTestBuilder, IAndResolvedRouteTestBuilder
     {
         private const string ExpectedModelStateErrorMessage = "have valid model state with no errors";
-
-        private readonly RouteContext routeContext;
-
+        
         private LambdaExpression actionCallExpression;
         private ResolvedRouteContext actualRouteInfo;
         private ExpressionParsedRouteContext expectedRouteInfo;
@@ -30,14 +29,12 @@
         /// </summary>
         /// <param name="httpConfiguration">HTTP configuration to use for the route test.</param>
         /// <param name="location">URI location represented by string.</param>
-        public ShouldMapTestBuilder(
-            IRouter router,
-            IServiceProvider serviceProvider,
-            RouteContext routeContext)
-            : base(router, serviceProvider)
+        public ShouldMapTestBuilder(RouteTestContext testContext)
+            : base(testContext)
         {
-            this.routeContext = routeContext;
         }
+        
+        private RouteContext RouteContext => this.TestContext.RouteContext;
 
         public IAndResolvedRouteTestBuilder ToAction(string actionName)
         {
@@ -335,7 +332,7 @@
         private ResolvedRouteContext GetActualRouteInfo()
         {
             return this.actualRouteInfo ??
-                   (this.actualRouteInfo = InternalRouteResolver.Resolve(this.Services, this.Router, this.routeContext));
+                   (this.actualRouteInfo = InternalRouteResolver.Resolve(this.Services, this.Router, this.RouteContext));
         }
 
         private void ThrowNewRouteAssertionException(string expected = null, string actual = null)
@@ -350,7 +347,7 @@
 
             throw new RouteAssertionException(string.Format(
                     "Expected route '{0}' to {1} but {2}.",
-                    this.routeContext.HttpContext.Request.Path,
+                    this.RouteContext.HttpContext.Request.Path,
                     expected,
                     actual));
         }

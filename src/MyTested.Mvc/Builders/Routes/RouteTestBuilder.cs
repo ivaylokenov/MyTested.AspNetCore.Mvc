@@ -7,23 +7,22 @@
     using Microsoft.AspNetCore.Http;
     using Http;
     using Internal.Http;
-
+    using Internal.TestContexts;
     /// <summary>
     /// Used for building a route test.
     /// </summary>
     public class RouteTestBuilder : BaseRouteTestBuilder, IRouteTestBuilder
     {
-        private MockedHttpContext httpContext;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="RouteTestBuilder" /> class.
         /// </summary>
         /// <param name="router">Instance of IRouter.</param>
-        public RouteTestBuilder(IRouter router, IServiceProvider serviceProvider)
-            : base(router, serviceProvider)
+        public RouteTestBuilder(RouteTestContext testContext)
+            : base(testContext)
         {
-            this.httpContext = new MockedHttpContext();
         }
+
+        private MockedHttpContext HttpContext => this.TestContext.MockedHttpContext;
 
         /// <summary>
         /// Sets the route location to test.
@@ -56,8 +55,8 @@
         /// <returns>Route test builder.</returns>
         public IShouldMapTestBuilder ShouldMap(HttpRequest request)
         {
-            this.httpContext.CustomRequest = request;
-            return this.ShouldMap(this.httpContext);
+            this.HttpContext.CustomRequest = request;
+            return this.ShouldMap(this.HttpContext);
         }
 
         /// <summary>
@@ -69,17 +68,13 @@
         {
             var httpBuilder = new HttpRequestBuilder();
             httpRequestBuilder(httpBuilder);
-            httpBuilder.ApplyTo(httpContext.Request);
-            return this.ShouldMap(httpContext);
+            httpBuilder.ApplyTo(this.HttpContext.Request);
+            return this.ShouldMap(this.HttpContext);
         }
 
         private IShouldMapTestBuilder ShouldMap(HttpContext httpContext)
         {
-            var routeContext = new RouteContext(httpContext);
-            return new ShouldMapTestBuilder(
-                this.Router,
-                this.Services,
-                routeContext);
+            return new ShouldMapTestBuilder(this.TestContext);
         }
     }
 }
