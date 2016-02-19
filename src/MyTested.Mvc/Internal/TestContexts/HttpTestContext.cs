@@ -1,5 +1,6 @@
 ﻿namespace MyTested.Mvc.Internal.TestContexts
 {
+    using Application;
     using Microsoft.AspNetCore.Http;
     using MyTested.Mvc.Internal.Http;
 
@@ -9,7 +10,7 @@
 
         public HttpTestContext()
         {
-            this.mockedHttpContext = new MockedHttpContext();
+            this.mockedHttpContext = TestServiceProvider.GetMockedHttpContext();
         }
 
         public HttpContext HttpContext
@@ -21,7 +22,7 @@
 
             internal set
             {
-                this.mockedHttpContext = new MockedHttpContext(value);
+                this.mockedHttpContext = MockedHttpContext.From(value);
             }
         }
 

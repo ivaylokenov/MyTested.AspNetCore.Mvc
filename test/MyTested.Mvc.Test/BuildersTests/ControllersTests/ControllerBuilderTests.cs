@@ -388,6 +388,9 @@
         {
             var httpContext = new DefaultHttpContext();
             httpContext.Request.Scheme = "Custom";
+            httpContext.Response.StatusCode = 404;
+            httpContext.Response.ContentType = ContentType.ApplicationJson;
+            httpContext.Response.ContentLength = 100;
 
             var controllerBuilder = MyMvc
                 .Controller<MvcController>()
@@ -401,8 +404,16 @@
 
             Assert.Equal("Custom", controller.HttpContext.Request.Scheme);
             Assert.Equal("Custom", setHttpContext.Request.Scheme);
-            Assert.Same(httpContext.Response, controller.HttpContext.Response);
-            Assert.Same(httpContext.Response, setHttpContext.Response);
+            Assert.IsAssignableFrom<MockedHttpResponse>(controller.HttpContext.Response);
+            Assert.IsAssignableFrom<MockedHttpResponse>(setHttpContext.Response);
+            Assert.Same(httpContext.Response.Body, controller.HttpContext.Response.Body);
+            Assert.Same(httpContext.Response.Body, setHttpContext.Response.Body);
+            Assert.Equal(httpContext.Response.ContentLength, controller.HttpContext.Response.ContentLength);
+            Assert.Equal(httpContext.Response.ContentLength, setHttpContext.Response.ContentLength);
+            Assert.Equal(httpContext.Response.ContentType, controller.HttpContext.Response.ContentType);
+            Assert.Equal(httpContext.Response.ContentType, setHttpContext.Response.ContentType);
+            Assert.Equal(httpContext.Response.StatusCode, controller.HttpContext.Response.StatusCode);
+            Assert.Equal(httpContext.Response.StatusCode, setHttpContext.Response.StatusCode);
             Assert.Same(httpContext.Items, controller.HttpContext.Items);
             Assert.Same(httpContext.Items, setHttpContext.Items);
             Assert.Same(httpContext.Features, controller.HttpContext.Features);

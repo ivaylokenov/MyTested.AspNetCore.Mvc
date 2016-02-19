@@ -23,11 +23,13 @@
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.Extensions.PlatformAbstractions;
     using System.Reflection;
-
+    using Microsoft.AspNetCore.Hosting;
+    using Http;
+    using Microsoft.AspNetCore.Http.Internal;
     public static class TestApplication
     {
         private static readonly RequestDelegate NullHandler = (c) => Task.FromResult(0);
-        private static readonly HostingEnvironment Environment = new HostingEnvironment { EnvironmentName = "Tests" };
+        private static readonly IHostingEnvironment Environment = new HostingEnvironment { EnvironmentName = "Tests" };
         
         private static bool initialiazed;
         private static Type startupType;
@@ -122,12 +124,20 @@
             var serviceCollection = new ServiceCollection();
             var diagnosticSource = new DiagnosticListener("MyTested.Mvc");
 
+            // default server services
+            serviceCollection.TryAddSingleton(Environment);
+            serviceCollection.TryAddSingleton<ILoggerFactory>(MockedLoggerFactory.Create());
+            serviceCollection.TryAddTransient<IHttpContextFactory, HttpContextFactory>();
+            serviceCollection.AddLogging();
+            serviceCollection.AddOptions();
+
             serviceCollection.TryAddSingleton<DiagnosticSource>(diagnosticSource);
             serviceCollection.TryAddSingleton(diagnosticSource);
-            serviceCollection.TryAddSingleton<ILoggerFactory>(MockedLoggerFactory.Create());
 
+            // testing framework services
             serviceCollection.TryAddSingleton<IControllerActionDescriptorCache, ControllerActionDescriptorCache>();
 
+            // custom MVC options
             serviceCollection.Configure<MvcOptions>(options =>
             {
                 var inputFormatters = options.InputFormatters.OfType<TextInputFormatter>();
@@ -155,12 +165,12 @@
             {
                 AdditionalServices(serviceCollection);
             }
-
+            
             PrepareRouteServices(serviceCollection);
 
             serviceProvider = serviceCollection.BuildServiceProvider();
         }
-
+        
         private static void PrepareRouteServices(IServiceCollection serviceCollection)
         {
             var modelBindingActionInvokerFactoryType = typeof(IModelBindingActionInvokerFactory);

@@ -5,10 +5,11 @@
     using Microsoft.Extensions.DependencyInjection;
     using Utilities.Validators;
     using Microsoft.AspNetCore.Mvc.Internal;
-
-    /// <summary>
-    /// Provides global application services.
-    /// </summary>
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Http.Features;
+    using Http;/// <summary>
+               /// Provides global application services.
+               /// </summary>
     public class TestServiceProvider
     {
         /// <summary>
@@ -80,6 +81,16 @@
             {
                 return null;
             }
+        }
+
+        public static MockedHttpContext GetMockedHttpContext()
+        {
+            var httpContextFactory = GetService<IHttpContextFactory>();
+            var httpContext = httpContextFactory != null
+                ? MockedHttpContext.From(httpContextFactory.Create(new FeatureCollection()))
+                : new MockedHttpContext();
+
+            return httpContext;
         }
     }
 }

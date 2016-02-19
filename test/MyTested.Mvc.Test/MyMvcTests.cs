@@ -23,6 +23,8 @@ namespace MyTested.Mvc.Tests
     using Internal.Contracts;
     using Internal.Routes;
     using Microsoft.Extensions.DependencyInjection.Extensions;
+    using Microsoft.AspNetCore.Http;
+    using Internal.Http;
     public class MyMvcTests
     {
         [Fact]
@@ -461,6 +463,48 @@ namespace MyTested.Mvc.Tests
             Assert.True(routeActionInvokerProvidersList[1].GetType() == typeof(ControllerActionInvokerProvider));
             Assert.NotNull(routeModelBindingActionInvokerFactory);
             Assert.IsAssignableFrom<CustomModelBindingActionInvokerFactory>(routeModelBindingActionInvokerFactory);
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void WithoutHttpContextFactoryTheDefaultMockedHttpContextShouldBeProvided()
+        {
+            MyMvc.IsUsingDefaultConfiguration()
+                .WithServices(services =>
+                {
+                    services.TryRemoveTransient<IHttpContextFactory>();
+                });
+
+            var httpContextFactory = TestServiceProvider.GetService<IHttpContextFactory>();
+
+            Assert.Null(httpContextFactory);
+
+            var httpContext = TestServiceProvider.GetMockedHttpContext();
+
+            Assert.NotNull(httpContext);
+            Assert.Equal(ContentType.FormUrlEncoded, httpContext.Request.ContentType);
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void WithHttpContextFactoryShouldReturnMockedHttpContextBasedOnTheFactoryCreatedHttpContext()
+        {
+            MyMvc.IsUsingDefaultConfiguration()
+                .WithServices(services =>
+                {
+                    services.TryReplaceTransient<IHttpContextFactory, CustomHttpContextFactory>();
+                });
+
+            var httpContextFactory = TestServiceProvider.GetService<IHttpContextFactory>();
+
+            Assert.NotNull(httpContextFactory);
+
+            var httpContext = TestServiceProvider.GetMockedHttpContext();
+
+            Assert.NotNull(httpContext);
+            Assert.Equal(ContentType.AudioVorbis, httpContext.Request.ContentType);
 
             MyMvc.IsUsingDefaultConfiguration();
         }

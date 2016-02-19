@@ -24,11 +24,14 @@
         }
 
         public static void TryRemoveTransient<TServive>(this IServiceCollection serviceCollection)
+            where TServive : class
         {
             serviceCollection.TryRemoveTransient(typeof(TServive));
         }
 
         public static void TryRemoveTransient<TServive, TImplementation>(this IServiceCollection serviceCollection)
+            where TServive : class
+            where TImplementation : class, TServive
         {
             serviceCollection.TryRemoveTransient(typeof(TServive), typeof(TImplementation));
         }
@@ -47,15 +50,18 @@
         }
 
         public static void TryRemoveSingleton<TServive>(this IServiceCollection serviceCollection)
+            where TServive : class
         {
             serviceCollection.TryRemoveSingleton(typeof(TServive));
         }
 
         public static void TryRemoveSingleton<TServive, TImplementation>(this IServiceCollection serviceCollection)
+            where TServive : class
+            where TImplementation : class, TServive
         {
             serviceCollection.TryRemoveSingleton(typeof(TServive), typeof(TImplementation));
         }
-        
+
         public static void TryRemoveScoped(this IServiceCollection serviceCollection, Type service)
         {
             CommonValidator.CheckForNullReference(service, nameof(service));
@@ -70,11 +76,14 @@
         }
 
         public static void TryRemoveScoped<TServive>(this IServiceCollection serviceCollection)
+            where TServive : class
         {
             serviceCollection.TryRemoveScoped(typeof(TServive));
         }
 
         public static void TryRemoveScoped<TServive, TImplementation>(this IServiceCollection serviceCollection)
+            where TServive : class
+            where TImplementation : class, TServive
         {
             serviceCollection.TryRemoveScoped(typeof(TServive), typeof(TImplementation));
         }
@@ -86,10 +95,12 @@
         }
 
         public static void TryReplaceTransient<TService, TImplementation>(this IServiceCollection serviceCollection)
+            where TService : class
+            where TImplementation : class, TService
         {
             serviceCollection.TryReplaceTransient(typeof(TService), typeof(TImplementation));
         }
-        
+
         public static void TryReplaceSingleton(this IServiceCollection serviceCollection, Type service, Type implementationType)
         {
             serviceCollection.TryRemoveSingleton(service);
@@ -97,6 +108,8 @@
         }
 
         public static void TryReplaceSingleton<TService, TImplementation>(this IServiceCollection serviceCollection)
+            where TService : class
+            where TImplementation : class, TService
         {
             serviceCollection.TryReplaceSingleton(typeof(TService), typeof(TImplementation));
         }
@@ -108,6 +121,8 @@
         }
 
         public static void TryReplaceScoped<TService, TImplementation>(this IServiceCollection serviceCollection)
+            where TService : class
+            where TImplementation : class, TService
         {
             serviceCollection.TryReplaceScoped(typeof(TService), typeof(TImplementation));
         }
@@ -131,7 +146,7 @@
             {
                 throw new ArgumentNullException(nameof(serviceCollection));
             }
-            
+
             serviceCollection
                 .Where(predicate)
                 .ToArray()
