@@ -483,7 +483,7 @@ namespace MyTested.Mvc.Tests
 
             Assert.Null(httpContextFactory);
 
-            var httpContext = TestServiceProvider.GetMockedHttpContext();
+            var httpContext = TestServiceProvider.CreateMockedHttpContext();
 
             Assert.NotNull(httpContext);
             Assert.Equal(ContentType.FormUrlEncoded, httpContext.Request.ContentType);
@@ -504,7 +504,7 @@ namespace MyTested.Mvc.Tests
 
             Assert.NotNull(httpContextFactory);
 
-            var httpContext = TestServiceProvider.GetMockedHttpContext();
+            var httpContext = TestServiceProvider.CreateMockedHttpContext();
 
             Assert.NotNull(httpContext);
             Assert.Equal(ContentType.AudioVorbis, httpContext.Request.ContentType);

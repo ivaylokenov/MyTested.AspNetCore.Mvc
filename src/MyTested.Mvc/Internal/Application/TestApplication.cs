@@ -140,6 +140,7 @@
             // custom MVC options
             serviceCollection.Configure<MvcOptions>(options =>
             {
+                // string input formatter helps with HTTP request processing
                 var inputFormatters = options.InputFormatters.OfType<TextInputFormatter>();
                 if (!inputFormatters.Any(f => f.SupportedMediaTypes.Contains(ContentType.TextPlain)))
                 {
@@ -179,16 +180,12 @@
             {
                 serviceCollection.TryAddEnumerable(
                     ServiceDescriptor.Transient<IActionInvokerProvider, ModelBindingActionInvokerProvider>());
-                serviceCollection.TryAddSingleton<IModelBindingActionInvokerFactory, ModelBindingActionInvokerFactory>();
+                serviceCollection.TryAddSingleton(modelBindingActionInvokerFactoryType, typeof(ModelBindingActionInvokerFactory));
             }
 
             routeServiceProvider = serviceCollection.BuildServiceProvider();
 
-            var modelBindingActionInvokerFactory = serviceCollection.FirstOrDefault(s => s.ServiceType == modelBindingActionInvokerFactoryType);
-            if (modelBindingActionInvokerFactory != null)
-            {
-                serviceCollection.Remove(modelBindingActionInvokerFactory);
-            }
+            serviceCollection.TryRemoveSingleton(modelBindingActionInvokerFactoryType);
 
             var actionInvokerProviders = serviceCollection.Where(s => s.ServiceType == typeof(IActionInvokerProvider)).ToList();
             if (actionInvokerProviders.Count > 1)

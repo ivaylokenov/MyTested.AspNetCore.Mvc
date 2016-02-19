@@ -18,7 +18,6 @@
     using Internal.Contracts;
     using Utilities.Extensions;
     using Internal.Http;
-    using Internal.Identity;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Controllers;
@@ -180,25 +179,25 @@
         }
 
         /// <summary>
-        /// Sets default authenticated user to the built controller with "TestUser" username.
+        /// Sets default authenticated user to the built controller with "TestId" identifier and "TestUser" username.
         /// </summary>
         /// <returns>The same controller builder.</returns>
         public IAndControllerBuilder<TController> WithAuthenticatedUser()
         {
-            this.Controller.HttpContext.User = MockedClaimsPrincipal.CreateDefaultAuthenticated();
+            this.Controller.HttpContext.User = ClaimsPrincipalBuilder.CreateDefaultAuthenticated();
             return this;
         }
 
         /// <summary>
-        /// Sets custom authenticated user using provided user builder.
+        /// Sets custom authenticated user using the provided user builder.
         /// </summary>
         /// <param name="userBuilder">User builder to create mocked user object.</param>
         /// <returns>The same controller builder.</returns>
-        public IAndControllerBuilder<TController> WithAuthenticatedUser(Action<IAndUserBuilder> userBuilder)
+        public IAndControllerBuilder<TController> WithAuthenticatedUser(Action<IAndClaimsPrincipalBuilder> userBuilder)
         {
-            var newUserBuilder = new UserBuilder();
+            var newUserBuilder = new ClaimsPrincipalBuilder();
             userBuilder(newUserBuilder);
-            this.Controller.HttpContext.User = newUserBuilder.GetUser();
+            this.Controller.HttpContext.User = newUserBuilder.GetClaimsPrincipal();
             return this;
         }
 
@@ -383,7 +382,7 @@
             }
         }
 
-        private TestActionDescriptor<TActionResult> GetAndValidateActionResult<TActionResult>(Expression<Func<TController, TActionResult>> actionCall)
+        private ActionTestContext<TActionResult> GetAndValidateActionResult<TActionResult>(Expression<Func<TController, TActionResult>> actionCall)
         {
             var actionName = this.GetAndValidateAction(actionCall);
             var action = ExpressionParser.GetMethodInfo(actionCall);
@@ -399,7 +398,7 @@
                 caughtException = exception;
             }
 
-            return new TestActionDescriptor<TActionResult>(actionName, action, actionResult, caughtException);
+            return new ActionTestContext<TActionResult>(actionName, action, actionResult, caughtException);
         }
 
         private string GetAndValidateAction(LambdaExpression actionCall)

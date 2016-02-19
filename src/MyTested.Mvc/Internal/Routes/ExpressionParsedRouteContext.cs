@@ -3,7 +3,7 @@
     using Utilities.Extensions;
     using System;
     using System.Collections.Generic;
-
+    using TestContexts;
     /// <summary>
     /// Contains route information from parsed expression.
     /// </summary>
@@ -49,6 +49,6 @@
         /// Gets the action arguments from the parsed expression.
         /// </summary>
         /// <value>Dictionary of action arguments.</value>
-        public IDictionary<string, MethodArgumentContext> ActionArguments { get; private set; }
+        public IDictionary<string, MethodArgumentTestContext> ActionArguments { get; private set; }
     }
 }

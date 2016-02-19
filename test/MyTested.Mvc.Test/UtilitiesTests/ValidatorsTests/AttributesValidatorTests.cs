@@ -13,7 +13,7 @@
         [Fact]
         public void ValidateNoAttributesShouldNotFailWithNoAttributes()
         {
-            var attributes = Reflection.GetCustomAttributes(new UserBuilder());
+            var attributes = Reflection.GetCustomAttributes(new ClaimsPrincipalBuilder());
 
             AttributesValidator.ValidateNoAttributes(attributes, TestObjectFactory.GetFailingValidationActionWithTwoParameteres());
         }
@@ -53,7 +53,7 @@
             Test.AssertException<NullReferenceException>(
                 () =>
                 {
-                    var attributes = Reflection.GetCustomAttributes(new UserBuilder());
+                    var attributes = Reflection.GetCustomAttributes(new ClaimsPrincipalBuilder());
 
                     AttributesValidator.ValidateNumberOfAttributes(attributes, TestObjectFactory.GetFailingValidationActionWithTwoParameteres());
                 },

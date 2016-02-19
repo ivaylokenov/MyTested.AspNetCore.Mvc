@@ -103,7 +103,7 @@
 
         internal TModel ModelAs<TModel>() => this.Model.TryCastTo<TModel>();
 
-        internal void Apply<TActionResult>(TestActionDescriptor<TActionResult> testActionDescriptor)
+        internal void Apply<TActionResult>(ActionTestContext<TActionResult> testActionDescriptor)
         {
             this.ActionName = testActionDescriptor.ActionName;
             this.Action = testActionDescriptor.Action;

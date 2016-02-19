@@ -12,7 +12,7 @@
     using Setups.Models;
     using Utilities;
     using Xunit;
-
+    using Internal.TestContexts;
     public class ExpressionParserTests
     {
         [Fact]
@@ -58,7 +58,7 @@
 
             var result = ExpressionParser.ResolveMethodArguments(expression);
 
-            var arguments = result as IList<MethodArgumentContext> ?? result.ToArray();
+            var arguments = result as IList<MethodArgumentTestContext> ?? result.ToArray();
             var firstArgument = arguments.First();
             var secondArgument = arguments.Last();
             var secondArgumentAsRequestModel = secondArgument.Value as RequestModel;

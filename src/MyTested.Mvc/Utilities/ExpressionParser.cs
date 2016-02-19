@@ -6,7 +6,7 @@
     using System.Linq.Expressions;
     using System.Reflection;
     using Internal;
-
+    using Internal.TestContexts;
     /// <summary>
     /// Utility class helping parsing expression trees.
     /// </summary>
@@ -39,7 +39,7 @@
         /// </summary>
         /// <param name="expression">Expression to be parsed.</param>
         /// <returns>Collection of method argument information.</returns>
-        public static IEnumerable<MethodArgumentContext> ResolveMethodArguments(LambdaExpression expression)
+        public static IEnumerable<MethodArgumentTestContext> ResolveMethodArguments(LambdaExpression expression)
         {
             var methodCallExpression = GetMethodCallExpression(expression);
             return methodCallExpression.Arguments
@@ -50,7 +50,7 @@
                         a.Name,
                         Value = ResolveExpressionValue(m)
                     })
-                .Select(ma => new MethodArgumentContext
+                .Select(ma => new MethodArgumentTestContext
                 {
                     Name = ma.Name,
                     Type = ma.Value?.GetType(),

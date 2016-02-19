@@ -72,19 +72,19 @@
         /// </summary>
         /// <returns>The same controller builder.</returns>
         IAndControllerBuilder<TController> WithoutValidation();
-        
+
         /// <summary>
-        /// Sets default authenticated user to the built controller with "TestUser" username.
+        /// Sets default authenticated user to the built controller with "TestId" identifier and "TestUser" username.
         /// </summary>
         /// <returns>The same controller builder.</returns>
         IAndControllerBuilder<TController> WithAuthenticatedUser();
 
         /// <summary>
-        /// Sets custom authenticated user using provided user builder.
+        /// Sets custom authenticated user using the provided user builder.
         /// </summary>
         /// <param name="userBuilder">User builder to create mocked user object.</param>
         /// <returns>The same controller builder.</returns>
-        IAndControllerBuilder<TController> WithAuthenticatedUser(Action<IAndUserBuilder> userBuilder);
+        IAndControllerBuilder<TController> WithAuthenticatedUser(Action<IAndClaimsPrincipalBuilder> userBuilder);
 
         /// <summary>
         /// Sets custom properties to the controller using action delegate.

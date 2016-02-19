@@ -1,16 +1,16 @@
 ﻿namespace MyTested.Mvc.Utilities.Extensions
 {
-    using Internal;
+    using Internal.TestContexts;
     using System.Collections.Generic;
     using System.Linq;
 
     public static class DictionaryExtensions
     {
-        public static IDictionary<string, MethodArgumentContext> ToDetailedValues(this IDictionary<string, object> dictionary)
+        public static IDictionary<string, MethodArgumentTestContext> ToDetailedValues(this IDictionary<string, object> dictionary)
         {
             return dictionary.ToDictionary(
                 a => a.Key,
-                a => new MethodArgumentContext
+                a => new MethodArgumentTestContext
                 {
                     Name = a.Key,
                     Type = a.Value?.GetType(),

@@ -10,7 +10,7 @@
 
         public HttpTestContext()
         {
-            this.mockedHttpContext = TestServiceProvider.GetMockedHttpContext();
+            this.mockedHttpContext = TestServiceProvider.CreateMockedHttpContext();
         }
 
         public HttpContext HttpContext

@@ -7,9 +7,11 @@
     using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Features;
-    using Http;/// <summary>
-               /// Provides global application services.
-               /// </summary>
+    using Http;
+
+    /// <summary>
+    /// Provides global application services.
+    /// </summary>
     public class TestServiceProvider
     {
         /// <summary>
@@ -83,7 +85,7 @@
             }
         }
 
-        public static MockedHttpContext GetMockedHttpContext()
+        public static MockedHttpContext CreateMockedHttpContext()
         {
             var httpContextFactory = GetService<IHttpContextFactory>();
             var httpContext = httpContextFactory != null

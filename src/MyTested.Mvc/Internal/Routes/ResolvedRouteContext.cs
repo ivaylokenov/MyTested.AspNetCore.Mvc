@@ -5,7 +5,7 @@
     using Microsoft.AspNetCore.Routing;
     using System.Collections.Generic;
     using System.Reflection;
-
+    using TestContexts;
     /// <summary>
     /// Contains information about a resolved route from the ASP.NET Web API internal pipeline.
     /// </summary>
@@ -80,7 +80,7 @@
         /// Gets the resolved action arguments for the current route.
         /// </summary>
         /// <value>Dictionary of action arguments.</value>
-        public IDictionary<string, MethodArgumentContext> ActionArguments { get; private set; }
+        public IDictionary<string, MethodArgumentTestContext> ActionArguments { get; private set; }
 
         /// <summary>
         /// Gets the resolved route data for the current route.

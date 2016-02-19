@@ -10,6 +10,7 @@
     using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.Extensions.DependencyInjection;
     using Utilities.Extensions;
+
     /// <summary>
     /// Used for resolving HTTP request to a route.
     /// </summary>

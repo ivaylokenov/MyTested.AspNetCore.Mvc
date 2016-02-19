@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Internal
+﻿namespace MyTested.Mvc.Internal.TestContexts
 {
     using System;
     using System.Reflection;
@@ -7,15 +7,15 @@
     /// Contains information about invoked action.
     /// </summary>
     /// <typeparam name="TActionResult">The action return type.</typeparam>
-    public class TestActionDescriptor<TActionResult>
+    public class ActionTestContext<TActionResult>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="TestActionDescriptor{TActionResult}" /> class.
+        /// Initializes a new instance of the <see cref="ActionTestContext{TActionResult}" /> class.
         /// </summary>
         /// <param name="actionName">Name of the action.</param>
         /// <param name="actionResult">Action return value.</param>
         /// <param name="caughtException">Caught exception during action execution.</param>
-        public TestActionDescriptor(string actionName, MethodInfo action, TActionResult actionResult, Exception caughtException)
+        public ActionTestContext(string actionName, MethodInfo action, TActionResult actionResult, Exception caughtException)
         {
             this.ActionName = actionName;
             this.Action = action;

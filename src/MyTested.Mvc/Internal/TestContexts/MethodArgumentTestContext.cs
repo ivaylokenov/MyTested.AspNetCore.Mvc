@@ -1,11 +1,11 @@
-﻿namespace MyTested.Mvc.Internal
+﻿namespace MyTested.Mvc.Internal.TestContexts
 {
     using System;
 
     /// <summary>
     /// Method argument information containing name, type and value for a method parameter.
     /// </summary>
-    public class MethodArgumentContext
+    public class MethodArgumentTestContext
     {
         /// <summary>
         /// Gets or sets the name of the argument.
