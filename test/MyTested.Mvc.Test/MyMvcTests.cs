@@ -25,6 +25,9 @@ namespace MyTested.Mvc.Tests
     using Microsoft.Extensions.DependencyInjection.Extensions;
     using Microsoft.AspNetCore.Http;
     using Internal.Http;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Http.Internal;
+    using System.Collections.Generic;
     public class MyMvcTests
     {
         [Fact]
@@ -238,7 +241,7 @@ namespace MyTested.Mvc.Tests
                         .Calling(c => c.OkAction())
                         .ShouldReturn()
                         .Ok();
-                }, 
+                },
                 "NoParameterlessConstructorController could not be instantiated because it contains no constructor taking no parameters.");
 
             MyMvc.IsUsingDefaultConfiguration();
@@ -248,7 +251,7 @@ namespace MyTested.Mvc.Tests
         public void DefaultConfigShouldSetMvc()
         {
             MyMvc.IsUsingDefaultConfiguration();
-            
+
             var service = TestServiceProvider.GetRequiredService<MvcMarkerService>();
 
             Assert.NotNull(service);
@@ -293,7 +296,7 @@ namespace MyTested.Mvc.Tests
                 {
                     set = true;
                 });
-            
+
             Assert.NotNull(TestApplication.Services);
             Assert.True(set);
         }
@@ -309,7 +312,7 @@ namespace MyTested.Mvc.Tests
                         name: "another",
                         template: "{controller=Home}/{action=Index}/{id?}");
                 });
-            
+
             var setRoutes = TestApplication.Router as RouteCollection;
 
             Assert.NotNull(setRoutes);
@@ -353,7 +356,7 @@ namespace MyTested.Mvc.Tests
 
             MyMvc.IsUsingDefaultConfiguration();
         }
-        
+
         [Fact]
         public void CustomStartupWithAdditionalApplicationShouldWorkCorrectly()
         {
@@ -393,7 +396,7 @@ namespace MyTested.Mvc.Tests
             var service = TestApplication.Services.GetRequiredService<IInjectedService>();
 
             Assert.NotNull(service);
-            
+
             var routesCollection = TestApplication.Router as RouteCollection;
 
             Assert.NotNull(routesCollection);
@@ -418,7 +421,7 @@ namespace MyTested.Mvc.Tests
             var routeServices = TestApplication.RouteServices;
             var routeActionInvokerProviders = routeServices.GetServices<IActionInvokerProvider>();
             var routeModelBindingActionInvokerFactory = routeServices.GetService<IModelBindingActionInvokerFactory>();
-            
+
             Assert.Equal(2, routeActionInvokerProviders.Count());
 
             var routeActionInvokerProvidersList = routeActionInvokerProviders.OrderByDescending(r => r.Order).ToList();
@@ -427,7 +430,7 @@ namespace MyTested.Mvc.Tests
             Assert.True(routeActionInvokerProvidersList[1].GetType() == typeof(ControllerActionInvokerProvider));
             Assert.NotNull(routeModelBindingActionInvokerFactory);
             Assert.IsAssignableFrom<ModelBindingActionInvokerFactory>(routeModelBindingActionInvokerFactory);
-            
+
             MyMvc.IsUsingDefaultConfiguration();
         }
 
@@ -507,6 +510,89 @@ namespace MyTested.Mvc.Tests
             Assert.Equal(ContentType.AudioVorbis, httpContext.Request.ContentType);
 
             MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void IHttpContextAccessorShouldWorkCorrectly()
+        {
+            MyMvc
+                .IsUsingDefaultConfiguration()
+                .WithServices(services =>
+                {
+                    services.TryReplaceTransient<IHttpContextFactory, CustomHttpContextFactory>();
+                    services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+                });
+
+            // synchronous contexts should be different
+            HttpContext firstContext = null;
+            HttpContext secondContext = null;
+
+            firstContext = MyMvc
+                            .Controller<HttpContextController>()
+                            .AndProvideTheController().Context;
+
+            secondContext = MyMvc
+                            .Controller<HttpContextController>()
+                            .AndProvideTheController().Context;
+
+            Assert.NotNull(firstContext);
+            Assert.NotNull(secondContext);
+            Assert.IsAssignableFrom<MockedHttpContext>(firstContext);
+            Assert.IsAssignableFrom<MockedHttpContext>(secondContext);
+            Assert.NotSame(firstContext, secondContext);
+            Assert.Equal(ContentType.AudioVorbis, firstContext.Request.ContentType);
+            Assert.Equal(ContentType.AudioVorbis, secondContext.Request.ContentType);
+
+            // asynchronous contexts should be different
+            Task
+                .Run(async () =>
+                {
+                    HttpContext firstContextAsync = null;
+                    HttpContext secondContextAsync = null;
+                    HttpContext thirdContextAsync = null;
+
+                    var tasks = new List<Task>
+                    {
+                        Task.Run(() =>
+                        {
+                            firstContextAsync = MyMvc
+                                .Controller<HttpContextController>()
+                                .AndProvideTheController().Context;
+                        }),
+                        Task.Run(() =>
+                        {
+                            secondContextAsync = MyMvc
+                                .Controller<HttpContextController>()
+                                .AndProvideTheController().Context;
+                        }),
+                        Task.Run(() =>
+                        {
+                            thirdContextAsync = MyMvc
+                                .Controller<HttpContextController>()
+                                .AndProvideTheController().Context;
+                        })
+                    };
+
+                    await Task.WhenAll(tasks);
+
+                    Assert.NotNull(firstContextAsync);
+                    Assert.NotNull(secondContextAsync);
+                    Assert.NotNull(thirdContextAsync);
+                    Assert.IsAssignableFrom<MockedHttpContext>(firstContextAsync);
+                    Assert.IsAssignableFrom<MockedHttpContext>(secondContextAsync);
+                    Assert.IsAssignableFrom<MockedHttpContext>(thirdContextAsync);
+                    Assert.NotSame(firstContextAsync, secondContextAsync);
+                    Assert.NotSame(firstContextAsync, thirdContextAsync);
+                    Assert.NotSame(secondContextAsync, thirdContextAsync);
+                    Assert.Equal(ContentType.AudioVorbis, firstContextAsync.Request.ContentType);
+                    Assert.Equal(ContentType.AudioVorbis, secondContextAsync.Request.ContentType);
+                    Assert.Equal(ContentType.AudioVorbis, thirdContextAsync.Request.ContentType);
+                })
+                .GetAwaiter()
+                .GetResult();
+
+            MyMvc
+                .IsUsingDefaultConfiguration();
         }
     }
 }

@@ -90,6 +90,12 @@
                 ? MockedHttpContext.From(httpContextFactory.Create(new FeatureCollection()))
                 : new MockedHttpContext();
 
+            var httpContextAccessor = GetService<IHttpContextAccessor>();
+            if (httpContextAccessor != null)
+            {
+                httpContextAccessor.HttpContext = httpContext;
+            }
+
             return httpContext;
         }
     }
