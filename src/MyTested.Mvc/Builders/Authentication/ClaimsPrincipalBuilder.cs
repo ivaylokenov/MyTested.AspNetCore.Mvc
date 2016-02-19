@@ -4,34 +4,18 @@
     using System.Linq;
     using System.Security.Claims;
     using Contracts.Authentication;
-    using Utilities.Extensions;
     using System.Security.Principal;
+    using System;
 
     /// <summary>
     /// Used for building mocked claims principal.
     /// </summary>
-    public class ClaimsPrincipalBuilder : IAndClaimsPrincipalBuilder
+    public class ClaimsPrincipalBuilder : BaseUserBuilder, IAndClaimsPrincipalBuilder
     {
-        private const string DefaultIdentifier = "TestId";
-        private const string DefaultUsername = "TestUser";
-        private const string DefaultAuthenticationType = "Passport";
-        private const string DefaultNameType = ClaimTypes.Name;
-        private const string DefaultRoleType = ClaimTypes.Role;
-
-        private ICollection<Claim> claims;
         private ICollection<ClaimsIdentity> identities;
 
-        private string authenticationType;
-        private string nameType;
-        private string roleType;
-        
         public ClaimsPrincipalBuilder()
         {
-            this.authenticationType = DefaultAuthenticationType;
-            this.nameType = DefaultNameType;
-            this.roleType = DefaultRoleType;
-
-            this.claims = new List<Claim>();
             this.identities = new List<ClaimsIdentity>();
         }
 
@@ -41,18 +25,18 @@
         /// <returns>Authenticated claims principal.</returns>
         public static ClaimsPrincipal CreateDefaultAuthenticated()
         {
-            return new ClaimsPrincipal(GetAuthenticatedClaimsIdentity());
+            return new ClaimsPrincipal(CreateAuthenticatedClaimsIdentity());
         }
 
         public IAndClaimsPrincipalBuilder WithNameType(string nameType)
         {
-            this.nameType = nameType;
+            this.AddNameType(nameType);
             return this;
         }
 
         public IAndClaimsPrincipalBuilder WithRoleType(string roleType)
         {
-            this.roleType = roleType;
+            this.AddRoleType(roleType);
             return this;
         }
 
@@ -63,7 +47,7 @@
         /// <returns>The same claims principal builder.</returns>
         public IAndClaimsPrincipalBuilder WithIdentifier(string identifier)
         {
-            this.claims.Add(new Claim(ClaimTypes.NameIdentifier, identifier));
+            this.AddIdentifier(identifier);
             return this;
         }
 
@@ -74,7 +58,7 @@
         /// <returns>The same claims principal builder.</returns>
         public IAndClaimsPrincipalBuilder WithUsername(string username)
         {
-            this.claims.Add(new Claim(this.nameType, username));
+            this.AddUsername(username);
             return this;
         }
 
@@ -85,7 +69,7 @@
         /// <returns>The same claims principal builder.</returns>
         public IAndClaimsPrincipalBuilder WithClaim(Claim claim)
         {
-            this.claims.Add(claim);
+            this.AddClaim(claim);
             return this;
         }
 
@@ -96,7 +80,7 @@
         /// <returns>The same claims principal builder.</returns>
         public IAndClaimsPrincipalBuilder WithClaims(IEnumerable<Claim> claims)
         {
-            claims.ForEach(claim => this.claims.Add(claim));
+            this.AddClaims(claims);
             return this;
         }
 
@@ -117,8 +101,40 @@
         /// <returns>The same claims principal builder.</returns>
         public IAndClaimsPrincipalBuilder WithAuthenticationType(string authenticationType)
         {
-            this.authenticationType = authenticationType;
+            this.AddAuthenticationType(authenticationType);
             return this;
+        }
+
+        /// <summary>
+        /// Used for adding role to claims principal.
+        /// </summary>
+        /// <param name="role">The role to add.</param>
+        /// <returns>The same claims principal builder.</returns>
+        public IAndClaimsPrincipalBuilder InRole(string role)
+        {
+            this.AddRole(role);
+            return this;
+        }
+
+        /// <summary>
+        /// Used for adding multiple roles to claims principal.
+        /// </summary>
+        /// <param name="roles">Collection of roles to add.</param>
+        /// <returns>The same claims principal builder.</returns>
+        public IAndClaimsPrincipalBuilder InRoles(IEnumerable<string> roles)
+        {
+            this.AddRoles(roles);
+            return this;
+        }
+
+        /// <summary>
+        /// Used for adding multiple roles to claims principal.
+        /// </summary>
+        /// <param name="roles">Roles to add.</param>
+        /// <returns>The same claims principal builder.</returns>
+        public IAndClaimsPrincipalBuilder InRoles(params string[] roles)
+        {
+            return this.InRoles(roles.AsEnumerable());
         }
 
         public IAndClaimsPrincipalBuilder WithIdentity(IIdentity identity)
@@ -133,41 +149,12 @@
             return this;
         }
 
-        public IAndClaimsPrincipalBuilder WithIdentity()
+        public IAndClaimsPrincipalBuilder WithIdentity(Action<IClaimsIdentityBuilder> claimsIdentityBuilder)
         {
+            var newClaimsIdentityBuilder = new ClaimsIdentityBuilder();
+            claimsIdentityBuilder(newClaimsIdentityBuilder);
+            this.identities.Add(newClaimsIdentityBuilder.GetClaimsIdentity());
             return this;
-        }
-
-        /// <summary>
-        /// Used for adding role to claims principal.
-        /// </summary>
-        /// <param name="role">The role to add.</param>
-        /// <returns>The same claims principal builder.</returns>
-        public IAndClaimsPrincipalBuilder InRole(string role)
-        {
-            this.claims.Add(new Claim(roleType, role));
-            return this;
-        }
-
-        /// <summary>
-        /// Used for adding multiple roles to claims principal.
-        /// </summary>
-        /// <param name="roles">Collection of roles to add.</param>
-        /// <returns>The same claims principal builder.</returns>
-        public IAndClaimsPrincipalBuilder InRoles(IEnumerable<string> roles)
-        {
-            roles.ForEach(role => this.InRole(role));
-            return this;
-        }
-
-        /// <summary>
-        /// Used for adding multiple roles to claims principal.
-        /// </summary>
-        /// <param name="roles">Roles to add.</param>
-        /// <returns>The same claims principal builder.</returns>
-        public IAndClaimsPrincipalBuilder InRoles(params string[] roles)
-        {
-            return this.InRoles(roles.AsEnumerable());
         }
 
         /// <summary>
@@ -181,39 +168,11 @@
         
         internal ClaimsPrincipal GetClaimsPrincipal()
         {
-            var claimsPrincipal = new ClaimsPrincipal(GetAuthenticatedClaimsIdentity(
-                this.claims,
-                this.authenticationType,
-                this.nameType,
-                this.roleType));
+            var claimsPrincipal = new ClaimsPrincipal(GetAuthenticatedClaimsIdentity());
 
             claimsPrincipal.AddIdentities(this.identities.AsEnumerable());
 
             return claimsPrincipal;
-        }
-        
-        private static ClaimsIdentity GetAuthenticatedClaimsIdentity(
-            ICollection<Claim> claims = null,
-            string authenticationType = null,
-            string nameType = null,
-            string roleType = null)
-        {
-            claims = claims ?? new List<Claim>();
-            authenticationType = authenticationType ?? DefaultAuthenticationType;
-            nameType = nameType ?? DefaultNameType;
-            roleType = roleType ?? DefaultRoleType;
-
-            if (claims.All(c => c.Type != ClaimTypes.NameIdentifier))
-            {
-                claims.Add(new Claim(ClaimTypes.NameIdentifier, DefaultIdentifier));
-            }
-
-            if (claims.All(c => c.Type != nameType))
-            {
-                claims.Add(new Claim(nameType, DefaultUsername));
-            }
-
-            return new ClaimsIdentity(claims, authenticationType, nameType, roleType);
         }
     }
 }

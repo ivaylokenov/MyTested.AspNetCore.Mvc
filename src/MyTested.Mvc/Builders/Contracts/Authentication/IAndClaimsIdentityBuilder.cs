@@ -5,5 +5,10 @@
     /// </summary>
     public interface IAndClaimsIdentityBuilder : IClaimsIdentityBuilder
     {
+        /// <summary>
+        /// AndAlso method for better readability when building claims identity.
+        /// </summary>
+        /// <returns>The same claims identity builder.</returns>
+        IClaimsIdentityBuilder AndAlso();
     }
 }
