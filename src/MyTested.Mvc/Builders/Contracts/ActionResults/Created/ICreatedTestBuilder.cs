@@ -101,15 +101,14 @@
         /// <returns>The same created test builder.</returns>
         IAndCreatedTestBuilder WithUrlHelperOfType<TUrlHelper>()
             where TUrlHelper : IUrlHelper;
-        
+
         /// <summary>
         /// Tests whether created result returns created at specific action.
         /// </summary>
         /// <typeparam name="TController">Type of expected controller.</typeparam>
         /// <param name="actionCall">Method call expression indicating the expected action.</param>
         /// <returns>The same created test builder.</returns>
-        IAndCreatedTestBuilder At<TController>(Expression<Action<TController>> actionCall)
-            where TController : Controller;
+        IAndCreatedTestBuilder At<TController>(Expression<Action<TController>> actionCall);
 
         /// <summary>
         /// Tests whether created result has the same status code as the provided one.

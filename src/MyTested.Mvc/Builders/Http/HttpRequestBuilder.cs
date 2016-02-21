@@ -32,7 +32,8 @@
         {
             this.request = new MockedHttpRequest
             {
-                Scheme = HttpScheme.Http
+                Scheme = HttpScheme.Http,
+                Path = "/"
             };
         }
 

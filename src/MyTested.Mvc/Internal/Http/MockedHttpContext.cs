@@ -38,7 +38,7 @@
             : base(features)
         {
             this.CustomRequest = this.httpRequest;
-            this.httpResponse = this.httpResponse ?? new MockedHttpResponse(this, this.Features);
+            this.httpResponse = this.httpResponse ?? new MockedHttpResponse(this);
             this.PrepareRequestServices();
         }
 
@@ -79,7 +79,7 @@
 
         internal HttpRequest CustomRequest
         {
-            set { this.httpRequest = value ?? new DefaultHttpRequest(this, this.Features); }
+            set { this.httpRequest = value ?? new DefaultHttpRequest(this); }
         }
 
         private void PrepareFeatures()

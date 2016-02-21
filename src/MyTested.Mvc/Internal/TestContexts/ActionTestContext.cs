@@ -1,6 +1,7 @@
 ﻿namespace MyTested.Mvc.Internal.TestContexts
 {
     using System;
+    using System.Linq.Expressions;
     using System.Reflection;
 
     /// <summary>
@@ -15,10 +16,10 @@
         /// <param name="actionName">Name of the action.</param>
         /// <param name="actionResult">Action return value.</param>
         /// <param name="caughtException">Caught exception during action execution.</param>
-        public ActionTestContext(string actionName, MethodInfo action, TActionResult actionResult, Exception caughtException)
+        public ActionTestContext(string actionName, LambdaExpression actionCall, TActionResult actionResult, Exception caughtException)
         {
             this.ActionName = actionName;
-            this.Action = action;
+            this.ActionCall = actionCall;
             this.ActionResult = actionResult;
             this.CaughtException = caughtException;
         }
@@ -29,7 +30,7 @@
         /// <value>The action name as string.</value>
         public string ActionName { get; internal set; }
         
-        public MethodInfo Action { get; internal set; }
+        public LambdaExpression ActionCall { get; internal set; }
 
         /// <summary>
         /// Gets the return value of the action.

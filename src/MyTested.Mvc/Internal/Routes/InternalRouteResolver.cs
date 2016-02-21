@@ -10,7 +10,7 @@
     using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.Extensions.DependencyInjection;
     using Utilities.Extensions;
-
+    using Microsoft.AspNetCore.Http;
     /// <summary>
     /// Used for resolving HTTP request to a route.
     /// </summary>
@@ -79,14 +79,28 @@
                 actionContext.ModelState);
         }
 
-        public static void ResolveRouteData(IRouter router, RouteContext routeContext)
+        public static RouteData ResolveRouteData(IRouter router, HttpContext httpContext)
         {
+            return ResolveRouteData(router, new RouteContext(httpContext));
+        }
+
+        public static RouteData ResolveRouteData(IRouter router, RouteContext routeContext)
+        {
+            var path = routeContext.HttpContext.Request?.Path;
+            if (path == null || !path.HasValue || path.Value == string.Empty)
+            {
+                return null;
+            }
+            
             router.RouteAsync(routeContext).Wait();
 
+            var routeData = routeContext.RouteData;
             routeContext.HttpContext.Features[typeof(IRoutingFeature)] = new MockedRoutingFeature
             {
-                RouteData = routeContext.RouteData
+                RouteData = routeData
             };
+
+            return routeData;
         }
     }
 }

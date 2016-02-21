@@ -7,7 +7,7 @@
     using Setups.Common;
     using Setups.Controllers;
     using Xunit;
-
+    using Setups.Startups;
     public class RedirectTestBuilderTests
     {
         [Fact]
@@ -449,23 +449,31 @@
         [Fact]
         public void AtShouldWorkCorrectlyWithCorrectActionCall()
         {
+            MyMvc.StartsFrom<RoutesStartup>();
+
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.RedirectToActionResult())
+                .Calling(c => c.RedirectToRouteAction())
                 .ShouldReturn()
                 .Redirect()
                 .To<NoAttributesController>(c => c.WithParameter(1));
+
+            MyMvc.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void AtShouldWorkCorrectlyWithCorrectVoidActionCall()
         {
+            MyMvc.StartsFrom<RoutesStartup>();
+
             MyMvc
                 .Controller<MvcController>()
                 .Calling(c => c.RedirectToRouteVoidAction())
                 .ShouldReturn()
                 .Redirect()
                 .To<NoAttributesController>(c => c.VoidAction());
+
+            MyMvc.IsUsingDefaultConfiguration();
         }
 
         [Fact]

@@ -193,7 +193,6 @@
         }
 
         public IAndResolvedRouteTestBuilder To<TController>()
-            where TController : Controller
         {
             var actualInfo = this.GetActualRouteInfo();
             var expectedControllerType = typeof(TController);
@@ -298,7 +297,7 @@
 
         private void ValidateRouteInformation<TController>()
         {
-            var expectedRouteValues = this.GetExpectedRouteInfo<TController>();
+            var expectedRouteValues = this.GetExpectedRouteInfo();
             var actualRouteValues = this.GetActualRouteInfo();
 
             if (!actualRouteValues.IsResolved)
@@ -323,10 +322,10 @@
             expectedRouteValues.ActionArguments.ForEach(arg => this.ToRouteValue(arg.Key, arg.Value.Value));
         }
 
-        private ExpressionParsedRouteContext GetExpectedRouteInfo<TController>()
+        private ExpressionParsedRouteContext GetExpectedRouteInfo()
         {
             return this.expectedRouteInfo ??
-                   (this.expectedRouteInfo = RouteExpressionParser.Parse<TController>(this.actionCallExpression));
+                   (this.expectedRouteInfo = RouteExpressionParser.Parse(this.actionCallExpression));
         }
 
         private ResolvedRouteContext GetActualRouteInfo()

@@ -42,6 +42,11 @@
         public static IEnumerable<MethodArgumentTestContext> ResolveMethodArguments(LambdaExpression expression)
         {
             var methodCallExpression = GetMethodCallExpression(expression);
+            if (!methodCallExpression.Arguments.Any())
+            {
+                return Enumerable.Empty<MethodArgumentTestContext>();
+            }
+
             return methodCallExpression.Arguments
                 .Zip(
                     methodCallExpression.Method.GetParameters(),

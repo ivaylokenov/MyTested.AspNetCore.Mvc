@@ -14,10 +14,11 @@
     using Microsoft.AspNetCore.Routing;
     using Microsoft.Net.Http.Headers;
     using Utilities.Validators;
-    using Internal.TestContexts;    /// <summary>
-                                    /// Used for testing created results.
-                                    /// </summary>
-                                    /// <typeparam name="TCreatedResult">Type of created result - CreatedAtActionResult or CreatedAtRouteResult.</typeparam>
+    using Internal.TestContexts;
+    using Internal;/// <summary>
+                   /// Used for testing created results.
+                   /// </summary>
+                   /// <typeparam name="TCreatedResult">Type of created result - CreatedAtActionResult or CreatedAtRouteResult.</typeparam>
     public class CreatedTestBuilder<TCreatedResult>
         : BaseTestBuilderWithResponseModel<TCreatedResult>, IAndCreatedTestBuilder
         where TCreatedResult : ObjectResult
@@ -355,7 +356,15 @@
         /// <param name="actionCall">Method call expression indicating the expected action.</param>
         /// <returns>The same created test builder.</returns>
         public IAndCreatedTestBuilder At<TController>(Expression<Action<TController>> actionCall)
-            where TController : Controller => this.AtRoute<TController>(actionCall);
+        {
+            RouteActionResultValidator.ValidateExpression(
+                this.TestContext,
+                LinkGenerationTestContext.FromCreatedResult(this.ActionResult),
+                actionCall,
+                this.ThrowNewCreatedResultAssertionException);
+
+            return this;
+        }
 
         /// <summary>
         /// AndAlso method for better readability when chaining created tests.
@@ -392,13 +401,7 @@
 
             return actualRedirectResult;
         }
-
-        private IAndCreatedTestBuilder AtRoute<TController>(LambdaExpression actionCall)
-            where TController : Controller
-        {
-            return this;
-        }
-
+        
         private void ThrowNewCreatedResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new CreatedResultAssertionException(string.Format(

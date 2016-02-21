@@ -13,7 +13,6 @@
     using Contracts.Http;
     using Exceptions;
     using Http;
-    using Internal;
     using Internal.Application;
     using Internal.Contracts;
     using Utilities.Extensions;
@@ -28,7 +27,7 @@
     using Utilities.Validators;
     using Internal.Routes;
     using Internal.TestContexts;
-
+    using Internal;
     /// <summary>
     /// Used for building the controller which will be tested.
     /// </summary>
@@ -289,7 +288,7 @@
             }
 
             this.TestContext.ActionName = actionName;
-            this.TestContext.Action = ExpressionParser.GetMethodInfo(actionCall);
+            this.TestContext.ActionCall = actionCall;
             this.TestContext.CaughtException = caughtException;
 
             return new VoidActionResultTestBuilder(this.TestContext);
@@ -398,12 +397,17 @@
                 caughtException = exception;
             }
 
-            return new ActionTestContext<TActionResult>(actionName, action, actionResult, caughtException);
+            return new ActionTestContext<TActionResult>(actionName, actionCall, actionResult, caughtException);
         }
 
         private string GetAndValidateAction(LambdaExpression actionCall)
         {
             var methodInfo = ExpressionParser.GetMethodInfo(actionCall);
+
+            if (this.enabledValidation)
+            {
+                this.ValidateModelState(actionCall);
+            }
 
             var controllerActionDescriptorCache = this.Services.GetService<IControllerActionDescriptorCache>();
             if (controllerActionDescriptorCache != null)
@@ -412,31 +416,14 @@
                     = controllerActionDescriptorCache.GetActionDescriptor(methodInfo);
             }
 
-            if (this.enabledValidation)
-            {
-                this.ValidateModelState(actionCall);
-            }
-
             return methodInfo.Name;
         }
 
         private void PrepareController()
         {
             var options = this.Services.GetRequiredService<IOptions<MvcOptions>>().Value;
-            
-            if (this.HttpContext.Request?.Path != null)
-            {
-                InternalRouteResolver.ResolveRouteData(TestApplication.Router, new RouteContext(this.HttpContext));
-            }
 
-            var controllerContext = new ControllerContext
-            {
-                HttpContext = this.HttpContext,
-                RouteData = this.HttpContext.GetRouteData(),
-                ValidatorProviders = options.ModelValidatorProviders,
-                InputFormatters = options.InputFormatters,
-                ModelBinders = options.ModelBinders
-            };
+            var controllerContext = new MockedControllerContext(this.TestContext);
 
             var controllerPropertyActivators = this.Services.GetServices<IControllerPropertyActivator>();
 

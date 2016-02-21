@@ -32,6 +32,11 @@
                     dataTokens: new { random = "value" });
 
                 routes.MapRoute(
+                    name: "Redirect",
+                    template: "api/Redirect/{action}",
+                    defaults: new { controller = "NoAttributes" });
+
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });

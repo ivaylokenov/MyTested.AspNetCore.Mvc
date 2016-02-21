@@ -18,6 +18,15 @@
         }
 
         [Fact]
+        public void ToShouldResolveCorrectControllerAndActionIfNoLocationIsSet()
+        {
+            MyMvc
+                .Routes()
+                .ShouldMap(request => request.WithMethod(HttpMethod.Post))
+                .To<HomeController>(c => c.Index());
+        }
+        
+        [Fact]
         public void ToShouldResolveCorrectControllerAndActionWithPartialPath()
         {
             MyMvc

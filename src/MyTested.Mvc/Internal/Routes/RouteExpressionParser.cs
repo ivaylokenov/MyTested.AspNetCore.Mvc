@@ -9,13 +9,13 @@
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Routing;
     using Utilities;
-
+    using Utilities.Extensions;
     public static class RouteExpressionParser
     {
         // This key should be ignored as it is used internally for route attribute matching.
         private static readonly string RouteGroupKey = "!__route_group";
 
-        public static ExpressionParsedRouteContext Parse<TController>(
+        public static ExpressionParsedRouteContext Parse(
             LambdaExpression actionCallExpression,
             object additionalRouteValues = null,
             bool considerParameterDescriptors = false)
@@ -77,6 +77,21 @@
                 controllerName,
                 actionName,
                 routeValues);
+        }
+
+        public static RouteData ResolveRouteData(IRouter router, LambdaExpression actionCallExpression)
+        {
+            var parsedRouteContext = Parse(actionCallExpression, considerParameterDescriptors: true);
+            
+            var routeData = new RouteData();
+
+            parsedRouteContext.ActionArguments.ForEach(r => routeData.Values.Add(r.Key, r.Value.Value));
+            routeData.Values["controller"] = parsedRouteContext.ControllerName;
+            routeData.Values["action"] = parsedRouteContext.Action;
+
+            routeData.Routers.Add(router);
+
+            return routeData;
         }
 
         private static IDictionary<string, object> GetRouteValues(

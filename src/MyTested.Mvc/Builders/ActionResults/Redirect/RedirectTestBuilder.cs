@@ -16,7 +16,7 @@
     /// <summary>
     /// Used for testing redirect results.
     /// </summary>
-    /// <typeparam name="TRedirectResult">Type of redirect result - RedirectResult, RedirectToAction or RedirectToRouteResult.</typeparam>
+    /// <typeparam name="TRedirectResult">Type of redirect result - RedirectResult, RedirectToActionResult or RedirectToRouteResult.</typeparam>
     public class RedirectTestBuilder<TRedirectResult>
         : BaseTestBuilderWithActionResult<TRedirectResult>, IAndRedirectTestBuilder
         where TRedirectResult : ActionResult
@@ -232,7 +232,7 @@
 
             return this;
         }
-        
+
         /// <summary>
         /// Tests whether redirect result redirects to specific action.
         /// </summary>
@@ -240,7 +240,15 @@
         /// <param name="actionCall">Method call expression indicating the expected redirect action.</param>
         /// <returns>The same redirect test builder.</returns>
         public IAndRedirectTestBuilder To<TController>(Expression<Action<TController>> actionCall)
-            where TController : Controller => this.RedirectTo<TController>(actionCall);
+        {
+            RouteActionResultValidator.ValidateExpression(
+                this.TestContext,
+                LinkGenerationTestContext.FromRedirectResult(this.ActionResult),
+                actionCall,
+                this.ThrowNewRedirectResultAssertionException);
+            
+            return this;
+        }
 
         /// <summary>
         /// AndAlso method for better readability when chaining redirect result tests.
@@ -268,13 +276,7 @@
 
             return actualRedirectResult;
         }
-
-        private IAndRedirectTestBuilder RedirectTo<TController>(LambdaExpression actionCall)
-            where TController : Controller
-        {
-            return this;
-        }
-
+        
         private void ThrowNewRedirectResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new RedirectResultAssertionException(string.Format(

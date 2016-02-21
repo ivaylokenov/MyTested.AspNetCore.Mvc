@@ -103,14 +103,13 @@
         /// <returns>The same redirect test builder.</returns>
         IAndRedirectTestBuilder WithUrlHelperOfType<TUrlHelper>()
             where TUrlHelper : IUrlHelper;
-        
+
         /// <summary>
         /// Tests whether redirect result redirects to specific action.
         /// </summary>
         /// <typeparam name="TController">Type of expected redirect controller.</typeparam>
         /// <param name="actionCall">Method call expression indicating the expected redirect action.</param>
         /// <returns>The same redirect test builder.</returns>
-        IAndRedirectTestBuilder To<TController>(Expression<Action<TController>> actionCall)
-            where TController : Controller;
+        IAndRedirectTestBuilder To<TController>(Expression<Action<TController>> actionCall);
     }
 }

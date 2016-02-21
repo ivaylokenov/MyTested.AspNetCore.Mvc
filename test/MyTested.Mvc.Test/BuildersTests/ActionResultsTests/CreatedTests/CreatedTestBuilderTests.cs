@@ -12,7 +12,7 @@
     using Setups.Controllers;
     using Setups.Models;
     using Xunit;
-
+    using Setups.Startups;
     public class CreatedTestBuilderTests
     {
         [Fact]
@@ -438,23 +438,31 @@
         [Fact]
         public void AtShouldWorkCorrectlyWithCorrectActionCall()
         {
+            MyMvc.StartsFrom<RoutesStartup>();
+
             MyMvc
                 .Controller<MvcController>()
                 .Calling(c => c.CreatedAtRouteAction())
                 .ShouldReturn()
                 .Created()
                 .At<NoAttributesController>(c => c.WithParameter(1));
+
+            MyMvc.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void AtShouldWorkCorrectlyWithCorrectVoidActionCall()
         {
+            MyMvc.StartsFrom<RoutesStartup>();
+
             MyMvc
                 .Controller<MvcController>()
                 .Calling(c => c.CreatedAtRouteVoidAction())
                 .ShouldReturn()
                 .Created()
                 .At<NoAttributesController>(c => c.VoidAction());
+
+            MyMvc.IsUsingDefaultConfiguration();
         }
 
         [Fact]

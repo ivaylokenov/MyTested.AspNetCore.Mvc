@@ -12,7 +12,7 @@
     {
         public static MockedHttpResponse From(DefaultHttpContext httpContext, HttpResponse httpResponse)
         {
-            return new MockedHttpResponse(httpContext, httpContext.Features)
+            return new MockedHttpResponse(httpContext)
             {
                 Body = httpResponse.Body,
                 ContentLength = httpResponse.ContentLength,
@@ -25,9 +25,8 @@
         /// Initializes a new instance of the <see cref="MockedHttpResponse" /> class.
         /// </summary>
         /// <param name="context">Default HTTP context.</param>
-        /// <param name="features">HTTP features collection.</param>
-        public MockedHttpResponse(DefaultHttpContext context, IFeatureCollection features)
-            : base(context, features)
+        public MockedHttpResponse(DefaultHttpContext context)
+            : base(context)
         {
         }
 

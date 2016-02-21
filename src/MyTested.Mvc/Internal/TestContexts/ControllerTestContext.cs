@@ -2,18 +2,23 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq.Expressions;
     using System.Reflection;
+    using Microsoft.AspNetCore.Routing;
     using Utilities;
     using Utilities.Extensions;
     using Utilities.Validators;
+    using Routes;
+    using Application;
 
     public class ControllerTestContext : HttpTestContext
     {
         private IEnumerable<object> controllerAttributes;
         private string actionName;
-        private MethodInfo action;
+        private LambdaExpression actionCall;
         private IEnumerable<object> actionAttributes;
         private object model;
+        private RouteData expressionRouteData;
         
         public object Controller { get; internal set; }
 
@@ -48,13 +53,21 @@
         {
             get
             {
-                return this.action;
+                return ExpressionParser.GetMethodInfo(this.ActionCall);
+            }
+        }
+
+        public LambdaExpression ActionCall
+        {
+            get
+            {
+                return this.actionCall;
             }
 
             internal set
             {
-                CommonValidator.CheckForNullReference(value, nameof(Action));
-                this.action = value;
+                CommonValidator.CheckForNullReference(value, nameof(ActionCall));
+                this.actionCall = value;
             }
         }
 
@@ -92,7 +105,26 @@
                 this.model = value;
             }
         }
-        
+
+        public override RouteData RouteData
+        {
+            get
+            {
+                var routeData = base.RouteData;
+                if (routeData != null)
+                {
+                    return routeData;
+                }
+
+                if (this.expressionRouteData == null && this.ActionCall != null)
+                {
+                    this.expressionRouteData = RouteExpressionParser.ResolveRouteData(TestApplication.Router, this.ActionCall);
+                }
+
+                return this.expressionRouteData;
+            }
+        }
+
         internal TController ControllerAs<TController>()
             where TController : class => this.Controller as TController;
 
@@ -106,7 +138,7 @@
         internal void Apply<TActionResult>(ActionTestContext<TActionResult> testActionDescriptor)
         {
             this.ActionName = testActionDescriptor.ActionName;
-            this.Action = testActionDescriptor.Action;
+            this.ActionCall = testActionDescriptor.ActionCall;
             this.ActionResult = testActionDescriptor.ActionResult;
             this.CaughtException = testActionDescriptor.CaughtException;
         }

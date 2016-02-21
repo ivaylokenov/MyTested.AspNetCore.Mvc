@@ -17,5 +17,12 @@
                     Value = a.Value
                 });
         }
+
+        public static IDictionary<string, object> ToRouteValues(this IDictionary<string, MethodArgumentTestContext> dictionary)
+        {
+            return dictionary.ToDictionary(
+                a => a.Key,
+                a => a.Value.Value);
+        }
     }
 }

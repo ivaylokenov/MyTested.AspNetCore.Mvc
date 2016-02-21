@@ -4,10 +4,15 @@
     using System.Collections.Generic;
     using Utilities.Extensions;
     using Microsoft.AspNetCore.Mvc;
-
-    /// <summary>
-    /// Validator class containing validation logic action results with route specific information.
-    /// </summary>
+    using Internal.Application;
+    using Microsoft.AspNetCore.Mvc.Routing;
+    using Internal.Routes;
+    using System.Linq.Expressions;
+    using Internal.TestContexts;
+    using Internal;
+    using System.Linq;/// <summary>
+                      /// Validator class containing validation logic action results with route specific information.
+                      /// </summary>
     public static class RouteActionResultValidator
     {
         /// <summary>
@@ -216,6 +221,65 @@
                         $"instead received {actualUrlHelper.GetName()}");
                 }
             });
+        }
+
+        public static void ValidateExpression(
+            ControllerTestContext controllerTestContext,
+            LinkGenerationTestContext linkGenerationTestContext,
+            LambdaExpression expectedRouteValuesAsLambdaExpression,
+            Action<string, string, string> failedValidationAction)
+        {
+            // extract
+            var actionContext = controllerTestContext.ControllerAs<Controller>().ControllerContext
+                ?? new MockedControllerContext(controllerTestContext);
+
+            if (actionContext.RouteData == null || !actionContext.RouteData.Values.Any())
+            {
+                actionContext.RouteData = controllerTestContext.RouteData;
+            }
+
+            var urlHelper = linkGenerationTestContext.UrlHelper ?? TestServiceProvider
+                .GetRequiredService<IUrlHelperFactory>()
+                .GetUrlHelper(actionContext);
+
+            var expectedRouteValues = RouteExpressionParser.Parse(expectedRouteValuesAsLambdaExpression, considerParameterDescriptors: true);
+            var expectedUri = urlHelper.Action(
+                expectedRouteValues.Action,
+                expectedRouteValues.ControllerName,
+                expectedRouteValues.ActionArguments.ToRouteValues());
+
+            string actualUri = null;
+            if (!string.IsNullOrWhiteSpace(linkGenerationTestContext.Location))
+            {
+                actualUri = linkGenerationTestContext.Location;
+            }
+            else if (!string.IsNullOrWhiteSpace(linkGenerationTestContext.RouteName))
+            {
+                actualUri = urlHelper.RouteUrl(
+                    linkGenerationTestContext.RouteName,
+                    linkGenerationTestContext.RouteValues);
+            }
+            else
+            {
+                linkGenerationTestContext.Action = linkGenerationTestContext.Action
+                    ?? controllerTestContext.RouteData.Values["action"] as string;
+
+                linkGenerationTestContext.Controller = linkGenerationTestContext.Controller
+                    ?? controllerTestContext.RouteData.Values["controller"] as string;
+
+                actualUri = urlHelper.Action(
+                    linkGenerationTestContext.Action,
+                    linkGenerationTestContext.Controller,
+                    linkGenerationTestContext.RouteValues);
+            }
+
+            if (actualUri != expectedUri)
+            {
+                failedValidationAction(
+                    "to have resolved location to",
+                    $"{expectedUri.GetErrorMessageName()}",
+                    $"in fact received {actualUri.GetErrorMessageName()}");
+            }
         }
     }
 }
