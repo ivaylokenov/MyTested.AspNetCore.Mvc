@@ -10,7 +10,8 @@
     using Utilities.Validators;
     using Routes;
     using Application;
-
+    using Microsoft.AspNetCore.Mvc;
+    using System.Linq;
     public class ControllerTestContext : HttpTestContext
     {
         private IEnumerable<object> controllerAttributes;
@@ -127,6 +128,20 @@
 
         internal TController ControllerAs<TController>()
             where TController : class => this.Controller as TController;
+
+        internal ControllerContext ControllerContext
+        {
+            get
+            {
+                var controllerContext = this.ControllerAs<Controller>()?.ControllerContext ?? new MockedControllerContext(this);
+                if (controllerContext.RouteData == null || !controllerContext.RouteData.Values.Any())
+                {
+                    controllerContext.RouteData = this.RouteData;
+                }
+
+                return controllerContext;
+            }
+        }
 
         internal TActionResult ActionResultAs<TActionResult>() => this.ActionResult.TryCastTo<TActionResult>();
 

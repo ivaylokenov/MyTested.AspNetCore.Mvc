@@ -8,9 +8,9 @@
     using Microsoft.AspNetCore.Mvc;
     using Utilities.Validators;
     using Internal.TestContexts;
-    /// <summary>
-    /// Used for testing local redirect result.
-    /// </summary>
+    using System.Linq.Expressions;    /// <summary>
+                                      /// Used for testing local redirect result.
+                                      /// </summary>
     public class LocalRedirectTestBuilder : BaseTestBuilderWithActionResult<LocalRedirectResult>,
         IAndLocalRedirectTestBuilder
     {
@@ -67,6 +67,53 @@
             LocationValidator.ValidateUri(
                 this.ActionResult,
                 localUrl.OriginalString,
+                this.ThrowNewRedirectResultAssertionException);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether local redirect result has the same URL helper as the provided one.
+        /// </summary>
+        /// <param name="urlHelper">URL helper of type IUrlHelper.</param>
+        /// <returns>The same local redirect test builder.</returns>
+        public IAndLocalRedirectTestBuilder WithUrlHelper(IUrlHelper urlHelper)
+        {
+            RouteActionResultValidator.ValidateUrlHelper(
+                this.ActionResult,
+                urlHelper,
+                this.ThrowNewRedirectResultAssertionException);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether local redirect result has the same URL helper type as the provided one.
+        /// </summary>
+        /// <typeparam name="TUrlHelper">URL helper of type IUrlHelper.</typeparam>
+        /// <returns>The same local redirect test builder.</returns>
+        public IAndLocalRedirectTestBuilder WithUrlHelperOfType<TUrlHelper>()
+            where TUrlHelper : IUrlHelper
+        {
+            RouteActionResultValidator.ValidateUrlHelperOfType<TUrlHelper>(
+                this.ActionResult,
+                this.ThrowNewRedirectResultAssertionException);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether local redirect result redirects to specific action.
+        /// </summary>
+        /// <typeparam name="TController">Type of expected redirect controller.</typeparam>
+        /// <param name="actionCall">Method call expression indicating the expected redirect action.</param>
+        /// <returns>The same local redirect test builder.</returns>
+        public IAndLocalRedirectTestBuilder To<TController>(Expression<Action<TController>> actionCall)
+        {
+            RouteActionResultValidator.ValidateExpressionLink(
+                this.TestContext,
+                LinkGenerationTestContext.FromLocalRedirectResult(this.ActionResult),
+                actionCall,
                 this.ThrowNewRedirectResultAssertionException);
 
             return this;

@@ -33,7 +33,10 @@
             var createdResult = actionResult as CreatedResult;
             if (createdResult != null)
             {
-                return new LinkGenerationTestContext { Location = createdResult.Location };
+                return new LinkGenerationTestContext
+                {
+                    Location = createdResult.Location
+                };
             }
 
             return null;
@@ -67,10 +70,23 @@
             var redirectResult = actionResult as RedirectResult;
             if (redirectResult != null)
             {
-                return new LinkGenerationTestContext { Location = redirectResult.Url };
+                return new LinkGenerationTestContext
+                {
+                    Location = redirectResult.Url,
+                    UrlHelper = redirectResult.UrlHelper
+                };
             }
 
             return null;
+        }
+
+        public static LinkGenerationTestContext FromLocalRedirectResult(LocalRedirectResult localRedirectResult)
+        {
+            return new LinkGenerationTestContext
+            {
+                Location = localRedirectResult.Url,
+                UrlHelper = localRedirectResult.UrlHelper
+            };
         }
 
         public string Location { get; set; }

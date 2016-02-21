@@ -241,7 +241,7 @@
         /// <returns>The same redirect test builder.</returns>
         public IAndRedirectTestBuilder To<TController>(Expression<Action<TController>> actionCall)
         {
-            RouteActionResultValidator.ValidateExpression(
+            RouteActionResultValidator.ValidateExpressionLink(
                 this.TestContext,
                 LinkGenerationTestContext.FromRedirectResult(this.ActionResult),
                 actionCall,

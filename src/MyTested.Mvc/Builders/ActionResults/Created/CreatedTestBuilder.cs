@@ -357,7 +357,7 @@
         /// <returns>The same created test builder.</returns>
         public IAndCreatedTestBuilder At<TController>(Expression<Action<TController>> actionCall)
         {
-            RouteActionResultValidator.ValidateExpression(
+            RouteActionResultValidator.ValidateExpressionLink(
                 this.TestContext,
                 LinkGenerationTestContext.FromCreatedResult(this.ActionResult),
                 actionCall,
