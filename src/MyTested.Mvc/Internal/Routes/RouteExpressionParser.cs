@@ -144,7 +144,7 @@
             return result;
         }
 
-        private static void ApplyAdditionaRouteValues(object routeValues, IDictionary<string, object> result)
+        public static void ApplyAdditionaRouteValues(object routeValues, IDictionary<string, object> result)
         {
             if (routeValues != null)
             {

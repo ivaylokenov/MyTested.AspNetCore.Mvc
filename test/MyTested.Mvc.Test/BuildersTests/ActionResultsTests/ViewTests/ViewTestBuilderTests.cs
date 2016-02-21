@@ -73,7 +73,7 @@
                         .View("Index")
                         .WithModel(model);
                 },
-                "When calling IndexView action in MvcController expected response model List<ResponseModel> to be the given model, but in fact it was a different.");
+                "When calling IndexView action in MvcController expected response model List<ResponseModel> to be the given model, but in fact it was a different one.");
         }
 
         [Fact]
@@ -373,7 +373,7 @@
                         .PartialView("_IndexPartial")
                         .WithModel(model);
                 },
-                "When calling IndexPartialView action in MvcController expected response model List<ResponseModel> to be the given model, but in fact it was a different.");
+                "When calling IndexPartialView action in MvcController expected response model List<ResponseModel> to be the given model, but in fact it was a different one.");
         }
 
         [Fact]

@@ -44,6 +44,8 @@
         /// <param name="httpRequestBuilder">HTTP request builder.</param>
         /// <returns>The same controller builder.</returns>
         IAndControllerBuilder<TController> WithHttpRequest(Action<IHttpRequestBuilder> httpRequestBuilder);
+        
+        IAndControllerBuilder<TController> WithResolvedRouteData();
 
         /// <summary>
         /// Tries to resolve constructor dependency of given type.
@@ -107,7 +109,7 @@
         /// <typeparam name="TActionResult">Asynchronous Task result from action.</typeparam>
         /// <param name="actionCall">Method call expression indicating invoked action.</param>
         /// <returns>Builder for testing the action result.</returns>
-        IActionResultTestBuilder<TActionResult> CallingAsync<TActionResult>(Expression<Func<TController, Task<TActionResult>>> actionCall);
+        IActionResultTestBuilder<TActionResult> Calling<TActionResult>(Expression<Func<TController, Task<TActionResult>>> actionCall);
 
         /// <summary>
         /// Indicates which action should be invoked and tested.
@@ -121,7 +123,7 @@
         /// </summary>
         /// <param name="actionCall">Method call expression indicating invoked action.</param>
         /// <returns>Builder for testing void actions.</returns>
-        IVoidActionResultTestBuilder CallingAsync(Expression<Func<TController, Task>> actionCall);
+        IVoidActionResultTestBuilder Calling(Expression<Func<TController, Task>> actionCall);
 
         /// <summary>
         /// Gets ASP.NET MVC controller instance to be tested.

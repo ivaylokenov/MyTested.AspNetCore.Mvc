@@ -14,6 +14,7 @@
     using System.Linq;
     public class ControllerTestContext : HttpTestContext
     {
+        private ControllerContext controllerContext;
         private IEnumerable<object> controllerAttributes;
         private string actionName;
         private LambdaExpression actionCall;
@@ -124,6 +125,13 @@
 
                 return this.expressionRouteData;
             }
+            
+            internal set
+            {
+                CommonValidator.CheckForNullReference(value, nameof(RouteData));
+                this.ControllerContext.RouteData = value;
+                base.RouteData = value;
+            }
         }
 
         internal TController ControllerAs<TController>()
@@ -133,13 +141,22 @@
         {
             get
             {
-                var controllerContext = this.ControllerAs<Controller>()?.ControllerContext ?? new MockedControllerContext(this);
-                if (controllerContext.RouteData == null || !controllerContext.RouteData.Values.Any())
+                if (this.controllerContext == null)
                 {
-                    controllerContext.RouteData = this.RouteData;
+                    this.controllerContext = this.ControllerAs<Controller>()?.ControllerContext ?? new MockedControllerContext(this);
+                    if (this.controllerContext.RouteData == null || !this.controllerContext.RouteData.Values.Any())
+                    {
+                        this.controllerContext.RouteData = this.RouteData;
+                    }
                 }
+                
+                return this.controllerContext;
+            }
 
-                return controllerContext;
+            set
+            {
+                CommonValidator.CheckForNullReference(value, nameof(ControllerContext));
+                this.controllerContext = value;
             }
         }
 

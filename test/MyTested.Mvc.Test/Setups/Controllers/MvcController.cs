@@ -742,6 +742,30 @@
             return TestObjectFactory.GetListOfResponseModels();
         }
 
+        public IActionResult UrlAction()
+        {
+            return this.Ok(this.Url.Action());
+        }
+
+        public IActionResult TryValidateModelAction()
+        {
+            var model = new RequestModel();
+            this.TryValidateModel(model);
+            if (this.ModelState.IsValid)
+            {
+                return this.Ok();
+            }
+
+            return this.HttpBadRequest();
+        }
+
+        public async Task<IActionResult> TryUpdateModelAction()
+        {
+            var model = new RequestModel();
+            await this.TryUpdateModelAsync<RequestModel>(model);
+            return this.Ok();
+        }
+
         private void ThrowNewNullReferenceException()
         {
             throw new NullReferenceException("Test exception message");

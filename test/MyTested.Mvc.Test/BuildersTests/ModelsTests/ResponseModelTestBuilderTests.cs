@@ -134,8 +134,8 @@
                         .ShouldReturn()
                         .Ok()
                         .WithResponseModel(another);
-                }, 
-                "When calling OkResultWithResponse action in MvcController expected response model List<ResponseModel> to be the given model, but in fact it was a different.");
+                },
+                "When calling OkResultWithResponse action in MvcController expected response model List<ResponseModel> to be the given model, but in fact it was a different one.");
         }
 
         [Fact]

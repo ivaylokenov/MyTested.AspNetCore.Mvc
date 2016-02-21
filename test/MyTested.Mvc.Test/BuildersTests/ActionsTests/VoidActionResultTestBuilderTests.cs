@@ -39,7 +39,7 @@
                 {
                     MyMvc
                         .Controller<MvcController>()
-                        .CallingAsync(c => c.EmptyActionWithExceptionAsync())
+                        .Calling(c => c.EmptyActionWithExceptionAsync())
                         .ShouldReturnEmpty();
                 },
                 "AggregateException (containing NullReferenceException with 'Test exception message' message) was thrown but was not caught or expected.");

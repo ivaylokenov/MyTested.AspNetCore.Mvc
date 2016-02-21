@@ -20,7 +20,6 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Controllers;
-    using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Options;
     using Utilities;
@@ -28,6 +27,7 @@
     using Internal.Routes;
     using Internal.TestContexts;
     using Internal;
+
     /// <summary>
     /// Used for building the controller which will be tested.
     /// </summary>
@@ -41,6 +41,8 @@
         private Action<TController> controllerSetupAction;
         private bool isPreparedForTesting;
         private bool enabledValidation;
+        private bool resolveRouteValues;
+        private object additionalRouteValues;
         
         /// <summary>
         /// Initializes a new instance of the <see cref="ControllerBuilder{TController}" /> class.
@@ -86,6 +88,12 @@
 
         private IServiceProvider Services => this.HttpContext.RequestServices;
 
+        public IAndControllerBuilder<TController> WithControllerContext(ControllerContext controllerContext)
+        {
+            this.TestContext.ControllerContext = controllerContext;
+            return this;
+        }
+
         /// <summary>
         /// Sets the HTTP context for the current test case. If no request services are set on the provided context, the globally configured ones are initialized.
         /// </summary>
@@ -120,6 +128,18 @@
             var newHttpRequestBuilder = new HttpRequestBuilder();
             httpRequestBuilder(newHttpRequestBuilder);
             newHttpRequestBuilder.ApplyTo(this.HttpRequest);
+            return this;
+        }
+
+        public IAndControllerBuilder<TController> WithResolvedRouteData()
+        {
+            return this.WithResolvedRouteData(null);
+        }
+
+        public IAndControllerBuilder<TController> WithResolvedRouteData(object additionalRouteValues)
+        {
+            this.resolveRouteValues = true;
+            this.additionalRouteValues = additionalRouteValues;
             return this;
         }
 
@@ -238,7 +258,9 @@
         public IActionResultTestBuilder<TActionResult> Calling<TActionResult>(Expression<Func<TController, TActionResult>> actionCall)
         {
             var actionInfo = this.GetAndValidateActionResult(actionCall);
+
             this.TestContext.Apply(actionInfo);
+
             return new ActionResultTestBuilder<TActionResult>(this.TestContext);
         }
 
@@ -248,7 +270,7 @@
         /// <typeparam name="TActionResult">Asynchronous Task result from action.</typeparam>
         /// <param name="actionCall">Method call expression indicating invoked action.</param>
         /// <returns>Builder for testing the action result.</returns>
-        public IActionResultTestBuilder<TActionResult> CallingAsync<TActionResult>(Expression<Func<TController, Task<TActionResult>>> actionCall)
+        public IActionResultTestBuilder<TActionResult> Calling<TActionResult>(Expression<Func<TController, Task<TActionResult>>> actionCall)
         {
             var actionInfo = this.GetAndValidateActionResult(actionCall);
             var actionResult = default(TActionResult);
@@ -299,7 +321,7 @@
         /// </summary>
         /// <param name="actionCall">Method call expression indicating invoked action.</param>
         /// <returns>Builder for testing void actions.</returns>
-        public IVoidActionResultTestBuilder CallingAsync(Expression<Func<TController, Task>> actionCall)
+        public IVoidActionResultTestBuilder Calling(Expression<Func<TController, Task>> actionCall)
         {
             var actionInfo = this.GetAndValidateActionResult(actionCall);
 
@@ -313,6 +335,7 @@
             }
 
             this.TestContext.Apply(actionInfo);
+
             return new VoidActionResultTestBuilder(this.TestContext);
         }
 
@@ -402,6 +425,8 @@
 
         private string GetAndValidateAction(LambdaExpression actionCall)
         {
+            this.SetRouteData(actionCall);
+
             var methodInfo = ExpressionParser.GetMethodInfo(actionCall);
 
             if (this.enabledValidation)
@@ -432,6 +457,17 @@
             if (this.controllerSetupAction != null)
             {
                 this.controllerSetupAction(this.TestContext.ControllerAs<TController>());
+            }
+        }
+
+        private void SetRouteData(LambdaExpression actionCall)
+        {
+            if (this.resolveRouteValues)
+            {
+                this.TestContext.RouteData = RouteExpressionParser.ResolveRouteData(TestApplication.Router, actionCall);
+                RouteExpressionParser.ApplyAdditionaRouteValues(
+                    this.additionalRouteValues, 
+                    this.TestContext.RouteData.Values);
             }
         }
 

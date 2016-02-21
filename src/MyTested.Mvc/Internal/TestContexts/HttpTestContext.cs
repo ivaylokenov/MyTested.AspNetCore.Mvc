@@ -5,9 +5,11 @@
     using Microsoft.AspNetCore.Routing;
     using MyTested.Mvc.Internal.Http;
     using Routes;
+    using Utilities.Validators;
     public class HttpTestContext
     {
         private MockedHttpContext mockedHttpContext;
+        private RouteData routeData;
 
         public HttpTestContext()
         {
@@ -23,6 +25,7 @@
 
             internal set
             {
+                CommonValidator.CheckForNullReference(value, nameof(HttpContext));
                 this.mockedHttpContext = MockedHttpContext.From(value);
             }
         }
@@ -35,13 +38,22 @@
         {
             get
             {
-                var routeData = this.HttpContext.GetRouteData();
-                if (routeData == null)
+                if (this.routeData == null)
                 {
-                    routeData = InternalRouteResolver.ResolveRouteData(TestApplication.Router, this.HttpContext);
+                    this.routeData = this.HttpContext.GetRouteData();
+                    if (this.routeData == null)
+                    {
+                        this.routeData = InternalRouteResolver.ResolveRouteData(TestApplication.Router, this.HttpContext);
+                    }
                 }
+                
+                return this.routeData;
+            }
 
-                return routeData;
+            internal set
+            {
+                CommonValidator.CheckForNullReference(value, nameof(RouteData));
+                this.routeData = value;
             }
         }
 

@@ -23,7 +23,7 @@
     public abstract class BaseTestBuilderWithResponseModel<TActionResult>
         : BaseTestBuilderWithActionResult<TActionResult>, IBaseTestBuilderWithResponseModel
     {
-        private const string ErrorMessage = "When calling {0} action in {1} expected response model {2} to be the given model, but in fact it was a different.";
+        private const string ErrorMessage = "When calling {0} action in {1} expected response model {2} to be the given model, but in fact it was a different one.";
         private const string OfTypeErrorMessage = "When calling {0} action in {1} expected response model to be of {2} type, but instead received {3}.";
 
         /// <summary>
@@ -94,10 +94,10 @@
             if (Reflection.AreNotDeeplyEqual(expectedModel, actualModel))
             {
                 throw new ResponseModelAssertionException(string.Format(
-                            this.ErrorMessageFormat,
-                            this.ActionName,
-                            this.Controller.GetName(),
-                            typeof(TResponseModel).ToFriendlyTypeName()));
+                    this.ErrorMessageFormat,
+                    this.ActionName,
+                    this.Controller.GetName(),
+                    typeof(TResponseModel).ToFriendlyTypeName()));
             }
 
             this.TestContext.Model = actualModel;

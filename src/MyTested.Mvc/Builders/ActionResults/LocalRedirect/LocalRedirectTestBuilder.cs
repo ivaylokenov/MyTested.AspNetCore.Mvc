@@ -8,9 +8,11 @@
     using Microsoft.AspNetCore.Mvc;
     using Utilities.Validators;
     using Internal.TestContexts;
-    using System.Linq.Expressions;    /// <summary>
-                                      /// Used for testing local redirect result.
-                                      /// </summary>
+    using System.Linq.Expressions;
+
+    /// <summary>
+    /// Used for testing local redirect result.
+    /// </summary>
     public class LocalRedirectTestBuilder : BaseTestBuilderWithActionResult<LocalRedirectResult>,
         IAndLocalRedirectTestBuilder
     {
@@ -124,7 +126,7 @@
         /// </summary>
         /// <returns>Local redirect result test builder.</returns>
         public ILocalRedirectTestBuilder AndAlso() => this;
-        
+
         private void ThrowNewRedirectResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new RedirectResultAssertionException(string.Format(

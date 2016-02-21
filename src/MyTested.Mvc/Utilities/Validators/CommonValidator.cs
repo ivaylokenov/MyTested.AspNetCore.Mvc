@@ -64,6 +64,7 @@
         {
             if (exception != null)
             {
+                var messageFormat = "{0}{1} was thrown but was not caught or expected.";
                 var message = FormatExceptionMessage(exception.Message);
 
                 var exceptionAsAggregateException = exception as AggregateException;
@@ -76,8 +77,15 @@
                     message = $" (containing {string.Join(", ", innerExceptions)})";
                 }
 
+                // ArgumentOutOfRangeException may be thrown because of missing route values
+                var exceptionAsArgumentOutOfRangeException = exception as ArgumentOutOfRangeException;
+                if (exceptionAsArgumentOutOfRangeException != null)
+                {
+                    messageFormat = "{0} was thrown but was not caught or expected. One possible reason my be unresolved route values. Consider calling 'WithResolvedRouteValues' on the controller builder or provide HTTP request path by using 'WithHttpRequest'.";
+                }
+                
                 throw new ActionCallAssertionException(string.Format(
-                    "{0}{1} was thrown but was not caught or expected.",
+                    messageFormat,
                     exception.GetType().ToFriendlyTypeName(),
                     message));
             }

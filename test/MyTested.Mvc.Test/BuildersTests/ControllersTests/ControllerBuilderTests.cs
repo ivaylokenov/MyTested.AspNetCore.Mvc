@@ -33,7 +33,7 @@
         {
             var actionResultTestBuilder = MyMvc
                 .Controller<MvcController>()
-                .CallingAsync(c => c.AsyncOkResultAction());
+                .Calling(c => c.AsyncOkResultAction());
 
             this.CheckActionResultTestBuilder(actionResultTestBuilder, "AsyncOkResultAction");
         }
@@ -53,7 +53,7 @@
         {
             var voidActionResultTestBuilder = MyMvc
                 .Controller<MvcController>()
-                .CallingAsync(c => c.EmptyActionAsync());
+                .Calling(c => c.EmptyActionAsync());
 
             this.CheckActionName(voidActionResultTestBuilder, "EmptyActionAsync");
         }
@@ -472,6 +472,54 @@
                 .Calling(c => c.WithRouteData(1))
                 .ShouldReturn()
                 .View();
+        }
+
+        [Fact]
+        public void UsingUrlHelperInsideControllerShouldWorkCorrectly()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .WithResolvedRouteData()
+                .Calling(c => c.UrlAction())
+                .ShouldReturn()
+                .Ok()
+                .WithResponseModel("/api/test");
+        }
+
+        [Fact]
+        public void UsingTryValidateModelInsideControllerShouldWorkCorrectly()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.TryValidateModelAction())
+                .ShouldReturn()
+                .HttpBadRequest();
+        }
+
+        [Fact]
+        public void UsingTryUpdateModelAsyncShouldWorkCorrectly()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.TryUpdateModelAction())
+                .ShouldReturn()
+                .Ok();
+        }
+
+        [Fact]
+        public void UnresolvedRouteValuesShouldHaveFriendlyException()
+        {
+            Test.AssertException<ActionCallAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.UrlAction())
+                        .ShouldReturn()
+                        .Ok()
+                        .WithResponseModel("");
+                },
+                "ArgumentOutOfRangeException was thrown but was not caught or expected. One possible reason my be unresolved route values. Consider calling 'WithResolvedRouteValues' on the controller builder or provide HTTP request path by using 'WithHttpRequest'.");
         }
 
         private void CheckActionResultTestBuilder<TActionResult>(

@@ -25,7 +25,7 @@
                 {
                     MyMvc
                         .Controller<MvcController>()
-                        .CallingAsync(c => c.ActionWithExceptionAsync())
+                        .Calling(c => c.ActionWithExceptionAsync())
                         .ShouldReturn()
                         .Ok();
                 }, 
