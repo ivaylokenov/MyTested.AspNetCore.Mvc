@@ -241,7 +241,7 @@
                         .Created()
                         .ContainingRouteValue("incorrect");
                 },
-                "When calling CreatedAtActionResult action in MvcController expected created result route values to have item with key 'incorrect', but such was not found.");
+                "When calling CreatedAtActionResult action in MvcController expected created result route values to have entry with key 'incorrect', but such was not found.");
         }
 
         [Fact]
@@ -268,7 +268,7 @@
                         .Created()
                         .ContainingRouteValue("incorrect", 1);
                 }),
-                "When calling CreatedAtActionResult action in MvcController expected created result route values to have item with 'incorrect' key and the provided value, but such was not found.");
+                "When calling CreatedAtActionResult action in MvcController expected created result route values to have entry with 'incorrect' key and the provided value, but such was not found.");
         }
 
         [Fact]
@@ -284,7 +284,7 @@
                         .Created()
                         .ContainingRouteValue("id", 2);
                 }),
-                "When calling CreatedAtActionResult action in MvcController expected created result route values to have item with 'id' key and the provided value, but the value was different.");
+                "When calling CreatedAtActionResult action in MvcController expected created result route values to have entry with 'id' key and the provided value, but the value was different.");
         }
 
         [Fact]
@@ -311,7 +311,7 @@
                         .Created()
                         .ContainingRouteValues(new { id = 1 });
                 },
-                "When calling CreatedAtActionResult action in MvcController expected created result route values to have 1 item, but in fact found 2.");
+                "When calling CreatedAtActionResult action in MvcController expected created result route values to have 1 entry, but in fact found 2.");
         }
 
         [Fact]
@@ -327,7 +327,7 @@
                         .Created()
                         .ContainingRouteValues(new { id = 1, second = 5, another = "test" });
                 },
-                "When calling CreatedAtActionResult action in MvcController expected created result route values to have 3 items, but in fact found 2.");
+                "When calling CreatedAtActionResult action in MvcController expected created result route values to have 3 entries, but in fact found 2.");
         }
 
         [Fact]

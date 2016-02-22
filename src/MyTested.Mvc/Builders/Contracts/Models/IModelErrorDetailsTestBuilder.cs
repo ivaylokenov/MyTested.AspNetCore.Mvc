@@ -43,7 +43,7 @@
         /// </summary>
         /// <param name="errorKey">Error key to search for.</param>
         /// <returns>Model error details test builder.</returns>
-        IModelErrorDetailsTestBuilder<TModel> ContainingModelStateError(string errorKey);
+        IModelErrorDetailsTestBuilder<TModel> ContainingError(string errorKey);
 
         /// <summary>
         /// Tests whether tested action's model state contains error by member expression.
@@ -51,7 +51,7 @@
         /// <typeparam name="TMember">Type of the member which will be tested for errors.</typeparam>
         /// <param name="memberWithError">Member expression for the tested member.</param>
         /// <returns>Model error details test builder.</returns>
-        IModelErrorDetailsTestBuilder<TModel> ContainingModelStateErrorFor<TMember>(
+        IModelErrorDetailsTestBuilder<TModel> ContainingErrorFor<TMember>(
             Expression<Func<TModel, TMember>> memberWithError);
 
         /// <summary>
@@ -60,7 +60,7 @@
         /// <typeparam name="TMember">Type of the member which will be tested for no errors.</typeparam>
         /// <param name="memberWithNoError">Member expression for the tested member.</param>
         /// <returns>Model error details test builder.</returns>
-        IModelErrorTestBuilder<TModel> ContainingNoModelStateErrorFor<TMember>(
+        IModelErrorTestBuilder<TModel> ContainingNoErrorFor<TMember>(
             Expression<Func<TModel, TMember>> memberWithNoError);
 
         /// <summary>

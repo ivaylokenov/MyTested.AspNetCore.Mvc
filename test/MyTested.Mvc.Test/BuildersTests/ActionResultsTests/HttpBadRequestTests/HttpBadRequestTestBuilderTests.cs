@@ -303,15 +303,15 @@
                 .ShouldReturn()
                 .HttpBadRequest()
                 .WithModelStateErrorFor<RequestModel>()
-                .ContainingModelStateErrorFor(m => m.Integer).ThatEquals("The field Integer must be between 1 and 2147483647.")
+                .ContainingErrorFor(m => m.Integer).ThatEquals("The field Integer must be between 1 and 2147483647.")
                 .AndAlso()
-                .ContainingModelStateErrorFor(m => m.RequiredString).BeginningWith("The RequiredString")
+                .ContainingErrorFor(m => m.RequiredString).BeginningWith("The RequiredString")
                 .AndAlso()
-                .ContainingModelStateErrorFor(m => m.RequiredString).EndingWith("required.")
+                .ContainingErrorFor(m => m.RequiredString).EndingWith("required.")
                 .AndAlso()
-                .ContainingModelStateErrorFor(m => m.RequiredString).Containing("field")
+                .ContainingErrorFor(m => m.RequiredString).Containing("field")
                 .AndAlso()
-                .ContainingNoModelStateErrorFor(m => m.NonRequiredString);
+                .ContainingNoErrorFor(m => m.NonRequiredString);
         }
         
         [Fact]

@@ -37,8 +37,8 @@
         /// Provides way to continue test case with specific model state errors.
         /// </summary>
         /// <typeparam name="TRequestModel">Request model type to be tested for errors.</typeparam>
-        /// <returns>Model test builder.</returns>
-        IModelErrorTestBuilder<TRequestModel> ModelStateFor<TRequestModel>();
+        /// <returns>Test builder with AndAlso method.</returns>
+        IAndTestBuilder<TActionResult> ModelStateFor<TRequestModel>(Action<IModelErrorTestBuilder<TRequestModel>> modelErrorTestBuilder);
 
         /// <summary>
         /// Checks whether the tested action's provided model state is valid.
@@ -56,7 +56,7 @@
         /// <summary>
         /// Checks whether the tested action applies additional features to the HTTP response.
         /// </summary>
-        /// <returns>HTTP response test builder.</returns>
-        IHttpResponseTestBuilder HttpResponse();
+        /// <returns>Test builder with AndAlso method.</returns>
+        IAndTestBuilder<TActionResult> HttpResponse(Action<IHttpResponseTestBuilder> httpResponseTestBuilder);
     }
 }

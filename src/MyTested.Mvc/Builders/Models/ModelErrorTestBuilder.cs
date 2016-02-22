@@ -37,7 +37,7 @@
         /// Tests whether tested action's model state is valid.
         /// </summary>
         /// <returns>Base test builder.</returns>
-        public IBaseTestBuilderWithInvokedAction ContainingNoModelStateErrors()
+        public IBaseTestBuilderWithInvokedAction ContainingNoErrors()
         {
             this.CheckValidModelState();
             return this.NewAndProvideTestBuilder();

@@ -18,10 +18,10 @@
                 .Controller<MvcController>()
                 .Calling(c => c.ModelStateCheck(requestModelWithErrors))
                 .ShouldHave()
-                .ModelStateFor<RequestModel>()
-                .ContainingNoModelStateErrorFor(r => r.NonRequiredString)
-                .ContainingModelStateErrorFor(r => r.Integer)
-                .ContainingModelStateErrorFor(r => r.RequiredString);
+                .ModelStateFor<RequestModel>(modelState => modelState
+                    .ContainingNoErrorFor(r => r.NonRequiredString)
+                    .ContainingErrorFor(r => r.Integer)
+                    .ContainingErrorFor(r => r.RequiredString));
         }
 
         [Fact]
@@ -170,11 +170,11 @@
                         .Controller<MvcController>()
                         .Calling(c => c.ModelStateCheck(requestModelWithErrors))
                         .ShouldHave()
-                        .ModelStateFor<RequestModel>()
-                        .ContainingNoModelStateErrorFor(r => r.NonRequiredString)
-                        .ContainingModelStateErrorFor(r => r.Integer)
-                        .ContainingModelStateErrorFor(r => r.RequiredString)
-                        .AndProvideTheModel();
+                        .ModelStateFor<RequestModel>(modelState => modelState
+                            .ContainingNoErrorFor(r => r.NonRequiredString)
+                            .ContainingErrorFor(r => r.Integer)
+                            .ContainingErrorFor(r => r.RequiredString)
+                            .AndProvideTheModel());
                 }, 
                 "AndProvideTheModel can be used when there is response model from the action.");
         }

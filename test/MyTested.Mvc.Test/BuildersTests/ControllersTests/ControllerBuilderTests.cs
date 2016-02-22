@@ -505,11 +505,11 @@
                 .ShouldReturn()
                 .Ok();
         }
-
+        
         [Fact]
         public void UnresolvedRouteValuesShouldHaveFriendlyException()
         {
-            Test.AssertException<ActionCallAssertionException>(
+            Test.AssertException<InvalidOperationException>(
                 () =>
                 {
                     MyMvc
@@ -519,7 +519,21 @@
                         .Ok()
                         .WithResponseModel("");
                 },
-                "ArgumentOutOfRangeException was thrown but was not caught or expected. One possible reason my be unresolved route values. Consider calling 'WithResolvedRouteValues' on the controller builder or provide HTTP request path by using 'WithHttpRequest'.");
+                "Route values are not present in the action call but are needed for successful pass of this test case. Consider calling 'WithResolvedRouteValues' on the controller builder to resolve them from the provided lambda expression or set the HTTP request path by using 'WithHttpRequest'.");
+        }
+
+        [Fact]
+        public void NormalIndexOutOfRangeExceptionShouldShowNormalMessage()
+        {
+            Assert.Throws<ActionCallAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.IndexOutOfRangeException())
+                        .ShouldReturn()
+                        .Ok();
+                });
         }
 
         private void CheckActionResultTestBuilder<TActionResult>(

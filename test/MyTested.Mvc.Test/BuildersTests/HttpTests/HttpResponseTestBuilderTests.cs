@@ -18,27 +18,24 @@
             MyMvc
                 .Controller<MvcController>()
                 .Calling(c => c.CustomResponseAction())
+                .ShouldHave()
+                .HttpResponse(response => response
+                    .WithContentType(ContentType.ApplicationJson)
+                    .AndAlso()
+                    .WithStatusCode(HttpStatusCode.InternalServerError)
+                    .AndAlso()
+                    .ContainingHeader("TestHeader", "TestHeaderValue")
+                    .ContainingCookie("TestCookie", "TestCookieValue", new CookieOptions
+                    {
+                        HttpOnly = true,
+                        Secure = true,
+                        Domain = "testdomain.com",
+                        Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)),
+                        Path = "/"
+                    }))
+                .AndAlso()
                 .ShouldReturn()
                 .Ok();
-
-            MyMvc
-                .Controller<MvcController>()
-                .Calling(c => c.CustomResponseAction())
-                .ShouldHave()
-                .HttpResponse()
-                .WithContentType(ContentType.ApplicationJson)
-                .AndAlso()
-                .WithStatusCode(HttpStatusCode.InternalServerError)
-                .AndAlso()
-                .ContainingHeader("TestHeader", "TestHeaderValue")
-                .ContainingCookie("TestCookie", "TestCookieValue", new CookieOptions
-                {
-                    HttpOnly = true,
-                    Secure = true,
-                    Domain = "testdomain.com",
-                    Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)),
-                    Path = "/"
-                });
         }
 
         [Fact]
@@ -53,22 +50,22 @@
                 .Controller<MvcController>()
                 .Calling(c => c.CustomVoidResponseAction())
                 .ShouldHave()
-                .HttpResponse()
-                .WithContentType(ContentType.ApplicationJson)
-                .AndAlso()
-                .WithContentLength(100)
-                .AndAlso()
-                .WithStatusCode(HttpStatusCode.InternalServerError)
-                .AndAlso()
-                .ContainingHeader("TestHeader", "TestHeaderValue")
-                .ContainingCookie("TestCookie", "TestCookieValue", new CookieOptions
-                {
-                    HttpOnly = true,
-                    Secure = true,
-                    Domain = "testdomain.com",
-                    Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)),
-                    Path = "/"
-                });
+                .HttpResponse(response => response
+                    .WithContentType(ContentType.ApplicationJson)
+                    .AndAlso()
+                    .WithContentLength(100)
+                    .AndAlso()
+                    .WithStatusCode(HttpStatusCode.InternalServerError)
+                    .AndAlso()
+                    .ContainingHeader("TestHeader", "TestHeaderValue")
+                    .ContainingCookie("TestCookie", "TestCookieValue", new CookieOptions
+                    {
+                        HttpOnly = true,
+                        Secure = true,
+                        Domain = "testdomain.com",
+                        Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)),
+                        Path = "/"
+                    }));
         }
 
         [Fact]
@@ -81,8 +78,7 @@
                         .Controller<MvcController>()
                         .Calling(c => c.CustomResponseBodyWithBytesAction())
                         .ShouldHave()
-                        .HttpResponse()
-                        .WithContentLength(10);
+                        .HttpResponse(response => response.WithContentLength(10));
                 },
                 "When calling CustomResponseBodyWithBytesAction action in MvcController expected HTTP response content length to be 10, but instead received 100.");
         }
@@ -97,8 +93,7 @@
                         .Controller<MvcController>()
                         .Calling(c => c.CustomResponseBodyWithBytesAction())
                         .ShouldHave()
-                        .HttpResponse()
-                        .WithContentType(ContentType.ApplicationXml);
+                        .HttpResponse(response => response.WithContentType(ContentType.ApplicationXml));
                 },
                 "When calling CustomResponseBodyWithBytesAction action in MvcController expected HTTP response content type to be 'application/xml', but instead received 'application/json'.");
         }
@@ -110,23 +105,23 @@
                 .Controller<MvcController>()
                 .Calling(c => c.CustomVoidResponseAction())
                 .ShouldHave()
-                .HttpResponse()
-                .ContainingCookie(cookie => cookie
-                    .WithName("TestCookie")
-                    .AndAlso()
-                    .WithValue("TestCookieValue")
-                    .AndAlso()
-                    .WithSecure(true)
-                    .AndAlso()
-                    .WithHttpOnly(true)
-                    .AndAlso()
-                    .WithMaxAge(null)
-                    .AndAlso()
-                    .WithDomain("testdomain.com")
-                    .AndAlso()
-                    .WithExpired(new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)))
-                    .AndAlso()
-                    .WithPath("/"));
+                .HttpResponse(response => response
+                    .ContainingCookie(cookie => cookie
+                        .WithName("TestCookie")
+                        .AndAlso()
+                        .WithValue("TestCookieValue")
+                        .AndAlso()
+                        .WithSecure(true)
+                        .AndAlso()
+                        .WithHttpOnly(true)
+                        .AndAlso()
+                        .WithMaxAge(null)
+                        .AndAlso()
+                        .WithDomain("testdomain.com")
+                        .AndAlso()
+                        .WithExpired(new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)))
+                        .AndAlso()
+                        .WithPath("/")));
         }
 
         [Fact]
@@ -139,8 +134,7 @@
                         .Controller<MvcController>()
                         .Calling(c => c.CustomVoidResponseAction())
                         .ShouldHave()
-                        .HttpResponse()
-                        .ContainingCookie("Invalid");
+                        .HttpResponse(response => response.ContainingCookie("Invalid"));
                 },
                 "When calling CustomVoidResponseAction action in MvcController expected HTTP response cookies to contain cookie with 'Invalid' name, but such was not found.");
         }
@@ -155,8 +149,7 @@
                         .Controller<MvcController>()
                         .Calling(c => c.CustomVoidResponseAction())
                         .ShouldHave()
-                        .HttpResponse()
-                        .ContainingCookie("TestCookie", "Invalid");
+                        .HttpResponse(response => response.ContainingCookie("TestCookie", "Invalid"));
                 },
                 "When calling CustomVoidResponseAction action in MvcController expected HTTP response cookies to contain cookie with 'TestCookie' name and 'Invalid' value, but the value was 'TestCookieValue'.");
         }
@@ -171,15 +164,14 @@
                        .Controller<MvcController>()
                        .Calling(c => c.CustomVoidResponseAction())
                        .ShouldHave()
-                       .HttpResponse()
-                       .ContainingCookie("TestCookie", "TestCookieValue", new CookieOptions
+                       .HttpResponse(response => response.ContainingCookie("TestCookie", "TestCookieValue", new CookieOptions
                        {
                            HttpOnly = false,
                            Secure = true,
                            Domain = "testdomain.com",
                            Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)),
                            Path = "/"
-                       });
+                       }));
                 },
                 "When calling CustomVoidResponseAction action in MvcController expected HTTP response cookies to contain cookie with the provided options - 'TestCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure', but in fact they were different - 'TestCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly'.");
         }
@@ -191,8 +183,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.CustomVoidResponseAction())
                 .ShouldHave()
-                .HttpResponse()
-                .ContainingCookies(new Dictionary<string, string> { ["TestCookie"] = "TestCookieValue", ["AnotherCookie"] = "TestCookieValue" });
+                .HttpResponse(response => response.ContainingCookies(new Dictionary<string, string> { ["TestCookie"] = "TestCookieValue", ["AnotherCookie"] = "TestCookieValue" }));
         }
 
         [Fact]
@@ -205,8 +196,7 @@
                         .Controller<MvcController>()
                         .Calling(c => c.CustomVoidResponseAction())
                         .ShouldHave()
-                        .HttpResponse()
-                        .ContainingCookies(new Dictionary<string, string> { ["TestCookie"] = "TestCookieValue" });
+                        .HttpResponse(response => response.ContainingCookies(new Dictionary<string, string> { ["TestCookie"] = "TestCookieValue" }));
                 },
                 "When calling CustomVoidResponseAction action in MvcController expected HTTP response headers to have 1 item, but instead found 2.");
         }
@@ -221,8 +211,7 @@
                         .Controller<MvcController>()
                         .Calling(c => c.CustomVoidResponseAction())
                         .ShouldHave()
-                        .HttpResponse()
-                        .ContainingCookies(new Dictionary<string, string> { ["TestCookie"] = "TestCookieValue", ["AnotherCookie"] = "TestCookieValue", ["YetAnotherCookie"] = "TestCookieValue", });
+                        .HttpResponse(response => response.ContainingCookies(new Dictionary<string, string> { ["TestCookie"] = "TestCookieValue", ["AnotherCookie"] = "TestCookieValue", ["YetAnotherCookie"] = "TestCookieValue", }));
                 },
                 "When calling CustomVoidResponseAction action in MvcController expected HTTP response headers to have 3 items, but instead found 2.");
         }
@@ -237,15 +226,15 @@
                         .Controller<MvcController>()
                         .Calling(c => c.CustomVoidResponseAction())
                         .ShouldHave()
-                        .HttpResponse()
-                        .ContainingCookie(cookie => cookie
+                        .HttpResponse(response => response
+                            .ContainingCookie(cookie => cookie
                             .WithValue("TestCookieValue")
                             .WithSecure(true)
                             .WithHttpOnly(true)
                             .WithMaxAge(null)
                             .WithDomain("testdomain.com")
                             .WithExpired(new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)))
-                            .WithPath("/"));
+                            .WithPath("/")));
                 },
                 "Cookie name must be provided. 'WithName' method must be called on the cookie builder in order to run this test case successfully.");
         }
@@ -260,16 +249,16 @@
                         .Controller<MvcController>()
                         .Calling(c => c.CustomVoidResponseAction())
                         .ShouldHave()
-                        .HttpResponse()
-                        .ContainingCookie(cookie => cookie
-                            .WithName("TestCookie")
-                            .WithValue("TestCookieValue12")
-                            .WithSecure(true)
-                            .WithHttpOnly(true)
-                            .WithMaxAge(null)
-                            .WithDomain("testdomain.com")
-                            .WithExpired(new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)))
-                            .WithPath("/"));
+                        .HttpResponse(response => response
+                            .ContainingCookie(cookie => cookie
+                                .WithName("TestCookie")
+                                .WithValue("TestCookieValue12")
+                                .WithSecure(true)
+                                .WithHttpOnly(true)
+                                .WithMaxAge(null)
+                                .WithDomain("testdomain.com")
+                                .WithExpired(new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)))
+                                .WithPath("/")));
                 },
                 "When calling CustomVoidResponseAction action in MvcController expected HTTP response cookies to contain cookie with 'TestCookie' name and 'TestCookie=TestCookieValue12; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly' value, but the value was 'TestCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly'.");
         }
@@ -284,8 +273,7 @@
                         .Controller<MvcController>()
                         .Calling(c => c.CustomVoidResponseAction())
                         .ShouldHave()
-                        .HttpResponse()
-                        .ContainingHeader("Invalid");
+                        .HttpResponse(response => response.ContainingHeader("Invalid"));
                 },
                 "When calling CustomVoidResponseAction action in MvcController expected HTTP response headers to contain header with 'Invalid' name, but such was not found.");
         }
@@ -297,8 +285,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.CustomResponseBodyWithBytesAction())
                 .ShouldHave()
-                .HttpResponse()
-                .WithBody(new MemoryStream(new byte[] { 1, 2, 3 }));
+                .HttpResponse(response => response.WithBody(new MemoryStream(new byte[] { 1, 2, 3 })));
         }
 
         [Fact]
@@ -311,8 +298,7 @@
                         .Controller<MvcController>()
                         .Calling(c => c.CustomResponseBodyWithBytesAction())
                         .ShouldHave()
-                        .HttpResponse()
-                        .WithBody(new MemoryStream(new byte[] { 1, 2, 3, 4 }));
+                        .HttpResponse(response => response.WithBody(new MemoryStream(new byte[] { 1, 2, 3, 4 })));
                 },
                 "When calling CustomResponseBodyWithBytesAction action in MvcController expected HTTP response body to have contents as the provided ones, but instead received different result.");
         }
@@ -324,8 +310,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.CustomResponseAction())
                 .ShouldHave()
-                .HttpResponse()
-                .WithBodyOfType<RequestModel>(ContentType.ApplicationJson);
+                .HttpResponse(response => response.WithBodyOfType<RequestModel>(ContentType.ApplicationJson));
         }
 
         [Fact]
@@ -338,8 +323,7 @@
                         .Controller<MvcController>()
                         .Calling(c => c.CustomResponseAction())
                         .ShouldHave()
-                        .HttpResponse()
-                        .WithBodyOfType<int>(ContentType.ApplicationJson);
+                        .HttpResponse(response => response.WithBodyOfType<int>(ContentType.ApplicationJson));
                 },
                 "When calling CustomResponseAction action in MvcController expected HTTP response body to be of Int32 type when using 'application/json', but in fact it was not.");
         }
@@ -351,8 +335,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.CustomResponseAction())
                 .ShouldHave()
-                .HttpResponse()
-                .WithBody(new RequestModel { Integer = 1, RequiredString = "Text" }, ContentType.ApplicationJson);
+                .HttpResponse(response => response.WithBody(new RequestModel { Integer = 1, RequiredString = "Text" }, ContentType.ApplicationJson));
         }
 
         [Fact]
@@ -362,8 +345,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.CustomResponseBodyWithStringBody())
                 .ShouldHave()
-                .HttpResponse()
-                .WithStringBody("Test");
+                .HttpResponse(response => response.WithStringBody("Test"));
         }
 
         [Fact]
@@ -373,8 +355,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.CustomResponseAction())
                 .ShouldHave()
-                .HttpResponse()
-                .WithJsonBody(new RequestModel { Integer = 1, RequiredString = "Text" });
+                .HttpResponse(response => response.WithJsonBody(new RequestModel { Integer = 1, RequiredString = "Text" }));
         }
 
         [Fact]
@@ -387,8 +368,7 @@
                         .Controller<MvcController>()
                         .Calling(c => c.CustomResponseAction())
                         .ShouldHave()
-                        .HttpResponse()
-                        .WithJsonBody(new RequestModel { Integer = 2, RequiredString = "Text" });
+                        .HttpResponse(response => response.WithJsonBody(new RequestModel { Integer = 2, RequiredString = "Text" }));
                 },
                 "When calling CustomResponseAction action in MvcController expected HTTP response body to be the given object, but in fact it was different.");
         }
@@ -400,8 +380,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.CustomResponseAction())
                 .ShouldHave()
-                .HttpResponse()
-                .WithJsonBody(@"{""Integer"":1,""RequiredString"":""Text""}");
+                .HttpResponse(response => response.WithJsonBody(@"{""Integer"":1,""RequiredString"":""Text""}"));
         }
     }
 }

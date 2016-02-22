@@ -6,7 +6,7 @@
     using Exceptions;
     using Utilities.Extensions;
     using Models;
-
+    using System;
     /// <summary>
     /// Class containing methods for testing model state.
     /// </summary>
@@ -17,10 +17,11 @@
         /// Provides way to continue test case with specific model state errors.
         /// </summary>
         /// <typeparam name="TRequestModel">Request model type to be tested for errors.</typeparam>
-        /// <returns>Response model test builder.</returns>
-        public IModelErrorTestBuilder<TRequestModel> ModelStateFor<TRequestModel>()
+        /// <returns>Test builder with AndAlso method.</returns>
+        public IAndTestBuilder<TActionResult> ModelStateFor<TRequestModel>(Action<IModelErrorTestBuilder<TRequestModel>> modelErrorTestBuilder)
         {
-            return new ModelErrorTestBuilder<TRequestModel>(this.TestContext);
+            modelErrorTestBuilder(new ModelErrorTestBuilder<TRequestModel>(this.TestContext));
+            return this.NewAndTestBuilder();
         }
 
         /// <summary>

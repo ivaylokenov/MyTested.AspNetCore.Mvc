@@ -20,7 +20,7 @@
                 .ShouldReturn()
                 .Ok()
                 .WithResponseModelOfType<ICollection<ResponseModel>>()
-                .ContainingNoModelStateErrors();
+                .ContainingNoErrors();
         }
 
         [Fact]
@@ -37,7 +37,7 @@
                         .ShouldReturn()
                         .Ok()
                         .WithResponseModelOfType<ICollection<ResponseModel>>()
-                        .ContainingNoModelStateErrors();
+                        .ContainingNoErrors();
                 }, 
                 "When calling OkResultActionWithRequestBody action in MvcController expected to have valid model state with no errors, but it had some.");
         }
@@ -53,7 +53,7 @@
                 .ShouldReturn()
                 .Ok()
                 .WithResponseModel(requestBodyWithErrors)
-                .ContainingModelStateError("RequiredString");
+                .ContainingError("RequiredString");
         }
 
         [Fact]
@@ -70,7 +70,7 @@
                         .ShouldReturn()
                         .Ok()
                         .WithResponseModel(requestBody)
-                        .ContainingModelStateError("Name");
+                        .ContainingError("Name");
                 }, 
                 "When calling ModelStateCheck action in MvcController expected to have a model error against key Name, but none found.");
         }
@@ -86,7 +86,7 @@
                 .ShouldReturn()
                 .Ok()
                 .WithResponseModel(requestBodyWithErrors)
-                .ContainingModelStateErrorFor(r => r.RequiredString);
+                .ContainingErrorFor(r => r.RequiredString);
         }
 
         [Fact]
@@ -103,7 +103,7 @@
                         .ShouldReturn()
                         .Ok()
                         .WithResponseModel(requestBody)
-                        .ContainingModelStateErrorFor(r => r.RequiredString);
+                        .ContainingErrorFor(r => r.RequiredString);
                 }, 
                 "When calling ModelStateCheck action in MvcController expected to have a model error against key RequiredString, but none found.");
         }
@@ -119,7 +119,7 @@
                 .ShouldReturn()
                 .Ok()
                 .WithResponseModel(requestBody)
-                .ContainingNoModelStateErrorFor(r => r.RequiredString);
+                .ContainingNoErrorFor(r => r.RequiredString);
         }
 
         [Fact]
@@ -136,7 +136,7 @@
                         .ShouldReturn()
                         .Ok()
                         .WithResponseModel(requestBodyWithErrors)
-                        .ContainingNoModelStateErrorFor(r => r.RequiredString);
+                        .ContainingNoErrorFor(r => r.RequiredString);
                 }, 
                 "When calling ModelStateCheck action in MvcController expected to have no model errors against key RequiredString, but found some.");
         }
@@ -152,8 +152,8 @@
                 .ShouldReturn()
                 .Ok()
                 .WithResponseModel(requestBody)
-                .ContainingNoModelStateErrorFor(r => r.Integer)
-                .ContainingNoModelStateErrorFor(r => r.RequiredString);
+                .ContainingNoErrorFor(r => r.Integer)
+                .ContainingNoErrorFor(r => r.RequiredString);
         }
 
         [Fact]
@@ -170,8 +170,8 @@
                         .ShouldReturn()
                         .Ok()
                         .WithResponseModel(requestBodyWithErrors)
-                        .ContainingNoModelStateErrorFor(r => r.Integer)
-                        .ContainingNoModelStateErrorFor(r => r.RequiredString);
+                        .ContainingNoErrorFor(r => r.Integer)
+                        .ContainingNoErrorFor(r => r.RequiredString);
                 },
                 "When calling ModelStateCheck action in MvcController expected to have no model errors against key Integer, but found some.");
         }
@@ -218,7 +218,7 @@
                 .ShouldReturn()
                 .Ok()
                 .WithResponseModelOfType<List<ResponseModel>>()
-                .ContainingNoModelStateErrorFor(m => m.Count)
+                .ContainingNoErrorFor(m => m.Count)
                 .AndProvideTheModel();
 
             Assert.NotNull(responseModel);
@@ -235,7 +235,7 @@
                 .ShouldReturn()
                 .Ok()
                 .WithResponseModelOfType<ICollection<ResponseModel>>()
-                .ContainingModelStateError("Test")
+                .ContainingError("Test")
                 .AndProvideTheModel();
 
             Assert.NotNull(responseModel);
@@ -252,7 +252,7 @@
                 .ShouldReturn()
                 .Ok()
                 .WithResponseModelOfType<ICollection<ResponseModel>>()
-                .ContainingModelStateError("Test").ThatEquals("Test error")
+                .ContainingError("Test").ThatEquals("Test error")
                 .AndProvideTheModel();
 
             Assert.NotNull(responseModel);

@@ -16,7 +16,7 @@
     using Models;
     using Newtonsoft.Json;
     using Services;
-
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
     [Authorize(Roles = "Admin,Moderator")]
     [Route("/api/test")]
     public class MvcController : Controller
@@ -158,6 +158,11 @@
             {
                 ViewEngine = viewEngine
             };
+        }
+
+        public IActionResult IndexOutOfRangeException()
+        {
+            throw new IndexOutOfRangeException();
         }
 
         public IActionResult CustomActionResult()
@@ -626,6 +631,15 @@
         {
             return this.HttpBadRequest(this.responseModel);
         }
+
+        public IActionResult ModelStateWithNestedError()
+        {
+            this.ModelState.AddModelError<NestedModel>(m => m.Nested.Integer, "NestedError");
+            this.ModelState.AddModelError("Nested.String", "NestedStringError");
+
+            return this.Ok();
+        }
+
 
         public IActionResult JsonAction()
         {

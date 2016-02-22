@@ -9,6 +9,7 @@
     using Utilities;
     using Utilities.Validators;
     using Internal.TestContexts;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
     /// <summary>
     /// Used for testing the model errors.
@@ -42,7 +43,7 @@
         /// </summary>
         /// <param name="errorKey">Error key to search for.</param>
         /// <returns>Model error details test builder.</returns>
-        public IModelErrorDetailsTestBuilder<TModel> ContainingModelStateError(string errorKey)
+        public IModelErrorDetailsTestBuilder<TModel> ContainingError(string errorKey)
         {
             if (!this.ModelState.ContainsKey(errorKey) || this.ModelState.Count == 0)
             {
@@ -50,7 +51,7 @@
                     "When calling {0} action in {1} expected to have a model error against key {2}, but none found.",
                     errorKey);
             }
-            
+
             return new ModelErrorDetailsTestBuilder<TModel>(
                 this.TestContext,
                 this,
@@ -64,10 +65,10 @@
         /// <typeparam name="TMember">Type of the member which will be tested for errors.</typeparam>
         /// <param name="memberWithError">Member expression for the tested member.</param>
         /// <returns>Model error details test builder.</returns>
-        public IModelErrorDetailsTestBuilder<TModel> ContainingModelStateErrorFor<TMember>(Expression<Func<TModel, TMember>> memberWithError)
+        public IModelErrorDetailsTestBuilder<TModel> ContainingErrorFor<TMember>(Expression<Func<TModel, TMember>> memberWithError)
         {
-            var memberName = ExpressionParser.GetPropertyName(memberWithError);
-            this.ContainingModelStateError(memberName);
+            var memberName = ExpressionHelper.GetExpressionText(memberWithError);
+            this.ContainingError(memberName);
 
             return new ModelErrorDetailsTestBuilder<TModel>(
                 this.TestContext,
@@ -82,7 +83,7 @@
         /// <typeparam name="TMember">Type of the member which will be tested for no errors.</typeparam>
         /// <param name="memberWithNoError">Member expression for the tested member.</param>
         /// <returns>This instance in order to support method chaining.</returns>
-        public IAndModelErrorTestBuilder<TModel> ContainingNoModelStateErrorFor<TMember>(Expression<Func<TModel, TMember>> memberWithNoError)
+        public IAndModelErrorTestBuilder<TModel> ContainingNoErrorFor<TMember>(Expression<Func<TModel, TMember>> memberWithNoError)
         {
             var memberName = ExpressionParser.GetPropertyName(memberWithNoError);
             if (this.ModelState.ContainsKey(memberName))

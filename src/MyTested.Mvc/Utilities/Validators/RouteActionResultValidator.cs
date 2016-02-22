@@ -89,10 +89,10 @@
         }
 
         /// <summary>
-        /// Validates whether RouteValues contains route item with key as the provided one from action result containing such property.
+        /// Validates whether RouteValues contains route entry with key as the provided one from action result containing such property.
         /// </summary>
         /// <param name="actionResult">Action result with RouteValues.</param>
-        /// <param name="key">Expected route item key.</param>
+        /// <param name="key">Expected route entry key.</param>
         /// <param name="failedValidationAction">Action to call in case of failed validation.</param>
         public static void ValidateRouteValue(
             dynamic actionResult,
@@ -105,18 +105,18 @@
                 {
                     failedValidationAction(
                         "route values",
-                        $"to have item with key '{key}'",
+                        $"to have entry with key '{key}'",
                         "such was not found");
                 }
             });
         }
 
         /// <summary>
-        /// Validates whether RouteValues contains route item with key and value as the provided ones from action result containing such property.
+        /// Validates whether RouteValues contains route entries with key and value as the provided ones from action result containing such property.
         /// </summary>
         /// <param name="actionResult">Action result with RouteValues.</param>
-        /// <param name="key">Expected route item key.</param>
-        /// <param name="value">Expected route item value.</param>
+        /// <param name="key">Expected route entry key.</param>
+        /// <param name="value">Expected route entry value.</param>
         /// <param name="failedValidationAction">Action to call in case of failed validation.</param>
         public static void ValidateRouteValue(
             dynamic actionResult,
@@ -128,21 +128,21 @@
             {
                 var routeValues = (IDictionary<string, object>)actionResult.RouteValues;
 
-                var itemExists = routeValues.ContainsKey(key);
-                var actualValue = itemExists ? routeValues[key] : null;
+                var entryExists = routeValues.ContainsKey(key);
+                var actualValue = entryExists ? routeValues[key] : null;
 
-                if (!itemExists || Reflection.AreNotDeeplyEqual(value, actualValue))
+                if (!entryExists || Reflection.AreNotDeeplyEqual(value, actualValue))
                 {
                     failedValidationAction(
                         "route values",
-                        $"to have item with '{key}' key and the provided value",
-                        $"{(itemExists ? "the value was different" : "such was not found")}");
+                        $"to have entry with '{key}' key and the provided value",
+                        $"{(entryExists ? "the value was different" : "such was not found")}");
                 }
             });
         }
 
         /// <summary>
-        /// Validates whether RouteValues contains the same route items as the provided ones from action result containing such property.
+        /// Validates whether RouteValues contains the same route entries as the provided ones from action result containing such property.
         /// </summary>
         /// <param name="actionResult">Action result with RouteValues.</param>
         /// <param name="routeValues">Expected route value dictionary.</param>
@@ -156,21 +156,21 @@
             {
                 var actualRouteValues = (IDictionary<string, object>)actionResult.RouteValues;
 
-                var expectedItems = routeValues.Count;
-                var actualItems = actualRouteValues.Count;
+                var expectedEntries = routeValues.Count;
+                var actualEntries = actualRouteValues.Count;
 
-                if (expectedItems != actualItems)
+                if (expectedEntries != actualEntries)
                 {
                     failedValidationAction(
                         "route values",
-                        $"to have {expectedItems} {(expectedItems != 1 ? "items" : "item")}",
-                        $"in fact found {actualItems}");
+                        $"to have {expectedEntries} {(expectedEntries != 1 ? "entries" : "entry")}",
+                        $"in fact found {actualEntries}");
                 }
 
-                routeValues.ForEach(item => ValidateRouteValue(
+                routeValues.ForEach(entry => ValidateRouteValue(
                     actionResult,
-                    item.Key,
-                    item.Value,
+                    entry.Key,
+                    entry.Value,
                     failedValidationAction));
             });
         }

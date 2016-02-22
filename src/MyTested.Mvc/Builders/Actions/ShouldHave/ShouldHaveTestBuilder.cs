@@ -6,9 +6,11 @@
     using Http;
     using Utilities.Validators;
     using Internal.TestContexts;
+    using Contracts.And;
+    using System;
 
     /// <summary>
-    /// Used for testing action attributes and model state.
+    /// Used for testing action attributes and controller properties.
     /// </summary>
     /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
     public partial class ShouldHaveTestBuilder<TActionResult>
@@ -30,11 +32,14 @@
         /// <summary>
         /// Checks whether the tested action applies additional features to the HTTP response.
         /// </summary>
-        /// <returns>HTTP response test builder.</returns>
-        public IHttpResponseTestBuilder HttpResponse()
+        /// <returns>Test builder with AndAlso method.</returns>
+        public IAndTestBuilder<TActionResult> HttpResponse(Action<IHttpResponseTestBuilder> httpResponseTestBuilder)
         {
             CommonValidator.CheckForException(this.CaughtException);
-            return new HttpResponseTestBuilder(this.TestContext);
+            
+            httpResponseTestBuilder(new HttpResponseTestBuilder(this.TestContext));
+
+            return this.NewAndTestBuilder();
         }
     }
 }

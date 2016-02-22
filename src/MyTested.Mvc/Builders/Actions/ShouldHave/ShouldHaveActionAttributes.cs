@@ -9,7 +9,7 @@
     using Utilities.Validators;
 
     /// <summary>
-    /// Used for testing action attributes and model state.
+    /// Class containing methods for testing action attributes.
     /// </summary>
     /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
     public partial class ShouldHaveTestBuilder<TActionResult>

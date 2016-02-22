@@ -115,9 +115,9 @@
         /// </summary>
         /// <param name="errorKey">Error key to search for.</param>
         /// <returns>Model error details test builder.</returns>
-        public IModelErrorDetailsTestBuilder<TModel> ContainingModelStateError(string errorKey)
+        public IModelErrorDetailsTestBuilder<TModel> ContainingError(string errorKey)
         {
-            return this.modelErrorTestBuilder.ContainingModelStateError(errorKey);
+            return this.modelErrorTestBuilder.ContainingError(errorKey);
         }
 
         /// <summary>
@@ -126,9 +126,9 @@
         /// <typeparam name="TMember">Type of the member which will be tested for errors.</typeparam>
         /// <param name="memberWithError">Member expression for the tested member.</param>
         /// <returns>Model error details test builder.</returns>
-        public IModelErrorDetailsTestBuilder<TModel> ContainingModelStateErrorFor<TMember>(Expression<Func<TModel, TMember>> memberWithError)
+        public IModelErrorDetailsTestBuilder<TModel> ContainingErrorFor<TMember>(Expression<Func<TModel, TMember>> memberWithError)
         {
-            return this.modelErrorTestBuilder.ContainingModelStateErrorFor(memberWithError);
+            return this.modelErrorTestBuilder.ContainingErrorFor(memberWithError);
         }
 
         /// <summary>
@@ -137,9 +137,9 @@
         /// <typeparam name="TMember">Type of the member which will be tested for no errors.</typeparam>
         /// <param name="memberWithNoError">Member expression for the tested member.</param>
         /// <returns>Model error details test builder.</returns>
-        public IModelErrorTestBuilder<TModel> ContainingNoModelStateErrorFor<TMember>(Expression<Func<TModel, TMember>> memberWithNoError)
+        public IModelErrorTestBuilder<TModel> ContainingNoErrorFor<TMember>(Expression<Func<TModel, TMember>> memberWithNoError)
         {
-            return this.modelErrorTestBuilder.ContainingNoModelStateErrorFor(memberWithNoError);
+            return this.modelErrorTestBuilder.ContainingNoErrorFor(memberWithNoError);
         }
 
         /// <summary>
