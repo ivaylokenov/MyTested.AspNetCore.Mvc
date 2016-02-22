@@ -10,12 +10,16 @@
     using Microsoft.Net.Http.Headers;
     using Utilities;
     using Microsoft.AspNetCore.Routing;
-    using Internal.TestContexts;    /// <summary>
-                                    /// Used for testing view component results.
-                                    /// </summary>
+    using Internal.TestContexts;
+    using Utilities.Validators;
+    /// <summary>
+    /// Used for testing view component results.
+    /// </summary>
     public class ViewComponentTestBuilder
         : ViewTestBuilder<ViewComponentResult>, IAndViewComponentTestBuilder
     {
+        private const string ArgumentsName = "arguments";
+
         private readonly IDictionary<string, object> viewComponentArguments;
 
         /// <summary>
@@ -101,13 +105,11 @@
         /// <returns>The same view component test builder.</returns>
         public IAndViewComponentTestBuilder ContainingArgument(string name)
         {
-            if (!this.viewComponentArguments.ContainsKey(name))
-            {
-                this.ThrowNewViewResultAssertionException(
-                    "arguments",
-                    $"to have item with key '{name}'",
-                    "such was not found");
-            }
+            DictionaryValidator.ValidateStringKey(
+                ArgumentsName,
+                this.viewComponentArguments,
+                name,
+                this.ThrowNewViewResultAssertionException);
 
             return this;
         }
@@ -120,16 +122,12 @@
         /// <returns>The same view component test builder.</returns>
         public IAndViewComponentTestBuilder ContainingArgument(string name, object value)
         {
-            var itemExists = this.viewComponentArguments.ContainsKey(name);
-            var actualValue = itemExists ? this.viewComponentArguments[name] : null;
-
-            if (!itemExists || Reflection.AreNotDeeplyEqual(value, actualValue))
-            {
-                this.ThrowNewViewResultAssertionException(
-                    "arguments",
-                    $"to have item with '{name}' key and the provided value",
-                    $"{(itemExists ? $"the value was different" : "such was not found")}");
-            }
+            DictionaryValidator.ValidateStringKeyAndValue(
+                ArgumentsName,
+                this.viewComponentArguments,
+                name,
+                value,
+                this.ThrowNewViewResultAssertionException);
 
             return this;
         }
@@ -142,15 +140,11 @@
         /// <returns>The same view component test builder.</returns>
         public IAndViewComponentTestBuilder ContainingArgument<TArgument>(TArgument argument)
         {
-            var sameArgument = this.viewComponentArguments.Values.FirstOrDefault(arg => Reflection.AreDeeplyEqual(argument, arg));
-
-            if (sameArgument == null)
-            {
-                this.ThrowNewViewResultAssertionException(
-                    "with at least one argument",
-                    "to be the given one",
-                    "none was found");
-            }
+            DictionaryValidator.ValidateValue(
+                ArgumentsName,
+                this.viewComponentArguments,
+                argument,
+                this.ThrowNewViewResultAssertionException);
 
             return this;
         }
@@ -162,16 +156,21 @@
         /// <returns>The same view component test builder.</returns>
         public IAndViewComponentTestBuilder ContainingArgumentOfType<TArgument>()
         {
-            var expectedType = typeof(TArgument);
-            var argumentOfSameType = this.viewComponentArguments.Values.FirstOrDefault(arg => arg.GetType() == expectedType);
+            DictionaryValidator.ValidateValueOfType<TArgument>(
+                ArgumentsName,
+                this.viewComponentArguments,
+                this.ThrowNewViewResultAssertionException);
 
-            if (argumentOfSameType == null)
-            {
-                this.ThrowNewViewResultAssertionException(
-                    "with at least one argument",
-                    $"to be of {expectedType.Name} type",
-                    "none was found");
-            }
+            return this;
+        }
+
+        public IAndViewComponentTestBuilder ContainingArgumentOfType<TArgument>(string name)
+        {
+            DictionaryValidator.ValidateStringKeyAndValueOfType<TArgument>(
+                ArgumentsName,
+                this.viewComponentArguments,
+                name,
+                this.ThrowNewViewResultAssertionException);
 
             return this;
         }
@@ -191,18 +190,11 @@
         /// <returns>The same view component test builder.</returns>
         public IAndViewComponentTestBuilder ContainingArguments(IDictionary<string, object> arguments)
         {
-            var expectedItems = arguments.Count;
-            var actualItems = this.viewComponentArguments.Count;
-
-            if (expectedItems != actualItems)
-            {
-                this.ThrowNewViewResultAssertionException(
-                    "arguments",
-                    $"to have {expectedItems} {(expectedItems != 1 ? "items" : "item")}",
-                    $"in fact found {actualItems}");
-            }
-
-            arguments.ForEach(item => this.ContainingArgument(item.Key, item.Value));
+            DictionaryValidator.ValidateValues(
+                ArgumentsName,
+                this.viewComponentArguments,
+                arguments,
+                this.ThrowNewViewResultAssertionException);
 
             return this;
         }

@@ -6,15 +6,16 @@
     using Microsoft.AspNetCore.Mvc;
     using Internal.Application;
     using Microsoft.AspNetCore.Mvc.Routing;
-    using Internal.Routes;
     using System.Linq.Expressions;
     using Internal.TestContexts;
-    using Internal;
-    using System.Linq;/// <summary>
-                      /// Validator class containing validation logic action results with route specific information.
-                      /// </summary>
+
+    /// <summary>
+    /// Validator class containing validation logic action results with route specific information.
+    /// </summary>
     public static class RouteActionResultValidator
     {
+        private const string RouteValuesName = "route values";
+
         /// <summary>
         /// Validates whether ActionName is the same as the provided one from action result containing such property.
         /// </summary>
@@ -101,13 +102,13 @@
         {
             RuntimeBinderValidator.ValidateBinding(() =>
             {
-                if (!((IDictionary<string, object>)actionResult.RouteValues).ContainsKey(key))
-                {
-                    failedValidationAction(
-                        "route values",
-                        $"to have entry with key '{key}'",
-                        "such was not found");
-                }
+                var routeValues = (IDictionary<string, object>)actionResult.RouteValues;
+
+                DictionaryValidator.ValidateStringKey(
+                    RouteValuesName,
+                    routeValues,
+                    key,
+                    failedValidationAction);
             });
         }
 
@@ -128,19 +129,64 @@
             {
                 var routeValues = (IDictionary<string, object>)actionResult.RouteValues;
 
-                var entryExists = routeValues.ContainsKey(key);
-                var actualValue = entryExists ? routeValues[key] : null;
-
-                if (!entryExists || Reflection.AreNotDeeplyEqual(value, actualValue))
-                {
-                    failedValidationAction(
-                        "route values",
-                        $"to have entry with '{key}' key and the provided value",
-                        $"{(entryExists ? "the value was different" : "such was not found")}");
-                }
+                DictionaryValidator.ValidateStringKeyAndValue(
+                    RouteValuesName,
+                    routeValues,
+                    key,
+                    value,
+                    failedValidationAction);
             });
         }
 
+        public static void ValidateRouteValueOfType<TRouteValue>(
+            dynamic actionResult,
+            Action<string, string, string> failedValidationAction)
+        {
+            RuntimeBinderValidator.ValidateBinding(() =>
+            {
+                var routeValues = (IDictionary<string, object>)actionResult.RouteValues;
+
+                DictionaryValidator.ValidateValueOfType<TRouteValue>(
+                    RouteValuesName,
+                    routeValues,
+                    failedValidationAction);
+            });
+        }
+
+        public static void ValidateRouteValueOfType<TRouteValue>(
+            dynamic actionResult,
+            string key,
+            Action<string, string, string> failedValidationAction)
+        {
+            RuntimeBinderValidator.ValidateBinding(() =>
+            {
+                var routeValues = (IDictionary<string, object>)actionResult.RouteValues;
+
+                DictionaryValidator.ValidateStringKeyAndValueOfType<TRouteValue>(
+                    RouteValuesName,
+                    routeValues,
+                    key,
+                    failedValidationAction);
+            });
+        }
+
+        public static void ValidateRouteValue<TRouteValue>(
+            dynamic actionResult,
+            TRouteValue value,
+            Action<string, string, string> failedValidationAction)
+        {
+            RuntimeBinderValidator.ValidateBinding(() =>
+            {
+                var routeValues = (IDictionary<string, object>)actionResult.RouteValues;
+
+                DictionaryValidator.ValidateValue(
+                    RouteValuesName,
+                    routeValues,
+                    value,
+                    failedValidationAction);
+            });
+        }
+            
         /// <summary>
         /// Validates whether RouteValues contains the same route entries as the provided ones from action result containing such property.
         /// </summary>
@@ -156,22 +202,11 @@
             {
                 var actualRouteValues = (IDictionary<string, object>)actionResult.RouteValues;
 
-                var expectedEntries = routeValues.Count;
-                var actualEntries = actualRouteValues.Count;
-
-                if (expectedEntries != actualEntries)
-                {
-                    failedValidationAction(
-                        "route values",
-                        $"to have {expectedEntries} {(expectedEntries != 1 ? "entries" : "entry")}",
-                        $"in fact found {actualEntries}");
-                }
-
-                routeValues.ForEach(entry => ValidateRouteValue(
-                    actionResult,
-                    entry.Key,
-                    entry.Value,
-                    failedValidationAction));
+                DictionaryValidator.ValidateValues(
+                    RouteValuesName,
+                    actualRouteValues,
+                    routeValues,
+                    failedValidationAction);
             });
         }
 
@@ -230,7 +265,7 @@
             Action<string, string, string> failedValidationAction)
         {
             var actionContext = controllerTestContext.ControllerContext;
-            
+
             var urlHelper = linkGenerationTestContext.UrlHelper ?? TestServiceProvider
                 .GetRequiredService<IUrlHelperFactory>()
                 .GetUrlHelper(actionContext);

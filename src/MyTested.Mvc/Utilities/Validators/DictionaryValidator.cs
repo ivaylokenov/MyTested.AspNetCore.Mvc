@@ -1,12 +1,14 @@
 ﻿namespace MyTested.Mvc.Utilities.Validators
 {
+    using Extensions;
     using System;
     using System.Collections.Generic;
     using System.Linq;
 
     public static class DictionaryValidator
     {
-        public static void WithStringKey(
+        public static void ValidateStringKey(
+            string name,
             IDictionary<string, object> dictionary,
             string key,
             Action<string, string, string> failedValidationAction)
@@ -14,13 +16,14 @@
             if (!dictionary.ContainsKey(key))
             {
                 failedValidationAction(
-                    "route values",
+                    name,
                     $"to have entry with key '{key}'",
                     "such was not found");
             }
         }
 
-        public static void WithStringKeyAndValue(
+        public static void ValidateStringKeyAndValue(
+            string name,
             IDictionary<string, object> dictionary,
             string key,
             object value,
@@ -32,54 +35,87 @@
             if (!entryExists || Reflection.AreNotDeeplyEqual(value, actualValue))
             {
                 failedValidationAction(
-                    "",
+                    name,
                     $"to have entry with '{key}' key and the provided value",
                     $"{(entryExists ? "the value was different" : "such was not found")}");
             }
         }
 
-        public static void WithValueOfType<TValue>(
+        public static void ValidateValueOfType<TValue>(
+            string name,
             IDictionary<string, object> dictionary,
             Action<string, string, string> failedValidationAction)
         {
             var expectedType = typeof(TValue);
-            var argumentOfSameType = dictionary.Values.FirstOrDefault(arg => arg.GetType() == expectedType);
+            var entryOfSameType = dictionary.Values.FirstOrDefault(arg => arg.GetType() == expectedType);
 
-            if (argumentOfSameType == null)
+            if (entryOfSameType == null)
             {
                 failedValidationAction(
-                    "with at least one argument",
-                    $"to be of {expectedType.Name} type",
+                    name,
+                    $"to have at least one entry of {expectedType.ToFriendlyTypeName()} type",
                     "none was found");
             }
         }
 
-        public static void WithStringKeyAndValueOfType<TValue>(
+        public static void ValidateStringKeyAndValueOfType<TValue>(
+            string name,
             IDictionary<string, object> dictionary,
             string key,
             Action<string, string, string> failedValidationAction)
         {
+            var entryExists = dictionary.ContainsKey(key);
+            var actualValue = entryExists ? dictionary[key] : null;
+
+            var expectedType = typeof(TValue);
+            if (!entryExists || Reflection.AreDifferentTypes(expectedType, actualValue?.GetType()))
+            {
+                failedValidationAction(
+                    name,
+                    $"to have entry with '{key}' key and of {expectedType.ToFriendlyTypeName()} type",
+                    $"{(entryExists ? "the value was different" : "such was not found")}");
+            }
         }
 
-        public static void WithValue<TValue>(
+        public static void ValidateValue<TValue>(
+            string name,
             IDictionary<string, object> dictionary,
             TValue value,
             Action<string, string, string> failedValidationAction)
         {
+            var sameEntry = dictionary.Values.FirstOrDefault(entry => Reflection.AreDeeplyEqual(value, entry));
+            if (sameEntry == null)
+            {
+                failedValidationAction(
+                    name,
+                    "to have entry with the provided value",
+                    "none was found");
+            }
         }
 
-        public static void WithValues(
+        public static void ValidateValues(
+            string name,
             IDictionary<string, object> dictionary,
             IDictionary<string, object> expectedDictionary,
             Action<string, string, string> failedValidationAction)
         {
-        }
+            var expectedItems = expectedDictionary.Count;
+            var actualItems = dictionary.Count;
 
-        public static void WithValues(
-            IDictionary<string, object> dictionary,
-            object values,
-            Action<string, string, string> failedValidationAction)
-        {
+            if (expectedItems != actualItems)
+            {
+                failedValidationAction(
+                    name,
+                    $"to have {expectedItems} {(expectedItems != 1 ? "entries" : "entry")}",
+                    $"in fact found {actualItems}");
+            }
+
+            expectedDictionary.ForEach(item => ValidateStringKeyAndValue(
+                name,
+                dictionary,
+                item.Key, 
+                item.Value,
+                failedValidationAction));
         }
     }
 }

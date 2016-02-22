@@ -252,7 +252,7 @@
                         .ViewComponent()
                         .ContainingArgument("id");
                 },
-                "When calling ViewComponentResultByType action in MvcController expected view component result arguments to have item with key 'id', but such was not found.");
+                "When calling ViewComponentResultByType action in MvcController expected view component result arguments to have entry with key 'id', but such was not found.");
         }
 
         [Fact]
@@ -268,7 +268,7 @@
                         .ViewComponent()
                         .ContainingArgument("model", new { model = 1 });
                 },
-                "When calling ViewComponentResultByType action in MvcController expected view component result arguments to have item with 'model' key and the provided value, but the value was different.");
+                "When calling ViewComponentResultByType action in MvcController expected view component result arguments to have entry with 'model' key and the provided value, but the value was different.");
         }
 
         [Fact]
@@ -284,7 +284,7 @@
                         .ViewComponent()
                         .ContainingArgument("id", new { model = 1 });
                 },
-                "When calling ViewComponentResultByType action in MvcController expected view component result arguments to have item with 'id' key and the provided value, but such was not found.");
+                "When calling ViewComponentResultByType action in MvcController expected view component result arguments to have entry with 'id' key and the provided value, but such was not found.");
         }
 
         [Fact]
@@ -313,7 +313,7 @@
                            .ViewComponent()
                            .ContainingArgument(1);
                    },
-                   "When calling ViewComponentResultByType action in MvcController expected view component result with at least one argument to be the given one, but none was found.");
+                   "When calling ViewComponentResultByType action in MvcController expected view component result arguments to have entry with the provided value, but none was found.");
         }
 
         [Fact]
@@ -342,7 +342,7 @@
                            .ViewComponent()
                            .ContainingArgumentOfType<int>();
                    },
-                   "When calling ViewComponentResultByType action in MvcController expected view component result with at least one argument to be of Int32 type, but none was found.");
+                   "When calling ViewComponentResultByType action in MvcController expected view component result arguments to have at least one entry of Int32 type, but none was found.");
         }
 
         [Fact]
@@ -369,7 +369,7 @@
                          .ViewComponent()
                          .ContainingArguments(new { id = 1, text = "text", incorrect = 15 });
                     }),
-                   "When calling ViewComponentResultByName action in MvcController expected view component result arguments to have 3 items, but in fact found 2.");
+                   "When calling ViewComponentResultByName action in MvcController expected view component result arguments to have 3 entries, but in fact found 2.");
         }
 
         [Fact]
@@ -385,7 +385,7 @@
                          .ViewComponent()
                          .ContainingArguments(new { id = 1, test = "incorrect" });
                     }),
-                   "When calling ViewComponentResultByName action in MvcController expected view component result arguments to have item with 'test' key and the provided value, but the value was different.");
+                   "When calling ViewComponentResultByName action in MvcController expected view component result arguments to have entry with 'test' key and the provided value, but the value was different.");
         }
 
         [Fact]

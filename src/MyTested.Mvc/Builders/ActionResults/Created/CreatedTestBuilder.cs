@@ -279,6 +279,35 @@
             return this;
         }
 
+        public IAndCreatedTestBuilder ContainingRouteValue<TRouteValue>(TRouteValue value)
+        {
+            RouteActionResultValidator.ValidateRouteValue(
+                this.ActionResult,
+                value,
+                this.ThrowNewCreatedResultAssertionException);
+
+            return this;
+        }
+
+        public IAndCreatedTestBuilder ContainingRouteValueOfType<TRouteValue>()
+        {
+            RouteActionResultValidator.ValidateRouteValueOfType<TRouteValue>(
+                this.ActionResult,
+                this.ThrowNewCreatedResultAssertionException);
+
+            return this;
+        }
+
+        public IAndCreatedTestBuilder ContainingRouteValueOfType<TRouteValue>(string key)
+        {
+            RouteActionResultValidator.ValidateRouteValueOfType<TRouteValue>(
+                this.ActionResult,
+                key,
+                this.ThrowNewCreatedResultAssertionException);
+
+            return this;
+        }
+
         /// <summary>
         /// Tests whether created result contains specific route key and value.
         /// </summary>
@@ -348,7 +377,7 @@
 
             return this;
         }
-        
+
         /// <summary>
         /// Tests whether created result returns created at specific action.
         /// </summary>
@@ -401,7 +430,7 @@
 
             return actualRedirectResult;
         }
-        
+
         private void ThrowNewCreatedResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new CreatedResultAssertionException(string.Format(

@@ -179,6 +179,35 @@
 
             return this;
         }
+        
+        public IAndRedirectTestBuilder ContainingRouteValue<TRouteValue>(TRouteValue value)
+        {
+            RouteActionResultValidator.ValidateRouteValue(
+                this.ActionResult,
+                value,
+                this.ThrowNewRedirectResultAssertionException);
+
+            return this;
+        }
+
+        public IAndRedirectTestBuilder ContainingRouteValueOfType<TRouteValue>()
+        {
+            RouteActionResultValidator.ValidateRouteValueOfType<TRouteValue>(
+                this.ActionResult,
+                this.ThrowNewRedirectResultAssertionException);
+
+            return this;
+        }
+
+        public IAndRedirectTestBuilder ContainingRouteValueOfType<TRouteValue>(string key)
+        {
+            RouteActionResultValidator.ValidateRouteValueOfType<TRouteValue>(
+                this.ActionResult,
+                key,
+                this.ThrowNewRedirectResultAssertionException);
+
+            return this;
+        }
 
         /// <summary>
         /// Tests whether redirect result contains the provided route values.

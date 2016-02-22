@@ -16,6 +16,7 @@
     using Xunit;
     using Internal.Http;
     using Microsoft.Extensions.Primitives;
+
     public class ControllerBuilderTests
     {
         [Fact]
