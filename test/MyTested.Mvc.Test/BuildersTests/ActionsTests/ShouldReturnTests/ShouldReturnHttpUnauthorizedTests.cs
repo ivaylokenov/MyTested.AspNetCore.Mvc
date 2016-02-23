@@ -14,7 +14,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.UnauthorizedAction())
                 .ShouldReturn()
-                .HttpUnauthorized();
+                .Unauthorized();
         }
 
         [Fact]
@@ -27,9 +27,9 @@
                         .Controller<MvcController>()
                         .Calling(c => c.BadRequestAction())
                         .ShouldReturn()
-                        .HttpUnauthorized();
+                        .Unauthorized();
                 }, 
-                "When calling BadRequestAction action in MvcController expected action result to be HttpUnauthorizedResult, but instead received BadRequestResult.");
+                "When calling BadRequestAction action in MvcController expected action result to be UnauthorizedResult, but instead received BadRequestResult.");
         }
     }
 }

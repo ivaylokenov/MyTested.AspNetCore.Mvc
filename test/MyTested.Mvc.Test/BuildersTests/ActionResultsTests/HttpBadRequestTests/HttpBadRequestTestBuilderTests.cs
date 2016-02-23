@@ -22,7 +22,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.BadRequestWithCustomError())
                 .ShouldReturn()
-                .HttpBadRequest()
+                .BadRequest()
                 .WithError(TestObjectFactory.GetListOfResponseModels());
         }
 
@@ -33,7 +33,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.BadRequestWithCustomError())
                 .ShouldReturn()
-                .HttpBadRequest()
+                .BadRequest()
                 .WithErrorOfType<List<ResponseModel>>();
         }
 
@@ -44,7 +44,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.BadRequestAction())
                 .ShouldReturn()
-                .HttpBadRequest()
+                .BadRequest()
                 .WithNoError();
         }
 
@@ -58,7 +58,7 @@
                         .Controller<MvcController>()
                         .Calling(c => c.BadRequestWithCustomError())
                         .ShouldReturn()
-                        .HttpBadRequest()
+                        .BadRequest()
                         .WithNoError();
                 },
                 "When calling BadRequestWithCustomError action in MvcController expected HTTP bad request result to not have error message, but in fact such was found.");
@@ -71,21 +71,21 @@
                 .Controller<MvcController>()
                 .Calling(c => c.BadRequestWithErrorAction())
                 .ShouldReturn()
-                .HttpBadRequest()
+                .BadRequest()
                 .WithErrorMessage();
         }
 
         [Fact]
         public void WithErrorMessageShouldThrowExceptionWhenResultDoesNotHaveErrorMessage()
         {
-            Test.AssertException<HttpBadRequestResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
                         .Calling(c => c.BadRequestAction())
                         .ShouldReturn()
-                        .HttpBadRequest()
+                        .BadRequest()
                         .WithErrorMessage();
                 }, 
                 "When calling BadRequestAction action in MvcController expected HTTP bad request result to contain error object, but it could not be found.");
@@ -98,21 +98,21 @@
                 .Controller<MvcController>()
                 .Calling(c => c.BadRequestWithErrorAction())
                 .ShouldReturn()
-                .HttpBadRequest()
+                .BadRequest()
                 .WithErrorMessage("Bad request");
         }
 
         [Fact]
         public void WithErrorMessageShouldThrowExceptionWhenResultDoesNotHaveCorrentErrorMessage()
         {
-            Test.AssertException<HttpBadRequestResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
                         .Calling(c => c.BadRequestWithErrorAction())
                         .ShouldReturn()
-                        .HttpBadRequest()
+                        .BadRequest()
                         .WithErrorMessage("Good request");
                 }, 
                 "When calling BadRequestWithErrorAction action in MvcController expected HTTP bad request result with message 'Good request', but instead received 'Bad request'.");
@@ -121,7 +121,7 @@
         [Fact]
         public void WithErrorMessageShouldThrowExceptionWhenResultIsNotString()
         {
-            Test.AssertException<HttpBadRequestResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     var requestModelWithErrors = TestObjectFactory.GetRequestModelWithErrors();
@@ -130,7 +130,7 @@
                         .Controller<MvcController>()
                         .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
                         .ShouldReturn()
-                        .HttpBadRequest()
+                        .BadRequest()
                         .WithErrorMessage("Good request");
                 },
                 "When calling BadRequestWithModelState action in MvcController expected HTTP bad request result with error message, but instead received non-string value.");
@@ -145,7 +145,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
                 .ShouldReturn()
-                .HttpBadRequest()
+                .BadRequest()
                 .WithModelStateError();
         }
 
@@ -161,14 +161,14 @@
                 .Controller<MvcController>()
                 .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
                 .ShouldReturn()
-                .HttpBadRequest()
+                .BadRequest()
                 .WithModelStateError(modelState);
         }
 
         [Fact]
         public void WithModelStateShouldThrowExceptionWhenModelStateHasDifferentKeys()
         {
-            Test.AssertException<HttpBadRequestResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     var requestModelWithErrors = TestObjectFactory.GetRequestModelWithErrors();
@@ -180,7 +180,7 @@
                         .Controller<MvcController>()
                         .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
                         .ShouldReturn()
-                        .HttpBadRequest()
+                        .BadRequest()
                         .WithModelStateError(modelState);
                 }, 
                 "When calling BadRequestWithModelState action in MvcController expected HTTP bad request model state dictionary to contain String key, but none found.");
@@ -189,7 +189,7 @@
         [Fact]
         public void WithModelStateShouldThrowExceptionWhenErrorIsNotModelState()
         {
-            Test.AssertException<HttpBadRequestResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     var modelState = new ModelStateDictionary();
@@ -198,7 +198,7 @@
                         .Controller<MvcController>()
                         .Calling(c => c.BadRequestWithErrorAction())
                         .ShouldReturn()
-                        .HttpBadRequest()
+                        .BadRequest()
                         .WithModelStateError(modelState);
                 },
                 "When calling BadRequestWithErrorAction action in MvcController expected HTTP bad request result with model state dictionary as error, but instead received other type of error.");
@@ -207,7 +207,7 @@
         [Fact]
         public void WithModelStateShouldThrowExceptionWhenModelStateHasLessNumberOfKeys()
         {
-            Test.AssertException<HttpBadRequestResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     var requestModelWithErrors = TestObjectFactory.GetRequestModelWithErrors();
@@ -218,7 +218,7 @@
                         .Controller<MvcController>()
                         .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
                         .ShouldReturn()
-                        .HttpBadRequest()
+                        .BadRequest()
                         .WithModelStateError(modelState);
                 }, 
                 "When calling BadRequestWithModelState action in MvcController expected HTTP bad request model state dictionary to contain 1 keys, but found 2.");
@@ -227,7 +227,7 @@
         [Fact]
         public void WithModelStateShouldThrowExceptionWhenModelStateHasMoreNumberOfKeys()
         {
-            Test.AssertException<HttpBadRequestResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     var requestModelWithErrors = TestObjectFactory.GetRequestModelWithErrors();
@@ -240,7 +240,7 @@
                         .Controller<MvcController>()
                         .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
                         .ShouldReturn()
-                        .HttpBadRequest()
+                        .BadRequest()
                         .WithModelStateError(modelState);
                 }, 
                 "When calling BadRequestWithModelState action in MvcController expected HTTP bad request model state dictionary to contain 3 keys, but found 2.");
@@ -249,7 +249,7 @@
         [Fact]
         public void WithModelStateShouldThrowExceptionWhenModelStateHasWrongError()
         {
-            Test.AssertException<HttpBadRequestResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     var requestModelWithErrors = TestObjectFactory.GetRequestModelWithErrors();
@@ -261,7 +261,7 @@
                         .Controller<MvcController>()
                         .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
                         .ShouldReturn()
-                        .HttpBadRequest()
+                        .BadRequest()
                         .WithModelStateError(modelState);
                 },
                 "When calling BadRequestWithModelState action in MvcController expected HTTP bad request result with message 'The RequiredString field is not required.', but instead received 'The RequiredString field is required.'.");
@@ -270,7 +270,7 @@
         [Fact]
         public void WithModelStateShouldThrowExceptionWhenModelStateHasMoreErrors()
         {
-            Test.AssertException<HttpBadRequestResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     var requestModelWithErrors = TestObjectFactory.GetRequestModelWithErrors();
@@ -283,7 +283,7 @@
                         .Controller<MvcController>()
                         .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
                         .ShouldReturn()
-                        .HttpBadRequest()
+                        .BadRequest()
                         .WithModelStateError(modelState);
                 }, 
                 "When calling BadRequestWithModelState action in MvcController expected HTTP bad request model state dictionary to contain 2 errors for RequiredString key, but found 1.");
@@ -301,7 +301,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
                 .ShouldReturn()
-                .HttpBadRequest()
+                .BadRequest()
                 .WithModelStateErrorFor<RequestModel>()
                 .ContainingErrorFor(m => m.Integer).ThatEquals("The field Integer must be between 1 and 2147483647.")
                 .AndAlso()
@@ -321,7 +321,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .HttpBadRequest()
+                .BadRequest()
                 .WithStatusCode(201);
         }
 
@@ -332,21 +332,21 @@
                 .Controller<MvcController>()
                 .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .HttpBadRequest()
+                .BadRequest()
                 .WithStatusCode(HttpStatusCode.Created);
         }
 
         [Fact]
         public void WithStatusCodeAsEnumShouldThrowExceptionWithIncorrectStatusCode()
         {
-            Test.AssertException<HttpBadRequestResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
                         .Calling(c => c.FullHttpBadRequestAction())
                         .ShouldReturn()
-                        .HttpBadRequest()
+                        .BadRequest()
                         .WithStatusCode(HttpStatusCode.OK);
                 },
                 "When calling FullHttpBadRequestAction action in MvcController expected HTTP bad request result to have 200 (OK) status code, but instead received 201 (Created).");
@@ -359,7 +359,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .HttpBadRequest()
+                .BadRequest()
                 .ContainingContentType(ContentType.ApplicationJson);
         }
 
@@ -370,21 +370,21 @@
                 .Controller<MvcController>()
                 .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .HttpBadRequest()
+                .BadRequest()
                 .ContainingContentType(new MediaTypeHeaderValue(ContentType.ApplicationJson));
         }
         
         [Fact]
         public void ContainingContentTypeAsMediaTypeHeaderValueShouldThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<HttpBadRequestResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     MyMvc
                        .Controller<MvcController>()
                        .Calling(c => c.FullHttpBadRequestAction())
                        .ShouldReturn()
-                       .HttpBadRequest()
+                       .BadRequest()
                        .ContainingContentType(new MediaTypeHeaderValue(ContentType.ApplicationOctetStream));
                 },
                 "When calling FullHttpBadRequestAction action in MvcController expected HTTP bad request result content types to contain application/octet-stream, but such was not found.");
@@ -397,7 +397,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .HttpBadRequest()
+                .BadRequest()
                 .ContainingContentTypes(new List<string>
                 {
                     ContentType.ApplicationJson,
@@ -412,21 +412,21 @@
                 .Controller<MvcController>()
                 .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .HttpBadRequest()
+                .BadRequest()
                 .ContainingContentTypes(ContentType.ApplicationJson, ContentType.ApplicationXml);
         }
 
         [Fact]
         public void ContainingContentTypesStringValueShouldNotThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<HttpBadRequestResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
                         .Calling(c => c.FullHttpBadRequestAction())
                         .ShouldReturn()
-                        .HttpBadRequest()
+                        .BadRequest()
                         .ContainingContentTypes(new List<string>
                         {
                             ContentType.ApplicationOctetStream,
@@ -439,14 +439,14 @@
         [Fact]
         public void ContainingContentTypesAsStringValueShouldNotThrowExceptionWithIncorrectCount()
         {
-            Test.AssertException<HttpBadRequestResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
                         .Calling(c => c.FullHttpBadRequestAction())
                         .ShouldReturn()
-                        .HttpBadRequest()
+                        .BadRequest()
                         .ContainingContentTypes(new List<string>
                         {
                             ContentType.ApplicationXml
@@ -458,14 +458,14 @@
         [Fact]
         public void ContainingContentTypesAsStringValueShouldNotThrowExceptionWithIncorrectCountWithMoreThanOneItem()
         {
-            Test.AssertException<HttpBadRequestResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
                         .Calling(c => c.FullHttpBadRequestAction())
                         .ShouldReturn()
-                        .HttpBadRequest()
+                        .BadRequest()
                         .ContainingContentTypes(new List<string>
                         {
                             ContentType.ApplicationXml,
@@ -483,7 +483,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .HttpBadRequest()
+                .BadRequest()
                 .ContainingContentTypes(new List<MediaTypeHeaderValue>
                 {
                     new MediaTypeHeaderValue(ContentType.ApplicationJson),
@@ -498,21 +498,21 @@
                 .Controller<MvcController>()
                 .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .HttpBadRequest()
+                .BadRequest()
                 .ContainingContentTypes(new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml));
         }
 
         [Fact]
         public void ContainingContentTypesAsMediaTypeHeaderValueShouldNotThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<HttpBadRequestResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
                         .Calling(c => c.FullHttpBadRequestAction())
                         .ShouldReturn()
-                        .HttpBadRequest()
+                        .BadRequest()
                         .ContainingContentTypes(new List<MediaTypeHeaderValue>
                         {
                             new MediaTypeHeaderValue(ContentType.ApplicationOctetStream),
@@ -525,14 +525,14 @@
         [Fact]
         public void ContainingContentTypesAsMediaTypeHeaderValueShouldNotThrowExceptionWithIncorrectCount()
         {
-            Test.AssertException<HttpBadRequestResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
                         .Calling(c => c.FullHttpBadRequestAction())
                         .ShouldReturn()
-                        .HttpBadRequest()
+                        .BadRequest()
                         .ContainingContentTypes(new List<MediaTypeHeaderValue>
                         {
                             new MediaTypeHeaderValue(ContentType.ApplicationXml)
@@ -544,14 +544,14 @@
         [Fact]
         public void ContainingContentTypesAsMediaTypeHeaderValueValueShouldNotThrowExceptionWithIncorrectCountWithMoreThanOneItem()
         {
-            Test.AssertException<HttpBadRequestResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
                         .Calling(c => c.FullHttpBadRequestAction())
                         .ShouldReturn()
-                        .HttpBadRequest()
+                        .BadRequest()
                         .ContainingContentTypes(new List<MediaTypeHeaderValue>
                         {
                             new MediaTypeHeaderValue(ContentType.ApplicationXml),
@@ -571,14 +571,14 @@
                 .Controller<MvcController>()
                 .Calling(c => c.HttpBadRequestActionWithFormatter(formatter))
                 .ShouldReturn()
-                .HttpBadRequest()
+                .BadRequest()
                 .ContainingOutputFormatter(formatter);
         }
 
         [Fact]
         public void ContainingOutputFormatterShouldThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<HttpBadRequestResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     var formatter = TestObjectFactory.GetOutputFormatter();
@@ -587,7 +587,7 @@
                         .Controller<MvcController>()
                         .Calling(c => c.HttpBadRequestActionWithFormatter(formatter))
                         .ShouldReturn()
-                        .HttpBadRequest()
+                        .BadRequest()
                         .ContainingOutputFormatter(new JsonOutputFormatter());
                 },
                 "When calling HttpBadRequestActionWithFormatter action in MvcController expected HTTP bad request result output formatters to contain the provided formatter, but such was not found.");
@@ -600,21 +600,21 @@
                 .Controller<MvcController>()
                 .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .HttpBadRequest()
+                .BadRequest()
                 .ContainingOutputFormatterOfType<JsonOutputFormatter>();
         }
 
         [Fact]
         public void ContainingOutputFormatterOfTypeShouldThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<HttpBadRequestResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
                         .Calling(c => c.FullHttpBadRequestAction())
                         .ShouldReturn()
-                        .HttpBadRequest()
+                        .BadRequest()
                         .ContainingOutputFormatterOfType<IOutputFormatter>();
                 },
                 "When calling FullHttpBadRequestAction action in MvcController expected HTTP bad request result output formatters to contain formatter of IOutputFormatter type, but such was not found.");
@@ -627,7 +627,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .HttpBadRequest()
+                .BadRequest()
                 .ContainingOutputFormatters(new List<IOutputFormatter>
                 {
                     new JsonOutputFormatter(),
@@ -642,21 +642,21 @@
                 .Controller<MvcController>()
                 .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .HttpBadRequest()
+                .BadRequest()
                 .ContainingOutputFormatters(new JsonOutputFormatter(), new CustomOutputFormatter());
         }
 
         [Fact]
         public void ContainingOutputFormattersShouldThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<HttpBadRequestResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
                         .Calling(c => c.FullHttpBadRequestAction())
                         .ShouldReturn()
-                        .HttpBadRequest()
+                        .BadRequest()
                         .ContainingOutputFormatters(new List<IOutputFormatter>
                         {
                             new JsonOutputFormatter(),
@@ -669,14 +669,14 @@
         [Fact]
         public void ContainingOutputFormattersShouldThrowExceptionWithIncorrectCount()
         {
-            Test.AssertException<HttpBadRequestResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
                         .Calling(c => c.FullHttpBadRequestAction())
                         .ShouldReturn()
-                        .HttpBadRequest()
+                        .BadRequest()
                         .ContainingOutputFormatters(new List<IOutputFormatter>
                         {
                             new JsonOutputFormatter()
@@ -688,14 +688,14 @@
         [Fact]
         public void ContainingOutputFormattersShouldThrowExceptionWithIncorrectCountWithMoreThanOneItem()
         {
-            Test.AssertException<HttpBadRequestResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
                         .Calling(c => c.FullHttpBadRequestAction())
                         .ShouldReturn()
-                        .HttpBadRequest()
+                        .BadRequest()
                         .ContainingOutputFormatters(new List<IOutputFormatter>
                         {
                             new JsonOutputFormatter(),
@@ -713,7 +713,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .HttpBadRequest()
+                .BadRequest()
                 .WithStatusCode(201)
                 .AndAlso()
                 .ContainingOutputFormatters(new JsonOutputFormatter(), new CustomOutputFormatter());
@@ -726,7 +726,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .HttpBadRequest()
+                .BadRequest()
                 .AndProvideTheActionResult();
 
             Assert.NotNull(actionResult);

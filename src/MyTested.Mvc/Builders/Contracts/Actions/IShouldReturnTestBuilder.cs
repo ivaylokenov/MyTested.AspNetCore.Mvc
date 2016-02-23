@@ -7,8 +7,8 @@
     using ActionResults.Created;
     using ActionResults.File;
     using ActionResults.Forbid;
-    using ActionResults.HttpBadRequest;
-    using ActionResults.HttpNotFound;
+    using ActionResults.BadRequest;
+    using ActionResults.NotFound;
     using ActionResults.Json;
     using ActionResults.LocalRedirect;
     using ActionResults.Ok;
@@ -93,7 +93,7 @@
         IForbidTestBuilder Forbid();
 
         /// <summary>
-        /// Tests whether action result is HttpOkResult or HttpOkObjectResult.
+        /// Tests whether action result is OkResult or OkObjectResult.
         /// </summary>
         /// <returns>Ok test builder.</returns>
         IOkTestBuilder Ok();
@@ -102,19 +102,19 @@
         /// Tests whether action result is BadRequestResult, InvalidModelStateResult or BadRequestErrorMessageResult.
         /// </summary>
         /// <returns>Bad request test builder.</returns>
-        IHttpBadRequestTestBuilder HttpBadRequest();
+        IBadRequestTestBuilder BadRequest();
 
         /// <summary>
-        /// Tests whether action result is HttpNotFoundResult or HttpNotFoundObjectResult.
+        /// Tests whether action result is NotFoundResult or NotFoundObjectResult.
         /// </summary>
         /// <returns>Base test builder with action result.</returns>
-        IHttpNotFoundTestBuilder HttpNotFound();
+        INotFoundTestBuilder NotFound();
         
         /// <summary>
-        /// Tests whether action result is HttpUnauthorizedResult.
+        /// Tests whether action result is UnauthorizedResult.
         /// </summary>
         /// <returns>Base test builder with action result.</returns>
-        IBaseTestBuilderWithActionResult<TActionResult> HttpUnauthorized();
+        IBaseTestBuilderWithActionResult<TActionResult> Unauthorized();
         
         /// <summary>
         /// Tests whether action result is LocalRedirectResult.
@@ -194,24 +194,24 @@
         IViewComponentTestBuilder ViewComponent<TViewComponentType>();
 
         /// <summary>
-        /// Tests whether action result is HttpStatusCodeResult.
+        /// Tests whether action result is StatusCodeResult.
         /// </summary>
         /// <returns>Base test builder with action result.</returns>
-        IBaseTestBuilderWithActionResult<TActionResult> HttpStatusCode();
+        IBaseTestBuilderWithActionResult<TActionResult> StatusCode();
 
         /// <summary>
-        /// Tests whether action result is HttpStatusCodeResult and is the same as provided one.
+        /// Tests whether action result is StatusCodeResult and is the same as provided one.
         /// </summary>
         /// <param name="statusCode">Status code.</param>
         /// <returns>Base test builder with action result.</returns>
-        IBaseTestBuilderWithActionResult<TActionResult> HttpStatusCode(int statusCode);
+        IBaseTestBuilderWithActionResult<TActionResult> StatusCode(int statusCode);
 
         /// <summary>
-        /// Tests whether action result is HttpStatusCodeResult and is the same as provided HttpStatusCode.
+        /// Tests whether action result is StatusCodeResult and is the same as provided StatusCode.
         /// </summary>
-        /// <param name="statusCode">HttpStatusCode enumeration.</param>
+        /// <param name="statusCode">StatusCode enumeration.</param>
         /// <returns>Base test builder with action result.</returns>
-        IBaseTestBuilderWithActionResult<TActionResult> HttpStatusCode(HttpStatusCode statusCode);
+        IBaseTestBuilderWithActionResult<TActionResult> StatusCode(HttpStatusCode statusCode);
         
         /// <summary>
         /// Tests whether action result is EmptyResult.

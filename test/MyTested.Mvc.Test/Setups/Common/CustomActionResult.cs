@@ -2,7 +2,7 @@
 {
     using Microsoft.AspNetCore.Mvc;
 
-    public class CustomActionResult : HttpOkResult
+    public class CustomActionResult : OkResult
     {
     }
 }

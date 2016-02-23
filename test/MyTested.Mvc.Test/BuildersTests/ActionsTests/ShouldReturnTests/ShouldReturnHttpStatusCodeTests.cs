@@ -14,7 +14,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.StatusCodeAction())
                 .ShouldReturn()
-                .HttpStatusCode();
+                .StatusCode();
         }
 
         [Fact]
@@ -27,9 +27,9 @@
                         .Controller<MvcController>()
                         .Calling(c => c.BadRequestAction())
                         .ShouldReturn()
-                        .HttpStatusCode();
+                        .StatusCode();
                 },
-                "When calling BadRequestAction action in MvcController expected action result to be HttpStatusCodeResult, but instead received BadRequestResult.");
+                "When calling BadRequestAction action in MvcController expected action result to be StatusCodeResult, but instead received BadRequestResult.");
         }
         
         [Fact]
@@ -39,7 +39,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.StatusCodeAction())
                 .ShouldReturn()
-                .HttpStatusCode(500);
+                .StatusCode(500);
         }
 
         [Fact]
@@ -52,9 +52,9 @@
                         .Controller<MvcController>()
                         .Calling(c => c.StatusCodeAction())
                         .ShouldReturn()
-                        .HttpStatusCode(200);
+                        .StatusCode(200);
                 },
-                "When calling StatusCodeAction action in MvcController expected HTTP status code result to have 200 (OK) status code, but instead received 500 (InternalServerError).");
+                "When calling StatusCodeAction action in MvcController expected status code result to have 200 (OK) status code, but instead received 500 (InternalServerError).");
         }
     }
 }

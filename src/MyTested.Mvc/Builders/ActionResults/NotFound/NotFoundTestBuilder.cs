@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Net;
     using Base;
-    using Contracts.ActionResults.HttpNotFound;
+    using Contracts.ActionResults.NotFound;
     using Exceptions;
     using Utilities.Extensions;
     using Microsoft.AspNetCore.Mvc;
@@ -14,18 +14,18 @@
     /// Used for testing HTTP not found result.
     /// </summary>
     /// <typeparam name="THttpNotFoundResult">Type of not found result - HttpNotFoundResult or HttpNotFoundObjectResult.</typeparam>
-    public class HttpNotFoundTestBuilder<THttpNotFoundResult>
-        : BaseTestBuilderWithResponseModel<THttpNotFoundResult>, IAndHttpNotFoundTestBuilder
+    public class NotFoundTestBuilder<THttpNotFoundResult>
+        : BaseTestBuilderWithResponseModel<THttpNotFoundResult>, IAndNotFoundTestBuilder
         where THttpNotFoundResult : ActionResult
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="HttpNotFoundTestBuilder{TActionResult}" /> class.
+        /// Initializes a new instance of the <see cref="NotFoundTestBuilder{TActionResult}" /> class.
         /// </summary>
         /// <param name="controller">Controller on which the action will be tested.</param>
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Caught exception during the action execution.</param>
         /// <param name="httpNotFoundResult">Result from the tested action.</param>
-        public HttpNotFoundTestBuilder(ControllerTestContext testContext)
+        public NotFoundTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
         }
@@ -34,9 +34,9 @@
         /// Tests whether no response model is returned from the HTTP not found result.
         /// </summary>
         /// <returns>The same HTTP not found test builder.</returns>
-        public IAndHttpNotFoundTestBuilder WithNoResponseModel()
+        public IAndNotFoundTestBuilder WithNoResponseModel()
         {
-            var actualResult = this.ActionResult as HttpNotFoundResult;
+            var actualResult = this.ActionResult as NotFoundResult;
             if (actualResult == null)
             {
                 throw new ResponseModelAssertionException(string.Format(
@@ -53,7 +53,7 @@
         /// </summary>
         /// <param name="statusCode">Status code.</param>
         /// <returns>The same HTTP not found test builder.</returns>
-        public IAndHttpNotFoundTestBuilder WithStatusCode(int statusCode)
+        public IAndNotFoundTestBuilder WithStatusCode(int statusCode)
         {
             this.ValidateStatusCode(statusCode);
             return this;
@@ -64,7 +64,7 @@
         /// </summary>
         /// <param name="statusCode">HttpStatusCode enumeration.</param>
         /// <returns>The same HTTP not found test builder.</returns>
-        public IAndHttpNotFoundTestBuilder WithStatusCode(HttpStatusCode statusCode)
+        public IAndNotFoundTestBuilder WithStatusCode(HttpStatusCode statusCode)
         {
             this.ValidateStatusCode(statusCode);
             return this;
@@ -75,7 +75,7 @@
         /// </summary>
         /// <param name="contentType">Content type as string.</param>
         /// <returns>The same HTTP not found test builder.</returns>
-        public IAndHttpNotFoundTestBuilder ContainingContentType(string contentType)
+        public IAndNotFoundTestBuilder ContainingContentType(string contentType)
         {
             this.ValidateContainingOfContentType(contentType);
             return this;
@@ -86,7 +86,7 @@
         /// </summary>
         /// <param name="contentType">Content type as MediaTypeHeaderValue.</param>
         /// <returns>The same HTTP not found test builder.</returns>
-        public IAndHttpNotFoundTestBuilder ContainingContentType(MediaTypeHeaderValue contentType)
+        public IAndNotFoundTestBuilder ContainingContentType(MediaTypeHeaderValue contentType)
         {
             this.ValidateContainingOfContentType(contentType);
             return this;
@@ -97,7 +97,7 @@
         /// </summary>
         /// <param name="contentTypes">Content types as enumerable of strings.</param>
         /// <returns>The same HTTP not found test builder.</returns>
-        public IAndHttpNotFoundTestBuilder ContainingContentTypes(IEnumerable<string> contentTypes)
+        public IAndNotFoundTestBuilder ContainingContentTypes(IEnumerable<string> contentTypes)
         {
             this.ValidateContentTypes(contentTypes);
             return this;
@@ -108,7 +108,7 @@
         /// </summary>
         /// <param name="contentTypes">Content types as string parameters.</param>
         /// <returns>The same HTTP not found test builder.</returns>
-        public IAndHttpNotFoundTestBuilder ContainingContentTypes(params string[] contentTypes)
+        public IAndNotFoundTestBuilder ContainingContentTypes(params string[] contentTypes)
         {
             this.ValidateContentTypes(contentTypes);
             return this;
@@ -119,7 +119,7 @@
         /// </summary>
         /// <param name="contentTypes">Content types as enumerable of MediaTypeHeaderValue.</param>
         /// <returns>The same HTTP not found test builder.</returns>
-        public IAndHttpNotFoundTestBuilder ContainingContentTypes(IEnumerable<MediaTypeHeaderValue> contentTypes)
+        public IAndNotFoundTestBuilder ContainingContentTypes(IEnumerable<MediaTypeHeaderValue> contentTypes)
         {
             this.ValidateContentTypes(contentTypes);
             return this;
@@ -130,7 +130,7 @@
         /// </summary>
         /// <param name="contentTypes">Content types as MediaTypeHeaderValue parameters.</param>
         /// <returns>The same HTTP not found test builder.</returns>
-        public IAndHttpNotFoundTestBuilder ContainingContentTypes(params MediaTypeHeaderValue[] contentTypes)
+        public IAndNotFoundTestBuilder ContainingContentTypes(params MediaTypeHeaderValue[] contentTypes)
         {
             this.ValidateContentTypes(contentTypes);
             return this;
@@ -141,7 +141,7 @@
         /// </summary>
         /// <param name="outputFormatter">Instance of IOutputFormatter.</param>
         /// <returns>The same HTTP not found test builder.</returns>
-        public IAndHttpNotFoundTestBuilder ContainingOutputFormatter(IOutputFormatter outputFormatter)
+        public IAndNotFoundTestBuilder ContainingOutputFormatter(IOutputFormatter outputFormatter)
         {
             this.ValidateContainingOfOutputFormatter(outputFormatter);
             return this;
@@ -152,7 +152,7 @@
         /// </summary>
         /// <typeparam name="TOutputFormatter">Type of IOutputFormatter.</typeparam>
         /// <returns>The same HTTP not found test builder.</returns>
-        public IAndHttpNotFoundTestBuilder ContainingOutputFormatterOfType<TOutputFormatter>()
+        public IAndNotFoundTestBuilder ContainingOutputFormatterOfType<TOutputFormatter>()
             where TOutputFormatter : IOutputFormatter
         {
             this.ValidateContainingOutputFormatterOfType<TOutputFormatter>();
@@ -164,7 +164,7 @@
         /// </summary>
         /// <param name="outputFormatters">Enumerable of IOutputFormatter.</param>
         /// <returns>The same HTTP not found test builder.</returns>
-        public IAndHttpNotFoundTestBuilder ContainingOutputFormatters(IEnumerable<IOutputFormatter> outputFormatters)
+        public IAndNotFoundTestBuilder ContainingOutputFormatters(IEnumerable<IOutputFormatter> outputFormatters)
         {
             this.ValidateOutputFormatters(outputFormatters);
             return this;
@@ -175,7 +175,7 @@
         /// </summary>
         /// <param name="outputFormatters">Output formatter parameters.</param>
         /// <returns>The same HTTP not found test builder.</returns>
-        public IAndHttpNotFoundTestBuilder ContainingOutputFormatters(params IOutputFormatter[] outputFormatters)
+        public IAndNotFoundTestBuilder ContainingOutputFormatters(params IOutputFormatter[] outputFormatters)
         {
             this.ValidateOutputFormatters(outputFormatters);
             return this;
@@ -185,7 +185,7 @@
         /// AndAlso method for better readability when chaining HTTP not found result tests.
         /// </summary>
         /// <returns>HTTP not found result test builder.</returns>
-        public IAndHttpNotFoundTestBuilder AndAlso() => this;
+        public IAndNotFoundTestBuilder AndAlso() => this;
 
         /// <summary>
         /// Gets the action result which will be tested.
@@ -204,7 +204,7 @@
 
         private void ThrowNewHttpNotFoundResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
-            throw new HttpNotFoundResultAssertionException(string.Format(
+            throw new NotFoundResultAssertionException(string.Format(
                     "When calling {0} action in {1} expected HTTP not found result {2} {3}, but {4}.",
                     this.ActionName,
                     this.Controller.GetName(),

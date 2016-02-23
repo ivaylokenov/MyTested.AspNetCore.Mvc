@@ -37,7 +37,7 @@
         /// <returns>The same ok test builder.</returns>
         public IAndOkTestBuilder WithNoResponseModel()
         {
-            var actualResult = this.ActionResult as HttpOkResult;
+            var actualResult = this.ActionResult as OkResult;
             if (actualResult == null)
             {
                 throw new ResponseModelAssertionException(string.Format(

@@ -1,7 +1,7 @@
 ﻿namespace MyTested.Mvc.Builders.Actions.ShouldReturn
 {
-    using ActionResults.HttpBadRequest;
-    using Contracts.ActionResults.HttpBadRequest;
+    using ActionResults.BadRequest;
+    using Contracts.ActionResults.BadRequest;
     using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
@@ -14,7 +14,7 @@
         /// Tests whether action result is BadRequestResult or BadRequestObjectResult.
         /// </summary>
         /// <returns>Bad request test builder.</returns>
-        public IHttpBadRequestTestBuilder HttpBadRequest()
+        public IBadRequestTestBuilder BadRequest()
         {
             if (this.ActionResult is BadRequestObjectResult)
             {
@@ -24,11 +24,11 @@
             return this.ReturnBadRequestTestBuilder<BadRequestResult>();
         }
 
-        private IHttpBadRequestTestBuilder ReturnBadRequestTestBuilder<TBadRequestResult>()
+        private IBadRequestTestBuilder ReturnBadRequestTestBuilder<TBadRequestResult>()
             where TBadRequestResult : ActionResult
         {
             this.TestContext.ActionResult = this.GetReturnObject<TBadRequestResult>();
-            return new HttpBadRequestTestBuilder<TBadRequestResult>(this.TestContext);
+            return new BadRequestTestBuilder<TBadRequestResult>(this.TestContext);
         }
     }
 }

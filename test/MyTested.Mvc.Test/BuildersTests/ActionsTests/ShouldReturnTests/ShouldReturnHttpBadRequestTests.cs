@@ -14,7 +14,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.BadRequestAction())
                 .ShouldReturn()
-                .HttpBadRequest();
+                .BadRequest();
         }
 
         [Fact]
@@ -26,7 +26,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
                 .ShouldReturn()
-                .HttpBadRequest();
+                .BadRequest();
         }
 
         [Fact]
@@ -36,7 +36,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.BadRequestWithErrorAction())
                 .ShouldReturn()
-                .HttpBadRequest();
+                .BadRequest();
         }
 
         [Fact]
@@ -49,9 +49,9 @@
                         .Controller<MvcController>()
                         .Calling(c => c.HttpNotFoundAction())
                         .ShouldReturn()
-                        .HttpBadRequest();
+                        .BadRequest();
                 },
-                "When calling HttpNotFoundAction action in MvcController expected action result to be BadRequestResult, but instead received HttpNotFoundResult.");
+                "When calling HttpNotFoundAction action in MvcController expected action result to be BadRequestResult, but instead received NotFoundResult.");
         }
     }
 }

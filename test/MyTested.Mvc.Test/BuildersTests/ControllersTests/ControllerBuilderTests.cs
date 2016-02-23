@@ -174,7 +174,7 @@
             controllerBuilder
                 .Calling(c => c.AuthorizedAction())
                 .ShouldReturn()
-                .HttpNotFound();
+                .NotFound();
 
             var controllerUser = controllerBuilder.AndProvideTheController().User;
 
@@ -436,7 +436,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.WithRequest())
                 .ShouldReturn()
-                .HttpBadRequest();
+                .BadRequest();
         }
 
         [Fact]
@@ -494,7 +494,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.TryValidateModelAction())
                 .ShouldReturn()
-                .HttpBadRequest();
+                .BadRequest();
         }
 
         [Fact]
@@ -545,7 +545,7 @@
             var actionResult = actionResultTestBuilder.AndProvideTheActionResult();
 
             Assert.NotNull(actionResult);
-            Assert.IsAssignableFrom<HttpOkResult>(actionResult);
+            Assert.IsAssignableFrom<OkResult>(actionResult);
         }
 
         private void CheckActionName(IBaseTestBuilderWithInvokedAction testBuilder, string expectedActionName)

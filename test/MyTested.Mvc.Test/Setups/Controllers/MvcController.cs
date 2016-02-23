@@ -177,7 +177,7 @@
                 return this.Ok();
             }
 
-            return this.HttpBadRequest();
+            return this.BadRequest();
         }
 
         public void CustomVoidResponseAction()
@@ -291,7 +291,7 @@
 
         public IActionResult FullOkAction()
         {
-            return new HttpOkObjectResult(this.responseModel)
+            return new OkObjectResult(this.responseModel)
             {
                 ContentTypes = new MediaTypeCollection { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) },
                 StatusCode = StatusCodes.Status201Created,
@@ -302,7 +302,7 @@
 
         public IActionResult OkActionWithFormatter(IOutputFormatter formatter)
         {
-            return new HttpOkObjectResult(this.responseModel)
+            return new OkObjectResult(this.responseModel)
             {
                 Formatters = new FormatterCollection<IOutputFormatter> { formatter }
             };
@@ -310,7 +310,7 @@
 
         public IActionResult StatusCodeAction()
         {
-            return new HttpStatusCodeResult(500);
+            return new StatusCodeResult(500);
         }
 
         public IActionResult ChallengeResultAction()
@@ -388,7 +388,7 @@
 
         public IActionResult OkResultWithContentNegotiatorAction()
         {
-            return new HttpOkObjectResult(5);
+            return new OkObjectResult(5);
         }
 
         public void EmptyActionWithException()
@@ -574,7 +574,7 @@
                 return this.Ok();
             }
 
-            return this.HttpBadRequest();
+            return this.BadRequest();
         }
 
         public IActionResult ModelStateCheck(RequestModel model)
@@ -602,19 +602,19 @@
             return this.Ok(this.responseModel.ToList());
         }
 
-        public async Task<HttpOkResult> AsyncOkResultAction()
+        public async Task<OkResult> AsyncOkResultAction()
         {
             return await Task.Run(() => this.Ok());
         }
 
         public IActionResult BadRequestAction()
         {
-            return this.HttpBadRequest();
+            return this.BadRequest();
         }
 
         public IActionResult BadRequestWithErrorAction()
         {
-            return this.HttpBadRequest("Bad request");
+            return this.BadRequest("Bad request");
         }
 
         public IActionResult BadRequestWithModelState(RequestModel model)
@@ -624,12 +624,12 @@
                 return this.Ok();
             }
 
-            return this.HttpBadRequest(this.ModelState);
+            return this.BadRequest(this.ModelState);
         }
 
         public IActionResult BadRequestWithCustomError()
         {
-            return this.HttpBadRequest(this.responseModel);
+            return this.BadRequest(this.responseModel);
         }
 
         public IActionResult ModelStateWithNestedError()
@@ -683,17 +683,17 @@
 
         public IActionResult HttpNotFoundAction()
         {
-            return this.HttpNotFound();
+            return this.NotFound();
         }
 
         public IActionResult HttpNotFoundWithObjectAction()
         {
-            return this.HttpNotFound("test");
+            return this.NotFound("test");
         }
 
         public IActionResult FullHttpNotFoundAction()
         {
-            return new HttpNotFoundObjectResult(this.responseModel)
+            return new NotFoundObjectResult(this.responseModel)
             {
                 ContentTypes = new MediaTypeCollection { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) },
                 StatusCode = StatusCodes.Status201Created,
@@ -704,7 +704,7 @@
 
         public IActionResult HttpNotFoundActionWithFormatter(IOutputFormatter formatter)
         {
-            return new HttpNotFoundObjectResult(this.responseModel)
+            return new NotFoundObjectResult(this.responseModel)
             {
                 Formatters = new FormatterCollection<IOutputFormatter> { formatter }
             };
@@ -718,12 +718,12 @@
                 return this.Ok();
             }
 
-            return this.HttpNotFound();
+            return this.NotFound();
         }
 
         public IActionResult UnauthorizedAction()
         {
-            return this.HttpUnauthorized();
+            return this.Unauthorized();
         }
 
         public bool GenericStructAction()
@@ -770,7 +770,7 @@
                 return this.Ok();
             }
 
-            return this.HttpBadRequest();
+            return this.BadRequest();
         }
 
         public async Task<IActionResult> TryUpdateModelAction()

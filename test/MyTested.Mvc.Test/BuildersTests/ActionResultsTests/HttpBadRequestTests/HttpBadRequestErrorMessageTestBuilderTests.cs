@@ -14,7 +14,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.BadRequestWithErrorAction())
                 .ShouldReturn()
-                .HttpBadRequest()
+                .BadRequest()
                 .WithErrorMessage()
                 .ThatEquals("Bad request");
         }
@@ -22,14 +22,14 @@
         [Fact]
         public void ThatEqualsShouldThrowExceptionWithIncorrectErrorMessage()
         {
-            Test.AssertException<HttpBadRequestResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
                         .Calling(c => c.BadRequestWithErrorAction())
                         .ShouldReturn()
-                        .HttpBadRequest()
+                        .BadRequest()
                         .WithErrorMessage()
                         .ThatEquals("Bad");
                 },
@@ -43,7 +43,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.BadRequestWithErrorAction())
                 .ShouldReturn()
-                .HttpBadRequest()
+                .BadRequest()
                 .WithErrorMessage()
                 .BeginningWith("Bad ");
         }
@@ -51,14 +51,14 @@
         [Fact]
         public void BeginningWithShouldThrowExceptionWithIncorrectErrorMessage()
         {
-            Test.AssertException<HttpBadRequestResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
                         .Calling(c => c.BadRequestWithErrorAction())
                         .ShouldReturn()
-                        .HttpBadRequest()
+                        .BadRequest()
                         .WithErrorMessage()
                         .BeginningWith("request");
                 },
@@ -72,7 +72,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.BadRequestWithErrorAction())
                 .ShouldReturn()
-                .HttpBadRequest()
+                .BadRequest()
                 .WithErrorMessage()
                 .EndingWith("request");
         }
@@ -80,14 +80,14 @@
         [Fact]
         public void EndingWithShouldThrowExceptionWithIncorrectErrorMessage()
         {
-            Test.AssertException<HttpBadRequestResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
                         .Calling(c => c.BadRequestWithErrorAction())
                         .ShouldReturn()
-                        .HttpBadRequest()
+                        .BadRequest()
                         .WithErrorMessage()
                         .EndingWith("Bad");
                 },
@@ -101,7 +101,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.BadRequestWithErrorAction())
                 .ShouldReturn()
-                .HttpBadRequest()
+                .BadRequest()
                 .WithErrorMessage()
                 .Containing("d r");
         }
@@ -109,14 +109,14 @@
         [Fact]
         public void ContainingShouldThrowExceptionWithIncorrectErrorMessage()
         {
-            Test.AssertException<HttpBadRequestResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
                         .Calling(c => c.BadRequestWithErrorAction())
                         .ShouldReturn()
-                        .HttpBadRequest()
+                        .BadRequest()
                         .WithErrorMessage()
                         .Containing("Another");
                 },

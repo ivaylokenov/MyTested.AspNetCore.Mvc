@@ -44,7 +44,7 @@
                         .ShouldReturn()
                         .Ok();
                 }, 
-                "When calling BadRequestAction action in MvcController expected action result to be HttpOkResult, but instead received BadRequestResult.");
+                "When calling BadRequestAction action in MvcController expected action result to be OkResult, but instead received BadRequestResult.");
         }
 
         [Fact]
@@ -59,7 +59,7 @@
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling CustomActionResult action in MvcController expected action result to be HttpOkResult, but instead received CustomActionResult.");
+                "When calling CustomActionResult action in MvcController expected action result to be OkResult, but instead received CustomActionResult.");
         }
     }
 }

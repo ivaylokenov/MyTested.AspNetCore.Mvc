@@ -3,15 +3,15 @@
     using System;
 
     /// <summary>
-    /// Exception for invalid bad request result.
+    /// Exception for invalid not found result.
     /// </summary>
-    public class HttpBadRequestResultAssertionException : Exception
+    public class NotFoundResultAssertionException : Exception
     {
         /// <summary>
-        /// Initializes a new instance of the HttpBadRequestResultAssertionException class.
+        /// Initializes a new instance of the NotFoundResultAssertionException class.
         /// </summary>
         /// <param name="message">Message for System.Exception class.</param>
-        public HttpBadRequestResultAssertionException(string message)
+        public NotFoundResultAssertionException(string message)
             : base(message)
         {
         }

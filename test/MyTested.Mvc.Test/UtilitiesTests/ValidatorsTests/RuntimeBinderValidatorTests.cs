@@ -11,7 +11,7 @@
         [Fact]
         public void ValidateBindingShouldNotThrowExceptionWithValidPropertyCall()
         {
-            var actionResultWithProperty = new HttpOkObjectResult("Test");
+            var actionResultWithProperty = new OkObjectResult("Test");
 
             RuntimeBinderValidator.ValidateBinding(() =>
             {
@@ -27,7 +27,7 @@
             Test.AssertException<InvalidCallAssertionException>(
                 () =>
                 {
-                    var actionResultWithProperty = new HttpOkObjectResult("Test");
+                    var actionResultWithProperty = new OkObjectResult("Test");
 
                     RuntimeBinderValidator.ValidateBinding(() =>
                     {

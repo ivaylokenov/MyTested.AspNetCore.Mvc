@@ -16,7 +16,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.BadRequestWithErrorAction())
                 .ShouldReturn()
-                .HttpBadRequest()
+                .BadRequest()
                 .WithErrorMessage()
                 .AndProvideTheController();
 
@@ -43,7 +43,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.BadRequestWithErrorAction())
                 .ShouldReturn()
-                .HttpBadRequest()
+                .BadRequest()
                 .WithErrorMessage()
                 .AndProvideTheActionName();
 

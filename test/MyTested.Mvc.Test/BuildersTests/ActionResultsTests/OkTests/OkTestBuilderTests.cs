@@ -456,7 +456,7 @@
                 .AndProvideTheActionResult();
 
             Assert.NotNull(actionResult);
-            Assert.IsAssignableFrom<HttpOkObjectResult>(actionResult);
+            Assert.IsAssignableFrom<OkObjectResult>(actionResult);
         }
     }
 }
