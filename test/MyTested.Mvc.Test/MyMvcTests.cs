@@ -28,6 +28,7 @@ namespace MyTested.Mvc.Tests
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http.Internal;
     using System.Collections.Generic;
+
     public class MyMvcTests
     {
         [Fact]
