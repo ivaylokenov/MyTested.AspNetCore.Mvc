@@ -9,6 +9,7 @@
     using Builders.Routes;
     using Internal.Application;
     using Internal.TestContexts;
+
     /// <summary>
     /// Starting point of the ASP.NET MVC testing framework, which provides a way to specify the test case.
     /// </summary>
