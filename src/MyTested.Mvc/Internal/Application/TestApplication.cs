@@ -24,14 +24,15 @@
     using Microsoft.Extensions.PlatformAbstractions;
     using System.Reflection;
     using Microsoft.AspNetCore.Hosting;
-    using Http;
     using Microsoft.AspNetCore.Http.Internal;
+    using Microsoft.Extensions.Configuration;
     public static class TestApplication
     {
         private static readonly RequestDelegate NullHandler = (c) => Task.FromResult(0);
         private static readonly IHostingEnvironment Environment = new HostingEnvironment { EnvironmentName = "Tests" };
         
         private static bool initialiazed;
+        private static IConfiguration configuration;
         private static Type startupType;
         private static StartupLoader startupLoader;
 
@@ -41,6 +42,7 @@
 
         static TestApplication()
         {
+            configuration = PrepareConfiguration();
             startupLoader = GetNewStartupLoader();
             startupType = FindDefaultStartupType();
         }
@@ -102,6 +104,13 @@
                 return router;
             }
         }
+        
+        private static IConfiguration PrepareConfiguration()
+        {
+            return new ConfigurationBuilder()
+                .AddInMemoryCollection()
+                .Build();
+        }
 
         private static void Initialize()
         {
@@ -133,6 +142,9 @@
 
             serviceCollection.TryAddSingleton<DiagnosticSource>(diagnosticSource);
             serviceCollection.TryAddSingleton(diagnosticSource);
+
+            // platform services
+            AddPlatformServices(serviceCollection);
 
             // testing framework services
             serviceCollection.TryAddSingleton<IControllerActionDescriptorCache, ControllerActionDescriptorCache>();
@@ -246,29 +258,16 @@
         private static Type FindDefaultStartupType()
         {
             var applicationName = PlatformServices.Default.Application.ApplicationName;
-            var libraryManager = DnxPlatformServices.Default.LibraryManager;
-
-            var startupTypes = libraryManager
-                .GetLibrary(applicationName)
-                .Assemblies
-                .Select(a => Assembly.Load(new AssemblyName(a.Name)))
-                .SelectMany(a =>
+            var applicationAssembly = Assembly.Load(new AssemblyName(applicationName));
+            
+            var startupTypes = applicationAssembly
+                .DefinedTypes
+                .Where(t =>
                 {
                     var startupName = $"{Environment.EnvironmentName}Startup";
-
-                    // check root of the package
-                    var type =
-                        a.GetType(startupName) ??
-                        a.GetType(applicationName + "." + startupName);
-
-                    if (type != null)
-                    {
-                        return new[] { type };
-                    }
-                    
-                    // full scan
-                    return a.DefinedTypes.Where(t => t.Name == startupName).Select(t => t.AsType());
+                    return t.Name == startupName || t.Name == $"{applicationName}.{startupName}";
                 })
+                .Select(t => t.AsType())
                 .ToArray();
 
             if (startupTypes.Length == 1)
@@ -277,6 +276,24 @@
             }
 
             return null;
+        }
+
+        private static void AddPlatformServices(IServiceCollection serviceCollection)
+        {
+            var defaultPlatformServices = PlatformServices.Default;
+            if (defaultPlatformServices != null)
+            {
+                if (defaultPlatformServices.Application != null)
+                {
+                    var appEnv = defaultPlatformServices.Application;
+                    serviceCollection.TryAddSingleton(appEnv);
+                }
+
+                if (defaultPlatformServices.Runtime != null)
+                {
+                    serviceCollection.TryAddSingleton(defaultPlatformServices.Runtime);
+                }
+            }
         }
         
         private static void Reset()
