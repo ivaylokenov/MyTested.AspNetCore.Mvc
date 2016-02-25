@@ -2,5 +2,6 @@
 {
     public interface IAndViewDataTestBuilder : IViewDataTestBuilder
     {
+        IViewDataTestBuilder AndAlso();
     }
 }

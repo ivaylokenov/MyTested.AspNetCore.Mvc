@@ -6,56 +6,56 @@
     using Microsoft.AspNetCore.Routing;
     using System.Collections.Generic;
 
-    public class ViewDataTestBuilder : BaseDataProviderTestBuilder, IAndViewDataTestBuilder
+    public class ViewBagTestBuilder : BaseDataProviderTestBuilder, IAndViewBagTestBuilder
     {
-        private const string ViewDataName = "view data";
-        
-        public ViewDataTestBuilder(ControllerTestContext testContext)
-            :base(testContext, ViewDataName)
+        private const string ViewBagName = "view bag";
+
+        public ViewBagTestBuilder(ControllerTestContext testContext)
+            : base(testContext, ViewBagName)
         {
         }
 
-        public IAndViewDataTestBuilder ContainingEntry(string key)
+        public IAndViewBagTestBuilder ContainingEntry(string key)
         {
             this.ValidateContainingEntry(key);
             return this;
         }
 
-        public IAndViewDataTestBuilder ContainingEntry<TEntry>(TEntry value)
+        public IAndViewBagTestBuilder ContainingEntry<TEntry>(TEntry value)
         {
             this.ValidateContainingEntry(value);
             return this;
         }
 
-        public IAndViewDataTestBuilder ContainingEntryOfType<TEntry>()
+        public IAndViewBagTestBuilder ContainingEntryOfType<TEntry>()
         {
             this.ValidateContainingEntryOfType<TEntry>();
             return this;
         }
-        
-        public IAndViewDataTestBuilder ContainingEntryOfType<TEntry>(string key)
+
+        public IAndViewBagTestBuilder ContainingEntryOfType<TEntry>(string key)
         {
             this.ValidateContainingEntryOfType<TEntry>(key);
             return this;
         }
 
-        public IAndViewDataTestBuilder ContainingEntry(string key, object value)
+        public IAndViewBagTestBuilder ContainingEntry(string key, object value)
         {
             this.ValidateContainingEntry(key, value);
             return this;
         }
 
-        public IAndViewDataTestBuilder ContainingEntries(object entries)
+        public IAndViewBagTestBuilder ContainingEntries(object entries)
             => this.ContainingEntries(new RouteValueDictionary(entries));
 
-        public IViewDataTestBuilder AndAlso()
+        public IAndViewBagTestBuilder ContainingEntries(IDictionary<string, object> entries)
         {
+            this.ValidateContainingEntries(entries);
             return this;
         }
 
-        public IAndViewDataTestBuilder ContainingEntries(IDictionary<string, object> entries)
+        public IViewBagTestBuilder AndAlso()
         {
-            this.ValidateContainingEntries(entries);
             return this;
         }
 
