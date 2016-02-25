@@ -17,7 +17,7 @@
     {
         static MyMvc()
         {
-            IsUsingDefaultConfiguration();
+            TestApplication.TryFindDefaultStartupType();
         }
 
         /// <summary>
