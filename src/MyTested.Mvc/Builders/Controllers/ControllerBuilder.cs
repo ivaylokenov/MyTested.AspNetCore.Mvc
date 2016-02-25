@@ -27,18 +27,19 @@
     using Internal.Routes;
     using Internal.TestContexts;
     using Internal;
-
-    /// <summary>
-    /// Used for building the controller which will be tested.
-    /// </summary>
-    /// <typeparam name="TController">Class inheriting ASP.NET MVC controller.</typeparam>
+    using Contracts.Data;
+    using Data;    /// <summary>
+                   /// Used for building the controller which will be tested.
+                   /// </summary>
+                   /// <typeparam name="TController">Class inheriting ASP.NET MVC controller.</typeparam>
     public class ControllerBuilder<TController> : IAndControllerBuilder<TController>
         where TController : Controller
     {
         private readonly IDictionary<Type, object> aggregatedDependencies;
 
         private ControllerTestContext testContext;
-        private Action<TController> controllerSetupAction;
+        private Action<ITempDataBuilder> tempDataBuilderAction;
+        private Action<TController> controllerSetupAction; 
         private bool isPreparedForTesting;
         private bool enabledValidation;
         private bool resolveRouteValues;
@@ -131,6 +132,12 @@
             return this;
         }
 
+        public IAndControllerBuilder<TController> WithTempData(Action<ITempDataBuilder> tempDataBuilder)
+        {
+            this.tempDataBuilderAction = tempDataBuilder;
+            return this;
+        }
+
         public IAndControllerBuilder<TController> WithResolvedRouteData()
         {
             return this.WithResolvedRouteData(null);
@@ -203,7 +210,7 @@
         /// <returns>The same controller builder.</returns>
         public IAndControllerBuilder<TController> WithAuthenticatedUser()
         {
-            this.Controller.HttpContext.User = ClaimsPrincipalBuilder.CreateDefaultAuthenticated();
+            this.HttpContext.User = ClaimsPrincipalBuilder.CreateDefaultAuthenticated();
             return this;
         }
 
@@ -216,7 +223,7 @@
         {
             var newUserBuilder = new ClaimsPrincipalBuilder();
             userBuilder(newUserBuilder);
-            this.Controller.HttpContext.User = newUserBuilder.GetClaimsPrincipal();
+            this.HttpContext.User = newUserBuilder.GetClaimsPrincipal();
             return this;
         }
 
@@ -453,6 +460,11 @@
             var controllerPropertyActivators = this.Services.GetServices<IControllerPropertyActivator>();
 
             controllerPropertyActivators.ForEach(a => a.Activate(controllerContext, this.TestContext.Controller));
+
+            if (this.tempDataBuilderAction != null)
+            {
+                this.tempDataBuilderAction(new TempDataBuilder(this.TestContext.ControllerAs<TController>()?.TempData));
+            }
 
             if (this.controllerSetupAction != null)
             {

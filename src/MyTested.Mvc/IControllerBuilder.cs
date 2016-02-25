@@ -10,7 +10,7 @@
     using Builders.Contracts.Http;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-
+    using Builders.Contracts.Data;
     /// <summary>
     /// Used for building the controller which will be tested.
     /// </summary>
@@ -46,6 +46,8 @@
         IAndControllerBuilder<TController> WithHttpRequest(Action<IHttpRequestBuilder> httpRequestBuilder);
         
         IAndControllerBuilder<TController> WithResolvedRouteData();
+
+        IAndControllerBuilder<TController> WithTempData(Action<ITempDataBuilder> tempDataBuilder);
 
         /// <summary>
         /// Tries to resolve constructor dependency of given type.

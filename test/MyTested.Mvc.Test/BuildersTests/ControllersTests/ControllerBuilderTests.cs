@@ -537,6 +537,18 @@
                 });
         }
 
+        [Fact]
+        public void WithTempDataShouldPopulateTempData()
+        {
+            var controller = MyMvc
+                .Controller<MvcController>()
+                .WithTempData(tempData => tempData
+                    .WithEntry("key", "value"))
+                .AndProvideTheController();
+
+            Assert.Equal(1, controller.TempData.Count);
+        }
+
         private void CheckActionResultTestBuilder<TActionResult>(
             IActionResultTestBuilder<TActionResult> actionResultTestBuilder,
             string expectedActionName)

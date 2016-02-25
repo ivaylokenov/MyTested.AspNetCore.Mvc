@@ -166,7 +166,7 @@
 
             // platform services
             AddPlatformServices(serviceCollection);
-
+            
             // testing framework services
             serviceCollection.TryAddSingleton<IControllerActionDescriptorCache, ControllerActionDescriptorCache>();
 

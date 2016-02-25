@@ -7,23 +7,21 @@
     using Utilities.Validators;
 
     /// <summary>
-    /// Class containing methods for testing view data.
+    /// Class containing methods for testing temp data.
     /// </summary>
     /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
     public partial class ShouldHaveTestBuilder<TActionResult>
     {
-        public IAndTestBuilder<TActionResult> ViewData(int? withNumberOfEntries = null)
+        public IAndTestBuilder<TActionResult> TempData(int? withNumberOfEntries = null)
         {
-
-
             return this.NewAndTestBuilder();
         }
 
-        public IAndTestBuilder<TActionResult> ViewData(Action<IViewDataTestBuilder> viewDataTestBuilder)
+        public IAndTestBuilder<TActionResult> TempData(Action<ITempDataTestBuilder> tempDataTestBuilder)
         {
             CommonValidator.CheckForException(this.CaughtException);
 
-            viewDataTestBuilder(new ViewDataTestBuilder(this.TestContext));
+            tempDataTestBuilder(new TempDataTestBuilder(this.TestContext));
 
             return this.NewAndTestBuilder();
         }

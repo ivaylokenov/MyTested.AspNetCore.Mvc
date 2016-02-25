@@ -6,7 +6,7 @@
     using Base;
     using Http;
     using Models;
-
+    using Data;
     /// <summary>
     /// Used for testing action attributes and model state.
     /// </summary>
@@ -52,6 +52,8 @@
         /// <param name="withNumberOfErrors">Expected number of errors. If default null is provided, the test builder checks only if any errors are found.</param>
         /// <returns>Test builder with AndAlso method.</returns>
         IAndTestBuilder<TActionResult> InvalidModelState(int? withNumberOfErrors = null);
+
+        IAndTestBuilder<TActionResult> TempData(Action<ITempDataTestBuilder> tempDataTestBuilder);
 
         /// <summary>
         /// Checks whether the tested action applies additional features to the HTTP response.

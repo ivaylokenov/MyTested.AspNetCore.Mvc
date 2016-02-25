@@ -6,59 +6,59 @@
     using Microsoft.AspNetCore.Routing;
     using System.Collections.Generic;
 
-    public class ViewDataTestBuilder : BaseDataProviderTestBuilder, IAndViewDataTestBuilder
+    public class TempDataTestBuilder : BaseDataProviderTestBuilder, IAndTempDataTestBuilder
     {
-        private const string ViewDataName = "view data";
-        
-        public ViewDataTestBuilder(ControllerTestContext testContext)
-            :base(testContext, ViewDataName)
+        private const string ViewDataName = "temp data";
+
+        public TempDataTestBuilder(ControllerTestContext testContext)
+            : base(testContext, ViewDataName)
         {
         }
 
-        public IAndViewDataTestBuilder ContainingEntry(string key)
+        public IAndTempDataTestBuilder ContainingEntry(string key)
         {
             this.ValidateContainingEntry(key);
             return this;
         }
 
-        public IAndViewDataTestBuilder ContainingEntry<TEntry>(TEntry value)
+        public IAndTempDataTestBuilder ContainingEntry<TEntry>(TEntry value)
         {
             this.ValidateContainingEntry(value);
             return this;
         }
 
-        public IAndViewDataTestBuilder ContainingEntryOfType<TEntry>()
+        public IAndTempDataTestBuilder ContainingEntryOfType<TEntry>()
         {
             this.ValidateContainingEntryOfType<TEntry>();
             return this;
         }
-        
-        public IAndViewDataTestBuilder ContainingEntryOfType<TEntry>(string key)
+
+        public IAndTempDataTestBuilder ContainingEntryOfType<TEntry>(string key)
         {
             this.ValidateContainingEntryOfType<TEntry>(key);
             return this;
         }
 
-        public IAndViewDataTestBuilder ContainingEntry(string key, object value)
+        public IAndTempDataTestBuilder ContainingEntry(string key, object value)
         {
             this.ValidateContainingEntry(key, value);
             return this;
         }
 
-        public IAndViewDataTestBuilder ContainingEntries(object entries)
+        public IAndTempDataTestBuilder ContainingEntries(object entries)
             => this.ContainingEntries(new RouteValueDictionary(entries));
-
-        public IAndViewDataTestBuilder ContainingEntries(IDictionary<string, object> entries)
+        
+        public IAndTempDataTestBuilder ContainingEntries(IDictionary<string, object> entries)
         {
             this.ValidateContainingEntries(entries);
             return this;
         }
 
-        public IViewDataTestBuilder AndAlso()
+        public ITempDataTestBuilder AndAlso()
         {
             return this;
         }
-        
+
         protected override IDictionary<string, object> GetDataProvider()
         {
             return this.TestContext.ControllerAs<Controller>().ViewData;
