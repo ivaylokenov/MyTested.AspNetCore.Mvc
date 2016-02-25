@@ -16,7 +16,7 @@
         {
             var routeInfo = InternalRouteResolver.Resolve(
                 TestApplication.RouteServices,
-                TestApplication.Router, 
+                TestApplication.Router,
                 GetRouteContext("/"));
 
             Assert.True(routeInfo.IsResolved);
@@ -35,7 +35,7 @@
                 TestApplication.RouteServices,
                 TestApplication.Router,
                 GetRouteContext("/Normal/AnotherName"));
-            
+
             Assert.True(routeInfo.IsResolved);
             Assert.Null(routeInfo.UnresolvedError);
             Assert.Equal(typeof(NormalController), routeInfo.ControllerType);
@@ -151,7 +151,7 @@
             Assert.Equal(0, routeInfo.ActionArguments.Count);
             Assert.True(routeInfo.ModelState.IsValid);
         }
-        
+
         [Fact]
         public void ResolveShouldResolveCorrectlyWithWrongSpecificMethod()
         {
@@ -231,7 +231,7 @@
                 TestApplication.RouteServices,
                 TestApplication.Router,
                 GetRouteContext("/Normal/ActionWithModel/5", "POST", body: @"{""Integer"":5,""String"":""Test""}", contentType: ContentType.ApplicationJson));
-            
+
             Assert.True(routeInfo.IsResolved);
             Assert.Null(routeInfo.UnresolvedError);
             Assert.Equal(typeof(NormalController), routeInfo.ControllerType);
@@ -337,7 +337,7 @@
 
             Assert.False(routeInfo.IsResolved);
             Assert.Equal(
-                "exception was thrown when trying to select an action: 'Multiple actions matched. The following actions matched route data and had all constraints satisfied:\r\n\r\nMyTested.Mvc.Tests.Setups.Routes.NormalController.ActionWithOverloads\r\nMyTested.Mvc.Tests.Setups.Routes.NormalController.ActionWithOverloads'", 
+                "exception was thrown when trying to select an action: 'Multiple actions matched. The following actions matched route data and had all constraints satisfied:\r\n\r\nMyTested.Mvc.Tests.Setups.Routes.NormalController.ActionWithOverloads\r\nMyTested.Mvc.Tests.Setups.Routes.NormalController.ActionWithOverloads'",
                 routeInfo.UnresolvedError);
             Assert.Null(routeInfo.ControllerType);
             Assert.Null(routeInfo.ControllerName);
