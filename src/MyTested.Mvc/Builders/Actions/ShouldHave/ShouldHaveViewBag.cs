@@ -7,23 +7,21 @@
     using Utilities.Validators;
 
     /// <summary>
-    /// Class containing methods for testing view data.
+    /// Class containing methods for testing view bag.
     /// </summary>
     /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
     public partial class ShouldHaveTestBuilder<TActionResult>
     {
-        public IAndTestBuilder<TActionResult> ViewData(int? withNumberOfEntries = null)
+        public IAndTestBuilder<TActionResult> ViewBag(int? withNumberOfEntries = null)
         {
-
-
             return this.NewAndTestBuilder();
         }
 
-        public IAndTestBuilder<TActionResult> ViewData(Action<IViewDataTestBuilder> viewDataTestBuilder)
+        public IAndTestBuilder<TActionResult> ViewBag(Action<IViewBagTestBuilder> viewDataTestBuilder)
         {
             CommonValidator.CheckForException(this.CaughtException);
 
-            viewDataTestBuilder(new ViewDataTestBuilder(this.TestContext));
+            viewDataTestBuilder(new ViewBagTestBuilder(this.TestContext));
 
             return this.NewAndTestBuilder();
         }

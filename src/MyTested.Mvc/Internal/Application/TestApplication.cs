@@ -45,7 +45,6 @@
         {
             configuration = PrepareConfiguration();
             startupLoader = GetNewStartupLoader();
-            startupType = FindDefaultStartupType();
         }
 
         internal static Type StartupType
@@ -60,7 +59,7 @@
                 startupType = value;
             }
         }
-
+        
         internal static Action<IServiceCollection> AdditionalServices { get; set; }
 
         internal static Action<IApplicationBuilder> AdditionalConfiguration { get; set; }
@@ -105,7 +104,28 @@
                 return router;
             }
         }
-        
+
+        internal static void TryFindDefaultStartupType()
+        {
+            var applicationName = PlatformServices.Default.Application.ApplicationName;
+            var applicationAssembly = Assembly.Load(new AssemblyName(applicationName));
+
+            var startupTypes = applicationAssembly
+                .DefinedTypes
+                .Where(t =>
+                {
+                    var startupName = $"{Environment.EnvironmentName}Startup";
+                    return t.Name == startupName || t.Name == $"{applicationName}.{startupName}";
+                })
+                .Select(t => t.AsType())
+                .ToArray();
+
+            if (startupTypes.Length == 1)
+            {
+                startupType = startupTypes.First();
+            }
+        }
+
         private static IConfiguration PrepareConfiguration()
         {
             return new ConfigurationBuilder()
@@ -146,7 +166,7 @@
 
             // platform services
             AddPlatformServices(serviceCollection);
-
+            
             // testing framework services
             serviceCollection.TryAddSingleton<IControllerActionDescriptorCache, ControllerActionDescriptorCache>();
 
@@ -254,29 +274,6 @@
         private static StartupLoader GetNewStartupLoader()
         {
             return new StartupLoader(new ServiceCollection().BuildServiceProvider(), Environment);
-        }
-
-        private static Type FindDefaultStartupType()
-        {
-            var applicationName = PlatformServices.Default.Application.ApplicationName;
-            var applicationAssembly = Assembly.Load(new AssemblyName(applicationName));
-            
-            var startupTypes = applicationAssembly
-                .DefinedTypes
-                .Where(t =>
-                {
-                    var startupName = $"{Environment.EnvironmentName}Startup";
-                    return t.Name == startupName || t.Name == $"{applicationName}.{startupName}";
-                })
-                .Select(t => t.AsType())
-                .ToArray();
-
-            if (startupTypes.Length == 1)
-            {
-                return startupTypes.First();
-            }
-
-            return null;
         }
 
         private static void AddPlatformServices(IServiceCollection serviceCollection)
