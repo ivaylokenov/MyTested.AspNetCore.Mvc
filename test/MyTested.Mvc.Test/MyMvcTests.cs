@@ -28,7 +28,8 @@ namespace MyTested.Mvc.Tests
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http.Internal;
     using System.Collections.Generic;
-
+    using Microsoft.Extensions.Caching.Memory;
+    using Internal.Caching;
     public class MyMvcTests
     {
         [Fact]
@@ -592,8 +593,15 @@ namespace MyTested.Mvc.Tests
                 .GetAwaiter()
                 .GetResult();
 
-            MyMvc
-                .IsUsingDefaultConfiguration();
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void MockedMemoryCacheShouldBeRegistedByDefault()
+        {
+            MyMvc.IsUsingDefaultConfiguration();
+
+            Assert.IsAssignableFrom<MockedMemoryCache>(TestServiceProvider.GetService<IMemoryCache>());
         }
     }
 }

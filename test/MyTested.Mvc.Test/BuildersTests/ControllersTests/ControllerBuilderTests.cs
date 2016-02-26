@@ -16,7 +16,7 @@
     using Xunit;
     using Internal.Http;
     using Microsoft.Extensions.Primitives;
-
+    using Microsoft.Extensions.DependencyInjection;
     public class ControllerBuilderTests
     {
         [Fact]
@@ -385,8 +385,29 @@
         }
 
         [Fact]
+        public void WithHttpContextSessionShouldThrowExceptionIfSessionIsNotRegistered()
+        {
+            var httpContext = new DefaultHttpContext();
+
+            var setHttpContext = MyMvc
+                .Controller<MvcController>()
+                .WithHttpContext(httpContext)
+                .AndProvideTheHttpContext();
+
+            Assert.Throws<InvalidOperationException>(() => setHttpContext.Session);
+        }
+
+        [Fact]
         public void WithHttpContextShouldPopulateCustomHttpContext()
         {
+            MyMvc
+                .IsUsingDefaultConfiguration()
+                .WithServices(services =>
+                {
+                    services.AddCaching();
+                    services.AddSession();
+                });
+
             var httpContext = new DefaultHttpContext();
             httpContext.Request.Scheme = "Custom";
             httpContext.Response.StatusCode = 404;
@@ -427,6 +448,8 @@
             Assert.Same(httpContext.TraceIdentifier, setHttpContext.TraceIdentifier);
             Assert.Same(httpContext.User, controller.HttpContext.User);
             Assert.Same(httpContext.User, setHttpContext.User);
+
+            MyMvc.IsUsingDefaultConfiguration();
         }
         
         [Fact]

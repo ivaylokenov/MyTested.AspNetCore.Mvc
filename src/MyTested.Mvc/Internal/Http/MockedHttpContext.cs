@@ -5,6 +5,8 @@
     using Microsoft.AspNetCore.Http.Features;
     using Microsoft.AspNetCore.Http.Features.Internal;
     using Microsoft.AspNetCore.Http.Internal;
+    using Microsoft.AspNetCore.Session;
+    using Microsoft.Extensions.DependencyInjection;
     using Utilities.Validators;
 
     /// <summary>
@@ -57,9 +59,13 @@
             this.Items = context.Items;
             this.RequestAborted = context.RequestAborted;
             this.RequestServices = context.RequestServices;
-            this.Session = context.Session;
             this.TraceIdentifier = context.TraceIdentifier;
             this.User = context.User;
+
+            if (this.Features.Get<ISessionFeature>() != null)
+            {
+                this.Session = context.Session;
+            }
 
             this.PrepareDefaultValues();
         }
@@ -98,12 +104,15 @@
                 this.Features.Set<IServiceProvidersFeature>(new MockedRequestServicesFeature(TestServiceProvider.Global));
             }
 
-            if (this.Features.Get<ISessionFeature>() == null)
+            if (this.RequestServices.GetService<ISessionStore>() != null)
             {
-                this.Features.Set<ISessionFeature>(new MockedSessionFeature
+                if (this.Features.Get<ISessionFeature>() == null)
                 {
-                    Session = new MockedSession()
-                });
+                    this.Features.Set<ISessionFeature>(new MockedSessionFeature
+                    {
+                        Session = new MockedSession()
+                    });
+                }
             }
         }
 

@@ -28,6 +28,7 @@
         /// <param name="formatter">Not used formatter parameter. Used for testing with ILogger service.</param>
         public void Log(LogLevel logLevel, int eventId, object state, Exception exception, Func<object, Exception, string> formatter)
         {
+            // intentionally does nothing
         }
 
         /// <summary>
@@ -51,6 +52,7 @@
         /// <param name="formatter">Not used formatter parameter. Used for testing with ILogger service.</param>
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
         {
+            // intentionally does nothing
         }
     }
 }

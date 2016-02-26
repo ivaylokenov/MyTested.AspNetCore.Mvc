@@ -492,6 +492,21 @@
           "lib/net451/Microsoft.AspNetCore.Routing.Abstractions.dll": {}
         }
       },
+      "Microsoft.AspNetCore.Session/1.0.0-rc2-16297": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Http.Abstractions": "1.0.0-rc2-16272",
+          "Microsoft.Extensions.Caching.Abstractions": "1.0.0-rc2-16140",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0-rc2-16119",
+          "Microsoft.Extensions.Options": "1.0.0-rc2-16091"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Session.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Session.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.TestHost/1.0.0-rc2-16356": {
         "type": "package",
         "dependencies": {
@@ -960,6 +975,7 @@
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc": "1.0.0-rc2",
+          "Microsoft.AspNetCore.Session": "1.0.0-rc2",
           "Microsoft.AspNetCore.TestHost": "1.0.0-rc2"
         }
       },
@@ -1767,6 +1783,21 @@
           "lib/net451/Microsoft.AspNetCore.Routing.Abstractions.dll": {}
         }
       },
+      "Microsoft.AspNetCore.Session/1.0.0-rc2-16297": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Http.Abstractions": "1.0.0-rc2-16272",
+          "Microsoft.Extensions.Caching.Abstractions": "1.0.0-rc2-16140",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0-rc2-16119",
+          "Microsoft.Extensions.Options": "1.0.0-rc2-16091"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Session.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Session.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.TestHost/1.0.0-rc2-16356": {
         "type": "package",
         "dependencies": {
@@ -2235,6 +2266,7 @@
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc": "1.0.0-rc2",
+          "Microsoft.AspNetCore.Session": "1.0.0-rc2",
           "Microsoft.AspNetCore.TestHost": "1.0.0-rc2"
         }
       },
@@ -3042,6 +3074,21 @@
           "lib/net451/Microsoft.AspNetCore.Routing.Abstractions.dll": {}
         }
       },
+      "Microsoft.AspNetCore.Session/1.0.0-rc2-16297": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Http.Abstractions": "1.0.0-rc2-16272",
+          "Microsoft.Extensions.Caching.Abstractions": "1.0.0-rc2-16140",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0-rc2-16119",
+          "Microsoft.Extensions.Options": "1.0.0-rc2-16091"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Session.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Session.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.TestHost/1.0.0-rc2-16356": {
         "type": "package",
         "dependencies": {
@@ -3510,6 +3557,7 @@
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc": "1.0.0-rc2",
+          "Microsoft.AspNetCore.Session": "1.0.0-rc2",
           "Microsoft.AspNetCore.TestHost": "1.0.0-rc2"
         }
       },
@@ -4269,6 +4317,20 @@
         "Microsoft.AspNetCore.Routing.Abstractions.1.0.0-rc2-16329.nupkg",
         "Microsoft.AspNetCore.Routing.Abstractions.1.0.0-rc2-16329.nupkg.sha512",
         "Microsoft.AspNetCore.Routing.Abstractions.nuspec"
+      ]
+    },
+    "Microsoft.AspNetCore.Session/1.0.0-rc2-16297": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "uqMEH0ZH1AroAyDYiZzWJ2nP/7pk18wg4IyVOQ5A7rjFslKL4Q8wdzd7yqWCbcSL4zMC1FyRC/nUkeghwmM6xg==",
+      "files": [
+        "lib/dotnet5.4/Microsoft.AspNetCore.Session.dll",
+        "lib/dotnet5.4/Microsoft.AspNetCore.Session.xml",
+        "lib/net451/Microsoft.AspNetCore.Session.dll",
+        "lib/net451/Microsoft.AspNetCore.Session.xml",
+        "Microsoft.AspNetCore.Session.1.0.0-rc2-16297.nupkg",
+        "Microsoft.AspNetCore.Session.1.0.0-rc2-16297.nupkg.sha512",
+        "Microsoft.AspNetCore.Session.nuspec"
       ]
     },
     "Microsoft.AspNetCore.TestHost/1.0.0-rc2-16356": {

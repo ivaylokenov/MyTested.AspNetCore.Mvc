@@ -28,10 +28,12 @@
     using Internal.TestContexts;
     using Internal;
     using Contracts.Data;
-    using Data;    /// <summary>
-                   /// Used for building the controller which will be tested.
-                   /// </summary>
-                   /// <typeparam name="TController">Class inheriting ASP.NET MVC controller.</typeparam>
+    using Data;
+
+    /// <summary>
+    /// Used for building the controller which will be tested.
+    /// </summary>
+    /// <typeparam name="TController">Class inheriting ASP.NET MVC controller.</typeparam>
     public class ControllerBuilder<TController> : IAndControllerBuilder<TController>
         where TController : Controller
     {
@@ -39,12 +41,12 @@
 
         private ControllerTestContext testContext;
         private Action<ITempDataBuilder> tempDataBuilderAction;
-        private Action<TController> controllerSetupAction; 
+        private Action<TController> controllerSetupAction;
         private bool isPreparedForTesting;
         private bool enabledValidation;
         private bool resolveRouteValues;
         private object additionalRouteValues;
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ControllerBuilder{TController}" /> class.
         /// </summary>
@@ -485,7 +487,7 @@
             {
                 this.TestContext.RouteData = RouteExpressionParser.ResolveRouteData(TestApplication.Router, actionCall);
                 RouteExpressionParser.ApplyAdditionaRouteValues(
-                    this.additionalRouteValues, 
+                    this.additionalRouteValues,
                     this.TestContext.RouteData.Values);
             }
         }

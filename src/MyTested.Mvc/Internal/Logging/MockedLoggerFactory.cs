@@ -22,6 +22,7 @@
         /// <param name="provider">Not used provider parameter. Used for testing with ILogger service.</param>
         public void AddProvider(ILoggerProvider provider)
         {
+            // intentionally does nothing
         }
 
         /// <summary>
@@ -39,6 +40,7 @@
         /// </summary>
         public void Dispose()
         {
+            // intentionally does nothing
         }
     }
 }

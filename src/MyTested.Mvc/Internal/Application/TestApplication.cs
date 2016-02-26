@@ -27,11 +27,13 @@
     using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.Extensions.Configuration;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
+    using Microsoft.Extensions.Caching.Memory;
+
     public static class TestApplication
     {
         private static readonly RequestDelegate NullHandler = (c) => Task.FromResult(0);
         private static readonly IHostingEnvironment Environment = new HostingEnvironment { EnvironmentName = "Tests" };
-        
+
         private static bool initialiazed;
         private static IConfiguration configuration;
         private static Type startupType;
@@ -59,7 +61,7 @@
                 startupType = value;
             }
         }
-        
+
         internal static Action<IServiceCollection> AdditionalServices { get; set; }
 
         internal static Action<IApplicationBuilder> AdditionalConfiguration { get; set; }
@@ -166,7 +168,7 @@
 
             // platform services
             AddPlatformServices(serviceCollection);
-            
+
             // testing framework services
             serviceCollection.TryAddSingleton<IControllerActionDescriptorCache, ControllerActionDescriptorCache>();
 
@@ -194,19 +196,22 @@
             {
                 serviceCollection.AddMvc();
             }
-            
+
             if (AdditionalServices != null)
             {
                 AdditionalServices(serviceCollection);
             }
-            
+
             PrepareRouteServices(serviceCollection);
 
             serviceCollection.TryReplaceSingleton<ITempDataProvider, MockedTempDataProvider>();
 
+            serviceCollection.TryRemoveSingleton<IMemoryCache, MemoryCache>();
+            serviceCollection.TryAddTransient<IMemoryCache, MockedMemoryCache>();
+
             serviceProvider = serviceCollection.BuildServiceProvider();
         }
-        
+
         private static void PrepareRouteServices(IServiceCollection serviceCollection)
         {
             var modelBindingActionInvokerFactoryType = typeof(IModelBindingActionInvokerFactory);
@@ -272,7 +277,7 @@
 
             router = routeBuilder.Build();
         }
-        
+
         private static StartupLoader GetNewStartupLoader()
         {
             return new StartupLoader(new ServiceCollection().BuildServiceProvider(), Environment);
@@ -295,7 +300,7 @@
                 }
             }
         }
-        
+
         private static void Reset()
         {
             initialiazed = false;
