@@ -516,7 +516,7 @@ namespace MyTested.Mvc.Tests
         }
 
         [Fact]
-        public void IHttpContextAccessorShouldWorkCorrectly()
+        public void IHttpContextAccessorShouldWorkCorrectlySynchronously()
         {
             MyMvc
                 .IsUsingDefaultConfiguration()
@@ -525,8 +525,7 @@ namespace MyTested.Mvc.Tests
                     services.TryReplaceTransient<IHttpContextFactory, CustomHttpContextFactory>();
                     services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
                 });
-
-            // synchronous contexts should be different
+            
             HttpContext firstContext = null;
             HttpContext secondContext = null;
 
@@ -545,8 +544,21 @@ namespace MyTested.Mvc.Tests
             Assert.NotSame(firstContext, secondContext);
             Assert.Equal(ContentType.AudioVorbis, firstContext.Request.ContentType);
             Assert.Equal(ContentType.AudioVorbis, secondContext.Request.ContentType);
+            
+            MyMvc.IsUsingDefaultConfiguration();
+        }
 
-            // asynchronous contexts should be different
+        [Fact]
+        public void IHttpContextAccessorShouldWorkCorrectlyAsynchronously()
+        {
+            MyMvc
+                .IsUsingDefaultConfiguration()
+                .WithServices(services =>
+                {
+                    services.TryReplaceTransient<IHttpContextFactory, CustomHttpContextFactory>();
+                    services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+                });
+
             Task
                 .Run(async () =>
                 {
@@ -606,12 +618,18 @@ namespace MyTested.Mvc.Tests
         }
 
         [Fact]
-        public void MockedMemoryCacheShouldBeDifferentForEveryCall()
+        public void MockedMemoryCacheShouldBeRegistedWithAddedCaching()
         {
-            // synchronous caching should be different for every test
-            // second call should not have cache entries
+            MyMvc.IsUsingDefaultConfiguration()
+                .WithServices(services => services.AddCaching());
 
-            // normal tests
+            Assert.IsAssignableFrom<MockedMemoryCache>(TestServiceProvider.GetService<IMemoryCache>());
+        }
+
+        [Fact]
+        public void MockedMemoryCacheShouldBeDifferentForEveryCallSynchronously()
+        {
+            // second call should not have cache entries
             MyMvc
                 .Controller<MvcController>()
                 .WithMemoryCache(cache => cache.WithEntry("test", "value"))
@@ -624,10 +642,14 @@ namespace MyTested.Mvc.Tests
                 .Calling(c => c.MemoryCacheAction())
                 .ShouldReturn()
                 .BadRequest();
+        }
 
-            // cached controller builder
+        [Fact]
+        public void MockedMemoryCacheShouldBeDifferentForEveryCallSynchronouslyWithCachedControllerBuilder()
+        {
             var controller = MyMvc.Controller<MvcController>();
 
+            // second call should not have cache entries
             controller
                 .WithMemoryCache(cache => cache.WithEntry("test", "value"))
                 .Calling(c => c.MemoryCacheAction())
@@ -638,8 +660,11 @@ namespace MyTested.Mvc.Tests
                 .Calling(c => c.MemoryCacheAction())
                 .ShouldReturn()
                 .BadRequest();
-
-            // asynchronous caching should be different for every test
+        }
+        
+        [Fact]
+        public void MockedMemoryCacheShouldBeDifferentForEveryCallAsynchronously()
+        {
             Task
                 .Run(async () =>
                 {
