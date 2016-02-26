@@ -26,6 +26,7 @@
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.Extensions.Configuration;
+
     public static class TestApplication
     {
         private static readonly RequestDelegate NullHandler = (c) => Task.FromResult(0);
