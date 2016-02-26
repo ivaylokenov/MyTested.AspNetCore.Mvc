@@ -49,6 +49,8 @@
 
         IAndControllerBuilder<TController> WithTempData(Action<ITempDataBuilder> tempDataBuilder);
 
+        IAndControllerBuilder<TController> WithMemoryCache(Action<IMemoryCacheBuilder> memoryCacheBuilder);
+
         /// <summary>
         /// Tries to resolve constructor dependency of given type.
         /// </summary>

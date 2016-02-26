@@ -13,7 +13,7 @@
     public class MockedMemoryCache : IMemoryCache
     {
 #if NET451
-        private const string LogicalDataKey = "__MemoryCache_Current__";
+        private const string DataKey = "__MemoryCache_Current__";
 #elif DOTNET5_6
         private static readonly AsyncLocal<IDictionary<object, MockedCacheEntry>> МemoryCacheCurrent = new AsyncLocal<IDictionary<object, MockedCacheEntry>>();
 #endif
@@ -52,7 +52,7 @@
         {
             if (this.cache.ContainsKey(key))
             {
-                value = this.cache[key];
+                value = this.cache[key].Value;
                 return true;
             }
             else
@@ -65,12 +65,12 @@
         private IDictionary<object, MockedCacheEntry> GetCurrentCache()
         {
 #if NET451
-            var handle = CallContext.LogicalGetData(LogicalDataKey) as ObjectHandle;
+            var handle = CallContext.GetData(DataKey) as ObjectHandle;
             var result = handle?.Unwrap() as IDictionary<object, MockedCacheEntry>;
             if (result == null)
             {
                 result = new Dictionary<object, MockedCacheEntry>();
-                CallContext.LogicalSetData(LogicalDataKey, new ObjectHandle(result));
+                CallContext.SetData(DataKey, new ObjectHandle(result));
             }
 
             return result;

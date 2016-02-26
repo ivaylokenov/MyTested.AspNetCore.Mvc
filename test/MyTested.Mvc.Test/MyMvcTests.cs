@@ -30,6 +30,7 @@ namespace MyTested.Mvc.Tests
     using System.Collections.Generic;
     using Microsoft.Extensions.Caching.Memory;
     using Internal.Caching;
+    using Internal;
     public class MyMvcTests
     {
         [Fact]
@@ -485,7 +486,7 @@ namespace MyTested.Mvc.Tests
 
             Assert.Null(httpContextFactory);
 
-            var httpContext = TestServiceProvider.CreateMockedHttpContext();
+            var httpContext = TestHelper.CreateMockedHttpContext();
 
             Assert.NotNull(httpContext);
             Assert.Equal(ContentType.FormUrlEncoded, httpContext.Request.ContentType);
@@ -506,7 +507,7 @@ namespace MyTested.Mvc.Tests
 
             Assert.NotNull(httpContextFactory);
 
-            var httpContext = TestServiceProvider.CreateMockedHttpContext();
+            var httpContext = TestHelper.CreateMockedHttpContext();
 
             Assert.NotNull(httpContext);
             Assert.Equal(ContentType.AudioVorbis, httpContext.Request.ContentType);
@@ -602,6 +603,69 @@ namespace MyTested.Mvc.Tests
             MyMvc.IsUsingDefaultConfiguration();
 
             Assert.IsAssignableFrom<MockedMemoryCache>(TestServiceProvider.GetService<IMemoryCache>());
+        }
+
+        [Fact]
+        public void MockedMemoryCacheShouldBeDifferentForEveryCall()
+        {
+            // synchronous caching should be different for every test
+            MyMvc
+                .Controller<MvcController>()
+                .WithMemoryCache(cache => cache.WithEntry("test", "value"))
+                .Calling(c => c.MemoryCacheAction())
+                .ShouldReturn()
+                .Ok();
+
+            // second call should not have cache entries
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.MemoryCacheAction())
+                .ShouldReturn()
+                .BadRequest();
+
+            // asynchronous caching should be different for every test
+            Task
+                .Run(async () =>
+                {
+                    TestHelper.ClearMemoryCache();
+
+                    string firstValue = null;
+                    string secondValue = null;
+                    string thirdValue = null;
+
+                    var tasks = new List<Task>
+                    {
+                        Task.Run(() =>
+                        {
+                            var memoryCache = TestServiceProvider.GetService<IMemoryCache>();
+                            memoryCache.Set("test", "first");
+                            firstValue = memoryCache.Get<string>("test");
+                            TestHelper.ClearMemoryCache();
+                        }),
+                        Task.Run(() =>
+                        {
+                            var memoryCache = TestServiceProvider.GetService<IMemoryCache>();
+                            memoryCache.Set("test", "second");
+                            secondValue = memoryCache.Get<string>("test");
+                            TestHelper.ClearMemoryCache();
+                        }),
+                        Task.Run(() =>
+                        {
+                            var memoryCache = TestServiceProvider.GetService<IMemoryCache>();
+                            memoryCache.Set("test", "third");
+                            thirdValue = memoryCache.Get<string>("test");
+                            TestHelper.ClearMemoryCache();
+                        })
+                    };
+
+                    await Task.WhenAll(tasks);
+
+                    Assert.Equal("first", firstValue);
+                    Assert.Equal("second", secondValue);
+                    Assert.Equal("third", thirdValue);
+                })
+                .GetAwaiter()
+                .GetResult();
         }
     }
 }

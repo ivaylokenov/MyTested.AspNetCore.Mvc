@@ -8,6 +8,7 @@
     using ShouldReturn;
     using Utilities.Validators;
     using Internal.TestContexts;
+    using Internal;
 
     /// <summary>
     /// Used for building the action result which will be tested.
@@ -44,6 +45,7 @@
         /// <returns>Should throw test builder.</returns>
         public IShouldThrowTestBuilder ShouldThrow()
         {
+            TestHelper.ClearMemoryCache();
             if (this.CaughtException == null)
             {
                 throw new ActionCallAssertionException(string.Format(
@@ -61,6 +63,7 @@
         /// <returns>Should return test builder.</returns>
         public IShouldReturnTestBuilder<TActionResult> ShouldReturn()
         {
+            TestHelper.ClearMemoryCache();
             CommonValidator.CheckForException(this.CaughtException);
             return new ShouldReturnTestBuilder<TActionResult>(this.TestContext);
         }

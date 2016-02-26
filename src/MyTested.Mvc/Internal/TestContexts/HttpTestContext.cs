@@ -6,6 +6,7 @@
     using MyTested.Mvc.Internal.Http;
     using Routes;
     using Utilities.Validators;
+
     public class HttpTestContext
     {
         private MockedHttpContext mockedHttpContext;
@@ -13,7 +14,8 @@
 
         public HttpTestContext()
         {
-            this.mockedHttpContext = TestServiceProvider.CreateMockedHttpContext();
+            TestHelper.ClearMemoryCache();
+            this.mockedHttpContext = TestHelper.CreateMockedHttpContext();
         }
 
         public HttpContext HttpContext

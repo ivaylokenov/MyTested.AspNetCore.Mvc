@@ -17,6 +17,8 @@
     using Newtonsoft.Json;
     using Services;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
+    using Microsoft.Extensions.Caching.Memory;
+    using Microsoft.Extensions.DependencyInjection;
     [Authorize(Roles = "Admin,Moderator")]
     [Route("/api/test")]
     public class MvcController : Controller
@@ -778,6 +780,19 @@
             var model = new RequestModel();
             await this.TryUpdateModelAsync<RequestModel>(model);
             return this.Ok();
+        }
+
+        public IActionResult MemoryCacheAction()
+        {
+            var memoryCache = this.HttpContext.RequestServices.GetService<IMemoryCache>();
+
+            var cacheValue = memoryCache.Get<string>("test");
+            if (cacheValue == "value")
+            {
+                return this.Ok();
+            }
+
+            return this.BadRequest();
         }
 
         private void ThrowNewNullReferenceException()

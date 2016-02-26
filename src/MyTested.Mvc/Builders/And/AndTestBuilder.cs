@@ -4,6 +4,7 @@
     using Base;
     using Contracts.Actions;
     using Contracts.And;
+    using Internal;
     using Internal.TestContexts;
 
     /// <summary>
@@ -24,6 +25,7 @@
         public AndTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
+            TestHelper.ClearMemoryCache();
         }
 
         /// <summary>
