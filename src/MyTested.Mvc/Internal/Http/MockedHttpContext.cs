@@ -39,7 +39,6 @@
         {
             this.CustomRequest = this.httpRequest;
             this.httpResponse = this.httpResponse ?? new MockedHttpResponse(this);
-            this.PrepareRequestServices();
         }
 
         /// <summary>
@@ -58,7 +57,7 @@
             this.Items = context.Items;
             this.RequestAborted = context.RequestAborted;
             this.RequestServices = context.RequestServices;
-            // this.Session = context.Session;
+            this.Session = context.Session;
             this.TraceIdentifier = context.TraceIdentifier;
             this.User = context.User;
 
@@ -93,6 +92,19 @@
             {
                 this.Features.Set<IHttpResponseFeature>(new HttpResponseFeature());
             }
+
+            if (this.Features.Get<IServiceProvidersFeature>() == null)
+            {
+                this.Features.Set<IServiceProvidersFeature>(new MockedRequestServicesFeature(TestServiceProvider.Global));
+            }
+
+            if (this.Features.Get<ISessionFeature>() == null)
+            {
+                this.Features.Set<ISessionFeature>(new MockedSessionFeature
+                {
+                    Session = new MockedSession()
+                });
+            }
         }
 
         private void PrepareDefaultValues()
@@ -100,19 +112,6 @@
             if (this.Request?.ContentType == null)
             {
                 this.Request.ContentType = ContentType.FormUrlEncoded;
-            }
-        }
-
-        private void PrepareRequestServices()
-        {
-            if (this.RequestServices != null)
-            {
-                return;
-            }
-
-            using (var feature = new MockedRequestServicesFeature(TestServiceProvider.Global))
-            {
-                this.Features.Set<IServiceProvidersFeature>(feature);
             }
         }
     }

@@ -21,7 +21,7 @@
 
         protected string DataProviderName { get; set; }
 
-        protected IDictionary<string, object> DataProvider { get; set; }
+        protected IDictionary<string, object> DataProvider { get; private set; }
 
         protected abstract IDictionary<string, object> GetDataProvider();
 

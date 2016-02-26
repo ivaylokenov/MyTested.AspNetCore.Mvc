@@ -8,7 +8,6 @@
 
   "dependencies": {
     "Microsoft.AspNetCore.Mvc": "1.0.0-rc2-*",
-    "Microsoft.AspNetCore.Session": "1.0.0-rc2-*",
     "Microsoft.AspNetCore.TestHost": "1.0.0-rc2-*"
   },
 

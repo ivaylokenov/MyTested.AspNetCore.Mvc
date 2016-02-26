@@ -138,6 +138,13 @@
             return this;
         }
 
+        public IAndControllerBuilder<TController> WithSession(Action<ISessionBuilder> sessionBuilder)
+        {
+            var newSessionBuilder = new SessionBuilder(this.HttpContext.Session);
+            sessionBuilder(newSessionBuilder);
+            return this;
+        }
+
         public IAndControllerBuilder<TController> WithResolvedRouteData()
         {
             return this.WithResolvedRouteData(null);

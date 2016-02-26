@@ -26,7 +26,7 @@
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.Extensions.Configuration;
-
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
     public static class TestApplication
     {
         private static readonly RequestDelegate NullHandler = (c) => Task.FromResult(0);
@@ -201,6 +201,8 @@
             }
             
             PrepareRouteServices(serviceCollection);
+
+            serviceCollection.TryReplaceSingleton<ITempDataProvider, MockedTempDataProvider>();
 
             serviceProvider = serviceCollection.BuildServiceProvider();
         }

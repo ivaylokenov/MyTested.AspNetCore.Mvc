@@ -9,17 +9,17 @@
 
     public class TempDataBuilder : IAndTempDataBuilder
     {
-        private readonly ITempDataDictionary tempData;
-
         public TempDataBuilder(ITempDataDictionary tempData)
         {
             CommonValidator.CheckForNullReference(tempData, nameof(ITempDataDictionary));
-            this.tempData = tempData;
+            this.TempData = tempData;
         }
+
+        protected ITempDataDictionary TempData { get; private set; }
 
         public IAndTempDataBuilder WithEntry(string key, object value)
         {
-            this.tempData.Add(key, value);
+            this.TempData.Add(key, value);
             return this;
         }
 
