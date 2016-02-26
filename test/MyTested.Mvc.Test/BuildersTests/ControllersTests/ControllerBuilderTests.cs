@@ -421,8 +421,8 @@
             Assert.Same(httpContext.Features, setHttpContext.Features);
             Assert.Same(httpContext.RequestServices, controller.HttpContext.RequestServices);
             Assert.Same(httpContext.RequestServices, setHttpContext.RequestServices);
-            // Assert.Same(httpContext.Session, controller.HttpContext.Session);
-            // Assert.Same(httpContext.Session, setHttpContext.Session);
+            Assert.Same(httpContext.Session, controller.HttpContext.Session);
+            Assert.Same(httpContext.Session, setHttpContext.Session);
             Assert.Same(httpContext.TraceIdentifier, controller.HttpContext.TraceIdentifier);
             Assert.Same(httpContext.TraceIdentifier, setHttpContext.TraceIdentifier);
             Assert.Same(httpContext.User, controller.HttpContext.User);
