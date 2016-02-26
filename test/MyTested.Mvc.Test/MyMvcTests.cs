@@ -609,6 +609,9 @@ namespace MyTested.Mvc.Tests
         public void MockedMemoryCacheShouldBeDifferentForEveryCall()
         {
             // synchronous caching should be different for every test
+            // second call should not have cache entries
+
+            // normal tests
             MyMvc
                 .Controller<MvcController>()
                 .WithMemoryCache(cache => cache.WithEntry("test", "value"))
@@ -616,9 +619,22 @@ namespace MyTested.Mvc.Tests
                 .ShouldReturn()
                 .Ok();
 
-            // second call should not have cache entries
             MyMvc
                 .Controller<MvcController>()
+                .Calling(c => c.MemoryCacheAction())
+                .ShouldReturn()
+                .BadRequest();
+
+            // cached controller builder
+            var controller = MyMvc.Controller<MvcController>();
+
+            controller
+                .WithMemoryCache(cache => cache.WithEntry("test", "value"))
+                .Calling(c => c.MemoryCacheAction())
+                .ShouldReturn()
+                .Ok();
+
+            controller
                 .Calling(c => c.MemoryCacheAction())
                 .ShouldReturn()
                 .BadRequest();
