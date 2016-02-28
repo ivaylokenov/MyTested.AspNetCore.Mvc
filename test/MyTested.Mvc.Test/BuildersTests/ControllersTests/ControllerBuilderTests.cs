@@ -490,6 +490,8 @@
         [Fact]
         public void RouteDataShouldBePopulatedWhenRequestAndPathAreProvided()
         {
+            MyMvc.IsUsingDefaultConfiguration();
+
             MyMvc
                 .Controller<MvcController>()
                 .WithHttpRequest(req => req.WithPath("/Mvc/WithRouteData/1"))

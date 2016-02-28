@@ -565,6 +565,8 @@ namespace MyTested.Mvc.Tests
                     HttpContext firstContextAsync = null;
                     HttpContext secondContextAsync = null;
                     HttpContext thirdContextAsync = null;
+                    HttpContext fourthContextAsync = null;
+                    HttpContext fifthContextAsync = null;
 
                     var tasks = new List<Task>
                     {
@@ -585,6 +587,18 @@ namespace MyTested.Mvc.Tests
                             thirdContextAsync = MyMvc
                                 .Controller<HttpContextController>()
                                 .AndProvideTheController().Context;
+                        }),
+                        Task.Run(() =>
+                        {
+                            fourthContextAsync = MyMvc
+                                .Controller<HttpContextController>()
+                                .AndProvideTheController().Context;
+                        }),
+                        Task.Run(() =>
+                        {
+                            fifthContextAsync = MyMvc
+                                .Controller<HttpContextController>()
+                                .AndProvideTheController().Context;
                         })
                     };
 
@@ -593,15 +607,24 @@ namespace MyTested.Mvc.Tests
                     Assert.NotNull(firstContextAsync);
                     Assert.NotNull(secondContextAsync);
                     Assert.NotNull(thirdContextAsync);
+                    Assert.NotNull(fourthContextAsync);
+                    Assert.NotNull(fifthContextAsync);
                     Assert.IsAssignableFrom<MockedHttpContext>(firstContextAsync);
                     Assert.IsAssignableFrom<MockedHttpContext>(secondContextAsync);
                     Assert.IsAssignableFrom<MockedHttpContext>(thirdContextAsync);
+                    Assert.IsAssignableFrom<MockedHttpContext>(fourthContextAsync);
+                    Assert.IsAssignableFrom<MockedHttpContext>(fifthContextAsync);
                     Assert.NotSame(firstContextAsync, secondContextAsync);
                     Assert.NotSame(firstContextAsync, thirdContextAsync);
                     Assert.NotSame(secondContextAsync, thirdContextAsync);
+                    Assert.NotSame(thirdContextAsync, fourthContextAsync);
+                    Assert.NotSame(fourthContextAsync, fifthContextAsync);
+                    Assert.NotSame(thirdContextAsync, fifthContextAsync);
                     Assert.Equal(ContentType.AudioVorbis, firstContextAsync.Request.ContentType);
                     Assert.Equal(ContentType.AudioVorbis, secondContextAsync.Request.ContentType);
                     Assert.Equal(ContentType.AudioVorbis, thirdContextAsync.Request.ContentType);
+                    Assert.Equal(ContentType.AudioVorbis, fourthContextAsync.Request.ContentType);
+                    Assert.Equal(ContentType.AudioVorbis, fifthContextAsync.Request.ContentType);
                 })
                 .GetAwaiter()
                 .GetResult();
@@ -673,6 +696,8 @@ namespace MyTested.Mvc.Tests
                     string firstValue = null;
                     string secondValue = null;
                     string thirdValue = null;
+                    string fourthValue = null;
+                    string fifthValue = null;
 
                     var tasks = new List<Task>
                     {
@@ -680,21 +705,35 @@ namespace MyTested.Mvc.Tests
                         {
                             var memoryCache = TestServiceProvider.GetService<IMemoryCache>();
                             memoryCache.Set("test", "first");
-                            firstValue = memoryCache.Get<string>("test");
+                            firstValue = TestServiceProvider.GetService<IMemoryCache>().Get<string>("test");
                             TestHelper.ClearMemoryCache();
                         }),
                         Task.Run(() =>
                         {
                             var memoryCache = TestServiceProvider.GetService<IMemoryCache>();
                             memoryCache.Set("test", "second");
-                            secondValue = memoryCache.Get<string>("test");
+                            secondValue = TestServiceProvider.GetService<IMemoryCache>().Get<string>("test");
                             TestHelper.ClearMemoryCache();
                         }),
                         Task.Run(() =>
                         {
                             var memoryCache = TestServiceProvider.GetService<IMemoryCache>();
                             memoryCache.Set("test", "third");
-                            thirdValue = memoryCache.Get<string>("test");
+                            thirdValue = TestServiceProvider.GetService<IMemoryCache>().Get<string>("test");
+                            TestHelper.ClearMemoryCache();
+                        }),
+                        Task.Run(() =>
+                        {
+                            var memoryCache = TestServiceProvider.GetService<IMemoryCache>();
+                            memoryCache.Set("test", "fourth");
+                            fourthValue = TestServiceProvider.GetService<IMemoryCache>().Get<string>("test");
+                            TestHelper.ClearMemoryCache();
+                        }),
+                        Task.Run(() =>
+                        {
+                            var memoryCache = TestServiceProvider.GetService<IMemoryCache>();
+                            memoryCache.Set("test", "fifth");
+                            fifthValue = TestServiceProvider.GetService<IMemoryCache>().Get<string>("test");
                             TestHelper.ClearMemoryCache();
                         })
                     };
@@ -704,6 +743,8 @@ namespace MyTested.Mvc.Tests
                     Assert.Equal("first", firstValue);
                     Assert.Equal("second", secondValue);
                     Assert.Equal("third", thirdValue);
+                    Assert.Equal("fourth", fourthValue);
+                    Assert.Equal("fifth", fifthValue);
                 })
                 .GetAwaiter()
                 .GetResult();
