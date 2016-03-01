@@ -1,5 +1,6 @@
 ﻿namespace MyTested.Mvc.Internal.Caching
 {
+    using System.Linq;
     using System.Collections.Generic;
     using Microsoft.Extensions.Caching.Memory;
     using Contracts;
@@ -74,6 +75,11 @@
                 value = null;
                 return false;
             }
+        }
+
+        public IDictionary<object, object> GetCacheAsDictionary()
+        {
+            return this.cache.ToDictionary(c => c.Key, c => c.Value.Value);
         }
 
         private IDictionary<object, IMockedCacheEntry> GetCurrentCache()

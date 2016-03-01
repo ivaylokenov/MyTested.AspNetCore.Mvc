@@ -25,7 +25,7 @@
 
         protected abstract IDictionary<string, object> GetDataProvider();
 
-        protected void ValidateContainingEntry(string key)
+        protected void ValidateContainingEntryWithKey(string key)
         {
             DictionaryValidator.ValidateStringKey(
                 this.DataProviderName,
@@ -34,7 +34,7 @@
                 this.ThrowNewDataProviderAssertionException);
         }
 
-        protected void ValidateContainingEntry<TEntry>(TEntry value)
+        protected void ValidateContainingEntryWithValue<TEntry>(TEntry value)
         {
             DictionaryValidator.ValidateValue(
                 this.DataProviderName,

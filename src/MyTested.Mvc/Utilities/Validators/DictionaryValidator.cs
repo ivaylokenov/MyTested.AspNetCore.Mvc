@@ -21,7 +21,7 @@
                     "such was not found");
             }
         }
-
+        
         public static void ValidateStringKeyAndValue(
             string name,
             IDictionary<string, object> dictionary,
@@ -46,16 +46,15 @@
             IDictionary<string, object> dictionary,
             Action<string, string, string> failedValidationAction)
         {
-            var expectedType = typeof(TValue);
-            var entryOfSameType = dictionary.Values.FirstOrDefault(arg => arg.GetType() == expectedType);
+            ValidateValueOfType<TValue>(name, dictionary.Values, failedValidationAction);
+        }
 
-            if (entryOfSameType == null)
-            {
-                failedValidationAction(
-                    name,
-                    $"to have at least one entry of {expectedType.ToFriendlyTypeName()} type",
-                    "none was found");
-            }
+        public static void ValidateValueOfType<TValue>(
+            string name,
+            IDictionary<object, object> dictionary,
+            Action<string, string, string> failedValidationAction)
+        {
+            ValidateValueOfType<TValue>(name, dictionary.Values, failedValidationAction);
         }
 
         public static void ValidateStringKeyAndValueOfType<TValue>(
@@ -68,18 +67,19 @@
             var actualValue = entryExists ? dictionary[key] : null;
 
             var expectedType = typeof(TValue);
-            if (!entryExists || Reflection.AreDifferentTypes(expectedType, actualValue?.GetType()))
+            var actualType = actualValue?.GetType();
+            if (!entryExists || Reflection.AreDifferentTypes(expectedType, actualType))
             {
                 failedValidationAction(
                     name,
                     $"to have entry with '{key}' key and of {expectedType.ToFriendlyTypeName()} type",
-                    $"{(entryExists ? "the value was different" : "such was not found")}");
+                    $"{(entryExists ? $"in fact found {actualType.ToFriendlyTypeName()}" : "such was not found")}");
             }
         }
 
-        public static void ValidateValue<TValue>(
+        public static void ValidateValue<TDictionaryKey, TValue>(
             string name,
-            IDictionary<string, object> dictionary,
+            IDictionary<TDictionaryKey, object> dictionary,
             TValue value,
             Action<string, string, string> failedValidationAction)
         {
@@ -116,6 +116,23 @@
                 item.Key, 
                 item.Value,
                 failedValidationAction));
+        }
+
+        private static void ValidateValueOfType<TValue>(
+            string name,
+            ICollection<object> values,
+            Action<string, string, string> failedValidationAction)
+        {
+            var expectedType = typeof(TValue);
+            var entryOfSameType = values.FirstOrDefault(arg => arg.GetType() == expectedType);
+
+            if (entryOfSameType == null)
+            {
+                failedValidationAction(
+                    name,
+                    $"to have at least one entry of {expectedType.ToFriendlyTypeName()} type",
+                    "none was found");
+            }
         }
     }
 }

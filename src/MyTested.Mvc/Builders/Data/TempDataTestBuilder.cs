@@ -15,15 +15,15 @@
         {
         }
 
-        public IAndTempDataTestBuilder ContainingEntry(string key)
+        public IAndTempDataTestBuilder ContainingEntryWithKey(string key)
         {
-            this.ValidateContainingEntry(key);
+            this.ValidateContainingEntryWithKey(key);
             return this;
         }
 
-        public IAndTempDataTestBuilder ContainingEntry<TEntry>(TEntry value)
+        public IAndTempDataTestBuilder ContainingEntryWithValue<TEntry>(TEntry value)
         {
-            this.ValidateContainingEntry(value);
+            this.ValidateContainingEntryWithValue(value);
             return this;
         }
 

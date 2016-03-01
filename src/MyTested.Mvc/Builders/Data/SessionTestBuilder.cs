@@ -14,9 +14,9 @@
         {
         }
 
-        public IAndSessionTestBuilder ContainingEntry(string key)
+        public IAndSessionTestBuilder ContainingEntryWithKey(string key)
         {
-            this.ValidateContainingEntry(key);
+            this.ValidateContainingEntryWithKey(key);
             return this;
         }
 
