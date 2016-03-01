@@ -8,6 +8,7 @@
     using Microsoft.AspNetCore.Http.Authentication;
     using MyTested.Mvc.Builders.Contracts.Authentication;
     using Internal.TestContexts;
+
     /// <summary>
     /// Used for testing authentication properties.
     /// </summary>
@@ -227,11 +228,11 @@
         private void ThrowNewAuthenticationPropertiesAssertionException(string expectedValue, string actualValue)
         {
             throw new AuthenticationPropertiesAssertionException(string.Format(
-                        "When calling {0} action in {1} expected authentication properties to {2}, but {3}.",
-                        this.ActionName,
-                        this.Controller.GetName(),
-                        expectedValue,
-                        actualValue));
+                "When calling {0} action in {1} expected authentication properties to {2}, but {3}.",
+                this.ActionName,
+                this.Controller.GetName(),
+                expectedValue,
+                actualValue));
         }
     }
 }

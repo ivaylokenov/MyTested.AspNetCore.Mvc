@@ -17,9 +17,9 @@
 #if NET451
         private const string DataKey = "__MemoryCache_Current__";
 #elif DOTNET5_6
-        private static readonly AsyncLocal<IDictionary<object, IMockedCacheEntry>> МemoryCacheCurrent = new AsyncLocal<IDictionary<object, IMockedCacheEntry>>();
+        private static readonly AsyncLocal<IDictionary<object, IMockedMemoryCacheEntry>> МemoryCacheCurrent = new AsyncLocal<IDictionary<object, IMockedMemoryCacheEntry>>();
 #endif
-        private readonly IDictionary<object, IMockedCacheEntry> cache;
+        private readonly IDictionary<object, IMockedMemoryCacheEntry> cache;
 
         public MockedMemoryCache()
         {
@@ -46,13 +46,13 @@
 
         public object Set(object key, object value, MemoryCacheEntryOptions options)
         {
-            this.cache[key] = new MockedCacheEntry(key, value, options);
+            this.cache[key] = new MockedMemoryCacheEntry(key, value, options);
             return value;
         }
 
         public bool TryGetValue(object key, out object value)
         {
-            IMockedCacheEntry cacheEntry;
+            IMockedMemoryCacheEntry cacheEntry;
             if (this.TryGetCacheEntry(key, out cacheEntry))
             {
                 value = cacheEntry.Value;
@@ -63,7 +63,7 @@
             return false;
         }
 
-        public bool TryGetCacheEntry(object key, out IMockedCacheEntry value)
+        public bool TryGetCacheEntry(object key, out IMockedMemoryCacheEntry value)
         {
             if (this.cache.ContainsKey(key))
             {
@@ -82,14 +82,14 @@
             return this.cache.ToDictionary(c => c.Key, c => c.Value.Value);
         }
 
-        private IDictionary<object, IMockedCacheEntry> GetCurrentCache()
+        private IDictionary<object, IMockedMemoryCacheEntry> GetCurrentCache()
         {
 #if NET451
             var handle = CallContext.GetData(DataKey) as ObjectHandle;
-            var result = handle?.Unwrap() as IDictionary<object, IMockedCacheEntry>;
+            var result = handle?.Unwrap() as IDictionary<object, IMockedMemoryCacheEntry>;
             if (result == null)
             {
-                result = new Dictionary<object, IMockedCacheEntry>();
+                result = new Dictionary<object, IMockedMemoryCacheEntry>();
                 CallContext.SetData(DataKey, new ObjectHandle(result));
             }
 
@@ -98,7 +98,7 @@
             var result = МemoryCacheCurrent.Value;
             if (result == null)
             {
-                result = new Dictionary<object, IMockedCacheEntry>();
+                result = new Dictionary<object, IMockedMemoryCacheEntry>();
                 МemoryCacheCurrent.Value = result;
             }
 

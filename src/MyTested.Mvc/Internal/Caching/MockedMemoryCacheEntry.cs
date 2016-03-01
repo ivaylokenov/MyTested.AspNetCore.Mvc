@@ -4,20 +4,20 @@
     using Internal.Contracts;
     using Utilities.Validators;
 
-    public class MockedCacheEntry : IMockedCacheEntry
+    public class MockedMemoryCacheEntry : IMockedMemoryCacheEntry
     {
         private object key;
 
-        public MockedCacheEntry()
+        public MockedMemoryCacheEntry()
         {
             this.Options = new MemoryCacheEntryOptions();
         }
 
-        public MockedCacheEntry(
+        public MockedMemoryCacheEntry(
             object key,
             object value,
             MemoryCacheEntryOptions options)
-        {;
+        {
             this.Key = key;
             this.Value = value;
             this.Options = options ?? new MemoryCacheEntryOptions();

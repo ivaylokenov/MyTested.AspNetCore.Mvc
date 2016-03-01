@@ -2,7 +2,7 @@
 {
     using Microsoft.Extensions.Caching.Memory;
 
-    public interface IMockedCacheEntry
+    public interface IMockedMemoryCacheEntry
     {
         object Key { get; }
 

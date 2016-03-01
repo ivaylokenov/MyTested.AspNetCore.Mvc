@@ -79,7 +79,7 @@
             {
                 this.ThrowNewDataProviderAssertionException(
                     MemoryCacheName,
-                    $"to have entry with the given value",
+                    "to have entry with the given value",
                     "in fact it was different");
             }
 
@@ -90,8 +90,8 @@
         {
             this.ContainingEntry(key, value);
 
-            IMockedCacheEntry cacheEntry;
-            this.mockedMemoryCache.TryGetCacheEntry(key, out cacheEntry);
+            IMockedMemoryCacheEntry cacheEntry;
+            this.GetMockedMemoryCache().TryGetCacheEntry(key, out cacheEntry);
             var actualOptions = cacheEntry.Options;
 
             if (Reflection.AreNotDeeplyEqual(options, actualOptions))
@@ -101,6 +101,24 @@
                     $"to have entry with the given options",
                     "in fact they were different");
             }
+
+            return this;
+        }
+
+        public IAndMemoryCacheTestBuilder ContainingEntry(Action<IMemoryCacheEntryTestBuilder> memoryCacheEntryTestBuilder)
+        {
+            var newMemoryCacheEntryBuilder = new MemoryCacheEntryTestBuilder(this.TestContext);
+            memoryCacheEntryTestBuilder(newMemoryCacheEntryBuilder);
+            var expectedMemoryCacheEntry = newMemoryCacheEntryBuilder.GetMockedMemoryCacheEntry();
+
+            var key = expectedMemoryCacheEntry.Key;
+            this.ContainingEntryWithKey(key);
+
+            IMockedMemoryCacheEntry actualMemoryCacheEntry;
+            this.GetMockedMemoryCache().TryGetCacheEntry(key, out actualMemoryCacheEntry);
+
+            var validations = newMemoryCacheEntryBuilder.GetMockedMemoryCacheEntryValidations();
+            validations.ForEach(v => v(expectedMemoryCacheEntry, actualMemoryCacheEntry));
 
             return this;
         }
@@ -167,12 +185,12 @@
         private void ThrowNewDataProviderAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new DataProviderAssertionException(string.Format(
-                    "When calling {0} action in {1} expected {2} {3}, but {4}.",
-                    this.ActionName,
-                    this.Controller.GetName(),
-                    propertyName,
-                    expectedValue,
-                    actualValue));
+                "When calling {0} action in {1} expected {2} {3}, but {4}.",
+                this.ActionName,
+                this.Controller.GetName(),
+                propertyName,
+                expectedValue,
+                actualValue));
         }
     }
 }

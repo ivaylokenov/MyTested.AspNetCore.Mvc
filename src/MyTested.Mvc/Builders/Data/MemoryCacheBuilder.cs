@@ -28,6 +28,15 @@
             return this;
         }
 
+        public IAndMemoryCacheBuilder WithEntry(Action<IMemoryCacheEntryTestBuilder> memoryCacheEntryBuilder)
+        {
+            var newMemoryCacheEntryBuilder = new MemoryCacheEntryBuilder();
+            memoryCacheEntryBuilder(newMemoryCacheEntryBuilder);
+            var memoryCacheEntry = newMemoryCacheEntryBuilder.GetMockedMemoryCacheEntry();
+
+            return this.WithEntry(memoryCacheEntry.Key, memoryCacheEntry.Value, memoryCacheEntry.Options);
+        }
+
         public IAndMemoryCacheBuilder WithEntries(IDictionary<object, object> entries)
         {
             entries.ForEach(e => this.WithEntry(e.Key, e.Value));
