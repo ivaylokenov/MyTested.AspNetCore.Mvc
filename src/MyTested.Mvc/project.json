@@ -13,7 +13,6 @@
   },
 
   "frameworks": {
-    "net451": { },
-    "dotnet5.6": { }
+    "net451": { }
   }
 }

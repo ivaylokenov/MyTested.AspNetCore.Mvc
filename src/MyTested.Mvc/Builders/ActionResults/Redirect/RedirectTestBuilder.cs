@@ -69,6 +69,39 @@
         }
 
         /// <summary>
+        /// Tests whether redirect result location passes given assertions.
+        /// </summary>
+        /// <param name="assertions">Action containing all assertions on the location.</param>
+        /// <returns>The same redirect test builder.</returns>
+        public IAndRedirectTestBuilder ToUrl(Action<string> assertions)
+        {
+            var redirectResult = this.GetRedirectResult<RedirectResult>(Location);
+            assertions(redirectResult.Url);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether redirect result location passes given predicate.
+        /// </summary>
+        /// <param name="predicate">Predicate testing the location.</param>
+        /// <returns>The same redirect test builder.</returns>
+        public IAndRedirectTestBuilder ToUrl(Func<string, bool> predicate)
+        {
+            var redirectResult = this.GetRedirectResult<RedirectResult>(Location);
+            if (!predicate(redirectResult.Url))
+            {
+                this.ThrowNewRedirectResultAssertionException(
+                    "location",
+                    "to pass the given predicate",
+                    "but it failed");
+            }
+
+            return this;
+        }
+
+
+        /// <summary>
         /// Tests whether redirect result has specific location provided by URI.
         /// </summary>
         /// <param name="location">Expected location as URI.</param>

@@ -185,6 +185,38 @@
         }
 
         /// <summary>
+        /// Tests whether created result location passes given assertions.
+        /// </summary>
+        /// <param name="assertions">Action containing all assertions on the location.</param>
+        /// <returns>The same created test builder.</returns>
+        public IAndCreatedTestBuilder AtLocation(Action<string> assertions)
+        {
+            var createdResult = this.GetCreatedResult<CreatedResult>(Location);
+            assertions(createdResult.Location);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether created result location passes given predicate.
+        /// </summary>
+        /// <param name="predicate">Predicate testing the location.</param>
+        /// <returns>The same created test builder.</returns>
+        public IAndCreatedTestBuilder AtLocation(Func<string, bool> predicate)
+        {
+            var createdResult = this.GetCreatedResult<CreatedResult>(Location);
+            if (!predicate(createdResult.Location))
+            {
+                this.ThrowNewCreatedResultAssertionException(
+                    "location",
+                    "to pass the given predicate",
+                    "but it failed");
+            }
+
+            return this;
+        }
+
+        /// <summary>
         /// Tests whether created result has specific location provided by URI.
         /// </summary>
         /// <param name="location">Expected location as URI.</param>
@@ -434,12 +466,12 @@
         private void ThrowNewCreatedResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new CreatedResultAssertionException(string.Format(
-                    "When calling {0} action in {1} expected created result {2} {3}, but {4}.",
-                    this.ActionName,
-                    this.Controller.GetName(),
-                    propertyName,
-                    expectedValue,
-                    actualValue));
+                "When calling {0} action in {1} expected created result {2} {3}, but {4}.",
+                this.ActionName,
+                this.Controller.GetName(),
+                propertyName,
+                expectedValue,
+                actualValue));
         }
     }
 }
