@@ -12,6 +12,7 @@
     using Application;
     using Microsoft.AspNetCore.Mvc;
     using System.Linq;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
     public class ControllerTestContext : HttpTestContext
     {
         private ControllerContext controllerContext;
@@ -133,6 +134,10 @@
                 base.RouteData = value;
             }
         }
+
+        public ITempDataDictionary TempData => this.ControllerAs<Controller>().TempData;
+
+        public ViewDataDictionary ViewData => this.ControllerAs<Controller>().ViewData;
 
         internal TController ControllerAs<TController>()
             where TController : class => this.Controller as TController;

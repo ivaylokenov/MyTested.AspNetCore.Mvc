@@ -4,7 +4,6 @@
     using Contracts.Data;
     using Data;
     using System;
-    using Utilities.Validators;
 
     /// <summary>
     /// Class containing methods for testing memory cache.
@@ -12,17 +11,29 @@
     /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
     public partial class ShouldHaveTestBuilder<TActionResult>
     {
+        public IAndTestBuilder<TActionResult> NoMemoryCache()
+        {
+            if (this.TestContext.MockedMemoryCache.Count > 0)
+            {
+                this.ThrowNewDataProviderAssertionExceptionWithNoEntries(MemoryCacheTestBuilder.MemoryCacheName);
+            }
+
+            return this.NewAndTestBuilder();
+        }
+
         public IAndTestBuilder<TActionResult> MemoryCache(int? withNumberOfEntries = null)
         {
+            this.ValidateDataProviderNumberOfEntries(
+                MemoryCacheTestBuilder.MemoryCacheName,
+                withNumberOfEntries,
+                this.TestContext.MockedMemoryCache.Count);
+
             return this.NewAndTestBuilder();
         }
 
         public IAndTestBuilder<TActionResult> MemoryCache(Action<IMemoryCacheTestBuilder> memoryCacheTestBuilder)
         {
-            CommonValidator.CheckForException(this.CaughtException);
-
             memoryCacheTestBuilder(new MemoryCacheTestBuilder(this.TestContext));
-
             return this.NewAndTestBuilder();
         }
     }

@@ -15,7 +15,7 @@
 
     public class MemoryCacheTestBuilder : BaseTestBuilderWithInvokedAction, IAndMemoryCacheTestBuilder
     {
-        private const string MemoryCacheName = "memory cache";
+        internal const string MemoryCacheName = "memory cache";
 
         private readonly IMemoryCache memoryCache;
 
@@ -146,11 +146,7 @@
         {
             if (this.mockedMemoryCache == null)
             {
-                this.mockedMemoryCache = this.memoryCache as IMockedMemoryCache;
-                if (this.mockedMemoryCache == null)
-                {
-                    throw new InvalidOperationException("This test requires the registered IMemoryCache service to implement IMockedMemoryCache.");
-                }
+                this.mockedMemoryCache = this.memoryCache.AsMockedMemoryCache();
             }
 
             return this.mockedMemoryCache;

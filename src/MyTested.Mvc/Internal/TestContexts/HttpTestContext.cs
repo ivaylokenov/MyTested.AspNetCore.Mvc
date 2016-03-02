@@ -1,10 +1,15 @@
 ﻿namespace MyTested.Mvc.Internal.TestContexts
 {
     using Application;
+    using Contracts;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Http.Features;
     using Microsoft.AspNetCore.Routing;
+    using Microsoft.Extensions.Caching.Memory;
+    using Microsoft.Extensions.DependencyInjection;
     using MyTested.Mvc.Internal.Http;
     using Routes;
+    using Utilities.Extensions;
     using Utilities.Validators;
 
     public class HttpTestContext
@@ -59,6 +64,12 @@
             }
         }
 
+        public IMemoryCache MemoryCache => this.HttpContext.RequestServices.GetService<IMemoryCache>();
+
+        public ISession Session => this.HttpContext.Session;
+
         internal MockedHttpContext MockedHttpContext => this.mockedHttpContext;
+
+        internal IMockedMemoryCache MockedMemoryCache => this.MemoryCache.AsMockedMemoryCache();
     }
 }

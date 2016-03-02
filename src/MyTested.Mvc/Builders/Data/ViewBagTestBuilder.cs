@@ -2,13 +2,12 @@
 {
     using Contracts.Data;
     using Internal.TestContexts;
-    using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Routing;
     using System.Collections.Generic;
 
     public class ViewBagTestBuilder : BaseDataProviderTestBuilder, IAndViewBagTestBuilder
     {
-        private const string ViewBagName = "view bag";
+        internal const string ViewBagName = "view bag";
 
         public ViewBagTestBuilder(ControllerTestContext testContext)
             : base(testContext, ViewBagName)
@@ -61,7 +60,7 @@
 
         protected override IDictionary<string, object> GetDataProvider()
         {
-            return this.TestContext.ControllerAs<Controller>().ViewData;
+            return this.TestContext.ViewData;
         }
     }
 }

@@ -7,7 +7,7 @@
 
     public class SessionTestBuilder : BaseDataProviderTestBuilder, IAndSessionTestBuilder
     {
-        private const string SessionName = "session";
+        internal const string SessionName = "session";
 
         public SessionTestBuilder(ControllerTestContext testContext)
             : base(testContext, SessionName)

@@ -5,6 +5,8 @@
 
     public interface IMockedMemoryCache : IMemoryCache
     {
+        int Count { get; }
+
         bool TryGetCacheEntry(object key, out IMockedMemoryCacheEntry value);
 
         IDictionary<object, object> GetCacheAsDictionary();

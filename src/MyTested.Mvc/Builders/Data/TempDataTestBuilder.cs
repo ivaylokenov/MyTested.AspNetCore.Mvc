@@ -2,16 +2,15 @@
 {
     using Contracts.Data;
     using Internal.TestContexts;
-    using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Routing;
     using System.Collections.Generic;
 
     public class TempDataTestBuilder : BaseDataProviderTestBuilder, IAndTempDataTestBuilder
     {
-        private const string ViewDataName = "temp data";
+        internal const string TempDataName = "temp data";
 
         public TempDataTestBuilder(ControllerTestContext testContext)
-            : base(testContext, ViewDataName)
+            : base(testContext, TempDataName)
         {
         }
 
@@ -61,7 +60,7 @@
 
         protected override IDictionary<string, object> GetDataProvider()
         {
-            return this.TestContext.ControllerAs<Controller>().ViewData;
+            return this.TestContext.TempData;
         }
     }
 }

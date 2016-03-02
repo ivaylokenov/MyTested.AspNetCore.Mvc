@@ -26,6 +26,8 @@
             this.cache = this.GetCurrentCache();
         }
 
+        public int Count => this.cache.Count;
+
         public IEntryLink CreateLinkingScope()
         {
             return new MockedEntryLink();

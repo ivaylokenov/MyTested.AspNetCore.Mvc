@@ -4,7 +4,7 @@
     using Contracts.Data;
     using Data;
     using System;
-    using Utilities.Validators;
+    using System.Linq;
 
     /// <summary>
     /// Class containing methods for testing session.
@@ -12,17 +12,29 @@
     /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
     public partial class ShouldHaveTestBuilder<TActionResult>
     {
+        public IAndTestBuilder<TActionResult> NoSession()
+        {
+            if (this.TestContext.Session.Keys.Count() > 0)
+            {
+                this.ThrowNewDataProviderAssertionExceptionWithNoEntries(SessionTestBuilder.SessionName);
+            }
+
+            return this.NewAndTestBuilder();
+        }
+
         public IAndTestBuilder<TActionResult> Session(int? withNumberOfEntries = null)
         {
+            this.ValidateDataProviderNumberOfEntries(
+                SessionTestBuilder.SessionName,
+                withNumberOfEntries,
+                this.TestContext.Session.Keys.Count());
+
             return this.NewAndTestBuilder();
         }
 
         public IAndTestBuilder<TActionResult> Session(Action<ISessionTestBuilder> sessionTestBuilder)
         {
-            CommonValidator.CheckForException(this.CaughtException);
-
             sessionTestBuilder(new SessionTestBuilder(this.TestContext));
-
             return this.NewAndTestBuilder();
         }
     }
