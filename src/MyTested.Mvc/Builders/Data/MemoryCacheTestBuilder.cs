@@ -129,10 +129,7 @@
             return this;
         }
 
-        public IMemoryCacheTestBuilder AndAlso()
-        {
-            return this;
-        }
+        public IMemoryCacheTestBuilder AndAlso() => this;
 
         private IMemoryCache GetMemoryCache()
         {

@@ -53,10 +53,7 @@
             return this.ContainingEntries(entries);
         }
 
-        public ISessionTestBuilder AndAlso()
-        {
-            return this;
-        }
+        public ISessionTestBuilder AndAlso() => this;
 
         protected override IDictionary<string, object> GetDataProvider()
         {

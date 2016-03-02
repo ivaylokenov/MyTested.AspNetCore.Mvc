@@ -32,9 +32,6 @@
         public IAndTempDataBuilder WithEntries(object entries)
             => this.WithEntries(new RouteValueDictionary(entries));
 
-        public ITempDataBuilder AndAlso()
-        {
-            return this;
-        }
+        public ITempDataBuilder AndAlso() => this;
     }
 }

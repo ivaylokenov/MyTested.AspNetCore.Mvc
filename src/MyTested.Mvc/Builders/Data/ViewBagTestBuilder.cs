@@ -53,14 +53,8 @@
             return this;
         }
 
-        public IViewBagTestBuilder AndAlso()
-        {
-            return this;
-        }
+        public IViewBagTestBuilder AndAlso() => this;
 
-        protected override IDictionary<string, object> GetDataProvider()
-        {
-            return this.TestContext.ViewData;
-        }
+        protected override IDictionary<string, object> GetDataProvider() => this.TestContext.ViewData;
     }
 }

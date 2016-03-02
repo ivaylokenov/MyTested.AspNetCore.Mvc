@@ -113,9 +113,7 @@
         }
 
         internal ICollection<Action<IMockedMemoryCacheEntry, IMockedMemoryCacheEntry>> GetMockedMemoryCacheEntryValidations()
-        {
-            return this.validations;
-        }
+            => this.validations;
 
         private void ThrowNewDataProviderAssertionException(string expectedValue, string actualValue)
         {

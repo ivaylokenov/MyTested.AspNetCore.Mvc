@@ -43,9 +43,6 @@
             return this;
         }
 
-        public IMemoryCacheBuilder AndAlso()
-        {
-            return this;
-        }
+        public IMemoryCacheBuilder AndAlso() => this;
     }
 }

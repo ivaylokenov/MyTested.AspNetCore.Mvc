@@ -51,9 +51,6 @@
             return this;
         }
 
-        public ISessionBuilder AndAlso()
-        {
-            return this;
-        }
+        public ISessionBuilder AndAlso() => this;
     }
 }

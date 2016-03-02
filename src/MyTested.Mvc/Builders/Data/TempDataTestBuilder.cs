@@ -53,14 +53,8 @@
             return this;
         }
 
-        public ITempDataTestBuilder AndAlso()
-        {
-            return this;
-        }
+        public ITempDataTestBuilder AndAlso() => this;
 
-        protected override IDictionary<string, object> GetDataProvider()
-        {
-            return this.TestContext.TempData;
-        }
+        protected override IDictionary<string, object> GetDataProvider() => this.TestContext.TempData;
     }
 }

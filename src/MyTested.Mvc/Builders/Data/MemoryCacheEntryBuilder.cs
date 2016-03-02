@@ -51,10 +51,7 @@
             return this;
         }
 
-        public IMemoryCacheEntryTestBuilder AndAlso()
-        {
-            return this;
-        }
+        public IMemoryCacheEntryTestBuilder AndAlso() => this;
 
         internal IMockedMemoryCacheEntry GetMockedMemoryCacheEntry()
         {
