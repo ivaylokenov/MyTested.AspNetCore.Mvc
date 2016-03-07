@@ -60,11 +60,41 @@
         }
 
         /// <summary>
-        /// Tests whether local redirect result has specific URL provided as URI.
+        /// Tests whether local redirect result URL passes given assertions.
         /// </summary>
-        /// <param name="localUrl">Expected URL as URI.</param>
+        /// <param name="assertions">Action containing all assertions on the URL.</param>
         /// <returns>The same local redirect test builder.</returns>
-        public IAndLocalRedirectTestBuilder ToUrl(Uri localUrl)
+        public IAndLocalRedirectTestBuilder ToUrl(Action<string> assertions)
+        {
+            assertions(this.ActionResult.Url);
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether local redirect result URL passes given predicate.
+        /// </summary>
+        /// <param name="predicate">Predicate testing the URL.</param>
+        /// <returns>The same local redirect test builder.</returns>
+        public IAndLocalRedirectTestBuilder ToUrl(Func<string, bool> predicate)
+        {
+            var url = this.ActionResult.Url;
+            if (!predicate(url))
+            {
+                this.ThrowNewRedirectResultAssertionException(
+                    $"location ('{url}')",
+                    "to pass the given predicate",
+                    "but it failed");
+            }
+        
+            return this;
+        }
+
+    /// <summary>
+    /// Tests whether local redirect result has specific URL provided as URI.
+    /// </summary>
+    /// <param name="localUrl">Expected URL as URI.</param>
+    /// <returns>The same local redirect test builder.</returns>
+    public IAndLocalRedirectTestBuilder ToUrl(Uri localUrl)
         {
             LocationValidator.ValidateUri(
                 this.ActionResult,

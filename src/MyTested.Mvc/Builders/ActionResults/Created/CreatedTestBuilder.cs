@@ -72,7 +72,7 @@
             this.ValidateContainingOfContentType(contentType);
             return this;
         }
-
+        
         /// <summary>
         /// Tests whether created result contains the content type provided as MediaTypeHeaderValue.
         /// </summary>
@@ -205,10 +205,11 @@
         public IAndCreatedTestBuilder AtLocation(Func<string, bool> predicate)
         {
             var createdResult = this.GetCreatedResult<CreatedResult>(Location);
-            if (!predicate(createdResult.Location))
+            var location = createdResult.Location;
+            if (!predicate(location))
             {
                 this.ThrowNewCreatedResultAssertionException(
-                    "location",
+                    $"location ('{location}')",
                     "to pass the given predicate",
                     "but it failed");
             }

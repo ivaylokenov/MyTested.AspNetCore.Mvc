@@ -89,10 +89,11 @@
         public IAndRedirectTestBuilder ToUrl(Func<string, bool> predicate)
         {
             var redirectResult = this.GetRedirectResult<RedirectResult>(Location);
-            if (!predicate(redirectResult.Url))
+            var url = redirectResult.Url;
+            if (!predicate(url))
             {
                 this.ThrowNewRedirectResultAssertionException(
-                    "location",
+                    $"location ('{url}')",
                     "to pass the given predicate",
                     "but it failed");
             }

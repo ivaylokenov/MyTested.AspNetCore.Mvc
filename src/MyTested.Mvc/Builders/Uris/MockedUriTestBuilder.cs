@@ -95,6 +95,23 @@
             return base.WithFragment(fragment);
         }
 
+        public IAndUriTestBuilder Passing(Action<Uri> assertions)
+        {
+            this.validations.Add((expected, actual) => 
+            {
+                assertions(actual);
+                return true;
+            });
+
+            return this;
+        }
+
+        public IAndUriTestBuilder Passing(Func<Uri, bool> predicate)
+        {
+            this.validations.Add((expected, actual) => predicate(actual));
+            return this;
+        }
+
         internal ICollection<Func<MockedUri, Uri, bool>> GetMockedUriValidations()
         {
             return this.validations;

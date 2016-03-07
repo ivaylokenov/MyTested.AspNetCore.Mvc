@@ -32,6 +32,23 @@
             return this;
         }
 
+        public IAndResponseCookieTestBuilder WithValue(Action<string> assertions)
+        {
+            this.validations.Add((expected, actual) =>
+            {
+                assertions(actual.Value);
+                return true;
+            });
+
+            return this;
+        }
+
+        public IAndResponseCookieTestBuilder WithValue(Func<string, bool> predicate)
+        {
+            this.validations.Add((expected, actual) => predicate(actual.Value));
+            return this;
+        }
+
         public IAndResponseCookieTestBuilder WithDomain(string domain)
         {
             this.responseCookie.Domain = domain;

@@ -263,9 +263,10 @@
             if (!predicate(actualErrorMessage))
             {
                 throw new BadRequestResultAssertionException(string.Format(
-                    "When calling {0} action in {1} expected bad request error message to pass the given predicate, but it failed.",
+                    "When calling {0} action in {1} expected bad request error message ('{2}') to pass the given predicate, but it failed.",
                     this.ActionName,
-                    this.Controller.GetName()));
+                    this.Controller.GetName(),
+                    actualErrorMessage));
             }
 
             return this;
