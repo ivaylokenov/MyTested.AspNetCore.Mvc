@@ -1,6 +1,9 @@
 ﻿namespace MyTested.Mvc.Utilities.Extensions
 {
+    using Microsoft.AspNetCore.Routing;
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Utilities;
 
     /// <summary>
@@ -57,6 +60,13 @@
             }
 
             return $"'{errorMessageName}'";
+        }
+
+        public static IDictionary<string, string> ToStringValueDictionary(this object obj)
+        {
+            return new RouteValueDictionary(obj)
+                .Where(i => i.Value?.GetType() == typeof(string))
+                .ToDictionary(i => i.Key, i => (string)i.Value);
         }
     }
 }

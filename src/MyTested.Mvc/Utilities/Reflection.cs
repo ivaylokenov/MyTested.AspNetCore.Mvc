@@ -1,5 +1,6 @@
 ﻿namespace MyTested.Mvc.Utilities
 {
+    using Microsoft.AspNetCore.Routing;
     using System;
     using System.Collections;
     using System.Collections.Concurrent;
@@ -423,15 +424,19 @@
                 return false;
             }
 
-            object alreadyCheckedObject = null;
-            if (processedElements.TryGetValue(expected, out alreadyCheckedObject))
+            var expectedType = expected.GetType();
+
+            if (expectedType != typeof(string) && !expectedType.GetTypeInfo().IsValueType)
             {
-                return true;
+                object alreadyCheckedObject = null;
+                if (processedElements.TryGetValue(expected, out alreadyCheckedObject))
+                {
+                    return true;
+                }
+
+                processedElements.Add(expected, expected);
             }
 
-            processedElements.Add(expected, expected);
-
-            var expectedType = expected.GetType();
             var actualType = actual.GetType();
             var objectType = typeof(object);
 
@@ -557,20 +562,18 @@
 
         private static bool ObjectPropertiesAreDeeplyEqual(object expected, object actual, ConditionalWeakTable<object, object> processedElements)
         {
-            var expectedType = expected.GetType();
-            var properties = expectedType.GetProperties();
-
-            foreach (var property in properties)
+            // Using RouteValueDictionary because it caches internally property getters as delegates.
+            // It is better not to implement own cache, because these object types may be used
+            // during the action call thus they will be evaluated and cached twice.
+            var expectedProperties = new RouteValueDictionary(expected);
+            var actualProperties = new RouteValueDictionary(actual);
+            
+            foreach (var key in expectedProperties.Keys)
             {
-                if (property.GetIndexParameters().Length != 0)
-                {
-                    continue;
-                }
+                var expectedPropertyValue = expectedProperties[key];
+                var actualPropertyValue = actualProperties[key];
 
-                var expectedPropertyValue = property.GetValue(expected);
-                var actualPropertyValue = property.GetValue(actual);
-
-                if (expectedPropertyValue is IEnumerable && expectedType != typeof(string))
+                if (expectedPropertyValue is IEnumerable && expectedPropertyValue?.GetType() != typeof(string))
                 {
                     if (!CollectionsAreDeeplyEqual(expectedPropertyValue, actualPropertyValue, processedElements))
                     {
@@ -584,7 +587,7 @@
                     return false;
                 }
             }
-
+            
             return true;
         }
 

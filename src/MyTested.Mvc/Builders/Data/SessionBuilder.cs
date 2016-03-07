@@ -7,7 +7,7 @@
     using Utilities.Extensions;
     using Internal.Contracts;
     using System;
-
+    using Microsoft.AspNetCore.Routing;
     public class SessionBuilder : IAndSessionBuilder
     {
         public SessionBuilder(ISession session)
@@ -44,6 +44,29 @@
         public IAndSessionBuilder WithIntegerEntry(string key, int value)
         {
             this.Session.SetInt32(key, value);
+            return this;
+        }
+
+        public IAndSessionBuilder WithEntries(object entries)
+        {
+            var entriesAsDictionary = new RouteValueDictionary(entries);
+            entriesAsDictionary.ForEach(e =>
+            {
+                var typeOfValue = e.Value?.GetType();
+                if (typeOfValue == typeof(byte[]))
+                {
+                    this.WithEntry(e.Key, (byte[])e.Value);
+                }
+                else if (typeOfValue == typeof(string))
+                {
+                    this.WithStringEntry(e.Key, (string)e.Value);
+                }
+                else if (typeOfValue == typeof(int))
+                {
+                    this.WithIntegerEntry(e.Key, (int)e.Value);
+                }
+            });
+
             return this;
         }
 

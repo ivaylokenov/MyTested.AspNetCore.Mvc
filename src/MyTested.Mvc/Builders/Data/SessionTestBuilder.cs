@@ -4,7 +4,7 @@
     using MyTested.Mvc.Internal.TestContexts;
     using Contracts.Data;
     using System.Linq;
-
+    using Microsoft.AspNetCore.Routing;
     public class SessionTestBuilder : BaseDataProviderTestBuilder, IAndSessionTestBuilder
     {
         internal const string SessionName = "session";
@@ -38,9 +38,17 @@
             return this;
         }
 
+        public IAndSessionTestBuilder ContainingEntries(object entries)
+            => this.ContainingEntries(new RouteValueDictionary(entries));
+
         public IAndSessionTestBuilder ContainingEntries(IDictionary<string, byte[]> entries)
         {
-            return this.ContainingEntries(entries);
+            return this.ContainingEntries<byte[]>(entries);
+        }
+
+        public IAndSessionTestBuilder ContainingEntries(IDictionary<string, object> entries)
+        {
+            return this.ContainingEntries<object>(entries);
         }
         
         public IAndSessionTestBuilder ContainingStringEntries(IDictionary<string, string> entries)

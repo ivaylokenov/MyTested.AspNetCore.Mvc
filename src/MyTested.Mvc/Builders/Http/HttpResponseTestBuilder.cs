@@ -332,6 +332,9 @@
             return this;
         }
 
+        public IAndHttpResponseTestBuilder ContainingCookies(object cookies)
+            => this.ContainingCookies(cookies.ToStringValueDictionary());
+
         /// <summary>
         /// Tests whether HTTP response message contains the provided dictionary of cookies.
         /// </summary>
@@ -433,6 +436,16 @@
         /// <param name="headers">Dictionary of headers.</param>
         /// <returns>The same HTTP response message test builder.</returns>
         public IAndHttpResponseTestBuilder ContainingHeaders(IHeaderDictionary headers)
+        {
+            this.ValidateHeadersCount(headers.Count);
+            headers.ForEach(h => this.ContainingHeader(h.Key, h.Value));
+            return this;
+        }
+
+        public IAndHttpResponseTestBuilder ContainingHeaders(object headers)
+            => this.ContainingHeaders(headers.ToStringValueDictionary());
+
+        public IAndHttpResponseTestBuilder ContainingHeaders(IDictionary<string, string> headers)
         {
             this.ValidateHeadersCount(headers.Count);
             headers.ForEach(h => this.ContainingHeader(h.Key, h.Value));
