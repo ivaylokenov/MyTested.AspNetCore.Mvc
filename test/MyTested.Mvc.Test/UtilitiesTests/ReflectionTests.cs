@@ -900,6 +900,16 @@
         }
 
         [Fact]
+        public void AreDeeplyEqualShouldWorkCorrectlyWithSameReferences()
+        {
+            var firstObject = new NestedModel { Integer = 1, String = "Text" };
+            var secondObject = new NestedModel { Integer = 1, String = "Text", Nested = firstObject };
+            firstObject.Nested = secondObject;
+
+            Assert.True(Reflection.AreDeeplyEqual(firstObject, secondObject));
+        }
+
+        [Fact]
         public void CreateDelegateShouldWorkCorrectlyWithAction()
         {
             var actionDelegate = Reflection.CreateDelegateFromMethod<Action<IServiceCollection>>(

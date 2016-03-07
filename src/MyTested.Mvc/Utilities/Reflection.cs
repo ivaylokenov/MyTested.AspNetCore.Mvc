@@ -7,6 +7,7 @@
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
+    using System.Runtime.CompilerServices;
 
     /// <summary>
     /// Class for validating reflection checks.
@@ -321,74 +322,7 @@
         /// <remarks>This method is used for the route testing. Since the ASP.NET MVC model binder creates new instances, circular references are not checked.</remarks>
         public static bool AreDeeplyEqual(object expected, object actual)
         {
-            if (expected == null && actual == null)
-            {
-                return true;
-            }
-
-            if (expected == null || actual == null)
-            {
-                return false;
-            }
-
-            var expectedType = expected.GetType();
-            var actualType = actual.GetType();
-            var objectType = typeof(object);
-
-            if ((expectedType == objectType && actualType != objectType)
-                || (actualType == objectType && expectedType != objectType))
-            {
-                return false;
-            }
-
-            if (expected is IEnumerable)
-            {
-                if (CollectionsAreDeeplyEqual(expected, actual))
-                {
-                    return true;
-                }
-
-                return false;
-            }
-
-            if (expectedType != actualType
-                && !expectedType.IsAssignableFrom(actualType)
-                && !actualType.IsAssignableFrom(expectedType))
-            {
-                return false;
-            }
-
-            if (expectedType.GetTypeInfo().IsPrimitive && actualType.GetTypeInfo().IsPrimitive)
-            {
-                return expected.ToString() == actual.ToString();
-            }
-
-            var equalsOperator = expectedType.GetMethods().FirstOrDefault(m => m.Name == "op_Equality");
-            if (equalsOperator != null)
-            {
-                return (bool)equalsOperator.Invoke(null, new[] { expected, actual });
-            }
-
-            if (expectedType != objectType)
-            {
-                var equalsMethod = expectedType.GetMethods().FirstOrDefault(m => m.Name == "Equals" && m.DeclaringType == expectedType);
-                if (equalsMethod != null)
-                {
-                    return (bool)equalsMethod.Invoke(expected, new[] { actual });
-                }
-            }
-
-            if (ComparablesAreDeeplyEqual(expected, actual))
-            {
-                return true;
-            }
-
-            if (!ObjectPropertiesAreDeeplyEqual(expected, actual))
-            {
-                return false;
-            }
-
-            return true;
+            return AreDeeplyEqual(expected, actual, new ConditionalWeakTable<object, object>());
         }
 
         /// <summary>
@@ -477,7 +411,92 @@
             return constructor;
         }
 
-        private static bool CollectionsAreDeeplyEqual(object expected, object actual)
+        private static bool AreDeeplyEqual(object expected, object actual, ConditionalWeakTable<object, object> processedElements)
+        {
+            if (expected == null && actual == null)
+            {
+                return true;
+            }
+
+            if (expected == null || actual == null)
+            {
+                return false;
+            }
+
+            object alreadyCheckedObject = null;
+            if (processedElements.TryGetValue(expected, out alreadyCheckedObject))
+            {
+                return true;
+            }
+
+            processedElements.Add(expected, expected);
+
+            var expectedType = expected.GetType();
+            var actualType = actual.GetType();
+            var objectType = typeof(object);
+
+            if ((expectedType == objectType && actualType != objectType)
+                || (actualType == objectType && expectedType != objectType))
+            {
+                return false;
+            }
+
+            if (expected is IEnumerable && expectedType != typeof(string))
+            {
+                if (CollectionsAreDeeplyEqual(expected, actual, processedElements))
+                {
+                    return true;
+                }
+
+                return false;
+            }
+            
+            if (expectedType != actualType
+                && !expectedType.IsAssignableFrom(actualType)
+                && !actualType.IsAssignableFrom(expectedType))
+            {
+                return false;
+            }
+
+            if (expectedType.GetTypeInfo().IsPrimitive && actualType.GetTypeInfo().IsPrimitive)
+            {
+                return expected.ToString() == actual.ToString();
+            }
+
+            var equalsOperator = expectedType.GetMethods().FirstOrDefault(m => m.Name == "op_Equality");
+            if (equalsOperator != null)
+            {
+                return (bool)equalsOperator.Invoke(null, new[] { expected, actual });
+            }
+
+            if (expectedType != objectType)
+            {
+                var equalsMethod = expectedType.GetMethods().FirstOrDefault(m => m.Name == "Equals" && m.DeclaringType == expectedType);
+                if (equalsMethod != null)
+                {
+                    return (bool)equalsMethod.Invoke(expected, new[] { actual });
+                }
+            }
+
+            if (ComparablesAreDeeplyEqual(expected, actual))
+            {
+                return true;
+            }
+
+            if (!ObjectPropertiesAreDeeplyEqual(expected, actual, processedElements))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private static bool AreNotDeeplyEqual(object expected, object actual, ConditionalWeakTable<object, object> processedElements)
+        {
+            return !AreDeeplyEqual(expected, actual, processedElements);
+        }
+
+        private static bool CollectionsAreDeeplyEqual(object expected, object actual, ConditionalWeakTable<object, object> processedElements)
         {
             var expectedAsEnumerable = (IEnumerable)expected;
             var actualAsEnumerable = actual as IEnumerable;
@@ -495,7 +514,7 @@
             }
 
             var collectionIsNotEqual = listOfExpectedValues
-                .Where((t, i) => AreNotDeeplyEqual(t, listOfActualValues[i]))
+                .Where((t, i) => AreNotDeeplyEqual(t, listOfActualValues[i], processedElements))
                 .Any();
 
             if (collectionIsNotEqual)
@@ -536,9 +555,11 @@
                 .FirstOrDefault(i => i.Name.StartsWith("IComparable")) != null;
         }
 
-        private static bool ObjectPropertiesAreDeeplyEqual(object expected, object actual)
+        private static bool ObjectPropertiesAreDeeplyEqual(object expected, object actual, ConditionalWeakTable<object, object> processedElements)
         {
-            var properties = expected.GetType().GetProperties();
+            var expectedType = expected.GetType();
+            var properties = expectedType.GetProperties();
+
             foreach (var property in properties)
             {
                 if (property.GetIndexParameters().Length != 0)
@@ -549,15 +570,15 @@
                 var expectedPropertyValue = property.GetValue(expected);
                 var actualPropertyValue = property.GetValue(actual);
 
-                if (expectedPropertyValue is IEnumerable)
+                if (expectedPropertyValue is IEnumerable && expectedType != typeof(string))
                 {
-                    if (!CollectionsAreDeeplyEqual(expectedPropertyValue, actualPropertyValue))
+                    if (!CollectionsAreDeeplyEqual(expectedPropertyValue, actualPropertyValue, processedElements))
                     {
                         return false;
                     }
                 }
 
-                var propertiesAreDifferent = AreNotDeeplyEqual(expectedPropertyValue, actualPropertyValue);
+                var propertiesAreDifferent = AreNotDeeplyEqual(expectedPropertyValue, actualPropertyValue, processedElements);
                 if (propertiesAreDifferent)
                 {
                     return false;

@@ -173,7 +173,6 @@
         [Fact]
         public void ResolveShouldResolveCorrectlyWithFullQueryString()
         {
-
             var routeInfo = InternalRouteResolver.Resolve(
                 TestApplication.RouteServices,
                 TestApplication.Router,
@@ -349,6 +348,8 @@
 
         private RouteContext GetRouteContext(string url, string method = "GET", string queryString = null, string body = null, string contentType = null)
         {
+            MyMvc.IsUsingDefaultConfiguration();
+
             var httpContext = new MockedHttpContext();
             httpContext.Request.Path = new PathString(url);
             httpContext.Request.QueryString = new QueryString(queryString);
