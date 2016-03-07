@@ -8,7 +8,7 @@
 #if NET451
     using System.Runtime.Remoting.Messaging;
     using System.Runtime.Remoting;
-#elif DOTNET5_6
+#elif NETSTANDARD1_5
     using System.Threading;
 #endif
 
@@ -16,7 +16,7 @@
     {
 #if NET451
         private const string DataKey = "__MemoryCache_Current__";
-#elif DOTNET5_6
+#elif NETSTANDARD1_5
         private static readonly AsyncLocal<IDictionary<object, IMockedMemoryCacheEntry>> МemoryCacheCurrent = new AsyncLocal<IDictionary<object, IMockedMemoryCacheEntry>>();
 #endif
         private readonly IDictionary<object, IMockedMemoryCacheEntry> cache;
@@ -96,7 +96,7 @@
             }
 
             return result;
-#elif DOTNET5_6
+#elif NETSTANDARD1_5
             var result = МemoryCacheCurrent.Value;
             if (result == null)
             {

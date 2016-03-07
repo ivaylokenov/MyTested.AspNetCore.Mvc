@@ -398,12 +398,12 @@
             {
                 if (this.aggregatedDependencies.Any())
                 {
-                    // custom dependencies are set, create instance with them
+                    // custom dependencies are set, try create instance with them
                     controller = Reflection.TryCreateInstance<TController>(this.aggregatedDependencies.Select(v => v.Value).ToArray());
                 }
                 else
                 {
-                    // try create instance with the global services
+                    // no custom dependencies are set, try create instance with the global services
                     controller = TestHelper.TryCreateInstance<TController>();
                 }
 

@@ -31,6 +31,7 @@ namespace MyTested.Mvc.Tests
     using Microsoft.Extensions.Caching.Memory;
     using Internal.Caching;
     using Internal;
+
     public class MyMvcTests
     {
         [Fact]

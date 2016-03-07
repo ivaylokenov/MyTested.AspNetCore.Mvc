@@ -7,6 +7,7 @@
     using Microsoft.AspNetCore.Routing;
     using Setups.Routes;
     using System.IO;
+    using System.Reflection;
     using Xunit;
 
     public class InternalRouteResolverTests
@@ -21,7 +22,7 @@
 
             Assert.True(routeInfo.IsResolved);
             Assert.Null(routeInfo.UnresolvedError);
-            Assert.Equal(typeof(HomeController), routeInfo.ControllerType);
+            Assert.Equal(typeof(HomeController).GetTypeInfo(), routeInfo.ControllerType);
             Assert.Equal("Home", routeInfo.ControllerName);
             Assert.Equal("Index", routeInfo.Action);
             Assert.Equal(0, routeInfo.ActionArguments.Count);
@@ -38,7 +39,7 @@
 
             Assert.True(routeInfo.IsResolved);
             Assert.Null(routeInfo.UnresolvedError);
-            Assert.Equal(typeof(NormalController), routeInfo.ControllerType);
+            Assert.Equal(typeof(NormalController).GetTypeInfo(), routeInfo.ControllerType);
             Assert.Equal("Normal", routeInfo.ControllerName);
             Assert.Equal("AnotherName", routeInfo.Action);
             Assert.Equal(0, routeInfo.ActionArguments.Count);
@@ -55,7 +56,7 @@
 
             Assert.True(routeInfo.IsResolved);
             Assert.Null(routeInfo.UnresolvedError);
-            Assert.Equal(typeof(RouteController), routeInfo.ControllerType);
+            Assert.Equal(typeof(RouteController).GetTypeInfo(), routeInfo.ControllerType);
             Assert.Equal("Route", routeInfo.ControllerName);
             Assert.Equal("Index", routeInfo.Action);
             Assert.Equal(0, routeInfo.ActionArguments.Count);
@@ -72,7 +73,7 @@
 
             Assert.True(routeInfo.IsResolved);
             Assert.Null(routeInfo.UnresolvedError);
-            Assert.Equal(typeof(NormalController), routeInfo.ControllerType);
+            Assert.Equal(typeof(NormalController).GetTypeInfo(), routeInfo.ControllerType);
             Assert.Equal("Normal", routeInfo.ControllerName);
             Assert.Equal("ActionWithParameters", routeInfo.Action);
             Assert.Equal(1, routeInfo.ActionArguments.Count);
@@ -90,7 +91,7 @@
 
             Assert.True(routeInfo.IsResolved);
             Assert.Null(routeInfo.UnresolvedError);
-            Assert.Equal(typeof(NormalController), routeInfo.ControllerType);
+            Assert.Equal(typeof(NormalController).GetTypeInfo(), routeInfo.ControllerType);
             Assert.Equal("Normal", routeInfo.ControllerName);
             Assert.Equal("ActionWithStringParameters", routeInfo.Action);
             Assert.Equal(1, routeInfo.ActionArguments.Count);
@@ -108,7 +109,7 @@
 
             Assert.True(routeInfo.IsResolved);
             Assert.Null(routeInfo.UnresolvedError);
-            Assert.Equal(typeof(NormalController), routeInfo.ControllerType);
+            Assert.Equal(typeof(NormalController).GetTypeInfo(), routeInfo.ControllerType);
             Assert.Equal("Normal", routeInfo.ControllerName);
             Assert.Equal("ActionWithParameters", routeInfo.Action);
             Assert.Equal(0, routeInfo.ActionArguments.Count);
@@ -125,7 +126,7 @@
 
             Assert.True(routeInfo.IsResolved);
             Assert.Null(routeInfo.UnresolvedError);
-            Assert.Equal(typeof(NormalController), routeInfo.ControllerType);
+            Assert.Equal(typeof(NormalController).GetTypeInfo(), routeInfo.ControllerType);
             Assert.Equal("Normal", routeInfo.ControllerName);
             Assert.Equal("ActionWithMultipleParameters", routeInfo.Action);
             Assert.Equal(3, routeInfo.ActionArguments.Count);
@@ -145,7 +146,7 @@
 
             Assert.True(routeInfo.IsResolved);
             Assert.Null(routeInfo.UnresolvedError);
-            Assert.Equal(typeof(NormalController), routeInfo.ControllerType);
+            Assert.Equal(typeof(NormalController).GetTypeInfo(), routeInfo.ControllerType);
             Assert.Equal("Normal", routeInfo.ControllerName);
             Assert.Equal("GetMethod", routeInfo.Action);
             Assert.Equal(0, routeInfo.ActionArguments.Count);
@@ -180,7 +181,7 @@
 
             Assert.True(routeInfo.IsResolved);
             Assert.Null(routeInfo.UnresolvedError);
-            Assert.Equal(typeof(NormalController), routeInfo.ControllerType);
+            Assert.Equal(typeof(NormalController).GetTypeInfo(), routeInfo.ControllerType);
             Assert.Equal("Normal", routeInfo.ControllerName);
             Assert.Equal("QueryString", routeInfo.Action);
             Assert.Equal(2, routeInfo.ActionArguments.Count);
@@ -199,7 +200,7 @@
 
             Assert.True(routeInfo.IsResolved);
             Assert.Null(routeInfo.UnresolvedError);
-            Assert.Equal(typeof(NormalController), routeInfo.ControllerType);
+            Assert.Equal(typeof(NormalController).GetTypeInfo(), routeInfo.ControllerType);
             Assert.Equal("Normal", routeInfo.ControllerName);
             Assert.Equal("QueryString", routeInfo.Action);
             Assert.Equal(1, routeInfo.ActionArguments.Count);
@@ -217,7 +218,7 @@
 
             Assert.True(routeInfo.IsResolved);
             Assert.Null(routeInfo.UnresolvedError);
-            Assert.Equal(typeof(NormalController), routeInfo.ControllerType);
+            Assert.Equal(typeof(NormalController).GetTypeInfo(), routeInfo.ControllerType);
             Assert.Equal("Normal", routeInfo.ControllerName);
             Assert.Equal("QueryString", routeInfo.Action);
             Assert.Equal(0, routeInfo.ActionArguments.Count);
@@ -234,7 +235,7 @@
 
             Assert.True(routeInfo.IsResolved);
             Assert.Null(routeInfo.UnresolvedError);
-            Assert.Equal(typeof(NormalController), routeInfo.ControllerType);
+            Assert.Equal(typeof(NormalController).GetTypeInfo(), routeInfo.ControllerType);
             Assert.Equal("Normal", routeInfo.ControllerName);
             Assert.Equal("ActionWithModel", routeInfo.Action);
             Assert.Equal(2, routeInfo.ActionArguments.Count);
@@ -260,7 +261,7 @@
 
             Assert.True(routeInfo.IsResolved);
             Assert.Null(routeInfo.UnresolvedError);
-            Assert.Equal(typeof(NormalController), routeInfo.ControllerType);
+            Assert.Equal(typeof(NormalController).GetTypeInfo(), routeInfo.ControllerType);
             Assert.Equal("Normal", routeInfo.ControllerName);
             Assert.Equal("ActionWithModel", routeInfo.Action);
             Assert.Equal(2, routeInfo.ActionArguments.Count);
@@ -286,7 +287,7 @@
 
             Assert.True(routeInfo.IsResolved);
             Assert.Null(routeInfo.UnresolvedError);
-            Assert.Equal(typeof(NormalController), routeInfo.ControllerType);
+            Assert.Equal(typeof(NormalController).GetTypeInfo(), routeInfo.ControllerType);
             Assert.Equal("Normal", routeInfo.ControllerName);
             Assert.Equal("ActionWithModel", routeInfo.Action);
             Assert.Equal(2, routeInfo.ActionArguments.Count);
@@ -310,7 +311,7 @@
 
             Assert.True(routeInfo.IsResolved);
             Assert.Null(routeInfo.UnresolvedError);
-            Assert.Equal(typeof(NormalController), routeInfo.ControllerType);
+            Assert.Equal(typeof(NormalController).GetTypeInfo(), routeInfo.ControllerType);
             Assert.Equal("Normal", routeInfo.ControllerName);
             Assert.Equal("ActionWithMultipleParameters", routeInfo.Action);
             Assert.Equal(3, routeInfo.ActionArguments.Count);
