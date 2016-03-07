@@ -18,6 +18,7 @@
         private static readonly ConcurrentDictionary<Type, ConstructorInfo> typesWithOneConstructorCache = new ConcurrentDictionary<Type, ConstructorInfo>();
         private static readonly ConcurrentDictionary<Type, IEnumerable<object>> typeAttributesCache = new ConcurrentDictionary<Type, IEnumerable<object>>();
         private static readonly ConcurrentDictionary<MethodInfo, IEnumerable<object>> methodAttributesCache = new ConcurrentDictionary<MethodInfo, IEnumerable<object>>();
+        private static readonly ConcurrentDictionary<Type, string> friendlyTypeNames = new ConcurrentDictionary<Type, string>();
 
         /// <summary>
         /// Checks whether two objects have the same types.
@@ -202,16 +203,19 @@
                 return "null";
             }
 
-            if (!type.GetTypeInfo().IsGenericType)
+            return friendlyTypeNames.GetOrAdd(type, _ =>
             {
-                return type.Name;
-            }
+                if (!type.GetTypeInfo().IsGenericType)
+                {
+                    return type.Name;
+                }
 
-            var genericArgumentNames = type.GetGenericArguments().Select(ga => ga.ToFriendlyTypeName());
-            var friendlyGenericName = type.Name.Split('`')[0];
-            var joinedGenericArgumentNames = string.Join(", ", genericArgumentNames);
+                var genericArgumentNames = type.GetGenericArguments().Select(ga => ga.ToFriendlyTypeName());
+                var friendlyGenericName = type.Name.Split('`')[0];
+                var joinedGenericArgumentNames = string.Join(", ", genericArgumentNames);
 
-            return $"{friendlyGenericName}<{joinedGenericArgumentNames}>";
+                return $"{friendlyGenericName}<{joinedGenericArgumentNames}>";
+            });
         }
 
         public static T TryFastCreateInstance<T>()
