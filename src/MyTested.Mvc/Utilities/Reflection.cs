@@ -258,8 +258,9 @@
                     return instance;
                 }
 
-                var selectedConstructorParameters = constructor
-                    .GetParameters()
+                var constructorParameterInfos = constructor.GetParameters();
+
+                var selectedConstructorParameters = constructorParameterInfos
                     .Select(cp => cp.ParameterType)
                     .ToList();
 
@@ -275,6 +276,12 @@
                             break;
                         }
                     }
+                }
+
+                var parametersToUse = resultParameters.ToArray();
+                if (parametersToUse.Length != constructorParameterInfos.Length)
+                {
+                    return instance;
                 }
 
                 instance = Activator.CreateInstance(type, resultParameters.ToArray()) as T;

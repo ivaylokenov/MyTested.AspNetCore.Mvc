@@ -9,7 +9,7 @@
     using Builders.Routes;
     using Internal.Application;
     using Internal.TestContexts;
-
+    using Internal;
     /// <summary>
     /// Starting point of the ASP.NET MVC testing framework, which provides a way to specify the test case.
     /// </summary>
@@ -54,15 +54,14 @@
         }
 
         /// <summary>
-        /// Selects controller on which the test will be executed. Controller is instantiated with default constructor.
+        /// Selects controller on which the test will be executed.
         /// </summary>
         /// <typeparam name="TController">Class inheriting ASP.NET MVC controller.</typeparam>
         /// <returns>Controller builder used to build the test case.</returns>
         public static IControllerBuilder<TController> Controller<TController>()
             where TController : Controller
         {
-            var controller = Reflection.TryFastCreateInstance<TController>();
-            return Controller(() => controller);
+            return Controller((TController)null);
         }
 
         /// <summary>
@@ -86,7 +85,7 @@
         public static IControllerBuilder<TController> Controller<TController>(Func<TController> construction)
             where TController : Controller
         {
-            return new ControllerBuilder<TController>(new ControllerTestContext { Controller = construction() });
+            return new ControllerBuilder<TController>(new ControllerTestContext { ControllerConstruction = construction });
         }
     }
 }

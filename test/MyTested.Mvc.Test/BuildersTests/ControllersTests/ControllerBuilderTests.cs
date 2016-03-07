@@ -307,16 +307,15 @@
                 () =>
                 {
                     MyMvc
-                        .Controller<MvcController>()
+                        .Controller<NoParameterlessConstructorController>()
                         .WithResolvedDependencyFor<RequestModel>(new RequestModel())
                         .WithResolvedDependencyFor<IAnotherInjectedService>(new AnotherInjectedService())
-                        .WithResolvedDependencyFor<IInjectedService>(new InjectedService())
                         .WithResolvedDependencyFor<ResponseModel>(new ResponseModel())
-                        .Calling(c => c.OkResultAction())
+                        .Calling(c => c.OkAction())
                         .ShouldReturn()
                         .Ok();
-                }, 
-                "MvcController could not be instantiated because it contains no constructor taking RequestModel, AnotherInjectedService, InjectedService, ResponseModel as parameters.");
+                },
+                "NoParameterlessConstructorController could not be instantiated because it contains no constructor taking RequestModel, AnotherInjectedService, ResponseModel as parameters.");
         }
 
         [Fact]

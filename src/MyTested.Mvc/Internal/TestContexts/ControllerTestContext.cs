@@ -13,8 +13,10 @@
     using Microsoft.AspNetCore.Mvc;
     using System.Linq;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
+
     public class ControllerTestContext : HttpTestContext
     {
+        private object controller;
         private ControllerContext controllerContext;
         private IEnumerable<object> controllerAttributes;
         private string actionName;
@@ -23,7 +25,18 @@
         private object model;
         private RouteData expressionRouteData;
         
-        public object Controller { get; internal set; }
+        public object Controller
+        {
+            get
+            {
+                if (this.controller == null)
+                {
+                    this.controller = this.ControllerConstruction();
+                }
+
+                return this.controller;
+            }
+        }
 
         public IEnumerable<object> ControllerAttributes
         {
@@ -138,6 +151,8 @@
         public ITempDataDictionary TempData => this.ControllerAs<Controller>().TempData;
 
         public ViewDataDictionary ViewData => this.ControllerAs<Controller>().ViewData;
+
+        internal Func<object> ControllerConstruction { get; set; }
 
         internal TController ControllerAs<TController>()
             where TController : class => this.Controller as TController;

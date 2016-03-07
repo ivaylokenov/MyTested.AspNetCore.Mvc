@@ -172,7 +172,10 @@
         /// <returns>The same controller builder.</returns>
         public IAndControllerBuilder<TController> WithResolvedDependencyFor<TDependency>(TDependency dependency)
         {
-            var typeOfDependency = dependency.GetType();
+            var typeOfDependency = dependency != null
+                ? dependency.GetType()
+                : typeof(TDependency);
+
             if (this.aggregatedDependencies.ContainsKey(typeOfDependency))
             {
                 throw new InvalidOperationException(string.Format(
@@ -182,7 +185,7 @@
             }
 
             this.aggregatedDependencies.Add(typeOfDependency, dependency);
-            this.TestContext.Controller = null;
+            this.TestContext.ControllerConstruction = () => null;
             return this;
         }
 
@@ -267,6 +270,7 @@
         /// <returns>Controller test builder.</returns>
         public IControllerTestBuilder ShouldHave()
         {
+            this.BuildControllerIfNotExists();
             return new ControllerTestBuilder(this.TestContext);
         }
 
@@ -394,11 +398,19 @@
             {
                 if (this.aggregatedDependencies.Any())
                 {
+                    // custom dependencies are set, create instance with them
                     controller = Reflection.TryCreateInstance<TController>(this.aggregatedDependencies.Select(v => v.Value).ToArray());
                 }
                 else
                 {
+                    // try create instance with the global services
                     controller = TestHelper.TryCreateInstance<TController>();
+                }
+
+                if (controller == null)
+                {
+                    // no controller at this point, try to create one with default constructor
+                    controller = Reflection.TryFastCreateInstance<TController>();
                 }
 
                 if (controller == null)
@@ -415,7 +427,7 @@
                         this.aggregatedDependencies.Count == 0 ? "no" : $"{joinedFriendlyDependencies} as"));
                 }
 
-                this.TestContext.Controller = controller;
+                this.TestContext.ControllerConstruction = () => controller;
             }
 
             if (!this.isPreparedForTesting)

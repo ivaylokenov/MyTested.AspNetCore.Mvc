@@ -5,6 +5,8 @@
     using Microsoft.AspNetCore.Http;
     using System.Collections.Generic;
     using Utilities.Extensions;
+    using Internal.Contracts;
+    using System;
 
     public class SessionBuilder : IAndSessionBuilder
     {
@@ -14,6 +16,18 @@
         }
 
         protected ISession Session { get; private set; }
+
+        public IAndSessionBuilder WithId(string sessionId)
+        {
+            var mockedSession = this.Session as IMockedSession;
+            if (mockedSession == null)
+            {
+                throw new InvalidOperationException("Setting session Id requires the registered ISession service to implement IMockedSession.");
+            }
+
+            mockedSession.Id = sessionId;
+            return this;
+        }
 
         public IAndSessionBuilder WithEntry(string key, byte[] value)
         {

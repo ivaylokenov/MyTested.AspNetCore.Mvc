@@ -17,6 +17,12 @@
         public static TInstance TryCreateInstance<TInstance>()
             where TInstance : class
         {
+            var instance = TestServiceProvider.GetService<TInstance>();
+            if (instance != null)
+            {
+                return instance;
+            }
+
             try
             {
                 var typeActivatorCache = TestServiceProvider.GetRequiredService<ITypeActivatorCache>();
