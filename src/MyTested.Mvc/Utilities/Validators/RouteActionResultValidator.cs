@@ -196,6 +196,7 @@
         public static void ValidateRouteValues(
             dynamic actionResult,
             IDictionary<string, object> routeValues,
+            bool includeCountCheck,
             Action<string, string, string> failedValidationAction)
         {
             RuntimeBinderValidator.ValidateBinding(() =>
@@ -206,7 +207,8 @@
                     RouteValuesName,
                     actualRouteValues,
                     routeValues,
-                    failedValidationAction);
+                    failedValidationAction,
+                    includeCountCheck);
             });
         }
 

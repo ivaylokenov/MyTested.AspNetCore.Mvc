@@ -97,17 +97,21 @@
             string name,
             IDictionary<string, object> dictionary,
             IDictionary<string, object> expectedDictionary,
-            Action<string, string, string> failedValidationAction)
+            Action<string, string, string> failedValidationAction,
+            bool includeCountCheck = true)
         {
-            var expectedItems = expectedDictionary.Count;
-            var actualItems = dictionary.Count;
-
-            if (expectedItems != actualItems)
+            if (includeCountCheck)
             {
-                failedValidationAction(
-                    name,
-                    $"to have {expectedItems} {(expectedItems != 1 ? "entries" : "entry")}",
-                    $"in fact found {actualItems}");
+                var expectedItems = expectedDictionary.Count;
+                var actualItems = dictionary.Count;
+
+                if (expectedItems != actualItems)
+                {
+                    failedValidationAction(
+                        name,
+                        $"to have {expectedItems} {(expectedItems != 1 ? "entries" : "entry")}",
+                        $"in fact found {actualItems}");
+                }
             }
 
             expectedDictionary.ForEach(item => ValidateStringKeyAndValue(

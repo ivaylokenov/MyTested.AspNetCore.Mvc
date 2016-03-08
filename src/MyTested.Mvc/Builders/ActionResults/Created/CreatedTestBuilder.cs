@@ -15,10 +15,11 @@
     using Microsoft.Net.Http.Headers;
     using Utilities.Validators;
     using Internal.TestContexts;
-    using Internal;/// <summary>
-                   /// Used for testing created results.
-                   /// </summary>
-                   /// <typeparam name="TCreatedResult">Type of created result - CreatedAtActionResult or CreatedAtRouteResult.</typeparam>
+
+    /// <summary>
+    /// Used for testing created results.
+    /// </summary>
+    /// <typeparam name="TCreatedResult">Type of created result - CreatedAtActionResult or CreatedAtRouteResult.</typeparam>
     public class CreatedTestBuilder<TCreatedResult>
         : BaseTestBuilderWithResponseModel<TCreatedResult>, IAndCreatedTestBuilder
         where TCreatedResult : ObjectResult
@@ -27,6 +28,8 @@
         private const string RouteName = "route name";
         private const string RouteValues = "route values";
         private const string UrlHelper = "URL helper";
+
+        private LambdaExpression createdAtExpression;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreatedTestBuilder{TCreatedResult}" /> class.
@@ -72,7 +75,7 @@
             this.ValidateContainingOfContentType(contentType);
             return this;
         }
-        
+
         /// <summary>
         /// Tests whether created result contains the content type provided as MediaTypeHeaderValue.
         /// </summary>
@@ -373,9 +376,12 @@
         /// <returns>The same created test builder.</returns>
         public IAndCreatedTestBuilder ContainingRouteValues(IDictionary<string, object> routeValues)
         {
+            var includeCountCheck = this.createdAtExpression == null;
+
             RouteActionResultValidator.ValidateRouteValues(
                 this.ActionResult,
                 routeValues,
+                includeCountCheck,
                 this.ThrowNewCreatedResultAssertionException);
 
             return this;
@@ -419,6 +425,8 @@
         /// <returns>The same created test builder.</returns>
         public IAndCreatedTestBuilder At<TController>(Expression<Action<TController>> actionCall)
         {
+            this.createdAtExpression = actionCall;
+
             RouteActionResultValidator.ValidateExpressionLink(
                 this.TestContext,
                 LinkGenerationTestContext.FromCreatedResult(this.ActionResult),

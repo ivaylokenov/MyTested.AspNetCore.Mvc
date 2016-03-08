@@ -24,6 +24,8 @@
         private const string Location = "location";
         private const string RouteName = "route name";
 
+        private LambdaExpression redirectToExpression;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="RedirectTestBuilder{TRedirectResult}" /> class.
         /// </summary>
@@ -258,9 +260,12 @@
         /// <returns>The same redirect test builder.</returns>
         public IAndRedirectTestBuilder ContainingRouteValues(IDictionary<string, object> routeValues)
         {
+            var includeCountCheck = this.redirectToExpression == null;
+
             RouteActionResultValidator.ValidateRouteValues(
                 this.ActionResult,
                 routeValues,
+                includeCountCheck,
                 this.ThrowNewRedirectResultAssertionException);
 
             return this;
@@ -304,6 +309,8 @@
         /// <returns>The same redirect test builder.</returns>
         public IAndRedirectTestBuilder To<TController>(Expression<Action<TController>> actionCall)
         {
+            this.redirectToExpression = actionCall;
+
             RouteActionResultValidator.ValidateExpressionLink(
                 this.TestContext,
                 LinkGenerationTestContext.FromRedirectResult(this.ActionResult),
