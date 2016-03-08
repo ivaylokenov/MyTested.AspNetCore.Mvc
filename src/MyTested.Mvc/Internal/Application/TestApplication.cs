@@ -35,9 +35,9 @@
         private static readonly IHostingEnvironment Environment = new HostingEnvironment { EnvironmentName = "Tests" };
 
         private static bool initialiazed;
+        private static IConfigurationBuilder configurationBuilder;
         private static IConfiguration configuration;
         private static Type startupType;
-        private static StartupLoader startupLoader;
 
         private static IServiceProvider serviceProvider;
         private static IServiceProvider routeServiceProvider;
@@ -46,7 +46,6 @@
         static TestApplication()
         {
             configuration = PrepareConfiguration();
-            startupLoader = GetNewStartupLoader();
         }
 
         internal static Type StartupType
@@ -64,7 +63,7 @@
 
         internal static Action<IServiceCollection> AdditionalServices { get; set; }
 
-        internal static Action<IApplicationBuilder> AdditionalConfiguration { get; set; }
+        internal static Action<IApplicationBuilder> AdditionalApplicationConfiguration { get; set; }
 
         internal static Action<IRouteBuilder> AdditionalRoutes { get; set; }
 
@@ -112,19 +111,29 @@
             var applicationName = PlatformServices.Default.Application.ApplicationName;
             var applicationAssembly = Assembly.Load(new AssemblyName(applicationName));
 
-            var startupTypes = applicationAssembly
-                .DefinedTypes
-                .Where(t =>
-                {
-                    var startupName = $"{Environment.EnvironmentName}Startup";
-                    return t.Name == startupName || t.Name == $"{applicationName}.{startupName}";
-                })
-                .Select(t => t.AsType())
-                .ToArray();
+            var startupName = $"{Environment.EnvironmentName}Startup";
 
-            if (startupTypes.Length == 1)
+            // check root of the testing library
+            startupType = 
+                applicationAssembly.GetType(startupName) ??
+                applicationAssembly.GetType($"{applicationName}.{startupName}");
+
+            if (startupType == null)
             {
-                startupType = startupTypes.First();
+                // full scan 
+                var startupTypes = applicationAssembly
+                    .DefinedTypes
+                    .Where(t =>
+                    {
+                        return t.Name == startupName || t.Name == $"{applicationName}.{startupName}";
+                    })
+                    .Select(t => t.AsType())
+                    .ToArray();
+
+                if (startupTypes.Length == 1)
+                {
+                    startupType = startupTypes.First();
+                }
             }
         }
 
@@ -142,7 +151,10 @@
             StartupMethods startupMethods = null;
             if (StartupType != null)
             {
-                startupMethods = startupLoader.LoadMethods(StartupType, null);
+                startupMethods = serviceCollection
+                    .BuildServiceProvider()
+                    .GetRequiredService<IStartupLoader>()
+                    .LoadMethods(StartupType, null);
             }
 
             PrepareServices(serviceCollection, startupMethods);
@@ -159,6 +171,9 @@
             // default server services
             serviceCollection.TryAddSingleton(Environment);
             serviceCollection.TryAddSingleton<ILoggerFactory>(MockedLoggerFactory.Create());
+
+            serviceCollection.AddTransient<IStartupLoader, StartupLoader>();
+
             serviceCollection.TryAddTransient<IHttpContextFactory, HttpContextFactory>();
             serviceCollection.AddLogging();
             serviceCollection.AddOptions();
@@ -243,9 +258,9 @@
                 startupMethods.ConfigureDelegate(applicationBuilder);
             }
 
-            if (AdditionalConfiguration != null)
+            if (AdditionalApplicationConfiguration != null)
             {
-                AdditionalConfiguration(applicationBuilder);
+                AdditionalApplicationConfiguration(applicationBuilder);
             }
 
             var routeBuilder = new RouteBuilder(applicationBuilder)
@@ -277,12 +292,7 @@
 
             router = routeBuilder.Build();
         }
-
-        private static StartupLoader GetNewStartupLoader()
-        {
-            return new StartupLoader(new ServiceCollection().BuildServiceProvider(), Environment);
-        }
-
+        
         private static void AddPlatformServices(IServiceCollection serviceCollection)
         {
             var defaultPlatformServices = PlatformServices.Default;
@@ -309,7 +319,7 @@
             routeServiceProvider = null;
             router = null;
             AdditionalServices = null;
-            AdditionalConfiguration = null;
+            AdditionalApplicationConfiguration = null;
             AdditionalRoutes = null;
         }
     }

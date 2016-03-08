@@ -39,7 +39,7 @@
         /// <returns>The same application configuration builder.</returns>
         public IApplicationConfigurationBuilder WithApplication(Action<IApplicationBuilder> app)
         {
-            TestApplication.AdditionalConfiguration = app;
+            TestApplication.AdditionalApplicationConfiguration = app;
             return this;
         }
 
