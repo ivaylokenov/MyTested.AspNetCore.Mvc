@@ -345,10 +345,10 @@
             }
 
             throw new RouteAssertionException(string.Format(
-                    "Expected route '{0}' to {1} but {2}.",
-                    this.RouteContext.HttpContext.Request.Path,
-                    expected,
-                    actual));
+                "{0} to {1} but {2}.",
+                this.TestContext.ExceptionMessagePrefix,
+                expected,
+                actual));
         }
     }
 }

@@ -85,7 +85,7 @@
         /// <returns>This instance in order to support method chaining.</returns>
         public IAndModelErrorTestBuilder<TModel> ContainingNoErrorFor<TMember>(Expression<Func<TModel, TMember>> memberWithNoError)
         {
-            var memberName = ExpressionParser.GetPropertyName(memberWithNoError);
+            var memberName = ExpressionHelper.GetExpressionText(memberWithNoError);
             if (this.ModelState.ContainsKey(memberName))
             {
                 this.ThrowNewModelErrorAssertionException(

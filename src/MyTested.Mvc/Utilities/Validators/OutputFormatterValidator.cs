@@ -78,13 +78,13 @@
 
             for (int i = 0; i < actualOutputFormatters.Count; i++)
             {
-                var actualMediaTypeFormatter = actualOutputFormatters[i];
-                var expectedMediaTypeFormatter = expectedOutputFormatters[i];
-                if (actualMediaTypeFormatter != expectedMediaTypeFormatter)
+                var actualOutputFormatter = actualOutputFormatters[i];
+                var expectedOutputFormatter = expectedOutputFormatters[i];
+                if (actualOutputFormatter != expectedOutputFormatter)
                 {
                     failedValidationAction(
                         "output formatters",
-                        $"to contain formatter of {expectedMediaTypeFormatter} type",
+                        $"to contain formatter of {expectedOutputFormatter} type",
                         "none was found");
                 }
             }
@@ -93,7 +93,7 @@
         private static IList<string> SortOutputFormatterNames(IEnumerable<IOutputFormatter> outputFormatters)
         {
             return outputFormatters
-                .Select(of => of.GetType().Name)
+                .Select(of => of.GetType().ToFriendlyTypeName())
                 .OrderBy(oft => oft)
                 .ToList();
         }

@@ -152,6 +152,8 @@
 
         public ViewDataDictionary ViewData => this.ControllerAs<Controller>().ViewData;
 
+        public override string ExceptionMessagePrefix => $"When calling {this.ActionName} action in {this.Controller.GetName()} expected";
+
         internal Func<object> ControllerConstruction { get; set; }
 
         internal TController ControllerAs<TController>()

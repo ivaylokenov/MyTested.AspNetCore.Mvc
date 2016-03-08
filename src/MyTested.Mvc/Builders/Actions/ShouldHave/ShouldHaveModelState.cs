@@ -7,6 +7,7 @@
     using Utilities.Extensions;
     using Models;
     using System;
+
     /// <summary>
     /// Class containing methods for testing model state.
     /// </summary>

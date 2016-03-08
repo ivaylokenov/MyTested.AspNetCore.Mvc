@@ -23,5 +23,7 @@
                 return routeContext;
             }
         }
+
+        public override string ExceptionMessagePrefix => $"Expected route '{this.HttpContext.Request.Path}'";
     }
 }
