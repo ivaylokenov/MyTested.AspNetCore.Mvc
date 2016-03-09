@@ -5,11 +5,10 @@
     using Builders.Contracts.Application;
     using Builders.Controllers;
     using Microsoft.AspNetCore.Mvc;
-    using Utilities;
     using Builders.Routes;
     using Internal.Application;
     using Internal.TestContexts;
-    using Internal;
+
     /// <summary>
     /// Starting point of the ASP.NET MVC testing framework, which provides a way to specify the test case.
     /// </summary>
@@ -17,7 +16,7 @@
     {
         static MyMvc()
         {
-            TestApplication.TryFindDefaultStartupType();
+            TestApplication.TryInitialize();
         }
 
         /// <summary>

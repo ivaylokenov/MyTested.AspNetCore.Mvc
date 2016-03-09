@@ -32,19 +32,24 @@
     public static class TestApplication
     {
         private static readonly RequestDelegate NullHandler = (c) => Task.FromResult(0);
-        private static readonly IHostingEnvironment Environment = new HostingEnvironment { EnvironmentName = "Tests" };
 
         private static bool initialiazed;
-        private static IConfigurationBuilder configurationBuilder;
+        private static object sync;
+
+        private static TestSettings testSettings;
+
         private static IConfiguration configuration;
+        private static IHostingEnvironment environment;
+
         private static Type startupType;
 
-        private static IServiceProvider serviceProvider;
-        private static IServiceProvider routeServiceProvider;
-        private static IRouter router;
-
+        private static volatile IServiceProvider serviceProvider;
+        private static volatile IServiceProvider routeServiceProvider;
+        private static volatile IRouter router;
+        
         static TestApplication()
         {
+            sync = new object();
             configuration = PrepareConfiguration();
         }
 
@@ -61,21 +66,19 @@
             }
         }
 
+        internal static Action<IConfigurationBuilder> AdditionalConfiguration { get; set; }
+
         internal static Action<IServiceCollection> AdditionalServices { get; set; }
 
         internal static Action<IApplicationBuilder> AdditionalApplicationConfiguration { get; set; }
 
         internal static Action<IRouteBuilder> AdditionalRoutes { get; set; }
-
+        
         public static IServiceProvider Services
         {
             get
             {
-                if (!initialiazed)
-                {
-                    Initialize();
-                }
-
+                TryLockedInitialization();
                 return serviceProvider;
             }
         }
@@ -84,11 +87,7 @@
         {
             get
             {
-                if (!initialiazed)
-                {
-                    Initialize();
-                }
-
+                TryLockedInitialization();
                 return routeServiceProvider;
             }
         }
@@ -97,16 +96,64 @@
         {
             get
             {
-                if (!initialiazed)
-                {
-                    Initialize();
-                }
-
+                TryLockedInitialization();
                 return router;
             }
         }
 
-        internal static void TryFindDefaultStartupType()
+        internal static IConfiguration Configuration
+        {
+            get
+            {
+                if (configuration == null)
+                {
+                    configuration = PrepareConfiguration();
+                }
+
+                return configuration;
+            }
+        }
+
+        internal static IHostingEnvironment Environment
+        {
+            get
+            {
+                if (environment == null)
+                {
+                    environment = PrepareEnvironment();
+                }
+
+                return environment;
+            }
+        }
+
+        internal static TestSettings TestSettings
+        {
+            get
+            {
+                if (testSettings == null)
+                {
+                    testSettings = TestSettings.With(configuration);
+                }
+
+                return testSettings;
+            }
+        }
+
+        internal static void TryInitialize()
+        {
+            if (TestSettings.AutomaticStartup)
+            {
+                startupType = TryFindDefaultStartupType();
+
+                if (startupType != null)
+                {
+                    Initialize();
+                }
+            }
+        }
+
+        internal static Type TryFindDefaultStartupType()
         {
             var applicationName = PlatformServices.Default.Application.ApplicationName;
             var applicationAssembly = Assembly.Load(new AssemblyName(applicationName));
@@ -114,11 +161,11 @@
             var startupName = $"{Environment.EnvironmentName}Startup";
 
             // check root of the testing library
-            startupType = 
+            var startup = 
                 applicationAssembly.GetType(startupName) ??
                 applicationAssembly.GetType($"{applicationName}.{startupName}");
 
-            if (startupType == null)
+            if (startup == null)
             {
                 // full scan 
                 var startupTypes = applicationAssembly
@@ -132,16 +179,11 @@
 
                 if (startupTypes.Length == 1)
                 {
-                    startupType = startupTypes.First();
+                    startup = startupTypes.First();
                 }
             }
-        }
 
-        private static IConfiguration PrepareConfiguration()
-        {
-            return new ConfigurationBuilder()
-                .AddInMemoryCollection()
-                .Build();
+            return startup;
         }
 
         private static void Initialize()
@@ -161,6 +203,28 @@
             PrepareApplicationAndRoutes(startupMethods);
 
             initialiazed = true;
+        }
+
+        private static IConfiguration PrepareConfiguration()
+        {
+            var configurationBuilder = new ConfigurationBuilder()
+                .AddJsonFile("testsettings.json", optional: true);
+
+            if (AdditionalConfiguration != null)
+            {
+                AdditionalConfiguration(configurationBuilder);
+            }
+
+            return configurationBuilder.Build();
+        }
+
+        private static IHostingEnvironment PrepareEnvironment()
+        {
+            return new HostingEnvironment
+            {
+                Configuration = Configuration,
+                EnvironmentName = TestSettings.EnvironmentName
+            };
         }
 
         private static IServiceCollection GetInitialServiceCollection()
@@ -311,9 +375,25 @@
             }
         }
 
+        private static void TryLockedInitialization()
+        {
+            if (!initialiazed)
+            {
+                lock (sync)
+                {
+                    if (!initialiazed)
+                    {
+                        Initialize();
+                    }
+                }
+            }
+        }
+
         private static void Reset()
         {
             initialiazed = false;
+            configuration = null;
+            environment = null;
             startupType = null;
             serviceProvider = null;
             routeServiceProvider = null;

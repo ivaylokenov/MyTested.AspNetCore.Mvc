@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Configuration;
 
     /// <summary>
     /// Configures the tested application.
@@ -19,6 +20,12 @@
         public ApplicationConfigurationBuilder(Type startupType)
         {
             TestApplication.StartupType = startupType;
+        }
+
+        public IApplicationConfigurationBuilder WithConfiguration(Action<IConfigurationBuilder> config)
+        {
+            TestApplication.AdditionalConfiguration = config;
+            return this;
         }
 
         /// <summary>
