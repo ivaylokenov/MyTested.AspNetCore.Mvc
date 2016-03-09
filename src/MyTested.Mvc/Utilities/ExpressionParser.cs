@@ -5,8 +5,8 @@
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
-    using Internal;
     using Internal.TestContexts;
+
     /// <summary>
     /// Utility class helping parsing expression trees.
     /// </summary>

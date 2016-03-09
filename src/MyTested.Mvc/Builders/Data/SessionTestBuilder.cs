@@ -5,6 +5,7 @@
     using Contracts.Data;
     using System.Linq;
     using Microsoft.AspNetCore.Routing;
+
     public class SessionTestBuilder : BaseDataProviderTestBuilder, IAndSessionTestBuilder
     {
         internal const string SessionName = "session";
