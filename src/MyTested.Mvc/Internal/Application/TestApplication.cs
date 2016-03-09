@@ -31,7 +31,7 @@
 
     public static class TestApplication
     {
-        private static readonly RequestDelegate NullHandler = (c) => Task.FromResult(0);
+        private static readonly RequestDelegate NullHandler = (c) => TaskCache.CompletedTask;
 
         private static bool initialiazed;
         private static object sync;
@@ -285,9 +285,12 @@
 
             serviceCollection.TryReplaceSingleton<ITempDataProvider, MockedTempDataProvider>();
 
-            serviceCollection.TryRemoveSingleton<IMemoryCache, MemoryCache>();
-            serviceCollection.TryAddTransient<IMemoryCache, MockedMemoryCache>();
-
+            if (serviceCollection.Any(s => s.ServiceType == typeof(IMemoryCache)))
+            {
+                serviceCollection.TryRemoveSingleton<IMemoryCache, MemoryCache>();
+                serviceCollection.TryAddTransient<IMemoryCache, MockedMemoryCache>();
+            }
+            
             serviceProvider = serviceCollection.BuildServiceProvider();
         }
 

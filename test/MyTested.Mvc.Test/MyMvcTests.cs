@@ -645,9 +645,22 @@ namespace MyTested.Mvc.Tests
         public void MockedMemoryCacheShouldBeRegistedWithAddedCaching()
         {
             MyMvc.IsUsingDefaultConfiguration()
-                .WithServices(services => services.AddCaching());
+                .WithServices(services => services.AddMemoryCache());
 
             Assert.IsAssignableFrom<MockedMemoryCache>(TestServiceProvider.GetService<IMemoryCache>());
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void MockedMemoryCacheShouldNotBeRegisteredIfNoCacheIsAdded()
+        {
+            MyMvc.IsUsingDefaultConfiguration()
+                .WithServices(services => services.TryRemoveSingleton<IMemoryCache>());
+            
+            Assert.Null(TestServiceProvider.GetService<IMemoryCache>());
+
+            MyMvc.IsUsingDefaultConfiguration();
         }
 
         [Fact]

@@ -403,7 +403,8 @@
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
-                    services.AddCaching();
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
                     services.AddSession();
                 });
 
