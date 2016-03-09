@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Tests.BuildersTests.AuthenticationTests
+﻿namespace MyTested.Mvc.Test.BuildersTests.AuthenticationTests
 {
     using System;
     using System.Collections.Generic;

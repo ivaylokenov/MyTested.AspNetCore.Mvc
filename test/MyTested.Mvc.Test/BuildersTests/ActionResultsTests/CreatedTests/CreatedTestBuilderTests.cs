@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Tests.BuildersTests.ActionResultsTests.CreatedTests
+﻿namespace MyTested.Mvc.Test.BuildersTests.ActionResultsTests.CreatedTests
 {
     using System;
     using System.Collections.Generic;

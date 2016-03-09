@@ -2,7 +2,7 @@
 
 [assembly: CollectionBehavior(DisableTestParallelization = true)]
 
-namespace MyTested.Mvc.Tests
+namespace MyTested.Mvc.Test
 {
     using System;
     using System.Linq;
@@ -137,7 +137,7 @@ namespace MyTested.Mvc.Tests
                     MyMvc.StartsFrom<MvcController>();
                     TestServiceProvider.GetService<IInjectedService>();
                 },
-                "A public method named 'ConfigureTests' or 'Configure' could not be found in the 'MyTested.Mvc.Tests.Setups.Controllers.MvcController' type.");
+                "A public method named 'ConfigureTest' or 'Configure' could not be found in the 'MyTested.Mvc.Test.Setups.Controllers.MvcController' type.");
         }
 
         [Fact]

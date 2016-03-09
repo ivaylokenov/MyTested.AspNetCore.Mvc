@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Tests.InternalTests
+﻿namespace MyTested.Mvc.Test.InternalTests
 {
     using Internal.Formatters;
     using Setups;

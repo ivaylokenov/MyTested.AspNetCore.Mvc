@@ -471,7 +471,7 @@
             if (controllerActionDescriptorCache != null)
             {
                 this.Controller.ControllerContext.ActionDescriptor
-                    = controllerActionDescriptorCache.GetActionDescriptor(methodInfo);
+                    = controllerActionDescriptorCache.TryGetActionDescriptor(methodInfo);
             }
 
             return methodInfo.Name;

@@ -7,7 +7,8 @@
     using Microsoft.Extensions.DependencyInjection.Extensions;
     using Utilities.Extensions;
     using Utilities.Validators;
-
+    using Microsoft.AspNetCore.Mvc.Internal;
+    using System.Reflection;
     public static class ServiceCollectionExtensions
     {
         public static void TryRemoveTransient(this IServiceCollection serviceCollection, Type service)
@@ -138,6 +139,26 @@
         {
             CommonValidator.CheckForNullReference(descriptors, nameof(descriptors));
             descriptors.ForEach(d => serviceCollection.TryReplaceEnumerable(d));
+        }
+
+        public static void AddMvcControllersAsServices(this IServiceCollection serviceCollection, params Type[] controllerTypes)
+        {
+            serviceCollection.AddMvcControllersAsServices(controllerTypes.AsEnumerable());
+        }
+
+        public static void AddMvcControllersAsServices(this IServiceCollection serviceCollection, IEnumerable<Type> controllerTypes)
+        {
+            ControllersAsServices.AddControllersAsServices(serviceCollection, controllerTypes);
+        }
+
+        public static void AddMvcControllersAsServices(this IServiceCollection serviceCollection, params Assembly[] controllerAssemblies)
+        {
+            serviceCollection.AddMvcControllersAsServices(controllerAssemblies.AsEnumerable());
+        }
+
+        public static void AddMvcControllersAsServices(this IServiceCollection serviceCollection, IEnumerable<Assembly> controllerAssemblies)
+        {
+            ControllersAsServices.AddControllersAsServices(serviceCollection, controllerAssemblies);
         }
 
         private static void RemoveServices(IServiceCollection serviceCollection, Func<ServiceDescriptor, bool> predicate)

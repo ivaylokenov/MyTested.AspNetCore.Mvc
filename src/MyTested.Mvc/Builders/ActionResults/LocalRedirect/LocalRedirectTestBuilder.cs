@@ -9,7 +9,7 @@
     using Utilities.Validators;
     using Internal.TestContexts;
     using System.Linq.Expressions;
-
+    using System.Threading.Tasks;
     /// <summary>
     /// Used for testing local redirect result.
     /// </summary>
@@ -85,16 +85,16 @@
                     "to pass the given predicate",
                     "but it failed");
             }
-        
+
             return this;
         }
 
-    /// <summary>
-    /// Tests whether local redirect result has specific URL provided as URI.
-    /// </summary>
-    /// <param name="localUrl">Expected URL as URI.</param>
-    /// <returns>The same local redirect test builder.</returns>
-    public IAndLocalRedirectTestBuilder ToUrl(Uri localUrl)
+        /// <summary>
+        /// Tests whether local redirect result has specific URL provided as URI.
+        /// </summary>
+        /// <param name="localUrl">Expected URL as URI.</param>
+        /// <returns>The same local redirect test builder.</returns>
+        public IAndLocalRedirectTestBuilder ToUrl(Uri localUrl)
         {
             LocationValidator.ValidateUri(
                 this.ActionResult,
@@ -142,6 +142,22 @@
         /// <returns>The same local redirect test builder.</returns>
         public IAndLocalRedirectTestBuilder To<TController>(Expression<Action<TController>> actionCall)
         {
+            return this.ProcessRouteLambdaExpression<TController>(actionCall);
+        }
+
+        public IAndLocalRedirectTestBuilder To<TController>(Expression<Func<TController, Task>> actionCall)
+        {
+            return this.ProcessRouteLambdaExpression<TController>(actionCall);
+        }
+
+        /// <summary>
+        /// AndAlso method for better readability when chaining local redirect result tests.
+        /// </summary>
+        /// <returns>Local redirect result test builder.</returns>
+        public ILocalRedirectTestBuilder AndAlso() => this;
+        
+        private IAndLocalRedirectTestBuilder ProcessRouteLambdaExpression<TController>(LambdaExpression actionCall)
+        {
             RouteActionResultValidator.ValidateExpressionLink(
                 this.TestContext,
                 LinkGenerationTestContext.FromLocalRedirectResult(this.ActionResult),
@@ -151,21 +167,15 @@
             return this;
         }
 
-        /// <summary>
-        /// AndAlso method for better readability when chaining local redirect result tests.
-        /// </summary>
-        /// <returns>Local redirect result test builder.</returns>
-        public ILocalRedirectTestBuilder AndAlso() => this;
-
         private void ThrowNewRedirectResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new RedirectResultAssertionException(string.Format(
-                    "When calling {0} action in {1} expected local redirect result {2} {3}, but {4}.",
-                    this.ActionName,
-                    this.Controller.GetName(),
-                    propertyName,
-                    expectedValue,
-                    actualValue));
+                "When calling {0} action in {1} expected local redirect result {2} {3}, but {4}.",
+                this.ActionName,
+                this.Controller.GetName(),
+                propertyName,
+                expectedValue,
+                actualValue));
         }
     }
 }

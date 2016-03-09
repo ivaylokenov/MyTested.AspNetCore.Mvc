@@ -14,5 +14,7 @@
         /// <param name="methodInfo">Method info of the controller action descriptor to get.</param>
         /// <returns>Controller action descriptor.</returns>
         ControllerActionDescriptor GetActionDescriptor(MethodInfo methodInfo);
+
+        ControllerActionDescriptor TryGetActionDescriptor(MethodInfo methodInfo);
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Tests.BuildersTests.ActionResultsTests.RedirectTests
+﻿namespace MyTested.Mvc.Test.BuildersTests.ActionResultsTests.RedirectTests
 {
     using System;
     using Exceptions;

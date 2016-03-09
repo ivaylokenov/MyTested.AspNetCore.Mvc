@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Tests.BuildersTests.AndTests
+﻿namespace MyTested.Mvc.Test.BuildersTests.AndTests
 {
     using System;
     using System.Linq;

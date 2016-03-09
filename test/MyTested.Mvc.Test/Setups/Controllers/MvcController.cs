@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Tests.Setups.Controllers
+﻿namespace MyTested.Mvc.Test.Setups.Controllers
 {
     using System;
     using System.Collections.Generic;

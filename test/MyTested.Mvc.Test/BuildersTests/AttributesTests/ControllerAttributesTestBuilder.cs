@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Tests.BuildersTests.AttributesTests
+﻿namespace MyTested.Mvc.Test.BuildersTests.AttributesTests
 {
     using Exceptions;
     using Microsoft.AspNetCore.Authorization;

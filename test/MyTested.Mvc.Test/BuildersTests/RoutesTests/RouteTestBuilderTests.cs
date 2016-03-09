@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Tests.BuildersTests.RoutesTests
+﻿namespace MyTested.Mvc.Test.BuildersTests.RoutesTests
 {
     using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.AspNetCore.Mvc.Routing;

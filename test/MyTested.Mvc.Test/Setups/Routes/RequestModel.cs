@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Tests.Setups.Routes
+﻿namespace MyTested.Mvc.Test.Setups.Routes
 {
     public class RequestModel
     {

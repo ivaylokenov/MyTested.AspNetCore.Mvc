@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Tests.BuildersTests.ActionResultsTests.JsonTests
+﻿namespace MyTested.Mvc.Test.BuildersTests.ActionResultsTests.JsonTests
 {
     using System.Collections.Generic;
     using Exceptions;

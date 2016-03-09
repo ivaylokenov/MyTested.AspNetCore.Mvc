@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Tests.BuildersTests.ActionResultsTests.LocalRedirectTests
+﻿namespace MyTested.Mvc.Test.BuildersTests.ActionResultsTests.LocalRedirectTests
 {
     using System;
     using Exceptions;

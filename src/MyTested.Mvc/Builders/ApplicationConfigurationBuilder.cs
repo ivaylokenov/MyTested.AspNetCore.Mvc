@@ -24,7 +24,7 @@
 
         public IApplicationConfigurationBuilder WithConfiguration(Action<IConfigurationBuilder> config)
         {
-            TestApplication.AdditionalConfiguration = config;
+            TestApplication.AdditionalConfiguration += config;
             return this;
         }
 
@@ -35,7 +35,7 @@
         /// <returns>The same application configuration builder.</returns>
         public IApplicationConfigurationBuilder WithServices(Action<IServiceCollection> services)
         {
-            TestApplication.AdditionalServices = services;
+            TestApplication.AdditionalServices += services;
             return this;
         }
 
@@ -46,7 +46,7 @@
         /// <returns>The same application configuration builder.</returns>
         public IApplicationConfigurationBuilder WithApplication(Action<IApplicationBuilder> app)
         {
-            TestApplication.AdditionalApplicationConfiguration = app;
+            TestApplication.AdditionalApplicationConfiguration += app;
             return this;
         }
 
@@ -57,7 +57,7 @@
         /// <returns>The same application configuration builder.</returns>
         public IApplicationConfigurationBuilder WithRoutes(Action<IRouteBuilder> routes)
         {
-            TestApplication.AdditionalRoutes = routes;
+            TestApplication.AdditionalRoutes += routes;
             return this;
         }
     }

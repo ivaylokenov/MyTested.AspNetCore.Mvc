@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Tests.BuildersTests.ActionResultsTests.FileTests
+﻿namespace MyTested.Mvc.Test.BuildersTests.ActionResultsTests.FileTests
 {
     using System.IO;
     using Exceptions;

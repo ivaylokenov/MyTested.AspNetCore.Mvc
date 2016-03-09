@@ -14,5 +14,10 @@
         {
             return default(TParameter);
         }
+
+        public static TParameter Any<TParameter>()
+        {
+            return default(TParameter);
+        }
     }
 }

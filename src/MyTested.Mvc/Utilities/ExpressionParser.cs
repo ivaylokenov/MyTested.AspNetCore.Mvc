@@ -75,10 +75,13 @@
 
             if (expression.NodeType == ExpressionType.Call)
             {
-                // Expression of type c => c.Action(With.No<int>()) - value should be ignored and can be skipped.
+                // Expression of type c => c.Action(With.No<int>()) or c => c.Action(With.Any<int>()) or c => c.Action(From.Services<IService>())
+                // Value should be ignored and can be skipped.
                 var expressionArgumentAsMethodCall = (MethodCallExpression)expression;
+                var expressionMethodDeclaringType = expressionArgumentAsMethodCall.Method.DeclaringType;
+
                 if (expressionArgumentAsMethodCall.Object == null
-                    && expressionArgumentAsMethodCall.Method.DeclaringType == typeof(With))
+                    && (expressionMethodDeclaringType == typeof(With) || expressionMethodDeclaringType == typeof(From)))
                 {
                     return null;
                 }
@@ -87,7 +90,8 @@
             object value;
             if (expression.NodeType == ExpressionType.Constant)
             {
-                // Expression of type c => c.Action({const}) - value can be extracted without compiling.
+                // Expression of type c => c.Action({const})
+                // Value can be extracted without compiling.
                 value = ((ConstantExpression)expression).Value;
             }
             else

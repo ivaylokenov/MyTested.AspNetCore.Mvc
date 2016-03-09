@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Tests.Setups.Common
+﻿namespace MyTested.Mvc.Test.Setups.Common
 {
     using Internal.Contracts;
     using Microsoft.AspNetCore.Mvc;

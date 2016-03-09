@@ -1,7 +1,6 @@
 ﻿namespace MyTested.Mvc.Internal.Application
 {
     using System;
-    using System.Threading.Tasks;
     using Caching;
     using Contracts;
     using Logging;
@@ -28,7 +27,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.Extensions.Caching.Memory;
-
+    using Microsoft.AspNetCore.Mvc.Controllers;
     public static class TestApplication
     {
         private static readonly RequestDelegate NullHandler = (c) => TaskCache.CompletedTask;
@@ -36,7 +35,7 @@
         private static bool initialiazed;
         private static object sync;
 
-        private static TestSettings testSettings;
+        private static TestConfiguration testConfiguration;
 
         private static IConfiguration configuration;
         private static IHostingEnvironment environment;
@@ -46,7 +45,7 @@
         private static volatile IServiceProvider serviceProvider;
         private static volatile IServiceProvider routeServiceProvider;
         private static volatile IRouter router;
-        
+
         static TestApplication()
         {
             sync = new object();
@@ -73,7 +72,7 @@
         internal static Action<IApplicationBuilder> AdditionalApplicationConfiguration { get; set; }
 
         internal static Action<IRouteBuilder> AdditionalRoutes { get; set; }
-        
+
         public static IServiceProvider Services
         {
             get
@@ -127,22 +126,22 @@
             }
         }
 
-        internal static TestSettings TestSettings
+        internal static TestConfiguration TestConfiguration
         {
             get
             {
-                if (testSettings == null)
+                if (testConfiguration == null)
                 {
-                    testSettings = TestSettings.With(configuration);
+                    testConfiguration = TestConfiguration.With(configuration);
                 }
 
-                return testSettings;
+                return testConfiguration;
             }
         }
 
         internal static void TryInitialize()
         {
-            if (TestSettings.AutomaticStartup)
+            if (TestConfiguration.AutomaticStartup)
             {
                 startupType = TryFindDefaultStartupType();
 
@@ -158,10 +157,10 @@
             var applicationName = PlatformServices.Default.Application.ApplicationName;
             var applicationAssembly = Assembly.Load(new AssemblyName(applicationName));
 
-            var startupName = $"{Environment.EnvironmentName}Startup";
+            var startupName = TestConfiguration.FullStartupName ?? $"{Environment.EnvironmentName}Startup";
 
             // check root of the testing library
-            var startup = 
+            var startup =
                 applicationAssembly.GetType(startupName) ??
                 applicationAssembly.GetType($"{applicationName}.{startupName}");
 
@@ -208,7 +207,7 @@
         private static IConfiguration PrepareConfiguration()
         {
             var configurationBuilder = new ConfigurationBuilder()
-                .AddJsonFile("testsettings.json", optional: true);
+                .AddJsonFile("testconfig.json", optional: true);
 
             if (AdditionalConfiguration != null)
             {
@@ -223,7 +222,7 @@
             return new HostingEnvironment
             {
                 Configuration = Configuration,
-                EnvironmentName = TestSettings.EnvironmentName
+                EnvironmentName = TestConfiguration.EnvironmentName
             };
         }
 
@@ -281,6 +280,7 @@
                 AdditionalServices(serviceCollection);
             }
 
+            TryAddControllersAsServices(serviceCollection);
             PrepareRouteServices(serviceCollection);
 
             serviceCollection.TryReplaceSingleton<ITempDataProvider, MockedTempDataProvider>();
@@ -290,8 +290,35 @@
                 serviceCollection.TryRemoveSingleton<IMemoryCache, MemoryCache>();
                 serviceCollection.TryAddTransient<IMemoryCache, MockedMemoryCache>();
             }
-            
+
             serviceProvider = serviceCollection.BuildServiceProvider();
+        }
+
+        private static void TryAddControllersAsServices(IServiceCollection serviceCollection)
+        {
+            if (StartupType != null)
+            {
+                var startupTypeInfo = StartupType.GetTypeInfo();
+
+                while (startupTypeInfo.BaseType != null && startupTypeInfo.BaseType != typeof(object))
+                {
+                    startupTypeInfo = startupTypeInfo.BaseType.GetTypeInfo();
+                }
+
+                if (startupTypeInfo.Assembly.GetName().Name != PlatformServices.Default.Application.ApplicationName)
+                {
+                    var controllerTypeProvider = serviceCollection
+                        .Where(s => s.ServiceType == typeof(IControllerTypeProvider))
+                        .Select(s => s.ImplementationInstance)
+                        .OfType<StaticControllerTypeProvider>()
+                        .FirstOrDefault();
+
+                    if (controllerTypeProvider == null || !controllerTypeProvider.ControllerTypes.Any())
+                    {
+                        serviceCollection.AddMvcControllersAsServices(startupTypeInfo.Assembly);
+                    }
+                }
+            }
         }
 
         private static void PrepareRouteServices(IServiceCollection serviceCollection)
@@ -359,7 +386,7 @@
 
             router = routeBuilder.Build();
         }
-        
+
         private static void AddPlatformServices(IServiceCollection serviceCollection)
         {
             var defaultPlatformServices = PlatformServices.Default;

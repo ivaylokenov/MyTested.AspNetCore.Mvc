@@ -2,30 +2,25 @@
 {
     using Microsoft.Extensions.Configuration;
 
-    internal class TestSettings
+    internal class TestConfiguration
     {
         private const string EnvironmentNameConfigKey = "Environment";
         private const string AutomaticStartupConfigKey = "AutomaticStartup";
+        private const string FullStartupNameConfigKey = "FullStartupName";
 
         private readonly IConfiguration configuration;
-        
-        private TestSettings(IConfiguration configuration)
+
+        private TestConfiguration(IConfiguration configuration)
         {
             this.configuration = configuration;
         }
 
-        internal static TestSettings With(IConfiguration configuration)
+        internal static TestConfiguration With(IConfiguration configuration)
         {
-            return new TestSettings(configuration);
+            return new TestConfiguration(configuration);
         }
 
-        internal string EnvironmentName
-        {
-            get
-            {
-                return this.configuration[EnvironmentNameConfigKey] ?? "Tests";
-            }
-        }
+        internal string EnvironmentName => this.configuration[EnvironmentNameConfigKey] ?? "Test";
 
         internal bool AutomaticStartup
         {
@@ -39,5 +34,7 @@
                 return automaticStartup;
             }
         }
+
+        internal string FullStartupName => this.configuration[FullStartupNameConfigKey];
     }
 }

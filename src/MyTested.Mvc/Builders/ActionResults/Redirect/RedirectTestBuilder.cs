@@ -12,7 +12,7 @@
     using Microsoft.AspNetCore.Routing;
     using Utilities.Validators;
     using Internal.TestContexts;
-
+    using System.Threading.Tasks;
     /// <summary>
     /// Used for testing redirect results.
     /// </summary>
@@ -309,15 +309,12 @@
         /// <returns>The same redirect test builder.</returns>
         public IAndRedirectTestBuilder To<TController>(Expression<Action<TController>> actionCall)
         {
-            this.redirectToExpression = actionCall;
+            return this.ProcessRouteLambdaExpression<TController>(actionCall);
+        }
 
-            RouteActionResultValidator.ValidateExpressionLink(
-                this.TestContext,
-                LinkGenerationTestContext.FromRedirectResult(this.ActionResult),
-                actionCall,
-                this.ThrowNewRedirectResultAssertionException);
-            
-            return this;
+        public IAndRedirectTestBuilder To<TController>(Expression<Func<TController, Task>> actionCall)
+        {
+            return this.ProcessRouteLambdaExpression<TController>(actionCall);
         }
 
         /// <summary>
@@ -346,7 +343,20 @@
 
             return actualRedirectResult;
         }
-        
+
+        private IAndRedirectTestBuilder ProcessRouteLambdaExpression<TController>(LambdaExpression actionCall)
+        {
+            this.redirectToExpression = actionCall;
+
+            RouteActionResultValidator.ValidateExpressionLink(
+                this.TestContext,
+                LinkGenerationTestContext.FromRedirectResult(this.ActionResult),
+                actionCall,
+                this.ThrowNewRedirectResultAssertionException);
+
+            return this;
+        }
+
         private void ThrowNewRedirectResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new RedirectResultAssertionException(string.Format(

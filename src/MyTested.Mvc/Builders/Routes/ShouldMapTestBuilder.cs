@@ -4,7 +4,6 @@
     using System.Linq.Expressions;
     using Contracts.Routes;
     using Utilities;
-    using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Routing;
     using Internal.Routes;
     using Exceptions;
@@ -12,6 +11,7 @@
     using System.Linq;
     using System.Collections.Generic;
     using Internal.TestContexts;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Used for building and testing a route.
@@ -216,9 +216,12 @@
         /// <returns>The same route test builder.</returns>
         public IAndResolvedRouteTestBuilder To<TController>(Expression<Action<TController>> actionCall)
         {
-            this.actionCallExpression = actionCall;
-            this.ValidateRouteInformation<TController>();
-            return this;
+            return this.ProcessRouteLambdaExpression<TController>(actionCall);
+        }
+
+        public IAndResolvedRouteTestBuilder To<TController>(Expression<Func<TController, Task>> actionCall)
+        {
+            return this.ProcessRouteLambdaExpression<TController>(actionCall);
         }
 
         /// <summary>
@@ -292,6 +295,13 @@
         /// <returns>The same route builder.</returns>
         public IResolvedRouteTestBuilder AndAlso()
         {
+            return this;
+        }
+
+        private IAndResolvedRouteTestBuilder ProcessRouteLambdaExpression<TController>(LambdaExpression actionCall)
+        {
+            this.actionCallExpression = actionCall;
+            this.ValidateRouteInformation<TController>();
             return this;
         }
 

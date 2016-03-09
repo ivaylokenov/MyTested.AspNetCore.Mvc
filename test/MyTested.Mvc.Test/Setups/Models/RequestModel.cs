@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Tests.Setups.Models
+﻿namespace MyTested.Mvc.Test.Setups.Models
 {
     using System.ComponentModel.DataAnnotations;
 

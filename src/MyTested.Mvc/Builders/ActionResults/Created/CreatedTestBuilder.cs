@@ -15,7 +15,7 @@
     using Microsoft.Net.Http.Headers;
     using Utilities.Validators;
     using Internal.TestContexts;
-
+    using System.Threading.Tasks;
     /// <summary>
     /// Used for testing created results.
     /// </summary>
@@ -425,15 +425,12 @@
         /// <returns>The same created test builder.</returns>
         public IAndCreatedTestBuilder At<TController>(Expression<Action<TController>> actionCall)
         {
-            this.createdAtExpression = actionCall;
+            return this.ProcessRouteLambdaExpression<TController>(actionCall);
+        }
 
-            RouteActionResultValidator.ValidateExpressionLink(
-                this.TestContext,
-                LinkGenerationTestContext.FromCreatedResult(this.ActionResult),
-                actionCall,
-                this.ThrowNewCreatedResultAssertionException);
-
-            return this;
+        public IAndCreatedTestBuilder At<TController>(Expression<Func<TController, Task>> actionCall)
+        {
+            return this.ProcessRouteLambdaExpression<TController>(actionCall);
         }
 
         /// <summary>
@@ -456,7 +453,7 @@
         /// <param name="actualValue">Actual value of the tested property.</param>
         protected override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)
             => this.ThrowNewCreatedResultAssertionException(propertyName, expectedValue, actualValue);
-
+        
         private TExpectedCreatedResult GetCreatedResult<TExpectedCreatedResult>(string containment)
             where TExpectedCreatedResult : class
         {
@@ -470,6 +467,19 @@
             }
 
             return actualRedirectResult;
+        }
+
+        private IAndCreatedTestBuilder ProcessRouteLambdaExpression<TController>(LambdaExpression actionCall)
+        {
+            this.createdAtExpression = actionCall;
+
+            RouteActionResultValidator.ValidateExpressionLink(
+                this.TestContext,
+                LinkGenerationTestContext.FromCreatedResult(this.ActionResult),
+                actionCall,
+                this.ThrowNewCreatedResultAssertionException);
+
+            return this;
         }
 
         private void ThrowNewCreatedResultAssertionException(string propertyName, string expectedValue, string actualValue)

@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Tests.BuildersTests.ActionResultsTests.ChallengeTests
+﻿namespace MyTested.Mvc.Test.BuildersTests.ActionResultsTests.ChallengeTests
 {
     using System.Collections.Generic;
     using Exceptions;

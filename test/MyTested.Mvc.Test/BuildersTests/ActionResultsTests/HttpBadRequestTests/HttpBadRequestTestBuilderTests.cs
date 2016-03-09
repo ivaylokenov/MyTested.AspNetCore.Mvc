@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Tests.BuildersTests.ActionResultsTests.HttpBadRequestTests
+﻿namespace MyTested.Mvc.Test.BuildersTests.ActionResultsTests.HttpBadRequestTests
 {
     using System.Collections.Generic;
     using System.Net;

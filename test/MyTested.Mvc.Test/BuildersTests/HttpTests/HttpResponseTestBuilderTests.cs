@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Tests.BuildersTests.HttpTests
+﻿namespace MyTested.Mvc.Test.BuildersTests.HttpTests
 {
     using Exceptions;
     using Microsoft.AspNetCore.Http;
