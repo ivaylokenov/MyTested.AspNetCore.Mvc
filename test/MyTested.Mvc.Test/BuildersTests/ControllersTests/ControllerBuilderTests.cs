@@ -244,6 +244,36 @@
         }
 
         [Fact]
+        public void WithResolvedDependencyForShouldWorkCorrectlyWithNullValues()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .WithResolvedDependencyFor<IInjectedService>(null)
+                .WithResolvedDependencyFor<RequestModel>(null)
+                .WithResolvedDependencyFor<IAnotherInjectedService>(null)
+                .Calling(c => c.DefaultView())
+                .ShouldReturn()
+                .View();
+        }
+
+
+        [Fact]
+        public void WithResolvedDependencyForShouldThrowExceptionWithNullValuesAndMoreThanOneSuitableConstructor()
+        {
+            Test.AssertException<UnresolvedDependenciesException>(
+                () =>
+                {
+                    MyMvc
+                       .Controller<MvcController>()
+                       .WithResolvedDependencyFor<IInjectedService>(null)
+                       .Calling(c => c.DefaultView())
+                       .ShouldReturn()
+                       .View();
+                },
+                "");
+        }
+
+        [Fact]
         public void AndAlsoShouldContinueTheNormalExecutionFlowOfTestBuilders()
         {
             MyMvc

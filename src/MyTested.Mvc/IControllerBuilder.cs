@@ -57,7 +57,8 @@
         /// <typeparam name="TDependency">Type of dependency to resolve.</typeparam>
         /// <param name="dependency">Instance of dependency to inject into constructor.</param>
         /// <returns>The same controller builder.</returns>
-        IAndControllerBuilder<TController> WithResolvedDependencyFor<TDependency>(TDependency dependency);
+        IAndControllerBuilder<TController> WithResolvedDependencyFor<TDependency>(TDependency dependency)
+            where TDependency : class;
 
         /// <summary>
         /// Tries to resolve constructor dependencies by the provided collection of dependencies.

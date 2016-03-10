@@ -12,6 +12,12 @@
     /// <typeparam name="TController">Class inheriting ASP.NET MVC controller.</typeparam>
     public partial class ControllerBuilder<TController>
     {
+        public IAndControllerBuilder<TController> WithNoResolvedDependencyFor<TDependency>(TDependency dependency)
+            where TDependency : class
+        {
+            return this.WithResolvedDependencyFor<TDependency>(null);
+        }
+
         /// <summary>
         /// Tries to resolve constructor dependency of given type.
         /// </summary>
@@ -19,6 +25,7 @@
         /// <param name="dependency">Instance of dependency to inject into constructor.</param>
         /// <returns>The same controller builder.</returns>
         public IAndControllerBuilder<TController> WithResolvedDependencyFor<TDependency>(TDependency dependency)
+            where TDependency : class
         {
             var typeOfDependency = dependency != null
                 ? dependency.GetType()
