@@ -255,7 +255,7 @@
                 }
 
                 var constructorParameterTypes = constructorParameters
-                    .Select(cp => cp.GetType())
+                    .Select(cp => cp?.GetType())
                     .ToList();
                 
                 var constructor = type.GetConstructorByUnorderedParameters(constructorParameterTypes);
@@ -393,10 +393,10 @@
             }
 
             var orderedTypes = types
-                .OrderBy(t => t.FullName)
+                .OrderBy(t => t?.FullName)
                 .ToList();
-            
-            var constructor = allConstructors
+
+            var constructors = allConstructors
                 .Where(c =>
                 {
                     var parameters = c.GetParameters()
@@ -409,11 +409,16 @@
                         return false;
                     }
 
-                    return !orderedTypes.Where((t, i) => !parameters[i].IsAssignableFrom(t)).Any();
+                    return !orderedTypes.Where((t, i) => t == null || !parameters[i].IsAssignableFrom(t)).Any();
                 })
-                .FirstOrDefault();
+                .ToList();
 
-            return constructor;
+            if (constructors.Count > 1)
+            {
+                return null;
+            }
+            
+            return constructors.FirstOrDefault();
         }
 
         private static bool AreDeeplyEqual(object expected, object actual, ConditionalWeakTable<object, object> processedElements)

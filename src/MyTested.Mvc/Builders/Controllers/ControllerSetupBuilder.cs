@@ -46,7 +46,8 @@
             var controller = this.TestContext.Controller;
             if (controller == null)
             {
-                if (this.aggregatedDependencies.Any())
+                var explicitDependenciesAreSet = this.aggregatedDependencies.Any();
+                if (explicitDependenciesAreSet)
                 {
                     // custom dependencies are set, try create instance with them
                     controller = Reflection.TryCreateInstance<TController>(this.aggregatedDependencies.Select(v => v.Value).ToArray());
@@ -57,7 +58,7 @@
                     controller = TestHelper.TryCreateInstance<TController>();
                 }
 
-                if (controller == null)
+                if (controller == null && !explicitDependenciesAreSet)
                 {
                     // no controller at this point, try to create one with default constructor
                     controller = Reflection.TryFastCreateInstance<TController>();
