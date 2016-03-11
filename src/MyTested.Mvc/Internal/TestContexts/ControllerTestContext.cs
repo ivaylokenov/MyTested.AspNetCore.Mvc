@@ -13,10 +13,11 @@
     using Microsoft.AspNetCore.Mvc;
     using System.Linq;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
-
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
     public class ControllerTestContext : HttpTestContext
     {
         private object controller;
+        private ControllerPropertyHelper controllerProperties;
         private ControllerContext controllerContext;
         private IEnumerable<object> controllerAttributes;
         private string actionName;
@@ -148,9 +149,11 @@
             }
         }
 
-        public ITempDataDictionary TempData => this.ControllerAs<Controller>().TempData;
+        public ModelStateDictionary ModelState => this.ControllerContext.ModelState;
 
-        public ViewDataDictionary ViewData => this.ControllerAs<Controller>().ViewData;
+        public ITempDataDictionary TempData => this.ControllerAs<Controller>()?.TempData ?? this.ControllerProperties.TempDataGetter(this.Controller);
+
+        public ViewDataDictionary ViewData => this.ControllerAs<Controller>()?.ViewData ?? this.ControllerProperties.ViewDataGetter(this.Controller);
 
         public override string ExceptionMessagePrefix => $"When calling {this.ActionName} action in {this.Controller.GetName()} expected";
 
@@ -158,6 +161,19 @@
 
         internal TController ControllerAs<TController>()
             where TController : class => this.Controller as TController;
+
+        internal ControllerPropertyHelper ControllerProperties
+        {
+            get
+            {
+                if (this.controllerProperties == null)
+                {
+                    this.controllerProperties = ControllerPropertyHelper.GetProperties(this.Controller.GetType());
+                }
+
+                return this.controllerProperties;
+            }
+        }
 
         internal ControllerContext ControllerContext
         {

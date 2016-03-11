@@ -9,8 +9,16 @@
     using Utilities.Validators;
     using Microsoft.AspNetCore.Mvc.Internal;
     using System.Reflection;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Http.Internal;
+
     public static class ServiceCollectionExtensions
     {
+        public static void AddHttpContextAccessor(this IServiceCollection serviceCollection)
+        {
+            serviceCollection.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        }
+
         public static void TryRemoveTransient(this IServiceCollection serviceCollection, Type service)
         {
             CommonValidator.CheckForNullReference(service, nameof(service));

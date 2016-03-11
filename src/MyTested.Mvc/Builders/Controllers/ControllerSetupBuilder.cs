@@ -7,7 +7,6 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Controllers;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Options;
     using System;
     using System.Linq;
     using Utilities;
@@ -16,7 +15,7 @@
     /// <summary>
     /// Used for building the controller which will be tested.
     /// </summary>
-    /// <typeparam name="TController">Class inheriting ASP.NET MVC controller.</typeparam>
+    /// <typeparam name="TController">Class representing ASP.NET MVC controller.</typeparam>
     public partial class ControllerBuilder<TController>
     {
         public IAndControllerBuilder<TController> WithControllerContext(ControllerContext controllerContext)
@@ -27,18 +26,20 @@
 
         public IAndControllerBuilder<TController> WithControllerContext(Action<ControllerContext> controllerContextSetup)
         {
-            this.controllerContextAction = controllerContextSetup;
+            this.controllerContextAction += controllerContextSetup;
             return this;
         }
 
         public IAndControllerBuilder<TController> WithActionContext(ActionContext actionContext)
         {
-            return this; // TODO: only POCO
+            this.TestContext.ControllerContext = new MockedControllerContext(this.TestContext, actionContext);
+            return this;
         }
 
         public IAndControllerBuilder<TController> WithActionContext(Action<ActionContext> actionContextSetup)
         {
-            return this; // TODO: only POCO
+            this.controllerContextAction += actionContextSetup;
+            return this;
         }
 
         /// <summary>
@@ -48,7 +49,7 @@
         /// <returns>The same controller test builder.</returns>
         public IAndControllerBuilder<TController> WithSetup(Action<TController> controllerSetup)
         {
-            this.controllerSetupAction = controllerSetup;
+            this.controllerSetupAction += controllerSetup;
             return this;
         }
 

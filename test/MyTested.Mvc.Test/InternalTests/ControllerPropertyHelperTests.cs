@@ -2,6 +2,7 @@
 {
     using Internal;
     using Internal.Application;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.AspNetCore.Mvc;
     using Setups;
@@ -27,8 +28,8 @@
                 }
             };
 
-            helper.ControllerContextSetter(controller, controllerContext);
-
+            controller.ControllerContext = controllerContext;
+            
             Assert.NotNull(controller.ControllerContext);
             Assert.Same(controllerContext, controller.ControllerContext);
 
@@ -36,15 +37,7 @@
 
             Assert.NotNull(gotControllerContext);
             Assert.Same(gotControllerContext, controller.ControllerContext);
-
-            var actionContext = new ActionContext();
-
-            Test.AssertException<InvalidOperationException>(
-                () =>
-                {
-                    helper.ActionContextSetter(controller, actionContext);
-                }, "ActionContext could not be found on the provided MvcController. The property should be specified manually by providing controller instance or using the specified helper methods.");
-
+            
             Test.AssertException<InvalidOperationException>(
                 () =>
                 {
@@ -66,14 +59,19 @@
         [Fact]
         public void GetPropertiesShouldNotThrowExceptionForPocoController()
         {
-            MyMvc.IsUsingDefaultConfiguration();
+            MyMvc
+                .IsUsingDefaultConfiguration()
+                .WithServices(services =>
+                {
+                    services.AddHttpContextAccessor();
+                });
 
             var helper = ControllerPropertyHelper.GetProperties<FullPocoController>();
-            
-            var controller = new FullPocoController(TestServiceProvider.Global);
-            var controllerContext = new ControllerContext();
 
-            helper.ControllerContextSetter(controller, controllerContext);
+            var controllerContext = new ControllerContext();
+            var controller = new FullPocoController();
+
+            controller.CustomControllerContext = controllerContext;
 
             Assert.NotNull(controller.CustomControllerContext);
             Assert.Same(controllerContext, controller.CustomControllerContext);
@@ -84,8 +82,8 @@
             Assert.Same(gotControllerContext, controller.CustomControllerContext);
 
             var actionContext = new ActionContext();
-            
-            helper.ActionContextSetter(controller, actionContext);
+
+            controller.CustomActionContext = actionContext;
 
             Assert.NotNull(controller.CustomActionContext);
             Assert.Same(actionContext, controller.CustomActionContext);

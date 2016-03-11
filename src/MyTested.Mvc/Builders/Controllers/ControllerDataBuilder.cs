@@ -8,7 +8,7 @@
     /// <summary>
     /// Used for building the controller which will be tested.
     /// </summary>
-    /// <typeparam name="TController">Class inheriting ASP.NET MVC controller.</typeparam>
+    /// <typeparam name="TController">Class representing ASP.NET MVC controller.</typeparam>
     public partial class ControllerBuilder<TController>
     {
         public IAndControllerBuilder<TController> WithTempData(Action<ITempDataBuilder> tempDataBuilder)

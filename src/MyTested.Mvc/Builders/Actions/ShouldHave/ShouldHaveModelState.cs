@@ -42,7 +42,7 @@
         /// <returns>Test builder with AndAlso method.</returns>
         public IAndTestBuilder<TActionResult> InvalidModelState(int? withNumberOfErrors = null)
         {
-            var actualModelStateErrors = this.Controller.ModelState.Values.SelectMany(c => c.Errors).Count();
+            var actualModelStateErrors = this.TestContext.ModelState.Values.SelectMany(c => c.Errors).Count();
             if (actualModelStateErrors == 0
                 || (withNumberOfErrors != null && actualModelStateErrors != withNumberOfErrors))
             {

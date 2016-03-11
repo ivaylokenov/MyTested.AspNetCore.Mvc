@@ -13,9 +13,9 @@
     /// <summary>
     /// Used for building the controller which will be tested.
     /// </summary>
-    /// <typeparam name="TController">Class inheriting ASP.NET MVC controller.</typeparam>
+    /// <typeparam name="TController">Class representing ASP.NET MVC controller.</typeparam>
     public partial class ControllerBuilder<TController> : IAndControllerBuilder<TController>
-        where TController : Controller
+        where TController : class
     {
         private readonly IDictionary<Type, object> aggregatedDependencies;
 
@@ -106,7 +106,7 @@
         /// <returns>HttpRequest from the tested controller.</returns>
         public HttpRequest AndProvideTheHttpRequest()
         {
-            return this.Controller.Request;
+            return this.TestContext.HttpRequest;
         }
 
         /// <summary>
@@ -115,7 +115,7 @@
         /// <returns>HttpContext from the tested controller.</returns>
         public HttpContext AndProvideTheHttpContext()
         {
-            return this.Controller.HttpContext;
+            return this.TestContext.HttpContext;
         }
     }
 }

@@ -18,17 +18,12 @@
 
         private static readonly MethodInfo CallPropertyGetterOpenGenericMethod =
             typeof(ControllerPropertyHelper).GetTypeInfo().GetDeclaredMethod(nameof(CallPropertyGetter));
-
-        private static readonly MethodInfo CallPropertySetterOpenGenericMethod =
-            typeof(ControllerPropertyHelper).GetTypeInfo().GetDeclaredMethod(nameof(CallPropertySetter));
-
+        
         private readonly Type controllerType;
         private readonly IEnumerable<PropertyInfo> properties;
 
         private Func<object, ControllerContext> controllerContextGetter;
-        private Action<object, ControllerContext> controllerContextSetter;
         private Func<object, ActionContext> actionContextGetter;
-        private Action<object, ActionContext> actionContextSetter;
         private Func<object, ViewDataDictionary> viewDataGetter;
         private Func<object, ITempDataDictionary> tempDataGetter;
 
@@ -50,20 +45,7 @@
                 return this.controllerContextGetter;
             }
         }
-
-        public Action<object, ControllerContext> ControllerContextSetter
-        {
-            get
-            {
-                if (this.controllerContextSetter == null)
-                {
-                    this.TryCreateControllerContextDelegates();
-                }
-
-                return this.controllerContextSetter;
-            }
-        }
-
+        
         public Func<object, ActionContext> ActionContextGetter
         {
             get
@@ -76,20 +58,7 @@
                 return this.actionContextGetter;
             }
         }
-
-        public Action<object, ActionContext> ActionContextSetter
-        {
-            get
-            {
-                if (this.actionContextSetter == null)
-                {
-                    this.TryCreateActionContextDelegates();
-                }
-
-                return this.actionContextSetter;
-            }
-        }
-
+        
         public Func<object, ViewDataDictionary> ViewDataGetter
         {
             get
@@ -154,49 +123,13 @@
                 throw new InvalidOperationException(string.Format(InvalidDelegateErrorMessage, propertyInfo.Name, typeof(TResult)));
             }
         }
-
-        private static Action<object, TValue> MakeFastPropertySetter<TValue>(PropertyInfo propertyInfo)
-        {
-            try
-            {
-                var setMethod = propertyInfo.SetMethod;
-                var parameters = setMethod.GetParameters();
-
-                var typeInput = setMethod.DeclaringType;
-                var parameterType = parameters[0].ParameterType;
-
-                // Create a delegate TDeclaringType -> { TDeclaringType.Property = TValue; }
-                var propertySetterAsAction =
-                    setMethod.CreateDelegate(typeof(Action<,>).MakeGenericType(typeInput, parameterType));
-                var callPropertySetterClosedGenericMethod =
-                    CallPropertySetterOpenGenericMethod.MakeGenericMethod(typeInput, parameterType);
-                var callPropertySetterDelegate =
-                    callPropertySetterClosedGenericMethod.CreateDelegate(
-                        typeof(Action<object, TValue>), propertySetterAsAction);
-
-                return (Action<object, TValue>)callPropertySetterDelegate;
-            }
-            catch
-            {
-                throw new InvalidOperationException(string.Format(InvalidDelegateErrorMessage, propertyInfo.Name, typeof(TValue)));
-            }
-        }
-
+        
         // Called via reflection
         private static TValue CallPropertyGetter<TDeclaringType, TValue>(
             Func<TDeclaringType, TValue> getter,
             object target)
         {
             return getter((TDeclaringType)target);
-        }
-
-        // Called via reflection
-        private static void CallPropertySetter<TDeclaringType, TValue>(
-            Action<TDeclaringType, TValue> setter,
-            object target,
-            object value)
-        {
-            setter((TDeclaringType)target, (TValue)value);
         }
         
         private void TryCreateControllerContextDelegates()
@@ -205,7 +138,6 @@
             this.ThrowNewInvalidOperationExceptionIfNull(controllerContextProperty, nameof(ControllerContext));
 
             this.controllerContextGetter = MakeFastPropertyGetter<ControllerContext>(controllerContextProperty);
-            this.controllerContextSetter = MakeFastPropertySetter<ControllerContext>(controllerContextProperty);
         }
 
         private void TryCreateActionContextDelegates()
@@ -214,7 +146,6 @@
             this.ThrowNewInvalidOperationExceptionIfNull(actionContextProperty, nameof(ActionContext));
 
             this.actionContextGetter = MakeFastPropertyGetter<ActionContext>(actionContextProperty);
-            this.actionContextSetter = MakeFastPropertySetter<ActionContext>(actionContextProperty);
         }
 
         private void TryCreateViewDataGetterDelegate()

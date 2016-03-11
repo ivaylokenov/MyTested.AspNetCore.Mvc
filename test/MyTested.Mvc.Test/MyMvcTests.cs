@@ -524,7 +524,7 @@ namespace MyTested.Mvc.Test
                 .WithServices(services =>
                 {
                     services.TryReplaceTransient<IHttpContextFactory, CustomHttpContextFactory>();
-                    services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+                    services.AddHttpContextAccessor();
                 });
             
             HttpContext firstContext = null;
@@ -557,7 +557,7 @@ namespace MyTested.Mvc.Test
                 .WithServices(services =>
                 {
                     services.TryReplaceTransient<IHttpContextFactory, CustomHttpContextFactory>();
-                    services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+                    services.AddHttpContextAccessor();
                 });
 
             Task

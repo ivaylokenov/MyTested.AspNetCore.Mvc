@@ -24,7 +24,7 @@
             ModelStateDictionary modelState = null)
             : base(testContext)
         {
-            this.ModelState = modelState ?? testContext.ControllerAs<Controller>().ModelState;
+            this.ModelState = modelState ?? testContext.ModelState;
         }
 
         /// <summary>

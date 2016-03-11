@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
     /// Base interface for all test builders.
@@ -13,7 +12,7 @@
         /// Gets the controller on which the action is tested.
         /// </summary>
         /// <returns>ASP.NET MVC controller on which the action is tested.</returns>
-        Controller AndProvideTheController();
+        object AndProvideTheController();
 
         /// <summary>
         /// Gets the HTTP context with which the action will be tested.

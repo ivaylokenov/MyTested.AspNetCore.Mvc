@@ -5,14 +5,13 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Options;
     using System;
-    using System.Linq;
     using Utilities.Validators;
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
     using Microsoft.AspNetCore.Routing;
-    using Application;
+
     public class MockedControllerContext : ControllerContext
     {
         private HttpTestContext testContext;
@@ -24,9 +23,13 @@
 
         public MockedControllerContext(HttpTestContext testContext)
         {
-            this.TestContext = testContext;
-            this.HttpContext = testContext.HttpContext;
-            this.RouteData = testContext.RouteData ?? new RouteData();
+            this.SetTestContext(testContext);
+        }
+
+        public MockedControllerContext(HttpTestContext testContext, ActionContext actionContext)
+            : base(actionContext)
+        {
+            this.SetTestContext(testContext);
         }
 
         public override FormatterCollection<IInputFormatter> InputFormatters
@@ -141,6 +144,13 @@
 
                 return options;
             }
+        }
+
+        private void SetTestContext(HttpTestContext testContext)
+        {
+            this.TestContext = testContext;
+            this.HttpContext = testContext.HttpContext;
+            this.RouteData = testContext.RouteData ?? new RouteData();
         }
     }
 }

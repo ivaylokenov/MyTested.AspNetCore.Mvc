@@ -5,9 +5,9 @@
     /// <summary>
     /// Used for adding AndAlso() method to controller builder.
     /// </summary>
-    /// <typeparam name="TController">Class inheriting ASP.NET MVC controller.</typeparam>
+    /// <typeparam name="TController">Class representing ASP.NET MVC controller.</typeparam>
     public interface IAndControllerBuilder<TController> : IControllerBuilder<TController>
-        where TController : Controller
+        where TController : class
     {
         /// <summary>
         /// AndAlso method for better readability when building controller instance.

@@ -278,7 +278,7 @@
         /// <returns>The same bad request test builder.</returns>
         public IAndBadRequestTestBuilder WithModelStateError()
         {
-            return this.WithModelStateError(this.Controller.ModelState);
+            return this.WithModelStateError(this.TestContext.ControllerContext.ModelState);
         }
 
         /// <summary>

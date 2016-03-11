@@ -55,10 +55,10 @@
         /// <summary>
         /// Selects controller on which the test will be executed.
         /// </summary>
-        /// <typeparam name="TController">Class inheriting ASP.NET MVC controller.</typeparam>
+        /// <typeparam name="TController">Class representing ASP.NET MVC controller.</typeparam>
         /// <returns>Controller builder used to build the test case.</returns>
         public static IControllerBuilder<TController> Controller<TController>()
-            where TController : Controller
+            where TController : class
         {
             return Controller((TController)null);
         }
@@ -66,11 +66,11 @@
         /// <summary>
         /// Selects controller on which the test will be executed.
         /// </summary>
-        /// <typeparam name="TController">Class inheriting ASP.NET MVC controller.</typeparam>
+        /// <typeparam name="TController">Class representing ASP.NET MVC controller.</typeparam>
         /// <param name="controller">Instance of the ASP.NET MVC controller to use.</param>
         /// <returns>Controller builder used to build the test case.</returns>
         public static IControllerBuilder<TController> Controller<TController>(TController controller)
-            where TController : Controller
+            where TController : class
         {
             return Controller(() => controller);
         }
@@ -78,11 +78,11 @@
         /// <summary>
         /// Selects controller on which the test will be executed. Controller is instantiated using construction function.
         /// </summary>
-        /// <typeparam name="TController">Class inheriting ASP.NET MVC controller.</typeparam>
+        /// <typeparam name="TController">Class representing ASP.NET MVC controller.</typeparam>
         /// <param name="construction">Construction function returning the instantiated controller.</param>
         /// <returns>Controller builder used to build the test case.</returns>
         public static IControllerBuilder<TController> Controller<TController>(Func<TController> construction)
-            where TController : Controller
+            where TController : class
         {
             return new ControllerBuilder<TController>(new ControllerTestContext { ControllerConstruction = construction });
         }

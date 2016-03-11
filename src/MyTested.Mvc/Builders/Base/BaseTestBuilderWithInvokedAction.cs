@@ -36,7 +36,7 @@
         /// Gets the HTTP response after the tested action is executed.
         /// </summary>
         /// <returns>The HTTP response.</returns>
-        public HttpResponse AndProvideTheHttpResponse() => this.Controller.Response;
+        public HttpResponse AndProvideTheHttpResponse() => this.TestContext.HttpResponse;
 
         /// <summary>
         /// Creates new AndProvideTestBuilder.
