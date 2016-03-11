@@ -41,13 +41,18 @@
                 ? MockedHttpContext.From(httpContextFactory.Create(new FeatureCollection()))
                 : new MockedHttpContext();
 
+            SetHttpContextToAccessor(httpContext);
+
+            return httpContext;
+        }
+
+        public static void SetHttpContextToAccessor(HttpContext httpContext)
+        {
             var httpContextAccessor = TestServiceProvider.GetService<IHttpContextAccessor>();
             if (httpContextAccessor != null)
             {
                 httpContextAccessor.HttpContext = httpContext;
             }
-
-            return httpContext;
         }
 
         public static void ClearMemoryCache()

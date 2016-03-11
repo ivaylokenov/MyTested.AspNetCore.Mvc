@@ -2,5 +2,6 @@
 {
     public interface ISessionBuilder
     {
+        IAndSessionBuilder WithStringEntry(string key, string value);
     }
 }

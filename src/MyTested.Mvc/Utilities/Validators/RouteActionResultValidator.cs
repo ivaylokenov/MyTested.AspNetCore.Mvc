@@ -8,7 +8,7 @@
     using Microsoft.AspNetCore.Mvc.Routing;
     using System.Linq.Expressions;
     using Internal.TestContexts;
-
+    using System.Linq;
     /// <summary>
     /// Validator class containing validation logic action results with route specific information.
     /// </summary>
@@ -267,6 +267,10 @@
             Action<string, string, string> failedValidationAction)
         {
             var actionContext = controllerTestContext.ControllerContext;
+            if (!actionContext.RouteData.Routers.Any())
+            {
+                actionContext.RouteData.Routers.Add(TestApplication.Router);
+            }
 
             var urlHelper = linkGenerationTestContext.UrlHelper ?? TestServiceProvider
                 .GetRequiredService<IUrlHelperFactory>()

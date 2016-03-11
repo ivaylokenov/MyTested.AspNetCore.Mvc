@@ -34,6 +34,7 @@
             {
                 CommonValidator.CheckForNullReference(value, nameof(HttpContext));
                 this.mockedHttpContext = MockedHttpContext.From(value);
+                TestHelper.SetHttpContextToAccessor(this.mockedHttpContext);
             }
         }
 

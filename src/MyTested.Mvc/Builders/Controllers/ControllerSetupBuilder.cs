@@ -25,9 +25,20 @@
             return this;
         }
 
+        public IAndControllerBuilder<TController> WithControllerContext(Action<ControllerContext> controllerContextSetup)
+        {
+            this.controllerContextAction = controllerContextSetup;
+            return this;
+        }
+
         public IAndControllerBuilder<TController> WithActionContext(ActionContext actionContext)
         {
-            return this;
+            return this; // TODO: only POCO
+        }
+
+        public IAndControllerBuilder<TController> WithActionContext(Action<ActionContext> actionContextSetup)
+        {
+            return this; // TODO: only POCO
         }
 
         /// <summary>
@@ -50,7 +61,7 @@
                 if (explicitDependenciesAreSet)
                 {
                     // custom dependencies are set, try create instance with them
-                    controller = Reflection.TryCreateInstance<TController>(this.aggregatedDependencies.Select(v => v.Value).ToArray());
+                    controller = Reflection.TryCreateInstance<TController>(this.aggregatedDependencies);
                 }
                 else
                 {
@@ -90,9 +101,12 @@
 
         private void PrepareController()
         {
-            var options = this.Services.GetRequiredService<IOptions<MvcOptions>>().Value;
+            var controllerContext = this.TestContext.ControllerContext;
 
-            var controllerContext = new MockedControllerContext(this.TestContext);
+            if (this.controllerContextAction != null)
+            {
+                this.controllerContextAction(controllerContext);
+            }
 
             var controllerPropertyActivators = this.Services.GetServices<IControllerPropertyActivator>();
 
@@ -100,7 +114,7 @@
 
             if (this.tempDataBuilderAction != null)
             {
-                this.tempDataBuilderAction(new TempDataBuilder(this.TestContext.ControllerAs<TController>()?.TempData));
+                this.tempDataBuilderAction(new TempDataBuilder(this.TestContext.TempData));
             }
 
             if (this.controllerSetupAction != null)

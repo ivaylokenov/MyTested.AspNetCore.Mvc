@@ -19,7 +19,13 @@
   },
 
   "frameworks": {
-    "net451": { },
-    "netstandard1.5": { }
+    "netstandard1.5": { },
+    "net451": {
+      "frameworkAssemblies": {
+        "System.Runtime": "",
+        "System.Collections": "",
+        "System.Threading.Tasks": ""
+      }
+    }
   }
 }

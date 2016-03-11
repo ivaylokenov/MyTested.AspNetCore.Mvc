@@ -12,7 +12,7 @@
     /// <typeparam name="TController">Class inheriting ASP.NET MVC controller.</typeparam>
     public partial class ControllerBuilder<TController>
     {
-        public IAndControllerBuilder<TController> WithNoResolvedDependencyFor<TDependency>(TDependency dependency)
+        public IAndControllerBuilder<TController> WithNoResolvedDependencyFor<TDependency>()
             where TDependency : class
         {
             return this.WithResolvedDependencyFor<TDependency>(null);

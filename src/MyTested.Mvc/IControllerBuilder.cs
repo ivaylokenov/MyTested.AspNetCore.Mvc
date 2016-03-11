@@ -23,6 +23,14 @@
         /// </summary>
         /// <returns>Controller test builder.</returns>
         IControllerTestBuilder ShouldHave();
+        
+        IAndControllerBuilder<TController> WithControllerContext(ControllerContext controllerContext);
+
+        IAndControllerBuilder<TController> WithControllerContext(Action<ControllerContext> controllerContextSetup);
+        
+        IAndControllerBuilder<TController> WithActionContext(ActionContext actionContext);
+
+        IAndControllerBuilder<TController> WithActionContext(Action<ActionContext> actionContextSetup);
 
         /// <summary>
         /// Sets the HTTP context for the current test case.
@@ -30,6 +38,8 @@
         /// <param name="httpContext">Instance of HttpContext.</param>
         /// <returns>The same controller builder.</returns>
         IAndControllerBuilder<TController> WithHttpContext(HttpContext httpContext);
+
+        IAndControllerBuilder<TController> WithHttpContext(Action<HttpContext> httpContextSetup);
 
         /// <summary>
         /// Adds HTTP request message to the tested controller.
@@ -50,6 +60,11 @@
         IAndControllerBuilder<TController> WithTempData(Action<ITempDataBuilder> tempDataBuilder);
 
         IAndControllerBuilder<TController> WithMemoryCache(Action<IMemoryCacheBuilder> memoryCacheBuilder);
+
+        IAndControllerBuilder<TController> WithSession(Action<ISessionBuilder> sessionBuilder);
+
+        IAndControllerBuilder<TController> WithNoResolvedDependencyFor<TDependency>()
+            where TDependency : class;
 
         /// <summary>
         /// Tries to resolve constructor dependency of given type.

@@ -795,6 +795,26 @@
             return this.BadRequest();
         }
 
+        public IActionResult TempDataAction()
+        {
+            if (this.TempData["test"] != null)
+            {
+                return this.Ok();
+            }
+
+            return this.BadRequest();
+        }
+
+        public IActionResult SessionAction()
+        {
+            if (this.HttpContext.Session.GetString("test") != null)
+            {
+                return this.Ok();
+            }
+
+            return this.BadRequest();
+        }
+
         private void ThrowNewNullReferenceException()
         {
             throw new NullReferenceException("Test exception message");

@@ -103,10 +103,7 @@
             router.RouteAsync(routeContext).Wait();
 
             var routeData = routeContext.RouteData;
-            routeContext.HttpContext.Features[typeof(IRoutingFeature)] = new MockedRoutingFeature
-            {
-                RouteData = routeData
-            };
+            routeContext.HttpContext.SetRouteData(routeData);
 
             return routeData;
         }

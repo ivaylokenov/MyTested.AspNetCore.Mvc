@@ -165,10 +165,10 @@
             {
                 if (this.controllerContext == null)
                 {
-                    this.controllerContext = this.ControllerAs<Controller>()?.ControllerContext ?? new MockedControllerContext(this);
-                    if (this.controllerContext.RouteData == null || !this.controllerContext.RouteData.Values.Any())
+                    this.controllerContext = new MockedControllerContext(this);
+                    if (!this.controllerContext.RouteData.Values.Any())
                     {
-                        this.controllerContext.RouteData = this.RouteData;
+                        this.controllerContext.RouteData = this.RouteData ?? this.controllerContext.RouteData;
                     }
                 }
                 
@@ -179,6 +179,7 @@
             {
                 CommonValidator.CheckForNullReference(value, nameof(ControllerContext));
                 this.controllerContext = value;
+                this.controllerContext.HttpContext = this.controllerContext.HttpContext ?? this.HttpContext;
             }
         }
 

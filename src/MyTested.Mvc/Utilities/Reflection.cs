@@ -231,13 +231,19 @@
             }
         }
 
+        public static T TryCreateInstance<T>(params object[] constructorParameters)
+            where T : class
+        {
+            return TryCreateInstance<T>(constructorParameters.ToDictionary(k => k?.GetType()));
+        }
+
         /// <summary>
         /// Tries to create instance of type T by using the provided unordered constructor parameters.
         /// </summary>
         /// <typeparam name="T">Type of created instance.</typeparam>
         /// <param name="constructorParameters">Unordered constructor parameters.</param>
         /// <returns>Created instance or null, if no suitable constructor found.</returns>
-        public static T TryCreateInstance<T>(params object[] constructorParameters)
+        public static T TryCreateInstance<T>(IDictionary<Type, object> constructorParameters = null)
             where T : class
         {
             var type = typeof(T);
@@ -245,17 +251,18 @@
             
             try
             {
-                instance = Activator.CreateInstance(type, constructorParameters) as T;
+                constructorParameters = constructorParameters ?? new Dictionary<Type, object>();
+                instance = Activator.CreateInstance(type, constructorParameters.Select(p => p.Value).ToArray()) as T;
             }
             catch (Exception)
             {
-                if (constructorParameters == null || constructorParameters.Length == 0)
+                if (constructorParameters == null || constructorParameters.Count == 0)
                 {
                     return instance;
                 }
 
                 var constructorParameterTypes = constructorParameters
-                    .Select(cp => cp?.GetType())
+                    .Select(cp => cp.Key)
                     .ToList();
                 
                 var constructor = type.GetConstructorByUnorderedParameters(constructorParameterTypes);
@@ -269,8 +276,7 @@
                 var selectedConstructorParameters = constructorParameterInfos
                     .Select(cp => cp.ParameterType)
                     .ToList();
-
-                var typeObjectDictionary = constructorParameters.ToDictionary(k => k.GetType());
+                
                 var resultParameters = new List<object>();
                 foreach (var selectedConstructorParameterType in selectedConstructorParameters)
                 {
@@ -278,19 +284,18 @@
                     {
                         if (selectedConstructorParameterType.IsAssignableFrom(constructorParameterType))
                         {
-                            resultParameters.Add(typeObjectDictionary[constructorParameterType]);
+                            resultParameters.Add(constructorParameters[constructorParameterType]);
                             break;
                         }
                     }
                 }
 
-                var parametersToUse = resultParameters.ToArray();
-                if (parametersToUse.Length != constructorParameterInfos.Length)
+                if (selectedConstructorParameters.Count != resultParameters.Count)
                 {
                     return instance;
                 }
-
-                instance = Activator.CreateInstance(type, resultParameters.ToArray()) as T;
+                
+                instance = constructor.Invoke(resultParameters.ToArray()) as T;
             }
 
             return instance;
@@ -393,32 +398,26 @@
             }
 
             var orderedTypes = types
-                .OrderBy(t => t?.FullName)
-                .ToList();
+                .OrderBy(t => t.FullName)
+                .ToArray();
 
-            var constructors = allConstructors
+            return allConstructors
                 .Where(c =>
                 {
-                    var parameters = c.GetParameters()
-                        .OrderBy(p => p.ParameterType.FullName)
-                        .Select(p => p.ParameterType)
-                        .ToList();
-
-                    if (orderedTypes.Count != parameters.Count)
+                    var parameters = c.GetParameters();
+                    if (orderedTypes.Length != parameters.Length)
                     {
                         return false;
                     }
 
-                    return !orderedTypes.Where((t, i) => t == null || !parameters[i].IsAssignableFrom(t)).Any();
+                    var parameterTypes = parameters
+                        .OrderBy(p => p.ParameterType.FullName)
+                        .Select(p => p.ParameterType)
+                        .ToArray();
+                    
+                    return !orderedTypes.Where((t, i) => !parameterTypes[i].IsAssignableFrom(t)).Any();
                 })
-                .ToList();
-
-            if (constructors.Count > 1)
-            {
-                return null;
-            }
-            
-            return constructors.FirstOrDefault();
+                .FirstOrDefault();
         }
 
         private static bool AreDeeplyEqual(object expected, object actual, ConditionalWeakTable<object, object> processedElements)

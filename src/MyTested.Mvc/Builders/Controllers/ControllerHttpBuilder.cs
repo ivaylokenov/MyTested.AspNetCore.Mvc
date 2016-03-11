@@ -26,7 +26,13 @@
         public IAndControllerBuilder<TController> WithHttpContext(HttpContext httpContext)
         {
             CommonValidator.CheckForNullReference(httpContext, nameof(HttpContext));
-            this.TestContext.HttpContext = httpContext; // TODO: add to the HTTP context accessor
+            this.TestContext.HttpContext = httpContext;
+            return this;
+        }
+
+        public IAndControllerBuilder<TController> WithHttpContext(Action<HttpContext> httpContextSetup)
+        {
+            httpContextSetup(this.TestContext.HttpContext);
             return this;
         }
 

@@ -5,11 +5,14 @@
     using Contracts.Controllers;
     using Internal.Contracts;
     using Internal.TestContexts;
+    using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
     using Microsoft.Extensions.DependencyInjection;
     using System;
+    using System.Linq;
     using System.Linq.Expressions;
     using System.Threading.Tasks;
     using Utilities;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Used for building the controller which will be tested.
@@ -138,6 +141,7 @@
 
         private string GetAndValidateAction(LambdaExpression actionCall)
         {
+            this.BuildControllerIfNotExists();
             this.SetRouteData(actionCall);
 
             var methodInfo = ExpressionParser.GetMethodInfo(actionCall);
@@ -150,7 +154,7 @@
             var controllerActionDescriptorCache = this.Services.GetService<IControllerActionDescriptorCache>();
             if (controllerActionDescriptorCache != null)
             {
-                this.Controller.ControllerContext.ActionDescriptor
+                this.TestContext.ControllerContext.ActionDescriptor
                     = controllerActionDescriptorCache.TryGetActionDescriptor(methodInfo);
             }
 
@@ -160,12 +164,16 @@
         private void ValidateModelState(LambdaExpression actionCall)
         {
             var arguments = ExpressionParser.ResolveMethodArguments(actionCall);
-            foreach (var argument in arguments)
+            if (arguments.Any())
             {
-                if (argument.Value != null)
+                var validator = this.Services.GetRequiredService<IObjectModelValidator>();
+                arguments.ForEach(argument =>
                 {
-                    this.Controller.TryValidateModel(argument.Value);
-                }
+                    if (argument.Value != null)
+                    {
+                        validator.Validate(this.TestContext.ControllerContext, argument.Value);
+                    }
+                });
             }
         }
     }

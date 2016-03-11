@@ -20,6 +20,7 @@
         private readonly IDictionary<Type, object> aggregatedDependencies;
 
         private ControllerTestContext testContext;
+        private Action<ControllerContext> controllerContextAction;
         private Action<ITempDataBuilder> tempDataBuilderAction;
         private Action<TController> controllerSetupAction;
         private bool isPreparedForTesting;

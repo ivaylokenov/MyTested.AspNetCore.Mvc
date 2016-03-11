@@ -256,21 +256,26 @@
                 .View();
         }
 
+        [Fact]
+        public void WithResolvedDependencyForShouldNotThrowExceptionWithNullValuesAndMoreThanOneSuitableConstructor()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .WithResolvedDependencyFor<IInjectedService>(null)
+                .Calling(c => c.DefaultView())
+                .ShouldReturn()
+                .View();
+        }
 
         [Fact]
-        public void WithResolvedDependencyForShouldThrowExceptionWithNullValuesAndMoreThanOneSuitableConstructor()
+        public void WithNoResolvedDependencyForShouldNotThrowException()
         {
-            Test.AssertException<UnresolvedDependenciesException>(
-                () =>
-                {
-                    MyMvc
-                       .Controller<MvcController>()
-                       .WithResolvedDependencyFor<IInjectedService>(null)
-                       .Calling(c => c.DefaultView())
-                       .ShouldReturn()
-                       .View();
-                },
-                "");
+            MyMvc
+                .Controller<MvcController>()
+                .WithNoResolvedDependencyFor<IInjectedService>()
+                .Calling(c => c.DefaultView())
+                .ShouldReturn()
+                .View();
         }
 
         [Fact]
@@ -481,7 +486,21 @@
 
             MyMvc.IsUsingDefaultConfiguration();
         }
-        
+
+        [Fact]
+        public void WithHttpContextSetupShouldPopulateContextProperties()
+        {
+            var controller = MyMvc
+                .Controller<MvcController>()
+                .WithHttpContext(httpContext =>
+                {
+                    httpContext.Request.ContentType = ContentType.ApplicationOctetStream;
+                })
+                .AndProvideTheController();
+
+            Assert.Equal(ContentType.ApplicationOctetStream, controller.HttpContext.Request.ContentType);
+        }
+
         [Fact]
         public void WithRequestShouldNotWorkWithDefaultRequestAction()
         {
@@ -590,6 +609,94 @@
                         .ShouldReturn()
                         .Ok();
                 });
+        }
+
+        [Fact]
+        public void WithControllerContextShouldSetControllerContext()
+        {
+            var controllerContext = new ControllerContext();
+
+            var controller = MyMvc
+                .Controller<MvcController>()
+                .WithControllerContext(controllerContext)
+                .AndProvideTheController();
+
+            Assert.NotNull(controller);
+            Assert.Same(controllerContext, controller.ControllerContext);
+        }
+
+        [Fact]
+        public void WithControllerContextSetupShouldSetCorrectControllerContext()
+        {
+            var controller = MyMvc
+                .Controller<MvcController>()
+                .WithControllerContext(controllerContext =>
+                {
+                    controllerContext.RouteData.Values.Add("testkey", "testvalue");
+                })
+                .AndProvideTheController();
+
+            Assert.NotNull(controller);
+            Assert.NotNull(controller.ControllerContext);
+            Assert.True(controller.ControllerContext.RouteData.Values.ContainsKey("testkey"));
+        }
+
+        [Fact]
+        public void WithTempDataShouldPopulateTempDataCorrectly()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .WithTempData(tempData =>
+                {
+                    tempData.WithEntry("test", "value");
+                })
+                .Calling(c => c.TempDataAction())
+                .ShouldReturn()
+                .Ok();
+        }
+
+        [Fact]
+        public void WithSessionShouldPopulateSessionCorrectly()
+        {
+            MyMvc
+                .IsUsingDefaultConfiguration()
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
+                    services.AddSession();
+                });
+
+            MyMvc
+                .Controller<MvcController>()
+                .WithSession(session =>
+                {
+                    session.WithStringEntry("test", "value");
+                })
+                .Calling(c => c.SessionAction())
+                .ShouldReturn()
+                .Ok();
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void WithSessionShouldThrowExceptionIfSessionIsNotSet()
+        {
+            Test.AssertException<InvalidOperationException>(
+                () =>
+                {
+                    MyMvc
+                       .Controller<MvcController>()
+                       .WithSession(session =>
+                       {
+                           session.WithStringEntry("test", "value");
+                       })
+                       .Calling(c => c.SessionAction())
+                       .ShouldReturn()
+                       .Ok();
+                },
+                "Session has not been configured for this application or request.");
         }
 
         [Fact]
