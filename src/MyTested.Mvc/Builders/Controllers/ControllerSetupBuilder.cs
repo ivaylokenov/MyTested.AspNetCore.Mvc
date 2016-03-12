@@ -4,6 +4,7 @@
     using Data;
     using Exceptions;
     using Internal;
+    using Internal.Controllers;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Controllers;
     using Microsoft.Extensions.DependencyInjection;

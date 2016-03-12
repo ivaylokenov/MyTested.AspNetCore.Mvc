@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Internal
+﻿namespace MyTested.Mvc.Internal.Controllers
 {
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;

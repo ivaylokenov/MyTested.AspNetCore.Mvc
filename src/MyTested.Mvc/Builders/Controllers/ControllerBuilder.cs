@@ -6,10 +6,12 @@
     using Internal.Http;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.DependencyInjection;
     using Utilities.Validators;
     using Internal.TestContexts;
     using Contracts.Data;
-
+    using Internal.Contracts;
+    using Utilities;
     /// <summary>
     /// Used for building the controller which will be tested.
     /// </summary>
@@ -38,6 +40,8 @@
 
             this.enabledValidation = true;
             this.aggregatedDependencies = new Dictionary<Type, object>();
+
+            this.ValidateControllerType();
         }
 
         /// <summary>
@@ -116,6 +120,16 @@
         public HttpContext AndProvideTheHttpContext()
         {
             return this.TestContext.HttpContext;
+        }
+
+        private void ValidateControllerType()
+        {
+            var validControllers = this.Services.GetService<IValidControllersCache>();
+            var controllerType = typeof(TController);
+            if (!validControllers.IsValid(typeof(TController)))
+            {
+                throw new InvalidOperationException($"{controllerType.ToFriendlyTypeName()} is not a valid controller type.");
+            }
         }
     }
 }

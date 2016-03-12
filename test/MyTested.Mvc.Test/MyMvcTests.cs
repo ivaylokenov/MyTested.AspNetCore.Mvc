@@ -31,7 +31,7 @@ namespace MyTested.Mvc.Test
     using Microsoft.Extensions.Caching.Memory;
     using Internal.Caching;
     using Internal;
-
+    using Internal.Formatters;
     public class MyMvcTests
     {
         [Fact]
@@ -470,6 +470,28 @@ namespace MyTested.Mvc.Test
             Assert.True(routeActionInvokerProvidersList[1].GetType() == typeof(ControllerActionInvokerProvider));
             Assert.NotNull(routeModelBindingActionInvokerFactory);
             Assert.IsAssignableFrom<CustomModelBindingActionInvokerFactory>(routeModelBindingActionInvokerFactory);
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+        
+        [Fact]
+        public void CustomConfigureOptionsShouldNotOverrideTheDefaultTestOnes()
+        {
+            MyMvc
+                .IsUsingDefaultConfiguration()
+                .WithServices(services =>
+                {
+                    services.Configure<MvcOptions>(options =>
+                    {
+                        options.MaxModelValidationErrors = 120;
+                    });
+                });
+
+            var builtOptions = TestApplication.Services.GetRequiredService<IOptions<MvcOptions>>();
+
+            Assert.Equal(120, builtOptions.Value.MaxModelValidationErrors);
+            Assert.Contains(typeof(StringInputFormatter), builtOptions.Value.InputFormatters.Select(f => f.GetType()));
+            Assert.Equal(1, builtOptions.Value.Conventions.Count);
 
             MyMvc.IsUsingDefaultConfiguration();
         }

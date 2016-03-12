@@ -1159,6 +1159,7 @@
 
             Assert.NotNull(controller);
             Assert.NotNull(controller.CustomHttpContext);
+            Assert.NotNull(controller.CustomActionContext);
             Assert.NotNull(controller.CustomControllerContext);
             Assert.NotNull(controller.CustomControllerContext.HttpContext);
             Assert.NotNull(controller.CustomControllerContext.InputFormatters);
@@ -1610,6 +1611,17 @@
             Assert.Equal(1, controller.CustomTempData.Count);
 
             MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void InvalidControllerTypeShouldThrowException()
+        {
+            Test.AssertException<InvalidOperationException>(
+                () =>
+                {
+                    MyMvc.Controller<RequestModel>();
+                },
+                "RequestModel is not a valid controller type.");
         }
 
         private void CheckActionResultTestBuilder<TActionResult>(

@@ -28,6 +28,7 @@
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.Extensions.Caching.Memory;
     using Microsoft.AspNetCore.Mvc.Controllers;
+    using Controllers;
     public static class TestApplication
     {
         private static readonly RequestDelegate NullHandler = (c) => TaskCache.CompletedTask;
@@ -248,19 +249,9 @@
             AddPlatformServices(serviceCollection);
 
             // testing framework services
+            serviceCollection.TryAddSingleton<IValidControllersCache, ValidControllersCache>();
             serviceCollection.TryAddSingleton<IControllerActionDescriptorCache, ControllerActionDescriptorCache>();
-
-            // custom MVC options
-            serviceCollection.Configure<MvcOptions>(options =>
-            {
-                // string input formatter helps with HTTP request processing
-                var inputFormatters = options.InputFormatters.OfType<TextInputFormatter>();
-                if (!inputFormatters.Any(f => f.SupportedMediaTypes.Contains(ContentType.TextPlain)))
-                {
-                    options.InputFormatters.Add(new StringInputFormatter());
-                }
-            });
-
+            
             return serviceCollection;
         }
 
@@ -280,6 +271,20 @@
                 AdditionalServices(serviceCollection);
             }
 
+            // custom MVC options
+            serviceCollection.Configure<MvcOptions>(options =>
+            {
+                // add controller conventions to save all valid controller types
+                options.Conventions.Add(new ValidControllersCache());
+
+                // string input formatter helps with HTTP request processing
+                var inputFormatters = options.InputFormatters.OfType<TextInputFormatter>();
+                if (!inputFormatters.Any(f => f.SupportedMediaTypes.Contains(ContentType.TextPlain)))
+                {
+                    options.InputFormatters.Add(new StringInputFormatter());
+                }
+            });
+
             TryAddControllersAsServices(serviceCollection);
             PrepareRouteServices(serviceCollection);
 
@@ -292,6 +297,9 @@
             }
 
             serviceProvider = serviceCollection.BuildServiceProvider();
+
+            // this call prepares all application conventions and fills the controller action descriptor cache
+            serviceProvider.GetService<IControllerActionDescriptorCache>();
         }
 
         private static void TryAddControllersAsServices(IServiceCollection serviceCollection)

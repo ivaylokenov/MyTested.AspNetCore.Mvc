@@ -14,6 +14,7 @@
     using System.Linq;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
+    using Controllers;
     public class ControllerTestContext : HttpTestContext
     {
         private object controller;
