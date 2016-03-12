@@ -19,6 +19,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection.Extensions;
+    using Microsoft.AspNetCore.Mvc.Controllers;
     public class ControllerBuilderTests
     {
         [Fact]
@@ -616,7 +617,13 @@
         [Fact]
         public void WithControllerContextShouldSetControllerContext()
         {
-            var controllerContext = new ControllerContext();
+            var controllerContext = new ControllerContext
+            {
+                ActionDescriptor = new ControllerActionDescriptor
+                {
+                    Name = "Test"
+                }
+            };
 
             var controller = MyMvc
                 .Controller<MvcController>()
@@ -624,7 +631,8 @@
                 .AndProvideTheController();
 
             Assert.NotNull(controller);
-            Assert.Same(controllerContext, controller.ControllerContext);
+            Assert.NotNull(controller.ControllerContext);
+            Assert.Equal("Test", controller.ControllerContext.ActionDescriptor.Name);
         }
 
         [Fact]
@@ -1486,7 +1494,13 @@
                     services.AddHttpContextAccessor();
                 });
 
-            var controllerContext = new ControllerContext();
+            var controllerContext = new ControllerContext
+            {
+                ActionDescriptor = new ControllerActionDescriptor
+                {
+                    Name = "Test"
+                }
+            };
 
             var controller = MyMvc
                 .Controller<FullPocoController>()
@@ -1494,7 +1508,8 @@
                 .AndProvideTheController();
 
             Assert.NotNull(controller);
-            Assert.Same(controllerContext, controller.CustomControllerContext);
+            Assert.NotNull(controller.CustomControllerContext);
+            Assert.Equal("Test", controller.CustomControllerContext.ActionDescriptor.Name);
 
             MyMvc.IsUsingDefaultConfiguration();
         }

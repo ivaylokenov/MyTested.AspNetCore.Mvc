@@ -12,6 +12,7 @@
     using System.Linq;
     using Utilities;
     using Utilities.Extensions;
+    using Utilities.Validators;
 
     /// <summary>
     /// Used for building the controller which will be tested.
@@ -21,8 +22,7 @@
     {
         public IAndControllerBuilder<TController> WithControllerContext(ControllerContext controllerContext)
         {
-            this.TestContext.ControllerContext = controllerContext;
-            return this;
+            return this.WithActionContext(controllerContext);
         }
 
         public IAndControllerBuilder<TController> WithControllerContext(Action<ControllerContext> controllerContextSetup)
@@ -33,7 +33,8 @@
 
         public IAndControllerBuilder<TController> WithActionContext(ActionContext actionContext)
         {
-            this.TestContext.ControllerContext = new MockedControllerContext(this.TestContext, actionContext);
+            CommonValidator.CheckForNullReference(actionContext, nameof(ActionContext));
+            this.TestContext.ControllerContext = MockedControllerContext.FromActionContext(this.TestContext, actionContext);
             return this;
         }
 
@@ -56,6 +57,11 @@
 
         private void BuildControllerIfNotExists()
         {
+            if (!this.isPreparedForTesting)
+            {
+                this.PrepareControllerContext();
+            }
+
             var controller = this.TestContext.Controller;
             if (controller == null)
             {
@@ -101,7 +107,7 @@
             }
         }
 
-        private void PrepareController()
+        private void PrepareControllerContext()
         {
             var controllerContext = this.TestContext.ControllerContext;
 
@@ -109,10 +115,13 @@
             {
                 this.controllerContextAction(controllerContext);
             }
+        }
 
+        private void PrepareController()
+        {
             var controllerPropertyActivators = this.Services.GetServices<IControllerPropertyActivator>();
 
-            controllerPropertyActivators.ForEach(a => a.Activate(controllerContext, this.TestContext.Controller));
+            controllerPropertyActivators.ForEach(a => a.Activate(this.TestContext.ControllerContext, this.TestContext.Controller));
 
             if (this.tempDataBuilderAction != null)
             {

@@ -4,6 +4,8 @@
     using Http;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Features;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.Extensions.Caching.Memory;
 
@@ -52,6 +54,15 @@
             if (httpContextAccessor != null)
             {
                 httpContextAccessor.HttpContext = httpContext;
+            }
+        }
+
+        public static void SetActionContextToAccessor(ActionContext actionContext)
+        {
+            var actionContextAccessor = TestServiceProvider.GetService<IActionContextAccessor>();
+            if (actionContextAccessor != null)
+            {
+                actionContextAccessor.ActionContext = actionContext;
             }
         }
 

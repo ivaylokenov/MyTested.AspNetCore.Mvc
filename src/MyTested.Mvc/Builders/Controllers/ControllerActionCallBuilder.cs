@@ -10,6 +10,7 @@
     using System;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Reflection;
     using System.Threading.Tasks;
     using Utilities;
     using Utilities.Extensions;
@@ -151,13 +152,8 @@
                 this.ValidateModelState(actionCall);
             }
 
-            var controllerActionDescriptorCache = this.Services.GetService<IControllerActionDescriptorCache>();
-            if (controllerActionDescriptorCache != null)
-            {
-                this.TestContext.ControllerContext.ActionDescriptor
-                    = controllerActionDescriptorCache.TryGetActionDescriptor(methodInfo);
-            }
-
+            this.SetActionDescriptor(methodInfo);
+            
             return methodInfo.Name;
         }
 
@@ -174,6 +170,20 @@
                         validator.Validate(this.TestContext.ControllerContext, argument.Value);
                     }
                 });
+            }
+        }
+
+        private void SetActionDescriptor(MethodInfo methodInfo)
+        {
+            var controllerContext = this.TestContext.ControllerContext;
+            if (controllerContext.ActionDescriptor == null || controllerContext.ActionDescriptor.MethodInfo == null)
+            {
+                var controllerActionDescriptorCache = this.Services.GetService<IControllerActionDescriptorCache>();
+                if (controllerActionDescriptorCache != null)
+                {
+                    controllerContext.ActionDescriptor
+                        = controllerActionDescriptorCache.TryGetActionDescriptor(methodInfo);
+                }
             }
         }
     }

@@ -29,6 +29,7 @@
     using Microsoft.Extensions.Caching.Memory;
     using Microsoft.AspNetCore.Mvc.Controllers;
     using Controllers;
+
     public static class TestApplication
     {
         private static readonly RequestDelegate NullHandler = (c) => TaskCache.CompletedTask;
@@ -292,8 +293,7 @@
 
             if (serviceCollection.Any(s => s.ServiceType == typeof(IMemoryCache)))
             {
-                serviceCollection.TryRemoveSingleton<IMemoryCache, MemoryCache>();
-                serviceCollection.TryAddTransient<IMemoryCache, MockedMemoryCache>();
+                serviceCollection.TryReplace<IMemoryCache, MockedMemoryCache>(ServiceLifetime.Transient);
             }
 
             serviceProvider = serviceCollection.BuildServiceProvider();

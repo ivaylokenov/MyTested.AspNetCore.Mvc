@@ -11,7 +11,7 @@
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
     using Microsoft.AspNetCore.Routing;
-
+    using Microsoft.AspNetCore.Mvc.Controllers;
     public class MockedControllerContext : ControllerContext
     {
         private HttpTestContext testContext;
@@ -21,15 +21,27 @@
         private IList<IModelValidatorProvider> validatorProviders;
         private IList<IValueProvider> valueProviders;
 
-        public MockedControllerContext(HttpTestContext testContext)
+        public static ControllerContext FromActionContext(HttpTestContext testContext, ActionContext actionContext)
         {
-            this.SetTestContext(testContext);
+            CommonValidator.CheckForNullReference(testContext, nameof(HttpTestContext));
+            CommonValidator.CheckForNullReference(actionContext, nameof(ActionContext));
+
+            actionContext.HttpContext = actionContext.HttpContext ?? testContext.HttpContext;
+            actionContext.RouteData = actionContext.RouteData ?? testContext.RouteData ?? new RouteData();
+            actionContext.ActionDescriptor = actionContext.ActionDescriptor ?? new ControllerActionDescriptor();
+
+            return new MockedControllerContext(testContext, actionContext);
         }
 
-        public MockedControllerContext(HttpTestContext testContext, ActionContext actionContext)
+        public MockedControllerContext(HttpTestContext testContext)
+        {
+            this.PrepareControllerContext(testContext);
+        }
+
+        private MockedControllerContext(HttpTestContext testContext, ActionContext actionContext)
             : base(actionContext)
         {
-            this.SetTestContext(testContext);
+            this.PrepareControllerContext(testContext);
         }
 
         public override FormatterCollection<IInputFormatter> InputFormatters
@@ -146,11 +158,12 @@
             }
         }
 
-        private void SetTestContext(HttpTestContext testContext)
+        private void PrepareControllerContext(HttpTestContext testContext)
         {
             this.TestContext = testContext;
             this.HttpContext = testContext.HttpContext;
             this.RouteData = testContext.RouteData ?? new RouteData();
+            TestHelper.SetActionContextToAccessor(this);
         }
     }
 }

@@ -13,7 +13,7 @@
         [Fact]
         public void NullServiceCollectionShouldThrowException()
         {
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<NullReferenceException>(() =>
             {
                 ServiceCollection serviceCollection = null;
                 serviceCollection.TryRemoveTransient<IInjectedService>();
@@ -21,11 +21,67 @@
         }
 
         [Fact]
+        public void TryRemoveShouldRemoveServiceByTypeOnlyInterface()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddTransient<IInjectedService, InjectedService>();
+            serviceCollection.AddSingleton<IInjectedService, ReplaceableInjectedService>();
+
+            Assert.NotNull(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
+
+            serviceCollection.TryRemove(typeof(IInjectedService));
+
+            Assert.Null(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
+        }
+
+        [Fact]
+        public void TryRemoveShouldRemoveServiceByTypeAndImplementation()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddTransient<IInjectedService, InjectedService>();
+            serviceCollection.AddSingleton<IInjectedService, ReplaceableInjectedService>();
+
+            Assert.NotNull(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
+
+            serviceCollection.TryRemove(typeof(IInjectedService), typeof(ReplaceableInjectedService));
+
+            Assert.IsAssignableFrom<InjectedService>(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
+        }
+
+        [Fact]
+        public void TryRemoveShouldRemoveServiceByGenericOnlyInterface()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddTransient<IInjectedService, InjectedService>();
+            serviceCollection.AddSingleton<IInjectedService, ReplaceableInjectedService>();
+
+            Assert.NotNull(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
+
+            serviceCollection.TryRemove<IInjectedService>();
+
+            Assert.Null(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
+        }
+
+        [Fact]
+        public void TryRemoveShouldRemoveServiceByGenericAndImplementation()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddTransient<IInjectedService, InjectedService>();
+            serviceCollection.AddSingleton<IInjectedService, ReplaceableInjectedService>();
+
+            Assert.NotNull(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
+
+            serviceCollection.TryRemove<IInjectedService, ReplaceableInjectedService>();
+
+            Assert.IsAssignableFrom<InjectedService>(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
+        }
+
+        [Fact]
         public void TryRemoveTransientShouldRemoveServiceByTypeOnlyInterface()
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.TryAddTransient<IInjectedService, InjectedService>();
-            serviceCollection.TryAddTransient<IInjectedService, ReplaceableInjectedService>();
+            serviceCollection.AddTransient<IInjectedService, InjectedService>();
+            serviceCollection.AddTransient<IInjectedService, ReplaceableInjectedService>();
 
             Assert.NotNull(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
 
@@ -38,8 +94,8 @@
         public void TryRemoveTransientShouldRemoveServiceByTypeAndImplementation()
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.TryAddTransient<IInjectedService>(s => new InjectedService());
-            serviceCollection.TryAddTransient(typeof(IInjectedService), typeof(ReplaceableInjectedService));
+            serviceCollection.AddTransient<IInjectedService>(s => new InjectedService());
+            serviceCollection.AddTransient(typeof(IInjectedService), typeof(ReplaceableInjectedService));
 
             Assert.NotNull(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
 
@@ -52,8 +108,8 @@
         public void TryRemoveTransientShouldRemoveServiceByGenericOnlyInterface()
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.TryAddTransient<IInjectedService, InjectedService>();
-            serviceCollection.TryAddTransient<IInjectedService, ReplaceableInjectedService>();
+            serviceCollection.AddTransient<IInjectedService, InjectedService>();
+            serviceCollection.AddTransient<IInjectedService, ReplaceableInjectedService>();
 
             Assert.NotNull(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
 
@@ -66,8 +122,8 @@
         public void TryRemoveTransientShouldRemoveServiceByGenericAndImplementation()
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.TryAddTransient<IInjectedService>(s => new InjectedService());
-            serviceCollection.TryAddTransient(typeof(IInjectedService), typeof(ReplaceableInjectedService));
+            serviceCollection.AddTransient<IInjectedService>(s => new InjectedService());
+            serviceCollection.AddTransient(typeof(IInjectedService), typeof(ReplaceableInjectedService));
 
             Assert.NotNull(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
 
@@ -80,8 +136,8 @@
         public void TryRemoveSingletonShouldRemoveServiceByTypeOnlyInterface()
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.TryAddSingleton<IInjectedService, InjectedService>();
-            serviceCollection.TryAddSingleton<IInjectedService, ReplaceableInjectedService>();
+            serviceCollection.AddSingleton<IInjectedService, InjectedService>();
+            serviceCollection.AddSingleton<IInjectedService, ReplaceableInjectedService>();
 
             Assert.NotNull(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
 
@@ -94,8 +150,8 @@
         public void TryRemoveSingletonShouldRemoveServiceByTypeAndImplementation()
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.TryAddSingleton<IInjectedService>(s => new InjectedService());
-            serviceCollection.TryAddSingleton(typeof(IInjectedService), typeof(ReplaceableInjectedService));
+            serviceCollection.AddSingleton<IInjectedService>(s => new InjectedService());
+            serviceCollection.AddSingleton(typeof(IInjectedService), typeof(ReplaceableInjectedService));
 
             Assert.NotNull(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
 
@@ -108,8 +164,8 @@
         public void TryRemoveSingletonShouldRemoveServiceByGenericOnlyInterface()
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.TryAddSingleton<IInjectedService, InjectedService>();
-            serviceCollection.TryAddSingleton<IInjectedService, ReplaceableInjectedService>();
+            serviceCollection.AddSingleton<IInjectedService, InjectedService>();
+            serviceCollection.AddSingleton<IInjectedService, ReplaceableInjectedService>();
 
             Assert.NotNull(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
 
@@ -122,8 +178,8 @@
         public void TryRemoveSingletonShouldRemoveServiceByGenericAndImplementation()
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.TryAddSingleton<IInjectedService>(s => new InjectedService());
-            serviceCollection.TryAddSingleton(typeof(IInjectedService), typeof(ReplaceableInjectedService));
+            serviceCollection.AddSingleton<IInjectedService>(s => new InjectedService());
+            serviceCollection.AddSingleton(typeof(IInjectedService), typeof(ReplaceableInjectedService));
 
             Assert.NotNull(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
 
@@ -136,8 +192,8 @@
         public void TryRemoveScopedShouldRemoveServiceByTypeOnlyInterface()
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.TryAddScoped<IInjectedService, InjectedService>();
-            serviceCollection.TryAddScoped<IInjectedService, ReplaceableInjectedService>();
+            serviceCollection.AddScoped<IInjectedService, InjectedService>();
+            serviceCollection.AddScoped<IInjectedService, ReplaceableInjectedService>();
 
             Assert.NotNull(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
 
@@ -150,8 +206,8 @@
         public void TryRemoveScopedShouldRemoveServiceByTypeAndImplementation()
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.TryAddScoped<IInjectedService>(s => new InjectedService());
-            serviceCollection.TryAddScoped(typeof(IInjectedService), typeof(ReplaceableInjectedService));
+            serviceCollection.AddScoped<IInjectedService>(s => new InjectedService());
+            serviceCollection.AddScoped(typeof(IInjectedService), typeof(ReplaceableInjectedService));
 
             Assert.NotNull(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
 
@@ -164,8 +220,8 @@
         public void TryRemoveScopedShouldRemoveServiceByGenericOnlyInterface()
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.TryAddScoped<IInjectedService, InjectedService>();
-            serviceCollection.TryAddScoped<IInjectedService, ReplaceableInjectedService>();
+            serviceCollection.AddScoped<IInjectedService, InjectedService>();
+            serviceCollection.AddScoped<IInjectedService, ReplaceableInjectedService>();
 
             Assert.NotNull(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
 
@@ -178,8 +234,8 @@
         public void TryRemoveScopedShouldRemoveServiceByGenericAndImplementation()
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.TryAddScoped<IInjectedService>(s => new InjectedService());
-            serviceCollection.TryAddScoped(typeof(IInjectedService), typeof(ReplaceableInjectedService));
+            serviceCollection.AddScoped<IInjectedService>(s => new InjectedService());
+            serviceCollection.AddScoped(typeof(IInjectedService), typeof(ReplaceableInjectedService));
 
             Assert.NotNull(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
 
@@ -189,10 +245,57 @@
         }
 
         [Fact]
+        public void TryReplaceShouldReplaceServiceByType()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddTransient(typeof(IInjectedService), typeof(InjectedService));
+
+            Assert.IsAssignableFrom<InjectedService>(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
+
+            serviceCollection.TryReplace(typeof(IInjectedService), typeof(ReplaceableInjectedService), ServiceLifetime.Singleton);
+
+            Assert.NotNull(serviceCollection.FirstOrDefault(s => s.ServiceType == typeof(IInjectedService) && s.Lifetime == ServiceLifetime.Singleton));
+
+            Assert.IsAssignableFrom<ReplaceableInjectedService>(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
+        }
+
+        [Fact]
+        public void TryReplaceShouldReplaceServiceByTypeAndImplementationFactory()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddTransient(typeof(IInjectedService), typeof(InjectedService));
+
+            Assert.IsAssignableFrom<InjectedService>(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
+
+            var injectedService = new ReplaceableInjectedService();
+            serviceCollection.TryReplace(typeof(IInjectedService), s => injectedService, ServiceLifetime.Singleton);
+
+            var actualService = serviceCollection.FirstOrDefault(s => s.ServiceType == typeof(IInjectedService) && s.Lifetime == ServiceLifetime.Singleton);
+            Assert.NotNull(actualService);
+
+            Assert.Same(injectedService, serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
+        }
+
+        [Fact]
+        public void TryReplaceShouldReplaceServiceByGenericType()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddTransient(typeof(IInjectedService), typeof(InjectedService));
+
+            Assert.IsAssignableFrom<InjectedService>(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
+
+            serviceCollection.TryReplace<IInjectedService, ReplaceableInjectedService>(ServiceLifetime.Singleton);
+
+            Assert.NotNull(serviceCollection.FirstOrDefault(s => s.ServiceType == typeof(IInjectedService) && s.Lifetime == ServiceLifetime.Singleton));
+
+            Assert.IsAssignableFrom<ReplaceableInjectedService>(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
+        }
+
+        [Fact]
         public void TryReplaceTransientShouldReplaceServiceByType()
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.TryAddTransient(typeof(IInjectedService), typeof(InjectedService));
+            serviceCollection.AddTransient(typeof(IInjectedService), typeof(InjectedService));
 
             Assert.IsAssignableFrom<InjectedService>(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
 
@@ -200,12 +303,26 @@
 
             Assert.IsAssignableFrom<ReplaceableInjectedService>(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
         }
+        
+        [Fact]
+        public void TryReplaceTransientShouldReplaceServiceByTypeAndImplementationFactory()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddTransient(typeof(IInjectedService), typeof(InjectedService));
+
+            Assert.IsAssignableFrom<InjectedService>(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
+
+            var service = new ReplaceableInjectedService();
+            serviceCollection.TryReplaceTransient(typeof(IInjectedService), s => service);
+
+            Assert.Same(service, serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
+        }
 
         [Fact]
         public void TryReplaceTransientShouldReplaceServiceByGeneric()
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.TryAddTransient<IInjectedService, InjectedService>();
+            serviceCollection.AddTransient<IInjectedService, InjectedService>();
 
             Assert.IsAssignableFrom<InjectedService>(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
 
@@ -215,10 +332,24 @@
         }
 
         [Fact]
+        public void TryReplaceTransientShouldReplaceServiceByGenericAndImplementationFactory()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddTransient<IInjectedService, InjectedService>();
+
+            Assert.IsAssignableFrom<InjectedService>(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
+
+            var service = new ReplaceableInjectedService();
+            serviceCollection.TryReplaceTransient<IInjectedService>(s => service);
+
+            Assert.Same(service, serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
+        }
+
+        [Fact]
         public void TryReplaceSingletonShouldReplaceServiceByType()
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.TryAddSingleton(typeof(IInjectedService), typeof(InjectedService));
+            serviceCollection.AddSingleton(typeof(IInjectedService), typeof(InjectedService));
 
             Assert.IsAssignableFrom<InjectedService>(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
 
@@ -226,12 +357,40 @@
 
             Assert.IsAssignableFrom<ReplaceableInjectedService>(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
         }
+        
+        [Fact]
+        public void TryReplaceSingletonShouldReplaceServiceByTypeAndImplementationFactory()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddSingleton(typeof(IInjectedService), typeof(InjectedService));
+
+            Assert.IsAssignableFrom<InjectedService>(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
+
+            var service = new ReplaceableInjectedService();
+            serviceCollection.TryReplaceSingleton(typeof(IInjectedService), s => service);
+
+            Assert.Same(service, serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
+        }
+
+        [Fact]
+        public void TryReplaceSingletonShouldReplaceServiceByTypeAndImplementationInstance()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddSingleton(typeof(IInjectedService), typeof(InjectedService));
+
+            Assert.IsAssignableFrom<InjectedService>(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
+
+            var service = new ReplaceableInjectedService();
+            serviceCollection.TryReplaceSingleton(typeof(IInjectedService), service);
+
+            Assert.Same(service, serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
+        }
 
         [Fact]
         public void TryReplaceSingletonShouldReplaceServiceByGeneric()
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.TryAddSingleton<IInjectedService, InjectedService>();
+            serviceCollection.AddSingleton<IInjectedService, InjectedService>();
 
             Assert.IsAssignableFrom<InjectedService>(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
 
@@ -241,10 +400,38 @@
         }
 
         [Fact]
+        public void TryReplaceSingletonShouldReplaceServiceByGenericTypeAndImplementationFactory()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddSingleton(typeof(IInjectedService), typeof(InjectedService));
+
+            Assert.IsAssignableFrom<InjectedService>(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
+
+            var service = new ReplaceableInjectedService();
+            serviceCollection.TryReplaceSingleton<IInjectedService>(s => service);
+
+            Assert.Same(service, serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
+        }
+
+        [Fact]
+        public void TryReplaceSingletonShouldReplaceServiceByGenericTypeAndImplementationInstance()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddSingleton(typeof(IInjectedService), typeof(InjectedService));
+
+            Assert.IsAssignableFrom<InjectedService>(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
+
+            var service = new ReplaceableInjectedService();
+            serviceCollection.TryReplaceSingleton<IInjectedService>(service);
+
+            Assert.Same(service, serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
+        }
+        
+        [Fact]
         public void TryReplaceScopedShouldReplaceServiceByType()
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.TryAddScoped(typeof(IInjectedService), typeof(InjectedService));
+            serviceCollection.AddScoped(typeof(IInjectedService), typeof(InjectedService));
 
             Assert.IsAssignableFrom<InjectedService>(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
 
@@ -252,18 +439,46 @@
 
             Assert.IsAssignableFrom<ReplaceableInjectedService>(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
         }
+        
+        [Fact]
+        public void TryReplaceScopedShouldReplaceServiceByTypeAndImplementationFactory()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddScoped(typeof(IInjectedService), typeof(InjectedService));
+
+            Assert.IsAssignableFrom<InjectedService>(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
+
+            var service = new ReplaceableInjectedService();
+            serviceCollection.TryReplaceScoped(typeof(IInjectedService), s => service);
+
+            Assert.Same(service, serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
+        }
 
         [Fact]
         public void TryReplaceScopedShouldReplaceServiceByGeneric()
         {
             var serviceCollection = new ServiceCollection();
-            serviceCollection.TryAddScoped<IInjectedService, InjectedService>();
+            serviceCollection.AddScoped<IInjectedService, InjectedService>();
 
             Assert.IsAssignableFrom<InjectedService>(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
 
             serviceCollection.TryReplaceScoped<IInjectedService, ReplaceableInjectedService>();
 
             Assert.IsAssignableFrom<ReplaceableInjectedService>(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
+        }
+
+        [Fact]
+        public void TryReplaceScopedShouldReplaceServiceByGenericTypeAndImplementationFactory()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddScoped(typeof(IInjectedService), typeof(InjectedService));
+
+            Assert.IsAssignableFrom<InjectedService>(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
+
+            var service = new ReplaceableInjectedService();
+            serviceCollection.TryReplaceScoped<IInjectedService>(s => service);
+
+            Assert.Same(service, serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
         }
 
         [Fact]
@@ -280,7 +495,6 @@
 
             Assert.IsAssignableFrom<ReplaceableInjectedService>(serviceCollection.BuildServiceProvider().GetServices<IInjectedService>().FirstOrDefault());
         }
-
 
         [Fact]
         public void TryReplaceEnumerableShouldReplaceServiceWithMultipleArguments()

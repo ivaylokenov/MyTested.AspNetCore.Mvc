@@ -196,7 +196,6 @@
             {
                 CommonValidator.CheckForNullReference(value, nameof(ControllerContext));
                 this.controllerContext = value;
-                this.controllerContext.HttpContext = this.controllerContext.HttpContext ?? this.HttpContext;
             }
         }
 
