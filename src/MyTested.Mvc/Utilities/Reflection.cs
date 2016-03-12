@@ -456,12 +456,7 @@
 
             if (expected is IEnumerable && expectedType != typeof(string))
             {
-                if (CollectionsAreDeeplyEqual(expected, actual, processedElements))
-                {
-                    return true;
-                }
-
-                return false;
+                return CollectionsAreDeeplyEqual(expected, actual, processedElements);
             }
             
             if (expectedType != actualType
@@ -595,8 +590,43 @@
                     return false;
                 }
             }
-            
+
             return true;
+        }
+
+        public class DeepEqualResult
+        {
+            private static readonly DeepEqualResult defaultSuccessResult = new DeepEqualResult(true);
+
+            public static DeepEqualResult Success => defaultSuccessResult;
+
+            public static DeepEqualResult Failure(string errorPath, object expected, object actual)
+            {
+                return new DeepEqualResult(false)
+                {
+                    ErrorPath = errorPath,
+                    ExpectedValue = expected,
+                    ActualValue = actual
+                };
+            }
+
+            private DeepEqualResult(bool areEqual)
+            {
+                this.AreEqual = areEqual;
+            }
+
+            public bool AreEqual { get; private set; }
+
+            public string ErrorPath { get; private set; }
+
+            public object ExpectedValue { get; private set; }
+
+            public object ActualValue { get; private set; }
+
+            public static implicit operator bool(DeepEqualResult result)
+            {
+                return result.AreEqual;
+            }
         }
 
         private static class New<T>
