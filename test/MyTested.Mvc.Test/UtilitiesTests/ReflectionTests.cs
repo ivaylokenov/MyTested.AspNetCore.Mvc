@@ -415,6 +415,8 @@
             Assert.True(Reflection.AreDeeplyEqual("test", "test"));
             Assert.True(Reflection.AreDeeplyEqual('a', 'a'));
             Assert.True(Reflection.AreDeeplyEqual(1.1, 1.1));
+            Assert.True(Reflection.AreDeeplyEqual(1.0m, (decimal)1));
+            Assert.True(Reflection.AreDeeplyEqual(1L, (long)1));
             Assert.True(Reflection.AreDeeplyEqual(1.1m, 1.1m));
             Assert.True(Reflection.AreDeeplyEqual(true, true));
             Assert.True(Reflection.AreDeeplyEqual(new DateTime(2015, 10, 19), new DateTime(2015, 10, 19)));
