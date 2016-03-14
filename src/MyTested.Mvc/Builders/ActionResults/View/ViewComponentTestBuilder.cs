@@ -1,17 +1,15 @@
 ﻿namespace MyTested.Mvc.Builders.ActionResults.View
 {
     using System.Collections.Generic;
-    using System.Linq;
     using System.Net;
     using Contracts.ActionResults.View;
-    using Utilities.Extensions;
+    using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ViewEngines;
-    using Microsoft.Net.Http.Headers;
-    using Utilities;
     using Microsoft.AspNetCore.Routing;
-    using Internal.TestContexts;
+    using Microsoft.Net.Http.Headers;
     using Utilities.Validators;
+
     /// <summary>
     /// Used for testing view component results.
     /// </summary>

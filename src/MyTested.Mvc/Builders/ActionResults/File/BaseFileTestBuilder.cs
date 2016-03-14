@@ -1,11 +1,12 @@
 ﻿namespace MyTested.Mvc.Builders.ActionResults.File
 {
+    using Base;
     using Exceptions;
-    using Utilities.Extensions;
-    using Microsoft.AspNetCore.Mvc;
-    using MyTested.Mvc.Builders.Base;
-    using Utilities.Validators;
     using Internal.TestContexts;
+    using Microsoft.AspNetCore.Mvc;
+    using Utilities.Extensions;
+    using Utilities.Validators;
+
     /// <summary>
     /// Base class for all test builders with file action result.
     /// </summary>

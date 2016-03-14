@@ -3,8 +3,9 @@
     using Base;
     using Contracts.ActionResults.BadRequest;
     using Exceptions;
-    using Utilities.Extensions;
     using Internal.TestContexts;
+    using Utilities.Extensions;
+
     /// <summary>
     /// Used for testing specific bad request text error messages.
     /// </summary>

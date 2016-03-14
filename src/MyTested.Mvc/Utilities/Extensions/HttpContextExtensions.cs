@@ -1,8 +1,8 @@
 ﻿namespace MyTested.Mvc.Utilities.Extensions
 {
+    using Internal.Routes;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Routing;
-    using Internal.Routes;
 
     public static class HttpContextExtensions
     {

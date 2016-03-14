@@ -3,12 +3,12 @@
     using Base;
     using Contracts.Actions;
     using Exceptions;
-    using Utilities.Extensions;
+    using Internal;
+    using Internal.TestContexts;
     using ShouldHave;
     using ShouldReturn;
+    using Utilities.Extensions;
     using Utilities.Validators;
-    using Internal.TestContexts;
-    using Internal;
 
     /// <summary>
     /// Used for building the action result which will be tested.

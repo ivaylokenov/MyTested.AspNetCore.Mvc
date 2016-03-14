@@ -1,5 +1,8 @@
 ﻿namespace MyTested.Mvc.Internal.Routes
 {
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Linq;
     using Contracts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Abstractions;
@@ -10,9 +13,6 @@
     using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Linq;
 
     public class ModelBindingActionInvokerFactory : IModelBindingActionInvokerFactory
     {

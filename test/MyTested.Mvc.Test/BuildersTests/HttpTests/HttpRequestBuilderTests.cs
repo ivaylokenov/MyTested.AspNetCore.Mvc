@@ -1,16 +1,17 @@
 ﻿namespace MyTested.Mvc.Test.BuildersTests.HttpTests
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
+    using Exceptions;
     using Microsoft.AspNetCore.Http.Features.Internal;
     using Microsoft.AspNetCore.Http.Internal;
-    using Setups.Controllers;
-    using Xunit;
-    using Setups.Models;
     using Microsoft.Extensions.Primitives;
     using Setups;
-    using System;
-    using Exceptions;
+    using Setups.Controllers;
+    using Setups.Models;
+    using Xunit;
+
     public class HttpRequestBuilderTests
     {
         [Fact]
@@ -118,7 +119,13 @@
             var builtRequest = MyMvc
                 .Controller<MvcController>()
                 .WithHttpRequest(request => request
-                    .WithBody(new { Id = 1, String = "Test" }, ContentType.ApplicationJson))
+                    .WithBody(
+                        new
+                        {
+                            Id = 1,
+                            String = "Test"
+                        },
+                        ContentType.ApplicationJson))
                 .AndProvideTheHttpRequest();
 
             using (var reader = new StreamReader(builtRequest.Body))
@@ -178,11 +185,13 @@
             var builtRequest = MyMvc
                 .Controller<MvcController>()
                 .WithHttpRequest(request => request
-                    .WithForm(new FormCollection(new Dictionary<string, StringValues>
-                    {
-                        ["Field"] = new StringValues("FieldValue"),
-                        ["AnotherField"] = new StringValues(new[] { "AnotherFieldValue", "SecondFieldValue" }),
-                    }, files)))
+                    .WithForm(new FormCollection(
+                        new Dictionary<string, StringValues>
+                        {
+                            ["Field"] = new StringValues("FieldValue"),
+                            ["AnotherField"] = new StringValues(new[] { "AnotherFieldValue", "SecondFieldValue" }),
+                        }, 
+                        files)))
                 .AndProvideTheHttpRequest();
 
             Assert.Equal(2, builtRequest.Form.Count);
@@ -308,6 +317,7 @@
             Assert.Equal("MyDictQueryValue", builtRequest.Query["MyDictQuery"]);
             Assert.Equal("AnotherDictQueryValue", builtRequest.Query["AnotherDictQuery"]);
         }
+
         [Fact]
         public void WithQueryAsCollectionShouldWorkCorrectly()
         {
@@ -483,7 +493,11 @@
             var builtRequest = MyMvc
                 .Controller<MvcController>()
                 .WithHttpRequest(request => request
-                    .WithJsonBody(new RequestModel { Integer = 1, RequiredString = "Text" }))
+                    .WithJsonBody(new RequestModel
+                    {
+                        Integer = 1,
+                        RequiredString = "Text"
+                    }))
                 .AndProvideTheHttpRequest();
 
             using (var reader = new StreamReader(builtRequest.Body))

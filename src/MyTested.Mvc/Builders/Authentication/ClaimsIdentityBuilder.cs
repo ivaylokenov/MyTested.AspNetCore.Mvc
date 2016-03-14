@@ -1,9 +1,9 @@
 ﻿namespace MyTested.Mvc.Builders.Authentication
 {
-    using MyTested.Mvc.Builders.Contracts.Authentication;
     using System.Collections.Generic;
     using System.Linq;
     using System.Security.Claims;
+    using Contracts.Authentication;
 
     public class ClaimsIdentityBuilder : BaseUserBuilder, IAndClaimsIdentityBuilder
     {

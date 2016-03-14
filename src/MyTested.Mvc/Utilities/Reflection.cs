@@ -1,6 +1,5 @@
 ﻿namespace MyTested.Mvc.Utilities
 {
-    using Microsoft.AspNetCore.Routing;
     using System;
     using System.Collections;
     using System.Collections.Concurrent;
@@ -9,16 +8,17 @@
     using System.Linq.Expressions;
     using System.Reflection;
     using System.Runtime.CompilerServices;
+    using Microsoft.AspNetCore.Routing;
 
     /// <summary>
     /// Class for validating reflection checks.
     /// </summary>
     public static class Reflection
     {
-        private static readonly ConcurrentDictionary<Type, ConstructorInfo> typesWithOneConstructorCache = new ConcurrentDictionary<Type, ConstructorInfo>();
-        private static readonly ConcurrentDictionary<Type, IEnumerable<object>> typeAttributesCache = new ConcurrentDictionary<Type, IEnumerable<object>>();
-        private static readonly ConcurrentDictionary<MethodInfo, IEnumerable<object>> methodAttributesCache = new ConcurrentDictionary<MethodInfo, IEnumerable<object>>();
-        private static readonly ConcurrentDictionary<Type, string> friendlyTypeNames = new ConcurrentDictionary<Type, string>();
+        private static readonly ConcurrentDictionary<Type, ConstructorInfo> TypesWithOneConstructorCache = new ConcurrentDictionary<Type, ConstructorInfo>();
+        private static readonly ConcurrentDictionary<Type, IEnumerable<object>> TypeAttributesCache = new ConcurrentDictionary<Type, IEnumerable<object>>();
+        private static readonly ConcurrentDictionary<MethodInfo, IEnumerable<object>> MethodAttributesCache = new ConcurrentDictionary<MethodInfo, IEnumerable<object>>();
+        private static readonly ConcurrentDictionary<Type, string> FriendlyTypeNames = new ConcurrentDictionary<Type, string>();
 
         /// <summary>
         /// Checks whether two objects have the same types.
@@ -203,7 +203,7 @@
                 return "null";
             }
 
-            return friendlyTypeNames.GetOrAdd(type, _ =>
+            return FriendlyTypeNames.GetOrAdd(type, _ =>
             {
                 if (!type.GetTypeInfo().IsGenericType)
                 {
@@ -248,7 +248,7 @@
         {
             var type = typeof(T);
             T instance = null;
-            
+
             try
             {
                 constructorParameters = constructorParameters ?? new Dictionary<Type, object>();
@@ -264,7 +264,7 @@
                 var constructorParameterTypes = constructorParameters
                     .Select(cp => cp.Key)
                     .ToList();
-                
+
                 var constructor = type.GetConstructorByUnorderedParameters(constructorParameterTypes);
                 if (constructor == null)
                 {
@@ -276,7 +276,7 @@
                 var selectedConstructorParameters = constructorParameterInfos
                     .Select(cp => cp.ParameterType)
                     .ToList();
-                
+
                 var resultParameters = new List<object>();
                 foreach (var selectedConstructorParameterType in selectedConstructorParameters)
                 {
@@ -294,7 +294,7 @@
                 {
                     return instance;
                 }
-                
+
                 instance = constructor.Invoke(resultParameters.ToArray()) as T;
             }
 
@@ -309,7 +309,7 @@
         public static IEnumerable<object> GetCustomAttributes(object obj)
         {
             var type = obj.GetType();
-            return typeAttributesCache.GetOrAdd(type, _ =>
+            return TypeAttributesCache.GetOrAdd(type, _ =>
             {
                 return type.GetTypeInfo().GetCustomAttributes(true);
             });
@@ -317,7 +317,7 @@
 
         public static IEnumerable<object> GetCustomAttributes(MethodInfo method)
         {
-            return methodAttributesCache.GetOrAdd(method, _ =>
+            return MethodAttributesCache.GetOrAdd(method, _ =>
             {
                 return method.GetCustomAttributes(true);
             });
@@ -384,7 +384,7 @@
         private static ConstructorInfo GetConstructorByUnorderedParameters(this Type type, IEnumerable<Type> types)
         {
             ConstructorInfo cachedConstructor;
-            if (typesWithOneConstructorCache.TryGetValue(type, out cachedConstructor))
+            if (TypesWithOneConstructorCache.TryGetValue(type, out cachedConstructor))
             {
                 return cachedConstructor;
             }
@@ -393,7 +393,7 @@
             if (allConstructors.Length == 1)
             {
                 var singleConstructor = allConstructors[0];
-                typesWithOneConstructorCache.TryAdd(type, singleConstructor);
+                TypesWithOneConstructorCache.TryAdd(type, singleConstructor);
                 return singleConstructor;
             }
 
@@ -414,7 +414,7 @@
                         .OrderBy(p => p.ParameterType.FullName)
                         .Select(p => p.ParameterType)
                         .ToArray();
-                    
+
                     return !orderedTypes.Where((t, i) => !parameterTypes[i].IsAssignableFrom(t)).Any();
                 })
                 .FirstOrDefault();
@@ -458,7 +458,7 @@
             {
                 return CollectionsAreDeeplyEqual(expected, actual, processedElements);
             }
-            
+
             if (expectedType != actualType
                 && !expectedType.IsAssignableFrom(actualType)
                 && !actualType.IsAssignableFrom(expectedType))
@@ -570,7 +570,7 @@
             // during the action call thus they will be evaluated and cached twice.
             var expectedProperties = new RouteValueDictionary(expected);
             var actualProperties = new RouteValueDictionary(actual);
-            
+
             foreach (var key in expectedProperties.Keys)
             {
                 var expectedPropertyValue = expectedProperties[key];
@@ -596,10 +596,18 @@
 
         public class DeepEqualResult
         {
-            private static readonly DeepEqualResult defaultSuccessResult = new DeepEqualResult(true);
+            private static readonly DeepEqualResult DefaultSuccessResult = new DeepEqualResult(true);
 
-            public static DeepEqualResult Success => defaultSuccessResult;
+            public static DeepEqualResult Success => DefaultSuccessResult;
+            
+            public bool AreEqual { get; private set; }
 
+            public string ErrorPath { get; private set; }
+
+            public object ExpectedValue { get; private set; }
+
+            public object ActualValue { get; private set; }
+            
             public static DeepEqualResult Failure(string errorPath, object expected, object actual)
             {
                 return new DeepEqualResult(false)
@@ -614,14 +622,6 @@
             {
                 this.AreEqual = areEqual;
             }
-
-            public bool AreEqual { get; private set; }
-
-            public string ErrorPath { get; private set; }
-
-            public object ExpectedValue { get; private set; }
-
-            public object ActualValue { get; private set; }
 
             public static implicit operator bool(DeepEqualResult result)
             {

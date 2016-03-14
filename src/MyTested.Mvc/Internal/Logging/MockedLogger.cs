@@ -8,6 +8,10 @@
     /// </summary>
     public class MockedLogger : ILogger
     {
+        private static MockedLogger defaultMockedLogger = new MockedLogger();
+
+        public static MockedLogger Instance => defaultMockedLogger; 
+
         /// <summary>
         /// Returns empty disposable object.
         /// </summary>
@@ -15,7 +19,7 @@
         /// <returns>Disposable object.</returns>
         public IDisposable BeginScopeImpl(object state)
         {
-            return new MockedDisposable();
+            return MockedDisposable.Instance;
         }
 
         /// <summary>

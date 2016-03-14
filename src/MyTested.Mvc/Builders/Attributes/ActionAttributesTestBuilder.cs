@@ -3,10 +3,10 @@
     using System;
     using Contracts.Attributes;
     using Exceptions;
-    using Utilities.Extensions;
+    using Internal.TestContexts;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using Internal.TestContexts;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Used for testing action attributes.

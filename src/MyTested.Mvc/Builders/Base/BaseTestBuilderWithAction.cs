@@ -3,8 +3,8 @@
     using System.Collections.Generic;
     using Contracts.Base;
     using Exceptions;
-    using Utilities.Extensions;
     using Internal.TestContexts;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Base class for all test builders with action call.

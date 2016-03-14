@@ -1,7 +1,7 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.Base
 {
-    using Microsoft.AspNetCore.Http;
     using System;
+    using Microsoft.AspNetCore.Http;
 
     /// <summary>
     /// Base interface for test builders with caught exception.

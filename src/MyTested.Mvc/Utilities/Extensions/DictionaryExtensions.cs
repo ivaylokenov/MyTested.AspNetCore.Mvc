@@ -1,8 +1,8 @@
 ﻿namespace MyTested.Mvc.Utilities.Extensions
 {
-    using Internal.TestContexts;
     using System.Collections.Generic;
     using System.Linq;
+    using Internal.TestContexts;
 
     public static class DictionaryExtensions
     {

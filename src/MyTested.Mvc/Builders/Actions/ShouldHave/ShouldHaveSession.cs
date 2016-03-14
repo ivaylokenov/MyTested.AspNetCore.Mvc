@@ -1,10 +1,10 @@
 ﻿namespace MyTested.Mvc.Builders.Actions.ShouldHave
 {
+    using System;
+    using System.Linq;
     using Contracts.And;
     using Contracts.Data;
     using Data;
-    using System;
-    using System.Linq;
 
     /// <summary>
     /// Class containing methods for testing session.

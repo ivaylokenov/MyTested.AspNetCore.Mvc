@@ -1,10 +1,10 @@
 ﻿namespace MyTested.Mvc.Builders.Data
 {
     using System.Collections.Generic;
-    using MyTested.Mvc.Internal.TestContexts;
-    using Contracts.Data;
     using System.Linq;
+    using Contracts.Data;
     using Microsoft.AspNetCore.Routing;
+    using MyTested.Mvc.Internal.TestContexts;
 
     public class SessionTestBuilder : BaseDataProviderTestBuilder, IAndSessionTestBuilder
     {

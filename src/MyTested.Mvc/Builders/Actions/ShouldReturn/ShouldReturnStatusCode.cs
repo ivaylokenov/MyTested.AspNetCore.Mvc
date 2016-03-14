@@ -3,8 +3,8 @@
     using System.Net;
     using Contracts.Base;
     using Exceptions;
-    using Utilities.Extensions;
     using Microsoft.AspNetCore.Mvc;
+    using Utilities.Extensions;
     using Utilities.Validators;
 
     /// <summary>

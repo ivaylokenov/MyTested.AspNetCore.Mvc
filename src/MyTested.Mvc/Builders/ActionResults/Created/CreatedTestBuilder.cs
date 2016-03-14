@@ -4,18 +4,19 @@
     using System.Collections.Generic;
     using System.Linq.Expressions;
     using System.Net;
+    using System.Threading.Tasks;
     using Base;
     using Contracts.ActionResults.Created;
     using Contracts.Uris;
     using Exceptions;
-    using Utilities.Extensions;
+    using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.AspNetCore.Routing;
     using Microsoft.Net.Http.Headers;
+    using Utilities.Extensions;
     using Utilities.Validators;
-    using Internal.TestContexts;
-    using System.Threading.Tasks;
+
     /// <summary>
     /// Used for testing created results.
     /// </summary>

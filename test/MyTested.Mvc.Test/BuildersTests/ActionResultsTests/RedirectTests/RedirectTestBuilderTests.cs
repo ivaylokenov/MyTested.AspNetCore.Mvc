@@ -6,8 +6,9 @@
     using Setups;
     using Setups.Common;
     using Setups.Controllers;
-    using Xunit;
     using Setups.Startups;
+    using Xunit;
+
     public class RedirectTestBuilderTests
     {
         [Fact]

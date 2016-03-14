@@ -1,9 +1,10 @@
 ﻿namespace MyTested.Mvc.Internal.Routes
 {
-    using Utilities.Extensions;
     using System;
     using System.Collections.Generic;
     using TestContexts;
+    using Utilities.Extensions;
+
     /// <summary>
     /// Contains route information from parsed expression.
     /// </summary>

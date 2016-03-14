@@ -1,17 +1,18 @@
 ﻿namespace MyTested.Mvc.Internal.Controllers
 {
+    using System;
+    using System.Collections.Generic;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Options;
-    using System;
-    using Utilities.Validators;
+    using Microsoft.AspNetCore.Mvc.Controllers;
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
-    using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
     using Microsoft.AspNetCore.Routing;
-    using Microsoft.AspNetCore.Mvc.Controllers;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Options;
+    using Utilities.Validators;
+
     public class MockedControllerContext : ControllerContext
     {
         private HttpTestContext testContext;
@@ -20,18 +21,6 @@
         private IList<IModelBinder> modelBinders;
         private IList<IModelValidatorProvider> validatorProviders;
         private IList<IValueProvider> valueProviders;
-
-        public static ControllerContext FromActionContext(HttpTestContext testContext, ActionContext actionContext)
-        {
-            CommonValidator.CheckForNullReference(testContext, nameof(HttpTestContext));
-            CommonValidator.CheckForNullReference(actionContext, nameof(ActionContext));
-
-            actionContext.HttpContext = actionContext.HttpContext ?? testContext.HttpContext;
-            actionContext.RouteData = actionContext.RouteData ?? testContext.RouteData ?? new RouteData();
-            actionContext.ActionDescriptor = actionContext.ActionDescriptor ?? new ControllerActionDescriptor();
-
-            return new MockedControllerContext(testContext, actionContext);
-        }
 
         public MockedControllerContext(HttpTestContext testContext)
         {
@@ -53,7 +42,7 @@
                     this.inputFormatters = this.Options.InputFormatters;
                 }
 
-                return inputFormatters;
+                return this.inputFormatters;
             }
 
             set
@@ -154,8 +143,20 @@
                     this.options = this.Services.GetRequiredService<IOptions<MvcOptions>>().Value;
                 }
 
-                return options;
+                return this.options;
             }
+        }
+
+        public static ControllerContext FromActionContext(HttpTestContext testContext, ActionContext actionContext)
+        {
+            CommonValidator.CheckForNullReference(testContext, nameof(HttpTestContext));
+            CommonValidator.CheckForNullReference(actionContext, nameof(ActionContext));
+
+            actionContext.HttpContext = actionContext.HttpContext ?? testContext.HttpContext;
+            actionContext.RouteData = actionContext.RouteData ?? testContext.RouteData ?? new RouteData();
+            actionContext.ActionDescriptor = actionContext.ActionDescriptor ?? new ControllerActionDescriptor();
+
+            return new MockedControllerContext(testContext, actionContext);
         }
 
         private void PrepareControllerContext(HttpTestContext testContext)

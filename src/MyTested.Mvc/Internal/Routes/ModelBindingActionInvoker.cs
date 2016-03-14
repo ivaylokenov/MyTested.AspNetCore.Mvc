@@ -8,10 +8,10 @@
     using Microsoft.AspNetCore.Mvc.Controllers;
     using Microsoft.AspNetCore.Mvc.Filters;
     using Microsoft.AspNetCore.Mvc.Formatters;
+    using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
     using Microsoft.Extensions.Logging;
-    using Microsoft.AspNetCore.Mvc.Internal;
 
     public class ModelBindingActionInvoker : ControllerActionInvoker, IModelBindingActionInvoker
     {
@@ -39,7 +39,7 @@
 
         protected override async Task<IDictionary<string, object>> BindActionArgumentsAsync()
         {
-            return (this.BoundActionArguments = await base.BindActionArgumentsAsync());
+            return this.BoundActionArguments = await base.BindActionArgumentsAsync();
         }
 
         protected override Task<IActionResult> InvokeActionAsync(ActionExecutingContext actionExecutingContext)

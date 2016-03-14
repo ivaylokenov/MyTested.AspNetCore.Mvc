@@ -80,11 +80,14 @@
                     .WithLocation("/Normal/ActionWithMultipleParameters/1")
                     .WithMethod(HttpMethod.Post)
                     .WithJsonBody(@"{""Integer"":1,""String"":""Text""}"))
-                .To<NormalController>(c => c.ActionWithMultipleParameters(1, With.No<string>(), new RequestModel
-                {
-                    Integer = 1,
-                    String = "Text"
-                }));
+                .To<NormalController>(c => c.ActionWithMultipleParameters(
+                    1,
+                    With.No<string>(),
+                    new RequestModel
+                    {
+                        Integer = 1,
+                        String = "Text"
+                    }));
         }
 
         [Fact]
@@ -95,12 +98,19 @@
                 .ShouldMap(request => request
                     .WithLocation("/Normal/ActionWithMultipleParameters/1")
                     .WithMethod(HttpMethod.Post)
-                    .WithJsonBody(new RequestModel { Integer = 1, String = "Text" }))
-                .To<NormalController>(c => c.ActionWithMultipleParameters(1, With.No<string>(), new RequestModel
-                {
-                    Integer = 1,
-                    String = "Text"
-                }));
+                    .WithJsonBody(new RequestModel
+                    {
+                        Integer = 1,
+                        String = "Text"
+                    }))
+                .To<NormalController>(c => c.ActionWithMultipleParameters(
+                    1,
+                    With.No<string>(),
+                    new RequestModel
+                    {
+                        Integer = 1,
+                        String = "Text"
+                    }));
         }
 
         [Fact]
@@ -111,12 +121,18 @@
                 .ShouldMap(request => request
                     .WithLocation("/Normal/ActionWithMultipleParameters/1")
                     .WithMethod(HttpMethod.Post)
-                    .WithJsonBody(new { Integer = 1, String = "Text" }))
-                .To<NormalController>(c => c.ActionWithMultipleParameters(1, With.No<string>(), new RequestModel
-                {
-                    Integer = 1,
-                    String = "Text"
-                }));
+                    .WithJsonBody(new
+                    {
+                        Integer = 1, String = "Text"
+                    }))
+                .To<NormalController>(c => c.ActionWithMultipleParameters(
+                    1,
+                    With.No<string>(),
+                    new RequestModel
+                    {
+                        Integer = 1,
+                        String = "Text"
+                    }));
         }
 
         [Fact]
@@ -293,7 +309,11 @@
                 .ShouldMap(request => request
                     .WithLocation("/Normal/UltimateModelBinding/100?myQuery=Test")
                     .WithMethod(HttpMethod.Post)
-                    .WithJsonBody(new { Integer = 1, String = "MyBodyValue" })
+                    .WithJsonBody(new
+                    {
+                        Integer = 1,
+                        String = "MyBodyValue"
+                    })
                     .WithFormField("MyField", "MyFieldValue")
                     .WithHeader("MyHeader", "MyHeaderValue"))
                 .To<NormalController>(c => c.UltimateModelBinding(

@@ -1,11 +1,11 @@
 ﻿namespace MyTested.Mvc.Test.InternalTests
 {
-    using Internal.Formatters;
-    using Setups;
-    using Setups.Models;
     using System;
     using System.IO;
     using System.Text;
+    using Internal.Formatters;
+    using Setups;
+    using Setups.Models;
     using Xunit;
 
     public class FormattersHelperTests
@@ -70,7 +70,6 @@
                     FormattersHelper.ReadFromStream<RequestModel>(stream, ContentType.TextPlain, Encoding.UTF8);
                 },
                 "Expected stream content to be formatted to RequestModel when using 'text/plain', but instead received String.");
-
         }
 
         [Fact]

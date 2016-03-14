@@ -1,9 +1,9 @@
 ﻿namespace MyTested.Mvc
 {
+    using System;
     using Builders.Contracts.Http;
     using Builders.Contracts.Routes;
     using Microsoft.AspNetCore.Http;
-    using System;
 
     /// <summary>
     /// Used for building a route test.

@@ -7,11 +7,11 @@
     using Contracts.ActionResults.Challenge;
     using Contracts.Authentication;
     using Exceptions;
-    using Utilities.Extensions;
+    using Internal.TestContexts;
     using Microsoft.AspNetCore.Http.Authentication;
     using Microsoft.AspNetCore.Mvc;
+    using Utilities.Extensions;
     using Utilities.Validators;
-    using Internal.TestContexts;
 
     /// <summary>
     /// Used for testing challenge result.

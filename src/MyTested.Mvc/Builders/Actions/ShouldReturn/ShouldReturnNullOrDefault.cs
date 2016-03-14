@@ -2,8 +2,8 @@
 {
     using Contracts.Base;
     using Exceptions;
-    using Utilities.Extensions;
     using Utilities;
+    using Utilities.Extensions;
     using Utilities.Validators;
 
     /// <summary>

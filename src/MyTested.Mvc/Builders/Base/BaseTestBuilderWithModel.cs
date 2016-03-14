@@ -1,8 +1,8 @@
 ﻿namespace MyTested.Mvc.Builders.Base
 {
     using Contracts.Base;
-    using Utilities.Validators;
     using Internal.TestContexts;
+    using Utilities.Validators;
 
     /// <summary>
     /// Base class for all test builders with model.

@@ -2,15 +2,15 @@
 {
     using System;
     using System.Net;
+    using ActionResults.BadRequest;
     using ActionResults.Challenge;
     using ActionResults.Content;
     using ActionResults.Created;
     using ActionResults.File;
     using ActionResults.Forbid;
-    using ActionResults.BadRequest;
-    using ActionResults.NotFound;
     using ActionResults.Json;
     using ActionResults.LocalRedirect;
+    using ActionResults.NotFound;
     using ActionResults.Ok;
     using ActionResults.Redirect;
     using ActionResults.View;

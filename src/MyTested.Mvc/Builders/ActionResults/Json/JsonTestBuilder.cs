@@ -6,13 +6,14 @@
     using Contracts.ActionResults.Json;
     using Exceptions;
     using Internal.Application;
-    using Utilities.Extensions;
+    using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Options;
     using Microsoft.Net.Http.Headers;
     using Newtonsoft.Json;
+    using Utilities.Extensions;
     using Utilities.Validators;
-    using Internal.TestContexts;
+
     /// <summary>
     /// Used for testing JSON results.
     /// </summary>

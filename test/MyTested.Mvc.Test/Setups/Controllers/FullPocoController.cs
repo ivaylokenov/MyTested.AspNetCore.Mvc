@@ -1,20 +1,20 @@
 ﻿namespace MyTested.Mvc.Test.Setups.Controllers
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
+    using Common;
+    using Internal.Application;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
+    using Microsoft.AspNetCore.Mvc.Routing;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.Extensions.DependencyInjection;
-    using Common;
-    using Microsoft.AspNetCore.Http;
     using Models;
-    using System.Linq;
-    using Microsoft.AspNetCore.Mvc.Routing;
     using Services;
-    using Internal.Application;
-    using Microsoft.AspNetCore.Http.Internal;
 
     public class FullPocoController
     {
@@ -25,8 +25,8 @@
         public FullPocoController()
         {
             this.services = TestApplication.Services;
-            this.viewData = new ViewDataDictionary(services.GetService<IModelMetadataProvider>(), new ControllerContext().ModelState);
-            this.tempData = (TempDataDictionary)services.GetService<ITempDataDictionaryFactory>().GetTempData(this.CustomHttpContext ?? new DefaultHttpContext());
+            this.viewData = new ViewDataDictionary(this.services.GetService<IModelMetadataProvider>(), new ControllerContext().ModelState);
+            this.tempData = (TempDataDictionary)this.services.GetService<ITempDataDictionaryFactory>().GetTempData(this.CustomHttpContext ?? new DefaultHttpContext());
         }
         
         public FullPocoController(IInjectedService injectedService)
@@ -78,7 +78,7 @@
 
         public TempDataDictionary CustomTempData => this.tempData;
 
-        public IUrlHelper CustomUrl => services.GetService<IUrlHelperFactory>().GetUrlHelper(this.CustomControllerContext);
+        public IUrlHelper CustomUrl => this.services.GetService<IUrlHelperFactory>().GetUrlHelper(this.CustomControllerContext);
         
         public IActionResult DefaultView()
         {

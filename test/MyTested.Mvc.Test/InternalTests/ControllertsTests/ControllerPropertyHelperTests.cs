@@ -1,12 +1,12 @@
 ﻿namespace MyTested.Mvc.Test.InternalTests.ControllerTests
 {
+    using System;
     using Internal.Application;
     using Internal.Controllers;
     using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.AspNetCore.Mvc;
     using Setups;
     using Setups.Controllers;
-    using System;
     using Xunit;
 
     public class ControllerPropertyHelperTests
@@ -41,7 +41,8 @@
                 () =>
                 {
                     var gotActionContext = helper.ActionContextGetter(controller);
-                }, "ActionContext could not be found on the provided MvcController. The property should be specified manually by providing controller instance or using the specified helper methods.");
+                }, 
+                "ActionContext could not be found on the provided MvcController. The property should be specified manually by providing controller instance or using the specified helper methods.");
             
             var gotViewData = helper.ViewDataGetter(controller);
 

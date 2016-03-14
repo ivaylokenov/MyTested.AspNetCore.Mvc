@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Security.Claims;
-
-namespace MyTested.Mvc.Builders.Contracts.Authentication
+﻿namespace MyTested.Mvc.Builders.Contracts.Authentication
 {
+    using System.Collections.Generic;
+    using System.Security.Claims;
+
     public interface IClaimsIdentityBuilder
     {
         /// <summary>

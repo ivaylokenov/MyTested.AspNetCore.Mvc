@@ -2,9 +2,9 @@
 {
     using System.Collections.Generic;
     using Contracts.Base;
+    using Internal.TestContexts;
     using Microsoft.AspNetCore.Http;
     using Utilities.Validators;
-    using Internal.TestContexts;
 
     /// <summary>
     /// Base class for all test builder.
@@ -36,6 +36,7 @@
             {
                 return this.testContext;
             }
+
             private set
             {
                 CommonValidator.CheckForNullReference(value, nameof(TestContext));

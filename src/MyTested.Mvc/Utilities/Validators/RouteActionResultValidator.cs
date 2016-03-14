@@ -2,13 +2,14 @@
 {
     using System;
     using System.Collections.Generic;
-    using Utilities.Extensions;
-    using Microsoft.AspNetCore.Mvc;
-    using Internal.Application;
-    using Microsoft.AspNetCore.Mvc.Routing;
-    using System.Linq.Expressions;
-    using Internal.TestContexts;
     using System.Linq;
+    using System.Linq.Expressions;
+    using Internal.Application;
+    using Internal.TestContexts;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Routing;
+    using Utilities.Extensions;
+
     /// <summary>
     /// Validator class containing validation logic action results with route specific information.
     /// </summary>
@@ -186,7 +187,7 @@
                     failedValidationAction);
             });
         }
-            
+
         /// <summary>
         /// Validates whether RouteValues contains the same route entries as the provided ones from action result containing such property.
         /// </summary>

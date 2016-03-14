@@ -1,11 +1,11 @@
 ﻿namespace MyTested.Mvc.Internal.Http
 {
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Contracts;
     using Microsoft.AspNetCore.Http.Features;
     using Microsoft.AspNetCore.Mvc.Internal;
-    using System;
-    using Contracts;
 
     public class MockedSession : ISession, IMockedSession
     {

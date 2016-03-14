@@ -1,11 +1,11 @@
 ﻿namespace MyTested.Mvc.Builders.Authentication
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Security.Claims;
-    using Contracts.Authentication;
     using System.Security.Principal;
-    using System;
+    using Contracts.Authentication;
 
     /// <summary>
     /// Used for building mocked claims principal.

@@ -1,14 +1,13 @@
 ﻿namespace MyTested.Mvc.Builders.Actions.ShouldHave
 {
+    using System;
     using Base;
     using Contracts.Actions;
-    using Contracts.Http;
-    using Http;
-    using Utilities.Validators;
-    using Internal.TestContexts;
     using Contracts.And;
-    using System;
+    using Contracts.Http;
     using Exceptions;
+    using Http;
+    using Internal.TestContexts;
     using Utilities.Extensions;
 
     /// <summary>

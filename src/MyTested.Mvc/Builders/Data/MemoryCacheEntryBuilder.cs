@@ -1,10 +1,10 @@
 ﻿namespace MyTested.Mvc.Builders.Data
 {
+    using System;
     using Contracts.Data;
     using Internal.Caching;
     using Internal.Contracts;
     using Microsoft.Extensions.Caching.Memory;
-    using System;
 
     public class MemoryCacheEntryBuilder : IAndMemoryCacheEntryTestBuilder
     {
@@ -59,8 +59,7 @@
             {
                 throw new InvalidOperationException("Cache entry key must be provided. 'WithKey' method must be called on the memory cache entry builder in order to run this test case successfully.");
             }
-
-
+            
             return this.MemoryCacheEntry;
         }
     }

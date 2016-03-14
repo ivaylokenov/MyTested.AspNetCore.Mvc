@@ -1,34 +1,34 @@
 ﻿namespace MyTested.Mvc.Internal.Application
 {
     using System;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Reflection;
     using Caching;
     using Contracts;
+    using Controllers;
+    using Formatters;
     using Logging;
     using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Hosting.Internal;
     using Microsoft.AspNetCore.Hosting.Startup;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Http.Internal;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Abstractions;
+    using Microsoft.AspNetCore.Mvc.Controllers;
+    using Microsoft.AspNetCore.Mvc.Formatters;
+    using Microsoft.AspNetCore.Mvc.Internal;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.AspNetCore.Routing;
+    using Microsoft.Extensions.Caching.Memory;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
     using Microsoft.Extensions.Logging;
-    using Microsoft.AspNetCore.Mvc.Abstractions;
-    using Routes;
-    using System.Linq;
-    using System.Diagnostics;
-    using Microsoft.AspNetCore.Mvc.Internal;
-    using Microsoft.AspNetCore.Mvc;
-    using Formatters;
-    using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.Extensions.PlatformAbstractions;
-    using System.Reflection;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http.Internal;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.AspNetCore.Mvc.ViewFeatures;
-    using Microsoft.Extensions.Caching.Memory;
-    using Microsoft.AspNetCore.Mvc.Controllers;
-    using Controllers;
+    using Routes;
 
     public static class TestApplication
     {
@@ -53,27 +53,6 @@
             sync = new object();
             configuration = PrepareConfiguration();
         }
-
-        internal static Type StartupType
-        {
-            get
-            {
-                return startupType;
-            }
-            set
-            {
-                Reset();
-                startupType = value;
-            }
-        }
-
-        internal static Action<IConfigurationBuilder> AdditionalConfiguration { get; set; }
-
-        internal static Action<IServiceCollection> AdditionalServices { get; set; }
-
-        internal static Action<IApplicationBuilder> AdditionalApplicationConfiguration { get; set; }
-
-        internal static Action<IRouteBuilder> AdditionalRoutes { get; set; }
 
         public static IServiceProvider Services
         {
@@ -101,6 +80,28 @@
                 return router;
             }
         }
+
+        internal static Type StartupType
+        {
+            get
+            {
+                return startupType;
+            }
+
+            set
+            {
+                Reset();
+                startupType = value;
+            }
+        }
+
+        internal static Action<IConfigurationBuilder> AdditionalConfiguration { get; set; }
+
+        internal static Action<IServiceCollection> AdditionalServices { get; set; }
+
+        internal static Action<IApplicationBuilder> AdditionalApplicationConfiguration { get; set; }
+
+        internal static Action<IRouteBuilder> AdditionalRoutes { get; set; }
 
         internal static IConfiguration Configuration
         {

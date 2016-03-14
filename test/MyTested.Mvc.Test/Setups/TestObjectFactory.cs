@@ -5,7 +5,6 @@
     using System.Globalization;
     using System.Runtime.Serialization.Formatters;
     using Common;
-    using Microsoft.Extensions.FileProviders;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Authentication;
     using Microsoft.AspNetCore.Http.Internal;
@@ -13,6 +12,7 @@
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.AspNetCore.Mvc.ViewEngines;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.FileProviders;
     using Models;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;

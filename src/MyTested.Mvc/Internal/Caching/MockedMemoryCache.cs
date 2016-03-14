@@ -2,15 +2,14 @@
 {
     using System.Linq;
     using System.Collections.Generic;
-    using Microsoft.Extensions.Caching.Memory;
-    using Contracts;
-
 #if NET451
     using System.Runtime.Remoting.Messaging;
     using System.Runtime.Remoting;
 #elif NETSTANDARD1_5
     using System.Threading;
 #endif
+    using Contracts;
+    using Microsoft.Extensions.Caching.Memory;
 
     public class MockedMemoryCache : IMockedMemoryCache
     {

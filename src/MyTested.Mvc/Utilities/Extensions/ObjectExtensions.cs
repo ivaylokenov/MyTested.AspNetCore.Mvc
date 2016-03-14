@@ -1,9 +1,9 @@
 ﻿namespace MyTested.Mvc.Utilities.Extensions
 {
-    using Microsoft.AspNetCore.Routing;
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Microsoft.AspNetCore.Routing;
     using Utilities;
 
     /// <summary>

@@ -1,10 +1,22 @@
 ﻿namespace MyTested.Mvc.Internal.TestContexts
 {
-    using Microsoft.AspNetCore.Mvc;
     using System.Collections.Generic;
+    using Microsoft.AspNetCore.Mvc;
 
     public class LinkGenerationTestContext
     {
+        public string Location { get; set; }
+
+        public IUrlHelper UrlHelper { get; set; }
+
+        public string RouteName { get; set; }
+
+        public string Controller { get; set; }
+
+        public string Action { get; set; }
+
+        public IDictionary<string, object> RouteValues { get; set; }
+        
         public static LinkGenerationTestContext FromCreatedResult(IActionResult actionResult)
         {
             var createdAtRouteResult = actionResult as CreatedAtRouteResult;
@@ -88,17 +100,5 @@
                 UrlHelper = localRedirectResult.UrlHelper
             };
         }
-
-        public string Location { get; set; }
-
-        public IUrlHelper UrlHelper { get; set; }
-
-        public string RouteName { get; set; }
-
-        public string Controller { get; set; }
-
-        public string Action { get; set; }
-
-        public IDictionary<string, object> RouteValues { get; set; }
     }
 }

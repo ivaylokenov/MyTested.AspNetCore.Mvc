@@ -11,6 +11,7 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Builders.Contracts.Data;
+
     /// <summary>
     /// Used for building the controller which will be tested.
     /// </summary>

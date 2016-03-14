@@ -4,9 +4,9 @@
     using Contracts.Actions;
     using Contracts.Base;
     using Internal;
+    using Internal.TestContexts;
     using ShouldHave;
     using Utilities.Validators;
-    using Internal.TestContexts;
 
     /// <summary>
     /// Used for testing void actions.
@@ -41,7 +41,7 @@
         /// <returns>Should have test builder.</returns>
         public IShouldHaveTestBuilder<VoidActionResult> ShouldHave()
         {
-            this.TestContext.ActionResult = VoidActionResult.Create();
+            this.TestContext.ActionResult = VoidActionResult.Instance;
             return new ShouldHaveTestBuilder<VoidActionResult>(this.TestContext);
         }
 

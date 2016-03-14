@@ -1,8 +1,8 @@
 ﻿namespace MyTested.Mvc.Utilities.Validators
 {
-    using Utilities.Extensions;
     using System;
     using System.Net;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Validator class containing HTTP status code validation logic.

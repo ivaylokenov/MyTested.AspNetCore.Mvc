@@ -5,8 +5,8 @@
     using Contracts.And;
     using Contracts.Base;
     using Internal;
-    using Utilities;
     using Internal.TestContexts;
+    using Utilities;
 
     /// <summary>
     /// Base class for all test builders with action result.

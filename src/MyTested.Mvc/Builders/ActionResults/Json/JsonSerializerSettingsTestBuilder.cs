@@ -1,22 +1,24 @@
 ﻿namespace MyTested.Mvc.Builders.ActionResults.Json
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Globalization;
+    using System.Linq;
     using System.Runtime.Serialization.Formatters;
     using Base;
     using Contracts.ActionResults.Json;
     using Exceptions;
-    using Utilities.Extensions;
+    using Internal.TestContexts;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using Utilities;
+    using Utilities.Extensions;
     using Utilities.Validators;
-    using Internal.TestContexts;
-    using System.Collections;
-    using System.Linq;    /// <summary>
-                          /// Used for testing JSON serializer settings in a JSON result.
-                          /// </summary>
+
+    /// <summary>
+    /// Used for testing JSON serializer settings in a JSON result.
+    /// </summary>
     public class JsonSerializerSettingsTestBuilder : BaseTestBuilderWithAction, IAndJsonSerializerSettingsTestBuilder
     {
         private readonly JsonSerializerSettings jsonSerializerSettings;
@@ -677,6 +679,14 @@
 
         internal ICollection<Action<JsonSerializerSettings, JsonSerializerSettings>> GetJsonSerializerSettingsValidations()
             => this.validations;
+        
+        private static IList<string> SortJsonConverterNames(IEnumerable<JsonConverter> jsonConverters)
+        {
+            return jsonConverters
+                .Select(of => of.GetType().ToFriendlyTypeName())
+                .OrderBy(oft => oft)
+                .ToList();
+        }
 
         private void ThrowNewJsonResultAssertionException(string expectedValue, string actualValue)
         {
@@ -686,14 +696,6 @@
                         this.Controller.GetName(),
                         expectedValue,
                         actualValue));
-        }
-
-        private static IList<string> SortJsonConverterNames(IEnumerable<JsonConverter> jsonConverters)
-        {
-            return jsonConverters
-                .Select(of => of.GetType().ToFriendlyTypeName())
-                .OrderBy(oft => oft)
-                .ToList();
         }
     }
 }

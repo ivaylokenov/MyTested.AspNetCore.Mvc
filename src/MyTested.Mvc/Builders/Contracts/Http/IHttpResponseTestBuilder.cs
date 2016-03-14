@@ -4,10 +4,10 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Net;
+    using System.Text;
     using Base;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Primitives;
-    using System.Text;
 
     /// <summary>
     /// Used for testing the HTTP response.

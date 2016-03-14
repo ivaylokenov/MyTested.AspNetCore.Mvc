@@ -1,12 +1,13 @@
 ﻿namespace MyTested.Mvc.Builders.ExceptionErrors
 {
+    using System;
     using Base;
     using Contracts.ExceptionErrors;
     using Exceptions;
-    using Utilities.Extensions;
-    using Utilities;
     using Internal.TestContexts;
-    using System;
+    using Utilities;
+    using Utilities.Extensions;
+
     /// <summary>
     /// Used for testing expected exceptions.
     /// </summary>
@@ -19,7 +20,7 @@
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="exception">Actual received exception.</param>
         public ExceptionTestBuilder(ControllerTestContext testContext)
-            :base(testContext)
+            : base(testContext)
         {
         }
 
@@ -76,7 +77,7 @@
 
             return this;
         }
-        
+
         /// <summary>
         /// Tests whether created result location passes given assertions.
         /// </summary>

@@ -14,11 +14,6 @@
     /// </summary>
     public class MockedHttpContext : DefaultHttpContext
     {
-        public static MockedHttpContext From(HttpContext httpContext)
-        {
-            return new MockedHttpContext(httpContext);
-        }
-
         private HttpRequest httpRequest;
         private HttpResponse httpResponse;
 
@@ -85,6 +80,11 @@
         internal HttpRequest CustomRequest
         {
             set { this.httpRequest = value ?? new DefaultHttpRequest(this); }
+        }
+
+        public static MockedHttpContext From(HttpContext httpContext)
+        {
+            return new MockedHttpContext(httpContext);
         }
 
         private void PrepareFeatures()

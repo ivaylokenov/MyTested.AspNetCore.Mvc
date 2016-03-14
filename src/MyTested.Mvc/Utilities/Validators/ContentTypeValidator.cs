@@ -3,9 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.Net.Http.Headers;
     using Utilities.Extensions;
-    using Microsoft.AspNetCore.Mvc.Formatters;
 
     /// <summary>
     /// Validator class containing content type validation logic.

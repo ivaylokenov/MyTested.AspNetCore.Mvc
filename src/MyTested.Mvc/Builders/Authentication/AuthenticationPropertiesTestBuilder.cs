@@ -8,10 +8,9 @@
     using Microsoft.AspNetCore.Http.Authentication;
     using MyTested.Mvc.Builders.Contracts.Authentication;
     using Internal.TestContexts;
-    using Microsoft.AspNetCore.Routing;
-    using System.Linq;    /// <summary>
-                          /// Used for testing authentication properties.
-                          /// </summary>
+    /// <summary>
+    /// Used for testing authentication properties.
+    /// </summary>
     public class AuthenticationPropertiesTestBuilder : BaseTestBuilderWithAction, IAndAuthenticationPropertiesTestBuilder
     {
         private const int DefaultItemsCount = 5;

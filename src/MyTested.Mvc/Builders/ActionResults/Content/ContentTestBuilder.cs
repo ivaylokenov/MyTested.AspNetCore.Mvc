@@ -4,11 +4,11 @@
     using Base;
     using Contracts.ActionResults.Content;
     using Exceptions;
-    using Utilities.Extensions;
+    using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Net.Http.Headers;
+    using Utilities.Extensions;
     using Utilities.Validators;
-    using Internal.TestContexts;
 
     /// <summary>
     /// Used for testing content result.

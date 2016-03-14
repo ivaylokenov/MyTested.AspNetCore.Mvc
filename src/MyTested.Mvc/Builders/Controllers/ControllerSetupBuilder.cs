@@ -1,5 +1,7 @@
 ﻿namespace MyTested.Mvc.Builders.Controllers
 {
+    using System;
+    using System.Linq;
     using Contracts.Controllers;
     using Data;
     using Exceptions;
@@ -8,8 +10,6 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Controllers;
     using Microsoft.Extensions.DependencyInjection;
-    using System;
-    using System.Linq;
     using Utilities;
     using Utilities.Extensions;
     using Utilities.Validators;

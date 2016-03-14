@@ -3,9 +3,8 @@
     using Base;
     using Contracts.Base;
     using Contracts.Models;
-    using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Internal.TestContexts;
-    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
 
     /// <summary>
     /// Used for testing the model errors.

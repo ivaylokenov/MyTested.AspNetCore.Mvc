@@ -2,8 +2,8 @@
 {
     using Contracts.Base;
     using Contracts.Models;
-    using Microsoft.AspNetCore.Mvc;
     using Internal.TestContexts;
+    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
     /// Base class for all test builders with view features.

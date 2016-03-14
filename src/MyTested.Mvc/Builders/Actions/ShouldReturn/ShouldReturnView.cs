@@ -4,8 +4,8 @@
     using Contracts.ActionResults.View;
     using Exceptions;
     using Internal;
-    using Utilities.Extensions;
     using Microsoft.AspNetCore.Mvc;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Class containing methods for testing ViewResult or PartialViewResult.

@@ -1,15 +1,16 @@
 ﻿namespace MyTested.Mvc.Internal.Routes
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq.Expressions;
+    using System.Reflection;
     using Application;
     using Contracts;
     using Microsoft.AspNetCore.Mvc.Controllers;
-    using System.Reflection;
-    using System.Collections.Generic;
     using Microsoft.AspNetCore.Routing;
     using Utilities;
     using Utilities.Extensions;
+
     public static class RouteExpressionParser
     {
         // This key should be ignored as it is used internally for route attribute matching.
@@ -94,6 +95,19 @@
             return routeData;
         }
 
+        public static void ApplyAdditionaRouteValues(object routeValues, IDictionary<string, object> result)
+        {
+            if (routeValues != null)
+            {
+                var additionalRouteValues = new RouteValueDictionary(routeValues);
+
+                foreach (var additionalRouteValue in additionalRouteValues)
+                {
+                    result[additionalRouteValue.Key] = additionalRouteValue.Value;
+                }
+            }
+        }
+
         private static IDictionary<string, object> GetRouteValues(
             MethodInfo methodInfo,
             MethodCallExpression methodCallExpression,
@@ -142,19 +156,6 @@
             }
 
             return result;
-        }
-
-        public static void ApplyAdditionaRouteValues(object routeValues, IDictionary<string, object> result)
-        {
-            if (routeValues != null)
-            {
-                var additionalRouteValues = new RouteValueDictionary(routeValues);
-
-                foreach (var additionalRouteValue in additionalRouteValues)
-                {
-                    result[additionalRouteValue.Key] = additionalRouteValue.Value;
-                }
-            }
         }
     }
 }

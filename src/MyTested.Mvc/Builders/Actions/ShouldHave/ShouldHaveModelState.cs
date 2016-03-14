@@ -1,12 +1,12 @@
 ﻿namespace MyTested.Mvc.Builders.Actions.ShouldHave
 {
+    using System;
     using System.Linq;
     using Contracts.And;
     using Contracts.Models;
     using Exceptions;
-    using Utilities.Extensions;
     using Models;
-    using System;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Class containing methods for testing model state.

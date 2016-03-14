@@ -2,7 +2,6 @@
 {
     using System;
     using System.Linq.Expressions;
-    using System.Reflection;
 
     /// <summary>
     /// Contains information about invoked action.
@@ -39,7 +38,7 @@
         public TActionResult ActionResult { get; internal set; }
 
         /// <summary>
-        /// Gets or sets the caught exception during the action execution.
+        /// Gets the caught exception during the action execution.
         /// </summary>
         /// <value>Action execution exception.</value>
         public Exception CaughtException { get; internal set; }

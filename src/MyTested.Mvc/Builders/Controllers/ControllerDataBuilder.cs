@@ -1,9 +1,9 @@
 ﻿namespace MyTested.Mvc.Builders.Controllers
 {
+    using System;
     using Contracts.Controllers;
     using Contracts.Data;
     using Data;
-    using System;
 
     /// <summary>
     /// Used for building the controller which will be tested.

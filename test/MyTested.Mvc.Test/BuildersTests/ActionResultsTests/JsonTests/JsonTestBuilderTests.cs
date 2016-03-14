@@ -2,12 +2,13 @@
 {
     using System.Collections.Generic;
     using Exceptions;
+    using Microsoft.Net.Http.Headers;
     using Newtonsoft.Json;
     using Setups;
     using Setups.Controllers;
     using Setups.Models;
     using Xunit;
-    using Microsoft.Net.Http.Headers;
+
     public class JsonTestBuilderTests
     {
         [Fact]

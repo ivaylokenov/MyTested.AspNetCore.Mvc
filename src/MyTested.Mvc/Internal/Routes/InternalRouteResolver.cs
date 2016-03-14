@@ -1,16 +1,16 @@
 ﻿namespace MyTested.Mvc.Internal.Routes
 {
-    using Microsoft.AspNetCore.Routing;
+    using System;
+    using Contracts;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Abstractions;
     using Microsoft.AspNetCore.Mvc.Controllers;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
-    using Contracts;
-    using System;
-    using Microsoft.AspNetCore.Mvc.Abstractions;
     using Microsoft.AspNetCore.Mvc.Internal;
+    using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.DependencyInjection;
     using Utilities.Extensions;
-    using Microsoft.AspNetCore.Http;
 
     /// <summary>
     /// Used for resolving HTTP request to a route.

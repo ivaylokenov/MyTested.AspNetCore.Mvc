@@ -1,5 +1,7 @@
 ﻿namespace MyTested.Mvc.Builders.Data
 {
+    using System;
+    using System.Collections.Generic;
     using Base;
     using Contracts.Data;
     using Exceptions;
@@ -7,8 +9,6 @@
     using Internal.TestContexts;
     using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.DependencyInjection;
-    using System;
-    using System.Collections.Generic;
     using Utilities;
     using Utilities.Extensions;
     using Utilities.Validators;

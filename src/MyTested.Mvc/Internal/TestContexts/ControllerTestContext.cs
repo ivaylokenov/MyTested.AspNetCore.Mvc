@@ -2,19 +2,20 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
+    using Application;
+    using Controllers;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.AspNetCore.Routing;
+    using Routes;
     using Utilities;
     using Utilities.Extensions;
     using Utilities.Validators;
-    using Routes;
-    using Application;
-    using Microsoft.AspNetCore.Mvc;
-    using System.Linq;
-    using Microsoft.AspNetCore.Mvc.ViewFeatures;
-    using Microsoft.AspNetCore.Mvc.ModelBinding;
-    using Controllers;
+
     public class ControllerTestContext : HttpTestContext
     {
         private object controller;
@@ -159,10 +160,7 @@
         public override string ExceptionMessagePrefix => $"When calling {this.ActionName} action in {this.Controller.GetName()} expected";
 
         internal Func<object> ControllerConstruction { get; set; }
-
-        internal TController ControllerAs<TController>()
-            where TController : class => this.Controller as TController;
-
+        
         internal ControllerPropertyHelper ControllerProperties
         {
             get
@@ -198,6 +196,9 @@
                 this.controllerContext = value;
             }
         }
+
+        internal TController ControllerAs<TController>()
+            where TController : class => this.Controller as TController;
 
         internal TActionResult ActionResultAs<TActionResult>() => this.ActionResult.TryCastTo<TActionResult>();
 

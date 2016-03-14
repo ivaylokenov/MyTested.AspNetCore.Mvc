@@ -1,8 +1,8 @@
 ﻿namespace MyTested.Mvc.Builders.Routes
 {
+    using System;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Routing;
-    using System;
     using Utilities.Validators;
 
     /// <summary>
@@ -28,6 +28,7 @@
             {
                 return this.testContext;
             }
+
             set
             {
                 CommonValidator.CheckForNullReference(value, nameof(TestContext));

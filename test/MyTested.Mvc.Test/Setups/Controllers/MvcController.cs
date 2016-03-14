@@ -7,18 +7,19 @@
     using System.Threading.Tasks;
     using Common;
     using Microsoft.AspNetCore.Authorization;
-    using Microsoft.Extensions.FileProviders;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.AspNetCore.Mvc.ViewEngines;
+    using Microsoft.Extensions.Caching.Memory;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.FileProviders;
     using Microsoft.Net.Http.Headers;
     using Models;
     using Newtonsoft.Json;
     using Services;
-    using Microsoft.AspNetCore.Mvc.ModelBinding;
-    using Microsoft.Extensions.Caching.Memory;
-    using Microsoft.Extensions.DependencyInjection;
+
     [Authorize(Roles = "Admin,Moderator")]
     [Route("/api/test")]
     public class MvcController : Controller
@@ -641,8 +642,7 @@
 
             return this.Ok();
         }
-
-
+        
         public IActionResult JsonAction()
         {
             return this.Json(this.responseModel);
@@ -831,22 +831,28 @@
             response.ContentType = ContentType.ApplicationJson;
             response.StatusCode = HttpStatusCode.InternalServerError;
             response.Headers.Add("TestHeader", "TestHeaderValue");
-            response.Cookies.Append("TestCookie", "TestCookieValue", new CookieOptions
-            {
-                HttpOnly = true,
-                Secure = true,
-                Domain = "testdomain.com",
-                Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)),
-                Path = "/"
-            });
-            response.Cookies.Append("AnotherCookie", "TestCookieValue", new CookieOptions
-            {
-                HttpOnly = true,
-                Secure = true,
-                Domain = "testdomain.com",
-                Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)),
-                Path = "/"
-            });
+            response.Cookies.Append(
+                "TestCookie",
+                "TestCookieValue",
+                new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    Domain = "testdomain.com",
+                    Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)),
+                    Path = "/"
+                });
+            response.Cookies.Append(
+                "AnotherCookie",
+                "TestCookieValue",
+                new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    Domain = "testdomain.com",
+                    Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)),
+                    Path = "/"
+                });
             response.ContentLength = 100;
         }
     }

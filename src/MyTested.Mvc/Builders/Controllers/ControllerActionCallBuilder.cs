@@ -1,5 +1,10 @@
 ﻿namespace MyTested.Mvc.Builders.Controllers
 {
+    using System;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Reflection;
+    using System.Threading.Tasks;
     using Actions;
     using Contracts.Actions;
     using Contracts.Controllers;
@@ -7,11 +12,6 @@
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
     using Microsoft.Extensions.DependencyInjection;
-    using System;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using System.Reflection;
-    using System.Threading.Tasks;
     using Utilities;
     using Utilities.Extensions;
 

@@ -5,9 +5,10 @@
     using System.Linq;
     using Builders.Authentication;
     using Builders.Contracts.Authentication;
-    using Utilities.Extensions;
-    using Microsoft.AspNetCore.Http.Authentication;
     using Internal.TestContexts;
+    using Microsoft.AspNetCore.Http.Authentication;
+    using Utilities.Extensions;
+
     /// <summary>
     /// Validator class containing authentication validation logic.
     /// </summary>

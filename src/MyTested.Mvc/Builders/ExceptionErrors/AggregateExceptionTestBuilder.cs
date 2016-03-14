@@ -4,9 +4,9 @@
     using System.Linq;
     using Contracts.ExceptionErrors;
     using Exceptions;
-    using Utilities.Extensions;
-    using Utilities;
     using Internal.TestContexts;
+    using Utilities;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Used for testing AggregateException.
@@ -22,7 +22,7 @@
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="caughtException">Actual received aggregate exception.</param>
         public AggregateExceptionTestBuilder(ControllerTestContext testContext)
-            :base(testContext)
+            : base(testContext)
         {
             this.aggregateException = testContext.CaughtExceptionAs<AggregateException>();
         }

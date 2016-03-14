@@ -3,15 +3,16 @@
     using System;
     using System.Collections.Generic;
     using Contracts.Controllers;
+    using Contracts.Data;
+    using Internal.Contracts;
     using Internal.Http;
+    using Internal.TestContexts;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
-    using Utilities.Validators;
-    using Internal.TestContexts;
-    using Contracts.Data;
-    using Internal.Contracts;
     using Utilities;
+    using Utilities.Validators;
+
     /// <summary>
     /// Used for building the controller which will be tested.
     /// </summary>
@@ -63,6 +64,7 @@
             {
                 return this.testContext;
             }
+
             set
             {
                 CommonValidator.CheckForNullReference(value, nameof(TestContext));

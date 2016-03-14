@@ -14,6 +14,6 @@
             this.tempData = (TempDataDictionary)services.GetService<ITempDataDictionaryFactory>().GetTempData(new DefaultHttpContext());
         }
 
-        private ITempDataDictionary TempData => tempData;
+        private ITempDataDictionary TempData => this.tempData;
     }
 }

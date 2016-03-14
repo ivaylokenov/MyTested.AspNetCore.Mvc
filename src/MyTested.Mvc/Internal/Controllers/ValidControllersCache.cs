@@ -1,9 +1,9 @@
 ﻿namespace MyTested.Mvc.Internal.Controllers
 {
-    using Contracts;
-    using Microsoft.AspNetCore.Mvc.ApplicationModels;
     using System;
     using System.Collections.Generic;
+    using Contracts;
+    using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
     internal class ValidControllersCache : IValidControllersCache, IControllerModelConvention
     {

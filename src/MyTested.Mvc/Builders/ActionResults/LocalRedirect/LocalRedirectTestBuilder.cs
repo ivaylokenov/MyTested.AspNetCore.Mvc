@@ -1,15 +1,16 @@
 ﻿namespace MyTested.Mvc.Builders.ActionResults.LocalRedirect
 {
     using System;
+    using System.Linq.Expressions;
+    using System.Threading.Tasks;
     using Base;
     using Contracts.ActionResults.LocalRedirect;
     using Exceptions;
-    using Utilities.Extensions;
-    using Microsoft.AspNetCore.Mvc;
-    using Utilities.Validators;
     using Internal.TestContexts;
-    using System.Linq.Expressions;
-    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
+    using Utilities.Extensions;
+    using Utilities.Validators;
+
     /// <summary>
     /// Used for testing local redirect result.
     /// </summary>

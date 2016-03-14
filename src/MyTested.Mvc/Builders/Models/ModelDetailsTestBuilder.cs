@@ -3,9 +3,9 @@
     using System;
     using Contracts.Models;
     using Exceptions;
-    using Utilities.Extensions;
-    using Utilities;
     using Internal.TestContexts;
+    using Utilities;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Used for testing the response model members.

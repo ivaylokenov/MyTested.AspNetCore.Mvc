@@ -4,17 +4,17 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Text;
     using Contracts.Http;
     using Contracts.Uris;
     using Exceptions;
-    using Utilities.Extensions;
+    using Internal.Formatters;
     using Internal.Http;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Primitives;
     using Uris;
+    using Utilities.Extensions;
     using Utilities.Validators;
-    using System.Text;
-    using Internal.Formatters;
 
     /// <summary>
     /// Used for building HTTP request message.

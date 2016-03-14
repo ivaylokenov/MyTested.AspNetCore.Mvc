@@ -1,24 +1,24 @@
 ﻿namespace MyTested.Mvc.Internal.Controllers
 {
     using System;
+    using System.Collections.Concurrent;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
-    using System.Reflection;
-    using System.Linq;
-    using System.Collections.Generic;
-    using System.Collections.Concurrent;
     using Utilities;
 
     public class ControllerPropertyHelper
     {
         private const string InvalidDelegateErrorMessage = "The {0} property cannot be activated for value of {1} type.";
 
-        private static readonly ConcurrentDictionary<Type, ControllerPropertyHelper> controllerPropertiesCache =
+        private static readonly ConcurrentDictionary<Type, ControllerPropertyHelper> ControllerPropertiesCache =
             new ConcurrentDictionary<Type, ControllerPropertyHelper>();
 
         private static readonly MethodInfo CallPropertyGetterOpenGenericMethod =
             typeof(ControllerPropertyHelper).GetTypeInfo().GetDeclaredMethod(nameof(CallPropertyGetter));
-        
+
         private readonly Type controllerType;
         private readonly IEnumerable<PropertyInfo> properties;
 
@@ -45,7 +45,7 @@
                 return this.controllerContextGetter;
             }
         }
-        
+
         public Func<object, ActionContext> ActionContextGetter
         {
             get
@@ -58,7 +58,7 @@
                 return this.actionContextGetter;
             }
         }
-        
+
         public Func<object, ViewDataDictionary> ViewDataGetter
         {
             get
@@ -93,12 +93,12 @@
 
         public static ControllerPropertyHelper GetProperties(Type type)
         {
-            return controllerPropertiesCache.GetOrAdd(type, _ =>
-            {
-                return new ControllerPropertyHelper(type);
-            });
+            return ControllerPropertiesCache.GetOrAdd(type, _ =>
+                {
+                    return new ControllerPropertyHelper(type);
+                });
         }
-        
+
         private static Func<object, TResult> MakeFastPropertyGetter<TResult>(PropertyInfo propertyInfo)
         {
             try
@@ -123,7 +123,7 @@
                 throw new InvalidOperationException(string.Format(InvalidDelegateErrorMessage, propertyInfo.Name, typeof(TResult)));
             }
         }
-        
+
         // Called via reflection
         private static TValue CallPropertyGetter<TDeclaringType, TValue>(
             Func<TDeclaringType, TValue> getter,
@@ -131,7 +131,7 @@
         {
             return getter((TDeclaringType)target);
         }
-        
+
         private void TryCreateControllerContextDelegates()
         {
             var controllerContextProperty = this.FindPropertyWithAttribute<ControllerContextAttribute>();

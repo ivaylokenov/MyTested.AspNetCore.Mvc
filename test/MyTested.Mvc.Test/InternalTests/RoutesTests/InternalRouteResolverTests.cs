@@ -1,13 +1,13 @@
 ﻿namespace MyTested.Mvc.Test.InternalTests.RoutesTests
 {
+    using System.IO;
+    using System.Reflection;
     using Internal.Application;
     using Internal.Http;
     using Internal.Routes;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Routing;
     using Setups.Routes;
-    using System.IO;
-    using System.Reflection;
     using Xunit;
 
     public class InternalRouteResolverTests
@@ -18,7 +18,7 @@
             var routeInfo = InternalRouteResolver.Resolve(
                 TestApplication.RouteServices,
                 TestApplication.Router,
-                GetRouteContext("/"));
+                this.GetRouteContext("/"));
 
             Assert.True(routeInfo.IsResolved);
             Assert.Null(routeInfo.UnresolvedError);
@@ -35,7 +35,7 @@
             var routeInfo = InternalRouteResolver.Resolve(
                 TestApplication.RouteServices,
                 TestApplication.Router,
-                GetRouteContext("/Normal/AnotherName"));
+                this.GetRouteContext("/Normal/AnotherName"));
 
             Assert.True(routeInfo.IsResolved);
             Assert.Null(routeInfo.UnresolvedError);
@@ -52,7 +52,7 @@
             var routeInfo = InternalRouteResolver.Resolve(
                 TestApplication.RouteServices,
                 TestApplication.Router,
-                GetRouteContext("/AttributeController/AttributeAction"));
+                this.GetRouteContext("/AttributeController/AttributeAction"));
 
             Assert.True(routeInfo.IsResolved);
             Assert.Null(routeInfo.UnresolvedError);
@@ -69,7 +69,7 @@
             var routeInfo = InternalRouteResolver.Resolve(
                 TestApplication.RouteServices,
                 TestApplication.Router,
-                GetRouteContext("/Normal/ActionWithParameters/5"));
+                this.GetRouteContext("/Normal/ActionWithParameters/5"));
 
             Assert.True(routeInfo.IsResolved);
             Assert.Null(routeInfo.UnresolvedError);
@@ -87,7 +87,7 @@
             var routeInfo = InternalRouteResolver.Resolve(
                 TestApplication.RouteServices,
                 TestApplication.Router,
-                GetRouteContext("/Normal/ActionWithStringParameters/Test"));
+                this.GetRouteContext("/Normal/ActionWithStringParameters/Test"));
 
             Assert.True(routeInfo.IsResolved);
             Assert.Null(routeInfo.UnresolvedError);
@@ -105,7 +105,7 @@
             var routeInfo = InternalRouteResolver.Resolve(
                 TestApplication.RouteServices,
                 TestApplication.Router,
-                GetRouteContext("/Normal/ActionWithParameters/Test"));
+                this.GetRouteContext("/Normal/ActionWithParameters/Test"));
 
             Assert.True(routeInfo.IsResolved);
             Assert.Null(routeInfo.UnresolvedError);
@@ -122,7 +122,7 @@
             var routeInfo = InternalRouteResolver.Resolve(
                 TestApplication.RouteServices,
                 TestApplication.Router,
-                GetRouteContext("/Normal/ActionWithMultipleParameters/5", queryString: "?text=test", contentType: ContentType.ApplicationJson));
+                this.GetRouteContext("/Normal/ActionWithMultipleParameters/5", queryString: "?text=test", contentType: ContentType.ApplicationJson));
 
             Assert.True(routeInfo.IsResolved);
             Assert.Null(routeInfo.UnresolvedError);
@@ -142,7 +142,7 @@
             var routeInfo = InternalRouteResolver.Resolve(
                 TestApplication.RouteServices,
                 TestApplication.Router,
-                GetRouteContext("/Normal/GetMethod"));
+                this.GetRouteContext("/Normal/GetMethod"));
 
             Assert.True(routeInfo.IsResolved);
             Assert.Null(routeInfo.UnresolvedError);
@@ -159,7 +159,7 @@
             var routeInfo = InternalRouteResolver.Resolve(
                 TestApplication.RouteServices,
                 TestApplication.Router,
-                GetRouteContext("/Normal/GetMethod", "POST"));
+                this.GetRouteContext("/Normal/GetMethod", "POST"));
 
             Assert.False(routeInfo.IsResolved);
             Assert.Equal("action could not be matched", routeInfo.UnresolvedError);
@@ -176,7 +176,7 @@
             var routeInfo = InternalRouteResolver.Resolve(
                 TestApplication.RouteServices,
                 TestApplication.Router,
-                GetRouteContext("/Normal/QueryString", "POST", "?first=test&second=5"));
+                this.GetRouteContext("/Normal/QueryString", "POST", "?first=test&second=5"));
 
             Assert.True(routeInfo.IsResolved);
             Assert.Null(routeInfo.UnresolvedError);
@@ -195,7 +195,7 @@
             var routeInfo = InternalRouteResolver.Resolve(
                 TestApplication.RouteServices,
                 TestApplication.Router,
-                GetRouteContext("/Normal/QueryString", "POST", "?first=test"));
+                this.GetRouteContext("/Normal/QueryString", "POST", "?first=test"));
 
             Assert.True(routeInfo.IsResolved);
             Assert.Null(routeInfo.UnresolvedError);
@@ -213,7 +213,7 @@
             var routeInfo = InternalRouteResolver.Resolve(
                 TestApplication.RouteServices,
                 TestApplication.Router,
-                GetRouteContext("/Normal/QueryString", "POST"));
+                this.GetRouteContext("/Normal/QueryString", "POST"));
 
             Assert.True(routeInfo.IsResolved);
             Assert.Null(routeInfo.UnresolvedError);
@@ -230,7 +230,7 @@
             var routeInfo = InternalRouteResolver.Resolve(
                 TestApplication.RouteServices,
                 TestApplication.Router,
-                GetRouteContext("/Normal/ActionWithModel/5", "POST", body: @"{""Integer"":5,""String"":""Test""}", contentType: ContentType.ApplicationJson));
+                this.GetRouteContext("/Normal/ActionWithModel/5", "POST", body: @"{""Integer"":5,""String"":""Test""}", contentType: ContentType.ApplicationJson));
 
             Assert.True(routeInfo.IsResolved);
             Assert.Null(routeInfo.UnresolvedError);
@@ -256,7 +256,7 @@
             var routeInfo = InternalRouteResolver.Resolve(
                 TestApplication.RouteServices,
                 TestApplication.Router,
-                GetRouteContext("/Normal/ActionWithModel/5", "POST", body: @"{""Integer"":5}", contentType: ContentType.ApplicationJson));
+                this.GetRouteContext("/Normal/ActionWithModel/5", "POST", body: @"{""Integer"":5}", contentType: ContentType.ApplicationJson));
 
             Assert.True(routeInfo.IsResolved);
             Assert.Null(routeInfo.UnresolvedError);
@@ -282,7 +282,7 @@
             var routeInfo = InternalRouteResolver.Resolve(
                 TestApplication.RouteServices,
                 TestApplication.Router,
-                GetRouteContext("/Normal/ActionWithModel/5", "POST", contentType: ContentType.ApplicationJson));
+                this.GetRouteContext("/Normal/ActionWithModel/5", "POST", contentType: ContentType.ApplicationJson));
 
             Assert.True(routeInfo.IsResolved);
             Assert.Null(routeInfo.UnresolvedError);
@@ -306,7 +306,7 @@
             var routeInfo = InternalRouteResolver.Resolve(
                 TestApplication.RouteServices,
                 TestApplication.Router,
-                GetRouteContext("/Normal/ActionWithMultipleParameters/5", "POST", body: @"{""Integer"":5,""String"":""Test""}", queryString: "?text=test", contentType: ContentType.ApplicationJson));
+                this.GetRouteContext("/Normal/ActionWithMultipleParameters/5", "POST", body: @"{""Integer"":5,""String"":""Test""}", queryString: "?text=test", contentType: ContentType.ApplicationJson));
 
             Assert.True(routeInfo.IsResolved);
             Assert.Null(routeInfo.UnresolvedError);
@@ -333,7 +333,7 @@
             var routeInfo = InternalRouteResolver.Resolve(
                 TestApplication.RouteServices,
                 TestApplication.Router,
-                GetRouteContext("/Normal/ActionWithOverloads"));
+                this.GetRouteContext("/Normal/ActionWithOverloads"));
 
             Assert.False(routeInfo.IsResolved);
             Assert.Equal(

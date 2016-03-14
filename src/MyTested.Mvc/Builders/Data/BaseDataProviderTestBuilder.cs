@@ -1,10 +1,10 @@
 ﻿namespace MyTested.Mvc.Builders.Data
 {
+    using System.Collections.Generic;
+    using Base;
     using Exceptions;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Routing;
-    using MyTested.Mvc.Builders.Base;
-    using System.Collections.Generic;
     using Utilities.Extensions;
     using Utilities.Validators;
 

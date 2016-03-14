@@ -3,16 +3,17 @@
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
+    using System.Threading.Tasks;
     using Base;
     using Contracts.ActionResults.Redirect;
     using Contracts.Uris;
     using Exceptions;
-    using Utilities.Extensions;
+    using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Routing;
+    using Utilities.Extensions;
     using Utilities.Validators;
-    using Internal.TestContexts;
-    using System.Threading.Tasks;
+
     /// <summary>
     /// Used for testing redirect results.
     /// </summary>
@@ -102,8 +103,7 @@
 
             return this;
         }
-
-
+        
         /// <summary>
         /// Tests whether redirect result has specific location provided by URI.
         /// </summary>

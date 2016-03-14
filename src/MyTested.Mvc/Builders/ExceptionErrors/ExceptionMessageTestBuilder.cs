@@ -3,8 +3,9 @@
     using Base;
     using Contracts.ExceptionErrors;
     using Exceptions;
-    using Utilities.Extensions;
     using Internal.TestContexts;
+    using Utilities.Extensions;
+
     /// <summary>
     /// Used for testing specific exception messages.
     /// </summary>

@@ -5,11 +5,11 @@
     using Base;
     using Contracts.ActionResults.Ok;
     using Exceptions;
-    using Utilities.Extensions;
+    using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.Net.Http.Headers;
-    using Internal.TestContexts;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Used for testing OK result.

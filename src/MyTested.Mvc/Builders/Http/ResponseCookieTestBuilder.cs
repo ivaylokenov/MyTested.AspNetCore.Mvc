@@ -91,6 +91,11 @@
             return this;
         }
 
+        public IResponseCookieTestBuilder AndAlso()
+        {
+            return this;
+        }
+
         internal SetCookieHeaderValue GetResponseCookie()
         {
             if (this.responseCookie.Name == FakeCookieName)
@@ -104,11 +109,6 @@
         internal ICollection<Func<SetCookieHeaderValue, SetCookieHeaderValue, bool>> GetResponseCookieValidations()
         {
             return this.validations;
-        }
-
-        public IResponseCookieTestBuilder AndAlso()
-        {
-            return this;
         }
     }
 }

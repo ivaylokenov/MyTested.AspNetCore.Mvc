@@ -1,5 +1,7 @@
 ﻿namespace MyTested.Mvc.Builders.Controllers
 {
+    using System;
+    using System.Linq.Expressions;
     using Authentication;
     using Contracts.Authentication;
     using Contracts.Controllers;
@@ -8,8 +10,6 @@
     using Internal.Application;
     using Internal.Routes;
     using Microsoft.AspNetCore.Http;
-    using System;
-    using System.Linq.Expressions;
     using Utilities.Validators;
 
     /// <summary>

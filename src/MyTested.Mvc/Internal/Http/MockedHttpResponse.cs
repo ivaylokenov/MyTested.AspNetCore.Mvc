@@ -1,15 +1,23 @@
 ﻿namespace MyTested.Mvc.Internal.Http
 {
     using System;
-    using Microsoft.AspNetCore.Http.Features;
-    using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Http.Internal;
 
     /// <summary>
     /// Mocked HTTP response.
     /// </summary>
     public class MockedHttpResponse : DefaultHttpResponse
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MockedHttpResponse" /> class.
+        /// </summary>
+        /// <param name="context">Default HTTP context.</param>
+        public MockedHttpResponse(DefaultHttpContext context)
+            : base(context)
+        {
+        }
+
         public static MockedHttpResponse From(DefaultHttpContext httpContext, HttpResponse httpResponse)
         {
             return new MockedHttpResponse(httpContext)
@@ -19,15 +27,6 @@
                 ContentType = httpResponse.ContentType,
                 StatusCode = httpResponse.StatusCode
             };
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MockedHttpResponse" /> class.
-        /// </summary>
-        /// <param name="context">Default HTTP context.</param>
-        public MockedHttpResponse(DefaultHttpContext context)
-            : base(context)
-        {
         }
 
         /// <summary>

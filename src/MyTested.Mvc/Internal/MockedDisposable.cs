@@ -7,6 +7,10 @@
     /// </summary>
     public class MockedDisposable : IDisposable
     {
+        private static MockedDisposable defaultMockedDisposable = new MockedDisposable();
+
+        public static MockedDisposable Instance => defaultMockedDisposable;
+
         /// <summary>
         /// Does nothing.
         /// </summary>

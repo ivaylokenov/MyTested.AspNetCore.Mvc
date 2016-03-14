@@ -3,8 +3,8 @@
     using System;
     using And;
     using Contracts.Base;
-    using Microsoft.AspNetCore.Http;
     using Internal.TestContexts;
+    using Microsoft.AspNetCore.Http;
 
     /// <summary>
     /// Base class for test builders with caught exception.

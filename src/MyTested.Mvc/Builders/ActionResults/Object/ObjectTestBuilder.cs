@@ -1,5 +1,7 @@
 ﻿namespace MyTested.Mvc.Builders.ActionResults.Object
 {
+    using System.Collections.Generic;
+    using System.Net;
     using Base;
     using Contracts.ActionResults.Object;
     using Exceptions;
@@ -7,8 +9,6 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.Net.Http.Headers;
-    using System.Collections.Generic;
-    using System.Net;
     using Utilities.Extensions;
 
     public class ObjectTestBuilder : BaseTestBuilderWithResponseModel<ObjectResult>, IAndObjectTestBuilder

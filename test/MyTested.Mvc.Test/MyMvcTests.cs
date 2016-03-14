@@ -5,35 +5,36 @@
 namespace MyTested.Mvc.Test
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using Exceptions;
+    using Internal;
     using Internal.Application;
+    using Internal.Caching;
+    using Internal.Contracts;
+    using Internal.Controllers;
+    using Internal.Formatters;
+    using Internal.Http;
+    using Internal.Routes;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Abstractions;
+    using Microsoft.AspNetCore.Mvc.Controllers;
     using Microsoft.AspNetCore.Mvc.Internal;
+    using Microsoft.AspNetCore.Routing;
+    using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.DependencyInjection.Extensions;
     using Microsoft.Extensions.Options;
     using Setups;
     using Setups.Common;
     using Setups.Controllers;
     using Setups.Services;
     using Setups.Startups;
-    using Microsoft.AspNetCore.Routing;
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Mvc.Abstractions;
-    using Internal.Contracts;
-    using Internal.Routes;
-    using Microsoft.Extensions.DependencyInjection.Extensions;
-    using Microsoft.AspNetCore.Http;
-    using Internal.Http;
-    using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Http.Internal;
-    using System.Collections.Generic;
-    using Microsoft.Extensions.Caching.Memory;
-    using Internal.Caching;
-    using Internal;
-    using Internal.Formatters;
-    using Internal.Controllers;
-    using Microsoft.AspNetCore.Mvc.Controllers;
+
     public class MyMvcTests
     {
         [Fact]

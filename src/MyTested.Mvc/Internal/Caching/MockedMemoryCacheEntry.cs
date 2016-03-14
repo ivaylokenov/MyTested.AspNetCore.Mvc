@@ -1,7 +1,7 @@
 ﻿namespace MyTested.Mvc.Internal.Caching
 {
-    using Microsoft.Extensions.Caching.Memory;
     using Internal.Contracts;
+    using Microsoft.Extensions.Caching.Memory;
     using Utilities.Validators;
 
     public class MockedMemoryCacheEntry : IMockedMemoryCacheEntry
