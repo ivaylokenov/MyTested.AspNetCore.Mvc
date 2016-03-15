@@ -48,7 +48,7 @@
                 this.ThrowNewDataProviderAssertionException(
                     name,
                     expectedCount == null ? "entries" : $" with {expectedCount} entries",
-                    expectedCount == null ? "but none were found" : $"but in fact contained {actualCount}");
+                    expectedCount == null ? "none were found" : $"in fact contained {actualCount}");
             }
         }
 
@@ -56,14 +56,14 @@
         {
             this.ThrowNewDataProviderAssertionException(
                 name,
-                "with no entries",
+                " with no entries",
                 "in fact it had some");
         }
 
         private void ThrowNewDataProviderAssertionException(string name, string expectedValue, string actualValue)
         {
             throw new DataProviderAssertionException(string.Format(
-                "When calling {0} action in {1} expected to have {2}{3}, {4}.",
+                "When calling {0} action in {1} expected to have {2}{3}, but {4}.",
                 this.ActionName,
                 this.Controller.GetName(),
                 name,

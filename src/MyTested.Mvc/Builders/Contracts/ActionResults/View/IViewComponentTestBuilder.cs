@@ -84,7 +84,9 @@
         /// <typeparam name="TArgument">Type of the argument.</typeparam>
         /// <returns>The same view component test builder.</returns>
         IAndViewComponentTestBuilder ContainingArgumentOfType<TArgument>();
-        
+
+        IAndViewComponentTestBuilder ContainingArgumentOfType<TArgument>(string name);
+
         /// <summary>
         /// Tests whether view component result will be invoked with the provided arguments.
         /// </summary>

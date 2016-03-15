@@ -53,6 +53,8 @@
         /// <param name="withNumberOfErrors">Expected number of errors. If default null is provided, the test builder checks only if any errors are found.</param>
         /// <returns>Test builder with AndAlso method.</returns>
         IAndTestBuilder<TActionResult> InvalidModelState(int? withNumberOfErrors = null);
+        
+        IAndTestBuilder<TActionResult> NoMemoryCache();
 
         IAndTestBuilder<TActionResult> TempData(Action<ITempDataTestBuilder> tempDataTestBuilder);
 

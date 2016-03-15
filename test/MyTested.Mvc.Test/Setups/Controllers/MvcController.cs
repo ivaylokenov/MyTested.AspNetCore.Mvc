@@ -827,6 +827,13 @@
             return this.BadRequest();
         }
 
+        public IActionResult AddMemoryCacheAction()
+        {
+            var memoryCache = this.HttpContext.RequestServices.GetService<IMemoryCache>();
+            memoryCache.Set("test", "value");
+            return this.Ok();
+        }
+
         public IActionResult TempDataAction()
         {
             if (this.TempData["test"] != null)

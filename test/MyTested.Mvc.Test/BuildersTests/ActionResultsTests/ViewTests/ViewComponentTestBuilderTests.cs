@@ -240,6 +240,17 @@
         }
 
         [Fact]
+        public void WithArgumentOfTypeAndNameShouldNotThrowExceptionWithCorrectArgumentName()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.ViewComponentResultByType())
+                .ShouldReturn()
+                .ViewComponent()
+                .ContainingArgumentOfType<List<ResponseModel>>("model");
+        }
+
+        [Fact]
         public void WithArgumentShouldThrowExceptionWithIncorrectArgumentName()
         {
             Test.AssertException<ViewResultAssertionException>(
@@ -298,6 +309,19 @@
                 .ShouldReturn()
                 .ViewComponent()
                 .ContainingArgument(responseModels);
+        }
+
+        [Fact]
+        public void WithArgumentShouldNotThrowExceptionWithCorrectArgumentAndName()
+        {
+            var responseModels = TestObjectFactory.GetListOfResponseModels();
+
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.ViewComponentResultByType())
+                .ShouldReturn()
+                .ViewComponent()
+                .ContainingArgument("model", responseModels);
         }
 
         [Fact]
