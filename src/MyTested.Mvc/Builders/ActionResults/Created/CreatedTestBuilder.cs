@@ -193,7 +193,7 @@
         /// </summary>
         /// <param name="assertions">Action containing all assertions on the location.</param>
         /// <returns>The same created test builder.</returns>
-        public IAndCreatedTestBuilder AtLocation(Action<string> assertions)
+        public IAndCreatedTestBuilder AtLocationPassing(Action<string> assertions)
         {
             var createdResult = this.GetCreatedResult<CreatedResult>(Location);
             assertions(createdResult.Location);
@@ -206,7 +206,7 @@
         /// </summary>
         /// <param name="predicate">Predicate testing the location.</param>
         /// <returns>The same created test builder.</returns>
-        public IAndCreatedTestBuilder AtLocation(Func<string, bool> predicate)
+        public IAndCreatedTestBuilder AtLocationPassing(Func<string, bool> predicate)
         {
             var createdResult = this.GetCreatedResult<CreatedResult>(Location);
             var location = createdResult.Location;
@@ -215,7 +215,7 @@
                 this.ThrowNewCreatedResultAssertionException(
                     $"location ('{location}')",
                     "to pass the given predicate",
-                    "but it failed");
+                    "it failed");
             }
 
             return this;
@@ -306,7 +306,7 @@
         /// </summary>
         /// <param name="key">Expected route key.</param>
         /// <returns>The same created test builder.</returns>
-        public IAndCreatedTestBuilder ContainingRouteValue(string key)
+        public IAndCreatedTestBuilder ContainingRouteKey(string key)
         {
             RouteActionResultValidator.ValidateRouteValue(
                 this.ActionResult,
@@ -425,11 +425,13 @@
         /// <param name="actionCall">Method call expression indicating the expected action.</param>
         /// <returns>The same created test builder.</returns>
         public IAndCreatedTestBuilder At<TController>(Expression<Action<TController>> actionCall)
+            where TController : class
         {
             return this.ProcessRouteLambdaExpression<TController>(actionCall);
         }
 
         public IAndCreatedTestBuilder At<TController>(Expression<Func<TController, Task>> actionCall)
+            where TController : class
         {
             return this.ProcessRouteLambdaExpression<TController>(actionCall);
         }

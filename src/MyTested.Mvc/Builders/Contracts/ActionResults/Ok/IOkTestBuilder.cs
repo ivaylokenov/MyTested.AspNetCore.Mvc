@@ -8,7 +8,7 @@
     using Microsoft.Net.Http.Headers;
 
     /// <summary>
-    /// Used for testing ok result.
+    /// Used for testing OK result.
     /// </summary>
     public interface IOkTestBuilder : IBaseTestBuilderWithResponseModel,
         IBaseTestBuilderWithActionResult<ActionResult>

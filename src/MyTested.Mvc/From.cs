@@ -12,9 +12,6 @@
         /// </summary>
         /// <typeparam name="TService">Type of service.</typeparam>
         /// <returns>Service implementation.</returns>
-        public static TService Services<TService>()
-        {
-            return TestServiceProvider.GetService<TService>();
-        }
+        public static TService Services<TService>() => TestServiceProvider.GetService<TService>();
     }
 }

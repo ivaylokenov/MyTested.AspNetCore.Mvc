@@ -224,7 +224,6 @@
         {
             return new HostingEnvironment
             {
-                Configuration = Configuration,
                 EnvironmentName = TestConfiguration.EnvironmentName
             };
         }

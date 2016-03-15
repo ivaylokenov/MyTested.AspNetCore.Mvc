@@ -1485,6 +1485,25 @@
         }
 
         [Fact]
+        public void CallingShouldWorkCorrectlyWithFromServices()
+        {
+            MyMvc
+                .IsUsingDefaultConfiguration()
+                .WithServices(services =>
+                {
+                    services.AddHttpContextAccessor();
+                });
+
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.WithService(From.Services<IHttpContextAccessor>()))
+                .ShouldReturn()
+                .Ok();
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
         public void WithControllerContextShouldSetControllerContextForPocoController()
         {
             MyMvc

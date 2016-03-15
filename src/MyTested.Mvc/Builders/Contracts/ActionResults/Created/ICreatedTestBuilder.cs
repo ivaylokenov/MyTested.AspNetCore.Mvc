@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq.Expressions;
     using System.Net;
+    using System.Threading.Tasks;
     using Base;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
@@ -22,6 +23,20 @@
         /// <param name="location">Expected location as string.</param>
         /// <returns>The same created test builder.</returns>
         IAndCreatedTestBuilder AtLocation(string location);
+
+        /// <summary>
+        /// Tests whether created result location passes given assertions.
+        /// </summary>
+        /// <param name="assertions">Action containing all assertions on the location.</param>
+        /// <returns>The same created test builder.</returns>
+        IAndCreatedTestBuilder AtLocationPassing(Action<string> assertions);
+
+        /// <summary>
+        /// Tests whether created result location passes given predicate.
+        /// </summary>
+        /// <param name="predicate">Predicate testing the location.</param>
+        /// <returns>The same created test builder.</returns>
+        IAndCreatedTestBuilder AtLocationPassing(Func<string, bool> predicate);
 
         /// <summary>
         /// Tests whether created result has specific location provided by URI.
@@ -63,7 +78,13 @@
         /// </summary>
         /// <param name="key">Expected route key.</param>
         /// <returns>The same created test builder.</returns>
-        IAndCreatedTestBuilder ContainingRouteValue(string key);
+        IAndCreatedTestBuilder ContainingRouteKey(string key);
+
+        IAndCreatedTestBuilder ContainingRouteValue<TRouteValue>(TRouteValue value);
+
+        IAndCreatedTestBuilder ContainingRouteValueOfType<TRouteValue>();
+
+        IAndCreatedTestBuilder ContainingRouteValueOfType<TRouteValue>(string key);
 
         /// <summary>
         /// Tests whether created result contains specific route key and value.
@@ -108,7 +129,11 @@
         /// <typeparam name="TController">Type of expected controller.</typeparam>
         /// <param name="actionCall">Method call expression indicating the expected action.</param>
         /// <returns>The same created test builder.</returns>
-        IAndCreatedTestBuilder At<TController>(Expression<Action<TController>> actionCall);
+        IAndCreatedTestBuilder At<TController>(Expression<Action<TController>> actionCall)
+            where TController : class;
+
+        IAndCreatedTestBuilder At<TController>(Expression<Func<TController, Task>> actionCall)
+            where TController : class;
 
         /// <summary>
         /// Tests whether created result has the same status code as the provided one.

@@ -476,7 +476,7 @@ namespace MyTested.Mvc.Test
 
             MyMvc.IsUsingDefaultConfiguration();
         }
-
+        
         [Fact]
         public void CustomConfigureOptionsShouldNotOverrideTheDefaultTestOnes()
         {

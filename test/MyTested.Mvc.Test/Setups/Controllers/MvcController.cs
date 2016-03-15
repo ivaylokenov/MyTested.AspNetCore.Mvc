@@ -303,9 +303,28 @@
             };
         }
 
+        public IActionResult FullObjectResultAction()
+        {
+            return new ObjectResult(this.responseModel)
+            {
+                ContentTypes = new MediaTypeCollection { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) },
+                StatusCode = StatusCodes.Status201Created,
+                Formatters = new FormatterCollection<IOutputFormatter> { new JsonOutputFormatter(), new CustomOutputFormatter() },
+                DeclaredType = typeof(List<ResponseModel>),
+            };
+        }
+
         public IActionResult OkActionWithFormatter(IOutputFormatter formatter)
         {
             return new OkObjectResult(this.responseModel)
+            {
+                Formatters = new FormatterCollection<IOutputFormatter> { formatter }
+            };
+        }
+
+        public IActionResult ObjectActionWithFormatter(IOutputFormatter formatter)
+        {
+            return new ObjectResult(this.responseModel)
             {
                 Formatters = new FormatterCollection<IOutputFormatter> { formatter }
             };
@@ -610,6 +629,11 @@
             return await Task.Run(() => this.Ok());
         }
 
+        public IActionResult ObjectResultWithResponse()
+        {
+            return new ObjectResult(this.responseModel.ToList());
+        }
+
         public IActionResult BadRequestAction()
         {
             return this.BadRequest();
@@ -642,7 +666,7 @@
 
             return this.Ok();
         }
-        
+
         public IActionResult JsonAction()
         {
             return this.Json(this.responseModel);
@@ -675,6 +699,14 @@
         public IActionResult LocalRedirectPermanentAction()
         {
             return this.LocalRedirectPermanent("/local/test");
+        }
+
+        public IActionResult LocalRedirectActionWithCustomUrlHelper(IUrlHelper helper)
+        {
+            return new LocalRedirectResult("/api/test")
+            {
+                UrlHelper = helper
+            };
         }
 
         public IActionResult CustomModelStateError()
@@ -813,6 +845,16 @@
             }
 
             return this.BadRequest();
+        }
+
+        public IActionResult WithService(IHttpContextAccessor httpContextAccessor)
+        {
+            if (httpContextAccessor == null)
+            {
+                return this.BadRequest();
+            }
+
+            return this.Ok();
         }
 
         private void ThrowNewNullReferenceException()

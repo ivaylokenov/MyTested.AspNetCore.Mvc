@@ -143,18 +143,26 @@
                 ContractResolver = new CamelCasePropertyNamesContractResolver(),
                 ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor,
                 DateFormatHandling = DateFormatHandling.MicrosoftDateFormat,
+                DateFormatString = "TEST",
                 DateParseHandling = DateParseHandling.DateTimeOffset,
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc,
                 DefaultValueHandling = DefaultValueHandling.Ignore,
+                EqualityComparer = new CustomEqualityComparer(),
                 Formatting = Formatting.Indented,
+                FloatFormatHandling = FloatFormatHandling.String,
+                FloatParseHandling = FloatParseHandling.Decimal,
                 MaxDepth = 2,
+                MetadataPropertyHandling = MetadataPropertyHandling.ReadAhead,
                 MissingMemberHandling = MissingMemberHandling.Ignore,
                 NullValueHandling = NullValueHandling.Ignore,
+                ReferenceResolverProvider = () => new CustomJsonReferenceResolver(),
                 ObjectCreationHandling = ObjectCreationHandling.Replace,
                 PreserveReferencesHandling = PreserveReferencesHandling.Arrays,
                 ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+                StringEscapeHandling = StringEscapeHandling.EscapeHtml,
                 TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
-                TypeNameHandling = TypeNameHandling.None
+                TypeNameHandling = TypeNameHandling.None,
+                TraceWriter = new CustomJsonTraceWriter()
             };
         }
     }

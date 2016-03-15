@@ -2,6 +2,7 @@
 {
     using System;
     using Microsoft.AspNetCore.Builder;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.DependencyInjection;
 
@@ -10,6 +11,8 @@
     /// </summary>
     public interface IApplicationConfigurationBuilder
     {
+        IApplicationConfigurationBuilder WithTestConfiguration(Action<IConfigurationBuilder> config);
+
         /// <summary>
         /// Adds additional services to the tested application's services collection.
         /// </summary>

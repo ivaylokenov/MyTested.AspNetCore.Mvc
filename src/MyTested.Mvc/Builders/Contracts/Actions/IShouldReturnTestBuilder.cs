@@ -11,6 +11,7 @@
     using ActionResults.Json;
     using ActionResults.LocalRedirect;
     using ActionResults.NotFound;
+    using ActionResults.Object;
     using ActionResults.Ok;
     using ActionResults.Redirect;
     using ActionResults.View;
@@ -91,6 +92,8 @@
         /// </summary>
         /// <returns>Forbid test builder.</returns>
         IForbidTestBuilder Forbid();
+
+        IObjectTestBuilder Object();
 
         /// <summary>
         /// Tests whether action result is OkResult or OkObjectResult.

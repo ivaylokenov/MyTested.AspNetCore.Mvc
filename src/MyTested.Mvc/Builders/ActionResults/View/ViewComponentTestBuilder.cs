@@ -101,7 +101,7 @@
         /// <param name="name">Name of the argument.</param>
         /// <param name="value">Expected argument value.</param>
         /// <returns>The same view component test builder.</returns>
-        public IAndViewComponentTestBuilder ContainingArgument(string name)
+        public IAndViewComponentTestBuilder ContainingArgumentWithName(string name)
         {
             DictionaryValidator.ValidateStringKey(
                 ArgumentsName,

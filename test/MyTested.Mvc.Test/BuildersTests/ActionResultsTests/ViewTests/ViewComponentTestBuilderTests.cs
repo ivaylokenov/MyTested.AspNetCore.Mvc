@@ -236,7 +236,7 @@
                 .Calling(c => c.ViewComponentResultByType())
                 .ShouldReturn()
                 .ViewComponent()
-                .ContainingArgument("model");
+                .ContainingArgumentWithName("model");
         }
 
         [Fact]
@@ -250,7 +250,7 @@
                         .Calling(c => c.ViewComponentResultByType())
                         .ShouldReturn()
                         .ViewComponent()
-                        .ContainingArgument("id");
+                        .ContainingArgumentWithName("id");
                 },
                 "When calling ViewComponentResultByType action in MvcController expected view component result arguments to have entry with key 'id', but such was not found.");
         }

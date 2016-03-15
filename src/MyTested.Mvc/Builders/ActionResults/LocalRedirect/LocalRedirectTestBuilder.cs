@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
     using Base;
     using Contracts.ActionResults.LocalRedirect;
+    using Contracts.Uris;
     using Exceptions;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
@@ -65,7 +66,7 @@
         /// </summary>
         /// <param name="assertions">Action containing all assertions on the URL.</param>
         /// <returns>The same local redirect test builder.</returns>
-        public IAndLocalRedirectTestBuilder ToUrl(Action<string> assertions)
+        public IAndLocalRedirectTestBuilder ToUrlPassing(Action<string> assertions)
         {
             assertions(this.ActionResult.Url);
             return this;
@@ -76,7 +77,7 @@
         /// </summary>
         /// <param name="predicate">Predicate testing the URL.</param>
         /// <returns>The same local redirect test builder.</returns>
-        public IAndLocalRedirectTestBuilder ToUrl(Func<string, bool> predicate)
+        public IAndLocalRedirectTestBuilder ToUrlPassing(Func<string, bool> predicate)
         {
             var url = this.ActionResult.Url;
             if (!predicate(url))
@@ -84,8 +85,23 @@
                 this.ThrowNewRedirectResultAssertionException(
                     $"location ('{url}')",
                     "to pass the given predicate",
-                    "but it failed");
+                    "it failed");
             }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether local redirect result has specific location provided by builder.
+        /// </summary>
+        /// <param name="uriTestBuilder">Builder for expected URI.</param>
+        /// <returns>The same local redirect test builder.</returns>
+        public IAndLocalRedirectTestBuilder ToUrl(Action<IUriTestBuilder> uriTestBuilder)
+        {
+            LocationValidator.ValidateLocation(
+                this.ActionResult,
+                uriTestBuilder,
+                this.ThrowNewRedirectResultAssertionException);
 
             return this;
         }
@@ -142,11 +158,13 @@
         /// <param name="actionCall">Method call expression indicating the expected redirect action.</param>
         /// <returns>The same local redirect test builder.</returns>
         public IAndLocalRedirectTestBuilder To<TController>(Expression<Action<TController>> actionCall)
+            where TController : class
         {
             return this.ProcessRouteLambdaExpression<TController>(actionCall);
         }
 
         public IAndLocalRedirectTestBuilder To<TController>(Expression<Func<TController, Task>> actionCall)
+            where TController : class
         {
             return this.ProcessRouteLambdaExpression<TController>(actionCall);
         }

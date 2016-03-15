@@ -3,8 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
+    using Setups.Controllers;
     using Setups.Services;
     using Xunit;
 
@@ -511,6 +514,58 @@
             });
 
             Assert.IsAssignableFrom<ReplaceableInjectedService>(serviceCollection.BuildServiceProvider().GetServices<IInjectedService>().FirstOrDefault());
+        }
+
+        [Fact]
+        public void AddMvcControllersAsServicesShouldWorkCorrectlyWithArrayOfTypes()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddMvcControllersAsServices(typeof(MvcController), typeof(AreaController));
+
+            var controllerServices = serviceCollection.Where(s => s.ServiceType.GetTypeInfo().BaseType == typeof(Controller)).Select(s => s.ServiceType).ToList();
+
+            Assert.NotEmpty(controllerServices);
+            Assert.Contains(typeof(MvcController), controllerServices);
+            Assert.Contains(typeof(AreaController), controllerServices);
+        }
+
+        [Fact]
+        public void AddMvcControllersAsServicesShouldWorkCorrectlyWithEnumerableOfTypes()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddMvcControllersAsServices(new[] { typeof(MvcController), typeof(AreaController) });
+
+            var controllerServices = serviceCollection.Where(s => s.ServiceType.GetTypeInfo().BaseType == typeof(Controller)).Select(s => s.ServiceType).ToList();
+
+            Assert.NotEmpty(controllerServices);
+            Assert.Contains(typeof(MvcController), controllerServices);
+            Assert.Contains(typeof(AreaController), controllerServices);
+        }
+        
+        [Fact]
+        public void AddMvcControllersAsServicesShouldWorkCorrectlyWithArrayOfAssemblies()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddMvcControllersAsServices(typeof(MvcController).GetTypeInfo().Assembly);
+
+            var controllerServices = serviceCollection.Where(s => s.ServiceType.GetTypeInfo().BaseType == typeof(Controller)).Select(s => s.ServiceType).ToList();
+
+            Assert.NotEmpty(controllerServices);
+            Assert.Contains(typeof(MvcController), controllerServices);
+            Assert.Contains(typeof(AreaController), controllerServices);
+        }
+        
+        [Fact]
+        public void AddMvcControllersAsServicesShouldWorkCorrectlyWithEnumerableOfAssemblies()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddMvcControllersAsServices(new[] { typeof(MvcController).GetTypeInfo().Assembly });
+
+            var controllerServices = serviceCollection.Where(s => s.ServiceType.GetTypeInfo().BaseType == typeof(Controller)).Select(s => s.ServiceType).ToList();
+
+            Assert.NotEmpty(controllerServices);
+            Assert.Contains(typeof(MvcController), controllerServices);
+            Assert.Contains(typeof(AreaController), controllerServices);
         }
     }
 }

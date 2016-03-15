@@ -1,16 +1,19 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.ActionResults.Json
 {
-    using System;
-    using System.Globalization;
-    using System.Runtime.Serialization.Formatters;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
-
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Runtime.Serialization.Formatters;
     /// <summary>
     /// Used for testing JSON serializer settings in a JSON result.
     /// </summary>
     public interface IJsonSerializerSettingsTestBuilder
     {
+        IAndJsonSerializerSettingsTestBuilder WithCheckAdditionalContent(bool checkAdditionalContent);
+
         /// <summary>
         /// Tests the Culture property in a JSON serializer settings object.
         /// </summary>
@@ -40,6 +43,15 @@
         /// <returns>The same JSON serializer settings test builder.</returns>
         IAndJsonSerializerSettingsTestBuilder WithContractResolverOfType(Type contractResolverType);
 
+        IAndJsonSerializerSettingsTestBuilder ContainingConverter(JsonConverter jsonConverter);
+
+        IAndJsonSerializerSettingsTestBuilder ContainingConverterOfType<TJsonConverter>()
+            where TJsonConverter : JsonConverter;
+
+        IAndJsonSerializerSettingsTestBuilder ContainingConverters(IEnumerable<JsonConverter> jsonConverters);
+
+        IAndJsonSerializerSettingsTestBuilder ContainingConverters(params JsonConverter[] jsonConverters);
+
         /// <summary>
         /// Tests the ConstructorHandling property in a JSON serializer settings object.
         /// </summary>
@@ -53,6 +65,8 @@
         /// <param name="dateFormatHandling">Expected DateFormatHandling.</param>
         /// <returns>The same JSON serializer settings test builder.</returns>
         IAndJsonSerializerSettingsTestBuilder WithDateFormatHandling(DateFormatHandling dateFormatHandling);
+        
+        IAndJsonSerializerSettingsTestBuilder WithDateFormatString(string dateFormatString);
 
         /// <summary>
         /// Tests the DateParseHandling property in a JSON serializer settings object.
@@ -75,6 +89,17 @@
         /// <returns>The same JSON serializer settings test builder.</returns>
         IAndJsonSerializerSettingsTestBuilder WithDefaultValueHandling(DefaultValueHandling defaultValueHandling);
 
+        IAndJsonSerializerSettingsTestBuilder WithEqualityComparer(IEqualityComparer equalityComparer);
+
+        IAndJsonSerializerSettingsTestBuilder WithEqualityComparerOfType<TEqualityComparer>()
+            where TEqualityComparer : IEqualityComparer;
+
+        IAndJsonSerializerSettingsTestBuilder WithEqualityComparerOfType(Type equalityComparerType);
+
+        IAndJsonSerializerSettingsTestBuilder WithFloatFormatHandling(FloatFormatHandling floatFormatHandling);
+
+        IAndJsonSerializerSettingsTestBuilder WithFloatParseHandling(FloatParseHandling floatParseHandling);
+
         /// <summary>
         /// Tests the Formatting property in a JSON serializer settings object.
         /// </summary>
@@ -88,6 +113,8 @@
         /// <param name="maxDepth">Expected max depth.</param>
         /// <returns>The same JSON serializer settings test builder.</returns>
         IAndJsonSerializerSettingsTestBuilder WithMaxDepth(int? maxDepth);
+
+        IAndJsonSerializerSettingsTestBuilder WithMetadataPropertyHandling(MetadataPropertyHandling metadataPropertyHandling);
 
         /// <summary>
         /// Tests the MissingMemberHandling property in a JSON serializer settings object.
@@ -124,6 +151,22 @@
         /// <param name="referenceLoopHandling">Expected ReferenceLoopHandling.</param>
         /// <returns>The same JSON serializer settings test builder.</returns>
         IAndJsonSerializerSettingsTestBuilder WithReferenceLoopHandling(ReferenceLoopHandling referenceLoopHandling);
+
+        IAndJsonSerializerSettingsTestBuilder WithReferenceResolver(IReferenceResolver referenceResolver);
+
+        IAndJsonSerializerSettingsTestBuilder WithReferenceResolverOfType<TReferenceResolver>()
+            where TReferenceResolver : IReferenceResolver;
+
+        IAndJsonSerializerSettingsTestBuilder WithReferenceResolverOfType(Type referenceResolverType);
+
+        IAndJsonSerializerSettingsTestBuilder WithStringEscapeHandling(StringEscapeHandling stringEscapeHandling);
+
+        IAndJsonSerializerSettingsTestBuilder WithTraceWriter(ITraceWriter traceWriter);
+
+        IAndJsonSerializerSettingsTestBuilder WithTraceWriterOfType<TTraceWriter>()
+            where TTraceWriter : ITraceWriter;
+
+        IAndJsonSerializerSettingsTestBuilder WithTraceWriterOfType(Type traceWriterType);
 
         /// <summary>
         /// Tests the FormatterAssemblyStyle property in a JSON serializer settings object.

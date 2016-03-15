@@ -22,8 +22,9 @@
     "netstandard1.5": { },
     "net451": {
       "frameworkAssemblies": {
-        "System.Runtime": "",
         "System.Collections": "",
+        "System.ComponentModel": "",
+        "System.Runtime": "",
         "System.Threading.Tasks": ""
       }
     }

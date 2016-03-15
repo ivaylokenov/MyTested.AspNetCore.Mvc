@@ -22,7 +22,7 @@
             TestApplication.StartupType = startupType;
         }
 
-        public IApplicationConfigurationBuilder WithConfiguration(Action<IConfigurationBuilder> config)
+        public IApplicationConfigurationBuilder WithTestConfiguration(Action<IConfigurationBuilder> config)
         {
             TestApplication.AdditionalConfiguration += config;
             return this;

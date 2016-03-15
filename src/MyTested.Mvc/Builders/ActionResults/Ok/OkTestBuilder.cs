@@ -34,7 +34,7 @@
         /// <summary>
         /// Tests whether no response model is returned from the invoked action.
         /// </summary>
-        /// <returns>The same ok test builder.</returns>
+        /// <returns>The same OK test builder.</returns>
         public IAndOkTestBuilder WithNoResponseModel()
         {
             var actualResult = this.ActionResult as OkResult;
@@ -183,9 +183,9 @@
         }
 
         /// <summary>
-        /// AndAlso method for better readability when chaining ok tests.
+        /// AndAlso method for better readability when chainingOKtests.
         /// </summary>
-        /// <returns>The same ok test builder.</returns>
+        /// <returns>The same OK test builder.</returns>
         public IOkTestBuilder AndAlso() => this;
 
         /// <summary>
@@ -206,7 +206,7 @@
         private void ThrowNewOkResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new OkResultAssertionException(string.Format(
-                    "When calling {0} action in {1} expected ok result {2} {3}, but {4}.",
+                    "When calling {0} action in {1} expected OK result {2} {3}, but {4}.",
                     this.ActionName,
                     this.Controller.GetName(),
                     propertyName,

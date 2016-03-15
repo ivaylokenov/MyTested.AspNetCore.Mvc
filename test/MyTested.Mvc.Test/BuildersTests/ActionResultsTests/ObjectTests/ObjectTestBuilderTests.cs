@@ -1,7 +1,5 @@
-﻿namespace MyTested.Mvc.Test.BuildersTests.ActionResultsTests.OkTests
+﻿namespace MyTested.Mvc.Test.BuildersTests.ActionResultsTests.ObjectTests
 {
-    using System.Collections.Generic;
-    using System.Net;
     using Exceptions;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
@@ -10,56 +8,31 @@
     using Setups.Common;
     using Setups.Controllers;
     using Setups.Models;
+    using System.Collections.Generic;
+    using System.Net;
     using Xunit;
 
-    public class OkTestBuilderTests
+    public class ObjectTestBuilderTests
     {
-        [Fact]
-        public void WithNoResponseModelShouldNotThrowExceptionIfNoResponseModelIsProvided()
-        {
-            MyMvc
-                .Controller<MvcController>()
-                .Calling(c => c.OkResultAction())
-                .ShouldReturn()
-                .Ok()
-                .WithNoResponseModel();
-        }
-
-        [Fact]
-        public void WithNoResponseModelShouldThrowExceptionIfResponseModelIsProvided()
-        {
-            Test.AssertException<ResponseModelAssertionException>(
-                () =>
-                {
-                    MyMvc
-                        .Controller<MvcController>()
-                        .Calling(c => c.OkResultWithResponse())
-                        .ShouldReturn()
-                        .Ok()
-                        .WithNoResponseModel();
-                },
-                "When calling OkResultWithResponse action in MvcController expected to not have response model but in fact response model was found.");
-        }
-
         [Fact]
         public void WithResponseModelShouldWorkCorrectly()
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.OkResultWithResponse())
+                .Calling(c => c.ObjectResultWithResponse())
                 .ShouldReturn()
-                .Ok()
+                .Object()
                 .WithResponseModelOfType<List<ResponseModel>>();
         }
-        
+
         [Fact]
         public void WithStatusCodeShouldNotThrowExceptionWithCorrectStatusCode()
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.FullOkAction())
+                .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
-                .Ok()
+                .Object()
                 .WithStatusCode(201);
         }
 
@@ -68,26 +41,26 @@
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.FullOkAction())
+                .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
-                .Ok()
+                .Object()
                 .WithStatusCode(HttpStatusCode.Created);
         }
 
         [Fact]
         public void WithStatusCodeAsEnumShouldThrowExceptionWithIncorrectStatusCode()
         {
-            Test.AssertException<OkResultAssertionException>(
+            Test.AssertException<ObjectResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
-                        .Calling(c => c.FullOkAction())
+                        .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
-                        .Ok()
+                        .Object()
                         .WithStatusCode(HttpStatusCode.OK);
                 },
-                "When calling FullOkAction action in MvcController expected OK result to have 200 (OK) status code, but instead received 201 (Created).");
+                "When calling FullObjectResultAction action in MvcController expected object result to have 200 (OK) status code, but instead received 201 (Created).");
         }
 
         [Fact]
@@ -95,9 +68,9 @@
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.FullOkAction())
+                .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
-                .Ok()
+                .Object()
                 .ContainingContentType(ContentType.ApplicationJson);
         }
 
@@ -106,26 +79,26 @@
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.FullOkAction())
+                .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
-                .Ok()
+                .Object()
                 .ContainingContentType(new MediaTypeHeaderValue(ContentType.ApplicationJson));
         }
-        
+
         [Fact]
         public void ContainingContentTypeAsMediaTypeHeaderValueShouldThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<OkResultAssertionException>(
+            Test.AssertException<ObjectResultAssertionException>(
                 () =>
                 {
                     MyMvc
                        .Controller<MvcController>()
-                       .Calling(c => c.FullOkAction())
+                       .Calling(c => c.FullObjectResultAction())
                        .ShouldReturn()
-                       .Ok()
+                       .Object()
                        .ContainingContentType(new MediaTypeHeaderValue(ContentType.ApplicationOctetStream));
                 },
-                "When calling FullOkAction action in MvcController expected OK result content types to contain application/octet-stream, but such was not found.");
+                "When calling FullObjectResultAction action in MvcController expected object result content types to contain application/octet-stream, but such was not found.");
         }
 
         [Fact]
@@ -133,9 +106,9 @@
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.FullOkAction())
+                .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
-                .Ok()
+                .Object()
                 .ContainingContentTypes(new List<string>
                 {
                     ContentType.ApplicationJson,
@@ -148,62 +121,62 @@
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.FullOkAction())
+                .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
-                .Ok()
+                .Object()
                 .ContainingContentTypes(ContentType.ApplicationJson, ContentType.ApplicationXml);
         }
 
         [Fact]
         public void ContainingContentTypesStringValueShouldNotThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<OkResultAssertionException>(
+            Test.AssertException<ObjectResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
-                        .Calling(c => c.FullOkAction())
+                        .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
-                        .Ok()
+                        .Object()
                         .ContainingContentTypes(new List<string>
                         {
                             ContentType.ApplicationOctetStream,
                             ContentType.ApplicationXml
                         });
                 },
-                "When calling FullOkAction action in MvcController expected OK result content types to contain application/octet-stream, but none was found.");
+                "When calling FullObjectResultAction action in MvcController expected object result content types to contain application/octet-stream, but none was found.");
         }
 
         [Fact]
         public void ContainingContentTypesAsStringValueShouldNotThrowExceptionWithIncorrectCount()
         {
-            Test.AssertException<OkResultAssertionException>(
+            Test.AssertException<ObjectResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
-                        .Calling(c => c.FullOkAction())
+                        .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
-                        .Ok()
+                        .Object()
                         .ContainingContentTypes(new List<string>
                         {
                             ContentType.ApplicationXml
                         });
                 },
-                "When calling FullOkAction action in MvcController expected OK result content types to have 1 item, but instead found 2.");
+                "When calling FullObjectResultAction action in MvcController expected object result content types to have 1 item, but instead found 2.");
         }
 
         [Fact]
         public void ContainingContentTypesAsStringValueShouldNotThrowExceptionWithIncorrectCountWithMoreThanOneItem()
         {
-            Test.AssertException<OkResultAssertionException>(
+            Test.AssertException<ObjectResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
-                        .Calling(c => c.FullOkAction())
+                        .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
-                        .Ok()
+                        .Object()
                         .ContainingContentTypes(new List<string>
                         {
                             ContentType.ApplicationXml,
@@ -211,7 +184,7 @@
                             ContentType.ApplicationZip
                         });
                 },
-                "When calling FullOkAction action in MvcController expected OK result content types to have 3 items, but instead found 2.");
+                "When calling FullObjectResultAction action in MvcController expected object result content types to have 3 items, but instead found 2.");
         }
 
         [Fact]
@@ -219,9 +192,9 @@
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.FullOkAction())
+                .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
-                .Ok()
+                .Object()
                 .ContainingContentTypes(new List<MediaTypeHeaderValue>
                 {
                     new MediaTypeHeaderValue(ContentType.ApplicationJson),
@@ -234,62 +207,62 @@
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.FullOkAction())
+                .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
-                .Ok()
+                .Object()
                 .ContainingContentTypes(new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml));
         }
 
         [Fact]
         public void ContainingContentTypesAsMediaTypeHeaderValueShouldNotThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<OkResultAssertionException>(
+            Test.AssertException<ObjectResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
-                        .Calling(c => c.FullOkAction())
+                        .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
-                        .Ok()
+                        .Object()
                         .ContainingContentTypes(new List<MediaTypeHeaderValue>
                         {
                             new MediaTypeHeaderValue(ContentType.ApplicationOctetStream),
                             new MediaTypeHeaderValue(ContentType.ApplicationXml)
                         });
                 },
-                "When calling FullOkAction action in MvcController expected OK result content types to contain application/octet-stream, but none was found.");
+                "When calling FullObjectResultAction action in MvcController expected object result content types to contain application/octet-stream, but none was found.");
         }
 
         [Fact]
         public void ContainingContentTypesAsMediaTypeHeaderValueShouldNotThrowExceptionWithIncorrectCount()
         {
-            Test.AssertException<OkResultAssertionException>(
+            Test.AssertException<ObjectResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
-                        .Calling(c => c.FullOkAction())
+                        .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
-                        .Ok()
+                        .Object()
                         .ContainingContentTypes(new List<MediaTypeHeaderValue>
                         {
                             new MediaTypeHeaderValue(ContentType.ApplicationXml)
                         });
                 },
-                "When calling FullOkAction action in MvcController expected OK result content types to have 1 item, but instead found 2.");
+                "When calling FullObjectResultAction action in MvcController expected object result content types to have 1 item, but instead found 2.");
         }
 
         [Fact]
         public void ContainingContentTypesAsMediaTypeHeaderValueValueShouldNotThrowExceptionWithIncorrectCountWithMoreThanOneItem()
         {
-            Test.AssertException<OkResultAssertionException>(
+            Test.AssertException<ObjectResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
-                        .Calling(c => c.FullOkAction())
+                        .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
-                        .Ok()
+                        .Object()
                         .ContainingContentTypes(new List<MediaTypeHeaderValue>
                         {
                             new MediaTypeHeaderValue(ContentType.ApplicationXml),
@@ -297,7 +270,7 @@
                             new MediaTypeHeaderValue(ContentType.ApplicationZip)
                         });
                 },
-                "When calling FullOkAction action in MvcController expected OK result content types to have 3 items, but instead found 2.");
+                "When calling FullObjectResultAction action in MvcController expected object result content types to have 3 items, but instead found 2.");
         }
 
         [Fact]
@@ -307,28 +280,28 @@
 
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.OkActionWithFormatter(formatter))
+                .Calling(c => c.ObjectActionWithFormatter(formatter))
                 .ShouldReturn()
-                .Ok()
+                .Object()
                 .ContainingOutputFormatter(formatter);
         }
 
         [Fact]
         public void ContainingOutputFormatterShouldThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<OkResultAssertionException>(
+            Test.AssertException<ObjectResultAssertionException>(
                 () =>
                 {
                     var formatter = TestObjectFactory.GetOutputFormatter();
 
                     MyMvc
                         .Controller<MvcController>()
-                        .Calling(c => c.OkActionWithFormatter(formatter))
+                        .Calling(c => c.ObjectActionWithFormatter(formatter))
                         .ShouldReturn()
-                        .Ok()
+                        .Object()
                         .ContainingOutputFormatter(new JsonOutputFormatter());
                 },
-                "When calling OkActionWithFormatter action in MvcController expected OK result output formatters to contain the provided formatter, but such was not found.");
+                "When calling ObjectActionWithFormatter action in MvcController expected object result output formatters to contain the provided formatter, but such was not found.");
         }
 
         [Fact]
@@ -336,26 +309,26 @@
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.FullOkAction())
+                .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
-                .Ok()
+                .Object()
                 .ContainingOutputFormatterOfType<JsonOutputFormatter>();
         }
 
         [Fact]
         public void ContainingOutputFormatterOfTypeShouldThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<OkResultAssertionException>(
+            Test.AssertException<ObjectResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
-                        .Calling(c => c.FullOkAction())
+                        .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
-                        .Ok()
+                        .Object()
                         .ContainingOutputFormatterOfType<IOutputFormatter>();
                 },
-                "When calling FullOkAction action in MvcController expected OK result output formatters to contain formatter of IOutputFormatter type, but such was not found.");
+                "When calling FullObjectResultAction action in MvcController expected object result output formatters to contain formatter of IOutputFormatter type, but such was not found.");
         }
 
         [Fact]
@@ -363,9 +336,9 @@
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.FullOkAction())
+                .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
-                .Ok()
+                .Object()
                 .ContainingOutputFormatters(new List<IOutputFormatter>
                 {
                     new JsonOutputFormatter(),
@@ -378,62 +351,62 @@
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.FullOkAction())
+                .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
-                .Ok()
+                .Object()
                 .ContainingOutputFormatters(new JsonOutputFormatter(), new CustomOutputFormatter());
         }
 
         [Fact]
         public void ContainingOutputFormattersShouldThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<OkResultAssertionException>(
+            Test.AssertException<ObjectResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
-                        .Calling(c => c.FullOkAction())
+                        .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
-                        .Ok()
+                        .Object()
                         .ContainingOutputFormatters(new List<IOutputFormatter>
                         {
                             new JsonOutputFormatter(),
                             new HttpNotAcceptableOutputFormatter()
                         });
                 },
-                "When calling FullOkAction action in MvcController expected OK result output formatters to contain formatter of HttpNotAcceptableOutputFormatter type, but none was found.");
+                "When calling FullObjectResultAction action in MvcController expected object result output formatters to contain formatter of HttpNotAcceptableOutputFormatter type, but none was found.");
         }
 
         [Fact]
         public void ContainingOutputFormattersShouldThrowExceptionWithIncorrectCount()
         {
-            Test.AssertException<OkResultAssertionException>(
+            Test.AssertException<ObjectResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
-                        .Calling(c => c.FullOkAction())
+                        .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
-                        .Ok()
+                        .Object()
                         .ContainingOutputFormatters(new List<IOutputFormatter>
                         {
                             new JsonOutputFormatter()
                         });
                 },
-                "When calling FullOkAction action in MvcController expected OK result output formatters to have 1 item, but instead found 2.");
+                "When calling FullObjectResultAction action in MvcController expected object result output formatters to have 1 item, but instead found 2.");
         }
 
         [Fact]
         public void ContainingOutputFormattersShouldThrowExceptionWithIncorrectCountWithMoreThanOneItem()
         {
-            Test.AssertException<OkResultAssertionException>(
+            Test.AssertException<ObjectResultAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
-                        .Calling(c => c.FullOkAction())
+                        .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
-                        .Ok()
+                        .Object()
                         .ContainingOutputFormatters(new List<IOutputFormatter>
                         {
                             new JsonOutputFormatter(),
@@ -441,7 +414,7 @@
                             new JsonOutputFormatter()
                         });
                 },
-                "When calling FullOkAction action in MvcController expected OK result output formatters to have 3 items, but instead found 2.");
+                "When calling FullObjectResultAction action in MvcController expected object result output formatters to have 3 items, but instead found 2.");
         }
 
         [Fact]
@@ -449,9 +422,9 @@
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.FullOkAction())
+                .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
-                .Ok()
+                .Object()
                 .WithStatusCode(201)
                 .AndAlso()
                 .ContainingOutputFormatters(new JsonOutputFormatter(), new CustomOutputFormatter());
@@ -462,13 +435,13 @@
         {
             var actionResult = MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.FullOkAction())
+                .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
-                .Ok()
+                .Object()
                 .AndProvideTheActionResult();
 
             Assert.NotNull(actionResult);
-            Assert.IsAssignableFrom<OkObjectResult>(actionResult);
+            Assert.IsAssignableFrom<ObjectResult>(actionResult);
         }
     }
 }

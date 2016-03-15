@@ -45,7 +45,7 @@
                 {
                     this.ThrowNewJsonResultAssertionException(
                         $"{(expected.CheckAdditionalContent ? "enabled" : "disabled")} checking for additional content",
-                        $"in fact it was {(expected.CheckAdditionalContent ? "enabled" : "disabled")}");
+                        $"in fact it was {(actual.CheckAdditionalContent ? "enabled" : "disabled")}");
                 }
             });
 
@@ -143,7 +143,7 @@
             this.validations.Add((expected, actual) =>
             {
                 var expectedJsonConverterType = typeof(TJsonConverter);
-                if (!actual.Converters.All(c => Reflection.AreDifferentTypes(c.GetType(), expectedJsonConverterType)))
+                if (actual.Converters.All(c => Reflection.AreDifferentTypes(c.GetType(), expectedJsonConverterType)))
                 {
                     this.ThrowNewJsonResultAssertionException(
                         $"converter of {expectedJsonConverterType.Name} type",
@@ -334,7 +334,7 @@
                 if (Reflection.AreDifferentTypes(equalityComparerType, actual.EqualityComparer?.GetType()))
                 {
                     this.ThrowNewJsonResultAssertionException(
-                        $"{equalityComparerType.ToFriendlyTypeName()}",
+                        $"equality comparer of {equalityComparerType.ToFriendlyTypeName()} type",
                         $"in fact found {actual.EqualityComparer.GetName()}");
                 }
             });
@@ -569,8 +569,8 @@
                 if (Reflection.AreDifferentTypes(referenceResolverType, actualReferenceResolverType))
                 {
                     this.ThrowNewJsonResultAssertionException(
-                        $"{referenceResolverType.ToFriendlyTypeName()}",
-                        $"in fact found {actualReferenceResolverType.GetName()}");
+                        $"reference resolver of {referenceResolverType.ToFriendlyTypeName()} type",
+                        $"in fact found {actualReferenceResolverType.ToFriendlyTypeName()}");
                 }
             });
 
@@ -620,8 +620,8 @@
                 if (Reflection.AreDifferentTypes(traceWriterType, actualTraceWriterType))
                 {
                     this.ThrowNewJsonResultAssertionException(
-                        $"{traceWriterType.ToFriendlyTypeName()}",
-                        $"in fact found {actualTraceWriterType.GetName()}");
+                        $"trace writer of {traceWriterType.ToFriendlyTypeName()} type",
+                        $"in fact found {actualTraceWriterType.ToFriendlyTypeName()}");
                 }
             });
 

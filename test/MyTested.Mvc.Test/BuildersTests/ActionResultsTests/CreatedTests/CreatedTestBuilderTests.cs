@@ -28,6 +28,36 @@
         }
 
         [Fact]
+        public void AtLocationWithStringShouldNotThrowExceptionIfTheLocationIsCorrectWithPredicate()
+        {
+            Test.AssertException<CreatedResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.CreatedAction())
+                        .ShouldReturn()
+                        .Created()
+                        .AtLocationPassing(location => location.StartsWith("http://somehost.com/someuri/2"));
+                },
+                "When calling CreatedAction action in MvcController expected created result location ('http://somehost.com/someuri/1?query=Test') to pass the given predicate, but it failed.");
+        }
+
+        [Fact]
+        public void AtLocationWithStringShouldNotThrowExceptionIfTheLocationIsCorrectWithAssertions()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.CreatedAction())
+                .ShouldReturn()
+                .Created()
+                .AtLocationPassing(location =>
+                {
+                    Assert.Equal("http://somehost.com/someuri/1?query=Test", location);
+                });
+        }
+
+        [Fact]
         public void AtLocationWithStringShouldThrowExceptionIfTheLocationIsIncorrect()
         {
             Test.AssertException<CreatedResultAssertionException>(
@@ -226,7 +256,40 @@
                 .Calling(c => c.CreatedAtActionResult())
                 .ShouldReturn()
                 .Created()
-                .ContainingRouteValue("id");
+                .ContainingRouteKey("id");
+        }
+
+        [Fact]
+        public void WithRouteValueWithValueShouldNotThrowExceptionWithCorrectRouteValue()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.CreatedAtActionResult())
+                .ShouldReturn()
+                .Created()
+                .ContainingRouteValue(1);
+        }
+        
+        [Fact]
+        public void WithRouteValueOfTypeWithValueShouldNotThrowExceptionWithCorrectRouteValue()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.CreatedAtActionResult())
+                .ShouldReturn()
+                .Created()
+                .ContainingRouteValueOfType<string>();
+        }
+        
+        [Fact]
+        public void WithRouteValueOfTypeWithKeyWithValueShouldNotThrowExceptionWithCorrectRouteValue()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.CreatedAtActionResult())
+                .ShouldReturn()
+                .Created()
+                .ContainingRouteValueOfType<int>("id");
         }
 
         [Fact]
@@ -240,13 +303,13 @@
                         .Calling(c => c.CreatedAtActionResult())
                         .ShouldReturn()
                         .Created()
-                        .ContainingRouteValue("incorrect");
+                        .ContainingRouteKey("incorrect");
                 },
                 "When calling CreatedAtActionResult action in MvcController expected created result route values to have entry with key 'incorrect', but such was not found.");
         }
 
         [Fact]
-        public void WithRouteValueWithValueShouldNotThrowExceptionWithCorrectRouteValue()
+        public void WithRouteValueWithValueAndKeyShouldNotThrowExceptionWithCorrectRouteValue()
         {
             MyMvc
                 .Controller<MvcController>()
@@ -260,7 +323,7 @@
         public void WithRouteValueWithValueShouldThrowExceptionWithIncorrectRouteKey()
         {
             Test.AssertException<CreatedResultAssertionException>(
-(Action)(() =>
+                () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
@@ -268,7 +331,7 @@
                         .ShouldReturn()
                         .Created()
                         .ContainingRouteValue("incorrect", 1);
-                }),
+                },
                 "When calling CreatedAtActionResult action in MvcController expected created result route values to have entry with 'incorrect' key and the provided value, but such was not found.");
         }
 
@@ -276,7 +339,7 @@
         public void WithRouteValueWithValueShouldThrowExceptionWithIncorrectRouteValue()
         {
             Test.AssertException<CreatedResultAssertionException>(
-(Action)(() =>
+                () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
@@ -284,7 +347,7 @@
                         .ShouldReturn()
                         .Created()
                         .ContainingRouteValue("id", 2);
-                }),
+                },
                 "When calling CreatedAtActionResult action in MvcController expected created result route values to have entry with 'id' key and the provided value, but the value was different.");
         }
 
@@ -448,6 +511,26 @@
                 .Created()
                 .At<NoAttributesController>(c => c.WithParameter(1));
 
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void AtShouldWorkCorrectlyWithCorrectTaskActionCall()
+        {
+            MyMvc.StartsFrom<RoutesStartup>();
+
+            Test.AssertException<CreatedResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.CreatedAtRouteAction())
+                        .ShouldReturn()
+                        .Created()
+                        .At<MvcController>(c => c.AsyncOkResultAction());
+                },
+                "When calling CreatedAtRouteAction action in MvcController expected created result to have resolved location to '/api/test', but in fact received '/api/Redirect/WithParameter?id=1'.");
+            
             MyMvc.IsUsingDefaultConfiguration();
         }
 

@@ -19,7 +19,7 @@
 
         public ModelBindingActionInvoker(
             ActionContext actionContext,
-            FilterCache filterCache,
+            ControllerActionInvokerCache controllerActionInvokerCache,
             IControllerFactory controllerFactory,
             ControllerActionDescriptor descriptor,
             IReadOnlyList<IInputFormatter> inputFormatters,
@@ -30,7 +30,7 @@
             ILogger logger,
             DiagnosticSource diagnosticSource,
             int maxModelValidationErrors)
-                : base(actionContext, filterCache, controllerFactory, descriptor, inputFormatters, controllerActionArgumentBinder, modelBinders, modelValidatorProviders, valueProviderFactories, logger, diagnosticSource, maxModelValidationErrors)
+                : base(actionContext, controllerActionInvokerCache, controllerFactory, descriptor, inputFormatters, controllerActionArgumentBinder, modelBinders, modelValidatorProviders, valueProviderFactories, logger, diagnosticSource, maxModelValidationErrors)
         {
             this.controllerActionDescriptor = descriptor;
         }

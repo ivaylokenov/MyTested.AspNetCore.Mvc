@@ -193,6 +193,7 @@
         }
 
         public IAndResolvedRouteTestBuilder To<TController>()
+            where TController : class
         {
             var actualInfo = this.GetActualRouteInfo();
             var expectedControllerType = typeof(TController);
@@ -215,11 +216,13 @@
         /// <param name="actionCall">Method call expression indicating the expected resolved action.</param>
         /// <returns>The same route test builder.</returns>
         public IAndResolvedRouteTestBuilder To<TController>(Expression<Action<TController>> actionCall)
+            where TController : class
         {
             return this.ProcessRouteLambdaExpression<TController>(actionCall);
         }
 
         public IAndResolvedRouteTestBuilder To<TController>(Expression<Func<TController, Task>> actionCall)
+            where TController : class
         {
             return this.ProcessRouteLambdaExpression<TController>(actionCall);
         }
