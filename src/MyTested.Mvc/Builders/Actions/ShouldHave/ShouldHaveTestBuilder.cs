@@ -47,7 +47,7 @@
             {
                 this.ThrowNewDataProviderAssertionException(
                     name,
-                    expectedCount == null ? "entries" : $" with {expectedCount} entries",
+                    expectedCount == null ? " entries" : $" with {expectedCount} {(expectedCount != 1 ? "entries" : "entry")}",
                     expectedCount == null ? "none were found" : $"in fact contained {actualCount}");
             }
         }

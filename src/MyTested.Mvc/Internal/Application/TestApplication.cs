@@ -224,6 +224,7 @@
         {
             return new HostingEnvironment
             {
+                ApplicationName = PlatformServices.Default.Application.ApplicationName,
                 EnvironmentName = TestConfiguration.EnvironmentName
             };
         }

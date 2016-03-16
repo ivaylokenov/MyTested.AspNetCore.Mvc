@@ -5,54 +5,54 @@
     using Setups.Controllers;
     using Xunit;
 
-    public class ShouldHaveMemoryCacheTests
+    public class ShouldHaveTempDataTests
     {
         [Fact]
-        public void NoMemoryCacheShouldNotThrowExceptionWithNoCacheEntries()
+        public void NoTempDataShouldNotThrowExceptionWithNoEntries()
         {
             MyMvc
                 .Controller<MvcController>()
                 .Calling(c => c.Ok())
                 .ShouldHave()
-                .NoMemoryCache()
+                .NoTempData()
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
         }
 
         [Fact]
-        public void NoMemoryCacheShouldThrowExceptionWithCacheEntries()
+        public void NoTempDataShouldThrowExceptionWithEntries()
         {
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
                     MyMvc
                        .Controller<MvcController>()
-                       .Calling(c => c.AddMemoryCacheAction())
+                       .Calling(c => c.AddTempDataAction())
                        .ShouldHave()
-                       .NoMemoryCache()
+                       .NoTempData()
                        .AndAlso()
                        .ShouldReturn()
                        .Ok();
                 },
-                "When calling AddMemoryCacheAction action in MvcController expected to have memory cache with no entries, but in fact it had some.");
+                "When calling AddTempDataAction action in MvcController expected to have temp data with no entries, but in fact it had some.");
         }
 
         [Fact]
-        public void MemoryCacheWithNoNumberShouldNotThrowExceptionWithAnyCacheEntries()
+        public void TempDataWithNoNumberShouldNotThrowExceptionWithAnyEntries()
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.AddMemoryCacheAction())
+                .Calling(c => c.AddTempDataAction())
                 .ShouldHave()
-                .MemoryCache()
+                .TempData()
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
         }
 
         [Fact]
-        public void MemoryCacheWithNoNumberShouldThrowExceptionWithNoCacheEntries()
+        public void TempDataWithNoNumberShouldThrowExceptionWithNoEntries()
         {
             Test.AssertException<DataProviderAssertionException>(
                 () =>
@@ -61,29 +61,29 @@
                         .Controller<MvcController>()
                         .Calling(c => c.Ok())
                         .ShouldHave()
-                        .MemoryCache()
+                        .TempData()
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling Ok action in MvcController expected to have memory cache entries, but none were found.");
+                "When calling Ok action in MvcController expected to have temp data entries, but none were found.");
         }
 
         [Fact]
-        public void MemoryCacheWithNumberShouldNotThrowExceptionWithCorrectCacheEntries()
+        public void TempDataWithNumberShouldNotThrowExceptionWithCorrectEntries()
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.AddMemoryCacheAction())
+                .Calling(c => c.AddTempDataAction())
                 .ShouldHave()
-                .MemoryCache(withNumberOfEntries: 1)
+                .TempData(withNumberOfEntries: 1)
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
         }
 
         [Fact]
-        public void MemoryCacheWithNumberShouldThrowExceptionWithInvalidCacheEntries()
+        public void TempDataWithNumberShouldThrowExceptionWithInvalidEntries()
         {
             Test.AssertException<DataProviderAssertionException>(
                 () =>
@@ -92,41 +92,41 @@
                         .Controller<MvcController>()
                         .Calling(c => c.Ok())
                         .ShouldHave()
-                        .MemoryCache(1)
+                        .TempData(1)
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling Ok action in MvcController expected to have memory cache with 1 entry, but in fact contained 0.");
+                "When calling Ok action in MvcController expected to have temp data with 1 entry, but in fact contained 0.");
         }
 
         [Fact]
-        public void MemoryCacheWithNumberShouldThrowExceptionWithInvalidManyCacheEntries()
+        public void TempDataWithNumberShouldThrowExceptionWithInvalidManyEntries()
         {
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
-                        .Calling(c => c.AddMemoryCacheAction())
+                        .Calling(c => c.AddTempDataAction())
                         .ShouldHave()
-                        .MemoryCache(3)
+                        .TempData(3)
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling AddMemoryCacheAction action in MvcController expected to have memory cache with 3 entries, but in fact contained 1.");
+                "When calling AddTempDataAction action in MvcController expected to have temp data with 3 entries, but in fact contained 1.");
         }
 
         [Fact]
-        public void MemoryCacheWithBuilderShouldWorkCorrectly()
+        public void TempDataWithBuilderShouldWorkCorrectly()
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.AddMemoryCacheAction())
+                .Calling(c => c.AddTempDataAction())
                 .ShouldHave()
-                .MemoryCache(cache => cache
-                    .ContainingEntry("test", "value"))
+                .TempData(tempData => tempData
+                    .ContainingEntry("test", "tempvalue"))
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();

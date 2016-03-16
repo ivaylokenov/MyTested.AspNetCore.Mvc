@@ -5,54 +5,54 @@
     using Setups.Controllers;
     using Xunit;
 
-    public class ShouldHaveMemoryCacheTests
+    public class ShouldHaveViewDataTests
     {
         [Fact]
-        public void NoMemoryCacheShouldNotThrowExceptionWithNoCacheEntries()
+        public void NoViewDataShouldNotThrowExceptionWithNoEntries()
         {
             MyMvc
                 .Controller<MvcController>()
                 .Calling(c => c.Ok())
                 .ShouldHave()
-                .NoMemoryCache()
+                .NoViewData()
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
         }
 
         [Fact]
-        public void NoMemoryCacheShouldThrowExceptionWithCacheEntries()
+        public void NoViewDataShouldThrowExceptionWithEntries()
         {
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
                     MyMvc
                        .Controller<MvcController>()
-                       .Calling(c => c.AddMemoryCacheAction())
+                       .Calling(c => c.AddViewDataAction())
                        .ShouldHave()
-                       .NoMemoryCache()
+                       .NoViewData()
                        .AndAlso()
                        .ShouldReturn()
                        .Ok();
                 },
-                "When calling AddMemoryCacheAction action in MvcController expected to have memory cache with no entries, but in fact it had some.");
+                "When calling AddViewDataAction action in MvcController expected to have view data with no entries, but in fact it had some.");
         }
 
         [Fact]
-        public void MemoryCacheWithNoNumberShouldNotThrowExceptionWithAnyCacheEntries()
+        public void ViewDataWithNoNumberShouldNotThrowExceptionWithAnyEntries()
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.AddMemoryCacheAction())
+                .Calling(c => c.AddViewDataAction())
                 .ShouldHave()
-                .MemoryCache()
+                .ViewData()
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
         }
 
         [Fact]
-        public void MemoryCacheWithNoNumberShouldThrowExceptionWithNoCacheEntries()
+        public void ViewDataWithNoNumberShouldThrowExceptionWithNoEntries()
         {
             Test.AssertException<DataProviderAssertionException>(
                 () =>
@@ -61,29 +61,29 @@
                         .Controller<MvcController>()
                         .Calling(c => c.Ok())
                         .ShouldHave()
-                        .MemoryCache()
+                        .ViewData()
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling Ok action in MvcController expected to have memory cache entries, but none were found.");
+                "When calling Ok action in MvcController expected to have view data entries, but none were found.");
         }
 
         [Fact]
-        public void MemoryCacheWithNumberShouldNotThrowExceptionWithCorrectCacheEntries()
+        public void ViewDataWithNumberShouldNotThrowExceptionWithCorrectEntries()
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.AddMemoryCacheAction())
+                .Calling(c => c.AddViewDataAction())
                 .ShouldHave()
-                .MemoryCache(withNumberOfEntries: 1)
+                .ViewData(withNumberOfEntries: 1)
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
         }
 
         [Fact]
-        public void MemoryCacheWithNumberShouldThrowExceptionWithInvalidCacheEntries()
+        public void ViewDataWithNumberShouldThrowExceptionWithInvalidEntries()
         {
             Test.AssertException<DataProviderAssertionException>(
                 () =>
@@ -92,41 +92,41 @@
                         .Controller<MvcController>()
                         .Calling(c => c.Ok())
                         .ShouldHave()
-                        .MemoryCache(1)
+                        .ViewData(1)
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling Ok action in MvcController expected to have memory cache with 1 entry, but in fact contained 0.");
+                "When calling Ok action in MvcController expected to have view data with 1 entry, but in fact contained 0.");
         }
 
         [Fact]
-        public void MemoryCacheWithNumberShouldThrowExceptionWithInvalidManyCacheEntries()
+        public void ViewDataWithNumberShouldThrowExceptionWithInvalidManyEntries()
         {
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
-                        .Calling(c => c.AddMemoryCacheAction())
+                        .Calling(c => c.AddViewDataAction())
                         .ShouldHave()
-                        .MemoryCache(3)
+                        .ViewData(3)
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling AddMemoryCacheAction action in MvcController expected to have memory cache with 3 entries, but in fact contained 1.");
+                "When calling AddViewDataAction action in MvcController expected to have view data with 3 entries, but in fact contained 1.");
         }
 
         [Fact]
-        public void MemoryCacheWithBuilderShouldWorkCorrectly()
+        public void ViewDataWithBuilderShouldWorkCorrectly()
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.AddMemoryCacheAction())
+                .Calling(c => c.AddViewDataAction())
                 .ShouldHave()
-                .MemoryCache(cache => cache
-                    .ContainingEntry("test", "value"))
+                .ViewData(viewData => viewData
+                    .ContainingEntry("Test", "datavalue"))
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();

@@ -40,6 +40,11 @@
             this.AddUsername(username);
             return this;
         }
+        
+        public IAndClaimsIdentityBuilder WithClaim(string type, string value)
+        {
+            return this.WithClaim(new Claim(type, value));
+        }
 
         /// <summary>
         /// Used for adding claim to the claims identity.

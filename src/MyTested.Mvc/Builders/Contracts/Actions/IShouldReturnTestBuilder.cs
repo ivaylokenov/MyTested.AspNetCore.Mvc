@@ -76,6 +76,20 @@
         IContentTestBuilder Content(string content);
 
         /// <summary>
+        /// Tests whether content result passes given assertions.
+        /// </summary>
+        /// <param name="assertions">Action containing all assertions on the content.</param>
+        /// <returns>Content result test builder.</returns>
+        IContentTestBuilder Content(Action<string> assertions);
+
+        /// <summary>
+        /// Tests whether content result passes given predicate.
+        /// </summary>
+        /// <param name="predicate">Predicate testing the content.</param>
+        /// <returns>Content result test builder.</returns>
+        IContentTestBuilder Content(Func<string, bool> predicate);
+
+        /// <summary>
         /// Tests whether action result is CreatedResult, CreatedAtActionResult or CreatedAtRouteResult.
         /// </summary>
         /// <returns>Created test builder.</returns>

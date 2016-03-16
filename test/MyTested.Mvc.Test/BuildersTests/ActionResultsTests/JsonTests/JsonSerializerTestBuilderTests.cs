@@ -81,6 +81,7 @@
 
             MyMvc
                 .Controller<MvcController>()
+                .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
                 .Json()
@@ -126,6 +127,7 @@
 
             MyMvc
                 .Controller<MvcController>()
+                .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
                 .Json()
@@ -140,6 +142,7 @@
 
             MyMvc
                 .Controller<MvcController>()
+                .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
                 .ShouldReturn()
                 .Json()
@@ -174,6 +177,7 @@
 
             MyMvc
                 .Controller<MvcController>()
+                .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
                 .Json()
@@ -190,6 +194,7 @@
 
             MyMvc
                 .Controller<MvcController>()
+                .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
                 .Json()
@@ -208,6 +213,7 @@
                 {
                     MyMvc
                         .Controller<MvcController>()
+                        .WithoutValidation()        
                         .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                         .ShouldReturn()
                         .Json()
@@ -226,6 +232,7 @@
 
             MyMvc
                 .Controller<MvcController>()
+                .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
                 .Json()
@@ -244,6 +251,7 @@
                 {
                     MyMvc
                         .Controller<MvcController>()
+                        .WithoutValidation()
                         .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                         .ShouldReturn()
                         .Json()
@@ -262,6 +270,7 @@
 
             MyMvc
                 .Controller<MvcController>()
+                .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
                 .Json()
@@ -278,6 +287,7 @@
 
             MyMvc
                 .Controller<MvcController>()
+                .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
                 .Json()
@@ -298,6 +308,7 @@
                 {
                     MyMvc
                         .Controller<MvcController>()
+                        .WithoutValidation()
                         .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                         .ShouldReturn()
                         .Json()
@@ -320,6 +331,7 @@
                 {
                     MyMvc
                         .Controller<MvcController>()
+                        .WithoutValidation()
                         .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                         .ShouldReturn()
                         .Json()
@@ -342,6 +354,7 @@
                 {
                     MyMvc
                         .Controller<MvcController>()
+                        .WithoutValidation()
                         .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                         .ShouldReturn()
                         .Json()
@@ -356,6 +369,7 @@
         {
             MyMvc
                 .Controller<MvcController>()
+                .WithoutValidation()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
                 .Json()
@@ -371,6 +385,7 @@
                 {
                     MyMvc
                         .Controller<MvcController>()
+                        .WithoutValidation()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
                         .Json()
@@ -389,6 +404,7 @@
 
             MyMvc
                 .Controller<MvcController>()
+                .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
                 .Json()
@@ -463,6 +479,7 @@
 
             MyMvc
                 .Controller<MvcController>()
+                .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
                 .Json()
@@ -508,6 +525,7 @@
 
             MyMvc
                 .Controller<MvcController>()
+                .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
                 .Json()
@@ -553,6 +571,7 @@
 
             MyMvc
                 .Controller<MvcController>()
+                .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
                 .Json()
@@ -598,6 +617,7 @@
 
             MyMvc
                 .Controller<MvcController>()
+                .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
                 .Json()
@@ -614,6 +634,7 @@
 
             MyMvc
                 .Controller<MvcController>()
+                .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
                 .ShouldReturn()
                 .Json()
@@ -645,6 +666,7 @@
 
             MyMvc
                 .Controller<MvcController>()
+                .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
                 .ShouldReturn()
                 .Json()
@@ -676,6 +698,7 @@
 
             MyMvc
                 .Controller<MvcController>()
+                .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
                 .ShouldReturn()
                 .Json()
@@ -780,6 +803,7 @@
 
             MyMvc
                 .Controller<MvcController>()
+                .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
                 .ShouldReturn()
                 .Json()
@@ -811,6 +835,7 @@
 
             MyMvc
                 .Controller<MvcController>()
+                .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
                 .ShouldReturn()
                 .Json()
@@ -842,6 +867,7 @@
 
             MyMvc
                 .Controller<MvcController>()
+                .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
                 .ShouldReturn()
                 .Json()
@@ -917,6 +943,7 @@
 
             MyMvc
                 .Controller<MvcController>()
+                .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
                 .Json()
@@ -981,6 +1008,7 @@
 
                     MyMvc
                         .Controller<MvcController>()
+                        .WithoutValidation()
                         .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                         .ShouldReturn()
                         .Json()
@@ -999,6 +1027,7 @@
 
             MyMvc
                 .Controller<MvcController>()
+                .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
                 .Json()
@@ -1044,6 +1073,7 @@
 
             MyMvc
                 .Controller<MvcController>()
+                .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
                 .Json()
@@ -1089,6 +1119,7 @@
 
             MyMvc
                 .Controller<MvcController>()
+                .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
                 .Json()
@@ -1134,6 +1165,7 @@
 
             MyMvc
                 .Controller<MvcController>()
+                .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
                 .Json()
@@ -1179,6 +1211,7 @@
 
             MyMvc
                 .Controller<MvcController>()
+                .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
                 .Json()
@@ -1224,6 +1257,7 @@
 
             MyMvc
                 .Controller<MvcController>()
+                .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
                 .Json()
@@ -1269,6 +1303,7 @@
 
             MyMvc
                 .Controller<MvcController>()
+                .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
                 .Json()
@@ -1314,6 +1349,7 @@
 
             MyMvc
                 .Controller<MvcController>()
+                .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
                 .Json()
@@ -1330,6 +1366,7 @@
 
             MyMvc
                 .Controller<MvcController>()
+                .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
                 .ShouldReturn()
                 .Json()
@@ -1361,6 +1398,7 @@
 
             MyMvc
                 .Controller<MvcController>()
+                .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
                 .ShouldReturn()
                 .Json()
@@ -1392,6 +1430,7 @@
 
             MyMvc
                 .Controller<MvcController>()
+                .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
                 .ShouldReturn()
                 .Json()

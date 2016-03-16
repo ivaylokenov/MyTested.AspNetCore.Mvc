@@ -5,54 +5,54 @@
     using Setups.Controllers;
     using Xunit;
 
-    public class ShouldHaveMemoryCacheTests
+    public class ShouldHaveViewBagTests
     {
         [Fact]
-        public void NoMemoryCacheShouldNotThrowExceptionWithNoCacheEntries()
+        public void NoViewBagShouldNotThrowExceptionWithNoEntries()
         {
             MyMvc
                 .Controller<MvcController>()
                 .Calling(c => c.Ok())
                 .ShouldHave()
-                .NoMemoryCache()
+                .NoViewBag()
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
         }
 
         [Fact]
-        public void NoMemoryCacheShouldThrowExceptionWithCacheEntries()
+        public void NoViewBagShouldThrowExceptionWithEntries()
         {
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
                     MyMvc
                        .Controller<MvcController>()
-                       .Calling(c => c.AddMemoryCacheAction())
+                       .Calling(c => c.AddViewBagAction())
                        .ShouldHave()
-                       .NoMemoryCache()
+                       .NoViewBag()
                        .AndAlso()
                        .ShouldReturn()
                        .Ok();
                 },
-                "When calling AddMemoryCacheAction action in MvcController expected to have memory cache with no entries, but in fact it had some.");
+                "When calling AddViewBagAction action in MvcController expected to have view bag with no entries, but in fact it had some.");
         }
 
         [Fact]
-        public void MemoryCacheWithNoNumberShouldNotThrowExceptionWithAnyCacheEntries()
+        public void ViewBagWithNoNumberShouldNotThrowExceptionWithAnyEntries()
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.AddMemoryCacheAction())
+                .Calling(c => c.AddViewBagAction())
                 .ShouldHave()
-                .MemoryCache()
+                .ViewBag()
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
         }
 
         [Fact]
-        public void MemoryCacheWithNoNumberShouldThrowExceptionWithNoCacheEntries()
+        public void ViewBagWithNoNumberShouldThrowExceptionWithNoEntries()
         {
             Test.AssertException<DataProviderAssertionException>(
                 () =>
@@ -61,29 +61,29 @@
                         .Controller<MvcController>()
                         .Calling(c => c.Ok())
                         .ShouldHave()
-                        .MemoryCache()
+                        .ViewBag()
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling Ok action in MvcController expected to have memory cache entries, but none were found.");
+                "When calling Ok action in MvcController expected to have view bag entries, but none were found.");
         }
 
         [Fact]
-        public void MemoryCacheWithNumberShouldNotThrowExceptionWithCorrectCacheEntries()
+        public void ViewBagWithNumberShouldNotThrowExceptionWithCorrectEntries()
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.AddMemoryCacheAction())
+                .Calling(c => c.AddViewBagAction())
                 .ShouldHave()
-                .MemoryCache(withNumberOfEntries: 1)
+                .ViewBag(withNumberOfEntries: 1)
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
         }
 
         [Fact]
-        public void MemoryCacheWithNumberShouldThrowExceptionWithInvalidCacheEntries()
+        public void ViewBagWithNumberShouldThrowExceptionWithInvalidEntries()
         {
             Test.AssertException<DataProviderAssertionException>(
                 () =>
@@ -92,41 +92,41 @@
                         .Controller<MvcController>()
                         .Calling(c => c.Ok())
                         .ShouldHave()
-                        .MemoryCache(1)
+                        .ViewBag(1)
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling Ok action in MvcController expected to have memory cache with 1 entry, but in fact contained 0.");
+                "When calling Ok action in MvcController expected to have view bag with 1 entry, but in fact contained 0.");
         }
 
         [Fact]
-        public void MemoryCacheWithNumberShouldThrowExceptionWithInvalidManyCacheEntries()
+        public void ViewBagWithNumberShouldThrowExceptionWithInvalidManyEntries()
         {
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
-                        .Calling(c => c.AddMemoryCacheAction())
+                        .Calling(c => c.AddViewBagAction())
                         .ShouldHave()
-                        .MemoryCache(3)
+                        .ViewBag(3)
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling AddMemoryCacheAction action in MvcController expected to have memory cache with 3 entries, but in fact contained 1.");
+                "When calling AddViewBagAction action in MvcController expected to have view bag with 3 entries, but in fact contained 1.");
         }
 
         [Fact]
-        public void MemoryCacheWithBuilderShouldWorkCorrectly()
+        public void ViewBagWithBuilderShouldWorkCorrectly()
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.AddMemoryCacheAction())
+                .Calling(c => c.AddViewBagAction())
                 .ShouldHave()
-                .MemoryCache(cache => cache
-                    .ContainingEntry("test", "value"))
+                .ViewBag(viewBag => viewBag
+                    .ContainingEntry("Test", "bagvalue"))
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();

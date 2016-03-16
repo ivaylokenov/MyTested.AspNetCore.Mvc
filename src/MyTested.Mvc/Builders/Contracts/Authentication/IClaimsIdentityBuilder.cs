@@ -5,6 +5,10 @@
 
     public interface IClaimsIdentityBuilder
     {
+        IAndClaimsIdentityBuilder WithNameType(string nameType);
+
+        IAndClaimsIdentityBuilder WithRoleType(string roleType);
+
         /// <summary>
         /// Used for setting ID to the claims identity. If such is not provided, "TestId" is used by default.
         /// </summary>
@@ -18,6 +22,8 @@
         /// <param name="username">The username to set.</param>
         /// <returns>The same claims identity builder.</returns>
         IAndClaimsIdentityBuilder WithUsername(string username);
+
+        IAndClaimsIdentityBuilder WithClaim(string type, string value);
 
         /// <summary>
         /// Used for adding claim to the claims identity.

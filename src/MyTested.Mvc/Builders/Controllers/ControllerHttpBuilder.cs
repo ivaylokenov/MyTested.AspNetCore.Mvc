@@ -67,7 +67,7 @@
         /// <returns>The same controller builder.</returns>
         public IAndControllerBuilder<TController> WithAuthenticatedUser()
         {
-            this.HttpContext.User = ClaimsPrincipalBuilder.CreateDefaultAuthenticated();
+            this.HttpContext.User = ClaimsPrincipalBuilder.DefaultAuthenticated;
             return this;
         }
 

@@ -1,13 +1,19 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.Authentication
 {
+    using System;
     using System.Collections.Generic;
     using System.Security.Claims;
+    using System.Security.Principal;
 
     /// <summary>
     /// Used for building claims principal.
     /// </summary>
     public interface IClaimsPrincipalBuilder
     {
+        IAndClaimsPrincipalBuilder WithNameType(string nameType);
+
+        IAndClaimsPrincipalBuilder WithRoleType(string roleType);
+
         /// <summary>
         /// Used for setting ID to the claims principal. If such is not provided, "TestId" is used by default.
         /// </summary>
@@ -21,6 +27,8 @@
         /// <param name="username">The username to set.</param>
         /// <returns>The same claims principal builder.</returns>
         IAndClaimsPrincipalBuilder WithUsername(string username);
+
+        IAndClaimsPrincipalBuilder WithClaim(string type, string value);
 
         /// <summary>
         /// Used for adding claim to the claims principal.
@@ -70,5 +78,9 @@
         /// <param name="roles">Roles to add.</param>
         /// <returns>The same claims principal builder.</returns>
         IAndClaimsPrincipalBuilder InRoles(params string[] roles);
+
+        IAndClaimsPrincipalBuilder WithIdentity(IIdentity identity);
+
+        IAndClaimsPrincipalBuilder WithIdentity(Action<IClaimsIdentityBuilder> claimsIdentityBuilder);
     }
 }

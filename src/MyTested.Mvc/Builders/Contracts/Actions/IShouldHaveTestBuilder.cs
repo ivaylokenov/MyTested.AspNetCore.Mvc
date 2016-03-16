@@ -54,9 +54,35 @@
         /// <returns>Test builder with AndAlso method.</returns>
         IAndTestBuilder<TActionResult> InvalidModelState(int? withNumberOfErrors = null);
         
+        IAndTestBuilder<TActionResult> MemoryCache(int? withNumberOfEntries = null);
+
+        IAndTestBuilder<TActionResult> MemoryCache(Action<IMemoryCacheTestBuilder> memoryCacheTestBuilder);
+
         IAndTestBuilder<TActionResult> NoMemoryCache();
 
+        IAndTestBuilder<TActionResult> Session(int? withNumberOfEntries = null);
+
+        IAndTestBuilder<TActionResult> Session(Action<ISessionTestBuilder> sessionTestBuilder);
+
+        IAndTestBuilder<TActionResult> NoSession();
+
+        IAndTestBuilder<TActionResult> TempData(int? withNumberOfEntries = null);
+
         IAndTestBuilder<TActionResult> TempData(Action<ITempDataTestBuilder> tempDataTestBuilder);
+
+        IAndTestBuilder<TActionResult> NoTempData();
+        
+        IAndTestBuilder<TActionResult> ViewBag(int? withNumberOfEntries = null);
+
+        IAndTestBuilder<TActionResult> ViewBag(Action<IViewBagTestBuilder> viewDataTestBuilder);
+
+        IAndTestBuilder<TActionResult> NoViewBag();
+
+        IAndTestBuilder<TActionResult> ViewData(int? withNumberOfEntries = null);
+
+        IAndTestBuilder<TActionResult> ViewData(Action<IViewDataTestBuilder> viewDataTestBuilder);
+
+        IAndTestBuilder<TActionResult> NoViewData();
 
         /// <summary>
         /// Checks whether the tested action applies additional features to the HTTP response.

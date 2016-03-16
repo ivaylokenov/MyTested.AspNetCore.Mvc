@@ -2,5 +2,6 @@
 {
     public interface IMemoryCacheTestBuilder
     {
+        IAndMemoryCacheTestBuilder ContainingEntry(object key, object value);
     }
 }

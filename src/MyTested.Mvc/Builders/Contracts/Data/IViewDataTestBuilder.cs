@@ -2,5 +2,6 @@
 {
     public interface IViewDataTestBuilder
     {
+        IAndViewDataTestBuilder ContainingEntry(string key, object value);
     }
 }

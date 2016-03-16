@@ -3,8 +3,9 @@
     using System.Collections.Generic;
     using System.Linq;
     using Contracts.Data;
+    using Internal.TestContexts;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Routing;
-    using MyTested.Mvc.Internal.TestContexts;
 
     public class SessionTestBuilder : BaseDataProviderTestBuilder, IAndSessionTestBuilder
     {
@@ -35,7 +36,15 @@
 
         public IAndSessionTestBuilder ContainingIntegerEntry(string key, int value)
         {
-            this.ValidateContainingEntry(key, value);
+            var bytes = new byte[]
+            {
+                (byte)(value >> 24),
+                (byte)(0xFF & (value >> 16)),
+                (byte)(0xFF & (value >> 8)),
+                (byte)(0xFF & value)
+            };
+
+            this.ValidateContainingEntry(key, bytes);
             return this;
         }
 
@@ -51,7 +60,7 @@
         {
             return this.ContainingEntries<object>(entries);
         }
-        
+
         public IAndSessionTestBuilder ContainingStringEntries(IDictionary<string, string> entries)
         {
             return this.ContainingEntries(entries);
@@ -71,11 +80,7 @@
 
             foreach (var key in session.Keys)
             {
-                byte[] value;
-                if (session.TryGetValue(key, out value))
-                {
-                    result.Add(key, value);
-                }
+                result.Add(key, session.Get(key));
             }
 
             return result;

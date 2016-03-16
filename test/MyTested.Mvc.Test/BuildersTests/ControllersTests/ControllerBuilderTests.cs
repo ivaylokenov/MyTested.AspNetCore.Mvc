@@ -365,6 +365,7 @@
 
             Assert.NotNull(controller);
             Assert.NotNull(controller.HttpContext);
+            Assert.NotNull(controller.HttpContext.RequestServices);
             Assert.NotNull(controller.ControllerContext);
             Assert.NotNull(controller.ControllerContext.HttpContext);
             Assert.NotNull(controller.ControllerContext.InputFormatters);
@@ -377,7 +378,6 @@
             Assert.NotNull(controller.ViewBag);
             Assert.NotNull(controller.ViewData);
             Assert.NotNull(controller.TempData);
-            Assert.NotNull(controller.Resolver);
             Assert.NotNull(controller.Request);
             Assert.NotNull(controller.Response);
             Assert.NotNull(controller.MetadataProvider);

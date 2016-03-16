@@ -834,6 +834,30 @@
             return this.Ok();
         }
 
+        public IActionResult AddSessionAction()
+        {
+            this.HttpContext.Session.SetInt32("test", 1);
+            return this.Ok();
+        }
+
+        public IActionResult AddTempDataAction()
+        {
+            this.TempData.Add("test", "tempvalue");
+            return this.Ok();
+        }
+
+        public IActionResult AddViewBagAction()
+        {
+            this.ViewBag.Test = "bagvalue";
+            return this.Ok();
+        }
+
+        public IActionResult AddViewDataAction()
+        {
+            this.ViewData["Test"] = "datavalue";
+            return this.Ok();
+        }
+
         public IActionResult TempDataAction()
         {
             if (this.TempData["test"] != null)
