@@ -19,7 +19,7 @@
     using Models;
     using Newtonsoft.Json;
     using Services;
-
+    using Internal.Contracts;
     [Authorize(Roles = "Admin,Moderator")]
     [Route("/api/test")]
     public class MvcController : Controller
@@ -827,10 +827,95 @@
             return this.BadRequest();
         }
 
+        public IActionResult FullMemoryCacheAction([FromServices]IMemoryCache cache)
+        {
+            var mockedMemoryCache = cache as IMockedMemoryCache;
+            if (mockedMemoryCache == null)
+            {
+                return this.Unauthorized();
+            }
+
+            var normalEntry = mockedMemoryCache.Get<string>("Normal");
+            if (normalEntry != null && normalEntry == "NormalValid")
+            {
+                return this.Ok("Normal");
+            }
+
+            IMockedMemoryCacheEntry fullEntry;
+            if (mockedMemoryCache.TryGetCacheEntry("FullEntry", out fullEntry))
+            {
+                return this.Ok(fullEntry);
+            }
+
+            var entries = mockedMemoryCache.GetCacheAsDictionary();
+            if (entries.Count == 3)
+            {
+                return this.Ok(entries);
+            }
+
+            return this.BadRequest();
+        }
+
+        public IActionResult FullSessionAction()
+        {
+            var session = this.HttpContext.Session;
+            
+            var hasId = session.GetString("HasId");
+            if (!string.IsNullOrWhiteSpace(hasId) && hasId == "HasIdValue")
+            {
+                return this.Ok(session.Id);
+            }
+
+            var byteEntry = session.Get("ByteEntry");
+            if (byteEntry != null)
+            {
+                return this.Ok(byteEntry);
+            }
+
+            var intEntry = session.GetInt32("IntEntry");
+            if (intEntry != null)
+            {
+                return this.Ok(intEntry);
+            }
+
+            var stringEntry = session.GetString("StringEntry");
+            if (stringEntry != null)
+            {
+                return this.Ok(stringEntry);
+            }
+
+            return this.BadRequest();
+        }
+
+        public IActionResult MultipleSessionValuesAction()
+        {
+            var session = this.HttpContext.Session;
+
+            var stringValue = session.GetString("StringKey");
+            var intValue = session.GetInt32("IntKey");
+            var byteValue = session.Get("ByteKey");
+
+            return this.Ok(new
+            {
+                String = stringValue,
+                Integer = intValue.Value,
+                Byte = byteValue
+            });
+        }
+
         public IActionResult AddMemoryCacheAction()
         {
             var memoryCache = this.HttpContext.RequestServices.GetService<IMemoryCache>();
-            memoryCache.Set("test", "value");
+            memoryCache.Set("test", "value", new MemoryCacheEntryOptions
+            {
+                AbsoluteExpiration = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(1),
+                Priority = CacheItemPriority.High,
+                SlidingExpiration = TimeSpan.FromMinutes(5)
+            });
+
+            memoryCache.Set("another", "anotherValue");
+
             return this.Ok();
         }
 

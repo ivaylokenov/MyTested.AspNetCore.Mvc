@@ -8,6 +8,7 @@
     using Contracts;
     using Controllers;
     using Formatters;
+    using Http;
     using Logging;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -22,6 +23,7 @@
     using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.AspNetCore.Routing;
+    using Microsoft.AspNetCore.Session;
     using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -29,7 +31,7 @@
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.PlatformAbstractions;
     using Routes;
-
+    using Utilities.Extensions;
     public static class TestApplication
     {
         private static readonly RequestDelegate NullHandler = (c) => TaskCache.CompletedTask;
@@ -287,20 +289,85 @@
                 }
             });
 
+            TryReplaceDataProviders(serviceCollection);
             TryAddControllersAsServices(serviceCollection);
             PrepareRouteServices(serviceCollection);
-
-            serviceCollection.TryReplaceSingleton<ITempDataProvider, MockedTempDataProvider>();
-
-            if (serviceCollection.Any(s => s.ServiceType == typeof(IMemoryCache)))
-            {
-                serviceCollection.TryReplace<IMemoryCache, MockedMemoryCache>(ServiceLifetime.Transient);
-            }
 
             serviceProvider = serviceCollection.BuildServiceProvider();
 
             // this call prepares all application conventions and fills the controller action descriptor cache
             serviceProvider.GetService<IControllerActionDescriptorCache>();
+        }
+
+        private static void TryReplaceDataProviders(IServiceCollection serviceCollection)
+        {
+            var tempDataProviderServiceType = typeof(ITempDataProvider);
+            var defaultTempDataProviderType = typeof(SessionStateTempDataProvider);
+            var memoryCacheServiceType = typeof(IMemoryCache);
+            var defaultMemoryCacheType = typeof(MemoryCache);
+            var sessionStoreServiceType = typeof(ISessionStore);
+            var defaultSessionStoreType = typeof(DistributedSessionStore);
+
+            var setMockedTempData = false;
+            var setMockedCaching = false;
+            var setMockedSession = false;
+
+            serviceCollection.ForEach(service =>
+            {
+                var serviceType = service.ServiceType;
+                var implementationType = service.ImplementationType;
+
+                if (serviceType == tempDataProviderServiceType)
+                {
+                    if (implementationType == defaultTempDataProviderType)
+                    {
+                        setMockedTempData = true;
+                    }
+                    else
+                    {
+                        setMockedTempData = false;
+                    }
+                }
+
+                if (serviceType == memoryCacheServiceType)
+                {
+                    if (implementationType == defaultMemoryCacheType)
+                    {
+                        setMockedCaching = true;
+                    }
+                    else
+                    {
+                        setMockedCaching = false;
+                    }
+                }
+
+                if (serviceType == sessionStoreServiceType)
+                {
+                    if (implementationType == defaultSessionStoreType)
+                    {
+                        setMockedSession = true;
+                    }
+                    else
+                    {
+                        setMockedSession = false;
+                    }
+                }
+            });
+
+            if (setMockedTempData)
+            {
+                serviceCollection.ReplaceTempDataProvider();
+            }
+
+            if (setMockedCaching)
+            {
+                serviceCollection.ReplaceMemoryCache();
+            }
+
+            if (setMockedSession)
+            {
+                serviceCollection.ReplaceSession();
+            }
         }
 
         private static void TryAddControllersAsServices(IServiceCollection serviceCollection)

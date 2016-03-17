@@ -7,8 +7,10 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.AspNetCore.Mvc.Internal;
+    using Microsoft.AspNetCore.Session;
     using Microsoft.Extensions.Caching.Memory;
-
+    using Microsoft.Extensions.DependencyInjection;
+    using System;
     public static class TestHelper
     {
         /// <summary>
@@ -46,6 +48,31 @@
             SetHttpContextToAccessor(httpContext);
 
             return httpContext;
+        }
+
+        public static void SetMockedSession(HttpContext httpContext)
+        {
+            var sessionStore = httpContext.RequestServices.GetService<ISessionStore>();
+            if (sessionStore != null)
+            {
+                if (httpContext.Features.Get<ISessionFeature>() == null)
+                {
+                    ISession mockedSession;
+                    if (sessionStore is MockedSessionStore)
+                    {
+                        mockedSession = new MockedSession();
+                    }
+                    else
+                    {
+                        mockedSession = sessionStore.Create(Guid.NewGuid().ToString(), TimeSpan.Zero, () => true, true);
+                    }
+
+                    httpContext.Features.Set<ISessionFeature>(new MockedSessionFeature
+                    {
+                        Session = mockedSession
+                    });
+                }
+            }
         }
 
         public static void SetHttpContextToAccessor(HttpContext httpContext)

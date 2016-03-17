@@ -369,7 +369,7 @@
                 .FirstOrDefault(methodFilter)
                 ?.CreateDelegate(typeof(TDelegate), instance) as TDelegate;
         }
-
+        
         /// <summary>
         /// Checks whether property with the provided name exists in a dynamic object.
         /// </summary>
@@ -379,6 +379,20 @@
         public static bool DynamicPropertyExists(dynamic dynamicObject, string propertyName)
         {
             return dynamicObject.GetType().GetProperty(propertyName) != null;
+        }
+
+        public static bool IsAnonymousType(Type type)
+        {
+            if (!(type.Name.StartsWith("<>") || type.Name.StartsWith("VB$")))
+            {
+                return false;
+            }
+
+            var typeInfo = type.GetTypeInfo();
+            return typeInfo.IsDefined(typeof(CompilerGeneratedAttribute), false)
+                && typeInfo.IsGenericType
+                && (type.Name.Contains("AnonymousType") || type.Name.Contains("AnonType"))
+                && (typeInfo.Attributes & TypeAttributes.NotPublic) == TypeAttributes.NotPublic;
         }
 
         private static ConstructorInfo GetConstructorByUnorderedParameters(this Type type, IEnumerable<Type> types)
@@ -477,7 +491,7 @@
                 return (bool)equalsOperator.Invoke(null, new[] { expected, actual });
             }
 
-            if (expectedType != objectType)
+            if (expectedType != objectType && !IsAnonymousType(expectedType))
             {
                 var equalsMethod = expectedType.GetMethods().FirstOrDefault(m => m.Name == "Equals" && m.DeclaringType == expectedType);
                 if (equalsMethod != null)

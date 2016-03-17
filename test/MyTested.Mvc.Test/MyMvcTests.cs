@@ -34,7 +34,8 @@ namespace MyTested.Mvc.Test
     using Setups.Controllers;
     using Setups.Services;
     using Setups.Startups;
-
+    using Microsoft.AspNetCore.Session;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
     public class MyMvcTests
     {
         [Fact]
@@ -217,7 +218,8 @@ namespace MyTested.Mvc.Test
         [Fact]
         public void ControllerWithNoParameterlessConstructorAndWithRegisteredServicesShouldPopulateCorrectInstanceOfControllerType()
         {
-            MyMvc.IsUsingDefaultConfiguration()
+            MyMvc
+                .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
                     services.AddTransient<IInjectedService, InjectedService>();
@@ -817,6 +819,33 @@ namespace MyTested.Mvc.Test
 
             MyMvc.IsUsingDefaultConfiguration();
         }
+        
+        [Fact]
+        public void WithCustomActionContextFuncShouldSetItToAccessor()
+        {
+            MyMvc
+                .IsUsingDefaultConfiguration()
+                .WithServices(services =>
+                {
+                    services.AddActionContextAccessor();
+                });
+
+            var actionDescriptor = new ControllerActionDescriptor { Name = "Test" };
+
+            var controller = MyMvc
+                .Controller<ActionContextController>()
+                .WithActionContext(actionContext =>
+                {
+                    actionContext.ActionDescriptor = actionDescriptor;
+                })
+                .AndProvideTheController();
+
+            Assert.NotNull(controller);
+            Assert.NotNull(controller.Context);
+            Assert.Equal("Test", controller.Context.ActionDescriptor.Name);
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
 
         [Fact]
         public void WithCustomControllerContextShouldSetItToAccessor()
@@ -972,6 +1001,151 @@ namespace MyTested.Mvc.Test
                 })
                 .GetAwaiter()
                 .GetResult();
+        }
+
+        [Fact]
+        public void DefaultConfigurationShouldSetMockedMemoryCache()
+        {
+            MyMvc.IsUsingDefaultConfiguration();
+
+            var memoryCache = TestServiceProvider.GetService<IMemoryCache>();
+
+            Assert.NotNull(memoryCache);
+            Assert.IsAssignableFrom<MockedMemoryCache>(memoryCache);
+        }
+
+        [Fact]
+        public void CustomMemoryCacheShouldOverrideTheMockedOne()
+        {
+            MyMvc.StartsFrom<DataStartup>();
+            
+            var memoryCache = TestServiceProvider.GetService<IMemoryCache>();
+
+            Assert.NotNull(memoryCache);
+            Assert.IsAssignableFrom<CustomMemoryCache>(memoryCache);
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+        
+        [Fact]
+        public void ExplicitMockedMemoryCacheShouldOverrideIt()
+        {
+            MyMvc
+                .StartsFrom<DataStartup>()
+                .WithServices(services =>
+                {
+                    services.ReplaceMemoryCache();
+                });
+
+            var memoryCache = TestServiceProvider.GetService<IMemoryCache>();
+
+            Assert.NotNull(memoryCache);
+            Assert.IsAssignableFrom<MockedMemoryCache>(memoryCache);
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+        
+        [Fact]
+        public void DefaultConfigurationShouldSetMockedSession()
+        {
+            MyMvc.IsUsingDefaultConfiguration();
+
+            var session = TestServiceProvider.GetService<ISessionStore>();
+
+            Assert.Null(session);
+        }
+
+        [Fact]
+        public void DefaultConfigurationWithSessionShouldSetMockedSession()
+        {
+            MyMvc
+                .IsUsingDefaultConfiguration()
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
+                    services.AddSession();
+                });
+
+            var session = TestServiceProvider.GetService<ISessionStore>();
+
+            Assert.NotNull(session);
+            Assert.IsAssignableFrom<MockedSessionStore>(session);
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void CustomSessionShouldOverrideTheMockedOne()
+        {
+            MyMvc.StartsFrom<DataStartup>();
+
+            var session = TestServiceProvider.GetService<ISessionStore>();
+
+            Assert.NotNull(session);
+            Assert.IsAssignableFrom<CustomSessionStore>(session);
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void ExplicitMockedSessionShouldOverrideIt()
+        {
+            MyMvc
+                .StartsFrom<DataStartup>()
+                .WithServices(services =>
+                {
+                    services.ReplaceSession();
+                });
+
+            var session = TestServiceProvider.GetService<ISessionStore>();
+
+            Assert.NotNull(session);
+            Assert.IsAssignableFrom<MockedSessionStore>(session);
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void DefaultConfigurationShouldSetMockedTempDataProvider()
+        {
+            MyMvc.IsUsingDefaultConfiguration();
+
+            var tempDataProvider = TestServiceProvider.GetService<ITempDataProvider>();
+
+            Assert.NotNull(tempDataProvider);
+            Assert.IsAssignableFrom<MockedTempDataProvider>(tempDataProvider);
+        }
+
+        [Fact]
+        public void CustomTempDataProviderShouldOverrideTheMockedOne()
+        {
+            MyMvc.StartsFrom<DataStartup>();
+
+            var tempDataProvider = TestServiceProvider.GetService<ITempDataProvider>();
+
+            Assert.NotNull(tempDataProvider);
+            Assert.IsAssignableFrom<CustomTempDataProvider>(tempDataProvider);
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void ExplicitMockedTempDataProviderShouldOverrideIt()
+        {
+            MyMvc
+                .StartsFrom<DataStartup>()
+                .WithServices(services =>
+                {
+                    services.ReplaceTempDataProvider();
+                });
+
+            var tempDataProvider = TestServiceProvider.GetService<ITempDataProvider>();
+
+            Assert.NotNull(tempDataProvider);
+            Assert.IsAssignableFrom<MockedTempDataProvider>(tempDataProvider);
+
+            MyMvc.IsUsingDefaultConfiguration();
         }
     }
 }

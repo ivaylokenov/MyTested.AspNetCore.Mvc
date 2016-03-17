@@ -104,16 +104,7 @@
                 this.Features.Set<IServiceProvidersFeature>(new MockedRequestServicesFeature(TestServiceProvider.Global));
             }
 
-            if (this.RequestServices.GetService<ISessionStore>() != null)
-            {
-                if (this.Features.Get<ISessionFeature>() == null)
-                {
-                    this.Features.Set<ISessionFeature>(new MockedSessionFeature
-                    {
-                        Session = new MockedSession()
-                    });
-                }
-            }
+            TestHelper.SetMockedSession(this);
         }
 
         private void PrepareDefaultValues()

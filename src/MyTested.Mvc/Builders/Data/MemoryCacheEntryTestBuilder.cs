@@ -85,8 +85,8 @@
                 if (expected.Options.Priority != actual.Options.Priority)
                 {
                     this.ThrowNewDataProviderAssertionException(
-                        $"to have entry with {expectedPriority.GetErrorMessageName()} priority",
-                        $"in fact found {actualPriority.GetErrorMessageName()}");
+                        $"to have entry with {expectedPriority.GetErrorMessageName(includeQuotes: false)} priority",
+                        $"in fact found {actualPriority.GetErrorMessageName(includeQuotes: false)}");
                 }
             });
 

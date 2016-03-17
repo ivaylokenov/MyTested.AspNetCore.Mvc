@@ -437,6 +437,7 @@
             Assert.True(Reflection.AreDeeplyEqual(new object(), new object()));
             Assert.True(Reflection.AreDeeplyEqual((object)5, (object)5));
             Assert.True(Reflection.AreDeeplyEqual((object)5, 5));
+            Assert.True(Reflection.AreDeeplyEqual(new { Integer = 1, String = "Test", Nested = new byte[] { 1, 2, 3 } }, new { Integer = 1, String = "Test", Nested = new byte[] { 1, 2, 3 } }));
             Assert.True(Reflection.AreDeeplyEqual(new RequestModel { Integer = 1 }, new RequestModel { Integer = 1 }));
             Assert.True(Reflection.AreDeeplyEqual(new RequestModel { Integer = 1, NonRequiredString = "test" }, new RequestModel { Integer = 1, NonRequiredString = "test" }));
             Assert.True(Reflection.AreDeeplyEqual(new GenericComparableModel { Integer = 1, String = "test" }, new GenericComparableModel { Integer = 1, String = "another" }));
@@ -449,6 +450,7 @@
             Assert.False(Reflection.AreDeeplyEqual(true, new object()));
             Assert.False(Reflection.AreDeeplyEqual("test", new object()));
             Assert.False(Reflection.AreDeeplyEqual(new object(), true));
+            Assert.False(Reflection.AreDeeplyEqual(new { Integer = 1, String = "Test", Nested = new byte[] { 1, 2, 3 } }, new { Integer = 1, String = "Test", Nested = new byte[] { 1, 2, 4 } }));
             Assert.False(Reflection.AreDeeplyEqual(new RequestModel { Integer = 2 }, new RequestModel { Integer = 1 }));
             Assert.False(Reflection.AreDeeplyEqual(new object(), new RequestModel { Integer = 1 }));
             Assert.False(Reflection.AreDeeplyEqual(new RequestModel { Integer = 2 }, new object()));

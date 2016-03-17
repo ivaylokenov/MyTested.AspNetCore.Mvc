@@ -3,15 +3,21 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
+    using Internal;
+    using Internal.Caching;
+    using Internal.Http;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Http.Internal;
+    using Microsoft.AspNetCore.Mvc.Infrastructure;
+    using Microsoft.AspNetCore.Mvc.Internal;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
+    using Microsoft.AspNetCore.Session;
+    using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
     using Utilities.Extensions;
     using Utilities.Validators;
-    using Microsoft.AspNetCore.Mvc.Internal;
-    using System.Reflection;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Http.Internal;
-    using Microsoft.AspNetCore.Mvc.Infrastructure;
 
     public static class ServiceCollectionExtensions
     {
@@ -25,6 +31,41 @@
         {
             CommonValidator.CheckForNullReference(serviceCollection, nameof(serviceCollection));
             serviceCollection.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
+        }
+        
+        public static void AddMvcControllersAsServices(this IServiceCollection serviceCollection, params Type[] controllerTypes)
+        {
+            serviceCollection.AddMvcControllersAsServices(controllerTypes.AsEnumerable());
+        }
+
+        public static void AddMvcControllersAsServices(this IServiceCollection serviceCollection, IEnumerable<Type> controllerTypes)
+        {
+            ControllersAsServices.AddControllersAsServices(serviceCollection, controllerTypes);
+        }
+
+        public static void AddMvcControllersAsServices(this IServiceCollection serviceCollection, params Assembly[] controllerAssemblies)
+        {
+            serviceCollection.AddMvcControllersAsServices(controllerAssemblies.AsEnumerable());
+        }
+
+        public static void AddMvcControllersAsServices(this IServiceCollection serviceCollection, IEnumerable<Assembly> controllerAssemblies)
+        {
+            ControllersAsServices.AddControllersAsServices(serviceCollection, controllerAssemblies);
+        }
+
+        public static void ReplaceTempDataProvider(this IServiceCollection serviceCollection)
+        {
+            serviceCollection.TryReplaceSingleton<ITempDataProvider, MockedTempDataProvider>();
+        }
+
+        public static void ReplaceMemoryCache(this IServiceCollection serviceCollection)
+        {
+            serviceCollection.TryReplace<IMemoryCache, MockedMemoryCache>(ServiceLifetime.Transient);
+        }
+
+        public static void ReplaceSession(this IServiceCollection serviceCollection)
+        {
+            serviceCollection.TryReplaceTransient<ISessionStore, MockedSessionStore>();
         }
 
         public static void TryRemove(this IServiceCollection serviceCollection, Type service)
@@ -247,26 +288,6 @@
         {
             CommonValidator.CheckForNullReference(descriptors, nameof(descriptors));
             descriptors.ForEach(d => serviceCollection.TryReplaceEnumerable(d));
-        }
-
-        public static void AddMvcControllersAsServices(this IServiceCollection serviceCollection, params Type[] controllerTypes)
-        {
-            serviceCollection.AddMvcControllersAsServices(controllerTypes.AsEnumerable());
-        }
-
-        public static void AddMvcControllersAsServices(this IServiceCollection serviceCollection, IEnumerable<Type> controllerTypes)
-        {
-            ControllersAsServices.AddControllersAsServices(serviceCollection, controllerTypes);
-        }
-
-        public static void AddMvcControllersAsServices(this IServiceCollection serviceCollection, params Assembly[] controllerAssemblies)
-        {
-            serviceCollection.AddMvcControllersAsServices(controllerAssemblies.AsEnumerable());
-        }
-
-        public static void AddMvcControllersAsServices(this IServiceCollection serviceCollection, IEnumerable<Assembly> controllerAssemblies)
-        {
-            ControllersAsServices.AddControllersAsServices(serviceCollection, controllerAssemblies);
         }
 
         private static void RemoveServices(IServiceCollection serviceCollection, Func<ServiceDescriptor, bool> predicate)

@@ -13,6 +13,8 @@
 
     public class MockedMemoryCache : IMockedMemoryCache
     {
+        private static readonly IEntryLink DefaultEntryLink = new MockedEntryLink();
+
 #if NET451
         private const string DataKey = "__MemoryCache_Current__";
 #elif NETSTANDARD1_5
@@ -27,10 +29,7 @@
 
         public int Count => this.cache.Count;
 
-        public IEntryLink CreateLinkingScope()
-        {
-            return new MockedEntryLink();
-        }
+        public IEntryLink CreateLinkingScope() => DefaultEntryLink;
 
         public void Dispose()
         {

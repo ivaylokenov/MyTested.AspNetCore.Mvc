@@ -76,7 +76,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.AddMemoryCacheAction())
                 .ShouldHave()
-                .MemoryCache(withNumberOfEntries: 1)
+                .MemoryCache(withNumberOfEntries: 2)
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
@@ -115,7 +115,7 @@
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling AddMemoryCacheAction action in MvcController expected to have memory cache with 3 entries, but in fact contained 1.");
+                "When calling AddMemoryCacheAction action in MvcController expected to have memory cache with 3 entries, but in fact contained 2.");
         }
 
         [Fact]
