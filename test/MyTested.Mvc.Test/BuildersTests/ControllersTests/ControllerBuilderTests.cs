@@ -77,7 +77,7 @@
             var modelState = (controller as Controller).ModelState;
 
             Assert.False(modelState.IsValid);
-            Assert.Equal(2, modelState.Values.Count);
+            Assert.Equal(2, modelState.Values.Count());
             Assert.Equal("Integer", modelState.Keys.First());
             Assert.Equal("RequiredString", modelState.Keys.Last());
         }
@@ -97,8 +97,8 @@
             var modelState = (controller as Controller).ModelState;
 
             Assert.True(modelState.IsValid);
-            Assert.Equal(0, modelState.Values.Count);
-            Assert.Equal(0, modelState.Keys.Count);
+            Assert.Equal(0, modelState.Values.Count());
+            Assert.Equal(0, modelState.Keys.Count());
         }
 
         [Fact]
@@ -819,7 +819,7 @@
             var modelState = (controller as FullPocoController).CustomControllerContext.ModelState;
 
             Assert.False(modelState.IsValid);
-            Assert.Equal(2, modelState.Values.Count);
+            Assert.Equal(2, modelState.Values.Count());
             Assert.Equal("Integer", modelState.Keys.First());
             Assert.Equal("RequiredString", modelState.Keys.Last());
 
@@ -848,8 +848,8 @@
             var modelState = (controller as FullPocoController).CustomControllerContext.ModelState;
 
             Assert.True(modelState.IsValid);
-            Assert.Equal(0, modelState.Values.Count);
-            Assert.Equal(0, modelState.Keys.Count);
+            Assert.Equal(0, modelState.Values.Count());
+            Assert.Equal(0, modelState.Keys.Count());
 
             MyMvc.IsUsingDefaultConfiguration();
         }

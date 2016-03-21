@@ -8,7 +8,6 @@
     using Contracts;
     using Controllers;
     using Formatters;
-    using Http;
     using Logging;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -32,6 +31,7 @@
     using Microsoft.Extensions.PlatformAbstractions;
     using Routes;
     using Utilities.Extensions;
+
     public static class TestApplication
     {
         private static readonly RequestDelegate NullHandler = (c) => TaskCache.CompletedTask;

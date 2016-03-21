@@ -291,8 +291,11 @@
             var badRequestObjectResultValue = this.GetBadRequestObjectResultValue();
             var actualModelState = this.GetModelStateFromSerializableError(badRequestObjectResultValue);
 
-            var expectedKeysCount = modelState.Keys.Count;
-            var actualKeysCount = actualModelState.Keys.Count;
+            var modelStateKeys = modelState.Keys.ToList();
+            var actualModelStateKeys = actualModelState.Keys.ToList();
+
+            var expectedKeysCount = modelStateKeys.Count;
+            var actualKeysCount = actualModelStateKeys.Count;
 
             if (expectedKeysCount != actualKeysCount)
             {
@@ -304,8 +307,8 @@
                         actualKeysCount));
             }
 
-            var actualModelStateSortedKeys = actualModelState.Keys.OrderBy(k => k).ToList();
-            var expectedModelStateSortedKeys = modelState.Keys.OrderBy(k => k).ToList();
+            var actualModelStateSortedKeys = actualModelStateKeys.OrderBy(k => k).ToList();
+            var expectedModelStateSortedKeys = modelStateKeys.OrderBy(k => k).ToList();
 
             foreach (var expectedKey in expectedModelStateSortedKeys)
             {
