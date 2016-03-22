@@ -9,7 +9,7 @@
     using Builders.Routes;
     using Internal.Application;
     using Internal.TestContexts;
-
+    using Internal;
     /// <summary>
     /// Starting point of the ASP.NET MVC testing framework, which provides a way to specify the test case.
     /// </summary>
@@ -61,7 +61,7 @@
         public static IControllerBuilder<TController> Controller<TController>()
             where TController : Controller
         {
-            var controller = Reflection.TryFastCreateInstance<TController>();
+            var controller = TestHelper.TryCreateInstance<TController>() ?? Reflection.TryFastCreateInstance<TController>();
             return Controller(() => controller);
         }
 
