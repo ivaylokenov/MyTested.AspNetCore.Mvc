@@ -3,8 +3,8 @@
     using System;
     using And;
     using Contracts.Base;
-    using Microsoft.AspNetCore.Http;
     using Internal.TestContexts;
+    using Microsoft.AspNetCore.Http;
 
     /// <summary>
     /// Base class for test builders with caught exception.
@@ -36,7 +36,7 @@
         /// Gets the HTTP response after the tested action is executed.
         /// </summary>
         /// <returns>The HTTP response.</returns>
-        public HttpResponse AndProvideTheHttpResponse() => this.Controller.Response;
+        public HttpResponse AndProvideTheHttpResponse() => this.TestContext.HttpResponse;
 
         /// <summary>
         /// Creates new AndProvideTestBuilder.

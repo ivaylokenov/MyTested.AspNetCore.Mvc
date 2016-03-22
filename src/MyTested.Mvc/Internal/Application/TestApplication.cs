@@ -1,82 +1,66 @@
 ﻿namespace MyTested.Mvc.Internal.Application
 {
     using System;
-    using System.Threading.Tasks;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Reflection;
     using Caching;
     using Contracts;
+    using Controllers;
+    using Formatters;
     using Logging;
     using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Hosting.Internal;
     using Microsoft.AspNetCore.Hosting.Startup;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Http.Internal;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Abstractions;
+    using Microsoft.AspNetCore.Mvc.Controllers;
+    using Microsoft.AspNetCore.Mvc.Formatters;
+    using Microsoft.AspNetCore.Mvc.Internal;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.AspNetCore.Routing;
+    using Microsoft.AspNetCore.Session;
+    using Microsoft.Extensions.Caching.Memory;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
     using Microsoft.Extensions.Logging;
-    using Microsoft.AspNetCore.Mvc.Abstractions;
-    using Routes;
-    using System.Linq;
-    using System.Diagnostics;
-    using Microsoft.AspNetCore.Mvc.Internal;
-    using Microsoft.AspNetCore.Mvc;
-    using Formatters;
-    using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.Extensions.PlatformAbstractions;
-    using System.Reflection;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http.Internal;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.AspNetCore.Mvc.ViewFeatures;
-    using Microsoft.Extensions.Caching.Memory;
+    using Routes;
+    using Utilities.Extensions;
 
     public static class TestApplication
     {
-        private static readonly RequestDelegate NullHandler = (c) => Task.FromResult(0);
-        private static readonly IHostingEnvironment Environment = new HostingEnvironment { EnvironmentName = "Tests" };
+        private static readonly RequestDelegate NullHandler = (c) => TaskCache.CompletedTask;
 
         private static bool initialiazed;
-        private static IConfiguration configuration;
-        private static Type startupType;
-        private static StartupLoader startupLoader;
+        private static object sync;
 
-        private static IServiceProvider serviceProvider;
-        private static IServiceProvider routeServiceProvider;
-        private static IRouter router;
+        private static TestConfiguration testConfiguration;
+
+        private static IConfiguration configuration;
+        private static IHostingEnvironment environment;
+
+        private static Type startupType;
+
+        private static volatile IServiceProvider serviceProvider;
+        private static volatile IServiceProvider routeServiceProvider;
+        private static volatile IRouter router;
 
         static TestApplication()
         {
+            sync = new object();
             configuration = PrepareConfiguration();
-            startupLoader = GetNewStartupLoader();
         }
-
-        internal static Type StartupType
-        {
-            get
-            {
-                return startupType;
-            }
-            set
-            {
-                Reset();
-                startupType = value;
-            }
-        }
-
-        internal static Action<IServiceCollection> AdditionalServices { get; set; }
-
-        internal static Action<IApplicationBuilder> AdditionalConfiguration { get; set; }
-
-        internal static Action<IRouteBuilder> AdditionalRoutes { get; set; }
 
         public static IServiceProvider Services
         {
             get
             {
-                if (!initialiazed)
-                {
-                    Initialize();
-                }
-
+                TryLockedInitialization();
                 return serviceProvider;
             }
         }
@@ -85,11 +69,7 @@
         {
             get
             {
-                if (!initialiazed)
-                {
-                    Initialize();
-                }
-
+                TryLockedInitialization();
                 return routeServiceProvider;
             }
         }
@@ -98,41 +78,116 @@
         {
             get
             {
-                if (!initialiazed)
-                {
-                    Initialize();
-                }
-
+                TryLockedInitialization();
                 return router;
             }
         }
 
-        internal static void TryFindDefaultStartupType()
+        internal static Type StartupType
+        {
+            get
+            {
+                return startupType;
+            }
+
+            set
+            {
+                Reset();
+                startupType = value;
+            }
+        }
+
+        internal static Action<IConfigurationBuilder> AdditionalConfiguration { get; set; }
+
+        internal static Action<IServiceCollection> AdditionalServices { get; set; }
+
+        internal static Action<IApplicationBuilder> AdditionalApplicationConfiguration { get; set; }
+
+        internal static Action<IRouteBuilder> AdditionalRoutes { get; set; }
+
+        internal static IConfiguration Configuration
+        {
+            get
+            {
+                if (configuration == null)
+                {
+                    configuration = PrepareConfiguration();
+                }
+
+                return configuration;
+            }
+        }
+
+        internal static IHostingEnvironment Environment
+        {
+            get
+            {
+                if (environment == null)
+                {
+                    environment = PrepareEnvironment();
+                }
+
+                return environment;
+            }
+        }
+
+        internal static TestConfiguration TestConfiguration
+        {
+            get
+            {
+                if (testConfiguration == null)
+                {
+                    testConfiguration = TestConfiguration.With(configuration);
+                }
+
+                return testConfiguration;
+            }
+        }
+
+        internal static void TryInitialize()
+        {
+            if (TestConfiguration.AutomaticStartup)
+            {
+                startupType = TryFindDefaultStartupType();
+
+                if (startupType != null)
+                {
+                    Initialize();
+                }
+            }
+        }
+
+        internal static Type TryFindDefaultStartupType()
         {
             var applicationName = PlatformServices.Default.Application.ApplicationName;
             var applicationAssembly = Assembly.Load(new AssemblyName(applicationName));
 
-            var startupTypes = applicationAssembly
-                .DefinedTypes
-                .Where(t =>
-                {
-                    var startupName = $"{Environment.EnvironmentName}Startup";
-                    return t.Name == startupName || t.Name == $"{applicationName}.{startupName}";
-                })
-                .Select(t => t.AsType())
-                .ToArray();
+            var startupName = TestConfiguration.FullStartupName ?? $"{Environment.EnvironmentName}Startup";
 
-            if (startupTypes.Length == 1)
+            // check root of the testing library
+            var startup =
+                applicationAssembly.GetType(startupName) ??
+                applicationAssembly.GetType($"{applicationName}.{startupName}");
+
+            if (startup == null)
             {
-                startupType = startupTypes.First();
-            }
-        }
+                // full scan 
+                var startupTypes = applicationAssembly
+                    .DefinedTypes
+                    .Where(t =>
+                    {
+                        return t.Name == startupName || t.Name == $"{applicationName}.{startupName}";
+                    })
+                    .Select(t => t.AsType())
+                    .ToArray();
 
-        private static IConfiguration PrepareConfiguration()
-        {
-            return new ConfigurationBuilder()
-                .AddInMemoryCollection()
-                .Build();
+                if (startupTypes.Length == 1)
+                {
+                    startup = startupTypes.First();
+                }
+            }
+
+            return startup;
         }
 
         private static void Initialize()
@@ -142,13 +197,38 @@
             StartupMethods startupMethods = null;
             if (StartupType != null)
             {
-                startupMethods = startupLoader.LoadMethods(StartupType, null);
+                startupMethods = serviceCollection
+                    .BuildServiceProvider()
+                    .GetRequiredService<IStartupLoader>()
+                    .LoadMethods(StartupType, null);
             }
 
             PrepareServices(serviceCollection, startupMethods);
             PrepareApplicationAndRoutes(startupMethods);
 
             initialiazed = true;
+        }
+
+        private static IConfiguration PrepareConfiguration()
+        {
+            var configurationBuilder = new ConfigurationBuilder()
+                .AddJsonFile("testconfig.json", optional: true);
+
+            if (AdditionalConfiguration != null)
+            {
+                AdditionalConfiguration(configurationBuilder);
+            }
+
+            return configurationBuilder.Build();
+        }
+
+        private static IHostingEnvironment PrepareEnvironment()
+        {
+            return new HostingEnvironment
+            {
+                ApplicationName = PlatformServices.Default.Application.ApplicationName,
+                EnvironmentName = TestConfiguration.EnvironmentName
+            };
         }
 
         private static IServiceCollection GetInitialServiceCollection()
@@ -159,6 +239,9 @@
             // default server services
             serviceCollection.TryAddSingleton(Environment);
             serviceCollection.TryAddSingleton<ILoggerFactory>(MockedLoggerFactory.Create());
+
+            serviceCollection.AddTransient<IStartupLoader, StartupLoader>();
+
             serviceCollection.TryAddTransient<IHttpContextFactory, HttpContextFactory>();
             serviceCollection.AddLogging();
             serviceCollection.AddOptions();
@@ -170,19 +253,9 @@
             AddPlatformServices(serviceCollection);
 
             // testing framework services
+            serviceCollection.TryAddSingleton<IValidControllersCache, ValidControllersCache>();
             serviceCollection.TryAddSingleton<IControllerActionDescriptorCache, ControllerActionDescriptorCache>();
-
-            // custom MVC options
-            serviceCollection.Configure<MvcOptions>(options =>
-            {
-                // string input formatter helps with HTTP request processing
-                var inputFormatters = options.InputFormatters.OfType<TextInputFormatter>();
-                if (!inputFormatters.Any(f => f.SupportedMediaTypes.Contains(ContentType.TextPlain)))
-                {
-                    options.InputFormatters.Add(new StringInputFormatter());
-                }
-            });
-
+            
             return serviceCollection;
         }
 
@@ -202,14 +275,126 @@
                 AdditionalServices(serviceCollection);
             }
 
+            // custom MVC options
+            serviceCollection.Configure<MvcOptions>(options =>
+            {
+                // add controller conventions to save all valid controller types
+                options.Conventions.Add(new ValidControllersCache());
+
+                // string input formatter helps with HTTP request processing
+                var inputFormatters = options.InputFormatters.OfType<TextInputFormatter>();
+                if (!inputFormatters.Any(f => f.SupportedMediaTypes.Contains(ContentType.TextPlain)))
+                {
+                    options.InputFormatters.Add(new StringInputFormatter());
+                }
+            });
+
+            TryReplaceDataProviders(serviceCollection);
+            TryAddControllersAsServices(serviceCollection);
             PrepareRouteServices(serviceCollection);
 
-            serviceCollection.TryReplaceSingleton<ITempDataProvider, MockedTempDataProvider>();
-
-            serviceCollection.TryRemoveSingleton<IMemoryCache, MemoryCache>();
-            serviceCollection.TryAddTransient<IMemoryCache, MockedMemoryCache>();
-
             serviceProvider = serviceCollection.BuildServiceProvider();
+
+            // this call prepares all application conventions and fills the controller action descriptor cache
+            serviceProvider.GetService<IControllerActionDescriptorCache>();
+        }
+
+        private static void TryReplaceDataProviders(IServiceCollection serviceCollection)
+        {
+            var tempDataProviderServiceType = typeof(ITempDataProvider);
+            var defaultTempDataProviderType = typeof(SessionStateTempDataProvider);
+            var memoryCacheServiceType = typeof(IMemoryCache);
+            var defaultMemoryCacheType = typeof(MemoryCache);
+            var sessionStoreServiceType = typeof(ISessionStore);
+            var defaultSessionStoreType = typeof(DistributedSessionStore);
+
+            var setMockedTempData = false;
+            var setMockedCaching = false;
+            var setMockedSession = false;
+
+            serviceCollection.ForEach(service =>
+            {
+                var serviceType = service.ServiceType;
+                var implementationType = service.ImplementationType;
+
+                if (serviceType == tempDataProviderServiceType)
+                {
+                    if (implementationType == defaultTempDataProviderType)
+                    {
+                        setMockedTempData = true;
+                    }
+                    else
+                    {
+                        setMockedTempData = false;
+                    }
+                }
+
+                if (serviceType == memoryCacheServiceType)
+                {
+                    if (implementationType == defaultMemoryCacheType)
+                    {
+                        setMockedCaching = true;
+                    }
+                    else
+                    {
+                        setMockedCaching = false;
+                    }
+                }
+
+                if (serviceType == sessionStoreServiceType)
+                {
+                    if (implementationType == defaultSessionStoreType)
+                    {
+                        setMockedSession = true;
+                    }
+                    else
+                    {
+                        setMockedSession = false;
+                    }
+                }
+            });
+
+            if (setMockedTempData)
+            {
+                serviceCollection.ReplaceTempDataProvider();
+            }
+
+            if (setMockedCaching)
+            {
+                serviceCollection.ReplaceMemoryCache();
+            }
+
+            if (setMockedSession)
+            {
+                serviceCollection.ReplaceSession();
+            }
+        }
+
+        private static void TryAddControllersAsServices(IServiceCollection serviceCollection)
+        {
+            if (StartupType != null)
+            {
+                var startupTypeInfo = StartupType.GetTypeInfo();
+
+                while (startupTypeInfo.BaseType != null && startupTypeInfo.BaseType != typeof(object))
+                {
+                    startupTypeInfo = startupTypeInfo.BaseType.GetTypeInfo();
+                }
+
+                if (startupTypeInfo.Assembly.GetName().Name != PlatformServices.Default.Application.ApplicationName)
+                {
+                    var controllerTypeProvider = serviceCollection
+                        .Where(s => s.ServiceType == typeof(IControllerTypeProvider))
+                        .Select(s => s.ImplementationInstance)
+                        .OfType<StaticControllerTypeProvider>()
+                        .FirstOrDefault();
+
+                    if (controllerTypeProvider == null || !controllerTypeProvider.ControllerTypes.Any())
+                    {
+                        serviceCollection.AddMvcControllersAsServices(startupTypeInfo.Assembly);
+                    }
+                }
+            }
         }
 
         private static void PrepareRouteServices(IServiceCollection serviceCollection)
@@ -243,9 +428,9 @@
                 startupMethods.ConfigureDelegate(applicationBuilder);
             }
 
-            if (AdditionalConfiguration != null)
+            if (AdditionalApplicationConfiguration != null)
             {
-                AdditionalConfiguration(applicationBuilder);
+                AdditionalApplicationConfiguration(applicationBuilder);
             }
 
             var routeBuilder = new RouteBuilder(applicationBuilder)
@@ -278,11 +463,6 @@
             router = routeBuilder.Build();
         }
 
-        private static StartupLoader GetNewStartupLoader()
-        {
-            return new StartupLoader(new ServiceCollection().BuildServiceProvider(), Environment);
-        }
-
         private static void AddPlatformServices(IServiceCollection serviceCollection)
         {
             var defaultPlatformServices = PlatformServices.Default;
@@ -301,15 +481,31 @@
             }
         }
 
+        private static void TryLockedInitialization()
+        {
+            if (!initialiazed)
+            {
+                lock (sync)
+                {
+                    if (!initialiazed)
+                    {
+                        Initialize();
+                    }
+                }
+            }
+        }
+
         private static void Reset()
         {
             initialiazed = false;
+            configuration = null;
+            environment = null;
             startupType = null;
             serviceProvider = null;
             routeServiceProvider = null;
             router = null;
             AdditionalServices = null;
-            AdditionalConfiguration = null;
+            AdditionalApplicationConfiguration = null;
             AdditionalRoutes = null;
         }
     }

@@ -4,12 +4,12 @@
     using System.Linq;
     using Contracts.ActionResults.File;
     using Exceptions;
-    using Utilities.Extensions;
+    using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.FileProviders;
     using Microsoft.Net.Http.Headers;
     using Utilities;
-    using Microsoft.Extensions.FileProviders;
-    using Internal.TestContexts;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Used for testing file result.

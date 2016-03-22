@@ -6,8 +6,8 @@
     using Contracts.ExceptionErrors;
     using ExceptionErrors;
     using Exceptions;
-    using Utilities.Extensions;
     using Internal.TestContexts;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Used for testing whether action throws exception.

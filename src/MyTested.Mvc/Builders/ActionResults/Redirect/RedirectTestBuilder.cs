@@ -3,15 +3,16 @@
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
+    using System.Threading.Tasks;
     using Base;
     using Contracts.ActionResults.Redirect;
     using Contracts.Uris;
     using Exceptions;
-    using Utilities.Extensions;
+    using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Routing;
+    using Utilities.Extensions;
     using Utilities.Validators;
-    using Internal.TestContexts;
 
     /// <summary>
     /// Used for testing redirect results.
@@ -23,6 +24,8 @@
     {
         private const string Location = "location";
         private const string RouteName = "route name";
+
+        private LambdaExpression redirectToExpression;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RedirectTestBuilder{TRedirectResult}" /> class.
@@ -73,7 +76,7 @@
         /// </summary>
         /// <param name="assertions">Action containing all assertions on the location.</param>
         /// <returns>The same redirect test builder.</returns>
-        public IAndRedirectTestBuilder ToUrl(Action<string> assertions)
+        public IAndRedirectTestBuilder ToUrlPassing(Action<string> assertions)
         {
             var redirectResult = this.GetRedirectResult<RedirectResult>(Location);
             assertions(redirectResult.Url);
@@ -86,21 +89,21 @@
         /// </summary>
         /// <param name="predicate">Predicate testing the location.</param>
         /// <returns>The same redirect test builder.</returns>
-        public IAndRedirectTestBuilder ToUrl(Func<string, bool> predicate)
+        public IAndRedirectTestBuilder ToUrlPassing(Func<string, bool> predicate)
         {
             var redirectResult = this.GetRedirectResult<RedirectResult>(Location);
-            if (!predicate(redirectResult.Url))
+            var url = redirectResult.Url;
+            if (!predicate(url))
             {
                 this.ThrowNewRedirectResultAssertionException(
-                    "location",
+                    $"location ('{url}')",
                     "to pass the given predicate",
-                    "but it failed");
+                    "it failed");
             }
 
             return this;
         }
-
-
+        
         /// <summary>
         /// Tests whether redirect result has specific location provided by URI.
         /// </summary>
@@ -124,9 +127,8 @@
         /// <returns>The same redirect test builder.</returns>
         public IAndRedirectTestBuilder ToUrl(Action<IUriTestBuilder> uriTestBuilder)
         {
-            var redirrectResult = this.GetRedirectResult<RedirectResult>(Location);
             LocationValidator.ValidateLocation(
-                this.ActionResult,
+                this.GetRedirectResult<RedirectResult>(Location),
                 uriTestBuilder,
                 this.ThrowNewRedirectResultAssertionException);
 
@@ -186,7 +188,7 @@
         /// </summary>
         /// <param name="key">Expected route key.</param>
         /// <returns>The same redirect test builder.</returns>
-        public IAndRedirectTestBuilder ContainingRouteValue(string key)
+        public IAndRedirectTestBuilder ContainingRouteKey(string key)
         {
             RouteActionResultValidator.ValidateRouteValue(
                 this.ActionResult,
@@ -257,9 +259,12 @@
         /// <returns>The same redirect test builder.</returns>
         public IAndRedirectTestBuilder ContainingRouteValues(IDictionary<string, object> routeValues)
         {
+            var includeCountCheck = this.redirectToExpression == null;
+
             RouteActionResultValidator.ValidateRouteValues(
                 this.ActionResult,
                 routeValues,
+                includeCountCheck,
                 this.ThrowNewRedirectResultAssertionException);
 
             return this;
@@ -302,14 +307,15 @@
         /// <param name="actionCall">Method call expression indicating the expected redirect action.</param>
         /// <returns>The same redirect test builder.</returns>
         public IAndRedirectTestBuilder To<TController>(Expression<Action<TController>> actionCall)
+            where TController : class
         {
-            RouteActionResultValidator.ValidateExpressionLink(
-                this.TestContext,
-                LinkGenerationTestContext.FromRedirectResult(this.ActionResult),
-                actionCall,
-                this.ThrowNewRedirectResultAssertionException);
-            
-            return this;
+            return this.ProcessRouteLambdaExpression<TController>(actionCall);
+        }
+
+        public IAndRedirectTestBuilder To<TController>(Expression<Func<TController, Task>> actionCall)
+            where TController : class
+        {
+            return this.ProcessRouteLambdaExpression<TController>(actionCall);
         }
 
         /// <summary>
@@ -338,7 +344,20 @@
 
             return actualRedirectResult;
         }
-        
+
+        private IAndRedirectTestBuilder ProcessRouteLambdaExpression<TController>(LambdaExpression actionCall)
+        {
+            this.redirectToExpression = actionCall;
+
+            RouteActionResultValidator.ValidateExpressionLink(
+                this.TestContext,
+                LinkGenerationTestContext.FromRedirectResult(this.ActionResult),
+                actionCall,
+                this.ThrowNewRedirectResultAssertionException);
+
+            return this;
+        }
+
         private void ThrowNewRedirectResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new RedirectResultAssertionException(string.Format(

@@ -7,15 +7,18 @@
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
+    using System.Runtime.CompilerServices;
+    using Microsoft.AspNetCore.Routing;
 
     /// <summary>
     /// Class for validating reflection checks.
     /// </summary>
     public static class Reflection
     {
-        private static readonly ConcurrentDictionary<Type, ConstructorInfo> typesWithOneConstructorCache = new ConcurrentDictionary<Type, ConstructorInfo>();
-        private static readonly ConcurrentDictionary<Type, IEnumerable<object>> typeAttributesCache = new ConcurrentDictionary<Type, IEnumerable<object>>();
-        private static readonly ConcurrentDictionary<MethodInfo, IEnumerable<object>> methodAttributesCache = new ConcurrentDictionary<MethodInfo, IEnumerable<object>>();
+        private static readonly ConcurrentDictionary<Type, ConstructorInfo> TypesWithOneConstructorCache = new ConcurrentDictionary<Type, ConstructorInfo>();
+        private static readonly ConcurrentDictionary<Type, IEnumerable<object>> TypeAttributesCache = new ConcurrentDictionary<Type, IEnumerable<object>>();
+        private static readonly ConcurrentDictionary<MethodInfo, IEnumerable<object>> MethodAttributesCache = new ConcurrentDictionary<MethodInfo, IEnumerable<object>>();
+        private static readonly ConcurrentDictionary<Type, string> FriendlyTypeNames = new ConcurrentDictionary<Type, string>();
 
         /// <summary>
         /// Checks whether two objects have the same types.
@@ -200,16 +203,19 @@
                 return "null";
             }
 
-            if (!type.GetTypeInfo().IsGenericType)
+            return FriendlyTypeNames.GetOrAdd(type, _ =>
             {
-                return type.Name;
-            }
+                if (!type.GetTypeInfo().IsGenericType)
+                {
+                    return type.Name;
+                }
 
-            var genericArgumentNames = type.GetGenericArguments().Select(ga => ga.ToFriendlyTypeName());
-            var friendlyGenericName = type.Name.Split('`')[0];
-            var joinedGenericArgumentNames = string.Join(", ", genericArgumentNames);
+                var genericArgumentNames = type.GetGenericArguments().Select(ga => ga.ToFriendlyTypeName());
+                var friendlyGenericName = type.Name.Split('`')[0];
+                var joinedGenericArgumentNames = string.Join(", ", genericArgumentNames);
 
-            return $"{friendlyGenericName}<{joinedGenericArgumentNames}>";
+                return $"{friendlyGenericName}<{joinedGenericArgumentNames}>";
+            });
         }
 
         public static T TryFastCreateInstance<T>()
@@ -225,31 +231,38 @@
             }
         }
 
+        public static T TryCreateInstance<T>(params object[] constructorParameters)
+            where T : class
+        {
+            return TryCreateInstance<T>(constructorParameters.ToDictionary(k => k?.GetType()));
+        }
+
         /// <summary>
         /// Tries to create instance of type T by using the provided unordered constructor parameters.
         /// </summary>
         /// <typeparam name="T">Type of created instance.</typeparam>
         /// <param name="constructorParameters">Unordered constructor parameters.</param>
         /// <returns>Created instance or null, if no suitable constructor found.</returns>
-        public static T TryCreateInstance<T>(params object[] constructorParameters)
+        public static T TryCreateInstance<T>(IDictionary<Type, object> constructorParameters = null)
             where T : class
         {
             var type = typeof(T);
             T instance = null;
-            
+
             try
             {
-                instance = Activator.CreateInstance(type, constructorParameters) as T;
+                constructorParameters = constructorParameters ?? new Dictionary<Type, object>();
+                instance = Activator.CreateInstance(type, constructorParameters.Select(p => p.Value).ToArray()) as T;
             }
             catch (Exception)
             {
-                if (constructorParameters == null || constructorParameters.Length == 0)
+                if (constructorParameters == null || constructorParameters.Count == 0)
                 {
                     return instance;
                 }
 
                 var constructorParameterTypes = constructorParameters
-                    .Select(cp => cp.GetType())
+                    .Select(cp => cp.Key)
                     .ToList();
 
                 var constructor = type.GetConstructorByUnorderedParameters(constructorParameterTypes);
@@ -258,12 +271,12 @@
                     return instance;
                 }
 
-                var selectedConstructorParameters = constructor
-                    .GetParameters()
+                var constructorParameterInfos = constructor.GetParameters();
+
+                var selectedConstructorParameters = constructorParameterInfos
                     .Select(cp => cp.ParameterType)
                     .ToList();
 
-                var typeObjectDictionary = constructorParameters.ToDictionary(k => k.GetType());
                 var resultParameters = new List<object>();
                 foreach (var selectedConstructorParameterType in selectedConstructorParameters)
                 {
@@ -271,13 +284,18 @@
                     {
                         if (selectedConstructorParameterType.IsAssignableFrom(constructorParameterType))
                         {
-                            resultParameters.Add(typeObjectDictionary[constructorParameterType]);
+                            resultParameters.Add(constructorParameters[constructorParameterType]);
                             break;
                         }
                     }
                 }
 
-                instance = Activator.CreateInstance(type, resultParameters.ToArray()) as T;
+                if (selectedConstructorParameters.Count != resultParameters.Count)
+                {
+                    return instance;
+                }
+
+                instance = constructor.Invoke(resultParameters.ToArray()) as T;
             }
 
             return instance;
@@ -291,7 +309,7 @@
         public static IEnumerable<object> GetCustomAttributes(object obj)
         {
             var type = obj.GetType();
-            return typeAttributesCache.GetOrAdd(type, _ =>
+            return TypeAttributesCache.GetOrAdd(type, _ =>
             {
                 return type.GetTypeInfo().GetCustomAttributes(true);
             });
@@ -299,7 +317,7 @@
 
         public static IEnumerable<object> GetCustomAttributes(MethodInfo method)
         {
-            return methodAttributesCache.GetOrAdd(method, _ =>
+            return MethodAttributesCache.GetOrAdd(method, _ =>
             {
                 return method.GetCustomAttributes(true);
             });
@@ -314,74 +332,7 @@
         /// <remarks>This method is used for the route testing. Since the ASP.NET MVC model binder creates new instances, circular references are not checked.</remarks>
         public static bool AreDeeplyEqual(object expected, object actual)
         {
-            if (expected == null && actual == null)
-            {
-                return true;
-            }
-
-            if (expected == null || actual == null)
-            {
-                return false;
-            }
-
-            var expectedType = expected.GetType();
-            var actualType = actual.GetType();
-            var objectType = typeof(object);
-
-            if ((expectedType == objectType && actualType != objectType)
-                || (actualType == objectType && expectedType != objectType))
-            {
-                return false;
-            }
-
-            if (expected is IEnumerable)
-            {
-                if (CollectionsAreDeeplyEqual(expected, actual))
-                {
-                    return true;
-                }
-
-                return false;
-            }
-
-            if (expectedType != actualType
-                && !expectedType.IsAssignableFrom(actualType)
-                && !actualType.IsAssignableFrom(expectedType))
-            {
-                return false;
-            }
-
-            if (expectedType.GetTypeInfo().IsPrimitive && actualType.GetTypeInfo().IsPrimitive)
-            {
-                return expected.ToString() == actual.ToString();
-            }
-
-            var equalsOperator = expectedType.GetMethods().FirstOrDefault(m => m.Name == "op_Equality");
-            if (equalsOperator != null)
-            {
-                return (bool)equalsOperator.Invoke(null, new[] { expected, actual });
-            }
-
-            if (expectedType != objectType)
-            {
-                var equalsMethod = expectedType.GetMethods().FirstOrDefault(m => m.Name == "Equals" && m.DeclaringType == expectedType);
-                if (equalsMethod != null)
-                {
-                    return (bool)equalsMethod.Invoke(expected, new[] { actual });
-                }
-            }
-
-            if (ComparablesAreDeeplyEqual(expected, actual))
-            {
-                return true;
-            }
-
-            if (!ObjectPropertiesAreDeeplyEqual(expected, actual))
-            {
-                return false;
-            }
-
-            return true;
+            return AreDeeplyEqual(expected, actual, new ConditionalWeakTable<object, object>());
         }
 
         /// <summary>
@@ -418,7 +369,7 @@
                 .FirstOrDefault(methodFilter)
                 ?.CreateDelegate(typeof(TDelegate), instance) as TDelegate;
         }
-
+        
         /// <summary>
         /// Checks whether property with the provided name exists in a dynamic object.
         /// </summary>
@@ -430,10 +381,24 @@
             return dynamicObject.GetType().GetProperty(propertyName) != null;
         }
 
+        public static bool IsAnonymousType(Type type)
+        {
+            if (!(type.Name.StartsWith("<>") || type.Name.StartsWith("VB$")))
+            {
+                return false;
+            }
+
+            var typeInfo = type.GetTypeInfo();
+            return typeInfo.IsDefined(typeof(CompilerGeneratedAttribute), false)
+                && typeInfo.IsGenericType
+                && (type.Name.Contains("AnonymousType") || type.Name.Contains("AnonType"))
+                && (typeInfo.Attributes & TypeAttributes.NotPublic) == TypeAttributes.NotPublic;
+        }
+
         private static ConstructorInfo GetConstructorByUnorderedParameters(this Type type, IEnumerable<Type> types)
         {
             ConstructorInfo cachedConstructor;
-            if (typesWithOneConstructorCache.TryGetValue(type, out cachedConstructor))
+            if (TypesWithOneConstructorCache.TryGetValue(type, out cachedConstructor))
             {
                 return cachedConstructor;
             }
@@ -442,35 +407,118 @@
             if (allConstructors.Length == 1)
             {
                 var singleConstructor = allConstructors[0];
-                typesWithOneConstructorCache.TryAdd(type, singleConstructor);
+                TypesWithOneConstructorCache.TryAdd(type, singleConstructor);
                 return singleConstructor;
             }
 
             var orderedTypes = types
                 .OrderBy(t => t.FullName)
-                .ToList();
-            
-            var constructor = allConstructors
+                .ToArray();
+
+            return allConstructors
                 .Where(c =>
                 {
-                    var parameters = c.GetParameters()
-                        .OrderBy(p => p.ParameterType.FullName)
-                        .Select(p => p.ParameterType)
-                        .ToList();
-
-                    if (orderedTypes.Count != parameters.Count)
+                    var parameters = c.GetParameters();
+                    if (orderedTypes.Length != parameters.Length)
                     {
                         return false;
                     }
 
-                    return !orderedTypes.Where((t, i) => !parameters[i].IsAssignableFrom(t)).Any();
+                    var parameterTypes = parameters
+                        .OrderBy(p => p.ParameterType.FullName)
+                        .Select(p => p.ParameterType)
+                        .ToArray();
+
+                    return !orderedTypes.Where((t, i) => !parameterTypes[i].IsAssignableFrom(t)).Any();
                 })
                 .FirstOrDefault();
-
-            return constructor;
         }
 
-        private static bool CollectionsAreDeeplyEqual(object expected, object actual)
+        private static bool AreDeeplyEqual(object expected, object actual, ConditionalWeakTable<object, object> processedElements)
+        {
+            if (expected == null && actual == null)
+            {
+                return true;
+            }
+
+            if (expected == null || actual == null)
+            {
+                return false;
+            }
+
+            var expectedType = expected.GetType();
+
+            if (expectedType != typeof(string) && !expectedType.GetTypeInfo().IsValueType)
+            {
+                object alreadyCheckedObject = null;
+                if (processedElements.TryGetValue(expected, out alreadyCheckedObject))
+                {
+                    return true;
+                }
+
+                processedElements.Add(expected, expected);
+            }
+
+            var actualType = actual.GetType();
+            var objectType = typeof(object);
+
+            if ((expectedType == objectType && actualType != objectType)
+                || (actualType == objectType && expectedType != objectType))
+            {
+                return false;
+            }
+
+            if (expected is IEnumerable && expectedType != typeof(string))
+            {
+                return CollectionsAreDeeplyEqual(expected, actual, processedElements);
+            }
+
+            if (expectedType != actualType
+                && !expectedType.IsAssignableFrom(actualType)
+                && !actualType.IsAssignableFrom(expectedType))
+            {
+                return false;
+            }
+
+            if (expectedType.GetTypeInfo().IsPrimitive && actualType.GetTypeInfo().IsPrimitive)
+            {
+                return expected.ToString() == actual.ToString();
+            }
+
+            var equalsOperator = expectedType.GetMethods().FirstOrDefault(m => m.Name == "op_Equality");
+            if (equalsOperator != null)
+            {
+                return (bool)equalsOperator.Invoke(null, new[] { expected, actual });
+            }
+
+            if (expectedType != objectType && !IsAnonymousType(expectedType))
+            {
+                var equalsMethod = expectedType.GetMethods().FirstOrDefault(m => m.Name == "Equals" && m.DeclaringType == expectedType);
+                if (equalsMethod != null)
+                {
+                    return (bool)equalsMethod.Invoke(expected, new[] { actual });
+                }
+            }
+
+            if (ComparablesAreDeeplyEqual(expected, actual))
+            {
+                return true;
+            }
+
+            if (!ObjectPropertiesAreDeeplyEqual(expected, actual, processedElements))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private static bool AreNotDeeplyEqual(object expected, object actual, ConditionalWeakTable<object, object> processedElements)
+        {
+            return !AreDeeplyEqual(expected, actual, processedElements);
+        }
+
+        private static bool CollectionsAreDeeplyEqual(object expected, object actual, ConditionalWeakTable<object, object> processedElements)
         {
             var expectedAsEnumerable = (IEnumerable)expected;
             var actualAsEnumerable = actual as IEnumerable;
@@ -488,7 +536,7 @@
             }
 
             var collectionIsNotEqual = listOfExpectedValues
-                .Where((t, i) => AreNotDeeplyEqual(t, listOfActualValues[i]))
+                .Where((t, i) => AreNotDeeplyEqual(t, listOfActualValues[i], processedElements))
                 .Any();
 
             if (collectionIsNotEqual)
@@ -529,28 +577,28 @@
                 .FirstOrDefault(i => i.Name.StartsWith("IComparable")) != null;
         }
 
-        private static bool ObjectPropertiesAreDeeplyEqual(object expected, object actual)
+        private static bool ObjectPropertiesAreDeeplyEqual(object expected, object actual, ConditionalWeakTable<object, object> processedElements)
         {
-            var properties = expected.GetType().GetProperties();
-            foreach (var property in properties)
+            // Using RouteValueDictionary because it caches internally property getters as delegates.
+            // It is better not to implement own cache, because these object types may be used
+            // during the action call thus they will be evaluated and cached twice.
+            var expectedProperties = new RouteValueDictionary(expected);
+            var actualProperties = new RouteValueDictionary(actual);
+
+            foreach (var key in expectedProperties.Keys)
             {
-                if (property.GetIndexParameters().Length != 0)
-                {
-                    continue;
-                }
+                var expectedPropertyValue = expectedProperties[key];
+                var actualPropertyValue = actualProperties[key];
 
-                var expectedPropertyValue = property.GetValue(expected);
-                var actualPropertyValue = property.GetValue(actual);
-
-                if (expectedPropertyValue is IEnumerable)
+                if (expectedPropertyValue is IEnumerable && expectedPropertyValue?.GetType() != typeof(string))
                 {
-                    if (!CollectionsAreDeeplyEqual(expectedPropertyValue, actualPropertyValue))
+                    if (!CollectionsAreDeeplyEqual(expectedPropertyValue, actualPropertyValue, processedElements))
                     {
                         return false;
                     }
                 }
 
-                var propertiesAreDifferent = AreNotDeeplyEqual(expectedPropertyValue, actualPropertyValue);
+                var propertiesAreDifferent = AreNotDeeplyEqual(expectedPropertyValue, actualPropertyValue, processedElements);
                 if (propertiesAreDifferent)
                 {
                     return false;
@@ -558,6 +606,41 @@
             }
 
             return true;
+        }
+
+        public class DeepEqualResult
+        {
+            private static readonly DeepEqualResult DefaultSuccessResult = new DeepEqualResult(true);
+
+            public static DeepEqualResult Success => DefaultSuccessResult;
+            
+            public bool AreEqual { get; private set; }
+
+            public string ErrorPath { get; private set; }
+
+            public object ExpectedValue { get; private set; }
+
+            public object ActualValue { get; private set; }
+            
+            public static DeepEqualResult Failure(string errorPath, object expected, object actual)
+            {
+                return new DeepEqualResult(false)
+                {
+                    ErrorPath = errorPath,
+                    ExpectedValue = expected,
+                    ActualValue = actual
+                };
+            }
+
+            private DeepEqualResult(bool areEqual)
+            {
+                this.AreEqual = areEqual;
+            }
+
+            public static implicit operator bool(DeepEqualResult result)
+            {
+                return result.AreEqual;
+            }
         }
 
         private static class New<T>

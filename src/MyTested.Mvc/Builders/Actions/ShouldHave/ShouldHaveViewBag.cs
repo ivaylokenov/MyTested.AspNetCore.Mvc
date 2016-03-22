@@ -1,9 +1,9 @@
 ﻿namespace MyTested.Mvc.Builders.Actions.ShouldHave
 {
+    using System;
     using Contracts.And;
     using Contracts.Data;
     using Data;
-    using System;
 
     /// <summary>
     /// Class containing methods for testing view bag.

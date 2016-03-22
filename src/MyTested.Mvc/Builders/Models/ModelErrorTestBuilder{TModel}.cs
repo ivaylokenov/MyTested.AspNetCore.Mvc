@@ -4,12 +4,11 @@
     using System.Linq.Expressions;
     using Contracts.Models;
     using Exceptions;
-    using Utilities.Extensions;
-    using Microsoft.AspNetCore.Mvc.ModelBinding;
-    using Utilities;
-    using Utilities.Validators;
     using Internal.TestContexts;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
+    using Utilities.Extensions;
+    using Utilities.Validators;
 
     /// <summary>
     /// Used for testing the model errors.
@@ -85,7 +84,7 @@
         /// <returns>This instance in order to support method chaining.</returns>
         public IAndModelErrorTestBuilder<TModel> ContainingNoErrorFor<TMember>(Expression<Func<TModel, TMember>> memberWithNoError)
         {
-            var memberName = ExpressionParser.GetPropertyName(memberWithNoError);
+            var memberName = ExpressionHelper.GetExpressionText(memberWithNoError);
             if (this.ModelState.ContainsKey(memberName))
             {
                 this.ThrowNewModelErrorAssertionException(

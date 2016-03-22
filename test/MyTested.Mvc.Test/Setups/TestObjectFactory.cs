@@ -1,11 +1,10 @@
-﻿namespace MyTested.Mvc.Tests.Setups
+﻿namespace MyTested.Mvc.Test.Setups
 {
     using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Runtime.Serialization.Formatters;
     using Common;
-    using Microsoft.Extensions.FileProviders;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Authentication;
     using Microsoft.AspNetCore.Http.Internal;
@@ -13,6 +12,7 @@
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.AspNetCore.Mvc.ViewEngines;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.FileProviders;
     using Models;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
@@ -143,18 +143,26 @@
                 ContractResolver = new CamelCasePropertyNamesContractResolver(),
                 ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor,
                 DateFormatHandling = DateFormatHandling.MicrosoftDateFormat,
+                DateFormatString = "TEST",
                 DateParseHandling = DateParseHandling.DateTimeOffset,
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc,
                 DefaultValueHandling = DefaultValueHandling.Ignore,
+                EqualityComparer = new CustomEqualityComparer(),
                 Formatting = Formatting.Indented,
+                FloatFormatHandling = FloatFormatHandling.String,
+                FloatParseHandling = FloatParseHandling.Decimal,
                 MaxDepth = 2,
+                MetadataPropertyHandling = MetadataPropertyHandling.ReadAhead,
                 MissingMemberHandling = MissingMemberHandling.Ignore,
                 NullValueHandling = NullValueHandling.Ignore,
+                ReferenceResolverProvider = () => new CustomJsonReferenceResolver(),
                 ObjectCreationHandling = ObjectCreationHandling.Replace,
                 PreserveReferencesHandling = PreserveReferencesHandling.Arrays,
                 ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+                StringEscapeHandling = StringEscapeHandling.EscapeHtml,
                 TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
-                TypeNameHandling = TypeNameHandling.None
+                TypeNameHandling = TypeNameHandling.None,
+                TraceWriter = new CustomJsonTraceWriter()
             };
         }
     }

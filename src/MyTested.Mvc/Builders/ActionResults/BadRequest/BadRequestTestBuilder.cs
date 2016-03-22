@@ -263,9 +263,10 @@
             if (!predicate(actualErrorMessage))
             {
                 throw new BadRequestResultAssertionException(string.Format(
-                    "When calling {0} action in {1} expected bad request error message to pass the given predicate, but it failed.",
+                    "When calling {0} action in {1} expected bad request error message ('{2}') to pass the given predicate, but it failed.",
                     this.ActionName,
-                    this.Controller.GetName()));
+                    this.Controller.GetName(),
+                    actualErrorMessage));
             }
 
             return this;
@@ -277,7 +278,7 @@
         /// <returns>The same bad request test builder.</returns>
         public IAndBadRequestTestBuilder WithModelStateError()
         {
-            return this.WithModelStateError(this.Controller.ModelState);
+            return this.WithModelStateError(this.TestContext.ControllerContext.ModelState);
         }
 
         /// <summary>
@@ -290,8 +291,11 @@
             var badRequestObjectResultValue = this.GetBadRequestObjectResultValue();
             var actualModelState = this.GetModelStateFromSerializableError(badRequestObjectResultValue);
 
-            var expectedKeysCount = modelState.Keys.Count;
-            var actualKeysCount = actualModelState.Keys.Count;
+            var modelStateKeys = modelState.Keys.ToList();
+            var actualModelStateKeys = actualModelState.Keys.ToList();
+
+            var expectedKeysCount = modelStateKeys.Count;
+            var actualKeysCount = actualModelStateKeys.Count;
 
             if (expectedKeysCount != actualKeysCount)
             {
@@ -303,8 +307,8 @@
                         actualKeysCount));
             }
 
-            var actualModelStateSortedKeys = actualModelState.Keys.OrderBy(k => k).ToList();
-            var expectedModelStateSortedKeys = modelState.Keys.OrderBy(k => k).ToList();
+            var actualModelStateSortedKeys = actualModelStateKeys.OrderBy(k => k).ToList();
+            var expectedModelStateSortedKeys = modelStateKeys.OrderBy(k => k).ToList();
 
             foreach (var expectedKey in expectedModelStateSortedKeys)
             {

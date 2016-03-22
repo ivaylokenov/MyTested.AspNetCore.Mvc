@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Tests.BuildersTests.ActionResultsTests.HttpBadRequestTests
+﻿namespace MyTested.Mvc.Test.BuildersTests.ActionResultsTests.HttpBadRequestTests
 {
     using System.Collections.Generic;
     using System.Net;
@@ -61,7 +61,7 @@
                         .BadRequest()
                         .WithNoError();
                 },
-                "When calling BadRequestWithCustomError action in MvcController expected HTTP bad request result to not have error message, but in fact such was found.");
+                "When calling BadRequestWithCustomError action in MvcController expected bad request result to not have error message, but in fact such was found.");
         }
 
         [Fact]
@@ -88,7 +88,7 @@
                         .BadRequest()
                         .WithErrorMessage();
                 }, 
-                "When calling BadRequestAction action in MvcController expected HTTP bad request result to contain error object, but it could not be found.");
+                "When calling BadRequestAction action in MvcController expected bad request result to contain error object, but it could not be found.");
         }
 
         [Fact]
@@ -115,7 +115,7 @@
                         .BadRequest()
                         .WithErrorMessage("Good request");
                 }, 
-                "When calling BadRequestWithErrorAction action in MvcController expected HTTP bad request result with message 'Good request', but instead received 'Bad request'.");
+                "When calling BadRequestWithErrorAction action in MvcController expected bad request result with message 'Good request', but instead received 'Bad request'.");
         }
 
         [Fact]
@@ -133,7 +133,7 @@
                         .BadRequest()
                         .WithErrorMessage("Good request");
                 },
-                "When calling BadRequestWithModelState action in MvcController expected HTTP bad request result with error message, but instead received non-string value.");
+                "When calling BadRequestWithModelState action in MvcController expected bad request result with error message, but instead received non-string value.");
         }
 
         [Fact]
@@ -183,7 +183,7 @@
                         .BadRequest()
                         .WithModelStateError(modelState);
                 }, 
-                "When calling BadRequestWithModelState action in MvcController expected HTTP bad request model state dictionary to contain String key, but none found.");
+                "When calling BadRequestWithModelState action in MvcController expected bad request model state dictionary to contain String key, but none found.");
         }
 
         [Fact]
@@ -201,7 +201,7 @@
                         .BadRequest()
                         .WithModelStateError(modelState);
                 },
-                "When calling BadRequestWithErrorAction action in MvcController expected HTTP bad request result with model state dictionary as error, but instead received other type of error.");
+                "When calling BadRequestWithErrorAction action in MvcController expected bad request result with model state dictionary as error, but instead received other type of error.");
         }
 
         [Fact]
@@ -221,7 +221,7 @@
                         .BadRequest()
                         .WithModelStateError(modelState);
                 }, 
-                "When calling BadRequestWithModelState action in MvcController expected HTTP bad request model state dictionary to contain 1 keys, but found 2.");
+                "When calling BadRequestWithModelState action in MvcController expected bad request model state dictionary to contain 1 keys, but found 2.");
         }
 
         [Fact]
@@ -243,7 +243,7 @@
                         .BadRequest()
                         .WithModelStateError(modelState);
                 }, 
-                "When calling BadRequestWithModelState action in MvcController expected HTTP bad request model state dictionary to contain 3 keys, but found 2.");
+                "When calling BadRequestWithModelState action in MvcController expected bad request model state dictionary to contain 3 keys, but found 2.");
         }
 
         [Fact]
@@ -264,7 +264,7 @@
                         .BadRequest()
                         .WithModelStateError(modelState);
                 },
-                "When calling BadRequestWithModelState action in MvcController expected HTTP bad request result with message 'The RequiredString field is not required.', but instead received 'The RequiredString field is required.'.");
+                "When calling BadRequestWithModelState action in MvcController expected bad request result with message 'The RequiredString field is not required.', but instead received 'The RequiredString field is required.'.");
         }
 
         [Fact]
@@ -286,7 +286,7 @@
                         .BadRequest()
                         .WithModelStateError(modelState);
                 }, 
-                "When calling BadRequestWithModelState action in MvcController expected HTTP bad request model state dictionary to contain 2 errors for RequiredString key, but found 1.");
+                "When calling BadRequestWithModelState action in MvcController expected bad request model state dictionary to contain 2 errors for RequiredString key, but found 1.");
         }
 
         [Fact]
@@ -349,7 +349,7 @@
                         .BadRequest()
                         .WithStatusCode(HttpStatusCode.OK);
                 },
-                "When calling FullHttpBadRequestAction action in MvcController expected HTTP bad request result to have 200 (OK) status code, but instead received 201 (Created).");
+                "When calling FullHttpBadRequestAction action in MvcController expected bad request result to have 200 (OK) status code, but instead received 201 (Created).");
         }
 
         [Fact]
@@ -387,7 +387,7 @@
                        .BadRequest()
                        .ContainingContentType(new MediaTypeHeaderValue(ContentType.ApplicationOctetStream));
                 },
-                "When calling FullHttpBadRequestAction action in MvcController expected HTTP bad request result content types to contain application/octet-stream, but such was not found.");
+                "When calling FullHttpBadRequestAction action in MvcController expected bad request result content types to contain application/octet-stream, but such was not found.");
         }
 
         [Fact]
@@ -433,7 +433,7 @@
                             ContentType.ApplicationXml
                         });
                 },
-                "When calling FullHttpBadRequestAction action in MvcController expected HTTP bad request result content types to contain application/octet-stream, but none was found.");
+                "When calling FullHttpBadRequestAction action in MvcController expected bad request result content types to contain application/octet-stream, but none was found.");
         }
 
         [Fact]
@@ -452,7 +452,7 @@
                             ContentType.ApplicationXml
                         });
                 },
-                "When calling FullHttpBadRequestAction action in MvcController expected HTTP bad request result content types to have 1 item, but instead found 2.");
+                "When calling FullHttpBadRequestAction action in MvcController expected bad request result content types to have 1 item, but instead found 2.");
         }
 
         [Fact]
@@ -473,7 +473,7 @@
                             ContentType.ApplicationZip
                         });
                 },
-                "When calling FullHttpBadRequestAction action in MvcController expected HTTP bad request result content types to have 3 items, but instead found 2.");
+                "When calling FullHttpBadRequestAction action in MvcController expected bad request result content types to have 3 items, but instead found 2.");
         }
 
         [Fact]
@@ -519,7 +519,7 @@
                             new MediaTypeHeaderValue(ContentType.ApplicationXml)
                         });
                 },
-                "When calling FullHttpBadRequestAction action in MvcController expected HTTP bad request result content types to contain application/octet-stream, but none was found.");
+                "When calling FullHttpBadRequestAction action in MvcController expected bad request result content types to contain application/octet-stream, but none was found.");
         }
 
         [Fact]
@@ -538,7 +538,7 @@
                             new MediaTypeHeaderValue(ContentType.ApplicationXml)
                         });
                 },
-                "When calling FullHttpBadRequestAction action in MvcController expected HTTP bad request result content types to have 1 item, but instead found 2.");
+                "When calling FullHttpBadRequestAction action in MvcController expected bad request result content types to have 1 item, but instead found 2.");
         }
 
         [Fact]
@@ -559,7 +559,7 @@
                             new MediaTypeHeaderValue(ContentType.ApplicationZip)
                         });
                 },
-                "When calling FullHttpBadRequestAction action in MvcController expected HTTP bad request result content types to have 3 items, but instead found 2.");
+                "When calling FullHttpBadRequestAction action in MvcController expected bad request result content types to have 3 items, but instead found 2.");
         }
 
         [Fact]
@@ -590,7 +590,7 @@
                         .BadRequest()
                         .ContainingOutputFormatter(new JsonOutputFormatter());
                 },
-                "When calling HttpBadRequestActionWithFormatter action in MvcController expected HTTP bad request result output formatters to contain the provided formatter, but such was not found.");
+                "When calling HttpBadRequestActionWithFormatter action in MvcController expected bad request result output formatters to contain the provided formatter, but such was not found.");
         }
 
         [Fact]
@@ -617,7 +617,7 @@
                         .BadRequest()
                         .ContainingOutputFormatterOfType<IOutputFormatter>();
                 },
-                "When calling FullHttpBadRequestAction action in MvcController expected HTTP bad request result output formatters to contain formatter of IOutputFormatter type, but such was not found.");
+                "When calling FullHttpBadRequestAction action in MvcController expected bad request result output formatters to contain formatter of IOutputFormatter type, but such was not found.");
         }
 
         [Fact]
@@ -663,7 +663,7 @@
                             new HttpNotAcceptableOutputFormatter()
                         });
                 },
-                "When calling FullHttpBadRequestAction action in MvcController expected HTTP bad request result output formatters to contain formatter of HttpNotAcceptableOutputFormatter type, but none was found.");
+                "When calling FullHttpBadRequestAction action in MvcController expected bad request result output formatters to contain formatter of HttpNotAcceptableOutputFormatter type, but none was found.");
         }
 
         [Fact]
@@ -682,7 +682,7 @@
                             new JsonOutputFormatter()
                         });
                 },
-                "When calling FullHttpBadRequestAction action in MvcController expected HTTP bad request result output formatters to have 1 item, but instead found 2.");
+                "When calling FullHttpBadRequestAction action in MvcController expected bad request result output formatters to have 1 item, but instead found 2.");
         }
 
         [Fact]
@@ -703,7 +703,7 @@
                             new JsonOutputFormatter()
                         });
                 },
-                "When calling FullHttpBadRequestAction action in MvcController expected HTTP bad request result output formatters to have 3 items, but instead found 2.");
+                "When calling FullHttpBadRequestAction action in MvcController expected bad request result output formatters to have 3 items, but instead found 2.");
         }
 
         [Fact]

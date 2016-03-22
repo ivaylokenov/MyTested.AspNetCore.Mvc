@@ -1,17 +1,19 @@
 ﻿namespace MyTested.Mvc.Builders.Authentication
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Security.Claims;
-    using Contracts.Authentication;
     using System.Security.Principal;
-    using System;
+    using Contracts.Authentication;
 
     /// <summary>
     /// Used for building mocked claims principal.
     /// </summary>
     public class ClaimsPrincipalBuilder : BaseUserBuilder, IAndClaimsPrincipalBuilder
     {
+        private static readonly ClaimsPrincipal DefaultAuthenticatedClaimsPrinciple = new ClaimsPrincipal(CreateAuthenticatedClaimsIdentity());
+
         private ICollection<ClaimsIdentity> identities;
 
         public ClaimsPrincipalBuilder()
@@ -23,10 +25,7 @@
         /// Static constructor for creating default authenticated claims principal with "TestId" identifier and "TestUser" username.
         /// </summary>
         /// <returns>Authenticated claims principal.</returns>
-        public static ClaimsPrincipal CreateDefaultAuthenticated()
-        {
-            return new ClaimsPrincipal(CreateAuthenticatedClaimsIdentity());
-        }
+        public static ClaimsPrincipal DefaultAuthenticated => DefaultAuthenticatedClaimsPrinciple;
 
         public IAndClaimsPrincipalBuilder WithNameType(string nameType)
         {
@@ -60,6 +59,11 @@
         {
             this.AddUsername(username);
             return this;
+        }
+
+        public IAndClaimsPrincipalBuilder WithClaim(string type, string value)
+        {
+            return this.WithClaim(new Claim(type, value));
         }
 
         /// <summary>
@@ -168,10 +172,11 @@
         
         internal ClaimsPrincipal GetClaimsPrincipal()
         {
-            var claimsPrincipal = new ClaimsPrincipal(GetAuthenticatedClaimsIdentity());
+            var identities = this.identities.Reverse().ToList();
+            identities.Add(GetAuthenticatedClaimsIdentity());
 
-            claimsPrincipal.AddIdentities(this.identities.AsEnumerable());
-
+            var claimsPrincipal = new ClaimsPrincipal(identities);
+            
             return claimsPrincipal;
         }
     }

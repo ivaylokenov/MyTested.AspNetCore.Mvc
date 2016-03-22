@@ -2,5 +2,6 @@
 {
     public interface ISessionTestBuilder
     {
+        IAndSessionTestBuilder ContainingIntegerEntry(string key, int value);
     }
 }

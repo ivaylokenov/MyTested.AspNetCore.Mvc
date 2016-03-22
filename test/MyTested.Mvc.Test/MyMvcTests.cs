@@ -2,35 +2,40 @@
 
 [assembly: CollectionBehavior(DisableTestParallelization = true)]
 
-namespace MyTested.Mvc.Tests
+namespace MyTested.Mvc.Test
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using Exceptions;
+    using Internal;
     using Internal.Application;
+    using Internal.Caching;
+    using Internal.Contracts;
+    using Internal.Controllers;
+    using Internal.Formatters;
+    using Internal.Http;
+    using Internal.Routes;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Abstractions;
+    using Microsoft.AspNetCore.Mvc.Controllers;
     using Microsoft.AspNetCore.Mvc.Internal;
+    using Microsoft.AspNetCore.Routing;
+    using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.DependencyInjection.Extensions;
     using Microsoft.Extensions.Options;
     using Setups;
     using Setups.Common;
     using Setups.Controllers;
     using Setups.Services;
     using Setups.Startups;
-    using Microsoft.AspNetCore.Routing;
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Mvc.Abstractions;
-    using Internal.Contracts;
-    using Internal.Routes;
-    using Microsoft.Extensions.DependencyInjection.Extensions;
-    using Microsoft.AspNetCore.Http;
-    using Internal.Http;
-    using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Http.Internal;
-    using System.Collections.Generic;
-    using Microsoft.Extensions.Caching.Memory;
-    using Internal.Caching;
-    using Internal;
+    using Microsoft.AspNetCore.Session;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
     public class MyMvcTests
     {
         [Fact]
@@ -136,7 +141,7 @@ namespace MyTested.Mvc.Tests
                     MyMvc.StartsFrom<MvcController>();
                     TestServiceProvider.GetService<IInjectedService>();
                 },
-                "A public method named 'ConfigureTests' or 'Configure' could not be found in the 'MyTested.Mvc.Tests.Setups.Controllers.MvcController' type.");
+                "A public method named 'ConfigureTest' or 'Configure' could not be found in the 'MyTested.Mvc.Test.Setups.Controllers.MvcController' type.");
         }
 
         [Fact]
@@ -213,7 +218,8 @@ namespace MyTested.Mvc.Tests
         [Fact]
         public void ControllerWithNoParameterlessConstructorAndWithRegisteredServicesShouldPopulateCorrectInstanceOfControllerType()
         {
-            MyMvc.IsUsingDefaultConfiguration()
+            MyMvc
+                .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
                     services.AddTransient<IInjectedService, InjectedService>();
@@ -472,6 +478,28 @@ namespace MyTested.Mvc.Tests
 
             MyMvc.IsUsingDefaultConfiguration();
         }
+        
+        [Fact]
+        public void CustomConfigureOptionsShouldNotOverrideTheDefaultTestOnes()
+        {
+            MyMvc
+                .IsUsingDefaultConfiguration()
+                .WithServices(services =>
+                {
+                    services.Configure<MvcOptions>(options =>
+                    {
+                        options.MaxModelValidationErrors = 120;
+                    });
+                });
+
+            var builtOptions = TestApplication.Services.GetRequiredService<IOptions<MvcOptions>>();
+
+            Assert.Equal(120, builtOptions.Value.MaxModelValidationErrors);
+            Assert.Contains(typeof(StringInputFormatter), builtOptions.Value.InputFormatters.Select(f => f.GetType()));
+            Assert.Equal(1, builtOptions.Value.Conventions.Count);
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
 
         [Fact]
         public void WithoutHttpContextFactoryTheDefaultMockedHttpContextShouldBeProvided()
@@ -523,9 +551,9 @@ namespace MyTested.Mvc.Tests
                 .WithServices(services =>
                 {
                     services.TryReplaceTransient<IHttpContextFactory, CustomHttpContextFactory>();
-                    services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+                    services.AddHttpContextAccessor();
                 });
-            
+
             HttpContext firstContext = null;
             HttpContext secondContext = null;
 
@@ -544,7 +572,7 @@ namespace MyTested.Mvc.Tests
             Assert.NotSame(firstContext, secondContext);
             Assert.Equal(ContentType.AudioVorbis, firstContext.Request.ContentType);
             Assert.Equal(ContentType.AudioVorbis, secondContext.Request.ContentType);
-            
+
             MyMvc.IsUsingDefaultConfiguration();
         }
 
@@ -556,7 +584,7 @@ namespace MyTested.Mvc.Tests
                 .WithServices(services =>
                 {
                     services.TryReplaceTransient<IHttpContextFactory, CustomHttpContextFactory>();
-                    services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+                    services.AddHttpContextAccessor();
                 });
 
             Task
@@ -633,6 +661,218 @@ namespace MyTested.Mvc.Tests
         }
 
         [Fact]
+        public void WithCustomHttpContextShouldSetItToAccessor()
+        {
+            MyMvc
+                .IsUsingDefaultConfiguration()
+                .WithServices(services =>
+                {
+                    services.AddHttpContextAccessor();
+                });
+
+            var httpContext = new DefaultHttpContext();
+            httpContext.Request.ContentType = ContentType.AudioVorbis;
+
+            var controller = MyMvc
+                .Controller<HttpContextController>()
+                .WithHttpContext(httpContext)
+                .AndProvideTheController();
+
+            Assert.NotNull(controller);
+            Assert.NotNull(controller.HttpContext);
+            Assert.NotNull(controller.Context);
+            Assert.Equal(ContentType.AudioVorbis, controller.HttpContext.Request.ContentType);
+            Assert.Equal(ContentType.AudioVorbis, controller.Context.Request.ContentType);
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void IActionContextAccessorShouldWorkCorrectlySynchronously()
+        {
+            MyMvc
+                .IsUsingDefaultConfiguration()
+                .WithServices(services =>
+                {
+                    services.AddActionContextAccessor();
+                });
+
+            ActionContext firstContext = null;
+            ActionContext secondContext = null;
+
+            firstContext = MyMvc
+                            .Controller<ActionContextController>()
+                            .AndProvideTheController().Context;
+
+            secondContext = MyMvc
+                            .Controller<ActionContextController>()
+                            .AndProvideTheController().Context;
+
+            Assert.NotNull(firstContext);
+            Assert.NotNull(secondContext);
+            Assert.IsAssignableFrom<MockedControllerContext>(firstContext);
+            Assert.IsAssignableFrom<MockedControllerContext>(secondContext);
+            Assert.NotSame(firstContext, secondContext);
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void IActionContextAccessorShouldWorkCorrectlyAsynchronously()
+        {
+            MyMvc
+                .IsUsingDefaultConfiguration()
+                .WithServices(services =>
+                {
+                    services.AddActionContextAccessor();
+                });
+
+            Task
+                .Run(async () =>
+                {
+                    ActionContext firstContextAsync = null;
+                    ActionContext secondContextAsync = null;
+                    ActionContext thirdContextAsync = null;
+                    ActionContext fourthContextAsync = null;
+                    ActionContext fifthContextAsync = null;
+
+                    var tasks = new List<Task>
+                    {
+                        Task.Run(() =>
+                        {
+                            firstContextAsync = MyMvc
+                                .Controller<ActionContextController>()
+                                .AndProvideTheController().Context;
+                        }),
+                        Task.Run(() =>
+                        {
+                            secondContextAsync = MyMvc
+                                .Controller<ActionContextController>()
+                                .AndProvideTheController().Context;
+                        }),
+                        Task.Run(() =>
+                        {
+                            thirdContextAsync = MyMvc
+                                .Controller<ActionContextController>()
+                                .AndProvideTheController().Context;
+                        }),
+                        Task.Run(() =>
+                        {
+                            fourthContextAsync = MyMvc
+                                .Controller<ActionContextController>()
+                                .AndProvideTheController().Context;
+                        }),
+                        Task.Run(() =>
+                        {
+                            fifthContextAsync = MyMvc
+                                .Controller<ActionContextController>()
+                                .AndProvideTheController().Context;
+                        })
+                    };
+
+                    await Task.WhenAll(tasks);
+
+                    Assert.NotNull(firstContextAsync);
+                    Assert.NotNull(secondContextAsync);
+                    Assert.NotNull(thirdContextAsync);
+                    Assert.NotNull(fourthContextAsync);
+                    Assert.NotNull(fifthContextAsync);
+                    Assert.IsAssignableFrom<MockedControllerContext>(firstContextAsync);
+                    Assert.IsAssignableFrom<MockedControllerContext>(secondContextAsync);
+                    Assert.IsAssignableFrom<MockedControllerContext>(thirdContextAsync);
+                    Assert.IsAssignableFrom<MockedControllerContext>(fourthContextAsync);
+                    Assert.IsAssignableFrom<MockedControllerContext>(fifthContextAsync);
+                    Assert.NotSame(firstContextAsync, secondContextAsync);
+                    Assert.NotSame(firstContextAsync, thirdContextAsync);
+                    Assert.NotSame(secondContextAsync, thirdContextAsync);
+                    Assert.NotSame(thirdContextAsync, fourthContextAsync);
+                    Assert.NotSame(fourthContextAsync, fifthContextAsync);
+                    Assert.NotSame(thirdContextAsync, fifthContextAsync);
+                })
+                .GetAwaiter()
+                .GetResult();
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void WithCustomActionContextShouldSetItToAccessor()
+        {
+            MyMvc
+                .IsUsingDefaultConfiguration()
+                .WithServices(services =>
+                {
+                    services.AddActionContextAccessor();
+                });
+
+            var actionDescriptor = new ControllerActionDescriptor { Name = "Test" };
+            var actionContext = new ActionContext { ActionDescriptor = actionDescriptor };
+
+            var controller = MyMvc
+                .Controller<ActionContextController>()
+                .WithActionContext(actionContext)
+                .AndProvideTheController();
+
+            Assert.NotNull(controller);
+            Assert.NotNull(controller.Context);
+            Assert.Equal("Test", controller.Context.ActionDescriptor.Name);
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+        
+        [Fact]
+        public void WithCustomActionContextFuncShouldSetItToAccessor()
+        {
+            MyMvc
+                .IsUsingDefaultConfiguration()
+                .WithServices(services =>
+                {
+                    services.AddActionContextAccessor();
+                });
+
+            var actionDescriptor = new ControllerActionDescriptor { Name = "Test" };
+
+            var controller = MyMvc
+                .Controller<ActionContextController>()
+                .WithActionContext(actionContext =>
+                {
+                    actionContext.ActionDescriptor = actionDescriptor;
+                })
+                .AndProvideTheController();
+
+            Assert.NotNull(controller);
+            Assert.NotNull(controller.Context);
+            Assert.Equal("Test", controller.Context.ActionDescriptor.Name);
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void WithCustomControllerContextShouldSetItToAccessor()
+        {
+            MyMvc
+                .IsUsingDefaultConfiguration()
+                .WithServices(services =>
+                {
+                    services.AddActionContextAccessor();
+                });
+
+            var actionDescriptor = new ControllerActionDescriptor { Name = "Test" };
+            var actionContext = new ControllerContext { ActionDescriptor = actionDescriptor };
+
+            var controller = MyMvc
+                .Controller<ActionContextController>()
+                .WithControllerContext(actionContext)
+                .AndProvideTheController();
+
+            Assert.NotNull(controller);
+            Assert.NotNull(controller.Context);
+            Assert.Equal("Test", controller.Context.ActionDescriptor.Name);
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
         public void MockedMemoryCacheShouldBeRegistedByDefault()
         {
             MyMvc.IsUsingDefaultConfiguration();
@@ -644,9 +884,22 @@ namespace MyTested.Mvc.Tests
         public void MockedMemoryCacheShouldBeRegistedWithAddedCaching()
         {
             MyMvc.IsUsingDefaultConfiguration()
-                .WithServices(services => services.AddCaching());
+                .WithServices(services => services.AddMemoryCache());
 
             Assert.IsAssignableFrom<MockedMemoryCache>(TestServiceProvider.GetService<IMemoryCache>());
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void MockedMemoryCacheShouldNotBeRegisteredIfNoCacheIsAdded()
+        {
+            MyMvc.IsUsingDefaultConfiguration()
+                .WithServices(services => services.TryRemoveSingleton<IMemoryCache>());
+
+            Assert.Null(TestServiceProvider.GetService<IMemoryCache>());
+
+            MyMvc.IsUsingDefaultConfiguration();
         }
 
         [Fact]
@@ -684,7 +937,7 @@ namespace MyTested.Mvc.Tests
                 .ShouldReturn()
                 .BadRequest();
         }
-        
+
         [Fact]
         public void MockedMemoryCacheShouldBeDifferentForEveryCallAsynchronously()
         {
@@ -748,6 +1001,151 @@ namespace MyTested.Mvc.Tests
                 })
                 .GetAwaiter()
                 .GetResult();
+        }
+
+        [Fact]
+        public void DefaultConfigurationShouldSetMockedMemoryCache()
+        {
+            MyMvc.IsUsingDefaultConfiguration();
+
+            var memoryCache = TestServiceProvider.GetService<IMemoryCache>();
+
+            Assert.NotNull(memoryCache);
+            Assert.IsAssignableFrom<MockedMemoryCache>(memoryCache);
+        }
+
+        [Fact]
+        public void CustomMemoryCacheShouldOverrideTheMockedOne()
+        {
+            MyMvc.StartsFrom<DataStartup>();
+            
+            var memoryCache = TestServiceProvider.GetService<IMemoryCache>();
+
+            Assert.NotNull(memoryCache);
+            Assert.IsAssignableFrom<CustomMemoryCache>(memoryCache);
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+        
+        [Fact]
+        public void ExplicitMockedMemoryCacheShouldOverrideIt()
+        {
+            MyMvc
+                .StartsFrom<DataStartup>()
+                .WithServices(services =>
+                {
+                    services.ReplaceMemoryCache();
+                });
+
+            var memoryCache = TestServiceProvider.GetService<IMemoryCache>();
+
+            Assert.NotNull(memoryCache);
+            Assert.IsAssignableFrom<MockedMemoryCache>(memoryCache);
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+        
+        [Fact]
+        public void DefaultConfigurationShouldSetMockedSession()
+        {
+            MyMvc.IsUsingDefaultConfiguration();
+
+            var session = TestServiceProvider.GetService<ISessionStore>();
+
+            Assert.Null(session);
+        }
+
+        [Fact]
+        public void DefaultConfigurationWithSessionShouldSetMockedSession()
+        {
+            MyMvc
+                .IsUsingDefaultConfiguration()
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
+                    services.AddSession();
+                });
+
+            var session = TestServiceProvider.GetService<ISessionStore>();
+
+            Assert.NotNull(session);
+            Assert.IsAssignableFrom<MockedSessionStore>(session);
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void CustomSessionShouldOverrideTheMockedOne()
+        {
+            MyMvc.StartsFrom<DataStartup>();
+
+            var session = TestServiceProvider.GetService<ISessionStore>();
+
+            Assert.NotNull(session);
+            Assert.IsAssignableFrom<CustomSessionStore>(session);
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void ExplicitMockedSessionShouldOverrideIt()
+        {
+            MyMvc
+                .StartsFrom<DataStartup>()
+                .WithServices(services =>
+                {
+                    services.ReplaceSession();
+                });
+
+            var session = TestServiceProvider.GetService<ISessionStore>();
+
+            Assert.NotNull(session);
+            Assert.IsAssignableFrom<MockedSessionStore>(session);
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void DefaultConfigurationShouldSetMockedTempDataProvider()
+        {
+            MyMvc.IsUsingDefaultConfiguration();
+
+            var tempDataProvider = TestServiceProvider.GetService<ITempDataProvider>();
+
+            Assert.NotNull(tempDataProvider);
+            Assert.IsAssignableFrom<MockedTempDataProvider>(tempDataProvider);
+        }
+
+        [Fact]
+        public void CustomTempDataProviderShouldOverrideTheMockedOne()
+        {
+            MyMvc.StartsFrom<DataStartup>();
+
+            var tempDataProvider = TestServiceProvider.GetService<ITempDataProvider>();
+
+            Assert.NotNull(tempDataProvider);
+            Assert.IsAssignableFrom<CustomTempDataProvider>(tempDataProvider);
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void ExplicitMockedTempDataProviderShouldOverrideIt()
+        {
+            MyMvc
+                .StartsFrom<DataStartup>()
+                .WithServices(services =>
+                {
+                    services.ReplaceTempDataProvider();
+                });
+
+            var tempDataProvider = TestServiceProvider.GetService<ITempDataProvider>();
+
+            Assert.NotNull(tempDataProvider);
+            Assert.IsAssignableFrom<MockedTempDataProvider>(tempDataProvider);
+
+            MyMvc.IsUsingDefaultConfiguration();
         }
     }
 }

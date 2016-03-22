@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Tests.BuildersTests.ActionResultsTests.ContentTests
+﻿namespace MyTested.Mvc.Test.BuildersTests.ActionResultsTests.ContentTests
 {
     using System.Net;
     using Exceptions;

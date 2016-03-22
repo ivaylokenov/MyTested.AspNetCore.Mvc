@@ -3,9 +3,9 @@
     using System;
     using Contracts.Models;
     using Exceptions;
-    using Utilities.Extensions;
-    using Utilities;
     using Internal.TestContexts;
+    using Utilities;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Used for testing the response model members.
@@ -47,10 +47,10 @@
             if (!predicate(this.Model))
             {
                 throw new ResponseModelAssertionException(string.Format(
-                            "When calling {0} action in {1} expected response model {2} to pass the given condition, but it failed.",
-                            this.ActionName,
-                            this.Controller.GetName(),
-                            typeof(TResponseModel).ToFriendlyTypeName()));
+                    "When calling {0} action in {1} expected response model {2} to pass the given condition, but it failed.",
+                    this.ActionName,
+                    this.Controller.GetName(),
+                    typeof(TResponseModel).ToFriendlyTypeName()));
             }
 
             return new ModelErrorTestBuilder<TResponseModel>(this.TestContext);

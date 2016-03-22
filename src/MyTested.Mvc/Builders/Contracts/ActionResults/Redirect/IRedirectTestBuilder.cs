@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
+    using System.Threading.Tasks;
     using Base;
     using Microsoft.AspNetCore.Mvc;
     using Uris;
@@ -24,6 +25,20 @@
         /// <param name="location">Expected location as string.</param>
         /// <returns>The same redirect test builder.</returns>
         IAndRedirectTestBuilder ToUrl(string location);
+        
+        /// <summary>
+        /// Tests whether redirect result location passes given assertions.
+        /// </summary>
+        /// <param name="assertions">Action containing all assertions on the location.</param>
+        /// <returns>The same redirect test builder.</returns>
+        IAndRedirectTestBuilder ToUrlPassing(Action<string> assertions);
+
+        /// <summary>
+        /// Tests whether redirect result location passes given predicate.
+        /// </summary>
+        /// <param name="predicate">Predicate testing the location.</param>
+        /// <returns>The same redirect test builder.</returns>
+        IAndRedirectTestBuilder ToUrlPassing(Func<string, bool> predicate);
 
         /// <summary>
         /// Tests whether redirect result has specific location provided by URI.
@@ -65,8 +80,14 @@
         /// </summary>
         /// <param name="key">Expected route key.</param>
         /// <returns>The same redirect test builder.</returns>
-        IAndRedirectTestBuilder ContainingRouteValue(string key);
+        IAndRedirectTestBuilder ContainingRouteKey(string key);
         
+        IAndRedirectTestBuilder ContainingRouteValue<TRouteValue>(TRouteValue value);
+
+        IAndRedirectTestBuilder ContainingRouteValueOfType<TRouteValue>();
+
+        IAndRedirectTestBuilder ContainingRouteValueOfType<TRouteValue>(string key);
+
         /// <summary>
         /// Tests whether redirect result contains specific route key and value.
         /// </summary>
@@ -110,6 +131,10 @@
         /// <typeparam name="TController">Type of expected redirect controller.</typeparam>
         /// <param name="actionCall">Method call expression indicating the expected redirect action.</param>
         /// <returns>The same redirect test builder.</returns>
-        IAndRedirectTestBuilder To<TController>(Expression<Action<TController>> actionCall);
+        IAndRedirectTestBuilder To<TController>(Expression<Action<TController>> actionCall)
+            where TController : class;
+
+        IAndRedirectTestBuilder To<TController>(Expression<Func<TController, Task>> actionCall)
+            where TController : class;
     }
 }

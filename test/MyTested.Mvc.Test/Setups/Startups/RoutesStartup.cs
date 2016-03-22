@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Tests.Setups.Startups
+﻿namespace MyTested.Mvc.Test.Setups.Startups
 {
     using Microsoft.AspNetCore.Builder;
     using Microsoft.Extensions.DependencyInjection;

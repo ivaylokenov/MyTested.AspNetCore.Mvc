@@ -1,9 +1,9 @@
 ﻿namespace MyTested.Mvc.Builders.Data
 {
+    using System.Collections.Generic;
     using Contracts.Data;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Routing;
-    using System.Collections.Generic;
 
     public class TempDataTestBuilder : BaseDataProviderTestBuilder, IAndTempDataTestBuilder
     {

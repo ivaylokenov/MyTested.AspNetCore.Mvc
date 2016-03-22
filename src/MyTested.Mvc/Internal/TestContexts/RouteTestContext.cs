@@ -17,11 +17,13 @@
             {
                 if (this.routeContext == null)
                 {
-                    routeContext = new RouteContext(this.HttpContext);
+                    this.routeContext = new RouteContext(this.HttpContext);
                 }
 
-                return routeContext;
+                return this.routeContext;
             }
         }
+
+        public override string ExceptionMessagePrefix => $"Expected route '{this.HttpContext.Request.Path}'";
     }
 }

@@ -2,5 +2,6 @@
 {
     public interface ITempDataTestBuilder
     {
+        IAndTempDataTestBuilder ContainingEntry(string key, object value);
     }
 }

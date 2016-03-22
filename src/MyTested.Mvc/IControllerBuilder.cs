@@ -11,18 +11,27 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Builders.Contracts.Data;
+
     /// <summary>
     /// Used for building the controller which will be tested.
     /// </summary>
-    /// <typeparam name="TController">Class inheriting ASP.NET MVC controller.</typeparam>
+    /// <typeparam name="TController">Class representing ASP.NET MVC controller.</typeparam>
     public interface IControllerBuilder<TController>
-        where TController : Controller
+        where TController : class
     {
         /// <summary>
         /// Used for testing controller attributes.
         /// </summary>
         /// <returns>Controller test builder.</returns>
         IControllerTestBuilder ShouldHave();
+        
+        IAndControllerBuilder<TController> WithControllerContext(ControllerContext controllerContext);
+
+        IAndControllerBuilder<TController> WithControllerContext(Action<ControllerContext> controllerContextSetup);
+        
+        IAndControllerBuilder<TController> WithActionContext(ActionContext actionContext);
+
+        IAndControllerBuilder<TController> WithActionContext(Action<ActionContext> actionContextSetup);
 
         /// <summary>
         /// Sets the HTTP context for the current test case.
@@ -30,6 +39,8 @@
         /// <param name="httpContext">Instance of HttpContext.</param>
         /// <returns>The same controller builder.</returns>
         IAndControllerBuilder<TController> WithHttpContext(HttpContext httpContext);
+
+        IAndControllerBuilder<TController> WithHttpContext(Action<HttpContext> httpContextSetup);
 
         /// <summary>
         /// Adds HTTP request message to the tested controller.
@@ -51,13 +62,19 @@
 
         IAndControllerBuilder<TController> WithMemoryCache(Action<IMemoryCacheBuilder> memoryCacheBuilder);
 
+        IAndControllerBuilder<TController> WithSession(Action<ISessionBuilder> sessionBuilder);
+
+        IAndControllerBuilder<TController> WithNoResolvedDependencyFor<TDependency>()
+            where TDependency : class;
+
         /// <summary>
         /// Tries to resolve constructor dependency of given type.
         /// </summary>
         /// <typeparam name="TDependency">Type of dependency to resolve.</typeparam>
         /// <param name="dependency">Instance of dependency to inject into constructor.</param>
         /// <returns>The same controller builder.</returns>
-        IAndControllerBuilder<TController> WithResolvedDependencyFor<TDependency>(TDependency dependency);
+        IAndControllerBuilder<TController> WithResolvedDependencyFor<TDependency>(TDependency dependency)
+            where TDependency : class;
 
         /// <summary>
         /// Tries to resolve constructor dependencies by the provided collection of dependencies.

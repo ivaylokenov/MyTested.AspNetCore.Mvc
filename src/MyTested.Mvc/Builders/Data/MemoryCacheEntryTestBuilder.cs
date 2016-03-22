@@ -1,16 +1,15 @@
 ﻿namespace MyTested.Mvc.Builders.Data
 {
-    using Contracts.Data;
-    using Internal.Caching;
-    using Internal.TestContexts;
     using System;
     using System.Collections.Generic;
-    using Utilities;
-    using Microsoft.Extensions.Caching.Memory;
+    using Contracts.Data;
     using Exceptions;
+    using Internal.Contracts;
+    using Internal.TestContexts;
+    using Microsoft.Extensions.Caching.Memory;
+    using Utilities;
     using Utilities.Extensions;
     using Utilities.Validators;
-    using Internal.Contracts;
 
     public class MemoryCacheEntryTestBuilder : MemoryCacheEntryBuilder, IAndMemoryCacheEntryTestBuilder
     {
@@ -86,8 +85,8 @@
                 if (expected.Options.Priority != actual.Options.Priority)
                 {
                     this.ThrowNewDataProviderAssertionException(
-                        $"to have entry with {expectedPriority.GetErrorMessageName()} priority",
-                        $"in fact found {actualPriority.GetErrorMessageName()}");
+                        $"to have entry with {expectedPriority.GetErrorMessageName(includeQuotes: false)} priority",
+                        $"in fact found {actualPriority.GetErrorMessageName(includeQuotes: false)}");
                 }
             });
 

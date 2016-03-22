@@ -1,16 +1,16 @@
 ﻿namespace MyTested.Mvc.Builders.Data
 {
+    using System.Collections.Generic;
     using Contracts.Data;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Routing;
-    using System.Collections.Generic;
 
     public class ViewDataTestBuilder : BaseDataProviderTestBuilder, IAndViewDataTestBuilder
     {
         internal const string ViewDataName = "view data";
-        
+
         public ViewDataTestBuilder(ControllerTestContext testContext)
-            :base(testContext, ViewDataName)
+            : base(testContext, ViewDataName)
         {
         }
 
@@ -31,7 +31,7 @@
             this.ValidateContainingEntryOfType<TEntry>();
             return this;
         }
-        
+
         public IAndViewDataTestBuilder ContainingEntryOfType<TEntry>(string key)
         {
             this.ValidateContainingEntryOfType<TEntry>(key);

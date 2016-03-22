@@ -7,9 +7,9 @@
     using Contracts.Base;
     using Contracts.Controllers;
     using Exceptions;
+    using Internal.TestContexts;
     using Utilities.Extensions;
     using Utilities.Validators;
-    using Internal.TestContexts;
 
     /// <summary>
     /// Used for testing controllers.

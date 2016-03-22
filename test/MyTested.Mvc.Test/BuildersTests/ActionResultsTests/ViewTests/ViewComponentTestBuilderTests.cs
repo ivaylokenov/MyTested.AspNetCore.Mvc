@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Tests.BuildersTests.ActionResultsTests.ViewTests
+﻿namespace MyTested.Mvc.Test.BuildersTests.ActionResultsTests.ViewTests
 {
     using System.Collections.Generic;
     using System.Net;
@@ -236,7 +236,18 @@
                 .Calling(c => c.ViewComponentResultByType())
                 .ShouldReturn()
                 .ViewComponent()
-                .ContainingArgument("model");
+                .ContainingArgumentWithName("model");
+        }
+
+        [Fact]
+        public void WithArgumentOfTypeAndNameShouldNotThrowExceptionWithCorrectArgumentName()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.ViewComponentResultByType())
+                .ShouldReturn()
+                .ViewComponent()
+                .ContainingArgumentOfType<List<ResponseModel>>("model");
         }
 
         [Fact]
@@ -250,7 +261,7 @@
                         .Calling(c => c.ViewComponentResultByType())
                         .ShouldReturn()
                         .ViewComponent()
-                        .ContainingArgument("id");
+                        .ContainingArgumentWithName("id");
                 },
                 "When calling ViewComponentResultByType action in MvcController expected view component result arguments to have entry with key 'id', but such was not found.");
         }
@@ -298,6 +309,19 @@
                 .ShouldReturn()
                 .ViewComponent()
                 .ContainingArgument(responseModels);
+        }
+
+        [Fact]
+        public void WithArgumentShouldNotThrowExceptionWithCorrectArgumentAndName()
+        {
+            var responseModels = TestObjectFactory.GetListOfResponseModels();
+
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.ViewComponentResultByType())
+                .ShouldReturn()
+                .ViewComponent()
+                .ContainingArgument("model", responseModels);
         }
 
         [Fact]

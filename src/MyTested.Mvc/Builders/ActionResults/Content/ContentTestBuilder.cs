@@ -4,11 +4,11 @@
     using Base;
     using Contracts.ActionResults.Content;
     using Exceptions;
-    using Utilities.Extensions;
+    using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Net.Http.Headers;
+    using Utilities.Extensions;
     using Utilities.Validators;
-    using Internal.TestContexts;
 
     /// <summary>
     /// Used for testing content result.
@@ -83,12 +83,12 @@
         private void ThrowNewContentResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new ContentResultAssertionException(string.Format(
-                    "When calling {0} action in {1} expected content result {2} {3}, but {4}.",
-                    this.ActionName,
-                    this.Controller.GetName(),
-                    propertyName,
-                    expectedValue,
-                    actualValue));
+                "When calling {0} action in {1} expected content result {2} {3}, but {4}.",
+                this.ActionName,
+                this.Controller.GetName(),
+                propertyName,
+                expectedValue,
+                actualValue));
         }
     }
 }

@@ -2,12 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
-    using Utilities.Extensions;
-    using Microsoft.AspNetCore.Mvc;
-    using Internal.Application;
-    using Microsoft.AspNetCore.Mvc.Routing;
+    using System.Linq;
     using System.Linq.Expressions;
+    using Internal.Application;
     using Internal.TestContexts;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Routing;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Validator class containing validation logic action results with route specific information.
@@ -186,7 +187,7 @@
                     failedValidationAction);
             });
         }
-            
+
         /// <summary>
         /// Validates whether RouteValues contains the same route entries as the provided ones from action result containing such property.
         /// </summary>
@@ -196,6 +197,7 @@
         public static void ValidateRouteValues(
             dynamic actionResult,
             IDictionary<string, object> routeValues,
+            bool includeCountCheck,
             Action<string, string, string> failedValidationAction)
         {
             RuntimeBinderValidator.ValidateBinding(() =>
@@ -206,7 +208,8 @@
                     RouteValuesName,
                     actualRouteValues,
                     routeValues,
-                    failedValidationAction);
+                    failedValidationAction,
+                    includeCountCheck);
             });
         }
 
@@ -265,6 +268,10 @@
             Action<string, string, string> failedValidationAction)
         {
             var actionContext = controllerTestContext.ControllerContext;
+            if (!actionContext.RouteData.Routers.Any())
+            {
+                actionContext.RouteData.Routers.Add(TestApplication.Router);
+            }
 
             var urlHelper = linkGenerationTestContext.UrlHelper ?? TestServiceProvider
                 .GetRequiredService<IUrlHelperFactory>()

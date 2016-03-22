@@ -1,8 +1,8 @@
 ﻿namespace MyTested.Mvc.Utilities.Extensions
 {
+    using System;
     using Internal.Contracts;
     using Microsoft.Extensions.Caching.Memory;
-    using System;
 
     public static class MemoryCacheExtensions
     {

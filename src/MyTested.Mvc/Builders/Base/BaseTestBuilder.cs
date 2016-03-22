@@ -2,10 +2,9 @@
 {
     using System.Collections.Generic;
     using Contracts.Base;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
-    using Utilities.Validators;
     using Internal.TestContexts;
+    using Microsoft.AspNetCore.Http;
+    using Utilities.Validators;
 
     /// <summary>
     /// Base class for all test builder.
@@ -27,7 +26,7 @@
         /// Gets the controller on which the action will be tested.
         /// </summary>
         /// <value>Controller on which the action will be tested.</value>
-        internal Controller Controller => this.TestContext.ControllerAs<Controller>();
+        internal object Controller => this.TestContext.Controller;
 
         internal IEnumerable<object> ControllerLevelAttributes => this.TestContext.ControllerAttributes;
 
@@ -37,6 +36,7 @@
             {
                 return this.testContext;
             }
+
             private set
             {
                 CommonValidator.CheckForNullReference(value, nameof(TestContext));
@@ -49,19 +49,19 @@
         /// Gets the controller on which the action is tested.
         /// </summary>
         /// <returns>ASP.NET MVC controller on which the action is tested.</returns>
-        public Controller AndProvideTheController() => this.Controller;
+        public object AndProvideTheController() => this.Controller;
 
         /// <summary>
         /// Gets the HTTP request message with which the action will be tested.
         /// </summary>
         /// <returns>HttpRequest from the tested controller.</returns>
-        public HttpRequest AndProvideTheHttpRequest() => this.Controller.Request;
+        public HttpRequest AndProvideTheHttpRequest() => this.TestContext.HttpContext.Request;
 
         /// <summary>
         /// Gets the HTTP context with which the action will be tested.
         /// </summary>
         /// <returns>HttpContext from the tested controller.</returns>
-        public HttpContext AndProvideTheHttpContext() => this.Controller.HttpContext;
+        public HttpContext AndProvideTheHttpContext() => this.TestContext.HttpContext;
 
         /// <summary>
         /// Gets the attributes on the tested controller.

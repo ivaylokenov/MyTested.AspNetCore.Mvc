@@ -1,11 +1,12 @@
 ﻿namespace MyTested.Mvc.Internal.Routes
 {
-    using Utilities.Extensions;
-    using Microsoft.AspNetCore.Mvc.ModelBinding;
-    using Microsoft.AspNetCore.Routing;
     using System.Collections.Generic;
     using System.Reflection;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
+    using Microsoft.AspNetCore.Routing;
     using TestContexts;
+    using Utilities.Extensions;
+
     /// <summary>
     /// Contains information about a resolved route from the ASP.NET Web API internal pipeline.
     /// </summary>

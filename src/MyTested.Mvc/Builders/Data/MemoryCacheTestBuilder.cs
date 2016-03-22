@@ -1,5 +1,7 @@
 ﻿namespace MyTested.Mvc.Builders.Data
 {
+    using System;
+    using System.Collections.Generic;
     using Base;
     using Contracts.Data;
     using Exceptions;
@@ -7,8 +9,6 @@
     using Internal.TestContexts;
     using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.DependencyInjection;
-    using System;
-    using System.Collections.Generic;
     using Utilities;
     using Utilities.Extensions;
     using Utilities.Validators;
@@ -65,7 +65,7 @@
             {
                 this.ThrowNewDataProviderAssertionException(
                     MemoryCacheName,
-                    $"to have entry with the given key and of {expectedType.ToFriendlyTypeName()} type",
+                    $"to have entry with the given key and value of {expectedType.ToFriendlyTypeName()} type",
                     $"in fact found {actualType.ToFriendlyTypeName()}");
             }
 
@@ -88,10 +88,12 @@
 
         public IAndMemoryCacheTestBuilder ContainingEntry(object key, object value, MemoryCacheEntryOptions options)
         {
+            var mockedMemoryCache = this.GetMockedMemoryCache();
+
             this.ContainingEntry(key, value);
 
             IMockedMemoryCacheEntry cacheEntry;
-            this.GetMockedMemoryCache().TryGetCacheEntry(key, out cacheEntry);
+            mockedMemoryCache.TryGetCacheEntry(key, out cacheEntry);
             var actualOptions = cacheEntry.Options;
 
             if (Reflection.AreNotDeeplyEqual(options, actualOptions))
@@ -107,6 +109,8 @@
 
         public IAndMemoryCacheTestBuilder ContainingEntry(Action<IMemoryCacheEntryTestBuilder> memoryCacheEntryTestBuilder)
         {
+            var mockedMemoryCache = this.GetMockedMemoryCache();
+
             var newMemoryCacheEntryBuilder = new MemoryCacheEntryTestBuilder(this.TestContext);
             memoryCacheEntryTestBuilder(newMemoryCacheEntryBuilder);
             var expectedMemoryCacheEntry = newMemoryCacheEntryBuilder.GetMockedMemoryCacheEntry();
@@ -115,7 +119,7 @@
             this.ContainingEntryWithKey(key);
 
             IMockedMemoryCacheEntry actualMemoryCacheEntry;
-            this.GetMockedMemoryCache().TryGetCacheEntry(key, out actualMemoryCacheEntry);
+            mockedMemoryCache.TryGetCacheEntry(key, out actualMemoryCacheEntry);
 
             var validations = newMemoryCacheEntryBuilder.GetMockedMemoryCacheEntryValidations();
             validations.ForEach(v => v(expectedMemoryCacheEntry, actualMemoryCacheEntry));
@@ -125,6 +129,17 @@
 
         public IAndMemoryCacheTestBuilder ContainingEntries(IDictionary<object, object> entries)
         {
+            var expectedItems = entries.Count;
+            var actualItems = this.GetMemoryCacheAsDictionary().Count;
+
+            if (expectedItems != actualItems)
+            {
+                this.ThrowNewDataProviderAssertionException(
+                    MemoryCacheName,
+                    $"to have {expectedItems} {(expectedItems != 1 ? "entries" : "entry")}",
+                    $"in fact found {actualItems}");
+            }
+
             entries.ForEach(e => this.ContainingEntry(e.Key, e.Value));
             return this;
         }

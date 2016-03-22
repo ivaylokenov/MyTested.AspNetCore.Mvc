@@ -5,6 +5,7 @@
     using Internal.Application;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Routing;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
 
     /// <summary>
@@ -21,6 +22,12 @@
             TestApplication.StartupType = startupType;
         }
 
+        public IApplicationConfigurationBuilder WithTestConfiguration(Action<IConfigurationBuilder> config)
+        {
+            TestApplication.AdditionalConfiguration += config;
+            return this;
+        }
+
         /// <summary>
         /// Adds additional services to the tested application's services collection.
         /// </summary>
@@ -28,7 +35,7 @@
         /// <returns>The same application configuration builder.</returns>
         public IApplicationConfigurationBuilder WithServices(Action<IServiceCollection> services)
         {
-            TestApplication.AdditionalServices = services;
+            TestApplication.AdditionalServices += services;
             return this;
         }
 
@@ -39,7 +46,7 @@
         /// <returns>The same application configuration builder.</returns>
         public IApplicationConfigurationBuilder WithApplication(Action<IApplicationBuilder> app)
         {
-            TestApplication.AdditionalConfiguration = app;
+            TestApplication.AdditionalApplicationConfiguration += app;
             return this;
         }
 
@@ -50,7 +57,7 @@
         /// <returns>The same application configuration builder.</returns>
         public IApplicationConfigurationBuilder WithRoutes(Action<IRouteBuilder> routes)
         {
-            TestApplication.AdditionalRoutes = routes;
+            TestApplication.AdditionalRoutes += routes;
             return this;
         }
     }

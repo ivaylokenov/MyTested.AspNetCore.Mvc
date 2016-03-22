@@ -4,17 +4,17 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Text;
     using Contracts.Http;
     using Contracts.Uris;
     using Exceptions;
-    using Utilities.Extensions;
+    using Internal.Formatters;
     using Internal.Http;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Primitives;
     using Uris;
+    using Utilities.Extensions;
     using Utilities.Validators;
-    using System.Text;
-    using Internal.Formatters;
 
     /// <summary>
     /// Used for building HTTP request message.
@@ -165,6 +165,9 @@
             return this;
         }
 
+        public IAndHttpRequestBuilder WithCookies(object cookies)
+            => this.WithCookies(cookies.ToStringValueDictionary());
+
         /// <summary>
         /// Adds cookies to the built HTTP request.
         /// </summary>
@@ -226,6 +229,15 @@
         public IAndHttpRequestBuilder WithFormField(string name, StringValues values)
         {
             this.request.AddFormField(name, values);
+            return this;
+        }
+
+        public IAndHttpRequestBuilder WithFormFields(object formValues)
+            => this.WithFormFields(formValues.ToStringValueDictionary());
+
+        public IAndHttpRequestBuilder WithFormFields(IDictionary<string, string> formValues)
+        {
+            formValues.ForEach(h => this.WithFormField(h.Key, h.Value));
             return this;
         }
 
@@ -332,6 +344,15 @@
         public IAndHttpRequestBuilder WithHeader(string name, StringValues values)
         {
             this.request.Headers.Add(name, values);
+            return this;
+        }
+
+        public IAndHttpRequestBuilder WithHeaders(object headers)
+            => this.WithHeaders(headers.ToStringValueDictionary());
+
+        public IAndHttpRequestBuilder WithHeaders(IDictionary<string, string> headers)
+        {
+            headers.ForEach(h => this.WithHeader(h.Key, h.Value));
             return this;
         }
 
@@ -486,6 +507,15 @@
         public IAndHttpRequestBuilder WithQuery(string name, StringValues values)
         {
             this.request.AddQueryValue(name, values);
+            return this;
+        }
+
+        public IAndHttpRequestBuilder WithQuery(object query)
+            => this.WithQuery(query.ToStringValueDictionary());
+
+        public IAndHttpRequestBuilder WithQuery(IDictionary<string, string> query)
+        {
+            query.ForEach(h => this.WithQuery(h.Key, h.Value));
             return this;
         }
 

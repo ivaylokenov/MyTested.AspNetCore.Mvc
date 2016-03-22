@@ -1,10 +1,16 @@
 {
+  "title": "MyTested.Mvc",
+  "description": "MyTested.Mvc is a powerful unit testing library providing easy fluent interface to test the ASP.NET MVC Core framework.",
   "version": "1.0.0-beta",
-  "description": "MyTested.Mvc Class Library",
   "authors": [ "Ivaylo Kenov" ],
   "tags": [ "" ],
   "projectUrl": "",
   "licenseUrl": "",
+
+  "compilationOptions": {
+    "warningsAsErrors": true,
+    "xmlDoc": true
+  },
 
   "dependencies": {
     "Microsoft.AspNetCore.Mvc": "1.0.0-rc2-*",
@@ -13,6 +19,14 @@
   },
 
   "frameworks": {
-    "net451": { }
+    "netstandard1.5": { },
+    "net451": {
+      "frameworkAssemblies": {
+        "System.Collections": "",
+        "System.ComponentModel": "",
+        "System.Runtime": "",
+        "System.Threading.Tasks": ""
+      }
+    }
   }
 }

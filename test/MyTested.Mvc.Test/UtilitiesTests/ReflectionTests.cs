@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Tests.UtilitiesTests
+﻿namespace MyTested.Mvc.Test.UtilitiesTests
 {
     using System;
     using System.Collections.Generic;
@@ -415,6 +415,8 @@
             Assert.True(Reflection.AreDeeplyEqual("test", "test"));
             Assert.True(Reflection.AreDeeplyEqual('a', 'a'));
             Assert.True(Reflection.AreDeeplyEqual(1.1, 1.1));
+            Assert.True(Reflection.AreDeeplyEqual(1.0m, (decimal)1));
+            Assert.True(Reflection.AreDeeplyEqual(1L, (long)1));
             Assert.True(Reflection.AreDeeplyEqual(1.1m, 1.1m));
             Assert.True(Reflection.AreDeeplyEqual(true, true));
             Assert.True(Reflection.AreDeeplyEqual(new DateTime(2015, 10, 19), new DateTime(2015, 10, 19)));
@@ -435,6 +437,7 @@
             Assert.True(Reflection.AreDeeplyEqual(new object(), new object()));
             Assert.True(Reflection.AreDeeplyEqual((object)5, (object)5));
             Assert.True(Reflection.AreDeeplyEqual((object)5, 5));
+            Assert.True(Reflection.AreDeeplyEqual(new { Integer = 1, String = "Test", Nested = new byte[] { 1, 2, 3 } }, new { Integer = 1, String = "Test", Nested = new byte[] { 1, 2, 3 } }));
             Assert.True(Reflection.AreDeeplyEqual(new RequestModel { Integer = 1 }, new RequestModel { Integer = 1 }));
             Assert.True(Reflection.AreDeeplyEqual(new RequestModel { Integer = 1, NonRequiredString = "test" }, new RequestModel { Integer = 1, NonRequiredString = "test" }));
             Assert.True(Reflection.AreDeeplyEqual(new GenericComparableModel { Integer = 1, String = "test" }, new GenericComparableModel { Integer = 1, String = "another" }));
@@ -447,6 +450,7 @@
             Assert.False(Reflection.AreDeeplyEqual(true, new object()));
             Assert.False(Reflection.AreDeeplyEqual("test", new object()));
             Assert.False(Reflection.AreDeeplyEqual(new object(), true));
+            Assert.False(Reflection.AreDeeplyEqual(new { Integer = 1, String = "Test", Nested = new byte[] { 1, 2, 3 } }, new { Integer = 1, String = "Test", Nested = new byte[] { 1, 2, 4 } }));
             Assert.False(Reflection.AreDeeplyEqual(new RequestModel { Integer = 2 }, new RequestModel { Integer = 1 }));
             Assert.False(Reflection.AreDeeplyEqual(new object(), new RequestModel { Integer = 1 }));
             Assert.False(Reflection.AreDeeplyEqual(new RequestModel { Integer = 2 }, new object()));
@@ -897,6 +901,16 @@
             };
 
             Assert.False(Reflection.AreDeeplyEqual(firstDictionaryWithObject, secondDictionaryWithObject));
+        }
+
+        [Fact]
+        public void AreDeeplyEqualShouldWorkCorrectlyWithSameReferences()
+        {
+            var firstObject = new NestedModel { Integer = 1, String = "Text" };
+            var secondObject = new NestedModel { Integer = 1, String = "Text", Nested = firstObject };
+            firstObject.Nested = secondObject;
+
+            Assert.True(Reflection.AreDeeplyEqual(firstObject, secondObject));
         }
 
         [Fact]

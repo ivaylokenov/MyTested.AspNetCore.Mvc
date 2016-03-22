@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Tests.BuildersTests.ActionResultsTests.RedirectTests
+﻿namespace MyTested.Mvc.Test.BuildersTests.ActionResultsTests.RedirectTests
 {
     using System;
     using Exceptions;
@@ -6,8 +6,9 @@
     using Setups;
     using Setups.Common;
     using Setups.Controllers;
-    using Xunit;
     using Setups.Startups;
+    using Xunit;
+
     public class RedirectTestBuilderTests
     {
         [Fact]
@@ -38,7 +39,7 @@
         }
 
         [Fact]
-        public void AtLocationWithStringShouldNotThrowExceptionIfTheLocationIsCorrect()
+        public void ToUrlWithStringShouldNotThrowExceptionIfTheLocationIsCorrect()
         {
             MyMvc
                 .Controller<MvcController>()
@@ -49,7 +50,7 @@
         }
 
         [Fact]
-        public void AtLocationWithStringShouldThrowExceptionIfTheLocationIsIncorrect()
+        public void ToUrlWithStringShouldThrowExceptionIfTheLocationIsIncorrect()
         {
             Test.AssertException<RedirectResultAssertionException>(
                 () =>
@@ -65,7 +66,7 @@
         }
 
         [Fact]
-        public void AtLocationWithStringShouldThrowExceptionIfTheLocationIsNotValid()
+        public void ToUrlWithStringShouldThrowExceptionIfTheLocationIsNotValid()
         {
             Test.AssertException<RedirectResultAssertionException>(
                 () =>
@@ -81,7 +82,48 @@
         }
 
         [Fact]
-        public void AtLocationWithUriShouldNotThrowExceptionIfTheLocationIsCorrect()
+        public void ToUrlPassingShouldNotThrowExceptionWithValidaPredicate()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.RedirectActionWithUri())
+                .ShouldReturn()
+                .Redirect()
+                .ToUrlPassing(url => url.StartsWith("http://somehost.com/"));
+        }
+
+        [Fact]
+        public void ToUrlPassingShouldThrowExceptionWithInvalidaPredicate()
+        {
+            Test.AssertException<RedirectResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.RedirectActionWithUri())
+                        .ShouldReturn()
+                        .Redirect()
+                        .ToUrlPassing(url => url.StartsWith("http://other.com/"));
+                },
+                "When calling RedirectActionWithUri action in MvcController expected redirect result location ('http://somehost.com/someuri/1?query=Test') to pass the given predicate, but it failed.");
+        }
+
+        [Fact]
+        public void ToUrlPassingShouldNotThrowExceptionWithValidaAssertions()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.RedirectActionWithUri())
+                .ShouldReturn()
+                .Redirect()
+                .ToUrlPassing(url =>
+                {
+                    Assert.True(url.StartsWith("http://somehost.com/"));
+                });
+        }
+        
+        [Fact]
+        public void ToUrlWithUriShouldNotThrowExceptionIfTheLocationIsCorrect()
         {
             MyMvc
                 .Controller<MvcController>()
@@ -92,7 +134,7 @@
         }
 
         [Fact]
-        public void AtLocationWithUriShouldThrowExceptionIfTheLocationIsIncorrect()
+        public void ToUrlWithUriShouldThrowExceptionIfTheLocationIsIncorrect()
         {
             Test.AssertException<RedirectResultAssertionException>(
                 () =>
@@ -108,7 +150,7 @@
         }
 
         [Fact]
-        public void AtLocationWithBuilderShouldNotThrowExceptionIfTheLocationIsCorrect()
+        public void ToUrlWithBuilderShouldNotThrowExceptionIfTheLocationIsCorrect()
         {
             MyMvc
                 .Controller<MvcController>()
@@ -131,7 +173,7 @@
         }
 
         [Fact]
-        public void AtLocationWithBuilderShouldThrowExceptionIfTheLocationIsIncorrect()
+        public void ToUrlWithBuilderShouldThrowExceptionIfTheLocationIsIncorrect()
         {
             Test.AssertException<RedirectResultAssertionException>(
                 () =>
@@ -247,9 +289,42 @@
                 .Calling(c => c.RedirectToActionResult())
                 .ShouldReturn()
                 .Redirect()
-                .ContainingRouteValue("id");
+                .ContainingRouteKey("id");
+        }
+        
+        [Fact]
+        public void WithRouteValueWithValueShouldNotThrowExceptionWithCorrectRouteValue()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.RedirectToActionResult())
+                .ShouldReturn()
+                .Redirect()
+                .ContainingRouteValue(1);
         }
 
+        [Fact]
+        public void WithRouteValueOfTypeWithValueShouldNotThrowExceptionWithCorrectRouteValue()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.RedirectToActionResult())
+                .ShouldReturn()
+                .Redirect()
+                .ContainingRouteValueOfType<string>();
+        }
+
+        [Fact]
+        public void WithRouteValueOfTypeWithKeyWithValueShouldNotThrowExceptionWithCorrectRouteValue()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.RedirectToActionResult())
+                .ShouldReturn()
+                .Redirect()
+                .ContainingRouteValueOfType<int>("id");
+        }
+        
         [Fact]
         public void WithRouteValueShouldThrowExceptionWithIncorrectRouteValue()
         {
@@ -261,13 +336,13 @@
                         .Calling(c => c.RedirectToActionResult())
                         .ShouldReturn()
                         .Redirect()
-                        .ContainingRouteValue("incorrect");
+                        .ContainingRouteKey("incorrect");
                 },
                 "When calling RedirectToActionResult action in MvcController expected redirect result route values to have entry with key 'incorrect', but such was not found.");
         }
 
         [Fact]
-        public void WithRouteValueWithValueShouldNotThrowExceptionWithCorrectRouteValue()
+        public void WithRouteValueWithKeyAndValueShouldNotThrowExceptionWithCorrectRouteValue()
         {
             MyMvc
                 .Controller<MvcController>()
@@ -281,7 +356,7 @@
         public void WithRouteValueWithValueShouldThrowExceptionWithIncorrectRouteKey()
         {
             Test.AssertException<RedirectResultAssertionException>(
-(Action)(() =>
+                () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
@@ -289,7 +364,7 @@
                         .ShouldReturn()
                         .Redirect()
                         .ContainingRouteValue("incorrect", 1);
-                }),
+                },
                 "When calling RedirectToActionResult action in MvcController expected redirect result route values to have entry with 'incorrect' key and the provided value, but such was not found.");
         }
 
@@ -297,7 +372,7 @@
         public void WithRouteValueWithValueShouldThrowExceptionWithIncorrectRouteValue()
         {
             Test.AssertException<RedirectResultAssertionException>(
-(Action)(() =>
+                () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
@@ -305,7 +380,7 @@
                         .ShouldReturn()
                         .Redirect()
                         .ContainingRouteValue("id", 2);
-                }),
+                },
                 "When calling RedirectToActionResult action in MvcController expected redirect result route values to have entry with 'id' key and the provided value, but the value was different.");
         }
 
@@ -472,6 +547,26 @@
                 .ShouldReturn()
                 .Redirect()
                 .To<NoAttributesController>(c => c.VoidAction());
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void AtShouldWorkCorrectlyWithCorrectTaskActionCall()
+        {
+            MyMvc.StartsFrom<RoutesStartup>();
+
+            Test.AssertException<RedirectResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.RedirectToRouteAction())
+                        .ShouldReturn()
+                        .Redirect()
+                        .To<MvcController>(c => c.AsyncOkResultAction());
+                },
+                "When calling RedirectToRouteAction action in MvcController expected redirect result to have resolved location to '/api/test', but in fact received '/api/Redirect/WithParameter?id=1'.");
 
             MyMvc.IsUsingDefaultConfiguration();
         }

@@ -1,5 +1,10 @@
 ﻿namespace MyTested.Mvc.Internal.Formatters
 {
+    using System;
+    using System.Collections.Concurrent;
+    using System.IO;
+    using System.Linq;
+    using System.Text;
     using Application;
     using Http;
     using Microsoft.AspNetCore.Mvc;
@@ -7,11 +12,6 @@
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.Extensions.Options;
     using Microsoft.Extensions.Primitives;
-    using System;
-    using System.Collections.Concurrent;
-    using System.IO;
-    using System.Linq;
-    using System.Text;
     using Utilities;
     using Utilities.Extensions;
     using Utilities.Validators;

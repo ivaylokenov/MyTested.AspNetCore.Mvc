@@ -2,15 +2,16 @@
 {
     using System;
     using System.Net;
+    using ActionResults.BadRequest;
     using ActionResults.Challenge;
     using ActionResults.Content;
     using ActionResults.Created;
     using ActionResults.File;
     using ActionResults.Forbid;
-    using ActionResults.BadRequest;
-    using ActionResults.NotFound;
     using ActionResults.Json;
     using ActionResults.LocalRedirect;
+    using ActionResults.NotFound;
+    using ActionResults.Object;
     using ActionResults.Ok;
     using ActionResults.Redirect;
     using ActionResults.View;
@@ -75,6 +76,20 @@
         IContentTestBuilder Content(string content);
 
         /// <summary>
+        /// Tests whether content result passes given assertions.
+        /// </summary>
+        /// <param name="assertions">Action containing all assertions on the content.</param>
+        /// <returns>Content result test builder.</returns>
+        IContentTestBuilder Content(Action<string> assertions);
+
+        /// <summary>
+        /// Tests whether content result passes given predicate.
+        /// </summary>
+        /// <param name="predicate">Predicate testing the content.</param>
+        /// <returns>Content result test builder.</returns>
+        IContentTestBuilder Content(Func<string, bool> predicate);
+
+        /// <summary>
         /// Tests whether action result is CreatedResult, CreatedAtActionResult or CreatedAtRouteResult.
         /// </summary>
         /// <returns>Created test builder.</returns>
@@ -91,6 +106,8 @@
         /// </summary>
         /// <returns>Forbid test builder.</returns>
         IForbidTestBuilder Forbid();
+
+        IObjectTestBuilder Object();
 
         /// <summary>
         /// Tests whether action result is OkResult or OkObjectResult.

@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Tests.BuildersTests.ActionResultsTests.HttpNotFoundTests
+﻿namespace MyTested.Mvc.Test.BuildersTests.ActionResultsTests.HttpNotFoundTests
 {
     using System.Collections.Generic;
     using System.Net;

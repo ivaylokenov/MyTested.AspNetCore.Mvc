@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Tests.BuildersTests.ActionResultsTests.OkTests
+﻿namespace MyTested.Mvc.Test.BuildersTests.ActionResultsTests.OkTests
 {
     using System.Collections.Generic;
     using System.Net;
@@ -9,6 +9,7 @@
     using Setups;
     using Setups.Common;
     using Setups.Controllers;
+    using Setups.Models;
     using Xunit;
 
     public class OkTestBuilderTests
@@ -38,6 +39,17 @@
                         .WithNoResponseModel();
                 },
                 "When calling OkResultWithResponse action in MvcController expected to not have response model but in fact response model was found.");
+        }
+
+        [Fact]
+        public void WithResponseModelShouldWorkCorrectly()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.OkResultWithResponse())
+                .ShouldReturn()
+                .Ok()
+                .WithResponseModelOfType<List<ResponseModel>>();
         }
         
         [Fact]
@@ -75,7 +87,7 @@
                         .Ok()
                         .WithStatusCode(HttpStatusCode.OK);
                 },
-                "When calling FullOkAction action in MvcController expected ok result to have 200 (OK) status code, but instead received 201 (Created).");
+                "When calling FullOkAction action in MvcController expected OK result to have 200 (OK) status code, but instead received 201 (Created).");
         }
 
         [Fact]
@@ -113,7 +125,7 @@
                        .Ok()
                        .ContainingContentType(new MediaTypeHeaderValue(ContentType.ApplicationOctetStream));
                 },
-                "When calling FullOkAction action in MvcController expected ok result content types to contain application/octet-stream, but such was not found.");
+                "When calling FullOkAction action in MvcController expected OK result content types to contain application/octet-stream, but such was not found.");
         }
 
         [Fact]
@@ -159,7 +171,7 @@
                             ContentType.ApplicationXml
                         });
                 },
-                "When calling FullOkAction action in MvcController expected ok result content types to contain application/octet-stream, but none was found.");
+                "When calling FullOkAction action in MvcController expected OK result content types to contain application/octet-stream, but none was found.");
         }
 
         [Fact]
@@ -178,7 +190,7 @@
                             ContentType.ApplicationXml
                         });
                 },
-                "When calling FullOkAction action in MvcController expected ok result content types to have 1 item, but instead found 2.");
+                "When calling FullOkAction action in MvcController expected OK result content types to have 1 item, but instead found 2.");
         }
 
         [Fact]
@@ -199,7 +211,7 @@
                             ContentType.ApplicationZip
                         });
                 },
-                "When calling FullOkAction action in MvcController expected ok result content types to have 3 items, but instead found 2.");
+                "When calling FullOkAction action in MvcController expected OK result content types to have 3 items, but instead found 2.");
         }
 
         [Fact]
@@ -245,7 +257,7 @@
                             new MediaTypeHeaderValue(ContentType.ApplicationXml)
                         });
                 },
-                "When calling FullOkAction action in MvcController expected ok result content types to contain application/octet-stream, but none was found.");
+                "When calling FullOkAction action in MvcController expected OK result content types to contain application/octet-stream, but none was found.");
         }
 
         [Fact]
@@ -264,7 +276,7 @@
                             new MediaTypeHeaderValue(ContentType.ApplicationXml)
                         });
                 },
-                "When calling FullOkAction action in MvcController expected ok result content types to have 1 item, but instead found 2.");
+                "When calling FullOkAction action in MvcController expected OK result content types to have 1 item, but instead found 2.");
         }
 
         [Fact]
@@ -285,7 +297,7 @@
                             new MediaTypeHeaderValue(ContentType.ApplicationZip)
                         });
                 },
-                "When calling FullOkAction action in MvcController expected ok result content types to have 3 items, but instead found 2.");
+                "When calling FullOkAction action in MvcController expected OK result content types to have 3 items, but instead found 2.");
         }
 
         [Fact]
@@ -316,7 +328,7 @@
                         .Ok()
                         .ContainingOutputFormatter(new JsonOutputFormatter());
                 },
-                "When calling OkActionWithFormatter action in MvcController expected ok result output formatters to contain the provided formatter, but such was not found.");
+                "When calling OkActionWithFormatter action in MvcController expected OK result output formatters to contain the provided formatter, but such was not found.");
         }
 
         [Fact]
@@ -343,7 +355,7 @@
                         .Ok()
                         .ContainingOutputFormatterOfType<IOutputFormatter>();
                 },
-                "When calling FullOkAction action in MvcController expected ok result output formatters to contain formatter of IOutputFormatter type, but such was not found.");
+                "When calling FullOkAction action in MvcController expected OK result output formatters to contain formatter of IOutputFormatter type, but such was not found.");
         }
 
         [Fact]
@@ -389,7 +401,7 @@
                             new HttpNotAcceptableOutputFormatter()
                         });
                 },
-                "When calling FullOkAction action in MvcController expected ok result output formatters to contain formatter of HttpNotAcceptableOutputFormatter type, but none was found.");
+                "When calling FullOkAction action in MvcController expected OK result output formatters to contain formatter of HttpNotAcceptableOutputFormatter type, but none was found.");
         }
 
         [Fact]
@@ -408,7 +420,7 @@
                             new JsonOutputFormatter()
                         });
                 },
-                "When calling FullOkAction action in MvcController expected ok result output formatters to have 1 item, but instead found 2.");
+                "When calling FullOkAction action in MvcController expected OK result output formatters to have 1 item, but instead found 2.");
         }
 
         [Fact]
@@ -429,7 +441,7 @@
                             new JsonOutputFormatter()
                         });
                 },
-                "When calling FullOkAction action in MvcController expected ok result output formatters to have 3 items, but instead found 2.");
+                "When calling FullOkAction action in MvcController expected OK result output formatters to have 3 items, but instead found 2.");
         }
 
         [Fact]

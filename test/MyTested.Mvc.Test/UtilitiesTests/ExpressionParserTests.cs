@@ -1,10 +1,10 @@
-﻿namespace MyTested.Mvc.Tests.UtilitiesTests
+﻿namespace MyTested.Mvc.Test.UtilitiesTests
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
-    using Internal;
+    using Internal.TestContexts;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Setups;
@@ -12,7 +12,7 @@
     using Setups.Models;
     using Utilities;
     using Xunit;
-    using Internal.TestContexts;
+
     public class ExpressionParserTests
     {
         [Fact]

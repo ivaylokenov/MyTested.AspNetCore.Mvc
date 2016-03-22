@@ -4,7 +4,6 @@
     using System.Linq.Expressions;
     using Contracts.Routes;
     using Utilities;
-    using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Routing;
     using Internal.Routes;
     using Exceptions;
@@ -12,6 +11,7 @@
     using System.Linq;
     using System.Collections.Generic;
     using Internal.TestContexts;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Used for building and testing a route.
@@ -193,6 +193,7 @@
         }
 
         public IAndResolvedRouteTestBuilder To<TController>()
+            where TController : class
         {
             var actualInfo = this.GetActualRouteInfo();
             var expectedControllerType = typeof(TController);
@@ -215,10 +216,15 @@
         /// <param name="actionCall">Method call expression indicating the expected resolved action.</param>
         /// <returns>The same route test builder.</returns>
         public IAndResolvedRouteTestBuilder To<TController>(Expression<Action<TController>> actionCall)
+            where TController : class
         {
-            this.actionCallExpression = actionCall;
-            this.ValidateRouteInformation<TController>();
-            return this;
+            return this.ProcessRouteLambdaExpression<TController>(actionCall);
+        }
+
+        public IAndResolvedRouteTestBuilder To<TController>(Expression<Func<TController, Task>> actionCall)
+            where TController : class
+        {
+            return this.ProcessRouteLambdaExpression<TController>(actionCall);
         }
 
         /// <summary>
@@ -295,6 +301,13 @@
             return this;
         }
 
+        private IAndResolvedRouteTestBuilder ProcessRouteLambdaExpression<TController>(LambdaExpression actionCall)
+        {
+            this.actionCallExpression = actionCall;
+            this.ValidateRouteInformation<TController>();
+            return this;
+        }
+
         private void ValidateRouteInformation<TController>()
         {
             var expectedRouteValues = this.GetExpectedRouteInfo();
@@ -345,10 +358,10 @@
             }
 
             throw new RouteAssertionException(string.Format(
-                    "Expected route '{0}' to {1} but {2}.",
-                    this.RouteContext.HttpContext.Request.Path,
-                    expected,
-                    actual));
+                "{0} to {1} but {2}.",
+                this.TestContext.ExceptionMessagePrefix,
+                expected,
+                actual));
         }
     }
 }

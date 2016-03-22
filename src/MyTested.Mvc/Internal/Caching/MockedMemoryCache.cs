@@ -2,21 +2,22 @@
 {
     using System.Linq;
     using System.Collections.Generic;
-    using Microsoft.Extensions.Caching.Memory;
-    using Contracts;
-
 #if NET451
     using System.Runtime.Remoting.Messaging;
     using System.Runtime.Remoting;
-#elif DOTNET5_6
+#elif NETSTANDARD1_5
     using System.Threading;
 #endif
+    using Contracts;
+    using Microsoft.Extensions.Caching.Memory;
 
     public class MockedMemoryCache : IMockedMemoryCache
     {
+        private static readonly IEntryLink DefaultEntryLink = new MockedEntryLink();
+
 #if NET451
         private const string DataKey = "__MemoryCache_Current__";
-#elif DOTNET5_6
+#elif NETSTANDARD1_5
         private static readonly AsyncLocal<IDictionary<object, IMockedMemoryCacheEntry>> МemoryCacheCurrent = new AsyncLocal<IDictionary<object, IMockedMemoryCacheEntry>>();
 #endif
         private readonly IDictionary<object, IMockedMemoryCacheEntry> cache;
@@ -28,10 +29,7 @@
 
         public int Count => this.cache.Count;
 
-        public IEntryLink CreateLinkingScope()
-        {
-            return new MockedEntryLink();
-        }
+        public IEntryLink CreateLinkingScope() => DefaultEntryLink;
 
         public void Dispose()
         {
@@ -96,7 +94,7 @@
             }
 
             return result;
-#elif DOTNET5_6
+#elif NETSTANDARD1_5
             var result = МemoryCacheCurrent.Value;
             if (result == null)
             {

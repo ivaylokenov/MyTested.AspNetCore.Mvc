@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Tests.Setups.Services
+﻿namespace MyTested.Mvc.Test.Setups.Services
 {
     public interface IAnotherInjectedService
     {

@@ -60,7 +60,7 @@
         /// <param name="name">Name of the argument.</param>
         /// <param name="value">Expected argument value.</param>
         /// <returns>The same view component test builder.</returns>
-        IAndViewComponentTestBuilder ContainingArgument(string name);
+        IAndViewComponentTestBuilder ContainingArgumentWithName(string name);
 
         /// <summary>
         /// Tests whether view component result will be invoked with an argument deeply equal to the provided one.
@@ -84,7 +84,9 @@
         /// <typeparam name="TArgument">Type of the argument.</typeparam>
         /// <returns>The same view component test builder.</returns>
         IAndViewComponentTestBuilder ContainingArgumentOfType<TArgument>();
-        
+
+        IAndViewComponentTestBuilder ContainingArgumentOfType<TArgument>(string name);
+
         /// <summary>
         /// Tests whether view component result will be invoked with the provided arguments.
         /// </summary>

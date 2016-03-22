@@ -4,11 +4,12 @@
     using System.Collections.Generic;
     using System.Linq;
     using Base;
-    using Utilities.Extensions;
+    using Internal.TestContexts;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Utilities;
-    using Internal.TestContexts;
+    using Utilities.Extensions;
+
     /// <summary>
     /// Base class for all attribute test builders.
     /// </summary>

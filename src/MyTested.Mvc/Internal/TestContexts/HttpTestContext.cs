@@ -12,12 +12,12 @@
     using Utilities.Extensions;
     using Utilities.Validators;
 
-    public class HttpTestContext
+    public abstract class HttpTestContext
     {
         private MockedHttpContext mockedHttpContext;
         private RouteData routeData;
 
-        public HttpTestContext()
+        protected HttpTestContext()
         {
             TestHelper.ClearMemoryCache();
             this.mockedHttpContext = TestHelper.CreateMockedHttpContext();
@@ -34,6 +34,7 @@
             {
                 CommonValidator.CheckForNullReference(value, nameof(HttpContext));
                 this.mockedHttpContext = MockedHttpContext.From(value);
+                TestHelper.SetHttpContextToAccessor(this.mockedHttpContext);
             }
         }
 
@@ -67,6 +68,8 @@
         public IMemoryCache MemoryCache => this.HttpContext.RequestServices.GetService<IMemoryCache>();
 
         public ISession Session => this.HttpContext.Session;
+
+        public abstract string ExceptionMessagePrefix { get; }
 
         internal MockedHttpContext MockedHttpContext => this.mockedHttpContext;
 

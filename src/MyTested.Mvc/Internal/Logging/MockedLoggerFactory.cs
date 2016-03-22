@@ -7,14 +7,13 @@
     /// </summary>
     public class MockedLoggerFactory : ILoggerFactory
     {
+        private static MockedLoggerFactory defaultMockedLoggerFactory = new MockedLoggerFactory();
+
         /// <summary>
         /// Created mocked logger factory.
         /// </summary>
         /// <returns>Mocked logger factory.</returns>
-        public static MockedLoggerFactory Create()
-        {
-            return new MockedLoggerFactory();
-        }
+        public static MockedLoggerFactory Create() => defaultMockedLoggerFactory;
 
         /// <summary>
         /// Does nothing. Used for testing purposes.
@@ -32,7 +31,7 @@
         /// <returns>Mocked ILogger.</returns>
         public ILogger CreateLogger(string categoryName)
         {
-            return new MockedLogger();
+            return MockedLogger.Instance;
         }
 
         /// <summary>

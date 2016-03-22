@@ -1,5 +1,7 @@
 ﻿namespace MyTested.Mvc.Builders.ActionResults.Object
 {
+    using System.Collections.Generic;
+    using System.Net;
     using Base;
     using Contracts.ActionResults.Object;
     using Exceptions;
@@ -7,14 +9,12 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.Net.Http.Headers;
-    using System.Collections.Generic;
-    using System.Net;
     using Utilities.Extensions;
 
     public class ObjectTestBuilder : BaseTestBuilderWithResponseModel<ObjectResult>, IAndObjectTestBuilder
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="objectTestBuilder{THttpobjectResult}" /> class.
+        /// Initializes a new instance of the <see cref="ObjectTestBuilder" /> class.
         /// </summary>
         /// <param name="controller">Controller on which the action will be tested.</param>
         /// <param name="actionName">Name of the tested action.</param>
@@ -178,12 +178,12 @@
         private void ThrowNewObjectResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new ObjectResultAssertionException(string.Format(
-                    "When calling {0} action in {1} expected object result {2} {3}, but {4}.",
-                    this.ActionName,
-                    this.Controller.GetName(),
-                    propertyName,
-                    expectedValue,
-                    actualValue));
+                "When calling {0} action in {1} expected object result {2} {3}, but {4}.",
+                this.ActionName,
+                this.Controller.GetName(),
+                propertyName,
+                expectedValue,
+                actualValue));
         }
     }
 }

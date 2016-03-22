@@ -1,16 +1,17 @@
 ﻿namespace MyTested.Mvc.Internal.Routes
 {
-    using Microsoft.AspNetCore.Routing;
+    using System;
+    using Contracts;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Abstractions;
     using Microsoft.AspNetCore.Mvc.Controllers;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
-    using Contracts;
-    using System;
-    using Microsoft.AspNetCore.Mvc.Abstractions;
     using Microsoft.AspNetCore.Mvc.Internal;
+    using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.DependencyInjection;
     using Utilities.Extensions;
-    using Microsoft.AspNetCore.Http;
+
     /// <summary>
     /// Used for resolving HTTP request to a route.
     /// </summary>
@@ -26,7 +27,14 @@
         /// <returns>Resolved route information.</returns>
         public static ResolvedRouteContext Resolve(IServiceProvider services, IRouter router, RouteContext routeContext)
         {
-            ResolveRouteData(router, routeContext);
+            try
+            {
+                ResolveRouteData(router, routeContext);
+            }
+            catch (Exception ex)
+            {
+                return new ResolvedRouteContext($"exception was thrown when trying to resolve route data: '{ex.Unwrap().Message}'");
+            }
 
             var actionSelector = services.GetRequiredService<IActionSelector>();
             var actionInvokerFactory = services.GetRequiredService<IActionInvokerFactory>();
@@ -95,10 +103,7 @@
             router.RouteAsync(routeContext).Wait();
 
             var routeData = routeContext.RouteData;
-            routeContext.HttpContext.Features[typeof(IRoutingFeature)] = new MockedRoutingFeature
-            {
-                RouteData = routeData
-            };
+            routeContext.HttpContext.SetRouteData(routeData);
 
             return routeData;
         }

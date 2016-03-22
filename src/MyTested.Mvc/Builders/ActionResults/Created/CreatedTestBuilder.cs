@@ -4,21 +4,23 @@
     using System.Collections.Generic;
     using System.Linq.Expressions;
     using System.Net;
+    using System.Threading.Tasks;
     using Base;
     using Contracts.ActionResults.Created;
     using Contracts.Uris;
     using Exceptions;
-    using Utilities.Extensions;
+    using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.AspNetCore.Routing;
     using Microsoft.Net.Http.Headers;
+    using Utilities.Extensions;
     using Utilities.Validators;
-    using Internal.TestContexts;
-    using Internal;/// <summary>
-                   /// Used for testing created results.
-                   /// </summary>
-                   /// <typeparam name="TCreatedResult">Type of created result - CreatedAtActionResult or CreatedAtRouteResult.</typeparam>
+
+    /// <summary>
+    /// Used for testing created results.
+    /// </summary>
+    /// <typeparam name="TCreatedResult">Type of created result - CreatedAtActionResult or CreatedAtRouteResult.</typeparam>
     public class CreatedTestBuilder<TCreatedResult>
         : BaseTestBuilderWithResponseModel<TCreatedResult>, IAndCreatedTestBuilder
         where TCreatedResult : ObjectResult
@@ -27,6 +29,8 @@
         private const string RouteName = "route name";
         private const string RouteValues = "route values";
         private const string UrlHelper = "URL helper";
+
+        private LambdaExpression createdAtExpression;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreatedTestBuilder{TCreatedResult}" /> class.
@@ -189,7 +193,7 @@
         /// </summary>
         /// <param name="assertions">Action containing all assertions on the location.</param>
         /// <returns>The same created test builder.</returns>
-        public IAndCreatedTestBuilder AtLocation(Action<string> assertions)
+        public IAndCreatedTestBuilder AtLocationPassing(Action<string> assertions)
         {
             var createdResult = this.GetCreatedResult<CreatedResult>(Location);
             assertions(createdResult.Location);
@@ -202,15 +206,16 @@
         /// </summary>
         /// <param name="predicate">Predicate testing the location.</param>
         /// <returns>The same created test builder.</returns>
-        public IAndCreatedTestBuilder AtLocation(Func<string, bool> predicate)
+        public IAndCreatedTestBuilder AtLocationPassing(Func<string, bool> predicate)
         {
             var createdResult = this.GetCreatedResult<CreatedResult>(Location);
-            if (!predicate(createdResult.Location))
+            var location = createdResult.Location;
+            if (!predicate(location))
             {
                 this.ThrowNewCreatedResultAssertionException(
-                    "location",
+                    $"location ('{location}')",
                     "to pass the given predicate",
-                    "but it failed");
+                    "it failed");
             }
 
             return this;
@@ -301,7 +306,7 @@
         /// </summary>
         /// <param name="key">Expected route key.</param>
         /// <returns>The same created test builder.</returns>
-        public IAndCreatedTestBuilder ContainingRouteValue(string key)
+        public IAndCreatedTestBuilder ContainingRouteKey(string key)
         {
             RouteActionResultValidator.ValidateRouteValue(
                 this.ActionResult,
@@ -372,9 +377,12 @@
         /// <returns>The same created test builder.</returns>
         public IAndCreatedTestBuilder ContainingRouteValues(IDictionary<string, object> routeValues)
         {
+            var includeCountCheck = this.createdAtExpression == null;
+
             RouteActionResultValidator.ValidateRouteValues(
                 this.ActionResult,
                 routeValues,
+                includeCountCheck,
                 this.ThrowNewCreatedResultAssertionException);
 
             return this;
@@ -417,14 +425,15 @@
         /// <param name="actionCall">Method call expression indicating the expected action.</param>
         /// <returns>The same created test builder.</returns>
         public IAndCreatedTestBuilder At<TController>(Expression<Action<TController>> actionCall)
+            where TController : class
         {
-            RouteActionResultValidator.ValidateExpressionLink(
-                this.TestContext,
-                LinkGenerationTestContext.FromCreatedResult(this.ActionResult),
-                actionCall,
-                this.ThrowNewCreatedResultAssertionException);
+            return this.ProcessRouteLambdaExpression<TController>(actionCall);
+        }
 
-            return this;
+        public IAndCreatedTestBuilder At<TController>(Expression<Func<TController, Task>> actionCall)
+            where TController : class
+        {
+            return this.ProcessRouteLambdaExpression<TController>(actionCall);
         }
 
         /// <summary>
@@ -447,7 +456,7 @@
         /// <param name="actualValue">Actual value of the tested property.</param>
         protected override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)
             => this.ThrowNewCreatedResultAssertionException(propertyName, expectedValue, actualValue);
-
+        
         private TExpectedCreatedResult GetCreatedResult<TExpectedCreatedResult>(string containment)
             where TExpectedCreatedResult : class
         {
@@ -461,6 +470,19 @@
             }
 
             return actualRedirectResult;
+        }
+
+        private IAndCreatedTestBuilder ProcessRouteLambdaExpression<TController>(LambdaExpression actionCall)
+        {
+            this.createdAtExpression = actionCall;
+
+            RouteActionResultValidator.ValidateExpressionLink(
+                this.TestContext,
+                LinkGenerationTestContext.FromCreatedResult(this.ActionResult),
+                actionCall,
+                this.ThrowNewCreatedResultAssertionException);
+
+            return this;
         }
 
         private void ThrowNewCreatedResultAssertionException(string propertyName, string expectedValue, string actualValue)

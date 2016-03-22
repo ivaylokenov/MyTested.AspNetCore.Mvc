@@ -1,24 +1,44 @@
 {
   "version": "1.0.0",
-  "description": "MyTested.Mvc.Tests Class Library",
+  "description": "MyTested.Mvc.Test Class Library",
   "authors": [ "Ivaylo Kenov" ],
   "tags": [ "" ],
   "projectUrl": "",
   "licenseUrl": "",
+
+  "compilationOptions": {
+    "warningsAsErrors": true
+  },
+
+  "testRunner": "xunit",
+  "commands": {
+    "test": "xunit.runner.aspnet"
+  },
 
   "dependencies": {
     "MyTested.Mvc": {
       "version": "1.0.0-*",
       "type": "build"
     },
-    "xunit.runner.aspnet": "2.0.0-aspnet-rc2-16105"
-  },
-
-  "commands": {
-    "test": "xunit.runner.aspnet"
+    "xunit": "2.1.0"
   },
 
   "frameworks": {
-    "dnx451": { }
+    "netstandardapp1.5": {
+      "dependencies": {
+        "dotnet-test-xunit": "1.0.0-dev-*"
+      }
+    },
+    "dnx451": {
+      "dependencies": {
+        "xunit.runner.aspnet": "2.0.0-aspnet-*"
+      }
+    },
+    "net451": {
+      "frameworkAssemblies": {
+        "System.Runtime": "",
+        "System.Threading.Tasks": ""
+      }
+    }
   }
 }

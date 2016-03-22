@@ -3,8 +3,8 @@
     using System.Collections.Generic;
     using Contracts.Base;
     using Exceptions;
-    using Utilities.Extensions;
     using Internal.TestContexts;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Base class for all test builders with action call.
@@ -44,7 +44,7 @@
         /// </summary>
         protected void CheckValidModelState()
         {
-            if (!this.Controller.ModelState.IsValid)
+            if (!this.TestContext.ModelState.IsValid)
             {
                 throw new ModelErrorAssertionException(string.Format(
                     "When calling {0} action in {1} expected to have valid model state with no errors, but it had some.",

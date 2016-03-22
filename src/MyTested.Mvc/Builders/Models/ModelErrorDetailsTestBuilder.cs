@@ -7,9 +7,10 @@
     using Base;
     using Contracts.Models;
     using Exceptions;
-    using Utilities.Extensions;
-    using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Internal.TestContexts;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
+    using Utilities.Extensions;
+
     /// <summary>
     /// Used for testing specific model errors.
     /// </summary>

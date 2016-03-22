@@ -1,10 +1,10 @@
 ﻿namespace MyTested.Mvc.Builders.Data
 {
     using System;
+    using System.Collections.Generic;
+    using Contracts.Data;
     using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.DependencyInjection;
-    using Contracts.Data;
-    using System.Collections.Generic;
     using Utilities.Extensions;
 
     public class MemoryCacheBuilder : IAndMemoryCacheBuilder

@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Tests.BuildersTests.ControllersTests
+﻿namespace MyTested.Mvc.Test.BuildersTests.ControllersTests
 {
     using Exceptions;
     using Setups;

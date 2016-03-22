@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Tests.Setups.Controllers
+﻿namespace MyTested.Mvc.Test.Setups.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -7,18 +7,19 @@
     using System.Threading.Tasks;
     using Common;
     using Microsoft.AspNetCore.Authorization;
-    using Microsoft.Extensions.FileProviders;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.AspNetCore.Mvc.ViewEngines;
+    using Microsoft.Extensions.Caching.Memory;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.FileProviders;
     using Microsoft.Net.Http.Headers;
     using Models;
     using Newtonsoft.Json;
     using Services;
-    using Microsoft.AspNetCore.Mvc.ModelBinding;
-    using Microsoft.Extensions.Caching.Memory;
-    using Microsoft.Extensions.DependencyInjection;
+    using Internal.Contracts;
     [Authorize(Roles = "Admin,Moderator")]
     [Route("/api/test")]
     public class MvcController : Controller
@@ -302,9 +303,28 @@
             };
         }
 
+        public IActionResult FullObjectResultAction()
+        {
+            return new ObjectResult(this.responseModel)
+            {
+                ContentTypes = new MediaTypeCollection { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) },
+                StatusCode = StatusCodes.Status201Created,
+                Formatters = new FormatterCollection<IOutputFormatter> { new JsonOutputFormatter(), new CustomOutputFormatter() },
+                DeclaredType = typeof(List<ResponseModel>),
+            };
+        }
+
         public IActionResult OkActionWithFormatter(IOutputFormatter formatter)
         {
             return new OkObjectResult(this.responseModel)
+            {
+                Formatters = new FormatterCollection<IOutputFormatter> { formatter }
+            };
+        }
+
+        public IActionResult ObjectActionWithFormatter(IOutputFormatter formatter)
+        {
+            return new ObjectResult(this.responseModel)
             {
                 Formatters = new FormatterCollection<IOutputFormatter> { formatter }
             };
@@ -609,6 +629,11 @@
             return await Task.Run(() => this.Ok());
         }
 
+        public IActionResult ObjectResultWithResponse()
+        {
+            return new ObjectResult(this.responseModel.ToList());
+        }
+
         public IActionResult BadRequestAction()
         {
             return this.BadRequest();
@@ -642,7 +667,6 @@
             return this.Ok();
         }
 
-
         public IActionResult JsonAction()
         {
             return this.Json(this.responseModel);
@@ -675,6 +699,14 @@
         public IActionResult LocalRedirectPermanentAction()
         {
             return this.LocalRedirectPermanent("/local/test");
+        }
+
+        public IActionResult LocalRedirectActionWithCustomUrlHelper(IUrlHelper helper)
+        {
+            return new LocalRedirectResult("/api/test")
+            {
+                UrlHelper = helper
+            };
         }
 
         public IActionResult CustomModelStateError()
@@ -795,6 +827,152 @@
             return this.BadRequest();
         }
 
+        public IActionResult FullMemoryCacheAction([FromServices]IMemoryCache cache)
+        {
+            var mockedMemoryCache = cache as IMockedMemoryCache;
+            if (mockedMemoryCache == null)
+            {
+                return this.Unauthorized();
+            }
+
+            var normalEntry = mockedMemoryCache.Get<string>("Normal");
+            if (normalEntry != null && normalEntry == "NormalValid")
+            {
+                return this.Ok("Normal");
+            }
+
+            IMockedMemoryCacheEntry fullEntry;
+            if (mockedMemoryCache.TryGetCacheEntry("FullEntry", out fullEntry))
+            {
+                return this.Ok(fullEntry);
+            }
+
+            var entries = mockedMemoryCache.GetCacheAsDictionary();
+            if (entries.Count == 3)
+            {
+                return this.Ok(entries);
+            }
+
+            return this.BadRequest();
+        }
+
+        public IActionResult FullSessionAction()
+        {
+            var session = this.HttpContext.Session;
+            
+            var hasId = session.GetString("HasId");
+            if (!string.IsNullOrWhiteSpace(hasId) && hasId == "HasIdValue")
+            {
+                return this.Ok(session.Id);
+            }
+
+            var byteEntry = session.Get("ByteEntry");
+            if (byteEntry != null)
+            {
+                return this.Ok(byteEntry);
+            }
+
+            var intEntry = session.GetInt32("IntEntry");
+            if (intEntry != null)
+            {
+                return this.Ok(intEntry);
+            }
+
+            var stringEntry = session.GetString("StringEntry");
+            if (stringEntry != null)
+            {
+                return this.Ok(stringEntry);
+            }
+
+            return this.BadRequest();
+        }
+
+        public IActionResult MultipleSessionValuesAction()
+        {
+            var session = this.HttpContext.Session;
+
+            var stringValue = session.GetString("StringKey");
+            var intValue = session.GetInt32("IntKey");
+            var byteValue = session.Get("ByteKey");
+
+            return this.Ok(new
+            {
+                String = stringValue,
+                Integer = intValue.Value,
+                Byte = byteValue
+            });
+        }
+
+        public IActionResult AddMemoryCacheAction()
+        {
+            var memoryCache = this.HttpContext.RequestServices.GetService<IMemoryCache>();
+            memoryCache.Set("test", "value", new MemoryCacheEntryOptions
+            {
+                AbsoluteExpiration = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(1),
+                Priority = CacheItemPriority.High,
+                SlidingExpiration = TimeSpan.FromMinutes(5)
+            });
+
+            memoryCache.Set("another", "anotherValue");
+
+            return this.Ok();
+        }
+
+        public IActionResult AddSessionAction()
+        {
+            this.HttpContext.Session.SetInt32("test", 1);
+            return this.Ok();
+        }
+
+        public IActionResult AddTempDataAction()
+        {
+            this.TempData.Add("test", "tempvalue");
+            return this.Ok();
+        }
+
+        public IActionResult AddViewBagAction()
+        {
+            this.ViewBag.Test = "bagvalue";
+            return this.Ok();
+        }
+
+        public IActionResult AddViewDataAction()
+        {
+            this.ViewData["Test"] = "datavalue";
+            return this.Ok();
+        }
+
+        public IActionResult TempDataAction()
+        {
+            if (this.TempData["test"] != null)
+            {
+                return this.Ok();
+            }
+
+            return this.BadRequest();
+        }
+
+        public IActionResult SessionAction()
+        {
+            if (this.HttpContext.Session.GetString("test") != null)
+            {
+                return this.Ok();
+            }
+
+            return this.BadRequest();
+        }
+
+        public IActionResult WithService(IHttpContextAccessor httpContextAccessor)
+        {
+            if (httpContextAccessor == null)
+            {
+                return this.BadRequest();
+            }
+
+            return this.Ok();
+        }
+
         private void ThrowNewNullReferenceException()
         {
             throw new NullReferenceException("Test exception message");
@@ -811,22 +989,28 @@
             response.ContentType = ContentType.ApplicationJson;
             response.StatusCode = HttpStatusCode.InternalServerError;
             response.Headers.Add("TestHeader", "TestHeaderValue");
-            response.Cookies.Append("TestCookie", "TestCookieValue", new CookieOptions
-            {
-                HttpOnly = true,
-                Secure = true,
-                Domain = "testdomain.com",
-                Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)),
-                Path = "/"
-            });
-            response.Cookies.Append("AnotherCookie", "TestCookieValue", new CookieOptions
-            {
-                HttpOnly = true,
-                Secure = true,
-                Domain = "testdomain.com",
-                Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)),
-                Path = "/"
-            });
+            response.Cookies.Append(
+                "TestCookie",
+                "TestCookieValue",
+                new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    Domain = "testdomain.com",
+                    Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)),
+                    Path = "/"
+                });
+            response.Cookies.Append(
+                "AnotherCookie",
+                "TestCookieValue",
+                new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    Domain = "testdomain.com",
+                    Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)),
+                    Path = "/"
+                });
             response.ContentLength = 100;
         }
     }

@@ -1,14 +1,13 @@
 ﻿namespace MyTested.Mvc.Builders.Actions.ShouldHave
 {
+    using System;
     using Base;
     using Contracts.Actions;
-    using Contracts.Http;
-    using Http;
-    using Utilities.Validators;
-    using Internal.TestContexts;
     using Contracts.And;
-    using System;
+    using Contracts.Http;
     using Exceptions;
+    using Http;
+    using Internal.TestContexts;
     using Utilities.Extensions;
 
     /// <summary>
@@ -48,8 +47,8 @@
             {
                 this.ThrowNewDataProviderAssertionException(
                     name,
-                    expectedCount == null ? "entries" : $" with {expectedCount} entries",
-                    expectedCount == null ? "but none were found" : $"but in fact contained {actualCount}");
+                    expectedCount == null ? " entries" : $" with {expectedCount} {(expectedCount != 1 ? "entries" : "entry")}",
+                    expectedCount == null ? "none were found" : $"in fact contained {actualCount}");
             }
         }
 
@@ -57,14 +56,14 @@
         {
             this.ThrowNewDataProviderAssertionException(
                 name,
-                "with no entries",
+                " with no entries",
                 "in fact it had some");
         }
 
         private void ThrowNewDataProviderAssertionException(string name, string expectedValue, string actualValue)
         {
             throw new DataProviderAssertionException(string.Format(
-                "When calling {0} action in {1} expected to have {2}{3}, {4}.",
+                "When calling {0} action in {1} expected to have {2}{3}, but {4}.",
                 this.ActionName,
                 this.Controller.GetName(),
                 name,

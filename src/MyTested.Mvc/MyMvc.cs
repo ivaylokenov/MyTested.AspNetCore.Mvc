@@ -4,12 +4,10 @@
     using Builders;
     using Builders.Contracts.Application;
     using Builders.Controllers;
-    using Microsoft.AspNetCore.Mvc;
-    using Utilities;
     using Builders.Routes;
     using Internal.Application;
     using Internal.TestContexts;
-    using Internal;
+
     /// <summary>
     /// Starting point of the ASP.NET MVC testing framework, which provides a way to specify the test case.
     /// </summary>
@@ -17,7 +15,7 @@
     {
         static MyMvc()
         {
-            TestApplication.TryFindDefaultStartupType();
+            TestApplication.TryInitialize();
         }
 
         /// <summary>
@@ -54,25 +52,24 @@
         }
 
         /// <summary>
-        /// Selects controller on which the test will be executed. Controller is instantiated with default constructor.
+        /// Selects controller on which the test will be executed.
         /// </summary>
-        /// <typeparam name="TController">Class inheriting ASP.NET MVC controller.</typeparam>
+        /// <typeparam name="TController">Class representing ASP.NET MVC controller.</typeparam>
         /// <returns>Controller builder used to build the test case.</returns>
         public static IControllerBuilder<TController> Controller<TController>()
-            where TController : Controller
+            where TController : class
         {
-            var controller = TestHelper.TryCreateInstance<TController>() ?? Reflection.TryFastCreateInstance<TController>();
-            return Controller(() => controller);
+            return Controller((TController)null);
         }
 
         /// <summary>
         /// Selects controller on which the test will be executed.
         /// </summary>
-        /// <typeparam name="TController">Class inheriting ASP.NET MVC controller.</typeparam>
+        /// <typeparam name="TController">Class representing ASP.NET MVC controller.</typeparam>
         /// <param name="controller">Instance of the ASP.NET MVC controller to use.</param>
         /// <returns>Controller builder used to build the test case.</returns>
         public static IControllerBuilder<TController> Controller<TController>(TController controller)
-            where TController : Controller
+            where TController : class
         {
             return Controller(() => controller);
         }
@@ -80,13 +77,13 @@
         /// <summary>
         /// Selects controller on which the test will be executed. Controller is instantiated using construction function.
         /// </summary>
-        /// <typeparam name="TController">Class inheriting ASP.NET MVC controller.</typeparam>
+        /// <typeparam name="TController">Class representing ASP.NET MVC controller.</typeparam>
         /// <param name="construction">Construction function returning the instantiated controller.</param>
         /// <returns>Controller builder used to build the test case.</returns>
         public static IControllerBuilder<TController> Controller<TController>(Func<TController> construction)
-            where TController : Controller
+            where TController : class
         {
-            return new ControllerBuilder<TController>(new ControllerTestContext { Controller = construction() });
+            return new ControllerBuilder<TController>(new ControllerTestContext { ControllerConstruction = construction });
         }
     }
 }

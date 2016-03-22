@@ -8,7 +8,6 @@
     using Microsoft.AspNetCore.Http.Authentication;
     using MyTested.Mvc.Builders.Contracts.Authentication;
     using Internal.TestContexts;
-
     /// <summary>
     /// Used for testing authentication properties.
     /// </summary>
@@ -160,6 +159,9 @@
 
             return this;
         }
+
+        public IAndAuthenticationPropertiesTestBuilder WithItems(object items)
+            => this.WithItems(items.ToStringValueDictionary());
 
         /// <summary>
         /// Tests whether authentication properties contains the provided items.

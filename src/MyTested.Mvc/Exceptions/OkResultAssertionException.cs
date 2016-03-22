@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// Exception for invalid ok result.
+    /// Exception for invalid OK result.
     /// </summary>
     public class OkResultAssertionException : Exception
     {

@@ -1,18 +1,23 @@
 ﻿namespace MyTested.Mvc.Internal.Http
 {
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Contracts;
     using Microsoft.AspNetCore.Http.Features;
     using Microsoft.AspNetCore.Mvc.Internal;
 
-    public class MockedSession : ISession
+    public class MockedSession : ISession, IMockedSession
     {
         private readonly IDictionary<string, byte[]> session;
 
         public MockedSession()
         {
+            this.Id = Guid.NewGuid().ToString();
             this.session = new Dictionary<string, byte[]>();
         }
+
+        public string Id { get; set; }
 
         public IEnumerable<string> Keys => this.session.Keys;
 

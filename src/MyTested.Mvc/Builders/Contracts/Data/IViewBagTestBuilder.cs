@@ -2,5 +2,6 @@
 {
     public interface IViewBagTestBuilder
     {
+        IAndViewBagTestBuilder ContainingEntry(string key, object value);
     }
 }

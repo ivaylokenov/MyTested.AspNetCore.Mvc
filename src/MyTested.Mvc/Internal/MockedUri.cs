@@ -1,7 +1,7 @@
-﻿using System.Text;
-
-namespace MyTested.Mvc.Internal
+﻿namespace MyTested.Mvc.Internal
 {
+    using System.Text;
+
     /// <summary>
     /// Mocked URI object.
     /// </summary>

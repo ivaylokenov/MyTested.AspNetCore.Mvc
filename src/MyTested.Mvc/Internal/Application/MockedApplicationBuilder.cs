@@ -3,12 +3,12 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Features;
     using Microsoft.AspNetCore.Routing;
-    using System.Reflection;
 
     public class MockedApplicationBuilder : IApplicationBuilder
     {
@@ -35,6 +35,7 @@
             {
                 return this.GetProperty<IServiceProvider>(ApplicationServicesPropertyName);
             }
+
             set
             {
                 this.SetProperty(ApplicationServicesPropertyName, value);
@@ -52,18 +53,7 @@
         public IDictionary<string, object> Properties { get; }
 
         public RouteCollection Routes { get; set; }
-
-        private T GetProperty<T>(string key)
-        {
-            object value;
-            return this.Properties.TryGetValue(key, out value) ? (T)value : default(T);
-        }
-
-        private void SetProperty<T>(string key, T value)
-        {
-            this.Properties[key] = value;
-        }
-
+        
         public IApplicationBuilder Use(Func<RequestDelegate, RequestDelegate> middleware)
         {
             this.ExtractRoutes(middleware);
@@ -92,7 +82,18 @@
 
             return app;
         }
-        
+
+        private T GetProperty<T>(string key)
+        {
+            object value;
+            return this.Properties.TryGetValue(key, out value) ? (T)value : default(T);
+        }
+
+        private void SetProperty<T>(string key, T value)
+        {
+            this.Properties[key] = value;
+        }
+
         private void ExtractRoutes(Func<RequestDelegate, RequestDelegate> middleware)
         {
             var middlewareArguments = middleware

@@ -2,21 +2,21 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.IO;
+    using System.Linq;
     using System.Net;
+    using System.Text;
     using Base;
     using Contracts.Http;
-    using Utilities.Extensions;
     using Exceptions;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.Extensions.Primitives;
-    using Utilities.Validators;
-    using Microsoft.Net.Http.Headers;
-    using Utilities;
-    using System.Text;
     using Internal.Formatters;
     using Internal.TestContexts;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.Primitives;
+    using Microsoft.Net.Http.Headers;
+    using Utilities;
+    using Utilities.Extensions;
+    using Utilities.Validators;
 
     /// <summary>
     /// Used for testing the HTTP response.
@@ -209,7 +209,7 @@
         /// <returns>The same HTTP response message test builder.</returns>
         public IAndHttpResponseTestBuilder WithContentType(string contentType)
         {
-            if (contentTypeTested)
+            if (this.contentTypeTested)
             {
                 return this;
             }
@@ -332,6 +332,9 @@
             return this;
         }
 
+        public IAndHttpResponseTestBuilder ContainingCookies(object cookies)
+            => this.ContainingCookies(cookies.ToStringValueDictionary());
+
         /// <summary>
         /// Tests whether HTTP response message contains the provided dictionary of cookies.
         /// </summary>
@@ -433,6 +436,16 @@
         /// <param name="headers">Dictionary of headers.</param>
         /// <returns>The same HTTP response message test builder.</returns>
         public IAndHttpResponseTestBuilder ContainingHeaders(IHeaderDictionary headers)
+        {
+            this.ValidateHeadersCount(headers.Count);
+            headers.ForEach(h => this.ContainingHeader(h.Key, h.Value));
+            return this;
+        }
+
+        public IAndHttpResponseTestBuilder ContainingHeaders(object headers)
+            => this.ContainingHeaders(headers.ToStringValueDictionary());
+
+        public IAndHttpResponseTestBuilder ContainingHeaders(IDictionary<string, string> headers)
         {
             this.ValidateHeadersCount(headers.Count);
             headers.ForEach(h => this.ContainingHeader(h.Key, h.Value));

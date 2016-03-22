@@ -32,6 +32,23 @@
             return this;
         }
 
+        public IAndResponseCookieTestBuilder WithValue(Action<string> assertions)
+        {
+            this.validations.Add((expected, actual) =>
+            {
+                assertions(actual.Value);
+                return true;
+            });
+
+            return this;
+        }
+
+        public IAndResponseCookieTestBuilder WithValue(Func<string, bool> predicate)
+        {
+            this.validations.Add((expected, actual) => predicate(actual.Value));
+            return this;
+        }
+
         public IAndResponseCookieTestBuilder WithDomain(string domain)
         {
             this.responseCookie.Domain = domain;
@@ -74,6 +91,11 @@
             return this;
         }
 
+        public IResponseCookieTestBuilder AndAlso()
+        {
+            return this;
+        }
+
         internal SetCookieHeaderValue GetResponseCookie()
         {
             if (this.responseCookie.Name == FakeCookieName)
@@ -87,11 +109,6 @@
         internal ICollection<Func<SetCookieHeaderValue, SetCookieHeaderValue, bool>> GetResponseCookieValidations()
         {
             return this.validations;
-        }
-
-        public IResponseCookieTestBuilder AndAlso()
-        {
-            return this;
         }
     }
 }

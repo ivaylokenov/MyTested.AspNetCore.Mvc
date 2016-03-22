@@ -1,9 +1,9 @@
 ﻿namespace MyTested.Mvc.Builders.Data
 {
+    using System.Collections.Generic;
     using Contracts.Data;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.AspNetCore.Routing;
-    using System.Collections.Generic;
     using Utilities.Extensions;
     using Utilities.Validators;
 

@@ -1,11 +1,12 @@
 ﻿namespace MyTested.Mvc.Builders.ExceptionErrors
 {
+    using System;
     using Base;
     using Contracts.ExceptionErrors;
     using Exceptions;
-    using Utilities.Extensions;
-    using Utilities;
     using Internal.TestContexts;
+    using Utilities;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Used for testing expected exceptions.
@@ -19,7 +20,7 @@
         /// <param name="actionName">Name of the tested action.</param>
         /// <param name="exception">Actual received exception.</param>
         public ExceptionTestBuilder(ControllerTestContext testContext)
-            :base(testContext)
+            : base(testContext)
         {
         }
 
@@ -71,6 +72,37 @@
                     this.ActionName,
                     this.Controller.GetName(),
                     message,
+                    actualExceptionMessage));
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether created result location passes given assertions.
+        /// </summary>
+        /// <param name="assertions">Action containing all assertions on the location.</param>
+        /// <returns>The same created test builder.</returns>
+        public IAndExceptionTestBuilder WithMessage(Action<string> assertions)
+        {
+            assertions(this.CaughtException.Message);
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether created result location passes given predicate.
+        /// </summary>
+        /// <param name="predicate">Predicate testing the location.</param>
+        /// <returns>The same created test builder.</returns>
+        public IAndExceptionTestBuilder WithMessage(Func<string, bool> predicate)
+        {
+            var actualExceptionMessage = this.CaughtException.Message;
+            if (!predicate(actualExceptionMessage))
+            {
+                throw new InvalidExceptionAssertionException(string.Format(
+                    "When calling {0} action in {1} expected exception message ('{2}') to pass the given predicate, but it failed.",
+                    this.ActionName,
+                    this.Controller.GetName(),
                     actualExceptionMessage));
             }
 

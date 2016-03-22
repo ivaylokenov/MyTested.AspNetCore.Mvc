@@ -14,11 +14,6 @@
     /// </summary>
     public class MockedHttpContext : DefaultHttpContext
     {
-        public static MockedHttpContext From(HttpContext httpContext)
-        {
-            return new MockedHttpContext(httpContext);
-        }
-
         private HttpRequest httpRequest;
         private HttpResponse httpResponse;
 
@@ -87,6 +82,11 @@
             set { this.httpRequest = value ?? new DefaultHttpRequest(this); }
         }
 
+        public static MockedHttpContext From(HttpContext httpContext)
+        {
+            return new MockedHttpContext(httpContext);
+        }
+
         private void PrepareFeatures()
         {
             if (this.Features.Get<IHttpRequestFeature>() == null)
@@ -104,16 +104,7 @@
                 this.Features.Set<IServiceProvidersFeature>(new MockedRequestServicesFeature(TestServiceProvider.Global));
             }
 
-            if (this.RequestServices.GetService<ISessionStore>() != null)
-            {
-                if (this.Features.Get<ISessionFeature>() == null)
-                {
-                    this.Features.Set<ISessionFeature>(new MockedSessionFeature
-                    {
-                        Session = new MockedSession()
-                    });
-                }
-            }
+            TestHelper.SetMockedSession(this);
         }
 
         private void PrepareDefaultValues()

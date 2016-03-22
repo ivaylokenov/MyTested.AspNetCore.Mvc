@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Tests.BuildersTests.ActionResultsTests.ForbidTests
+﻿namespace MyTested.Mvc.Test.BuildersTests.ActionResultsTests.ForbidTests
 {
     using System.Collections.Generic;
     using Exceptions;

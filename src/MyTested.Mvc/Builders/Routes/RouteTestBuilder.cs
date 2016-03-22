@@ -1,12 +1,12 @@
 ﻿namespace MyTested.Mvc.Builders.Routes
 {
     using System;
-    using Contracts.Routes;
     using Contracts.Http;
-    using Microsoft.AspNetCore.Http;
+    using Contracts.Routes;
     using Http;
     using Internal.Http;
     using Internal.TestContexts;
+    using Microsoft.AspNetCore.Http;
 
     /// <summary>
     /// Used for building a route test.

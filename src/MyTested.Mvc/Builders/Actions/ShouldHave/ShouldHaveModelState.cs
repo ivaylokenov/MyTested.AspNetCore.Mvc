@@ -1,12 +1,12 @@
 ﻿namespace MyTested.Mvc.Builders.Actions.ShouldHave
 {
+    using System;
     using System.Linq;
     using Contracts.And;
     using Contracts.Models;
     using Exceptions;
-    using Utilities.Extensions;
     using Models;
-    using System;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Class containing methods for testing model state.
@@ -42,7 +42,7 @@
         /// <returns>Test builder with AndAlso method.</returns>
         public IAndTestBuilder<TActionResult> InvalidModelState(int? withNumberOfErrors = null)
         {
-            var actualModelStateErrors = this.Controller.ModelState.Values.SelectMany(c => c.Errors).Count();
+            var actualModelStateErrors = this.TestContext.ModelState.Values.SelectMany(c => c.Errors).Count();
             if (actualModelStateErrors == 0
                 || (withNumberOfErrors != null && actualModelStateErrors != withNumberOfErrors))
             {

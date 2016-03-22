@@ -3,9 +3,9 @@
     using System;
     using Contracts.Attributes;
     using Exceptions;
-    using Utilities.Extensions;
-    using Microsoft.AspNetCore.Authorization;
     using Internal.TestContexts;
+    using Microsoft.AspNetCore.Authorization;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Used for testing controller attributes.

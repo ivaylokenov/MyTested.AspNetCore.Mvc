@@ -4,13 +4,14 @@
     using Base;
     using Contracts.ActionResults.View;
     using Exceptions;
-    using Utilities.Extensions;
+    using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ViewEngines;
     using Microsoft.Net.Http.Headers;
     using Utilities;
+    using Utilities.Extensions;
     using Utilities.Validators;
-    using Internal.TestContexts;
+
     /// <summary>
     /// Used for testing view results.
     /// </summary>

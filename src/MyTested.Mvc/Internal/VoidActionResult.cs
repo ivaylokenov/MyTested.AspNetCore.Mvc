@@ -5,13 +5,12 @@
     /// </summary>
     public class VoidActionResult
     {
+        private static VoidActionResult defaultVoidActionResult = new VoidActionResult();
+
         /// <summary>
         /// Creates new instance of <see cref="VoidActionResult"/>.
         /// </summary>
         /// <returns>Void action result.</returns>
-        public static VoidActionResult Create()
-        {
-            return new VoidActionResult();
-        }
+        public static VoidActionResult Instance => defaultVoidActionResult;
     }
 }

@@ -1,14 +1,16 @@
 ﻿namespace MyTested.Mvc.Builders.ActionResults.LocalRedirect
 {
     using System;
+    using System.Linq.Expressions;
+    using System.Threading.Tasks;
     using Base;
     using Contracts.ActionResults.LocalRedirect;
+    using Contracts.Uris;
     using Exceptions;
-    using Utilities.Extensions;
-    using Microsoft.AspNetCore.Mvc;
-    using Utilities.Validators;
     using Internal.TestContexts;
-    using System.Linq.Expressions;
+    using Microsoft.AspNetCore.Mvc;
+    using Utilities.Extensions;
+    using Utilities.Validators;
 
     /// <summary>
     /// Used for testing local redirect result.
@@ -57,6 +59,51 @@
                 this.ThrowNewRedirectResultAssertionException);
 
             return this.ToUrl(uri);
+        }
+
+        /// <summary>
+        /// Tests whether local redirect result URL passes given assertions.
+        /// </summary>
+        /// <param name="assertions">Action containing all assertions on the URL.</param>
+        /// <returns>The same local redirect test builder.</returns>
+        public IAndLocalRedirectTestBuilder ToUrlPassing(Action<string> assertions)
+        {
+            assertions(this.ActionResult.Url);
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether local redirect result URL passes given predicate.
+        /// </summary>
+        /// <param name="predicate">Predicate testing the URL.</param>
+        /// <returns>The same local redirect test builder.</returns>
+        public IAndLocalRedirectTestBuilder ToUrlPassing(Func<string, bool> predicate)
+        {
+            var url = this.ActionResult.Url;
+            if (!predicate(url))
+            {
+                this.ThrowNewRedirectResultAssertionException(
+                    $"location ('{url}')",
+                    "to pass the given predicate",
+                    "it failed");
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Tests whether local redirect result has specific location provided by builder.
+        /// </summary>
+        /// <param name="uriTestBuilder">Builder for expected URI.</param>
+        /// <returns>The same local redirect test builder.</returns>
+        public IAndLocalRedirectTestBuilder ToUrl(Action<IUriTestBuilder> uriTestBuilder)
+        {
+            LocationValidator.ValidateLocation(
+                this.ActionResult,
+                uriTestBuilder,
+                this.ThrowNewRedirectResultAssertionException);
+
+            return this;
         }
 
         /// <summary>
@@ -111,6 +158,24 @@
         /// <param name="actionCall">Method call expression indicating the expected redirect action.</param>
         /// <returns>The same local redirect test builder.</returns>
         public IAndLocalRedirectTestBuilder To<TController>(Expression<Action<TController>> actionCall)
+            where TController : class
+        {
+            return this.ProcessRouteLambdaExpression<TController>(actionCall);
+        }
+
+        public IAndLocalRedirectTestBuilder To<TController>(Expression<Func<TController, Task>> actionCall)
+            where TController : class
+        {
+            return this.ProcessRouteLambdaExpression<TController>(actionCall);
+        }
+
+        /// <summary>
+        /// AndAlso method for better readability when chaining local redirect result tests.
+        /// </summary>
+        /// <returns>Local redirect result test builder.</returns>
+        public ILocalRedirectTestBuilder AndAlso() => this;
+        
+        private IAndLocalRedirectTestBuilder ProcessRouteLambdaExpression<TController>(LambdaExpression actionCall)
         {
             RouteActionResultValidator.ValidateExpressionLink(
                 this.TestContext,
@@ -121,21 +186,15 @@
             return this;
         }
 
-        /// <summary>
-        /// AndAlso method for better readability when chaining local redirect result tests.
-        /// </summary>
-        /// <returns>Local redirect result test builder.</returns>
-        public ILocalRedirectTestBuilder AndAlso() => this;
-
         private void ThrowNewRedirectResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new RedirectResultAssertionException(string.Format(
-                    "When calling {0} action in {1} expected local redirect result {2} {3}, but {4}.",
-                    this.ActionName,
-                    this.Controller.GetName(),
-                    propertyName,
-                    expectedValue,
-                    actualValue));
+                "When calling {0} action in {1} expected local redirect result {2} {3}, but {4}.",
+                this.ActionName,
+                this.Controller.GetName(),
+                propertyName,
+                expectedValue,
+                actualValue));
         }
     }
 }

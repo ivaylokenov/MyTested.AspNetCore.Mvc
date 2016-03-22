@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Tests.UtilitiesTests.ValidatorsTests
+﻿namespace MyTested.Mvc.Test.UtilitiesTests.ValidatorsTests
 {
     using Exceptions;
     using Microsoft.AspNetCore.Mvc;

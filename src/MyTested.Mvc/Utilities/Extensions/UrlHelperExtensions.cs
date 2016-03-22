@@ -1,9 +1,9 @@
 ﻿namespace MyTested.Mvc.Utilities.Extensions
 {
+    using System.Linq.Expressions;
     using Internal.Routes;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
-    using System.Linq.Expressions;
 
     public static class UrlHelperExtensions
     {

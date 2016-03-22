@@ -1,10 +1,10 @@
 ﻿namespace MyTested.Mvc.Builders.ActionResults.File
 {
+    using Contracts.ActionResults.File;
+    using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Net.Http.Headers;
-    using MyTested.Mvc.Builders.Contracts.ActionResults.File;
     using Utilities.Extensions;
-    using Internal.TestContexts;
 
     /// <summary>
     /// Used for testing physical file result.

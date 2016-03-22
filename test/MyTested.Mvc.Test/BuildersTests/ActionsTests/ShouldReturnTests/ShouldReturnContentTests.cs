@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Tests.BuildersTests.ActionsTests.ShouldReturnTests
+﻿namespace MyTested.Mvc.Test.BuildersTests.ActionsTests.ShouldReturnTests
 {
     using Exceptions;
     using Setups;
@@ -55,6 +55,44 @@
                         .Content("content");
                 }, 
                 "When calling BadRequestAction action in MvcController expected action result to be ContentResult, but instead received BadRequestResult.");
+        }
+
+        [Fact]
+        public void ShouldReturnContentWithPredicateShouldNotThrowExceptionWithValidPredicate()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.ContentAction())
+                .ShouldReturn()
+                .Content(content => content.StartsWith("con"));
+        }
+        
+        [Fact]
+        public void ShouldReturnContentWithPredicateShouldThrowExceptionWithInvalidPredicate()
+        {
+            Test.AssertException<ContentResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.ContentAction())
+                        .ShouldReturn()
+                        .Content(content => content.StartsWith("invalid"));
+                },
+                "When calling ContentAction action in MvcController expected content result ('content') to pass the given predicate, but it failed.");
+        }
+
+        [Fact]
+        public void ShouldReturnContentWithAssertionsShouldNotThrowExceptionWithValidPredicate()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.ContentAction())
+                .ShouldReturn()
+                .Content(content =>
+                {
+                    Assert.True(content.StartsWith("con"));
+                });
         }
     }
 }

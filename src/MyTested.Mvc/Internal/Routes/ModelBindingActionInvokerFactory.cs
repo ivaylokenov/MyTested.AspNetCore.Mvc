@@ -1,5 +1,8 @@
 ﻿namespace MyTested.Mvc.Internal.Routes
 {
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Linq;
     using Contracts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Abstractions;
@@ -10,15 +13,12 @@
     using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Linq;
 
     public class ModelBindingActionInvokerFactory : IModelBindingActionInvokerFactory
     {
         private readonly IControllerActionArgumentBinder argumentBinder;
         private readonly IControllerFactory controllerFactory;
-        private readonly FilterCache filterCache;
+        private readonly ControllerActionInvokerCache controllerActionInvokerCache;
         private readonly IReadOnlyList<IInputFormatter> inputFormatters;
         private readonly IReadOnlyList<IModelBinder> modelBinders;
         private readonly IReadOnlyList<IModelValidatorProvider> modelValidatorProviders;
@@ -29,7 +29,7 @@
 
         public ModelBindingActionInvokerFactory(
             IControllerFactory controllerFactory,
-            FilterCache filterCache,
+            ControllerActionInvokerCache controllerActionInvokerCache,
             IControllerActionArgumentBinder argumentBinder,
             IOptions<MvcOptions> optionsAccessor,
             ILoggerFactory loggerFactory,
@@ -37,7 +37,7 @@
         {
             this.controllerFactory = controllerFactory;
             this.argumentBinder = argumentBinder;
-            this.filterCache = filterCache;
+            this.controllerActionInvokerCache = controllerActionInvokerCache;
             this.inputFormatters = optionsAccessor.Value.InputFormatters.ToArray();
             this.modelBinders = optionsAccessor.Value.ModelBinders.ToArray();
             this.modelValidatorProviders = optionsAccessor.Value.ModelValidatorProviders.ToArray();
@@ -53,7 +53,7 @@
         {
             return new ModelBindingActionInvoker(
                 actionContext,
-                this.filterCache,
+                this.controllerActionInvokerCache,
                 this.controllerFactory,
                 controllerActionDescriptor,
                 this.inputFormatters,
