@@ -1,31 +1,29 @@
 ﻿namespace MyTested.Mvc.Test.BuildersTests.DataTests
 {
-    using System;
+    using System.Collections.Generic;
     using Exceptions;
-    using Microsoft.Extensions.Caching.Memory;
     using Setups;
     using Setups.Controllers;
     using Xunit;
-    using System.Collections.Generic;
 
-    public class MemoryCacheTestBuilderTests
+    public class TempDataTestBuilderTests
     {
         [Fact]
         public void ContainingEntryWithKeyShouldNotThrowExceptionWithCorrectEntry()
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.AddMemoryCacheAction())
+                .Calling(c => c.AddTempDataAction())
                 .ShouldHave()
-                .MemoryCache(cache => cache
-                    .ContainingEntryWithKey("test")
+                .TempData(tempData => tempData
+                    .ContainingEntryWithKey("Test")
                     .AndAlso()
-                    .ContainingEntryWithValue("value"))
+                    .ContainingEntryWithKey("Another"))
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
         }
-        
+
         [Fact]
         public void ContainingEntryWithKeyShouldThrowExceptionWithIncorrectEntry()
         {
@@ -34,24 +32,24 @@
                 {
                     MyMvc
                        .Controller<MvcController>()
-                       .Calling(c => c.AddMemoryCacheAction())
+                       .Calling(c => c.AddTempDataAction())
                        .ShouldHave()
-                       .MemoryCache(cache => cache.ContainingEntryWithKey("invalid"))
+                       .TempData(tempData => tempData.ContainingEntryWithKey("Invalid"))
                        .AndAlso()
                        .ShouldReturn()
                        .Ok();
                 },
-                "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with the given key, but such was not found.");
+                "When calling AddTempDataAction action in MvcController expected temp data to have entry with 'Invalid' key, but such was not found.");
         }
-        
+
         [Fact]
         public void ContainingEntryWithValueShouldNotThrowExceptionWithCorrectEntry()
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.AddMemoryCacheAction())
+                .Calling(c => c.AddTempDataAction())
                 .ShouldHave()
-                .MemoryCache(cache => cache.ContainingEntryWithValue("value"))
+                .TempData(tempData => tempData.ContainingEntryWithValue("TempValue"))
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
@@ -65,24 +63,24 @@
                 {
                     MyMvc
                        .Controller<MvcController>()
-                       .Calling(c => c.AddMemoryCacheAction())
+                       .Calling(c => c.AddTempDataAction())
                        .ShouldHave()
-                       .MemoryCache(cache => cache.ContainingEntryWithValue("invalid"))
+                       .TempData(tempData => tempData.ContainingEntryWithValue("Invalid"))
                        .AndAlso()
                        .ShouldReturn()
                        .Ok();
                 },
-                "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with the provided value, but none was found.");
+                "When calling AddTempDataAction action in MvcController expected temp data to have entry with the provided value, but none was found.");
         }
-        
+
         [Fact]
         public void ContainingEntryOfTypeShouldNotThrowExceptionWithCorrectEntry()
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.AddMemoryCacheAction())
+                .Calling(c => c.AddTempDataAction())
                 .ShouldHave()
-                .MemoryCache(cache => cache.ContainingEntryOfType<string>())
+                .TempData(tempData => tempData.ContainingEntryOfType<string>())
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
@@ -96,24 +94,24 @@
                 {
                     MyMvc
                        .Controller<MvcController>()
-                       .Calling(c => c.AddMemoryCacheAction())
+                       .Calling(c => c.AddTempDataAction())
                        .ShouldHave()
-                       .MemoryCache(cache => cache.ContainingEntryOfType<int>())
+                       .TempData(tempData => tempData.ContainingEntryOfType<int>())
                        .AndAlso()
                        .ShouldReturn()
                        .Ok();
                 },
-                "When calling AddMemoryCacheAction action in MvcController expected memory cache to have at least one entry of Int32 type, but none was found.");
+                "When calling AddTempDataAction action in MvcController expected temp data to have at least one entry of Int32 type, but none was found.");
         }
-        
+
         [Fact]
         public void ContainingEntryOfTypeAndKeyShouldNotThrowExceptionWithCorrectEntry()
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.AddMemoryCacheAction())
+                .Calling(c => c.AddTempDataAction())
                 .ShouldHave()
-                .MemoryCache(cache => cache.ContainingEntryOfType<string>("test"))
+                .TempData(tempData => tempData.ContainingEntryOfType<string>("Test"))
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
@@ -127,14 +125,14 @@
                 {
                     MyMvc
                        .Controller<MvcController>()
-                       .Calling(c => c.AddMemoryCacheAction())
+                       .Calling(c => c.AddTempDataAction())
                        .ShouldHave()
-                       .MemoryCache(cache => cache.ContainingEntryOfType<string>("invalid"))
+                       .TempData(tempData => tempData.ContainingEntryOfType<string>("Invalid"))
                        .AndAlso()
                        .ShouldReturn()
                        .Ok();
                 },
-                "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with the given key, but such was not found.");
+                "When calling AddTempDataAction action in MvcController expected temp data to have entry with 'Invalid' key and value of String type, but such was not found.");
         }
 
         [Fact]
@@ -145,24 +143,24 @@
                 {
                     MyMvc
                        .Controller<MvcController>()
-                       .Calling(c => c.AddMemoryCacheAction())
+                       .Calling(c => c.AddTempDataAction())
                        .ShouldHave()
-                       .MemoryCache(cache => cache.ContainingEntryOfType<int>("test"))
+                       .TempData(tempData => tempData.ContainingEntryOfType<int>("Test"))
                        .AndAlso()
                        .ShouldReturn()
                        .Ok();
                 },
-                "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with the given key and value of Int32 type, but in fact found String.");
+                "When calling AddTempDataAction action in MvcController expected temp data to have entry with 'Test' key and value of Int32 type, but in fact found String.");
         }
-        
+
         [Fact]
         public void ContainingEntryShouldNotThrowExceptionWithCorrectEntry()
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.AddMemoryCacheAction())
+                .Calling(c => c.AddTempDataAction())
                 .ShouldHave()
-                .MemoryCache(cache => cache.ContainingEntry("test", "value"))
+                .TempData(tempData => tempData.ContainingEntry("Test", "TempValue"))
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
@@ -176,14 +174,14 @@
                 {
                     MyMvc
                        .Controller<MvcController>()
-                       .Calling(c => c.AddMemoryCacheAction())
+                       .Calling(c => c.AddTempDataAction())
                        .ShouldHave()
-                       .MemoryCache(cache => cache.ContainingEntry("invalid", "value"))
+                       .TempData(tempData => tempData.ContainingEntry("Invalid", "TempValue"))
                        .AndAlso()
                        .ShouldReturn()
                        .Ok();
                 },
-                "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with the given key, but such was not found.");
+                "When calling AddTempDataAction action in MvcController expected temp data to have entry with 'Invalid' key and the provided value, but such was not found.");
         }
 
         [Fact]
@@ -194,76 +192,50 @@
                 {
                     MyMvc
                        .Controller<MvcController>()
-                       .Calling(c => c.AddMemoryCacheAction())
+                       .Calling(c => c.AddTempDataAction())
                        .ShouldHave()
-                       .MemoryCache(cache => cache.ContainingEntry("test", "invalid"))
+                       .TempData(tempData => tempData.ContainingEntry("Test", "Invalid"))
                        .AndAlso()
                        .ShouldReturn()
                        .Ok();
                 },
-                "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with the given value, but in fact it was different.");
+                "When calling AddTempDataAction action in MvcController expected temp data to have entry with 'Test' key and the provided value, but the value was different.");
         }
-
-        [Fact]
-        public void ContainingEntryWithOptionsShouldNotThrowExceptionWithCorrectEntry()
-        {
-            MyMvc
-                .Controller<MvcController>()
-                .Calling(c => c.AddMemoryCacheAction())
-                .ShouldHave()
-                .MemoryCache(cache => cache.ContainingEntry("test", "value", new MemoryCacheEntryOptions
-                {
-                    AbsoluteExpiration = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
-                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(1),
-                    Priority = CacheItemPriority.High,
-                    SlidingExpiration = TimeSpan.FromMinutes(5)
-                }))
-                .AndAlso()
-                .ShouldReturn()
-                .Ok();
-        }
-
-        [Fact]
-        public void ContainingEntryWithOptionsShouldThrowExceptionWithIncorrectEntryKey()
-        {
-            Test.AssertException<DataProviderAssertionException>(
-                () =>
-                {
-                    MyMvc
-                       .Controller<MvcController>()
-                       .Calling(c => c.AddMemoryCacheAction())
-                       .ShouldHave()
-                       .MemoryCache(cache => cache.ContainingEntry("test", "value", new MemoryCacheEntryOptions
-                       {
-                           AbsoluteExpiration = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
-                           AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(2),
-                           Priority = CacheItemPriority.High,
-                           SlidingExpiration = TimeSpan.FromMinutes(5)
-                       }))
-                       .AndAlso()
-                       .ShouldReturn()
-                       .Ok();
-                },
-                "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with the given options, but in fact they were different.");
-        }
-
+        
         [Fact]
         public void ContainingEntriesShouldNotThrowExceptionWithCorrectValues()
         {
             MyMvc
                 .Controller<MvcController>()
-                .Calling(c => c.AddMemoryCacheAction())
+                .Calling(c => c.AddTempDataAction())
                 .ShouldHave()
-                .MemoryCache(cache => cache.ContainingEntries(new Dictionary<object, object>
+                .TempData(tempData => tempData.ContainingEntries(new Dictionary<string, object>
                 {
-                    ["test"] = "value",
-                    ["another"] = "anotherValue"
+                    ["Test"] = "TempValue",
+                    ["Another"] = "AnotherValue"
                 }))
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
         }
         
+        [Fact]
+        public void ContainingEntriesWithObjectShouldNotThrowExceptionWithCorrectValues()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.AddTempDataAction())
+                .ShouldHave()
+                .TempData(tempData => tempData.ContainingEntries(new 
+                {
+                    Test = "TempValue",
+                    Another = "AnotherValue"
+                }))
+                .AndAlso()
+                .ShouldReturn()
+                .Ok();
+        }
+
         [Fact]
         public void ContainingEntriesShouldThrowExceptionWithIncorrectCount()
         {
@@ -272,19 +244,19 @@
                 {
                     MyMvc
                         .Controller<MvcController>()
-                        .Calling(c => c.AddMemoryCacheAction())
+                        .Calling(c => c.AddTempDataAction())
                         .ShouldHave()
-                        .MemoryCache(cache => cache.ContainingEntries(new Dictionary<object, object>
+                        .TempData(tempData => tempData.ContainingEntries(new Dictionary<string, object>
                         {
-                            ["test"] = "value",
+                            ["Test"] = "TempValue",
                         }))
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling AddMemoryCacheAction action in MvcController expected memory cache to have 1 entry, but in fact found 2.");
+                "When calling AddTempDataAction action in MvcController expected temp data to have 1 entry, but in fact found 2.");
         }
-        
+
         [Fact]
         public void ContainingEntriesShouldThrowExceptionWithIncorrectManyCount()
         {
@@ -293,21 +265,21 @@
                 {
                     MyMvc
                         .Controller<MvcController>()
-                        .Calling(c => c.AddMemoryCacheAction())
+                        .Calling(c => c.AddTempDataAction())
                         .ShouldHave()
-                        .MemoryCache(cache => cache.ContainingEntries(new Dictionary<object, object>
+                        .TempData(tempData => tempData.ContainingEntries(new Dictionary<string, object>
                         {
-                            ["test"] = "value",
-                            ["another"] = "anotherValue",
-                            ["third"] = "anotherThirdValue"
+                            ["Test"] = "TempValue",
+                            ["Another"] = "AnotherValue",
+                            ["Third"] = "AnotherThirdValue"
                         }))
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling AddMemoryCacheAction action in MvcController expected memory cache to have 3 entries, but in fact found 2.");
+                "When calling AddTempDataAction action in MvcController expected temp data to have 3 entries, but in fact found 2.");
         }
-        
+
         [Fact]
         public void ContainingEntriesShouldThrowExceptionWithInvalidKey()
         {
@@ -316,20 +288,20 @@
                 {
                     MyMvc
                         .Controller<MvcController>()
-                        .Calling(c => c.AddMemoryCacheAction())
+                        .Calling(c => c.AddTempDataAction())
                         .ShouldHave()
-                        .MemoryCache(cache => cache.ContainingEntries(new Dictionary<object, object>
+                        .TempData(tempData => tempData.ContainingEntries(new Dictionary<string, object>
                         {
-                            ["test"] = "value",
-                            ["invalid"] = "anotherValue"
+                            ["Test"] = "TempValue",
+                            ["Invalid"] = "AnotherValue"
                         }))
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with the given key, but such was not found.");
+                "When calling AddTempDataAction action in MvcController expected temp data to have entry with 'Invalid' key and the provided value, but such was not found.");
         }
-        
+
         [Fact]
         public void ContainingEntriesShouldThrowExceptionWithInvalidValue()
         {
@@ -338,18 +310,18 @@
                 {
                     MyMvc
                         .Controller<MvcController>()
-                        .Calling(c => c.AddMemoryCacheAction())
+                        .Calling(c => c.AddTempDataAction())
                         .ShouldHave()
-                        .MemoryCache(cache => cache.ContainingEntries(new Dictionary<object, object>
+                        .TempData(tempData => tempData.ContainingEntries(new Dictionary<string, object>
                         {
-                            ["test"] = "value",
-                            ["another"] = "invalid"
+                            ["Test"] = "Value",
+                            ["Another"] = "Invalid"
                         }))
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with the given value, but in fact it was different.");
+                "When calling AddTempDataAction action in MvcController expected temp data to have entry with 'Test' key and the provided value, but the value was different.");
         }
     }
 }

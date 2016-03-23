@@ -130,7 +130,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.AddSessionAction())
                 .ShouldHave()
-                .Session(withNumberOfEntries: 1)
+                .Session(withNumberOfEntries: 3)
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
@@ -186,12 +186,12 @@
                         .Controller<MvcController>()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
-                        .Session(3)
+                        .Session(4)
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling AddSessionAction action in MvcController expected to have session with 3 entries, but in fact contained 1.");
+                "When calling AddSessionAction action in MvcController expected to have session with 4 entries, but in fact contained 3.");
 
             MyMvc.IsUsingDefaultConfiguration();
         }
@@ -213,7 +213,7 @@
                 .Calling(c => c.AddSessionAction())
                 .ShouldHave()
                 .Session(session => session
-                    .ContainingIntegerEntry("test", 1))
+                    .ContainingEntry("Integer", 1))
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();

@@ -263,7 +263,7 @@
                         .ViewComponent()
                         .ContainingArgumentWithName("id");
                 },
-                "When calling ViewComponentResultByType action in MvcController expected view component result arguments to have entry with key 'id', but such was not found.");
+                "When calling ViewComponentResultByType action in MvcController expected view component result arguments to have entry with 'id' key, but such was not found.");
         }
 
         [Fact]

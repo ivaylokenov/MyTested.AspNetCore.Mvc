@@ -3,9 +3,8 @@
     using System.Collections.Generic;
     using Contracts.Data;
     using Internal.TestContexts;
-    using Microsoft.AspNetCore.Routing;
 
-    public class ViewBagTestBuilder : BaseDataProviderTestBuilder, IAndViewBagTestBuilder
+    public class ViewBagTestBuilder : BaseDataProviderWithStringKeyTestBuilder<IAndViewBagTestBuilder>, IAndViewBagTestBuilder
     {
         internal const string ViewBagName = "view bag";
 
@@ -13,47 +12,10 @@
             : base(testContext, ViewBagName)
         {
         }
-
-        public IAndViewBagTestBuilder ContainingEntryWithKey(string key)
-        {
-            this.ValidateContainingEntryWithKey(key);
-            return this;
-        }
-
-        public IAndViewBagTestBuilder ContainingEntryWithValue<TEntry>(TEntry value)
-        {
-            this.ValidateContainingEntryWithValue(value);
-            return this;
-        }
-
-        public IAndViewBagTestBuilder ContainingEntryOfType<TEntry>()
-        {
-            this.ValidateContainingEntryOfType<TEntry>();
-            return this;
-        }
-
-        public IAndViewBagTestBuilder ContainingEntryOfType<TEntry>(string key)
-        {
-            this.ValidateContainingEntryOfType<TEntry>(key);
-            return this;
-        }
-
-        public IAndViewBagTestBuilder ContainingEntry(string key, object value)
-        {
-            this.ValidateContainingEntry(key, value);
-            return this;
-        }
-
-        public IAndViewBagTestBuilder ContainingEntries(object entries)
-            => this.ContainingEntries(new RouteValueDictionary(entries));
-
-        public IAndViewBagTestBuilder ContainingEntries(IDictionary<string, object> entries)
-        {
-            this.ValidateContainingEntries(entries);
-            return this;
-        }
-
+        
         public IViewBagTestBuilder AndAlso() => this;
+
+        protected override IAndViewBagTestBuilder DataProviderTestBuilder => this;
 
         protected override IDictionary<string, object> GetDataProvider() => this.TestContext.ViewData;
     }

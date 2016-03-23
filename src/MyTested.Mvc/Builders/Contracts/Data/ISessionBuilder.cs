@@ -8,16 +8,16 @@
 
         IAndSessionBuilder WithEntry(string key, byte[] value);
 
-        IAndSessionBuilder WithStringEntry(string key, string value);
+        IAndSessionBuilder WithEntry(string key, string value);
 
-        IAndSessionBuilder WithIntegerEntry(string key, int value);
+        IAndSessionBuilder WithEntry(string key, int value);
         
         IAndSessionBuilder WithEntries(object entries);
 
         IAndSessionBuilder WithEntries(IDictionary<string, byte[]> entries);
 
-        IAndSessionBuilder WithStringEntries(IDictionary<string, string> entries);
+        IAndSessionBuilder WithEntries(IDictionary<string, string> entries);
         
-        IAndSessionBuilder WithIntegerEntries(IDictionary<string, int> entries);
+        IAndSessionBuilder WithEntries(IDictionary<string, int> entries);
     }
 }

@@ -29,7 +29,7 @@
                 .WithSession(session => session
                     .WithId("TestId")
                     .AndAlso()
-                    .WithStringEntry("HasId", "HasIdValue"))
+                    .WithEntry("HasId", "HasIdValue"))
                 .Calling(c => c.FullSessionAction())
                 .ShouldReturn()
                 .Ok()
@@ -53,7 +53,7 @@
             var actionResult = MyMvc
                 .Controller<MvcController>()
                 .WithSession(session => session
-                    .WithStringEntry("HasId", "HasIdValue"))
+                    .WithEntry("HasId", "HasIdValue"))
                 .Calling(c => c.FullSessionAction())
                 .ShouldReturn()
                 .Ok()
@@ -83,18 +83,18 @@
                 });
 
             Test.AssertException<InvalidOperationException>(
-                () =>
+(Action)(() =>
                 {
                     MyMvc
                         .Controller<MvcController>()
-                        .WithSession(session => session
+                        .WithSession((Action<Builders.Contracts.Data.ISessionBuilder>)(session => session
                             .WithId("TestId")
-                            .WithStringEntry("HasId", "HasIdValue"))
+                            .WithEntry("HasId", "HasIdValue")))
                         .Calling(c => c.FullSessionAction())
                         .ShouldReturn()
                         .Ok()
                         .WithResponseModel("TestId");
-                },
+                }),
                 "Setting session Id requires the registered ISession service to implement IMockedSession.");
 
             MyMvc.IsUsingDefaultConfiguration();
@@ -139,7 +139,7 @@
             MyMvc
                 .Controller<MvcController>()
                 .WithSession(session => session
-                    .WithIntegerEntry("IntEntry", 1))
+                    .WithEntry("IntEntry", 1))
                 .Calling(c => c.FullSessionAction())
                 .ShouldReturn()
                 .Ok()
@@ -221,7 +221,7 @@
             MyMvc
                 .Controller<MvcController>()
                 .WithSession(session => session
-                    .WithStringEntries(new Dictionary<string, string> { ["StringEntry"] = "stringTest" }))
+                    .WithEntries(new Dictionary<string, string> { ["StringEntry"] = "stringTest" }))
                 .Calling(c => c.FullSessionAction())
                 .ShouldReturn()
                 .Ok()
@@ -245,7 +245,7 @@
             MyMvc
                 .Controller<MvcController>()
                 .WithSession(session => session
-                    .WithIntegerEntries(new Dictionary<string, int> { ["IntEntry"] = 1 }))
+                    .WithEntries(new Dictionary<string, int> { ["IntEntry"] = 1 }))
                 .Calling(c => c.FullSessionAction())
                 .ShouldReturn()
                 .Ok()

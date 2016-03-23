@@ -921,16 +921,19 @@
 
         public IActionResult AddSessionAction()
         {
-            this.HttpContext.Session.SetInt32("test", 1);
+            this.HttpContext.Session.SetInt32("Integer", 1);
+            this.HttpContext.Session.SetString("String", "Text");
+            this.HttpContext.Session.Set("Bytes", new byte[] { 1, 2, 3 });
             return this.Ok();
         }
 
         public IActionResult AddTempDataAction()
         {
-            this.TempData.Add("test", "tempvalue");
+            this.TempData.Add("Test", "TempValue");
+            this.TempData.Add("Another", "AnotherValue");
             return this.Ok();
         }
-
+        
         public IActionResult AddViewBagAction()
         {
             this.ViewBag.Test = "bagvalue";
@@ -945,9 +948,10 @@
 
         public IActionResult TempDataAction()
         {
-            if (this.TempData["test"] != null)
+            var tempDataValue = this.TempData["Test"];
+            if (tempDataValue != null)
             {
-                return this.Ok();
+                return this.Ok(tempDataValue);
             }
 
             return this.BadRequest();

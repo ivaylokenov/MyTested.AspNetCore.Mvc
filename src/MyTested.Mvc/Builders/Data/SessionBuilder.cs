@@ -36,13 +36,13 @@
             return this;
         }
 
-        public IAndSessionBuilder WithStringEntry(string key, string value)
+        public IAndSessionBuilder WithEntry(string key, string value)
         {
             this.Session.SetString(key, value);
             return this;
         }
 
-        public IAndSessionBuilder WithIntegerEntry(string key, int value)
+        public IAndSessionBuilder WithEntry(string key, int value)
         {
             this.Session.SetInt32(key, value);
             return this;
@@ -60,11 +60,11 @@
                 }
                 else if (typeOfValue == typeof(string))
                 {
-                    this.WithStringEntry(e.Key, (string)e.Value);
+                    this.WithEntry(e.Key, (string)e.Value);
                 }
                 else if (typeOfValue == typeof(int))
                 {
-                    this.WithIntegerEntry(e.Key, (int)e.Value);
+                    this.WithEntry(e.Key, (int)e.Value);
                 }
             });
 
@@ -77,15 +77,15 @@
             return this;
         }
         
-        public IAndSessionBuilder WithStringEntries(IDictionary<string, string> entries)
+        public IAndSessionBuilder WithEntries(IDictionary<string, string> entries)
         {
-            entries.ForEach(e => this.WithStringEntry(e.Key, e.Value));
+            entries.ForEach(e => this.WithEntry(e.Key, e.Value));
             return this;
         }
         
-        public IAndSessionBuilder WithIntegerEntries(IDictionary<string, int> entries)
+        public IAndSessionBuilder WithEntries(IDictionary<string, int> entries)
         {
-            entries.ForEach(e => this.WithIntegerEntry(e.Key, e.Value));
+            entries.ForEach(e => this.WithEntry(e.Key, e.Value));
             return this;
         }
 

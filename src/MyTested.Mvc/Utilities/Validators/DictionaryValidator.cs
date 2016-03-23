@@ -17,7 +17,7 @@
             {
                 failedValidationAction(
                     name,
-                    $"to have entry with key '{key}'",
+                    $"to have entry with '{key}' key",
                     "such was not found");
             }
         }
@@ -72,7 +72,7 @@
             {
                 failedValidationAction(
                     name,
-                    $"to have entry with '{key}' key and of {expectedType.ToFriendlyTypeName()} type",
+                    $"to have entry with '{key}' key and value of {expectedType.ToFriendlyTypeName()} type",
                     $"{(entryExists ? $"in fact found {actualType.ToFriendlyTypeName()}" : "such was not found")}");
             }
         }

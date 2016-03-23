@@ -76,7 +76,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.AddTempDataAction())
                 .ShouldHave()
-                .TempData(withNumberOfEntries: 1)
+                .TempData(withNumberOfEntries: 2)
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
@@ -115,7 +115,7 @@
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling AddTempDataAction action in MvcController expected to have temp data with 3 entries, but in fact contained 1.");
+                "When calling AddTempDataAction action in MvcController expected to have temp data with 3 entries, but in fact contained 2.");
         }
 
         [Fact]
@@ -126,7 +126,7 @@
                 .Calling(c => c.AddTempDataAction())
                 .ShouldHave()
                 .TempData(tempData => tempData
-                    .ContainingEntry("test", "tempvalue"))
+                    .ContainingEntry("Test", "TempValue"))
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();

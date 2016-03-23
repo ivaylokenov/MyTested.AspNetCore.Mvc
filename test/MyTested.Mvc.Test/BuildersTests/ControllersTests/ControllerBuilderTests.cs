@@ -679,10 +679,10 @@
 
             MyMvc
                 .Controller<MvcController>()
-                .WithSession(session =>
+                .WithSession((Action<Builders.Contracts.Data.ISessionBuilder>)(session =>
                 {
-                    session.WithStringEntry("test", "value");
-                })
+                    session.WithEntry("test", "value");
+                }))
                 .Calling(c => c.SessionAction())
                 .ShouldReturn()
                 .Ok();
@@ -694,18 +694,18 @@
         public void WithSessionShouldThrowExceptionIfSessionIsNotSet()
         {
             Test.AssertException<InvalidOperationException>(
-                () =>
+(Action)(() =>
                 {
                     MyMvc
                        .Controller<MvcController>()
-                       .WithSession(session =>
+                       .WithSession((Action<Builders.Contracts.Data.ISessionBuilder>)(session =>
                        {
-                           session.WithStringEntry("test", "value");
-                       })
+                           session.WithEntry("test", "value");
+                       }))
                        .Calling(c => c.SessionAction())
                        .ShouldReturn()
                        .Ok();
-                },
+                }),
                 "Session has not been configured for this application or request.");
         }
 
@@ -1596,10 +1596,10 @@
 
             MyMvc
                 .Controller<FullPocoController>()
-                .WithSession(session =>
+                .WithSession((Action<Builders.Contracts.Data.ISessionBuilder>)(session =>
                 {
-                    session.WithStringEntry("test", "value");
-                })
+                    session.WithEntry("test", "value");
+                }))
                 .Calling(c => c.SessionAction())
                 .ShouldReturn()
                 .Ok();
@@ -1611,18 +1611,18 @@
         public void WithSessionShouldThrowExceptionIfSessionIsNotSetForPocoController()
         {
             Test.AssertException<InvalidOperationException>(
-                () =>
+(Action)(() =>
                 {
                     MyMvc
                        .Controller<FullPocoController>()
-                       .WithSession(session =>
+                       .WithSession((Action<Builders.Contracts.Data.ISessionBuilder>)(session =>
                        {
-                           session.WithStringEntry("test", "value");
-                       })
+                           session.WithEntry("test", "value");
+                       }))
                        .Calling(c => c.SessionAction())
                        .ShouldReturn()
                        .Ok();
-                },
+                }),
                 "Session has not been configured for this application or request.");
         }
 
