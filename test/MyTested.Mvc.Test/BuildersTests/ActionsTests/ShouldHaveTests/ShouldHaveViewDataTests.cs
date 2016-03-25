@@ -76,7 +76,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.AddViewDataAction())
                 .ShouldHave()
-                .ViewData(withNumberOfEntries: 1)
+                .ViewData(withNumberOfEntries: 2)
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
@@ -115,7 +115,7 @@
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling AddViewDataAction action in MvcController expected to have view data with 3 entries, but in fact contained 1.");
+                "When calling AddViewDataAction action in MvcController expected to have view data with 3 entries, but in fact contained 2.");
         }
 
         [Fact]
@@ -126,7 +126,7 @@
                 .Calling(c => c.AddViewDataAction())
                 .ShouldHave()
                 .ViewData(viewData => viewData
-                    .ContainingEntry("Test", "datavalue"))
+                    .ContainingEntry("Test", "DataValue"))
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();

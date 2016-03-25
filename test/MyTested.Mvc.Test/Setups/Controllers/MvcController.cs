@@ -936,13 +936,15 @@
         
         public IActionResult AddViewBagAction()
         {
-            this.ViewBag.Test = "bagvalue";
+            this.ViewBag.Test = "BagValue";
+            this.ViewBag.Another = "AnotherValue";
             return this.Ok();
         }
 
         public IActionResult AddViewDataAction()
         {
-            this.ViewData["Test"] = "datavalue";
+            this.ViewData["Test"] = "DataValue";
+            this.ViewData["Another"] = "AnotherValue";
             return this.Ok();
         }
 

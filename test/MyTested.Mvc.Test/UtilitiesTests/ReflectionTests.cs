@@ -423,6 +423,7 @@
             Assert.False(Reflection.AreDeeplyEqual(1, 0));
             Assert.False(Reflection.AreDeeplyEqual(1, null));
             Assert.False(Reflection.AreDeeplyEqual("test1", "test2"));
+            Assert.False(Reflection.AreDeeplyEqual("Test", "test"));
             Assert.False(Reflection.AreDeeplyEqual('a', 'b'));
             Assert.False(Reflection.AreDeeplyEqual(1.1, 1.2));
             Assert.False(Reflection.AreDeeplyEqual(1.1m, 1.2m));

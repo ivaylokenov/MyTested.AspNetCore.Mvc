@@ -76,7 +76,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.AddViewBagAction())
                 .ShouldHave()
-                .ViewBag(withNumberOfEntries: 1)
+                .ViewBag(withNumberOfEntries: 2)
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
@@ -115,7 +115,7 @@
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling AddViewBagAction action in MvcController expected to have view bag with 3 entries, but in fact contained 1.");
+                "When calling AddViewBagAction action in MvcController expected to have view bag with 3 entries, but in fact contained 2.");
         }
 
         [Fact]
@@ -126,7 +126,7 @@
                 .Calling(c => c.AddViewBagAction())
                 .ShouldHave()
                 .ViewBag(viewBag => viewBag
-                    .ContainingEntry("Test", "bagvalue"))
+                    .ContainingEntry("Test", "BagValue"))
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
