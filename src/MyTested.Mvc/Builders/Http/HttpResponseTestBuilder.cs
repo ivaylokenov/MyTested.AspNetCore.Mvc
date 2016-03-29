@@ -422,7 +422,7 @@
             {
                 this.ThrowNewHttpResponseAssertionException(
                     "headers",
-                    $"to have header with '{name}' name and {values.Count} {(values.Count != 1 ? "values" : "value")}",
+                    $"to contain header with '{name}' name and {values.Count} {(values.Count != 1 ? "values" : "value")}",
                     $"instead found {headerValues.Count}");
             }
 

@@ -64,9 +64,30 @@
 
         public static IDictionary<string, string> ToStringValueDictionary(this object obj)
         {
-            return new RouteValueDictionary(obj)
-                .Where(i => i.Value?.GetType() == typeof(string))
-                .ToDictionary(i => i.Key, i => (string)i.Value);
+            return ObjectToDictionary<string>(obj);
+        }
+
+        public static IDictionary<string, object> ToObjectValueDictionary(this object obj)
+        {
+            return ObjectToDictionary<object>(obj);
+        }
+
+        private static IDictionary<string, TValue> ObjectToDictionary<TValue>(object obj)
+        {
+            var objAsStringValueDictionary = obj as IDictionary<string, TValue>;
+            if (objAsStringValueDictionary != null)
+            {
+                return objAsStringValueDictionary;
+            }
+
+            var result = new RouteValueDictionary(obj).AsEnumerable();
+            var typeOfValue = typeof(TValue);
+            if (typeOfValue != typeof(object))
+            {
+                result = result.Where(i => Reflection.AreAssignable(typeof(TValue), i.Value?.GetType()));
+            }
+
+            return result.ToDictionary(i => i.Key.Replace('_', '-'), i => (TValue)i.Value);
         }
     }
 }

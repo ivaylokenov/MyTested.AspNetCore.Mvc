@@ -45,6 +45,11 @@
                         { "AnotherDictCookie", "AnotherDictCookieValue" }
                     })
                     .WithCookies(requestCookies)
+                    .WithCookies(new
+                    {
+                        ObjectCookie = "ObjectCookieValue",
+                        AnotherObjectCookie = "AnotherObjectCookieValue"  
+                    })
                     .AndAlso()
                     .WithFormField("Field", "FieldValue")
                     .WithFormField("MultiField", "FirstFieldValue", "SecondFieldValue")
@@ -77,12 +82,14 @@
             Assert.Equal(1, builtRequest.ContentLength);
             Assert.Same(ContentType.ApplicationJson, builtRequest.ContentType);
 
-            Assert.Equal(5, builtRequest.Cookies.Count);
+            Assert.Equal(7, builtRequest.Cookies.Count);
             Assert.Equal("MyCookieValue", builtRequest.Cookies["MyCookie"]);
             Assert.Equal("MyDictCookieValue", builtRequest.Cookies["MyDictCookie"]);
             Assert.Equal("AnotherDictCookieValue", builtRequest.Cookies["AnotherDictCookie"]);
             Assert.Equal("MyRequestCookieValue", builtRequest.Cookies["MyRequestCookie"]);
             Assert.Equal("AnotherRequestCookieValue", builtRequest.Cookies["AnotherRequestCookie"]);
+            Assert.Equal("ObjectCookieValue", builtRequest.Cookies["ObjectCookie"]);
+            Assert.Equal("AnotherObjectCookieValue", builtRequest.Cookies["AnotherObjectCookie"]);
 
             Assert.Equal(4, builtRequest.Form.Count);
             Assert.Equal("FieldValue", builtRequest.Form["Field"]);
@@ -155,6 +162,42 @@
         }
 
         [Fact]
+        public void WithFormAsObjectShouldWorkCorrectly()
+        {
+            var builtRequest = MyMvc
+                .Controller<MvcController>()
+                .WithHttpRequest(request => request
+                    .WithFormFields(new
+                    {
+                        Field = "FieldValue",
+                        AnotherField = "AnotherFieldValue"
+                    }))
+                .AndProvideTheHttpRequest();
+
+            Assert.Equal(2, builtRequest.Form.Count);
+            Assert.Equal("FieldValue", builtRequest.Form["Field"]);
+            Assert.Equal("AnotherFieldValue", builtRequest.Form["AnotherField"]);
+        }
+        
+        [Fact]
+        public void WithFormAsStringDictionaryShouldWorkCorrectly()
+        {
+            var builtRequest = MyMvc
+                .Controller<MvcController>()
+                .WithHttpRequest(request => request
+                    .WithFormFields(new Dictionary<string, string>
+                    {
+                        ["Field"] = "FieldValue",
+                        ["AnotherField"] = "AnotherFieldValue"
+                    }))
+                .AndProvideTheHttpRequest();
+
+            Assert.Equal(2, builtRequest.Form.Count);
+            Assert.Equal("FieldValue", builtRequest.Form["Field"]);
+            Assert.Equal("AnotherFieldValue", builtRequest.Form["AnotherField"]);
+        }
+
+        [Fact]
         public void WithFormAsDictionaryAndStringValuesShouldWorkCorrectly()
         {
             var builtRequest = MyMvc
@@ -218,6 +261,42 @@
             Assert.Equal(2, builtRequest.Headers.Count);
             Assert.Equal("HeaderValue", builtRequest.Headers["Header"]);
             Assert.Equal("AnotherHeaderValue,SecondHeaderValue", builtRequest.Headers["AnotherHeader"]);
+        }
+        
+        [Fact]
+        public void WithHeadersAsObjectDictionaryShouldWorkCorrectly()
+        {
+            var builtRequest = MyMvc
+                .Controller<MvcController>()
+                .WithHttpRequest(request => request
+                    .WithHeaders(new
+                    {
+                        Header = "HeaderValue",
+                        AnotherHeader = "AnotherHeaderValue"
+                    }))
+                .AndProvideTheHttpRequest();
+
+            Assert.Equal(2, builtRequest.Headers.Count);
+            Assert.Equal("HeaderValue", builtRequest.Headers["Header"]);
+            Assert.Equal("AnotherHeaderValue", builtRequest.Headers["AnotherHeader"]);
+        }
+
+        [Fact]
+        public void WithHeadersAsStringDictionaryShouldWorkCorrectly()
+        {
+            var builtRequest = MyMvc
+                .Controller<MvcController>()
+                .WithHttpRequest(request => request
+                    .WithHeaders(new Dictionary<string, string>
+                    {
+                        ["Header"] = "HeaderValue",
+                        ["AnotherHeader"] = "AnotherHeaderValue"
+                    }))
+                .AndProvideTheHttpRequest();
+
+            Assert.Equal(2, builtRequest.Headers.Count);
+            Assert.Equal("HeaderValue", builtRequest.Headers["Header"]);
+            Assert.Equal("AnotherHeaderValue", builtRequest.Headers["AnotherHeader"]);
         }
 
         [Fact]
@@ -292,6 +371,42 @@
                     {
                         { "MyDictQuery", new[] { "MyDictQueryValue" } },
                         { "AnotherDictQuery", new[] { "AnotherDictQueryValue" } }
+                    }))
+                .AndProvideTheHttpRequest();
+
+            Assert.Equal(2, builtRequest.Query.Count);
+            Assert.Equal("MyDictQueryValue", builtRequest.Query["MyDictQuery"]);
+            Assert.Equal("AnotherDictQueryValue", builtRequest.Query["AnotherDictQuery"]);
+        }
+
+        [Fact]
+        public void WithQueryAsStringDictionaryShouldWorkCorrectly()
+        {
+            var builtRequest = MyMvc
+                .Controller<MvcController>()
+                .WithHttpRequest(request => request
+                    .WithQuery(new Dictionary<string, string>
+                    {
+                        { "MyDictQuery", "MyDictQueryValue" },
+                        { "AnotherDictQuery", "AnotherDictQueryValue" }
+                    }))
+                .AndProvideTheHttpRequest();
+
+            Assert.Equal(2, builtRequest.Query.Count);
+            Assert.Equal("MyDictQueryValue", builtRequest.Query["MyDictQuery"]);
+            Assert.Equal("AnotherDictQueryValue", builtRequest.Query["AnotherDictQuery"]);
+        }
+
+        [Fact]
+        public void WithQueryAsObjectShouldWorkCorrectly()
+        {
+            var builtRequest = MyMvc
+                .Controller<MvcController>()
+                .WithHttpRequest(request => request
+                    .WithQuery(new
+                    {
+                        MyDictQuery = "MyDictQueryValue",
+                        AnotherDictQuery = "AnotherDictQueryValue"
                     }))
                 .AndProvideTheHttpRequest();
 

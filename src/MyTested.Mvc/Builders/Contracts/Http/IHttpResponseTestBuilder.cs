@@ -216,6 +216,8 @@
         /// <returns>The same HTTP response message test builder.</returns>
         IAndHttpResponseTestBuilder ContainingHeaders(IHeaderDictionary headers);
 
+        IAndHttpResponseTestBuilder ContainingHeaders(object headers);
+        
         /// <summary>
         /// Tests whether HTTP response message status code is the same as the provided one.
         /// </summary>

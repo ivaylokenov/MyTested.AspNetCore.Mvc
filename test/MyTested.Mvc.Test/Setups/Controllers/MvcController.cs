@@ -995,6 +995,8 @@
             response.ContentType = ContentType.ApplicationJson;
             response.StatusCode = HttpStatusCode.InternalServerError;
             response.Headers.Add("TestHeader", "TestHeaderValue");
+            response.Headers.Add("AnotherTestHeader", "AnotherTestHeaderValue");
+            response.Headers.Add("MultipleTestHeader", new[] { "FirstMultipleTestHeaderValue", "AnotherMultipleTestHeaderValue" });
             response.Cookies.Append(
                 "TestCookie",
                 "TestCookieValue",

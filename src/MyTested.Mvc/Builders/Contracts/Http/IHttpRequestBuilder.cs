@@ -105,6 +105,8 @@
         /// <param name="value">Cookie value.</param>
         /// <returns>The same HTTP request builder.</returns>
         IAndHttpRequestBuilder WithCookie(string name, string value);
+        
+        IAndHttpRequestBuilder WithCookies(object cookies);
 
         /// <summary>
         /// Adds cookies to the built HTTP request.
@@ -152,13 +154,17 @@
         /// <returns>The same HTTP request builder.</returns>
         IAndHttpRequestBuilder WithFormField(string name, StringValues values);
 
+        IAndHttpRequestBuilder WithFormFields(object formValues);
+
+        IAndHttpRequestBuilder WithFormFields(IDictionary<string, string> formValues);
+
         /// <summary>
         /// Adds form fields to the built HTTP request.
         /// </summary>
         /// <param name="formValues">Dictionary of form fields to add.</param>
         /// <returns>The same HTTP request builder.</returns>
         IAndHttpRequestBuilder WithFormFields(IDictionary<string, IEnumerable<string>> formValues);
-
+        
         /// <summary>
         /// Adds form fields to the built HTTP request.
         /// </summary>
@@ -225,6 +231,10 @@
         /// <param name="values">Collection of string values for the header.</param>
         /// <returns>The same HTTP request builder.</returns>
         IAndHttpRequestBuilder WithHeader(string name, StringValues values);
+        
+        IAndHttpRequestBuilder WithHeaders(object headers);
+
+        IAndHttpRequestBuilder WithHeaders(IDictionary<string, string> headers);
 
         /// <summary>
         /// Adds collection of headers to the built HTTP request.
@@ -310,6 +320,10 @@
         /// <param name="value">Value of the query.</param>
         /// <returns>The same HTTP request builder.</returns>
         IAndHttpRequestBuilder WithQuery(string name, string value);
+        
+        IAndHttpRequestBuilder WithQuery(object query);
+
+        IAndHttpRequestBuilder WithQuery(IDictionary<string, string> query);
 
         /// <summary>
         /// Adds query value to the built HTTP request.
