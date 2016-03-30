@@ -156,6 +156,8 @@
         /// <returns>The same HTTP response message test builder.</returns>
         IAndHttpResponseTestBuilder ContainingCookies(IDictionary<string, string> cookies);
 
+        IAndHttpResponseTestBuilder ContainingCookies(object cookies);
+
         /// <summary>
         /// Tests whether HTTP response message contains header with the same name as the provided one.
         /// </summary>
@@ -194,6 +196,8 @@
         /// <param name="values">Expected header values.</param>
         /// <returns>The same HTTP response message test builder.</returns>
         IAndHttpResponseTestBuilder ContainingHeader(string name, StringValues values);
+
+        IAndHttpResponseTestBuilder ContainingHeaders(IDictionary<string, string> headers);
 
         /// <summary>
         /// Tests whether HTTP response message contains the same headers as the provided ones.

@@ -347,7 +347,7 @@
             if (expectedCookiesCount != actualCookiesCount)
             {
                 this.ThrowNewHttpResponseAssertionException(
-                    "headers",
+                    "cookies",
                     $"to have {expectedCookiesCount} {(expectedCookiesCount != 1 ? "items" : "item")}",
                     $"instead found {actualCookiesCount}");
             }
@@ -443,7 +443,27 @@
         }
 
         public IAndHttpResponseTestBuilder ContainingHeaders(object headers)
-            => this.ContainingHeaders(headers.ToStringValueDictionary());
+        {
+            var headerDictionary = headers.ToObjectValueDictionary();
+
+            headerDictionary.ForEach(h =>
+            {
+                var headerAsString = h.Value as string;
+                if (headerAsString != null)
+                {
+                    this.ContainingHeader(h.Key, headerAsString);
+                    return;
+                }
+
+                var headerAsEnumerable = h.Value as IEnumerable<string>;
+                if (headerAsEnumerable != null)
+                {
+                    this.ContainingHeader(h.Key, new StringValues(headerAsEnumerable.ToArray()));
+                }
+            });
+
+            return this;
+        }
 
         public IAndHttpResponseTestBuilder ContainingHeaders(IDictionary<string, string> headers)
         {
@@ -544,7 +564,7 @@
 
         private void ValidateHeaderValues(string name, string expectedValue, StringValues headerValues)
         {
-            if (!headerValues.Contains(expectedValue))
+            if (!headerValues.Contains(expectedValue) && string.Join(",", headerValues) != expectedValue)
             {
                 this.ThrowNewHttpResponseAssertionException(
                     "headers",

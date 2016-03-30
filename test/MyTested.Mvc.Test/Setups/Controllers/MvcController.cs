@@ -188,6 +188,11 @@
             this.SetCustomResponse();
         }
 
+        public void CustomCookieHeadersAction(string cookie)
+        {
+            this.Response.Headers.Add("Set-Cookie", cookie);
+        }
+
         public IActionResult CustomResponseAction()
         {
             this.SetCustomResponse();
