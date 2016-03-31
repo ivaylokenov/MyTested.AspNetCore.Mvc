@@ -8,6 +8,10 @@
 
         IAndResponseCookieTestBuilder WithValue(string value);
 
+        IAndResponseCookieTestBuilder WithValue(Action<string> assertions);
+        
+        IAndResponseCookieTestBuilder WithValue(Func<string, bool> predicate);
+
         IAndResponseCookieTestBuilder WithDomain(string domain);
 
         IAndResponseCookieTestBuilder WithExpired(DateTimeOffset? expires);

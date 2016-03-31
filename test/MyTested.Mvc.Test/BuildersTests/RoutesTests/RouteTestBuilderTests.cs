@@ -1,13 +1,63 @@
 ﻿namespace MyTested.Mvc.Test.BuildersTests.RoutesTests
 {
+    using Exceptions;
+    using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.AspNetCore.Mvc.Routing;
+    using Setups;
     using Setups.Routes;
     using Setups.Startups;
+    using System;
     using Xunit;
 
     public class RouteTestBuilderTests
     {
+        [Fact]
+        public void ToActionShouldNotThrowExceptionWithCorrectAction()
+        {
+            MyMvc
+                .Routes()
+                .ShouldMap("/")
+                .ToAction("Index");
+        }
+        
+        [Fact]
+        public void ToActionShouldThrowExceptionWithIncorrectAction()
+        {
+            Test.AssertException<RouteAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Routes()
+                        .ShouldMap("/")
+                        .ToAction("Home");
+                },
+                "Expected route '/' to match Home action but in fact matched Index.");
+        }
+
+        [Fact]
+        public void ToControllerShouldNotThrowExceptionWithCorrectAction()
+        {
+            MyMvc
+                .Routes()
+                .ShouldMap("/")
+                .ToController("Home");
+        }
+
+        [Fact]
+        public void ToControllerShouldThrowExceptionWithIncorrectAction()
+        {
+            Test.AssertException<RouteAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Routes()
+                        .ShouldMap("/")
+                        .ToController("Index");
+                },
+                "Expected route '/' to match Index controller but in fact matched Home.");
+        }
+
         [Fact]
         public void ToShouldResolveCorrectControllerAndActionWithEmptyPath()
         {
@@ -298,6 +348,27 @@
             MyMvc
                 .Routes()
                 .ShouldMap("/Normal/FromServicesAction")
+                .To<NormalController>(c => c.FromServicesAction(From.Services<IActionSelector>()));
+        }
+
+        [Fact]
+        public void ShouldMapWithRequestShouldWorkCorrectly()
+        {
+            var request = new DefaultHttpRequest(new DefaultHttpContext());
+            request.Path = "/Normal/FromServicesAction";
+
+            MyMvc
+                .Routes()
+                .ShouldMap(request)
+                .To<NormalController>(c => c.FromServicesAction(From.Services<IActionSelector>()));
+        }
+
+        [Fact]
+        public void ShouldMapWithUriShouldWorkCorrectly()
+        {
+            MyMvc
+                .Routes()
+                .ShouldMap(new Uri("/Normal/FromServicesAction", UriKind.Relative))
                 .To<NormalController>(c => c.FromServicesAction(From.Services<IActionSelector>()));
         }
 

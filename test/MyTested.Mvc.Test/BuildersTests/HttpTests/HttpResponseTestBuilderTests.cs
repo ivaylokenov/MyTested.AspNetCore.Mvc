@@ -127,6 +127,37 @@
         }
 
         [Fact]
+        public void WithResponseCookieBuilderShouldNotThrowExceptionWithCorrectValuePredicate()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.CustomVoidResponseAction())
+                .ShouldHave()
+                .HttpResponse(response => response
+                    .ContainingCookie(cookie => cookie
+                        .WithName("TestCookie")
+                        .AndAlso()
+                        .WithValue(value => value.StartsWith("TestCookie"))));
+        }
+
+        [Fact]
+        public void WithResponseCookieBuilderShouldNotThrowExceptionWithCorrectValueAssertions()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.CustomVoidResponseAction())
+                .ShouldHave()
+                .HttpResponse(response => response
+                    .ContainingCookie(cookie => cookie
+                        .WithName("TestCookie")
+                        .AndAlso()
+                        .WithValue(value =>
+                        {
+                            Assert.True(value.StartsWith("TestCookie"));
+                        })));
+        }
+
+        [Fact]
         public void ContainingCookieByKeyShouldThrowExceptionWithInvalidKey()
         {
             Test.AssertException<HttpResponseAssertionException>(
@@ -257,7 +288,7 @@
                 },
                 "When calling CustomCookieHeadersAction action in MvcController expected HTTP response to have set cookies, but none were found.");
         }
-        
+
         [Fact]
         public void WithInvalidCookiesShouldThrowException()
         {
@@ -336,6 +367,38 @@
         }
 
         [Fact]
+        public void HeaderValuesShouldThrowExceptionWithInvalidHeaderValue()
+        {
+            Test.AssertException<HttpResponseAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.CustomVoidResponseAction())
+                        .ShouldHave()
+                        .HttpResponse(response => response
+                            .ContainingHeader("TestHeader", "Invalid"));
+                },
+                "When calling CustomVoidResponseAction action in MvcController expected HTTP response headers to contain header with 'TestHeader' name and 'Invalid' value, but the value was 'TestHeaderValue'.");
+        }
+
+        [Fact]
+        public void HeaderValuesShouldThrowExceptionWithInvalidHeaderValues()
+        {
+            Test.AssertException<HttpResponseAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.CustomVoidResponseAction())
+                        .ShouldHave()
+                        .HttpResponse(response => response
+                            .ContainingHeader("MultipleTestHeader", "Invalid"));
+                },
+                "When calling CustomVoidResponseAction action in MvcController expected HTTP response headers to contain header with 'MultipleTestHeader' name and 'Invalid' value, but the values were 'FirstMultipleTestHeaderValue,AnotherMultipleTestHeaderValue'.");
+        }
+
+        [Fact]
         public void ContainingHeaderWithMultipleValuesShouldWorkCorrectly()
         {
             MyMvc
@@ -344,7 +407,7 @@
                 .ShouldHave()
                 .HttpResponse(response => response.ContainingHeader("TestHeader", new List<string> { "TestHeaderValue" }));
         }
-        
+
         [Fact]
         public void ContainingHeaderWithMultipleValuesAsParamsShouldWorkCorrectly()
         {
@@ -354,7 +417,7 @@
                 .ShouldHave()
                 .HttpResponse(response => response.ContainingHeader("TestHeader", new string[] { "TestHeaderValue" }));
         }
-        
+
         [Fact]
         public void ContainingHeaderWithMultipleValuesShouldThrowExceptionWithInvalidSingleCount()
         {
@@ -404,7 +467,50 @@
                 .ShouldHave()
                 .HttpResponse(response => response.ContainingHeaders(headers));
         }
-        
+
+        [Fact]
+        public void ContainingHeadersWithHeadersDictionaryShouldThrowExceptionWithInvalidCount()
+        {
+            var headers = new HeaderDictionary
+            {
+                ["Set-Cookie"] = new[] { "TestCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly", "AnotherCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly" },
+            };
+
+
+            Test.AssertException<HttpResponseAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.CustomVoidResponseAction())
+                        .ShouldHave()
+                        .HttpResponse(response => response.ContainingHeaders(headers));
+                },
+                "When calling CustomVoidResponseAction action in MvcController expected HTTP response headers to have 1 item, but instead found 6.");
+        }
+
+        [Fact]
+        public void ContainingHeadersWithHeadersDictionaryShouldThrowExceptionWithInvalidMultipleCount()
+        {
+            var headers = new HeaderDictionary
+            {
+                ["TestHeader"] = "Test",
+                ["Set-Cookie"] = new[] { "TestCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly", "AnotherCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly" },
+            };
+
+
+            Test.AssertException<HttpResponseAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.CustomVoidResponseAction())
+                        .ShouldHave()
+                        .HttpResponse(response => response.ContainingHeaders(headers));
+                },
+                "When calling CustomVoidResponseAction action in MvcController expected HTTP response headers to have 2 items, but instead found 6.");
+        }
+
         [Fact]
         public void ContainingHeadersWithHeadersObjectShouldWorkCorrectly()
         {
@@ -422,7 +528,7 @@
                     Set_Cookie = new[] { "TestCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly", "AnotherCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly" },
                 }));
         }
-        
+
         [Fact]
         public void ContainingHeadersWithHeadersStringDicrionaryShouldWorkCorrectly()
         {
@@ -440,7 +546,7 @@
                     ["Set-Cookie"] = "TestCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly,AnotherCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly"
                 }));
         }
-        
+
         [Fact]
         public void ContainingHeadersWithHeadersStringValuesDicrionaryShouldWorkCorrectly()
         {
@@ -458,7 +564,7 @@
                     ["Set-Cookie"] = new[] { "TestCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly", "AnotherCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly" }
                 }));
         }
-        
+
         [Fact]
         public void ContainingHeadersWithHeadersEnumerableDicrionaryShouldWorkCorrectly()
         {

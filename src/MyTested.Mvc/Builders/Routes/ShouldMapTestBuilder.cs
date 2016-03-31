@@ -45,7 +45,7 @@
             {
                 this.ThrowNewRouteAssertionException(
                     $"match {actionName} action",
-                    $"in fact mathed {actualActionName}");
+                    $"in fact matched {actualActionName}");
             }
 
             return this;
@@ -60,7 +60,7 @@
             {
                 this.ThrowNewRouteAssertionException(
                     $"match {controllerName} controller",
-                    $"in fact mathed {actualControllerName}");
+                    $"in fact matched {actualControllerName}");
             }
 
             return this;

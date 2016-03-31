@@ -569,7 +569,7 @@
                 this.ThrowNewHttpResponseAssertionException(
                     "headers",
                     $"to contain header with '{name}' name and '{expectedValue}' value",
-                    $"the {(headerValues.Count != 1 ? "the values were" : "the value was")} '{headerValues}'");
+                    $"the {(headerValues.Count != 1 ? "values were" : "value was")} '{headerValues}'");
             }
         }
 
