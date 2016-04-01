@@ -273,7 +273,7 @@
             Assert.Equal(5, model.Integer);
             Assert.Equal(null, model.String);
 
-            Assert.True(routeInfo.ModelState.IsValid);
+            Assert.False(routeInfo.ModelState.IsValid);
         }
 
         [Fact]

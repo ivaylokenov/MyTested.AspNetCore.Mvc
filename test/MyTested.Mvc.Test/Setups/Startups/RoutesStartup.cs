@@ -29,7 +29,7 @@
                     template: "Test/{action=Index}/{id?}",
                     defaults: new { controller = "Test" },
                     constraints: new { controller = "Test" },
-                    dataTokens: new { random = "value" });
+                    dataTokens: new { random = "value", another = "token" });
 
                 routes.MapRoute(
                     name: "Redirect",

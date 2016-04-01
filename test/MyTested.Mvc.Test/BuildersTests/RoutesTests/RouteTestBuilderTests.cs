@@ -8,6 +8,7 @@
     using Setups.Routes;
     using Setups.Startups;
     using System;
+    using System.Collections.Generic;
     using Xunit;
 
     public class RouteTestBuilderTests
@@ -36,12 +37,44 @@
         }
 
         [Fact]
-        public void ToControllerShouldNotThrowExceptionWithCorrectAction()
+        public void ToControllerShouldNotThrowExceptionWithCorrectController()
         {
             MyMvc
                 .Routes()
                 .ShouldMap("/")
                 .ToController("Home");
+        }
+
+        [Fact]
+        public void ToControllerAndActionShouldNotThrowExceptionWithCorrectActionAndController()
+        {
+            MyMvc
+                .Routes()
+                .ShouldMap("/")
+                .To("Index", "Home");
+        }
+
+        [Fact]
+        public void ToControllerWithGenericShouldNotThrowExceptionWithCorrectController()
+        {
+            MyMvc
+                .Routes()
+                .ShouldMap("/")
+                .To<HomeController>();
+        }
+        
+        [Fact]
+        public void ToControllerShouldThrowExceptionWithIncorrectControllerType()
+        {
+            Test.AssertException<RouteAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Routes()
+                        .ShouldMap("/")
+                        .To<RouteController>();
+                },
+                "Expected route '/' to match RouteController but in fact matched HomeController.");
         }
 
         [Fact]
@@ -57,6 +90,274 @@
                 },
                 "Expected route '/' to match Index controller but in fact matched Home.");
         }
+        
+        [Fact]
+        public void ToRouteValueShouldNotThrowExceptionWithCorrectRouteValueKey()
+        {
+            MyMvc
+                .Routes()
+                .ShouldMap("/Home/Contact/1")
+                .ToRouteValue("id");
+        }
+
+        [Fact]
+        public void ToRouteValueShouldThrowExceptionWithIncorrectRouteValueKey()
+        {
+            Test.AssertException<RouteAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Routes()
+                        .ShouldMap("/Home/Contact/1")
+                        .ToRouteValue("name");
+                },
+                "Expected route '/Home/Contact/1' to contain route value with 'name' key but such was not found.");
+        }
+        
+        [Fact]
+        public void ToRouteValueShouldNotThrowExceptionWithCorrectRouteValue()
+        {
+            MyMvc
+                .Routes()
+                .ShouldMap("/Home/Contact/1")
+                .ToRouteValue("id", 1);
+        }
+
+        [Fact]
+        public void ToRouteValueShouldThrowExceptionWithIncorrectRouteValue()
+        {
+            Test.AssertException<RouteAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Routes()
+                        .ShouldMap("/Home/Contact/1")
+                        .ToRouteValue("id", 2);
+                },
+                "Expected route '/Home/Contact/1' to contain route value with 'id' key and the provided value but the value was different.");
+        }
+        
+        [Fact]
+        public void ToRouteValuesShouldNotThrowExceptionWithCorrectRouteValues()
+        {
+            MyMvc
+                .Routes()
+                .ShouldMap("/Home/Contact/1")
+                .ToRouteValues(new { controller = "Home", action = "Contact", id = 1 });
+        }
+        
+        [Fact]
+        public void ToRouteValuesShouldNotMakeCountCheckWithProvidedLambda()
+        {
+            MyMvc
+                .Routes()
+                .ShouldMap("/Home/Contact/1")
+                .To<HomeController>(c => c.Contact(1))
+                .AndAlso()
+                .ToRouteValues(new { id = 1 });
+        }
+
+        [Fact]
+        public void ToRouteValuesShouldNotThrowExceptionWithCorrectRouteValuesAsDictionary()
+        {
+            MyMvc
+                .Routes()
+                .ShouldMap("/Home/Contact/1")
+                .ToRouteValues(new Dictionary<string, object>
+                {
+                    ["controller"] = "Home",
+                    ["action"] = "Contact",
+                    ["id"] = 1
+                });
+        }
+
+        [Fact]
+        public void ToRouteValuesShouldThrowExceptionWithIncorrectRouteValues()
+        {
+            Test.AssertException<RouteAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Routes()
+                        .ShouldMap("/Home/Contact/1")
+                        .ToRouteValues(new { controller = "Home", action = "Index", id = 1 });
+                },
+                "Expected route '/Home/Contact/1' to contain route value with 'action' key and the provided value but the value was different.");
+        }
+        
+        [Fact]
+        public void ToRouteValuesShouldThrowExceptionWithIncorrectRouteValuesWithSingleCountError()
+        {
+            Test.AssertException<RouteAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Routes()
+                        .ShouldMap("/Home/Contact/1")
+                        .ToRouteValues(new { id = 1 });
+                },
+                "Expected route '/Home/Contact/1' to contain 1 route value but in fact found 3.");
+        }
+        
+        [Fact]
+        public void ToRouteValuesShouldThrowExceptionWithIncorrectRouteValuesWithMultipleCountError()
+        {
+            Test.AssertException<RouteAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Routes()
+                        .ShouldMap("/Home/Contact/1")
+                        .ToRouteValues(new { id = 1, query = "invalid", another = "another", fourth = "test" });
+                },
+                "Expected route '/Home/Contact/1' to contain 4 route values but in fact found 3.");
+        }
+        
+        [Fact]
+        public void ToDataTokenShouldNotThrowExceptionWithCorrectDataTokenKey()
+        {
+            MyMvc.StartsFrom<RoutesStartup>();
+
+            MyMvc
+                .Routes()
+                .ShouldMap("/Test")
+                .ToDataToken("random");
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void ToDataTokenShouldThrowExceptionWithIncorrectDataTokenKey()
+        {
+            MyMvc.StartsFrom<RoutesStartup>();
+
+            Test.AssertException<RouteAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Routes()
+                        .ShouldMap("/Test")
+                        .ToDataToken("name");
+                },
+                "Expected route '/Test' to contain data token with 'name' key but such was not found.");
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void ToDataTokenShouldNotThrowExceptionWithCorrectDataToken()
+        {
+            MyMvc.StartsFrom<RoutesStartup>();
+
+            MyMvc
+                .Routes()
+                .ShouldMap("/Test")
+                .ToDataToken("random", "value");
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void ToDataTokenShouldThrowExceptionWithIncorrectDataToken()
+        {
+            MyMvc.StartsFrom<RoutesStartup>();
+
+            Test.AssertException<RouteAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Routes()
+                        .ShouldMap("/Test")
+                        .ToDataToken("random", 2);
+                },
+                "Expected route '/Test' to contain data token with 'random' key and the provided value but the value was different.");
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void ToDataTokensShouldNotThrowExceptionWithCorrectDataTokens()
+        {
+            MyMvc.StartsFrom<RoutesStartup>();
+
+            MyMvc
+                .Routes()
+                .ShouldMap("/Test")
+                .ToDataTokens(new { random = "value", another = "token" });
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+        
+        [Fact]
+        public void ToDataTokensShouldNotThrowExceptionWithCorrectDataTokensAsDictionary()
+        {
+            MyMvc.StartsFrom<RoutesStartup>();
+
+            MyMvc
+                .Routes()
+                .ShouldMap("/Test")
+                .ToDataTokens(new Dictionary<string, object>
+                {
+                    ["random"] = "value",
+                    ["another"] = "token"
+                });
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void ToDataTokensShouldThrowExceptionWithIncorrectDataTokens()
+        {
+            MyMvc.StartsFrom<RoutesStartup>();
+
+            Test.AssertException<RouteAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Routes()
+                        .ShouldMap("/Test")
+                        .ToDataTokens(new { random = "value", another = "invalid" });
+                },
+                "Expected route '/Test' to contain data token with 'another' key and the provided value but the value was different.");
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void ToDataTokenShouldThrowExceptionWithIncorrectDataTokensWithSingleCountError()
+        {
+            MyMvc.StartsFrom<RoutesStartup>();
+
+            Test.AssertException<RouteAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Routes()
+                        .ShouldMap("/Test")
+                        .ToDataTokens(new { id = 1 });
+                },
+                "Expected route '/Test' to contain 1 data token but in fact found 2.");
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void ToDataTokensShouldThrowExceptionWithIncorrectDataTokensWithMultipleCountError()
+        {
+            MyMvc.StartsFrom<RoutesStartup>();
+
+            Test.AssertException<RouteAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Routes()
+                        .ShouldMap("/Test")
+                        .ToDataTokens(new { id = 1, query = "invalid", another = "another", fourth = "test" });
+                },
+                "Expected route '/Test' to contain 4 data tokens but in fact found 2.");
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
 
         [Fact]
         public void ToShouldResolveCorrectControllerAndActionWithEmptyPath()
@@ -65,6 +366,15 @@
                 .Routes()
                 .ShouldMap("/")
                 .To<HomeController>(c => c.Index());
+        }
+
+        [Fact]
+        public void ToShouldResolveCorrectControllerAndAction()
+        {
+            MyMvc
+                .Routes()
+                .ShouldMap("/Home/AsyncMethod")
+                .To<HomeController>(c => c.AsyncMethod());
         }
 
         [Fact]
@@ -246,6 +556,19 @@
 
             MyMvc.IsUsingDefaultConfiguration();
         }
+        
+        [Fact]
+        public void ToShouldResolveCorrectControllerAndActionWithDefaultValues()
+        {
+            MyMvc.StartsFrom<RoutesStartup>();
+
+            MyMvc
+                .Routes()
+                .ShouldMap("/CustomRoute")
+                .To<NormalController>(c => c.FromRouteAction(new RequestModel { Integer = 1, String = "test" }));
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
 
         [Fact]
         public void ToShouldResolveCorrectControllerAndActionWithRouteConstraints()
@@ -266,12 +589,68 @@
         }
 
         [Fact]
+        public void ToShouldThrowExceptionWithInvalidRoute()
+        {
+            Test.AssertException<RouteAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Routes()
+                        .ShouldMap("/Normal/ActionWithModel/1")
+                        .To<HomeController>(c => c.Index());
+                },
+                "Expected route '/Normal/ActionWithModel/1' to match Index action in HomeController but action could not be matched.");
+        }
+
+        [Fact]
+        public void ToShouldThrowExceptionWithDifferentAction()
+        {
+            Test.AssertException<RouteAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Routes()
+                        .ShouldMap("/")
+                        .To<HomeController>(c => c.Contact(1));
+                },
+                "Expected route '/' to match Contact action in HomeController but instead matched Index action.");
+        }
+
+        [Fact]
+        public void ToShouldThrowExceptionWithDifferentController()
+        {
+            Test.AssertException<RouteAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Routes()
+                        .ShouldMap("/")
+                        .To<RouteController>(c => c.Index());
+                },
+                "Expected route '/' to match Index action in RouteController but instead matched HomeController.");
+        }
+
+        [Fact]
         public void ToShouldResolveNonExistingRouteWithInvalidGetMethod()
         {
             MyMvc
                 .Routes()
                 .ShouldMap("/Normal/ActionWithModel/1")
                 .ToNonExistingRoute();
+        }
+        
+        [Fact]
+        public void ToNonExistingRouteShouldThrowExceptionWithValidOne()
+        {
+            Test.AssertException<RouteAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Routes()
+                        .ShouldMap("/")
+                        .ToNonExistingRoute();
+                },
+                "Expected route '/' to be non-existing but in fact it was resolved successfully.");
         }
 
         [Fact]
@@ -370,6 +749,35 @@
                 .Routes()
                 .ShouldMap(new Uri("/Normal/FromServicesAction", UriKind.Relative))
                 .To<NormalController>(c => c.FromServicesAction(From.Services<IActionSelector>()));
+        }
+
+        [Fact]
+        public void ToValidModelStateShouldNotThrowExceptionWithValidModelState()
+        {
+            MyMvc
+                .Routes()
+                .ShouldMap(request => request
+                    .WithPath("/Normal/ActionWithModel/5")
+                    .WithMethod(HttpMethod.Post)
+                    .WithJsonBody(@"{""Integer"":5,""String"":""Test""}"))
+                .ToValidModelState();
+        }
+        
+        [Fact]
+        public void ToValidModelStateShouldThrowExceptionWithUnresolvedAction()
+        {
+            Test.AssertException<RouteAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Routes()
+                        .ShouldMap(request => request
+                            .WithPath("/Normal/Invalid/5")
+                            .WithMethod(HttpMethod.Post)
+                            .WithJsonBody(@"{""Integer"":5,""String"":""Test""}"))
+                        .ToValidModelState();
+                },
+                "Expected route '/Normal/Invalid/5' to have valid model state with no errors but action could not be matched.");
         }
 
         [Fact]

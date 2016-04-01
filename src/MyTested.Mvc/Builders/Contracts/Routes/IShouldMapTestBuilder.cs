@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq.Expressions;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Used for building and testing a route.
@@ -12,6 +13,11 @@
 
         IAndResolvedRouteTestBuilder ToController(string controllerName);
 
+        IAndResolvedRouteTestBuilder To(string actionName, string controllerName);
+        
+        IAndResolvedRouteTestBuilder To<TController>()
+            where TController : class;
+
         /// <summary>
         /// Tests whether the built route is resolved to the action provided by the expression.
         /// </summary>
@@ -20,7 +26,10 @@
         /// <returns>The same route test builder.</returns>
         IAndResolvedRouteTestBuilder To<TController>(Expression<Action<TController>> actionCall)
             where TController : class;
-        
+
+        IAndResolvedRouteTestBuilder To<TController>(Expression<Func<TController, Task>> actionCall)
+            where TController : class;
+
         /// <summary>
         /// Tests whether the built route cannot be resolved.
         /// </summary>
