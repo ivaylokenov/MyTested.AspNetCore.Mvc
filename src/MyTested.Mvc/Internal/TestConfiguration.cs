@@ -15,13 +15,8 @@
             this.configuration = configuration;
         }
 
-        internal static TestConfiguration With(IConfiguration configuration)
-        {
-            return new TestConfiguration(configuration);
-        }
-
         internal string EnvironmentName => this.configuration[EnvironmentNameConfigKey] ?? "Test";
-
+        
         internal bool AutomaticStartup
         {
             get
@@ -36,5 +31,10 @@
         }
 
         internal string FullStartupName => this.configuration[FullStartupNameConfigKey];
+
+        internal static TestConfiguration With(IConfiguration configuration)
+        {
+            return new TestConfiguration(configuration);
+        }
     }
 }

@@ -610,6 +610,11 @@
         public class DeepEqualResult
         {
             private static readonly DeepEqualResult DefaultSuccessResult = new DeepEqualResult(true);
+            
+            private DeepEqualResult(bool areEqual)
+            {
+                this.AreEqual = areEqual;
+            }
 
             public static DeepEqualResult Success => DefaultSuccessResult;
             
@@ -620,7 +625,7 @@
             public object ExpectedValue { get; private set; }
 
             public object ActualValue { get; private set; }
-            
+
             public static DeepEqualResult Failure(string errorPath, object expected, object actual)
             {
                 return new DeepEqualResult(false)
@@ -629,11 +634,6 @@
                     ExpectedValue = expected,
                     ActualValue = actual
                 };
-            }
-
-            private DeepEqualResult(bool areEqual)
-            {
-                this.AreEqual = areEqual;
             }
 
             public static implicit operator bool(DeepEqualResult result)

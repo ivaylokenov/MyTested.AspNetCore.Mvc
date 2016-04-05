@@ -6,6 +6,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Common;
+    using Internal.Contracts;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -19,7 +20,7 @@
     using Models;
     using Newtonsoft.Json;
     using Services;
-    using Internal.Contracts;
+
     [Authorize(Roles = "Admin,Moderator")]
     [Route("/api/test")]
     public class MvcController : Controller

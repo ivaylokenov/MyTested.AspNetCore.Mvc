@@ -1,5 +1,7 @@
 ﻿namespace MyTested.Mvc.Test.BuildersTests.ActionResultsTests.ObjectTests
 {
+    using System.Collections.Generic;
+    using System.Net;
     using Exceptions;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
@@ -8,8 +10,6 @@
     using Setups.Common;
     using Setups.Controllers;
     using Setups.Models;
-    using System.Collections.Generic;
-    using System.Net;
     using Xunit;
 
     public class ObjectTestBuilderTests

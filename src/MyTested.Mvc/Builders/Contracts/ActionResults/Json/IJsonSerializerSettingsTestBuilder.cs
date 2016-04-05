@@ -1,12 +1,13 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.ActionResults.Json
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Serialization;
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Runtime.Serialization.Formatters;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Serialization;
+
     /// <summary>
     /// Used for testing JSON serializer settings in a JSON result.
     /// </summary>

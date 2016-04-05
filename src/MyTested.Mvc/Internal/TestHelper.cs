@@ -1,5 +1,6 @@
 ﻿namespace MyTested.Mvc.Internal
 {
+    using System;
     using Application;
     using Http;
     using Microsoft.AspNetCore.Http;
@@ -10,7 +11,7 @@
     using Microsoft.AspNetCore.Session;
     using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.DependencyInjection;
-    using System;
+
     public static class TestHelper
     {
         /// <summary>

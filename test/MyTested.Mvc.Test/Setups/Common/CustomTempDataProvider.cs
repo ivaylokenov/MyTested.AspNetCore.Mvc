@@ -1,6 +1,5 @@
 ﻿namespace MyTested.Mvc.Test.Setups.Common
 {
-    using System;
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;

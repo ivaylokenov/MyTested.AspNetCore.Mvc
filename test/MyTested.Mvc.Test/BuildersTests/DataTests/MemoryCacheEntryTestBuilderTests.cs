@@ -5,9 +5,10 @@
     using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.DependencyInjection;
     using Setups;
+    using Setups.Common;
     using Setups.Controllers;
     using Xunit;
-    using Setups.Common;
+
     public class MemoryCacheEntryTestBuilderTests
     {
         [Fact]

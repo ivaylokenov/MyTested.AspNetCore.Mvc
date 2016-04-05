@@ -1,11 +1,11 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.ActionResults.Object
 {
+    using System.Collections.Generic;
+    using System.Net;
     using Base;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.Net.Http.Headers;
-    using System.Collections.Generic;
-    using System.Net;
 
     public interface IObjectTestBuilder : IBaseTestBuilderWithResponseModel,
         IBaseTestBuilderWithActionResult<ObjectResult>

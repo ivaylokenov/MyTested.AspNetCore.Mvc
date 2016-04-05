@@ -1,12 +1,12 @@
 ﻿namespace MyTested.Mvc.Test.BuildersTests.DataTests
 {
     using System;
+    using System.Collections.Generic;
     using Exceptions;
     using Microsoft.Extensions.Caching.Memory;
     using Setups;
     using Setups.Controllers;
     using Xunit;
-    using System.Collections.Generic;
 
     public class MemoryCacheTestBuilderTests
     {

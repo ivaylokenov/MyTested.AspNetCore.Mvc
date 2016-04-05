@@ -7,10 +7,10 @@
     using Builders.Contracts.Actions;
     using Builders.Contracts.Authentication;
     using Builders.Contracts.Controllers;
+    using Builders.Contracts.Data;
     using Builders.Contracts.Http;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using Builders.Contracts.Data;
 
     /// <summary>
     /// Used for building the controller which will be tested.

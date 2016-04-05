@@ -32,7 +32,7 @@
 
             internal set
             {
-                CommonValidator.CheckForNullReference(value, nameof(key));
+                CommonValidator.CheckForNullReference(value, nameof(this.key));
                 this.key = value;
             }
         }

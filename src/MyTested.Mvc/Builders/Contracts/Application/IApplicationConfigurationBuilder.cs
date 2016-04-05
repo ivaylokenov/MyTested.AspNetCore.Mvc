@@ -2,8 +2,8 @@
 {
     using System;
     using Microsoft.AspNetCore.Builder;
-    using Microsoft.Extensions.Configuration;
     using Microsoft.AspNetCore.Routing;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
 
     /// <summary>

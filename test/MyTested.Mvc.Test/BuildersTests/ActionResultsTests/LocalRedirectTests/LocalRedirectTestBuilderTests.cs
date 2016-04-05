@@ -159,8 +159,7 @@
                 .LocalRedirect()
                 .ToUrl(url => url.WithAbsolutePath("/local/test"));
         }
-
-
+        
         [Fact]
         public void WithCustomUrlHelperShouldNotThrowExceptionWithCorrectUrlHelper()
         {

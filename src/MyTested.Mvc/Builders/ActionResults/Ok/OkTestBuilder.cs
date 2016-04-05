@@ -183,7 +183,7 @@
         }
 
         /// <summary>
-        /// AndAlso method for better readability when chainingOKtests.
+        /// AndAlso method for better readability when chaining OK tests.
         /// </summary>
         /// <returns>The same OK test builder.</returns>
         public IOkTestBuilder AndAlso() => this;

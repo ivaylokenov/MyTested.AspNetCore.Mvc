@@ -12,11 +12,11 @@
             : base(testContext, ViewBagName)
         {
         }
-        
-        public IViewBagTestBuilder AndAlso() => this;
 
         protected override IAndViewBagTestBuilder DataProviderTestBuilder => this;
 
+        public IViewBagTestBuilder AndAlso() => this;
+        
         protected override IDictionary<string, object> GetDataProvider() => this.TestContext.ViewData;
     }
 }

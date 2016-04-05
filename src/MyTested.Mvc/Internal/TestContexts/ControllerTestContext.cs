@@ -63,7 +63,7 @@
 
             internal set
             {
-                CommonValidator.CheckForNotWhiteSpaceString(value, nameof(ActionName));
+                CommonValidator.CheckForNotWhiteSpaceString(value, nameof(this.ActionName));
                 this.actionName = value;
             }
         }
@@ -85,7 +85,7 @@
 
             internal set
             {
-                CommonValidator.CheckForNullReference(value, nameof(ActionCall));
+                CommonValidator.CheckForNullReference(value, nameof(this.ActionCall));
                 this.actionCall = value;
             }
         }

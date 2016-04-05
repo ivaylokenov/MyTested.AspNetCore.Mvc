@@ -5,8 +5,6 @@
     using Microsoft.AspNetCore.Http.Features;
     using Microsoft.AspNetCore.Http.Features.Internal;
     using Microsoft.AspNetCore.Http.Internal;
-    using Microsoft.AspNetCore.Session;
-    using Microsoft.Extensions.DependencyInjection;
     using Utilities.Validators;
 
     /// <summary>

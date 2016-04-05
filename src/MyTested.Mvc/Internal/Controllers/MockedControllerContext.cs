@@ -47,7 +47,7 @@
 
             set
             {
-                CommonValidator.CheckForNullReference(value, nameof(InputFormatters));
+                CommonValidator.CheckForNullReference(value, nameof(this.InputFormatters));
                 this.inputFormatters = value;
             }
         }
@@ -66,7 +66,7 @@
 
             set
             {
-                CommonValidator.CheckForNullReference(value, nameof(ModelBinders));
+                CommonValidator.CheckForNullReference(value, nameof(this.ModelBinders));
                 this.modelBinders = value;
             }
         }
@@ -85,7 +85,7 @@
 
             set
             {
-                CommonValidator.CheckForNullReference(value, nameof(ValidatorProviders));
+                CommonValidator.CheckForNullReference(value, nameof(this.ValidatorProviders));
                 this.validatorProviders = value;
             }
         }

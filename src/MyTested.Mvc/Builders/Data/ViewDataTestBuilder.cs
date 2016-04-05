@@ -12,10 +12,10 @@
             : base(testContext, ViewDataName)
         {
         }
-        
-        public IViewDataTestBuilder AndAlso() => this;
 
         protected override IAndViewDataTestBuilder DataProviderTestBuilder => this;
+
+        public IViewDataTestBuilder AndAlso() => this;
 
         protected override IDictionary<string, object> GetDataProvider() => this.TestContext.ViewData;
     }

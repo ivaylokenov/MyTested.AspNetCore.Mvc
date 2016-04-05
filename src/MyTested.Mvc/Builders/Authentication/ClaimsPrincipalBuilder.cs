@@ -173,7 +173,7 @@
         internal ClaimsPrincipal GetClaimsPrincipal()
         {
             var identities = this.identities.Reverse().ToList();
-            identities.Add(GetAuthenticatedClaimsIdentity());
+            identities.Add(this.GetAuthenticatedClaimsIdentity());
 
             var claimsPrincipal = new ClaimsPrincipal(identities);
             

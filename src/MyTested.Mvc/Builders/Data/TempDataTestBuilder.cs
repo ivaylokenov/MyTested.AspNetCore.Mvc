@@ -13,9 +13,9 @@
         {
         }
 
-        public ITempDataTestBuilder AndAlso() => this;
-
         protected override IAndTempDataTestBuilder DataProviderTestBuilder => this;
+
+        public ITempDataTestBuilder AndAlso() => this;
 
         protected override IDictionary<string, object> GetDataProvider() => this.TestContext.TempData;
     }

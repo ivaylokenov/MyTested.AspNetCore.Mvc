@@ -12,7 +12,8 @@
         {
         }
 
-
+        protected abstract TDataProviderTestBuilder DataProviderTestBuilder { get; }
+        
         public TDataProviderTestBuilder ContainingEntryWithKey(string key)
         {
             this.ValidateContainingEntryWithKey(key);
@@ -51,7 +52,5 @@
             this.ValidateContainingEntries(entries);
             return this.DataProviderTestBuilder;
         }
-
-        protected abstract TDataProviderTestBuilder DataProviderTestBuilder { get; }
     }
 }

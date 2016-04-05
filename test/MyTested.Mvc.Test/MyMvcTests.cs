@@ -24,7 +24,9 @@ namespace MyTested.Mvc.Test
     using Microsoft.AspNetCore.Mvc.Abstractions;
     using Microsoft.AspNetCore.Mvc.Controllers;
     using Microsoft.AspNetCore.Mvc.Internal;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.AspNetCore.Routing;
+    using Microsoft.AspNetCore.Session;
     using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -34,8 +36,7 @@ namespace MyTested.Mvc.Test
     using Setups.Controllers;
     using Setups.Services;
     using Setups.Startups;
-    using Microsoft.AspNetCore.Session;
-    using Microsoft.AspNetCore.Mvc.ViewFeatures;
+
     public class MyMvcTests
     {
         [Fact]

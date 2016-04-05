@@ -3,10 +3,11 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Security.Claims;
-    using Setups.Controllers;
-    using Xunit;
     using System.Security.Principal;
     using Setups.Common;
+    using Setups.Controllers;
+    using Xunit;
+
     public class ClaimsPrincipalBuilderTests
     {
         [Fact]

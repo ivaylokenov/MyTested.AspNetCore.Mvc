@@ -39,8 +39,8 @@
 
             private set
             {
-                CommonValidator.CheckForNullReference(value, nameof(TestContext));
-                CommonValidator.CheckForNullReference(value.Controller, nameof(Controller));
+                CommonValidator.CheckForNullReference(value, nameof(this.TestContext));
+                CommonValidator.CheckForNullReference(value.Controller, nameof(this.Controller));
                 this.testContext = value;
             }
         }

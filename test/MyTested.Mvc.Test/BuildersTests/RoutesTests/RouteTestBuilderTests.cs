@@ -1,5 +1,7 @@
 ﻿namespace MyTested.Mvc.Test.BuildersTests.RoutesTests
 {
+    using System;
+    using System.Collections.Generic;
     using Exceptions;
     using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -7,8 +9,6 @@
     using Setups;
     using Setups.Routes;
     using Setups.Startups;
-    using System;
-    using System.Collections.Generic;
     using Xunit;
 
     public class RouteTestBuilderTests
