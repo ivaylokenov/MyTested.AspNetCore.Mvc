@@ -85,6 +85,31 @@
                         .WithQuery("?query=Test"),
                 TestObjectFactory.GetFailingValidationAction());
         }
+        
+        [Fact]
+        public void ValidateLocationShouldNotThrowExceptionWithCorrectPassingPredicate()
+        {
+            var actionResultWithLocation = new CreatedResult(TestObjectFactory.GetUri(), "Test");
+
+            LocationValidator.ValidateLocation(
+                actionResultWithLocation,
+                location => location.Passing(uri => uri.Host == "somehost.com"),
+                TestObjectFactory.GetFailingValidationAction());
+        }
+        
+        [Fact]
+        public void ValidateLocationShouldNotThrowExceptionWithCorrectPassingAssertions()
+        {
+            var actionResultWithLocation = new CreatedResult(TestObjectFactory.GetUri(), "Test");
+
+            LocationValidator.ValidateLocation(
+                actionResultWithLocation,
+                location => location.Passing(uri =>
+                {
+                    Assert.Equal("somehost.com", uri.Host);
+                }),
+                TestObjectFactory.GetFailingValidationAction());
+        }
 
         [Fact]
         public void ValidateLocationShouldThrowExceptionWithIncorrectLocationBuilder()

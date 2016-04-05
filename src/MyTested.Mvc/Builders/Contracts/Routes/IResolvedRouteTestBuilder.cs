@@ -28,5 +28,12 @@
         /// </summary>
         /// <returns>The same route test builder.</returns>
         IAndResolvedRouteTestBuilder ToValidModelState();
+
+        /// <summary>
+        /// Tests whether the resolved route will have invalid model state.
+        /// </summary>
+        /// <param name="withNumberOfErrors">Expected number of errors. If default null is provided, the test builder checks only if any errors are found.</param>
+        /// <returns>The same route test builder.</returns>
+        IAndResolvedRouteTestBuilder ToInvalidModelState(int? withNumberOfErrors = null);
     }
 }

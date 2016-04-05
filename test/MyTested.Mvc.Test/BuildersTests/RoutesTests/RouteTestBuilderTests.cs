@@ -21,7 +21,7 @@
                 .ShouldMap("/")
                 .ToAction("Index");
         }
-        
+
         [Fact]
         public void ToActionShouldThrowExceptionWithIncorrectAction()
         {
@@ -62,7 +62,7 @@
                 .ShouldMap("/")
                 .To<HomeController>();
         }
-        
+
         [Fact]
         public void ToControllerShouldThrowExceptionWithIncorrectControllerType()
         {
@@ -90,7 +90,7 @@
                 },
                 "Expected route '/' to match Index controller but in fact matched Home.");
         }
-        
+
         [Fact]
         public void ToRouteValueShouldNotThrowExceptionWithCorrectRouteValueKey()
         {
@@ -113,7 +113,7 @@
                 },
                 "Expected route '/Home/Contact/1' to contain route value with 'name' key but such was not found.");
         }
-        
+
         [Fact]
         public void ToRouteValueShouldNotThrowExceptionWithCorrectRouteValue()
         {
@@ -136,7 +136,7 @@
                 },
                 "Expected route '/Home/Contact/1' to contain route value with 'id' key and the provided value but the value was different.");
         }
-        
+
         [Fact]
         public void ToRouteValuesShouldNotThrowExceptionWithCorrectRouteValues()
         {
@@ -145,7 +145,7 @@
                 .ShouldMap("/Home/Contact/1")
                 .ToRouteValues(new { controller = "Home", action = "Contact", id = 1 });
         }
-        
+
         [Fact]
         public void ToRouteValuesShouldNotMakeCountCheckWithProvidedLambda()
         {
@@ -184,7 +184,7 @@
                 },
                 "Expected route '/Home/Contact/1' to contain route value with 'action' key and the provided value but the value was different.");
         }
-        
+
         [Fact]
         public void ToRouteValuesShouldThrowExceptionWithIncorrectRouteValuesWithSingleCountError()
         {
@@ -198,7 +198,7 @@
                 },
                 "Expected route '/Home/Contact/1' to contain 1 route value but in fact found 3.");
         }
-        
+
         [Fact]
         public void ToRouteValuesShouldThrowExceptionWithIncorrectRouteValuesWithMultipleCountError()
         {
@@ -212,7 +212,7 @@
                 },
                 "Expected route '/Home/Contact/1' to contain 4 route values but in fact found 3.");
         }
-        
+
         [Fact]
         public void ToDataTokenShouldNotThrowExceptionWithCorrectDataTokenKey()
         {
@@ -287,7 +287,7 @@
 
             MyMvc.IsUsingDefaultConfiguration();
         }
-        
+
         [Fact]
         public void ToDataTokensShouldNotThrowExceptionWithCorrectDataTokensAsDictionary()
         {
@@ -385,7 +385,7 @@
                 .ShouldMap(request => request.WithMethod(HttpMethod.Post))
                 .To<HomeController>(c => c.Index());
         }
-        
+
         [Fact]
         public void ToShouldResolveCorrectControllerAndActionWithPartialPath()
         {
@@ -483,7 +483,8 @@
                     .WithMethod(HttpMethod.Post)
                     .WithJsonBody(new
                     {
-                        Integer = 1, String = "Text"
+                        Integer = 1,
+                        String = "Text"
                     }))
                 .To<NormalController>(c => c.ActionWithMultipleParameters(
                     1,
@@ -556,7 +557,7 @@
 
             MyMvc.IsUsingDefaultConfiguration();
         }
-        
+
         [Fact]
         public void ToShouldResolveCorrectControllerAndActionWithDefaultValues()
         {
@@ -638,7 +639,7 @@
                 .ShouldMap("/Normal/ActionWithModel/1")
                 .ToNonExistingRoute();
         }
-        
+
         [Fact]
         public void ToNonExistingRouteShouldThrowExceptionWithValidOne()
         {
@@ -762,7 +763,7 @@
                     .WithJsonBody(@"{""Integer"":5,""String"":""Test""}"))
                 .ToValidModelState();
         }
-        
+
         [Fact]
         public void ToValidModelStateShouldThrowExceptionWithUnresolvedAction()
         {
@@ -778,6 +779,115 @@
                         .ToValidModelState();
                 },
                 "Expected route '/Normal/Invalid/5' to have valid model state with no errors but action could not be matched.");
+        }
+
+        [Fact]
+        public void ToValidModelStateShouldThrowExceptionWithInvalidModelState()
+        {
+            Test.AssertException<RouteAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Routes()
+                        .ShouldMap(request => request
+                            .WithPath("/Normal/ActionWithModel/5")
+                            .WithMethod(HttpMethod.Post)
+                            .WithJsonBody(@"{""Integer"":5}"))
+                        .ToValidModelState();
+                },
+                "Expected route '/Normal/ActionWithModel/5' to have valid model state with no errors but it had some.");
+        }
+
+        [Fact]
+        public void ToInvalidModelStateShouldNotThrowExceptionWithInvalidModelState()
+        {
+            MyMvc
+                .Routes()
+                .ShouldMap(request => request
+                    .WithPath("/Normal/ActionWithModel/5")
+                    .WithMethod(HttpMethod.Post)
+                    .WithJsonBody(@"{""Integer"":5}"))
+                .ToInvalidModelState();
+        }
+        
+        [Fact]
+        public void ToInvalidModelStateShouldNotThrowExceptionWithInvalidModelStateAndCorrectNumberOfErrors()
+        {
+            MyMvc
+                .Routes()
+                .ShouldMap(request => request
+                    .WithPath("/Normal/ActionWithModel/5")
+                    .WithMethod(HttpMethod.Post)
+                    .WithJsonBody(@"{""Integer"":5}"))
+                .ToInvalidModelState(withNumberOfErrors: 1);
+        }
+
+        [Fact]
+        public void ToInvalidModelStateShouldThrowExceptionWithValidModelState()
+        {
+            Test.AssertException<RouteAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Routes()
+                        .ShouldMap(request => request
+                            .WithPath("/Normal/ActionWithModel/5")
+                            .WithMethod(HttpMethod.Post)
+                            .WithJsonBody(@"{""Integer"":5,""String"":""Test""}"))
+                        .ToInvalidModelState();
+                },
+                "Expected route '/Normal/ActionWithModel/5' to have invalid model state but was in fact valid.");
+        }
+        
+        [Fact]
+        public void ToInvalidModelStateShouldThrowExceptionWithIncorrectNumberOfErrors()
+        {
+            Test.AssertException<RouteAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Routes()
+                        .ShouldMap(request => request
+                            .WithPath("/Normal/ActionWithModel/5")
+                            .WithMethod(HttpMethod.Post)
+                            .WithJsonBody(@"{""Integer"":5}"))
+                        .ToInvalidModelState(withNumberOfErrors: 3);
+                },
+                "Expected route '/Normal/ActionWithModel/5' to have invalid model state with 3 errors but in fact contained 1.");
+        }
+        
+        [Fact]
+        public void ToInvalidModelStateShouldThrowExceptionWithIncorrectOneNumberOfErrors()
+        {
+            Test.AssertException<RouteAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Routes()
+                        .ShouldMap(request => request
+                            .WithPath("/Normal/ActionWithModel/5")
+                            .WithMethod(HttpMethod.Post)
+                            .WithJsonBody(@"{""Integer"":5,""String"":""Test""}"))
+                        .ToInvalidModelState(withNumberOfErrors: 1);
+                },
+                "Expected route '/Normal/ActionWithModel/5' to have invalid model state with 1 error but in fact contained 0.");
+        }
+
+        [Fact]
+        public void ToInvalidModelStateShouldThrowExceptionWithUnresolvedAction()
+        {
+            Test.AssertException<RouteAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Routes()
+                        .ShouldMap(request => request
+                            .WithPath("/Normal/Invalid/5")
+                            .WithMethod(HttpMethod.Post)
+                            .WithJsonBody(@"{""Integer"":5,""String"":""Test""}"))
+                        .ToInvalidModelState();
+                },
+                "Expected route '/Normal/Invalid/5' to have invalid model state but action could not be matched.");
         }
 
         [Fact]

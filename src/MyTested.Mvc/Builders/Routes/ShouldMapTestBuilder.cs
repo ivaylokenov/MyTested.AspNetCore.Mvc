@@ -292,7 +292,7 @@
                 || (withNumberOfErrors != null && actualModelStateErrors != withNumberOfErrors))
             {
                 this.ThrowNewRouteAssertionException(
-                    $"have invalid model state{(withNumberOfErrors == null ? string.Empty : $" with {withNumberOfErrors} errors")}",
+                    $"have invalid model state{(withNumberOfErrors == null ? string.Empty : $" with {withNumberOfErrors} {(withNumberOfErrors != 1 ? "errors" : "error")}")}",
                     withNumberOfErrors == null ? "was in fact valid" : $"in fact contained {actualModelStateErrors}");
             }
 
