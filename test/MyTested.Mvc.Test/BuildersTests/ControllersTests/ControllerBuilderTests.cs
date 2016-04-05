@@ -426,12 +426,14 @@
         {
             var httpContext = new DefaultHttpContext();
 
-            var setHttpContext = MyMvc
+            MyMvc
                 .Controller<MvcController>()
                 .WithHttpContext(httpContext)
-                .AndProvideTheHttpContext();
-
-            Assert.Throws<InvalidOperationException>(() => setHttpContext.Session);
+                .ShouldPassFor()
+                .TheHttpContext(context =>
+                {
+                    Assert.Throws<InvalidOperationException>(() => context.Session);
+                });
         }
 
         [Fact]
@@ -1245,12 +1247,14 @@
 
             var httpContext = new DefaultHttpContext();
 
-            var setHttpContext = MyMvc
+            MyMvc
                 .Controller<FullPocoController>()
                 .WithHttpContext(httpContext)
-                .AndProvideTheHttpContext();
-
-            Assert.Throws<InvalidOperationException>(() => setHttpContext.Session);
+                .ShouldPassFor()
+                .TheHttpContext(context =>
+                {
+                    Assert.Throws<InvalidOperationException>(() => context.Session);
+                });
         }
 
         [Fact]

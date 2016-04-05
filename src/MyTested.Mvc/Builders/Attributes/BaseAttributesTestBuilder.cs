@@ -13,7 +13,7 @@
     /// <summary>
     /// Base class for all attribute test builders.
     /// </summary>
-    public abstract class BaseAttributesTestBuilder : BaseTestBuilder
+    public abstract class BaseAttributesTestBuilder : BaseTestBuilderWithController
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseAttributesTestBuilder" /> class.

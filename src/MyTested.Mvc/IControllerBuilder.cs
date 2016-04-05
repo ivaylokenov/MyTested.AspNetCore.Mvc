@@ -6,6 +6,7 @@
     using System.Threading.Tasks;
     using Builders.Contracts.Actions;
     using Builders.Contracts.Authentication;
+    using Builders.Contracts.Base;
     using Builders.Contracts.Controllers;
     using Builders.Contracts.Data;
     using Builders.Contracts.Http;
@@ -16,7 +17,7 @@
     /// Used for building the controller which will be tested.
     /// </summary>
     /// <typeparam name="TController">Class representing ASP.NET MVC controller.</typeparam>
-    public interface IControllerBuilder<TController>
+    public interface IControllerBuilder<TController> : IBaseTestBuilder
         where TController : class
     {
         /// <summary>
@@ -151,17 +152,5 @@
         /// </summary>
         /// <returns>Instance of the ASP.NET MVC controller.</returns>
         TController AndProvideTheController();
-
-        /// <summary>
-        /// Gets the HTTP request message with which the action will be tested.
-        /// </summary>
-        /// <returns>HttpRequest from the tested controller.</returns>
-        HttpRequest AndProvideTheHttpRequest();
-
-        /// <summary>
-        /// Gets the HTTP context with which the action will be tested.
-        /// </summary>
-        /// <returns>HttpContext from the tested controller.</returns>
-        HttpContext AndProvideTheHttpContext();
     }
 }

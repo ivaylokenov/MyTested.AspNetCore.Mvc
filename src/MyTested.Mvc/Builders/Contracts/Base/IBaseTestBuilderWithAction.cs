@@ -5,7 +5,7 @@
     /// <summary>
     /// Base interface for all test builders with action call.
     /// </summary>
-    public interface IBaseTestBuilderWithAction : IBaseTestBuilder
+    public interface IBaseTestBuilderWithAction : IBaseTestBuilderWithController
     {
         /// <summary>
         /// Gets the action name which will be tested.

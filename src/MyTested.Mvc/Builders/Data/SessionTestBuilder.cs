@@ -88,7 +88,7 @@
         protected override IDictionary<string, object> GetDataProvider()
         {
             var result = new Dictionary<string, object>();
-            var session = this.TestContext.HttpContext.Session;
+            var session = this.HttpContext.Session;
 
             foreach (var key in session.Keys)
             {

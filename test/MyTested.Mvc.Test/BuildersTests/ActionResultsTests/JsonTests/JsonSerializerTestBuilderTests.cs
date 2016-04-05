@@ -763,8 +763,7 @@
                 },
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Double float parse handling, but in fact found Decimal.");
         }
-
-
+        
         [Fact]
         public void WithMetadataPropertyHandlingShouldNotThrowExceptionWithCorrectValue()
         {
@@ -903,8 +902,7 @@
                 },
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have EscapeNonAscii string escape handling, but in fact found EscapeHtml.");
         }
-
-
+        
         [Fact]
         public void WithFormattingShouldNotThrowExceptionWithCorrectValue()
         {

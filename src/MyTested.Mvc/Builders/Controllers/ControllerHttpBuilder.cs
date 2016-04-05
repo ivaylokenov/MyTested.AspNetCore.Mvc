@@ -32,7 +32,7 @@
 
         public IAndControllerBuilder<TController> WithHttpContext(Action<HttpContext> httpContextSetup)
         {
-            httpContextSetup(this.TestContext.HttpContext);
+            httpContextSetup(this.HttpContext);
             return this;
         }
 

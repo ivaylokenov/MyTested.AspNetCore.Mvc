@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using Base;
     using Contracts.Controllers;
     using Contracts.Data;
     using Internal.Contracts;
@@ -17,7 +18,7 @@
     /// Used for building the controller which will be tested.
     /// </summary>
     /// <typeparam name="TController">Class representing ASP.NET MVC controller.</typeparam>
-    public partial class ControllerBuilder<TController> : IAndControllerBuilder<TController>
+    public partial class ControllerBuilder<TController> : BaseTestBuilder, IAndControllerBuilder<TController>
         where TController : class
     {
         private readonly IDictionary<Type, object> aggregatedDependencies;
@@ -36,6 +37,7 @@
         /// </summary>
         /// <param name="testContext"></param>
         public ControllerBuilder(ControllerTestContext testContext)
+            :base (testContext)
         {
             this.TestContext = testContext;
 
@@ -58,7 +60,7 @@
             }
         }
 
-        private ControllerTestContext TestContext
+        private new ControllerTestContext TestContext
         {
             get
             {
@@ -72,7 +74,7 @@
             }
         }
 
-        private MockedHttpContext HttpContext => this.TestContext.MockedHttpContext;
+        private new MockedHttpContext HttpContext => this.TestContext.MockedHttpContext;
 
         private HttpRequest HttpRequest => this.HttpContext.Request;
 
@@ -105,25 +107,7 @@
         {
             return this.Controller;
         }
-
-        /// <summary>
-        /// Gets the HTTP request with which the action will be tested.
-        /// </summary>
-        /// <returns>HttpRequest from the tested controller.</returns>
-        public HttpRequest AndProvideTheHttpRequest()
-        {
-            return this.TestContext.HttpRequest;
-        }
-
-        /// <summary>
-        /// Gets the HTTP context with which the action will be tested.
-        /// </summary>
-        /// <returns>HttpContext from the tested controller.</returns>
-        public HttpContext AndProvideTheHttpContext()
-        {
-            return this.TestContext.HttpContext;
-        }
-
+        
         private void ValidateControllerType()
         {
             var validControllers = this.Services.GetService<IValidControllersCache>();
