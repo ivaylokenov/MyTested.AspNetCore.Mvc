@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Builders.Contracts.ShouldPass
+﻿namespace MyTested.Mvc.Builders.Contracts.ShouldPassFor
 {
     using System;
     using Microsoft.AspNetCore.Http;
@@ -7,10 +7,10 @@
     {
         IShouldPassForTestBuilder TheHttpContext(Action<HttpContext> assertions);
 
-        IShouldPassForTestBuilder TheHttpContext(Func<HttpContext, bool> assertions);
+        IShouldPassForTestBuilder TheHttpContext(Func<HttpContext, bool> predicate);
 
         IShouldPassForTestBuilder TheHttpRequest(Action<HttpRequest> assertions);
 
-        IShouldPassForTestBuilder TheHttpRequest(Func<HttpRequest, bool> assertions);
+        IShouldPassForTestBuilder TheHttpRequest(Func<HttpRequest, bool> predicate);
     }
 }

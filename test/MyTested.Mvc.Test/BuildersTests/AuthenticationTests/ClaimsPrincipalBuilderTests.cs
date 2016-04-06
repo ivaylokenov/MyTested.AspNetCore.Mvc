@@ -13,77 +13,87 @@
         [Fact]
         public void WithNameTypeShouldOverrideDefaultClaimType()
         {
-            var controller = MyMvc
+            MyMvc
                 .Controller<MvcController>()
                 .WithAuthenticatedUser(user => user
                     .WithNameType("CustomUsername")
                     .WithUsername("MyUsername"))
-                .AndProvideTheController();
-            
-            var claim = controller.User.Claims.FirstOrDefault(c => c.Type == "CustomUsername");
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    var claim = controller.User.Claims.FirstOrDefault(c => c.Type == "CustomUsername");
 
-            Assert.NotNull(claim);
-            Assert.Equal("MyUsername", claim.Value);
+                    Assert.NotNull(claim);
+                    Assert.Equal("MyUsername", claim.Value);
+                });
         }
         
         [Fact]
         public void WithRoleTypeShouldOverrideDefaultClaimType()
         {
-            var controller = MyMvc
+            MyMvc
                 .Controller<MvcController>()
                 .WithAuthenticatedUser(user => user
                     .WithRoleType("CustomRole")
                     .InRole("MyRole"))
-                .AndProvideTheController();
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    var claim = controller.User.Claims.FirstOrDefault(c => c.Type == "CustomRole");
 
-            var claim = controller.User.Claims.FirstOrDefault(c => c.Type == "CustomRole");
-
-            Assert.NotNull(claim);
-            Assert.Equal("MyRole", claim.Value);
+                    Assert.NotNull(claim);
+                    Assert.Equal("MyRole", claim.Value);
+                });
         }
 
         [Fact]
         public void WithoutIdentifierShouldSetCorrectDefaultIdentifier()
         {
-            var controller = MyMvc
+            MyMvc
                 .Controller<MvcController>()
                 .WithAuthenticatedUser()
-                .AndProvideTheController();
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    var claim = controller.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
 
-            var claim = controller.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
-
-            Assert.NotNull(claim);
-            Assert.Equal("TestId", claim.Value);
+                    Assert.NotNull(claim);
+                    Assert.Equal("TestId", claim.Value);
+                });
         }
 
         [Fact]
         public void WithIdentifierShouldSetCorrectIdentifier()
         {
-            var controller = MyMvc
+            MyMvc
                 .Controller<MvcController>()
                 .WithAuthenticatedUser(user => user
                     .WithIdentifier("TestingId"))
-                .AndProvideTheController();
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    var claim = controller.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
 
-            var claim = controller.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
-
-            Assert.NotNull(claim);
-            Assert.Equal("TestingId", claim.Value);
+                    Assert.NotNull(claim);
+                    Assert.Equal("TestingId", claim.Value);
+                });
         }
 
         [Fact]
         public void WithClaimShouldSetCorrectClaim()
         {
-            var controller = MyMvc
+            MyMvc
                 .Controller<MvcController>()
                 .WithAuthenticatedUser(user => user
                     .WithClaim("MyClaim", "MyValue"))
-                .AndProvideTheController();
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    var claim = controller.User.Claims.FirstOrDefault(c => c.Type == "MyClaim");
 
-            var claim = controller.User.Claims.FirstOrDefault(c => c.Type == "MyClaim");
-
-            Assert.NotNull(claim);
-            Assert.Equal("MyValue", claim.Value);
+                    Assert.NotNull(claim);
+                    Assert.Equal("MyValue", claim.Value);
+                });
         }
 
         [Fact]

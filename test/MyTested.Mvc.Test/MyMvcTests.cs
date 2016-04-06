@@ -188,32 +188,45 @@ namespace MyTested.Mvc.Test
         [Fact]
         public void ControllerWithoutConstructorFunctionShouldPopulateCorrectNewInstanceOfControllerType()
         {
-            var controller = MyMvc.Controller<MvcController>().AndProvideTheController();
-
-            Assert.NotNull(controller);
-            Assert.IsAssignableFrom<MvcController>(controller);
+            MyMvc
+                .Controller<MvcController>()
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    Assert.NotNull(controller);
+                    Assert.IsAssignableFrom<MvcController>(controller);
+                });
         }
 
         [Fact]
         public void ControllerWithConstructorFunctionShouldPopulateCorrectNewInstanceOfControllerType()
         {
-            var controller = MyMvc.Controller(() => new MvcController(new InjectedService())).AndProvideTheController();
+            MyMvc
+                .Controller(() => new MvcController(new InjectedService()))
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    Assert.NotNull(controller);
+                    Assert.IsAssignableFrom<MvcController>(controller);
 
-            Assert.NotNull(controller);
-            Assert.IsAssignableFrom<MvcController>(controller);
-
-            Assert.NotNull(controller.InjectedService);
-            Assert.IsAssignableFrom<InjectedService>(controller.InjectedService);
+                    Assert.NotNull(controller.InjectedService);
+                    Assert.IsAssignableFrom<InjectedService>(controller.InjectedService);
+                });
         }
 
         [Fact]
         public void ControllerWithProvidedInstanceShouldPopulateCorrectInstanceOfControllerType()
         {
             var instance = new MvcController();
-            var controller = MyMvc.Controller(instance).AndProvideTheController();
 
-            Assert.NotNull(controller);
-            Assert.IsAssignableFrom<MvcController>(controller);
+            MyMvc
+                .Controller(instance)
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    Assert.NotNull(controller);
+                    Assert.IsAssignableFrom<MvcController>(controller);
+                });
         }
 
         [Fact]
@@ -227,14 +240,18 @@ namespace MyTested.Mvc.Test
                     services.AddTransient<IAnotherInjectedService, AnotherInjectedService>();
                 });
 
-            var controller = MyMvc.Controller<NoParameterlessConstructorController>().AndProvideTheController();
-
-            Assert.NotNull(controller);
-            Assert.NotNull(controller.Service);
-            Assert.IsAssignableFrom<InjectedService>(controller.Service);
-            Assert.NotNull(controller.AnotherInjectedService);
-            Assert.IsAssignableFrom<AnotherInjectedService>(controller.AnotherInjectedService);
-
+            MyMvc
+                .Controller<NoParameterlessConstructorController>()
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    Assert.NotNull(controller);
+                    Assert.NotNull(controller.Service);
+                    Assert.IsAssignableFrom<InjectedService>(controller.Service);
+                    Assert.NotNull(controller.AnotherInjectedService);
+                    Assert.IsAssignableFrom<AnotherInjectedService>(controller.AnotherInjectedService);
+                });
+            
             MyMvc.IsUsingDefaultConfiguration();
         }
 
@@ -558,13 +575,21 @@ namespace MyTested.Mvc.Test
             HttpContext firstContext = null;
             HttpContext secondContext = null;
 
-            firstContext = MyMvc
-                            .Controller<HttpContextController>()
-                            .AndProvideTheController().Context;
+            MyMvc
+                .Controller<HttpContextController>()
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    firstContext = controller.Context;
+                });
 
-            secondContext = MyMvc
-                            .Controller<HttpContextController>()
-                            .AndProvideTheController().Context;
+            MyMvc
+                .Controller<HttpContextController>()
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    secondContext = controller.Context;
+                });
 
             Assert.NotNull(firstContext);
             Assert.NotNull(secondContext);
@@ -601,33 +626,53 @@ namespace MyTested.Mvc.Test
                     {
                         Task.Run(() =>
                         {
-                            firstContextAsync = MyMvc
+                            MyMvc
                                 .Controller<HttpContextController>()
-                                .AndProvideTheController().Context;
+                                .ShouldPassFor()
+                                .TheController(controller =>
+                                {
+                                    firstContextAsync = controller.Context;
+                                });
                         }),
                         Task.Run(() =>
                         {
-                            secondContextAsync = MyMvc
+                            MyMvc
                                 .Controller<HttpContextController>()
-                                .AndProvideTheController().Context;
+                                .ShouldPassFor()
+                                .TheController(controller =>
+                                {
+                                    secondContextAsync = controller.Context;
+                                });
                         }),
                         Task.Run(() =>
                         {
-                            thirdContextAsync = MyMvc
+                            MyMvc
                                 .Controller<HttpContextController>()
-                                .AndProvideTheController().Context;
+                                .ShouldPassFor()
+                                .TheController(controller =>
+                                {
+                                    thirdContextAsync = controller.Context;
+                                });
                         }),
                         Task.Run(() =>
                         {
-                            fourthContextAsync = MyMvc
+                            MyMvc
                                 .Controller<HttpContextController>()
-                                .AndProvideTheController().Context;
+                                .ShouldPassFor()
+                                .TheController(controller =>
+                                {
+                                    fourthContextAsync = controller.Context;
+                                });
                         }),
                         Task.Run(() =>
                         {
-                            fifthContextAsync = MyMvc
+                            MyMvc
                                 .Controller<HttpContextController>()
-                                .AndProvideTheController().Context;
+                                .ShouldPassFor()
+                                .TheController(controller =>
+                                {
+                                    fifthContextAsync = controller.Context;
+                                });
                         })
                     };
 
@@ -674,16 +719,18 @@ namespace MyTested.Mvc.Test
             var httpContext = new DefaultHttpContext();
             httpContext.Request.ContentType = ContentType.AudioVorbis;
 
-            var controller = MyMvc
+            MyMvc
                 .Controller<HttpContextController>()
                 .WithHttpContext(httpContext)
-                .AndProvideTheController();
-
-            Assert.NotNull(controller);
-            Assert.NotNull(controller.HttpContext);
-            Assert.NotNull(controller.Context);
-            Assert.Equal(ContentType.AudioVorbis, controller.HttpContext.Request.ContentType);
-            Assert.Equal(ContentType.AudioVorbis, controller.Context.Request.ContentType);
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    Assert.NotNull(controller);
+                    Assert.NotNull(controller.HttpContext);
+                    Assert.NotNull(controller.Context);
+                    Assert.Equal(ContentType.AudioVorbis, controller.HttpContext.Request.ContentType);
+                    Assert.Equal(ContentType.AudioVorbis, controller.Context.Request.ContentType);
+                });
 
             MyMvc.IsUsingDefaultConfiguration();
         }
@@ -701,13 +748,21 @@ namespace MyTested.Mvc.Test
             ActionContext firstContext = null;
             ActionContext secondContext = null;
 
-            firstContext = MyMvc
-                            .Controller<ActionContextController>()
-                            .AndProvideTheController().Context;
+            MyMvc
+                .Controller<ActionContextController>()
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    firstContext = controller.Context;
+                });
 
-            secondContext = MyMvc
-                            .Controller<ActionContextController>()
-                            .AndProvideTheController().Context;
+            MyMvc
+                .Controller<ActionContextController>()
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    secondContext = controller.Context;
+                });
 
             Assert.NotNull(firstContext);
             Assert.NotNull(secondContext);
@@ -741,33 +796,53 @@ namespace MyTested.Mvc.Test
                     {
                         Task.Run(() =>
                         {
-                            firstContextAsync = MyMvc
+                            MyMvc
                                 .Controller<ActionContextController>()
-                                .AndProvideTheController().Context;
+                                .ShouldPassFor()
+                                .TheController(controller =>
+                                {
+                                    firstContextAsync = controller.Context;
+                                });
                         }),
                         Task.Run(() =>
                         {
-                            secondContextAsync = MyMvc
+                            MyMvc
                                 .Controller<ActionContextController>()
-                                .AndProvideTheController().Context;
+                                .ShouldPassFor()
+                                .TheController(controller =>
+                                {
+                                    secondContextAsync = controller.Context;
+                                });
                         }),
                         Task.Run(() =>
                         {
-                            thirdContextAsync = MyMvc
+                            MyMvc
                                 .Controller<ActionContextController>()
-                                .AndProvideTheController().Context;
+                                .ShouldPassFor()
+                                .TheController(controller =>
+                                {
+                                    thirdContextAsync = controller.Context;
+                                });
                         }),
                         Task.Run(() =>
                         {
-                            fourthContextAsync = MyMvc
+                            MyMvc
                                 .Controller<ActionContextController>()
-                                .AndProvideTheController().Context;
+                                .ShouldPassFor()
+                                .TheController(controller =>
+                                {
+                                    fourthContextAsync = controller.Context;
+                                });
                         }),
                         Task.Run(() =>
                         {
-                            fifthContextAsync = MyMvc
+                            MyMvc
                                 .Controller<ActionContextController>()
-                                .AndProvideTheController().Context;
+                                .ShouldPassFor()
+                                .TheController(controller =>
+                                {
+                                    fifthContextAsync = controller.Context;
+                                });
                         })
                     };
 
@@ -809,14 +884,16 @@ namespace MyTested.Mvc.Test
             var actionDescriptor = new ControllerActionDescriptor { Name = "Test" };
             var actionContext = new ActionContext { ActionDescriptor = actionDescriptor };
 
-            var controller = MyMvc
+            MyMvc
                 .Controller<ActionContextController>()
                 .WithActionContext(actionContext)
-                .AndProvideTheController();
-
-            Assert.NotNull(controller);
-            Assert.NotNull(controller.Context);
-            Assert.Equal("Test", controller.Context.ActionDescriptor.Name);
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    Assert.NotNull(controller);
+                    Assert.NotNull(controller.Context);
+                    Assert.Equal("Test", controller.Context.ActionDescriptor.Name);
+                });
 
             MyMvc.IsUsingDefaultConfiguration();
         }
@@ -833,17 +910,19 @@ namespace MyTested.Mvc.Test
 
             var actionDescriptor = new ControllerActionDescriptor { Name = "Test" };
 
-            var controller = MyMvc
+            MyMvc
                 .Controller<ActionContextController>()
                 .WithActionContext(actionContext =>
                 {
                     actionContext.ActionDescriptor = actionDescriptor;
                 })
-                .AndProvideTheController();
-
-            Assert.NotNull(controller);
-            Assert.NotNull(controller.Context);
-            Assert.Equal("Test", controller.Context.ActionDescriptor.Name);
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    Assert.NotNull(controller);
+                    Assert.NotNull(controller.Context);
+                    Assert.Equal("Test", controller.Context.ActionDescriptor.Name);
+                });
 
             MyMvc.IsUsingDefaultConfiguration();
         }
@@ -861,14 +940,16 @@ namespace MyTested.Mvc.Test
             var actionDescriptor = new ControllerActionDescriptor { Name = "Test" };
             var actionContext = new ControllerContext { ActionDescriptor = actionDescriptor };
 
-            var controller = MyMvc
+            MyMvc
                 .Controller<ActionContextController>()
                 .WithControllerContext(actionContext)
-                .AndProvideTheController();
-
-            Assert.NotNull(controller);
-            Assert.NotNull(controller.Context);
-            Assert.Equal("Test", controller.Context.ActionDescriptor.Name);
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    Assert.NotNull(controller);
+                    Assert.NotNull(controller.Context);
+                    Assert.Equal("Test", controller.Context.ActionDescriptor.Name);
+                });
 
             MyMvc.IsUsingDefaultConfiguration();
         }

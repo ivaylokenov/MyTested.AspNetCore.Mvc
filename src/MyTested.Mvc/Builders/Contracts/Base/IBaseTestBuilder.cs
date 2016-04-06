@@ -1,6 +1,6 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.Base
 {
-    using ShouldPass;
+    using ShouldPassFor;
 
     public interface IBaseTestBuilder
     {

@@ -20,6 +20,7 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection.Extensions;
     using Microsoft.AspNetCore.Mvc.Controllers;
+
     public class ControllerBuilderTests
     {
         [Fact]
@@ -67,19 +68,21 @@
         {
             var requestModel = TestObjectFactory.GetRequestModelWithErrors();
 
-            var controller = MyMvc
+            MyMvc
                 .Controller<MvcController>()
                 .Calling(c => c.OkResultActionWithRequestBody(1, requestModel))
                 .ShouldReturn()
                 .Ok()
-                .AndProvideTheController();
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    var modelState = (controller as Controller).ModelState;
 
-            var modelState = (controller as Controller).ModelState;
-
-            Assert.False(modelState.IsValid);
-            Assert.Equal(2, modelState.Values.Count());
-            Assert.Equal("Integer", modelState.Keys.First());
-            Assert.Equal("RequiredString", modelState.Keys.Last());
+                    Assert.False(modelState.IsValid);
+                    Assert.Equal(2, modelState.Values.Count());
+                    Assert.Equal("Integer", modelState.Keys.First());
+                    Assert.Equal("RequiredString", modelState.Keys.Last());
+                });
         }
 
         [Fact]
@@ -87,18 +90,20 @@
         {
             var requestModel = TestObjectFactory.GetValidRequestModel();
 
-            var controller = MyMvc
+            MyMvc
                 .Controller<MvcController>()
                 .Calling(c => c.OkResultActionWithRequestBody(1, requestModel))
                 .ShouldReturn()
                 .Ok()
-                .AndProvideTheController();
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    var modelState = (controller as Controller).ModelState;
 
-            var modelState = (controller as Controller).ModelState;
-
-            Assert.True(modelState.IsValid);
-            Assert.Equal(0, modelState.Values.Count());
-            Assert.Equal(0, modelState.Keys.Count());
+                    Assert.True(modelState.IsValid);
+                    Assert.Equal(0, modelState.Values.Count());
+                    Assert.Equal(0, modelState.Keys.Count());
+                });
         }
 
         [Fact]
@@ -115,28 +120,29 @@
         [Fact]
         public void WithAuthenticatedUserShouldPopulateUserPropertyWithDefaultValues()
         {
-            var controllerBuilder = MyMvc
+            MyMvc
                 .Controller<MvcController>()
-                .WithAuthenticatedUser();
-
-            controllerBuilder
+                .WithAuthenticatedUser()
                 .Calling(c => c.AuthorizedAction())
                 .ShouldReturn()
-                .Ok();
+                .Ok()
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    var controllerUser = (controller as Controller).User;
 
-            var controllerUser = controllerBuilder.AndProvideTheController().User;
-
-            Assert.Equal(false, controllerUser.IsInRole("Any"));
-            Assert.Equal("TestUser", controllerUser.Identity.Name);
-            Assert.True(controllerUser.HasClaim(ClaimTypes.Name, "TestUser"));
-            Assert.Equal("Passport", controllerUser.Identity.AuthenticationType);
-            Assert.Equal(true, controllerUser.Identity.IsAuthenticated);
+                    Assert.Equal(false, controllerUser.IsInRole("Any"));
+                    Assert.Equal("TestUser", controllerUser.Identity.Name);
+                    Assert.True(controllerUser.HasClaim(ClaimTypes.Name, "TestUser"));
+                    Assert.Equal("Passport", controllerUser.Identity.AuthenticationType);
+                    Assert.Equal(true, controllerUser.Identity.IsAuthenticated);
+                });
         }
 
         [Fact]
         public void WithAuthenticatedUserShouldPopulateProperUserWhenUserWithUserBuilder()
         {
-            var controllerBuilder = MyMvc
+            MyMvc
                 .Controller<MvcController>()
                 .WithAuthenticatedUser(user => user
                     .WithUsername("NewUserName")
@@ -148,88 +154,96 @@
                     {
                         "SuperUser",
                         "MegaUser"
-                    }));
-
-            controllerBuilder
+                    }))
                 .Calling(c => c.AuthorizedAction())
                 .ShouldReturn()
-                .Ok();
+                .Ok()
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    var controllerUser = (controller as Controller).User;
 
-            var controllerUser = controllerBuilder.AndProvideTheController().User;
-
-            Assert.Equal("NewUserName", controllerUser.Identity.Name);
-            Assert.Equal("Custom", controllerUser.Identity.AuthenticationType);
-            Assert.Equal(true, controllerUser.Identity.IsAuthenticated);
-            Assert.Equal(true, controllerUser.IsInRole("NormalUser"));
-            Assert.Equal(true, controllerUser.IsInRole("Moderator"));
-            Assert.Equal(true, controllerUser.IsInRole("Administrator"));
-            Assert.Equal(true, controllerUser.IsInRole("SuperUser"));
-            Assert.Equal(true, controllerUser.IsInRole("MegaUser"));
-            Assert.Equal(false, controllerUser.IsInRole("AnotherRole"));
+                    Assert.Equal("NewUserName", controllerUser.Identity.Name);
+                    Assert.Equal("Custom", controllerUser.Identity.AuthenticationType);
+                    Assert.Equal(true, controllerUser.Identity.IsAuthenticated);
+                    Assert.Equal(true, controllerUser.IsInRole("NormalUser"));
+                    Assert.Equal(true, controllerUser.IsInRole("Moderator"));
+                    Assert.Equal(true, controllerUser.IsInRole("Administrator"));
+                    Assert.Equal(true, controllerUser.IsInRole("SuperUser"));
+                    Assert.Equal(true, controllerUser.IsInRole("MegaUser"));
+                    Assert.Equal(false, controllerUser.IsInRole("AnotherRole"));
+                });
         }
 
         [Fact]
         public void WithAuthenticatedNotCalledShouldNotHaveAuthorizedUser()
         {
-            var controllerBuilder = MyMvc
-                .Controller<MvcController>();
-
-            controllerBuilder
+            MyMvc
+                .Controller<MvcController>()
                 .Calling(c => c.AuthorizedAction())
                 .ShouldReturn()
-                .NotFound();
+                .NotFound()
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    var controllerUser = (controller as Controller).User;
 
-            var controllerUser = controllerBuilder.AndProvideTheController().User;
-
-            Assert.Equal(false, controllerUser.IsInRole("Any"));
-            Assert.Equal(null, controllerUser.Identity.Name);
-            Assert.Equal(null, controllerUser.Identity.AuthenticationType);
-            Assert.Equal(false, controllerUser.Identity.IsAuthenticated);
+                    Assert.Equal(false, controllerUser.IsInRole("Any"));
+                    Assert.Equal(null, controllerUser.Identity.Name);
+                    Assert.Equal(null, controllerUser.Identity.AuthenticationType);
+                    Assert.Equal(false, controllerUser.Identity.IsAuthenticated);
+                });
         }
         
         [Fact]
         public void WithResolvedDependencyForShouldChooseCorrectConstructorWithLessDependencies()
         {
-            var controller = MyMvc
+            MyMvc
                 .Controller<MvcController>()
                 .WithResolvedDependencyFor<IInjectedService>(new InjectedService())
-                .AndProvideTheController();
-
-            Assert.NotNull(controller);
-            Assert.NotNull(controller.InjectedService);
-            Assert.Null(controller.AnotherInjectedService);
-            Assert.Null(controller.InjectedRequestModel);
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    Assert.NotNull(controller);
+                    Assert.NotNull(controller.InjectedService);
+                    Assert.Null(controller.AnotherInjectedService);
+                    Assert.Null(controller.InjectedRequestModel);
+                });
         }
 
         [Fact]
         public void WithResolvedDependencyForShouldChooseCorrectConstructorWithMoreDependencies()
         {
-            var controller = MyMvc
+            MyMvc
                 .Controller<MvcController>()
                 .WithResolvedDependencyFor<IAnotherInjectedService>(new AnotherInjectedService())
                 .WithResolvedDependencyFor<IInjectedService>(new InjectedService())
-                .AndProvideTheController();
-
-            Assert.NotNull(controller);
-            Assert.NotNull(controller.InjectedService);
-            Assert.NotNull(controller.AnotherInjectedService);
-            Assert.Null(controller.InjectedRequestModel);
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    Assert.NotNull(controller);
+                    Assert.NotNull(controller.InjectedService);
+                    Assert.NotNull(controller.AnotherInjectedService);
+                    Assert.Null(controller.InjectedRequestModel);
+                });
         }
 
         [Fact]
         public void WithResolvedDependencyForShouldChooseCorrectConstructorWithAllDependencies()
         {
-            var controller = MyMvc
+            MyMvc
                 .Controller<MvcController>()
                 .WithResolvedDependencyFor<IAnotherInjectedService>(new AnotherInjectedService())
                 .WithResolvedDependencyFor<RequestModel>(new RequestModel())
                 .WithResolvedDependencyFor<IInjectedService>(new InjectedService())
-                .AndProvideTheController();
-
-            Assert.NotNull(controller);
-            Assert.NotNull(controller.InjectedService);
-            Assert.NotNull(controller.AnotherInjectedService);
-            Assert.NotNull(controller.InjectedRequestModel);
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    Assert.NotNull(controller);
+                    Assert.NotNull(controller.InjectedService);
+                    Assert.NotNull(controller.AnotherInjectedService);
+                    Assert.NotNull(controller.InjectedRequestModel);
+                });
         }
 
         [Fact]
@@ -359,66 +373,72 @@
         [Fact]
         public void PrepareControllerShouldSetCorrectPropertiesWithDefaultServices()
         {
-            var controller = MyMvc
+            MyMvc
                 .Controller<MvcController>()
-                .AndProvideTheController();
-
-            Assert.NotNull(controller);
-            Assert.NotNull(controller.HttpContext);
-            Assert.NotNull(controller.HttpContext.RequestServices);
-            Assert.NotNull(controller.ControllerContext);
-            Assert.NotNull(controller.ControllerContext.HttpContext);
-            Assert.NotNull(controller.ControllerContext.InputFormatters);
-            Assert.NotEmpty(controller.ControllerContext.InputFormatters);
-            Assert.NotNull(controller.ControllerContext.ModelBinders);
-            Assert.NotEmpty(controller.ControllerContext.ModelBinders);
-            Assert.NotNull(controller.ControllerContext.ValidatorProviders);
-            Assert.NotEmpty(controller.ControllerContext.ValidatorProviders);
-            Assert.NotNull(controller.ControllerContext.ValueProviders);
-            Assert.NotNull(controller.ViewBag);
-            Assert.NotNull(controller.ViewData);
-            Assert.NotNull(controller.TempData);
-            Assert.NotNull(controller.Request);
-            Assert.NotNull(controller.Response);
-            Assert.NotNull(controller.MetadataProvider);
-            Assert.NotNull(controller.ModelState);
-            Assert.NotNull(controller.ObjectValidator);
-            Assert.NotNull(controller.Url);
-            Assert.NotNull(controller.User);
-            Assert.Null(controller.ControllerContext.ActionDescriptor);
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    Assert.NotNull(controller);
+                    Assert.NotNull(controller.HttpContext);
+                    Assert.NotNull(controller.HttpContext.RequestServices);
+                    Assert.NotNull(controller.ControllerContext);
+                    Assert.NotNull(controller.ControllerContext.HttpContext);
+                    Assert.NotNull(controller.ControllerContext.InputFormatters);
+                    Assert.NotEmpty(controller.ControllerContext.InputFormatters);
+                    Assert.NotNull(controller.ControllerContext.ModelBinders);
+                    Assert.NotEmpty(controller.ControllerContext.ModelBinders);
+                    Assert.NotNull(controller.ControllerContext.ValidatorProviders);
+                    Assert.NotEmpty(controller.ControllerContext.ValidatorProviders);
+                    Assert.NotNull(controller.ControllerContext.ValueProviders);
+                    Assert.NotNull(controller.ViewBag);
+                    Assert.NotNull(controller.ViewData);
+                    Assert.NotNull(controller.TempData);
+                    Assert.NotNull(controller.Request);
+                    Assert.NotNull(controller.Response);
+                    Assert.NotNull(controller.MetadataProvider);
+                    Assert.NotNull(controller.ModelState);
+                    Assert.NotNull(controller.ObjectValidator);
+                    Assert.NotNull(controller.Url);
+                    Assert.NotNull(controller.User);
+                    Assert.Null(controller.ControllerContext.ActionDescriptor);
+                });
         }
 
         [Fact]
         public void PrepareControllerShouldSetCorrectPropertiesWithCustomSetup()
         {
-            var controller = MyMvc
+            MyMvc
                 .Controller<MvcController>()
                 .WithSetup(c =>
                 {
                     c.ControllerContext = new ControllerContext();
                 })
-                .AndProvideTheController();
-
-            Assert.NotNull(controller);
-            Assert.NotNull(controller.ControllerContext);
-            Assert.Null(controller.ControllerContext.HttpContext);
-            Assert.Empty(controller.ControllerContext.InputFormatters);
-            Assert.Empty(controller.ControllerContext.ModelBinders);
-            Assert.Empty(controller.ControllerContext.ValidatorProviders);
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    Assert.NotNull(controller);
+                    Assert.NotNull(controller.ControllerContext);
+                    Assert.Null(controller.ControllerContext.HttpContext);
+                    Assert.Empty(controller.ControllerContext.InputFormatters);
+                    Assert.Empty(controller.ControllerContext.ModelBinders);
+                    Assert.Empty(controller.ControllerContext.ValidatorProviders);
+                });
         }
 
         [Fact]
         public void CallingShouldPopulateCorrectActionDescriptor()
         {
-            var controller = MyMvc
+            MyMvc
                 .Controller<MvcController>()
                 .Calling(c => c.OkResultAction())
-                .AndProvideTheController();
-
-            Assert.NotNull(controller);
-            Assert.NotNull((controller as Controller).ControllerContext);
-            Assert.NotNull((controller as Controller).ControllerContext.ActionDescriptor);
-            Assert.Equal("OkResultAction", (controller as Controller).ControllerContext.ActionDescriptor.Name);
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    Assert.NotNull(controller);
+                    Assert.NotNull((controller as Controller).ControllerContext);
+                    Assert.NotNull((controller as Controller).ControllerContext.ActionDescriptor);
+                    Assert.Equal("OkResultAction", (controller as Controller).ControllerContext.ActionDescriptor.Name);
+                });
         }
 
         [Fact]
@@ -454,56 +474,58 @@
             httpContext.Response.ContentType = ContentType.ApplicationJson;
             httpContext.Response.ContentLength = 100;
 
-            var controllerBuilder = MyMvc
+            MyMvc
                 .Controller<MvcController>()
-                .WithHttpContext(httpContext);
-
-            var controller = controllerBuilder
-                .AndProvideTheController();
-
-            var setHttpContext = controllerBuilder
-                .AndProvideTheHttpContext();
-
-            Assert.Equal("Custom", controller.HttpContext.Request.Scheme);
-            Assert.Equal("Custom", setHttpContext.Request.Scheme);
-            Assert.IsAssignableFrom<MockedHttpResponse>(controller.HttpContext.Response);
-            Assert.IsAssignableFrom<MockedHttpResponse>(setHttpContext.Response);
-            Assert.Same(httpContext.Response.Body, controller.HttpContext.Response.Body);
-            Assert.Same(httpContext.Response.Body, setHttpContext.Response.Body);
-            Assert.Equal(httpContext.Response.ContentLength, controller.HttpContext.Response.ContentLength);
-            Assert.Equal(httpContext.Response.ContentLength, setHttpContext.Response.ContentLength);
-            Assert.Equal(httpContext.Response.ContentType, controller.HttpContext.Response.ContentType);
-            Assert.Equal(httpContext.Response.ContentType, setHttpContext.Response.ContentType);
-            Assert.Equal(httpContext.Response.StatusCode, controller.HttpContext.Response.StatusCode);
-            Assert.Equal(httpContext.Response.StatusCode, setHttpContext.Response.StatusCode);
-            Assert.Same(httpContext.Items, controller.HttpContext.Items);
-            Assert.Same(httpContext.Items, setHttpContext.Items);
-            Assert.Same(httpContext.Features, controller.HttpContext.Features);
-            Assert.Same(httpContext.Features, setHttpContext.Features);
-            Assert.Same(httpContext.RequestServices, controller.HttpContext.RequestServices);
-            Assert.Same(httpContext.RequestServices, setHttpContext.RequestServices);
-            Assert.Same(httpContext.Session, controller.HttpContext.Session);
-            Assert.Same(httpContext.Session, setHttpContext.Session);
-            Assert.Same(httpContext.TraceIdentifier, controller.HttpContext.TraceIdentifier);
-            Assert.Same(httpContext.TraceIdentifier, setHttpContext.TraceIdentifier);
-            Assert.Same(httpContext.User, controller.HttpContext.User);
-            Assert.Same(httpContext.User, setHttpContext.User);
-
+                .WithHttpContext(httpContext)
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    Assert.Equal("Custom", controller.HttpContext.Request.Scheme);
+                    Assert.IsAssignableFrom<MockedHttpResponse>(controller.HttpContext.Response);
+                    Assert.Same(httpContext.Response.Body, controller.HttpContext.Response.Body);
+                    Assert.Equal(httpContext.Response.ContentLength, controller.HttpContext.Response.ContentLength);
+                    Assert.Equal(httpContext.Response.ContentType, controller.HttpContext.Response.ContentType);
+                    Assert.Equal(httpContext.Response.StatusCode, controller.HttpContext.Response.StatusCode);
+                    Assert.Same(httpContext.Items, controller.HttpContext.Items);
+                    Assert.Same(httpContext.Features, controller.HttpContext.Features);
+                    Assert.Same(httpContext.RequestServices, controller.HttpContext.RequestServices);
+                    Assert.Same(httpContext.Session, controller.HttpContext.Session);
+                    Assert.Same(httpContext.TraceIdentifier, controller.HttpContext.TraceIdentifier);
+                    Assert.Same(httpContext.User, controller.HttpContext.User);
+                })
+                .TheHttpContext(setHttpContext =>
+                {
+                    Assert.Equal("Custom", setHttpContext.Request.Scheme);
+                    Assert.IsAssignableFrom<MockedHttpResponse>(setHttpContext.Response);
+                    Assert.Same(httpContext.Response.Body, setHttpContext.Response.Body);
+                    Assert.Equal(httpContext.Response.ContentLength, setHttpContext.Response.ContentLength);
+                    Assert.Equal(httpContext.Response.ContentType, setHttpContext.Response.ContentType);
+                    Assert.Equal(httpContext.Response.StatusCode, setHttpContext.Response.StatusCode);
+                    Assert.Same(httpContext.Items, setHttpContext.Items);
+                    Assert.Same(httpContext.Features, setHttpContext.Features);
+                    Assert.Same(httpContext.RequestServices, setHttpContext.RequestServices);
+                    Assert.Same(httpContext.Session, setHttpContext.Session);
+                    Assert.Same(httpContext.TraceIdentifier, setHttpContext.TraceIdentifier);
+                    Assert.Same(httpContext.User, setHttpContext.User);
+                });
+            
             MyMvc.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void WithHttpContextSetupShouldPopulateContextProperties()
         {
-            var controller = MyMvc
+            MyMvc
                 .Controller<MvcController>()
                 .WithHttpContext(httpContext =>
                 {
                     httpContext.Request.ContentType = ContentType.ApplicationOctetStream;
                 })
-                .AndProvideTheController();
-
-            Assert.Equal(ContentType.ApplicationOctetStream, controller.HttpContext.Request.ContentType);
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    Assert.Equal(ContentType.ApplicationOctetStream, controller.HttpContext.Request.ContentType);
+                });
         }
 
         [Fact]
@@ -627,30 +649,34 @@
                 }
             };
 
-            var controller = MyMvc
+            MyMvc
                 .Controller<MvcController>()
                 .WithControllerContext(controllerContext)
-                .AndProvideTheController();
-
-            Assert.NotNull(controller);
-            Assert.NotNull(controller.ControllerContext);
-            Assert.Equal("Test", controller.ControllerContext.ActionDescriptor.Name);
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    Assert.NotNull(controller);
+                    Assert.NotNull(controller.ControllerContext);
+                    Assert.Equal("Test", controller.ControllerContext.ActionDescriptor.Name);
+                });
         }
 
         [Fact]
         public void WithControllerContextSetupShouldSetCorrectControllerContext()
         {
-            var controller = MyMvc
+            MyMvc
                 .Controller<MvcController>()
                 .WithControllerContext(controllerContext =>
                 {
                     controllerContext.RouteData.Values.Add("testkey", "testvalue");
                 })
-                .AndProvideTheController();
-
-            Assert.NotNull(controller);
-            Assert.NotNull(controller.ControllerContext);
-            Assert.True(controller.ControllerContext.RouteData.Values.ContainsKey("testkey"));
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    Assert.NotNull(controller);
+                    Assert.NotNull(controller.ControllerContext);
+                    Assert.True(controller.ControllerContext.RouteData.Values.ContainsKey("testkey"));
+                });
         }
 
         [Fact]
@@ -696,7 +722,7 @@
         public void WithSessionShouldThrowExceptionIfSessionIsNotSet()
         {
             Test.AssertException<InvalidOperationException>(
-(Action)(() =>
+                () =>
                 {
                     MyMvc
                        .Controller<MvcController>()
@@ -707,20 +733,22 @@
                        .Calling(c => c.SessionAction())
                        .ShouldReturn()
                        .Ok();
-                }),
+                },
                 "Session has not been configured for this application or request.");
         }
 
         [Fact]
         public void WithTempDataShouldPopulateTempData()
         {
-            var controller = MyMvc
+            MyMvc
                 .Controller<MvcController>()
                 .WithTempData(tempData => tempData
                     .WithEntry("key", "value"))
-                .AndProvideTheController();
-
-            Assert.Equal(1, controller.TempData.Count);
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    Assert.Equal(1, controller.TempData.Count);
+                });
         }
         
         [Fact]
@@ -811,19 +839,22 @@
 
             var requestModel = TestObjectFactory.GetRequestModelWithErrors();
 
-            var controller = MyMvc
+            MyMvc
                 .Controller<FullPocoController>()
                 .Calling(c => c.OkResultActionWithRequestBody(1, requestModel))
                 .ShouldReturn()
                 .Ok()
-                .AndProvideTheController();
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    var modelState = (controller as FullPocoController).CustomControllerContext.ModelState;
 
-            var modelState = (controller as FullPocoController).CustomControllerContext.ModelState;
+                    Assert.False(modelState.IsValid);
+                    Assert.Equal(2, modelState.Values.Count());
+                    Assert.Equal("Integer", modelState.Keys.First());
+                    Assert.Equal("RequiredString", modelState.Keys.Last());
 
-            Assert.False(modelState.IsValid);
-            Assert.Equal(2, modelState.Values.Count());
-            Assert.Equal("Integer", modelState.Keys.First());
-            Assert.Equal("RequiredString", modelState.Keys.Last());
+                });
 
             MyMvc.IsUsingDefaultConfiguration();
         }
@@ -840,18 +871,20 @@
 
             var requestModel = TestObjectFactory.GetValidRequestModel();
 
-            var controller = MyMvc
+            MyMvc
                 .Controller<FullPocoController>()
                 .Calling(c => c.OkResultActionWithRequestBody(1, requestModel))
                 .ShouldReturn()
                 .Ok()
-                .AndProvideTheController();
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    var modelState = (controller as FullPocoController).CustomControllerContext.ModelState;
 
-            var modelState = (controller as FullPocoController).CustomControllerContext.ModelState;
-
-            Assert.True(modelState.IsValid);
-            Assert.Equal(0, modelState.Values.Count());
-            Assert.Equal(0, modelState.Keys.Count());
+                    Assert.True(modelState.IsValid);
+                    Assert.Equal(0, modelState.Values.Count());
+                    Assert.Equal(0, modelState.Keys.Count());
+                });
 
             MyMvc.IsUsingDefaultConfiguration();
         }
@@ -886,22 +919,23 @@
                     services.AddHttpContextAccessor();
                 });
 
-            var controllerBuilder = MyMvc
+            MyMvc
                 .Controller<FullPocoController>()
-                .WithAuthenticatedUser();
-
-            controllerBuilder
+                .WithAuthenticatedUser()
                 .Calling(c => c.AuthorizedAction())
                 .ShouldReturn()
-                .Ok();
+                .Ok()
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    var controllerUser = (controller as FullPocoController).CustomHttpContext.User;
 
-            var controllerUser = controllerBuilder.AndProvideTheController().CustomHttpContext.User;
-
-            Assert.Equal(false, controllerUser.IsInRole("Any"));
-            Assert.Equal("TestUser", controllerUser.Identity.Name);
-            Assert.True(controllerUser.HasClaim(ClaimTypes.Name, "TestUser"));
-            Assert.Equal("Passport", controllerUser.Identity.AuthenticationType);
-            Assert.Equal(true, controllerUser.Identity.IsAuthenticated);
+                    Assert.Equal(false, controllerUser.IsInRole("Any"));
+                    Assert.Equal("TestUser", controllerUser.Identity.Name);
+                    Assert.True(controllerUser.HasClaim(ClaimTypes.Name, "TestUser"));
+                    Assert.Equal("Passport", controllerUser.Identity.AuthenticationType);
+                    Assert.Equal(true, controllerUser.Identity.IsAuthenticated);
+                });
 
             MyMvc.IsUsingDefaultConfiguration();
         }
@@ -916,7 +950,7 @@
                     services.AddHttpContextAccessor();
                 });
 
-            var controllerBuilder = MyMvc
+            MyMvc
                 .Controller<FullPocoController>()
                 .WithAuthenticatedUser(user => user
                     .WithUsername("NewUserName")
@@ -928,25 +962,26 @@
                     {
                         "SuperUser",
                         "MegaUser"
-                    }));
-
-            controllerBuilder
+                    }))
                 .Calling(c => c.AuthorizedAction())
                 .ShouldReturn()
-                .Ok();
+                .Ok()
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    var controllerUser = (controller as FullPocoController).CustomHttpContext.User;
 
-            var controllerUser = controllerBuilder.AndProvideTheController().CustomHttpContext.User;
-
-            Assert.Equal("NewUserName", controllerUser.Identity.Name);
-            Assert.Equal("Custom", controllerUser.Identity.AuthenticationType);
-            Assert.Equal(true, controllerUser.Identity.IsAuthenticated);
-            Assert.Equal(true, controllerUser.IsInRole("NormalUser"));
-            Assert.Equal(true, controllerUser.IsInRole("Moderator"));
-            Assert.Equal(true, controllerUser.IsInRole("Administrator"));
-            Assert.Equal(true, controllerUser.IsInRole("SuperUser"));
-            Assert.Equal(true, controllerUser.IsInRole("MegaUser"));
-            Assert.Equal(false, controllerUser.IsInRole("AnotherRole"));
-
+                    Assert.Equal("NewUserName", controllerUser.Identity.Name);
+                    Assert.Equal("Custom", controllerUser.Identity.AuthenticationType);
+                    Assert.Equal(true, controllerUser.Identity.IsAuthenticated);
+                    Assert.Equal(true, controllerUser.IsInRole("NormalUser"));
+                    Assert.Equal(true, controllerUser.IsInRole("Moderator"));
+                    Assert.Equal(true, controllerUser.IsInRole("Administrator"));
+                    Assert.Equal(true, controllerUser.IsInRole("SuperUser"));
+                    Assert.Equal(true, controllerUser.IsInRole("MegaUser"));
+                    Assert.Equal(false, controllerUser.IsInRole("AnotherRole"));
+                });
+            
             MyMvc.IsUsingDefaultConfiguration();
         }
 
@@ -960,20 +995,21 @@
                     services.AddHttpContextAccessor();
                 });
 
-            var controllerBuilder = MyMvc
-                .Controller<FullPocoController>();
-
-            controllerBuilder
+            MyMvc
+                .Controller<FullPocoController>()
                 .Calling(c => c.AuthorizedAction())
                 .ShouldReturn()
-                .NotFound();
+                .NotFound()
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    var controllerUser = (controller as FullPocoController).CustomHttpContext.User;
 
-            var controllerUser = controllerBuilder.AndProvideTheController().CustomHttpContext.User;
-
-            Assert.Equal(false, controllerUser.IsInRole("Any"));
-            Assert.Equal(null, controllerUser.Identity.Name);
-            Assert.Equal(null, controllerUser.Identity.AuthenticationType);
-            Assert.Equal(false, controllerUser.Identity.IsAuthenticated);
+                    Assert.Equal(false, controllerUser.IsInRole("Any"));
+                    Assert.Equal(null, controllerUser.Identity.Name);
+                    Assert.Equal(null, controllerUser.Identity.AuthenticationType);
+                    Assert.Equal(false, controllerUser.Identity.IsAuthenticated);
+                });
 
             MyMvc.IsUsingDefaultConfiguration();
         }
@@ -981,15 +1017,17 @@
         [Fact]
         public void WithResolvedDependencyForShouldChooseCorrectConstructorWithLessDependenciesForPocoController()
         {
-            var controller = MyMvc
+            MyMvc
                 .Controller<FullPocoController>()
                 .WithResolvedDependencyFor<IInjectedService>(new InjectedService())
-                .AndProvideTheController();
-
-            Assert.NotNull(controller);
-            Assert.NotNull(controller.InjectedService);
-            Assert.Null(controller.AnotherInjectedService);
-            Assert.Null(controller.InjectedRequestModel);
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    Assert.NotNull(controller);
+                    Assert.NotNull(controller.InjectedService);
+                    Assert.Null(controller.AnotherInjectedService);
+                    Assert.Null(controller.InjectedRequestModel);
+                });
 
             MyMvc.IsUsingDefaultConfiguration();
         }
@@ -997,16 +1035,18 @@
         [Fact]
         public void WithResolvedDependencyForShouldChooseCorrectConstructorWithMoreDependenciesForPocoController()
         {
-            var controller = MyMvc
+            MyMvc
                 .Controller<FullPocoController>()
                 .WithResolvedDependencyFor<IAnotherInjectedService>(new AnotherInjectedService())
                 .WithResolvedDependencyFor<IInjectedService>(new InjectedService())
-                .AndProvideTheController();
-
-            Assert.NotNull(controller);
-            Assert.NotNull(controller.InjectedService);
-            Assert.NotNull(controller.AnotherInjectedService);
-            Assert.Null(controller.InjectedRequestModel);
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    Assert.NotNull(controller);
+                    Assert.NotNull(controller.InjectedService);
+                    Assert.NotNull(controller.AnotherInjectedService);
+                    Assert.Null(controller.InjectedRequestModel);
+                });
 
             MyMvc.IsUsingDefaultConfiguration();
         }
@@ -1014,17 +1054,19 @@
         [Fact]
         public void WithResolvedDependencyForShouldChooseCorrectConstructorWithAllDependenciesForPocoController()
         {
-            var controller = MyMvc
+            MyMvc
                 .Controller<FullPocoController>()
                 .WithResolvedDependencyFor<IAnotherInjectedService>(new AnotherInjectedService())
                 .WithResolvedDependencyFor<RequestModel>(new RequestModel())
                 .WithResolvedDependencyFor<IInjectedService>(new InjectedService())
-                .AndProvideTheController();
-
-            Assert.NotNull(controller);
-            Assert.NotNull(controller.InjectedService);
-            Assert.NotNull(controller.AnotherInjectedService);
-            Assert.NotNull(controller.InjectedRequestModel);
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    Assert.NotNull(controller);
+                    Assert.NotNull(controller.InjectedService);
+                    Assert.NotNull(controller.AnotherInjectedService);
+                    Assert.NotNull(controller.InjectedRequestModel);
+                });
 
             MyMvc.IsUsingDefaultConfiguration();
         }
@@ -1163,27 +1205,29 @@
                     services.AddHttpContextAccessor();
                 });
 
-            var controller = MyMvc
+            MyMvc
                 .Controller<FullPocoController>()
-                .AndProvideTheController();
-
-            Assert.NotNull(controller);
-            Assert.NotNull(controller.CustomHttpContext);
-            Assert.NotNull(controller.CustomActionContext);
-            Assert.NotNull(controller.CustomControllerContext);
-            Assert.NotNull(controller.CustomControllerContext.HttpContext);
-            Assert.NotNull(controller.CustomControllerContext.InputFormatters);
-            Assert.NotEmpty(controller.CustomControllerContext.InputFormatters);
-            Assert.NotNull(controller.CustomControllerContext.ModelBinders);
-            Assert.NotEmpty(controller.CustomControllerContext.ModelBinders);
-            Assert.NotNull(controller.CustomControllerContext.ValidatorProviders);
-            Assert.NotEmpty(controller.CustomControllerContext.ValidatorProviders);
-            Assert.NotNull(controller.CustomControllerContext.ValueProviders);
-            Assert.NotNull(controller.CustomHttpContext.Request);
-            Assert.NotNull(controller.CustomHttpContext.Response);
-            Assert.NotNull(controller.CustomControllerContext.ModelState);
-            Assert.NotNull(controller.CustomHttpContext.User);
-            Assert.Null(controller.CustomControllerContext.ActionDescriptor);
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    Assert.NotNull(controller);
+                    Assert.NotNull(controller.CustomHttpContext);
+                    Assert.NotNull(controller.CustomActionContext);
+                    Assert.NotNull(controller.CustomControllerContext);
+                    Assert.NotNull(controller.CustomControllerContext.HttpContext);
+                    Assert.NotNull(controller.CustomControllerContext.InputFormatters);
+                    Assert.NotEmpty(controller.CustomControllerContext.InputFormatters);
+                    Assert.NotNull(controller.CustomControllerContext.ModelBinders);
+                    Assert.NotEmpty(controller.CustomControllerContext.ModelBinders);
+                    Assert.NotNull(controller.CustomControllerContext.ValidatorProviders);
+                    Assert.NotEmpty(controller.CustomControllerContext.ValidatorProviders);
+                    Assert.NotNull(controller.CustomControllerContext.ValueProviders);
+                    Assert.NotNull(controller.CustomHttpContext.Request);
+                    Assert.NotNull(controller.CustomHttpContext.Response);
+                    Assert.NotNull(controller.CustomControllerContext.ModelState);
+                    Assert.NotNull(controller.CustomHttpContext.User);
+                    Assert.Null(controller.CustomControllerContext.ActionDescriptor);
+                });
 
             MyMvc.IsUsingDefaultConfiguration();
         }
@@ -1198,16 +1242,18 @@
                     services.AddHttpContextAccessor();
                 });
 
-            var controller = MyMvc
+            MyMvc
                 .Controller<FullPocoController>()
                 .WithSetup(c =>
                 {
                     c.PublicProperty = new object();
                 })
-                .AndProvideTheController();
-
-            Assert.NotNull(controller);
-            Assert.NotNull(controller.PublicProperty);
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    Assert.NotNull(controller);
+                    Assert.NotNull(controller.PublicProperty);
+                });
 
             MyMvc.IsUsingDefaultConfiguration();
         }
@@ -1222,15 +1268,17 @@
                     services.AddHttpContextAccessor();
                 });
 
-            var controller = MyMvc
+            MyMvc
                 .Controller<FullPocoController>()
                 .Calling(c => c.OkResultAction())
-                .AndProvideTheController();
-
-            Assert.NotNull(controller);
-            Assert.NotNull((controller as FullPocoController).CustomControllerContext);
-            Assert.NotNull((controller as FullPocoController).CustomControllerContext.ActionDescriptor);
-            Assert.Equal("OkResultAction", (controller as FullPocoController).CustomControllerContext.ActionDescriptor.Name);
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    Assert.NotNull(controller);
+                    Assert.NotNull((controller as FullPocoController).CustomControllerContext);
+                    Assert.NotNull((controller as FullPocoController).CustomControllerContext.ActionDescriptor);
+                    Assert.Equal("OkResultAction", (controller as FullPocoController).CustomControllerContext.ActionDescriptor.Name);
+                });
 
             MyMvc.IsUsingDefaultConfiguration();
         }
@@ -1278,39 +1326,44 @@
 
             var controllerBuilder = MyMvc
                 .Controller<FullPocoController>()
-                .WithHttpContext(httpContext);
+                .WithHttpContext(httpContext)
+                .ShouldPassFor()
+                .TheHttpContext(setHttpContext =>
+                {
+                    Assert.Equal("Custom", setHttpContext.Request.Scheme);
+                    Assert.IsAssignableFrom<MockedHttpResponse>(setHttpContext.Response);
+                    Assert.Same(httpContext.Response.Body, setHttpContext.Response.Body);
+                    Assert.Equal(httpContext.Response.ContentLength, setHttpContext.Response.ContentLength);
+                    Assert.Equal(httpContext.Response.ContentType, setHttpContext.Response.ContentType);
+                    Assert.Equal(httpContext.Response.StatusCode, setHttpContext.Response.StatusCode);
+                    Assert.Same(httpContext.Items, setHttpContext.Items);
+                    Assert.Same(httpContext.Features, setHttpContext.Features);
+                    Assert.Same(httpContext.RequestServices, setHttpContext.RequestServices);
+                    Assert.Same(httpContext.Session, setHttpContext.Session);
+                    Assert.Same(httpContext.TraceIdentifier, setHttpContext.TraceIdentifier);
+                    Assert.Same(httpContext.User, setHttpContext.User);
+                });
 
-            var controller = controllerBuilder
-                .AndProvideTheController();
-
-            var setHttpContext = controllerBuilder
-                .AndProvideTheHttpContext();
-
-            Assert.Equal("Custom", controller.CustomHttpContext.Request.Scheme);
-            Assert.Equal("Custom", setHttpContext.Request.Scheme);
-            Assert.IsAssignableFrom<MockedHttpResponse>(controller.CustomHttpContext.Response);
-            Assert.IsAssignableFrom<MockedHttpResponse>(setHttpContext.Response);
-            Assert.Same(httpContext.Response.Body, controller.CustomHttpContext.Response.Body);
-            Assert.Same(httpContext.Response.Body, setHttpContext.Response.Body);
-            Assert.Equal(httpContext.Response.ContentLength, controller.CustomHttpContext.Response.ContentLength);
-            Assert.Equal(httpContext.Response.ContentLength, setHttpContext.Response.ContentLength);
-            Assert.Equal(httpContext.Response.ContentType, controller.CustomHttpContext.Response.ContentType);
-            Assert.Equal(httpContext.Response.ContentType, setHttpContext.Response.ContentType);
-            Assert.Equal(httpContext.Response.StatusCode, controller.CustomHttpContext.Response.StatusCode);
-            Assert.Equal(httpContext.Response.StatusCode, setHttpContext.Response.StatusCode);
-            Assert.Same(httpContext.Items, controller.CustomHttpContext.Items);
-            Assert.Same(httpContext.Items, setHttpContext.Items);
-            Assert.Same(httpContext.Features, controller.CustomHttpContext.Features);
-            Assert.Same(httpContext.Features, setHttpContext.Features);
-            Assert.Same(httpContext.RequestServices, controller.CustomHttpContext.RequestServices);
-            Assert.Same(httpContext.RequestServices, setHttpContext.RequestServices);
-            Assert.Same(httpContext.Session, controller.CustomHttpContext.Session);
-            Assert.Same(httpContext.Session, setHttpContext.Session);
-            Assert.Same(httpContext.TraceIdentifier, controller.CustomHttpContext.TraceIdentifier);
-            Assert.Same(httpContext.TraceIdentifier, setHttpContext.TraceIdentifier);
-            Assert.Same(httpContext.User, controller.CustomHttpContext.User);
-            Assert.Same(httpContext.User, setHttpContext.User);
-
+            MyMvc
+                .Controller<FullPocoController>()
+                .WithHttpContext(httpContext)
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    Assert.Equal("Custom", controller.CustomHttpContext.Request.Scheme);
+                    Assert.IsAssignableFrom<MockedHttpResponse>(controller.CustomHttpContext.Response);
+                    Assert.Same(httpContext.Response.Body, controller.CustomHttpContext.Response.Body);
+                    Assert.Equal(httpContext.Response.ContentLength, controller.CustomHttpContext.Response.ContentLength);
+                    Assert.Equal(httpContext.Response.ContentType, controller.CustomHttpContext.Response.ContentType);
+                    Assert.Equal(httpContext.Response.StatusCode, controller.CustomHttpContext.Response.StatusCode);
+                    Assert.Same(httpContext.Items, controller.CustomHttpContext.Items);
+                    Assert.Same(httpContext.Features, controller.CustomHttpContext.Features);
+                    Assert.Same(httpContext.RequestServices, controller.CustomHttpContext.RequestServices);
+                    Assert.Same(httpContext.Session, controller.CustomHttpContext.Session);
+                    Assert.Same(httpContext.TraceIdentifier, controller.CustomHttpContext.TraceIdentifier);
+                    Assert.Same(httpContext.User, controller.CustomHttpContext.User);
+                });
+            
             MyMvc.IsUsingDefaultConfiguration();
         }
 
@@ -1324,15 +1377,17 @@
                     services.AddHttpContextAccessor();
                 });
 
-            var controller = MyMvc
+            MyMvc
                 .Controller<FullPocoController>()
                 .WithHttpContext(httpContext =>
                 {
                     httpContext.Request.ContentType = ContentType.ApplicationOctetStream;
                 })
-                .AndProvideTheController();
-
-            Assert.Equal(ContentType.ApplicationOctetStream, controller.CustomHttpContext.Request.ContentType);
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    Assert.Equal(ContentType.ApplicationOctetStream, controller.CustomHttpContext.Request.ContentType);
+                });
 
             MyMvc.IsUsingDefaultConfiguration();
         }
@@ -1525,14 +1580,16 @@
                 }
             };
 
-            var controller = MyMvc
+            MyMvc
                 .Controller<FullPocoController>()
                 .WithControllerContext(controllerContext)
-                .AndProvideTheController();
-
-            Assert.NotNull(controller);
-            Assert.NotNull(controller.CustomControllerContext);
-            Assert.Equal("Test", controller.CustomControllerContext.ActionDescriptor.Name);
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    Assert.NotNull(controller);
+                    Assert.NotNull(controller.CustomControllerContext);
+                    Assert.Equal("Test", controller.CustomControllerContext.ActionDescriptor.Name);
+                });
 
             MyMvc.IsUsingDefaultConfiguration();
         }
@@ -1547,17 +1604,19 @@
                     services.AddHttpContextAccessor();
                 });
 
-            var controller = MyMvc
+            MyMvc
                 .Controller<FullPocoController>()
                 .WithControllerContext(controllerContext =>
                 {
                     controllerContext.RouteData.Values.Add("testkey", "testvalue");
                 })
-                .AndProvideTheController();
-
-            Assert.NotNull(controller);
-            Assert.NotNull(controller.CustomControllerContext);
-            Assert.True(controller.CustomControllerContext.RouteData.Values.ContainsKey("testkey"));
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    Assert.NotNull(controller);
+                    Assert.NotNull(controller.CustomControllerContext);
+                    Assert.True(controller.CustomControllerContext.RouteData.Values.ContainsKey("testkey"));
+                });
 
             MyMvc.IsUsingDefaultConfiguration();
         }
@@ -1615,7 +1674,7 @@
         public void WithSessionShouldThrowExceptionIfSessionIsNotSetForPocoController()
         {
             Test.AssertException<InvalidOperationException>(
-(Action)(() =>
+                () =>
                 {
                     MyMvc
                        .Controller<FullPocoController>()
@@ -1626,7 +1685,7 @@
                        .Calling(c => c.SessionAction())
                        .ShouldReturn()
                        .Ok();
-                }),
+                },
                 "Session has not been configured for this application or request.");
         }
 
@@ -1640,13 +1699,15 @@
                     services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
                 });
 
-            var controller = MyMvc
+            MyMvc
                 .Controller<FullPocoController>()
                 .WithTempData(tempData => tempData
                     .WithEntry("key", "value"))
-                .AndProvideTheController();
-
-            Assert.Equal(1, controller.CustomTempData.Count);
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    Assert.Equal(1, controller.CustomTempData.Count);
+                });
 
             MyMvc.IsUsingDefaultConfiguration();
         }

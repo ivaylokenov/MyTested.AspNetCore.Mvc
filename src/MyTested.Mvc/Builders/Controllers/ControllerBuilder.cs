@@ -5,12 +5,14 @@
     using Base;
     using Contracts.Controllers;
     using Contracts.Data;
+    using Contracts.ShouldPassFor;
     using Internal.Contracts;
     using Internal.Http;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
+    using ShouldPassFor;
     using Utilities;
     using Utilities.Validators;
 
@@ -37,7 +39,7 @@
         /// </summary>
         /// <param name="testContext"></param>
         public ControllerBuilder(ControllerTestContext testContext)
-            :base (testContext)
+            : base(testContext)
         {
             this.TestContext = testContext;
 
@@ -98,16 +100,13 @@
             this.BuildControllerIfNotExists();
             return new ControllerTestBuilder(this.TestContext);
         }
-
-        /// <summary>
-        /// Gets ASP.NET MVC controller instance to be tested.
-        /// </summary>
-        /// <returns>Instance of the ASP.NET MVC controller.</returns>
-        public TController AndProvideTheController()
-        {
-            return this.Controller;
-        }
         
+        public new IShouldPassForTestBuilderWithController<TController> ShouldPassFor()
+        {
+            this.BuildControllerIfNotExists();
+            return new ShouldPassForTestBuilderWithController<TController>(this.TestContext);
+        }
+
         private void ValidateControllerType()
         {
             var validControllers = this.Services.GetService<IValidControllersCache>();

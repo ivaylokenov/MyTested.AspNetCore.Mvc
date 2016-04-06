@@ -1,10 +1,10 @@
 ﻿namespace MyTested.Mvc.Builders.Base
 {
     using Contracts.Base;
-    using Contracts.ShouldPass;
+    using Contracts.ShouldPassFor;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Http;
-    using ShouldPass;
+    using ShouldPassFor;
     using Utilities.Validators;
 
     public abstract class BaseTestBuilder : IBaseTestBuilder

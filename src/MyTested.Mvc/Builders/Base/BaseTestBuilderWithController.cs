@@ -2,7 +2,9 @@
 {
     using System.Collections.Generic;
     using Contracts.Base;
+    using Contracts.ShouldPassFor;
     using Internal.TestContexts;
+    using ShouldPassFor;
     using Utilities.Validators;
 
     /// <summary>
@@ -44,16 +46,9 @@
             }
         }
 
-        /// <summary>
-        /// Gets the controller on which the action is tested.
-        /// </summary>
-        /// <returns>ASP.NET MVC controller on which the action is tested.</returns>
-        public object AndProvideTheController() => this.Controller;
-
-        /// <summary>
-        /// Gets the attributes on the tested controller.
-        /// </summary>
-        /// <returns>IEnumerable of object representing the attributes or null, if no attributes were collected on the controller.</returns>
-        public IEnumerable<object> AndProvideTheControllerAttributes() => this.ControllerLevelAttributes;
+        public new IShouldPassForTestBuilderWithController<object> ShouldPassFor()
+        {
+            return new ShouldPassForTestBuilderWithController<object>(this.TestContext);
+        }
     }
 }

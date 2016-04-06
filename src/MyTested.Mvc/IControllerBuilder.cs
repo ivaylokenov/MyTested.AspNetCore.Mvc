@@ -10,6 +10,7 @@
     using Builders.Contracts.Controllers;
     using Builders.Contracts.Data;
     using Builders.Contracts.Http;
+    using Builders.Contracts.ShouldPassFor;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
@@ -147,10 +148,6 @@
         /// <returns>Builder for testing void actions.</returns>
         IVoidActionResultTestBuilder Calling(Expression<Func<TController, Task>> actionCall);
 
-        /// <summary>
-        /// Gets ASP.NET MVC controller instance to be tested.
-        /// </summary>
-        /// <returns>Instance of the ASP.NET MVC controller.</returns>
-        TController AndProvideTheController();
+        new IShouldPassForTestBuilderWithController<TController> ShouldPassFor();
     }
 }
