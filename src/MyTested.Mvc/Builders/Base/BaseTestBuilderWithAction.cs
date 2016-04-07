@@ -1,11 +1,11 @@
 ﻿namespace MyTested.Mvc.Builders.Base
 {
     using System.Collections.Generic;
-    using Builders.ShouldPassFor;
     using Contracts.Base;
     using Contracts.ShouldPassFor;
     using Exceptions;
     using Internal.TestContexts;
+    using ShouldPassFor;
     using Utilities.Extensions;
 
     /// <summary>
@@ -29,10 +29,7 @@
 
         internal IEnumerable<object> ActionLevelAttributes => this.TestContext.ActionAttributes;
         
-        public new IShouldPassForTestBuilderWithAction ShouldPassFor()
-        {
-            return new ShouldPassForTestBuilderWithAction(this.TestContext);
-        }
+        public new IShouldPassForTestBuilderWithAction ShouldPassFor() => new ShouldPassForTestBuilderWithAction(this.TestContext);
 
         /// <summary>
         /// Tests whether the tested action's model state is valid.

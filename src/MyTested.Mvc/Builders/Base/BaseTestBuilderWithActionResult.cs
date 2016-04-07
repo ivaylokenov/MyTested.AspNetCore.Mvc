@@ -1,11 +1,11 @@
 ﻿namespace MyTested.Mvc.Builders.Base
 {
-    using System;
     using And;
     using Contracts.And;
     using Contracts.Base;
-    using Internal;
+    using Contracts.ShouldPassFor;
     using Internal.TestContexts;
+    using ShouldPassFor;
     using Utilities;
 
     /// <summary>
@@ -33,20 +33,9 @@
         /// </summary>
         /// <value>Action result to be tested.</value>
         internal TActionResult ActionResult => this.TestContext.ActionResultAs<TActionResult>();
-
-        /// <summary>
-        /// Gets the action result which will be tested.
-        /// </summary>
-        /// <returns>Action result to be tested.</returns>
-        public TActionResult AndProvideTheActionResult()
-        {
-            if (this.ActionResult.GetType() == typeof(VoidActionResult))
-            {
-                throw new InvalidOperationException("Void methods cannot provide action result because they do not have return value.");
-            }
-
-            return this.ActionResult;
-        }
+        
+        public new IShouldPassForTestBuilderWithActionResult<TActionResult> ShouldPassFor()
+            => new ShouldPassForTestBuilderWithActionResult<TActionResult>(this.TestContext);
 
         /// <summary>
         /// Initializes new instance of builder providing AndAlso method.

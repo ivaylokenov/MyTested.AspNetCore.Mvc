@@ -367,13 +367,7 @@
         {
             return this;
         }
-
-        /// <summary>
-        /// Gets the action result which will be tested.
-        /// </summary>
-        /// <returns>Action result to be tested.</returns>
-        public new ActionResult AndProvideTheActionResult() => this.ActionResult;
-
+        
         protected override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)
             => this.ThrowNewHttpBadRequestResultAssertionException(propertyName, expectedValue, actualValue);
 

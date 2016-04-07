@@ -88,15 +88,17 @@
         [Fact]
         public void AndProvideShouldReturnProperCaughtException()
         {
-            var caughtException = MyMvc
+            MyMvc
                 .Controller<MvcController>()
                 .Calling(c => c.ActionWithException())
                 .ShouldThrow()
                 .Exception()
-                .AndProvideTheCaughtException();
-
-            Assert.NotNull(caughtException);
-            Assert.IsAssignableFrom<NullReferenceException>(caughtException);
+                .ShouldPassFor()
+                .TheCaughtException(caughtException =>
+                {
+                    Assert.NotNull(caughtException);
+                    Assert.IsAssignableFrom<NullReferenceException>(caughtException);
+                });            
         }
 
         [Fact]

@@ -1659,10 +1659,10 @@
 
             MyMvc
                 .Controller<FullPocoController>()
-                .WithSession((Action<Builders.Contracts.Data.ISessionBuilder>)(session =>
+                .WithSession(session =>
                 {
                     session.WithEntry("test", "value");
-                }))
+                })
                 .Calling(c => c.SessionAction())
                 .ShouldReturn()
                 .Ok();
@@ -1678,10 +1678,10 @@
                 {
                     MyMvc
                        .Controller<FullPocoController>()
-                       .WithSession((Action<Builders.Contracts.Data.ISessionBuilder>)(session =>
+                       .WithSession(session =>
                        {
                            session.WithEntry("test", "value");
-                       }))
+                       })
                        .Calling(c => c.SessionAction())
                        .ShouldReturn()
                        .Ok();

@@ -3,8 +3,9 @@
     using System;
     using And;
     using Contracts.Base;
+    using Contracts.ShouldPassFor;
     using Internal.TestContexts;
-    using Microsoft.AspNetCore.Http;
+    using ShouldPassFor;
 
     /// <summary>
     /// Base class for test builders with caught exception.
@@ -25,18 +26,9 @@
         }
 
         internal Exception CaughtException => this.TestContext.CaughtException;
-
-        /// <summary>
-        /// Gets the thrown exception in the tested action.
-        /// </summary>
-        /// <returns>The exception instance or null, if no exception was caught.</returns>
-        public Exception AndProvideTheCaughtException() => this.CaughtException;
         
-        /// <summary>
-        /// Gets the HTTP response after the tested action is executed.
-        /// </summary>
-        /// <returns>The HTTP response.</returns>
-        public HttpResponse AndProvideTheHttpResponse() => this.TestContext.HttpResponse;
+        public new IShouldPassForTestBuilderWithInvokedAction ShouldPassFor()
+            => new ShouldPassForTestBuilderWithInvokedAction(this.TestContext);
 
         /// <summary>
         /// Creates new AndProvideTestBuilder.

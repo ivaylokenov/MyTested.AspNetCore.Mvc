@@ -33,9 +33,6 @@
             }
         }
 
-        public IShouldPassForTestBuilder ShouldPassFor()
-        {
-            return new ShouldPassForTestBuilder(this.TestContext);
-        }
+        public IShouldPassForTestBuilder ShouldPassFor() => new ShouldPassForTestBuilder(this.TestContext);
     }
 }
