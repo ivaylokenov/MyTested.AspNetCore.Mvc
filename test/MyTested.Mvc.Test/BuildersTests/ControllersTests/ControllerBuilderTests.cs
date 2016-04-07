@@ -1736,11 +1736,14 @@
 
         private void CheckActionName(IBaseTestBuilderWithInvokedAction testBuilder, string expectedActionName)
         {
-            var actionName = testBuilder.AndProvideTheActionName();
-
-            Assert.NotNull(actionName);
-            Assert.NotEmpty(actionName);
-            Assert.Equal(expectedActionName, actionName);
+            testBuilder
+                .ShouldPassFor()
+                .TheAction(actionName =>
+                {
+                    Assert.NotNull(actionName);
+                    Assert.NotEmpty(actionName);
+                    Assert.Equal(expectedActionName, actionName);
+                });
         }
     }
 }

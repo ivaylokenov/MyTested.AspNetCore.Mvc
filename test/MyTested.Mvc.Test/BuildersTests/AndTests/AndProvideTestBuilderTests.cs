@@ -43,28 +43,32 @@
         [Fact]
         public void AndProvideShouldReturnProperActionName()
         {
-            var actionName = MyMvc
+            MyMvc
                 .Controller<MvcController>()
                 .Calling(c => c.BadRequestWithErrorAction())
                 .ShouldReturn()
                 .BadRequest()
                 .WithErrorMessage()
-                .AndProvideTheActionName();
-
-            Assert.Equal("BadRequestWithErrorAction", actionName);
+                .ShouldPassFor()
+                .TheAction(actionName =>
+                {
+                    Assert.Equal("BadRequestWithErrorAction", actionName);
+                });
         }
 
         [Fact]
         public void AndProvideShouldReturnProperActionAttributes()
         {
-            var attributes = MyMvc
+            MyMvc
                 .Controller<MvcController>()
                 .Calling(c => c.VariousAttributesAction())
                 .ShouldHave()
                 .ActionAttributes()
-                .AndProvideTheActionAttributes();
-
-            Assert.Equal(6, attributes.Count());
+                .ShouldPassFor()
+                .TheActionAttributes(attributes =>
+                {
+                    Assert.Equal(6, attributes.Count());
+                });
         }
 
         [Fact]

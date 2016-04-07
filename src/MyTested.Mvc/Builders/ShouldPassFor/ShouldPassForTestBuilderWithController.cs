@@ -9,35 +9,35 @@
         IShouldPassForTestBuilderWithController<TController>
         where TController : class
     {
-        private readonly ControllerTestContext testContext;
-
         public ShouldPassForTestBuilderWithController(ControllerTestContext testContext)
             : base(testContext)
         {
-            this.testContext = testContext;
+            this.TestContext = testContext;
         }
+
+        protected ControllerTestContext TestContext { get; private set; }
 
         public IShouldPassForTestBuilderWithController<TController> TheController(Action<TController> assertions)
         {
-            this.ValidateFor(assertions, this.testContext.ControllerAs<TController>());
+            this.ValidateFor(assertions, this.TestContext.ControllerAs<TController>());
             return this;
         }
 
         public IShouldPassForTestBuilderWithController<TController> TheController(Func<TController, bool> predicate)
         {
-            this.ValidateFor(predicate, this.testContext.ControllerAs<TController>());
+            this.ValidateFor(predicate, this.TestContext.ControllerAs<TController>());
             return this;
         }
 
         public IShouldPassForTestBuilderWithController<TController> TheControllerAttributes(Action<IEnumerable<object>> assertions)
         {
-            this.ValidateFor(assertions, this.testContext.ControllerAttributes);
+            this.ValidateFor(assertions, this.TestContext.ControllerAttributes);
             return this;
         }
 
         public IShouldPassForTestBuilderWithController<TController> TheControllerAttributes(Func<IEnumerable<object>, bool> predicate)
         {
-            this.ValidateFor(predicate, this.testContext.ControllerAttributes);
+            this.ValidateFor(predicate, this.TestContext.ControllerAttributes);
             return this;
         }
     }
