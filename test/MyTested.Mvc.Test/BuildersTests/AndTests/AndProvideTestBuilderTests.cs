@@ -12,28 +12,32 @@
         [Fact]
         public void AndProvideShouldReturnProperController()
         {
-            var controller = MyMvc
+            MyMvc
                 .Controller<MvcController>()
                 .Calling(c => c.BadRequestWithErrorAction())
                 .ShouldReturn()
                 .BadRequest()
                 .WithErrorMessage()
-                .AndProvideTheController();
-
-            Assert.NotNull(controller);
-            Assert.IsAssignableFrom<MvcController>(controller);
+                .ShouldPassFor()
+                .TheController(controller =>
+                {
+                    Assert.NotNull(controller);
+                    Assert.IsAssignableFrom<MvcController>(controller);
+                });
         }
         
         [Fact]
         public void AndProvideTheControllerAttributesShouldReturnProperAttributes()
         {
-            var attributes = MyMvc
+            MyMvc
                 .Controller<MvcController>()
                 .ShouldHave()
                 .Attributes()
-                .AndProvideTheControllerAttributes();
-
-            Assert.Equal(2, attributes.Count());
+                .ShouldPassFor()
+                .TheControllerAttributes(attributes =>
+                {
+                    Assert.Equal(2, attributes.Count());
+                });
         }
 
         [Fact]
