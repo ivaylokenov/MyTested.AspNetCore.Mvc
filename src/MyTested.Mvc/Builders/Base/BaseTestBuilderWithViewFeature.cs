@@ -1,7 +1,9 @@
 ﻿namespace MyTested.Mvc.Builders.Base
 {
+    using Builders.ShouldPassFor;
     using Contracts.Base;
     using Contracts.Models;
+    using Contracts.ShouldPassFor;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
 
@@ -39,11 +41,8 @@
         /// <typeparam name="TModel">Type of model object.</typeparam>
         /// <returns>Model details test builder.</returns>
         public IModelDetailsTestBuilder<TModel> WithModelOfType<TModel>() => this.WithResponseModelOfType<TModel>();
-
-        /// <summary>
-        /// Gets the action result which will be tested.
-        /// </summary>
-        /// <returns>Action result to be tested.</returns>
-        public new ActionResult AndProvideTheActionResult() => this.ActionResult;
+        
+        IShouldPassForTestBuilderWithActionResult<ActionResult> IBaseTestBuilderWithActionResult<ActionResult>.ShouldPassFor()
+            => new ShouldPassForTestBuilderWithActionResult<ActionResult>(this.TestContext);
     }
 }

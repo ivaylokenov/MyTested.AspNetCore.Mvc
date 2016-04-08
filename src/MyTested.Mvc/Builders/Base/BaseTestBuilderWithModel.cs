@@ -1,8 +1,9 @@
 ﻿namespace MyTested.Mvc.Builders.Base
 {
     using Contracts.Base;
+    using Contracts.ShouldPassFor;
     using Internal.TestContexts;
-    using Utilities.Validators;
+    using ShouldPassFor;
 
     /// <summary>
     /// Base class for all test builders with model.
@@ -21,17 +22,10 @@
             : base(testContext)
         {
         }
-
-        internal TModel Model => this.TestContext.ModelAs<TModel>();
-
-        /// <summary>
-        /// Gets the model returned from an action result.
-        /// </summary>
-        /// <returns>Model returned from action result.</returns>
-        public TModel AndProvideTheModel()
+        
+        public new IShouldPassForTestBuilderWithModel<TModel> ShouldPassFor()
         {
-            CommonValidator.CheckForEqualityWithDefaultValue(this.Model, "AndProvideTheModel can be used when there is response model from the action.");
-            return this.Model;
+            return new ShouldPassForTestBuilderWithModel<TModel>(this.TestContext);
         }
     }
 }

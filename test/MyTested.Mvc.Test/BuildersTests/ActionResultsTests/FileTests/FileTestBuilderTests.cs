@@ -295,15 +295,17 @@
         [Fact]
         public void AndProvideTheActionResultShouldWorkCorrectly()
         {
-            var actionResult = MyMvc
+            MyMvc
                 .Controller<MvcController>()
                 .Calling(c => c.FileWithContents())
                 .ShouldReturn()
                 .File()
-                .AndProvideTheActionResult();
-
-            Assert.NotNull(actionResult);
-            Assert.IsAssignableFrom<FileResult>(actionResult);
+                .ShouldPassFor()
+                .TheActionResult(actionResult =>
+                {
+                    Assert.NotNull(actionResult);
+                    Assert.IsAssignableFrom<FileResult>(actionResult);
+                });
         }
     }
 }

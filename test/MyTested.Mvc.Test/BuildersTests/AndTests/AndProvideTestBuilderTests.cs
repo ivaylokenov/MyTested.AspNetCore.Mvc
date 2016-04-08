@@ -74,15 +74,17 @@
         [Fact]
         public void AndProvideShouldReturnProperActionResult()
         {
-            var actionResult = MyMvc
+            MyMvc
                 .Controller<MvcController>()
                 .Calling(c => c.LocalRedirect("URL"))
                 .ShouldReturn()
                 .LocalRedirect()
-                .AndProvideTheActionResult();
-
-            Assert.NotNull(actionResult);
-            Assert.IsAssignableFrom<LocalRedirectResult>(actionResult);
+                .ShouldPassFor()
+                .TheActionResult(actionResult =>
+                {
+                    Assert.NotNull(actionResult);
+                    Assert.IsAssignableFrom<LocalRedirectResult>(actionResult);
+                });
         }
 
         [Fact]
@@ -112,7 +114,8 @@
                         .Calling(c => c.EmptyActionWithException())
                         .ShouldHave()
                         .ValidModelState()
-                        .AndProvideTheActionResult();
+                        .ShouldPassFor()
+                        .TheActionResult(actionResult => actionResult != null);
                 }, 
                 "Void methods cannot provide action result because they do not have return value.");
         }

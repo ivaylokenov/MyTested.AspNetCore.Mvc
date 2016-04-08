@@ -4,11 +4,14 @@
     using System.Net;
     using Base;
     using Contracts.ActionResults.Ok;
+    using Contracts.Base;
+    using Contracts.ShouldPassFor;
     using Exceptions;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.Net.Http.Headers;
+    using ShouldPassFor;
     using Utilities.Extensions;
 
     /// <summary>
@@ -188,11 +191,8 @@
         /// <returns>The same OK test builder.</returns>
         public IOkTestBuilder AndAlso() => this;
 
-        /// <summary>
-        /// Gets the action result which will be tested.
-        /// </summary>
-        /// <returns>Action result to be tested.</returns>
-        public new ActionResult AndProvideTheActionResult() => this.ActionResult;
+        IShouldPassForTestBuilderWithActionResult<ActionResult> IBaseTestBuilderWithActionResult<ActionResult>.ShouldPassFor()
+            => new ShouldPassForTestBuilderWithActionResult<ActionResult>(this.TestContext);
 
         /// <summary>
         /// Throws new OK result assertion exception for the provided property name, expected value and actual value.

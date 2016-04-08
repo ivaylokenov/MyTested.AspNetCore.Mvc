@@ -179,85 +179,96 @@
         [Fact]
         public void AndProvideTheModelShouldReturnProperModelWhenThereIsResponseModel()
         {
-            var responseModel = MyMvc
+            MyMvc
                 .Controller<MvcController>()
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
                 .Ok()
                 .WithResponseModelOfType<List<ResponseModel>>()
-                .AndProvideTheModel();
-
-            Assert.NotNull(responseModel);
-            Assert.IsAssignableFrom<List<ResponseModel>>(responseModel);
-            Assert.Equal(2, responseModel.Count);
+                .ShouldPassFor()
+                .TheModel(responseModel =>
+                {
+                    Assert.NotNull(responseModel);
+                    Assert.IsAssignableFrom<List<ResponseModel>>(responseModel);
+                    Assert.Equal(2, responseModel.Count);
+                });
         }
 
         [Fact]
         public void AndProvideTheModelShouldReturnProperModelWhenThereIsResponseModelWithPassing()
         {
-            var responseModel = MyMvc
+            MyMvc
                 .Controller<MvcController>()
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
                 .Ok()
                 .WithResponseModelOfType<List<ResponseModel>>()
                 .Passing(m => m.Count == 2)
-                .AndProvideTheModel();
-
-            Assert.NotNull(responseModel);
-            Assert.IsAssignableFrom<List<ResponseModel>>(responseModel);
-            Assert.Equal(2, responseModel.Count);
+                .ShouldPassFor()
+                .TheModel(responseModel =>
+                {
+                    Assert.NotNull(responseModel);
+                    Assert.IsAssignableFrom<List<ResponseModel>>(responseModel);
+                    Assert.Equal(2, responseModel.Count);
+                });
         }
 
         [Fact]
         public void AndProvideTheModelShouldReturnProperModelWhenThereIsResponseModelWithModelStateCheck()
         {
-            var responseModel = MyMvc
+            MyMvc
                 .Controller<MvcController>()
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
                 .Ok()
                 .WithResponseModelOfType<List<ResponseModel>>()
                 .ContainingNoErrorFor(m => m.Count)
-                .AndProvideTheModel();
-
-            Assert.NotNull(responseModel);
-            Assert.IsAssignableFrom<List<ResponseModel>>(responseModel);
-            Assert.Equal(2, responseModel.Count);
+                .AndAlso()
+                .ShouldPassFor()
+                .TheModel(responseModel =>
+                {
+                    Assert.NotNull(responseModel);
+                    Assert.IsAssignableFrom<List<ResponseModel>>(responseModel);
+                    Assert.Equal(2, responseModel.Count);
+                });
         }
 
         [Fact]
         public void AndProvideTheModelShouldReturnProperModelWhenThereIsResponseModelWithModelStateError()
         {
-            var responseModel = MyMvc
+            MyMvc
                 .Controller<MvcController>()
                 .Calling(c => c.CustomModelStateError())
                 .ShouldReturn()
                 .Ok()
                 .WithResponseModelOfType<ICollection<ResponseModel>>()
                 .ContainingError("Test")
-                .AndProvideTheModel();
-
-            Assert.NotNull(responseModel);
-            Assert.IsAssignableFrom<List<ResponseModel>>(responseModel);
-            Assert.Equal(2, responseModel.Count);
+                .ShouldPassFor()
+                .TheModel(responseModel =>
+                {
+                    Assert.NotNull(responseModel);
+                    Assert.IsAssignableFrom<List<ResponseModel>>(responseModel);
+                    Assert.Equal(2, responseModel.Count);
+                });
         }
 
         [Fact]
         public void AndProvideTheModelShouldReturnProperModelWhenThereIsResponseModelWithModelStateErrorAndErrorCheck()
         {
-            var responseModel = MyMvc
+            MyMvc
                 .Controller<MvcController>()
                 .Calling(c => c.CustomModelStateError())
                 .ShouldReturn()
                 .Ok()
                 .WithResponseModelOfType<ICollection<ResponseModel>>()
                 .ContainingError("Test").ThatEquals("Test error")
-                .AndProvideTheModel();
-
-            Assert.NotNull(responseModel);
-            Assert.IsAssignableFrom<List<ResponseModel>>(responseModel);
-            Assert.Equal(2, responseModel.Count);
+                .ShouldPassFor()
+                .TheModel(responseModel =>
+                {
+                    Assert.NotNull(responseModel);
+                    Assert.IsAssignableFrom<List<ResponseModel>>(responseModel);
+                    Assert.Equal(2, responseModel.Count);
+                });
         }
     }
 }

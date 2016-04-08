@@ -1728,10 +1728,14 @@
             string expectedActionName)
         {
             this.CheckActionName(actionResultTestBuilder, expectedActionName);
-            var actionResult = actionResultTestBuilder.AndProvideTheActionResult();
 
-            Assert.NotNull(actionResult);
-            Assert.IsAssignableFrom<OkResult>(actionResult);
+            actionResultTestBuilder
+                .ShouldPassFor()
+                .TheActionResult(actionResult =>
+                {
+                    Assert.NotNull(actionResult);
+                    Assert.IsAssignableFrom<OkResult>(actionResult);
+                });
         }
 
         private void CheckActionName(IBaseTestBuilderWithInvokedAction testBuilder, string expectedActionName)

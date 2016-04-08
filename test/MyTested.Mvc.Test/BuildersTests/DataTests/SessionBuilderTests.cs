@@ -50,26 +50,28 @@
                     services.AddSession();
                 });
 
-            var actionResult = MyMvc
+            MyMvc
                 .Controller<MvcController>()
                 .WithSession(session => session
                     .WithEntry("HasId", "HasIdValue"))
                 .Calling(c => c.FullSessionAction())
                 .ShouldReturn()
                 .Ok()
-                .AndProvideTheActionResult();
+                .ShouldPassFor()
+                .TheActionResult(actionResult =>
+                {
+                    var okObjectResult = actionResult as OkObjectResult;
 
-            var okObjectResult = actionResult as OkObjectResult;
+                    Assert.NotNull(okObjectResult);
+                    Assert.IsAssignableFrom<string>(okObjectResult.Value);
 
-            Assert.NotNull(okObjectResult);
-            Assert.IsAssignableFrom<string>(okObjectResult.Value);
+                    var modelAsString = (string)okObjectResult.Value;
 
-            var modelAsString = (string)okObjectResult.Value;
+                    Assert.NotNull(modelAsString);
+                    Assert.NotEmpty(modelAsString);
 
-            Assert.NotNull(modelAsString);
-            Assert.NotEmpty(modelAsString);
-
-            MyMvc.IsUsingDefaultConfiguration();
+                    MyMvc.IsUsingDefaultConfiguration();
+                });
         }
 
         [Fact]

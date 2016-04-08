@@ -159,13 +159,7 @@
         }
 
         public IObjectTestBuilder AndAlso() => this;
-
-        /// <summary>
-        /// Gets the object result which will be tested.
-        /// </summary>
-        /// <returns>Object result to be tested.</returns>
-        public new ObjectResult AndProvideTheActionResult() => this.ActionResult;
-
+        
         /// <summary>
         /// Throws new object result assertion exception for the provided property name, expected value and actual value.
         /// </summary>

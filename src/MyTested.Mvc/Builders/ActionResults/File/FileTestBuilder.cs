@@ -10,11 +10,12 @@
     using Microsoft.Net.Http.Headers;
     using Utilities;
     using Utilities.Extensions;
-
-    /// <summary>
-    /// Used for testing file result.
-    /// </summary>
-    /// <typeparam name="TFileResult">Result of type FileStreamResult, VirtualFileResult or FileContentResult.</typeparam>
+    using Contracts.ShouldPassFor;
+    using Contracts.Base;
+    using ShouldPassFor;/// <summary>
+                        /// Used for testing file result.
+                        /// </summary>
+                        /// <typeparam name="TFileResult">Result of type FileStreamResult, VirtualFileResult or FileContentResult.</typeparam>
     public class FileTestBuilder<TFileResult>
         : BaseFileTestBuilder<TFileResult>, IAndFileTestBuilder
         where TFileResult : FileResult
@@ -173,6 +174,9 @@
         /// </summary>
         /// <returns>File result test builder.</returns>
         public IFileTestBuilder AndAlso() => this;
+        
+        IShouldPassForTestBuilderWithActionResult<FileResult> IBaseTestBuilderWithActionResult<FileResult>.ShouldPassFor()
+            => new ShouldPassForTestBuilderWithActionResult<FileResult>(this.TestContext);
 
         private TExpectedFileResult GetFileResult<TExpectedFileResult>(string containment)
             where TExpectedFileResult : class

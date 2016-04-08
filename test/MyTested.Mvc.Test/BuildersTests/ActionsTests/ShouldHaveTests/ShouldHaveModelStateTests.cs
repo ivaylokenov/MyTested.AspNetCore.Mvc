@@ -174,7 +174,8 @@
                             .ContainingNoErrorFor(r => r.NonRequiredString)
                             .ContainingErrorFor(r => r.Integer)
                             .ContainingErrorFor(r => r.RequiredString)
-                            .AndProvideTheModel());
+                            .ShouldPassFor()
+                            .TheModel(model => model != null));
                 }, 
                 "AndProvideTheModel can be used when there is response model from the action.");
         }

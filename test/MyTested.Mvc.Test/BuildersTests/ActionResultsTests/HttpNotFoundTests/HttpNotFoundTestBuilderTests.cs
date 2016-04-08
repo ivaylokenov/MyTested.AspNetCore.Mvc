@@ -448,15 +448,17 @@
         [Fact]
         public void AndProvideTheActionResultShouldWorkCorrectly()
         {
-            var actionResult = MyMvc
+            MyMvc
                 .Controller<MvcController>()
                 .Calling(c => c.FullHttpNotFoundAction())
                 .ShouldReturn()
                 .NotFound()
-                .AndProvideTheActionResult();
-
-            Assert.NotNull(actionResult);
-            Assert.IsAssignableFrom<NotFoundObjectResult>(actionResult);
+                .ShouldPassFor()
+                .TheActionResult(actionResult =>
+                {
+                    Assert.NotNull(actionResult);
+                    Assert.IsAssignableFrom<NotFoundObjectResult>(actionResult);
+                });
         }
     }
 }

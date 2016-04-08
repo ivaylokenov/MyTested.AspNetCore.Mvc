@@ -957,15 +957,17 @@
         [Fact]
         public void AndProvideTheActionResultShouldWorkCorrectly()
         {
-            var actionResult = MyMvc
+            MyMvc
                 .Controller<MvcController>()
                 .Calling(c => c.CreatedAction())
                 .ShouldReturn()
                 .Created()
-                .AndProvideTheActionResult();
-
-            Assert.NotNull(actionResult);
-            Assert.IsAssignableFrom<CreatedResult>(actionResult);
+                .ShouldPassFor()
+                .TheActionResult(actionResult =>
+                {
+                    Assert.NotNull(actionResult);
+                    Assert.IsAssignableFrom<CreatedResult>(actionResult);
+                });
         }
     }
 }

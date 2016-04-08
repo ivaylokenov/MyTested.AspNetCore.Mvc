@@ -439,15 +439,17 @@
         [Fact]
         public void AndProvideTheActionResultShouldWorkCorrectly()
         {
-            var actionResult = MyMvc
+            MyMvc
                 .Controller<MvcController>()
                 .Calling(c => c.ViewComponentResultByName())
                 .ShouldReturn()
                 .ViewComponent()
-                .AndProvideTheActionResult();
-
-            Assert.NotNull(actionResult);
-            Assert.IsAssignableFrom<ViewComponentResult>(actionResult);
+                .ShouldPassFor()
+                .TheActionResult(actionResult =>
+                {
+                    Assert.NotNull(actionResult);
+                    Assert.IsAssignableFrom<ViewComponentResult>(actionResult);
+                });
         }
     }
 }

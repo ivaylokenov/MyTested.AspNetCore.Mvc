@@ -11,6 +11,9 @@
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Routing;
+    using Contracts.Base;
+    using Contracts.ShouldPassFor;
+    using ShouldPassFor;
     using Utilities.Extensions;
     using Utilities.Validators;
 
@@ -324,12 +327,9 @@
         /// <returns>Redirect result test builder.</returns>
         public IRedirectTestBuilder AndAlso() => this;
 
-        /// <summary>
-        /// Gets the action result which will be tested.
-        /// </summary>
-        /// <returns>Action result to be tested.</returns>
-        public new ActionResult AndProvideTheActionResult() => this.ActionResult;
-
+        IShouldPassForTestBuilderWithActionResult<ActionResult> IBaseTestBuilderWithActionResult<ActionResult>.ShouldPassFor()
+            => new ShouldPassForTestBuilderWithActionResult<ActionResult>(this.TestContext);
+        
         private TExpectedRedirectResult GetRedirectResult<TExpectedRedirectResult>(string containment)
             where TExpectedRedirectResult : class
         {

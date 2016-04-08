@@ -3,12 +3,13 @@
     using System;
     using System.Linq.Expressions;
     using Contracts.Models;
+    using Contracts.ShouldPassFor;
     using Exceptions;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
+    using ShouldPassFor;
     using Utilities.Extensions;
-    using Utilities.Validators;
 
     /// <summary>
     /// Used for testing the model errors.
@@ -99,21 +100,11 @@
         /// AndAlso method for better readability when chaining error message tests.
         /// </summary>
         /// <returns>Model error details test builder.</returns>
-        public IModelErrorTestBuilder<TModel> AndAlso()
-        {
-            return this;
-        }
+        public IModelErrorTestBuilder<TModel> AndAlso() => this;
 
-        /// <summary>
-        /// Gets the model returned from an action result.
-        /// </summary>
-        /// <returns>Model returned from action result.</returns>
-        public TModel AndProvideTheModel()
-        {
-            CommonValidator.CheckForEqualityWithDefaultValue(this.Model, "AndProvideTheModel can be used when there is response model from the action.");
-            return this.Model;
-        }
-
+        public new IShouldPassForTestBuilderWithModel<TModel> ShouldPassFor()
+            => new ShouldPassForTestBuilderWithModel<TModel>(this.TestContext);
+        
         private void ThrowNewModelErrorAssertionException(string messageFormat, string errorKey)
         {
             throw new ModelErrorAssertionException(string.Format(

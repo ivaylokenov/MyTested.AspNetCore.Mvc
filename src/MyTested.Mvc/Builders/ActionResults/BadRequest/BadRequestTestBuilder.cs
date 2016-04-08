@@ -1,20 +1,23 @@
 ﻿namespace MyTested.Mvc.Builders.ActionResults.BadRequest
 {
-    using System.Collections.Generic;
-    using System.Linq;
     using Base;
+    using Contracts.Base;
     using Contracts.ActionResults.BadRequest;
     using Contracts.Models;
+    using Contracts.ShouldPassFor;
     using Exceptions;
-    using Utilities.Extensions;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.ModelBinding;
-    using Models;
-    using System.Net;
-    using Microsoft.Net.Http.Headers;
-    using Microsoft.AspNetCore.Mvc.Formatters;
     using Internal.TestContexts;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Formatters;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
+    using Microsoft.Net.Http.Headers;
+    using Models;
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Net;
+    using ShouldPassFor;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Used for testing bad request results.
@@ -363,11 +366,11 @@
         /// AndAlso method for better readability when chaining bad request result tests.
         /// </summary>
         /// <returns>HTTP bad request result test builder.</returns>
-        public IBadRequestTestBuilder AndAlso()
-        {
-            return this;
-        }
-        
+        public IBadRequestTestBuilder AndAlso() => this;
+
+        IShouldPassForTestBuilderWithActionResult<ActionResult> IBaseTestBuilderWithActionResult<ActionResult>.ShouldPassFor()
+            => new ShouldPassForTestBuilderWithActionResult<ActionResult>(this.TestContext);
+
         protected override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)
             => this.ThrowNewHttpBadRequestResultAssertionException(propertyName, expectedValue, actualValue);
 

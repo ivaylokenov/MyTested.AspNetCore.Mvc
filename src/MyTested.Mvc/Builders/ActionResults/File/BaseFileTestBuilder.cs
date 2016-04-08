@@ -26,12 +26,6 @@
             : base(testContext)
         {
         }
-
-        /// <summary>
-        /// Gets the tested file result.
-        /// </summary>
-        /// <returns>Tested file result.</returns>
-        public new FileResult AndProvideTheActionResult() => this.ActionResult;
         
         /// <summary>
         /// Validates whether file result has the provided content type.

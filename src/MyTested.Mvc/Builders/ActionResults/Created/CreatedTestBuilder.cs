@@ -16,6 +16,9 @@
     using Microsoft.Net.Http.Headers;
     using Utilities.Extensions;
     using Utilities.Validators;
+    using Contracts.ShouldPassFor;
+    using ShouldPassFor;
+    using Contracts.Base;
 
     /// <summary>
     /// Used for testing created results.
@@ -442,11 +445,8 @@
         /// <returns>Created test builder.</returns>
         public ICreatedTestBuilder AndAlso() => this;
 
-        /// <summary>
-        /// Gets the action result which will be tested.
-        /// </summary>
-        /// <returns>Action result to be tested.</returns>
-        public new ObjectResult AndProvideTheActionResult() => this.ActionResult;
+        IShouldPassForTestBuilderWithActionResult<ObjectResult> IBaseTestBuilderWithActionResult<ObjectResult>.ShouldPassFor()
+            => new ShouldPassForTestBuilderWithActionResult<ObjectResult>(this.TestContext);
 
         /// <summary>
         /// Throws new created result assertion exception for the provided property name, expected value and actual value.
@@ -456,7 +456,7 @@
         /// <param name="actualValue">Actual value of the tested property.</param>
         protected override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)
             => this.ThrowNewCreatedResultAssertionException(propertyName, expectedValue, actualValue);
-        
+
         private TExpectedCreatedResult GetCreatedResult<TExpectedCreatedResult>(string containment)
             where TExpectedCreatedResult : class
         {
