@@ -15,7 +15,7 @@
 
         public IShouldPassForTestBuilderWithModel<TModel> TheModel(Action<TModel> assertions)
         {
-            this.ValidateFor(assertions, this.GetModel());
+            assertions(this.GetModel());
             return this;
         }
 

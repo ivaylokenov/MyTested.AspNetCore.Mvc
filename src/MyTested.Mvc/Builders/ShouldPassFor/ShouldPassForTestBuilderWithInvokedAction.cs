@@ -4,7 +4,7 @@
     using Contracts.ShouldPassFor;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Http;
-
+    using Utilities.Extensions;
     public class ShouldPassForTestBuilderWithInvokedAction : ShouldPassForTestBuilderWithAction,
         IShouldPassForTestBuilderWithInvokedAction
     {
@@ -15,25 +15,26 @@
 
         public IShouldPassForTestBuilderWithInvokedAction TheCaughtException(Action<Exception> assertions)
         {
-            this.ValidateFor(assertions, this.TestContext.CaughtException);
+            assertions(this.TestContext.CaughtException);
             return this;
         }
 
         public IShouldPassForTestBuilderWithInvokedAction TheCaughtException(Func<Exception, bool> predicate)
         {
-            this.ValidateFor(predicate, this.TestContext.CaughtException);
+            var exception = this.TestContext.CaughtException;
+            this.ValidateFor(predicate, exception, exception != null ? exception.GetName() : "caught exception");
             return this;
         }
 
         public IShouldPassForTestBuilderWithInvokedAction TheHttpResponse(Action<HttpResponse> assertions)
         {
-            this.ValidateFor(assertions, this.TestContext.HttpResponse);
+            assertions(this.TestContext.HttpResponse);
             return this;
         }
 
         public IShouldPassForTestBuilderWithInvokedAction TheHttpResponse(Func<HttpResponse, bool> predicate)
         {
-            this.ValidateFor(predicate, this.TestContext.HttpResponse);
+            this.ValidateFor(predicate, this.TestContext.HttpResponse, nameof(HttpResponse));
             return this;
         }
     }

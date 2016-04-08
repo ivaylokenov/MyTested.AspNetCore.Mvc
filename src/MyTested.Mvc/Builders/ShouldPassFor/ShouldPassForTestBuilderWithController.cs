@@ -19,7 +19,7 @@
 
         public IShouldPassForTestBuilderWithController<TController> TheController(Action<TController> assertions)
         {
-            this.ValidateFor(assertions, this.TestContext.ControllerAs<TController>());
+            assertions(this.TestContext.ControllerAs<TController>());
             return this;
         }
 
@@ -31,13 +31,13 @@
 
         public IShouldPassForTestBuilderWithController<TController> TheControllerAttributes(Action<IEnumerable<object>> assertions)
         {
-            this.ValidateFor(assertions, this.TestContext.ControllerAttributes);
+            assertions(this.TestContext.ControllerAttributes);
             return this;
         }
 
         public IShouldPassForTestBuilderWithController<TController> TheControllerAttributes(Func<IEnumerable<object>, bool> predicate)
         {
-            this.ValidateFor(predicate, this.TestContext.ControllerAttributes);
+            this.ValidateFor(predicate, this.TestContext.ControllerAttributes, "controller attributes");
             return this;
         }
     }

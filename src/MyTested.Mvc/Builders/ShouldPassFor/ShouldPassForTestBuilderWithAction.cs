@@ -15,25 +15,25 @@
 
         public IShouldPassForTestBuilderWithAction TheAction(Action<string> assertions)
         {
-            this.ValidateFor(assertions, this.TestContext.ActionName);
+            assertions(this.TestContext.ActionName);
             return this;
         }
 
         public IShouldPassForTestBuilderWithAction TheAction(Func<string, bool> predicate)
         {
-            this.ValidateFor(predicate, this.TestContext.ActionName);
+            this.ValidateFor(predicate, this.TestContext.ActionName, "action name");
             return this;
         }
 
         public IShouldPassForTestBuilderWithAction TheActionAttributes(Action<IEnumerable<object>> assertions)
         {
-            this.ValidateFor(assertions, this.TestContext.ActionAttributes);
+            assertions(this.TestContext.ActionAttributes);
             return this;
         }
 
         public IShouldPassForTestBuilderWithAction TheActionAttributes(Func<IEnumerable<object>, bool> predicate)
         {
-            this.ValidateFor(predicate, this.TestContext.ActionAttributes);
+            this.ValidateFor(predicate, this.TestContext.ActionAttributes, "action attributes");
             return this;
         }
     }

@@ -20,38 +20,33 @@
 
         public IShouldPassForTestBuilder TheHttpContext(Action<HttpContext> assertions)
         {
-            this.ValidateFor(assertions, this.testContext.HttpContext);
+            assertions(this.testContext.HttpContext);
             return this;
         }
 
         public IShouldPassForTestBuilder TheHttpContext(Func<HttpContext, bool> predicate)
         {
-            this.ValidateFor(predicate, this.testContext.HttpContext);
+            this.ValidateFor(predicate, this.testContext.HttpContext, nameof(HttpContext));
             return this;
         }
 
         public IShouldPassForTestBuilder TheHttpRequest(Action<HttpRequest> assertions)
         {
-            this.ValidateFor(assertions, this.testContext.HttpRequest);
+            assertions(this.testContext.HttpRequest);
             return this;
         }
 
         public IShouldPassForTestBuilder TheHttpRequest(Func<HttpRequest, bool> predicate)
         {
-            this.ValidateFor(predicate, this.testContext.HttpRequest);
+            this.ValidateFor(predicate, this.testContext.HttpRequest, nameof(HttpRequest));
             return this;
         }
-
-        protected void ValidateFor<T>(Action<T> assertions, T obj)
-        {
-            assertions(obj);
-        }
-
-        protected void ValidateFor<T>(Func<T, bool> predicate, T obj)
+        
+        protected void ValidateFor<T>(Func<T, bool> predicate, T obj, string objectName = null)
         {
             if (!predicate(obj))
             {
-                throw new InvalidAssertionException($"Expected the {obj.GetName()} to pass the given predicate but it failed.");
+                throw new InvalidAssertionException($"Expected the {objectName ?? obj.GetName()} to pass the given predicate but it failed.");
             }
         }
     }

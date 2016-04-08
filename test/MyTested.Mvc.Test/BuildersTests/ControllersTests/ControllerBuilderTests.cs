@@ -527,7 +527,7 @@
                     Assert.Equal(ContentType.ApplicationOctetStream, controller.HttpContext.Request.ContentType);
                 });
         }
-
+        
         [Fact]
         public void WithRequestShouldNotWorkWithDefaultRequestAction()
         {

@@ -15,7 +15,7 @@
 
         public IShouldPassForTestBuilderWithActionResult<TActionResult> TheActionResult(Action<TActionResult> assertions)
         {
-            this.ValidateFor(assertions, this.GetActionResult());
+            assertions(this.GetActionResult());
             return this;
         }
 
