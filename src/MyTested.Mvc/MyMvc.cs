@@ -9,7 +9,7 @@
     using Internal.TestContexts;
 
     /// <summary>
-    /// Starting point of the ASP.NET MVC testing framework, which provides a way to specify the test case.
+    /// Starting point of the ASP.NET Core MVC testing framework, which provides a way to specify the test case.
     /// </summary>
     public static class MyMvc
     {
@@ -54,7 +54,7 @@
         /// <summary>
         /// Selects controller on which the test will be executed.
         /// </summary>
-        /// <typeparam name="TController">Class representing ASP.NET MVC controller.</typeparam>
+        /// <typeparam name="TController">Class representing ASP.NET Core MVC controller.</typeparam>
         /// <returns>Controller builder used to build the test case.</returns>
         public static IControllerBuilder<TController> Controller<TController>()
             where TController : class
@@ -65,8 +65,8 @@
         /// <summary>
         /// Selects controller on which the test will be executed.
         /// </summary>
-        /// <typeparam name="TController">Class representing ASP.NET MVC controller.</typeparam>
-        /// <param name="controller">Instance of the ASP.NET MVC controller to use.</param>
+        /// <typeparam name="TController">Class representing ASP.NET Core MVC controller.</typeparam>
+        /// <param name="controller">Instance of the ASP.NET Core MVC controller to use.</param>
         /// <returns>Controller builder used to build the test case.</returns>
         public static IControllerBuilder<TController> Controller<TController>(TController controller)
             where TController : class
@@ -77,7 +77,7 @@
         /// <summary>
         /// Selects controller on which the test will be executed. Controller is instantiated using construction function.
         /// </summary>
-        /// <typeparam name="TController">Class representing ASP.NET MVC controller.</typeparam>
+        /// <typeparam name="TController">Class representing ASP.NET Core MVC controller.</typeparam>
         /// <param name="construction">Construction function returning the instantiated controller.</param>
         /// <returns>Controller builder used to build the test case.</returns>
         public static IControllerBuilder<TController> Controller<TController>(Func<TController> construction)

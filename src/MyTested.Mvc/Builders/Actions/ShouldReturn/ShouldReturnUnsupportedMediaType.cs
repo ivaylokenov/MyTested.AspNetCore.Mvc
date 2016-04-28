@@ -4,15 +4,12 @@
     using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
-    /// Class containing methods for testing UnsupportedMediaTypeResult.
+    /// Class containing methods for testing <see cref="UnsupportedMediaTypeResult"/>.
     /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
+    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
-        /// <summary>
-        /// Tests whether action result is UnsupportedMediaTypeResult.
-        /// </summary>
-        /// <returns>Base test builder with action result.</returns>
+        /// <inheritdoc />
         public IBaseTestBuilderWithActionResult<TActionResult> UnsupportedMediaType()
         {
             this.ValidateActionReturnType<UnsupportedMediaTypeResult>();

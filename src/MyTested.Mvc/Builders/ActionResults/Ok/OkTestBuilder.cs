@@ -17,7 +17,7 @@
     /// <summary>
     /// Used for testing OK result.
     /// </summary>
-    /// <typeparam name="THttpOkResult">Type of OK result - HttpOkResult or HttpOkObjectResult.</typeparam>
+    /// <typeparam name="THttpOkResult">Type of OK result - <see cref="OkResult"/> or <see cref="OkObjectResult"/>.</typeparam>
     public class OkTestBuilder<THttpOkResult>
         : BaseTestBuilderWithResponseModel<THttpOkResult>, IAndOkTestBuilder
         where THttpOkResult : ActionResult

@@ -5,15 +5,12 @@
     using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
-    /// Class containing methods for testing ForbidResult.
+    /// Class containing methods for testing <see cref="ForbidResult"/>.
     /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
+    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
-        /// <summary>
-        /// Tests whether action result is ForbidResult.
-        /// </summary>
-        /// <returns>Forbid test builder.</returns>
+        /// <inheritdoc />
         public IForbidTestBuilder Forbid()
         {
             this.TestContext.ActionResult = this.GetReturnObject<ForbidResult>();

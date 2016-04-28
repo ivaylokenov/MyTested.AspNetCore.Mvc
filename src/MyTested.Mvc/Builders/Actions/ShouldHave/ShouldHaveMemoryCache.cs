@@ -6,11 +6,12 @@
     using Data;
 
     /// <summary>
-    /// Class containing methods for testing memory cache.
+    /// Class containing methods for testing <see cref="Microsoft.Extensions.Caching.Memory.IMemoryCache"/>.
     /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
+    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
     public partial class ShouldHaveTestBuilder<TActionResult>
     {
+        /// <inheritdoc />
         public IAndTestBuilder<TActionResult> NoMemoryCache()
         {
             if (this.TestContext.MockedMemoryCache.Count > 0)
@@ -21,6 +22,7 @@
             return this.NewAndTestBuilder();
         }
 
+        /// <inheritdoc />
         public IAndTestBuilder<TActionResult> MemoryCache(int? withNumberOfEntries = null)
         {
             this.ValidateDataProviderNumberOfEntries(
@@ -31,6 +33,7 @@
             return this.NewAndTestBuilder();
         }
 
+        /// <inheritdoc />
         public IAndTestBuilder<TActionResult> MemoryCache(Action<IMemoryCacheTestBuilder> memoryCacheTestBuilder)
         {
             memoryCacheTestBuilder(new MemoryCacheTestBuilder(this.TestContext));

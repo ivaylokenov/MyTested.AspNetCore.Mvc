@@ -5,15 +5,12 @@
     using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
-    /// Class containing methods for testing NotFoundResult or NotFoundObjectResult.
+    /// Class containing methods for testing <see cref="NotFoundResult"/> or <see cref="NotFoundObjectResult"/>.
     /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
+    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
-        /// <summary>
-        /// Tests whether action result is NotFoundResult or NotFoundObjectResult.
-        /// </summary>
-        /// <returns>Base test builder with action result.</returns>
+        /// <inheritdoc />
         public INotFoundTestBuilder NotFound()
         {
             if (this.ActionResult is NotFoundObjectResult)

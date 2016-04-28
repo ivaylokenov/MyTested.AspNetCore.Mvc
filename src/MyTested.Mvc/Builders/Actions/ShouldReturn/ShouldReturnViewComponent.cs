@@ -7,26 +7,19 @@
     using Utilities;
 
     /// <summary>
-    /// Class containing methods for testing ViewComponentResult.
+    /// Class containing methods for testing <see cref="ViewComponentResult"/>.
     /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
+    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
-        /// <summary>
-        /// Tests whether action result is ViewComponentResult.
-        /// </summary>
-        /// <returns>View component test builder.</returns>
+        /// <inheritdoc />
         public IViewComponentTestBuilder ViewComponent()
         {
             this.TestContext.ActionResult = this.GetReturnObject<ViewComponentResult>();
             return new ViewComponentTestBuilder(this.TestContext);
         }
 
-        /// <summary>
-        /// Tests whether action result is ViewComponentResult with the specified view component name.
-        /// </summary>
-        /// <param name="viewComponentName">Expected view component name.</param>
-        /// <returns>View component test builder.</returns>
+        /// <inheritdoc />
         public IViewComponentTestBuilder ViewComponent(string viewComponentName)
         {
             var viewComponentResult = this.GetReturnObject<ViewComponentResult>();
@@ -44,11 +37,7 @@
             return new ViewComponentTestBuilder(this.TestContext);
         }
 
-        /// <summary>
-        /// Tests whether action result is ViewComponentResult with the specified view component type.
-        /// </summary>
-        /// <param name="viewComponentType">Expected view component type.</param>
-        /// <returns>View component test builder.</returns>
+        /// <inheritdoc />
         public IViewComponentTestBuilder ViewComponent(Type viewComponentType)
         {
             var viewComponentResult = this.GetReturnObject<ViewComponentResult>();
@@ -66,11 +55,7 @@
             return new ViewComponentTestBuilder(this.TestContext);
         }
 
-        /// <summary>
-        /// Tests whether action result is ViewComponentResult with the specified view component type.
-        /// </summary>
-        /// <typeparam name="TViewComponentType">Expected view component type.</typeparam>
-        /// <returns>View component test builder.</returns>
+        /// <inheritdoc />
         public IViewComponentTestBuilder ViewComponent<TViewComponentType>()
         {
             return this.ViewComponent(typeof(TViewComponentType));

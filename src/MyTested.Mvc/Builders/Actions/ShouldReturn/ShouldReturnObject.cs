@@ -5,15 +5,12 @@
     using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
-    /// Class containing methods for testing ObjectResult.
+    /// Class containing methods for testing <see cref="ObjectResult"/>.
     /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
+    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
-        /// <summary>
-        /// Tests whether action result is ObjectResult.
-        /// </summary>
-        /// <returns>Object result test builder.</returns>
+        /// <inheritdoc />
         public IObjectTestBuilder Object()
         {
             this.TestContext.ActionResult = this.GetReturnObject<ObjectResult>();

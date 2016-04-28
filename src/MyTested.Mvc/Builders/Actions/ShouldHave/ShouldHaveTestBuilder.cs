@@ -13,27 +13,20 @@
     /// <summary>
     /// Used for testing action attributes and controller properties.
     /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
+    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
     public partial class ShouldHaveTestBuilder<TActionResult>
         : BaseTestBuilderWithActionResult<TActionResult>, IShouldHaveTestBuilder<TActionResult>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ShouldHaveTestBuilder{TActionResult}" /> class.
         /// </summary>
-        /// <param name="controller">Controller on which the action will be tested.</param>
-        /// <param name="actionName">Name of the tested action.</param>
-        /// <param name="caughtException">Caught exception during the action execution.</param>
-        /// <param name="actionResult">Result from the tested action.</param>
-        /// <param name="actionAttributes">Collected action attributes from the method call.</param>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public ShouldHaveTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
         }
 
-        /// <summary>
-        /// Checks whether the tested action applies additional features to the HTTP response.
-        /// </summary>
-        /// <returns>Test builder with AndAlso method.</returns>
+        /// <inheritdoc />
         public IAndTestBuilder<TActionResult> HttpResponse(Action<IHttpResponseTestBuilder> httpResponseTestBuilder)
         {
             httpResponseTestBuilder(new HttpResponseTestBuilder(this.TestContext));

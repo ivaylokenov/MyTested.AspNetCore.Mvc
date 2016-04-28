@@ -3,7 +3,7 @@
     /// <summary>
     /// Used for adding AndAlso() method to controller builder.
     /// </summary>
-    /// <typeparam name="TController">Class representing ASP.NET MVC controller.</typeparam>
+    /// <typeparam name="TController">Class representing ASP.NET Core MVC controller.</typeparam>
     public interface IAndControllerBuilder<TController> : IControllerBuilder<TController>
         where TController : class
     {

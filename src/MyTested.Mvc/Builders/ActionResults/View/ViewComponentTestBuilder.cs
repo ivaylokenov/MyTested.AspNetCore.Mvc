@@ -11,7 +11,7 @@
     using Utilities.Validators;
 
     /// <summary>
-    /// Used for testing view component results.
+    /// Used for testing <see cref="ViewComponentResult"/>.
     /// </summary>
     public class ViewComponentTestBuilder
         : ViewTestBuilder<ViewComponentResult>, IAndViewComponentTestBuilder

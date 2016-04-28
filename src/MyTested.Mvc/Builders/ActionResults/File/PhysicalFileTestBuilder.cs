@@ -7,7 +7,7 @@
     using Utilities.Extensions;
 
     /// <summary>
-    /// Used for testing physical file result.
+    /// Used for testing <see cref="PhysicalFileResult"/>.
     /// </summary>
     public class PhysicalFileTestBuilder
         : BaseFileTestBuilder<PhysicalFileResult>, IAndPhysicalFileTestBuilder

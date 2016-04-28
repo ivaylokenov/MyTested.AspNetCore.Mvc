@@ -25,6 +25,7 @@
         /// Static constructor for creating default authenticated claims principal with "TestId" identifier and "TestUser" username.
         /// </summary>
         /// <returns>Authenticated claims principal.</returns>
+        /// <value>Result of type <see cref="ClaimsPrincipal"/>.</value>
         public static ClaimsPrincipal DefaultAuthenticated => DefaultAuthenticatedClaimsPrinciple;
 
         public IAndClaimsPrincipalBuilder WithNameType(string nameType)

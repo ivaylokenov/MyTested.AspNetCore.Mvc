@@ -17,7 +17,7 @@
     using Utilities.Validators;
 
     /// <summary>
-    /// Used for testing JSON serializer settings in a JSON result.
+    /// Used for testing <see cref="JsonSerializerSettings"/> in a <see cref="Microsoft.AspNetCore.Mvc.JsonResult"/>.
     /// </summary>
     public class JsonSerializerSettingsTestBuilder : BaseTestBuilderWithAction, IAndJsonSerializerSettingsTestBuilder
     {

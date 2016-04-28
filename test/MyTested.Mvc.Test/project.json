@@ -1,10 +1,7 @@
 {
-  "version": "1.0.0",
-  "description": "MyTested.Mvc.Test Class Library",
   "authors": [ "Ivaylo Kenov" ],
-  "tags": [ "" ],
-  "projectUrl": "",
-  "licenseUrl": "",
+  "projectUrl": "https://github.com/ivaylokenov/MyTested.Mvc",
+  "licenseUrl": "https://github.com/ivaylokenov/MyTested.Mvc/blob/master/LICENSE",
 
   "compilationOptions": {
     "warningsAsErrors": true

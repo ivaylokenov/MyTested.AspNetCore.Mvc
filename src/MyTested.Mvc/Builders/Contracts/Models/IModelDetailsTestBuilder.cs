@@ -5,7 +5,7 @@
     /// <summary>
     /// Used for testing the response model members.
     /// </summary>
-    /// <typeparam name="TResponseModel">Response model from invoked action in ASP.NET MVC controller.</typeparam>
+    /// <typeparam name="TResponseModel">Response model from invoked action in ASP.NET Core MVC controller.</typeparam>
     public interface IModelDetailsTestBuilder<TResponseModel> : IModelErrorTestBuilder<TResponseModel>
     {
         /// <summary>

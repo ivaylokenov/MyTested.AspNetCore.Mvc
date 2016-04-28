@@ -5,15 +5,12 @@
     using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
-    /// Class containing methods for testing OkResult or OkObjectResult.
+    /// Class containing methods for testing <see cref="OkResult"/> or <see cref="OkObjectResult"/>.
     /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
+    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
-        /// <summary>
-        /// Tests whether action result is OkResult or OkObjectResult.
-        /// </summary>
-        /// <returns>Ok test builder.</returns>
+        /// <inheritdoc />
         public IOkTestBuilder Ok()
         {
             if (this.ActionResult is OkObjectResult)

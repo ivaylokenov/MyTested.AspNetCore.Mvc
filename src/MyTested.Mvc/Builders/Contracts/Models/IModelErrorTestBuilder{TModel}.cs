@@ -7,7 +7,7 @@
     /// <summary>
     /// Used for testing model errors.
     /// </summary>
-    /// <typeparam name="TModel">Model from invoked action in ASP.NET MVC controller.</typeparam>
+    /// <typeparam name="TModel">Model from invoked action in ASP.NET Core MVC controller.</typeparam>
     public interface IModelErrorTestBuilder<TModel> : IModelErrorTestBuilder, IBaseTestBuilderWithModel<TModel>
     {
         /// <summary>

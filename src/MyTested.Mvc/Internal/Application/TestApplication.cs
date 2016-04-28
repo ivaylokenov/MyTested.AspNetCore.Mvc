@@ -161,7 +161,7 @@
         {
             var applicationName = PlatformServices.Default.Application.ApplicationName;
             var applicationAssembly = Assembly.Load(new AssemblyName(applicationName));
-
+            
             var startupName = TestConfiguration.FullStartupName ?? $"{Environment.EnvironmentName}Startup";
 
             // check root of the testing library

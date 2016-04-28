@@ -6,13 +6,13 @@
     using System.Threading.Tasks;
     using Base;
     using Contracts.ActionResults.Redirect;
+    using Contracts.Base;
+    using Contracts.ShouldPassFor;
     using Contracts.Uris;
     using Exceptions;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Routing;
-    using Contracts.Base;
-    using Contracts.ShouldPassFor;
     using ShouldPassFor;
     using Utilities.Extensions;
     using Utilities.Validators;
@@ -20,7 +20,7 @@
     /// <summary>
     /// Used for testing redirect results.
     /// </summary>
-    /// <typeparam name="TRedirectResult">Type of redirect result - RedirectResult, RedirectToActionResult or RedirectToRouteResult.</typeparam>
+    /// <typeparam name="TRedirectResult">Type of redirect result - <see cref="RedirectResult"/>, <see cref="RedirectToActionResult"/> or <see cref="RedirectToRouteResult"/>.</typeparam>
     public class RedirectTestBuilder<TRedirectResult>
         : BaseTestBuilderWithActionResult<TRedirectResult>, IAndRedirectTestBuilder
         where TRedirectResult : ActionResult

@@ -9,13 +9,10 @@
     /// <summary>
     /// Class containing methods for testing null or default value result.
     /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
+    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
-        /// <summary>
-        /// Tests whether action result is the default value of the type.
-        /// </summary>
-        /// <returns>Base test builder with action result.</returns>
+        /// <inheritdoc />
         public IBaseTestBuilderWithActionResult<TActionResult> DefaultValue()
         {
             if (!this.CheckValidDefaultValue())
@@ -28,10 +25,7 @@
             return this.NewAndProvideTestBuilder();
         }
 
-        /// <summary>
-        /// Tests whether action result is null.
-        /// </summary>
-        /// <returns>Base test builder with action result.</returns>
+        /// <inheritdoc />
         public IBaseTestBuilderWithActionResult<TActionResult> Null()
         {
             CommonValidator.CheckIfTypeCanBeNull(typeof(TActionResult));
@@ -45,10 +39,7 @@
             return this.NewAndProvideTestBuilder();
         }
 
-        /// <summary>
-        /// Tests whether action result is not null.
-        /// </summary>
-        /// <returns>Base test builder with action result.</returns>
+        /// <inheritdoc />
         public IBaseTestBuilderWithActionResult<TActionResult> NotNull()
         {
             CommonValidator.CheckIfTypeCanBeNull(typeof(TActionResult));

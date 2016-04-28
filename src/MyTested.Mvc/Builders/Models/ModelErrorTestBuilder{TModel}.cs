@@ -14,7 +14,7 @@
     /// <summary>
     /// Used for testing the model errors.
     /// </summary>
-    /// <typeparam name="TModel">Model from invoked action in ASP.NET MVC controller.</typeparam>
+    /// <typeparam name="TModel">Model from invoked action in ASP.NET Core MVC controller.</typeparam>
     public class ModelErrorTestBuilder<TModel> : ModelErrorTestBuilder, IAndModelErrorTestBuilder<TModel>
     {
         /// <summary>
@@ -33,7 +33,7 @@
         }
 
         /// <summary>
-        /// Gets model from invoked action in ASP.NET MVC controller.
+        /// Gets model from invoked action in ASP.NET Core MVC controller.
         /// </summary>
         /// <value>Model from invoked action.</value>
         protected TModel Model => this.TestContext.ModelAs<TModel>();

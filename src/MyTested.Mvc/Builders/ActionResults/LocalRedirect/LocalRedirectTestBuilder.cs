@@ -13,7 +13,7 @@
     using Utilities.Validators;
 
     /// <summary>
-    /// Used for testing local redirect result.
+    /// Used for testing <see cref="LocalRedirectResult"/>.
     /// </summary>
     public class LocalRedirectTestBuilder : BaseTestBuilderWithActionResult<LocalRedirectResult>,
         IAndLocalRedirectTestBuilder

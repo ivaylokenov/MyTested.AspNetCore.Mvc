@@ -7,6 +7,8 @@
     using System.Threading.Tasks;
     using Base;
     using Contracts.ActionResults.Created;
+    using Contracts.Base;
+    using Contracts.ShouldPassFor;
     using Contracts.Uris;
     using Exceptions;
     using Internal.TestContexts;
@@ -14,16 +16,14 @@
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.AspNetCore.Routing;
     using Microsoft.Net.Http.Headers;
+    using ShouldPassFor;
     using Utilities.Extensions;
     using Utilities.Validators;
-    using Contracts.ShouldPassFor;
-    using ShouldPassFor;
-    using Contracts.Base;
 
     /// <summary>
     /// Used for testing created results.
     /// </summary>
-    /// <typeparam name="TCreatedResult">Type of created result - CreatedAtActionResult or CreatedAtRouteResult.</typeparam>
+    /// <typeparam name="TCreatedResult">Type of created result - <see cref="CreatedResult"/>, <see cref="CreatedAtActionResult"/> or <see cref="CreatedAtRouteResult"/>.</typeparam>
     public class CreatedTestBuilder<TCreatedResult>
         : BaseTestBuilderWithResponseModel<TCreatedResult>, IAndCreatedTestBuilder
         where TCreatedResult : ObjectResult

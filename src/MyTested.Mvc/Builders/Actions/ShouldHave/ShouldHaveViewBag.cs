@@ -8,9 +8,10 @@
     /// <summary>
     /// Class containing methods for testing view bag.
     /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
+    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
     public partial class ShouldHaveTestBuilder<TActionResult>
     {
+        /// <inheritdoc />
         public IAndTestBuilder<TActionResult> NoViewBag()
         {
             if (this.TestContext.ViewData.Count > 0)
@@ -21,6 +22,7 @@
             return this.NewAndTestBuilder();
         }
 
+        /// <inheritdoc />
         public IAndTestBuilder<TActionResult> ViewBag(int? withNumberOfEntries = null)
         {
             this.ValidateDataProviderNumberOfEntries(
@@ -31,6 +33,7 @@
             return this.NewAndTestBuilder();
         }
 
+        /// <inheritdoc />
         public IAndTestBuilder<TActionResult> ViewBag(Action<IViewBagTestBuilder> viewDataTestBuilder)
         {
             viewDataTestBuilder(new ViewBagTestBuilder(this.TestContext));

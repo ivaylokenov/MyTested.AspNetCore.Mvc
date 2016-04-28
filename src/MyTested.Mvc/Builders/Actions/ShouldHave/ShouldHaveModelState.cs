@@ -9,37 +9,26 @@
     using Utilities.Extensions;
 
     /// <summary>
-    /// Class containing methods for testing model state.
+    /// Class containing methods for testing <see cref="Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary"/>.
     /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
+    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
     public partial class ShouldHaveTestBuilder<TActionResult>
     {
-        /// <summary>
-        /// Provides way to continue test case with specific model state errors.
-        /// </summary>
-        /// <typeparam name="TRequestModel">Request model type to be tested for errors.</typeparam>
-        /// <returns>Test builder with AndAlso method.</returns>
+        /// <inheritdoc />
         public IAndTestBuilder<TActionResult> ModelStateFor<TRequestModel>(Action<IModelErrorTestBuilder<TRequestModel>> modelErrorTestBuilder)
         {
             modelErrorTestBuilder(new ModelErrorTestBuilder<TRequestModel>(this.TestContext));
             return this.NewAndTestBuilder();
         }
 
-        /// <summary>
-        /// Checks whether the tested action's provided model state is valid.
-        /// </summary>
-        /// <returns>Test builder with AndAlso method.</returns>
+        /// <inheritdoc />
         public IAndTestBuilder<TActionResult> ValidModelState()
         {
             this.CheckValidModelState();
             return this.NewAndTestBuilder();
         }
 
-        /// <summary>
-        /// Checks whether the tested action's provided model state is not valid.
-        /// </summary>
-        /// <param name="withNumberOfErrors">Expected number of errors. If default null is provided, the test builder checks only if any errors are found.</param>
-        /// <returns>Test builder with AndAlso method.</returns>
+        /// <inheritdoc />
         public IAndTestBuilder<TActionResult> InvalidModelState(int? withNumberOfErrors = null)
         {
             var actualModelStateErrors = this.TestContext.ModelState.Values.SelectMany(c => c.Errors).Count();

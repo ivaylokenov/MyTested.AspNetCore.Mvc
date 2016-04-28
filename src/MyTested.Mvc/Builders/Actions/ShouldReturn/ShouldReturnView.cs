@@ -8,25 +8,18 @@
     using Utilities.Extensions;
 
     /// <summary>
-    /// Class containing methods for testing ViewResult or PartialViewResult.
+    /// Class containing methods for testing <see cref="ViewResult"/> or <see cref="PartialViewResult"/>.
     /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
+    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
-        /// <summary>
-        /// Tests whether action result is ViewResult with default view name.
-        /// </summary>
-        /// <returns>View test builder.</returns>
+        /// <inheritdoc />
         public IViewTestBuilder View()
         {
             return this.View(null);
         }
 
-        /// <summary>
-        /// Tests whether action result is ViewResult with the specified view name.
-        /// </summary>
-        /// <param name="viewName">Expected view name.</param>
-        /// <returns>View test builder.</returns>
+        /// <inheritdoc />
         public IViewTestBuilder View(string viewName)
         {
             var viewType = "view";
@@ -40,20 +33,13 @@
             return new ViewTestBuilder<ViewResult>(this.TestContext, viewType);
         }
 
-        /// <summary>
-        /// Tests whether action result is PartialViewResult with default view name.
-        /// </summary>
-        /// <returns>View test builder.</returns>
+        /// <inheritdoc />
         public IViewTestBuilder PartialView()
         {
             return this.PartialView(null);
         }
 
-        /// <summary>
-        /// Tests whether action result is PartialViewResult with the specified view name.
-        /// </summary>
-        /// <param name="viewName">Expected partial view name.</param>
-        /// <returns>View test builder.</returns>
+        /// <inheritdoc />
         public IViewTestBuilder PartialView(string viewName)
         {
             var viewType = "partial view";

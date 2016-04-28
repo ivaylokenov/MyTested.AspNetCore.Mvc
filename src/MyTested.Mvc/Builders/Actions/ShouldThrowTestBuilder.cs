@@ -10,7 +10,7 @@
     using Utilities.Extensions;
 
     /// <summary>
-    /// Used for testing whether action throws exception.
+    /// Used for testing whether action throws <see cref="System.Exception"/>.
     /// </summary>
     public class ShouldThrowTestBuilder : BaseTestBuilderWithInvokedAction, IShouldThrowTestBuilder
     {
@@ -19,29 +19,20 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="ShouldThrowTestBuilder" /> class.
         /// </summary>
-        /// <param name="controller">Controller on which the action will be tested.</param>
-        /// <param name="actionName">Name of the tested action.</param>
-        /// <param name="caughtException">Caught exception during the action execution.</param>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public ShouldThrowTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
             this.exceptionTestBuilder = new ExceptionTestBuilder(this.TestContext);
         }
 
-        /// <summary>
-        /// Tests whether action throws any exception.
-        /// </summary>
-        /// <returns>Exception test builder.</returns>
+        /// <inheritdoc />
         public IExceptionTestBuilder Exception()
         {
             return this.exceptionTestBuilder;
         }
 
-        /// <summary>
-        /// Tests whether action throws any AggregateException.
-        /// </summary>
-        /// <param name="withNumberOfInnerExceptions">Optional expected number of total inner exceptions.</param>
-        /// <returns>AggregateException test builder.</returns>
+        /// <inheritdoc />
         public IAggregateExceptionTestBuilder AggregateException(int? withNumberOfInnerExceptions = null)
         {
             this.exceptionTestBuilder.OfType<AggregateException>();

@@ -19,7 +19,7 @@
     /// <summary>
     /// Used for building the controller which will be tested.
     /// </summary>
-    /// <typeparam name="TController">Class representing ASP.NET MVC controller.</typeparam>
+    /// <typeparam name="TController">Class representing ASP.NET Core MVC controller.</typeparam>
     public partial class ControllerBuilder<TController> : BaseTestBuilder, IAndControllerBuilder<TController>
         where TController : class
     {
@@ -50,9 +50,9 @@
         }
 
         /// <summary>
-        /// Gets the ASP.NET MVC controller instance to be tested.
+        /// Gets the ASP.NET Core MVC controller instance to be tested.
         /// </summary>
-        /// <value>Instance of the ASP.NET MVC controller.</value>
+        /// <value>Instance of the ASP.NET Core MVC controller.</value>
         private TController Controller
         {
             get

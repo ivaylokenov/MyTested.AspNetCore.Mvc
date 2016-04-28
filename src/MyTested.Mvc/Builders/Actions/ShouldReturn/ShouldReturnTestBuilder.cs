@@ -13,17 +13,14 @@
     /// <summary>
     /// Used for testing returned action result.
     /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
+    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
     public partial class ShouldReturnTestBuilder<TActionResult>
         : BaseTestBuilderWithActionResult<TActionResult>, IShouldReturnTestBuilder<TActionResult>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ShouldReturnTestBuilder{TActionResult}" /> class.
         /// </summary>
-        /// <param name="controller">Controller on which the action will be tested.</param>
-        /// <param name="actionName">Name of the tested action.</param>
-        /// <param name="caughtException">Caught exception during the action execution.</param>
-        /// <param name="actionResult">Result from the tested action.</param>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public ShouldReturnTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {

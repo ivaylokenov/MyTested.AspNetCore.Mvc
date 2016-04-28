@@ -14,7 +14,7 @@
     using Utilities.Validators;
 
     /// <summary>
-    /// Used for testing forbid result.
+    /// Used for testing <see cref="ForbidResult"/>.
     /// </summary>
     public class ForbidTestBuilder
         : BaseTestBuilderWithActionResult<ForbidResult>, IAndForbidTestBuilder

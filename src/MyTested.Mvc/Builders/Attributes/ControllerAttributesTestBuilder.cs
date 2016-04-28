@@ -15,16 +15,13 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="ControllerAttributesTestBuilder" /> class.
         /// </summary>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public ControllerAttributesTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
         }
 
-        /// <summary>
-        /// Checks whether the collected attributes contain the provided attribute type.
-        /// </summary>
-        /// <typeparam name="TAttribute">Type of expected attribute.</typeparam>
-        /// <returns>The same attributes test builder.</returns>
+        /// <inheritdoc />
         public IAndControllerAttributesTestBuilder ContainingAttributeOfType<TAttribute>()
             where TAttribute : Attribute
         {
@@ -32,13 +29,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Checks whether the collected attributes contain RouteAttribute.
-        /// </summary>
-        /// <param name="template">Expected overridden route template of the action.</param>
-        /// <param name="withName">Optional expected route name.</param>
-        /// <param name="withOrder">Optional expected route order.</param>
-        /// <returns>The same attributes test builder.</returns>
+        /// <inheritdoc />
         public IAndControllerAttributesTestBuilder ChangingRouteTo(
             string template,
             string withName = null,
@@ -52,21 +43,14 @@
 
             return this;
         }
-        
-        /// <summary>
-        /// Checks whether the collected attributes contain AllowAnonymousAttribute.
-        /// </summary>
-        /// <returns>The same attributes test builder.</returns>
+
+        /// <inheritdoc />
         public IAndControllerAttributesTestBuilder AllowingAnonymousRequests()
         {
             return this.ContainingAttributeOfType<AllowAnonymousAttribute>();
         }
 
-        /// <summary>
-        /// Checks whether the collected attributes contain AuthorizeAttribute.
-        /// </summary>
-        /// <param name="withAllowedRoles">Optional expected authorized roles.</param>
-        /// <returns>The same attributes test builder.</returns>
+        /// <inheritdoc />
         public IAndControllerAttributesTestBuilder RestrictingForAuthorizedRequests(
             string withAllowedRoles = null)
         {
@@ -77,10 +61,7 @@
             return this;
         }
 
-        /// <summary>
-        /// AndAlso method for better readability when chaining attribute tests.
-        /// </summary>
-        /// <returns>The same attributes test builder.</returns>
+        /// <inheritdoc />
         public IControllerAttributesTestBuilder AndAlso()
         {
             return this;

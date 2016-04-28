@@ -17,7 +17,7 @@
     /// <summary>
     /// Used for building the controller which will be tested.
     /// </summary>
-    /// <typeparam name="TController">Class representing ASP.NET MVC controller.</typeparam>
+    /// <typeparam name="TController">Class representing ASP.NET Core MVC controller.</typeparam>
     public interface IControllerBuilder<TController> : IBaseTestBuilder
         where TController : class
     {

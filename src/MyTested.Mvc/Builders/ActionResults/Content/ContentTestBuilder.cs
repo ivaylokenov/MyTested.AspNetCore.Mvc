@@ -11,7 +11,7 @@
     using Utilities.Validators;
 
     /// <summary>
-    /// Used for testing content result.
+    /// Used for testing <see cref="ContentResult"/>.
     /// </summary>
     public class ContentTestBuilder
         : BaseTestBuilderWithActionResult<ContentResult>, IAndContentTestBuilder

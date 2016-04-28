@@ -6,11 +6,12 @@
     using Data;
 
     /// <summary>
-    /// Class containing methods for testing view data.
+    /// Class containing methods for testing <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary"/>.
     /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
+    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
     public partial class ShouldHaveTestBuilder<TActionResult>
     {
+        /// <inheritdoc />
         public IAndTestBuilder<TActionResult> NoViewData()
         {
             if (this.TestContext.ViewData.Count > 0)
@@ -21,6 +22,7 @@
             return this.NewAndTestBuilder();
         }
 
+        /// <inheritdoc />
         public IAndTestBuilder<TActionResult> ViewData(int? withNumberOfEntries = null)
         {
             this.ValidateDataProviderNumberOfEntries(
@@ -31,6 +33,7 @@
             return this.NewAndTestBuilder();
         }
 
+        /// <inheritdoc />
         public IAndTestBuilder<TActionResult> ViewData(Action<IViewDataTestBuilder> viewDataTestBuilder)
         {
             viewDataTestBuilder(new ViewDataTestBuilder(this.TestContext));

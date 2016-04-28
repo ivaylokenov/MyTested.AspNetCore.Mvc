@@ -117,7 +117,7 @@
         /// <summary>
         /// Adds JSON body to the built HTTP request. If no content type is set on the request, 'application/json' will be used. Uses UTF8 encoding.
         /// </summary>
-        /// <param name="jsonBody">Object to seriallize using the built-in JSON formatters in ASP.NET MVC.</param>
+        /// <param name="jsonBody">Object to seriallize using the built-in JSON formatters in ASP.NET Core MVC.</param>
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithJsonBody(object jsonBody)
             => this.WithJsonBody(jsonBody, defaultEncoding);
@@ -125,7 +125,7 @@
         /// <summary>
         /// Adds JSON body to the built HTTP request. If no content type is set on the request, 'application/json' will be used.
         /// </summary>
-        /// <param name="jsonBody">Object to seriallize using the built-in JSON formatters in ASP.NET MVC.</param>
+        /// <param name="jsonBody">Object to seriallize using the built-in JSON formatters in ASP.NET Core MVC.</param>
         /// <param name="encoding">Encoding to use for the body.</param>
         /// <returns>The same HTTP request builder.</returns>
         public IAndHttpRequestBuilder WithJsonBody(object jsonBody, Encoding encoding)

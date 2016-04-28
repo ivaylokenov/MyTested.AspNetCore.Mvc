@@ -5,15 +5,12 @@
     using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
-    /// Class containing methods for testing LocalRedirectResult.
+    /// Class containing methods for testing <see cref="LocalRedirectResult"/>.
     /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
+    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
-        /// <summary>
-        /// Tests whether action result is LocalRedirectResult.
-        /// </summary>
-        /// <returns>Local redirect test builder.</returns>
+        /// <inheritdoc />
         public ILocalRedirectTestBuilder LocalRedirect()
         {
             this.TestContext.ActionResult = this.GetReturnObject<LocalRedirectResult>();

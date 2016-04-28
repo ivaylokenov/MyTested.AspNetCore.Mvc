@@ -13,9 +13,9 @@
     using Utilities.Validators;
 
     /// <summary>
-    /// Used for testing view results.
+    /// Used for testing view result.
     /// </summary>
-    /// <typeparam name="TViewResult">Type of view result - ViewResult or PartialViewResult.</typeparam>
+    /// <typeparam name="TViewResult">Type of view result - <see cref="ViewResult"/> or <see cref="PartialViewResult"/>.</typeparam>
     public class ViewTestBuilder<TViewResult>
         : BaseTestBuilderWithViewFeature<TViewResult>, IAndViewTestBuilder
         where TViewResult : ActionResult

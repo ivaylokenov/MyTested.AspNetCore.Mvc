@@ -5,15 +5,12 @@
     using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
-    /// Class containing methods for testing RedirectResult, RedirectToActionResult or RedirectToRouteResult.
+    /// Class containing methods for testing <see cref="RedirectResult"/>, <see cref="RedirectToActionResult"/> or <see cref="RedirectToRouteResult"/>.
     /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
+    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
-        /// <summary>
-        /// Tests whether action result is RedirectResult, RedirectToActionResult or RedirectToRouteResult.
-        /// </summary>
-        /// <returns>Redirect test builder.</returns>
+        /// <inheritdoc />
         public IRedirectTestBuilder Redirect()
         {
             if (this.ActionResult is RedirectToRouteResult)

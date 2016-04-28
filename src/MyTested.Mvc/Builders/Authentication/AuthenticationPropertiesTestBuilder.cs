@@ -3,11 +3,12 @@
     using System;
     using System.Collections.Generic;
     using Base;
+    using Contracts.Authentication;
     using Exceptions;
-    using Utilities.Extensions;
-    using Microsoft.AspNetCore.Http.Authentication;
-    using MyTested.Mvc.Builders.Contracts.Authentication;
     using Internal.TestContexts;
+    using Microsoft.AspNetCore.Http.Authentication;
+    using Utilities.Extensions;
+
     /// <summary>
     /// Used for testing authentication properties.
     /// </summary>
@@ -21,8 +22,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="AuthenticationPropertiesTestBuilder" /> class.
         /// </summary>
-        /// <param name="controller">Controller on which the action will be tested.</param>
-        /// <param name="actionName">Name of the tested action.</param>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public AuthenticationPropertiesTestBuilder(ControllerTestContext testContext)
             :base(testContext)
         {
@@ -30,11 +30,7 @@
             this.validations = new List<Action<AuthenticationProperties, AuthenticationProperties>>();
         }
         
-        /// <summary>
-        /// Tests whether authentication properties has the same allow refresh value as the provided one.
-        /// </summary>
-        /// <param name="allowRefresh">Expected allow refresh value.</param>
-        /// <returns>The same authentication properties test builder.</returns>
+        /// <inheritdoc />
         public IAndAuthenticationPropertiesTestBuilder WithAllowRefresh(bool? allowRefresh)
         {
             this.authenticationProperties.AllowRefresh = allowRefresh;
@@ -51,11 +47,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether authentication properties has the same expires value as the provided one.
-        /// </summary>
-        /// <param name="expiresUtc">Expected expires value.</param>
-        /// <returns>The same authentication properties test builder.</returns>
+        /// <inheritdoc />
         public IAndAuthenticationPropertiesTestBuilder WithExpires(DateTimeOffset? expiresUtc)
         {
             this.authenticationProperties.ExpiresUtc = expiresUtc;
@@ -72,11 +64,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether authentication properties has the same is persistent value as the provided one.
-        /// </summary>
-        /// <param name="isPersistent">Expected is persistent value.</param>
-        /// <returns>The same authentication properties test builder.</returns>
+        /// <inheritdoc />
         public IAndAuthenticationPropertiesTestBuilder WithIsPersistent(bool isPersistent)
         {
             this.authenticationProperties.IsPersistent = isPersistent;
@@ -93,11 +81,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether authentication properties has the same issued value as the provided one.
-        /// </summary>
-        /// <param name="issuedUtc">Expected issued value.</param>
-        /// <returns>The same authentication properties test builder.</returns>
+        /// <inheritdoc />
         public IAndAuthenticationPropertiesTestBuilder WithIssued(DateTimeOffset? issuedUtc)
         {
             this.authenticationProperties.IssuedUtc = issuedUtc;
@@ -114,11 +98,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether authentication properties contains the provided item key.
-        /// </summary>
-        /// <param name="itemKey">Expected item key.</param>
-        /// <returns>The same authentication properties test builder.</returns>
+        /// <inheritdoc />
         public IAndAuthenticationPropertiesTestBuilder WithItem(string itemKey)
         {
             this.authenticationProperties.Items.Add(itemKey, string.Empty);
@@ -135,12 +115,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether authentication properties contains the provided item key and value.
-        /// </summary>
-        /// <param name="itemKey">Expected item key.</param>
-        /// <param name="itemValue">Expected item value.</param>
-        /// <returns>The same authentication properties test builder.</returns>
+        /// <inheritdoc />
         public IAndAuthenticationPropertiesTestBuilder WithItem(string itemKey, string itemValue)
         {
             this.authenticationProperties.Items.Add(itemKey, itemValue);
@@ -160,14 +135,11 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IAndAuthenticationPropertiesTestBuilder WithItems(object items)
             => this.WithItems(items.ToStringValueDictionary());
 
-        /// <summary>
-        /// Tests whether authentication properties contains the provided items.
-        /// </summary>
-        /// <param name="items">Expected items as dictionary.</param>
-        /// <returns>The same authentication properties test builder.</returns>
+        /// <inheritdoc />
         public IAndAuthenticationPropertiesTestBuilder WithItems(IDictionary<string, string> items)
         {
             this.validations.Add((expected, actual) =>
@@ -187,11 +159,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether authentication properties has the same redirect URI as the provided one.
-        /// </summary>
-        /// <param name="redirectUri">Expected redirect URI.</param>
-        /// <returns>The same authentication properties test builder.</returns>
+        /// <inheritdoc />
         public IAndAuthenticationPropertiesTestBuilder WithRedirectUri(string redirectUri)
         {
             this.authenticationProperties.RedirectUri = redirectUri;
@@ -208,10 +176,7 @@
             return this;
         }
 
-        /// <summary>
-        /// AndAlso method for better readability when testing authentication properties.
-        /// </summary>
-        /// <returns>The same authentication properties test builder.</returns>
+        /// <inheritdoc />
         public IAuthenticationPropertiesTestBuilder AndAlso()
         {
             return this;

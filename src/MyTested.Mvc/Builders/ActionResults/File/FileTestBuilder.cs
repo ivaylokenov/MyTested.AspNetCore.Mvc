@@ -3,21 +3,21 @@
     using System.IO;
     using System.Linq;
     using Contracts.ActionResults.File;
+    using Contracts.Base;
+    using Contracts.ShouldPassFor;
     using Exceptions;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.FileProviders;
     using Microsoft.Net.Http.Headers;
+    using ShouldPassFor;
     using Utilities;
     using Utilities.Extensions;
-    using Contracts.ShouldPassFor;
-    using Contracts.Base;
-    using ShouldPassFor;
 
     /// <summary>
     /// Used for testing file result.
     /// </summary>
-    /// <typeparam name="TFileResult">Result of type FileStreamResult, VirtualFileResult or FileContentResult.</typeparam>
+    /// <typeparam name="TFileResult">Result of type <see cref="FileStreamResult"/>, <see cref="VirtualFileResult"/> or <see cref="FileContentResult"/>.</typeparam>
     public class FileTestBuilder<TFileResult>
         : BaseFileTestBuilder<TFileResult>, IAndFileTestBuilder
         where TFileResult : FileResult

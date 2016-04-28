@@ -8,9 +8,9 @@
     using Utilities.Validators;
 
     /// <summary>
-    /// Base class for all test builders with file action result.
+    /// Base class for all test builders with file result.
     /// </summary>
-    /// <typeparam name="TFileResult">Type inheriting FileResult.</typeparam>
+    /// <typeparam name="TFileResult">Type inheriting <see cref="FileResult"/>.</typeparam>
     public abstract class BaseFileTestBuilder<TFileResult> :
         BaseTestBuilderWithActionResult<TFileResult>
         where TFileResult : FileResult

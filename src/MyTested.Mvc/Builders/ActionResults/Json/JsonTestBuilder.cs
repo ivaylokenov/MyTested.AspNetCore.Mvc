@@ -15,7 +15,7 @@
     using Utilities.Validators;
 
     /// <summary>
-    /// Used for testing JSON results.
+    /// Used for testing <see cref="JsonResult"/>.
     /// </summary>
     public class JsonTestBuilder : BaseTestBuilderWithResponseModel<JsonResult>, IAndJsonTestBuilder
     {

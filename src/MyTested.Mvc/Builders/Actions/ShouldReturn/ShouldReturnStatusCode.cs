@@ -8,36 +8,25 @@
     using Utilities.Validators;
 
     /// <summary>
-    /// Class containing methods for testing StatusCodeResult.
+    /// Class containing methods for testing <see cref="StatusCodeResult"/>.
     /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
+    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
-        /// <summary>
-        /// Tests whether action result is StatusCodeResult.
-        /// </summary>
-        /// <returns>Base test builder with action result.</returns>
+        /// <inheritdoc />
         public IBaseTestBuilderWithActionResult<TActionResult> StatusCode()
         {
             this.ValidateActionReturnType<StatusCodeResult>();
             return this.NewAndProvideTestBuilder();
         }
 
-        /// <summary>
-        /// Tests whether action result is StatusCodeResult and is the same as provided one.
-        /// </summary>
-        /// <param name="statusCode">Status code.</param>
-        /// <returns>Base test builder with action result.</returns>
+        /// <inheritdoc />
         public IBaseTestBuilderWithActionResult<TActionResult> StatusCode(int statusCode)
         {
             return this.StatusCode((HttpStatusCode)statusCode);
         }
 
-        /// <summary>
-        /// Tests whether action result is StatusCodeResult and is the same as provided HttpStatusCode.
-        /// </summary>
-        /// <param name="statusCode">HttpStatusCode enumeration.</param>
-        /// <returns>Base test builder with action result.</returns>
+        /// <inheritdoc />
         public IBaseTestBuilderWithActionResult<TActionResult> StatusCode(HttpStatusCode statusCode)
         {
             var statusCodeResult = this.GetReturnObject<StatusCodeResult>();

@@ -18,6 +18,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseAttributesTestBuilder" /> class.
         /// </summary>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         protected BaseAttributesTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {

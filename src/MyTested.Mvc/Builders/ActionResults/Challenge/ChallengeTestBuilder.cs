@@ -14,7 +14,7 @@
     using Utilities.Validators;
 
     /// <summary>
-    /// Used for testing challenge result.
+    /// Used for testing <see cref="ChallengeResult"/>.
     /// </summary>
     public class ChallengeTestBuilder
         : BaseTestBuilderWithActionResult<ChallengeResult>, IAndChallengeTestBuilder

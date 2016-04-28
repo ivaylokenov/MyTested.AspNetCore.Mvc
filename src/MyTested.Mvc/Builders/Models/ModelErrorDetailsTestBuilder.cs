@@ -14,7 +14,7 @@
     /// <summary>
     /// Used for testing specific model errors.
     /// </summary>
-    /// <typeparam name="TModel">Model from invoked action in ASP.NET MVC controller.</typeparam>
+    /// <typeparam name="TModel">Model from invoked action in ASP.NET Core MVC controller.</typeparam>
     public class ModelErrorDetailsTestBuilder<TModel> : BaseTestBuilderWithModel<TModel>, IModelErrorDetailsTestBuilder<TModel>
     {
         private readonly IAndModelErrorTestBuilder<TModel> modelErrorTestBuilder;

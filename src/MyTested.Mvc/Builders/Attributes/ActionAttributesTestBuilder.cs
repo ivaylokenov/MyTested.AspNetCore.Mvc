@@ -16,16 +16,13 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="ActionAttributesTestBuilder" /> class.
         /// </summary>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public ActionAttributesTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
         }
 
-        /// <summary>
-        /// Checks whether the collected attributes contain the provided attribute type.
-        /// </summary>
-        /// <typeparam name="TAttribute">Type of expected attribute.</typeparam>
-        /// <returns>The same attributes test builder.</returns>
+        /// <inheritdoc />
         public IAndActionAttributesTestBuilder ContainingAttributeOfType<TAttribute>()
             where TAttribute : Attribute
         {
@@ -33,11 +30,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Checks whether the collected attributes contain ActionNameAttribute.
-        /// </summary>
-        /// <param name="actionName">Expected overridden name of the action.</param>
-        /// <returns>The same attributes test builder.</returns>
+        /// <inheritdoc />
         public IAndActionAttributesTestBuilder ChangingActionNameTo(string actionName)
         {
             this.ContainingAttributeOfType<ActionNameAttribute>();
@@ -56,13 +49,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Checks whether the collected attributes contain RouteAttribute.
-        /// </summary>
-        /// <param name="template">Expected overridden route template of the action.</param>
-        /// <param name="withName">Optional expected route name.</param>
-        /// <param name="withOrder">Optional expected route order.</param>
-        /// <returns>The same attributes test builder.</returns>
+        /// <inheritdoc />
         public IAndActionAttributesTestBuilder ChangingRouteTo(
             string template,
             string withName = null,
@@ -77,20 +64,13 @@
             return this;
         }
 
-        /// <summary>
-        /// Checks whether the collected attributes contain AllowAnonymousAttribute.
-        /// </summary>
-        /// <returns>The same attributes test builder.</returns>
+        /// <inheritdoc />
         public IAndActionAttributesTestBuilder AllowingAnonymousRequests()
         {
             return this.ContainingAttributeOfType<AllowAnonymousAttribute>();
         }
 
-        /// <summary>
-        /// Checks whether the collected attributes contain AuthorizeAttribute.
-        /// </summary>
-        /// <param name="withAllowedRoles">Optional expected authorized roles.</param>
-        /// <returns>The same attributes test builder.</returns>
+        /// <inheritdoc />
         public IAndActionAttributesTestBuilder RestrictingForAuthorizedRequests(
             string withAllowedRoles = null)
         {
@@ -101,19 +81,13 @@
             return this;
         }
 
-        /// <summary>
-        /// Checks whether the collected attributes contain NonActionAttribute.
-        /// </summary>
-        /// <returns>The same attributes test builder.</returns>
+        /// <inheritdoc />
         public IAndActionAttributesTestBuilder DisablingActionCall()
         {
             return this.ContainingAttributeOfType<NonActionAttribute>();
         }
-        
-        /// <summary>
-        /// AndAlso method for better readability when chaining attribute tests.
-        /// </summary>
-        /// <returns>The same attributes test builder.</returns>
+
+        /// <inheritdoc />
         public IActionAttributesTestBuilder AndAlso()
         {
             return this;

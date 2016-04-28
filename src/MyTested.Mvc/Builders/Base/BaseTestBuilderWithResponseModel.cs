@@ -19,7 +19,7 @@
     /// <summary>
     /// Base class for all response model test builders.
     /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
+    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
     public abstract class BaseTestBuilderWithResponseModel<TActionResult>
         : BaseTestBuilderWithActionResult<TActionResult>, IBaseTestBuilderWithResponseModel
     {

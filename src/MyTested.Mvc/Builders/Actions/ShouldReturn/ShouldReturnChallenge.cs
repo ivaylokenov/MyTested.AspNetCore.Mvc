@@ -5,15 +5,12 @@
     using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
-    /// Class containing methods for testing ChallengeResult.
+    /// Class containing methods for testing <see cref="ChallengeResult"/>.
     /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
+    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
-        /// <summary>
-        /// Tests whether action result is ChallengeResult.
-        /// </summary>
-        /// <returns>Challenge test builder.</returns>
+        /// <inheritdoc />
         public IChallengeTestBuilder Challenge()
         {
             this.TestContext.ActionResult = this.GetReturnObject<ChallengeResult>();

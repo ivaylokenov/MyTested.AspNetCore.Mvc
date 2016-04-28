@@ -11,6 +11,9 @@
     using Microsoft.Net.Http.Headers;
     using Utilities.Extensions;
 
+    /// <summary>
+    /// Used for testing <see cref="ObjectResult"/>.
+    /// </summary>
     public class ObjectTestBuilder : BaseTestBuilderWithResponseModel<ObjectResult>, IAndObjectTestBuilder
     {
         /// <summary>

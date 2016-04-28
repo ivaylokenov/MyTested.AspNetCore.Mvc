@@ -4,15 +4,12 @@
     using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
-    /// Class containing methods for testing UnauthorizedResult.
+    /// Class containing methods for testing <see cref="UnauthorizedResult"/>.
     /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
+    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
-        /// <summary>
-        /// Tests whether action result is UnauthorizedResult.
-        /// </summary>
-        /// <returns>Base test builder with action result.</returns>
+        /// <inheritdoc />
         public IBaseTestBuilderWithActionResult<TActionResult> Unauthorized()
         {
             this.ValidateActionReturnType<UnauthorizedResult>();

@@ -6,11 +6,12 @@
     using Data;
 
     /// <summary>
-    /// Class containing methods for testing temp data.
+    /// Class containing methods for testing <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.TempDataDictionary"/>.
     /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
+    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
     public partial class ShouldHaveTestBuilder<TActionResult>
     {
+        /// <inheritdoc />
         public IAndTestBuilder<TActionResult> NoTempData()
         {
             if (this.TestContext.TempData.Count > 0)
@@ -21,6 +22,7 @@
             return this.NewAndTestBuilder();
         }
 
+        /// <inheritdoc />
         public IAndTestBuilder<TActionResult> TempData(int? withNumberOfEntries = null)
         {
             this.ValidateDataProviderNumberOfEntries(
@@ -31,6 +33,7 @@
             return this.NewAndTestBuilder();
         }
 
+        /// <inheritdoc />
         public IAndTestBuilder<TActionResult> TempData(Action<ITempDataTestBuilder> tempDataTestBuilder)
         {
             tempDataTestBuilder(new TempDataTestBuilder(this.TestContext));

@@ -11,9 +11,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="AndProvideTestBuilder" /> class.
         /// </summary>
-        /// <param name="controller">Controller on which the action will be tested.</param>
-        /// <param name="actionName">Name of the tested action.</param>
-        /// <param name="caughtException">Caught exception during the action execution.</param>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public AndProvideTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {

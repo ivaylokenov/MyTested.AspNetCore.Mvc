@@ -6,16 +6,13 @@
     /// <summary>
     /// Provides controller, action and action result information.
     /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
+    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
     public class AndProvideTestBuilder<TActionResult> : BaseTestBuilderWithActionResult<TActionResult>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AndProvideTestBuilder{TActionResult}" /> class.
         /// </summary>
-        /// <param name="controller">Controller on which the action will be tested.</param>
-        /// <param name="actionName">Name of the tested action.</param>
-        /// <param name="caughtException">Caught exception during the action execution.</param>
-        /// <param name="actionResult">Result from the tested action.</param>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public AndProvideTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {

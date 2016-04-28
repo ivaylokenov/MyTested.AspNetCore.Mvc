@@ -7,11 +7,12 @@
     using Data;
 
     /// <summary>
-    /// Class containing methods for testing session.
+    /// Class containing methods for testing <see cref="Microsoft.AspNetCore.Http.Features.ISession"/>.
     /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET MVC controller.</typeparam>
+    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
     public partial class ShouldHaveTestBuilder<TActionResult>
     {
+        /// <inheritdoc />
         public IAndTestBuilder<TActionResult> NoSession()
         {
             if (this.TestContext.Session.Keys.Count() > 0)
@@ -22,6 +23,7 @@
             return this.NewAndTestBuilder();
         }
 
+        /// <inheritdoc />
         public IAndTestBuilder<TActionResult> Session(int? withNumberOfEntries = null)
         {
             this.ValidateDataProviderNumberOfEntries(
@@ -32,6 +34,7 @@
             return this.NewAndTestBuilder();
         }
 
+        /// <inheritdoc />
         public IAndTestBuilder<TActionResult> Session(Action<ISessionTestBuilder> sessionTestBuilder)
         {
             sessionTestBuilder(new SessionTestBuilder(this.TestContext));

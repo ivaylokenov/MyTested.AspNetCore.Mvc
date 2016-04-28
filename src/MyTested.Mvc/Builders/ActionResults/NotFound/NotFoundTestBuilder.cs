@@ -17,7 +17,7 @@
     /// <summary>
     /// Used for testing HTTP not found result.
     /// </summary>
-    /// <typeparam name="THttpNotFoundResult">Type of not found result - HttpNotFoundResult or HttpNotFoundObjectResult.</typeparam>
+    /// <typeparam name="THttpNotFoundResult">Type of not found result - <see cref="NotFoundResult"/> or <see cref="NotFoundObjectResult"/>.</typeparam>
     public class NotFoundTestBuilder<THttpNotFoundResult>
         : BaseTestBuilderWithResponseModel<THttpNotFoundResult>, IAndNotFoundTestBuilder
         where THttpNotFoundResult : ActionResult

@@ -22,7 +22,7 @@
     /// <summary>
     /// Used for testing bad request results.
     /// </summary>
-    /// <typeparam name="THttpBadRequestResult">Type of bad request result - BadRequestResult or BadRequestObjectResult.</typeparam>
+    /// <typeparam name="THttpBadRequestResult">Type of bad request result - <see cref="BadRequestResult"/> or <see cref="BadRequestObjectResult"/>.</typeparam>
     public class BadRequestTestBuilder<THttpBadRequestResult>
         : BaseTestBuilderWithResponseModel<THttpBadRequestResult>, IAndBadRequestTestBuilder
         where THttpBadRequestResult : ActionResult
