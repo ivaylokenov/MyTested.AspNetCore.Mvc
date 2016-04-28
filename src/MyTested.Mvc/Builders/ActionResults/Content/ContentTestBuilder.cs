@@ -19,28 +19,17 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="ContentTestBuilder" /> class.
         /// </summary>
-        /// <param name="controller">Controller on which the action will be tested.</param>
-        /// <param name="actionName">Name of the tested action.</param>
-        /// <param name="caughtException">Caught exception during the action execution.</param>
-        /// <param name="contentResult">Result from the tested action.</param>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public ContentTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
         }
-        
-        /// <summary>
-        /// Tests whether content result has the same status code as the provided one.
-        /// </summary>
-        /// <param name="statusCode">Status code.</param>
-        /// <returns>The same content test builder.</returns>
+
+        /// <inheritdoc />
         public IAndContentTestBuilder WithStatusCode(int statusCode)
             => this.WithStatusCode((HttpStatusCode)statusCode);
 
-        /// <summary>
-        /// Tests whether content result has the same status code as the provided HttpStatusCode.
-        /// </summary>
-        /// <param name="statusCode">HttpStatusCode enumeration.</param>
-        /// <returns>The same content test builder.</returns>
+        /// <inheritdoc />
         public IAndContentTestBuilder WithStatusCode(HttpStatusCode statusCode)
         {
             HttpStatusCodeValidator.ValidateHttpStatusCode(
@@ -51,11 +40,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether content result has the same content type as the provided string.
-        /// </summary>
-        /// <param name="contentType">ContentType type as string.</param>
-        /// <returns>The same content test builder.</returns>
+        /// <inheritdoc />
         public IAndContentTestBuilder WithContentType(string contentType)
         {
             ContentTypeValidator.ValidateContentType(
@@ -66,18 +51,11 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether content result has the same content type as the provided MediaTypeHeaderValue.
-        /// </summary>
-        /// <param name="contentType">Content type as MediaTypeHeaderValue.</param>
-        /// <returns>The same content test builder.</returns>
+        /// <inheritdoc />
         public IAndContentTestBuilder WithContentType(MediaTypeHeaderValue contentType)
             => this.WithContentType(contentType?.MediaType);
-        
-        /// <summary>
-        /// AndAlso method for better readability when chaining content tests.
-        /// </summary>
-        /// <returns>The same content test builder.</returns>
+
+        /// <inheritdoc />
         public IContentTestBuilder AndAlso() => this;
         
         private void ThrowNewContentResultAssertionException(string propertyName, string expectedValue, string actualValue)

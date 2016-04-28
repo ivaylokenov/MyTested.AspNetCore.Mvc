@@ -12,10 +12,12 @@
     using Utilities.Extensions;
     using Contracts.ShouldPassFor;
     using Contracts.Base;
-    using ShouldPassFor;/// <summary>
-                        /// Used for testing file result.
-                        /// </summary>
-                        /// <typeparam name="TFileResult">Result of type FileStreamResult, VirtualFileResult or FileContentResult.</typeparam>
+    using ShouldPassFor;
+
+    /// <summary>
+    /// Used for testing file result.
+    /// </summary>
+    /// <typeparam name="TFileResult">Result of type FileStreamResult, VirtualFileResult or FileContentResult.</typeparam>
     public class FileTestBuilder<TFileResult>
         : BaseFileTestBuilder<TFileResult>, IAndFileTestBuilder
         where TFileResult : FileResult
@@ -28,50 +30,31 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="FileTestBuilder{TFileResult}" /> class.
         /// </summary>
-        /// <param name="controller">Controller on which the action will be tested.</param>
-        /// <param name="actionName">Name of the tested action.</param>
-        /// <param name="caughtException">Caught exception during the action execution.</param>
-        /// <param name="fileResult">Result from the tested action.</param>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public FileTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
         }
 
-        /// <summary>
-        /// Tests whether file result has the same content type as the provided one.
-        /// </summary>
-        /// <param name="contentType">Content type as string.</param>
-        /// <returns>The same file test builder.</returns>
+        /// <inheritdoc />
         public IAndFileTestBuilder WithContentType(string contentType)
         {
             this.ValidateContentType(contentType);
             return this;
         }
 
-        /// <summary>
-        /// Tests whether file result has the same content type as the provided one.
-        /// </summary>
-        /// <param name="contentType">Content type as MediaTypeHeaderValue.</param>
-        /// <returns>The same file test builder.</returns>
+        /// <inheritdoc />
         public IAndFileTestBuilder WithContentType(MediaTypeHeaderValue contentType)
             => this.WithContentType(contentType?.MediaType);
 
-        /// <summary>
-        /// Tests whether file result has the same file download name as the provided one.
-        /// </summary>
-        /// <param name="fileDownloadName">File download name as string.</param>
-        /// <returns>The same file test builder.</returns>
+        /// <inheritdoc />
         public IAndFileTestBuilder WithFileDownloadName(string fileDownloadName)
         {
             this.ValidateFileDownloadName(fileDownloadName);
             return this;
         }
 
-        /// <summary>
-        /// Tests whether file result has the same file stream as the provided one.
-        /// </summary>
-        /// <param name="stream">File stream.</param>
-        /// <returns>The same file test builder.</returns>
+        /// <inheritdoc />
         public IAndFileTestBuilder WithStream(Stream stream)
         {
             var fileStreamResult = this.GetFileResult<FileStreamResult>(FileStream);
@@ -88,11 +71,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether file result has the same file name as the provided one.
-        /// </summary>
-        /// <param name="fileName">File name as string.</param>
-        /// <returns>The same file test builder.</returns>
+        /// <inheritdoc />
         public IAndFileTestBuilder WithFileName(string fileName)
         {
             var virtualFileResult = this.GetFileResult<VirtualFileResult>(FileName);
@@ -108,11 +87,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether file result has the same file provider as the provided one.
-        /// </summary>
-        /// <param name="fileProvider">File provider of type IFileProvider.</param>
-        /// <returns>The same file test builder.</returns>
+        /// <inheritdoc />
         public IAndFileTestBuilder WithFileProvider(IFileProvider fileProvider)
         {
             var virtualFileResult = this.GetFileResult<VirtualFileResult>(FileProvider);
@@ -127,11 +102,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether file result has the same file provider type as the provided one.
-        /// </summary>
-        /// <typeparam name="TFileProvider">File provider of type IFileProvider.</typeparam>
-        /// <returns>The same file test builder.</returns>
+        /// <inheritdoc />
         public IAndFileTestBuilder WithFileProviderOfType<TFileProvider>()
             where TFileProvider : IFileProvider
         {
@@ -150,11 +121,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether file result has the same file contents as the provided byte array.
-        /// </summary>
-        /// <param name="fileContents">File contents as byte array.</param>
-        /// <returns>The same file test builder.</returns>
+        /// <inheritdoc />
         public IAndFileTestBuilder WithContents(byte[] fileContents)
         {
             var fileContentResult = this.GetFileResult<FileContentResult>(FileContents);
@@ -169,12 +136,9 @@
             return this;
         }
 
-        /// <summary>
-        /// AndAlso method for better readability when chaining file result tests.
-        /// </summary>
-        /// <returns>File result test builder.</returns>
+        /// <inheritdoc />
         public IFileTestBuilder AndAlso() => this;
-        
+
         IShouldPassForTestBuilderWithActionResult<FileResult> IBaseTestBuilderWithActionResult<FileResult>.ShouldPassFor()
             => new ShouldPassForTestBuilderWithActionResult<FileResult>(this.TestContext);
 

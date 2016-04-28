@@ -18,10 +18,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseFileTestBuilder{TFileResult}" /> class.
         /// </summary>
-        /// <param name="controller">Controller on which the action will be tested.</param>
-        /// <param name="actionName">Name of the tested action.</param>
-        /// <param name="caughtException">Caught exception during the action execution.</param>
-        /// <param name="fileResult">Result from the tested action.</param>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public BaseFileTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {

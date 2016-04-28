@@ -22,20 +22,13 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="ForbidTestBuilder" /> class.
         /// </summary>
-        /// <param name="controller">Controller on which the action will be tested.</param>
-        /// <param name="actionName">Name of the tested action.</param>
-        /// <param name="caughtException">Caught exception during the action execution.</param>
-        /// <param name="forbidResult">Result from the tested action.</param>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public ForbidTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
         }
 
-        /// <summary>
-        /// Tests whether forbid result contains specific authentication scheme provided by string.
-        /// </summary>
-        /// <param name="authenticationScheme">Expected authentication scheme as string.</param>
-        /// <returns>The same forbid test builder.</returns>
+        /// <inheritdoc />
         public IAndForbidTestBuilder ContainingAuthenticationScheme(string authenticationScheme)
         {
             AuthenticationValidator.ValidateAuthenticationScheme(
@@ -46,11 +39,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether forbid result has the provided enumerable of authentication schemes.
-        /// </summary>
-        /// <param name="authenticationSchemes">Expected authentication schemes as enumerable.</param>
-        /// <returns>The same forbid test builder.</returns>
+        /// <inheritdoc />
         public IAndForbidTestBuilder ContainingAuthenticationSchemes(IEnumerable<string> authenticationSchemes)
         {
             AuthenticationValidator.ValidateAuthenticationSchemes(
@@ -61,19 +50,11 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether forbid result has the provided parameters of authentication schemes.
-        /// </summary>
-        /// <param name="authenticationSchemes">Expected authentication schemes as string parameters.</param>
-        /// <returns>The same forbid test builder.</returns>
+        /// <inheritdoc />
         public IAndForbidTestBuilder ContainingAuthenticationSchemes(params string[] authenticationSchemes)
             => this.ContainingAuthenticationSchemes(authenticationSchemes.AsEnumerable());
 
-        /// <summary>
-        /// Tests whether forbid result has the provided authentication properties.
-        /// </summary>
-        /// <param name="properties">Expected authentication properties.</param>
-        /// <returns>The same forbid test builder.</returns>
+        /// <inheritdoc />
         public IAndForbidTestBuilder WithAuthenticationProperties(AuthenticationProperties properties)
         {
             AuthenticationValidator.ValidateAuthenticationProperties(
@@ -84,11 +65,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether forbid result has the provided authentication properties provided as builder.
-        /// </summary>
-        /// <param name="authenticationPropertiesBuilder">Expected authentication properties.</param>
-        /// <returns>The same forbid test builder.</returns>
+        /// <inheritdoc />
         public IAndForbidTestBuilder WithAuthenticationProperties(Action<IAuthenticationPropertiesTestBuilder> authenticationPropertiesBuilder)
         {
             AuthenticationValidator.ValidateAuthenticationProperties(
@@ -98,10 +75,7 @@
             return this;
         }
 
-        /// <summary>
-        /// AndAlso method for better readability when chaining forbid tests.
-        /// </summary>
-        /// <returns>The same forbid test builder.</returns>
+        /// <inheritdoc />
         public IForbidTestBuilder AndAlso() => this;
 
         private void ThrowNewForbidResultAssertionException(string propertyName, string expectedValue, string actualValue)

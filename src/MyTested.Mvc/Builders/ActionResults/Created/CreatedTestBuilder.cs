@@ -38,119 +38,76 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="CreatedTestBuilder{TCreatedResult}" /> class.
         /// </summary>
-        /// <param name="controller">Controller on which the action will be tested.</param>
-        /// <param name="actionName">Name of the tested action.</param>
-        /// <param name="caughtException">Caught exception during the action execution.</param>
-        /// <param name="createdResult">Result from the tested action.</param>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public CreatedTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
         }
 
-        /// <summary>
-        /// Tests whether created result has the same status code as the provided one.
-        /// </summary>
-        /// <param name="statusCode">Status code.</param>
-        /// <returns>The same created test builder.</returns>
+        /// <inheritdoc />
         public IAndCreatedTestBuilder WithStatusCode(int statusCode)
         {
             this.ValidateStatusCode(statusCode);
             return this;
         }
 
-        /// <summary>
-        /// Tests whether created has the same status code as the provided HttpStatusCode.
-        /// </summary>
-        /// <param name="statusCode">HttpStatusCode enumeration.</param>
-        /// <returns>The same created test builder.</returns>
+        /// <inheritdoc />
         public IAndCreatedTestBuilder WithStatusCode(HttpStatusCode statusCode)
         {
             this.ValidateStatusCode(statusCode);
             return this;
         }
 
-        /// <summary>
-        /// Tests whether created result contains the content type provided as string.
-        /// </summary>
-        /// <param name="contentType">Content type as string.</param>
-        /// <returns>The same created test builder.</returns>
+        /// <inheritdoc />
         public IAndCreatedTestBuilder ContainingContentType(string contentType)
         {
             this.ValidateContainingOfContentType(contentType);
             return this;
         }
 
-        /// <summary>
-        /// Tests whether created result contains the content type provided as MediaTypeHeaderValue.
-        /// </summary>
-        /// <param name="contentType">Content type as MediaTypeHeaderValue.</param>
-        /// <returns>The same created test builder.</returns>
+        /// <inheritdoc />
         public IAndCreatedTestBuilder ContainingContentType(MediaTypeHeaderValue contentType)
         {
             this.ValidateContainingOfContentType(contentType);
             return this;
         }
 
-        /// <summary>
-        /// Tests whether created result contains the same content types provided as enumerable of strings.
-        /// </summary>
-        /// <param name="contentTypes">Content types as enumerable of strings.</param>
-        /// <returns>The same created test builder.</returns>
+        /// <inheritdoc />
         public IAndCreatedTestBuilder ContainingContentTypes(IEnumerable<string> contentTypes)
         {
             this.ValidateContentTypes(contentTypes);
             return this;
         }
 
-        /// <summary>
-        /// Tests whether created result contains the same content types provided as string parameters.
-        /// </summary>
-        /// <param name="contentTypes">Content types as string parameters.</param>
-        /// <returns>The same created test builder.</returns>
+        /// <inheritdoc />
         public IAndCreatedTestBuilder ContainingContentTypes(params string[] contentTypes)
         {
             this.ValidateContentTypes(contentTypes);
             return this;
         }
 
-        /// <summary>
-        /// Tests whether created result contains the same content types provided as enumerable of MediaTypeHeaderValue.
-        /// </summary>
-        /// <param name="contentTypes">Content types as enumerable of MediaTypeHeaderValue.</param>
-        /// <returns>The same created test builder.</returns>
+        /// <inheritdoc />
         public IAndCreatedTestBuilder ContainingContentTypes(IEnumerable<MediaTypeHeaderValue> contentTypes)
         {
             this.ValidateContentTypes(contentTypes);
             return this;
         }
 
-        /// <summary>
-        /// Tests whether created result contains the same content types provided as MediaTypeHeaderValue parameters.
-        /// </summary>
-        /// <param name="contentTypes">Content types as MediaTypeHeaderValue parameters.</param>
-        /// <returns>The same created test builder.</returns>
+        /// <inheritdoc />
         public IAndCreatedTestBuilder ContainingContentTypes(params MediaTypeHeaderValue[] contentTypes)
         {
             this.ValidateContentTypes(contentTypes);
             return this;
         }
 
-        /// <summary>
-        /// Tests whether created result contains the provided output formatter.
-        /// </summary>
-        /// <param name="outputFormatter">Instance of IOutputFormatter.</param>
-        /// <returns>The same created test builder.</returns>
+        /// <inheritdoc />
         public IAndCreatedTestBuilder ContainingOutputFormatter(IOutputFormatter outputFormatter)
         {
             this.ValidateContainingOfOutputFormatter(outputFormatter);
             return this;
         }
 
-        /// <summary>
-        /// Tests whether created result contains output formatter of the provided type.
-        /// </summary>
-        /// <typeparam name="TOutputFormatter">Type of IOutputFormatter.</typeparam>
-        /// <returns>The same created test builder.</returns>
+        /// <inheritdoc />
         public IAndCreatedTestBuilder ContainingOutputFormatterOfType<TOutputFormatter>()
             where TOutputFormatter : IOutputFormatter
         {
@@ -158,44 +115,28 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether created result contains the provided output formatters.
-        /// </summary>
-        /// <param name="outputFormatters">Enumerable of IOutputFormatter.</param>
-        /// <returns>The same created test builder.</returns>
+        /// <inheritdoc />
         public IAndCreatedTestBuilder ContainingOutputFormatters(IEnumerable<IOutputFormatter> outputFormatters)
         {
             this.ValidateOutputFormatters(outputFormatters);
             return this;
         }
 
-        /// <summary>
-        /// Tests whether created result contains the provided output formatters.
-        /// </summary>
-        /// <param name="outputFormatters">Output formatter parameters.</param>
-        /// <returns>The same created test builder.</returns>
+        /// <inheritdoc />
         public IAndCreatedTestBuilder ContainingOutputFormatters(params IOutputFormatter[] outputFormatters)
         {
             this.ValidateOutputFormatters(outputFormatters);
             return this;
         }
 
-        /// <summary>
-        /// Tests whether created result has specific location provided by string.
-        /// </summary>
-        /// <param name="location">Expected location as string.</param>
-        /// <returns>The same created test builder.</returns>
+        /// <inheritdoc />
         public IAndCreatedTestBuilder AtLocation(string location)
         {
             var uri = LocationValidator.ValidateAndGetWellFormedUriString(location, this.ThrowNewCreatedResultAssertionException);
             return this.AtLocation(uri);
         }
 
-        /// <summary>
-        /// Tests whether created result location passes given assertions.
-        /// </summary>
-        /// <param name="assertions">Action containing all assertions on the location.</param>
-        /// <returns>The same created test builder.</returns>
+        /// <inheritdoc />
         public IAndCreatedTestBuilder AtLocationPassing(Action<string> assertions)
         {
             var createdResult = this.GetCreatedResult<CreatedResult>(Location);
@@ -204,11 +145,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether created result location passes given predicate.
-        /// </summary>
-        /// <param name="predicate">Predicate testing the location.</param>
-        /// <returns>The same created test builder.</returns>
+        /// <inheritdoc />
         public IAndCreatedTestBuilder AtLocationPassing(Func<string, bool> predicate)
         {
             var createdResult = this.GetCreatedResult<CreatedResult>(Location);
@@ -224,11 +161,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether created result has specific location provided by URI.
-        /// </summary>
-        /// <param name="location">Expected location as URI.</param>
-        /// <returns>The same created test builder.</returns>
+        /// <inheritdoc />
         public IAndCreatedTestBuilder AtLocation(Uri location)
         {
             var createdResult = this.GetCreatedResult<CreatedResult>(Location);
@@ -240,11 +173,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether created result has specific location provided by builder.
-        /// </summary>
-        /// <param name="uriTestBuilder">Builder for expected URI.</param>
-        /// <returns>The same created test builder.</returns>
+        /// <inheritdoc />
         public IAndCreatedTestBuilder AtLocation(Action<IUriTestBuilder> uriTestBuilder)
         {
             var createdResult = this.GetCreatedResult<CreatedResult>(Location);
@@ -256,11 +185,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether created at action result has specific action name.
-        /// </summary>
-        /// <param name="actionName">Expected action name.</param>
-        /// <returns>The same created test builder.</returns>
+        /// <inheritdoc />
         public IAndCreatedTestBuilder AtAction(string actionName)
         {
             var createdAtActionResult = this.GetCreatedResult<CreatedAtActionResult>("action name");
@@ -272,11 +197,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether created at action result has specific controller name.
-        /// </summary>
-        /// <param name="controllerName">Expected controller name.</param>
-        /// <returns>The same created test builder.</returns>
+        /// <inheritdoc />
         public IAndCreatedTestBuilder AtController(string controllerName)
         {
             var createdAtActionResult = this.GetCreatedResult<CreatedAtActionResult>("controller name");
@@ -288,11 +209,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether created at route result has specific route name.
-        /// </summary>
-        /// <param name="routeName">Expected route name.</param>
-        /// <returns>The same created test builder.</returns>
+        /// <inheritdoc />
         public IAndCreatedTestBuilder WithRouteName(string routeName)
         {
             var createdAtRouteResult = this.GetCreatedResult<CreatedAtRouteResult>("route name");
@@ -304,11 +221,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether created result contains specific route key.
-        /// </summary>
-        /// <param name="key">Expected route key.</param>
-        /// <returns>The same created test builder.</returns>
+        /// <inheritdoc />
         public IAndCreatedTestBuilder ContainingRouteKey(string key)
         {
             RouteActionResultValidator.ValidateRouteValue(
@@ -319,6 +232,7 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IAndCreatedTestBuilder ContainingRouteValue<TRouteValue>(TRouteValue value)
         {
             RouteActionResultValidator.ValidateRouteValue(
@@ -329,6 +243,7 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IAndCreatedTestBuilder ContainingRouteValueOfType<TRouteValue>()
         {
             RouteActionResultValidator.ValidateRouteValueOfType<TRouteValue>(
@@ -338,6 +253,7 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IAndCreatedTestBuilder ContainingRouteValueOfType<TRouteValue>(string key)
         {
             RouteActionResultValidator.ValidateRouteValueOfType<TRouteValue>(
@@ -348,12 +264,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether created result contains specific route key and value.
-        /// </summary>
-        /// <param name="key">Expected route key.</param>
-        /// <param name="value">Expected route value.</param>
-        /// <returns>The same created test builder.</returns>
+        /// <inheritdoc />
         public IAndCreatedTestBuilder ContainingRouteValue(string key, object value)
         {
             RouteActionResultValidator.ValidateRouteValue(
@@ -365,19 +276,11 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether created result contains the provided route values.
-        /// </summary>
-        /// <param name="routeValues">Expected route value dictionary.</param>
-        /// <returns>The same created test builder.</returns>
+        /// <inheritdoc />
         public IAndCreatedTestBuilder ContainingRouteValues(object routeValues)
             => this.ContainingRouteValues(new RouteValueDictionary(routeValues));
 
-        /// <summary>
-        /// Tests whether created result contains the provided route values.
-        /// </summary>
-        /// <param name="routeValues">Expected route value dictionary.</param>
-        /// <returns>The same created test builder.</returns>
+        /// <inheritdoc />
         public IAndCreatedTestBuilder ContainingRouteValues(IDictionary<string, object> routeValues)
         {
             var includeCountCheck = this.createdAtExpression == null;
@@ -391,11 +294,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether created result has the same URL helper as the provided one.
-        /// </summary>
-        /// <param name="urlHelper">URL helper of type IUrlHelper.</param>
-        /// <returns>The same created test builder.</returns>
+        /// <inheritdoc />
         public IAndCreatedTestBuilder WithUrlHelper(IUrlHelper urlHelper)
         {
             RouteActionResultValidator.ValidateUrlHelper(
@@ -406,11 +305,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether created result has the same URL helper type as the provided one.
-        /// </summary>
-        /// <typeparam name="TUrlHelper">URL helper of type IUrlHelper.</typeparam>
-        /// <returns>The same created test builder.</returns>
+        /// <inheritdoc />
         public IAndCreatedTestBuilder WithUrlHelperOfType<TUrlHelper>()
             where TUrlHelper : IUrlHelper
         {
@@ -421,28 +316,21 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether created result returns created at specific action.
-        /// </summary>
-        /// <typeparam name="TController">Type of expected controller.</typeparam>
-        /// <param name="actionCall">Method call expression indicating the expected action.</param>
-        /// <returns>The same created test builder.</returns>
+        /// <inheritdoc />
         public IAndCreatedTestBuilder At<TController>(Expression<Action<TController>> actionCall)
             where TController : class
         {
             return this.ProcessRouteLambdaExpression<TController>(actionCall);
         }
 
+        /// <inheritdoc />
         public IAndCreatedTestBuilder At<TController>(Expression<Func<TController, Task>> actionCall)
             where TController : class
         {
             return this.ProcessRouteLambdaExpression<TController>(actionCall);
         }
 
-        /// <summary>
-        /// AndAlso method for better readability when chaining created tests.
-        /// </summary>
-        /// <returns>Created test builder.</returns>
+        /// <inheritdoc />
         public ICreatedTestBuilder AndAlso() => this;
 
         IShouldPassForTestBuilderWithActionResult<ObjectResult> IBaseTestBuilderWithActionResult<ObjectResult>.ShouldPassFor()

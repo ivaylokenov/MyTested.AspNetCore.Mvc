@@ -33,42 +33,27 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="HttpBadRequestTestBuilder{TBadRequestResult}" /> class.
         /// </summary>
-        /// <param name="controller">Controller on which the action will be tested.</param>
-        /// <param name="actionName">Name of the tested action.</param>
-        /// <param name="caughtException">Caught exception during the action execution.</param>
-        /// <param name="httpBadRequestResult">Result from the tested action.</param>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public BadRequestTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
             this.ErrorMessageFormat = ErrorMessage;
             this.OfTypeErrorMessageFormat = OfTypeErrorMessage;
         }
-
-        /// <summary>
-        /// Tests whether bad request result contains deeply equal error value as the provided error object.
-        /// </summary>
-        /// <typeparam name="TError">Type of error object.</typeparam>
-        /// <param name="error">Error object.</param>
-        /// <returns>Model details test builder.</returns>
+        
+        /// <inheritdoc />
         public IModelDetailsTestBuilder<TError> WithError<TError>(TError error)
         {
             return this.WithResponseModel(error);
         }
 
-        /// <summary>
-        /// Tests whether bad request result contains error object of the provided type.
-        /// </summary>
-        /// <typeparam name="TError">Type of error object.</typeparam>
-        /// <returns>Model details test builder.</returns>
+        /// <inheritdoc />
         public IModelDetailsTestBuilder<TError> WithErrorOfType<TError>()
         {
             return this.WithResponseModelOfType<TError>();
         }
 
-        /// <summary>
-        /// Tests whether no specific error is returned from the bad request result.
-        /// </summary>
-        /// <returns>The same bad request test builder.</returns>
+        /// <inheritdoc />
         public IAndBadRequestTestBuilder WithNoError()
         {
             var actualResult = this.ActionResult as BadRequestResult;
@@ -83,110 +68,70 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether bad request result has the same status code as the provided one.
-        /// </summary>
-        /// <param name="statusCode">Status code.</param>
-        /// <returns>The same bad request test builder.</returns>
+        /// <inheritdoc />
         public IAndBadRequestTestBuilder WithStatusCode(int statusCode)
         {
             this.ValidateStatusCode(statusCode);
             return this;
         }
 
-        /// <summary>
-        /// Tests whether bad request result has the same status code as the provided HttpStatusCode.
-        /// </summary>
-        /// <param name="statusCode">HttpStatusCode enumeration.</param>
-        /// <returns>The same bad request test builder.</returns>
+        /// <inheritdoc />
         public IAndBadRequestTestBuilder WithStatusCode(HttpStatusCode statusCode)
         {
             this.ValidateStatusCode(statusCode);
             return this;
         }
 
-        /// <summary>
-        /// Tests whether bad request result contains the content type provided as string.
-        /// </summary>
-        /// <param name="contentType">Content type as string.</param>
-        /// <returns>The same bad request test builder.</returns>
+        /// <inheritdoc />
         public IAndBadRequestTestBuilder ContainingContentType(string contentType)
         {
             this.ValidateContainingOfContentType(contentType);
             return this;
         }
 
-        /// <summary>
-        /// Tests whether bad request result contains the content type provided as MediaTypeHeaderValue.
-        /// </summary>
-        /// <param name="contentType">Content type as MediaTypeHeaderValue.</param>
-        /// <returns>The same bad request test builder.</returns>
+        /// <inheritdoc />
         public IAndBadRequestTestBuilder ContainingContentType(MediaTypeHeaderValue contentType)
         {
             this.ValidateContainingOfContentType(contentType);
             return this;
         }
 
-        /// <summary>
-        /// Tests whether bad request result contains the same content types provided as enumerable of strings.
-        /// </summary>
-        /// <param name="contentTypes">Content types as enumerable of strings.</param>
-        /// <returns>The same bad request test builder.</returns>
+        /// <inheritdoc />
         public IAndBadRequestTestBuilder ContainingContentTypes(IEnumerable<string> contentTypes)
         {
             this.ValidateContentTypes(contentTypes);
             return this;
         }
 
-        /// <summary>
-        /// Tests whether bad request result contains the same content types provided as string parameters.
-        /// </summary>
-        /// <param name="contentTypes">Content types as string parameters.</param>
-        /// <returns>The same bad request test builder.</returns>
+        /// <inheritdoc />
         public IAndBadRequestTestBuilder ContainingContentTypes(params string[] contentTypes)
         {
             this.ValidateContentTypes(contentTypes);
             return this;
         }
 
-        /// <summary>
-        /// Tests whether bad request result contains the same content types provided as enumerable of MediaTypeHeaderValue.
-        /// </summary>
-        /// <param name="contentTypes">Content types as enumerable of MediaTypeHeaderValue.</param>
-        /// <returns>The same bad request test builder.</returns>
+        /// <inheritdoc />
         public IAndBadRequestTestBuilder ContainingContentTypes(IEnumerable<MediaTypeHeaderValue> contentTypes)
         {
             this.ValidateContentTypes(contentTypes);
             return this;
         }
 
-        /// <summary>
-        /// Tests whether bad request result contains the same content types provided as MediaTypeHeaderValue parameters.
-        /// </summary>
-        /// <param name="contentTypes">Content types as MediaTypeHeaderValue parameters.</param>
-        /// <returns>The same bad request test builder.</returns>
+        /// <inheritdoc />
         public IAndBadRequestTestBuilder ContainingContentTypes(params MediaTypeHeaderValue[] contentTypes)
         {
             this.ValidateContentTypes(contentTypes);
             return this;
         }
 
-        /// <summary>
-        /// Tests whether bad request result contains the provided output formatter.
-        /// </summary>
-        /// <param name="outputFormatter">Instance of IOutputFormatter.</param>
-        /// <returns>The same bad request test builder.</returns>
+        /// <inheritdoc />
         public IAndBadRequestTestBuilder ContainingOutputFormatter(IOutputFormatter outputFormatter)
         {
             this.ValidateContainingOfOutputFormatter(outputFormatter);
             return this;
         }
 
-        /// <summary>
-        /// Tests whether bad request result contains output formatter of the provided type.
-        /// </summary>
-        /// <typeparam name="TOutputFormatter">Type of IOutputFormatter.</typeparam>
-        /// <returns>The same bad request test builder.</returns>
+        /// <inheritdoc />
         public IAndBadRequestTestBuilder ContainingOutputFormatterOfType<TOutputFormatter>()
             where TOutputFormatter : IOutputFormatter
         {
@@ -194,32 +139,21 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether bad request result contains the provided output formatters.
-        /// </summary>
-        /// <param name="outputFormatters">Enumerable of IOutputFormatter.</param>
-        /// <returns>The same bad request test builder.</returns>
+        /// <inheritdoc />
         public IAndBadRequestTestBuilder ContainingOutputFormatters(IEnumerable<IOutputFormatter> outputFormatters)
         {
             this.ValidateOutputFormatters(outputFormatters);
             return this;
         }
 
-        /// <summary>
-        /// Tests whether bad request result contains the provided output formatters.
-        /// </summary>
-        /// <param name="outputFormatters">Output formatter parameters.</param>
-        /// <returns>The same bad request test builder.</returns>
+        /// <inheritdoc />
         public IAndBadRequestTestBuilder ContainingOutputFormatters(params IOutputFormatter[] outputFormatters)
         {
             this.ValidateOutputFormatters(outputFormatters);
             return this;
         }
 
-        /// <summary>
-        /// Tests bad request result with specific text error using test builder.
-        /// </summary>
-        /// <returns>Bad request with error message test builder.</returns>
+        /// <inheritdoc />
         public IBadRequestErrorMessageTestBuilder WithErrorMessage()
         {
             var actualErrorMessage = this.GetBadRequestErrorMessage();
@@ -229,11 +163,7 @@
                 this);
         }
 
-        /// <summary>
-        /// Tests bad request result with specific text error message provided by string.
-        /// </summary>
-        /// <param name="error">Expected text error message from bad request result.</param>
-        /// <returns>The same bad request test builder.</returns>
+        /// <inheritdoc />
         public IAndBadRequestTestBuilder WithErrorMessage(string error)
         {
             var actualErrorMessage = this.GetBadRequestErrorMessage();
@@ -242,11 +172,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether bad request result error message passes given assertions.
-        /// </summary>
-        /// <param name="assertions">Action containing all assertions on the error message.</param>
-        /// <returns>The same bad request test builder.</returns>
+        /// <inheritdoc />
         public IAndBadRequestTestBuilder WithErrorMessage(Action<string> assertions)
         {
             var actualErrorMessage = this.GetBadRequestErrorMessage();
@@ -255,11 +181,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests bad request result error message whether it passes given predicate.
-        /// </summary>
-        /// <param name="predicate">Predicate testing the error message.</param>
-        /// <returns>The same bad request test builder.</returns>
+        /// <inheritdoc />
         public IAndBadRequestTestBuilder WithErrorMessage(Func<string, bool> predicate)
         {
             var actualErrorMessage = this.GetBadRequestErrorMessage();
@@ -275,20 +197,13 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether bad request result contains the controller's ModelState dictionary as object error.
-        /// </summary>
-        /// <returns>The same bad request test builder.</returns>
+        /// <inheritdoc />
         public IAndBadRequestTestBuilder WithModelStateError()
         {
             return this.WithModelStateError(this.TestContext.ControllerContext.ModelState);
         }
 
-        /// <summary>
-        /// Tests bad request result with specific model state dictionary.
-        /// </summary>
-        /// <param name="modelState">Model state dictionary to deeply compare to the actual one.</param>
-        /// <returns>The same bad request test builder.</returns>
+        /// <inheritdoc />
         public IAndBadRequestTestBuilder WithModelStateError(ModelStateDictionary modelState)
         {
             var badRequestObjectResultValue = this.GetBadRequestObjectResultValue();
@@ -349,11 +264,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests bad request result for model state errors using test builder.
-        /// </summary>
-        /// <typeparam name="TRequestModel">Type of model for which the model state errors will be tested.</typeparam>
-        /// <returns>Model error test builder.</returns>
+        /// <inheritdoc />
         public IModelErrorTestBuilder<TRequestModel> WithModelStateErrorFor<TRequestModel>()
         {
             this.TestContext.Model = this.GetBadRequestObjectResultValue();
@@ -362,10 +273,7 @@
                 modelState: this.GetModelStateFromSerializableError(this.TestContext.Model));
         }
 
-        /// <summary>
-        /// AndAlso method for better readability when chaining bad request result tests.
-        /// </summary>
-        /// <returns>HTTP bad request result test builder.</returns>
+        /// <inheritdoc />
         public IBadRequestTestBuilder AndAlso() => this;
 
         IShouldPassForTestBuilderWithActionResult<ActionResult> IBaseTestBuilderWithActionResult<ActionResult>.ShouldPassFor()
@@ -449,12 +357,12 @@
         private void ThrowNewHttpBadRequestResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new BadRequestResultAssertionException(string.Format(
-                    "When calling {0} action in {1} expected bad request result {2} {3}, but {4}.",
-                    this.ActionName,
-                    this.Controller.GetName(),
-                    propertyName,
-                    expectedValue,
-                    actualValue));
+                "When calling {0} action in {1} expected bad request result {2} {3}, but {4}.",
+                this.ActionName,
+                this.Controller.GetName(),
+                propertyName,
+                expectedValue,
+                actualValue));
         }
     }
 }

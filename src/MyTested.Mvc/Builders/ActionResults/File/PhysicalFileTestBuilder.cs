@@ -15,50 +15,31 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="PhysicalFileTestBuilder" /> class.
         /// </summary>
-        /// <param name="controller">Controller on which the action will be tested.</param>
-        /// <param name="actionName">Name of the tested action.</param>
-        /// <param name="caughtException">Caught exception during the action execution.</param>
-        /// <param name="physicalFileResult">Result from the tested action.</param>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public PhysicalFileTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
         }
 
-        /// <summary>
-        /// Tests whether file result has the same content type as the provided one.
-        /// </summary>
-        /// <param name="contentType">Content type as string.</param>
-        /// <returns>The same file test builder.</returns>
+        /// <inheritdoc />
         public IAndPhysicalFileTestBuilder WithContentType(string contentType)
         {
             this.ValidateContentType(contentType);
             return this;
         }
 
-        /// <summary>
-        /// Tests whether file result has the same content type as the provided one.
-        /// </summary>
-        /// <param name="contentType">Content type as MediaTypeHeaderValue.</param>
-        /// <returns>The same file test builder.</returns>
+        /// <inheritdoc />
         public IAndPhysicalFileTestBuilder WithContentType(MediaTypeHeaderValue contentType)
             => this.WithContentType(contentType?.MediaType);
 
-        /// <summary>
-        /// Tests whether file result has the same file download name as the provided one.
-        /// </summary>
-        /// <param name="fileDownloadName">File download name as string.</param>
-        /// <returns>The same file test builder.</returns>
+        /// <inheritdoc />
         public IAndPhysicalFileTestBuilder WithFileDownloadName(string fileDownloadName)
         {
             this.ValidateFileDownloadName(fileDownloadName);
             return this;
         }
 
-        /// <summary>
-        /// Tests whether file result has the same physical file path as the provided one.
-        /// </summary>
-        /// <param name="physicalPath">File physical path as string.</param>
-        /// <returns>The same file test builder.</returns>
+        /// <inheritdoc />
         public IAndPhysicalFileTestBuilder WithPhysicalPath(string physicalPath)
         {
             var actualPhysicalPath = (this.ActionResult as PhysicalFileResult)?.FileName;
@@ -73,10 +54,7 @@
             return this;
         }
 
-        /// <summary>
-        /// AndAlso method for better readability when chaining physical file result tests.
-        /// </summary>
-        /// <returns>Physical file result test builder.</returns>
+        /// <inheritdoc />
         public IPhysicalFileTestBuilder AndAlso() => this;
     }
 }

@@ -22,20 +22,13 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="ChallengeTestBuilder" /> class.
         /// </summary>
-        /// <param name="controller">Controller on which the action will be tested.</param>
-        /// <param name="actionName">Name of the tested action.</param>
-        /// <param name="caughtException">Caught exception during the action execution.</param>
-        /// <param name="challengeResult">Result from the tested action.</param>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public ChallengeTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
         }
 
-        /// <summary>
-        /// Tests whether challenge result contains specific authentication scheme provided by string.
-        /// </summary>
-        /// <param name="authenticationScheme">Expected authentication scheme as string.</param>
-        /// <returns>The same challenge test builder.</returns>
+        /// <inheritdoc />
         public IAndChallengeTestBuilder ContainingAuthenticationScheme(string authenticationScheme)
         {
             AuthenticationValidator.ValidateAuthenticationScheme(
@@ -46,11 +39,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether challenge result has the provided enumerable of authentication schemes.
-        /// </summary>
-        /// <param name="authenticationSchemes">Expected authentication schemes as enumerable.</param>
-        /// <returns>The same challenge test builder.</returns>
+        /// <inheritdoc />
         public IAndChallengeTestBuilder ContainingAuthenticationSchemes(IEnumerable<string> authenticationSchemes)
         {
             AuthenticationValidator.ValidateAuthenticationSchemes(
@@ -61,19 +50,11 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether challenge result has the provided parameters of authentication schemes.
-        /// </summary>
-        /// <param name="authenticationSchemes">Expected authentication schemes as string parameters.</param>
-        /// <returns>The same challenge test builder.</returns>
+        /// <inheritdoc />
         public IAndChallengeTestBuilder ContainingAuthenticationSchemes(params string[] authenticationSchemes)
             => this.ContainingAuthenticationSchemes(authenticationSchemes.AsEnumerable());
 
-        /// <summary>
-        /// Tests whether challenge result has the provided authentication properties.
-        /// </summary>
-        /// <param name="properties">Expected authentication properties.</param>
-        /// <returns>The same challenge test builder.</returns>
+        /// <inheritdoc />
         public IAndChallengeTestBuilder WithAuthenticationProperties(AuthenticationProperties properties)
         {
             AuthenticationValidator.ValidateAuthenticationProperties(
@@ -84,11 +65,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether challenge result has the provided authentication properties provided as builder.
-        /// </summary>
-        /// <param name="authenticationPropertiesBuilder">Expected authentication properties.</param>
-        /// <returns>The same challenge test builder.</returns>
+        /// <inheritdoc />
         public IAndChallengeTestBuilder WithAuthenticationProperties(Action<IAuthenticationPropertiesTestBuilder> authenticationPropertiesBuilder)
         {
             AuthenticationValidator.ValidateAuthenticationProperties(
@@ -98,10 +75,7 @@
             return this;
         }
 
-        /// <summary>
-        /// AndAlso method for better readability when chaining challenge tests.
-        /// </summary>
-        /// <returns>The same challenge test builder.</returns>
+        /// <inheritdoc />
         public IChallengeTestBuilder AndAlso() => this;
 
         private void ThrowNewChallengeResultAssertionException(string propertyName, string expectedValue, string actualValue)

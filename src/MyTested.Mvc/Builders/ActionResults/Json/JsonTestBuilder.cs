@@ -22,28 +22,17 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonTestBuilder" /> class.
         /// </summary>
-        /// <param name="controller">Controller on which the action will be tested.</param>
-        /// <param name="actionName">Name of the tested action.</param>
-        /// <param name="caughtException">Caught exception during the action execution.</param>
-        /// <param name="jsonResult">Result from the tested action.</param>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public JsonTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
         }
 
-        /// <summary>
-        /// Tests whether JSON result has the same status code as the provided one.
-        /// </summary>
-        /// <param name="statusCode">Status code.</param>
-        /// <returns>The same JSON test builder.</returns>
+        /// <inheritdoc />
         public IAndJsonTestBuilder WithStatusCode(int statusCode)
             => this.WithStatusCode((HttpStatusCode)statusCode);
 
-        /// <summary>
-        /// Tests whether JSON result has the same status code as the provided HttpStatusCode.
-        /// </summary>
-        /// <param name="statusCode">HttpStatusCode enumeration.</param>
-        /// <returns>The same JSON test builder.</returns>
+        /// <inheritdoc />
         public IAndJsonTestBuilder WithStatusCode(HttpStatusCode statusCode)
         {
             HttpStatusCodeValidator.ValidateHttpStatusCode(
@@ -54,11 +43,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether JSON result has the same content type as the provided string.
-        /// </summary>
-        /// <param name="contentType">ContentType type as string.</param>
-        /// <returns>The same JSON test builder.</returns>
+        /// <inheritdoc />
         public IAndJsonTestBuilder WithContentType(string contentType)
         {
             ContentTypeValidator.ValidateContentType(
@@ -69,34 +54,19 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether JSON result has the same content type as the provided MediaTypeHeaderValue.
-        /// </summary>
-        /// <param name="contentType">Content type as MediaTypeHeaderValue.</param>
-        /// <returns>The same JSON test builder.</returns>
+        /// <inheritdoc />
         public IAndJsonTestBuilder WithContentType(MediaTypeHeaderValue contentType)
             => this.WithContentType(contentType?.MediaType);
 
-        /// <summary>
-        /// Tests whether JSON result has the default JSON serializer settings.
-        /// </summary>
-        /// <returns>The same JSON test builder.</returns>
+        /// <inheritdoc />
         public IAndJsonTestBuilder WithDefaulJsonSerializerSettings()
             => this.WithJsonSerializerSettings(s => this.PopulateFullJsonSerializerSettingsTestBuilder(s));
 
-        /// <summary>
-        /// Tests whether JSON result has the provided JSON serializer settings.
-        /// </summary>
-        /// <param name="jsonSerializerSettings">Expected JSON serializer settings to test with.</param>
-        /// <returns>The same JSON test builder.</returns>
+        /// <inheritdoc />
         public IAndJsonTestBuilder WithJsonSerializerSettings(JsonSerializerSettings jsonSerializerSettings)
             => this.WithJsonSerializerSettings(s => this.PopulateFullJsonSerializerSettingsTestBuilder(s, jsonSerializerSettings));
 
-        /// <summary>
-        /// Tests whether JSON result has JSON serializer settings by using builder.
-        /// </summary>
-        /// <param name="jsonSerializerSettingsBuilder">Builder for creating JSON serializer settings.</param>
-        /// <returns>The same JSON test builder.</returns>
+        /// <inheritdoc />
         public IAndJsonTestBuilder WithJsonSerializerSettings(
             Action<IJsonSerializerSettingsTestBuilder> jsonSerializerSettingsBuilder)
         {
@@ -114,10 +84,7 @@
             return this;
         }
 
-        /// <summary>
-        /// AndAlso method for better readability when chaining JSON result tests.
-        /// </summary>
-        /// <returns>JSON result test builder.</returns>
+        /// <inheritdoc />
         public IJsonTestBuilder AndAlso() => this;
 
         /// <summary>

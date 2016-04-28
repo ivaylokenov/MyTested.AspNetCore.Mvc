@@ -23,10 +23,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="ViewComponentTestBuilder" /> class.
         /// </summary>
-        /// <param name="controller">Controller on which the action will be tested.</param>
-        /// <param name="actionName">Name of the tested action.</param>
-        /// <param name="caughtException">Caught exception during the action execution.</param>
-        /// <param name="viewComponentResult">Result from the tested action.</param>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public ViewComponentTestBuilder(ControllerTestContext testContext)
             : base(testContext, "view component")
         {
@@ -34,60 +31,36 @@
             this.viewComponentArguments = new RouteValueDictionary(this.ActionResult.Arguments);
         }
 
-        /// <summary>
-        /// Tests whether view component result has the same status code as the provided one.
-        /// </summary>
-        /// <param name="statusCode">Status code.</param>
-        /// <returns>The same view component test builder.</returns>
+        /// <inheritdoc />
         public new IAndViewComponentTestBuilder WithStatusCode(int statusCode)
             => this.WithStatusCode((HttpStatusCode)statusCode);
 
-        /// <summary>
-        /// Tests whether view component result has the same status code as the provided HttpStatusCode.
-        /// </summary>
-        /// <param name="statusCode">HttpStatusCode enumeration.</param>
-        /// <returns>The same view component test builder.</returns>
+        /// <inheritdoc />
         public new IAndViewComponentTestBuilder WithStatusCode(HttpStatusCode statusCode)
         {
             base.WithStatusCode(statusCode);
             return this;
         }
 
-        /// <summary>
-        /// Tests whether view component result has the same content type as the provided string.
-        /// </summary>
-        /// <param name="contentType">ContentType type as string.</param>
-        /// <returns>The same view component test builder.</returns>
+        /// <inheritdoc />
         public new IAndViewComponentTestBuilder WithContentType(string contentType)
         {
             base.WithContentType(contentType);
             return this;
         }
 
-        /// <summary>
-        /// Tests whether view component result has the same content type as the provided MediaTypeHeaderValue.
-        /// </summary>
-        /// <param name="contentType">Content type as MediaTypeHeaderValue.</param>
-        /// <returns>The same view component test builder.</returns>
+        /// <inheritdoc />
         public new IAndViewComponentTestBuilder WithContentType(MediaTypeHeaderValue contentType)
             => this.WithContentType(contentType?.MediaType);
 
-        /// <summary>
-        /// Tests whether view component result has the same view engine as the provided one.
-        /// </summary>
-        /// <param name="viewEngine">View engine of type IViewEngine.</param>
-        /// <returns>The same view component test builder.</returns>
+        /// <inheritdoc />
         public new IAndViewComponentTestBuilder WithViewEngine(IViewEngine viewEngine)
         {
             base.WithViewEngine(viewEngine);
             return this;
         }
 
-        /// <summary>
-        /// Tests whether view component result has the same view engine type as the provided one.
-        /// </summary>
-        /// <typeparam name="TViewEngine">View engine of type IViewEngine.</typeparam>
-        /// <returns>The same view component test builder.</returns>
+        /// <inheritdoc />
         public new IAndViewComponentTestBuilder WithViewEngineOfType<TViewEngine>()
             where TViewEngine : IViewEngine
         {
@@ -95,12 +68,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether view component result will be invoked with an argument with the same name as the provided one.
-        /// </summary>
-        /// <param name="name">Name of the argument.</param>
-        /// <param name="value">Expected argument value.</param>
-        /// <returns>The same view component test builder.</returns>
+        /// <inheritdoc />
         public IAndViewComponentTestBuilder ContainingArgumentWithName(string name)
         {
             DictionaryValidator.ValidateStringKey(
@@ -112,12 +80,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether view component result will be invoked with an argument deeply equal to the provided one.
-        /// </summary>
-        /// <param name="name">Name of the argument.</param>
-        /// <param name="value">Expected argument value.</param>
-        /// <returns>The same view component test builder.</returns>
+        /// <inheritdoc />
         public IAndViewComponentTestBuilder ContainingArgument(string name, object value)
         {
             DictionaryValidator.ValidateStringKeyAndValue(
@@ -130,12 +93,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether view component result will be invoked with an argument equal to the provided one.
-        /// </summary>
-        /// <typeparam name="TArgument">Type of the argument.</typeparam>
-        /// <param name="argument">Argument object.</param>
-        /// <returns>The same view component test builder.</returns>
+        /// <inheritdoc />
         public IAndViewComponentTestBuilder ContainingArgument<TArgument>(TArgument argument)
         {
             DictionaryValidator.ValidateValue(
@@ -147,11 +105,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether view component result will be invoked with an argument of the provided type.
-        /// </summary>
-        /// <typeparam name="TArgument">Type of the argument.</typeparam>
-        /// <returns>The same view component test builder.</returns>
+        /// <inheritdoc />
         public IAndViewComponentTestBuilder ContainingArgumentOfType<TArgument>()
         {
             DictionaryValidator.ValidateValueOfType<TArgument>(
@@ -162,6 +116,7 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IAndViewComponentTestBuilder ContainingArgumentOfType<TArgument>(string name)
         {
             DictionaryValidator.ValidateStringKeyAndValueOfType<TArgument>(
@@ -173,19 +128,11 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether view component result will be invoked with the provided arguments.
-        /// </summary>
-        /// <param name="arguments">Arguments object.</param>
-        /// <returns>The same view component test builder.</returns>
+        /// <inheritdoc />
         public IAndViewComponentTestBuilder ContainingArguments(object arguments)
             => this.ContainingArguments(new RouteValueDictionary(arguments));
 
-        /// <summary>
-        /// Tests whether view component result will be invoked with the provided arguments.
-        /// </summary>
-        /// <param name="arguments">Argument objects as dictionary.</param>
-        /// <returns>The same view component test builder.</returns>
+        /// <inheritdoc />
         public IAndViewComponentTestBuilder ContainingArguments(IDictionary<string, object> arguments)
         {
             DictionaryValidator.ValidateValues(
@@ -197,10 +144,7 @@
             return this;
         }
 
-        /// <summary>
-        /// AndAlso method for better readability when chaining view component result tests.
-        /// </summary>
-        /// <returns>The same view component test builder.</returns>
+        /// <inheritdoc />
         public new IViewComponentTestBuilder AndAlso() => this;
     }
 }

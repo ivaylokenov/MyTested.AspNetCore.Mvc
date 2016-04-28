@@ -25,10 +25,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="ViewTestBuilder{TViewResult}" /> class.
         /// </summary>
-        /// <param name="controller">Controller on which the action will be tested.</param>
-        /// <param name="actionName">Name of the tested action.</param>
-        /// <param name="caughtException">Caught exception during the action execution.</param>
-        /// <param name="viewResult">Result from the tested action.</param>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         /// <param name="viewType">View type name.</param>
         public ViewTestBuilder(
             ControllerTestContext testContext,
@@ -38,19 +35,11 @@
             this.viewType = viewType;
         }
 
-        /// <summary>
-        /// Tests whether view result has the same status code as the provided one.
-        /// </summary>
-        /// <param name="statusCode">Status code.</param>
-        /// <returns>The same view test builder.</returns>
+        /// <inheritdoc />
         public IAndViewTestBuilder WithStatusCode(int statusCode)
             => this.WithStatusCode((HttpStatusCode)statusCode);
 
-        /// <summary>
-        /// Tests whether view result has the same status code as the provided HttpStatusCode.
-        /// </summary>
-        /// <param name="statusCode">HttpStatusCode enumeration.</param>
-        /// <returns>The same view test builder.</returns>
+        /// <inheritdoc />
         public IAndViewTestBuilder WithStatusCode(HttpStatusCode statusCode)
         {
             HttpStatusCodeValidator.ValidateHttpStatusCode(
@@ -60,12 +49,8 @@
 
             return this;
         }
-        
-        /// <summary>
-        /// Tests whether view result has the same content type as the provided string.
-        /// </summary>
-        /// <param name="contentType">ContentType type as string.</param>
-        /// <returns>The same view test builder.</returns>
+
+        /// <inheritdoc />
         public IAndViewTestBuilder WithContentType(string contentType)
         {
             ContentTypeValidator.ValidateContentType(
@@ -76,19 +61,11 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether view result has the same content type as the provided MediaTypeHeaderValue.
-        /// </summary>
-        /// <param name="contentType">Content type as MediaTypeHeaderValue.</param>
-        /// <returns>The same view test builder.</returns>
+        /// <inheritdoc />
         public IAndViewTestBuilder WithContentType(MediaTypeHeaderValue contentType)
             => this.WithContentType(contentType?.MediaType);
 
-        /// <summary>
-        /// Tests whether view result has the same view engine as the provided one.
-        /// </summary>
-        /// <param name="viewEngine">View engine of type IViewEngine.</param>
-        /// <returns>The same view test builder.</returns>
+        /// <inheritdoc />
         public IAndViewTestBuilder WithViewEngine(IViewEngine viewEngine)
         {
             var actualViewEngine = this.GetViewEngine();
@@ -103,11 +80,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether view result has the same view engine type as the provided one.
-        /// </summary>
-        /// <typeparam name="TViewEngine">View engine of type IViewEngine.</typeparam>
-        /// <returns>The same view test builder.</returns>
+        /// <inheritdoc />
         public IAndViewTestBuilder WithViewEngineOfType<TViewEngine>()
             where TViewEngine : IViewEngine
         {
@@ -125,10 +98,7 @@
             return this;
         }
 
-        /// <summary>
-        /// AndAlso method for better readability when chaining view result tests.
-        /// </summary>
-        /// <returns>View result test builder.</returns>
+        /// <inheritdoc />
         public IViewTestBuilder AndAlso() => this;
 
         /// <summary>
