@@ -17,7 +17,7 @@
     using Utilities.Validators;
 
     /// <summary>
-    /// Base class for all response model test builders.
+    /// Base class for all test builders with response model.
     /// </summary>
     /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
     public abstract class BaseTestBuilderWithResponseModel<TActionResult>
@@ -29,10 +29,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseTestBuilderWithResponseModel{TActionResult}" /> class.
         /// </summary>
-        /// <param name="controller">Controller on which the action will be tested.</param>
-        /// <param name="actionName">Name of the tested action.</param>
-        /// <param name="caughtException">Caught exception during the action execution.</param>
-        /// <param name="actionResult">Result from the tested action.</param>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         protected BaseTestBuilderWithResponseModel(ControllerTestContext testContext)
             : base(testContext)
         {
@@ -52,11 +49,7 @@
         /// <value>String value.</value>
         protected string OfTypeErrorMessageFormat { get; set; }
 
-        /// <summary>
-        /// Tests whether certain type of response model is returned from the invoked action.
-        /// </summary>
-        /// <typeparam name="TResponseModel">Type of the response model.</typeparam>
-        /// <returns>Builder for testing the response model errors.</returns>
+        /// <inheritdoc />
         public IModelDetailsTestBuilder<TResponseModel> WithResponseModelOfType<TResponseModel>()
         {
             var actualResponseDataType = this.GetReturnType();
@@ -80,12 +73,7 @@
             return new ModelDetailsTestBuilder<TResponseModel>(this.TestContext);
         }
 
-        /// <summary>
-        /// Tests whether a deeply equal object to the provided one is returned from the invoked action.
-        /// </summary>
-        /// <typeparam name="TResponseModel">Type of the response model.</typeparam>
-        /// <param name="expectedModel">Expected model to be returned.</param>
-        /// <returns>Builder for testing the response model errors.</returns>
+        /// <inheritdoc />
         public IModelDetailsTestBuilder<TResponseModel> WithResponseModel<TResponseModel>(TResponseModel expectedModel)
         {
             this.WithResponseModelOfType<TResponseModel>();
@@ -107,7 +95,7 @@
         /// <summary>
         /// Tests whether action result has the same status code as the provided one.
         /// </summary>
-        /// <param name="statusCode">Status code.</param>
+        /// <param name="statusCode">Status code as integer.</param>
         protected void ValidateStatusCode(int statusCode)
         {
             this.ValidateStatusCode((HttpStatusCode)statusCode);
@@ -116,7 +104,7 @@
         /// <summary>
         /// Tests whether action result has the same status code as the provided HttpStatusCode.
         /// </summary>
-        /// <param name="statusCode">HttpStatusCode enumeration.</param>
+        /// <param name="statusCode"><see cref="HttpStatusCode"/> enumeration.</param>
         protected void ValidateStatusCode(HttpStatusCode statusCode)
         {
             HttpStatusCodeValidator.ValidateHttpStatusCode(
@@ -137,7 +125,7 @@
         /// <summary>
         /// Tests whether action result contains the same content type as the provided MediaTypeHeaderValue.
         /// </summary>
-        /// <param name="contentType">Expected content type as MediaTypeHeaderValue.</param>
+        /// <param name="contentType">Expected content type as <see cref="MediaTypeHeaderValue"/>.</param>
         protected void ValidateContainingOfContentType(MediaTypeHeaderValue contentType)
         {
             ContentTypeValidator.ValidateContainingOfContentType(
@@ -167,7 +155,7 @@
         /// <summary>
         /// Tests whether action result contains the same content types as the provided ones.
         /// </summary>
-        /// <param name="contentTypes">Expected content types as enumerable of MediaTypeHeaderValue.</param>
+        /// <param name="contentTypes">Expected content types as enumerable of <see cref="MediaTypeHeaderValue"/>.</param>
         protected void ValidateContentTypes(IEnumerable<MediaTypeHeaderValue> contentTypes)
         {
             ContentTypeValidator.ValidateContentTypes(
@@ -179,7 +167,7 @@
         /// <summary>
         /// Tests whether action result contains the same content types as the provided ones.
         /// </summary>
-        /// <param name="contentTypes">Expected content types as MediaTypeHeaderValue parameters.</param>
+        /// <param name="contentTypes">Expected content types as <see cref="MediaTypeHeaderValue"/> parameters.</param>
         protected void ValidateContentTypes(params MediaTypeHeaderValue[] contentTypes)
         {
             this.ValidateContentTypes(contentTypes.AsEnumerable());
@@ -188,7 +176,7 @@
         /// <summary>
         /// Tests whether action result contains the same output formatter as the provided one.
         /// </summary>
-        /// <param name="outputFormatter">Expected instance of IOutputFormatter.</param>
+        /// <param name="outputFormatter">Expected instance of <see cref="IOutputFormatter"/>.</param>
         protected void ValidateContainingOfOutputFormatter(IOutputFormatter outputFormatter)
         {
             OutputFormatterValidator.ValidateContainingOfOutputFormatter(
@@ -200,7 +188,7 @@
         /// <summary>
         /// Tests whether action result contains type of output formatter as the provided one.
         /// </summary>
-        /// <typeparam name="TOutputFormatter">Expected type of IOutputFormatter.</typeparam>
+        /// <typeparam name="TOutputFormatter">Expected type of <see cref="IOutputFormatter"/>.</typeparam>
         protected void ValidateContainingOutputFormatterOfType<TOutputFormatter>()
             where TOutputFormatter : IOutputFormatter
         {
@@ -212,7 +200,7 @@
         /// <summary>
         /// Tests whether action result contains the same output formatters as the provided ones.
         /// </summary>
-        /// <param name="outputFormatters">Expected enumerable of IOutputFormatter.</param>
+        /// <param name="outputFormatters">Expected enumerable of <see cref="IOutputFormatter"/>.</param>
         protected void ValidateOutputFormatters(IEnumerable<IOutputFormatter> outputFormatters)
         {
             OutputFormatterValidator.ValidateOutputFormatters(
@@ -224,7 +212,7 @@
         /// <summary>
         /// Tests whether action result contains the same output formatters as the provided ones.
         /// </summary>
-        /// <param name="outputFormatters">Expected IOutputFormatter parameters.</param>
+        /// <param name="outputFormatters">Expected <see cref="IOutputFormatter"/> parameters.</param>
         protected void ValidateOutputFormatters(params IOutputFormatter[] outputFormatters)
             => this.ValidateOutputFormatters(outputFormatters.AsEnumerable());
 

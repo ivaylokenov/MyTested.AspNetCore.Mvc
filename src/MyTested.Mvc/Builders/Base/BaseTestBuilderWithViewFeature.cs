@@ -1,11 +1,11 @@
 ﻿namespace MyTested.Mvc.Builders.Base
 {
-    using Builders.ShouldPassFor;
     using Contracts.Base;
     using Contracts.Models;
     using Contracts.ShouldPassFor;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
+    using ShouldPassFor;
 
     /// <summary>
     /// Base class for all test builders with view features.
@@ -18,30 +18,19 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseTestBuilderWithViewFeature{TActionResult}" /> class.
         /// </summary>
-        /// <param name="controller">Controller on which the action will be tested.</param>
-        /// <param name="actionName">Name of the tested action.</param>
-        /// <param name="caughtException">Caught exception during the action execution.</param>
-        /// <param name="viewResult">Result from the tested action.</param>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         protected BaseTestBuilderWithViewFeature(ControllerTestContext testContext)
             : base(testContext)
         {
         }
         
-        /// <summary>
-        /// Tests whether view result contains deeply equal model object as the provided one.
-        /// </summary>
-        /// <typeparam name="TModel">Type of model object.</typeparam>
-        /// <param name="model">Model object.</param>
-        /// <returns>Model details test builder.</returns>
+        /// <inheritdoc />
         public IModelDetailsTestBuilder<TModel> WithModel<TModel>(TModel model) => this.WithResponseModel(model);
 
-        /// <summary>
-        /// Tests whether view result contains model object of the provided type.
-        /// </summary>
-        /// <typeparam name="TModel">Type of model object.</typeparam>
-        /// <returns>Model details test builder.</returns>
+        /// <inheritdoc />
         public IModelDetailsTestBuilder<TModel> WithModelOfType<TModel>() => this.WithResponseModelOfType<TModel>();
-        
+
+        /// <inheritdoc />
         IShouldPassForTestBuilderWithActionResult<ActionResult> IBaseTestBuilderWithActionResult<ActionResult>.ShouldPassFor()
             => new ShouldPassForTestBuilderWithActionResult<ActionResult>(this.TestContext);
     }

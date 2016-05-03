@@ -3,7 +3,7 @@
     using Models;
 
     /// <summary>
-    /// Base interface for all response model test builders.
+    /// Base interface for all test builders with response model.
     /// </summary>
     public interface IBaseTestBuilderWithResponseModel : IBaseTestBuilderWithInvokedAction
     {

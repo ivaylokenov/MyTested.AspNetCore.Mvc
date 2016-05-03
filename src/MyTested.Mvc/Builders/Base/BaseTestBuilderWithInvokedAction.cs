@@ -8,7 +8,7 @@
     using ShouldPassFor;
 
     /// <summary>
-    /// Base class for test builders with caught exception.
+    /// Base class for test builders with invoked action.
     /// </summary>
     public abstract class BaseTestBuilderWithInvokedAction
         : BaseTestBuilderWithAction, IBaseTestBuilderWithInvokedAction
@@ -16,24 +16,26 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseTestBuilderWithInvokedAction" /> class.
         /// </summary>
-        /// <param name="controller">Controller on which the action will be tested.</param>
-        /// <param name="actionName">Name of the tested action.</param>
-        /// <param name="caughtException">Caught exception during the action execution.</param>
-        /// <param name="actionAttributes">Collected action attributes from the method call.</param>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         protected BaseTestBuilderWithInvokedAction(ControllerTestContext testContext)
             : base(testContext)
         {
         }
 
+        /// <summary>
+        /// Gets the caught exception. Returns null, if such does not exist.
+        /// </summary>
+        /// <value>Result of type <see cref="Exception"/>.</value>
         internal Exception CaughtException => this.TestContext.CaughtException;
         
+        /// <inheritdoc />
         public new IShouldPassForTestBuilderWithInvokedAction ShouldPassFor()
             => new ShouldPassForTestBuilderWithInvokedAction(this.TestContext);
 
         /// <summary>
-        /// Creates new AndProvideTestBuilder.
+        /// Creates new <see cref="AndProvideTestBuilder"/>.
         /// </summary>
-        /// <returns>Base test builder.</returns>
+        /// <returns>Test builder of type <see cref="IBaseTestBuilderWithInvokedAction"/>.</returns>
         protected IBaseTestBuilderWithInvokedAction NewAndProvideTestBuilder()
             => new AndProvideTestBuilder(this.TestContext);
     }

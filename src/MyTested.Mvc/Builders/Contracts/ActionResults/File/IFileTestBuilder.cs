@@ -15,49 +15,49 @@
         /// Tests whether file result has the same content type as the provided one.
         /// </summary>
         /// <param name="contentType">Content type as string.</param>
-        /// <returns>The same file test builder.</returns>
+        /// <returns>The same <see cref="IAndFileTestBuilder"/>.</returns>
         IAndFileTestBuilder WithContentType(string contentType);
 
         /// <summary>
         /// Tests whether file result has the same content type as the provided one.
         /// </summary>
-        /// <param name="contentType">Content type as MediaTypeHeaderValue.</param>
-        /// <returns>The same file test builder.</returns>
+        /// <param name="contentType">Content type as <see cref="MediaTypeHeaderValue"/>.</param>
+        /// <returns>The same <see cref="IAndFileTestBuilder"/>.</returns>
         IAndFileTestBuilder WithContentType(MediaTypeHeaderValue contentType);
 
         /// <summary>
         /// Tests whether file result has the same file download name as the provided one.
         /// </summary>
         /// <param name="fileDownloadName">File download name as string.</param>
-        /// <returns>The same file test builder.</returns>
+        /// <returns>The same <see cref="IAndFileTestBuilder"/>.</returns>
         IAndFileTestBuilder WithFileDownloadName(string fileDownloadName);
 
         /// <summary>
         /// Tests whether file result has the same file stream as the provided one.
         /// </summary>
         /// <param name="stream">File stream.</param>
-        /// <returns>The same file test builder.</returns>
+        /// <returns>The same <see cref="IAndFileTestBuilder"/>.</returns>
         IAndFileTestBuilder WithStream(Stream stream);
 
         /// <summary>
         /// Tests whether file result has the same file name as the provided one.
         /// </summary>
         /// <param name="fileName">File name as string.</param>
-        /// <returns>The same file test builder.</returns>
+        /// <returns>The same <see cref="IAndFileTestBuilder"/>.</returns>
         IAndFileTestBuilder WithFileName(string fileName);
 
         /// <summary>
         /// Tests whether file result has the same file provider as the provided one.
         /// </summary>
-        /// <param name="fileProvider">File provider of type IFileProvider.</param>
-        /// <returns>The same file test builder.</returns>
+        /// <param name="fileProvider">File provider of type <see cref="IFileProvider"/>.</param>
+        /// <returns>The same <see cref="IAndFileTestBuilder"/>.</returns>
         IAndFileTestBuilder WithFileProvider(IFileProvider fileProvider);
 
         /// <summary>
         /// Tests whether file result has the same file provider type as the provided one.
         /// </summary>
-        /// <typeparam name="TFileProvider">File provider of type IFileProvider.</typeparam>
-        /// <returns>The same file test builder.</returns>
+        /// <typeparam name="TFileProvider">File provider of type <see cref="IFileProvider"/>.</typeparam>
+        /// <returns>The same <see cref="IAndFileTestBuilder"/>.</returns>
         IAndFileTestBuilder WithFileProviderOfType<TFileProvider>()
             where TFileProvider : IFileProvider;
 
@@ -65,7 +65,7 @@
         /// Tests whether file result has the same file contents as the provided byte array.
         /// </summary>
         /// <param name="fileContents">File contents as byte array.</param>
-        /// <returns>The same file test builder.</returns>
+        /// <returns>The same <see cref="IAndFileTestBuilder"/>.</returns>
         IAndFileTestBuilder WithContents(byte[] fileContents);
     }
 }
