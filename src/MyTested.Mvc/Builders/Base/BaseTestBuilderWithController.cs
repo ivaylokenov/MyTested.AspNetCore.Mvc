@@ -30,8 +30,16 @@
         /// <value>Controller on which the action will be tested.</value>
         internal object Controller => this.TestContext.Controller;
 
+        /// <summary>
+        /// Gets the controller attributes which will be tested.
+        /// </summary>
+        /// <value>Controller attributes which will be tested.</value>
         internal IEnumerable<object> ControllerLevelAttributes => this.TestContext.ControllerAttributes;
 
+        /// <summary>
+        /// Gets the currently used <see cref="ControllerTestContext"/>.
+        /// </summary>
+        /// <value>Result of type <see cref="ControllerTestContext"/>.</value>
         protected new ControllerTestContext TestContext
         {
             get
@@ -46,6 +54,7 @@
             }
         }
 
+        /// <inheritdoc />
         public new IShouldPassForTestBuilderWithController<object> ShouldPassFor() 
             => new ShouldPassForTestBuilderWithController<object>(this.TestContext);
     }

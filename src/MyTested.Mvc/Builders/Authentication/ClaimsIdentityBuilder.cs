@@ -5,122 +5,93 @@
     using System.Security.Claims;
     using Contracts.Authentication;
 
+    /// <summary>
+    /// Used for creating mocked authenticated <see cref="ClaimsIdentity"/>.
+    /// </summary>
     public class ClaimsIdentityBuilder : BaseUserBuilder, IAndClaimsIdentityBuilder
     {
+        /// <inheritdoc />
         public IAndClaimsIdentityBuilder WithNameType(string nameType)
         {
             this.AddNameType(nameType);
             return this;
         }
 
+        /// <inheritdoc />
         public IAndClaimsIdentityBuilder WithRoleType(string roleType)
         {
             this.AddRoleType(roleType);
             return this;
         }
 
-        /// <summary>
-        /// Used for setting ID to the claims identity. If such is not provided, "TestId" is used by default.
-        /// </summary>
-        /// <param name="identifier">The user Id to set.</param>
-        /// <returns>The same claims identity builder.</returns>
+        /// <inheritdoc />
         public IAndClaimsIdentityBuilder WithIdentifier(string identifier)
         {
             this.AddIdentifier(identifier);
             return this;
         }
 
-        /// <summary>
-        /// Used for setting username to the claims identity. If such is not provided, "TestUser" is used by default.
-        /// </summary>
-        /// <param name="username">The username to set.</param>
-        /// <returns>The same claims identity builder.</returns>
+        /// <inheritdoc />
         public IAndClaimsIdentityBuilder WithUsername(string username)
         {
             this.AddUsername(username);
             return this;
         }
-        
+
+        /// <inheritdoc />
         public IAndClaimsIdentityBuilder WithClaim(string type, string value)
         {
             return this.WithClaim(new Claim(type, value));
         }
 
-        /// <summary>
-        /// Used for adding claim to the claims identity.
-        /// </summary>
-        /// <param name="claim">The claim to add.</param>
-        /// <returns>The same claims identity builder.</returns>
+        /// <inheritdoc />
         public IAndClaimsIdentityBuilder WithClaim(Claim claim)
         {
             this.AddClaim(claim);
             return this;
         }
 
-        /// <summary>
-        /// Used for adding claims to the claims identity.
-        /// </summary>
-        /// <param name="claims">The claims to add.</param>
-        /// <returns>The same claims identity builder.</returns>
+        /// <inheritdoc />
         public IAndClaimsIdentityBuilder WithClaims(IEnumerable<Claim> claims)
         {
             this.AddClaims(claims);
             return this;
         }
 
-        /// <summary>
-        /// Used for adding claims to the claims identity.
-        /// </summary>
-        /// <param name="claims">The claims to add.</param>
-        /// <returns>The same claims identity builder.</returns>
+        /// <inheritdoc />
         public IAndClaimsIdentityBuilder WithClaims(params Claim[] claims)
         {
             return this.WithClaims(claims.AsEnumerable());
         }
 
-        /// <summary>
-        /// Used for setting authentication type to the claims identity. If such is not provided, "Passport" is used by default.
-        /// </summary>
-        /// <param name="authenticationType">The authentication type to set.</param>
-        /// <returns>The same claims identity builder.</returns>
+        /// <inheritdoc />
         public IAndClaimsIdentityBuilder WithAuthenticationType(string authenticationType)
         {
             this.AddAuthenticationType(authenticationType);
             return this;
         }
 
-        /// <summary>
-        /// Used for adding role to claims identity.
-        /// </summary>
-        /// <param name="role">The role to add.</param>
-        /// <returns>The same claims identity builder.</returns>
+        /// <inheritdoc />
         public IAndClaimsIdentityBuilder InRole(string role)
         {
             this.AddRole(role);
             return this;
         }
 
-        /// <summary>
-        /// Used for adding multiple roles to claims identity.
-        /// </summary>
-        /// <param name="roles">Collection of roles to add.</param>
-        /// <returns>The same claims identity builder.</returns>
+        /// <inheritdoc />
         public IAndClaimsIdentityBuilder InRoles(IEnumerable<string> roles)
         {
             this.AddRoles(roles);
             return this;
         }
 
-        /// <summary>
-        /// Used for adding multiple roles to claims identity.
-        /// </summary>
-        /// <param name="roles">Roles to add.</param>
-        /// <returns>The same claims identity builder.</returns>
+        /// <inheritdoc />
         public IAndClaimsIdentityBuilder InRoles(params string[] roles)
         {
             return this.InRoles(roles.AsEnumerable());
         }
 
+        /// <inheritdoc />
         public IClaimsIdentityBuilder AndAlso()
         {
             return this;

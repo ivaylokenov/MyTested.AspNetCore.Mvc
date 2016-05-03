@@ -18,11 +18,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseTestBuilderWithActionResult{TActionResult}" /> class.
         /// </summary>
-        /// <param name="controller">Controller on which the action will be tested.</param>
-        /// <param name="actionName">Name of the tested action.</param>
-        /// <param name="caughtException">Caught exception during the action execution.</param>
-        /// <param name="actionResult">Result from the tested action.</param>
-        /// <param name="actionAttributes">Collected action attributes from the method call.</param>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         protected BaseTestBuilderWithActionResult(ControllerTestContext testContext)
             : base(testContext)
         {
@@ -34,22 +30,23 @@
         /// <value>Action result to be tested.</value>
         internal TActionResult ActionResult => this.TestContext.ActionResultAs<TActionResult>();
         
+        /// <inheritdoc />
         public new IShouldPassForTestBuilderWithActionResult<TActionResult> ShouldPassFor()
             => new ShouldPassForTestBuilderWithActionResult<TActionResult>(this.TestContext);
 
         /// <summary>
         /// Initializes new instance of builder providing AndAlso method.
         /// </summary>
-        /// <returns>Test builder with AndAlso method.</returns>
+        /// <returns>Test builder of type <see cref="IAndTestBuilder{TActionResult}"/>.</returns>
         protected IAndTestBuilder<TActionResult> NewAndTestBuilder()
         {
             return new AndTestBuilder<TActionResult>(this.TestContext);
         }
 
         /// <summary>
-        /// Creates new AndProvideTestBuilder.
+        /// Creates new <see cref="AndProvideTestBuilder{TActionResult}"/>.
         /// </summary>
-        /// <returns>Base test builder with action result.</returns>
+        /// <returns>Base test builder of type <see cref="IBaseTestBuilderWithActionResult{TActionResult}"/>.</returns>
         protected new IBaseTestBuilderWithActionResult<TActionResult> NewAndProvideTestBuilder()
         {
             return new AndProvideTestBuilder<TActionResult>(this.TestContext);

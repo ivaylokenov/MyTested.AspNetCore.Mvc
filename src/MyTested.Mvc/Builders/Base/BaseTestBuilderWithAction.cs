@@ -16,6 +16,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseTestBuilderWithAction" /> class.
         /// </summary>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         protected BaseTestBuilderWithAction(ControllerTestContext testContext)
             : base(testContext)
         {
@@ -27,8 +28,13 @@
         /// <value>Action name to be tested.</value>
         internal string ActionName => this.TestContext.ActionName;
 
+        /// <summary>
+        /// Gets the action attributes which will be tested.
+        /// </summary>
+        /// <value>Action attributes to be tested.</value>
         internal IEnumerable<object> ActionLevelAttributes => this.TestContext.ActionAttributes;
         
+        /// <inheritdoc />
         public new IShouldPassForTestBuilderWithAction ShouldPassFor() => new ShouldPassForTestBuilderWithAction(this.TestContext);
 
         /// <summary>

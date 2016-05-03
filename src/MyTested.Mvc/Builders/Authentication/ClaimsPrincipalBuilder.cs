@@ -8,7 +8,7 @@
     using Contracts.Authentication;
 
     /// <summary>
-    /// Used for building mocked claims principal.
+    /// Used for building mocked <see cref="ClaimsPrincipal"/>.
     /// </summary>
     public class ClaimsPrincipalBuilder : BaseUserBuilder, IAndClaimsPrincipalBuilder
     {
@@ -16,6 +16,9 @@
 
         private ICollection<ClaimsIdentity> identities;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ClaimsPrincipalBuilder" /> class.
+        /// </summary>
         public ClaimsPrincipalBuilder()
         {
             this.identities = new List<ClaimsIdentity>();
@@ -24,124 +27,92 @@
         /// <summary>
         /// Static constructor for creating default authenticated claims principal with "TestId" identifier and "TestUser" username.
         /// </summary>
-        /// <returns>Authenticated claims principal.</returns>
+        /// <returns>Authenticated <see cref="ClaimsPrincipal"/>.</returns>
         /// <value>Result of type <see cref="ClaimsPrincipal"/>.</value>
         public static ClaimsPrincipal DefaultAuthenticated => DefaultAuthenticatedClaimsPrinciple;
 
+        /// <inheritdoc />
         public IAndClaimsPrincipalBuilder WithNameType(string nameType)
         {
             this.AddNameType(nameType);
             return this;
         }
 
+        /// <inheritdoc />
         public IAndClaimsPrincipalBuilder WithRoleType(string roleType)
         {
             this.AddRoleType(roleType);
             return this;
         }
 
-        /// <summary>
-        /// Used for setting ID to the claims principal. If such is not provided, "TestId" is used by default.
-        /// </summary>
-        /// <param name="identifier">The user Id to set.</param>
-        /// <returns>The same claims principal builder.</returns>
+        /// <inheritdoc />
         public IAndClaimsPrincipalBuilder WithIdentifier(string identifier)
         {
             this.AddIdentifier(identifier);
             return this;
         }
 
-        /// <summary>
-        /// Used for setting username to the claims principal. If such is not provided, "TestUser" is used by default.
-        /// </summary>
-        /// <param name="username">The username to set.</param>
-        /// <returns>The same claims principal builder.</returns>
+        /// <inheritdoc />
         public IAndClaimsPrincipalBuilder WithUsername(string username)
         {
             this.AddUsername(username);
             return this;
         }
 
+        /// <inheritdoc />
         public IAndClaimsPrincipalBuilder WithClaim(string type, string value)
         {
             return this.WithClaim(new Claim(type, value));
         }
 
-        /// <summary>
-        /// Used for adding claim to the claims principal.
-        /// </summary>
-        /// <param name="claim">The claim to add.</param>
-        /// <returns>The same claims principal builder.</returns>
+        /// <inheritdoc />
         public IAndClaimsPrincipalBuilder WithClaim(Claim claim)
         {
             this.AddClaim(claim);
             return this;
         }
 
-        /// <summary>
-        /// Used for adding claims to the claims principal.
-        /// </summary>
-        /// <param name="claims">The claims to add.</param>
-        /// <returns>The same claims principal builder.</returns>
+        /// <inheritdoc />
         public IAndClaimsPrincipalBuilder WithClaims(IEnumerable<Claim> claims)
         {
             this.AddClaims(claims);
             return this;
         }
 
-        /// <summary>
-        /// Used for adding claims to the claims principal.
-        /// </summary>
-        /// <param name="claims">The claims to add.</param>
-        /// <returns>The same claims principal builder.</returns>
+        /// <inheritdoc />
         public IAndClaimsPrincipalBuilder WithClaims(params Claim[] claims)
         {
             return this.WithClaims(claims.AsEnumerable());
         }
 
-        /// <summary>
-        /// Used for setting authentication type to the claims principal. If such is not provided, "Passport" is used by default.
-        /// </summary>
-        /// <param name="authenticationType">The authentication type to set.</param>
-        /// <returns>The same claims principal builder.</returns>
+        /// <inheritdoc />
         public IAndClaimsPrincipalBuilder WithAuthenticationType(string authenticationType)
         {
             this.AddAuthenticationType(authenticationType);
             return this;
         }
 
-        /// <summary>
-        /// Used for adding role to claims principal.
-        /// </summary>
-        /// <param name="role">The role to add.</param>
-        /// <returns>The same claims principal builder.</returns>
+        /// <inheritdoc />
         public IAndClaimsPrincipalBuilder InRole(string role)
         {
             this.AddRole(role);
             return this;
         }
 
-        /// <summary>
-        /// Used for adding multiple roles to claims principal.
-        /// </summary>
-        /// <param name="roles">Collection of roles to add.</param>
-        /// <returns>The same claims principal builder.</returns>
+        /// <inheritdoc />
         public IAndClaimsPrincipalBuilder InRoles(IEnumerable<string> roles)
         {
             this.AddRoles(roles);
             return this;
         }
 
-        /// <summary>
-        /// Used for adding multiple roles to claims principal.
-        /// </summary>
-        /// <param name="roles">Roles to add.</param>
-        /// <returns>The same claims principal builder.</returns>
+        /// <inheritdoc />
         public IAndClaimsPrincipalBuilder InRoles(params string[] roles)
         {
             return this.InRoles(roles.AsEnumerable());
         }
 
+        /// <inheritdoc />
         public IAndClaimsPrincipalBuilder WithIdentity(IIdentity identity)
         {
             var claimsIdentity = identity as ClaimsIdentity;
@@ -154,6 +125,7 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IAndClaimsPrincipalBuilder WithIdentity(Action<IClaimsIdentityBuilder> claimsIdentityBuilder)
         {
             var newClaimsIdentityBuilder = new ClaimsIdentityBuilder();
@@ -162,10 +134,7 @@
             return this;
         }
 
-        /// <summary>
-        /// AndAlso method for better readability when building claims principal.
-        /// </summary>
-        /// <returns>The same claims principal builder.</returns>
+        /// <inheritdoc />
         public IClaimsPrincipalBuilder AndAlso()
         {
             return this;
