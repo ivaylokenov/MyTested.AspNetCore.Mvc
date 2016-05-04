@@ -69,14 +69,14 @@
         IModelErrorTestBuilder<TRequestModel> WithModelStateErrorFor<TRequestModel>();
 
         /// <summary>
-        /// Tests whether <see cref="BadRequestResult"/> or <see cref="BadRequestObjectResult"/> has the same status code as the provided one.
+        /// Tests whether <see cref="BadRequestObjectResult"/> has the same status code as the provided one.
         /// </summary>
         /// <param name="statusCode">Status code as integer.</param>
         /// <returns>The same <see cref="IAndBadRequestTestBuilder"/>.</returns>
         IAndBadRequestTestBuilder WithStatusCode(int statusCode);
 
         /// <summary>
-        /// Tests whether <see cref="BadRequestResult"/> or <see cref="BadRequestObjectResult"/> has the same status code as the provided <see cref="HttpStatusCode"/>.
+        /// Tests whether <see cref="BadRequestObjectResult"/> has the same status code as the provided <see cref="HttpStatusCode"/>.
         /// </summary>
         /// <param name="statusCode"><see cref="HttpStatusCode"/> enumeration.</param>
         /// <returns>The same <see cref="IAndBadRequestTestBuilder"/>.</returns>

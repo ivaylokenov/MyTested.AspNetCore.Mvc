@@ -153,7 +153,7 @@
         /// Tests whether <see cref="CreatedAtActionResult"/> or <see cref="CreatedAtRouteResult"/> returns created at specific asynchronous action.
         /// </summary>
         /// <typeparam name="TController">Type of expected controller.</typeparam>
-        /// <param name="actionCall">Method call expression indicating the expected asynchronous action.</param>
+        /// <param name="actionCall">Method call expression indicating the expected asynchronous created action.</param>
         /// <returns>The same <see cref="IAndCreatedTestBuilder"/>.</returns>
         IAndCreatedTestBuilder At<TController>(Expression<Func<TController, Task>> actionCall)
             where TController : class;
