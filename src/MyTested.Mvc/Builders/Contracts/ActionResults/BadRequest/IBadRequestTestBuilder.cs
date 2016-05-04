@@ -10,12 +10,12 @@
     using Models;
 
     /// <summary>
-    /// Used for testing HTTP bad request results.
+    /// Used for testing <see cref="BadRequestResult"/> and <see cref="BadRequestObjectResult"/>.
     /// </summary>
     public interface IBadRequestTestBuilder : IBaseTestBuilderWithActionResult<ActionResult>
     {
         /// <summary>
-        /// Tests whether HTTP bad request result contains deeply equal error value as the provided error object.
+        /// Tests whether <see cref="BadRequestObjectResult"/> contains deeply equal error value as the provided error object.
         /// </summary>
         /// <typeparam name="TError">Type of error object.</typeparam>
         /// <param name="error">Error object.</param>
@@ -23,116 +23,116 @@
         IModelDetailsTestBuilder<TError> WithError<TError>(TError error);
 
         /// <summary>
-        /// Tests whether HTTP bad request result contains error object of the provided type.
+        /// Tests whether <see cref="BadRequestObjectResult"/> contains error object of the provided type.
         /// </summary>
         /// <typeparam name="TError">Type of error object.</typeparam>
         /// <returns>Test builder of type <see cref="IModelDetailsTestBuilder{TError}"/>.</returns>
         IModelDetailsTestBuilder<TError> WithErrorOfType<TError>();
 
         /// <summary>
-        /// Tests whether no specific error is returned from the HTTP bad request result.
+        /// Tests whether no specific error is returned from the <see cref="BadRequestObjectResult"/>.
         /// </summary>
         /// <returns>The same <see cref="IAndBadRequestTestBuilder"/>.</returns>
         IAndBadRequestTestBuilder WithNoError();
 
         /// <summary>
-        /// Tests HTTP bad request result with specific text error message using test builder.
+        /// Tests <see cref="BadRequestObjectResult"/> with specific text error message using test builder.
         /// </summary>
         /// <returns><see cref="IBadRequestErrorMessageTestBuilder"/>.</returns>
         IBadRequestErrorMessageTestBuilder WithErrorMessage();
 
         /// <summary>
-        /// Tests HTTP bad request result with specific text error message provided by string.
+        /// Tests <see cref="BadRequestObjectResult"/> with specific text error message provided by string.
         /// </summary>
-        /// <param name="message">Expected error message from bad request result.</param>
+        /// <param name="message">Expected error message.</param>
         /// <returns>The same <see cref="IAndBadRequestTestBuilder"/>.</returns>
         IAndBadRequestTestBuilder WithErrorMessage(string message);
 
         /// <summary>
-        /// Tests whether HTTP bad request result contains the controller's <see cref="ModelStateDictionary"/> as object error.
+        /// Tests whether <see cref="BadRequestObjectResult"/> contains the controller's <see cref="ModelStateDictionary"/> as object error.
         /// </summary>
         /// <returns>The same <see cref="IAndBadRequestTestBuilder"/>.</returns>
         IAndBadRequestTestBuilder WithModelStateError();
 
         /// <summary>
-        /// Tests HTTP bad request result with specific <see cref="ModelStateDictionary"/>.
+        /// Tests whether <see cref="BadRequestObjectResult"/> contains specific <see cref="ModelStateDictionary"/>.
         /// </summary>
         /// <param name="modelState"><see cref="ModelStateDictionary"/> to deeply compare to the actual one.</param>
         /// <returns>The same <see cref="IAndBadRequestTestBuilder"/>.</returns>
         IAndBadRequestTestBuilder WithModelStateError(ModelStateDictionary modelState);
 
         /// <summary>
-        /// Tests HTTP bad request result for model state errors using test builder.
+        /// Tests whether <see cref="BadRequestObjectResult"/> contains specific model state errors using test builder.
         /// </summary>
         /// <typeparam name="TRequestModel">Type of model for which the model state errors will be tested.</typeparam>
         /// <returns>The same <see cref="IAndBadRequestTestBuilder"/>.</returns>
         IModelErrorTestBuilder<TRequestModel> WithModelStateErrorFor<TRequestModel>();
 
         /// <summary>
-        /// Tests whether HTTP bad request result has the same status code as the provided one.
+        /// Tests whether <see cref="BadRequestResult"/> or <see cref="BadRequestObjectResult"/> has the same status code as the provided one.
         /// </summary>
-        /// <param name="statusCode">Status code.</param>
+        /// <param name="statusCode">Status code as integer.</param>
         /// <returns>The same <see cref="IAndBadRequestTestBuilder"/>.</returns>
         IAndBadRequestTestBuilder WithStatusCode(int statusCode);
 
         /// <summary>
-        /// Tests whether HTTP bad request has the same status code as the provided <see cref="HttpStatusCode"/>.
+        /// Tests whether <see cref="BadRequestResult"/> or <see cref="BadRequestObjectResult"/> has the same status code as the provided <see cref="HttpStatusCode"/>.
         /// </summary>
         /// <param name="statusCode"><see cref="HttpStatusCode"/> enumeration.</param>
         /// <returns>The same <see cref="IAndBadRequestTestBuilder"/>.</returns>
         IAndBadRequestTestBuilder WithStatusCode(HttpStatusCode statusCode);
 
         /// <summary>
-        /// Tests whether HTTP bad request result contains the content type provided as string.
+        /// Tests whether <see cref="BadRequestObjectResult"/> contains the content type provided as string.
         /// </summary>
         /// <param name="contentType">Content type as string.</param>
         /// <returns>The same <see cref="IAndBadRequestTestBuilder"/>.</returns>
         IAndBadRequestTestBuilder ContainingContentType(string contentType);
 
         /// <summary>
-        /// Tests whether HTTP bad request result contains the content type provided as <see cref="MediaTypeHeaderValue"/>.
+        /// Tests whether <see cref="BadRequestObjectResult"/> contains the content type provided as <see cref="MediaTypeHeaderValue"/>.
         /// </summary>
         /// <param name="contentType">Content type as MediaTypeHeaderValue.</param>
         /// <returns>The same <see cref="IAndBadRequestTestBuilder"/>.</returns>
         IAndBadRequestTestBuilder ContainingContentType(MediaTypeHeaderValue contentType);
 
         /// <summary>
-        /// Tests whether HTTP bad request result contains the same content types provided as enumerable of strings.
+        /// Tests whether <see cref="BadRequestObjectResult"/> contains the same content types provided as enumerable of strings.
         /// </summary>
         /// <param name="contentTypes">Content types as enumerable of strings.</param>
         /// <returns>The same <see cref="IAndBadRequestTestBuilder"/>.</returns>
         IAndBadRequestTestBuilder ContainingContentTypes(IEnumerable<string> contentTypes);
 
         /// <summary>
-        /// Tests whether HTTP bad request result contains the same content types provided as string parameters.
+        /// Tests whether <see cref="BadRequestObjectResult"/> contains the same content types provided as string parameters.
         /// </summary>
         /// <param name="contentTypes">Content types as string parameters.</param>
         /// <returns>The same <see cref="IAndBadRequestTestBuilder"/>.</returns>
         IAndBadRequestTestBuilder ContainingContentTypes(params string[] contentTypes);
 
         /// <summary>
-        /// Tests whether HTTP bad request result contains the same content types provided as enumerable of <see cref="MediaTypeHeaderValue"/>.
+        /// Tests whether <see cref="BadRequestObjectResult"/> contains the same content types provided as enumerable of <see cref="MediaTypeHeaderValue"/>.
         /// </summary>
         /// <param name="contentTypes">Content types as enumerable of <see cref="MediaTypeHeaderValue"/>.</param>
         /// <returns>The same <see cref="IAndBadRequestTestBuilder"/>.</returns>
         IAndBadRequestTestBuilder ContainingContentTypes(IEnumerable<MediaTypeHeaderValue> contentTypes);
 
         /// <summary>
-        /// Tests whether HTTP bad request result contains the same content types provided as <see cref="MediaTypeHeaderValue"/> parameters.
+        /// Tests whether <see cref="BadRequestObjectResult"/> contains the same content types provided as <see cref="MediaTypeHeaderValue"/> parameters.
         /// </summary>
         /// <param name="contentTypes">Content types as <see cref="MediaTypeHeaderValue"/> parameters.</param>
         /// <returns>The same <see cref="IAndBadRequestTestBuilder"/>.</returns>
         IAndBadRequestTestBuilder ContainingContentTypes(params MediaTypeHeaderValue[] contentTypes);
 
         /// <summary>
-        /// Tests whether HTTP bad request result contains the provided output formatter.
+        /// Tests whether <see cref="BadRequestObjectResult"/> contains the provided output formatter.
         /// </summary>
         /// <param name="outputFormatter">Instance of <see cref="IOutputFormatter"/>.</param>
         /// <returns>The same <see cref="IAndBadRequestTestBuilder"/>.</returns>
         IAndBadRequestTestBuilder ContainingOutputFormatter(IOutputFormatter outputFormatter);
 
         /// <summary>
-        /// Tests whether HTTP bad request result contains output formatter of the provided type.
+        /// Tests whether <see cref="BadRequestObjectResult"/> contains output formatter of the provided type.
         /// </summary>
         /// <typeparam name="TOutputFormatter">Type of <see cref="IOutputFormatter"/>.</typeparam>
         /// <returns>The same <see cref="IAndBadRequestTestBuilder"/>.</returns>
@@ -140,17 +140,17 @@
             where TOutputFormatter : IOutputFormatter;
 
         /// <summary>
-        /// Tests whether HTTP bad request result contains the provided output formatters.
+        /// Tests whether <see cref="BadRequestObjectResult"/> contains the provided output formatters.
         /// </summary>
         /// <param name="outputFormatters">Enumerable of <see cref="IOutputFormatter"/>.</param>
-        /// <returns>The same HTTP bad request test builder.</returns>
+        /// <returns>The same <see cref="IAndBadRequestTestBuilder"/>.</returns>
         IAndBadRequestTestBuilder ContainingOutputFormatters(IEnumerable<IOutputFormatter> outputFormatters);
 
         /// <summary>
-        /// Tests whether HTTP bad request result contains the provided output formatters.
+        /// Tests whether <see cref="BadRequestObjectResult"/> contains the provided output formatters.
         /// </summary>
         /// <param name="outputFormatters"><see cref="IOutputFormatter"/> parameters.</param>
-        /// <returns>The same HTTP bad request test builder.</returns>
+        /// <returns>The same <see cref="IAndBadRequestTestBuilder"/>.</returns>
         IAndBadRequestTestBuilder ContainingOutputFormatters(params IOutputFormatter[] outputFormatters);
     }
 }

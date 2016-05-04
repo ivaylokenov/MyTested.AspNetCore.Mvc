@@ -3,7 +3,7 @@
     using Base;
 
     /// <summary>
-    /// Used for testing specific bad request text error messages.
+    /// Used for testing specific <see cref="Microsoft.AspNetCore.Mvc.BadRequestObjectResult"/> text error messages.
     /// </summary>
     public interface IBadRequestErrorMessageTestBuilder : IBaseTestBuilderWithInvokedAction
     {

@@ -8,57 +8,57 @@
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Used for testing JSON results.
+    /// Used for testing <see cref="JsonResult"/>.
     /// </summary>
     public interface IJsonTestBuilder : IBaseTestBuilderWithResponseModel,
         IBaseTestBuilderWithActionResult<JsonResult>
     {
         /// <summary>
-        /// Tests whether JSON result has the same status code as the provided one.
+        /// Tests whether <see cref="JsonResult"/> has the same status code as the provided one.
         /// </summary>
-        /// <param name="statusCode">Status code.</param>
-        /// <returns>The same JSON test builder.</returns>
+        /// <param name="statusCode">Status code as integer.</param>
+        /// <returns>The same <see cref="IAndJsonTestBuilder"/>.</returns>
         IAndJsonTestBuilder WithStatusCode(int statusCode);
 
         /// <summary>
-        /// Tests whether JSON result has the same status code as the provided HttpStatusCode.
+        /// Tests whether <see cref="JsonResult"/> has the same status code as the provided <see cref="HttpStatusCode"/>.
         /// </summary>
-        /// <param name="statusCode">HttpStatusCode enumeration.</param>
-        /// <returns>The same JSON test builder.</returns>
+        /// <param name="statusCode"><see cref="HttpStatusCode"/> enumeration.</param>
+        /// <returns>The same <see cref="IAndJsonTestBuilder"/>.</returns>
         IAndJsonTestBuilder WithStatusCode(HttpStatusCode statusCode);
         
         /// <summary>
-        /// Tests whether JSON result has the same content type as the provided string.
+        /// Tests whether <see cref="JsonResult"/> has the same content type as the provided string.
         /// </summary>
         /// <param name="contentType">ContentType type as string.</param>
-        /// <returns>The same JSON test builder.</returns>
+        /// <returns>The same <see cref="IAndJsonTestBuilder"/>.</returns>
         IAndJsonTestBuilder WithContentType(string contentType);
-        
+
         /// <summary>
-        /// Tests whether JSON result has the same content type as the provided MediaTypeHeaderValue.
+        /// Tests whether <see cref="JsonResult"/> has the same content type as the provided <see cref="MediaTypeHeaderValue"/>.
         /// </summary>
-        /// <param name="contentType">Content type as MediaTypeHeaderValue.</param>
-        /// <returns>The same JSON test builder.</returns>
+        /// <param name="contentType">Content type as <see cref="MediaTypeHeaderValue"/>.</param>
+        /// <returns>The same <see cref="IAndJsonTestBuilder"/>.</returns>
         IAndJsonTestBuilder WithContentType(MediaTypeHeaderValue contentType);
 
         /// <summary>
-        /// Tests whether JSON result has the default JSON serializer settings.
+        /// Tests whether <see cref="JsonResult"/> has the default <see cref="JsonSerializerSettings"/>.
         /// </summary>
-        /// <returns>The same JSON test builder.</returns>
+        /// <returns>The same <see cref="IAndJsonTestBuilder"/>.</returns>
         IAndJsonTestBuilder WithDefaulJsonSerializerSettings();
 
         /// <summary>
-        /// Tests whether JSON result has the provided JSON serializer settings.
+        /// Tests whether <see cref="JsonResult"/> has the provided <see cref="JsonSerializerSettings"/>.
         /// </summary>
-        /// <param name="jsonSerializerSettings">Expected JSON serializer settings to test with.</param>
-        /// <returns>The same JSON test builder.</returns>
+        /// <param name="jsonSerializerSettings">Expected <see cref="JsonSerializerSettings"/> to test with.</param>
+        /// <returns>The same <see cref="IAndJsonTestBuilder"/>.</returns>
         IAndJsonTestBuilder WithJsonSerializerSettings(JsonSerializerSettings jsonSerializerSettings);
 
         /// <summary>
-        /// Tests whether JSON result has JSON serializer settings by using builder.
+        /// Tests whether <see cref="JsonResult"/> has <see cref="JsonSerializerSettings"/> by using builder.
         /// </summary>
-        /// <param name="jsonSerializerSettingsBuilder">Builder for creating JSON serializer settings.</param>
-        /// <returns>The same JSON test builder.</returns>
+        /// <param name="jsonSerializerSettingsBuilder">Builder for creating <see cref="JsonSerializerSettings"/>.</param>
+        /// <returns>The same <see cref="IAndJsonTestBuilder"/>.</returns>
         IAndJsonTestBuilder WithJsonSerializerSettings(
             Action<IJsonSerializerSettingsTestBuilder> jsonSerializerSettingsBuilder);
     }
