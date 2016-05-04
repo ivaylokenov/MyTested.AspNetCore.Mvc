@@ -34,9 +34,9 @@
         }
 
         /// <inheritdoc />
-        public IAndTestBuilder<TActionResult> ViewBag(Action<IViewBagTestBuilder> viewDataTestBuilder)
+        public IAndTestBuilder<TActionResult> ViewBag(Action<IViewBagTestBuilder> viewBagTestBuilder)
         {
-            viewDataTestBuilder(new ViewBagTestBuilder(this.TestContext));
+            viewBagTestBuilder(new ViewBagTestBuilder(this.TestContext));
             return this.NewAndTestBuilder();
         }
     }

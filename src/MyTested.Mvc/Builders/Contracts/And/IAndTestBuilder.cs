@@ -4,7 +4,7 @@
     using Base;
 
     /// <summary>
-    /// Class containing AndAlso() method allowing additional assertions after action tests.
+    /// Class containing AndAlso() method allowing additional assertions after the action tests.
     /// </summary>
     /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
     public interface IAndTestBuilder<TActionResult> : IBaseTestBuilderWithActionResult<TActionResult>
@@ -12,7 +12,7 @@
         /// <summary>
         /// Method allowing additional assertions after the action tests.
         /// </summary>
-        /// <returns>Builder for testing the action result.</returns>
+        /// <returns>Test builder of <see cref="IActionResultTestBuilder{TActionResult}"/>.</returns>
         IActionResultTestBuilder<TActionResult> AndAlso();
     }
 }

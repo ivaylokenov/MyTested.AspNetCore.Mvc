@@ -9,21 +9,21 @@
     public interface IVoidActionResultTestBuilder : IBaseTestBuilderWithInvokedAction
     {
         /// <summary>
-        /// Tests whether action result is void.
+        /// Tests whether the action result is void.
         /// </summary>
-        /// <returns>Base test builder.</returns>
+        /// <returns>Test builder of <see cref="IBaseTestBuilderWithInvokedAction"/> type.</returns>
         IBaseTestBuilderWithInvokedAction ShouldReturnEmpty();
 
         /// <summary>
-        /// Used for testing action attributes and model state.
+        /// Used for testing the action's additional data - action attributes, HTTP response, view bag and more.
         /// </summary>
-        /// <returns>Should have test builder.</returns>
+        /// <returns>Test builder of <see cref="IShouldHaveTestBuilder{VoidActionResult}"/> type.</returns>
         IShouldHaveTestBuilder<VoidActionResult> ShouldHave();
 
         /// <summary>
-        /// Used for testing whether action throws exception.
+        /// Used for testing whether the action throws exception.
         /// </summary>
-        /// <returns>Should throw test builder.</returns>
+        /// <returns>Test builder of <see cref="IShouldThrowTestBuilder"/> type.</returns>
         IShouldThrowTestBuilder ShouldThrow();
     }
 }
