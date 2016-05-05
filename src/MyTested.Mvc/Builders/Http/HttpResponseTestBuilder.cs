@@ -499,7 +499,7 @@
         /// <summary>
         /// Tests whether HTTP response message status code is the same as the provided one.
         /// </summary>
-        /// <param name="statusCode">Expected status code.</param>
+        /// <param name="statusCode">Expected <see cref="HttpStatusCode"/>.</param>
         /// <returns>The same HTTP response message test builder.</returns>
         public IAndHttpResponseTestBuilder WithStatusCode(HttpStatusCode statusCode)
         {

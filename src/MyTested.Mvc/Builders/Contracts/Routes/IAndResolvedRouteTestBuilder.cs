@@ -8,7 +8,7 @@
         /// <summary>
         /// AndAlso method for better readability when building route tests.
         /// </summary>
-        /// <returns>The same route builder.</returns>
+        /// <returns>The same <see cref="IResolvedRouteTestBuilder"/>.</returns>
         IResolvedRouteTestBuilder AndAlso();
     }
 }

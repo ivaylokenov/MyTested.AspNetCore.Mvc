@@ -1,15 +1,15 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.Models
 {
     /// <summary>
-    /// Used for adding AndAlso() method to the the model error tests.
+    /// Used for adding AndAlso() method to the <see cref="Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary"/> error tests.
     /// </summary>
     /// <typeparam name="TModel">Model from invoked action in ASP.NET Core MVC controller.</typeparam>
     public interface IAndModelErrorTestBuilder<TModel> : IModelErrorTestBuilder<TModel>
     {
         /// <summary>
-        /// AndAlso method for better readability when chaining error message tests.
+        /// AndAlso method for better readability when chaining <see cref="Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary"/> error message tests.
         /// </summary>
-        /// <returns>Model error details test builder.</returns>
+        /// <returns>The same <see cref="IModelErrorTestBuilder{TModel}"/>.</returns>
         IModelErrorTestBuilder<TModel> AndAlso();
     }
 }
