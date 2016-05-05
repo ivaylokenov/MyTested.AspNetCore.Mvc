@@ -23,7 +23,7 @@
         /// <summary>
         /// Used for testing returned action result.
         /// </summary>
-        /// <returns>Test builder of <see cref="IShouldReturnTestBuilder<TActionResult>"/>.</returns>
+        /// <returns>Test builder of <see cref="IShouldReturnTestBuilder{TActionResult}"/>.</returns>
         IShouldReturnTestBuilder<TActionResult> ShouldReturn();
     }
 }

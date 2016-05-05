@@ -20,9 +20,9 @@
         IAndChallengeTestBuilder ContainingAuthenticationScheme(string authenticationScheme);
 
         /// <summary>
-        /// Tests whether <see cref="ChallengeResult"/> has the provided enumerable of authentication schemes.
+        /// Tests whether <see cref="ChallengeResult"/> has the provided collection of authentication schemes.
         /// </summary>
-        /// <param name="authenticationSchemes">Expected authentication schemes as enumerable.</param>
+        /// <param name="authenticationSchemes">Expected authentication schemes as collection.</param>
         /// <returns>The same <see cref="IAndChallengeTestBuilder"/>.</returns>
         IAndChallengeTestBuilder ContainingAuthenticationSchemes(IEnumerable<string> authenticationSchemes);
 

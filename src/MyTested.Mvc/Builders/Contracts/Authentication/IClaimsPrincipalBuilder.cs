@@ -56,7 +56,7 @@
         /// <summary>
         /// Adds claims to the built <see cref="ClaimsPrincipal"/>.
         /// </summary>
-        /// <param name="claims">Enumerable of <see cref="Claim"/> to add.</param>
+        /// <param name="claims">Collection of <see cref="Claim"/> to add.</param>
         /// <returns>The same <see cref="IAndClaimsPrincipalBuilder"/>.</returns>
         IAndClaimsPrincipalBuilder WithClaims(IEnumerable<Claim> claims);
 
@@ -84,7 +84,7 @@
         /// <summary>
         /// Adds roles to the built <see cref="ClaimsPrincipal"/>.
         /// </summary>
-        /// <param name="roles">Enumerable of role names to add.</param>
+        /// <param name="roles">Collection of role names to add.</param>
         /// <returns>The same <see cref="IAndClaimsPrincipalBuilder"/>.</returns>
         IAndClaimsPrincipalBuilder InRoles(IEnumerable<string> roles);
 

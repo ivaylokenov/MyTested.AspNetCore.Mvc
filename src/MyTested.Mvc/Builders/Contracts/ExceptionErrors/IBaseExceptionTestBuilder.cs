@@ -3,21 +3,21 @@
     using Base;
 
     /// <summary>
-    /// Used for testing expected exception messages.
+    /// Used for testing expected <see cref="System.Exception"/> messages.
     /// </summary>
     public interface IBaseExceptionTestBuilder : IBaseTestBuilderWithInvokedAction
     {
         /// <summary>
-        /// Tests exception message using test builder.
+        /// Tests <see cref="System.Exception.Message"/> using test builder.
         /// </summary>
-        /// <returns>Exception message test builder.</returns>
+        /// <returns>Test builder of <see cref="IExceptionMessageTestBuilder"/> type.</returns>
         IExceptionMessageTestBuilder WithMessage();
 
         /// <summary>
-        /// Tests exception message whether it is equal to the provided message as string.
+        /// Tests <see cref="System.Exception.Message"/> whether it is equal to the provided message as string.
         /// </summary>
-        /// <param name="message">Expected exception message as string.</param>
-        /// <returns>The same exception test builder.</returns>
+        /// <param name="message">Expected <see cref="System.Exception.Message"/> as string.</param>
+        /// <returns>The same <see cref="IAndExceptionTestBuilder"/>.</returns>
         IAndExceptionTestBuilder WithMessage(string message);
     }
 }

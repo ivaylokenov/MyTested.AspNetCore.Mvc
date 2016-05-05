@@ -9,7 +9,7 @@
     using Utilities.Extensions;
 
     /// <summary>
-    /// Used for testing AggregateException.
+    /// Used for testing <see cref="AggregateException"/>.
     /// </summary>
     public class AggregateExceptionTestBuilder : ExceptionTestBuilder, IAndAggregateExceptionTestBuilder
     {

@@ -137,7 +137,7 @@
         /// <summary>
         /// Tests whether action result contains the same content types as the provided ones.
         /// </summary>
-        /// <param name="contentTypes">Expected content types as enumerable of strings.</param>
+        /// <param name="contentTypes">Expected content types as collection of strings.</param>
         protected void ValidateContentTypes(IEnumerable<string> contentTypes)
         {
             this.ValidateContentTypes(contentTypes.Select(ct => new MediaTypeHeaderValue(ct)));
@@ -155,7 +155,7 @@
         /// <summary>
         /// Tests whether action result contains the same content types as the provided ones.
         /// </summary>
-        /// <param name="contentTypes">Expected content types as enumerable of <see cref="MediaTypeHeaderValue"/>.</param>
+        /// <param name="contentTypes">Expected content types as collection of <see cref="MediaTypeHeaderValue"/>.</param>
         protected void ValidateContentTypes(IEnumerable<MediaTypeHeaderValue> contentTypes)
         {
             ContentTypeValidator.ValidateContentTypes(
@@ -200,7 +200,7 @@
         /// <summary>
         /// Tests whether action result contains the same output formatters as the provided ones.
         /// </summary>
-        /// <param name="outputFormatters">Expected enumerable of <see cref="IOutputFormatter"/>.</param>
+        /// <param name="outputFormatters">Expected collection of <see cref="IOutputFormatter"/>.</param>
         protected void ValidateOutputFormatters(IEnumerable<IOutputFormatter> outputFormatters)
         {
             OutputFormatterValidator.ValidateOutputFormatters(

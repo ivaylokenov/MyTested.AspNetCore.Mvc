@@ -48,9 +48,9 @@
         IAndNotFoundTestBuilder ContainingContentType(MediaTypeHeaderValue contentType);
 
         /// <summary>
-        /// Tests whether <see cref="NotFoundObjectResult"/> contains the same content types provided as enumerable of strings.
+        /// Tests whether <see cref="NotFoundObjectResult"/> contains the same content types provided as collection of strings.
         /// </summary>
-        /// <param name="contentTypes">Content types as enumerable of strings.</param>
+        /// <param name="contentTypes">Content types as collection of strings.</param>
         /// <returns>The same <see cref="IAndNotFoundTestBuilder"/>.</returns>
         IAndNotFoundTestBuilder ContainingContentTypes(IEnumerable<string> contentTypes);
 
@@ -62,9 +62,9 @@
         IAndNotFoundTestBuilder ContainingContentTypes(params string[] contentTypes);
 
         /// <summary>
-        /// Tests whether <see cref="NotFoundObjectResult"/> contains the same content types provided as enumerable of <see cref="MediaTypeHeaderValue"/>.
+        /// Tests whether <see cref="NotFoundObjectResult"/> contains the same content types provided as collection of <see cref="MediaTypeHeaderValue"/>.
         /// </summary>
-        /// <param name="contentTypes">Content types as enumerable of MediaTypeHeaderValue.</param>
+        /// <param name="contentTypes">Content types as collection of MediaTypeHeaderValue.</param>
         /// <returns>The same <see cref="IAndNotFoundTestBuilder"/>.</returns>
         IAndNotFoundTestBuilder ContainingContentTypes(IEnumerable<MediaTypeHeaderValue> contentTypes);
 
@@ -93,7 +93,7 @@
         /// <summary>
         /// Tests whether <see cref="NotFoundObjectResult"/> contains the provided output formatters.
         /// </summary>
-        /// <param name="outputFormatters">Enumerable of <see cref="IOutputFormatter"/>.</param>
+        /// <param name="outputFormatters">Collection of <see cref="IOutputFormatter"/>.</param>
         /// <returns>The same <see cref="IAndNotFoundTestBuilder"/>.</returns>
         IAndNotFoundTestBuilder ContainingOutputFormatters(IEnumerable<IOutputFormatter> outputFormatters);
 

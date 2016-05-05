@@ -67,7 +67,7 @@
         /// <summary>
         /// Tests whether the <see cref="JsonSerializerSettings"/> contains the provided <see cref="JsonConverter"/> objects.
         /// </summary>
-        /// <param name="jsonConverters">Enumerable of <see cref="JsonConverter"/>.</param>
+        /// <param name="jsonConverters">Collection of <see cref="JsonConverter"/>.</param>
         /// <returns>The same <see cref="IAndJsonSerializerSettingsTestBuilder"/>.</returns>
         IAndJsonSerializerSettingsTestBuilder ContainingConverters(IEnumerable<JsonConverter> jsonConverters);
 

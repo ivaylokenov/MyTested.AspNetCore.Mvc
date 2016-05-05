@@ -4,8 +4,10 @@
       <Value>avi</Value>
       <Value>css</Value>
       <Value>js</Value>
+      <Value>json</Value>
       <Value>Json</Value>
       <Value>mp</Value>
+      <Value>nullable</Value>
       <Value>ogg</Value>
       <Value>png</Value>
       <Value>qt</Value>

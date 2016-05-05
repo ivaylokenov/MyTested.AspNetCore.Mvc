@@ -146,7 +146,7 @@
         /// <summary>
         /// Adds claims to the built <see cref="ClaimsIdentity"/>.
         /// </summary>
-        /// <param name="claims">Enumerable of <see cref="Claim"/> to add.</param>
+        /// <param name="claims">Collection of <see cref="Claim"/> to add.</param>
         protected void AddClaims(IEnumerable<Claim> claims)
         {
             claims.ForEach(c => this.AddClaim(c));
@@ -173,7 +173,7 @@
         /// <summary>
         /// Adds roles to the built <see cref="ClaimsIdentity"/>.
         /// </summary>
-        /// <param name="roles">Enumerable of roles to add.</param>
+        /// <param name="roles">Collection of roles to add.</param>
         protected void AddRoles(IEnumerable<string> roles)
         {
             roles.ForEach(r => this.AddRole(r));

@@ -20,9 +20,9 @@
         IAndForbidTestBuilder ContainingAuthenticationScheme(string authenticationScheme);
 
         /// <summary>
-        /// Tests whether <see cref="ForbidResult"/> has the provided enumerable of authentication schemes.
+        /// Tests whether <see cref="ForbidResult"/> has the provided collection of authentication schemes.
         /// </summary>
-        /// <param name="authenticationSchemes">Expected authentication schemes as enumerable.</param>
+        /// <param name="authenticationSchemes">Expected authentication schemes as collection.</param>
         /// <returns>The same <see cref="IAndForbidTestBuilder"/>.</returns>
         IAndForbidTestBuilder ContainingAuthenticationSchemes(IEnumerable<string> authenticationSchemes);
 

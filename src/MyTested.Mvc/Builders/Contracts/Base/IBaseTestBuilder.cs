@@ -2,6 +2,9 @@
 {
     using ShouldPassFor;
 
+    /// <summary>
+    /// Base interface for all test builders.
+    /// </summary>
     public interface IBaseTestBuilder
     {
         /// <summary>
