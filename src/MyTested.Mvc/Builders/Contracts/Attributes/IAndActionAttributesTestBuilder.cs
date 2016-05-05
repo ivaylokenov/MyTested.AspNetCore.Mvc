@@ -1,14 +1,14 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.Attributes
 {
     /// <summary>
-    /// Used for adding AndAlso() method to the the attribute tests.
+    /// Used for adding AndAlso() method to the action attributes tests.
     /// </summary>
     public interface IAndActionAttributesTestBuilder : IActionAttributesTestBuilder
     {
         /// <summary>
-        /// AndAlso method for better readability when chaining attribute tests.
+        /// AndAlso method for better readability when chaining action attributes tests.
         /// </summary>
-        /// <returns>The same attributes test builder.</returns>
+        /// <returns>The same <see cref="IActionAttributesTestBuilder"/>.</returns>
         IActionAttributesTestBuilder AndAlso();
     }
 }

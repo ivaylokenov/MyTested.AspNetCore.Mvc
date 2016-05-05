@@ -6,81 +6,107 @@
     using System.Security.Principal;
 
     /// <summary>
-    /// Used for building claims principal.
+    /// Used for building mocked <see cref="System.Security.Claims.ClaimsPrincipal"/>.
     /// </summary>
     public interface IClaimsPrincipalBuilder
     {
+        /// <summary>
+        /// Sets type of the username claim. Default is <see cref="ClaimTypes.Name"/>.
+        /// </summary>
+        /// <param name="nameType">Type to set on the username claim.</param>
+        /// <returns>The same <see cref="IAndClaimsPrincipalBuilder"/>.</returns>
         IAndClaimsPrincipalBuilder WithNameType(string nameType);
 
+        /// <summary>
+        /// Sets type of the role claim. Default is <see cref="ClaimTypes.Role"/>.
+        /// </summary>
+        /// <param name="roleType">Type to set on the role claim.</param>
+        /// <returns>The same <see cref="IAndClaimsPrincipalBuilder"/>.</returns>
         IAndClaimsPrincipalBuilder WithRoleType(string roleType);
 
         /// <summary>
-        /// Used for setting ID to the claims principal. If such is not provided, "TestId" is used by default.
+        /// Sets identifier claim to the built <see cref="ClaimsPrincipal"/>. If such is not provided, "TestId" is used by default.
         /// </summary>
-        /// <param name="identifier">The user Id to set.</param>
-        /// <returns>The same claims principal builder.</returns>
+        /// <param name="identifier">Value of the identifier claim - <see cref="ClaimTypes.NameIdentifier"/>.</param>
+        /// <returns>The same <see cref="IAndClaimsPrincipalBuilder"/>.</returns>
         IAndClaimsPrincipalBuilder WithIdentifier(string identifier);
 
         /// <summary>
-        /// Used for setting username to the claims principal. If such is not provided, "TestUser" is used by default.
+        /// Sets username claims to the built <see cref="ClaimsPrincipal"/>. If such is not provided, "TestUser" is used by default.
         /// </summary>
-        /// <param name="username">The username to set.</param>
-        /// <returns>The same claims principal builder.</returns>
+        /// <param name="username">Value of the username claim. Default claim type is <see cref="ClaimTypes.Name"/>.</param>
+        /// <returns>The same <see cref="IAndClaimsPrincipalBuilder"/>.</returns>
         IAndClaimsPrincipalBuilder WithUsername(string username);
 
+        /// <summary>
+        /// Adds claim to the built <see cref="ClaimsPrincipal"/>.
+        /// </summary>
+        /// <param name="type">Type of the <see cref="Claim"/> to add.</param>
+        /// <param name="value">Value of the <see cref="Claim"/> to add.</param>
+        /// <returns>The same <see cref="IAndClaimsPrincipalBuilder"/>.</returns>
         IAndClaimsPrincipalBuilder WithClaim(string type, string value);
 
         /// <summary>
-        /// Used for adding claim to the claims principal.
+        /// Adds claim to the built <see cref="ClaimsPrincipal"/>.
         /// </summary>
-        /// <param name="claim">The claim to add.</param>
-        /// <returns>The same claims principal builder.</returns>
+        /// <param name="claim">The <see cref="Claim"/> to add.</param>
+        /// <returns>The same <see cref="IAndClaimsPrincipalBuilder"/>.</returns>
         IAndClaimsPrincipalBuilder WithClaim(Claim claim);
 
         /// <summary>
-        /// Used for adding claims to the claims principal.
+        /// Adds claims to the built <see cref="ClaimsPrincipal"/>.
         /// </summary>
-        /// <param name="claims">The claims to add.</param>
-        /// <returns>The same claims principal builder.</returns>
+        /// <param name="claims">Enumerable of <see cref="Claim"/> to add.</param>
+        /// <returns>The same <see cref="IAndClaimsPrincipalBuilder"/>.</returns>
         IAndClaimsPrincipalBuilder WithClaims(IEnumerable<Claim> claims);
 
         /// <summary>
-        /// Used for adding claims to the claims principal.
+        /// Adds claims to the built <see cref="ClaimsPrincipal"/>.
         /// </summary>
-        /// <param name="claims">The claims to add.</param>
-        /// <returns>The same claims principal builder.</returns>
+        /// <param name="claims"><see cref="Claim"/> parameters to add.</param>
+        /// <returns>The same <see cref="IAndClaimsPrincipalBuilder"/>.</returns>
         IAndClaimsPrincipalBuilder WithClaims(params Claim[] claims);
 
         /// <summary>
-        /// Used for setting authentication type to the claims principal. If such is not provided, "Passport" is used by default.
+        /// Adds authentication type to the built <see cref="ClaimsPrincipal"/>. If such is not provided, "Passport" is used by default.
         /// </summary>
-        /// <param name="authenticationType">The authentication type to set.</param>
-        /// <returns>The same claims principal builder.</returns>
+        /// <param name="authenticationType">Authentication type to add.</param>
+        /// <returns>The same <see cref="IAndClaimsPrincipalBuilder"/>.</returns>
         IAndClaimsPrincipalBuilder WithAuthenticationType(string authenticationType);
 
         /// <summary>
-        /// Used for adding role to the claims principal.
+        /// Adds role to the built <see cref="ClaimsPrincipal"/>.
         /// </summary>
-        /// <param name="role">The role to add.</param>
-        /// <returns>The same claims principal builder.</returns>
+        /// <param name="role">Value of the role claim. Default claim type is <see cref="ClaimTypes.Role"/>.</param>
+        /// <returns>The same <see cref="IAndClaimsPrincipalBuilder"/>.</returns>
         IAndClaimsPrincipalBuilder InRole(string role);
 
         /// <summary>
-        /// Used for adding multiple roles to the claims principal.
+        /// Adds roles to the built <see cref="ClaimsPrincipal"/>.
         /// </summary>
-        /// <param name="roles">Collection of roles to add.</param>
-        /// <returns>The same claims principal builder.</returns>
+        /// <param name="roles">Enumerable of role names to add.</param>
+        /// <returns>The same <see cref="IAndClaimsPrincipalBuilder"/>.</returns>
         IAndClaimsPrincipalBuilder InRoles(IEnumerable<string> roles);
 
         /// <summary>
-        /// Used for adding multiple roles to the claims principal.
+        /// Adds roles to the built <see cref="ClaimsPrincipal"/>.
         /// </summary>
-        /// <param name="roles">Roles to add.</param>
-        /// <returns>The same claims principal builder.</returns>
+        /// <param name="roles">Role name parameters to add.</param>
+        /// <returns>The same <see cref="IAndClaimsPrincipalBuilder"/>.</returns>
         IAndClaimsPrincipalBuilder InRoles(params string[] roles);
 
+        /// <summary>
+        /// Adds <see cref="IIdentity"/> to the built <see cref="ClaimsPrincipal"/>.
+        /// </summary>
+        /// <param name="identity"><see cref="IIdentity"/> to add.</param>
+        /// <returns>The same <see cref="IAndClaimsPrincipalBuilder"/>.</returns>
         IAndClaimsPrincipalBuilder WithIdentity(IIdentity identity);
 
+        /// <summary>
+        /// Adds <see cref="IIdentity"/> to the built <see cref="ClaimsPrincipal"/>.
+        /// </summary>
+        /// <param name="claimsIdentityBuilder">Builder for creating mocked <see cref="IIdentity"/>.</param>
+        /// <returns>The same <see cref="IAndClaimsPrincipalBuilder"/>.</returns>
         IAndClaimsPrincipalBuilder WithIdentity(Action<IClaimsIdentityBuilder> claimsIdentityBuilder);
     }
 }

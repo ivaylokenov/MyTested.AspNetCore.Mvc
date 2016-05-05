@@ -8,10 +8,10 @@
     public interface IBaseTestBuilderWithResponseModel : IBaseTestBuilderWithInvokedAction
     {
         /// <summary>
-        /// Tests whether response model is returned from the invoked action.
+        /// Tests whether response model of the given type is returned from the invoked action.
         /// </summary>
         /// <typeparam name="TResponseModel">Type of the response model.</typeparam>
-        /// <returns>Builder for testing the response model errors.</returns>
+        /// <returns>Test builder of <see cref="IModelDetailsTestBuilder{TResponseModel}"/>.</returns>
         IModelDetailsTestBuilder<TResponseModel> WithResponseModelOfType<TResponseModel>();
 
         /// <summary>
@@ -19,7 +19,7 @@
         /// </summary>
         /// <typeparam name="TResponseModel">Type of the response model.</typeparam>
         /// <param name="expectedModel">Expected model to be returned.</param>
-        /// <returns>Builder for testing the response model errors.</returns>
+        /// <returns>Test builder of <see cref="IModelDetailsTestBuilder{TResponseModel}"/>.</returns>
         IModelDetailsTestBuilder<TResponseModel> WithResponseModel<TResponseModel>(TResponseModel expectedModel);
     }
 }

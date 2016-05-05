@@ -13,14 +13,14 @@
         /// </summary>
         /// <typeparam name="TModel">Type of model object.</typeparam>
         /// <param name="model">Model object.</param>
-        /// <returns>Model details test builder.</returns>
+        /// <returns>Test builder of <see cref="IModelDetailsTestBuilder{TModel}"/>.</returns>
         IModelDetailsTestBuilder<TModel> WithModel<TModel>(TModel model);
 
         /// <summary>
-        /// Tests whether view result contains model object of the provided type.
+        /// Tests whether view result has model object of the provided type.
         /// </summary>
         /// <typeparam name="TModel">Type of model object.</typeparam>
-        /// <returns>Model details test builder.</returns>
+        /// <returns>Test builder of <see cref="IModelDetailsTestBuilder{TModel}"/>.</returns>
         IModelDetailsTestBuilder<TModel> WithModelOfType<TModel>();
     }
 }

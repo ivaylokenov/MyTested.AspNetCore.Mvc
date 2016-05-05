@@ -7,6 +7,10 @@
     /// </summary>
     public interface IBaseTestBuilderWithController : IBaseTestBuilder
     {
+        /// <summary>
+        /// Allows additional testing on various components.
+        /// </summary>
+        /// <returns>Test builder of <see cref="IShouldPassForTestBuilderWithController{object}"/> type.</returns>
         new IShouldPassForTestBuilderWithController<object> ShouldPassFor();
     }
 }

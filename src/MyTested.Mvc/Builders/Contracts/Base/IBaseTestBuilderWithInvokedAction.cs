@@ -7,6 +7,10 @@
     /// </summary>
     public interface IBaseTestBuilderWithInvokedAction : IBaseTestBuilderWithAction
     {
+        /// <summary>
+        /// Allows additional testing on various components.
+        /// </summary>
+        /// <returns>Test builder of <see cref="IShouldPassForTestBuilderWithInvokedAction"/> type.</returns>
         new IShouldPassForTestBuilderWithInvokedAction ShouldPassFor();
     }
 }

@@ -37,7 +37,7 @@
         }
 
         /// <summary>
-        /// Checks whether the collected attributes contain the provided attribute type.
+        /// Tests whether the action attributes contain the provided attribute type.
         /// </summary>
         /// <typeparam name="TAttribute">Type of expected attribute.</typeparam>
         /// <param name="failedValidationAction">Action to execute, if the validation fails.</param>
@@ -57,7 +57,7 @@
         }
 
         /// <summary>
-        /// Checks whether the collected attributes contain RouteAttribute.
+        /// Tests whether the action attributes contain RouteAttribute.
         /// </summary>
         /// <param name="template">Expected overridden route template of the action.</param>
         /// <param name="failedValidationAction">Action to execute, if the validation fails.</param>
@@ -100,7 +100,7 @@
         }
 
         /// <summary>
-        /// Checks whether the collected attributes contain AuthorizeAttribute.
+        /// Tests whether the action attributes contain <see cref="Microsoft.AspNetCore.Authorization.AuthorizeAttribute"/>.
         /// </summary>
         /// <param name="failedValidationAction">Action to execute, if the validation fails.</param>
         /// <param name="withAllowedRoles">Optional expected authorized roles.</param>
