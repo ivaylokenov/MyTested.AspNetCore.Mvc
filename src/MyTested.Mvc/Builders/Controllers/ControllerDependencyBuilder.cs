@@ -12,18 +12,14 @@
     /// <typeparam name="TController">Class representing ASP.NET Core MVC controller.</typeparam>
     public partial class ControllerBuilder<TController>
     {
+        /// <inheritdoc />
         public IAndControllerBuilder<TController> WithNoResolvedDependencyFor<TDependency>()
             where TDependency : class
         {
             return this.WithResolvedDependencyFor<TDependency>(null);
         }
 
-        /// <summary>
-        /// Tries to resolve constructor dependency of given type.
-        /// </summary>
-        /// <typeparam name="TDependency">Type of dependency to resolve.</typeparam>
-        /// <param name="dependency">Instance of dependency to inject into constructor.</param>
-        /// <returns>The same controller builder.</returns>
+        /// <inheritdoc />
         public IAndControllerBuilder<TController> WithResolvedDependencyFor<TDependency>(TDependency dependency)
             where TDependency : class
         {
@@ -44,22 +40,14 @@
             return this;
         }
 
-        /// <summary>
-        /// Tries to resolve constructor dependencies by the provided collection of dependencies.
-        /// </summary>
-        /// <param name="dependencies">Collection of dependencies to inject into constructor.</param>
-        /// <returns>The same controller builder.</returns>
+        /// <inheritdoc />
         public IAndControllerBuilder<TController> WithResolvedDependencies(IEnumerable<object> dependencies)
         {
             dependencies.ForEach(d => this.WithResolvedDependencyFor(d));
             return this;
         }
 
-        /// <summary>
-        /// Tries to resolve constructor dependencies by the provided dependencies.
-        /// </summary>
-        /// <param name="dependencies">Dependencies to inject into constructor.</param>
-        /// <returns>The same controller builder.</returns>
+        /// <inheritdoc />
         public IAndControllerBuilder<TController> WithResolvedDependencies(params object[] dependencies)
         {
             dependencies.ForEach(d => this.WithResolvedDependencyFor(d));

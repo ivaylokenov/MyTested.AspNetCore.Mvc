@@ -15,7 +15,7 @@
         IAndTestBuilder<TActionResult>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AndTestBuilder{TActionResult}" /> class.
+        /// Initializes a new instance of the <see cref="AndTestBuilder{TActionResult}"/> class.
         /// </summary>
         /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public AndTestBuilder(ControllerTestContext testContext)

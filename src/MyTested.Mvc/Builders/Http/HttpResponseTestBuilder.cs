@@ -19,7 +19,7 @@
     using Utilities.Validators;
 
     /// <summary>
-    /// Used for testing the HTTP response.
+    /// Used for testing <see cref="HttpResponse"/>.
     /// </summary>
     public class HttpResponseTestBuilder : BaseTestBuilderWithInvokedAction,
         IAndHttpResponseTestBuilder
@@ -30,23 +30,16 @@
         private bool contentTypeTested;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HttpResponseTestBuilder" /> class.
+        /// Initializes a new instance of the <see cref="HttpResponseTestBuilder"/> class.
         /// </summary>
-        /// <param name="controller">Controller on which the action will be tested.</param>
-        /// <param name="actionName">Name of the tested action.</param>
-        /// <param name="caughtException">Caught exception during the action execution.</param>
-        /// <param name="httpResponse">HTTP response after the tested action.</param>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public HttpResponseTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
             this.httpResponse = testContext.HttpResponse;
         }
 
-        /// <summary>
-        /// Tests whether HTTP response message body has the same contents as the provided Stream.
-        /// </summary>
-        /// <param name="body">Expected stream body.</param>
-        /// <returns>The same HTTP response message test builder.</returns>
+        /// <inheritdoc />
         public IAndHttpResponseTestBuilder WithBody(Stream body)
         {
             var expectedContents = body.ToByteArray();
@@ -62,22 +55,11 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether HTTP response message body has the same type as the provided one. Body is parsed from the configured formatters and provided content type. Uses UTF8 encoding.
-        /// </summary>
-        /// <typeparam name="TBody">Expected type of body to test.</typeparam>
-        /// <param name="contentType">Expected content type as string.</param>
-        /// <returns>The same HTTP response message test builder.</returns>
+        /// <inheritdoc />
         public IAndHttpResponseTestBuilder WithBodyOfType<TBody>(string contentType)
             => this.WithBodyOfType<TBody>(contentType, defaultEncoding);
 
-        /// <summary>
-        /// Tests whether HTTP response message body has the same type as the provided one. Body is parsed from the configured formatters and provided content type.
-        /// </summary>
-        /// <typeparam name="TBody">Expected type of body to test.</typeparam>
-        /// <param name="contentType">Expected content type as string.</param>
-        /// <param name="encoding">Encoding of the body.</param>
-        /// <returns>The same HTTP response message test builder.</returns>
+        /// <inheritdoc />
         public IAndHttpResponseTestBuilder WithBodyOfType<TBody>(string contentType, Encoding encoding)
         {
             try
@@ -95,24 +77,11 @@
             return this.WithContentType(contentType);
         }
 
-        /// <summary>
-        /// Tests whether HTTP response message body has deeply equal value as the provided one. Body is parsed from the configured formatters and provided content type. Uses UTF8 encoding.
-        /// </summary>
-        /// <typeparam name="TBody">Expected type of body to test.</typeparam>
-        /// <param name="body">Expected body object.</param>
-        /// <param name="contentType">Expected content type as string.</param>
-        /// <returns>The same HTTP response message test builder.</returns>
+        /// <inheritdoc />
         public IAndHttpResponseTestBuilder WithBody<TBody>(TBody body, string contentType)
             => this.WithBody(body, contentType, defaultEncoding);
 
-        /// <summary>
-        /// Tests whether HTTP response message body has deeply equal value as the provided one. Body is parsed from the configured formatters and provided content type.
-        /// </summary>
-        /// <typeparam name="TBody">Expected type of body to test.</typeparam>
-        /// <param name="body">Expected body object.</param>
-        /// <param name="contentType">Expected content type as string.</param>
-        /// <param name="encoding">Encoding of the body.</param>
-        /// <returns>The same HTTP response message test builder.</returns>
+        /// <inheritdoc />
         public IAndHttpResponseTestBuilder WithBody<TBody>(TBody body, string contentType, Encoding encoding)
         {
             var parsedBody = FormattersHelper.ReadFromStream<TBody>(this.httpResponse.Body, contentType, encoding);
@@ -128,66 +97,33 @@
             return this.WithContentType(contentType);
         }
 
-        /// <summary>
-        /// Tests whether HTTP response message body is equal to the provided string. Body is parsed from the configured formatters and 'text/plain' content type. Uses UTF8 encoding.
-        /// </summary>
-        /// <param name="body">Expected body as string.</param>
-        /// <returns>The same HTTP response message test builder.</returns>
+        /// <inheritdoc />
         public IAndHttpResponseTestBuilder WithStringBody(string body)
             => this.WithStringBody(body, defaultEncoding);
 
-        /// <summary>
-        /// Tests whether HTTP response message body is equal to the provided string. Body is parsed from the configured formatters and 'text/plain' content type.
-        /// </summary>
-        /// <param name="body">Expected body as string.</param>
-        /// <param name="encoding">Encoding of the body.</param>
-        /// <returns>The same HTTP response message test builder.</returns>
+        /// <inheritdoc />
         public IAndHttpResponseTestBuilder WithStringBody(string body, Encoding encoding)
             => this.WithBody(body, ContentType.TextPlain, encoding);
 
-        /// <summary>
-        /// Tests whether HTTP response message body is equal to the provided JSON string. Body is parsed from the configured formatters and 'application/json' content type. Uses UTF8 encoding.
-        /// </summary>
-        /// <param name="jsonBody">Expected body as JSON string.</param>
-        /// <returns>The same HTTP response message test builder.</returns>
+        /// <inheritdoc />
         public IAndHttpResponseTestBuilder WithJsonBody(string jsonBody)
             => this.WithJsonBody(jsonBody, defaultEncoding);
 
-        /// <summary>
-        /// Tests whether HTTP response message body is equal to the provided JSON string. Body is parsed from the configured formatters and 'application/json' content type.
-        /// </summary>
-        /// <param name="jsonBody">Expected body as JSON string.</param>
-        /// <param name="encoding">Encoding of the body.</param>
-        /// <returns>The same HTTP response message test builder.</returns>
+        /// <inheritdoc />
         public IAndHttpResponseTestBuilder WithJsonBody(string jsonBody, Encoding encoding)
              => this
                 .WithContentType(ContentType.ApplicationJson)
                 .WithStringBody(jsonBody, encoding);
 
-        /// <summary>
-        /// Tests whether HTTP response message body is deeply equal to the provided object. Body is parsed from the configured formatters and 'application/json' content type. Uses UTF8 encoding.
-        /// </summary>
-        /// <typeparam name="TBody">Expected type of body to test.</typeparam>
-        /// <param name="jsonBody">Expected body as object.</param>
-        /// <returns>The same HTTP response message test builder.</returns>
+        /// <inheritdoc />
         public IAndHttpResponseTestBuilder WithJsonBody<TBody>(TBody jsonBody)
             => this.WithJsonBody(jsonBody, defaultEncoding);
 
-        /// <summary>
-        /// Tests whether HTTP response message body is equal to the provided JSON string. Body is parsed from the configured formatters and 'application/json' content type.
-        /// </summary>
-        /// <typeparam name="TBody">Expected type of body to test.</typeparam>
-        /// <param name="jsonBody">Expected body as object.</param>
-        /// <param name="encoding">Encoding of the body.</param>
-        /// <returns>The same HTTP response message test builder.</returns>
+        /// <inheritdoc />
         public IAndHttpResponseTestBuilder WithJsonBody<TBody>(TBody jsonBody, Encoding encoding)
             => this.WithBody(jsonBody, ContentType.ApplicationJson, encoding);
 
-        /// <summary>
-        /// Tests whether HTTP response message content length is the same as the provided one.
-        /// </summary>
-        /// <param name="contentLenght">Expected content length.</param>
-        /// <returns>The same HTTP response message test builder.</returns>
+        /// <inheritdoc />
         public IAndHttpResponseTestBuilder WithContentLength(long? contentLenght)
         {
             var actualContentLength = this.httpResponse.ContentLength;
@@ -202,11 +138,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether HTTP response message content type is the same as the provided one.
-        /// </summary>
-        /// <param name="contentType">Expected content type.</param>
-        /// <returns>The same HTTP response message test builder.</returns>
+        /// <inheritdoc />
         public IAndHttpResponseTestBuilder WithContentType(string contentType)
         {
             if (this.contentTypeTested)
@@ -228,11 +160,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether HTTP response message contains cookie by using test builder.
-        /// </summary>
-        /// <param name="cookieBuilder">Action of response cookie test builder.</param>
-        /// <returns>The same HTTP response message test builder.</returns>
+        /// <inheritdoc />
         public IAndHttpResponseTestBuilder ContainingCookie(Action<IResponseCookieTestBuilder> cookieBuilder)
         {
             var newResponseCookieTestBuilder = new ResponseCookieTestBuilder();
@@ -256,11 +184,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether HTTP response message contains cookie with the same name as the provided one.
-        /// </summary>
-        /// <param name="key">Expected cookie name.</param>
-        /// <returns>The same HTTP response message test builder.</returns>
+        /// <inheritdoc />
         public IAndHttpResponseTestBuilder ContainingCookie(string key)
         {
             var cookie = this.GetCookieByKey(key);
@@ -275,12 +199,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether HTTP response message contains cookie with the same name and value as the provided ones.
-        /// </summary>
-        /// <param name="key">Expected cookie name.</param>
-        /// <param name="value">Expected cookie value.</param>
-        /// <returns>The same HTTP response message test builder.</returns>
+        /// <inheritdoc />
         public IAndHttpResponseTestBuilder ContainingCookie(string key, string value)
         {
             this.ContainingCookie(key);
@@ -297,13 +216,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether HTTP response message contains cookie with the same name, value and options as the provided ones.
-        /// </summary>
-        /// <param name="key">Expected cookie name.</param>
-        /// <param name="value">Expected cookie value.</param>
-        /// <param name="options">Expected cookie options.</param>
-        /// <returns>The same HTTP response message test builder.</returns>
+        /// <inheritdoc />
         public IAndHttpResponseTestBuilder ContainingCookie(string key, string value, CookieOptions options)
         {
             this.ContainingCookie(key, value);
@@ -332,14 +245,11 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IAndHttpResponseTestBuilder ContainingCookies(object cookies)
             => this.ContainingCookies(cookies.ToStringValueDictionary());
 
-        /// <summary>
-        /// Tests whether HTTP response message contains the provided dictionary of cookies.
-        /// </summary>
-        /// <param name="cookies">Dictionary of cookies.</param>
-        /// <returns>The same HTTP response message test builder.</returns>
+        /// <inheritdoc />
         public IAndHttpResponseTestBuilder ContainingCookies(IDictionary<string, string> cookies)
         {
             var expectedCookiesCount = cookies.Count;
@@ -356,11 +266,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether HTTP response message contains header with the same name as the provided one.
-        /// </summary>
-        /// <param name="name">Expected header name.</param>
-        /// <returns>The same HTTP response message test builder.</returns>
+        /// <inheritdoc />
         public IAndHttpResponseTestBuilder ContainingHeader(string name)
         {
             if (!this.httpResponse.Headers.ContainsKey(name))
@@ -374,12 +280,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether HTTP response message contains header with the same name and value as the provided ones.
-        /// </summary>
-        /// <param name="name">Expected header name.</param>
-        /// <param name="value">Expected header value.</param>
-        /// <returns>The same HTTP response message test builder.</returns>
+        /// <inheritdoc />
         public IAndHttpResponseTestBuilder ContainingHeader(string name, string value)
         {
             this.ContainingHeader(name);
@@ -390,30 +291,15 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether HTTP response message contains header with the same name and values as the provided ones.
-        /// </summary>
-        /// <param name="name">Expected header name.</param>
-        /// <param name="value">Expected header values.</param>
-        /// <returns>The same HTTP response message test builder.</returns>
+        /// <inheritdoc />
         public IAndHttpResponseTestBuilder ContainingHeader(string name, IEnumerable<string> values)
             => this.ContainingHeader(name, new StringValues(values.ToArray()));
 
-        /// <summary>
-        /// Tests whether HTTP response message contains header with the same name and values as the provided ones.
-        /// </summary>
-        /// <param name="name">Expected header name.</param>
-        /// <param name="values">Expected header values.</param>
-        /// <returns>The same HTTP response message test builder.</returns>
+        /// <inheritdoc />
         public IAndHttpResponseTestBuilder ContainingHeader(string name, params string[] values)
             => this.ContainingHeader(name, values.AsEnumerable());
 
-        /// <summary>
-        /// Tests whether HTTP response message contains header with the same name and values as the provided ones.
-        /// </summary>
-        /// <param name="name">Expected header name.</param>
-        /// <param name="values">Expected header values.</param>
-        /// <returns>The same HTTP response message test builder.</returns>
+        /// <inheritdoc />
         public IAndHttpResponseTestBuilder ContainingHeader(string name, StringValues values)
         {
             this.ContainingHeader(name);
@@ -430,11 +316,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether HTTP response message contains the same headers as the provided ones.
-        /// </summary>
-        /// <param name="headers">Dictionary of headers.</param>
-        /// <returns>The same HTTP response message test builder.</returns>
+        /// <inheritdoc />
         public IAndHttpResponseTestBuilder ContainingHeaders(IHeaderDictionary headers)
         {
             this.ValidateHeadersCount(headers.Count);
@@ -442,6 +324,7 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IAndHttpResponseTestBuilder ContainingHeaders(object headers)
         {
             var headerDictionary = headers.ToObjectValueDictionary();
@@ -465,6 +348,7 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IAndHttpResponseTestBuilder ContainingHeaders(IDictionary<string, string> headers)
         {
             this.ValidateHeadersCount(headers.Count);
@@ -472,11 +356,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether HTTP response message contains the same headers as the provided ones.
-        /// </summary>
-        /// <param name="headers">Dictionary of headers.</param>
-        /// <returns>The same HTTP response message test builder.</returns>
+        /// <inheritdoc />
         public IAndHttpResponseTestBuilder ContainingHeaders(IDictionary<string, StringValues> headers)
         {
             this.ValidateHeadersCount(headers.Count);
@@ -484,11 +364,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether HTTP response message contains the same headers as the provided ones.
-        /// </summary>
-        /// <param name="headers">Dictionary of headers.</param>
-        /// <returns>The same HTTP response message test builder.</returns>
+        /// <inheritdoc />
         public IAndHttpResponseTestBuilder ContainingHeaders(IDictionary<string, IEnumerable<string>> headers)
         {
             this.ValidateHeadersCount(headers.Count);
@@ -496,11 +372,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether HTTP response message status code is the same as the provided one.
-        /// </summary>
-        /// <param name="statusCode">Expected <see cref="HttpStatusCode"/>.</param>
-        /// <returns>The same HTTP response message test builder.</returns>
+        /// <inheritdoc />
         public IAndHttpResponseTestBuilder WithStatusCode(HttpStatusCode statusCode)
         {
             HttpStatusCodeValidator.ValidateHttpStatusCode(
@@ -511,18 +383,11 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether HTTP response message status code is the same as the provided HttpStatusCode.
-        /// </summary>
-        /// <param name="statusCode">Expected status code.</param>
-        /// <returns>The same HTTP response message test builder.</returns>
+        /// <inheritdoc />
         public IAndHttpResponseTestBuilder WithStatusCode(int statusCode)
             => this.WithStatusCode((HttpStatusCode)statusCode);
 
-        /// <summary>
-        /// AndAlso method for better readability when chaining HTTP response message tests.
-        /// </summary>
-        /// <returns>The same HTTP response message test builder.</returns>
+        /// <inheritdoc />
         public IHttpResponseTestBuilder AndAlso() => this;
 
         private IList<SetCookieHeaderValue> GetAllCookies()

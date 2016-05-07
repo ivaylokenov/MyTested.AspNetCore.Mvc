@@ -11,7 +11,7 @@
     public class ExpressionParsedRouteContext
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExpressionParsedRouteContext" /> class.
+        /// Initializes a new instance of the <see cref="ExpressionParsedRouteContext"/> class.
         /// </summary>
         /// <param name="controllerType">Controller name.</param>
         /// <param name="action">Action name.</param>

@@ -23,7 +23,7 @@
         private string viewType;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ViewTestBuilder{TViewResult}" /> class.
+        /// Initializes a new instance of the <see cref="ViewTestBuilder{TViewResult}"/> class.
         /// </summary>
         /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         /// <param name="viewType">View type name.</param>

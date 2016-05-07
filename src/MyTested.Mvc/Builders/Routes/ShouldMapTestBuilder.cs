@@ -25,7 +25,7 @@
         private ExpressionParsedRouteContext expectedRouteInfo;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ShouldMapTestBuilder" /> class.
+        /// Initializes a new instance of the <see cref="ShouldMapTestBuilder"/> class.
         /// </summary>
         /// <param name="httpConfiguration">HTTP configuration to use for the route test.</param>
         /// <param name="location">URI location represented by string.</param>

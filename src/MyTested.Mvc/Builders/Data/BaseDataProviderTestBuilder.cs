@@ -8,8 +8,16 @@
     using Utilities.Extensions;
     using Utilities.Validators;
 
+    /// <summary>
+    /// Base class for all data provider test builder.
+    /// </summary>
     public abstract class BaseDataProviderTestBuilder : BaseTestBuilderWithInvokedAction
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BaseDataProviderTestBuilder"/> class.
+        /// </summary>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
+        /// <param name="dataProviderName">Name of the data provider.</param>
         protected BaseDataProviderTestBuilder(ControllerTestContext testContext, string dataProviderName)
             : base(testContext)
         {
@@ -19,12 +27,28 @@
             CommonValidator.CheckForNullReference(this.DataProvider);
         }
 
+        /// <summary>
+        /// Gets or sets the data provider name.
+        /// </summary>
+        /// <value>Name of the data provider as string.</value>
         protected string DataProviderName { get; set; }
 
+        /// <summary>
+        /// Gets the data provider as <see cref="IDictionary{string, object}"/>.
+        /// </summary>
+        /// <value>Data provider as <see cref="IDictionary{string, object}"/>.</value>
         protected IDictionary<string, object> DataProvider { get; private set; }
 
+        /// <summary>
+        /// When overridden in derived class provides a way to built the data provider as <see cref="IDictionary{string, object}"/>.
+        /// </summary>
+        /// <returns>Data provider as <see cref="IDictionary{string, object}"/></returns>
         protected abstract IDictionary<string, object> GetDataProvider();
 
+        /// <summary>
+        /// Validates whether the data provider contains entry with the given key.
+        /// </summary>
+        /// <param name="key">Key to validate.</param>
         protected void ValidateContainingEntryWithKey(string key)
         {
             DictionaryValidator.ValidateStringKey(
@@ -34,6 +58,11 @@
                 this.ThrowNewDataProviderAssertionException);
         }
 
+        /// <summary>
+        /// Validates whether the data provider contains entry with the given value.
+        /// </summary>
+        /// <typeparam name="TEntry">Type of the value.</typeparam>
+        /// <param name="value">Value to validate.</param>
         protected void ValidateContainingEntryWithValue<TEntry>(TEntry value)
         {
             DictionaryValidator.ValidateValue(
@@ -43,6 +72,10 @@
                 this.ThrowNewDataProviderAssertionException);
         }
 
+        /// <summary>
+        /// Validates whether the data provider contains entry value with the given type.
+        /// </summary>
+        /// <typeparam name="TEntry">Type of the value.</typeparam>
         protected void ValidateContainingEntryOfType<TEntry>()
         {
             DictionaryValidator.ValidateValueOfType<TEntry>(
@@ -51,6 +84,11 @@
                 this.ThrowNewDataProviderAssertionException);
         }
 
+        /// <summary>
+        /// Validates whether the data provider contains entry value with the given type and corresponding key.
+        /// </summary>
+        /// <typeparam name="TEntry">Type of the value.</typeparam>
+        /// <param name="key">Key to validate.</param>
         protected void ValidateContainingEntryOfType<TEntry>(string key)
         {
             DictionaryValidator.ValidateStringKeyAndValueOfType<TEntry>(
@@ -60,6 +98,11 @@
                 this.ThrowNewDataProviderAssertionException);
         }
 
+        /// <summary>
+        /// Validates whether the data provider contains entry with the given key and corresponding value.
+        /// </summary>
+        /// <param name="key">Key to validate.</param>
+        /// <param name="value">Value to validate.</param>
         protected void ValidateContainingEntry(string key, object value)
         {
             DictionaryValidator.ValidateStringKeyAndValue(
@@ -70,9 +113,17 @@
                 this.ThrowNewDataProviderAssertionException);
         }
 
+        /// <summary>
+        /// Validates whether the data provider contains entry with the given entries.
+        /// </summary>
+        /// <param name="entries">Anonymous object of entries.</param>
         protected void ValidateContainingEntries(object entries)
             => this.ValidateContainingEntries(new RouteValueDictionary(entries));
 
+        /// <summary>
+        /// Validates whether the data provider contains entry with the given entries.
+        /// </summary>
+        /// <param name="entries">Dictionary of entries.</param>
         protected void ValidateContainingEntries(IDictionary<string, object> entries)
         {
             DictionaryValidator.ValidateValues(
@@ -82,6 +133,12 @@
                 this.ThrowNewDataProviderAssertionException);
         }
 
+        /// <summary>
+        /// Throws new <see cref="DataProviderAssertionException"/> with the provided details.
+        /// </summary>
+        /// <param name="propertyName">Name of the property that failed.</param>
+        /// <param name="expectedValue">Expected value.</param>
+        /// <param name="actualValue">Actual value.</param>
         protected void ThrowNewDataProviderAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new DataProviderAssertionException(string.Format(

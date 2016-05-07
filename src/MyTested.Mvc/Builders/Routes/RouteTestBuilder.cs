@@ -14,7 +14,7 @@
     public class RouteTestBuilder : BaseRouteTestBuilder, IRouteTestBuilder
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="RouteTestBuilder" /> class.
+        /// Initializes a new instance of the <see cref="RouteTestBuilder"/> class.
         /// </summary>
         /// <param name="router">Instance of IRouter.</param>
         public RouteTestBuilder(RouteTestContext testContext)

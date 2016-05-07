@@ -16,7 +16,7 @@
         where TViewResult : ActionResult
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseTestBuilderWithViewFeature{TActionResult}" /> class.
+        /// Initializes a new instance of the <see cref="BaseTestBuilderWithViewFeature{TActionResult}"/> class.
         /// </summary>
         /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         protected BaseTestBuilderWithViewFeature(ControllerTestContext testContext)

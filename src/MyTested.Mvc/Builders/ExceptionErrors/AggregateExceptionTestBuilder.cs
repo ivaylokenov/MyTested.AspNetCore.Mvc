@@ -16,22 +16,16 @@
         private readonly AggregateException aggregateException;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AggregateExceptionTestBuilder" /> class.
+        /// Initializes a new instance of the <see cref="AggregateExceptionTestBuilder"/> class.
         /// </summary>
-        /// <param name="controller">Controller on which the action will be tested.</param>
-        /// <param name="actionName">Name of the tested action.</param>
-        /// <param name="caughtException">Actual received aggregate exception.</param>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public AggregateExceptionTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
             this.aggregateException = testContext.CaughtExceptionAs<AggregateException>();
         }
 
-        /// <summary>
-        /// Tests whether AggregateException contains inner exception of the provided type.
-        /// </summary>
-        /// <typeparam name="TInnerException">Expected inner exception type.</typeparam>
-        /// <returns>The same aggregate exception test builder.</returns>
+        /// <inheritdoc />
         public IAndAggregateExceptionTestBuilder ContainingInnerExceptionOfType<TInnerException>()
             where TInnerException : Exception
         {
@@ -49,13 +43,7 @@
             return this;
         }
 
-        /// <summary>
-        /// AndAlso method for better readability when chaining aggregate exception tests.
-        /// </summary>
-        /// <returns>The same aggregate exception test builder.</returns>
-        public new IAggregateExceptionTestBuilder AndAlso()
-        {
-            return this;
-        }
+        /// <inheritdoc />
+        public new IAggregateExceptionTestBuilder AndAlso() => this;
     }
 }

@@ -18,7 +18,7 @@
         : BaseTestBuilderWithActionResult<TActionResult>, IShouldHaveTestBuilder<TActionResult>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ShouldHaveTestBuilder{TActionResult}" /> class.
+        /// Initializes a new instance of the <see cref="ShouldHaveTestBuilder{TActionResult}"/> class.
         /// </summary>
         /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public ShouldHaveTestBuilder(ControllerTestContext testContext)

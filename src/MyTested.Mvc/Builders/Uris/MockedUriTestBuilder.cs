@@ -13,7 +13,7 @@
         private readonly ICollection<Func<MockedUri, Uri, bool>> validations;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MockedUriTestBuilder" /> class.
+        /// Initializes a new instance of the <see cref="MockedUriTestBuilder"/> class.
         /// </summary>
         public MockedUriTestBuilder()
         {

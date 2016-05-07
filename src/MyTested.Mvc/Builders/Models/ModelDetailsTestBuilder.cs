@@ -8,40 +8,29 @@
     using Utilities.Extensions;
 
     /// <summary>
-    /// Used for testing the response model members.
+    /// Used for testing the model members.
     /// </summary>
-    /// <typeparam name="TResponseModel">Response model from invoked action in ASP.NET Core MVC controller.</typeparam>
+    /// <typeparam name="TResponseModel">Model from invoked action in ASP.NET Core MVC controller.</typeparam>
     public class ModelDetailsTestBuilder<TResponseModel>
         : ModelErrorTestBuilder<TResponseModel>, IModelDetailsTestBuilder<TResponseModel>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ModelDetailsTestBuilder{TResponseModel}" /> class.
+        /// Initializes a new instance of the <see cref="ModelDetailsTestBuilder{TResponseModel}"/> class.
         /// </summary>
-        /// <param name="controller">Controller on which the action will be tested.</param>
-        /// <param name="actionName">Name of the tested action.</param>
-        /// <param name="caughtException">Caught exception during the action execution.</param>
-        /// <param name="responseModel">Response model from invoked action.</param>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public ModelDetailsTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
         }
-
-        /// <summary>
-        /// Tests whether the returned response model from the invoked action passes given assertions.
-        /// </summary>
-        /// <param name="assertions">Action containing all assertions on the response model.</param>
-        /// <returns>Builder for testing the response model errors.</returns>
+        
+        /// <inheritdoc />
         public IModelErrorTestBuilder<TResponseModel> Passing(Action<TResponseModel> assertions)
         {
             assertions(this.Model);
             return new ModelErrorTestBuilder<TResponseModel>(this.TestContext);
         }
 
-        /// <summary>
-        /// Tests whether the returned response model from the invoked action passes given predicate.
-        /// </summary>
-        /// <param name="predicate">Predicate testing the response model.</param>
-        /// <returns>Builder for testing the response model errors.</returns>
+        /// <inheritdoc />
         public IModelErrorTestBuilder<TResponseModel> Passing(Func<TResponseModel, bool> predicate)
         {
             if (!predicate(this.Model))

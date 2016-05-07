@@ -17,7 +17,7 @@
             new ConcurrentDictionary<MethodInfo, ControllerActionDescriptor>();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ControllerActionDescriptorCache" /> class.
+        /// Initializes a new instance of the <see cref="ControllerActionDescriptorCache"/> class.
         /// </summary>
         /// <param name="provider">Action descriptors collection provider.</param>
         public ControllerActionDescriptorCache(IActionDescriptorCollectionProvider provider)

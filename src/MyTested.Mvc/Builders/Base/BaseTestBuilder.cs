@@ -15,7 +15,7 @@
         private HttpTestContext testContext;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseTestBuilder" /> class.
+        /// Initializes a new instance of the <see cref="BaseTestBuilder"/> class.
         /// </summary>
         /// <param name="testContext">HTTP test context containing data about the currently executed assertion chain.</param>
         protected BaseTestBuilder(HttpTestContext testContext)

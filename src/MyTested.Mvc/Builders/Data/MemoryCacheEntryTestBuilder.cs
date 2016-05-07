@@ -11,11 +11,18 @@
     using Utilities.Extensions;
     using Utilities.Validators;
 
+    /// <summary>
+    /// Used for building mocked <see cref="IMemoryCache"/> entry.
+    /// </summary>
     public class MemoryCacheEntryTestBuilder : MemoryCacheEntryBuilder, IAndMemoryCacheEntryTestBuilder
     {
         private readonly ControllerTestContext testContext;
         private readonly ICollection<Action<IMockedMemoryCacheEntry, IMockedMemoryCacheEntry>> validations;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MemoryCacheEntryTestBuilder"/> class.
+        /// </summary>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public MemoryCacheEntryTestBuilder(ControllerTestContext testContext)
         {
             CommonValidator.CheckForNullReference(testContext, nameof(testContext));
@@ -23,7 +30,8 @@
             this.testContext = testContext;
             this.validations = new List<Action<IMockedMemoryCacheEntry, IMockedMemoryCacheEntry>>();
         }
-        
+
+        /// <inheritdoc />
         public override IAndMemoryCacheEntryTestBuilder WithValue(object value)
         {
             this.validations.Add((expected, actual) =>
@@ -39,6 +47,7 @@
             return base.WithValue(value);
         }
 
+        /// <inheritdoc />
         public override IAndMemoryCacheEntryTestBuilder WithAbsoluteExpiration(DateTimeOffset? absoluteExpiration)
         {
             this.validations.Add((expected, actual) =>
@@ -57,6 +66,7 @@
             return base.WithAbsoluteExpiration(absoluteExpiration);
         }
 
+        /// <inheritdoc />
         public override IAndMemoryCacheEntryTestBuilder WithAbsoluteExpirationRelativeToNow(TimeSpan? absoluteExpirationRelativeToNow)
         {
             this.validations.Add((expected, actual) =>
@@ -75,6 +85,7 @@
             return base.WithAbsoluteExpirationRelativeToNow(absoluteExpirationRelativeToNow);
         }
 
+        /// <inheritdoc />
         public override IAndMemoryCacheEntryTestBuilder WithPriority(CacheItemPriority priority)
         {
             this.validations.Add((expected, actual) =>
@@ -93,6 +104,7 @@
             return base.WithPriority(priority);
         }
 
+        /// <inheritdoc />
         public override IAndMemoryCacheEntryTestBuilder WithSlidingExpiration(TimeSpan? slidingExpiration)
         {
             this.validations.Add((expected, actual) =>

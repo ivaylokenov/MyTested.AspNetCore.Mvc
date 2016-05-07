@@ -20,7 +20,7 @@
         : BaseTestBuilderWithActionResult<ForbidResult>, IAndForbidTestBuilder
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ForbidTestBuilder" /> class.
+        /// Initializes a new instance of the <see cref="ForbidTestBuilder"/> class.
         /// </summary>
         /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public ForbidTestBuilder(ControllerTestContext testContext)

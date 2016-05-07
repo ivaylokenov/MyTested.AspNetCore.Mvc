@@ -96,7 +96,7 @@
             }
             else
             {
-                // Expresion needs compiling because it is not of constant type.
+                // Expression needs compiling because it is not of constant type.
                 var convertExpression = Expression.Convert(expression, typeof(object));
                 value = Expression.Lambda<Func<object>>(convertExpression).Compile().Invoke();
             }

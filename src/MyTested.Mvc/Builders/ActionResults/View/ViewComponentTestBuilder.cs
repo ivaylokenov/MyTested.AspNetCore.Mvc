@@ -21,7 +21,7 @@
         private readonly IDictionary<string, object> viewComponentArguments;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ViewComponentTestBuilder" /> class.
+        /// Initializes a new instance of the <see cref="ViewComponentTestBuilder"/> class.
         /// </summary>
         /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public ViewComponentTestBuilder(ControllerTestContext testContext)

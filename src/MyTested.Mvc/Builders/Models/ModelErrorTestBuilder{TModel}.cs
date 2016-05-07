@@ -12,19 +12,16 @@
     using Utilities.Extensions;
 
     /// <summary>
-    /// Used for testing the model errors.
+    /// Used for testing the <see cref="ModelStateDictionary"/> errors.
     /// </summary>
     /// <typeparam name="TModel">Model from invoked action in ASP.NET Core MVC controller.</typeparam>
     public class ModelErrorTestBuilder<TModel> : ModelErrorTestBuilder, IAndModelErrorTestBuilder<TModel>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ModelErrorTestBuilder{TModel}" /> class.
+        /// Initializes a new instance of the <see cref="ModelErrorTestBuilder{TModel}"/> class.
         /// </summary>
-        /// <param name="controller">Controller on which the action will be tested.</param>
-        /// <param name="actionName">Name of the tested action.</param>
-        /// <param name="caughtException">Caught exception during the action execution.</param>
-        /// <param name="model">Model returned from action result.</param>
-        /// <param name="modelState">Optional model state dictionary to use the class with. Default is controller's model state.</param>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
+        /// <param name="modelState">Optional <see cref="ModelStateDictionary"/> to use the class with. Default is Default is <see cref="Microsoft.AspNetCore.Mvc.Controller"/>'s <see cref="ModelStateDictionary"/>.</param>
         public ModelErrorTestBuilder(
             ControllerTestContext testContext,
             ModelStateDictionary modelState = null)
@@ -38,11 +35,7 @@
         /// <value>Model from invoked action.</value>
         protected TModel Model => this.TestContext.ModelAs<TModel>();
 
-        /// <summary>
-        /// Tests whether tested action's model state contains error by key.
-        /// </summary>
-        /// <param name="errorKey">Error key to search for.</param>
-        /// <returns>Model error details test builder.</returns>
+        /// <inheritdoc />
         public IModelErrorDetailsTestBuilder<TModel> ContainingError(string errorKey)
         {
             if (!this.ModelState.ContainsKey(errorKey) || this.ModelState.Count == 0)
@@ -59,12 +52,7 @@
                 this.ModelState[errorKey].Errors);
         }
 
-        /// <summary>
-        /// Tests whether tested action's model state contains error by member expression.
-        /// </summary>
-        /// <typeparam name="TMember">Type of the member which will be tested for errors.</typeparam>
-        /// <param name="memberWithError">Member expression for the tested member.</param>
-        /// <returns>Model error details test builder.</returns>
+        /// <inheritdoc />
         public IModelErrorDetailsTestBuilder<TModel> ContainingErrorFor<TMember>(Expression<Func<TModel, TMember>> memberWithError)
         {
             var memberName = ExpressionHelper.GetExpressionText(memberWithError);
@@ -77,12 +65,7 @@
                 this.ModelState[memberName].Errors);
         }
 
-        /// <summary>
-        /// Tests whether tested action's model state contains no error by member expression.
-        /// </summary>
-        /// <typeparam name="TMember">Type of the member which will be tested for no errors.</typeparam>
-        /// <param name="memberWithNoError">Member expression for the tested member.</param>
-        /// <returns>This instance in order to support method chaining.</returns>
+        /// <inheritdoc />
         public IAndModelErrorTestBuilder<TModel> ContainingNoErrorFor<TMember>(Expression<Func<TModel, TMember>> memberWithNoError)
         {
             var memberName = ExpressionHelper.GetExpressionText(memberWithNoError);
@@ -96,12 +79,10 @@
             return this;
         }
 
-        /// <summary>
-        /// AndAlso method for better readability when chaining error message tests.
-        /// </summary>
-        /// <returns>Model error details test builder.</returns>
+        /// <inheritdoc />
         public IModelErrorTestBuilder<TModel> AndAlso() => this;
 
+        /// <inheritdoc />
         public new IShouldPassForTestBuilderWithModel<TModel> ShouldPassFor()
             => new ShouldPassForTestBuilderWithModel<TModel>(this.TestContext);
         

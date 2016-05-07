@@ -16,7 +16,7 @@
         where TFileResult : FileResult
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseFileTestBuilder{TFileResult}" /> class.
+        /// Initializes a new instance of the <see cref="BaseFileTestBuilder{TFileResult}"/> class.
         /// </summary>
         /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public BaseFileTestBuilder(ControllerTestContext testContext)

@@ -13,7 +13,7 @@
         private RouteTestContext testContext;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseRouteTestBuilder" /> class.
+        /// Initializes a new instance of the <see cref="BaseRouteTestBuilder"/> class.
         /// </summary>
         /// <param name="router">Instance of IRouter.</param>
         /// <param name="serviceProvider">Instance of IServiceProvider.</param>

@@ -16,7 +16,7 @@
         private HttpResponse httpResponse;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MockedHttpContext" /> class.
+        /// Initializes a new instance of the <see cref="MockedHttpContext"/> class.
         /// </summary>
         public MockedHttpContext()
             : this(new FeatureCollection())
@@ -26,7 +26,7 @@
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MockedHttpContext" /> class with the provided features.
+        /// Initializes a new instance of the <see cref="MockedHttpContext"/> class with the provided features.
         /// </summary>
         /// <param name="features">HTTP features to initialize.</param>
         public MockedHttpContext(IFeatureCollection features)
@@ -37,7 +37,7 @@
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MockedHttpContext" /> class by copying the properties from the provided one.
+        /// Initializes a new instance of the <see cref="MockedHttpContext"/> class by copying the properties from the provided one.
         /// </summary>
         /// <param name="context">HttpContext to copy properties from.</param>
         private MockedHttpContext(HttpContext context)

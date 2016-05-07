@@ -17,7 +17,7 @@
     public class ObjectTestBuilder : BaseTestBuilderWithResponseModel<ObjectResult>, IAndObjectTestBuilder
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ObjectTestBuilder" /> class.
+        /// Initializes a new instance of the <see cref="ObjectTestBuilder"/> class.
         /// </summary>
         /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public ObjectTestBuilder(ControllerTestContext testContext)

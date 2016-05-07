@@ -9,82 +9,106 @@
     using Microsoft.AspNetCore.Routing;
     using Utilities.Validators;
 
+    /// <summary>
+    /// Used for testing <see cref="Microsoft.AspNetCore.Http.Features.ISession"/>.
+    /// </summary>
     public class SessionTestBuilder : BaseDataProviderTestBuilder, IAndSessionTestBuilder
     {
         internal const string SessionName = "session";
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SessionTestBuilder"/> class.
+        /// </summary>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public SessionTestBuilder(ControllerTestContext testContext)
             : base(testContext, SessionName)
         {
         }
 
+        /// <inheritdoc />
         public IAndSessionTestBuilder ContainingEntryWithKey(string key)
         {
             this.ValidateContainingEntryWithKey(key);
             return this;
         }
 
+        /// <inheritdoc />
         public IAndSessionTestBuilder ContainingEntryWithValue(byte[] value)
         {
             this.ValidateContainingEntryWithValue(value);
             return this;
         }
 
+        /// <inheritdoc />
         public IAndSessionTestBuilder ContainingEntryWithValue(string value)
         {
             this.ValidateContainingEntryWithValue(ConvertStringToByteArray(value));
             return this;
         }
 
+        /// <inheritdoc />
         public IAndSessionTestBuilder ContainingEntryWithValue(int value)
         {
             this.ValidateContainingEntryWithValue(ConvertIntegerToByteArray(value));
             return this;
         }
 
+        /// <inheritdoc />
         public IAndSessionTestBuilder ContainingEntry(string key, byte[] value)
         {
             this.ValidateContainingEntry(key, value);
             return this;
         }
 
+        /// <inheritdoc />
         public IAndSessionTestBuilder ContainingEntry(string key, string value)
         {
             this.ValidateContainingEntry(key, ConvertStringToByteArray(value));
             return this;
         }
 
+        /// <inheritdoc />
         public IAndSessionTestBuilder ContainingEntry(string key, int value)
         {
             this.ValidateContainingEntry(key, ConvertIntegerToByteArray(value));
             return this;
         }
 
+        /// <inheritdoc />
         public IAndSessionTestBuilder ContainingEntries(object entries)
             => this.ContainingEntries(new RouteValueDictionary(entries));
 
+        /// <inheritdoc />
         public IAndSessionTestBuilder ContainingEntries(IDictionary<string, byte[]> entries)
         {
             return this.ContainingEntries<byte[]>(entries);
         }
 
+        /// <inheritdoc />
         public IAndSessionTestBuilder ContainingEntries(IDictionary<string, object> entries)
         {
             return this.ContainingEntries<object>(entries, true);
         }
 
+        /// <inheritdoc />
         public IAndSessionTestBuilder ContainingEntries(IDictionary<string, string> entries)
         {
             return this.ContainingEntries<string>(entries);
         }
 
+        /// <inheritdoc />
         public IAndSessionTestBuilder ContainingEntries(IDictionary<string, int> entries)
         {
             return this.ContainingEntries<int>(entries);
         }
 
+        /// <inheritdoc />
         public ISessionTestBuilder AndAlso() => this;
 
+        /// <summary>
+        /// When overridden in derived class provides a way to built the data provider as <see cref="IDictionary{string, object}"/>.
+        /// </summary>
+        /// <returns>Data provider as <see cref="IDictionary{string, object}"/></returns>
         protected override IDictionary<string, object> GetDataProvider()
         {
             var result = new Dictionary<string, object>();

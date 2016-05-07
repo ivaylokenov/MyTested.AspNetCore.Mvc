@@ -27,7 +27,7 @@
         private const string OfTypeErrorMessage = "When calling {0} action in {1} expected response model to be of {2} type, but instead received {3}.";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseTestBuilderWithResponseModel{TActionResult}" /> class.
+        /// Initializes a new instance of the <see cref="BaseTestBuilderWithResponseModel{TActionResult}"/> class.
         /// </summary>
         /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         protected BaseTestBuilderWithResponseModel(ControllerTestContext testContext)

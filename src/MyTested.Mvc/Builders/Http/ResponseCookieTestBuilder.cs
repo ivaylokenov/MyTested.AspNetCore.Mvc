@@ -5,6 +5,9 @@
     using Contracts.Http;
     using Microsoft.Net.Http.Headers;
 
+    /// <summary>
+    /// Used for testing <see cref="Microsoft.AspNetCore.Http.HttpResponse"/> cookie.
+    /// </summary>
     public class ResponseCookieTestBuilder : IAndResponseCookieTestBuilder
     {
         private const string FakeCookieName = "__cookie__";
@@ -12,12 +15,16 @@
         private readonly SetCookieHeaderValue responseCookie;
         private readonly ICollection<Func<SetCookieHeaderValue, SetCookieHeaderValue, bool>> validations;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ResponseCookieTestBuilder"/> class.
+        /// </summary>
         public ResponseCookieTestBuilder()
         {
             this.validations = new List<Func<SetCookieHeaderValue, SetCookieHeaderValue, bool>>();
             this.responseCookie = new SetCookieHeaderValue(FakeCookieName);
         }
 
+        /// <inheritdoc />
         public IAndResponseCookieTestBuilder WithName(string name)
         {
             this.responseCookie.Name = name;
@@ -25,6 +32,7 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IAndResponseCookieTestBuilder WithValue(string value)
         {
             this.responseCookie.Value = value;
@@ -32,6 +40,7 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IAndResponseCookieTestBuilder WithValue(Action<string> assertions)
         {
             this.validations.Add((expected, actual) =>
@@ -43,12 +52,14 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IAndResponseCookieTestBuilder WithValue(Func<string, bool> predicate)
         {
             this.validations.Add((expected, actual) => predicate(actual.Value));
             return this;
         }
 
+        /// <inheritdoc />
         public IAndResponseCookieTestBuilder WithDomain(string domain)
         {
             this.responseCookie.Domain = domain;
@@ -56,6 +67,7 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IAndResponseCookieTestBuilder WithExpired(DateTimeOffset? expires)
         {
             this.responseCookie.Expires = expires;
@@ -63,6 +75,7 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IAndResponseCookieTestBuilder WithHttpOnly(bool httpOnly)
         {
             this.responseCookie.HttpOnly = httpOnly;
@@ -70,6 +83,7 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IAndResponseCookieTestBuilder WithMaxAge(TimeSpan? maxAge)
         {
             this.responseCookie.MaxAge = maxAge;
@@ -77,6 +91,7 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IAndResponseCookieTestBuilder WithPath(string path)
         {
             this.responseCookie.Path = path;
@@ -84,6 +99,7 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IAndResponseCookieTestBuilder WithSecure(bool secure)
         {
             this.responseCookie.Secure = secure;
@@ -91,10 +107,8 @@
             return this;
         }
 
-        public IResponseCookieTestBuilder AndAlso()
-        {
-            return this;
-        }
+        /// <inheritdoc />
+        public IResponseCookieTestBuilder AndAlso() => this;
 
         internal SetCookieHeaderValue GetResponseCookie()
         {

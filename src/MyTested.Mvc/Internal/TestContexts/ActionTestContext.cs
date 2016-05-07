@@ -10,7 +10,7 @@
     public class ActionTestContext<TActionResult>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ActionTestContext{TActionResult}" /> class.
+        /// Initializes a new instance of the <see cref="ActionTestContext{TActionResult}"/> class.
         /// </summary>
         /// <param name="actionName">Name of the action.</param>
         /// <param name="actionResult">Action return value.</param>

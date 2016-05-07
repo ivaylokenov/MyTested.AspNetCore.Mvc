@@ -35,9 +35,9 @@
         private object additionalRouteValues;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ControllerBuilder{TController}" /> class.
+        /// Initializes a new instance of the <see cref="ControllerBuilder{TController}"/> class.
         /// </summary>
-        /// <param name="testContext"></param>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public ControllerBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
@@ -48,11 +48,7 @@
 
             this.ValidateControllerType();
         }
-
-        /// <summary>
-        /// Gets the ASP.NET Core MVC controller instance to be tested.
-        /// </summary>
-        /// <value>Instance of the ASP.NET Core MVC controller.</value>
+        
         private TController Controller
         {
             get
@@ -82,25 +78,20 @@
 
         private IServiceProvider Services => this.HttpContext.RequestServices;
 
-        /// <summary>
-        /// AndAlso method for better readability when building controller instance.
-        /// </summary>
-        /// <returns>The same controller builder.</returns>
+        /// <inheritdoc />
         public IAndControllerBuilder<TController> AndAlso()
         {
             return this;
         }
 
-        /// <summary>
-        /// Used for testing controller attributes.
-        /// </summary>
-        /// <returns>Controller test builder.</returns>
+        /// <inheritdoc />
         public IControllerTestBuilder ShouldHave()
         {
             this.BuildControllerIfNotExists();
             return new ControllerTestBuilder(this.TestContext);
         }
-        
+
+        /// <inheritdoc />
         public new IShouldPassForTestBuilderWithController<TController> ShouldPassFor()
         {
             this.BuildControllerIfNotExists();

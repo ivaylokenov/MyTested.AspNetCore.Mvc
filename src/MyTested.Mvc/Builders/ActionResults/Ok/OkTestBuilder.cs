@@ -23,7 +23,7 @@
         where THttpOkResult : ActionResult
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="OkTestBuilder{THttpOkResult}" /> class.
+        /// Initializes a new instance of the <see cref="OkTestBuilder{THttpOkResult}"/> class.
         /// </summary>
         /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public OkTestBuilder(ControllerTestContext testContext)

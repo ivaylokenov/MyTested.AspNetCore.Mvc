@@ -13,6 +13,9 @@
     using Utilities.Extensions;
     using Utilities.Validators;
 
+    /// <summary>
+    /// Used for testing <see cref="IMemoryCache"/>.
+    /// </summary>
     public class MemoryCacheTestBuilder : BaseTestBuilderWithInvokedAction, IAndMemoryCacheTestBuilder
     {
         internal const string MemoryCacheName = "memory cache";
@@ -22,18 +25,24 @@
         private IMockedMemoryCache mockedMemoryCache;
         private IDictionary<object, object> memoryCacheAsDictionary;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MemoryCacheTestBuilder"/> class.
+        /// </summary>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public MemoryCacheTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
             this.memoryCache = this.GetMemoryCache();
         }
 
+        /// <inheritdoc />
         public IAndMemoryCacheTestBuilder ContainingEntryWithKey(object key)
         {
             this.GetValue(key);
             return this;
         }
 
+        /// <inheritdoc />
         public IAndMemoryCacheTestBuilder ContainingEntryWithValue<TEntry>(TEntry value)
         {
             DictionaryValidator.ValidateValue(
@@ -45,6 +54,7 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IAndMemoryCacheTestBuilder ContainingEntryOfType<TEntry>()
         {
             DictionaryValidator.ValidateValueOfType<TEntry>(
@@ -55,6 +65,7 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IAndMemoryCacheTestBuilder ContainingEntryOfType<TEntry>(object key)
         {
             var value = this.GetValue(key);
@@ -72,6 +83,7 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IAndMemoryCacheTestBuilder ContainingEntry(object key, object value)
         {
             var actualValue = this.GetValue(key);
@@ -86,6 +98,7 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IAndMemoryCacheTestBuilder ContainingEntry(object key, object value, MemoryCacheEntryOptions options)
         {
             var mockedMemoryCache = this.GetMockedMemoryCache();
@@ -107,6 +120,7 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IAndMemoryCacheTestBuilder ContainingEntry(Action<IMemoryCacheEntryTestBuilder> memoryCacheEntryTestBuilder)
         {
             var mockedMemoryCache = this.GetMockedMemoryCache();
@@ -127,6 +141,7 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IAndMemoryCacheTestBuilder ContainingEntries(IDictionary<object, object> entries)
         {
             var expectedItems = entries.Count;
@@ -144,6 +159,7 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IMemoryCacheTestBuilder AndAlso() => this;
 
         private IMemoryCache GetMemoryCache()

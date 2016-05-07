@@ -16,7 +16,7 @@
         : BaseTestBuilderWithInvokedAction, IBaseTestBuilderWithActionResult<TActionResult>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseTestBuilderWithActionResult{TActionResult}" /> class.
+        /// Initializes a new instance of the <see cref="BaseTestBuilderWithActionResult{TActionResult}"/> class.
         /// </summary>
         /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         protected BaseTestBuilderWithActionResult(ControllerTestContext testContext)

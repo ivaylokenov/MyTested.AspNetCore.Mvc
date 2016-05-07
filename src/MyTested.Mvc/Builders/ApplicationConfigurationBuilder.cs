@@ -14,7 +14,7 @@
     public class ApplicationConfigurationBuilder : IApplicationConfigurationBuilder
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ApplicationConfigurationBuilder" /> class.
+        /// Initializes a new instance of the <see cref="ApplicationConfigurationBuilder"/> class.
         /// </summary>
         /// <param name="startupType">Type of startup class.</param>
         public ApplicationConfigurationBuilder(Type startupType)

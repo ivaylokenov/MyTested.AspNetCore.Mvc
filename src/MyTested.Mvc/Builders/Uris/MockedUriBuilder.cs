@@ -12,7 +12,7 @@
     public class MockedUriBuilder : IAndUriTestBuilder
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MockedUriBuilder" /> class.
+        /// Initializes a new instance of the <see cref="MockedUriBuilder"/> class.
         /// </summary>
         public MockedUriBuilder()
         {

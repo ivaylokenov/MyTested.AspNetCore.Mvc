@@ -10,7 +10,7 @@
     public class AndProvideTestBuilder<TActionResult> : BaseTestBuilderWithActionResult<TActionResult>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AndProvideTestBuilder{TActionResult}" /> class.
+        /// Initializes a new instance of the <see cref="AndProvideTestBuilder{TActionResult}"/> class.
         /// </summary>
         /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public AndProvideTestBuilder(ControllerTestContext testContext)

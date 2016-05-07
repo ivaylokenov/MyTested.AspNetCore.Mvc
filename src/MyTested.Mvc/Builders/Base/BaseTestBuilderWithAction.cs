@@ -14,7 +14,7 @@
     public abstract class BaseTestBuilderWithAction : BaseTestBuilderWithController, IBaseTestBuilderWithAction
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseTestBuilderWithAction" /> class.
+        /// Initializes a new instance of the <see cref="BaseTestBuilderWithAction"/> class.
         /// </summary>
         /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         protected BaseTestBuilderWithAction(ControllerTestContext testContext)

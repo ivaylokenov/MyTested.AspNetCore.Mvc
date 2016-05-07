@@ -16,7 +16,7 @@
         private readonly IAndBadRequestTestBuilder badRequestTestBuilder;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BadRequestErrorMessageTestBuilder" /> class.
+        /// Initializes a new instance of the <see cref="BadRequestErrorMessageTestBuilder"/> class.
         /// </summary>
         /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         /// <param name="actualMessage">Actual text error message received from bad request result.</param>

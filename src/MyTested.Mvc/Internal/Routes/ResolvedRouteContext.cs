@@ -13,7 +13,7 @@
     public class ResolvedRouteContext
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResolvedRouteContext" /> class.
+        /// Initializes a new instance of the <see cref="ResolvedRouteContext"/> class.
         /// </summary>
         /// <param name="controllerType">Resolved controller type for the current route.</param>
         /// <param name="action">Resolved action name for the current route.</param>
@@ -38,7 +38,7 @@
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResolvedRouteContext" /> class.
+        /// Initializes a new instance of the <see cref="ResolvedRouteContext"/> class.
         /// </summary>
         /// <param name="unresolvedError">Received error during the route resolving.</param>
         public ResolvedRouteContext(string unresolvedError)

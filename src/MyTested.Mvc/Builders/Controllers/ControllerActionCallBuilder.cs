@@ -21,22 +21,14 @@
     /// <typeparam name="TController">Class representing ASP.NET Core MVC controller.</typeparam>
     public partial class ControllerBuilder<TController>
     {
-        /// <summary>
-        /// Disables ModelState validation for the action call.
-        /// </summary>
-        /// <returns>The same controller builder.</returns>
+        /// <inheritdoc />
         public IAndControllerBuilder<TController> WithoutValidation()
         {
             this.enabledValidation = false;
             return this;
         }
 
-        /// <summary>
-        /// Indicates which action should be invoked and tested.
-        /// </summary>
-        /// <typeparam name="TActionResult">Type of result from action.</typeparam>
-        /// <param name="actionCall">Method call expression indicating invoked action.</param>
-        /// <returns>Builder for testing the action result.</returns>
+        /// <inheritdoc />
         public IActionResultTestBuilder<TActionResult> Calling<TActionResult>(Expression<Func<TController, TActionResult>> actionCall)
         {
             var actionInfo = this.GetAndValidateActionResult(actionCall);
@@ -46,12 +38,7 @@
             return new ActionResultTestBuilder<TActionResult>(this.TestContext);
         }
 
-        /// <summary>
-        /// Indicates which action should be invoked and tested.
-        /// </summary>
-        /// <typeparam name="TActionResult">Asynchronous Task result from action.</typeparam>
-        /// <param name="actionCall">Method call expression indicating invoked action.</param>
-        /// <returns>Builder for testing the action result.</returns>
+        /// <inheritdoc />
         public IActionResultTestBuilder<TActionResult> Calling<TActionResult>(Expression<Func<TController, Task<TActionResult>>> actionCall)
         {
             var actionInfo = this.GetAndValidateActionResult(actionCall);
@@ -72,11 +59,7 @@
             return new ActionResultTestBuilder<TActionResult>(this.TestContext);
         }
 
-        /// <summary>
-        /// Indicates which action should be invoked and tested.
-        /// </summary>
-        /// <param name="actionCall">Method call expression indicating invoked action.</param>
-        /// <returns>Builder for testing void actions.</returns>
+        /// <inheritdoc />
         public IVoidActionResultTestBuilder Calling(Expression<Action<TController>> actionCall)
         {
             var actionName = this.GetAndValidateAction(actionCall);
@@ -98,11 +81,7 @@
             return new VoidActionResultTestBuilder(this.TestContext);
         }
 
-        /// <summary>
-        /// Indicates which action should be invoked and tested.
-        /// </summary>
-        /// <param name="actionCall">Method call expression indicating invoked action.</param>
-        /// <returns>Builder for testing void actions.</returns>
+        /// <inheritdoc />
         public IVoidActionResultTestBuilder Calling(Expression<Func<TController, Task>> actionCall)
         {
             var actionInfo = this.GetAndValidateActionResult(actionCall);

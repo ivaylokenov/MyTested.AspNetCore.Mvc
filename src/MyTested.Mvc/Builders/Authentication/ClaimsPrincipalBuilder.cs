@@ -17,7 +17,7 @@
         private ICollection<ClaimsIdentity> identities;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ClaimsPrincipalBuilder" /> class.
+        /// Initializes a new instance of the <see cref="ClaimsPrincipalBuilder"/> class.
         /// </summary>
         public ClaimsPrincipalBuilder()
         {

@@ -12,7 +12,7 @@
     public abstract class BaseTestBuilderWithModel<TModel> : BaseTestBuilderWithInvokedAction, IBaseTestBuilderWithModel<TModel>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseTestBuilderWithModel{TModel}" /> class.
+        /// Initializes a new instance of the <see cref="BaseTestBuilderWithModel{TModel}"/> class.
         /// </summary>
         /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         protected BaseTestBuilderWithModel(ControllerTestContext testContext)

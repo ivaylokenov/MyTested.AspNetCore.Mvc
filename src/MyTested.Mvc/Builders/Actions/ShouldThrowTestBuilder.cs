@@ -17,7 +17,7 @@
         private readonly IExceptionTestBuilder exceptionTestBuilder;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ShouldThrowTestBuilder" /> class.
+        /// Initializes a new instance of the <see cref="ShouldThrowTestBuilder"/> class.
         /// </summary>
         /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public ShouldThrowTestBuilder(ControllerTestContext testContext)

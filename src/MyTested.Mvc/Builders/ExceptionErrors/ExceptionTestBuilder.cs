@@ -14,21 +14,15 @@
     public class ExceptionTestBuilder : BaseTestBuilderWithInvokedAction, IAndExceptionTestBuilder
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExceptionTestBuilder" /> class.
+        /// Initializes a new instance of the <see cref="ExceptionTestBuilder"/> class.
         /// </summary>
-        /// <param name="controller">Controller on which the action will be tested.</param>
-        /// <param name="actionName">Name of the tested action.</param>
-        /// <param name="exception">Actual received exception.</param>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public ExceptionTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
         }
 
-        /// <summary>
-        /// Tests whether certain type of exception is returned from the invoked action.
-        /// </summary>
-        /// <typeparam name="TException">Type of the expected exception.</typeparam>
-        /// <returns>The same exception test builder.</returns>
+        /// <inheritdoc />
         public IAndExceptionTestBuilder OfType<TException>()
         {
             var expectedExceptionType = typeof(TException);
@@ -46,10 +40,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests exception message using test builder.
-        /// </summary>
-        /// <returns>Exception message test builder.</returns>
+        /// <inheritdoc />
         public IExceptionMessageTestBuilder WithMessage()
         {
             return new ExceptionMessageTestBuilder(
@@ -57,11 +48,7 @@
                 this);
         }
 
-        /// <summary>
-        /// Tests exception message whether it is equal to the provided message as string.
-        /// </summary>
-        /// <param name="message">Expected exception message as string.</param>
-        /// <returns>The same exception test builder.</returns>
+        /// <inheritdoc />
         public IAndExceptionTestBuilder WithMessage(string message)
         {
             var actualExceptionMessage = this.CaughtException.Message;
@@ -78,22 +65,14 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether created result location passes given assertions.
-        /// </summary>
-        /// <param name="assertions">Action containing all assertions on the location.</param>
-        /// <returns>The same created test builder.</returns>
+        /// <inheritdoc />
         public IAndExceptionTestBuilder WithMessage(Action<string> assertions)
         {
             assertions(this.CaughtException.Message);
             return this;
         }
 
-        /// <summary>
-        /// Tests whether created result location passes given predicate.
-        /// </summary>
-        /// <param name="predicate">Predicate testing the location.</param>
-        /// <returns>The same created test builder.</returns>
+        /// <inheritdoc />
         public IAndExceptionTestBuilder WithMessage(Func<string, bool> predicate)
         {
             var actualExceptionMessage = this.CaughtException.Message;
@@ -109,13 +88,7 @@
             return this;
         }
 
-        /// <summary>
-        /// AndAlso method for better readability when chaining expected exception tests.
-        /// </summary>
-        /// <returns>The same exception test builder.</returns>
-        public IExceptionTestBuilder AndAlso()
-        {
-            return this;
-        }
+        /// <inheritdoc />
+        public IExceptionTestBuilder AndAlso() => this;
     }
 }

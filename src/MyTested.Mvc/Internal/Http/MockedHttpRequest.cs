@@ -23,7 +23,7 @@
         private IFormFeature formFeature;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MockedHttpRequest" /> class.
+        /// Initializes a new instance of the <see cref="MockedHttpRequest"/> class.
         /// </summary>
         public MockedHttpRequest()
         {

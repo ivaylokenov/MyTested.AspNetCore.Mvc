@@ -7,7 +7,7 @@
     using Utilities.Extensions;
 
     /// <summary>
-    /// Used for testing specific exception messages.
+    /// Used for testing <see cref="System.Exception"/> messages.
     /// </summary>
     public class ExceptionMessageTestBuilder
         : BaseTestBuilderWithInvokedAction, IExceptionMessageTestBuilder
@@ -16,12 +16,10 @@
         private readonly string actualMessage;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExceptionMessageTestBuilder" /> class.
+        /// Initializes a new instance of the <see cref="ExceptionMessageTestBuilder"/> class.
         /// </summary>
-        /// <param name="controller">Controller on which the action will be tested.</param>
-        /// <param name="actionName">Name of the tested action.</param>
-        /// <param name="caughtException">Caught exception during the action execution.</param>
-        /// <param name="exceptionTestBuilder">Original exception test builder.</param>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
+        /// <param name="exceptionTestBuilder">Test builder of <see cref="IAndExceptionTestBuilder"/> type.</param>
         public ExceptionMessageTestBuilder(
             ControllerTestContext testContext,
             IAndExceptionTestBuilder exceptionTestBuilder)
@@ -31,11 +29,7 @@
             this.actualMessage = testContext.CaughtException.Message;
         }
 
-        /// <summary>
-        /// Tests whether particular exception message is equal to given message.
-        /// </summary>
-        /// <param name="errorMessage">Expected error message for particular exception.</param>
-        /// <returns>Exception test builder.</returns>
+        /// <inheritdoc />
         public IAndExceptionTestBuilder ThatEquals(string errorMessage)
         {
             if (this.actualMessage != errorMessage)
@@ -48,11 +42,7 @@
             return this.exceptionTestBuilder;
         }
 
-        /// <summary>
-        /// Tests whether particular exception message begins with given message.
-        /// </summary>
-        /// <param name="beginMessage">Expected beginning for particular exception message.</param>
-        /// <returns>Exception test builder.</returns>
+        /// <inheritdoc />
         public IAndExceptionTestBuilder BeginningWith(string beginMessage)
         {
             if (!this.actualMessage.StartsWith(beginMessage))
@@ -65,11 +55,7 @@
             return this.exceptionTestBuilder;
         }
 
-        /// <summary>
-        /// Tests whether particular exception message ends with given message.
-        /// </summary>
-        /// <param name="endMessage">Expected ending for particular exception message.</param>
-        /// <returns>Exception test builder.</returns>
+        /// <inheritdoc />
         public IAndExceptionTestBuilder EndingWith(string endMessage)
         {
             if (!this.actualMessage.EndsWith(endMessage))
@@ -82,11 +68,7 @@
             return this.exceptionTestBuilder;
         }
 
-        /// <summary>
-        /// Tests whether particular exception message contains given message.
-        /// </summary>
-        /// <param name="containsMessage">Expected containing string for particular exception message.</param>
-        /// <returns>Exception test builder.</returns>
+        /// <inheritdoc />
         public IAndExceptionTestBuilder Containing(string containsMessage)
         {
             if (!this.actualMessage.Contains(containsMessage))

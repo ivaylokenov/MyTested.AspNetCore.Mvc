@@ -11,18 +11,21 @@
     /// <typeparam name="TController">Class representing ASP.NET Core MVC controller.</typeparam>
     public partial class ControllerBuilder<TController>
     {
+        /// <inheritdoc />
         public IAndControllerBuilder<TController> WithTempData(Action<ITempDataBuilder> tempDataBuilder)
         {
             this.tempDataBuilderAction = tempDataBuilder;
             return this;
         }
 
+        /// <inheritdoc />
         public IAndControllerBuilder<TController> WithSession(Action<ISessionBuilder> sessionBuilder)
         {
             sessionBuilder(new SessionBuilder(this.HttpContext.Session));
             return this;
         }
 
+        /// <inheritdoc />
         public IAndControllerBuilder<TController> WithMemoryCache(Action<IMemoryCacheBuilder> memoryCacheBuilder)
         {
             memoryCacheBuilder(new MemoryCacheBuilder(this.Services));

@@ -31,7 +31,7 @@
         private LambdaExpression redirectToExpression;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RedirectTestBuilder{TRedirectResult}" /> class.
+        /// Initializes a new instance of the <see cref="RedirectTestBuilder{TRedirectResult}"/> class.
         /// </summary>
         /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public RedirectTestBuilder(ControllerTestContext testContext)

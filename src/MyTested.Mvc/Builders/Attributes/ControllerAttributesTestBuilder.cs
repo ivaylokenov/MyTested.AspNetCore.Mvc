@@ -13,7 +13,7 @@
     public class ControllerAttributesTestBuilder : BaseAttributesTestBuilder, IAndControllerAttributesTestBuilder
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ControllerAttributesTestBuilder" /> class.
+        /// Initializes a new instance of the <see cref="ControllerAttributesTestBuilder"/> class.
         /// </summary>
         /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public ControllerAttributesTestBuilder(ControllerTestContext testContext)

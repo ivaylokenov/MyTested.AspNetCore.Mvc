@@ -10,7 +10,7 @@
     public class MockedHttpResponse : DefaultHttpResponse
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MockedHttpResponse" /> class.
+        /// Initializes a new instance of the <see cref="MockedHttpResponse"/> class.
         /// </summary>
         /// <param name="context">Default HTTP context.</param>
         public MockedHttpResponse(DefaultHttpContext context)

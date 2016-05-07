@@ -17,18 +17,15 @@
     public class ControllerTestBuilder : BaseTestBuilderWithController, IControllerTestBuilder
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ControllerTestBuilder" /> class.
+        /// Initializes a new instance of the <see cref="ControllerTestBuilder"/> class.
         /// </summary>
-        /// <param name="testContext"></param>
+        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public ControllerTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
         }
 
-        /// <summary>
-        /// Checks whether the tested controller has no attributes of any type. 
-        /// </summary>
-        /// <returns>Base test builder.</returns>
+        /// <inheritdoc />
         public IBaseTestBuilderWithController NoAttributes()
         {
             AttributesValidator.ValidateNoAttributes(
@@ -38,11 +35,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Checks whether the tested controller has at least 1 attribute of any type. 
-        /// </summary>
-        /// <param name="withTotalNumberOf">Optional parameter specifying the exact total number of attributes on the tested controller.</param>
-        /// <returns>Base test builder.</returns>
+        /// <inheritdoc />
         public IBaseTestBuilderWithController Attributes(int? withTotalNumberOf = null)
         {
             AttributesValidator.ValidateNumberOfAttributes(
@@ -53,11 +46,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Checks whether the tested controller has at specific attributes. 
-        /// </summary>
-        /// <param name="attributesTestBuilder">Builder for testing specific attributes on the controller.</param>
-        /// <returns>Base test builder.</returns>
+        /// <inheritdoc />
         public IBaseTestBuilderWithController Attributes(Action<IControllerAttributesTestBuilder> attributesTestBuilder)
         {
             var newAttributesTestBuilder = new ControllerAttributesTestBuilder(this.TestContext);

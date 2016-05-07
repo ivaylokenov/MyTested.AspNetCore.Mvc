@@ -25,7 +25,7 @@
         private readonly ICollection<Action<JsonSerializerSettings, JsonSerializerSettings>> validations;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="JsonSerializerSettingsTestBuilder" /> class.
+        /// Initializes a new instance of the <see cref="JsonSerializerSettingsTestBuilder"/> class.
         /// </summary>
         /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public JsonSerializerSettingsTestBuilder(ControllerTestContext testContext)

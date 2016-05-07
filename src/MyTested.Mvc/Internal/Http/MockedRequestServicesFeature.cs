@@ -16,7 +16,7 @@
         private bool requestServicesSet;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MockedRequestServicesFeature" /> class.
+        /// Initializes a new instance of the <see cref="MockedRequestServicesFeature"/> class.
         /// </summary>
         /// <param name="globalServices">Global application services provider.</param>
         public MockedRequestServicesFeature(IServiceProvider globalServices)

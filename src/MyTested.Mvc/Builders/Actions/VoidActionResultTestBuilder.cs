@@ -14,7 +14,7 @@
     public class VoidActionResultTestBuilder : BaseTestBuilderWithInvokedAction, IVoidActionResultTestBuilder
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="VoidActionResultTestBuilder" /> class.
+        /// Initializes a new instance of the <see cref="VoidActionResultTestBuilder"/> class.
         /// </summary>
         /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
         public VoidActionResultTestBuilder(ControllerTestContext testContext)

@@ -20,17 +20,20 @@
     /// <typeparam name="TController">Class representing ASP.NET Core MVC controller.</typeparam>
     public partial class ControllerBuilder<TController>
     {
+        /// <inheritdoc />
         public IAndControllerBuilder<TController> WithControllerContext(ControllerContext controllerContext)
         {
             return this.WithActionContext(controllerContext);
         }
 
+        /// <inheritdoc />
         public IAndControllerBuilder<TController> WithControllerContext(Action<ControllerContext> controllerContextSetup)
         {
             this.controllerContextAction += controllerContextSetup;
             return this;
         }
 
+        /// <inheritdoc />
         public IAndControllerBuilder<TController> WithActionContext(ActionContext actionContext)
         {
             CommonValidator.CheckForNullReference(actionContext, nameof(ActionContext));
@@ -38,17 +41,14 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IAndControllerBuilder<TController> WithActionContext(Action<ActionContext> actionContextSetup)
         {
             this.controllerContextAction += actionContextSetup;
             return this;
         }
 
-        /// <summary>
-        /// Sets custom properties to the controller using action delegate.
-        /// </summary>
-        /// <param name="controllerSetup">Action delegate to use for controller setup.</param>
-        /// <returns>The same controller test builder.</returns>
+        /// <inheritdoc />
         public IAndControllerBuilder<TController> WithSetup(Action<TController> controllerSetup)
         {
             this.controllerSetupAction += controllerSetup;
@@ -123,15 +123,9 @@
 
             controllerPropertyActivators.ForEach(a => a.Activate(this.TestContext.ControllerContext, this.TestContext.Controller));
 
-            if (this.tempDataBuilderAction != null)
-            {
-                this.tempDataBuilderAction(new TempDataBuilder(this.TestContext.TempData));
-            }
+            this.tempDataBuilderAction?.Invoke(new TempDataBuilder(this.TestContext.TempData));
 
-            if (this.controllerSetupAction != null)
-            {
-                this.controllerSetupAction(this.TestContext.ControllerAs<TController>());
-            }
+            this.controllerSetupAction?.Invoke(this.TestContext.ControllerAs<TController>());
         }
     }
 }
