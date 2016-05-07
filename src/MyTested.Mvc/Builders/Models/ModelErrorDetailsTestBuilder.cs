@@ -24,7 +24,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelErrorDetailsTestBuilder{TModel}"/> class.
         /// </summary>
-        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
+        /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
         /// <param name="modelErrorTestBuilder">Test builder of <see cref="IAndModelErrorTestBuilder{TModel}"/> type.</param>
         /// <param name="errorKey">Key in <see cref="ModelStateDictionary"/> corresponding to this particular error.</param>
         /// <param name="aggregatedErrors">All errors found in <see cref="ModelStateDictionary"/> for given error key.</param>

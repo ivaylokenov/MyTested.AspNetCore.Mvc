@@ -16,7 +16,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseDataProviderTestBuilder"/> class.
         /// </summary>
-        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
+        /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
         /// <param name="dataProviderName">Name of the data provider.</param>
         protected BaseDataProviderTestBuilder(ControllerTestContext testContext, string dataProviderName)
             : base(testContext)

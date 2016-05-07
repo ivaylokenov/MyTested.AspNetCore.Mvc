@@ -17,7 +17,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseTestBuilder"/> class.
         /// </summary>
-        /// <param name="testContext">HTTP test context containing data about the currently executed assertion chain.</param>
+        /// <param name="testContext"><see cref="HttpTestContext"/> containing data about the currently executed assertion chain.</param>
         protected BaseTestBuilder(HttpTestContext testContext)
         {
             this.TestContext = testContext;

@@ -27,8 +27,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="ShouldMapTestBuilder"/> class.
         /// </summary>
-        /// <param name="httpConfiguration">HTTP configuration to use for the route test.</param>
-        /// <param name="location">URI location represented by string.</param>
+        /// <param name="testContext"><see cref="RouteTestContext"/> containing data about the currently executed assertion chain.</param>
         public ShouldMapTestBuilder(RouteTestContext testContext)
             : base(testContext)
         {
@@ -36,6 +35,7 @@
 
         private RouteContext RouteContext => this.TestContext.RouteContext;
 
+        /// <inheritdoc />
         public IAndResolvedRouteTestBuilder ToAction(string actionName)
         {
             var actualInfo = this.GetActualRouteInfo();
@@ -51,6 +51,7 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IAndResolvedRouteTestBuilder ToController(string controllerName)
         {
             var actualInfo = this.GetActualRouteInfo();
@@ -66,6 +67,7 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IAndResolvedRouteTestBuilder ToRouteValue(string key)
         {
             var actualInfo = this.GetActualRouteInfo();
@@ -79,6 +81,7 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IAndResolvedRouteTestBuilder ToRouteValue(string key, object value)
         {
             this.ToRouteValue(key);
@@ -115,9 +118,11 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IAndResolvedRouteTestBuilder ToRouteValues(object routeValues)
             => this.ToRouteValues(new RouteValueDictionary(routeValues));
 
+        /// <inheritdoc />
         public IAndResolvedRouteTestBuilder ToRouteValues(IDictionary<string, object> routeValues)
         {
             if (this.actionCallExpression == null)
@@ -140,6 +145,7 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IAndResolvedRouteTestBuilder ToDataToken(string key)
         {
             var actualInfo = this.GetActualRouteInfo();
@@ -153,6 +159,7 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IAndResolvedRouteTestBuilder ToDataToken(string key, object value)
         {
             this.ToDataToken(key);
@@ -170,9 +177,11 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IAndResolvedRouteTestBuilder ToDataTokens(object dataTokens)
             => this.ToDataTokens(new RouteValueDictionary(dataTokens));
 
+        /// <inheritdoc />
         public IAndResolvedRouteTestBuilder ToDataTokens(IDictionary<string, object> dataTokens)
         {
             var actualInfo = this.GetActualRouteInfo();
@@ -191,7 +200,8 @@
 
             return this;
         }
-        
+
+        /// <inheritdoc />
         public IAndResolvedRouteTestBuilder To(string actionName, string controllerName)
         {
             this.ToAction(actionName);
@@ -199,6 +209,7 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IAndResolvedRouteTestBuilder To<TController>()
             where TController : class
         {
@@ -216,27 +227,21 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether the built route is resolved to the action provided by the expression.
-        /// </summary>
-        /// <typeparam name="TController">Type of expected resolved controller.</typeparam>
-        /// <param name="actionCall">Method call expression indicating the expected resolved action.</param>
-        /// <returns>The same route test builder.</returns>
+        /// <inheritdoc />
         public IAndResolvedRouteTestBuilder To<TController>(Expression<Action<TController>> actionCall)
             where TController : class
         {
             return this.ProcessRouteLambdaExpression<TController>(actionCall);
         }
 
+        /// <inheritdoc />
         public IAndResolvedRouteTestBuilder To<TController>(Expression<Func<TController, Task>> actionCall)
             where TController : class
         {
             return this.ProcessRouteLambdaExpression<TController>(actionCall);
         }
 
-        /// <summary>
-        /// Tests whether the built route cannot be resolved.
-        /// </summary>
+        /// <inheritdoc />
         public void ToNonExistingRoute()
         {
             var actualInfo = this.GetActualRouteInfo();
@@ -248,10 +253,7 @@
             }
         }
 
-        /// <summary>
-        /// Tests whether the resolved route will have valid model state.
-        /// </summary>
-        /// <returns>The same route test builder.</returns>
+        /// <inheritdoc />
         public IAndResolvedRouteTestBuilder ToValidModelState()
         {
             var actualInfo = this.GetActualRouteInfo();
@@ -272,11 +274,7 @@
             return this;
         }
 
-        /// <summary>
-        /// Tests whether the resolved route will have invalid model state.
-        /// </summary>
-        /// <param name="withNumberOfErrors">Expected number of errors. If default null is provided, the test builder checks only if any errors are found.</param>
-        /// <returns>The same route test builder.</returns>
+        /// <inheritdoc />
         public IAndResolvedRouteTestBuilder ToInvalidModelState(int? withNumberOfErrors = null)
         {
             var actualInfo = this.GetActualRouteInfo();
@@ -299,14 +297,8 @@
             return this;
         }
 
-        /// <summary>
-        /// AndAlso method for better readability when building route tests.
-        /// </summary>
-        /// <returns>The same route builder.</returns>
-        public IResolvedRouteTestBuilder AndAlso()
-        {
-            return this;
-        }
+        /// <inheritdoc />
+        public IResolvedRouteTestBuilder AndAlso() => this;
 
         private IAndResolvedRouteTestBuilder ProcessRouteLambdaExpression<TController>(LambdaExpression actionCall)
         {

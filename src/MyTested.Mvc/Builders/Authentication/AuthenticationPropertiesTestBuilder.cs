@@ -22,7 +22,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="AuthenticationPropertiesTestBuilder"/> class.
         /// </summary>
-        /// <param name="testContext">Controller test context containing data about the currently executed assertion chain.</param>
+        /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
         public AuthenticationPropertiesTestBuilder(ControllerTestContext testContext)
             :base(testContext)
         {

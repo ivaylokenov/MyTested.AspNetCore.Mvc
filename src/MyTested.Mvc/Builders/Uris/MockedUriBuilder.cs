@@ -7,7 +7,7 @@
     using SystemUriBuilder = System.UriBuilder;
 
     /// <summary>
-    /// Used for creating URI.
+    /// Used for building <see cref="Uri"/>.
     /// </summary>
     public class MockedUriBuilder : IAndUriTestBuilder
     {
@@ -20,60 +20,40 @@
         }
 
         /// <summary>
-        /// Gets the built mocked URI instance.
+        /// Gets the built mocked <see cref="Uri"/> instance.
         /// </summary>
-        /// <value>Mocked URI.</value>
+        /// <value>Mocked <see cref="Uri"/>.</value>
         protected MockedUri MockedUri { get; private set; }
 
-        /// <summary>
-        /// Adds host to the built URI.
-        /// </summary>
-        /// <param name="host">Host part of URI.</param>
-        /// <returns>The same URI test builder.</returns>
+        /// <inheritdoc />
         public virtual IAndUriTestBuilder WithHost(string host)
         {
             this.MockedUri.Host = host;
             return this;
         }
 
-        /// <summary>
-        /// Adds port to the built URI.
-        /// </summary>
-        /// <param name="port">Port part of URI.</param>
-        /// <returns>The same URI test builder.</returns>
+        /// <inheritdoc />
         public virtual IAndUriTestBuilder WithPort(int port)
         {
             this.MockedUri.Port = port;
             return this;
         }
 
-        /// <summary>
-        /// Adds absolute path to the built URI.
-        /// </summary>
-        /// <param name="absolutePath">Absolute path part of URI.</param>
-        /// <returns>The same URI test builder.</returns>
+        /// <inheritdoc />
         public virtual IAndUriTestBuilder WithAbsolutePath(string absolutePath)
         {
             this.MockedUri.AbsolutePath = absolutePath;
             return this;
         }
 
-        /// <summary>
-        /// Adds scheme to the built URI.
-        /// </summary>
-        /// <param name="scheme">Scheme part of URI.</param>
-        /// <returns>The same URI test builder.</returns>
+        /// <inheritdoc />
         public virtual IAndUriTestBuilder WithScheme(string scheme)
         {
             this.MockedUri.Scheme = scheme;
             return this;
         }
 
-        /// <summary>
-        /// Adds query string to the built URI.
-        /// </summary>
-        /// <param name="query">Query part of URI.</param>
-        /// <returns>The same URI test builder.</returns>
+        /// <inheritdoc />
         public virtual IAndUriTestBuilder WithQuery(string query)
         {
             if (!query.StartsWith("?"))
@@ -85,30 +65,17 @@
             return this;
         }
 
-        /// <summary>
-        /// Adds fragment to the built URI.
-        /// </summary>
-        /// <param name="fragment">Document fragment part of URI.</param>
-        /// <returns>The same URI test builder.</returns>
+        /// <inheritdoc />
         public virtual IAndUriTestBuilder WithFragment(string fragment)
         {
             this.MockedUri.Fragment = fragment;
             return this;
         }
 
-        /// <summary>
-        /// AndAlso method for better readability when chaining URI builder.
-        /// </summary>
-        /// <returns>The same URI test builder.</returns>
-        public IUriTestBuilder AndAlso()
-        {
-            return this;
-        }
+        /// <inheritdoc />
+        public IUriTestBuilder AndAlso() => this;
 
-        internal MockedUri GetMockedUri()
-        {
-            return this.MockedUri;
-        }
+        internal MockedUri GetMockedUri() => this.MockedUri;
 
         internal Uri GetUri()
         {

@@ -22,39 +22,28 @@
             TestApplication.StartupType = startupType;
         }
 
+        /// <inheritdoc />
         public IApplicationConfigurationBuilder WithTestConfiguration(Action<IConfigurationBuilder> config)
         {
             TestApplication.AdditionalConfiguration += config;
             return this;
         }
 
-        /// <summary>
-        /// Adds additional services to the tested application's services collection.
-        /// </summary>
-        /// <param name="services">Action for service registration.</param>
-        /// <returns>The same application configuration builder.</returns>
+        /// <inheritdoc />
         public IApplicationConfigurationBuilder WithServices(Action<IServiceCollection> services)
         {
             TestApplication.AdditionalServices += services;
             return this;
         }
 
-        /// <summary>
-        /// Adds additional middleware to the tested application builder.
-        /// </summary>
-        /// <param name="app">Action for middleware registration.</param>
-        /// <returns>The same application configuration builder.</returns>
+        /// <inheritdoc />
         public IApplicationConfigurationBuilder WithApplication(Action<IApplicationBuilder> app)
         {
             TestApplication.AdditionalApplicationConfiguration += app;
             return this;
         }
 
-        /// <summary>
-        /// Adds additional routes to the tested application builder.
-        /// </summary>
-        /// <param name="routes">Action for route registration.</param>
-        /// <returns>The same application configuration builder.</returns>
+        /// <inheritdoc />
         public IApplicationConfigurationBuilder WithRoutes(Action<IRouteBuilder> routes)
         {
             TestApplication.AdditionalRoutes += routes;

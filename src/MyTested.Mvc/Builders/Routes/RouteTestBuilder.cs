@@ -16,7 +16,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="RouteTestBuilder"/> class.
         /// </summary>
-        /// <param name="router">Instance of IRouter.</param>
+        /// <param name="testContext"><see cref="RouteTestContext"/> containing data about the currently executed assertion chain.</param>
         public RouteTestBuilder(RouteTestContext testContext)
             : base(testContext)
         {
@@ -24,11 +24,7 @@
 
         private MockedHttpContext HttpContext => this.TestContext.MockedHttpContext;
 
-        /// <summary>
-        /// Sets the route location to test.
-        /// </summary>
-        /// <param name="location">Location as string.</param>
-        /// <returns>Route test builder.</returns>
+        /// <inheritdoc />
         public IShouldMapTestBuilder ShouldMap(string location)
         {
             return this.ShouldMap(request => request
@@ -36,11 +32,7 @@
                 .WithMethod(HttpMethod.Get));
         }
 
-        /// <summary>
-        /// Sets the route location to test.
-        /// </summary>
-        /// <param name="location">Location as Uri.</param>
-        /// <returns>Route test builder.</returns>
+        /// <inheritdoc />
         public IShouldMapTestBuilder ShouldMap(Uri location)
         {
             return this.ShouldMap(request => request
@@ -48,22 +40,14 @@
                 .WithMethod(HttpMethod.Get));
         }
 
-        /// <summary>
-        /// Sets the route HTTP request message to test.
-        /// </summary>
-        /// <param name="request">Instance of type HttpRequest.</param>
-        /// <returns>Route test builder.</returns>
+        /// <inheritdoc />
         public IShouldMapTestBuilder ShouldMap(HttpRequest request)
         {
             this.HttpContext.CustomRequest = request;
             return this.ShouldMap(this.HttpContext);
         }
 
-        /// <summary>
-        /// Sets the route HTTP request message to test using a builder.
-        /// </summary>
-        /// <param name="httpRequestBuilder">Builder for HTTP request.</param>
-        /// <returns>Route test builder.</returns>
+        /// <inheritdoc />
         public IShouldMapTestBuilder ShouldMap(Action<IHttpRequestBuilder> httpRequestBuilder)
         {
             var httpBuilder = new HttpRequestBuilder();
