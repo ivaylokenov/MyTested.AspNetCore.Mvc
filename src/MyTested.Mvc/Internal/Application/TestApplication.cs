@@ -31,7 +31,7 @@
     using Microsoft.Extensions.PlatformAbstractions;
     using Routes;
     using Utilities.Extensions;
-
+    
     public static class TestApplication
     {
         private static readonly RequestDelegate NullHandler = (c) => TaskCache.CompletedTask;
