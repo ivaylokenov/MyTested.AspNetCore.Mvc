@@ -3,14 +3,14 @@
     using System;
 
     /// <summary>
-    /// Exception for controller unresolved dependencies.
+    /// <see cref="Exception"/> for controller unresolved dependencies.
     /// </summary>
     public class UnresolvedDependenciesException : Exception
     {
         /// <summary>
-        /// Initializes a new instance of the UnresolvedDependenciesException class.
+        /// Initializes a new instance of the <see cref="UnresolvedDependenciesException"/> class.
         /// </summary>
-        /// <param name="message">Message for System.Exception class.</param>
+        /// <param name="message">The message that describes the error.</param>
         public UnresolvedDependenciesException(string message)
             : base(message)
         {

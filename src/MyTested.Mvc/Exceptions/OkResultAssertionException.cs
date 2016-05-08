@@ -3,14 +3,14 @@
     using System;
 
     /// <summary>
-    /// Exception for invalid OK result.
+    /// <see cref="Exception"/> for invalid <see cref="Microsoft.AspNetCore.Mvc.OkResult"/> or <see cref="Microsoft.AspNetCore.Mvc.OkObjectResult"/>.
     /// </summary>
     public class OkResultAssertionException : Exception
     {
         /// <summary>
-        /// Initializes a new instance of the OkResultAssertionException class.
+        /// Initializes a new instance of the <see cref="OkResultAssertionException"/> class.
         /// </summary>
-        /// <param name="message">Message for System.Exception class.</param>
+        /// <param name="message">The message that describes the error.</param>
         public OkResultAssertionException(string message)
             : base(message)
         {

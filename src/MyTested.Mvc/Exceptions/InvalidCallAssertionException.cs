@@ -3,14 +3,14 @@
     using System;
 
     /// <summary>
-    /// Exception for invalid test call.
+    /// <see cref="Exception"/> for invalid test call.
     /// </summary>
     public class InvalidCallAssertionException : Exception
     {
         /// <summary>
-        /// Initializes a new instance of the InvalidCallAssertionException class.
+        /// Initializes a new instance of the <see cref="InvalidCallAssertionException"/> class.
         /// </summary>
-        /// <param name="message">Message for System.Exception class.</param>
+        /// <param name="message">The message that describes the error.</param>
         public InvalidCallAssertionException(string message)
             : base(message)
         {

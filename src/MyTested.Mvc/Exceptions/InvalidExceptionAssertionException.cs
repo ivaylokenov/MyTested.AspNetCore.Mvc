@@ -3,14 +3,14 @@
     using System;
 
     /// <summary>
-    /// Exception for invalid expected exceptions.
+    /// <see cref="Exception"/> for invalid expected exceptions.
     /// </summary>
     public class InvalidExceptionAssertionException : Exception
     {
         /// <summary>
-        /// Initializes a new instance of the InvalidExceptionAssertionException class.
+        /// Initializes a new instance of the <see cref="InvalidExceptionAssertionException"/> class.
         /// </summary>
-        /// <param name="message">Message for System.Exception class.</param>
+        /// <param name="message">The message that describes the error.</param>
         public InvalidExceptionAssertionException(string message)
             : base(message)
         {

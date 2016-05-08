@@ -3,14 +3,14 @@
     using System;
 
     /// <summary>
-    /// Exception for invalid data assertion.
+    /// <see cref="Exception"/> for invalid data assertion.
     /// </summary>
     public class DataProviderAssertionException : Exception
     {
         /// <summary>
-        /// Initializes a new instance of the DataProviderAssertionException class.
+        /// Initializes a new instance of the <see cref="DataProviderAssertionException"/> class.
         /// </summary>
-        /// <param name="message">Message for System.Exception class.</param>
+        /// <param name="message">The message that describes the error.</param>
         public DataProviderAssertionException(string message)
             : base(message)
         {

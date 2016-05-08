@@ -3,14 +3,14 @@
     using System;
 
     /// <summary>
-    /// Exception for invalid action return type when expecting response model.
+    /// <see cref="Exception"/> for invalid action return type when expecting response model.
     /// </summary>
     public class ResponseModelAssertionException : Exception
     {
         /// <summary>
-        /// Initializes a new instance of the ResponseModelAssertionException class.
+        /// Initializes a new instance of the <see cref="ResponseModelAssertionException"/> class.
         /// </summary>
-        /// <param name="message">Message for System.Exception class.</param>
+        /// <param name="message">The message that describes the error.</param>
         public ResponseModelAssertionException(string message)
             : base(message)
         {

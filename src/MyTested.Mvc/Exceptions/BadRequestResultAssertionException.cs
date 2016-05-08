@@ -3,14 +3,14 @@
     using System;
 
     /// <summary>
-    /// Exception for invalid bad request result.
+    /// <see cref="Exception"/> for invalid <see cref="Microsoft.AspNetCore.Mvc.BadRequestResult"/> or <see cref="Microsoft.AspNetCore.Mvc.BadRequestObjectResult"/>.
     /// </summary>
     public class BadRequestResultAssertionException : Exception
     {
         /// <summary>
-        /// Initializes a new instance of the BadRequestResultAssertionException class.
+        /// Initializes a new instance of the <see cref="BadRequestResultAssertionException"/> class.
         /// </summary>
-        /// <param name="message">Message for System.Exception class.</param>
+        /// <param name="message">The message that describes the error.</param>
         public BadRequestResultAssertionException(string message)
             : base(message)
         {

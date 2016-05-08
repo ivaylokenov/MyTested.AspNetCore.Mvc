@@ -3,14 +3,14 @@
     using System;
 
     /// <summary>
-    /// Exception for invalid content result.
+    /// <see cref="Exception"/> for invalid <see cref="Microsoft.AspNetCore.Mvc.ContentResult"/>.
     /// </summary>
     public class ContentResultAssertionException : Exception
     {
         /// <summary>
-        /// Initializes a new instance of the ContentResultAssertionException class.
+        /// Initializes a new instance of the <see cref="ContentResultAssertionException"/> class.
         /// </summary>
-        /// <param name="message">Message for System.Exception class.</param>
+        /// <param name="message">The message that describes the error.</param>
         public ContentResultAssertionException(string message)
             : base(message)
         {

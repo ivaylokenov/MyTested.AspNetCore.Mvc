@@ -3,14 +3,14 @@
     using System;
 
     /// <summary>
-    /// Exception for model with errors.
+    /// <see cref="Exception"/> for <see cref="Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary"/> errors.
     /// </summary>
     public class ModelErrorAssertionException : Exception
     {
         /// <summary>
-        /// Initializes a new instance of the ModelErrorAssertionException class.
+        /// Initializes a new instance of the <see cref="ModelErrorAssertionException"/> class.
         /// </summary>
-        /// <param name="message">Message for System.Exception class.</param>
+        /// <param name="message">The message that describes the error.</param>
         public ModelErrorAssertionException(string message)
             : base(message)
         {

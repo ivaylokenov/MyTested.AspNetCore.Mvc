@@ -45,7 +45,7 @@
         [Fact]
         public void ShouldReturnHttpStatusCodeShouldThrowExceptionWithIncorrectStatusCode()
         {
-            Test.AssertException<HttpStatusCodeResultAssertionException>(
+            Test.AssertException<StatusCodeResultAssertionException>(
                 () =>
                 {
                     MyMvc

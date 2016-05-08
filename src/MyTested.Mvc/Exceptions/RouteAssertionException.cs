@@ -3,14 +3,14 @@
     using System;
 
     /// <summary>
-    /// Exception for invalid authentication properties call.
+    /// <see cref="Exception"/> for invalid route.
     /// </summary>
     public class RouteAssertionException : Exception
     {
         /// <summary>
-        /// Initializes a new instance of the RouteAssertionException class.
+        /// Initializes a new instance of the <see cref="RouteAssertionException"/> class.
         /// </summary>
-        /// <param name="message">Message for System.Exception class.</param>
+        /// <param name="message">The message that describes the error.</param>
         public RouteAssertionException(string message)
             : base(message)
         {

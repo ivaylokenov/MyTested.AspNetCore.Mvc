@@ -3,14 +3,14 @@
     using System;
 
     /// <summary>
-    /// Exception for invalid authentication properties call.
+    /// <see cref="Exception"/> for invalid <see cref="Microsoft.AspNetCore.Http.Authentication.AuthenticationProperties"/> assertion.
     /// </summary>
     public class AuthenticationPropertiesAssertionException : Exception
     {
         /// <summary>
-        /// Initializes a new instance of the AuthenticationPropertiesAssertionException class.
+        /// Initializes a new instance of the <see cref="AuthenticationPropertiesAssertionException"/> class.
         /// </summary>
-        /// <param name="message">Message for System.Exception class.</param>
+        /// <param name="message">The message that describes the error.</param>
         public AuthenticationPropertiesAssertionException(string message)
             : base(message)
         {

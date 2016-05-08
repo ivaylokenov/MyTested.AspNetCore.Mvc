@@ -3,14 +3,14 @@
     using System;
 
     /// <summary>
-    /// Exception for invalid forbid result.
+    /// <see cref="Exception"/> for invalid <see cref="Microsoft.AspNetCore.Mvc.ForbidResult"/>.
     /// </summary>
     public class ForbidResultAssertionException : Exception
     {
         /// <summary>
-        /// Initializes a new instance of the ForbidResultAssertionException class.
+        /// Initializes a new instance of the <see cref="ForbidResultAssertionException"/> class.
         /// </summary>
-        /// <param name="message">Message for System.Exception class.</param>
+        /// <param name="message">The message that describes the error.</param>
         public ForbidResultAssertionException(string message)
             : base(message)
         {

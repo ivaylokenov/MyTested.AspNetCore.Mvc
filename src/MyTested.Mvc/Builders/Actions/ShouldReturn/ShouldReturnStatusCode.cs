@@ -41,7 +41,7 @@
 
         private void ThrowNewHttpStatusCodeResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
-            throw new HttpStatusCodeResultAssertionException(string.Format(
+            throw new StatusCodeResultAssertionException(string.Format(
                     "When calling {0} action in {1} expected status code result {2} {3}, but {4}.",
                     this.ActionName,
                     this.Controller.GetName(),

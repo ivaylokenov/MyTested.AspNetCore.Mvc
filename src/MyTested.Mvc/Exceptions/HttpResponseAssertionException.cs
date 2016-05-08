@@ -3,14 +3,14 @@
     using System;
 
     /// <summary>
-    /// Exception for invalid HTTP response.
+    /// <see cref="Exception"/> for invalid <see cref="Microsoft.AspNetCore.Http.HttpResponse"/>.
     /// </summary>
     public class HttpResponseAssertionException : Exception
     {
         /// <summary>
-        /// Initializes a new instance of the HttpResponseAssertionException class.
+        /// Initializes a new instance of the <see cref="HttpResponseAssertionException"/> class.
         /// </summary>
-        /// <param name="message">Message for System.Exception class.</param>
+        /// <param name="message">The message that describes the error.</param>
         public HttpResponseAssertionException(string message)
             : base(message)
         {

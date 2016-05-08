@@ -3,14 +3,14 @@
     using System;
 
     /// <summary>
-    /// Exception for invalid not found result.
+    /// <see cref="Exception"/> for invalid <see cref="Microsoft.AspNetCore.Mvc.NotFoundResult"/> or <see cref="Microsoft.AspNetCore.Mvc.NotFoundObjectResult"/>.
     /// </summary>
     public class NotFoundResultAssertionException : Exception
     {
         /// <summary>
-        /// Initializes a new instance of the NotFoundResultAssertionException class.
+        /// Initializes a new instance of the <see cref="NotFoundResultAssertionException"/> class.
         /// </summary>
-        /// <param name="message">Message for System.Exception class.</param>
+        /// <param name="message">The message that describes the error.</param>
         public NotFoundResultAssertionException(string message)
             : base(message)
         {

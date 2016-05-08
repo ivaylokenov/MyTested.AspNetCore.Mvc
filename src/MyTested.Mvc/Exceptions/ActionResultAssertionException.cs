@@ -3,14 +3,14 @@
     using System;
 
     /// <summary>
-    /// Exception for invalid action return type when expecting IActionResult.
+    /// <see cref="Exception"/> for invalid action return type.
     /// </summary>
     public class ActionResultAssertionException : Exception
     {
         /// <summary>
-        /// Initializes a new instance of the ActionResultAssertionException class.
+        /// Initializes a new instance of the <see cref="ActionResultAssertionException"/> class.
         /// </summary>
-        /// <param name="message">Message for System.Exception class.</param>
+        /// <param name="message">The message that describes the error.</param>
         public ActionResultAssertionException(string message)
             : base(message)
         {
