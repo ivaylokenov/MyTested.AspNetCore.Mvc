@@ -109,7 +109,7 @@
         /// </summary>
         /// <param name="userBuilder">User builder to create mocked user object.</param>
         /// <returns>The same controller builder.</returns>
-        IAndControllerBuilder<TController> WithAuthenticatedUser(Action<IAndClaimsPrincipalBuilder> userBuilder);
+        IAndControllerBuilder<TController> WithAuthenticatedUser(Action<IClaimsPrincipalBuilder> userBuilder);
 
         /// <summary>
         /// Sets custom properties to the controller using action delegate.

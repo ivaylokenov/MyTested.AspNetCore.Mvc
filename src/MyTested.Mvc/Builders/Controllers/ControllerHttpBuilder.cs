@@ -58,7 +58,7 @@
         }
 
         /// <inheritdoc />
-        public IAndControllerBuilder<TController> WithAuthenticatedUser(Action<IAndClaimsPrincipalBuilder> userBuilder)
+        public IAndControllerBuilder<TController> WithAuthenticatedUser(Action<IClaimsPrincipalBuilder> userBuilder)
         {
             var newUserBuilder = new ClaimsPrincipalBuilder();
             userBuilder(newUserBuilder);
