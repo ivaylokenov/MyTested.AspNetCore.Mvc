@@ -3,13 +3,17 @@
   "description": "MyTested.Mvc is a powerful unit testing library providing easy fluent interface to test the ASP.NET Core MVC framework.",
   "version": "1.0.0-beta",
   "authors": [ "Ivaylo Kenov" ],
-  "tags": [ "aspnetcore", "aspnetcoremvc", "testing", "unit", "tests", "fluent", "testing", "framework", "asp", "net", "core", "mvc", "test", "mymvc" ],
-  "projectUrl": "https://github.com/ivaylokenov/MyTested.Mvc",
-  "licenseUrl": "https://github.com/ivaylokenov/MyTested.Mvc/blob/master/LICENSE",
+  "packOptions": {
+    "projectUrl": "https://github.com/ivaylokenov/MyTested.Mvc",
+    "licenseUrl": "https://github.com/ivaylokenov/MyTested.Mvc/blob/master/LICENSE",
+    "tags": [ "aspnetcore", "aspnetcoremvc", "testing", "unit", "tests", "fluent", "testing", "framework", "asp", "net", "core", "mvc", "test", "mymvc" ]
+  },
 
-  "compilationOptions": {
-    "warningsAsErrors": true,
-    "xmlDoc": true
+  "buildOptions": {
+    "compilationOptions": {
+      "warningsAsErrors": true,
+      "xmlDoc": true
+    }
   },
 
   "dependencies": {
@@ -19,14 +23,11 @@
   },
 
   "frameworks": {
-    "netstandard1.5": { },
-    "net451": {
-      "frameworkAssemblies": {
-        "System.Collections": "",
-        "System.ComponentModel": "",
-        "System.Runtime": "",
-        "System.Threading.Tasks": ""
-      }
+    "net451": { },
+    "netstandard1.5": {
+      "imports": [
+        "portable-net451+win8"
+      ]
     }
   }
 }
