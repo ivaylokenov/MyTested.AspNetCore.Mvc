@@ -6,92 +6,92 @@
     public static class ContentType
     {
         /// <summary>
-        /// Represents text/plain (txt).
+        /// "text/plain" (txt) MIME type value.
         /// </summary>
         public const string TextPlain = "text/plain";
 
         /// <summary>
-        /// Represents text/html (html).
+        /// "text/html" (html) MIME type value.
         /// </summary>
         public const string TextHtml = "text/html";
 
         /// <summary>
-        /// Represents text/css (css).
+        /// "text/css" (css) MIME type value.
         /// </summary>
         public const string TextCss = "text/css";
 
         /// <summary>
-        /// Represents image/bmp (bmp).
+        /// "image/bmp" (bmp) MIME type value.
         /// </summary>
         public const string ImageBmp = "image/bmp";
 
         /// <summary>
-        /// Represents image/jpeg (jpeg or jpg).
+        /// "image/jpeg" (jpeg or jpg) MIME type value.
         /// </summary>
         public const string ImageJpeg = "image/jpeg";
 
         /// <summary>
-        /// Represents image/png (png).
+        /// "image/png" (png) MIME type value.
         /// </summary>
         public const string ImagePng = "image/png";
 
         /// <summary>
-        /// Represents image/gif (gif).
+        /// "image/gif" (gif) MIME type value.
         /// </summary>
         public const string ImageGif = "image/gif";
 
         /// <summary>
-        /// Represents "application/x-javascript" (js).
+        /// "application/x-javascript" (js) MIME type value.
         /// </summary>
         public const string ApplicationJavaScript = "application/x-javascript";
 
         /// <summary>
-        /// Represents application/json (json).
+        /// "application/json" (json) MIME type value.
         /// </summary>
         public const string ApplicationJson = "application/json";
 
         /// <summary>
-        /// Represents application/xml (xml).
+        /// "application/xml" (xml) MIME type value.
         /// </summary>
         public const string ApplicationXml = "application/xml";
 
         /// <summary>
-        /// Represents application/x-www-form-urlencoded.
+        /// "application/x-www-form-urlencoded" MIME type value.
         /// </summary>
         public const string FormUrlEncoded = "application/x-www-form-urlencoded";
 
         /// <summary>
-        /// Represents application/octet-stream (exe).
+        /// "application/octet-stream" (exe) MIME type value.
         /// </summary>
         public const string ApplicationOctetStream = "application/octet-stream";
 
         /// <summary>
-        /// Represents application/zip (zip).
+        /// "application/zip" (zip) MIME type value.
         /// </summary>
         public const string ApplicationZip = "application/zip";
 
         /// <summary>
-        /// Represents audio/mpeg (mp3).
+        /// "audio/mpeg" (mp3) MIME type value.
         /// </summary>
         public const string AudioMpeg = "audio/mpeg";
 
         /// <summary>
-        /// Represents audio/vorbis (ogg).
+        /// "audio/vorbis" (ogg) MIME type value.
         /// </summary>
         public const string AudioVorbis = "audio/vorbis";
 
         /// <summary>
-        /// Represents video/avi (avi).
+        /// "video/avi" (avi) MIME type value.
         /// </summary>
         public const string VideoAvi = "video/avi";
 
         /// <summary>
-        /// Represents video/mpeg (mpeg).
+        /// "video/mpeg" (mpeg) MIME type value.
         /// </summary>
         public const string VideoMpeg = "video/mpeg";
 
         /// <summary>
-        /// Represents video/quicktime (qt).
+        /// "video/quicktime" (qt) MIME type value.
         /// </summary>
         public const string VideoQuicktime = "video/quicktime";
     }

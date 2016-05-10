@@ -260,7 +260,7 @@ namespace MyTested.Mvc.Test
         {
             MyMvc.IsUsingDefaultConfiguration();
 
-            Test.AssertException<UnresolvedDependenciesException>(
+            Test.AssertException<UnresolvedServicesException>(
                 () =>
                 {
                     MyMvc

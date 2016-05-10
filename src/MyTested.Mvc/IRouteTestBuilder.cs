@@ -14,28 +14,28 @@
         /// Sets the route location to test.
         /// </summary>
         /// <param name="location">Location as string.</param>
-        /// <returns>Route test builder.</returns>
+        /// <returns>Test builder of <see cref="IShouldMapTestBuilder"/> type.</returns>
         IShouldMapTestBuilder ShouldMap(string location);
-        
+
         /// <summary>
         /// Sets the route location to test.
         /// </summary>
-        /// <param name="location">Location as Uri.</param>
-        /// <returns>Route test builder.</returns>
+        /// <param name="location">Location as <see cref="Uri"/>.</param>
+        /// <returns>Test builder of <see cref="IShouldMapTestBuilder"/> type.</returns>
         IShouldMapTestBuilder ShouldMap(Uri location);
 
         /// <summary>
-        /// Sets the route HTTP request message to test.
+        /// Sets the <see cref="HttpRequest"/> for the route test.
         /// </summary>
-        /// <param name="request">Instance of type HttpRequest.</param>
-        /// <returns>Route test builder.</returns>
+        /// <param name="request">Instance of <see cref="HttpRequest"/> type.</param>
+        /// <returns>Test builder of <see cref="IShouldMapTestBuilder"/> type.</returns>
         IShouldMapTestBuilder ShouldMap(HttpRequest request);
 
         /// <summary>
-        /// Sets the route HTTP request message to test using a builder.
+        /// Sets the <see cref="HttpRequest"/> for the route test.
         /// </summary>
-        /// <param name="httpRequestBuilder">Builder for HTTP request message.</param>
-        /// <returns>Route test builder.</returns>
+        /// <param name="httpRequestBuilder">Action setting the <see cref="HttpRequest"/> by using <see cref="IHttpRequestBuilder"/>.</param>
+        /// <returns>Test builder of <see cref="IShouldMapTestBuilder"/> type.</returns>
         IShouldMapTestBuilder ShouldMap(Action<IHttpRequestBuilder> httpRequestBuilder);
     }
 }

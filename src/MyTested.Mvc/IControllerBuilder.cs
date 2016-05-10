@@ -22,100 +22,156 @@
         where TController : class
     {
         /// <summary>
-        /// Used for testing controller attributes.
+        /// Used for testing controller additional data.
         /// </summary>
-        /// <returns>Controller test builder.</returns>
+        /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>
         IControllerTestBuilder ShouldHave();
-        
+
+        /// <summary>
+        /// Sets the <see cref="ControllerContext"/> on the tested controller.
+        /// </summary>
+        /// <param name="controllerContext">Instance of <see cref="ControllerContext"/> to set.</param>
+        /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>
         IAndControllerBuilder<TController> WithControllerContext(ControllerContext controllerContext);
 
+        /// <summary>
+        /// Sets the <see cref="ControllerContext"/> on the tested controller.
+        /// </summary>
+        /// <param name="controllerContextSetup">Action setting the <see cref="ControllerContext"/>.</param>
+        /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>
         IAndControllerBuilder<TController> WithControllerContext(Action<ControllerContext> controllerContextSetup);
-        
+
+        /// <summary>
+        /// Sets the <see cref="ActionContext"/> on the tested controller.
+        /// </summary>
+        /// <param name="actionContext">Instance of <see cref="ActionContext"/> to set.</param>
+        /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>
         IAndControllerBuilder<TController> WithActionContext(ActionContext actionContext);
 
+        /// <summary>
+        /// Sets the <see cref="ActionContext"/> on the tested controller.
+        /// </summary>
+        /// <param name="actionContextSetup">Action setting the <see cref="ActionContext"/>.</param>
+        /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>
         IAndControllerBuilder<TController> WithActionContext(Action<ActionContext> actionContextSetup);
 
         /// <summary>
-        /// Sets the HTTP context for the current test case.
+        /// Sets the <see cref="HttpContext"/> on the tested controller.
         /// </summary>
-        /// <param name="httpContext">Instance of HttpContext.</param>
-        /// <returns>The same controller builder.</returns>
+        /// <param name="httpContext">Instance of <see cref="HttpContext"/> to set.</param>
+        /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>
         IAndControllerBuilder<TController> WithHttpContext(HttpContext httpContext);
 
+        /// <summary>
+        /// Sets the <see cref="HttpContext"/> on the tested controller.
+        /// </summary>
+        /// <param name="httpContextSetup">Action setting the <see cref="HttpContext"/>.</param>
+        /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>
         IAndControllerBuilder<TController> WithHttpContext(Action<HttpContext> httpContextSetup);
 
         /// <summary>
-        /// Adds HTTP request message to the tested controller.
+        /// Sets the <see cref="HttpRequest"/> on the tested controller.
         /// </summary>
-        /// <param name="requestMessage">Instance of HttpRequestMessage.</param>
-        /// <returns>The same controller builder.</returns>
-        IAndControllerBuilder<TController> WithHttpRequest(HttpRequest requestMessage);
+        /// <param name="httpRequest">Instance of <see cref="HttpRequest"/> to set.</param>
+        /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>
+        IAndControllerBuilder<TController> WithHttpRequest(HttpRequest httpRequest);
 
         /// <summary>
-        /// Adds HTTP request to the tested controller by using builder.
+        /// Sets the <see cref="HttpRequest"/> on the tested controller.
         /// </summary>
-        /// <param name="httpRequestBuilder">HTTP request builder.</param>
-        /// <returns>The same controller builder.</returns>
+        /// <param name="httpRequestBuilder">Action setting the <see cref="HttpRequest"/> by using <see cref="IHttpRequestBuilder"/>.</param>
+        /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>
         IAndControllerBuilder<TController> WithHttpRequest(Action<IHttpRequestBuilder> httpRequestBuilder);
-        
-        IAndControllerBuilder<TController> WithResolvedRouteData();
 
+        /// <summary>
+        /// Indicates that route values should be extracted from the provided action call expression.
+        /// </summary>
+        /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>
+        IAndControllerBuilder<TController> WithRouteData();
+
+        /// <summary>
+        /// Indicates that route values should be extracted from the provided action call expression adding the given additional values.
+        /// </summary>
+        /// <param name="additionalRouteValues">Anonymous object containing route values.</param>
+        /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>
+        IAndControllerBuilder<TController> WithRouteData(object additionalRouteValues);
+
+        /// <summary>
+        /// Sets initial values to the <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.TempDataDictionary"/> on the tested controller.
+        /// </summary>
+        /// <param name="tempDataBuilder">Action setting the <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.TempDataDictionary"/> values by using <see cref="ITempDataBuilder"/>.</param>
+        /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>
         IAndControllerBuilder<TController> WithTempData(Action<ITempDataBuilder> tempDataBuilder);
 
+        /// <summary>
+        /// Sets initial values to the <see cref="Microsoft.Extensions.Caching.Memory.IMemoryCache"/> service.
+        /// </summary>
+        /// <param name="memoryCacheBuilder">Action setting the <see cref="Microsoft.Extensions.Caching.Memory.IMemoryCache"/> values by using <see cref="IMemoryCacheBuilder"/>.</param>
+        /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>
         IAndControllerBuilder<TController> WithMemoryCache(Action<IMemoryCacheBuilder> memoryCacheBuilder);
 
+        /// <summary>
+        /// Sets initial values to the HTTP <see cref="Microsoft.AspNetCore.Http.Features.ISession"/>.
+        /// </summary>
+        /// <param name="sessionBuilder">Action setting the <see cref="Microsoft.AspNetCore.Http.Features.ISession"/> values by using <see cref="ISessionBuilder"/>.</param>
+        /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>
         IAndControllerBuilder<TController> WithSession(Action<ISessionBuilder> sessionBuilder);
 
-        IAndControllerBuilder<TController> WithNoResolvedDependencyFor<TDependency>()
-            where TDependency : class;
+        /// <summary>
+        /// Sets null value to the constructor service dependency of the given type.
+        /// </summary>
+        /// <typeparam name="TService">Type of service dependency.</typeparam>
+        /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>
+        IAndControllerBuilder<TController> WithNoServiceFor<TService>()
+            where TService : class;
 
         /// <summary>
-        /// Tries to resolve constructor dependency of given type.
+        /// Tries to resolve constructor service dependency of the given type.
         /// </summary>
-        /// <typeparam name="TDependency">Type of dependency to resolve.</typeparam>
-        /// <param name="dependency">Instance of dependency to inject into constructor.</param>
-        /// <returns>The same controller builder.</returns>
-        IAndControllerBuilder<TController> WithResolvedDependencyFor<TDependency>(TDependency dependency)
-            where TDependency : class;
+        /// <typeparam name="TService">Type of service dependency to resolve.</typeparam>
+        /// <param name="service">Instance of service dependency to inject into the controller constructor.</param>
+        /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>
+        IAndControllerBuilder<TController> WithServiceFor<TService>(TService service)
+            where TService : class;
 
         /// <summary>
-        /// Tries to resolve constructor dependencies by the provided collection of dependencies.
+        /// Tries to resolve constructor service dependencies by the provided collection of objects.
         /// </summary>
-        /// <param name="dependencies">Collection of dependencies to inject into constructor.</param>
-        /// <returns>The same controller builder.</returns>
-        IAndControllerBuilder<TController> WithResolvedDependencies(IEnumerable<object> dependencies);
+        /// <param name="services">Collection of service dependencies to inject into the controller constructor.</param>
+        /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>
+        IAndControllerBuilder<TController> WithServices(IEnumerable<object> services);
 
         /// <summary>
-        /// Tries to resolve constructor dependencies by the provided dependencies.
+        /// Tries to resolve constructor service dependencies by the provided parameters.
         /// </summary>
-        /// <param name="dependencies">Dependencies to inject into constructor.</param>
-        /// <returns>The same controller builder.</returns>
-        IAndControllerBuilder<TController> WithResolvedDependencies(params object[] dependencies);
+        /// <param name="services">Services to inject into the controller constructor.</param>
+        /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>
+        IAndControllerBuilder<TController> WithServices(params object[] services);
 
         /// <summary>
-        /// Disables ModelState validation for the action call.
+        /// Disables <see cref="Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary"/> validation for the action call.
         /// </summary>
-        /// <returns>The same controller builder.</returns>
+        /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>
         IAndControllerBuilder<TController> WithoutValidation();
 
         /// <summary>
-        /// Sets default authenticated user to the built controller with "TestId" identifier and "TestUser" username.
+        /// Sets default authenticated <see cref="HttpContext.User"/> to the built controller with "TestId" identifier and "TestUser" username.
         /// </summary>
-        /// <returns>The same controller builder.</returns>
+        /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>
         IAndControllerBuilder<TController> WithAuthenticatedUser();
 
         /// <summary>
-        /// Sets custom authenticated user using the provided user builder.
+        /// Sets custom authenticated <see cref="HttpContext.User"/> using the provided user builder.
         /// </summary>
-        /// <param name="userBuilder">User builder to create mocked user object.</param>
-        /// <returns>The same controller builder.</returns>
+        /// <param name="userBuilder">Action setting the <see cref="HttpContext.User"/> by using <see cref="IClaimsPrincipalBuilder"/>.</param>
+        /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>
         IAndControllerBuilder<TController> WithAuthenticatedUser(Action<IClaimsPrincipalBuilder> userBuilder);
 
         /// <summary>
-        /// Sets custom properties to the controller using action delegate.
+        /// Sets custom properties to the controller using a delegate.
         /// </summary>
-        /// <param name="controllerSetup">Action delegate to use for controller setup.</param>
-        /// <returns>The same controller test builder.</returns>
+        /// <param name="controllerSetup">Action to use for controller setup.</param>
+        /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>
         IAndControllerBuilder<TController> WithSetup(Action<TController> controllerSetup);
 
         /// <summary>
@@ -123,31 +179,35 @@
         /// </summary>
         /// <typeparam name="TActionResult">Type of result from action.</typeparam>
         /// <param name="actionCall">Method call expression indicating invoked action.</param>
-        /// <returns>Builder for testing the action result.</returns>
+        /// <returns>Test builder of <see cref="IActionResultTestBuilder{TActionResult}"/> type.</returns>
         IActionResultTestBuilder<TActionResult> Calling<TActionResult>(Expression<Func<TController, TActionResult>> actionCall);
 
         /// <summary>
         /// Indicates which action should be invoked and tested.
         /// </summary>
-        /// <typeparam name="TActionResult">Asynchronous Task result from action.</typeparam>
-        /// <param name="actionCall">Method call expression indicating invoked action.</param>
-        /// <returns>Builder for testing the action result.</returns>
+        /// <typeparam name="TActionResult">Type of result from action.</typeparam>
+        /// <param name="actionCall">Method call expression indicating invoked asynchronous action.</param>
+        /// <returns>Test builder of <see cref="IActionResultTestBuilder{TActionResult}"/> type.</returns>
         IActionResultTestBuilder<TActionResult> Calling<TActionResult>(Expression<Func<TController, Task<TActionResult>>> actionCall);
 
         /// <summary>
         /// Indicates which action should be invoked and tested.
         /// </summary>
-        /// <param name="actionCall">Method call expression indicating invoked action.</param>
-        /// <returns>Builder for testing void actions.</returns>
+        /// <param name="actionCall">Method call expression indicating invoked void action.</param>
+        /// <returns>Test builder of <see cref="IActionResultTestBuilder{TActionResult}"/> type.</returns>
         IVoidActionResultTestBuilder Calling(Expression<Action<TController>> actionCall);
 
         /// <summary>
         /// Indicates which action should be invoked and tested.
         /// </summary>
-        /// <param name="actionCall">Method call expression indicating invoked action.</param>
-        /// <returns>Builder for testing void actions.</returns>
+        /// <param name="actionCall">Method call expression indicating invoked asynchronous void action.</param>
+        /// <returns>Test builder of <see cref="IActionResultTestBuilder{TActionResult}"/> type.</returns>
         IVoidActionResultTestBuilder Calling(Expression<Func<TController, Task>> actionCall);
 
+        /// <summary>
+        /// Allows additional testing on various components.
+        /// </summary>
+        /// <returns>Test builder of <see cref="IShouldPassForTestBuilderWithController{TController}"/> type.</returns>
         new IShouldPassForTestBuilderWithController<TController> ShouldPassFor();
     }
 }

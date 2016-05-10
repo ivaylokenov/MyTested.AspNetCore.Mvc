@@ -15,6 +15,11 @@
             return default(TParameter);
         }
 
+        /// <summary>
+        /// Indicates that a argument should not be considered in method call lambda expression.
+        /// </summary>
+        /// <typeparam name="TParameter">Type of parameter.</typeparam>
+        /// <returns><see cref="TParameter"/></returns>
         public static TParameter Any<TParameter>()
         {
             return default(TParameter);

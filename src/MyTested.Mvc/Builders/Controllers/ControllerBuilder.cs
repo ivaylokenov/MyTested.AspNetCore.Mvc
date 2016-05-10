@@ -23,7 +23,7 @@
     public partial class ControllerBuilder<TController> : BaseTestBuilder, IAndControllerBuilder<TController>
         where TController : class
     {
-        private readonly IDictionary<Type, object> aggregatedDependencies;
+        private readonly IDictionary<Type, object> aggregatedServices;
 
         private ControllerTestContext testContext;
         private Action<ControllerContext> controllerContextAction;
@@ -44,7 +44,7 @@
             this.TestContext = testContext;
 
             this.enabledValidation = true;
-            this.aggregatedDependencies = new Dictionary<Type, object>();
+            this.aggregatedServices = new Dictionary<Type, object>();
 
             this.ValidateControllerType();
         }

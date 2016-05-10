@@ -6,27 +6,27 @@
     public class AuthenticationScheme
     {
         /// <summary>
-        /// Anonymous authentication header scheme.
+        /// "Anonymous" authentication header scheme.
         /// </summary>
         public const string Anonymous = "Anonymous";
 
         /// <summary>
-        /// Basic authentication header scheme.
+        /// "Basic" authentication header scheme.
         /// </summary>
         public const string Basic = "Basic";
 
         /// <summary>
-        /// Digest authentication header scheme.
+        /// "Digest" authentication header scheme.
         /// </summary>
         public const string Digest = "Digest";
 
         /// <summary>
-        /// NTLM authentication header scheme.
+        /// "NTLM" authentication header scheme.
         /// </summary>
         public const string NTLM = "NTLM";
 
         /// <summary>
-        /// Negotiate authentication header scheme.
+        /// "Negotiate" authentication header scheme.
         /// </summary>
         public const string Negotiate = "Negotiate";
     }

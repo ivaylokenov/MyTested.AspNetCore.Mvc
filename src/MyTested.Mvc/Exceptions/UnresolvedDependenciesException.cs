@@ -3,15 +3,15 @@
     using System;
 
     /// <summary>
-    /// <see cref="Exception"/> for controller unresolved dependencies.
+    /// <see cref="Exception"/> for controller unresolved service dependencies.
     /// </summary>
-    public class UnresolvedDependenciesException : Exception
+    public class UnresolvedServicesException : Exception
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UnresolvedDependenciesException"/> class.
+        /// Initializes a new instance of the <see cref="UnresolvedServicesException"/> class.
         /// </summary>
         /// <param name="message">The message that describes the error.</param>
-        public UnresolvedDependenciesException(string message)
+        public UnresolvedServicesException(string message)
             : base(message)
         {
         }

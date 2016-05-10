@@ -200,7 +200,7 @@
         {
             MyMvc
                 .Controller<MvcController>()
-                .WithResolvedDependencyFor<IInjectedService>(new InjectedService())
+                .WithServiceFor<IInjectedService>(new InjectedService())
                 .ShouldPassFor()
                 .TheController(controller =>
                 {
@@ -216,8 +216,8 @@
         {
             MyMvc
                 .Controller<MvcController>()
-                .WithResolvedDependencyFor<IAnotherInjectedService>(new AnotherInjectedService())
-                .WithResolvedDependencyFor<IInjectedService>(new InjectedService())
+                .WithServiceFor<IAnotherInjectedService>(new AnotherInjectedService())
+                .WithServiceFor<IInjectedService>(new InjectedService())
                 .ShouldPassFor()
                 .TheController(controller =>
                 {
@@ -233,9 +233,9 @@
         {
             MyMvc
                 .Controller<MvcController>()
-                .WithResolvedDependencyFor<IAnotherInjectedService>(new AnotherInjectedService())
-                .WithResolvedDependencyFor<RequestModel>(new RequestModel())
-                .WithResolvedDependencyFor<IInjectedService>(new InjectedService())
+                .WithServiceFor<IAnotherInjectedService>(new AnotherInjectedService())
+                .WithServiceFor<RequestModel>(new RequestModel())
+                .WithServiceFor<IInjectedService>(new InjectedService())
                 .ShouldPassFor()
                 .TheController(controller =>
                 {
@@ -251,9 +251,9 @@
         {
             MyMvc
                 .Controller<MvcController>()
-                .WithResolvedDependencyFor(new RequestModel())
-                .WithResolvedDependencyFor(new AnotherInjectedService())
-                .WithResolvedDependencyFor(new InjectedService())
+                .WithServiceFor(new RequestModel())
+                .WithServiceFor(new AnotherInjectedService())
+                .WithServiceFor(new InjectedService())
                 .WithAuthenticatedUser()
                 .Calling(c => c.AuthorizedAction())
                 .ShouldReturn()
@@ -265,9 +265,9 @@
         {
             MyMvc
                 .Controller<MvcController>()
-                .WithResolvedDependencyFor<IInjectedService>(null)
-                .WithResolvedDependencyFor<RequestModel>(null)
-                .WithResolvedDependencyFor<IAnotherInjectedService>(null)
+                .WithServiceFor<IInjectedService>(null)
+                .WithServiceFor<RequestModel>(null)
+                .WithServiceFor<IAnotherInjectedService>(null)
                 .Calling(c => c.DefaultView())
                 .ShouldReturn()
                 .View();
@@ -278,7 +278,7 @@
         {
             MyMvc
                 .Controller<MvcController>()
-                .WithResolvedDependencyFor<IInjectedService>(null)
+                .WithServiceFor<IInjectedService>(null)
                 .Calling(c => c.DefaultView())
                 .ShouldReturn()
                 .View();
@@ -289,7 +289,7 @@
         {
             MyMvc
                 .Controller<MvcController>()
-                .WithNoResolvedDependencyFor<IInjectedService>()
+                .WithNoServiceFor<IInjectedService>()
                 .Calling(c => c.DefaultView())
                 .ShouldReturn()
                 .View();
@@ -300,11 +300,11 @@
         {
             MyMvc
                 .Controller<MvcController>()
-                .WithResolvedDependencyFor(new RequestModel())
+                .WithServiceFor(new RequestModel())
                 .AndAlso()
-                .WithResolvedDependencyFor(new AnotherInjectedService())
+                .WithServiceFor(new AnotherInjectedService())
                 .AndAlso()
-                .WithResolvedDependencyFor(new InjectedService())
+                .WithServiceFor(new InjectedService())
                 .AndAlso()
                 .WithAuthenticatedUser()
                 .Calling(c => c.AuthorizedAction())
@@ -317,7 +317,7 @@
         {
             MyMvc
                 .Controller<MvcController>()
-                .WithResolvedDependencies(new List<object> { new RequestModel(), new AnotherInjectedService(), new InjectedService() })
+                .WithServices(new List<object> { new RequestModel(), new AnotherInjectedService(), new InjectedService() })
                 .WithAuthenticatedUser()
                 .Calling(c => c.AuthorizedAction())
                 .ShouldReturn()
@@ -329,7 +329,7 @@
         {
             MyMvc
                 .Controller<MvcController>()
-                .WithResolvedDependencies(new RequestModel(), new AnotherInjectedService(), new InjectedService())
+                .WithServices(new RequestModel(), new AnotherInjectedService(), new InjectedService())
                 .WithAuthenticatedUser()
                 .Calling(c => c.AuthorizedAction())
                 .ShouldReturn()
@@ -344,10 +344,10 @@
                 {
                     MyMvc
                         .Controller<MvcController>()
-                        .WithResolvedDependencyFor<RequestModel>(new RequestModel())
-                        .WithResolvedDependencyFor<IAnotherInjectedService>(new AnotherInjectedService())
-                        .WithResolvedDependencyFor<IInjectedService>(new InjectedService())
-                        .WithResolvedDependencyFor<IAnotherInjectedService>(new AnotherInjectedService());
+                        .WithServiceFor<RequestModel>(new RequestModel())
+                        .WithServiceFor<IAnotherInjectedService>(new AnotherInjectedService())
+                        .WithServiceFor<IInjectedService>(new InjectedService())
+                        .WithServiceFor<IAnotherInjectedService>(new AnotherInjectedService());
                 },
                 "Dependency AnotherInjectedService is already registered for MvcController controller.");
         }
@@ -355,14 +355,14 @@
         [Fact]
         public void WithResolvedDependencyForShouldThrowExceptionWhenNoConstructorExistsForDependencies()
         {
-            Test.AssertException<UnresolvedDependenciesException>(
+            Test.AssertException<UnresolvedServicesException>(
                 () =>
                 {
                     MyMvc
                         .Controller<NoParameterlessConstructorController>()
-                        .WithResolvedDependencyFor<RequestModel>(new RequestModel())
-                        .WithResolvedDependencyFor<IAnotherInjectedService>(new AnotherInjectedService())
-                        .WithResolvedDependencyFor<ResponseModel>(new ResponseModel())
+                        .WithServiceFor<RequestModel>(new RequestModel())
+                        .WithServiceFor<IAnotherInjectedService>(new AnotherInjectedService())
+                        .WithServiceFor<ResponseModel>(new ResponseModel())
                         .Calling(c => c.OkAction())
                         .ShouldReturn()
                         .Ok();
@@ -581,7 +581,7 @@
         {
             MyMvc
                 .Controller<MvcController>()
-                .WithResolvedRouteData()
+                .WithRouteData()
                 .Calling(c => c.UrlAction())
                 .ShouldReturn()
                 .Ok()
@@ -1019,7 +1019,7 @@
         {
             MyMvc
                 .Controller<FullPocoController>()
-                .WithResolvedDependencyFor<IInjectedService>(new InjectedService())
+                .WithServiceFor<IInjectedService>(new InjectedService())
                 .ShouldPassFor()
                 .TheController(controller =>
                 {
@@ -1037,8 +1037,8 @@
         {
             MyMvc
                 .Controller<FullPocoController>()
-                .WithResolvedDependencyFor<IAnotherInjectedService>(new AnotherInjectedService())
-                .WithResolvedDependencyFor<IInjectedService>(new InjectedService())
+                .WithServiceFor<IAnotherInjectedService>(new AnotherInjectedService())
+                .WithServiceFor<IInjectedService>(new InjectedService())
                 .ShouldPassFor()
                 .TheController(controller =>
                 {
@@ -1056,9 +1056,9 @@
         {
             MyMvc
                 .Controller<FullPocoController>()
-                .WithResolvedDependencyFor<IAnotherInjectedService>(new AnotherInjectedService())
-                .WithResolvedDependencyFor<RequestModel>(new RequestModel())
-                .WithResolvedDependencyFor<IInjectedService>(new InjectedService())
+                .WithServiceFor<IAnotherInjectedService>(new AnotherInjectedService())
+                .WithServiceFor<RequestModel>(new RequestModel())
+                .WithServiceFor<IInjectedService>(new InjectedService())
                 .ShouldPassFor()
                 .TheController(controller =>
                 {
@@ -1076,9 +1076,9 @@
         {
             MyMvc
                 .Controller<FullPocoController>()
-                .WithResolvedDependencyFor(new RequestModel())
-                .WithResolvedDependencyFor(new AnotherInjectedService())
-                .WithResolvedDependencyFor(new InjectedService())
+                .WithServiceFor(new RequestModel())
+                .WithServiceFor(new AnotherInjectedService())
+                .WithServiceFor(new InjectedService())
                 .WithAuthenticatedUser()
                 .Calling(c => c.OkResultAction())
                 .ShouldReturn()
@@ -1090,9 +1090,9 @@
         {
             MyMvc
                 .Controller<FullPocoController>()
-                .WithResolvedDependencyFor<IInjectedService>(null)
-                .WithResolvedDependencyFor<RequestModel>(null)
-                .WithResolvedDependencyFor<IAnotherInjectedService>(null)
+                .WithServiceFor<IInjectedService>(null)
+                .WithServiceFor<RequestModel>(null)
+                .WithServiceFor<IAnotherInjectedService>(null)
                 .Calling(c => c.DefaultView())
                 .ShouldReturn()
                 .View();
@@ -1103,7 +1103,7 @@
         {
             MyMvc
                 .Controller<FullPocoController>()
-                .WithResolvedDependencyFor<IInjectedService>(null)
+                .WithServiceFor<IInjectedService>(null)
                 .Calling(c => c.DefaultView())
                 .ShouldReturn()
                 .View();
@@ -1114,7 +1114,7 @@
         {
             MyMvc
                 .Controller<FullPocoController>()
-                .WithNoResolvedDependencyFor<IInjectedService>()
+                .WithNoServiceFor<IInjectedService>()
                 .Calling(c => c.DefaultView())
                 .ShouldReturn()
                 .View();
@@ -1125,11 +1125,11 @@
         {
             MyMvc
                 .Controller<FullPocoController>()
-                .WithResolvedDependencyFor(new RequestModel())
+                .WithServiceFor(new RequestModel())
                 .AndAlso()
-                .WithResolvedDependencyFor(new AnotherInjectedService())
+                .WithServiceFor(new AnotherInjectedService())
                 .AndAlso()
-                .WithResolvedDependencyFor(new InjectedService())
+                .WithServiceFor(new InjectedService())
                 .AndAlso()
                 .WithAuthenticatedUser()
                 .Calling(c => c.OkResultAction())
@@ -1142,7 +1142,7 @@
         {
             MyMvc
                 .Controller<FullPocoController>()
-                .WithResolvedDependencies(new List<object> { new RequestModel(), new AnotherInjectedService(), new InjectedService() })
+                .WithServices(new List<object> { new RequestModel(), new AnotherInjectedService(), new InjectedService() })
                 .WithAuthenticatedUser()
                 .Calling(c => c.OkResultAction())
                 .ShouldReturn()
@@ -1154,7 +1154,7 @@
         {
             MyMvc
                 .Controller<FullPocoController>()
-                .WithResolvedDependencies(new RequestModel(), new AnotherInjectedService(), new InjectedService())
+                .WithServices(new RequestModel(), new AnotherInjectedService(), new InjectedService())
                 .WithAuthenticatedUser()
                 .Calling(c => c.OkResultAction())
                 .ShouldReturn()
@@ -1169,10 +1169,10 @@
                 {
                     MyMvc
                         .Controller<FullPocoController>()
-                        .WithResolvedDependencyFor<RequestModel>(new RequestModel())
-                        .WithResolvedDependencyFor<IAnotherInjectedService>(new AnotherInjectedService())
-                        .WithResolvedDependencyFor<IInjectedService>(new InjectedService())
-                        .WithResolvedDependencyFor<IAnotherInjectedService>(new AnotherInjectedService());
+                        .WithServiceFor<RequestModel>(new RequestModel())
+                        .WithServiceFor<IAnotherInjectedService>(new AnotherInjectedService())
+                        .WithServiceFor<IInjectedService>(new InjectedService())
+                        .WithServiceFor<IAnotherInjectedService>(new AnotherInjectedService());
                 },
                 "Dependency AnotherInjectedService is already registered for FullPocoController controller.");
         }
@@ -1180,14 +1180,14 @@
         [Fact]
         public void WithResolvedDependencyForShouldThrowExceptionWhenNoConstructorExistsForDependenciesForPocoController()
         {
-            Test.AssertException<UnresolvedDependenciesException>(
+            Test.AssertException<UnresolvedServicesException>(
                 () =>
                 {
                     MyMvc
                         .Controller<NoParameterlessConstructorController>()
-                        .WithResolvedDependencyFor<RequestModel>(new RequestModel())
-                        .WithResolvedDependencyFor<IAnotherInjectedService>(new AnotherInjectedService())
-                        .WithResolvedDependencyFor<ResponseModel>(new ResponseModel())
+                        .WithServiceFor<RequestModel>(new RequestModel())
+                        .WithServiceFor<IAnotherInjectedService>(new AnotherInjectedService())
+                        .WithServiceFor<ResponseModel>(new ResponseModel())
                         .Calling(c => c.OkAction())
                         .ShouldReturn()
                         .Ok();
@@ -1486,7 +1486,7 @@
 
             MyMvc
                 .Controller<FullPocoController>()
-                .WithResolvedRouteData()
+                .WithRouteData()
                 .Calling(c => c.UrlAction())
                 .ShouldReturn()
                 .Ok()

@@ -65,11 +65,11 @@
             var controller = this.TestContext.Controller;
             if (controller == null)
             {
-                var explicitDependenciesAreSet = this.aggregatedDependencies.Any();
+                var explicitDependenciesAreSet = this.aggregatedServices.Any();
                 if (explicitDependenciesAreSet)
                 {
                     // custom dependencies are set, try create instance with them
-                    controller = Reflection.TryCreateInstance<TController>(this.aggregatedDependencies);
+                    controller = Reflection.TryCreateInstance<TController>(this.aggregatedServices);
                 }
                 else
                 {
@@ -85,16 +85,16 @@
 
                 if (controller == null)
                 {
-                    var friendlyDependenciesNames = this.aggregatedDependencies
+                    var friendlyServiceNames = this.aggregatedServices
                         .Keys
                         .Select(k => k.ToFriendlyTypeName());
 
-                    var joinedFriendlyDependencies = string.Join(", ", friendlyDependenciesNames);
+                    var joinedFriendlyServices = string.Join(", ", friendlyServiceNames);
 
-                    throw new UnresolvedDependenciesException(string.Format(
+                    throw new UnresolvedServicesException(string.Format(
                         "{0} could not be instantiated because it contains no constructor taking {1} parameters.",
                         typeof(TController).ToFriendlyTypeName(),
-                        this.aggregatedDependencies.Count == 0 ? "no" : $"{joinedFriendlyDependencies} as"));
+                        this.aggregatedServices.Count == 0 ? "no" : $"{joinedFriendlyServices} as"));
                 }
 
                 this.TestContext.ControllerConstruction = () => controller;
@@ -110,11 +110,7 @@
         private void PrepareControllerContext()
         {
             var controllerContext = this.TestContext.ControllerContext;
-
-            if (this.controllerContextAction != null)
-            {
-                this.controllerContextAction(controllerContext);
-            }
+            this.controllerContextAction?.Invoke(controllerContext);
         }
 
         private void PrepareController()

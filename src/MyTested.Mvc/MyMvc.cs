@@ -9,7 +9,7 @@
     using Internal.TestContexts;
 
     /// <summary>
-    /// Starting point of the ASP.NET Core MVC testing framework, which provides a way to specify the test case.
+    /// Starting point of the ASP.NET Core MVC testing framework. Provides methods to specify a test case.
     /// </summary>
     public static class MyMvc
     {
@@ -19,9 +19,9 @@
         }
 
         /// <summary>
-        /// Sets default configuration on the tested application. Calls 'AddMvc' on the services collection and 'UseMvc' on the application builder.
+        /// Sets default configuration on the tested application. Calls 'AddMvc' on the services collection and 'UseMvcWithDefaultRoute' on the application builder.
         /// </summary>
-        /// <returns>Application configuration builder.</returns>
+        /// <returns>Builder of <see cref="IApplicationConfigurationBuilder"/> type.</returns>
         public static IApplicationConfigurationBuilder IsUsingDefaultConfiguration()
         {
             return new ApplicationConfigurationBuilder(null);
@@ -31,7 +31,7 @@
         /// Configures the tested application with the provided startup class.
         /// </summary>
         /// <typeparam name="TStartup">Type of startup class.</typeparam>
-        /// <returns>Application configuration builder.</returns>
+        /// <returns>Builder of <see cref="IApplicationConfigurationBuilder"/> type.</returns>
         public static IApplicationConfigurationBuilder StartsFrom<TStartup>()
             where TStartup : class, new()
         {
@@ -41,7 +41,7 @@
         /// <summary>
         /// Starts a route test.
         /// </summary>
-        /// <returns>Route test builder.</returns>
+        /// <returns>Test builder of <see cref="IRouteTestBuilder"/> type.</returns>
         public static IRouteTestBuilder Routes()
         {
             return new RouteTestBuilder(new RouteTestContext
@@ -52,10 +52,10 @@
         }
 
         /// <summary>
-        /// Selects controller on which the test will be executed.
+        /// Starts a controller test.
         /// </summary>
         /// <typeparam name="TController">Class representing ASP.NET Core MVC controller.</typeparam>
-        /// <returns>Controller builder used to build the test case.</returns>
+        /// <returns>Test builder of <see cref="IControllerBuilder{TController}"/> type.</returns>
         public static IControllerBuilder<TController> Controller<TController>()
             where TController : class
         {
@@ -63,11 +63,11 @@
         }
 
         /// <summary>
-        /// Selects controller on which the test will be executed.
+        /// Starts a controller test.
         /// </summary>
         /// <typeparam name="TController">Class representing ASP.NET Core MVC controller.</typeparam>
         /// <param name="controller">Instance of the ASP.NET Core MVC controller to use.</param>
-        /// <returns>Controller builder used to build the test case.</returns>
+        /// <returns>Test builder of <see cref="IControllerBuilder{TController}"/> type.</returns>
         public static IControllerBuilder<TController> Controller<TController>(TController controller)
             where TController : class
         {
@@ -75,11 +75,11 @@
         }
 
         /// <summary>
-        /// Selects controller on which the test will be executed. Controller is instantiated using construction function.
+        /// Starts a controller test.
         /// </summary>
         /// <typeparam name="TController">Class representing ASP.NET Core MVC controller.</typeparam>
         /// <param name="construction">Construction function returning the instantiated controller.</param>
-        /// <returns>Controller builder used to build the test case.</returns>
+        /// <returns>Test builder of <see cref="IControllerBuilder{TController}"/> type.</returns>
         public static IControllerBuilder<TController> Controller<TController>(Func<TController> construction)
             where TController : class
         {

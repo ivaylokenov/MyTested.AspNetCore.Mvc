@@ -31,7 +31,7 @@
     using Microsoft.Extensions.PlatformAbstractions;
     using Routes;
     using Utilities.Extensions;
-    
+
     public static class TestApplication
     {
         private static readonly RequestDelegate NullHandler = (c) => TaskCache.CompletedTask;
@@ -161,7 +161,7 @@
         {
             var applicationName = PlatformServices.Default.Application.ApplicationName;
             var applicationAssembly = Assembly.Load(new AssemblyName(applicationName));
-            
+
             var startupName = TestConfiguration.FullStartupName ?? $"{Environment.EnvironmentName}Startup";
 
             // check root of the testing library
@@ -214,10 +214,7 @@
             var configurationBuilder = new ConfigurationBuilder()
                 .AddJsonFile("testconfig.json", optional: true);
 
-            if (AdditionalConfiguration != null)
-            {
-                AdditionalConfiguration(configurationBuilder);
-            }
+            AdditionalConfiguration?.Invoke(configurationBuilder);
 
             return configurationBuilder.Build();
         }
@@ -255,7 +252,7 @@
             // testing framework services
             serviceCollection.TryAddSingleton<IValidControllersCache, ValidControllersCache>();
             serviceCollection.TryAddSingleton<IControllerActionDescriptorCache, ControllerActionDescriptorCache>();
-            
+
             return serviceCollection;
         }
 
@@ -270,10 +267,7 @@
                 serviceCollection.AddMvc();
             }
 
-            if (AdditionalServices != null)
-            {
-                AdditionalServices(serviceCollection);
-            }
+            AdditionalServices?.Invoke(serviceCollection);
 
             // custom MVC options
             serviceCollection.Configure<MvcOptions>(options =>
@@ -428,10 +422,7 @@
                 startupMethods.ConfigureDelegate(applicationBuilder);
             }
 
-            if (AdditionalApplicationConfiguration != null)
-            {
-                AdditionalApplicationConfiguration(applicationBuilder);
-            }
+            AdditionalApplicationConfiguration?.Invoke(applicationBuilder);
 
             var routeBuilder = new RouteBuilder(applicationBuilder)
             {
@@ -444,10 +435,7 @@
                 routeBuilder.Routes.Add(route);
             }
 
-            if (AdditionalRoutes != null)
-            {
-                AdditionalRoutes(routeBuilder);
-            }
+            AdditionalRoutes?.Invoke(routeBuilder);
 
             if (StartupType == null || routeBuilder.Routes.Count == 0)
             {

@@ -67,13 +67,13 @@
         }
 
         /// <inheritdoc />
-        public IAndControllerBuilder<TController> WithResolvedRouteData()
+        public IAndControllerBuilder<TController> WithRouteData()
         {
-            return this.WithResolvedRouteData(null);
+            return this.WithRouteData(null);
         }
 
         /// <inheritdoc />
-        public IAndControllerBuilder<TController> WithResolvedRouteData(object additionalRouteValues)
+        public IAndControllerBuilder<TController> WithRouteData(object additionalRouteValues)
         {
             this.resolveRouteValues = true;
             this.additionalRouteValues = additionalRouteValues;
