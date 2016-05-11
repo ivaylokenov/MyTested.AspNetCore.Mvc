@@ -7,7 +7,7 @@
     {
         int Count { get; }
 
-        bool TryGetCacheEntry(object key, out IMockedMemoryCacheEntry value);
+        bool TryGetCacheEntry(object key, out ICacheEntry value);
 
         IDictionary<object, object> GetCacheAsDictionary();
     }

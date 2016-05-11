@@ -3,7 +3,6 @@
     using System;
     using Contracts.Data;
     using Internal.Caching;
-    using Internal.Contracts;
     using Microsoft.Extensions.Caching.Memory;
 
     /// <summary>
@@ -16,14 +15,14 @@
         /// </summary>
         public MemoryCacheEntryBuilder()
         {
-            this.MemoryCacheEntry = new MockedMemoryCacheEntry();
+            this.MemoryCacheEntry = new MockedCacheEntry();
         }
-        
+
         /// <summary>
         /// Gets the mocked <see cref="IMemoryCache"/> entry.
         /// </summary>
-        /// <value>The built <see cref="MockedMemoryCacheEntry"/>.</value>
-        protected MockedMemoryCacheEntry MemoryCacheEntry { get; private set; }
+        /// <value>The built <see cref="ICacheEntry"/>.</value>
+        protected MockedCacheEntry MemoryCacheEntry { get; private set; }
 
         /// <inheritdoc />
         public virtual IAndMemoryCacheEntryTestBuilder WithKey(object key)
@@ -42,35 +41,35 @@
         /// <inheritdoc />
         public virtual IAndMemoryCacheEntryTestBuilder WithAbsoluteExpiration(DateTimeOffset? absoluteExpiration)
         {
-            this.MemoryCacheEntry.Options.AbsoluteExpiration = absoluteExpiration;
+            this.MemoryCacheEntry.AbsoluteExpiration = absoluteExpiration;
             return this;
         }
 
         /// <inheritdoc />
         public virtual IAndMemoryCacheEntryTestBuilder WithAbsoluteExpirationRelativeToNow(TimeSpan? absoluteExpirationRelativeToNow)
         {
-            this.MemoryCacheEntry.Options.AbsoluteExpirationRelativeToNow = absoluteExpirationRelativeToNow;
+            this.MemoryCacheEntry.AbsoluteExpirationRelativeToNow = absoluteExpirationRelativeToNow;
             return this;
         }
 
         /// <inheritdoc />
         public virtual IAndMemoryCacheEntryTestBuilder WithPriority(CacheItemPriority priority)
         {
-            this.MemoryCacheEntry.Options.Priority = priority;
+            this.MemoryCacheEntry.Priority = priority;
             return this;
         }
 
         /// <inheritdoc />
         public virtual IAndMemoryCacheEntryTestBuilder WithSlidingExpiration(TimeSpan? slidingExpiration)
         {
-            this.MemoryCacheEntry.Options.SlidingExpiration = slidingExpiration;
+            this.MemoryCacheEntry.SlidingExpiration = slidingExpiration;
             return this;
         }
 
         /// <inheritdoc />
         public IMemoryCacheEntryTestBuilder AndAlso() => this;
 
-        internal IMockedMemoryCacheEntry GetMockedMemoryCacheEntry()
+        internal ICacheEntry GetMockedMemoryCacheEntry()
         {
             if (this.MemoryCacheEntry.Key == null)
             {

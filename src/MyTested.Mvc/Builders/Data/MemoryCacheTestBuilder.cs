@@ -105,9 +105,16 @@
 
             this.ContainingEntry(key, value);
 
-            IMockedMemoryCacheEntry cacheEntry;
+            ICacheEntry cacheEntry;
             mockedMemoryCache.TryGetCacheEntry(key, out cacheEntry);
-            var actualOptions = cacheEntry.Options;
+
+            var actualOptions = new MemoryCacheEntryOptions
+            {
+                AbsoluteExpiration = cacheEntry.AbsoluteExpiration,
+                AbsoluteExpirationRelativeToNow = cacheEntry.AbsoluteExpirationRelativeToNow,
+                Priority = cacheEntry.Priority,
+                SlidingExpiration = cacheEntry.SlidingExpiration
+            };
 
             if (Reflection.AreNotDeeplyEqual(options, actualOptions))
             {
@@ -132,7 +139,7 @@
             var key = expectedMemoryCacheEntry.Key;
             this.ContainingEntryWithKey(key);
 
-            IMockedMemoryCacheEntry actualMemoryCacheEntry;
+            ICacheEntry actualMemoryCacheEntry;
             mockedMemoryCache.TryGetCacheEntry(key, out actualMemoryCacheEntry);
 
             var validations = newMemoryCacheEntryBuilder.GetMockedMemoryCacheEntryValidations();

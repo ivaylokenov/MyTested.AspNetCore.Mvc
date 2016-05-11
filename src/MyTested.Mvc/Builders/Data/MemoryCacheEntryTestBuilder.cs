@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using Contracts.Data;
     using Exceptions;
-    using Internal.Contracts;
+    using Internal.Caching;
     using Internal.TestContexts;
     using Microsoft.Extensions.Caching.Memory;
     using Utilities;
@@ -17,7 +17,7 @@
     public class MemoryCacheEntryTestBuilder : MemoryCacheEntryBuilder, IAndMemoryCacheEntryTestBuilder
     {
         private readonly ControllerTestContext testContext;
-        private readonly ICollection<Action<IMockedMemoryCacheEntry, IMockedMemoryCacheEntry>> validations;
+        private readonly ICollection<Action<ICacheEntry, ICacheEntry>> validations;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MemoryCacheEntryTestBuilder"/> class.
@@ -28,7 +28,7 @@
             CommonValidator.CheckForNullReference(testContext, nameof(testContext));
 
             this.testContext = testContext;
-            this.validations = new List<Action<IMockedMemoryCacheEntry, IMockedMemoryCacheEntry>>();
+            this.validations = new List<Action<ICacheEntry, ICacheEntry>>();
         }
 
         /// <inheritdoc />
@@ -52,8 +52,8 @@
         {
             this.validations.Add((expected, actual) =>
             {
-                var expectedExpiration = expected.Options.AbsoluteExpiration;
-                var actualExpiration = actual.Options.AbsoluteExpiration;
+                var expectedExpiration = expected.AbsoluteExpiration;
+                var actualExpiration = actual.AbsoluteExpiration;
 
                 if (expectedExpiration != actualExpiration)
                 {
@@ -71,8 +71,8 @@
         {
             this.validations.Add((expected, actual) =>
             {
-                var expectedRelativeExpiration = expected.Options.AbsoluteExpirationRelativeToNow;
-                var actualRelativeExpiration = actual.Options.AbsoluteExpirationRelativeToNow;
+                var expectedRelativeExpiration = expected.AbsoluteExpirationRelativeToNow;
+                var actualRelativeExpiration = actual.AbsoluteExpirationRelativeToNow;
 
                 if (expectedRelativeExpiration != actualRelativeExpiration)
                 {
@@ -90,10 +90,10 @@
         {
             this.validations.Add((expected, actual) =>
             {
-                var expectedPriority = expected.Options.Priority;
-                var actualPriority = actual.Options.Priority;
+                var expectedPriority = expected.Priority;
+                var actualPriority = actual.Priority;
 
-                if (expected.Options.Priority != actual.Options.Priority)
+                if (expected.Priority != actual.Priority)
                 {
                     this.ThrowNewDataProviderAssertionException(
                         $"to have entry with {expectedPriority.GetErrorMessageName(includeQuotes: false)} priority",
@@ -109,8 +109,8 @@
         {
             this.validations.Add((expected, actual) =>
             {
-                var expectedSlidingExpiration = expected.Options.SlidingExpiration;
-                var actualSlidingExpiration = actual.Options.SlidingExpiration;
+                var expectedSlidingExpiration = expected.SlidingExpiration;
+                var actualSlidingExpiration = actual.SlidingExpiration;
 
                 if (expectedSlidingExpiration != actualSlidingExpiration)
                 {
@@ -123,7 +123,7 @@
             return base.WithSlidingExpiration(slidingExpiration);
         }
 
-        internal ICollection<Action<IMockedMemoryCacheEntry, IMockedMemoryCacheEntry>> GetMockedMemoryCacheEntryValidations()
+        internal ICollection<Action<ICacheEntry, ICacheEntry>> GetMockedMemoryCacheEntryValidations()
             => this.validations;
 
         private void ThrowNewDataProviderAssertionException(string expectedValue, string actualValue)
