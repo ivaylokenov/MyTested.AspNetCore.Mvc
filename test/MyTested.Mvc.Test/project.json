@@ -1,41 +1,41 @@
 {
   "authors": [ "Ivaylo Kenov" ],
-  "projectUrl": "https://github.com/ivaylokenov/MyTested.Mvc",
-  "licenseUrl": "https://github.com/ivaylokenov/MyTested.Mvc/blob/master/LICENSE",
+  "packOptions": {
+    "projectUrl": "https://github.com/ivaylokenov/MyTested.Mvc",
+    "licenseUrl": "https://github.com/ivaylokenov/MyTested.Mvc/blob/master/LICENSE"
+  },
 
   "compilationOptions": {
     "warningsAsErrors": true
   },
 
   "testRunner": "xunit",
-  "commands": {
-    "test": "xunit.runner.aspnet"
-  },
 
   "dependencies": {
+    "Microsoft.NETCore.Platforms": "1.0.1-*",
     "MyTested.Mvc": {
       "version": "1.0.0-*",
       "type": "build"
     },
+    "dotnet-test-xunit": "1.0.0-*",
     "xunit": "2.1.0"
   },
 
   "frameworks": {
-    "netstandardapp1.5": {
+    "netcoreapp1.0": {
+      "imports": [
+        "dnxcore50",
+        "portable-net451+win8"
+      ],
       "dependencies": {
-        "dotnet-test-xunit": "1.0.0-dev-*"
+        "Microsoft.NETCore.App": {
+          "version": "1.0.0-*",
+          "type": "platform"
+        },
+        "System.Diagnostics.Process": "4.1.0-*",
+        "System.Diagnostics.TraceSource": "4.0.0-*"
       }
     },
-    "dnx451": {
-      "dependencies": {
-        "xunit.runner.aspnet": "2.0.0-aspnet-*"
-      }
-    },
-    "net451": {
-      "frameworkAssemblies": {
-        "System.Runtime": "",
-        "System.Threading.Tasks": ""
-      }
-    }
+    "net451": { }
   }
 }

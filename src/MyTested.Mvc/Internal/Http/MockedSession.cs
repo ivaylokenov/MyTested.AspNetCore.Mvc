@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Contracts;
-    using Microsoft.AspNetCore.Http.Features;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc.Internal;
 
     public class MockedSession : ISession, IMockedSession

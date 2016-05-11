@@ -1,6 +1,6 @@
 ﻿namespace MyTested.Mvc.Internal.Caching
 {
-    using Internal.Contracts;
+    using Contracts;
     using Microsoft.Extensions.Caching.Memory;
     using Utilities.Validators;
 

@@ -3,14 +3,14 @@
     using Microsoft.AspNetCore.Builder;
     using Microsoft.Extensions.DependencyInjection;
 
-    public class TestsStartup
+    public class TestStartup
     {
-        public void ConfigureTestsServices(IServiceCollection services)
+        public void ConfigureTestServices(IServiceCollection services)
         {
             services.AddMvc();
         }
 
-        public void ConfigureTests(IApplicationBuilder app)
+        public void ConfigureTest(IApplicationBuilder app)
         {
             app.UseMvcWithDefaultRoute();
         }

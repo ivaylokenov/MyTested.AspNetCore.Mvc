@@ -44,7 +44,7 @@
             }
         }
 
-        public object Set(object key, object value, MemoryCacheEntryOptions options)
+        public ICacheEntry CreateEntry(object key)
         {
             this.cache[key] = new MockedMemoryCacheEntry(key, value, options);
             return value;

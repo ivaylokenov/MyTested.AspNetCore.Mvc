@@ -52,25 +52,6 @@
             }
         }
 
-        public override IList<IModelBinder> ModelBinders
-        {
-            get
-            {
-                if (this.modelBinders == null)
-                {
-                    this.modelBinders = this.Options.ModelBinders;
-                }
-
-                return this.modelBinders;
-            }
-
-            set
-            {
-                CommonValidator.CheckForNullReference(value, nameof(this.ModelBinders));
-                this.modelBinders = value;
-            }
-        }
-
         public override IList<IModelValidatorProvider> ValidatorProviders
         {
             get
