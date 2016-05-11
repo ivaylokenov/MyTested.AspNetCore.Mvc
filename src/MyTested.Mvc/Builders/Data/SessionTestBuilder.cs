@@ -10,7 +10,7 @@
     using Utilities.Validators;
 
     /// <summary>
-    /// Used for testing <see cref="Microsoft.AspNetCore.Http.Features.ISession"/>.
+    /// Used for testing <see cref="Microsoft.AspNetCore.Http.ISession"/>.
     /// </summary>
     public class SessionTestBuilder : BaseDataProviderTestBuilder, IAndSessionTestBuilder
     {

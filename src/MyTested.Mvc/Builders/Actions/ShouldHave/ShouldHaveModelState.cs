@@ -11,7 +11,6 @@
     /// <summary>
     /// Class containing methods for testing <see cref="Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary"/>.
     /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
     public partial class ShouldHaveTestBuilder<TActionResult>
     {
         /// <inheritdoc />

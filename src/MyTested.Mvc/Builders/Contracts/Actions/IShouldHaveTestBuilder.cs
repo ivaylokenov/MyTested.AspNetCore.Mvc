@@ -79,22 +79,22 @@
         IAndTestBuilder<TActionResult> NoMemoryCache();
 
         /// <summary>
-        /// Tests whether the action sets entries in the <see cref="Microsoft.AspNetCore.Http.Features.ISession"/>.
+        /// Tests whether the action sets entries in the <see cref="Microsoft.AspNetCore.Http.ISession"/>.
         /// </summary>
-        /// <param name="withNumberOfEntries">Expected number of <see cref="Microsoft.AspNetCore.Http.Features.ISession"/> entries.
+        /// <param name="withNumberOfEntries">Expected number of <see cref="Microsoft.AspNetCore.Http.ISession"/> entries.
         /// If default null is provided, the test builder checks only if any entries are found.</param>
         /// <returns>Test builder of <see cref="IAndTestBuilder{TActionResult}"/> type.</returns>
         IAndTestBuilder<TActionResult> Session(int? withNumberOfEntries = null);
 
         /// <summary>
-        /// Tests whether the action sets specific <see cref="Microsoft.AspNetCore.Http.Features.ISession"/> entries.
+        /// Tests whether the action sets specific <see cref="Microsoft.AspNetCore.Http.ISession"/> entries.
         /// </summary>
-        /// <param name="sessionTestBuilder">Builder for testing specific <see cref="Microsoft.AspNetCore.Http.Features.ISession"/> entries.</param>
+        /// <param name="sessionTestBuilder">Builder for testing specific <see cref="Microsoft.AspNetCore.Http.ISession"/> entries.</param>
         /// <returns>Test builder of <see cref="IAndTestBuilder{TActionResult}"/> type.</returns>
         IAndTestBuilder<TActionResult> Session(Action<ISessionTestBuilder> sessionTestBuilder);
 
         /// <summary>
-        /// Tests whether the action does not set any <see cref="Microsoft.AspNetCore.Http.Features.ISession"/> entries.
+        /// Tests whether the action does not set any <see cref="Microsoft.AspNetCore.Http.ISession"/> entries.
         /// </summary>
         /// <returns>Test builder of <see cref="IAndTestBuilder{TActionResult}"/> type.</returns>
         IAndTestBuilder<TActionResult> NoSession();

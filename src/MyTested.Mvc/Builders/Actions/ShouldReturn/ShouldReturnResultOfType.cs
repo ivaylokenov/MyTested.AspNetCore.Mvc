@@ -7,7 +7,6 @@
     /// <summary>
     /// Class containing methods for testing return type.
     /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <inheritdoc />

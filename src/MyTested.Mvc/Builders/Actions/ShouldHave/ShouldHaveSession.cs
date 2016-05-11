@@ -7,9 +7,8 @@
     using Data;
 
     /// <summary>
-    /// Class containing methods for testing <see cref="Microsoft.AspNetCore.Http.Features.ISession"/>.
+    /// Class containing methods for testing <see cref="Microsoft.AspNetCore.Http.ISession"/>.
     /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
     public partial class ShouldHaveTestBuilder<TActionResult>
     {
         /// <inheritdoc />

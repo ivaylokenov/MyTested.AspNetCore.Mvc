@@ -24,7 +24,7 @@
         /// <summary>
         /// Gets the data provider test builder.
         /// </summary>
-        /// <value>Test builder of <see cref="TDataProviderTestBuilder"/>.</value>
+        /// <value>Test builder for the concrete data provider.</value>
         protected abstract TDataProviderTestBuilder DataProviderTestBuilder { get; }
         
         /// <inheritdoc />

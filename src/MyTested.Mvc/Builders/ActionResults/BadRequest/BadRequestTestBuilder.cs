@@ -31,7 +31,7 @@
         private const string OfTypeErrorMessage = "When calling {0} action in {1} expected bad request result error to be of {2} type, but instead received {3}.";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HttpBadRequestTestBuilder{TBadRequestResult}"/> class.
+        /// Initializes a new instance of the <see cref="BadRequestTestBuilder{TBadRequestResult}"/> class.
         /// </summary>
         /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
         public BadRequestTestBuilder(ControllerTestContext testContext)

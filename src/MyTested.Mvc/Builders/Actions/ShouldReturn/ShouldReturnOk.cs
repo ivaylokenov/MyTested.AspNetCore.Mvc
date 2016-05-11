@@ -7,7 +7,6 @@
     /// <summary>
     /// Class containing methods for testing <see cref="OkResult"/> or <see cref="OkObjectResult"/>.
     /// </summary>
-    /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <inheritdoc />

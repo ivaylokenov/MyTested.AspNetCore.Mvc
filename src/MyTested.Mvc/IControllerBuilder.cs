@@ -111,9 +111,9 @@
         IAndControllerBuilder<TController> WithMemoryCache(Action<IMemoryCacheBuilder> memoryCacheBuilder);
 
         /// <summary>
-        /// Sets initial values to the HTTP <see cref="Microsoft.AspNetCore.Http.Features.ISession"/>.
+        /// Sets initial values to the HTTP <see cref="ISession"/>.
         /// </summary>
-        /// <param name="sessionBuilder">Action setting the <see cref="Microsoft.AspNetCore.Http.Features.ISession"/> values by using <see cref="ISessionBuilder"/>.</param>
+        /// <param name="sessionBuilder">Action setting the <see cref="Microsoft.AspNetCore.Http.ISession"/> values by using <see cref="ISessionBuilder"/>.</param>
         /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>
         IAndControllerBuilder<TController> WithSession(Action<ISessionBuilder> sessionBuilder);
 
