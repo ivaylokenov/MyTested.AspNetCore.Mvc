@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Exceptions;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.AspNetCore.Mvc.Routing;

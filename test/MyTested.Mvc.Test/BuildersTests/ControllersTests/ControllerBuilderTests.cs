@@ -385,8 +385,6 @@
                     Assert.NotNull(controller.ControllerContext.HttpContext);
                     Assert.NotNull(controller.ControllerContext.InputFormatters);
                     Assert.NotEmpty(controller.ControllerContext.InputFormatters);
-                    Assert.NotNull(controller.ControllerContext.ModelBinders);
-                    Assert.NotEmpty(controller.ControllerContext.ModelBinders);
                     Assert.NotNull(controller.ControllerContext.ValidatorProviders);
                     Assert.NotEmpty(controller.ControllerContext.ValidatorProviders);
                     Assert.NotNull(controller.ControllerContext.ValueProviders);
@@ -420,7 +418,6 @@
                     Assert.NotNull(controller.ControllerContext);
                     Assert.Null(controller.ControllerContext.HttpContext);
                     Assert.Empty(controller.ControllerContext.InputFormatters);
-                    Assert.Empty(controller.ControllerContext.ModelBinders);
                     Assert.Empty(controller.ControllerContext.ValidatorProviders);
                 });
         }
@@ -1217,8 +1214,6 @@
                     Assert.NotNull(controller.CustomControllerContext.HttpContext);
                     Assert.NotNull(controller.CustomControllerContext.InputFormatters);
                     Assert.NotEmpty(controller.CustomControllerContext.InputFormatters);
-                    Assert.NotNull(controller.CustomControllerContext.ModelBinders);
-                    Assert.NotEmpty(controller.CustomControllerContext.ModelBinders);
                     Assert.NotNull(controller.CustomControllerContext.ValidatorProviders);
                     Assert.NotEmpty(controller.CustomControllerContext.ValidatorProviders);
                     Assert.NotNull(controller.CustomControllerContext.ValueProviders);

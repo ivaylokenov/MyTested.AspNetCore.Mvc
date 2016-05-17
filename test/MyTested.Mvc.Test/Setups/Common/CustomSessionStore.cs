@@ -1,7 +1,7 @@
 ﻿namespace MyTested.Mvc.Test.Setups.Common
 {
     using System;
-    using Microsoft.AspNetCore.Http.Features;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Session;
 
     public class CustomSessionStore : ISessionStore

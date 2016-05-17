@@ -377,16 +377,17 @@
 
                 if (startupTypeInfo.Assembly.GetName().Name != PlatformServices.Default.Application.ApplicationName)
                 {
-                    var controllerTypeProvider = serviceCollection
-                        .Where(s => s.ServiceType == typeof(IControllerTypeProvider))
-                        .Select(s => s.ImplementationInstance)
-                        .OfType<StaticControllerTypeProvider>()
-                        .FirstOrDefault();
+                    // TODO: ADD APPLICATION PARTS!
+                    //var controllerTypeProvider = serviceCollection
+                    //    .Where(s => s.ServiceType == typeof(IControllerTypeProvider))
+                    //    .Select(s => s.ImplementationInstance)
+                    //    .OfType<StaticControllerTypeProvider>()
+                    //    .FirstOrDefault();
 
-                    if (controllerTypeProvider == null || !controllerTypeProvider.ControllerTypes.Any())
-                    {
-                        serviceCollection.AddMvcControllersAsServices(startupTypeInfo.Assembly);
-                    }
+                    //if (controllerTypeProvider == null || !controllerTypeProvider.ControllerTypes.Any())
+                    //{
+                    //    serviceCollection.AddMvcControllersAsServices(startupTypeInfo.Assembly);
+                    //}
                 }
             }
         }

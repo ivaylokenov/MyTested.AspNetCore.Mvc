@@ -24,13 +24,12 @@
             ControllerActionDescriptor descriptor,
             IReadOnlyList<IInputFormatter> inputFormatters,
             IControllerActionArgumentBinder controllerActionArgumentBinder,
-            IReadOnlyList<IModelBinder> modelBinders,
             IReadOnlyList<IModelValidatorProvider> modelValidatorProviders,
             IReadOnlyList<IValueProviderFactory> valueProviderFactories,
             ILogger logger,
             DiagnosticSource diagnosticSource,
             int maxModelValidationErrors)
-                : base(actionContext, controllerActionInvokerCache, controllerFactory, descriptor, inputFormatters, controllerActionArgumentBinder, modelBinders, modelValidatorProviders, valueProviderFactories, logger, diagnosticSource, maxModelValidationErrors)
+                : base(actionContext, controllerActionInvokerCache, controllerFactory, descriptor, inputFormatters, controllerActionArgumentBinder, modelValidatorProviders, valueProviderFactories, logger, diagnosticSource, maxModelValidationErrors)
         {
             this.controllerActionDescriptor = descriptor;
         }

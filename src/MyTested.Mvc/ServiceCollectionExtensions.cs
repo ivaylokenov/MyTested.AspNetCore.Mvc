@@ -61,7 +61,8 @@
         /// <param name="controllerTypes">Controller types to add.</param>
         public static void AddMvcControllersAsServices(this IServiceCollection serviceCollection, IEnumerable<Type> controllerTypes)
         {
-            ControllersAsServices.AddControllersAsServices(serviceCollection, controllerTypes);
+            // TODO: Application parts
+            // ControllersAsServices.AddControllersAsServices(serviceCollection, controllerTypes);
         }
 
         /// <summary>
@@ -81,7 +82,8 @@
         /// <param name="controllerAssemblies">Assemblies containing controller types.</param>
         public static void AddMvcControllersAsServices(this IServiceCollection serviceCollection, IEnumerable<Assembly> controllerAssemblies)
         {
-            ControllersAsServices.AddControllersAsServices(serviceCollection, controllerAssemblies);
+            // TODO: Application parts
+            // ControllersAsServices.AddControllersAsServices(serviceCollection, controllerAssemblies);
         }
 
         /// <summary>

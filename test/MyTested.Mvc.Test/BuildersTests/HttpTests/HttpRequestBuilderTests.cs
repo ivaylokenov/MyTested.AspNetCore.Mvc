@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.IO;
     using Exceptions;
-    using Microsoft.AspNetCore.Http.Features.Internal;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.Extensions.Primitives;
     using Setups;

@@ -20,7 +20,6 @@
         private readonly IControllerFactory controllerFactory;
         private readonly ControllerActionInvokerCache controllerActionInvokerCache;
         private readonly IReadOnlyList<IInputFormatter> inputFormatters;
-        private readonly IReadOnlyList<IModelBinder> modelBinders;
         private readonly IReadOnlyList<IModelValidatorProvider> modelValidatorProviders;
         private readonly IReadOnlyList<IValueProviderFactory> valueProviderFactories;
         private readonly int maxModelValidationErrors;
@@ -39,7 +38,6 @@
             this.argumentBinder = argumentBinder;
             this.controllerActionInvokerCache = controllerActionInvokerCache;
             this.inputFormatters = optionsAccessor.Value.InputFormatters.ToArray();
-            this.modelBinders = optionsAccessor.Value.ModelBinders.ToArray();
             this.modelValidatorProviders = optionsAccessor.Value.ModelValidatorProviders.ToArray();
             this.valueProviderFactories = optionsAccessor.Value.ValueProviderFactories.ToArray();
             this.maxModelValidationErrors = optionsAccessor.Value.MaxModelValidationErrors;
@@ -58,7 +56,6 @@
                 controllerActionDescriptor,
                 this.inputFormatters,
                 this.argumentBinder,
-                this.modelBinders,
                 this.modelValidatorProviders,
                 this.valueProviderFactories,
                 this.logger,

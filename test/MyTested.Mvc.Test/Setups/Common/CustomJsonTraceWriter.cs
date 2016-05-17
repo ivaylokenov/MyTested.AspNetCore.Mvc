@@ -1,9 +1,13 @@
 ﻿namespace MyTested.Mvc.Test.Setups.Common
 {
     using System;
-    using System.Diagnostics;
-    using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
+
+#if NET451
+    using System.Diagnostics;
+#else
+    using TraceLevel = Newtonsoft.Json.TraceLevel;
+#endif
 
     public class CustomJsonTraceWriter : ITraceWriter
     {
@@ -27,7 +31,7 @@
                 return TraceLevel.Error;
             }
         }
-
+        
         public void Trace(TraceLevel level, string message, Exception ex)
         {
         }

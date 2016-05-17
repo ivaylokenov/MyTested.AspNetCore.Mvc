@@ -41,13 +41,14 @@
                 .Calling(c => c.FullMemoryCacheAction(From.Services<IMemoryCache>()))
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel(new MockedMemoryCacheEntry("FullEntry", "FullEntryValid", new MemoryCacheEntryOptions
+                .WithResponseModel(new MockedCacheEntry("FullEntry")
                 {
+                    Value = "FullEntryValid",
                     AbsoluteExpiration = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
                     AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(1),
                     Priority = CacheItemPriority.High,
                     SlidingExpiration = TimeSpan.FromMinutes(5)
-                }));
+                });
         }
 
         [Fact]
@@ -71,13 +72,14 @@
                 .Calling(c => c.FullMemoryCacheAction(From.Services<IMemoryCache>()))
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel(new MockedMemoryCacheEntry("FullEntry", "FullEntryValid", new MemoryCacheEntryOptions
+                .WithResponseModel(new MockedCacheEntry("FullEntry")
                 {
+                    Value = "FullEntryValid",
                     AbsoluteExpiration = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
                     AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(1),
                     Priority = CacheItemPriority.High,
                     SlidingExpiration = TimeSpan.FromMinutes(5)
-                }));
+                });
         }
 
         [Fact]

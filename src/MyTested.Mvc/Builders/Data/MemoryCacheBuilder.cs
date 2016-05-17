@@ -48,7 +48,13 @@
             memoryCacheEntryBuilder(newMemoryCacheEntryBuilder);
             var memoryCacheEntry = newMemoryCacheEntryBuilder.GetMockedMemoryCacheEntry();
 
-            return this.WithEntry(memoryCacheEntry.Key, memoryCacheEntry.Value, memoryCacheEntry.Options);
+            return this.WithEntry(memoryCacheEntry.Key, memoryCacheEntry.Value, new MemoryCacheEntryOptions
+            {
+                AbsoluteExpiration = memoryCacheEntry.AbsoluteExpiration,
+                AbsoluteExpirationRelativeToNow = memoryCacheEntry.AbsoluteExpirationRelativeToNow,
+                Priority = memoryCacheEntry.Priority,
+                SlidingExpiration = memoryCacheEntry.SlidingExpiration
+            });
         }
 
         /// <inheritdoc />

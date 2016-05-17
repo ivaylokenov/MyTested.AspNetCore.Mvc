@@ -1,14 +1,15 @@
 ﻿namespace MyTested.Mvc.Test.Setups.Common
 {
+    using System;
     using Microsoft.Extensions.Caching.Memory;
 
     public class CustomMemoryCache : IMemoryCache
     {
-        public IEntryLink CreateLinkingScope()
+        public ICacheEntry CreateEntry(object key)
         {
-            return null; 
+            return null;
         }
-
+        
         public void Dispose()
         {
         }

@@ -7,7 +7,7 @@
     using Exceptions;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
-    using Microsoft.AspNetCore.Mvc.ViewFeatures;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
     using ShouldPassFor;
     using Utilities.Extensions;
 

@@ -5,7 +5,7 @@
     "licenseUrl": "https://github.com/ivaylokenov/MyTested.Mvc/blob/master/LICENSE"
   },
 
-  "compilationOptions": {
+  "buildOptions": {
     "warningsAsErrors": true
   },
 

@@ -348,7 +348,7 @@
 
         public IActionResult ChallengeWithAuthenticationSchemes()
         {
-            return this.Challenge(new List<string> { AuthenticationScheme.Basic, AuthenticationScheme.NTLM });
+            return this.Challenge(AuthenticationScheme.Basic, AuthenticationScheme.NTLM);
         }
 
         public IActionResult ChallengeWithAuthenticationProperties()
@@ -368,7 +368,7 @@
 
         public IActionResult ForbidWithAuthenticationSchemes()
         {
-            return this.Forbid(new List<string> { AuthenticationScheme.Basic, AuthenticationScheme.NTLM });
+            return this.Forbid(AuthenticationScheme.Basic, AuthenticationScheme.NTLM);
         }
 
         public IActionResult ForbidWithAuthenticationProperties()
