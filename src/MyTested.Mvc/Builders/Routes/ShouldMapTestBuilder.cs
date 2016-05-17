@@ -215,13 +215,13 @@
         {
             var actualInfo = this.GetActualRouteInfo();
             var expectedControllerType = typeof(TController);
-            var actualControllerType = actualInfo.ControllerType;
+            var actualControllerType = actualInfo.ControllerType.AsType();
 
             if (Reflection.AreDifferentTypes(expectedControllerType, actualControllerType))
             {
                 this.ThrowNewRouteAssertionException(
                     $"match {expectedControllerType.ToFriendlyTypeName()}",
-                    $"in fact matched {actualControllerType.AsType().ToFriendlyTypeName()}");
+                    $"in fact matched {actualControllerType.ToFriendlyTypeName()}");
             }
 
             return this;
@@ -317,11 +317,14 @@
                 this.ThrowNewRouteAssertionException(actual: actualRouteValues.UnresolvedError);
             }
 
-            if (Reflection.AreDifferentTypes(this.expectedRouteInfo.ControllerType, this.actualRouteInfo.ControllerType))
+            var expectedControllerType = this.expectedRouteInfo.ControllerType;
+            var actualControllerType = this.actualRouteInfo.ControllerType.AsType();
+
+            if (Reflection.AreDifferentTypes(expectedControllerType, actualControllerType))
             {
                 this.ThrowNewRouteAssertionException(actual: string.Format(
                     "instead matched {0}",
-                    actualRouteValues.ControllerType.AsType().ToFriendlyTypeName()));
+                    actualControllerType.ToFriendlyTypeName()));
             }
 
             if (expectedRouteValues.Action != actualRouteValues.Action)

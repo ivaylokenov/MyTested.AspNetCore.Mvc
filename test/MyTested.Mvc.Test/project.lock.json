@@ -10796,6 +10796,7 @@
   },
   "projectFileDependencyGroups": {
     "": [
+      "Microsoft.AspNetCore.Mvc >= 1.0.0-*",
       "Microsoft.NETCore.Platforms >= 1.0.1-*",
       "MyTested.Mvc >= 1.0.0-*",
       "dotnet-test-xunit >= 1.0.0-*",

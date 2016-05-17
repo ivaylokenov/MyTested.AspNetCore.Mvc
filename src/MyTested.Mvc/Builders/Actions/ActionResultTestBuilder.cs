@@ -29,6 +29,7 @@
         /// <inheritdoc />
         public IShouldHaveTestBuilder<TActionResult> ShouldHave()
         {
+            CommonValidator.CheckForException(this.CaughtException);
             return new ShouldHaveTestBuilder<TActionResult>(this.TestContext);
         }
 

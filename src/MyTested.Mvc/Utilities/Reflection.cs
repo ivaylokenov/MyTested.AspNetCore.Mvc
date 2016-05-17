@@ -311,7 +311,7 @@
             var type = obj.GetType();
             return TypeAttributesCache.GetOrAdd(type, _ =>
             {
-                return type.GetTypeInfo().GetCustomAttributes(true);
+                return type.GetTypeInfo().GetCustomAttributes(false);
             });
         }
 
@@ -319,7 +319,7 @@
         {
             return MethodAttributesCache.GetOrAdd(method, _ =>
             {
-                return method.GetCustomAttributes(true);
+                return method.GetCustomAttributes(false);
             });
         }
 

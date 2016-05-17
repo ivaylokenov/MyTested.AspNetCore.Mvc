@@ -83,6 +83,19 @@
         }
 
         [Fact]
+        public void AsyncMemoryCacheActionShouldNotThrowExceptionWithCorrectCacheEntries()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.AddMemoryCacheActionAsync())
+                .ShouldHave()
+                .MemoryCache(withNumberOfEntries: 1)
+                .AndAlso()
+                .ShouldReturn()
+                .Ok();
+        }
+
+        [Fact]
         public void MemoryCacheWithNumberShouldThrowExceptionWithInvalidCacheEntries()
         {
             Test.AssertException<DataProviderAssertionException>(

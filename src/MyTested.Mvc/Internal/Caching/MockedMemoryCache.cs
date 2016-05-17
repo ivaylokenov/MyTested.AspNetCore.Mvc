@@ -16,7 +16,7 @@
 #if NET451
         private const string DataKey = "__MemoryCache_Current__";
 #elif NETSTANDARD1_5
-        private static readonly AsyncLocal<IDictionary<object, ICacheEntry>> МemoryCacheCurrent = new AsyncLocal<IDictionary<object, ICacheEntry>>();
+        private static readonly ThreadLocal<IDictionary<object, ICacheEntry>> МemoryCacheCurrent = new ThreadLocal<IDictionary<object, ICacheEntry>>();
 #endif
         private readonly IDictionary<object, ICacheEntry> cache;
 

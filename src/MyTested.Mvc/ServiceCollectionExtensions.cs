@@ -8,9 +8,7 @@
     using Internal.Caching;
     using Internal.Http;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
-    using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.AspNetCore.Session;
     using Microsoft.Extensions.Caching.Memory;
@@ -43,49 +41,7 @@
             CommonValidator.CheckForNullReference(serviceCollection, nameof(serviceCollection));
             serviceCollection.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
         }
-
-        /// <summary>
-        /// Adds the provided controller types as services to the <see cref="IServiceCollection"/>.
-        /// </summary>
-        /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
-        /// <param name="controllerTypes">Controller types to add.</param>
-        public static void AddMvcControllersAsServices(this IServiceCollection serviceCollection, params Type[] controllerTypes)
-        {
-            serviceCollection.AddMvcControllersAsServices(controllerTypes.AsEnumerable());
-        }
-
-        /// <summary>
-        /// Adds the provided controller types as services to the <see cref="IServiceCollection"/>.
-        /// </summary>
-        /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
-        /// <param name="controllerTypes">Controller types to add.</param>
-        public static void AddMvcControllersAsServices(this IServiceCollection serviceCollection, IEnumerable<Type> controllerTypes)
-        {
-            // TODO: Application parts
-            // ControllersAsServices.AddControllersAsServices(serviceCollection, controllerTypes);
-        }
-
-        /// <summary>
-        /// Adds the provided controller type assemblies as services to the <see cref="IServiceCollection"/>.
-        /// </summary>
-        /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
-        /// <param name="controllerAssemblies">Assemblies containing controller types.</param>
-        public static void AddMvcControllersAsServices(this IServiceCollection serviceCollection, params Assembly[] controllerAssemblies)
-        {
-            serviceCollection.AddMvcControllersAsServices(controllerAssemblies.AsEnumerable());
-        }
-
-        /// <summary>
-        /// Adds the provided controller type assemblies as services to the <see cref="IServiceCollection"/>.
-        /// </summary>
-        /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
-        /// <param name="controllerAssemblies">Assemblies containing controller types.</param>
-        public static void AddMvcControllersAsServices(this IServiceCollection serviceCollection, IEnumerable<Assembly> controllerAssemblies)
-        {
-            // TODO: Application parts
-            // ControllersAsServices.AddControllersAsServices(serviceCollection, controllerAssemblies);
-        }
-
+        
         /// <summary>
         /// Replaces the default <see cref="ITempDataProvider"/> with a mocked implementation.
         /// </summary>

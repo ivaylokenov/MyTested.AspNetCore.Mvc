@@ -925,6 +925,15 @@
             return this.Ok();
         }
 
+        public async Task<IActionResult> AddMemoryCacheActionAsync()
+        {
+            var memoryCache = this.HttpContext.RequestServices.GetService<IMemoryCache>();
+
+            await Task.Run(() => memoryCache.Set("another", "anotherValue"));
+
+            return this.Ok();
+        }
+
         public IActionResult AddSessionAction()
         {
             this.HttpContext.Session.SetInt32("Integer", 1);

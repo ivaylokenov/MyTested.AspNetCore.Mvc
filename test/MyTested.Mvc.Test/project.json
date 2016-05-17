@@ -13,6 +13,7 @@
 
   "dependencies": {
     "Microsoft.NETCore.Platforms": "1.0.1-*",
+    "Microsoft.AspNetCore.Mvc": "1.0.0-*",
     "MyTested.Mvc": {
       "version": "1.0.0-*",
       "type": "build"

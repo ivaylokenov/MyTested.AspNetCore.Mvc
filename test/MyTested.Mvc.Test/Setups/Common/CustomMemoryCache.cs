@@ -1,13 +1,13 @@
 ﻿namespace MyTested.Mvc.Test.Setups.Common
 {
-    using System;
+    using Internal.Caching;
     using Microsoft.Extensions.Caching.Memory;
 
     public class CustomMemoryCache : IMemoryCache
     {
         public ICacheEntry CreateEntry(object key)
         {
-            return null;
+            return new MockedCacheEntry(key);
         }
         
         public void Dispose()
@@ -20,7 +20,7 @@
 
         public object Set(object key, object value, MemoryCacheEntryOptions options)
         {
-            return null;
+            return new object();
         }
 
         public bool TryGetValue(object key, out object value)

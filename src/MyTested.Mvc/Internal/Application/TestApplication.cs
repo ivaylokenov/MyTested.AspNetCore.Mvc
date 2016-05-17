@@ -14,10 +14,8 @@
     using Microsoft.AspNetCore.Hosting.Internal;
     using Microsoft.AspNetCore.Hosting.Startup;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Abstractions;
-    using Microsoft.AspNetCore.Mvc.Controllers;
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -28,6 +26,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
     using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.ObjectPool;
     using Microsoft.Extensions.PlatformAbstractions;
     using Routes;
     using Utilities.Extensions;
@@ -246,6 +245,8 @@
             serviceCollection.TryAddSingleton<DiagnosticSource>(diagnosticSource);
             serviceCollection.TryAddSingleton(diagnosticSource);
 
+            serviceCollection.AddSingleton<ObjectPoolProvider, DefaultObjectPoolProvider>();
+
             // platform services
             AddPlatformServices(serviceCollection);
 
@@ -266,7 +267,7 @@
             {
                 serviceCollection.AddMvc();
             }
-
+            
             AdditionalServices?.Invoke(serviceCollection);
 
             // custom MVC options
@@ -284,7 +285,6 @@
             });
 
             TryReplaceDataProviders(serviceCollection);
-            TryAddControllersAsServices(serviceCollection);
             PrepareRouteServices(serviceCollection);
 
             serviceProvider = serviceCollection.BuildServiceProvider();
@@ -347,7 +347,7 @@
                     }
                 }
             });
-
+            
             if (setMockedTempData)
             {
                 serviceCollection.ReplaceTempDataProvider();
@@ -361,34 +361,6 @@
             if (setMockedSession)
             {
                 serviceCollection.ReplaceSession();
-            }
-        }
-
-        private static void TryAddControllersAsServices(IServiceCollection serviceCollection)
-        {
-            if (StartupType != null)
-            {
-                var startupTypeInfo = StartupType.GetTypeInfo();
-
-                while (startupTypeInfo.BaseType != null && startupTypeInfo.BaseType != typeof(object))
-                {
-                    startupTypeInfo = startupTypeInfo.BaseType.GetTypeInfo();
-                }
-
-                if (startupTypeInfo.Assembly.GetName().Name != PlatformServices.Default.Application.ApplicationName)
-                {
-                    // TODO: ADD APPLICATION PARTS!
-                    //var controllerTypeProvider = serviceCollection
-                    //    .Where(s => s.ServiceType == typeof(IControllerTypeProvider))
-                    //    .Select(s => s.ImplementationInstance)
-                    //    .OfType<StaticControllerTypeProvider>()
-                    //    .FirstOrDefault();
-
-                    //if (controllerTypeProvider == null || !controllerTypeProvider.ControllerTypes.Any())
-                    //{
-                    //    serviceCollection.AddMvcControllersAsServices(startupTypeInfo.Assembly);
-                    //}
-                }
             }
         }
 
