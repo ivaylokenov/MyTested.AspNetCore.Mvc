@@ -30,13 +30,13 @@
     using Microsoft.Extensions.PlatformAbstractions;
     using Routes;
     using Utilities.Extensions;
-    using Microsoft.Extensions.DependencyModel;
+
     public static class TestApplication
     {
         private static readonly RequestDelegate NullHandler = (c) => TaskCache.CompletedTask;
+        private static readonly object Sync;
 
         private static bool initialiazed;
-        private static object sync;
 
         private static TestConfiguration testConfiguration;
 
@@ -51,7 +51,7 @@
 
         static TestApplication()
         {
-            sync = new object();
+            Sync = new object();
             configuration = PrepareConfiguration();
         }
 
@@ -163,7 +163,7 @@
 
             var startupName = TestConfiguration.FullStartupName ?? $"{Environment.EnvironmentName}Startup";
 
-            // check root of the testing library
+            // check root of the test project
             var startup =
                 applicationAssembly.GetType(startupName) ??
                 applicationAssembly.GetType($"{applicationName}.{startupName}");
@@ -173,10 +173,7 @@
                 // full scan 
                 var startupTypes = applicationAssembly
                     .DefinedTypes
-                    .Where(t =>
-                    {
-                        return t.Name == startupName || t.Name == $"{applicationName}.{startupName}";
-                    })
+                    .Where(t => t.Name == startupName || t.Name == $"{applicationName}.{startupName}")
                     .Select(t => t.AsType())
                     .ToArray();
 
@@ -368,7 +365,7 @@
         {
             var modelBindingActionInvokerFactoryType = typeof(IModelBindingActionInvokerFactory);
 
-            if (!serviceCollection.Any(s => s.ServiceType == modelBindingActionInvokerFactoryType))
+            if (serviceCollection.All(s => s.ServiceType != modelBindingActionInvokerFactoryType))
             {
                 serviceCollection.TryAddEnumerable(
                     ServiceDescriptor.Transient<IActionInvokerProvider, ModelBindingActionInvokerProvider>());
@@ -390,10 +387,7 @@
         {
             var applicationBuilder = new MockedApplicationBuilder(serviceProvider);
 
-            if (startupMethods?.ConfigureDelegate != null)
-            {
-                startupMethods.ConfigureDelegate(applicationBuilder);
-            }
+            startupMethods?.ConfigureDelegate?.Invoke(applicationBuilder);
 
             AdditionalApplicationConfiguration?.Invoke(applicationBuilder);
 
@@ -446,7 +440,7 @@
         {
             if (!initialiazed)
             {
-                lock (sync)
+                lock (Sync)
                 {
                     if (!initialiazed)
                     {

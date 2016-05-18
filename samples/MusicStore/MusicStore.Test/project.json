@@ -1,23 +1,13 @@
-{
-  "authors": [ "Ivaylo Kenov" ],
-  "packOptions": {
-    "projectUrl": "https://github.com/ivaylokenov/MyTested.Mvc",
-    "licenseUrl": "https://github.com/ivaylokenov/MyTested.Mvc/blob/master/LICENSE"
-  },
-
+﻿{
   "buildOptions": {
     "warningsAsErrors": true
   },
-
-  "testRunner": "xunit",
-
   "dependencies": {
-    "Microsoft.AspNetCore.Mvc": "1.0.0-*",
     "dotnet-test-xunit": "1.0.0-*",
-    "xunit": "2.1.0",
-    "MyTested.Mvc": "1.0.0-*"
+    "XUnit": "2.1.0",
+    "MyTested.Mvc": "1.0.0-*",
+    "MusicStore.Web": "1.0.0-*"
   },
-
   "frameworks": {
     "netcoreapp1.0": {
       "imports": [
@@ -31,6 +21,7 @@
         }
       }
     },
-    "net451": { }
-  }
+    "net451": { } 
+  },
+  "testRunner": "xunit"
 }
