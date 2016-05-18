@@ -30,7 +30,7 @@
     using Microsoft.Extensions.PlatformAbstractions;
     using Routes;
     using Utilities.Extensions;
-
+    using Microsoft.Extensions.DependencyModel;
     public static class TestApplication
     {
         private static readonly RequestDelegate NullHandler = (c) => TaskCache.CompletedTask;
@@ -167,7 +167,7 @@
             var startup =
                 applicationAssembly.GetType(startupName) ??
                 applicationAssembly.GetType($"{applicationName}.{startupName}");
-
+            
             if (startup == null)
             {
                 // full scan 

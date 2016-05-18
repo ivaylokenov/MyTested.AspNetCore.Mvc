@@ -18,7 +18,6 @@
         private HttpTestContext testContext;
         private MvcOptions options;
         private FormatterCollection<IInputFormatter> inputFormatters;
-        private IList<IModelBinder> modelBinders;
         private IList<IModelValidatorProvider> validatorProviders;
         private IList<IValueProvider> valueProviders;
 
