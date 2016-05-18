@@ -25,6 +25,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
+    using Microsoft.Extensions.DependencyModel;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.ObjectPool;
     using Microsoft.Extensions.PlatformAbstractions;
@@ -33,12 +34,15 @@
 
     public static class TestApplication
     {
+        private const string TestFrameworkName = "MyTested.Mvc";
+
         private static readonly RequestDelegate NullHandler = (c) => TaskCache.CompletedTask;
         private static readonly object Sync;
 
         private static bool initialiazed;
 
         private static TestConfiguration testConfiguration;
+        private static string testAssemblyName;
 
         private static IConfiguration configuration;
         private static IHostingEnvironment environment;
@@ -104,6 +108,23 @@
 
         internal static Action<IRouteBuilder> AdditionalRoutes { get; set; }
 
+        internal static string TestAssemblyName
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(testAssemblyName))
+                {
+                    var startUpAssemblyFullName = StartupType?.GetTypeInfo().Assembly.FullName;
+                    if (startUpAssemblyFullName != null)
+                    {
+                        testAssemblyName = new AssemblyName(testAssemblyName).Name;
+                    }
+                }
+
+                return testAssemblyName;
+            }
+        }
+
         internal static IConfiguration Configuration
         {
             get
@@ -143,6 +164,11 @@
             }
         }
 
+        internal static string ApplicationName => 
+            TestConfiguration.ApplicationName
+                ?? TestAssemblyName
+                ?? PlatformServices.Default.Application.ApplicationName;
+
         internal static void TryInitialize()
         {
             if (TestConfiguration.AutomaticStartup)
@@ -158,30 +184,20 @@
 
         internal static Type TryFindDefaultStartupType()
         {
-            var applicationName = PlatformServices.Default.Application.ApplicationName;
-            var applicationAssembly = Assembly.Load(new AssemblyName(applicationName));
+            testAssemblyName = DependencyContext.Default
+                .RuntimeLibraries
+                .Where(l => l.Dependencies.Any(d => d.Name.StartsWith(TestFrameworkName)))
+                .Select(l => l.Name)
+                .First();
+
+            var applicationAssembly = Assembly.Load(new AssemblyName(testAssemblyName));
 
             var startupName = TestConfiguration.FullStartupName ?? $"{Environment.EnvironmentName}Startup";
 
             // check root of the test project
             var startup =
                 applicationAssembly.GetType(startupName) ??
-                applicationAssembly.GetType($"{applicationName}.{startupName}");
-            
-            if (startup == null)
-            {
-                // full scan 
-                var startupTypes = applicationAssembly
-                    .DefinedTypes
-                    .Where(t => t.Name == startupName || t.Name == $"{applicationName}.{startupName}")
-                    .Select(t => t.AsType())
-                    .ToArray();
-
-                if (startupTypes.Length == 1)
-                {
-                    startup = startupTypes.First();
-                }
-            }
+                applicationAssembly.GetType($"{testAssemblyName}.{startupName}");
 
             return startup;
         }
@@ -219,15 +235,16 @@
         {
             return new HostingEnvironment
             {
-                ApplicationName = PlatformServices.Default.Application.ApplicationName,
-                EnvironmentName = TestConfiguration.EnvironmentName
+                ApplicationName = ApplicationName,
+                EnvironmentName = TestConfiguration.EnvironmentName,
+                ContentRootPath = PlatformServices.Default.Application.ApplicationBasePath
             };
         }
 
         private static IServiceCollection GetInitialServiceCollection()
         {
             var serviceCollection = new ServiceCollection();
-            var diagnosticSource = new DiagnosticListener("MyTested.Mvc");
+            var diagnosticSource = new DiagnosticListener(TestFrameworkName);
 
             // default server services
             serviceCollection.TryAddSingleton(Environment);
@@ -264,7 +281,7 @@
             {
                 serviceCollection.AddMvc();
             }
-            
+
             AdditionalServices?.Invoke(serviceCollection);
 
             // custom MVC options
@@ -344,7 +361,7 @@
                     }
                 }
             });
-            
+
             if (setMockedTempData)
             {
                 serviceCollection.ReplaceTempDataProvider();

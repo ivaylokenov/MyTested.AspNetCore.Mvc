@@ -4,6 +4,7 @@
 
     internal class TestConfiguration
     {
+        private const string ApplicationNameConfigKey = "ApplicationName";
         private const string EnvironmentNameConfigKey = "Environment";
         private const string AutomaticStartupConfigKey = "AutomaticStartup";
         private const string FullStartupNameConfigKey = "FullStartupName";
@@ -14,6 +15,8 @@
         {
             this.configuration = configuration;
         }
+
+        internal string ApplicationName => this.configuration[ApplicationNameConfigKey];
 
         internal string EnvironmentName => this.configuration[EnvironmentNameConfigKey] ?? "Test";
         

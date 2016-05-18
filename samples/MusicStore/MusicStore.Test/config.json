@@ -1,0 +1,13 @@
+﻿{
+  "AppSettings": {
+    "SiteTitle": "ASP.NET MVC Music Store",
+    "CacheDbResults": true
+  },
+  "DefaultAdminUsername": "Administrator@test.com",
+  "DefaultAdminPassword": "YouShouldChangeThisPassword1!",
+  "Data": {
+    "DefaultConnection": {
+      "ConnectionString": "Dummy Connection"
+    }
+  }
+}

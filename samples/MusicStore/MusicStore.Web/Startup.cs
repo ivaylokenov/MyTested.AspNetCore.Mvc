@@ -208,9 +208,6 @@ namespace MusicStore
                     name: "api",
                     template: "{controller}/{id?}");
             });
-
-            //Populates the MusicStore sample data
-            SampleData.InitializeMusicStoreDatabaseAsync(app.ApplicationServices).Wait();
         }
     }
 }
