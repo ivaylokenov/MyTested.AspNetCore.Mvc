@@ -58,6 +58,26 @@
         }
 
         [Fact]
+        public void ShouldReturnViewWithNameShouldNotThrowExceptionWithCorrectModel()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.DefaultViewWithModel())
+                .ShouldReturn()
+                .View(TestObjectFactory.GetListOfResponseModels());
+        }
+        
+        [Fact]
+        public void ShouldReturnViewWithNameShouldNotThrowExceptionWithCorrectNameAndModel()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.IndexView())
+                .ShouldReturn()
+                .View("Index", TestObjectFactory.GetListOfResponseModels());
+        }
+
+        [Fact]
         public void ShouldReturnPartialViewShouldNotThrowExceptionWithDefaultPartialView()
         {
             MyMvc
@@ -75,6 +95,26 @@
                 .Calling(c => c.IndexPartialView())
                 .ShouldReturn()
                 .PartialView("_IndexPartial");
+        }
+
+        [Fact]
+        public void ShouldReturnPartialViewWithNameShouldNotThrowExceptionWithCorrectModel()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.DefaultPartialViewWithModel())
+                .ShouldReturn()
+                .PartialView(TestObjectFactory.GetListOfResponseModels());
+        }
+
+        [Fact]
+        public void ShouldReturnPartialViewWithNameShouldNotThrowExceptionWithCorrectNameAndModel()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.IndexPartialView())
+                .ShouldReturn()
+                .PartialView("_IndexPartial", TestObjectFactory.GetListOfResponseModels());
         }
 
         [Fact]

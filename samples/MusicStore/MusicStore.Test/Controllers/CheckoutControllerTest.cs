@@ -48,8 +48,7 @@
                 .InvalidModelState()
                 .AndAlso()
                 .ShouldReturn()
-                .View()
-                .WithModel(With.Default<Order>());
+                .View(With.Default<Order>());
         }
 
         [Fact]
@@ -64,8 +63,7 @@
                     With.Default<Order>(),
                     CancellationToken.None))
                 .ShouldReturn()
-                .View()
-                .WithModel(With.Default<Order>());
+                .View(With.Default<Order>());
         }
     }
 }

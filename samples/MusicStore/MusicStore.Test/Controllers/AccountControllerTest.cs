@@ -182,8 +182,7 @@
                     .ThatEquals("Invalid login attempt."))
                 .AndAlso()
                 .ShouldReturn()
-                .View()
-                .WithModel(model);
+                .View(model);
         }
     }
 }

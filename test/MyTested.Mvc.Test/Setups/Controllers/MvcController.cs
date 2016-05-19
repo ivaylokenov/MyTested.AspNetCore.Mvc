@@ -76,6 +76,11 @@
         {
             return this.View();
         }
+        
+        public IActionResult DefaultViewWithModel()
+        {
+            return this.View(this.responseModel);
+        }
 
         public IActionResult IndexView()
         {
@@ -103,6 +108,11 @@
         public IActionResult DefaultPartialView()
         {
             return this.PartialView();
+        }
+
+        public IActionResult DefaultPartialViewWithModel()
+        {
+            return this.PartialView(this.responseModel);
         }
 
         public IActionResult IndexPartialView()

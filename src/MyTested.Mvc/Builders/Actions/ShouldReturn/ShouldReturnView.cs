@@ -33,6 +33,20 @@
         }
 
         /// <inheritdoc />
+        public IViewTestBuilder View<TModel>(TModel model)
+        {
+            return View(null, model);
+        }
+
+        /// <inheritdoc />
+        public IViewTestBuilder View<TModel>(string viewName, TModel model)
+        {
+            var viewTestBuilder = this.View(viewName);
+            viewTestBuilder.WithModel(model);
+            return viewTestBuilder;
+        }
+
+        /// <inheritdoc />
         public IViewTestBuilder PartialView()
         {
             return this.PartialView(null);
@@ -51,7 +65,21 @@
 
             return new ViewTestBuilder<PartialViewResult>(this.TestContext, viewType);
         }
-        
+
+        /// <inheritdoc />
+        public IViewTestBuilder PartialView<TModel>(TModel model)
+        {
+            return PartialView(null, model);
+        }
+
+        /// <inheritdoc />
+        public IViewTestBuilder PartialView<TModel>(string viewName, TModel model)
+        {
+            var viewTestBuilder = this.PartialView(viewName);
+            viewTestBuilder.WithModel(model);
+            return viewTestBuilder;
+        }
+
         private void ThrowNewViewResultAssertionException(string viewType, string expectedViewName, string actualViewName)
         {
             throw new ViewResultAssertionException(string.Format(
