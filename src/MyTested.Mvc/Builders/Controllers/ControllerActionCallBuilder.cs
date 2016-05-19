@@ -102,7 +102,6 @@
         private ActionTestContext<TActionResult> GetAndValidateActionResult<TActionResult>(Expression<Func<TController, TActionResult>> actionCall)
         {
             var actionName = this.GetAndValidateAction(actionCall);
-            var action = ExpressionParser.GetMethodInfo(actionCall);
             var actionResult = default(TActionResult);
             Exception caughtException = null;
 
@@ -137,7 +136,7 @@
 
         private void ValidateModelState(LambdaExpression actionCall)
         {
-            var arguments = ExpressionParser.ResolveMethodArguments(actionCall);
+            var arguments = ExpressionParser.ResolveMethodArguments(actionCall).ToArray();
             if (arguments.Any())
             {
                 var validator = this.Services.GetRequiredService<IObjectModelValidator>();
@@ -154,7 +153,7 @@
         private void SetActionDescriptor(MethodInfo methodInfo)
         {
             var controllerContext = this.TestContext.ControllerContext;
-            if (controllerContext.ActionDescriptor == null || controllerContext.ActionDescriptor.MethodInfo == null)
+            if (controllerContext.ActionDescriptor?.MethodInfo == null)
             {
                 var controllerActionDescriptorCache = this.Services.GetService<IControllerActionDescriptorCache>();
                 if (controllerActionDescriptorCache != null)

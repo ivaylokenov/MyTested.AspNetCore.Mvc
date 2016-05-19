@@ -280,7 +280,7 @@
             var expectedUri = urlHelper.ExpressionLink(expectedRouteValuesAsLambdaExpression);
             var actualUri = urlHelper.GenerateLink(linkGenerationTestContext, controllerTestContext);
 
-            if (actualUri != expectedUri)
+            if (!string.Equals(expectedUri, actualUri, StringComparison.OrdinalIgnoreCase))
             {
                 failedValidationAction(
                     "to have resolved location to",

@@ -74,7 +74,7 @@
             {
                 var routeAttribute = this.TryGetAttributeOfType<RouteAttribute>(attrs);
                 var actualTemplate = routeAttribute.Template;
-                if (template.ToLower() != actualTemplate.ToLower())
+                if (!string.Equals(template, actualTemplate, StringComparison.OrdinalIgnoreCase))
                 {
                     failedValidationAction(
                         $"{routeAttribute.GetName()} with '{template}' template",

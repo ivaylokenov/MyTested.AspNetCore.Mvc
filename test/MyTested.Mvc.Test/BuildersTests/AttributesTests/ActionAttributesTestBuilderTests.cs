@@ -1,5 +1,7 @@
 ﻿namespace MyTested.Mvc.Test.BuildersTests.AttributesTests
 {
+    using System.Collections.Generic;
+    using System.Net.Http;
     using Exceptions;
     using Microsoft.AspNetCore.Mvc;
     using Setups;
@@ -18,7 +20,7 @@
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes.ContainingAttributeOfType<HttpGetAttribute>());
         }
-        
+
         public void ContainingAttributeOfTypeShouldThrowExceptionWithActionWithoutTheAttribute()
         {
             Test.AssertException<AttributeAssertionException>(
@@ -247,7 +249,7 @@
                 },
                 "When calling NormalActionWithAttributes action in MvcController expected action to have AuthorizeAttribute with allowed 'Admin' roles, but in fact found 'Admin,Moderator'.");
         }
-        
+
         [Fact]
         public void DisablingActionCallShouldNotThrowExceptionWithTheAttribute()
         {
@@ -274,6 +276,136 @@
         }
         
         [Fact]
+        public void ValidatingAntiForgeryTokenShouldNotThrowExceptionWithTheAttribute()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.AntiForgeryToken())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes.ValidatingAntiForgeryToken());
+        }
+
+        [Fact]
+        public void ValidatingAntiForgeryTokenShouldThrowExceptionWithActionWithoutTheAttribute()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.NormalActionWithAttributes())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes.ValidatingAntiForgeryToken());
+                },
+                "When calling NormalActionWithAttributes action in MvcController expected action to have ValidateAntiForgeryTokenAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void RestrictingForHttpMethodWithGenericShouldWorkCorrectly()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.NormalActionWithAttributes())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes.RestrictingForHttpMethod<HttpGetAttribute>());
+        }
+
+        [Fact]
+        public void RestrictingForHttpMethodWithStringShouldWorkCorrectly()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.NormalActionWithAttributes())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes.RestrictingForHttpMethod("GET"));
+        }
+
+        [Fact]
+        public void RestrictingForHttpMethodWithHttpMethodClassShouldWorkCorrectly()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.NormalActionWithAttributes())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes.RestrictingForHttpMethod(HttpMethod.Get));
+        }
+
+        [Fact]
+        public void RestrictingForHttpMethodWithListOfStringsShouldWorkCorrectly()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.NormalActionWithAttributes())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes.RestrictingForHttpMethods(new List<string> { "GET", "HEAD" }));
+        }
+
+        [Fact]
+        public void RestrictingForHttpMethodWithParamsOfStringsShouldWorkCorrectly()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.NormalActionWithAttributes())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes.RestrictingForHttpMethods("GET", "HEAD"));
+        }
+
+        [Fact]
+        public void RestrictingForHttpMethodWithListOfHttpMethodsShouldWorkCorrectly()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.NormalActionWithAttributes())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes.RestrictingForHttpMethods(new List<HttpMethod> { HttpMethod.Get, HttpMethod.Head }));
+        }
+
+        [Fact]
+        public void RestrictingForHttpMethodWithParamsOfHttpMethodShouldWorkCorrectly()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.NormalActionWithAttributes())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes.RestrictingForHttpMethods(HttpMethod.Get, HttpMethod.Head));
+        }
+
+        [Fact]
+        public void RestrictingForHttpMethodWithListOfHttpMethodsShouldWorkCorrectlyWithDoubleAttributes()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.VariousAttributesAction())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes.RestrictingForHttpMethods(new List<HttpMethod>
+                {
+                    HttpMethod.Get,
+                    HttpMethod.Post,
+                    HttpMethod.Delete
+                }));
+        }
+
+        [Fact]
+        public void RestrictingForHttpMethodWithListOfHttpMethodsShouldWorkCorrectlyWithDoubleAttributesAndIncorrectMethods()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyMvc
+                       .Controller<MvcController>()
+                       .Calling(c => c.VariousAttributesAction())
+                       .ShouldHave()
+                       .ActionAttributes(attributes => attributes.RestrictingForHttpMethods(new List<HttpMethod>
+                       {
+                            HttpMethod.Get,
+                            HttpMethod.Head,
+                            HttpMethod.Delete
+                       }));
+                },
+                "When calling VariousAttributesAction action in MvcController expected action to have attribute restricting requests for HTTP 'HEAD' method, but in fact none was found.");
+        }
+
+        [Fact]
         public void AndAlsoShouldWorkCorrectly()
         {
             MyMvc
@@ -287,7 +419,7 @@
                         .DisablingActionCall()
                         .ChangingActionNameTo("NormalAction"));
         }
-        
+
         [Fact]
         public void WithNoShouldWorkCorrectly()
         {

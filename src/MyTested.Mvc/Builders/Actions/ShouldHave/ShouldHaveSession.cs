@@ -14,7 +14,7 @@
         /// <inheritdoc />
         public IAndTestBuilder<TActionResult> NoSession()
         {
-            if (this.TestContext.Session.Keys.Count() > 0)
+            if (this.TestContext.Session.Keys.Any())
             {
                 this.ThrowNewDataProviderAssertionExceptionWithNoEntries(SessionTestBuilder.SessionName);
             }

@@ -293,6 +293,12 @@
             return this.Ok();
         }
 
+        [ValidateAntiForgeryToken]
+        public IActionResult AntiForgeryToken()
+        {
+            return this.Ok();
+        }
+
         public IActionResult OkResultAction()
         {
             return this.Ok();

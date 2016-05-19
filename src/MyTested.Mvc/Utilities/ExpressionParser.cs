@@ -80,10 +80,14 @@
                 var expressionArgumentAsMethodCall = (MethodCallExpression)expression;
                 var expressionMethodDeclaringType = expressionArgumentAsMethodCall.Method.DeclaringType;
 
-                if (expressionArgumentAsMethodCall.Object == null
-                    && (expressionMethodDeclaringType == typeof(With) || expressionMethodDeclaringType == typeof(From)))
+                if (expressionArgumentAsMethodCall.Object == null)
                 {
-                    return null;
+                    if ((expressionMethodDeclaringType == typeof(With) &&
+                         expressionArgumentAsMethodCall.Method.Name != nameof(With.Default))
+                        || expressionMethodDeclaringType == typeof(From))
+                    {
+                        return null;
+                    }
                 }
             }
 

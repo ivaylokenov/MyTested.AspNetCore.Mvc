@@ -15,5 +15,25 @@
                 .ShouldReturn()
                 .View("~/Views/Shared/Error.cshtml");
         }
+
+        [Fact]
+        public void StatusCodePageShouldReturnCorrectView()
+        {
+            MyMvc
+                .Controller<HomeController>()
+                .Calling(c => c.StatusCodePage())
+                .ShouldReturn()
+                .View("~/Views/Shared/StatusCodePage.cshtml");
+        }
+
+        [Fact]
+        public void AccessDeniedShouldReturnCorrectView()
+        {
+            MyMvc
+                .Controller<HomeController>()
+                .Calling(c => c.AccessDenied())
+                .ShouldReturn()
+                .View("~/Views/Shared/AccessDenied.cshtml");
+        }
     }
 }

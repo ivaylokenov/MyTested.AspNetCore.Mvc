@@ -13,7 +13,7 @@
             return urlHelper.Action(
                 routeValues.Action,
                 routeValues.ControllerName,
-                routeValues.ActionArguments.ToRouteValues());
+                routeValues.ActionArguments.ToSortedRouteValues());
         }
 
         public static string GenerateLink(

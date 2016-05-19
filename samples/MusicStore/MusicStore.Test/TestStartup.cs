@@ -1,9 +1,12 @@
 ﻿namespace MusicStore.Test
 {
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
+    using Mocks;
     using Models;
+    using MyTested.Mvc;
 
     public class TestStartup : Startup
     {
@@ -16,8 +19,9 @@
         {
             base.ConfigureServices(services);
 
-            services
-                .AddDbContext<MusicStoreContext>(opts => opts.UseInMemoryDatabase());
+            services.AddDbContext<MusicStoreContext>(opts => opts.UseInMemoryDatabase());
+            services.TryReplace<MusicStoreContext, MusicStoreContext>(ServiceLifetime.Transient);
+            services.TryReplaceSingleton<SignInManager<ApplicationUser>, MockedSignInManager>();
         }
     }
 }

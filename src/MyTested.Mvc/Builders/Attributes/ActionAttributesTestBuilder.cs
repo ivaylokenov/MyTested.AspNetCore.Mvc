@@ -1,12 +1,17 @@
 ﻿namespace MyTested.Mvc.Builders.Attributes
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Contracts.Attributes;
     using Exceptions;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Routing;
     using Utilities.Extensions;
+
+    using HttpMethod = System.Net.Http.HttpMethod;
 
     /// <summary>
     /// Used for testing action attributes.
@@ -88,6 +93,72 @@
         }
 
         /// <inheritdoc />
+        public IAndActionAttributesTestBuilder ValidatingAntiForgeryToken()
+        {
+            return this.ContainingAttributeOfType<ValidateAntiForgeryTokenAttribute>();
+        }
+
+        /// <inheritdoc />
+        public IAndActionAttributesTestBuilder RestrictingForHttpMethod<THttpMethod>()
+            where THttpMethod : Attribute, IActionHttpMethodProvider, new()
+        {
+            return this.RestrictingForHttpMethods(new THttpMethod().HttpMethods);
+        }
+
+        /// <inheritdoc />
+        public IAndActionAttributesTestBuilder RestrictingForHttpMethod(string httpMethod)
+        {
+            return this.RestrictingForHttpMethod(new HttpMethod(httpMethod));
+        }
+
+        /// <inheritdoc />
+        public IAndActionAttributesTestBuilder RestrictingForHttpMethod(HttpMethod httpMethod)
+        {
+            return this.RestrictingForHttpMethods(new List<HttpMethod> { httpMethod });
+        }
+
+        /// <inheritdoc />
+        public IAndActionAttributesTestBuilder RestrictingForHttpMethods(IEnumerable<string> httpMethods)
+        {
+            return this.RestrictingForHttpMethods(httpMethods.Select(m => new HttpMethod(m)));
+        }
+
+        /// <inheritdoc />
+        public IAndActionAttributesTestBuilder RestrictingForHttpMethods(params string[] httpMethods)
+        {
+            return this.RestrictingForHttpMethods(httpMethods.AsEnumerable());
+        }
+
+        /// <inheritdoc />
+        public IAndActionAttributesTestBuilder RestrictingForHttpMethods(IEnumerable<HttpMethod> httpMethods)
+        {
+            this.Validations.Add(attrs =>
+            {
+                var totalAllowedHttpMethods = attrs.OfType<IActionHttpMethodProvider>().SelectMany(a => a.HttpMethods);
+
+                httpMethods.ForEach(httpMethod =>
+                {
+                    var method = httpMethod.Method;
+
+                    if (!totalAllowedHttpMethods.Contains(method))
+                    {
+                        this.ThrowNewAttributeAssertionException(
+                            $"attribute restricting requests for HTTP '{method}' method",
+                            "in fact none was found");
+                    }
+                });
+            });
+
+            return this;
+        }
+
+        /// <inheritdoc />
+        public IAndActionAttributesTestBuilder RestrictingForHttpMethods(params HttpMethod[] httpMethods)
+        {
+            return this.RestrictingForHttpMethods(httpMethods.AsEnumerable());
+        }
+
+        /// <inheritdoc />
         public IActionAttributesTestBuilder AndAlso()
         {
             return this;
@@ -96,11 +167,11 @@
         private void ThrowNewAttributeAssertionException(string expectedValue, string actualValue)
         {
             throw new AttributeAssertionException(string.Format(
-                        "When calling {0} action in {1} expected action to have {2}, but {3}.",
-                        this.TestContext.ActionName,
-                        this.Controller.GetName(),
-                        expectedValue,
-                        actualValue));
+                "When calling {0} action in {1} expected action to have {2}, but {3}.",
+                this.TestContext.ActionName,
+                this.Controller.GetName(),
+                expectedValue,
+                actualValue));
         }
     }
 }

@@ -24,5 +24,11 @@
                 a => a.Key,
                 a => a.Value.Value);
         }
+
+        public static IDictionary<string, object> ToSortedRouteValues(
+            this IDictionary<string, MethodArgumentTestContext> dictionary)
+        {
+            return new SortedDictionary<string, object>(dictionary.ToRouteValues());
+        }
     }
 }
