@@ -91,23 +91,33 @@
                 }
             }
 
-            object value;
             if (expression.NodeType == ExpressionType.Constant)
             {
                 // Expression of type c => c.Action({const})
                 // Value can be extracted without compiling.
-                value = ((ConstantExpression)expression).Value;
-            }
-            else
-            {
-                // Expression needs compiling because it is not of constant type.
-                var convertExpression = Expression.Convert(expression, typeof(object));
-                value = Expression.Lambda<Func<object>>(convertExpression).Compile().Invoke();
+                return ((ConstantExpression)expression).Value;
             }
 
-            return value;
+            if (expression.NodeType == ExpressionType.MemberAccess
+                && ((MemberExpression)expression).Member is FieldInfo)
+            {
+                // Expression of type c => c.Action(id)
+                // Value can be extracted without compiling.
+                var memberAccessExpr = (MemberExpression)expression;
+                var constantExpression = (ConstantExpression)memberAccessExpr.Expression;
+                if (constantExpression != null)
+                {
+                    var innerMemberName = memberAccessExpr.Member.Name;
+                    var compiledLambdaScopeField = constantExpression.Value.GetType().GetField(innerMemberName);
+                    return compiledLambdaScopeField.GetValue(constantExpression.Value);
+                }
+            }
+
+            // Expression needs compiling because it is not of constant type.
+            var convertExpression = Expression.Convert(expression, typeof(object));
+            return Expression.Lambda<Func<object>>(convertExpression).Compile().Invoke();
         }
-        
+
         /// <summary>
         /// Parses member name from member lambda expression.
         /// </summary>
