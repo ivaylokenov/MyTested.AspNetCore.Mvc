@@ -1021,7 +1021,8 @@ namespace MyTested.Mvc.Test
             Task
                 .Run(async () =>
                 {
-                    TestHelper.ClearMemoryCache();
+                    TestHelper.GlobalTestCleanup += () => TestServiceProvider.GetService<IMemoryCache>()?.Dispose();
+                    TestHelper.ExecuteTestCleanup();
 
                     string firstValue = null;
                     string secondValue = null;
@@ -1036,35 +1037,35 @@ namespace MyTested.Mvc.Test
                             var memoryCache = TestServiceProvider.GetService<IMemoryCache>();
                             memoryCache.Set("test", "first");
                             firstValue = TestServiceProvider.GetService<IMemoryCache>().Get<string>("test");
-                            TestHelper.ClearMemoryCache();
+                            TestHelper.ExecuteTestCleanup();
                         }),
                         Task.Run(() =>
                         {
                             var memoryCache = TestServiceProvider.GetService<IMemoryCache>();
                             memoryCache.Set("test", "second");
                             secondValue = TestServiceProvider.GetService<IMemoryCache>().Get<string>("test");
-                            TestHelper.ClearMemoryCache();
+                            TestHelper.ExecuteTestCleanup();
                         }),
                         Task.Run(() =>
                         {
                             var memoryCache = TestServiceProvider.GetService<IMemoryCache>();
                             memoryCache.Set("test", "third");
                             thirdValue = TestServiceProvider.GetService<IMemoryCache>().Get<string>("test");
-                            TestHelper.ClearMemoryCache();
+                            TestHelper.ExecuteTestCleanup();
                         }),
                         Task.Run(() =>
                         {
                             var memoryCache = TestServiceProvider.GetService<IMemoryCache>();
                             memoryCache.Set("test", "fourth");
                             fourthValue = TestServiceProvider.GetService<IMemoryCache>().Get<string>("test");
-                            TestHelper.ClearMemoryCache();
+                            TestHelper.ExecuteTestCleanup();
                         }),
                         Task.Run(() =>
                         {
                             var memoryCache = TestServiceProvider.GetService<IMemoryCache>();
                             memoryCache.Set("test", "fifth");
                             fifthValue = TestServiceProvider.GetService<IMemoryCache>().Get<string>("test");
-                            TestHelper.ClearMemoryCache();
+                            TestHelper.ExecuteTestCleanup();
                         })
                     };
 

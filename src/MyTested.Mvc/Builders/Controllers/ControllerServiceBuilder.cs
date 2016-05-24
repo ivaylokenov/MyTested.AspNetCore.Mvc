@@ -3,10 +3,12 @@
     using System;
     using System.Collections.Generic;
     using Contracts.Controllers;
+    using Internal;
     using Internal.Application;
     using Microsoft.Extensions.DependencyInjection;
     using Utilities;
     using Utilities.Extensions;
+    using Utilities.Validators;
 
     /// <summary>
     /// Used for building the controller which will be tested.
@@ -16,6 +18,8 @@
         /// <inheritdoc />
         public IAndControllerBuilder<TController> WithServiceSetupFor<TService>(Action<TService> scopedServiceSetup)
         {
+            CommonValidator.CheckForNullReference(scopedServiceSetup, nameof(scopedServiceSetup));
+
             var serviceLifetime = TestServiceProvider.GetServiceLifetime<TService>();
             if (serviceLifetime != ServiceLifetime.Scoped)
             {
@@ -24,14 +28,6 @@
 
             scopedServiceSetup(this.HttpContext.RequestServices.GetService<TService>());
 
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndControllerBuilder<TController> WithServiceSetupFor<TService>(
-            Action<TService> singletonServiceSetup,
-            Action<TService> singletonServiceCleanup)
-        {
             return this;
         }
 

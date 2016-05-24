@@ -372,6 +372,7 @@
             if (setMockedCaching)
             {
                 serviceCollection.ReplaceMemoryCache();
+                TestHelper.GlobalTestCleanup += () => TestServiceProvider.GetService<IMemoryCache>()?.Dispose();
             }
 
             if (setMockedSession)

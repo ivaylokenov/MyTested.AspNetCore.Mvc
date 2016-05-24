@@ -18,7 +18,7 @@
 
         protected HttpTestContext()
         {
-            TestHelper.ClearMemoryCache();
+            TestHelper.ExecuteTestCleanup();
             this.mockedHttpContext = TestHelper.CreateMockedHttpContext();
         }
 

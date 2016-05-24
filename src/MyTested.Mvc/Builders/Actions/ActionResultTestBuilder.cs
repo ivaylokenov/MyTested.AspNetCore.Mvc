@@ -36,7 +36,7 @@
         /// <inheritdoc />
         public IShouldThrowTestBuilder ShouldThrow()
         {
-            TestHelper.ClearMemoryCache();
+            TestHelper.ExecuteTestCleanup();
             if (this.CaughtException == null)
             {
                 throw new ActionCallAssertionException(string.Format(
@@ -51,7 +51,7 @@
         /// <inheritdoc />
         public IShouldReturnTestBuilder<TActionResult> ShouldReturn()
         {
-            TestHelper.ClearMemoryCache();
+            TestHelper.ExecuteTestCleanup();
             CommonValidator.CheckForException(this.CaughtException);
             return new ShouldReturnTestBuilder<TActionResult>(this.TestContext);
         }

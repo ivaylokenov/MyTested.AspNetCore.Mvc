@@ -9,11 +9,12 @@
     using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.AspNetCore.Session;
-    using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.DependencyInjection;
 
     public static class TestHelper
     {
+        public static Action GlobalTestCleanup { get; set; }
+        
         /// <summary>
         /// Tries to create instance of the provided type. Returns null if not successful.
         /// </summary>
@@ -94,9 +95,6 @@
             }
         }
 
-        public static void ClearMemoryCache()
-        {
-            TestServiceProvider.GetService<IMemoryCache>()?.Dispose();
-        }
+        public static void ExecuteTestCleanup() => GlobalTestCleanup?.Invoke();
     }
 }

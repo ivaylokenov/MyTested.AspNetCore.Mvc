@@ -21,7 +21,7 @@
         public AndTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
-            TestHelper.ClearMemoryCache();
+            TestHelper.ExecuteTestCleanup();
         }
 
         /// <inheritdoc />

@@ -4,9 +4,11 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Security.Claims;
+    using System.Threading.Tasks;
     using Builders.Contracts.Actions;
     using Builders.Contracts.Base;
     using Exceptions;
+    using Internal.Application;
     using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.AspNetCore.Mvc;
     using Setups;
@@ -1796,7 +1798,7 @@
 
             MyMvc.IsUsingDefaultConfiguration();
         }
-
+        
         private void CheckActionResultTestBuilder<TActionResult>(
             IActionResultTestBuilder<TActionResult> actionResultTestBuilder,
             string expectedActionName)
