@@ -19,7 +19,6 @@ namespace MyTested.Mvc.Test
     using Internal.Routes;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Abstractions;
     using Microsoft.AspNetCore.Mvc.Controllers;
@@ -609,7 +608,6 @@ namespace MyTested.Mvc.Test
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
-                    services.TryReplaceTransient<IHttpContextFactory, CustomHttpContextFactory>();
                     services.AddHttpContextAccessor();
                 });
 
@@ -694,11 +692,6 @@ namespace MyTested.Mvc.Test
                     Assert.NotSame(thirdContextAsync, fourthContextAsync);
                     Assert.NotSame(fourthContextAsync, fifthContextAsync);
                     Assert.NotSame(thirdContextAsync, fifthContextAsync);
-                    Assert.Equal(ContentType.AudioVorbis, firstContextAsync.Request.ContentType);
-                    Assert.Equal(ContentType.AudioVorbis, secondContextAsync.Request.ContentType);
-                    Assert.Equal(ContentType.AudioVorbis, thirdContextAsync.Request.ContentType);
-                    Assert.Equal(ContentType.AudioVorbis, fourthContextAsync.Request.ContentType);
-                    Assert.Equal(ContentType.AudioVorbis, fifthContextAsync.Request.ContentType);
                 })
                 .GetAwaiter()
                 .GetResult();
@@ -897,7 +890,7 @@ namespace MyTested.Mvc.Test
 
             MyMvc.IsUsingDefaultConfiguration();
         }
-        
+
         [Fact]
         public void WithCustomActionContextFuncShouldSetItToAccessor()
         {
@@ -965,7 +958,8 @@ namespace MyTested.Mvc.Test
         [Fact]
         public void MockedMemoryCacheShouldBeRegistedWithAddedCaching()
         {
-            MyMvc.IsUsingDefaultConfiguration()
+            MyMvc
+                .IsUsingDefaultConfiguration()
                 .WithServices(services => services.AddMemoryCache());
 
             Assert.IsAssignableFrom<MockedMemoryCache>(TestServiceProvider.GetService<IMemoryCache>());
@@ -976,7 +970,8 @@ namespace MyTested.Mvc.Test
         [Fact]
         public void MockedMemoryCacheShouldNotBeRegisteredIfNoCacheIsAdded()
         {
-            MyMvc.IsUsingDefaultConfiguration()
+            MyMvc
+                .IsUsingDefaultConfiguration()
                 .WithServices(services => services.TryRemoveSingleton<IMemoryCache>());
 
             Assert.Null(TestServiceProvider.GetService<IMemoryCache>());
@@ -1100,7 +1095,7 @@ namespace MyTested.Mvc.Test
         public void CustomMemoryCacheShouldOverrideTheMockedOne()
         {
             MyMvc.StartsFrom<DataStartup>();
-            
+
             var memoryCache = TestServiceProvider.GetService<IMemoryCache>();
 
             Assert.NotNull(memoryCache);
@@ -1108,7 +1103,7 @@ namespace MyTested.Mvc.Test
 
             MyMvc.IsUsingDefaultConfiguration();
         }
-        
+
         [Fact]
         public void ExplicitMockedMemoryCacheShouldOverrideIt()
         {
@@ -1126,7 +1121,7 @@ namespace MyTested.Mvc.Test
 
             MyMvc.IsUsingDefaultConfiguration();
         }
-        
+
         [Fact]
         public void DefaultConfigurationShouldSetMockedSession()
         {
@@ -1227,6 +1222,79 @@ namespace MyTested.Mvc.Test
             Assert.NotNull(tempDataProvider);
             Assert.IsAssignableFrom<MockedTempDataProvider>(tempDataProvider);
 
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void ScopedServicesShouldRemainThroughTheTestCase()
+        {
+            MyMvc
+                .IsUsingDefaultConfiguration()
+                .WithServices(services =>
+                {
+                    services.TryAddScoped<IScopedService, ScopedService>();
+                });
+
+            MyMvc
+                .Controller<ServicesController>()
+                .Calling(c => c.SetValue())
+                .ShouldReturn()
+                .ResultOfType<string>()
+                .Passing(r => r == "Scoped");
+            
+            MyMvc
+                .Controller<ServicesController>()
+                .WithNoServiceFor<IScopedService>()
+                .Calling(c => c.DoNotSetValue())
+                .ShouldReturn()
+                .ResultOfType<string>()
+                .Passing(r => r == "Default");
+
+            MyMvc
+                .Controller<ServicesController>()
+                .Calling(c => c.DoNotSetValue())
+                .ShouldReturn()
+                .ResultOfType<string>()
+                .Passing(r => r == "Constructor");
+
+            MyMvc
+                .Controller<ServicesController>()
+                .Calling(c => c.FromServices(From.Services<IScopedService>()))
+                .ShouldReturn()
+                .ResultOfType<string>()
+                .Passing(r => r == "Constructor");
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void ServiceLifeTimesShouldBeSavedCorrectly()
+        {
+            MyMvc
+                .IsUsingDefaultConfiguration()
+                .WithServices(services =>
+                {
+                    services.AddScoped<IScopedService, ScopedService>();
+                    services.AddSingleton<IInjectedService, InjectedService>();
+                    services.AddTransient<IAnotherInjectedService, AnotherInjectedService>();
+                });
+
+            // this call ensures services are loaded (uses lazy loading)
+            var setupServices = TestApplication.Services;
+
+            Assert.NotNull(setupServices.GetService<IScopedService>());
+            Assert.NotNull(setupServices.GetService<IInjectedService>());
+            Assert.NotNull(setupServices.GetService<IAnotherInjectedService>());
+
+            var scopedServiceLifetime = TestServiceProvider.GetServiceLifetime(typeof(IScopedService));
+            Assert.Equal(ServiceLifetime.Scoped, scopedServiceLifetime);
+
+            var singletonServiceLifetime = TestServiceProvider.GetServiceLifetime<IInjectedService>();
+            Assert.Equal(ServiceLifetime.Singleton, singletonServiceLifetime);
+
+            var transientServiceLifetime = TestServiceProvider.GetServiceLifetime<IAnotherInjectedService>();
+            Assert.Equal(ServiceLifetime.Transient, transientServiceLifetime);
+            
             MyMvc.IsUsingDefaultConfiguration();
         }
     }

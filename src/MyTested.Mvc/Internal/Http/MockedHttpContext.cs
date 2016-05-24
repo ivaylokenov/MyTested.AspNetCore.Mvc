@@ -1,6 +1,6 @@
 ﻿namespace MyTested.Mvc.Internal.Http
 {
-    using Internal.Application;
+    using Application;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Features;
     using Microsoft.AspNetCore.Http.Internal;
@@ -11,8 +11,9 @@
     /// </summary>
     public class MockedHttpContext : DefaultHttpContext
     {
+        private readonly HttpResponse httpResponse;
+
         private HttpRequest httpRequest;
-        private HttpResponse httpResponse;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MockedHttpContext"/> class.
@@ -98,7 +99,7 @@
 
             if (this.Features.Get<IServiceProvidersFeature>() == null)
             {
-                this.Features.Set<IServiceProvidersFeature>(new MockedRequestServicesFeature(TestServiceProvider.Global));
+                this.Features.Set<IServiceProvidersFeature>(new MockedRequestServicesFeature());
             }
 
             TestHelper.SetMockedSession(this);

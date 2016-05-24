@@ -61,10 +61,7 @@
             this.InjectedRequestModel = requestModel;
         }
 
-        public ICollection<ResponseModel> ResponseModel
-        {
-            get { return this.responseModel; }
-        }
+        public ICollection<ResponseModel> ResponseModel => this.responseModel;
 
         public IInjectedService InjectedService { get; private set; }
 

@@ -2,12 +2,11 @@
 {
     using Application;
     using Contracts;
+    using Http;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Http.Features;
     using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.DependencyInjection;
-    using MyTested.Mvc.Internal.Http;
     using Routes;
     using Utilities.Extensions;
     using Utilities.Validators;

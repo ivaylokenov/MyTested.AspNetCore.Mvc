@@ -17,8 +17,6 @@
     /// </summary>
     public static class InternalRouteResolver
     {
-        private const string UnresolvedRouteFormat = "it could not be resolved: '{0}'";
-
         /// <summary>
         /// Resolves HTTP request to a route using the provided route context and the action selector and invoker services.
         /// </summary>

@@ -102,6 +102,8 @@
 
             Assert.NotNull(gotTempData);
             Assert.Same(gotTempData, controller.CustomTempData);
+
+            MyMvc.IsUsingDefaultConfiguration();
         }
 
         [Fact]

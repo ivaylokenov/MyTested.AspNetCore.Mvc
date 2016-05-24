@@ -31,7 +31,7 @@
             try
             {
                 var typeActivatorCache = TestServiceProvider.GetRequiredService<ITypeActivatorCache>();
-                return typeActivatorCache.CreateInstance<TInstance>(TestServiceProvider.Global, typeof(TInstance));
+                return typeActivatorCache.CreateInstance<TInstance>(TestServiceProvider.Current, typeof(TInstance));
             }
             catch
             {
@@ -96,11 +96,7 @@
 
         public static void ClearMemoryCache()
         {
-            var memoryCache = TestServiceProvider.GetService<IMemoryCache>();
-            if (memoryCache != null)
-            {
-                memoryCache.Dispose();
-            }
+            TestServiceProvider.GetService<IMemoryCache>()?.Dispose();
         }
     }
 }

@@ -36,7 +36,7 @@
     {
         private const string TestFrameworkName = "MyTested.Mvc";
 
-        private static readonly RequestDelegate NullHandler = (c) => TaskCache.CompletedTask;
+        private static readonly RequestDelegate NullHandler = c => TaskCache.CompletedTask;
         private static readonly object Sync;
 
         private static bool initialiazed;
@@ -298,7 +298,7 @@
                 }
             });
 
-            TryReplaceDataProviders(serviceCollection);
+            TryReplaceCommonServices(serviceCollection);
             PrepareRouteServices(serviceCollection);
 
             serviceProvider = serviceCollection.BuildServiceProvider();
@@ -307,7 +307,7 @@
             serviceProvider.GetService<IControllerActionDescriptorCache>();
         }
 
-        private static void TryReplaceDataProviders(IServiceCollection serviceCollection)
+        private static void TryReplaceCommonServices(IServiceCollection serviceCollection)
         {
             var tempDataProviderServiceType = typeof(ITempDataProvider);
             var defaultTempDataProviderType = typeof(SessionStateTempDataProvider);
@@ -324,6 +324,8 @@
             {
                 var serviceType = service.ServiceType;
                 var implementationType = service.ImplementationType;
+
+                TestServiceProvider.SaveServiceLifetime(serviceType, service.Lifetime);
 
                 if (serviceType == tempDataProviderServiceType)
                 {
@@ -479,6 +481,8 @@
             AdditionalServices = null;
             AdditionalApplicationConfiguration = null;
             AdditionalRoutes = null;
+            TestServiceProvider.Current = null;
+            TestServiceProvider.ClearServiceLifetimes();
         }
     }
 }

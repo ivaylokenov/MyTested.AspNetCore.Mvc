@@ -32,7 +32,14 @@
 
             var typeInfoOfExpectedReturnValue = typeOfExpectedReturnValue.GetTypeInfo();
 
-            var typeOfActionResult = this.ActionResult.GetType();
+            var typeOfActionResult = this.ActionResult?.GetType();
+            if (typeOfActionResult == null)
+            {
+                this.ThrowNewGenericActionResultAssertionException(
+                    typeOfExpectedReturnValue.ToFriendlyTypeName(),
+                    "null");
+            }
+
             var typeInfoOfActionResult = typeOfActionResult.GetTypeInfo();
 
             var isAssignableCheck = canBeAssignable && Reflection.AreNotAssignable(typeOfExpectedReturnValue, typeOfActionResult);
@@ -71,7 +78,7 @@
 
             if (invalid)
             {
-                this.ThrowNewGenericHttpActionResultAssertionException(
+                this.ThrowNewGenericActionResultAssertionException(
                     typeOfExpectedReturnValue.ToFriendlyTypeName(),
                     typeOfActionResult.ToFriendlyTypeName());
             }
@@ -82,7 +89,7 @@
             this.ValidateActionReturnType(typeof(TExpectedType), canBeAssignable, allowDifferentGenericTypeDefinitions);
         }
 
-        private void ThrowNewGenericHttpActionResultAssertionException(
+        private void ThrowNewGenericActionResultAssertionException(
             string typeNameOfExpectedReturnValue,
             string typeNameOfActionResult)
         {

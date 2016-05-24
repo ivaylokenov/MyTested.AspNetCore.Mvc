@@ -68,13 +68,7 @@
             }
         }
 
-        public MethodInfo Action
-        {
-            get
-            {
-                return ExpressionParser.GetMethodInfo(this.ActionCall);
-            }
-        }
+        public MethodInfo Action => ExpressionParser.GetMethodInfo(this.ActionCall);
 
         public LambdaExpression ActionCall
         {

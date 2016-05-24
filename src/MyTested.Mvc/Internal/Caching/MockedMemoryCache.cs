@@ -2,22 +2,14 @@
 {
     using System.Linq;
     using System.Collections.Generic;
-#if NET451
-    using System.Runtime.Remoting.Messaging;
-    using System.Runtime.Remoting;
-#elif NETSTANDARD1_5
-    using System.Threading;
-#endif
     using Contracts;
     using Microsoft.Extensions.Caching.Memory;
 
     public class MockedMemoryCache : IMockedMemoryCache
     {
-#if NET451
-        private const string DataKey = "__MemoryCache_Current__";
-#elif NETSTANDARD1_5
-        private static readonly ThreadLocal<IDictionary<object, ICacheEntry>> МemoryCacheCurrent = new ThreadLocal<IDictionary<object, ICacheEntry>>();
-#endif
+        private static readonly TestLocal<IDictionary<object, ICacheEntry>> Current
+            = new TestLocal<IDictionary<object, ICacheEntry>>();
+
         private readonly IDictionary<object, ICacheEntry> cache;
 
         public MockedMemoryCache()
@@ -81,26 +73,15 @@
 
         private IDictionary<object, ICacheEntry> GetCurrentCache()
         {
-#if NET451
-            var handle = CallContext.GetData(DataKey) as ObjectHandle;
-            var result = handle?.Unwrap() as IDictionary<object, ICacheEntry>;
-            if (result == null)
+            var result = Current.Value;
+            if (result != null)
             {
-                result = new Dictionary<object, ICacheEntry>();
-                CallContext.SetData(DataKey, new ObjectHandle(result));
+                return result;
             }
 
-            return result;
-#elif NETSTANDARD1_5
-            var result = МemoryCacheCurrent.Value;
-            if (result == null)
-            {
-                result = new Dictionary<object, ICacheEntry>();
-                МemoryCacheCurrent.Value = result;
-            }
-
-            return result;
-#endif
+            var newCache = new Dictionary<object, ICacheEntry>();
+            Current.Value = newCache;
+            return newCache;
         }
     }
 }

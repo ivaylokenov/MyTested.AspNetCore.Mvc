@@ -10,6 +10,12 @@
     /// </summary>
     public class TestServiceProvider
     {
+        private static readonly TestLocal<IServiceProvider> CurrentServiceProvider
+            = new TestLocal<IServiceProvider>();
+
+        private static readonly IDictionary<Type, ServiceLifetime> ServiceLifetimes
+            = new Dictionary<Type, ServiceLifetime>();
+
         /// <summary>
         /// Gets the global service provider.
         /// </summary>
@@ -24,9 +30,21 @@
         public static TInstance GetRequiredService<TInstance>()
         {
             ServiceValidator.ValidateServices();
-            var service = Global.GetService<TInstance>();
+            var service = Current.GetService<TInstance>();
             ServiceValidator.ValidateServiceExists(service);
             return service;
+        }
+
+        public static IServiceProvider Current
+        {
+            get
+            {
+                return CurrentServiceProvider.Value ?? Global;
+            }
+            internal set
+            {
+                CurrentServiceProvider.Value = value;
+            }
         }
 
         /// <summary>
@@ -37,7 +55,7 @@
         public static TInstance GetService<TInstance>()
         {
             ServiceValidator.ValidateServices();
-            return Global.GetService<TInstance>();
+            return Current.GetService<TInstance>();
         }
 
         /// <summary>
@@ -48,7 +66,7 @@
         public static IEnumerable<TInstance> GetServices<TInstance>()
         {
             ServiceValidator.ValidateServices();
-            return Global.GetServices<TInstance>();
+            return Current.GetServices<TInstance>();
         }
 
         /// <summary>
@@ -58,8 +76,19 @@
         /// <returns>Instance of TInstance type.</returns>
         public static TInstance TryGetService<TInstance>()
             where TInstance : class
-        {
-            return Global.GetService<TInstance>();
-        }
+            => Current.GetService<TInstance>();
+
+        public static void SaveServiceLifetime(Type serviceType, ServiceLifetime lifetime)
+            => ServiceLifetimes[serviceType] = lifetime;
+
+        public static ServiceLifetime GetServiceLifetime(Type serviceType)
+            => ServiceLifetimes.ContainsKey(serviceType)
+                ? ServiceLifetimes[serviceType]
+                : ServiceLifetime.Transient;
+
+        public static ServiceLifetime GetServiceLifetime<TService>()
+            => GetServiceLifetime(typeof(TService));
+
+        internal static void ClearServiceLifetimes() => ServiceLifetimes.Clear();
     }
 }

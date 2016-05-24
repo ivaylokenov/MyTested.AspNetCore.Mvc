@@ -20,6 +20,7 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection.Extensions;
     using Microsoft.AspNetCore.Mvc.Controllers;
+    using Microsoft.AspNetCore.Mvc.Infrastructure;
 
     public class ControllerBuilderTests
     {
@@ -1716,6 +1717,84 @@
                     MyMvc.Controller<RequestModel>();
                 },
                 "RequestModel is not a valid controller type.");
+        }
+
+        [Fact]
+        public void WithServiceSetupForShouldSetupScopedServiceCorrectly()
+        {
+            MyMvc
+                .IsUsingDefaultConfiguration()
+                .WithServices(services =>
+                {
+                    services.AddScoped<IScopedService, ScopedService>();
+                });
+
+            MyMvc
+                .Controller<ServicesController>()
+                .WithNoServiceFor<IScopedService>()
+                .WithServiceSetupFor<IScopedService>(s => s.Value = "Custom")
+                .Calling(c => c.DoNotSetValue())
+                .ShouldReturn()
+                .ResultOfType<string>()
+                .Passing(r => r == "Custom");
+            
+            MyMvc
+                .Controller<ServicesController>()
+                .WithNoServiceFor<IScopedService>()
+                .WithServiceSetupFor<IScopedService>(s => s.Value = "SecondCustom")
+                .Calling(c => c.FromServices(From.Services<IScopedService>()))
+                .ShouldReturn()
+                .ResultOfType<string>()
+                .Passing(r => r == "SecondCustom");
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void WithServiceSetupForShouldSetupScopedServiceCorrectlyWithConstructorInjection()
+        {
+            MyMvc
+                .IsUsingDefaultConfiguration()
+                .WithServices(services =>
+                {
+                    services.AddScoped<IScopedService, ScopedService>();
+                });
+
+            MyMvc
+                .Controller<ScopedServiceController>()
+                .WithServiceSetupFor<IScopedService>(s => s.Value = "TestValue")
+                .Calling(c => c.Index())
+                .ShouldReturn()
+                .Ok()
+                .WithResponseModel("TestValue");
+
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+        
+        [Fact]
+        public void WithServiceSetupForShouldThrowExceptionWithNoScopedService()
+        {
+            MyMvc
+                .IsUsingDefaultConfiguration()
+                .WithServices(services =>
+                {
+                    services.AddSingleton<IScopedService, ScopedService>();
+                });
+
+            Test.AssertException<InvalidOperationException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<ScopedServiceController>()
+                        .WithServiceSetupFor<IScopedService>(s => s.Value = "TestValue")
+                        .Calling(c => c.Index())
+                        .ShouldReturn()
+                        .Ok()
+                        .WithResponseModel("TestValue");
+                },
+                "This overload of the 'WithServiceSetupFor' method can be used only for services with scoped lifetime.");
+
+            MyMvc.IsUsingDefaultConfiguration();
         }
 
         private void CheckActionResultTestBuilder<TActionResult>(

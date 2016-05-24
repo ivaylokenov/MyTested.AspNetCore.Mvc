@@ -118,6 +118,14 @@
         IAndControllerBuilder<TController> WithSession(Action<ISessionBuilder> sessionBuilder);
 
         /// <summary>
+        /// Configures a service with scoped lifetime by using the provided <see cref="Action"/> delegate.
+        /// </summary>
+        /// <typeparam name="TService">Type of service to configure.</typeparam>
+        /// <param name="scopedServiceSetup">Action configuring the service.</param>
+        /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>
+        IAndControllerBuilder<TController> WithServiceSetupFor<TService>(Action<TService> scopedServiceSetup);
+
+        /// <summary>
         /// Sets null value to the constructor service dependency of the given type.
         /// </summary>
         /// <typeparam name="TService">Type of service dependency.</typeparam>

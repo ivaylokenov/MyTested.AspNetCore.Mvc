@@ -33,12 +33,12 @@
             HttpStatusCodeValidator.ValidateHttpStatusCode(
                 statusCode,
                 statusCodeResult.StatusCode,
-                this.ThrowNewHttpStatusCodeResultAssertionException);
+                this.ThrowNewStatusCodeResultAssertionException);
 
             return this.NewAndProvideTestBuilder();
         }
 
-        private void ThrowNewHttpStatusCodeResultAssertionException(string propertyName, string expectedValue, string actualValue)
+        private void ThrowNewStatusCodeResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new StatusCodeResultAssertionException(string.Format(
                     "When calling {0} action in {1} expected status code result {2} {3}, but {4}.",

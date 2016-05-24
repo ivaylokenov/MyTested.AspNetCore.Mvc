@@ -11,5 +11,10 @@
         }
 
         public ActionContext Context { get; private set; }
+
+        public IActionResult Index()
+        {
+            return this.Ok(this.Context);
+        }
     }
 }

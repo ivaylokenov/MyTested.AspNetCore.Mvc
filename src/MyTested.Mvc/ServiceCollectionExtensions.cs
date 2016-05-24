@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Reflection;
     using Internal;
+    using Internal.Application;
     using Internal.Caching;
     using Internal.Http;
     using Microsoft.AspNetCore.Http;
@@ -271,6 +272,7 @@
         {
             serviceCollection.TryRemove(service);
             serviceCollection.TryAdd(ServiceDescriptor.Describe(service, implementationType, lifetime));
+            TestServiceProvider.SaveServiceLifetime(service, lifetime);
         }
 
         /// <summary>
@@ -284,6 +286,7 @@
         {
             serviceCollection.TryRemove(service);
             serviceCollection.TryAdd(ServiceDescriptor.Describe(service, implementationFactory, lifetime));
+            TestServiceProvider.SaveServiceLifetime(service, lifetime);
         }
 
         /// <summary>
@@ -320,7 +323,7 @@
         /// <param name="implementationFactory">Service implementation factory which will be used for replacement.</param>
         public static void TryReplaceTransient(this IServiceCollection serviceCollection, Type service, Func<IServiceProvider, object> implementationFactory)
         {
-            serviceCollection.TryRemove(service);
+            serviceCollection.TryRemoveTransient(service);
             serviceCollection.AddTransient(service, implementationFactory);
         }
 
@@ -491,7 +494,7 @@
         public static void TryReplaceEnumerable(this IServiceCollection serviceCollection, IEnumerable<ServiceDescriptor> descriptors)
         {
             CommonValidator.CheckForNullReference(descriptors, nameof(descriptors));
-            descriptors.ForEach(d => serviceCollection.TryReplaceEnumerable(d));
+            descriptors.ForEach(serviceCollection.TryReplaceEnumerable);
         }
 
         private static void RemoveServices(IServiceCollection serviceCollection, Func<ServiceDescriptor, bool> predicate)
