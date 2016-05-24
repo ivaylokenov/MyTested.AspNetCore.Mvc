@@ -14,6 +14,7 @@
     using ActionResults.Object;
     using ActionResults.Ok;
     using ActionResults.Redirect;
+    using ActionResults.StatusCode;
     using ActionResults.View;
     using Base;
     using Models;
@@ -248,24 +249,24 @@
         IViewComponentTestBuilder ViewComponent<TViewComponentType>();
 
         /// <summary>
-        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.StatusCodeResult"/>.
+        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.StatusCodeResult"/> or <see cref="Microsoft.AspNetCore.Mvc.ObjectResult"/>.
         /// </summary>
-        /// <returns>Test builder of <see cref="IBaseTestBuilderWithActionResult{TActionResult}"/> type.</returns>
-        IBaseTestBuilderWithActionResult<TActionResult> StatusCode();
+        /// <returns>Test builder of <see cref="IStatusCodeTestBuilder"/> type.</returns>
+        IStatusCodeTestBuilder StatusCode();
 
         /// <summary>
-        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.StatusCodeResult"/> and it has the same status code as provided one.
+        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.StatusCodeResult"/> or <see cref="Microsoft.AspNetCore.Mvc.ObjectResult"/> and it has the same status code as provided one.
         /// </summary>
         /// <param name="statusCode">Status code as integer.</param>
-        /// <returns>Test builder of <see cref="IBaseTestBuilderWithActionResult{TActionResult}"/> type.</returns>
-        IBaseTestBuilderWithActionResult<TActionResult> StatusCode(int statusCode);
+        /// <returns>Test builder of <see cref="IStatusCodeTestBuilder"/> type.</returns>
+        IStatusCodeTestBuilder StatusCode(int statusCode);
 
         /// <summary>
-        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.StatusCodeResult"/> and is the same as provided <see cref="HttpStatusCode"/>.
+        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.StatusCodeResult"/> or <see cref="Microsoft.AspNetCore.Mvc.ObjectResult"/> and is the same as provided <see cref="HttpStatusCode"/>.
         /// </summary>
         /// <param name="statusCode"><see cref="HttpStatusCode"/> enumeration.</param>
-        /// <returns>Test builder of <see cref="IBaseTestBuilderWithActionResult{TActionResult}"/> type.</returns>
-        IBaseTestBuilderWithActionResult<TActionResult> StatusCode(HttpStatusCode statusCode);
+        /// <returns>Test builder of <see cref="IStatusCodeTestBuilder"/> type.</returns>
+        IStatusCodeTestBuilder StatusCode(HttpStatusCode statusCode);
 
         /// <summary>
         /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.EmptyResult"/>.

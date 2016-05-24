@@ -92,6 +92,19 @@
             return new ModelDetailsTestBuilder<TResponseModel>(this.TestContext);
         }
 
+        protected void WithNoResponseModel<TExpectedActionResult>()
+            where TExpectedActionResult : ActionResult
+        {
+            var actualResult = this.ActionResult as TExpectedActionResult;
+            if (actualResult == null)
+            {
+                throw new ResponseModelAssertionException(string.Format(
+                    "When calling {0} action in {1} expected to not have response model but in fact response model was found.",
+                    this.ActionName,
+                    this.Controller.GetName()));
+            }
+        }
+
         /// <summary>
         /// Tests whether action result has the same status code as the provided one.
         /// </summary>

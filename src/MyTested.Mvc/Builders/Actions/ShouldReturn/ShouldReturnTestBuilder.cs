@@ -88,7 +88,7 @@
         {
             this.ValidateActionReturnType(typeof(TExpectedType), canBeAssignable, allowDifferentGenericTypeDefinitions);
         }
-
+        
         private void ThrowNewGenericActionResultAssertionException(
             string typeNameOfExpectedReturnValue,
             string typeNameOfActionResult)

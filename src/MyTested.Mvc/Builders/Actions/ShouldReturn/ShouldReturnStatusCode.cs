@@ -1,6 +1,8 @@
 ﻿namespace MyTested.Mvc.Builders.Actions.ShouldReturn
 {
     using System.Net;
+    using ActionResults.StatusCode;
+    using Contracts.ActionResults.StatusCode;
     using Contracts.Base;
     using Exceptions;
     using Microsoft.AspNetCore.Mvc;
@@ -13,31 +15,40 @@
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <inheritdoc />
-        public IBaseTestBuilderWithActionResult<TActionResult> StatusCode()
+        public IStatusCodeTestBuilder StatusCode()
         {
-            this.ValidateActionReturnType<StatusCodeResult>();
-            return this.NewAndProvideTestBuilder();
+            return this.GetStatusCodeTestBuilder();
         }
 
         /// <inheritdoc />
-        public IBaseTestBuilderWithActionResult<TActionResult> StatusCode(int statusCode)
+        public IStatusCodeTestBuilder StatusCode(int statusCode)
         {
             return this.StatusCode((HttpStatusCode)statusCode);
         }
 
         /// <inheritdoc />
-        public IBaseTestBuilderWithActionResult<TActionResult> StatusCode(HttpStatusCode statusCode)
+        public IStatusCodeTestBuilder StatusCode(HttpStatusCode statusCode)
         {
-            var statusCodeResult = this.GetReturnObject<StatusCodeResult>();
-
             HttpStatusCodeValidator.ValidateHttpStatusCode(
+                this.ActionResult,
                 statusCode,
-                statusCodeResult.StatusCode,
                 this.ThrowNewStatusCodeResultAssertionException);
 
-            return this.NewAndProvideTestBuilder();
+            return this.GetStatusCodeTestBuilder();
         }
 
+        private IStatusCodeTestBuilder GetStatusCodeTestBuilder()
+        {
+            if (this.ActionResult is StatusCodeResult)
+            {
+                this.TestContext.ActionResult = this.GetReturnObject<StatusCodeResult>();
+                return new StatusCodeTestBuilder<StatusCodeResult>(this.TestContext);
+            }
+
+            this.TestContext.ActionResult = this.GetReturnObject<ObjectResult>();
+            return new StatusCodeTestBuilder<ObjectResult>(this.TestContext);
+        }
+        
         private void ThrowNewStatusCodeResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new StatusCodeResultAssertionException(string.Format(

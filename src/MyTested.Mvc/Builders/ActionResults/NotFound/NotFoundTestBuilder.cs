@@ -34,15 +34,7 @@
         /// <inheritdoc />
         public IAndNotFoundTestBuilder WithNoResponseModel()
         {
-            var actualResult = this.ActionResult as NotFoundResult;
-            if (actualResult == null)
-            {
-                throw new ResponseModelAssertionException(string.Format(
-                        "When calling {0} action in {1} expected to not have response model, but in fact response model was found.",
-                        this.ActionName,
-                        this.Controller.GetName()));
-            }
-
+            this.WithNoResponseModel<NotFoundResult>();
             return this;
         }
 

@@ -17,13 +17,13 @@
     /// <summary>
     /// Used for testing OK result.
     /// </summary>
-    /// <typeparam name="THttpOkResult">Type of OK result - <see cref="OkResult"/> or <see cref="OkObjectResult"/>.</typeparam>
-    public class OkTestBuilder<THttpOkResult>
-        : BaseTestBuilderWithResponseModel<THttpOkResult>, IAndOkTestBuilder
-        where THttpOkResult : ActionResult
+    /// <typeparam name="TOkResult">Type of OK result - <see cref="OkResult"/> or <see cref="OkObjectResult"/>.</typeparam>
+    public class OkTestBuilder<TOkResult>
+        : BaseTestBuilderWithResponseModel<TOkResult>, IAndOkTestBuilder
+        where TOkResult : ActionResult
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="OkTestBuilder{THttpOkResult}"/> class.
+        /// Initializes a new instance of the <see cref="OkTestBuilder{TOkResult}"/> class.
         /// </summary>
         /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
         public OkTestBuilder(ControllerTestContext testContext)
@@ -34,15 +34,7 @@
         /// <inheritdoc />
         public IAndOkTestBuilder WithNoResponseModel()
         {
-            var actualResult = this.ActionResult as OkResult;
-            if (actualResult == null)
-            {
-                throw new ResponseModelAssertionException(string.Format(
-                    "When calling {0} action in {1} expected to not have response model but in fact response model was found.",
-                    this.ActionName,
-                    this.Controller.GetName()));
-            }
-
+            this.WithNoResponseModel<OkResult>();
             return this;
         }
 
@@ -140,12 +132,12 @@
         /// <summary>
         /// Throws new OK result assertion exception for the provided property name, expected value and actual value.
         /// </summary>
-        /// <param name="propertyName">Property name on which the testing failed..</param>
+        /// <param name="propertyName">Property name on which the testing failed.</param>
         /// <param name="expectedValue">Expected value of the tested property.</param>
         /// <param name="actualValue">Actual value of the tested property.</param>
         protected override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)
             => this.ThrowNewOkResultAssertionException(propertyName, expectedValue, actualValue);
-
+        
         private void ThrowNewOkResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new OkResultAssertionException(string.Format(
