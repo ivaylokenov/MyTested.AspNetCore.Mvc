@@ -449,6 +449,49 @@
         }
 
         [Fact]
+        public void ShouldReturnResultShouldWorkCorrectlyWithCorrectModel()
+        {
+            MyMvc
+                .Controller<MvcController>()
+                .Calling(c => c.GenericActionWithCollection())
+                .ShouldReturn()
+                .Result(TestObjectFactory.GetListOfResponseModels());
+        }
+
+        [Fact]
+        public void ShouldReturnResultShouldThrowExceptionWithIncorrectModelType()
+        {
+            Test.AssertException<ActionResultAssertionException>(
+                () =>
+                {
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.GenericInterfaceAction())
+                        .ShouldReturn()
+                        .Result(TestObjectFactory.GetListOfResponseModels());
+                },
+                "When calling GenericInterfaceAction action in MvcController expected action result to be List<ResponseModel>, but instead received ResponseModel.");
+        }
+
+        [Fact]
+        public void ShouldReturnResultShouldThrowExceptionWithDifferentModel()
+        {
+            Test.AssertException<ActionResultAssertionException>(
+                () =>
+                {
+                    var model = TestObjectFactory.GetListOfResponseModels();
+                    model.Add(new ResponseModel());
+                    
+                    MyMvc
+                        .Controller<MvcController>()
+                        .Calling(c => c.GenericInterfaceAction())
+                        .ShouldReturn()
+                        .Result(model);
+                },
+                "When calling GenericInterfaceAction action in MvcController expected action result to be List<ResponseModel>, but instead received ResponseModel.");
+        }
+
+        [Fact]
         public void DynamicResultShouldBeProperlyRecognised()
         {
             MyMvc

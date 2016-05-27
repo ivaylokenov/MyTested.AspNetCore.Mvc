@@ -56,6 +56,13 @@
         /// <param name="returnType">Expected return type.</param>
         /// <returns>Test builder of <see cref="IModelDetailsTestBuilder{TActionResult}"/> type.</returns>
         IModelDetailsTestBuilder<TActionResult> ResultOfType(Type returnType);
+        
+        /// <summary>
+        /// Tests whether the action result is deeply equal to the provided one.
+        /// </summary>
+        /// <param name="model">Expected return object.</param>
+        /// <returns>Test builder of <see cref="IModelDetailsTestBuilder{TActionResult}"/> type.</returns>
+        IModelDetailsTestBuilder<TActionResult> Result<TResponseModel>(TResponseModel model);
 
         /// <summary>
         /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.ChallengeResult"/>.
