@@ -3,7 +3,7 @@
   "version": 2,
   "targets": {
     ".NETCoreApp,Version=v1.0": {
-      "dotnet-test-xunit/1.0.0-rc2-build10015": {
+      "dotnet-test-xunit/1.0.0-rc2-build10025": {
         "type": "package",
         "dependencies": {
           "Microsoft.Extensions.Testing.Abstractions": "1.0.0-preview1-002702",
@@ -4049,7 +4049,7 @@
           "Microsoft.AspNetCore.Mvc": "1.0.0",
           "Microsoft.AspNetCore.Session": "1.0.0",
           "Microsoft.AspNetCore.TestHost": "1.0.0",
-          "Microsoft.Extensions.Configuration.Json": "1.0.0-rc2-final"
+          "Microsoft.Extensions.Configuration.Json": "1.0.0"
         },
         "compile": {
           "netstandard1.5/MyTested.Mvc.dll": {}
@@ -4061,11 +4061,11 @@
     }
   },
   "libraries": {
-    "dotnet-test-xunit/1.0.0-rc2-build10015": {
-      "sha512": "2traZWYeJiFzau+1j9HcnSZ3rQLDyIrqKyYKCTbPPmu6lsQAtaOG5q+fuKS9Vaxczmh0IcvZ2hdWEuYmtVb9zw==",
+    "dotnet-test-xunit/1.0.0-rc2-build10025": {
+      "sha512": "MhxfSjj6z/dpct/9zsssDAXKxWXhAx9s39080Qm+59k2vLJafUjUTzl4cs2rKHK7BYty2EyNxir68v7cJcaBEA==",
       "type": "package",
       "files": [
-        "dotnet-test-xunit.1.0.0-rc2-build10015.nupkg.sha512",
+        "dotnet-test-xunit.1.0.0-rc2-build10025.nupkg.sha512",
         "dotnet-test-xunit.nuspec",
         "lib/net451/dotnet-test-xunit.exe",
         "lib/netcoreapp1.0/dotnet-test-xunit.dll",

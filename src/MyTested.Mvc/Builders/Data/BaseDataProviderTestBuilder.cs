@@ -34,15 +34,15 @@
         protected string DataProviderName { get; set; }
 
         /// <summary>
-        /// Gets the data provider as <see cref="IDictionary{string, object}"/>.
+        /// Gets the data provider as <see cref="IDictionary{TKey,TValue}"/>.
         /// </summary>
-        /// <value>Data provider as <see cref="IDictionary{string, object}"/>.</value>
+        /// <value>Data provider as <see cref="IDictionary{TKey,TValue}"/>.</value>
         protected IDictionary<string, object> DataProvider { get; private set; }
 
         /// <summary>
-        /// When overridden in derived class provides a way to built the data provider as <see cref="IDictionary{string, object}"/>.
+        /// When overridden in derived class provides a way to built the data provider as <see cref="IDictionary{TKey,TValue}"/>.
         /// </summary>
-        /// <returns>Data provider as <see cref="IDictionary{string, object}"/></returns>
+        /// <returns>Data provider as <see cref="IDictionary{TKey,TValue}"/></returns>
         protected abstract IDictionary<string, object> GetDataProvider();
 
         /// <summary>

@@ -106,9 +106,9 @@
         public ISessionTestBuilder AndAlso() => this;
 
         /// <summary>
-        /// When overridden in derived class provides a way to built the data provider as <see cref="IDictionary{string, object}"/>.
+        /// When overridden in derived class provides a way to built the data provider as <see cref="IDictionary{TKey,TValue}"/>.
         /// </summary>
-        /// <returns>Data provider as <see cref="IDictionary{string, object}"/></returns>
+        /// <returns>Data provider as <see cref="IDictionary{TKey,TValue}"/></returns>
         protected override IDictionary<string, object> GetDataProvider()
         {
             var result = new Dictionary<string, object>();

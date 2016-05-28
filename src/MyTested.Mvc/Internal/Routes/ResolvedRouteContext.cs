@@ -16,6 +16,7 @@
         /// Initializes a new instance of the <see cref="ResolvedRouteContext"/> class.
         /// </summary>
         /// <param name="controllerType">Resolved controller type for the current route.</param>
+        /// <param name="controllerName">Resolved controller name for the current route.</param>
         /// <param name="action">Resolved action name for the current route.</param>
         /// <param name="routeValues">Resolved dictionary of the action arguments for the current route.</param>
         /// <param name="routeData">Resolved HttpMessageHandler for the current route.</param>

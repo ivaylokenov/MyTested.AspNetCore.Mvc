@@ -10,7 +10,7 @@
         /// <summary>
         /// Allows additional testing on various components.
         /// </summary>
-        /// <returns>Test builder of <see cref="IShouldPassForTestBuilderWithController{object}"/> type.</returns>
+        /// <returns>Test builder of <see cref="IShouldPassForTestBuilderWithController{TObject}"/> type.</returns>
         new IShouldPassForTestBuilderWithController<object> ShouldPassFor();
     }
 }

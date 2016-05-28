@@ -10,17 +10,19 @@
   },
 
   "buildOptions": {
-    "compilationOptions": {
-      "warningsAsErrors": true,
-      "xmlDoc": true
-    }
+    "warningsAsErrors": true,
+    "xmlDoc": true,
+    "nowarn": [
+      "CS1591"
+    ],
+    "keyFile": "../../tools/Key.snk"
   },
 
   "dependencies": {
     "Microsoft.AspNetCore.Mvc": "1.0.0-*",
     "Microsoft.AspNetCore.Session": "1.0.0-*",
     "Microsoft.AspNetCore.TestHost": "1.0.0-*",
-    "Microsoft.Extensions.Configuration.Json": "1.0.0-rc2-final"
+    "Microsoft.Extensions.Configuration.Json": "1.0.0-*"
   },
 
   "frameworks": {

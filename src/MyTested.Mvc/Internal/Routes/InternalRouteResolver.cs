@@ -20,6 +20,7 @@
         /// <summary>
         /// Resolves HTTP request to a route using the provided route context and the action selector and invoker services.
         /// </summary>
+        /// <param name="services">Application services from which the route will be resolved.</param>
         /// <param name="router">IRouter to resolve route values.</param>
         /// <param name="routeContext">RouteContext to use for resolving the route values.</param>
         /// <returns>Resolved route information.</returns>

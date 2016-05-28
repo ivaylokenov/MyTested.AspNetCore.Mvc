@@ -95,10 +95,8 @@
         /// <summary>
         /// Validates whether Properties are the same as the provided ones from action result containing such property by using a builder.
         /// </summary>
-        /// <param name="actionResult">Action result with Properties.</param>
         /// <param name="authenticationPropertiesBuilder">Authentication properties builder.</param>
-        /// <param name="controller">Controller type for error messages.</param>
-        /// <param name="actionName">Action name for error messages.</param>
+        /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
         public static void ValidateAuthenticationProperties(
             Action<IAuthenticationPropertiesTestBuilder> authenticationPropertiesBuilder,
             ControllerTestContext testContext)

@@ -13,6 +13,7 @@
         /// Initializes a new instance of the <see cref="ActionTestContext{TActionResult}"/> class.
         /// </summary>
         /// <param name="actionName">Name of the action.</param>
+        /// <param name="actionCall"><see cref="LambdaExpression"/> representing the action call.</param>
         /// <param name="actionResult">Action return value.</param>
         /// <param name="caughtException">Caught exception during action execution.</param>
         public ActionTestContext(string actionName, LambdaExpression actionCall, TActionResult actionResult, Exception caughtException)

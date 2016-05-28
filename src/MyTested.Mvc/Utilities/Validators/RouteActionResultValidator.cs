@@ -193,6 +193,7 @@
         /// </summary>
         /// <param name="actionResult">Action result with RouteValues.</param>
         /// <param name="routeValues">Expected route value dictionary.</param>
+        /// <param name="includeCountCheck">Specifies whether the total number of route values should be validated.</param>
         /// <param name="failedValidationAction">Action to call in case of failed validation.</param>
         public static void ValidateRouteValues(
             dynamic actionResult,
