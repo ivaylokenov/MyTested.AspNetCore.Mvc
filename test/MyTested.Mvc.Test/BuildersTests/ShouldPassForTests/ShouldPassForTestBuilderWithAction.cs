@@ -1,9 +1,9 @@
 ﻿namespace MyTested.Mvc.Test.BuildersTests.ShouldPassForTests
 {
+    using System.Linq;
     using Exceptions;
     using Setups;
     using Setups.Controllers;
-    using System.Linq;
     using Xunit;
 
     public class ShouldPassForTestBuilderWithAction

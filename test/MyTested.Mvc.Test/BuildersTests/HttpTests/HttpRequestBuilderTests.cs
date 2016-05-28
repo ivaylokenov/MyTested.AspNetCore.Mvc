@@ -165,7 +165,6 @@
                     Assert.Equal("FieldValue", builtRequest.Form["Field"]);
                     Assert.Equal("AnotherFieldValue,SecondFieldValue", builtRequest.Form["AnotherField"]);
                 });
-
         }
 
         [Fact]
