@@ -394,7 +394,7 @@
 
             routeServiceProvider = serviceCollection.BuildServiceProvider();
 
-            serviceCollection.TryRemoveSingleton(modelBindingActionInvokerFactoryType);
+            serviceCollection.RemoveSingleton(modelBindingActionInvokerFactoryType);
 
             var actionInvokerProviders = serviceCollection.Where(s => s.ServiceType == typeof(IActionInvokerProvider)).ToList();
             if (actionInvokerProviders.Count > 1)

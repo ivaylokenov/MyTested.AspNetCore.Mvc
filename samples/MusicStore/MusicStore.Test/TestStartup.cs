@@ -20,7 +20,7 @@
             base.ConfigureServices(services);
 
             services.AddDbContext<MusicStoreContext>(opts => opts.UseInMemoryDatabase());
-            services.TryReplaceSingleton<SignInManager<ApplicationUser>, MockedSignInManager>();
+            services.ReplaceSingleton<SignInManager<ApplicationUser>, MockedSignInManager>();
         }
     }
 }

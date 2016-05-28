@@ -524,7 +524,7 @@ namespace MyTested.Mvc.Test
             MyMvc.IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
-                    services.TryRemoveTransient<IHttpContextFactory>();
+                    services.RemoveTransient<IHttpContextFactory>();
                 });
 
             var httpContextFactory = TestServiceProvider.GetService<IHttpContextFactory>();
@@ -545,7 +545,7 @@ namespace MyTested.Mvc.Test
             MyMvc.IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
-                    services.TryReplaceTransient<IHttpContextFactory, CustomHttpContextFactory>();
+                    services.ReplaceTransient<IHttpContextFactory, CustomHttpContextFactory>();
                 });
 
             var httpContextFactory = TestServiceProvider.GetService<IHttpContextFactory>();
@@ -567,7 +567,7 @@ namespace MyTested.Mvc.Test
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
-                    services.TryReplaceTransient<IHttpContextFactory, CustomHttpContextFactory>();
+                    services.ReplaceTransient<IHttpContextFactory, CustomHttpContextFactory>();
                     services.AddHttpContextAccessor();
                 });
 
@@ -972,7 +972,7 @@ namespace MyTested.Mvc.Test
         {
             MyMvc
                 .IsUsingDefaultConfiguration()
-                .WithServices(services => services.TryRemoveSingleton<IMemoryCache>());
+                .WithServices(services => services.RemoveSingleton<IMemoryCache>());
 
             Assert.Null(TestServiceProvider.GetService<IMemoryCache>());
 
