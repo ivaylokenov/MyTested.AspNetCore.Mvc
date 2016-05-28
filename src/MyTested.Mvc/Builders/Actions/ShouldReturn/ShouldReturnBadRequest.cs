@@ -4,9 +4,9 @@
     using Contracts.ActionResults.BadRequest;
     using Microsoft.AspNetCore.Mvc;
 
-    /// <summary>
+    /// <content>
     /// Class containing methods for testing <see cref="BadRequestResult"/> or <see cref="BadRequestObjectResult"/>.
-    /// </summary>
+    /// </content>
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <inheritdoc />

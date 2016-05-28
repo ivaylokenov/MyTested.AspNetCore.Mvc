@@ -3,15 +3,14 @@
     using System.Net;
     using ActionResults.StatusCode;
     using Contracts.ActionResults.StatusCode;
-    using Contracts.Base;
     using Exceptions;
     using Microsoft.AspNetCore.Mvc;
     using Utilities.Extensions;
     using Utilities.Validators;
 
-    /// <summary>
+    /// <content>
     /// Class containing methods for testing <see cref="StatusCodeResult"/>.
-    /// </summary>
+    /// </content>
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <inheritdoc />

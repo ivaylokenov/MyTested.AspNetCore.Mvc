@@ -4,9 +4,9 @@
     using Contracts.ActionResults.Redirect;
     using Microsoft.AspNetCore.Mvc;
 
-    /// <summary>
+    /// <content>
     /// Class containing methods for testing <see cref="RedirectResult"/>, <see cref="RedirectToActionResult"/> or <see cref="RedirectToRouteResult"/>.
-    /// </summary>
+    /// </content>
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <inheritdoc />

@@ -7,9 +7,9 @@
     using Utilities;
     using Utilities.Extensions;
 
-    /// <summary>
+    /// <content>
     /// Class containing methods for testing return type.
-    /// </summary>
+    /// </content>
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <inheritdoc />

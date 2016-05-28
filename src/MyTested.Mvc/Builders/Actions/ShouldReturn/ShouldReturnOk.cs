@@ -4,9 +4,9 @@
     using Contracts.ActionResults.Ok;
     using Microsoft.AspNetCore.Mvc;
 
-    /// <summary>
+    /// <content>
     /// Class containing methods for testing <see cref="OkResult"/> or <see cref="OkObjectResult"/>.
-    /// </summary>
+    /// </content>
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <inheritdoc />

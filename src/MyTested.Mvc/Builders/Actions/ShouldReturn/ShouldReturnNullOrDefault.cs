@@ -6,9 +6,9 @@
     using Utilities.Extensions;
     using Utilities.Validators;
 
-    /// <summary>
+    /// <content>
     /// Class containing methods for testing null or default value result.
-    /// </summary>
+    /// </content>
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <inheritdoc />

@@ -5,9 +5,9 @@
     using Contracts.Data;
     using Data;
 
-    /// <summary>
+    /// <content>
     /// Class containing methods for testing <see cref="Microsoft.Extensions.Caching.Memory.IMemoryCache"/>.
-    /// </summary>
+    /// </content>
     public partial class ShouldHaveTestBuilder<TActionResult>
     {
         /// <inheritdoc />

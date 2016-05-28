@@ -3,9 +3,9 @@
     using Contracts.Base;
     using Microsoft.AspNetCore.Mvc;
 
-    /// <summary>
+    /// <content>
     /// Class containing methods for testing <see cref="UnsupportedMediaTypeResult"/>.
-    /// </summary>
+    /// </content>
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <inheritdoc />

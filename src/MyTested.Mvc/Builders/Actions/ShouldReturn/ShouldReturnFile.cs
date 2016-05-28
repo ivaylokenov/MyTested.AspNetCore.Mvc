@@ -4,9 +4,9 @@
     using Contracts.ActionResults.File;
     using Microsoft.AspNetCore.Mvc;
 
-    /// <summary>
+    /// <content>
     /// Class containing methods for testing <see cref="FileStreamResult"/>, <see cref="VirtualFileResult"/>, <see cref="FileContentResult"/> or <see cref="PhysicalFileResult"/>.
-    /// </summary>
+    /// </content>
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <inheritdoc />

@@ -8,9 +8,9 @@
     using Models;
     using Utilities.Extensions;
 
-    /// <summary>
+    /// <content>
     /// Class containing methods for testing <see cref="Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary"/>.
-    /// </summary>
+    /// </content>
     public partial class ShouldHaveTestBuilder<TActionResult>
     {
         /// <inheritdoc />

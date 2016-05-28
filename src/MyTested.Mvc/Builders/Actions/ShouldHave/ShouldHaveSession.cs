@@ -6,9 +6,9 @@
     using Contracts.Data;
     using Data;
 
-    /// <summary>
+    /// <content>
     /// Class containing methods for testing <see cref="Microsoft.AspNetCore.Http.ISession"/>.
-    /// </summary>
+    /// </content>
     public partial class ShouldHaveTestBuilder<TActionResult>
     {
         /// <inheritdoc />

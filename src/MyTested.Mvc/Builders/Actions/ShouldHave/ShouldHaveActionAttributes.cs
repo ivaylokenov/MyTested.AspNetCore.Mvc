@@ -8,9 +8,9 @@
     using Utilities.Extensions;
     using Utilities.Validators;
 
-    /// <summary>
+    /// <content>
     /// Class containing methods for testing action attributes.
-    /// </summary>
+    /// </content>
     public partial class ShouldHaveTestBuilder<TActionResult>
     {
         /// <inheritdoc />

@@ -6,9 +6,9 @@
     using Microsoft.AspNetCore.Mvc;
     using Utilities;
 
-    /// <summary>
+    /// <content>
     /// Class containing methods for testing <see cref="ViewComponentResult"/>.
-    /// </summary>
+    /// </content>
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <inheritdoc />

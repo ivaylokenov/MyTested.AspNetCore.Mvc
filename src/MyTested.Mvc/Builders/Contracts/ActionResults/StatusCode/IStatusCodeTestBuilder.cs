@@ -6,6 +6,9 @@
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.Net.Http.Headers;
 
+    /// <summary>
+    /// Used for testing <see cref="StatusCodeResult"/> or <see cref="ObjectResult"/>.
+    /// </summary>
     public interface IStatusCodeTestBuilder : IBaseTestBuilderWithResponseModel,
         IBaseTestBuilderWithActionResult<ActionResult>
     {
