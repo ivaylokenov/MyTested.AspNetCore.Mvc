@@ -61,13 +61,7 @@
         /// Gets the current server feature collection. Not used in the actual testing.
         /// </summary>
         /// <value>Result of <see cref="IFeatureCollection"/> type.</value>
-        public IFeatureCollection ServerFeatures
-        {
-            get
-            {
-                return this.GetProperty<IFeatureCollection>(ServerFeaturesPropertyName);
-            }
-        }
+        public IFeatureCollection ServerFeatures => this.GetProperty<IFeatureCollection>(ServerFeaturesPropertyName);
 
         /// <summary>
         /// Gets the current application properties. Not used in the actual testing.
@@ -76,7 +70,7 @@
         public IDictionary<string, object> Properties { get; }
 
         /// <summary>
-        /// Gets the registered route collection.
+        /// Gets or sets the registered route collection.
         /// </summary>
         /// <value>Result of <see cref="RouteCollection"/> type.</value>
         public RouteCollection Routes { get; set; }
@@ -143,17 +137,14 @@
                .DeclaredFields
                .FirstOrDefault(m => m.Name == "args");
 
-            if (middlewareArguments != null)
+            var argumentsValues = middlewareArguments?.GetValue(middleware.Target) as object[];
+            if (argumentsValues != null)
             {
-                var argumentsValues = middlewareArguments.GetValue(middleware.Target) as object[];
-                if (argumentsValues != null)
+                foreach (var argument in argumentsValues.OfType<RouteCollection>())
                 {
-                    foreach (var argument in argumentsValues.OfType<RouteCollection>())
+                    for (int i = 0; i < argument.Count; i++)
                     {
-                        for (int i = 0; i < argument.Count; i++)
-                        {
-                            this.Routes.Add(argument[i]);
-                        }
+                        this.Routes.Add(argument[i]);
                     }
                 }
             }

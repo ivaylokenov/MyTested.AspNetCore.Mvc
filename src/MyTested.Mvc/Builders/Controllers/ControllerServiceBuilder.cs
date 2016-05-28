@@ -3,16 +3,15 @@
     using System;
     using System.Collections.Generic;
     using Contracts.Controllers;
-    using Internal;
     using Internal.Application;
     using Microsoft.Extensions.DependencyInjection;
     using Utilities;
     using Utilities.Extensions;
     using Utilities.Validators;
 
-    /// <summary>
+    /// <content>
     /// Used for building the controller which will be tested.
-    /// </summary>
+    /// </content>
     public partial class ControllerBuilder<TController>
     {
         /// <inheritdoc />

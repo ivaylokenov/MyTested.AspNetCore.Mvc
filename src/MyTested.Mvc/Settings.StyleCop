@@ -7,11 +7,14 @@
       <Value>json</Value>
       <Value>Json</Value>
       <Value>mp</Value>
+      <Value>Mvc</Value>
       <Value>nullable</Value>
       <Value>ogg</Value>
       <Value>png</Value>
       <Value>qt</Value>
       <Value>quicktime</Value>
+      <Value>referer</Value>
+      <Value>satisfiable</Value>
       <Value>vorbis</Value>
       <Value>x-javascript</Value>
       <Value>x-www-form-urlencoded</Value>

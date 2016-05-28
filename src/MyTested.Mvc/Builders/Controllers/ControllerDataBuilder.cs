@@ -5,9 +5,9 @@
     using Contracts.Data;
     using Data;
 
-    /// <summary>
+    /// <content>
     /// Used for building the controller which will be tested.
-    /// </summary>
+    /// </content>
     public partial class ControllerBuilder<TController>
     {
         /// <inheritdoc />

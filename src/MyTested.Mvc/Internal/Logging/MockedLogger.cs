@@ -8,13 +8,12 @@
     /// </summary>
     public class MockedLogger : ILogger
     {
-        private static MockedLogger defaultMockedLogger = new MockedLogger();
-
-        public static MockedLogger Instance => defaultMockedLogger;
+        public static MockedLogger Instance { get; } = new MockedLogger();
 
         /// <summary>
         /// Returns empty <see cref="IDisposable"/> object.
         /// </summary>
+        /// <typeparam name="TState">Not used type argument. Used for testing with <see cref="ILogger"/> service.</typeparam>
         /// <param name="state">Not used parameter. Used for testing with <see cref="ILogger"/> service.</param>
         /// <returns>Disposable object.</returns>
         public IDisposable BeginScope<TState>(TState state)

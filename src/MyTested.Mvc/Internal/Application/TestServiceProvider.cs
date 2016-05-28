@@ -21,6 +21,19 @@
         /// </summary>
         /// <value>Type of IServiceProvider.</value>
         public static IServiceProvider Global => TestApplication.Services;
+        
+        public static IServiceProvider Current
+        {
+            get
+            {
+                return CurrentServiceProvider.Value ?? Global;
+            }
+
+            internal set
+            {
+                CurrentServiceProvider.Value = value;
+            }
+        }
 
         /// <summary>
         /// Gets required service. Throws exception if such is not found or there are no registered services.
@@ -33,18 +46,6 @@
             var service = Current.GetService<TInstance>();
             ServiceValidator.ValidateServiceExists(service);
             return service;
-        }
-
-        public static IServiceProvider Current
-        {
-            get
-            {
-                return CurrentServiceProvider.Value ?? Global;
-            }
-            internal set
-            {
-                CurrentServiceProvider.Value = value;
-            }
         }
 
         /// <summary>

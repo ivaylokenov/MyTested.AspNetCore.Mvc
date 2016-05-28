@@ -2,8 +2,8 @@
 {
     using System.Linq;
     using System.Collections.Generic;
-    using Contracts;
     using Microsoft.Extensions.Caching.Memory;
+    using Contracts;
 
     public class MockedMemoryCache : IMockedMemoryCache
     {

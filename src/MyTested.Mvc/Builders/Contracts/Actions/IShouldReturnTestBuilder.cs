@@ -56,10 +56,11 @@
         /// <param name="returnType">Expected return type.</param>
         /// <returns>Test builder of <see cref="IModelDetailsTestBuilder{TActionResult}"/> type.</returns>
         IModelDetailsTestBuilder<TActionResult> ResultOfType(Type returnType);
-        
+
         /// <summary>
         /// Tests whether the action result is deeply equal to the provided one.
         /// </summary>
+        /// <typeparam name="TResponseModel">Expected response type.</typeparam>
         /// <param name="model">Expected return object.</param>
         /// <returns>Test builder of <see cref="IModelDetailsTestBuilder{TActionResult}"/> type.</returns>
         IModelDetailsTestBuilder<TActionResult> Result<TResponseModel>(TResponseModel model);
@@ -175,6 +176,7 @@
         /// <summary>
         /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.PartialViewResult"/> with the provided deeply equal model object.
         /// </summary>
+        /// <typeparam name="TModel">Expected model type.</typeparam>
         /// <param name="model">Expected model object.</param>
         /// <returns>Test builder of <see cref="IViewTestBuilder"/> type.</returns>
         IViewTestBuilder PartialView<TModel>(TModel model);
@@ -182,6 +184,7 @@
         /// <summary>
         /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.PartialViewResult"/> with the provided partial view name and deeply equal model object.
         /// </summary>
+        /// <typeparam name="TModel">Expected model type.</typeparam>
         /// <param name="viewName">Expected partial view name.</param>
         /// <param name="model">Expected model object.</param>
         /// <returns>Test builder of <see cref="IViewTestBuilder"/> type.</returns>
@@ -216,6 +219,7 @@
         /// <summary>
         /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.ViewResult"/> with the provided deeply equal model object.
         /// </summary>
+        /// <typeparam name="TModel">Expected model type.</typeparam>
         /// <param name="model">Expected model object.</param>
         /// <returns>Test builder of <see cref="IViewTestBuilder"/> type.</returns>
         IViewTestBuilder View<TModel>(TModel model);
@@ -223,6 +227,7 @@
         /// <summary>
         /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.ViewResult"/> with the provided view name and deeply equal model object.
         /// </summary>
+        /// <typeparam name="TModel">Expected model type.</typeparam>
         /// <param name="viewName">Expected view name.</param>
         /// <param name="model">Expected model object.</param>
         /// <returns>Test builder of <see cref="IViewTestBuilder"/> type.</returns>

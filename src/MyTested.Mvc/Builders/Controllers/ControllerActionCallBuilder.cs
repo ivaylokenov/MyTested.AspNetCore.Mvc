@@ -15,9 +15,9 @@
     using Utilities;
     using Utilities.Extensions;
 
-    /// <summary>
+    /// <content>
     /// Used for building the controller which will be tested.
-    /// </summary>
+    /// </content>
     public partial class ControllerBuilder<TController>
     {
         /// <inheritdoc />
