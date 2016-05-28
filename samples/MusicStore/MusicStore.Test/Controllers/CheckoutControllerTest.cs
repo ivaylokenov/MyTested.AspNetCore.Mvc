@@ -65,5 +65,47 @@
                 .ShouldReturn()
                 .View(With.Default<Order>());
         }
+
+        [Fact]
+        public void CompleteShouldReturnViewWithCorrectIdWithCorrectOrder()
+        {
+            MyMvc
+                .Controller<CheckoutController>()
+                .WithAuthenticatedUser(user => user.WithUsername("TestUser"))
+                .WithServiceSetupFor<MusicStoreContext>(ms =>
+                {
+                    ms.Orders.Add(new Order
+                    {
+                        OrderId = 1,
+                        Username = "TestUser"
+                    });
+
+                    ms.SaveChanges();
+                })
+                .Calling(c => c.Complete(From.Services<MusicStoreContext>(), 1))
+                .ShouldReturn()
+                .View(1);
+        }
+        
+        [Fact]
+        public void CompleteShouldReturnViewWithErrorWithIncorrectOrder()
+        {
+            MyMvc
+                .Controller<CheckoutController>()
+                .WithAuthenticatedUser(user => user.WithUsername("TestUser"))
+                .WithServiceSetupFor<MusicStoreContext>(ms =>
+                {
+                    ms.Orders.Add(new Order
+                    {
+                        OrderId = 1,
+                        Username = "AnotherUser"
+                    });
+
+                    ms.SaveChanges();
+                })
+                .Calling(c => c.Complete(From.Services<MusicStoreContext>(), 1))
+                .ShouldReturn()
+                .View("Error");
+        }
     }
 }

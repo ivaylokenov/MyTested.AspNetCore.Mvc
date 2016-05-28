@@ -38,7 +38,7 @@ namespace MusicStore
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
             // Add EF services to the services container
-            if (_platform.UseInMemoryStore)
+            if (!_platform.UseInMemoryStore)
             {
                 services.AddDbContext<MusicStoreContext>(options =>
                     options.UseInMemoryDatabase());

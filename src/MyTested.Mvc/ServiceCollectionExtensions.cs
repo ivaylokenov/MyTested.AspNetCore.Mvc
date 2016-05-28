@@ -30,7 +30,7 @@
         public static void AddHttpContextAccessor(this IServiceCollection serviceCollection)
         {
             CommonValidator.CheckForNullReference(serviceCollection, nameof(IServiceCollection));
-            serviceCollection.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            serviceCollection.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         /// <summary>
@@ -40,7 +40,7 @@
         public static void AddActionContextAccessor(this IServiceCollection serviceCollection)
         {
             CommonValidator.CheckForNullReference(serviceCollection, nameof(serviceCollection));
-            serviceCollection.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
+            serviceCollection.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
         }
         
         /// <summary>
@@ -271,7 +271,7 @@
         public static void Replace(this IServiceCollection serviceCollection, Type service, Type implementationType, ServiceLifetime lifetime)
         {
             serviceCollection.Remove(service);
-            serviceCollection.TryAdd(ServiceDescriptor.Describe(service, implementationType, lifetime));
+            serviceCollection.Add(ServiceDescriptor.Describe(service, implementationType, lifetime));
             TestServiceProvider.SaveServiceLifetime(service, lifetime);
         }
 
@@ -285,7 +285,7 @@
         public static void Replace(this IServiceCollection serviceCollection, Type service, Func<IServiceProvider, object> implementationFactory, ServiceLifetime lifetime)
         {
             serviceCollection.Remove(service);
-            serviceCollection.TryAdd(ServiceDescriptor.Describe(service, implementationFactory, lifetime));
+            serviceCollection.Add(ServiceDescriptor.Describe(service, implementationFactory, lifetime));
             TestServiceProvider.SaveServiceLifetime(service, lifetime);
         }
 
