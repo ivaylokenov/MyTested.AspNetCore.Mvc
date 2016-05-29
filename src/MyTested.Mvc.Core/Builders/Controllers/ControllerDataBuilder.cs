@@ -16,14 +16,7 @@
             this.tempDataBuilderAction = tempDataBuilder;
             return this;
         }
-
-        /// <inheritdoc />
-        public IAndControllerBuilder<TController> WithSession(Action<ISessionBuilder> sessionBuilder)
-        {
-            sessionBuilder(new SessionBuilder(this.HttpContext.Session));
-            return this;
-        }
-
+        
         /// <inheritdoc />
         public IAndControllerBuilder<TController> WithMemoryCache(Action<IMemoryCacheBuilder> memoryCacheBuilder)
         {

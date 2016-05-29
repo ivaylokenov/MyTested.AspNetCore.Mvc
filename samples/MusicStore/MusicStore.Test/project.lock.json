@@ -4198,11 +4198,12 @@
           "netcoreapp1.0/MusicStore.Web.dll": {}
         }
       },
-      "MyTested.Mvc/1.0.0": {
+      "MyTested.Mvc/1.0.0-beta": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.5",
         "dependencies": {
-          "MyTested.Mvc.Core": "1.0.0"
+          "MyTested.Mvc.Core": "1.0.0",
+          "MyTested.Mvc.Session": "1.0.0"
         },
         "compile": {
           "netstandard1.5/MyTested.Mvc.dll": {}
@@ -4225,6 +4226,20 @@
         },
         "runtime": {
           "netstandard1.5/MyTested.Mvc.Core.dll": {}
+        }
+      },
+      "MyTested.Mvc.Session/1.0.0-beta": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.5",
+        "dependencies": {
+          "Microsoft.AspNetCore.Session": "1.0.0",
+          "MyTested.Mvc.Core": "1.0.0"
+        },
+        "compile": {
+          "netstandard1.5/MyTested.Mvc.Session.dll": {}
+        },
+        "runtime": {
+          "netstandard1.5/MyTested.Mvc.Session.dll": {}
         }
       }
     },
@@ -6294,11 +6309,12 @@
           "net451/MusicStore.Web.dll": {}
         }
       },
-      "MyTested.Mvc/1.0.0": {
+      "MyTested.Mvc/1.0.0-beta": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
-          "MyTested.Mvc.Core": "1.0.0"
+          "MyTested.Mvc.Core": "1.0.0",
+          "MyTested.Mvc.Session": "1.0.0"
         },
         "compile": {
           "net451/MyTested.Mvc.dll": {}
@@ -6321,6 +6337,20 @@
         },
         "runtime": {
           "net451/MyTested.Mvc.Core.dll": {}
+        }
+      },
+      "MyTested.Mvc.Session/1.0.0-beta": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "Microsoft.AspNetCore.Session": "1.0.0",
+          "MyTested.Mvc.Core": "1.0.0"
+        },
+        "compile": {
+          "net451/MyTested.Mvc.Session.dll": {}
+        },
+        "runtime": {
+          "net451/MyTested.Mvc.Session.dll": {}
         }
       }
     }
@@ -12652,7 +12682,7 @@
       "path": "../MusicStore.Web/project.json",
       "msbuildProject": "../MusicStore.Web/MusicStore.Web.xproj"
     },
-    "MyTested.Mvc/1.0.0": {
+    "MyTested.Mvc/1.0.0-beta": {
       "type": "project",
       "path": "../../../src/MyTested.Mvc/project.json",
       "msbuildProject": "../../../src/MyTested.Mvc/MyTested.Mvc.xproj"
@@ -12661,6 +12691,11 @@
       "type": "project",
       "path": "../../../src/MyTested.Mvc.Core/project.json",
       "msbuildProject": "../../../src/MyTested.Mvc.Core/MyTested.Mvc.Core.xproj"
+    },
+    "MyTested.Mvc.Session/1.0.0-beta": {
+      "type": "project",
+      "path": "../../../src/MyTested.Mvc.Session/project.json",
+      "msbuildProject": "../../../src/MyTested.Mvc.Session/MyTested.Mvc.Session.xproj"
     }
   },
   "projectFileDependencyGroups": {

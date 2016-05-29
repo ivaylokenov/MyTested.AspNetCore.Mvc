@@ -71,7 +71,7 @@
         }
 
         /// <summary>
-        /// Tries to remove а service from the <see cref="IServiceCollection"/>.
+        /// Removes а service from the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="service">Type of the service which will be removed.</param>
@@ -82,7 +82,7 @@
         }
 
         /// <summary>
-        /// Tries to remove a service from the <see cref="IServiceCollection"/>.
+        /// Removes a service from the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="service">Type of the service which will be removed.</param>
@@ -94,7 +94,7 @@
         }
 
         /// <summary>
-        /// Tries to remove a service from the <see cref="IServiceCollection"/>.
+        /// Removes a service from the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <typeparam name="TServive">Type of the service which will be removed.</typeparam>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
@@ -105,7 +105,7 @@
         }
 
         /// <summary>
-        /// Tries to remove a service from the <see cref="IServiceCollection"/>.
+        /// Removes a service from the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <typeparam name="TServive">Type of the service which will be removed.</typeparam>
         /// <typeparam name="TImplementation">Service implementation type which will be removed.</typeparam>
@@ -118,7 +118,7 @@
         }
 
         /// <summary>
-        /// Tries to remove a transient service from the <see cref="IServiceCollection"/>.
+        /// Removes a transient service from the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="service">Type of the service which will be removed.</param>
@@ -129,7 +129,7 @@
         }
 
         /// <summary>
-        /// Tries to remove a transient service from the <see cref="IServiceCollection"/>.
+        /// Removes a transient service from the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="service">Type of the service which will be removed.</param>
@@ -142,7 +142,7 @@
         }
 
         /// <summary>
-        /// Tries to remove a transient service from the <see cref="IServiceCollection"/>.
+        /// Removes a transient service from the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <typeparam name="TServive">Type of the service which will be removed.</typeparam>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
@@ -153,7 +153,7 @@
         }
 
         /// <summary>
-        /// Tries to remove a transient service from the <see cref="IServiceCollection"/>.
+        /// Removes a transient service from the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <typeparam name="TServive">Type of the service which will be removed.</typeparam>
         /// <typeparam name="TImplementation">Service implementation type which will be removed.</typeparam>
@@ -166,7 +166,7 @@
         }
 
         /// <summary>
-        /// Tries to remove a singleton service from the <see cref="IServiceCollection"/>.
+        /// Removes a singleton service from the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="service">Type of the service which will be removed.</param>
@@ -177,7 +177,7 @@
         }
 
         /// <summary>
-        /// Tries to remove a singleton service from the <see cref="IServiceCollection"/>.
+        /// Removes a singleton service from the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="service">Type of the service which will be removed.</param>
@@ -190,7 +190,7 @@
         }
 
         /// <summary>
-        /// Tries to remove a singleton service from the <see cref="IServiceCollection"/>.
+        /// Removes a singleton service from the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <typeparam name="TServive">Type of the service which will be removed.</typeparam>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
@@ -201,7 +201,7 @@
         }
 
         /// <summary>
-        /// Tries to remove a singleton service from the <see cref="IServiceCollection"/>.
+        /// Removes a singleton service from the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <typeparam name="TServive">Type of the service which will be removed.</typeparam>
         /// <typeparam name="TImplementation">Service implementation type which will be removed.</typeparam>
@@ -214,7 +214,7 @@
         }
 
         /// <summary>
-        /// Tries to remove a scoped service from the <see cref="IServiceCollection"/>.
+        /// Removes a scoped service from the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="service">Type of the service which will be removed.</param>
@@ -225,7 +225,7 @@
         }
 
         /// <summary>
-        /// Tries to remove a scoped service from the <see cref="IServiceCollection"/>.
+        /// Removes a scoped service from the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="service">Type of the service which will be removed.</param>
@@ -238,7 +238,7 @@
         }
 
         /// <summary>
-        /// Tries to remove a scoped service from the <see cref="IServiceCollection"/>.
+        /// Removes a scoped service from the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <typeparam name="TServive">Type of the service which will be removed.</typeparam>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
@@ -249,7 +249,7 @@
         }
 
         /// <summary>
-        /// Tries to remove a scoped service from the <see cref="IServiceCollection"/>.
+        /// Removes a scoped service from the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <typeparam name="TServive">Type of the service which will be removed.</typeparam>
         /// <typeparam name="TImplementation">Service implementation type which will be removed.</typeparam>
@@ -262,7 +262,7 @@
         }
 
         /// <summary>
-        /// Tries to replace a service in the <see cref="IServiceCollection"/>.
+        /// Replaces a service in the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="service">Type of the service which will be replaced.</param>
@@ -276,7 +276,7 @@
         }
 
         /// <summary>
-        /// Tries to replace a service in the <see cref="IServiceCollection"/>.
+        /// Replaces a service in the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="service">Type of the service which will be replaced.</param>
@@ -290,7 +290,45 @@
         }
 
         /// <summary>
-        /// Tries to replace a service in the <see cref="IServiceCollection"/>.
+        /// Replaces service lifetime in the <see cref="IServiceCollection"/>.
+        /// </summary>
+        /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
+        /// <param name="service">Type of the service which will be replaced.</param>
+        /// <param name="lifetime">The <see cref="ServiceLifetime"/> which will be applied on the replaced service.</param>
+        public static void ReplaceLifetime(this IServiceCollection serviceCollection, Type service, ServiceLifetime lifetime)
+        {
+            CommonValidator.CheckForNullReference(serviceCollection, nameof(serviceCollection));
+
+            serviceCollection
+                .Where(s => s.ServiceType == service)
+                .ToArray()
+                .ForEach(s =>
+                {
+                    if (s.ImplementationType != null)
+                    {
+                        serviceCollection.Replace(s.ServiceType, s.ImplementationType, lifetime);
+                    }
+                    else if (s.ImplementationFactory != null)
+                    {
+                        serviceCollection.Replace(s.ServiceType, s.ImplementationFactory, lifetime);
+                    }
+                });
+        }
+
+        /// <summary>
+        /// Replaces service lifetime in the <see cref="IServiceCollection"/>.
+        /// </summary>
+        /// <typeparam name="TService">Type of the service which will be replaced.</typeparam>
+        /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
+        /// <param name="lifetime">The <see cref="ServiceLifetime"/> which will be applied on the replaced service.</param>
+        public static void ReplaceLifetime<TService>(this IServiceCollection serviceCollection, ServiceLifetime lifetime)
+            where TService : class 
+        {
+            serviceCollection.ReplaceLifetime(typeof(TService), lifetime);
+        }
+
+        /// <summary>
+        /// Replaces a service in the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <typeparam name="TService">Type of the service which will be replaced.</typeparam>
         /// <typeparam name="TImplementation">Service implementation type which will be used for replacement.</typeparam>
@@ -304,7 +342,7 @@
         }
 
         /// <summary>
-        /// Tries to replace a transient service in the <see cref="IServiceCollection"/>.
+        /// Replaces a transient service in the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="service">Type of the service which will be replaced.</param>
@@ -316,7 +354,7 @@
         }
 
         /// <summary>
-        /// Tries to replace a transient service in the <see cref="IServiceCollection"/>.
+        /// Replaces a transient service in the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="service">Type of the service which will be replaced.</param>
@@ -328,7 +366,7 @@
         }
 
         /// <summary>
-        /// Tries to replace a transient service in the <see cref="IServiceCollection"/>.
+        /// Replaces a transient service in the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <typeparam name="TService">Type of the service which will be replaced.</typeparam>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
@@ -340,7 +378,7 @@
         }
 
         /// <summary>
-        /// Tries to replace a transient service in the <see cref="IServiceCollection"/>.
+        /// Replaces a transient service in the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <typeparam name="TService">Type of the service which will be replaced.</typeparam>
         /// <typeparam name="TImplementation">Service implementation type which will be used for replacement.</typeparam>
@@ -353,7 +391,7 @@
         }
 
         /// <summary>
-        /// Tries to replace a singleton service in the <see cref="IServiceCollection"/>.
+        /// Replaces a singleton service in the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="service">Type of the service which will be replaced.</param>
@@ -365,7 +403,7 @@
         }
 
         /// <summary>
-        /// Tries to replace a singleton service in the <see cref="IServiceCollection"/>.
+        /// Replaces a singleton service in the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="service">Type of the service which will be replaced.</param>
@@ -377,7 +415,7 @@
         }
 
         /// <summary>
-        /// Tries to replace a singleton service in the <see cref="IServiceCollection"/>.
+        /// Replaces a singleton service in the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="service">Type of the service which will be replaced.</param>
@@ -389,7 +427,7 @@
         }
 
         /// <summary>
-        /// Tries to replace a singleton service in the <see cref="IServiceCollection"/>.
+        /// Replaces a singleton service in the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <typeparam name="TService">Type of the service which will be replaced.</typeparam>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
@@ -401,7 +439,7 @@
         }
 
         /// <summary>
-        /// Tries to replace a singleton service in the <see cref="IServiceCollection"/>.
+        /// Replaces a singleton service in the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <typeparam name="TService">Type of the service which will be replaced.</typeparam>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
@@ -413,7 +451,7 @@
         }
 
         /// <summary>
-        /// Tries to replace a singleton service in the <see cref="IServiceCollection"/>.
+        /// Replaces a singleton service in the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <typeparam name="TService">Type of the service which will be replaced.</typeparam>
         /// <typeparam name="TImplementation">Service implementation type which will be used for replacement.</typeparam>
@@ -426,7 +464,7 @@
         }
 
         /// <summary>
-        /// Tries to replace a scoped service in the <see cref="IServiceCollection"/>.
+        /// Replaces a scoped service in the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="service">Type of the service which will be replaced.</param>
@@ -438,7 +476,7 @@
         }
 
         /// <summary>
-        /// Tries to replace a scoped service in the <see cref="IServiceCollection"/>.
+        /// Replaces a scoped service in the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="service">Type of the service which will be replaced.</param>
@@ -450,7 +488,7 @@
         }
 
         /// <summary>
-        /// Tries to replace a scoped service in the <see cref="IServiceCollection"/>.
+        /// Replaces a scoped service in the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <typeparam name="TService">Type of the service which will be replaced.</typeparam>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
@@ -462,7 +500,7 @@
         }
 
         /// <summary>
-        /// Tries to replace a scoped service in the <see cref="IServiceCollection"/>.
+        /// Replaces a scoped service in the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <typeparam name="TService">Type of the service which will be replaced.</typeparam>
         /// <typeparam name="TImplementation">Service implementation type which will be used for replacement.</typeparam>
@@ -475,7 +513,7 @@
         }
 
         /// <summary>
-        /// Tries to replace multiple services in the <see cref="IServiceCollection"/>.
+        /// Replaces multiple services in the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="descriptor"><see cref="ServiceDescriptor"/> providing the services.</param>
@@ -487,7 +525,7 @@
         }
 
         /// <summary>
-        /// Tries to replace multiple services in the <see cref="IServiceCollection"/>.
+        /// Replaces multiple services in the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="descriptors"><see cref="ServiceDescriptor"/> providing the services.</param>

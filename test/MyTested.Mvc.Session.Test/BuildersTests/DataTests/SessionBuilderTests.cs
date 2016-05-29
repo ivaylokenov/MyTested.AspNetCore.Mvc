@@ -8,6 +8,7 @@
     using Setups;
     using Setups.Common;
     using Setups.Controllers;
+    using Setups.Models;
     using Xunit;
 
     public class SessionBuilderTests
@@ -174,7 +175,7 @@
                 .Calling(c => c.MultipleSessionValuesAction())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel(new
+                .WithResponseModel(new SessionResponseModel
                 {
                     String = "test",
                     Integer = 1,

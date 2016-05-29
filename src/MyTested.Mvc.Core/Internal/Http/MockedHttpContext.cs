@@ -1,6 +1,5 @@
 ﻿namespace MyTested.Mvc.Internal.Http
 {
-    using Application;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Features;
     using Microsoft.AspNetCore.Http.Internal;

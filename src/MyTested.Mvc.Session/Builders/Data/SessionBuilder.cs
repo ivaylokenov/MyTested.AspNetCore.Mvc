@@ -5,7 +5,6 @@
     using Contracts.Data;
     using Internal.Contracts;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Http.Features;
     using Microsoft.AspNetCore.Routing;
     using Utilities.Extensions;
 

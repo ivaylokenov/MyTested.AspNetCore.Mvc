@@ -1,4 +1,4 @@
-{
+﻿{
   "buildOptions": {
     "warningsAsErrors": true
   },
@@ -8,8 +8,8 @@
   "dependencies": {
     "dotnet-test-xunit": "1.0.0-*",
     "xunit": "2.1.0",
-    "MyTested.Mvc.Core": "1.0.0-*",
-    "MyTested.Mvc.Test": "*" 
+    "MyTested.Mvc.Session": "1.0.0-*",
+    "MyTested.Mvc.Test": "*"
   },
 
   "frameworks": {

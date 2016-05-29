@@ -512,5 +512,33 @@
 
             Assert.IsAssignableFrom<ReplaceableInjectedService>(serviceCollection.BuildServiceProvider().GetServices<IInjectedService>().FirstOrDefault());
         }
+
+        [Fact]
+        public void ReplaceLifetimeShouldWorkCorrectlyWithImplementationType()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddSingleton<IInjectedService, InjectedService>();
+
+            Assert.Equal(ServiceLifetime.Singleton, serviceCollection.FirstOrDefault(s => s.ServiceType == typeof(IInjectedService))?.Lifetime);
+
+            serviceCollection.ReplaceLifetime<IInjectedService>(ServiceLifetime.Scoped);
+            
+            Assert.Equal(1, serviceCollection.Count);
+            Assert.Equal(ServiceLifetime.Scoped, serviceCollection.FirstOrDefault(s => s.ServiceType == typeof(IInjectedService))?.Lifetime);
+        }
+        
+        [Fact]
+        public void ReplaceLifetimeShouldWorkCorrectlyWithImplementationFactory()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddSingleton<IInjectedService>(s => new InjectedService());
+
+            Assert.Equal(ServiceLifetime.Singleton, serviceCollection.FirstOrDefault(s => s.ServiceType == typeof(IInjectedService))?.Lifetime);
+
+            serviceCollection.ReplaceLifetime<IInjectedService>(ServiceLifetime.Scoped);
+
+            Assert.Equal(1, serviceCollection.Count);
+            Assert.Equal(ServiceLifetime.Scoped, serviceCollection.FirstOrDefault(s => s.ServiceType == typeof(IInjectedService))?.Lifetime);
+        }
     }
 }

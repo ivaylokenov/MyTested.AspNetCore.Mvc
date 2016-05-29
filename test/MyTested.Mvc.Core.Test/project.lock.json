@@ -3459,6 +3459,20 @@
           "lib/dotnet/xunit.runner.utility.dotnet.dll": {}
         }
       },
+      "MyTested.Mvc/1.0.0-beta": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.5",
+        "dependencies": {
+          "MyTested.Mvc.Core": "1.0.0",
+          "MyTested.Mvc.Session": "1.0.0"
+        },
+        "compile": {
+          "netstandard1.5/MyTested.Mvc.dll": {}
+        },
+        "runtime": {
+          "netstandard1.5/MyTested.Mvc.dll": {}
+        }
+      },
       "MyTested.Mvc.Core/1.0.0-beta": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.5",
@@ -3473,6 +3487,36 @@
         },
         "runtime": {
           "netstandard1.5/MyTested.Mvc.Core.dll": {}
+        }
+      },
+      "MyTested.Mvc.Session/1.0.0-beta": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.5",
+        "dependencies": {
+          "Microsoft.AspNetCore.Session": "1.0.0",
+          "MyTested.Mvc.Core": "1.0.0"
+        },
+        "compile": {
+          "netstandard1.5/MyTested.Mvc.Session.dll": {}
+        },
+        "runtime": {
+          "netstandard1.5/MyTested.Mvc.Session.dll": {}
+        }
+      },
+      "MyTested.Mvc.Test/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.5",
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc": "1.0.0",
+          "Microsoft.AspNetCore.Session": "1.0.0",
+          "MyTested.Mvc": "1.0.0",
+          "xunit": "2.1.0"
+        },
+        "compile": {
+          "netstandard1.5/MyTested.Mvc.Test.dll": {}
+        },
+        "runtime": {
+          "netstandard1.5/MyTested.Mvc.Test.dll": {}
         }
       }
     },
@@ -4971,6 +5015,20 @@
           "lib/net35/xunit.runner.utility.desktop.dll": {}
         }
       },
+      "MyTested.Mvc/1.0.0-beta": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "MyTested.Mvc.Core": "1.0.0",
+          "MyTested.Mvc.Session": "1.0.0"
+        },
+        "compile": {
+          "net451/MyTested.Mvc.dll": {}
+        },
+        "runtime": {
+          "net451/MyTested.Mvc.dll": {}
+        }
+      },
       "MyTested.Mvc.Core/1.0.0-beta": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
@@ -4985,6 +5043,36 @@
         },
         "runtime": {
           "net451/MyTested.Mvc.Core.dll": {}
+        }
+      },
+      "MyTested.Mvc.Session/1.0.0-beta": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "Microsoft.AspNetCore.Session": "1.0.0",
+          "MyTested.Mvc.Core": "1.0.0"
+        },
+        "compile": {
+          "net451/MyTested.Mvc.Session.dll": {}
+        },
+        "runtime": {
+          "net451/MyTested.Mvc.Session.dll": {}
+        }
+      },
+      "MyTested.Mvc.Test/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc": "1.0.0",
+          "Microsoft.AspNetCore.Session": "1.0.0",
+          "MyTested.Mvc": "1.0.0",
+          "xunit": "2.1.0"
+        },
+        "compile": {
+          "net451/MyTested.Mvc.Test.dll": {}
+        },
+        "runtime": {
+          "net451/MyTested.Mvc.Test.dll": {}
         }
       }
     }
@@ -10726,16 +10814,31 @@
         "xunit.runner.utility.nuspec"
       ]
     },
+    "MyTested.Mvc/1.0.0-beta": {
+      "type": "project",
+      "path": "../../src/MyTested.Mvc/project.json",
+      "msbuildProject": "../../src/MyTested.Mvc/MyTested.Mvc.xproj"
+    },
     "MyTested.Mvc.Core/1.0.0-beta": {
       "type": "project",
       "path": "../../src/MyTested.Mvc.Core/project.json",
       "msbuildProject": "../../src/MyTested.Mvc.Core/MyTested.Mvc.Core.xproj"
+    },
+    "MyTested.Mvc.Session/1.0.0-beta": {
+      "type": "project",
+      "path": "../../src/MyTested.Mvc.Session/project.json",
+      "msbuildProject": "../../src/MyTested.Mvc.Session/MyTested.Mvc.Session.xproj"
+    },
+    "MyTested.Mvc.Test/1.0.0": {
+      "type": "project",
+      "path": "../MyTested.Mvc.Test/project.json",
+      "msbuildProject": "../MyTested.Mvc.Test/MyTested.Mvc.Test.xproj"
     }
   },
   "projectFileDependencyGroups": {
     "": [
-      "Microsoft.AspNetCore.Mvc >= 1.0.0-*",
       "MyTested.Mvc.Core >= 1.0.0-*",
+      "MyTested.Mvc.Test",
       "dotnet-test-xunit >= 1.0.0-*",
       "xunit >= 2.1.0"
     ],

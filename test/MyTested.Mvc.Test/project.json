@@ -1,0 +1,21 @@
+﻿{
+  "buildOptions": {
+    "warningsAsErrors": true
+  },
+
+  "dependencies": {
+    "Microsoft.AspNetCore.Mvc": "1.0.0-*",
+    "Microsoft.AspNetCore.Session": "1.0.0-*",
+    "MyTested.Mvc": "1.0.0-*",
+    "xunit": "2.1.0"
+  },
+
+  "frameworks": {
+    "net451": { },
+    "netstandard1.5": {
+      "imports": [
+        "portable-net451+win8"
+      ]
+    }
+  }
+}

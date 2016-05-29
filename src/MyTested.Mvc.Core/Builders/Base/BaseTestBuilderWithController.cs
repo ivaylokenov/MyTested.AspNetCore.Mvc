@@ -40,7 +40,7 @@
         /// Gets the currently used <see cref="ControllerTestContext"/>.
         /// </summary>
         /// <value>Result of type <see cref="ControllerTestContext"/>.</value>
-        protected new ControllerTestContext TestContext
+        public new ControllerTestContext TestContext
         {
             get
             {

@@ -1,6 +1,6 @@
 ﻿namespace MyTested.Mvc.Test.Setups.Services
 {
-    internal class InjectedService : IInjectedService
+    public class InjectedService : IInjectedService
     {
     }
 }

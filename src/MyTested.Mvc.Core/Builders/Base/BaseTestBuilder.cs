@@ -29,7 +29,7 @@
         /// Gets the currently used <see cref="HttpTestContext"/>.
         /// </summary>
         /// <value>Result of type <see cref="HttpTestContext"/>.</value>
-        protected HttpTestContext TestContext
+        public HttpTestContext TestContext
         {
             get
             {

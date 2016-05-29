@@ -292,6 +292,21 @@
         }
 
         [Fact]
+        public void ToFriendlyTypeNameShouldReturnProperNameWhenTypeIsAnonymous()
+        {
+            var name = new { }.GetType().ToFriendlyTypeName();
+            Assert.True(name.StartsWith("AnonymousType"));
+        }
+
+        [Fact]
+        public void ToFriendlyTypeNameShouldReturnProperNameWhenTypeIsAnonymousWithGeneric()
+        {
+            var name = new { Int = 1, String = "Test" }.GetType().ToFriendlyTypeName();
+            Assert.True(name.StartsWith("AnonymousType"));
+            Assert.True(name.EndsWith("<Int32, String>"));
+        }
+
+        [Fact]
         public void ToFriendlyTypeNameShouldReturnProperNameWhenTypeIsGenericWithoutArguments()
         {
             var name = typeof(List<>).ToFriendlyTypeName();

@@ -4042,11 +4042,12 @@
           "netcoreapp1.0/ApplicationParts.Web.dll": {}
         }
       },
-      "MyTested.Mvc/1.0.0": {
+      "MyTested.Mvc/1.0.0-beta": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.5",
         "dependencies": {
-          "MyTested.Mvc.Core": "1.0.0"
+          "MyTested.Mvc.Core": "1.0.0",
+          "MyTested.Mvc.Session": "1.0.0"
         },
         "compile": {
           "netstandard1.5/MyTested.Mvc.dll": {}
@@ -4069,6 +4070,20 @@
         },
         "runtime": {
           "netstandard1.5/MyTested.Mvc.Core.dll": {}
+        }
+      },
+      "MyTested.Mvc.Session/1.0.0-beta": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.5",
+        "dependencies": {
+          "Microsoft.AspNetCore.Session": "1.0.0",
+          "MyTested.Mvc.Core": "1.0.0"
+        },
+        "compile": {
+          "netstandard1.5/MyTested.Mvc.Session.dll": {}
+        },
+        "runtime": {
+          "netstandard1.5/MyTested.Mvc.Session.dll": {}
         }
       }
     }
@@ -10273,7 +10288,7 @@
       "path": "../ApplicationParts.Web/project.json",
       "msbuildProject": "../ApplicationParts.Web/ApplicationParts.Web.xproj"
     },
-    "MyTested.Mvc/1.0.0": {
+    "MyTested.Mvc/1.0.0-beta": {
       "type": "project",
       "path": "../../../src/MyTested.Mvc/project.json",
       "msbuildProject": "../../../src/MyTested.Mvc/MyTested.Mvc.xproj"
@@ -10282,6 +10297,11 @@
       "type": "project",
       "path": "../../../src/MyTested.Mvc.Core/project.json",
       "msbuildProject": "../../../src/MyTested.Mvc.Core/MyTested.Mvc.Core.xproj"
+    },
+    "MyTested.Mvc.Session/1.0.0-beta": {
+      "type": "project",
+      "path": "../../../src/MyTested.Mvc.Session/project.json",
+      "msbuildProject": "../../../src/MyTested.Mvc.Session/MyTested.Mvc.Session.xproj"
     }
   },
   "projectFileDependencyGroups": {

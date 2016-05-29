@@ -4,13 +4,7 @@
 
     public class CustomActionInvokerProvider : IActionInvokerProvider
     {
-        public int Order
-        {
-            get
-            {
-                return int.MaxValue;
-            }
-        }
+        public int Order => int.MaxValue;
 
         public void OnProvidersExecuted(ActionInvokerProviderContext context)
         {

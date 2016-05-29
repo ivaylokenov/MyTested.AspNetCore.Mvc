@@ -205,13 +205,15 @@
 
             return FriendlyTypeNames.GetOrAdd(type, _ =>
             {
+                const string anonymousTypePrefix = "<>f__";
+
                 if (!type.GetTypeInfo().IsGenericType)
                 {
-                    return type.Name;
+                    return type.Name.Replace(anonymousTypePrefix, string.Empty);
                 }
 
                 var genericArgumentNames = type.GetGenericArguments().Select(ga => ga.ToFriendlyTypeName());
-                var friendlyGenericName = type.Name.Split('`')[0];
+                var friendlyGenericName = type.Name.Split('`')[0].Replace(anonymousTypePrefix, string.Empty);
                 var joinedGenericArgumentNames = string.Join(", ", genericArgumentNames);
 
                 return $"{friendlyGenericName}<{joinedGenericArgumentNames}>";

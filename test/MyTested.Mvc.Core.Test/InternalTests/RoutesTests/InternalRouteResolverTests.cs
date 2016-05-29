@@ -337,7 +337,7 @@
 
             Assert.False(routeInfo.IsResolved);
             Assert.Equal(
-                "exception was thrown when trying to select an action: 'Multiple actions matched. The following actions matched route data and had all constraints satisfied:\r\n\r\nMyTested.Mvc.Test.Setups.Routes.NormalController.ActionWithOverloads (MyTested.Mvc.Core.Test)\r\nMyTested.Mvc.Test.Setups.Routes.NormalController.ActionWithOverloads (MyTested.Mvc.Core.Test)'",
+                "exception was thrown when trying to select an action: 'Multiple actions matched. The following actions matched route data and had all constraints satisfied:\r\n\r\nMyTested.Mvc.Test.Setups.Routes.NormalController.ActionWithOverloads (MyTested.Mvc.Test)\r\nMyTested.Mvc.Test.Setups.Routes.NormalController.ActionWithOverloads (MyTested.Mvc.Test)'",
                 routeInfo.UnresolvedError);
             Assert.Null(routeInfo.ControllerType);
             Assert.Null(routeInfo.ControllerName);

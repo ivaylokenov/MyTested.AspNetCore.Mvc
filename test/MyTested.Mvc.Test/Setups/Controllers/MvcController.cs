@@ -914,7 +914,7 @@
             var intValue = session.GetInt32("IntKey");
             var byteValue = session.Get("ByteKey");
 
-            return this.Ok(new
+            return this.Ok(new SessionResponseModel
             {
                 String = stringValue,
                 Integer = intValue.Value,

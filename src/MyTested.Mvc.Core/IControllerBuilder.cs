@@ -109,14 +109,7 @@
         /// <param name="memoryCacheBuilder">Action setting the <see cref="Microsoft.Extensions.Caching.Memory.IMemoryCache"/> values by using <see cref="IMemoryCacheBuilder"/>.</param>
         /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>
         IAndControllerBuilder<TController> WithMemoryCache(Action<IMemoryCacheBuilder> memoryCacheBuilder);
-
-        /// <summary>
-        /// Sets initial values to the HTTP <see cref="ISession"/>.
-        /// </summary>
-        /// <param name="sessionBuilder">Action setting the <see cref="Microsoft.AspNetCore.Http.ISession"/> values by using <see cref="ISessionBuilder"/>.</param>
-        /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>
-        IAndControllerBuilder<TController> WithSession(Action<ISessionBuilder> sessionBuilder);
-
+        
         /// <summary>
         /// Configures a service with scoped lifetime by using the provided <see cref="Action"/> delegate.
         /// </summary>

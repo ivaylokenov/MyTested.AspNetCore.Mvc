@@ -1,8 +1,4 @@
-﻿using Xunit;
-
-[assembly: CollectionBehavior(DisableTestParallelization = true)]
-
-namespace MyTested.Mvc.Test
+﻿namespace MyTested.Mvc.Test
 {
     using System;
     using System.Collections.Generic;
@@ -35,6 +31,7 @@ namespace MyTested.Mvc.Test
     using Setups.Controllers;
     using Setups.Services;
     using Setups.Startups;
+    using Xunit;
 
     public class MyMvcTests
     {
