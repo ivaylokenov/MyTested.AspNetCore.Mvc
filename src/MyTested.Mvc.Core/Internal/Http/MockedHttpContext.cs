@@ -101,12 +101,12 @@
                 this.Features.Set<IServiceProvidersFeature>(new MockedRequestServicesFeature());
             }
 
-            TestHelper.SetMockedSession(this);
+            TestHelper.ApplyHttpFeatures(this);
         }
 
         private void PrepareDefaultValues()
         {
-            if (this.Request?.ContentType == null)
+            if (this.Request.ContentType == null)
             {
                 this.Request.ContentType = ContentType.FormUrlEncoded;
             }

@@ -611,15 +611,13 @@
 
         public class DeepEqualResult
         {
-            private static readonly DeepEqualResult DefaultSuccessResult = new DeepEqualResult(true);
-            
             private DeepEqualResult(bool areEqual)
             {
                 this.AreEqual = areEqual;
             }
 
-            public static DeepEqualResult Success => DefaultSuccessResult;
-            
+            public static DeepEqualResult Success { get; } = new DeepEqualResult(true);
+
             public bool AreEqual { get; private set; }
 
             public string ErrorPath { get; private set; }

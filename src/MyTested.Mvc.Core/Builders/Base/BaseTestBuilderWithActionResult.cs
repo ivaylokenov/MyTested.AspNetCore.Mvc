@@ -38,7 +38,7 @@
         /// Initializes new instance of builder providing AndAlso method.
         /// </summary>
         /// <returns>Test builder of type <see cref="IAndTestBuilder{TActionResult}"/>.</returns>
-        protected IAndTestBuilder<TActionResult> NewAndTestBuilder()
+        public IAndTestBuilder<TActionResult> NewAndTestBuilder()
         {
             return new AndTestBuilder<TActionResult>(this.TestContext);
         }
@@ -47,7 +47,7 @@
         /// Creates new <see cref="AndProvideTestBuilder{TActionResult}"/>.
         /// </summary>
         /// <returns>Base test builder of type <see cref="IBaseTestBuilderWithActionResult{TActionResult}"/>.</returns>
-        protected new IBaseTestBuilderWithActionResult<TActionResult> NewAndProvideTestBuilder()
+        public new IBaseTestBuilderWithActionResult<TActionResult> NewAndProvideTestBuilder()
         {
             return new AndProvideTestBuilder<TActionResult>(this.TestContext);
         }

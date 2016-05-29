@@ -1,6 +1,7 @@
 ﻿namespace MyTested.Mvc.Internal
 {
     using System;
+    using System.Collections.Generic;
     using Application;
     using Http;
     using Microsoft.AspNetCore.Http;
@@ -8,13 +9,14 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.AspNetCore.Mvc.Internal;
-    using Microsoft.AspNetCore.Session;
-    using Microsoft.Extensions.DependencyInjection;
 
     public static class TestHelper
     {
         public static Action GlobalTestCleanup { get; set; }
         
+        internal static ISet<IHttpFeatureRegistrationPlugin> HttpFeatureRegistrationPlugins { get; }
+            = new HashSet<IHttpFeatureRegistrationPlugin>();
+
         /// <summary>
         /// Tries to create instance of the provided type. Returns null if not successful.
         /// </summary>
@@ -52,28 +54,11 @@
             return httpContext;
         }
 
-        public static void SetMockedSession(HttpContext httpContext)
+        public static void ApplyHttpFeatures(HttpContext httpContext)
         {
-            var sessionStore = httpContext.RequestServices.GetService<ISessionStore>();
-            if (sessionStore != null)
+            foreach (var httpFeatureRegistrationPlugin in HttpFeatureRegistrationPlugins)
             {
-                if (httpContext.Features.Get<ISessionFeature>() == null)
-                {
-                    ISession mockedSession;
-                    if (sessionStore is MockedSessionStore)
-                    {
-                        mockedSession = new MockedSession();
-                    }
-                    else
-                    {
-                        mockedSession = sessionStore.Create(Guid.NewGuid().ToString(), TimeSpan.Zero, () => true, true);
-                    }
-
-                    httpContext.Features.Set<ISessionFeature>(new MockedSessionFeature
-                    {
-                        Session = mockedSession
-                    });
-                }
+                httpFeatureRegistrationPlugin.HttpFeatureRegistrationDelegate(httpContext);
             }
         }
 

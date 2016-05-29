@@ -1,6 +1,7 @@
 ﻿namespace MyTested.Mvc.Internal.Application
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
     using System.Reflection;
@@ -20,7 +21,6 @@
     using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.AspNetCore.Routing;
-    using Microsoft.AspNetCore.Session;
     using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -30,6 +30,7 @@
     using Microsoft.Extensions.ObjectPool;
     using Microsoft.Extensions.PlatformAbstractions;
     using Routes;
+    using Utilities;
     using Utilities.Extensions;
 
     public static class TestApplication
@@ -37,6 +38,7 @@
         private const string TestFrameworkName = "MyTested.Mvc";
 
         private static readonly RequestDelegate NullHandler = c => TaskCache.CompletedTask;
+        private static readonly ISet<IServiceRegistrationPlugin> ServiceRegistrationPlugins = new HashSet<IServiceRegistrationPlugin>();
         private static readonly object Sync;
 
         private static bool initialiazed;
@@ -55,6 +57,7 @@
 
         static TestApplication()
         {
+            LoadPlugins();
             Sync = new object();
             configuration = PrepareConfiguration();
         }
@@ -164,10 +167,37 @@
             }
         }
 
-        internal static string ApplicationName => 
+        internal static string ApplicationName =>
             TestConfiguration.ApplicationName
                 ?? TestAssemblyName
                 ?? PlatformServices.Default.Application.ApplicationName;
+
+        internal static void LoadPlugins()
+        {
+            string pluginPrefix = $"{TestFrameworkName}.";
+
+            DependencyContext.Default
+                .RuntimeLibraries
+                .Where(l => l.Name.StartsWith(pluginPrefix))
+                .Select(l => Assembly.Load(new AssemblyName(l.Name)).GetType($"{l.Name}.{l.Name.Replace(pluginPrefix, string.Empty)}TestPlugin"))
+                .Where(p => p != null)
+                .ForEach(t =>
+                {
+                    var plugin = Activator.CreateInstance(t);
+
+                    var servicePlugin = plugin as IServiceRegistrationPlugin;
+                    if (servicePlugin != null)
+                    {
+                        ServiceRegistrationPlugins.Add(servicePlugin);
+                    }
+
+                    var httpFeatureRegistrationPlugin = plugin as IHttpFeatureRegistrationPlugin;
+                    if (httpFeatureRegistrationPlugin != null)
+                    {
+                        TestHelper.HttpFeatureRegistrationPlugins.Add(httpFeatureRegistrationPlugin);
+                    }
+                });
+        }
 
         internal static void TryInitialize()
         {
@@ -313,12 +343,11 @@
             var defaultTempDataProviderType = typeof(SessionStateTempDataProvider);
             var memoryCacheServiceType = typeof(IMemoryCache);
             var defaultMemoryCacheType = typeof(MemoryCache);
-            var sessionStoreServiceType = typeof(ISessionStore);
-            var defaultSessionStoreType = typeof(DistributedSessionStore);
 
             var setMockedTempData = false;
             var setMockedCaching = false;
-            var setMockedSession = false;
+
+            var applicablePlugins = new HashSet<IServiceRegistrationPlugin>();
 
             serviceCollection.ForEach(service =>
             {
@@ -326,6 +355,14 @@
                 var implementationType = service.ImplementationType;
 
                 TestServiceProvider.SaveServiceLifetime(serviceType, service.Lifetime);
+
+                foreach (var serviceRegistrationPlugin in ServiceRegistrationPlugins)
+                {
+                    if (serviceRegistrationPlugin.ServiceSelectorPredicate(service))
+                    {
+                        applicablePlugins.Add(serviceRegistrationPlugin);
+                    }
+                }
 
                 if (serviceType == tempDataProviderServiceType)
                 {
@@ -350,20 +387,8 @@
                         setMockedCaching = false;
                     }
                 }
-
-                if (serviceType == sessionStoreServiceType)
-                {
-                    if (implementationType == defaultSessionStoreType)
-                    {
-                        setMockedSession = true;
-                    }
-                    else
-                    {
-                        setMockedSession = false;
-                    }
-                }
             });
-
+            
             if (setMockedTempData)
             {
                 serviceCollection.ReplaceTempDataProvider();
@@ -375,9 +400,9 @@
                 TestHelper.GlobalTestCleanup += () => TestServiceProvider.GetService<IMemoryCache>()?.Dispose();
             }
 
-            if (setMockedSession)
+            foreach (var applicablePlugin in applicablePlugins)
             {
-                serviceCollection.ReplaceSession();
+                applicablePlugin.ServiceRegistrationDelegate(serviceCollection);
             }
         }
 

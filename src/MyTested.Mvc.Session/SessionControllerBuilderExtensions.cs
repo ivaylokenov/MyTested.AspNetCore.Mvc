@@ -7,7 +7,7 @@
     using Builders.Data;
 
     /// <summary>
-    /// Contains session extension methods for <see cref="IControllerBuilder{TController}"/>.
+    /// Contains <see cref="Microsoft.AspNetCore.Http.ISession"/> extension methods for <see cref="IControllerBuilder{TController}"/>.
     /// </summary>
     public static class SessionControllerBuilderExtensions
     {

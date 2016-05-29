@@ -579,22 +579,6 @@
           "lib/netstandard1.3/Microsoft.AspNetCore.Routing.Abstractions.dll": {}
         }
       },
-      "Microsoft.AspNetCore.Session/1.0.0-rc2-final": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.AspNetCore.Http.Abstractions": "1.0.0-rc2-final",
-          "Microsoft.Extensions.Caching.Abstractions": "1.0.0-rc2-final",
-          "Microsoft.Extensions.Logging.Abstractions": "1.0.0-rc2-final",
-          "Microsoft.Extensions.Options": "1.0.0-rc2-final",
-          "System.Security.Cryptography.Algorithms": "4.1.0-rc2-24027"
-        },
-        "compile": {
-          "lib/netstandard1.3/Microsoft.AspNetCore.Session.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard1.3/Microsoft.AspNetCore.Session.dll": {}
-        }
-      },
       "Microsoft.AspNetCore.TestHost/1.0.0-rc2-final": {
         "type": "package",
         "dependencies": {
@@ -3459,26 +3443,11 @@
           "lib/dotnet/xunit.runner.utility.dotnet.dll": {}
         }
       },
-      "MyTested.Mvc/1.0.0-beta": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v1.5",
-        "dependencies": {
-          "MyTested.Mvc.Core": "1.0.0",
-          "MyTested.Mvc.Session": "1.0.0"
-        },
-        "compile": {
-          "netstandard1.5/MyTested.Mvc.dll": {}
-        },
-        "runtime": {
-          "netstandard1.5/MyTested.Mvc.dll": {}
-        }
-      },
       "MyTested.Mvc.Core/1.0.0-beta": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.5",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc": "1.0.0",
-          "Microsoft.AspNetCore.Session": "1.0.0",
           "Microsoft.AspNetCore.TestHost": "1.0.0",
           "Microsoft.Extensions.Configuration.Json": "1.0.0"
         },
@@ -3489,27 +3458,12 @@
           "netstandard1.5/MyTested.Mvc.Core.dll": {}
         }
       },
-      "MyTested.Mvc.Session/1.0.0-beta": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v1.5",
-        "dependencies": {
-          "Microsoft.AspNetCore.Session": "1.0.0",
-          "MyTested.Mvc.Core": "1.0.0"
-        },
-        "compile": {
-          "netstandard1.5/MyTested.Mvc.Session.dll": {}
-        },
-        "runtime": {
-          "netstandard1.5/MyTested.Mvc.Session.dll": {}
-        }
-      },
       "MyTested.Mvc.Test/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.5",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc": "1.0.0",
-          "Microsoft.AspNetCore.Session": "1.0.0",
-          "MyTested.Mvc": "1.0.0",
+          "MyTested.Mvc.Core": "1.0.0",
           "xunit": "2.1.0"
         },
         "compile": {
@@ -4049,21 +4003,6 @@
         },
         "runtime": {
           "lib/net451/Microsoft.AspNetCore.Routing.Abstractions.dll": {}
-        }
-      },
-      "Microsoft.AspNetCore.Session/1.0.0-rc2-final": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.AspNetCore.Http.Abstractions": "1.0.0-rc2-final",
-          "Microsoft.Extensions.Caching.Abstractions": "1.0.0-rc2-final",
-          "Microsoft.Extensions.Logging.Abstractions": "1.0.0-rc2-final",
-          "Microsoft.Extensions.Options": "1.0.0-rc2-final"
-        },
-        "compile": {
-          "lib/net451/Microsoft.AspNetCore.Session.dll": {}
-        },
-        "runtime": {
-          "lib/net451/Microsoft.AspNetCore.Session.dll": {}
         }
       },
       "Microsoft.AspNetCore.TestHost/1.0.0-rc2-final": {
@@ -5015,26 +4954,11 @@
           "lib/net35/xunit.runner.utility.desktop.dll": {}
         }
       },
-      "MyTested.Mvc/1.0.0-beta": {
-        "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1",
-        "dependencies": {
-          "MyTested.Mvc.Core": "1.0.0",
-          "MyTested.Mvc.Session": "1.0.0"
-        },
-        "compile": {
-          "net451/MyTested.Mvc.dll": {}
-        },
-        "runtime": {
-          "net451/MyTested.Mvc.dll": {}
-        }
-      },
       "MyTested.Mvc.Core/1.0.0-beta": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc": "1.0.0",
-          "Microsoft.AspNetCore.Session": "1.0.0",
           "Microsoft.AspNetCore.TestHost": "1.0.0",
           "Microsoft.Extensions.Configuration.Json": "1.0.0"
         },
@@ -5045,27 +4969,12 @@
           "net451/MyTested.Mvc.Core.dll": {}
         }
       },
-      "MyTested.Mvc.Session/1.0.0-beta": {
-        "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1",
-        "dependencies": {
-          "Microsoft.AspNetCore.Session": "1.0.0",
-          "MyTested.Mvc.Core": "1.0.0"
-        },
-        "compile": {
-          "net451/MyTested.Mvc.Session.dll": {}
-        },
-        "runtime": {
-          "net451/MyTested.Mvc.Session.dll": {}
-        }
-      },
       "MyTested.Mvc.Test/1.0.0": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc": "1.0.0",
-          "Microsoft.AspNetCore.Session": "1.0.0",
-          "MyTested.Mvc": "1.0.0",
+          "MyTested.Mvc.Core": "1.0.0",
           "xunit": "2.1.0"
         },
         "compile": {
@@ -5480,18 +5389,6 @@
         "lib/net451/Microsoft.AspNetCore.Routing.Abstractions.xml",
         "lib/netstandard1.3/Microsoft.AspNetCore.Routing.Abstractions.dll",
         "lib/netstandard1.3/Microsoft.AspNetCore.Routing.Abstractions.xml"
-      ]
-    },
-    "Microsoft.AspNetCore.Session/1.0.0-rc2-final": {
-      "sha512": "lDTzVXliaOWFnilip+jJYiGpNiqeQ6aEY15Z5N27TYeGc/BJg0yIU645tROK4DTvoEnLTeY60oAIQV4w0ILSWQ==",
-      "type": "package",
-      "files": [
-        "Microsoft.AspNetCore.Session.1.0.0-rc2-final.nupkg.sha512",
-        "Microsoft.AspNetCore.Session.nuspec",
-        "lib/net451/Microsoft.AspNetCore.Session.dll",
-        "lib/net451/Microsoft.AspNetCore.Session.xml",
-        "lib/netstandard1.3/Microsoft.AspNetCore.Session.dll",
-        "lib/netstandard1.3/Microsoft.AspNetCore.Session.xml"
       ]
     },
     "Microsoft.AspNetCore.TestHost/1.0.0-rc2-final": {
@@ -10814,20 +10711,10 @@
         "xunit.runner.utility.nuspec"
       ]
     },
-    "MyTested.Mvc/1.0.0-beta": {
-      "type": "project",
-      "path": "../../src/MyTested.Mvc/project.json",
-      "msbuildProject": "../../src/MyTested.Mvc/MyTested.Mvc.xproj"
-    },
     "MyTested.Mvc.Core/1.0.0-beta": {
       "type": "project",
       "path": "../../src/MyTested.Mvc.Core/project.json",
       "msbuildProject": "../../src/MyTested.Mvc.Core/MyTested.Mvc.Core.xproj"
-    },
-    "MyTested.Mvc.Session/1.0.0-beta": {
-      "type": "project",
-      "path": "../../src/MyTested.Mvc.Session/project.json",
-      "msbuildProject": "../../src/MyTested.Mvc.Session/MyTested.Mvc.Session.xproj"
     },
     "MyTested.Mvc.Test/1.0.0": {
       "type": "project",

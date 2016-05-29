@@ -459,15 +459,6 @@
         [Fact]
         public void WithHttpContextShouldPopulateCustomHttpContext()
         {
-            MyMvc
-                .IsUsingDefaultConfiguration()
-                .WithServices(services =>
-                {
-                    services.AddMemoryCache();
-                    services.AddDistributedMemoryCache();
-                    services.AddSession();
-                });
-
             var httpContext = new DefaultHttpContext();
             httpContext.Request.Scheme = "Custom";
             httpContext.Response.StatusCode = 404;
@@ -489,7 +480,6 @@
                     Assert.Same(httpContext.Items, controller.HttpContext.Items);
                     Assert.Same(httpContext.Features, controller.HttpContext.Features);
                     Assert.Same(httpContext.RequestServices, controller.HttpContext.RequestServices);
-                    Assert.Same(httpContext.Session, controller.HttpContext.Session);
                     Assert.Same(httpContext.TraceIdentifier, controller.HttpContext.TraceIdentifier);
                     Assert.Same(httpContext.User, controller.HttpContext.User);
                 })
@@ -504,12 +494,9 @@
                     Assert.Same(httpContext.Items, setHttpContext.Items);
                     Assert.Same(httpContext.Features, setHttpContext.Features);
                     Assert.Same(httpContext.RequestServices, setHttpContext.RequestServices);
-                    Assert.Same(httpContext.Session, setHttpContext.Session);
                     Assert.Same(httpContext.TraceIdentifier, setHttpContext.TraceIdentifier);
                     Assert.Same(httpContext.User, setHttpContext.User);
                 });
-            
-            MyMvc.IsUsingDefaultConfiguration();
         }
 
         [Fact]
@@ -1266,9 +1253,6 @@
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
-                    services.AddMemoryCache();
-                    services.AddDistributedMemoryCache();
-                    services.AddSession();
                     services.AddHttpContextAccessor();
                 });
 
@@ -1278,7 +1262,7 @@
             httpContext.Response.ContentType = ContentType.ApplicationJson;
             httpContext.Response.ContentLength = 100;
 
-            var controllerBuilder = MyMvc
+            MyMvc
                 .Controller<FullPocoController>()
                 .WithHttpContext(httpContext)
                 .ShouldPassFor()
@@ -1293,7 +1277,6 @@
                     Assert.Same(httpContext.Items, setHttpContext.Items);
                     Assert.Same(httpContext.Features, setHttpContext.Features);
                     Assert.Same(httpContext.RequestServices, setHttpContext.RequestServices);
-                    Assert.Same(httpContext.Session, setHttpContext.Session);
                     Assert.Same(httpContext.TraceIdentifier, setHttpContext.TraceIdentifier);
                     Assert.Same(httpContext.User, setHttpContext.User);
                 });
@@ -1313,7 +1296,6 @@
                     Assert.Same(httpContext.Items, controller.CustomHttpContext.Items);
                     Assert.Same(httpContext.Features, controller.CustomHttpContext.Features);
                     Assert.Same(httpContext.RequestServices, controller.CustomHttpContext.RequestServices);
-                    Assert.Same(httpContext.Session, controller.CustomHttpContext.Session);
                     Assert.Same(httpContext.TraceIdentifier, controller.CustomHttpContext.TraceIdentifier);
                     Assert.Same(httpContext.User, controller.CustomHttpContext.User);
                 });

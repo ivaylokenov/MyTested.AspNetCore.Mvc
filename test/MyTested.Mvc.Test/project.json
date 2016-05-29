@@ -5,8 +5,7 @@
 
   "dependencies": {
     "Microsoft.AspNetCore.Mvc": "1.0.0-*",
-    "Microsoft.AspNetCore.Session": "1.0.0-*",
-    "MyTested.Mvc": "1.0.0-*",
+    "MyTested.Mvc.Core": "1.0.0-*",
     "xunit": "2.1.0"
   },
 

@@ -3459,26 +3459,11 @@
           "lib/dotnet/xunit.runner.utility.dotnet.dll": {}
         }
       },
-      "MyTested.Mvc/1.0.0-beta": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v1.5",
-        "dependencies": {
-          "MyTested.Mvc.Core": "1.0.0",
-          "MyTested.Mvc.Session": "1.0.0"
-        },
-        "compile": {
-          "netstandard1.5/MyTested.Mvc.dll": {}
-        },
-        "runtime": {
-          "netstandard1.5/MyTested.Mvc.dll": {}
-        }
-      },
       "MyTested.Mvc.Core/1.0.0-beta": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.5",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc": "1.0.0",
-          "Microsoft.AspNetCore.Session": "1.0.0",
           "Microsoft.AspNetCore.TestHost": "1.0.0",
           "Microsoft.Extensions.Configuration.Json": "1.0.0"
         },
@@ -3508,8 +3493,7 @@
         "framework": ".NETStandard,Version=v1.5",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc": "1.0.0",
-          "Microsoft.AspNetCore.Session": "1.0.0",
-          "MyTested.Mvc": "1.0.0",
+          "MyTested.Mvc.Core": "1.0.0",
           "xunit": "2.1.0"
         },
         "compile": {
@@ -5015,26 +4999,11 @@
           "lib/net35/xunit.runner.utility.desktop.dll": {}
         }
       },
-      "MyTested.Mvc/1.0.0-beta": {
-        "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1",
-        "dependencies": {
-          "MyTested.Mvc.Core": "1.0.0",
-          "MyTested.Mvc.Session": "1.0.0"
-        },
-        "compile": {
-          "net451/MyTested.Mvc.dll": {}
-        },
-        "runtime": {
-          "net451/MyTested.Mvc.dll": {}
-        }
-      },
       "MyTested.Mvc.Core/1.0.0-beta": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc": "1.0.0",
-          "Microsoft.AspNetCore.Session": "1.0.0",
           "Microsoft.AspNetCore.TestHost": "1.0.0",
           "Microsoft.Extensions.Configuration.Json": "1.0.0"
         },
@@ -5064,8 +5033,7 @@
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc": "1.0.0",
-          "Microsoft.AspNetCore.Session": "1.0.0",
-          "MyTested.Mvc": "1.0.0",
+          "MyTested.Mvc.Core": "1.0.0",
           "xunit": "2.1.0"
         },
         "compile": {
@@ -10813,11 +10781,6 @@
         "xunit.runner.utility.2.1.0.nupkg.sha512",
         "xunit.runner.utility.nuspec"
       ]
-    },
-    "MyTested.Mvc/1.0.0-beta": {
-      "type": "project",
-      "path": "../../src/MyTested.Mvc/project.json",
-      "msbuildProject": "../../src/MyTested.Mvc/MyTested.Mvc.xproj"
     },
     "MyTested.Mvc.Core/1.0.0-beta": {
       "type": "project",

@@ -21,7 +21,6 @@
     using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.AspNetCore.Routing;
-    using Microsoft.AspNetCore.Session;
     using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -1116,67 +1115,6 @@
 
             Assert.NotNull(memoryCache);
             Assert.IsAssignableFrom<MockedMemoryCache>(memoryCache);
-
-            MyMvc.IsUsingDefaultConfiguration();
-        }
-
-        [Fact]
-        public void DefaultConfigurationShouldSetMockedSession()
-        {
-            MyMvc.IsUsingDefaultConfiguration();
-
-            var session = TestServiceProvider.GetService<ISessionStore>();
-
-            Assert.Null(session);
-        }
-
-        [Fact]
-        public void DefaultConfigurationWithSessionShouldSetMockedSession()
-        {
-            MyMvc
-                .IsUsingDefaultConfiguration()
-                .WithServices(services =>
-                {
-                    services.AddMemoryCache();
-                    services.AddDistributedMemoryCache();
-                    services.AddSession();
-                });
-
-            var session = TestServiceProvider.GetService<ISessionStore>();
-
-            Assert.NotNull(session);
-            Assert.IsAssignableFrom<MockedSessionStore>(session);
-
-            MyMvc.IsUsingDefaultConfiguration();
-        }
-
-        [Fact]
-        public void CustomSessionShouldOverrideTheMockedOne()
-        {
-            MyMvc.StartsFrom<DataStartup>();
-
-            var session = TestServiceProvider.GetService<ISessionStore>();
-
-            Assert.NotNull(session);
-            Assert.IsAssignableFrom<CustomSessionStore>(session);
-
-            MyMvc.IsUsingDefaultConfiguration();
-        }
-
-        [Fact]
-        public void ExplicitMockedSessionShouldOverrideIt()
-        {
-            MyMvc
-                .StartsFrom<DataStartup>()
-                .WithServices(services =>
-                {
-                    services.ReplaceSession();
-                });
-
-            var session = TestServiceProvider.GetService<ISessionStore>();
-
-            Assert.NotNull(session);
-            Assert.IsAssignableFrom<MockedSessionStore>(session);
 
             MyMvc.IsUsingDefaultConfiguration();
         }

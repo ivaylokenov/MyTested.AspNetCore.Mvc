@@ -33,7 +33,7 @@
             return this.NewAndTestBuilder();
         }
 
-        private void ValidateDataProviderNumberOfEntries(string name, int? expectedCount, int actualCount)
+        public void ValidateDataProviderNumberOfEntries(string name, int? expectedCount, int actualCount)
         {
             if (actualCount == 0
                 || (expectedCount != null && actualCount != expectedCount))
@@ -45,7 +45,7 @@
             }
         }
 
-        private void ThrowNewDataProviderAssertionExceptionWithNoEntries(string name)
+        public void ThrowNewDataProviderAssertionExceptionWithNoEntries(string name)
         {
             this.ThrowNewDataProviderAssertionException(
                 name,
@@ -53,7 +53,7 @@
                 "in fact it had some");
         }
 
-        private void ThrowNewDataProviderAssertionException(string name, string expectedValue, string actualValue)
+        public void ThrowNewDataProviderAssertionException(string name, string expectedValue, string actualValue)
         {
             throw new DataProviderAssertionException(string.Format(
                 "When calling {0} action in {1} expected to have {2}{3}, but {4}.",

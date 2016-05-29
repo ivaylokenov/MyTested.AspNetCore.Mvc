@@ -10,7 +10,7 @@
     using Utilities.Validators;
 
     /// <summary>
-    /// Used for testing <see cref="Microsoft.AspNetCore.Http.ISession"/>.
+    /// Used for testing <see cref="ISession"/>.
     /// </summary>
     public class SessionTestBuilder : BaseDataProviderTestBuilder, IAndSessionTestBuilder
     {
@@ -112,7 +112,7 @@
         protected override IDictionary<string, object> GetDataProvider()
         {
             var result = new Dictionary<string, object>();
-            var session = this.HttpContext.Session;
+            var session = this.TestContext.HttpContext.Session;
 
             foreach (var key in session.Keys)
             {
