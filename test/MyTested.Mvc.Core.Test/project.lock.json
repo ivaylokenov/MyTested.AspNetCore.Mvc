@@ -3459,7 +3459,7 @@
           "lib/dotnet/xunit.runner.utility.dotnet.dll": {}
         }
       },
-      "MyTested.Mvc/1.0.0-beta": {
+      "MyTested.Mvc.Core/1.0.0-beta": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.5",
         "dependencies": {
@@ -3469,10 +3469,10 @@
           "Microsoft.Extensions.Configuration.Json": "1.0.0"
         },
         "compile": {
-          "netstandard1.5/MyTested.Mvc.dll": {}
+          "netstandard1.5/MyTested.Mvc.Core.dll": {}
         },
         "runtime": {
-          "netstandard1.5/MyTested.Mvc.dll": {}
+          "netstandard1.5/MyTested.Mvc.Core.dll": {}
         }
       }
     },
@@ -4971,7 +4971,7 @@
           "lib/net35/xunit.runner.utility.desktop.dll": {}
         }
       },
-      "MyTested.Mvc/1.0.0-beta": {
+      "MyTested.Mvc.Core/1.0.0-beta": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
@@ -4981,10 +4981,10 @@
           "Microsoft.Extensions.Configuration.Json": "1.0.0"
         },
         "compile": {
-          "net451/MyTested.Mvc.dll": {}
+          "net451/MyTested.Mvc.Core.dll": {}
         },
         "runtime": {
-          "net451/MyTested.Mvc.dll": {}
+          "net451/MyTested.Mvc.Core.dll": {}
         }
       }
     }
@@ -10726,16 +10726,16 @@
         "xunit.runner.utility.nuspec"
       ]
     },
-    "MyTested.Mvc/1.0.0-beta": {
+    "MyTested.Mvc.Core/1.0.0-beta": {
       "type": "project",
-      "path": "../../src/MyTested.Mvc/project.json",
-      "msbuildProject": "../../src/MyTested.Mvc/MyTested.Mvc.xproj"
+      "path": "../../src/MyTested.Mvc.Core/project.json",
+      "msbuildProject": "../../src/MyTested.Mvc.Core/MyTested.Mvc.Core.xproj"
     }
   },
   "projectFileDependencyGroups": {
     "": [
       "Microsoft.AspNetCore.Mvc >= 1.0.0-*",
-      "MyTested.Mvc >= 1.0.0-*",
+      "MyTested.Mvc.Core >= 1.0.0-*",
       "dotnet-test-xunit >= 1.0.0-*",
       "xunit >= 2.1.0"
     ],

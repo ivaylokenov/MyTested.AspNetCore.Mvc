@@ -4198,7 +4198,20 @@
           "netcoreapp1.0/MusicStore.Web.dll": {}
         }
       },
-      "MyTested.Mvc/1.0.0-beta": {
+      "MyTested.Mvc/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.5",
+        "dependencies": {
+          "MyTested.Mvc.Core": "1.0.0"
+        },
+        "compile": {
+          "netstandard1.5/MyTested.Mvc.dll": {}
+        },
+        "runtime": {
+          "netstandard1.5/MyTested.Mvc.dll": {}
+        }
+      },
+      "MyTested.Mvc.Core/1.0.0-beta": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.5",
         "dependencies": {
@@ -4208,10 +4221,10 @@
           "Microsoft.Extensions.Configuration.Json": "1.0.0"
         },
         "compile": {
-          "netstandard1.5/MyTested.Mvc.dll": {}
+          "netstandard1.5/MyTested.Mvc.Core.dll": {}
         },
         "runtime": {
-          "netstandard1.5/MyTested.Mvc.dll": {}
+          "netstandard1.5/MyTested.Mvc.Core.dll": {}
         }
       }
     },
@@ -6281,7 +6294,20 @@
           "net451/MusicStore.Web.dll": {}
         }
       },
-      "MyTested.Mvc/1.0.0-beta": {
+      "MyTested.Mvc/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "MyTested.Mvc.Core": "1.0.0"
+        },
+        "compile": {
+          "net451/MyTested.Mvc.dll": {}
+        },
+        "runtime": {
+          "net451/MyTested.Mvc.dll": {}
+        }
+      },
+      "MyTested.Mvc.Core/1.0.0-beta": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
@@ -6291,10 +6317,10 @@
           "Microsoft.Extensions.Configuration.Json": "1.0.0"
         },
         "compile": {
-          "net451/MyTested.Mvc.dll": {}
+          "net451/MyTested.Mvc.Core.dll": {}
         },
         "runtime": {
-          "net451/MyTested.Mvc.dll": {}
+          "net451/MyTested.Mvc.Core.dll": {}
         }
       }
     }
@@ -12626,10 +12652,15 @@
       "path": "../MusicStore.Web/project.json",
       "msbuildProject": "../MusicStore.Web/MusicStore.Web.xproj"
     },
-    "MyTested.Mvc/1.0.0-beta": {
+    "MyTested.Mvc/1.0.0": {
       "type": "project",
       "path": "../../../src/MyTested.Mvc/project.json",
       "msbuildProject": "../../../src/MyTested.Mvc/MyTested.Mvc.xproj"
+    },
+    "MyTested.Mvc.Core/1.0.0-beta": {
+      "type": "project",
+      "path": "../../../src/MyTested.Mvc.Core/project.json",
+      "msbuildProject": "../../../src/MyTested.Mvc.Core/MyTested.Mvc.Core.xproj"
     }
   },
   "projectFileDependencyGroups": {

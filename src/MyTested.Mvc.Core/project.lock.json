@@ -1220,22 +1220,6 @@
         "runtime": {
           "lib/net45/_._": {}
         }
-      },
-      "MyTested.Mvc.Core/1.0.0-beta": {
-        "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1",
-        "dependencies": {
-          "Microsoft.AspNetCore.Mvc": "1.0.0",
-          "Microsoft.AspNetCore.Session": "1.0.0",
-          "Microsoft.AspNetCore.TestHost": "1.0.0",
-          "Microsoft.Extensions.Configuration.Json": "1.0.0"
-        },
-        "compile": {
-          "net451/MyTested.Mvc.Core.dll": {}
-        },
-        "runtime": {
-          "net451/MyTested.Mvc.Core.dll": {}
-        }
       }
     },
     ".NETStandard,Version=v1.5": {
@@ -3753,22 +3737,6 @@
         },
         "runtime": {
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
-        }
-      },
-      "MyTested.Mvc.Core/1.0.0-beta": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v1.5",
-        "dependencies": {
-          "Microsoft.AspNetCore.Mvc": "1.0.0",
-          "Microsoft.AspNetCore.Session": "1.0.0",
-          "Microsoft.AspNetCore.TestHost": "1.0.0",
-          "Microsoft.Extensions.Configuration.Json": "1.0.0"
-        },
-        "compile": {
-          "netstandard1.5/MyTested.Mvc.Core.dll": {}
-        },
-        "runtime": {
-          "netstandard1.5/MyTested.Mvc.Core.dll": {}
         }
       }
     }
@@ -8244,16 +8212,14 @@
         "ref/xamarintvos10/_._",
         "ref/xamarinwatchos10/_._"
       ]
-    },
-    "MyTested.Mvc.Core/1.0.0-beta": {
-      "type": "project",
-      "path": "../MyTested.Mvc.Core/project.json",
-      "msbuildProject": "../MyTested.Mvc.Core/MyTested.Mvc.Core.xproj"
     }
   },
   "projectFileDependencyGroups": {
     "": [
-      "MyTested.Mvc.Core >= 1.0.0-*"
+      "Microsoft.AspNetCore.Mvc >= 1.0.0-*",
+      "Microsoft.AspNetCore.Session >= 1.0.0-*",
+      "Microsoft.AspNetCore.TestHost >= 1.0.0-*",
+      "Microsoft.Extensions.Configuration.Json >= 1.0.0-*"
     ],
     ".NETFramework,Version=v4.5.1": [],
     ".NETStandard,Version=v1.5": []
