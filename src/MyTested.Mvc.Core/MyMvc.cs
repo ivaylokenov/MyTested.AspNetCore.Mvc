@@ -13,6 +13,8 @@
     /// </summary>
     public static class MyMvc
     {
+        internal const string ReleaseDate = "2016-06-01";
+
         static MyMvc()
         {
             TestApplication.TryInitialize();

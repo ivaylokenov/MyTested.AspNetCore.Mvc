@@ -8,6 +8,8 @@
         private const string EnvironmentNameConfigKey = "Environment";
         private const string AutomaticStartupConfigKey = "AutomaticStartup";
         private const string FullStartupNameConfigKey = "FullStartupName";
+        private const string LicenseConfigKey = "License";
+        private const string LicensesConfigKey = "Licenses";
 
         private readonly IConfiguration configuration;
 
@@ -19,21 +21,24 @@
         internal string ApplicationName => this.configuration[ApplicationNameConfigKey];
 
         internal string EnvironmentName => this.configuration[EnvironmentNameConfigKey] ?? "Test";
-        
-        internal bool AutomaticStartup
+
+        internal bool AutomaticStartup => this.configuration.GetValue(AutomaticStartupConfigKey, true);
+
+        internal string FullStartupName => this.configuration[FullStartupNameConfigKey];
+
+        internal string[] Licenses
         {
             get
             {
-                var configValue = this.configuration[AutomaticStartupConfigKey] ?? "true";
+                var license = this.configuration[LicenseConfigKey];
+                if (license != null)
+                {
+                    return new[] { license };
+                }
 
-                bool automaticStartup = true;
-                bool.TryParse(configValue, out automaticStartup);
-
-                return automaticStartup;
+                return this.configuration.GetValue<string[]>(LicensesConfigKey);
             }
         }
-
-        internal string FullStartupName => this.configuration[FullStartupNameConfigKey];
 
         internal static TestConfiguration With(IConfiguration configuration)
         {

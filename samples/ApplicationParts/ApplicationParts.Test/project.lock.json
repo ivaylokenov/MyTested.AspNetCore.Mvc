@@ -1166,6 +1166,19 @@
           "lib/netstandard1.0/Microsoft.Extensions.Configuration.Abstractions.dll": {}
         }
       },
+      "Microsoft.Extensions.Configuration.Binder/1.0.0-rc2-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Configuration": "1.0.0-rc2-final",
+          "System.ComponentModel.TypeConverter": "4.0.1-rc2-24027"
+        },
+        "compile": {
+          "lib/netstandard1.1/Microsoft.Extensions.Configuration.Binder.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.1/Microsoft.Extensions.Configuration.Binder.dll": {}
+        }
+      },
       "Microsoft.Extensions.Configuration.EnvironmentVariables/1.0.0-rc2-final": {
         "type": "package",
         "dependencies": {
@@ -3313,7 +3326,7 @@
           "System.Threading": "4.0.11-rc2-24027"
         },
         "compile": {
-          "ref/netstandard1.3/_._": {}
+          "ref/netstandard1.3/System.Security.Cryptography.Csp.dll": {}
         },
         "runtimeTargets": {
           "runtimes/unix/lib/netstandard1.3/System.Security.Cryptography.Csp.dll": {
@@ -4062,13 +4075,29 @@
         "dependencies": {
           "Microsoft.AspNetCore.Mvc": "1.0.0",
           "Microsoft.AspNetCore.TestHost": "1.0.0",
-          "Microsoft.Extensions.Configuration.Json": "1.0.0"
+          "Microsoft.Extensions.Configuration.Binder": "1.0.0",
+          "Microsoft.Extensions.Configuration.Json": "1.0.0",
+          "MyTested.Mvc.Licensing": "1.0.0"
         },
         "compile": {
           "netstandard1.5/MyTested.Mvc.Core.dll": {}
         },
         "runtime": {
           "netstandard1.5/MyTested.Mvc.Core.dll": {}
+        }
+      },
+      "MyTested.Mvc.Licensing/1.0.0-beta": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.4",
+        "dependencies": {
+          "NETStandard.Library": "1.5.0-rc2-24027",
+          "System.Security.Cryptography.Csp": "4.0.0-rc2-24027"
+        },
+        "compile": {
+          "netstandard1.4/MyTested.Mvc.Licensing.dll": {}
+        },
+        "runtime": {
+          "netstandard1.4/MyTested.Mvc.Licensing.dll": {}
         }
       },
       "MyTested.Mvc.Session/1.0.0-beta": {
@@ -4948,6 +4977,16 @@
         "Microsoft.Extensions.Configuration.Abstractions.nuspec",
         "lib/netstandard1.0/Microsoft.Extensions.Configuration.Abstractions.dll",
         "lib/netstandard1.0/Microsoft.Extensions.Configuration.Abstractions.xml"
+      ]
+    },
+    "Microsoft.Extensions.Configuration.Binder/1.0.0-rc2-final": {
+      "sha512": "o1gYKuwXVDKhmTgQAqmVZARdJHNzccT5kbgzI1+bJmWumqxZWpAY+YASSHZdUsHaPzhdV2IOLwhAek2WFhaCmg==",
+      "type": "package",
+      "files": [
+        "Microsoft.Extensions.Configuration.Binder.1.0.0-rc2-final.nupkg.sha512",
+        "Microsoft.Extensions.Configuration.Binder.nuspec",
+        "lib/netstandard1.1/Microsoft.Extensions.Configuration.Binder.dll",
+        "lib/netstandard1.1/Microsoft.Extensions.Configuration.Binder.xml"
       ]
     },
     "Microsoft.Extensions.Configuration.EnvironmentVariables/1.0.0-rc2-final": {
@@ -10296,6 +10335,11 @@
       "type": "project",
       "path": "../../../src/MyTested.Mvc.Core/project.json",
       "msbuildProject": "../../../src/MyTested.Mvc.Core/MyTested.Mvc.Core.xproj"
+    },
+    "MyTested.Mvc.Licensing/1.0.0-beta": {
+      "type": "project",
+      "path": "../../../src/MyTested.Mvc.Licensing/project.json",
+      "msbuildProject": "../../../src/MyTested.Mvc.Licensing/MyTested.Mvc.Licensing.xproj"
     },
     "MyTested.Mvc.Session/1.0.0-beta": {
       "type": "project",

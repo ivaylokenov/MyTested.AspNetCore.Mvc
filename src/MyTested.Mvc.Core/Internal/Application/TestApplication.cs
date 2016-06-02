@@ -3,12 +3,14 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Globalization;
     using System.Linq;
     using System.Reflection;
     using Caching;
     using Contracts;
     using Controllers;
     using Formatters;
+    using Licensing;
     using Logging;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -30,7 +32,6 @@
     using Microsoft.Extensions.ObjectPool;
     using Microsoft.Extensions.PlatformAbstractions;
     using Routes;
-    using Utilities;
     using Utilities.Extensions;
 
     public static class TestApplication
@@ -60,6 +61,8 @@
             LoadPlugins();
             Sync = new object();
             configuration = PrepareConfiguration();
+            FindTestAssemblyName();
+            PrepareLicensing();
         }
 
         public static IServiceProvider Services
@@ -214,12 +217,6 @@
 
         internal static Type TryFindDefaultStartupType()
         {
-            testAssemblyName = DependencyContext.Default
-                .RuntimeLibraries
-                .Where(l => l.Dependencies.Any(d => d.Name.StartsWith(TestFrameworkName)))
-                .Select(l => l.Name)
-                .First();
-
             var applicationAssembly = Assembly.Load(new AssemblyName(testAssemblyName));
 
             var startupName = TestConfiguration.FullStartupName ?? $"{Environment.EnvironmentName}Startup";
@@ -259,6 +256,23 @@
             AdditionalConfiguration?.Invoke(configurationBuilder);
 
             return configurationBuilder.Build();
+        }
+
+        private static void FindTestAssemblyName()
+        {
+            testAssemblyName = DependencyContext.Default
+                .RuntimeLibraries
+                .Where(l => l.Dependencies.Any(d => d.Name.StartsWith(TestFrameworkName)))
+                .Select(l => l.Name)
+                .First();
+        }
+
+        private static void PrepareLicensing()
+        {
+            TestCounter.SetLicenseData(
+                TestConfiguration.Licenses,
+                DateTime.ParseExact(MyMvc.ReleaseDate, "yyyy-MM-dd", CultureInfo.InvariantCulture),
+                TestAssemblyName);
         }
 
         private static IHostingEnvironment PrepareEnvironment()
