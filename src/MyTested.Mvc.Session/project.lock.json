@@ -958,54 +958,6 @@
           "lib/netstandard1.1/Microsoft.Net.Http.Headers.dll": {}
         }
       },
-      "Microsoft.NETCore.Platforms/1.0.1-rc2-24027": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.NETCore.Targets": "1.0.1-rc2-24027"
-        }
-      },
-      "Microsoft.NETCore.Runtime/1.0.2-rc2-24027": {
-        "type": "package"
-      },
-      "Microsoft.NETCore.Targets/1.0.1-rc2-24027": {
-        "type": "package"
-      },
-      "NETStandard.Library/1.5.0-rc2-24027": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.NETCore.Platforms": "1.0.1-rc2-24027",
-          "Microsoft.NETCore.Runtime": "1.0.2-rc2-24027",
-          "System.Collections": "4.0.11-rc2-24027",
-          "System.Collections.Concurrent": "4.0.12-rc2-24027",
-          "System.Diagnostics.Debug": "4.0.11-rc2-24027",
-          "System.Diagnostics.Tools": "4.0.1-rc2-24027",
-          "System.Diagnostics.Tracing": "4.1.0-rc2-24027",
-          "System.Globalization": "4.0.11-rc2-24027",
-          "System.IO": "4.1.0-rc2-24027",
-          "System.IO.Compression": "4.1.0-rc2-24027",
-          "System.Linq": "4.1.0-rc2-24027",
-          "System.Net.Http": "4.0.1-rc2-24027",
-          "System.Net.Primitives": "4.0.11-rc2-24027",
-          "System.ObjectModel": "4.0.12-rc2-24027",
-          "System.Reflection": "4.1.0-rc2-24027",
-          "System.Reflection.Extensions": "4.0.1-rc2-24027",
-          "System.Reflection.Primitives": "4.0.1-rc2-24027",
-          "System.Resources.ResourceManager": "4.0.1-rc2-24027",
-          "System.Runtime": "4.1.0-rc2-24027",
-          "System.Runtime.Extensions": "4.1.0-rc2-24027",
-          "System.Runtime.InteropServices": "4.1.0-rc2-24027",
-          "System.Runtime.InteropServices.RuntimeInformation": "4.0.0-rc2-24027",
-          "System.Runtime.Numerics": "4.0.1-rc2-24027",
-          "System.Text.Encoding": "4.0.11-rc2-24027",
-          "System.Text.Encoding.Extensions": "4.0.11-rc2-24027",
-          "System.Text.RegularExpressions": "4.0.12-rc2-24027",
-          "System.Threading": "4.0.11-rc2-24027",
-          "System.Threading.Tasks": "4.0.11-rc2-24027",
-          "System.Threading.Timer": "4.0.1-rc2-24027",
-          "System.Xml.ReaderWriter": "4.0.11-rc2-24027",
-          "System.Xml.XDocument": "4.0.11-rc2-24027"
-        }
-      },
       "Newtonsoft.Json/8.0.3": {
         "type": "package",
         "compile": {
@@ -1126,24 +1078,6 @@
           "lib/portable-net45+win8+wpa81/System.Diagnostics.DiagnosticSource.dll": {}
         }
       },
-      "System.Diagnostics.Tools/4.0.1-rc2-24027": {
-        "type": "package",
-        "compile": {
-          "ref/net45/_._": {}
-        },
-        "runtime": {
-          "lib/net45/_._": {}
-        }
-      },
-      "System.Diagnostics.Tracing/4.1.0-rc2-24027": {
-        "type": "package",
-        "compile": {
-          "ref/net45/_._": {}
-        },
-        "runtime": {
-          "lib/net45/_._": {}
-        }
-      },
       "System.Globalization/4.0.11-rc2-24027": {
         "type": "package",
         "compile": {
@@ -1162,15 +1096,6 @@
           "lib/net45/_._": {}
         }
       },
-      "System.IO.Compression/4.1.0-rc2-24027": {
-        "type": "package",
-        "compile": {
-          "ref/net45/_._": {}
-        },
-        "runtime": {
-          "lib/net45/_._": {}
-        }
-      },
       "System.Linq/4.1.0-rc2-24027": {
         "type": "package",
         "compile": {
@@ -1181,36 +1106,6 @@
         }
       },
       "System.Linq.Expressions/4.0.11-rc2-24027": {
-        "type": "package",
-        "compile": {
-          "ref/net45/_._": {}
-        },
-        "runtime": {
-          "lib/net45/_._": {}
-        }
-      },
-      "System.Net.Http/4.0.1-rc2-24027": {
-        "type": "package",
-        "frameworkAssemblies": [
-          "System.Net.Http"
-        ],
-        "compile": {
-          "ref/net45/_._": {}
-        },
-        "runtime": {
-          "lib/net45/_._": {}
-        }
-      },
-      "System.Net.Primitives/4.0.11-rc2-24027": {
-        "type": "package",
-        "compile": {
-          "ref/net45/_._": {}
-        },
-        "runtime": {
-          "lib/net45/_._": {}
-        }
-      },
-      "System.ObjectModel/4.0.12-rc2-24027": {
         "type": "package",
         "compile": {
           "ref/net45/_._": {}
@@ -1249,15 +1144,6 @@
           "lib/portable-net45+win8/System.Reflection.Metadata.dll": {}
         }
       },
-      "System.Reflection.Primitives/4.0.1-rc2-24027": {
-        "type": "package",
-        "compile": {
-          "ref/net45/_._": {}
-        },
-        "runtime": {
-          "lib/net45/_._": {}
-        }
-      },
       "System.Resources.ResourceManager/4.0.1-rc2-24027": {
         "type": "package",
         "compile": {
@@ -1286,24 +1172,6 @@
         }
       },
       "System.Runtime.InteropServices/4.1.0-rc2-24027": {
-        "type": "package",
-        "compile": {
-          "ref/net45/_._": {}
-        },
-        "runtime": {
-          "lib/net45/_._": {}
-        }
-      },
-      "System.Runtime.InteropServices.RuntimeInformation/4.0.0-rc2-24027": {
-        "type": "package",
-        "dependencies": {
-          "System.Runtime": "4.1.0-rc2-24027"
-        },
-        "compile": {
-          "ref/netstandard1.1/System.Runtime.InteropServices.RuntimeInformation.dll": {}
-        }
-      },
-      "System.Runtime.Numerics/4.0.1-rc2-24027": {
         "type": "package",
         "compile": {
           "ref/net45/_._": {}
@@ -1348,15 +1216,6 @@
           "lib/netstandard1.0/System.Text.Encodings.Web.dll": {}
         }
       },
-      "System.Text.RegularExpressions/4.0.12-rc2-24027": {
-        "type": "package",
-        "compile": {
-          "ref/net45/_._": {}
-        },
-        "runtime": {
-          "lib/net45/_._": {}
-        }
-      },
       "System.Threading/4.0.11-rc2-24027": {
         "type": "package",
         "compile": {
@@ -1367,33 +1226,6 @@
         }
       },
       "System.Threading.Tasks/4.0.11-rc2-24027": {
-        "type": "package",
-        "compile": {
-          "ref/net45/_._": {}
-        },
-        "runtime": {
-          "lib/net45/_._": {}
-        }
-      },
-      "System.Threading.Timer/4.0.1-rc2-24027": {
-        "type": "package",
-        "compile": {
-          "ref/net451/_._": {}
-        },
-        "runtime": {
-          "lib/net451/_._": {}
-        }
-      },
-      "System.Xml.ReaderWriter/4.0.11-rc2-24027": {
-        "type": "package",
-        "compile": {
-          "ref/net45/_._": {}
-        },
-        "runtime": {
-          "lib/net45/_._": {}
-        }
-      },
-      "System.Xml.XDocument/4.0.11-rc2-24027": {
         "type": "package",
         "compile": {
           "ref/net45/_._": {}
@@ -1422,9 +1254,6 @@
       "MyTested.Mvc.Licensing/1.0.0-beta": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
-        "dependencies": {
-          "NETStandard.Library": "1.5.0-rc2"
-        },
         "compile": {
           "net451/MyTested.Mvc.Licensing.dll": {}
         },
@@ -4135,7 +3964,7 @@
         "framework": ".NETStandard,Version=v1.4",
         "dependencies": {
           "NETStandard.Library": "1.5.0-rc2",
-          "System.Security.Cryptography.Csp": "4.0.0-rc2-24027"
+          "System.Security.Cryptography.Csp": "4.0.0-rc2"
         },
         "compile": {
           "netstandard1.4/MyTested.Mvc.Licensing.dll": {}

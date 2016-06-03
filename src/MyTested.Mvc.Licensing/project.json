@@ -1,7 +1,7 @@
 ﻿{
   "title": "MyTested.Mvc.Licensing",
   "description": "My Tested MVC licensing components.",
-  "version": "1.0.0-beta",
+  "version": "1.0.0-beta2",
   "authors": [ "Ivaylo Kenov" ],
   "packOptions": {
     "projectUrl": "https://github.com/ivaylokenov/MyTested.Mvc",
@@ -12,10 +12,6 @@
       "type": "git",
       "url": "git://github.com/ivaylokenov/MyTested.Mvc"
     }
-  },
-
-  "dependencies": {
-    "NETStandard.Library": "1.5.0-rc2-*"
   },
 
   "buildOptions": {
@@ -31,7 +27,8 @@
     "net451": { },
     "netstandard1.4": {
       "dependencies": {
-        "System.Security.Cryptography.Csp": "4.0.0-rc2-*" 
+        "NETStandard.Library": "1.5.0-rc2-*",
+        "System.Security.Cryptography.Csp": "4.0.0-rc2-*"
       }
     }
   }
