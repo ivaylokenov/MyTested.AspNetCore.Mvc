@@ -1391,7 +1391,7 @@
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
-          "NETStandard.Library": "1.5.0-rc2-24027"
+          "NETStandard.Library": "1.5.0-rc2"
         },
         "compile": {
           "net451/MyTested.Mvc.Licensing.dll": {}
@@ -4069,7 +4069,7 @@
         "type": "project",
         "framework": ".NETStandard,Version=v1.4",
         "dependencies": {
-          "NETStandard.Library": "1.5.0-rc2-24027",
+          "NETStandard.Library": "1.5.0-rc2",
           "System.Security.Cryptography.Csp": "4.0.0-rc2-24027"
         },
         "compile": {

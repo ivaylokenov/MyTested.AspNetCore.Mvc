@@ -3477,8 +3477,8 @@
         "type": "project",
         "framework": ".NETStandard,Version=v1.4",
         "dependencies": {
-          "NETStandard.Library": "1.5.0-rc2-24027",
-          "System.Security.Cryptography.Csp": "4.0.0-rc2-24027"
+          "NETStandard.Library": "1.5.0-rc2",
+          "System.Security.Cryptography.Csp": "4.0.0-rc2"
         },
         "compile": {
           "netstandard1.4/MyTested.Mvc.Licensing.dll": {}
@@ -3487,7 +3487,7 @@
           "netstandard1.4/MyTested.Mvc.Licensing.dll": {}
         }
       },
-      "MyTested.Mvc.Test/1.0.0": {
+      "MyTested.Mvc.Test/1.0.0-beta": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.5",
         "dependencies": {
@@ -5176,7 +5176,7 @@
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
-          "NETStandard.Library": "1.5.0-rc2-24027"
+          "NETStandard.Library": "1.5.0-rc2"
         },
         "compile": {
           "net451/MyTested.Mvc.Licensing.dll": {}
@@ -5185,7 +5185,7 @@
           "net451/MyTested.Mvc.Licensing.dll": {}
         }
       },
-      "MyTested.Mvc.Test/1.0.0": {
+      "MyTested.Mvc.Test/1.0.0-beta": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
@@ -10947,7 +10947,7 @@
       "path": "../../src/MyTested.Mvc.Licensing/project.json",
       "msbuildProject": "../../src/MyTested.Mvc.Licensing/MyTested.Mvc.Licensing.xproj"
     },
-    "MyTested.Mvc.Test/1.0.0": {
+    "MyTested.Mvc.Test/1.0.0-beta": {
       "type": "project",
       "path": "../MyTested.Mvc.Test/project.json",
       "msbuildProject": "../MyTested.Mvc.Test/MyTested.Mvc.Test.xproj"
@@ -10957,7 +10957,7 @@
     "": [
       "MyTested.Mvc.Core >= 1.0.0-*",
       "MyTested.Mvc.Licensing >= 1.0.0-*",
-      "MyTested.Mvc.Test",
+      "MyTested.Mvc.Test >= 1.0.0-*",
       "dotnet-test-xunit >= 1.0.0-*",
       "xunit >= 2.1.0"
     ],

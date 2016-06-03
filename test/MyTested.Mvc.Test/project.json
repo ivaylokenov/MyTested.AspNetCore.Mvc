@@ -1,4 +1,6 @@
 ﻿{
+  "version": "1.0.0-beta", 
+
   "buildOptions": {
     "warningsAsErrors": true,
     "keyFile": "../../tools/Key.snk"
