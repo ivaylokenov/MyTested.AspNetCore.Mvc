@@ -4086,7 +4086,7 @@
           "netstandard1.5/MyTested.Mvc.Core.dll": {}
         }
       },
-      "MyTested.Mvc.Licensing/1.0.0-beta": {
+      "MyTested.Mvc.Licensing/1.0.0-beta2": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.4",
         "dependencies": {
@@ -10336,7 +10336,7 @@
       "path": "../../../src/MyTested.Mvc.Core/project.json",
       "msbuildProject": "../../../src/MyTested.Mvc.Core/MyTested.Mvc.Core.xproj"
     },
-    "MyTested.Mvc.Licensing/1.0.0-beta": {
+    "MyTested.Mvc.Licensing/1.0.0-beta2": {
       "type": "project",
       "path": "../../../src/MyTested.Mvc.Licensing/project.json",
       "msbuildProject": "../../../src/MyTested.Mvc.Licensing/MyTested.Mvc.Licensing.xproj"

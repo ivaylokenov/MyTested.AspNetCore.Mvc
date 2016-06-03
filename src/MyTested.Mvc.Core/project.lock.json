@@ -1219,7 +1219,7 @@
           "lib/net45/_._": {}
         }
       },
-      "MyTested.Mvc.Licensing/1.0.0-beta": {
+      "MyTested.Mvc.Licensing/1.0.0-beta2": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "compile": {
@@ -3894,7 +3894,7 @@
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
         }
       },
-      "MyTested.Mvc.Licensing/1.0.0-beta": {
+      "MyTested.Mvc.Licensing/1.0.0-beta2": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.4",
         "dependencies": {
@@ -8654,7 +8654,7 @@
         "ref/xamarinwatchos10/_._"
       ]
     },
-    "MyTested.Mvc.Licensing/1.0.0-beta": {
+    "MyTested.Mvc.Licensing/1.0.0-beta2": {
       "type": "project",
       "path": "../MyTested.Mvc.Licensing/project.json",
       "msbuildProject": "../MyTested.Mvc.Licensing/MyTested.Mvc.Licensing.xproj"

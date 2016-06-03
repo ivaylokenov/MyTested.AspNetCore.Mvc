@@ -17,6 +17,7 @@
   "buildOptions": {
     "warningsAsErrors": true,
     "xmlDoc": true,
+    "optimize": true,
     "nowarn": [
       "CS1591"
     ],

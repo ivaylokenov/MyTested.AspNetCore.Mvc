@@ -1251,7 +1251,7 @@
           "net451/MyTested.Mvc.Core.dll": {}
         }
       },
-      "MyTested.Mvc.Licensing/1.0.0-beta": {
+      "MyTested.Mvc.Licensing/1.0.0-beta2": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "compile": {
@@ -3959,7 +3959,7 @@
           "netstandard1.5/MyTested.Mvc.Core.dll": {}
         }
       },
-      "MyTested.Mvc.Licensing/1.0.0-beta": {
+      "MyTested.Mvc.Licensing/1.0.0-beta2": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.4",
         "dependencies": {
@@ -8736,7 +8736,7 @@
       "path": "../MyTested.Mvc.Core/project.json",
       "msbuildProject": "../MyTested.Mvc.Core/MyTested.Mvc.Core.xproj"
     },
-    "MyTested.Mvc.Licensing/1.0.0-beta": {
+    "MyTested.Mvc.Licensing/1.0.0-beta2": {
       "type": "project",
       "path": "../MyTested.Mvc.Licensing/project.json",
       "msbuildProject": "../MyTested.Mvc.Licensing/MyTested.Mvc.Licensing.xproj"
