@@ -1,5 +1,6 @@
 ﻿namespace MyTested.Mvc.Internal
 {
+    using System.Collections.Generic;
     using Microsoft.Extensions.Configuration;
 
     internal class TestConfiguration
@@ -26,7 +27,7 @@
 
         internal string FullStartupName => this.configuration[FullStartupNameConfigKey];
 
-        internal string[] Licenses
+        internal IEnumerable<string> Licenses
         {
             get
             {
@@ -36,7 +37,9 @@
                     return new[] { license };
                 }
 
-                return this.configuration.GetValue<string[]>(LicensesConfigKey);
+                var licenses = new List<string>();
+                this.configuration.GetSection(LicensesConfigKey).Bind(licenses);
+                return licenses;
             }
         }
 

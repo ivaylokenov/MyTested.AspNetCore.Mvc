@@ -58,9 +58,9 @@
 
         static TestApplication()
         {
-            LoadPlugins();
             Sync = new object();
-            configuration = PrepareConfiguration();
+            LoadPlugins();
+            PrepareTestConfiguration();
             FindTestAssemblyName();
             PrepareLicensing();
         }
@@ -130,20 +130,7 @@
                 return testAssemblyName;
             }
         }
-
-        internal static IConfiguration Configuration
-        {
-            get
-            {
-                if (configuration == null)
-                {
-                    configuration = PrepareConfiguration();
-                }
-
-                return configuration;
-            }
-        }
-
+        
         internal static IHostingEnvironment Environment
         {
             get
@@ -161,9 +148,10 @@
         {
             get
             {
-                if (testConfiguration == null)
+                if (testConfiguration == null || AdditionalConfiguration != null)
                 {
-                    testConfiguration = TestConfiguration.With(configuration);
+                    testConfiguration = TestConfiguration.With(PrepareTestConfiguration());
+                    PrepareLicensing();
                 }
 
                 return testConfiguration;
@@ -248,14 +236,15 @@
             initialiazed = true;
         }
 
-        private static IConfiguration PrepareConfiguration()
+        private static IConfiguration PrepareTestConfiguration()
         {
             var configurationBuilder = new ConfigurationBuilder()
                 .AddJsonFile("testconfig.json", optional: true);
 
             AdditionalConfiguration?.Invoke(configurationBuilder);
-
-            return configurationBuilder.Build();
+            AdditionalConfiguration = null;
+            
+            return configuration = configurationBuilder.Build();
         }
 
         private static void FindTestAssemblyName()

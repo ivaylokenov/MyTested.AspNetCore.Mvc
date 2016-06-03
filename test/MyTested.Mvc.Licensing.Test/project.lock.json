@@ -10955,6 +10955,7 @@
   },
   "projectFileDependencyGroups": {
     "": [
+      "MyTested.Mvc.Core >= 1.0.0-*",
       "MyTested.Mvc.Licensing >= 1.0.0-*",
       "MyTested.Mvc.Test",
       "dotnet-test-xunit >= 1.0.0-*",
