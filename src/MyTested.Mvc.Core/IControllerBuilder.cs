@@ -8,7 +8,6 @@
     using Builders.Contracts.Authentication;
     using Builders.Contracts.Base;
     using Builders.Contracts.Controllers;
-    using Builders.Contracts.Data;
     using Builders.Contracts.Http;
     using Builders.Contracts.ShouldPassFor;
     using Microsoft.AspNetCore.Http;
@@ -95,20 +94,6 @@
         /// <param name="additionalRouteValues">Anonymous object containing route values.</param>
         /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>
         IAndControllerBuilder<TController> WithRouteData(object additionalRouteValues);
-
-        /// <summary>
-        /// Sets initial values to the <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.TempDataDictionary"/> on the tested controller.
-        /// </summary>
-        /// <param name="tempDataBuilder">Action setting the <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.TempDataDictionary"/> values by using <see cref="ITempDataBuilder"/>.</param>
-        /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>
-        IAndControllerBuilder<TController> WithTempData(Action<ITempDataBuilder> tempDataBuilder);
-
-        /// <summary>
-        /// Sets initial values to the <see cref="Microsoft.Extensions.Caching.Memory.IMemoryCache"/> service.
-        /// </summary>
-        /// <param name="memoryCacheBuilder">Action setting the <see cref="Microsoft.Extensions.Caching.Memory.IMemoryCache"/> values by using <see cref="IMemoryCacheBuilder"/>.</param>
-        /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>
-        IAndControllerBuilder<TController> WithMemoryCache(Action<IMemoryCacheBuilder> memoryCacheBuilder);
         
         /// <summary>
         /// Configures a service with scoped lifetime by using the provided <see cref="Action"/> delegate.

@@ -11,11 +11,12 @@
     /// <summary>
     /// Contains <see cref="Microsoft.AspNetCore.Http.ISession"/> extension methods for <see cref="IShouldHaveTestBuilder{TActionResult}"/>.
     /// </summary>
-    public static class SessionShouldHaveTestBuilderExtensions
+    public static class ShouldHaveTestBuilderSessionExtensions
     {
         /// <summary>
         /// Tests whether the action does not set any <see cref="Microsoft.AspNetCore.Http.ISession"/> entries.
         /// </summary>
+        /// <typeparam name="TActionResult">Type of action result type.</typeparam>
         /// <param name="shouldHaveTestBuilder">Instance of <see cref="IShouldHaveTestBuilder{TActionResult}"/> type.</param>
         /// <returns>Test builder of <see cref="IAndTestBuilder{TActionResult}"/> type.</returns>
         public static IAndTestBuilder<TActionResult> NoSession<TActionResult>(this IShouldHaveTestBuilder<TActionResult> shouldHaveTestBuilder)
@@ -33,6 +34,7 @@
         /// <summary>
         /// Tests whether the action sets entries in the <see cref="Microsoft.AspNetCore.Http.ISession"/>.
         /// </summary>
+        /// <typeparam name="TActionResult">Type of action result type.</typeparam>
         /// <param name="shouldHaveTestBuilder">Instance of <see cref="IShouldHaveTestBuilder{TActionResult}"/> type.</param>
         /// <param name="withNumberOfEntries">Expected number of <see cref="Microsoft.AspNetCore.Http.ISession"/> entries.
         /// If default null is provided, the test builder checks only if any entries are found.</param>
@@ -54,6 +56,7 @@
         /// <summary>
         /// Tests whether the action sets specific <see cref="Microsoft.AspNetCore.Http.ISession"/> entries.
         /// </summary>
+        /// <typeparam name="TActionResult">Type of action result type.</typeparam>
         /// <param name="shouldHaveTestBuilder">Instance of <see cref="IShouldHaveTestBuilder{TActionResult}"/> type.</param>
         /// <param name="sessionTestBuilder">Builder for testing specific <see cref="Microsoft.AspNetCore.Http.ISession"/> entries.</param>
         /// <returns>Test builder of <see cref="IAndTestBuilder{TActionResult}"/> type.</returns>

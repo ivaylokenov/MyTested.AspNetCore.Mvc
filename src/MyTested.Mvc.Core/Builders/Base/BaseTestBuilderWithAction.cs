@@ -26,13 +26,13 @@
         /// Gets the action name which will be tested.
         /// </summary>
         /// <value>Action name to be tested.</value>
-        internal string ActionName => this.TestContext.ActionName;
+        public string ActionName => this.TestContext.ActionName;
 
         /// <summary>
         /// Gets the action attributes which will be tested.
         /// </summary>
         /// <value>Action attributes to be tested.</value>
-        internal IEnumerable<object> ActionLevelAttributes => this.TestContext.ActionAttributes;
+        public IEnumerable<object> ActionLevelAttributes => this.TestContext.ActionAttributes;
         
         /// <inheritdoc />
         public new IShouldPassForTestBuilderWithAction ShouldPassFor() => new ShouldPassForTestBuilderWithAction(this.TestContext);

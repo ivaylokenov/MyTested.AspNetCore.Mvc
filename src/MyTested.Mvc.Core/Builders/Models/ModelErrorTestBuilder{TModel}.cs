@@ -6,8 +6,8 @@
     using Contracts.ShouldPassFor;
     using Exceptions;
     using Internal.TestContexts;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
-    using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
     using ShouldPassFor;
     using Utilities.Extensions;
 
@@ -21,7 +21,7 @@
         /// Initializes a new instance of the <see cref="ModelErrorTestBuilder{TModel}"/> class.
         /// </summary>
         /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
-        /// <param name="modelState">Optional <see cref="ModelStateDictionary"/> to use the class with. Default is Default is <see cref="Microsoft.AspNetCore.Mvc.Controller"/>'s <see cref="ModelStateDictionary"/>.</param>
+        /// <param name="modelState">Optional <see cref="ModelStateDictionary"/> to use the class with. Default is Default is <see cref="ControllerBase"/>'s <see cref="ModelStateDictionary"/>.</param>
         public ModelErrorTestBuilder(
             ControllerTestContext testContext,
             ModelStateDictionary modelState = null)

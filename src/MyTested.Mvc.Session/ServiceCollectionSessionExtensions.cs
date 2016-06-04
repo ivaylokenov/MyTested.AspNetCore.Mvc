@@ -4,7 +4,10 @@
     using Microsoft.AspNetCore.Session;
     using Microsoft.Extensions.DependencyInjection;
 
-    public static class SessionServiceCollectionExtensions
+    /// <summary>
+    /// Contains session extension methods for <see cref="IServiceCollection"/>.
+    /// </summary>
+    public static class ServiceCollectionSessionExtensions
     {
         /// <summary>
         /// Replaces the default <see cref="ISessionStore"/> with a mocked implementation.

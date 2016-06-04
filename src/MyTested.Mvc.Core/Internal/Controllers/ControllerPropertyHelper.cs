@@ -6,31 +6,27 @@
     using System.Linq;
     using System.Reflection;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Utilities;
 
     public class ControllerPropertyHelper
     {
         private const string InvalidDelegateErrorMessage = "The {0} property cannot be activated for value of {1} type.";
 
-        private static readonly ConcurrentDictionary<Type, ControllerPropertyHelper> ControllerPropertiesCache =
-            new ConcurrentDictionary<Type, ControllerPropertyHelper>();
-
         private static readonly MethodInfo CallPropertyGetterOpenGenericMethod =
             typeof(ControllerPropertyHelper).GetTypeInfo().GetDeclaredMethod(nameof(CallPropertyGetter));
 
+        private static readonly ConcurrentDictionary<Type, ControllerPropertyHelper> ControllerPropertiesCache =
+            new ConcurrentDictionary<Type, ControllerPropertyHelper>();
+
         private readonly Type controllerType;
-        private readonly IEnumerable<PropertyInfo> properties;
 
         private Func<object, ControllerContext> controllerContextGetter;
         private Func<object, ActionContext> actionContextGetter;
-        private Func<object, ViewDataDictionary> viewDataGetter;
-        private Func<object, ITempDataDictionary> tempDataGetter;
 
         public ControllerPropertyHelper(Type controllerType)
         {
             this.controllerType = controllerType;
-            this.properties = controllerType.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            this.Properties = controllerType.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
         }
 
         public Func<object, ControllerContext> ControllerContextGetter
@@ -59,31 +55,7 @@
             }
         }
 
-        public Func<object, ViewDataDictionary> ViewDataGetter
-        {
-            get
-            {
-                if (this.viewDataGetter == null)
-                {
-                    this.TryCreateViewDataGetterDelegate();
-                }
-
-                return this.viewDataGetter;
-            }
-        }
-
-        public Func<object, ITempDataDictionary> TempDataGetter
-        {
-            get
-            {
-                if (this.tempDataGetter == null)
-                {
-                    this.TryCreateTempDataGetterDelegate();
-                }
-
-                return this.tempDataGetter;
-            }
-        }
+        protected IEnumerable<PropertyInfo> Properties { get; private set; }
 
         public static ControllerPropertyHelper GetProperties<TController>()
             where TController : class
@@ -93,13 +65,10 @@
 
         public static ControllerPropertyHelper GetProperties(Type type)
         {
-            return ControllerPropertiesCache.GetOrAdd(type, _ =>
-                {
-                    return new ControllerPropertyHelper(type);
-                });
+            return ControllerPropertiesCache.GetOrAdd(type, _ => new ControllerPropertyHelper(type));
         }
 
-        private static Func<object, TResult> MakeFastPropertyGetter<TResult>(PropertyInfo propertyInfo)
+        protected static Func<object, TResult> MakeFastPropertyGetter<TResult>(PropertyInfo propertyInfo)
         {
             try
             {
@@ -148,29 +117,13 @@
             this.actionContextGetter = MakeFastPropertyGetter<ActionContext>(actionContextProperty);
         }
 
-        private void TryCreateViewDataGetterDelegate()
-        {
-            var viewDataProperty = this.FindPropertyWithAttribute<ViewDataDictionaryAttribute>();
-            this.ThrowNewInvalidOperationExceptionIfNull(viewDataProperty, nameof(ViewDataDictionary));
-
-            this.viewDataGetter = MakeFastPropertyGetter<ViewDataDictionary>(viewDataProperty);
-        }
-
-        private void TryCreateTempDataGetterDelegate()
-        {
-            var tempDataProperty = this.properties.FirstOrDefault(pr => typeof(ITempDataDictionary).IsAssignableFrom(pr.PropertyType));
-            this.ThrowNewInvalidOperationExceptionIfNull(tempDataProperty, nameof(TempDataDictionary));
-
-            this.tempDataGetter = MakeFastPropertyGetter<ITempDataDictionary>(tempDataProperty);
-        }
-
-        private PropertyInfo FindPropertyWithAttribute<TAttribute>()
+        protected PropertyInfo FindPropertyWithAttribute<TAttribute>()
             where TAttribute : Attribute
         {
-            return this.properties.FirstOrDefault(pr => pr.GetCustomAttribute(typeof(TAttribute), true) != null);
+            return this.Properties.FirstOrDefault(pr => pr.GetCustomAttribute(typeof(TAttribute), true) != null);
         }
 
-        private void ThrowNewInvalidOperationExceptionIfNull(object value, string propertyName)
+        protected void ThrowNewInvalidOperationExceptionIfNull(object value, string propertyName)
         {
             if (value == null)
             {

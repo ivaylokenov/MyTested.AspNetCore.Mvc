@@ -1,0 +1,40 @@
+﻿{
+  "title": "MyTested.Mvc.ViewFeatures",
+  "description": "My Tested MVC view components for testing ASP.NET Core MVC.",
+  "version": "1.0.0-beta",
+  "authors": [ "Ivaylo Kenov" ],
+  "packOptions": {
+    "projectUrl": "https://github.com/ivaylokenov/MyTested.Mvc",
+    "licenseUrl": "https://github.com/ivaylokenov/MyTested.Mvc/blob/master/LICENSE",
+    "tags": [ "aspnetcore", "aspnetcoremvc", "testing", "unit", "tests", "fluent", "testing", "framework", "asp", "net", "core", "mvc", "test", "mymvc" ],
+    "requireLicenseAcceptance": true,
+    "repository": {
+      "type": "git",
+      "url": "git://github.com/ivaylokenov/MyTested.Mvc"
+    }
+  },
+
+  "buildOptions": {
+    "warningsAsErrors": true,
+    "xmlDoc": true,
+    "optimize": true,
+    "nowarn": [
+      "CS1591"
+    ],
+    "keyFile": "../../tools/Key.snk"
+  },
+
+  "dependencies": {
+    "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.0.0-*",
+    "MyTested.Mvc.Core": "1.0.0-*"
+  },
+
+  "frameworks": {
+    "net451": { },
+    "netstandard1.5": {
+      "imports": [
+        "portable-net451+win8"
+      ]
+    }
+  }
+}

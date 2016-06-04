@@ -4059,8 +4059,10 @@
         "type": "project",
         "framework": ".NETStandard,Version=v1.5",
         "dependencies": {
+          "MyTested.Mvc.Caching": "1.0.0",
           "MyTested.Mvc.Core": "1.0.0",
-          "MyTested.Mvc.Session": "1.0.0"
+          "MyTested.Mvc.Session": "1.0.0",
+          "MyTested.Mvc.ViewFeatures": "1.0.0"
         },
         "compile": {
           "netstandard1.5/MyTested.Mvc.dll": {}
@@ -4069,11 +4071,25 @@
           "netstandard1.5/MyTested.Mvc.dll": {}
         }
       },
+      "MyTested.Mvc.Caching/1.0.0-beta": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.5",
+        "dependencies": {
+          "Microsoft.Extensions.Caching.Memory": "1.0.0",
+          "MyTested.Mvc.Core": "1.0.0"
+        },
+        "compile": {
+          "netstandard1.5/MyTested.Mvc.Caching.dll": {}
+        },
+        "runtime": {
+          "netstandard1.5/MyTested.Mvc.Caching.dll": {}
+        }
+      },
       "MyTested.Mvc.Core/1.0.0-beta": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.5",
         "dependencies": {
-          "Microsoft.AspNetCore.Mvc": "1.0.0",
+          "Microsoft.AspNetCore.Mvc.Core": "1.0.0",
           "Microsoft.AspNetCore.TestHost": "1.0.0",
           "Microsoft.Extensions.Configuration.Binder": "1.0.0",
           "Microsoft.Extensions.Configuration.Json": "1.0.0",
@@ -4112,6 +4128,20 @@
         },
         "runtime": {
           "netstandard1.5/MyTested.Mvc.Session.dll": {}
+        }
+      },
+      "MyTested.Mvc.ViewFeatures/1.0.0-beta": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.5",
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.0.0",
+          "MyTested.Mvc.Core": "1.0.0"
+        },
+        "compile": {
+          "netstandard1.5/MyTested.Mvc.ViewFeatures.dll": {}
+        },
+        "runtime": {
+          "netstandard1.5/MyTested.Mvc.ViewFeatures.dll": {}
         }
       }
     }
@@ -10331,6 +10361,11 @@
       "path": "../../../src/MyTested.Mvc/project.json",
       "msbuildProject": "../../../src/MyTested.Mvc/MyTested.Mvc.xproj"
     },
+    "MyTested.Mvc.Caching/1.0.0-beta": {
+      "type": "project",
+      "path": "../../../src/MyTested.Mvc.Caching/project.json",
+      "msbuildProject": "../../../src/MyTested.Mvc.Caching/MyTested.Mvc.Caching.xproj"
+    },
     "MyTested.Mvc.Core/1.0.0-beta": {
       "type": "project",
       "path": "../../../src/MyTested.Mvc.Core/project.json",
@@ -10345,6 +10380,11 @@
       "type": "project",
       "path": "../../../src/MyTested.Mvc.Session/project.json",
       "msbuildProject": "../../../src/MyTested.Mvc.Session/MyTested.Mvc.Session.xproj"
+    },
+    "MyTested.Mvc.ViewFeatures/1.0.0-beta": {
+      "type": "project",
+      "path": "../../../src/MyTested.Mvc.ViewFeatures/project.json",
+      "msbuildProject": "../../../src/MyTested.Mvc.ViewFeatures/MyTested.Mvc.ViewFeatures.xproj"
     }
   },
   "projectFileDependencyGroups": {

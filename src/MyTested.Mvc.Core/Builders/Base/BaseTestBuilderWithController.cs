@@ -28,7 +28,7 @@
         /// Gets the controller on which the action will be tested.
         /// </summary>
         /// <value>Controller on which the action will be tested.</value>
-        internal object Controller => this.TestContext.Controller;
+        public object Controller => this.TestContext.Controller;
 
         /// <summary>
         /// Gets the controller attributes which will be tested.

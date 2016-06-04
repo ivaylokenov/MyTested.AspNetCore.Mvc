@@ -118,7 +118,7 @@
 
             controllerPropertyActivators.ForEach(a => a.Activate(this.TestContext.ControllerContext, this.TestContext.Controller));
 
-            this.tempDataBuilderAction?.Invoke(new TempDataBuilder(this.TestContext.TempData));
+            this.ControllerPreparationAction?.Invoke(this.TestContext);
 
             this.controllerSetupAction?.Invoke(this.TestContext.ControllerAs<TController>());
         }

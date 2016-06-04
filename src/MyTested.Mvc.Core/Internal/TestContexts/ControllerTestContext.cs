@@ -84,7 +84,7 @@
             }
         }
 
-        public object ActionResult { get; internal set; }
+        public object ActionResult { get; set; }
 
         public IEnumerable<object> ActionAttributes
         {
@@ -146,11 +146,7 @@
         }
 
         public ModelStateDictionary ModelState => this.ControllerContext.ModelState;
-
-        public ITempDataDictionary TempData => this.ControllerAs<Controller>()?.TempData ?? this.ControllerProperties.TempDataGetter(this.Controller);
-
-        public ViewDataDictionary ViewData => this.ControllerAs<Controller>()?.ViewData ?? this.ControllerProperties.ViewDataGetter(this.Controller);
-
+        
         public override string ExceptionMessagePrefix => $"When calling {this.ActionName} action in {this.Controller.GetName()} expected";
 
         internal Func<object> ControllerConstruction { get; set; }

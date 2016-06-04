@@ -296,7 +296,7 @@
         {
             if (this.ActionResult is ObjectResult)
             {
-                var declaredType = (this.ActionResult as ObjectResult)?.DeclaredType;
+                var declaredType = (this.ActionResult as ObjectResult).DeclaredType;
                 if (declaredType != null)
                 {
                     return declaredType;

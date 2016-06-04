@@ -3,13 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Internal;
     using Internal.Application;
-    using Internal.Caching;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
-    using Microsoft.AspNetCore.Mvc.ViewFeatures;
-    using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
     using Utilities.Extensions;
@@ -40,24 +36,6 @@
             serviceCollection.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
         }
         
-        /// <summary>
-        /// Replaces the default <see cref="ITempDataProvider"/> with a mocked implementation.
-        /// </summary>
-        /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
-        public static void ReplaceTempDataProvider(this IServiceCollection serviceCollection)
-        {
-            serviceCollection.ReplaceSingleton<ITempDataProvider, MockedTempDataProvider>();
-        }
-
-        /// <summary>
-        /// Replaces the default <see cref="IMemoryCache"/> with a mocked implementation.
-        /// </summary>
-        /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
-        public static void ReplaceMemoryCache(this IServiceCollection serviceCollection)
-        {
-            serviceCollection.Replace<IMemoryCache, MockedMemoryCache>(ServiceLifetime.Transient);
-        }
-
         /// <summary>
         /// Removes а service from the <see cref="IServiceCollection"/>.
         /// </summary>

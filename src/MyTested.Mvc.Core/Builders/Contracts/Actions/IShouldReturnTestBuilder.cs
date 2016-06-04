@@ -8,14 +8,12 @@
     using ActionResults.Created;
     using ActionResults.File;
     using ActionResults.Forbid;
-    using ActionResults.Json;
     using ActionResults.LocalRedirect;
     using ActionResults.NotFound;
     using ActionResults.Object;
     using ActionResults.Ok;
     using ActionResults.Redirect;
     using ActionResults.StatusCode;
-    using ActionResults.View;
     using Base;
     using Models;
 
@@ -159,37 +157,7 @@
         /// </summary>
         /// <returns>Test builder of <see cref="IBaseTestBuilderWithActionResult{TActionResult}"/> type.</returns>
         IBaseTestBuilderWithActionResult<TActionResult> NoContent();
-
-        /// <summary>
-        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.PartialViewResult"/> with the default view name.
-        /// </summary>
-        /// <returns>Test builder of <see cref="IViewTestBuilder"/> type.</returns>
-        IViewTestBuilder PartialView();
-
-        /// <summary>
-        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.PartialViewResult"/> with the provided partial view name.
-        /// </summary>
-        /// <param name="viewName">Expected partial view name.</param>
-        /// <returns>Test builder of <see cref="IViewTestBuilder"/> type.</returns>
-        IViewTestBuilder PartialView(string viewName);
-
-        /// <summary>
-        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.PartialViewResult"/> with the provided deeply equal model object.
-        /// </summary>
-        /// <typeparam name="TModel">Expected model type.</typeparam>
-        /// <param name="model">Expected model object.</param>
-        /// <returns>Test builder of <see cref="IViewTestBuilder"/> type.</returns>
-        IViewTestBuilder PartialView<TModel>(TModel model);
-
-        /// <summary>
-        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.PartialViewResult"/> with the provided partial view name and deeply equal model object.
-        /// </summary>
-        /// <typeparam name="TModel">Expected model type.</typeparam>
-        /// <param name="viewName">Expected partial view name.</param>
-        /// <param name="model">Expected model object.</param>
-        /// <returns>Test builder of <see cref="IViewTestBuilder"/> type.</returns>
-        IViewTestBuilder PartialView<TModel>(string viewName, TModel model);
-
+        
         /// <summary>
         /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.PhysicalFileResult"/>.
         /// </summary>
@@ -202,64 +170,7 @@
         /// </summary>
         /// <returns>Test builder of <see cref="IRedirectTestBuilder"/> type.</returns>
         IRedirectTestBuilder Redirect();
-
-        /// <summary>
-        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.ViewResult"/> with the default view name.
-        /// </summary>
-        /// <returns>Test builder of <see cref="IViewTestBuilder"/> type.</returns>
-        IViewTestBuilder View();
-
-        /// <summary>
-        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.ViewResult"/> with the provided view name.
-        /// </summary>
-        /// <param name="viewName">Expected view name.</param>
-        /// <returns>Test builder of <see cref="IViewTestBuilder"/> type.</returns>
-        IViewTestBuilder View(string viewName);
-
-        /// <summary>
-        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.ViewResult"/> with the provided deeply equal model object.
-        /// </summary>
-        /// <typeparam name="TModel">Expected model type.</typeparam>
-        /// <param name="model">Expected model object.</param>
-        /// <returns>Test builder of <see cref="IViewTestBuilder"/> type.</returns>
-        IViewTestBuilder View<TModel>(TModel model);
-
-        /// <summary>
-        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.ViewResult"/> with the provided view name and deeply equal model object.
-        /// </summary>
-        /// <typeparam name="TModel">Expected model type.</typeparam>
-        /// <param name="viewName">Expected view name.</param>
-        /// <param name="model">Expected model object.</param>
-        /// <returns>Test builder of <see cref="IViewTestBuilder"/> type.</returns>
-        IViewTestBuilder View<TModel>(string viewName, TModel model);
-
-        /// <summary>
-        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.ViewComponentResult"/>.
-        /// </summary>
-        /// <returns>Test builder of <see cref="IViewComponentTestBuilder"/> type.</returns>
-        IViewComponentTestBuilder ViewComponent();
-
-        /// <summary>
-        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.ViewComponentResult"/> with the provided view component name.
-        /// </summary>
-        /// <param name="viewComponentName">Expected view component name.</param>
-        /// <returns>Test builder of <see cref="IViewComponentTestBuilder"/> type.</returns>
-        IViewComponentTestBuilder ViewComponent(string viewComponentName);
-
-        /// <summary>
-        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.ViewComponentResult"/> with the provided view component type.
-        /// </summary>
-        /// <param name="viewComponentType">Expected view component type.</param>
-        /// <returns>Test builder of <see cref="IViewComponentTestBuilder"/> type.</returns>
-        IViewComponentTestBuilder ViewComponent(Type viewComponentType);
-
-        /// <summary>
-        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.ViewComponentResult"/> with the specified view component type.
-        /// </summary>
-        /// <typeparam name="TViewComponentType">Expected view component type.</typeparam>
-        /// <returns>Test builder of <see cref="IViewComponentTestBuilder"/> type.</returns>
-        IViewComponentTestBuilder ViewComponent<TViewComponentType>();
-
+        
         /// <summary>
         /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.StatusCodeResult"/> or <see cref="Microsoft.AspNetCore.Mvc.ObjectResult"/>.
         /// </summary>
@@ -291,11 +202,5 @@
         /// </summary>
         /// <returns>Test builder of <see cref="IBaseTestBuilderWithActionResult{TActionResult}"/> type.</returns>
         IBaseTestBuilderWithActionResult<TActionResult> UnsupportedMediaType();
-
-        /// <summary>
-        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.JsonResult"/>.
-        /// </summary>
-        /// <returns>Test builder of <see cref="IJsonTestBuilder"/> type.</returns>
-        IJsonTestBuilder Json();
     }
 }

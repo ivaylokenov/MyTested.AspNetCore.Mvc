@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using Base;
     using Contracts.Controllers;
-    using Contracts.Data;
     using Contracts.ShouldPassFor;
     using Internal.Contracts;
     using Internal.Http;
@@ -27,7 +26,6 @@
 
         private ControllerTestContext testContext;
         private Action<ControllerContext> controllerContextAction;
-        private Action<ITempDataBuilder> tempDataBuilderAction;
         private Action<TController> controllerSetupAction;
         private bool isPreparedForTesting;
         private bool enabledValidation;
@@ -58,7 +56,7 @@
             }
         }
 
-        private new ControllerTestContext TestContext
+        public new ControllerTestContext TestContext
         {
             get
             {
@@ -71,6 +69,8 @@
                 this.testContext = value;
             }
         }
+
+        public Action<ControllerTestContext> ControllerPreparationAction { get; set; }
 
         private new MockedHttpContext HttpContext => this.TestContext.MockedHttpContext;
 
