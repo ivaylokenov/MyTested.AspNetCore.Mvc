@@ -87,6 +87,11 @@
         /// <inheritdoc />
         public IJsonTestBuilder AndAlso() => this;
 
+        protected override object GetActualModel()
+        {
+            return this.ActionResult?.Value;
+        }
+
         /// <summary>
         /// Throws new JSON result assertion exception for the provided property name, expected value and actual value.
         /// </summary>

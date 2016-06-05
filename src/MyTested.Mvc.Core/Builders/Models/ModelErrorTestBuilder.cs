@@ -15,7 +15,7 @@
         /// Initializes a new instance of the <see cref="ModelErrorTestBuilder"/> class.
         /// </summary>
         /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
-        /// <param name="modelState">Optional <see cref="ModelStateDictionary"/> to use the test builder with. Default is <see cref="Microsoft.AspNetCore.Mvc.Controller"/>'s <see cref="ModelStateDictionary"/>.</param>
+        /// <param name="modelState">Optional <see cref="ModelStateDictionary"/> to use the test builder with. Default is controller's <see cref="ModelStateDictionary"/>.</param>
         public ModelErrorTestBuilder(
             ControllerTestContext testContext,
             ModelStateDictionary modelState = null)
@@ -28,7 +28,7 @@
         /// Gets validated <see cref="ModelStateDictionary"/>.
         /// </summary>
         /// <value><see cref="ModelStateDictionary"/> containing all validation errors.</value>
-        protected ModelStateDictionary ModelState { get; private set; }
+        public ModelStateDictionary ModelState { get; private set; }
 
         /// <inheritdoc />
         public IBaseTestBuilderWithInvokedAction ContainingNoErrors()

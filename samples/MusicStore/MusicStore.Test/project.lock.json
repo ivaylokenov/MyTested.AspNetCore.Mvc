@@ -4202,6 +4202,7 @@
         "type": "project",
         "framework": ".NETStandard,Version=v1.5",
         "dependencies": {
+          "Microsoft.AspNetCore.Mvc": "1.0.0",
           "MyTested.Mvc.Caching": "1.0.0",
           "MyTested.Mvc.Core": "1.0.0",
           "MyTested.Mvc.Session": "1.0.0",
@@ -6358,6 +6359,7 @@
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
+          "Microsoft.AspNetCore.Mvc": "1.0.0",
           "MyTested.Mvc.Caching": "1.0.0",
           "MyTested.Mvc.Core": "1.0.0",
           "MyTested.Mvc.Session": "1.0.0",

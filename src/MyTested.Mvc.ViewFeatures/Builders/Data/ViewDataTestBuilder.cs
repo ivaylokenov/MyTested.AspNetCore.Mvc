@@ -33,6 +33,6 @@
         /// When overridden in derived class provides a way to built the data provider as <see cref="IDictionary{TKey,TValue}"/>.
         /// </summary>
         /// <returns>Data provider as <see cref="IDictionary{TKey,TValue}"/></returns>
-        protected override IDictionary<string, object> GetDataProvider() => this.TestContext.ViewData;
+        protected override IDictionary<string, object> GetDataProvider() => this.TestContext.GetViewData();
     }
 }

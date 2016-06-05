@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Concurrent;
     using System.Linq;
+    using System.Reflection;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
     public class ViewFeaturesControllerPropertyHelper : ControllerPropertyHelper
@@ -65,7 +66,7 @@
 
         private void TryCreateTempDataGetterDelegate()
         {
-            var tempDataProperty = this.Properties.FirstOrDefault(pr => typeof(ITempDataDictionary).IsAssignableFrom(pr.PropertyType));
+            var tempDataProperty = this.Properties.FirstOrDefault(pr => typeof(ITempDataDictionary).GetTypeInfo().IsAssignableFrom(pr.PropertyType));
             this.ThrowNewInvalidOperationExceptionIfNull(tempDataProperty, nameof(TempDataDictionary));
 
             this.tempDataGetter = MakeFastPropertyGetter<ITempDataDictionary>(tempDataProperty);

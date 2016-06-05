@@ -25,6 +25,7 @@
   },
 
   "dependencies": {
+    "Microsoft.AspNetCore.Mvc": "1.0.0-*",
     "MyTested.Mvc.Caching": "1.0.0-*",
     "MyTested.Mvc.Core": "1.0.0-*",
     "MyTested.Mvc.Session": "1.0.0-*",

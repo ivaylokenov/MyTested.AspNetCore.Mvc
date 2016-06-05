@@ -37,6 +37,7 @@
         private const string TestFrameworkName = "MyTested.Mvc";
 
         private static readonly RequestDelegate NullHandler = c => TaskCache.CompletedTask;
+        private static readonly ISet<IDefaultRegistrationPlugin> DefaultRegistrationPlugins = new HashSet<IDefaultRegistrationPlugin>();
         private static readonly ISet<IServiceRegistrationPlugin> ServiceRegistrationPlugins = new HashSet<IServiceRegistrationPlugin>();
         private static readonly object Sync;
 
@@ -44,8 +45,7 @@
 
         private static TestConfiguration testConfiguration;
         private static string testAssemblyName;
-
-        private static IConfiguration configuration;
+        
         private static IHostingEnvironment environment;
 
         private static Type startupType;
@@ -163,16 +163,20 @@
 
         internal static void LoadPlugins()
         {
-            string pluginPrefix = $"{TestFrameworkName}.";
-
             DependencyContext.Default
                 .RuntimeLibraries
-                .Where(l => l.Name.StartsWith(pluginPrefix))
-                .Select(l => Assembly.Load(new AssemblyName(l.Name)).GetType($"{l.Name}.{l.Name.Replace(pluginPrefix, string.Empty)}TestPlugin"))
+                .Where(l => l.Name.StartsWith(TestFrameworkName))
+                .Select(l => Assembly.Load(new AssemblyName(l.Name)).GetType($"{l.Name}.{l.Name.Replace(TestFrameworkName, string.Empty).Trim('.')}TestPlugin"))
                 .Where(p => p != null)
                 .ForEach(t =>
                 {
                     var plugin = Activator.CreateInstance(t);
+
+                    var defaultRegistrationPlugin = plugin as IDefaultRegistrationPlugin;
+                    if (defaultRegistrationPlugin != null)
+                    {
+                        DefaultRegistrationPlugins.Add(defaultRegistrationPlugin);
+                    }
 
                     var servicePlugin = plugin as IServiceRegistrationPlugin;
                     if (servicePlugin != null)
@@ -242,7 +246,7 @@
             AdditionalConfiguration?.Invoke(configurationBuilder);
             AdditionalConfiguration = null;
             
-            return configuration = configurationBuilder.Build();
+            return configurationBuilder.Build();
         }
 
         private static void FindTestAssemblyName()
@@ -310,7 +314,18 @@
             }
             else
             {
-                serviceCollection.AddMvc();
+                var defaultRegistrationPlugin = DefaultRegistrationPlugins
+                    .OrderByDescending(p => p.Priority)
+                    .FirstOrDefault();
+
+                if (defaultRegistrationPlugin != null)
+                {
+                    defaultRegistrationPlugin.DefaultServiceRegistrationDelegate(serviceCollection);
+                }
+                else
+                {
+                    serviceCollection.AddMvcCore();
+                }
             }
 
             AdditionalServices?.Invoke(serviceCollection);
@@ -329,7 +344,7 @@
                 }
             });
 
-            TryReplaceCommonServices(serviceCollection);
+            TryReplaceKnownServices(serviceCollection);
             PrepareRouteServices(serviceCollection);
 
             serviceProvider = serviceCollection.BuildServiceProvider();
@@ -338,16 +353,8 @@
             serviceProvider.GetService<IControllerActionDescriptorCache>();
         }
 
-        private static void TryReplaceCommonServices(IServiceCollection serviceCollection)
+        private static void TryReplaceKnownServices(IServiceCollection serviceCollection)
         {
-            var tempDataProviderServiceType = typeof(ITempDataProvider);
-            var defaultTempDataProviderType = typeof(SessionStateTempDataProvider);
-            var memoryCacheServiceType = typeof(IMemoryCache);
-            var defaultMemoryCacheType = typeof(MemoryCache);
-
-            var setMockedTempData = false;
-            var setMockedCaching = false;
-
             var applicablePlugins = new HashSet<IServiceRegistrationPlugin>();
 
             serviceCollection.ForEach(service =>
@@ -364,43 +371,8 @@
                         applicablePlugins.Add(serviceRegistrationPlugin);
                     }
                 }
-
-                if (serviceType == tempDataProviderServiceType)
-                {
-                    if (implementationType == defaultTempDataProviderType)
-                    {
-                        setMockedTempData = true;
-                    }
-                    else
-                    {
-                        setMockedTempData = false;
-                    }
-                }
-
-                if (serviceType == memoryCacheServiceType)
-                {
-                    if (implementationType == defaultMemoryCacheType)
-                    {
-                        setMockedCaching = true;
-                    }
-                    else
-                    {
-                        setMockedCaching = false;
-                    }
-                }
             });
             
-            if (setMockedTempData)
-            {
-                serviceCollection.ReplaceTempDataProvider();
-            }
-
-            if (setMockedCaching)
-            {
-                serviceCollection.ReplaceMemoryCache();
-                TestHelper.GlobalTestCleanup += () => TestServiceProvider.GetService<IMemoryCache>()?.Dispose();
-            }
-
             foreach (var applicablePlugin in applicablePlugins)
             {
                 applicablePlugin.ServiceRegistrationDelegate(serviceCollection);
@@ -499,7 +471,6 @@
         private static void Reset()
         {
             initialiazed = false;
-            configuration = null;
             environment = null;
             startupType = null;
             serviceProvider = null;

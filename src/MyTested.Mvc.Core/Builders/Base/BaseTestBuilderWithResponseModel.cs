@@ -267,29 +267,9 @@
             return objectResult;
         }
 
-        private object GetActualModel()
+        protected virtual object GetActualModel()
         {
-            if (this.ActionResult is ObjectResult)
-            {
-                return (this.ActionResult as ObjectResult).Value;
-            }
-
-            if (this.ActionResult is JsonResult)
-            {
-                return (this.ActionResult as JsonResult).Value;
-            }
-
-            if (this.ActionResult is ViewResult)
-            {
-                return (this.ActionResult as ViewResult).Model;
-            }
-
-            if (this.ActionResult is PartialViewResult)
-            {
-                return (this.ActionResult as PartialViewResult).ViewData?.Model;
-            }
-
-            return null;
+            return (this.ActionResult as ObjectResult)?.Value;
         }
 
         private Type GetReturnType()

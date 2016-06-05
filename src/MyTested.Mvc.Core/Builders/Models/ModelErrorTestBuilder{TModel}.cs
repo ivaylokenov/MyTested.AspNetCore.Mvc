@@ -51,34 +51,7 @@
                 errorKey,
                 this.ModelState[errorKey].Errors);
         }
-
-        /// <inheritdoc />
-        public IModelErrorDetailsTestBuilder<TModel> ContainingErrorFor<TMember>(Expression<Func<TModel, TMember>> memberWithError)
-        {
-            var memberName = ExpressionHelper.GetExpressionText(memberWithError);
-            this.ContainingError(memberName);
-
-            return new ModelErrorDetailsTestBuilder<TModel>(
-                this.TestContext,
-                this,
-                memberName,
-                this.ModelState[memberName].Errors);
-        }
-
-        /// <inheritdoc />
-        public IAndModelErrorTestBuilder<TModel> ContainingNoErrorFor<TMember>(Expression<Func<TModel, TMember>> memberWithNoError)
-        {
-            var memberName = ExpressionHelper.GetExpressionText(memberWithNoError);
-            if (this.ModelState.ContainsKey(memberName))
-            {
-                this.ThrowNewModelErrorAssertionException(
-                    "When calling {0} action in {1} expected to have no model errors against key {2}, but found some.",
-                    memberName);
-            }
-
-            return this;
-        }
-
+        
         /// <inheritdoc />
         public IModelErrorTestBuilder<TModel> AndAlso() => this;
 
@@ -86,7 +59,7 @@
         public new IShouldPassForTestBuilderWithModel<TModel> ShouldPassFor()
             => new ShouldPassForTestBuilderWithModel<TModel>(this.TestContext);
         
-        private void ThrowNewModelErrorAssertionException(string messageFormat, string errorKey)
+        public void ThrowNewModelErrorAssertionException(string messageFormat, string errorKey)
         {
             throw new ModelErrorAssertionException(string.Format(
                     messageFormat,

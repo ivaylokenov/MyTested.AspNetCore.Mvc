@@ -40,6 +40,8 @@
             this.aggregatedErrors = aggregatedErrors.Select(me => me.ErrorMessage);
         }
 
+        public IModelErrorTestBuilder<TModel> ModelErrorTestBuilder => this.modelErrorTestBuilder;
+
         /// <inheritdoc />
         public IAndModelErrorTestBuilder<TModel> ThatEquals(string errorMessage)
         {
@@ -96,18 +98,6 @@
         public IModelErrorDetailsTestBuilder<TModel> ContainingError(string errorKey)
         {
             return this.modelErrorTestBuilder.ContainingError(errorKey);
-        }
-
-        /// <inheritdoc />
-        public IModelErrorDetailsTestBuilder<TModel> ContainingErrorFor<TMember>(Expression<Func<TModel, TMember>> memberWithError)
-        {
-            return this.modelErrorTestBuilder.ContainingErrorFor(memberWithError);
-        }
-
-        /// <inheritdoc />
-        public IModelErrorTestBuilder<TModel> ContainingNoErrorFor<TMember>(Expression<Func<TModel, TMember>> memberWithNoError)
-        {
-            return this.modelErrorTestBuilder.ContainingNoErrorFor(memberWithNoError);
         }
 
         /// <inheritdoc />

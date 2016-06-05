@@ -28,7 +28,7 @@
         /// Gets the action result which will be tested.
         /// </summary>
         /// <value>Action result to be tested.</value>
-        internal TActionResult ActionResult => this.TestContext.ActionResultAs<TActionResult>();
+        public TActionResult ActionResult => this.TestContext.ActionResultAs<TActionResult>();
         
         /// <inheritdoc />
         public new IShouldPassForTestBuilderWithActionResult<TActionResult> ShouldPassFor()

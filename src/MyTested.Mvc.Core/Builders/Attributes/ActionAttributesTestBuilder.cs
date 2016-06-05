@@ -91,13 +91,7 @@
         {
             return this.ContainingAttributeOfType<NonActionAttribute>();
         }
-
-        /// <inheritdoc />
-        public IAndActionAttributesTestBuilder ValidatingAntiForgeryToken()
-        {
-            return this.ContainingAttributeOfType<ValidateAntiForgeryTokenAttribute>();
-        }
-
+        
         /// <inheritdoc />
         public IAndActionAttributesTestBuilder RestrictingForHttpMethod<THttpMethod>()
             where THttpMethod : Attribute, IActionHttpMethodProvider, new()

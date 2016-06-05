@@ -20,7 +20,7 @@
         : BaseTestBuilderWithViewFeature<TViewResult>, IAndViewTestBuilder
         where TViewResult : ActionResult
     {
-        private string viewType;
+        private readonly string viewType;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ViewTestBuilder{TViewResult}"/> class.

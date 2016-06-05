@@ -56,13 +56,7 @@
         /// </summary>
         /// <returns>The same <see cref="IAndActionAttributesTestBuilder"/>.</returns>
         IAndActionAttributesTestBuilder DisablingActionCall();
-
-        /// <summary>
-        /// Tests whether the action attributes contain <see cref="Microsoft.AspNetCore.Mvc.ValidateAntiForgeryTokenAttribute"/>.
-        /// </summary>
-        /// <returns>The same <see cref="IAndActionAttributesTestBuilder"/>.</returns>
-        IAndActionAttributesTestBuilder ValidatingAntiForgeryToken();
-
+        
         /// <summary>
         /// Tests whether the action attributes restrict the request to a specific HTTP method (<see cref="Microsoft.AspNetCore.Mvc.AcceptVerbsAttribute"/> or the specific <see cref="Microsoft.AspNetCore.Mvc.HttpGetAttribute"/>, <see cref="Microsoft.AspNetCore.Mvc.HttpPostAttribute"/>, etc.).
         /// </summary>
