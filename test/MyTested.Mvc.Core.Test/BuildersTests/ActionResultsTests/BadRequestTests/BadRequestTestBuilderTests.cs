@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Test.BuildersTests.ActionResultsTests.HttpBadRequestTests
+﻿namespace MyTested.Mvc.Test.BuildersTests.ActionResultsTests.BadRequestTests
 {
     using System.Collections.Generic;
     using System.Net;
@@ -287,31 +287,6 @@
                         .WithModelStateError(modelState);
                 }, 
                 "When calling BadRequestWithModelState action in MvcController expected bad request model state dictionary to contain 2 errors for RequiredString key, but found 1.");
-        }
-
-        [Fact]
-        public void WithModelStateForShouldNotThrowExceptionWhenModelStateHasSameErrors()
-        {
-            var requestModelWithErrors = TestObjectFactory.GetRequestModelWithErrors();
-            var modelState = new ModelStateDictionary();
-            modelState.AddModelError("Integer", "The field Integer must be between 1 and 2147483647.");
-            modelState.AddModelError("RequiredString", "The RequiredString field is required.");
-
-            MyMvc
-                .Controller<MvcController>()
-                .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
-                .ShouldReturn()
-                .BadRequest()
-                .WithModelStateErrorFor<RequestModel>()
-                .ContainingErrorFor(m => m.Integer).ThatEquals("The field Integer must be between 1 and 2147483647.")
-                .AndAlso()
-                .ContainingErrorFor(m => m.RequiredString).BeginningWith("The RequiredString")
-                .AndAlso()
-                .ContainingErrorFor(m => m.RequiredString).EndingWith("required.")
-                .AndAlso()
-                .ContainingErrorFor(m => m.RequiredString).Containing("field")
-                .AndAlso()
-                .ContainingNoErrorFor(m => m.NonRequiredString);
         }
         
         [Fact]

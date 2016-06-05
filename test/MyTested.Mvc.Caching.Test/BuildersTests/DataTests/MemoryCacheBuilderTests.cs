@@ -14,7 +14,7 @@
         public void WithEntryShouldSetCorrectValues()
         {
             MyMvc
-                .Controller<MvcController>()
+                .Controller<MemoryCacheController>()
                 .WithMemoryCache(memoryCache => memoryCache
                     .WithEntry("Normal", "NormalValid")
                     .AndAlso()
@@ -29,7 +29,7 @@
         public void WithCacheOptionsShouldSetCorrectValues()
         {
             MyMvc
-                .Controller<MvcController>()
+                .Controller<MemoryCacheController>()
                 .WithMemoryCache(memoryCache => memoryCache
                     .WithEntry("FullEntry", "FullEntryValid", new MemoryCacheEntryOptions
                     {
@@ -55,7 +55,7 @@
         public void WithCacheBuilderShouldSetCorrectValues()
         {
             MyMvc
-                .Controller<MvcController>()
+                .Controller<MemoryCacheController>()
                 .WithMemoryCache(memoryCache => memoryCache
                     .WithEntry(entry => entry
                         .WithKey("FullEntry")
@@ -88,7 +88,7 @@
             Test.AssertException<InvalidOperationException>(() =>
             {
                 MyMvc
-                    .Controller<MvcController>()
+                    .Controller<MemoryCacheController>()
                     .WithMemoryCache(memoryCache => memoryCache
                         .WithEntry(entry => entry.WithValue("WithoutKey")))
                     .Calling(c => c.FullMemoryCacheAction(From.Services<IMemoryCache>()))
@@ -102,7 +102,7 @@
         public void WithCacheEntriesShouldSetCorrectValues()
         {
             MyMvc
-                .Controller<MvcController>()
+                .Controller<MemoryCacheController>()
                 .WithMemoryCache(memoryCache => memoryCache
                     .WithEntries(new Dictionary<object, object>
                     {

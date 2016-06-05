@@ -6,7 +6,6 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Common;
-    using Internal.Contracts;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -845,36 +844,7 @@
 
             return this.BadRequest();
         }
-
-        public IActionResult FullMemoryCacheAction([FromServices]IMemoryCache cache)
-        {
-            var mockedMemoryCache = cache as IMockedMemoryCache;
-            if (mockedMemoryCache == null)
-            {
-                return this.Unauthorized();
-            }
-
-            var normalEntry = mockedMemoryCache.Get<string>("Normal");
-            if (normalEntry != null && normalEntry == "NormalValid")
-            {
-                return this.Ok("Normal");
-            }
-
-            ICacheEntry fullEntry;
-            if (mockedMemoryCache.TryGetCacheEntry("FullEntry", out fullEntry))
-            {
-                return this.Ok(fullEntry);
-            }
-
-            var entries = mockedMemoryCache.GetCacheAsDictionary();
-            if (entries.Count == 3)
-            {
-                return this.Ok(entries);
-            }
-
-            return this.BadRequest();
-        }
-
+        
         public IActionResult FullSessionAction()
         {
             var session = this.HttpContext.Session;

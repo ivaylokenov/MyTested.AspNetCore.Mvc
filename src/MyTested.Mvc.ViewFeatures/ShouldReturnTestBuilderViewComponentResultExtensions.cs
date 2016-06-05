@@ -85,18 +85,5 @@
             actualShouldReturnTestBuilder.TestContext.ActionResult = viewComponentResult;
             return new ViewComponentTestBuilder(actualShouldReturnTestBuilder.TestContext);
         }
-
-        /// <summary>
-        /// Tests whether the action result is <see cref="ViewComponentResult"/> with the specified view component type.
-        /// </summary>
-        /// <typeparam name="TActionResult">Type of action result type.</typeparam>
-        /// <typeparam name="TViewComponentType">Expected view component type.</typeparam>
-        /// <param name="shouldReturnTestBuilder">Instance of <see cref="IShouldReturnTestBuilder{TActionResult}"/> type.</param>
-        /// <returns>Test builder of <see cref="IViewComponentTestBuilder"/> type.</returns>
-        public static IViewComponentTestBuilder ViewComponent<TActionResult, TViewComponentType>(
-            this IShouldReturnTestBuilder<TActionResult> shouldReturnTestBuilder)
-        {
-            return shouldReturnTestBuilder.ViewComponent(typeof(TViewComponentType));
-        }
     }
 }

@@ -1,7 +1,5 @@
 ﻿namespace MyTested.Mvc.Builders.Contracts.Models
 {
-    using System;
-    using System.Linq.Expressions;
     using Base;
 
     /// <summary>

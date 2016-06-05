@@ -1,7 +1,5 @@
 ﻿namespace MyTested.Mvc.Builders.Models
 {
-    using System;
-    using System.Linq.Expressions;
     using Contracts.Models;
     using Contracts.ShouldPassFor;
     using Exceptions;

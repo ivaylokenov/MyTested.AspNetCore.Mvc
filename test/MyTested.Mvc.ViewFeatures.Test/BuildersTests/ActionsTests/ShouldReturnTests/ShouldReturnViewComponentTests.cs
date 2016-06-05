@@ -113,15 +113,5 @@
                 },
                 "When calling ViewComponentResultByType action in MvcController expected view component result to be 'ViewComponent', but instead received 'CustomViewComponent'.");
         }
-
-        [Fact]
-        public void ShouldReturnViewComponentShouldNotThrowExceptionWithCorrectGenericViewComponentType()
-        {
-            MyMvc
-                .Controller<MvcController>()
-                .Calling(c => c.ViewComponentResultByType())
-                .ShouldReturn()
-                .ViewComponent<CustomViewComponent>();
-        }
     }
 }

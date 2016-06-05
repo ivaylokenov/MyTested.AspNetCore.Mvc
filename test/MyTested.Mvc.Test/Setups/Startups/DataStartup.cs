@@ -3,7 +3,6 @@
     using Common;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
-    using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.DependencyInjection;
 
     public class DataStartup
@@ -12,7 +11,6 @@
         {
             services.AddMvc();
             services.AddTransient<ITempDataProvider, CustomTempDataProvider>();
-            services.AddSingleton<IMemoryCache, CustomMemoryCache>();
         }
 
         public void Configure(IApplicationBuilder app)

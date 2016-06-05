@@ -1,7 +1,5 @@
 ﻿namespace MyTested.Mvc
 {
-    using System;
-
     /// <summary>
     /// Provides easy replacing of expression method argument values.
     /// </summary>

@@ -86,7 +86,7 @@
                 });
 
             Test.AssertException<InvalidOperationException>(
-(Action)(() =>
+                () =>
                 {
                     MyMvc
                         .Controller<MvcController>()
@@ -97,7 +97,7 @@
                         .ShouldReturn()
                         .Ok()
                         .WithResponseModel("TestId");
-                }),
+                },
                 "Setting session Id requires the registered ISession service to implement IMockedSession.");
 
             MyMvc.IsUsingDefaultConfiguration();

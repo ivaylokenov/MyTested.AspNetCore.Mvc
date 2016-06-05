@@ -7,7 +7,6 @@
     using Common;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Authentication;
-    using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.AspNetCore.Mvc.ViewEngines;

@@ -1,8 +1,9 @@
-﻿namespace MyTested.Mvc.Licensing.Test
+﻿namespace MyTested.Mvc.Test
 {
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Licensing;
     using Xunit;
 
     public class TestCounterTests

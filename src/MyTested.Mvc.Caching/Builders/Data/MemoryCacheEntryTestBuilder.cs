@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using Contracts.Data;
     using Exceptions;
-    using Internal.Caching;
     using Internal.TestContexts;
     using Microsoft.Extensions.Caching.Memory;
     using Utilities;

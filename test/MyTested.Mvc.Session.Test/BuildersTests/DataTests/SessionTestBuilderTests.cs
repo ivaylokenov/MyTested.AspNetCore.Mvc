@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using Exceptions;
     using Microsoft.Extensions.DependencyInjection;
+    using Mvc;
     using Setups;
     using Setups.Controllers;
     using Xunit;

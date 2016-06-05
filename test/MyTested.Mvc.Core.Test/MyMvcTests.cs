@@ -7,7 +7,6 @@
     using Exceptions;
     using Internal;
     using Internal.Application;
-    using Internal.Caching;
     using Internal.Contracts;
     using Internal.Controllers;
     using Internal.Formatters;
@@ -942,27 +941,7 @@
 
             MyMvc.IsUsingDefaultConfiguration();
         }
-
-        [Fact]
-        public void MockedMemoryCacheShouldBeRegistedByDefault()
-        {
-            MyMvc.IsUsingDefaultConfiguration();
-
-            Assert.IsAssignableFrom<MockedMemoryCache>(TestServiceProvider.GetService<IMemoryCache>());
-        }
-
-        [Fact]
-        public void MockedMemoryCacheShouldBeRegistedWithAddedCaching()
-        {
-            MyMvc
-                .IsUsingDefaultConfiguration()
-                .WithServices(services => services.AddMemoryCache());
-
-            Assert.IsAssignableFrom<MockedMemoryCache>(TestServiceProvider.GetService<IMemoryCache>());
-
-            MyMvc.IsUsingDefaultConfiguration();
-        }
-
+        
         [Fact]
         public void MockedMemoryCacheShouldNotBeRegisteredIfNoCacheIsAdded()
         {
@@ -974,43 +953,7 @@
 
             MyMvc.IsUsingDefaultConfiguration();
         }
-
-        [Fact]
-        public void MockedMemoryCacheShouldBeDifferentForEveryCallSynchronously()
-        {
-            // second call should not have cache entries
-            MyMvc
-                .Controller<MvcController>()
-                .WithMemoryCache(cache => cache.WithEntry("test", "value"))
-                .Calling(c => c.MemoryCacheAction())
-                .ShouldReturn()
-                .Ok();
-
-            MyMvc
-                .Controller<MvcController>()
-                .Calling(c => c.MemoryCacheAction())
-                .ShouldReturn()
-                .BadRequest();
-        }
-
-        [Fact]
-        public void MockedMemoryCacheShouldBeDifferentForEveryCallSynchronouslyWithCachedControllerBuilder()
-        {
-            var controller = MyMvc.Controller<MvcController>();
-
-            // second call should not have cache entries
-            controller
-                .WithMemoryCache(cache => cache.WithEntry("test", "value"))
-                .Calling(c => c.MemoryCacheAction())
-                .ShouldReturn()
-                .Ok();
-
-            controller
-                .Calling(c => c.MemoryCacheAction())
-                .ShouldReturn()
-                .BadRequest();
-        }
-
+        
         [Fact]
         public void MockedMemoryCacheShouldBeDifferentForEveryCallAsynchronously()
         {
@@ -1078,59 +1021,6 @@
         }
 
         [Fact]
-        public void DefaultConfigurationShouldSetMockedMemoryCache()
-        {
-            MyMvc.IsUsingDefaultConfiguration();
-
-            var memoryCache = TestServiceProvider.GetService<IMemoryCache>();
-
-            Assert.NotNull(memoryCache);
-            Assert.IsAssignableFrom<MockedMemoryCache>(memoryCache);
-        }
-
-        [Fact]
-        public void CustomMemoryCacheShouldOverrideTheMockedOne()
-        {
-            MyMvc.StartsFrom<DataStartup>();
-
-            var memoryCache = TestServiceProvider.GetService<IMemoryCache>();
-
-            Assert.NotNull(memoryCache);
-            Assert.IsAssignableFrom<CustomMemoryCache>(memoryCache);
-
-            MyMvc.IsUsingDefaultConfiguration();
-        }
-
-        [Fact]
-        public void ExplicitMockedMemoryCacheShouldOverrideIt()
-        {
-            MyMvc
-                .StartsFrom<DataStartup>()
-                .WithServices(services =>
-                {
-                    services.ReplaceMemoryCache();
-                });
-
-            var memoryCache = TestServiceProvider.GetService<IMemoryCache>();
-
-            Assert.NotNull(memoryCache);
-            Assert.IsAssignableFrom<MockedMemoryCache>(memoryCache);
-
-            MyMvc.IsUsingDefaultConfiguration();
-        }
-
-        [Fact]
-        public void DefaultConfigurationShouldSetMockedTempDataProvider()
-        {
-            MyMvc.IsUsingDefaultConfiguration();
-
-            var tempDataProvider = TestServiceProvider.GetService<ITempDataProvider>();
-
-            Assert.NotNull(tempDataProvider);
-            Assert.IsAssignableFrom<MockedTempDataProvider>(tempDataProvider);
-        }
-
-        [Fact]
         public void CustomTempDataProviderShouldOverrideTheMockedOne()
         {
             MyMvc.StartsFrom<DataStartup>();
@@ -1139,24 +1029,6 @@
 
             Assert.NotNull(tempDataProvider);
             Assert.IsAssignableFrom<CustomTempDataProvider>(tempDataProvider);
-
-            MyMvc.IsUsingDefaultConfiguration();
-        }
-
-        [Fact]
-        public void ExplicitMockedTempDataProviderShouldOverrideIt()
-        {
-            MyMvc
-                .StartsFrom<DataStartup>()
-                .WithServices(services =>
-                {
-                    services.ReplaceTempDataProvider();
-                });
-
-            var tempDataProvider = TestServiceProvider.GetService<ITempDataProvider>();
-
-            Assert.NotNull(tempDataProvider);
-            Assert.IsAssignableFrom<MockedTempDataProvider>(tempDataProvider);
 
             MyMvc.IsUsingDefaultConfiguration();
         }

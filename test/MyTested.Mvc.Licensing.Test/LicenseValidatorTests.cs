@@ -1,11 +1,11 @@
-﻿namespace MyTested.Mvc.Licensing.Test
+﻿namespace MyTested.Mvc.Test
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Security.Cryptography;
     using Licensing;
-    using Mvc.Test.Setups;
+    using Setups;
     using Xunit;
 
     public class LicenseValidatorTests

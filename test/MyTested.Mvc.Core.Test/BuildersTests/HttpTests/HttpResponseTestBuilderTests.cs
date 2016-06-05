@@ -2,7 +2,6 @@
 {
     using Exceptions;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.Extensions.Primitives;
     using Setups;
     using Setups.Controllers;

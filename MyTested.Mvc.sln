@@ -52,6 +52,10 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MyTested.Mvc.Licensing.Test
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MyTested.Mvc.ViewFeatures", "src\MyTested.Mvc.ViewFeatures\MyTested.Mvc.ViewFeatures.xproj", "{3315171D-AD61-4FFD-BE9D-503DBC477822}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MyTested.Mvc.Caching.Test", "test\MyTested.Mvc.Caching.Test\MyTested.Mvc.Caching.Test.xproj", "{9C519326-85D8-440A-B64B-67797DBA2F20}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MyTested.Mvc.ViewFeatures.Test", "test\MyTested.Mvc.ViewFeatures.Test\MyTested.Mvc.ViewFeatures.Test.xproj", "{1C8F2E0F-811A-42E4-B35A-FAAD19D8257A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -126,6 +130,14 @@ Global
 		{3315171D-AD61-4FFD-BE9D-503DBC477822}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3315171D-AD61-4FFD-BE9D-503DBC477822}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3315171D-AD61-4FFD-BE9D-503DBC477822}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C519326-85D8-440A-B64B-67797DBA2F20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C519326-85D8-440A-B64B-67797DBA2F20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C519326-85D8-440A-B64B-67797DBA2F20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C519326-85D8-440A-B64B-67797DBA2F20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C8F2E0F-811A-42E4-B35A-FAAD19D8257A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C8F2E0F-811A-42E4-B35A-FAAD19D8257A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C8F2E0F-811A-42E4-B35A-FAAD19D8257A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C8F2E0F-811A-42E4-B35A-FAAD19D8257A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -150,5 +162,7 @@ Global
 		{E9ABDAE6-53B6-4880-9485-D9FB8756BFA9} = {09353A03-2B0C-496B-8EB1-2CB6A22D758B}
 		{7D6EE44F-C8E6-4929-BDB8-6D2067FFA56E} = {D140FA14-A6C2-4279-8A41-35BC55279DA8}
 		{3315171D-AD61-4FFD-BE9D-503DBC477822} = {09353A03-2B0C-496B-8EB1-2CB6A22D758B}
+		{9C519326-85D8-440A-B64B-67797DBA2F20} = {D140FA14-A6C2-4279-8A41-35BC55279DA8}
+		{1C8F2E0F-811A-42E4-B35A-FAAD19D8257A} = {D140FA14-A6C2-4279-8A41-35BC55279DA8}
 	EndGlobalSection
 EndGlobal

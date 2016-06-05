@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Test.BuildersTests.ActionResultsTests.HttpBadRequestTests
+﻿namespace MyTested.Mvc.Test.BuildersTests.ActionResultsTests.BadRequestTests
 {
     using Exceptions;
     using Setups;

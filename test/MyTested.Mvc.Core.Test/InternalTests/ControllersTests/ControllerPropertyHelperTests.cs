@@ -1,4 +1,4 @@
-﻿namespace MyTested.Mvc.Test.InternalTests.ControllerTests
+﻿namespace MyTested.Mvc.Test.InternalTests.ControllersTests
 {
     using System;
     using Internal.Application;
@@ -28,7 +28,7 @@
             };
 
             controller.ControllerContext = controllerContext;
-            
+
             Assert.NotNull(controller.ControllerContext);
             Assert.Same(controllerContext, controller.ControllerContext);
 
@@ -36,24 +36,13 @@
 
             Assert.NotNull(gotControllerContext);
             Assert.Same(gotControllerContext, controller.ControllerContext);
-            
+
             Test.AssertException<InvalidOperationException>(
                 () =>
                 {
                     var gotActionContext = helper.ActionContextGetter(controller);
-                }, 
+                },
                 "ActionContext could not be found on the provided MvcController. The property should be specified manually by providing controller instance or using the specified helper methods.");
-            
-            var gotViewData = helper.ViewDataGetter(controller);
-
-            Assert.NotNull(gotViewData);
-            Assert.Same(gotViewData, controller.ViewData);
-
-            var tempData = controller.TempData;
-            var gotTempData = helper.TempDataGetter(controller);
-
-            Assert.NotNull(gotTempData);
-            Assert.Same(gotTempData, controller.TempData);
         }
 
         [Fact]
@@ -69,9 +58,10 @@
             var helper = ControllerPropertyHelper.GetProperties<FullPocoController>();
 
             var controllerContext = new ControllerContext();
-            var controller = new FullPocoController();
-
-            controller.CustomControllerContext = controllerContext;
+            var controller = new FullPocoController
+            {
+                CustomControllerContext = controllerContext
+            };
 
             Assert.NotNull(controller.CustomControllerContext);
             Assert.Same(controllerContext, controller.CustomControllerContext);
@@ -93,30 +83,7 @@
             Assert.NotNull(gotActionContext);
             Assert.Same(gotActionContext, controller.CustomActionContext);
             
-            var gotViewData = helper.ViewDataGetter(controller);
-
-            Assert.NotNull(gotViewData);
-            Assert.Same(gotViewData, controller.CustomViewData);
-            
-            var gotTempData = helper.TempDataGetter(controller);
-
-            Assert.NotNull(gotTempData);
-            Assert.Same(gotTempData, controller.CustomTempData);
-
             MyMvc.IsUsingDefaultConfiguration();
-        }
-
-        [Fact]
-        public void GetPropertiesShouldNotThrowExceptionForPrivateProperties()
-        {
-            MyMvc.IsUsingDefaultConfiguration();
-
-            var helper = ControllerPropertyHelper.GetProperties<PrivatePocoController>();
-
-            var controller = new PrivatePocoController(TestServiceProvider.Global);
-
-            var gotTempData = helper.TempDataGetter(controller);
-            Assert.NotNull(gotTempData);
         }
     }
 }
