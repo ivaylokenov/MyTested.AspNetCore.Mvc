@@ -1,7 +1,12 @@
 ﻿{
   "buildOptions": {
     "warningsAsErrors": true,
-    "keyFile": "../../tools/Key.snk"
+    "keyFile": "../../tools/Key.snk",
+    "copyToOutput": {
+      "include": [
+        "testconfig.json"
+      ]
+    }
   },
 
   "testRunner": "xunit",
@@ -9,6 +14,7 @@
   "dependencies": {
     "dotnet-test-xunit": "1.0.0-*",
     "xunit": "2.1.0",
+    "Microsoft.AspNetCore.Mvc": "1.0.0-*",
     "MyTested.Mvc.Caching": "1.0.0-*",
     "MyTested.Mvc.Test": "1.0.0-*"
   },

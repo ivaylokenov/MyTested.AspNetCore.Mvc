@@ -26,7 +26,7 @@
 
   "dependencies": {
     "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.0.0-*",
-    "MyTested.Mvc.Core": "1.0.0-*"
+    "MyTested.Mvc.DataAnnotations": "1.0.0-*"
   },
 
   "frameworks": {

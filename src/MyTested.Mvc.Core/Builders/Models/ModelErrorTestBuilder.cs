@@ -29,12 +29,5 @@
         /// </summary>
         /// <value><see cref="ModelStateDictionary"/> containing all validation errors.</value>
         public ModelStateDictionary ModelState { get; private set; }
-
-        /// <inheritdoc />
-        public IBaseTestBuilderWithInvokedAction ContainingNoErrors()
-        {
-            this.CheckValidModelState();
-            return this.NewAndProvideTestBuilder();
-        }
     }
 }

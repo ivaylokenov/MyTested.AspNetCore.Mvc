@@ -112,7 +112,7 @@
                 return this.model;
             }
 
-            internal set
+            set
             {
                 this.model = value;
             }

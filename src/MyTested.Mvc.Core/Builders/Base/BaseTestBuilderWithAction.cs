@@ -40,7 +40,7 @@
         /// <summary>
         /// Tests whether the tested action's model state is valid.
         /// </summary>
-        protected void CheckValidModelState()
+        public void CheckValidModelState()
         {
             if (!this.TestContext.ModelState.IsValid)
             {

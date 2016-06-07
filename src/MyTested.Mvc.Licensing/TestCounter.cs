@@ -6,7 +6,7 @@
 
     internal static class TestCounter
     {
-        private const int MaximumAllowedAssertions = 250;
+        private const int MaximumAllowedAssertions = 500;
 
         private static readonly object Sync;
 

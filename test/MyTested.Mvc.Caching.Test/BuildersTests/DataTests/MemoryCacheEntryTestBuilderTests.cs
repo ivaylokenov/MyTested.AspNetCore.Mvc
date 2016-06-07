@@ -9,8 +9,15 @@
     using Setups.Controllers;
     using Xunit;
 
-    public class MemoryCacheEntryTestBuilderTests
+    public class MemoryCacheEntryTestBuilderTests : IDisposable
     {
+        public MemoryCacheEntryTestBuilderTests()
+        {
+            MyMvc
+                .IsUsingDefaultConfiguration()
+                .WithServices(services => services.AddMemoryCache());
+        }
+
         [Fact]
         public void WithValidShouldNotThrowExceptionWithCorrectValue()
         {
@@ -223,6 +230,11 @@
                 },
                 "This test requires the registered IMemoryCache service to implement IMockedMemoryCache.");
 
+            MyMvc.IsUsingDefaultConfiguration();
+        }
+
+        public void Dispose()
+        {
             MyMvc.IsUsingDefaultConfiguration();
         }
     }

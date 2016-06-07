@@ -249,33 +249,7 @@
 
             Assert.True(routeInfo.ModelState.IsValid);
         }
-
-        [Fact]
-        public void ResolveShouldResolveCorrectlyWithPartialJsonContentBody()
-        {
-            var routeInfo = InternalRouteResolver.Resolve(
-                TestApplication.RouteServices,
-                TestApplication.Router,
-                this.GetRouteContext("/Normal/ActionWithModel/5", "POST", body: @"{""Integer"":5}", contentType: ContentType.ApplicationJson));
-
-            Assert.True(routeInfo.IsResolved);
-            Assert.Null(routeInfo.UnresolvedError);
-            Assert.Equal(typeof(NormalController).GetTypeInfo(), routeInfo.ControllerType);
-            Assert.Equal("Normal", routeInfo.ControllerName);
-            Assert.Equal("ActionWithModel", routeInfo.Action);
-            Assert.Equal(2, routeInfo.ActionArguments.Count);
-            Assert.Equal(5, routeInfo.ActionArguments["id"].Value);
-            Assert.True(routeInfo.ActionArguments.ContainsKey("model"));
-
-            var model = routeInfo.ActionArguments["model"].Value as RequestModel;
-
-            Assert.NotNull(model);
-            Assert.Equal(5, model.Integer);
-            Assert.Equal(null, model.String);
-
-            Assert.False(routeInfo.ModelState.IsValid);
-        }
-
+        
         [Fact]
         public void ResolveShouldResolveCorrectlyWithEmptyJsonContentBody()
         {

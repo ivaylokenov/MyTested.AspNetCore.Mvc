@@ -47,27 +47,7 @@
         /// <param name="message">Expected error message.</param>
         /// <returns>The same <see cref="IAndBadRequestTestBuilder"/>.</returns>
         IAndBadRequestTestBuilder WithErrorMessage(string message);
-
-        /// <summary>
-        /// Tests whether <see cref="BadRequestObjectResult"/> contains the controller's <see cref="ModelStateDictionary"/> as object error.
-        /// </summary>
-        /// <returns>The same <see cref="IAndBadRequestTestBuilder"/>.</returns>
-        IAndBadRequestTestBuilder WithModelStateError();
-
-        /// <summary>
-        /// Tests whether <see cref="BadRequestObjectResult"/> contains specific <see cref="ModelStateDictionary"/>.
-        /// </summary>
-        /// <param name="modelState"><see cref="ModelStateDictionary"/> to deeply compare to the actual one.</param>
-        /// <returns>The same <see cref="IAndBadRequestTestBuilder"/>.</returns>
-        IAndBadRequestTestBuilder WithModelStateError(ModelStateDictionary modelState);
-
-        /// <summary>
-        /// Tests whether <see cref="BadRequestObjectResult"/> contains specific model state errors using test builder.
-        /// </summary>
-        /// <typeparam name="TRequestModel">Type of model for which the model state errors will be tested.</typeparam>
-        /// <returns>The same <see cref="IAndBadRequestTestBuilder"/>.</returns>
-        IModelErrorTestBuilder<TRequestModel> WithModelStateErrorFor<TRequestModel>();
-
+        
         /// <summary>
         /// Tests whether <see cref="BadRequestObjectResult"/> has the same status code as the provided one.
         /// </summary>

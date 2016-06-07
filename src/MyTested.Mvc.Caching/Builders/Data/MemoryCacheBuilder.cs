@@ -18,7 +18,7 @@
         /// <param name="services"><see cref="IServiceProvider"/> providing the current <see cref="IMemoryCache"/>.</param>
         public MemoryCacheBuilder(IServiceProvider services)
         {
-            this.MemoryCache = services.GetService<IMemoryCache>();
+            this.MemoryCache = services.GetRequiredService<IMemoryCache>();
         }
 
         /// <summary>

@@ -69,7 +69,7 @@
                 });
 
             MyMvc
-                .Controller<FullPocoController>()
+                .Controller<PocoController>()
                 .WithSession(session =>
                 {
                     session.WithEntry("test", "value");
@@ -88,7 +88,7 @@
                 () =>
                 {
                     MyMvc
-                       .Controller<FullPocoController>()
+                       .Controller<PocoController>()
                        .WithSession(session =>
                        {
                            session.WithEntry("test", "value");
@@ -120,7 +120,7 @@
             httpContext.Response.ContentLength = 100;
 
             MyMvc
-                .Controller<FullPocoController>()
+                .Controller<PocoController>()
                 .WithHttpContext(httpContext)
                 .ShouldPassFor()
                 .TheHttpContext(setHttpContext =>
@@ -140,7 +140,7 @@
                 });
 
             MyMvc
-                .Controller<FullPocoController>()
+                .Controller<PocoController>()
                 .WithHttpContext(httpContext)
                 .ShouldPassFor()
                 .TheController(controller =>

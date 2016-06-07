@@ -18,7 +18,7 @@
     /// </summary>
     public class ShouldMapTestBuilder : BaseRouteTestBuilder, IShouldMapTestBuilder, IAndResolvedRouteTestBuilder
     {
-        private const string ExpectedModelStateErrorMessage = "have valid model state with no errors";
+        public const string ExpectedModelStateErrorMessage = "have valid model state with no errors";
 
         private LambdaExpression actionCallExpression;
         private ResolvedRouteContext actualRouteInfo;
@@ -254,50 +254,6 @@
         }
 
         /// <inheritdoc />
-        public IAndResolvedRouteTestBuilder ToValidModelState()
-        {
-            var actualInfo = this.GetActualRouteInfo();
-            if (!actualInfo.IsResolved)
-            {
-                this.ThrowNewRouteAssertionException(
-                    ExpectedModelStateErrorMessage,
-                    actualInfo.UnresolvedError);
-            }
-
-            if (!actualInfo.ModelState.IsValid)
-            {
-                this.ThrowNewRouteAssertionException(
-                    ExpectedModelStateErrorMessage,
-                    "it had some");
-            }
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndResolvedRouteTestBuilder ToInvalidModelState(int? withNumberOfErrors = null)
-        {
-            var actualInfo = this.GetActualRouteInfo();
-            if (!actualInfo.IsResolved)
-            {
-                this.ThrowNewRouteAssertionException(
-                    "have invalid model state",
-                    actualInfo.UnresolvedError);
-            }
-
-            var actualModelStateErrors = actualInfo.ModelState.Values.SelectMany(c => c.Errors).Count();
-            if (actualModelStateErrors == 0
-                || (withNumberOfErrors != null && actualModelStateErrors != withNumberOfErrors))
-            {
-                this.ThrowNewRouteAssertionException(
-                    $"have invalid model state{(withNumberOfErrors == null ? string.Empty : $" with {withNumberOfErrors} {(withNumberOfErrors != 1 ? "errors" : "error")}")}",
-                    withNumberOfErrors == null ? "was in fact valid" : $"in fact contained {actualModelStateErrors}");
-            }
-
-            return this;
-        }
-
-        /// <inheritdoc />
         public IResolvedRouteTestBuilder AndAlso() => this;
 
         private IAndResolvedRouteTestBuilder ProcessRouteLambdaExpression<TController>(LambdaExpression actionCall)
@@ -337,19 +293,19 @@
             expectedRouteValues.ActionArguments.ForEach(arg => this.ToRouteValue(arg.Key, arg.Value.Value));
         }
 
-        private ExpressionParsedRouteContext GetExpectedRouteInfo()
+        public ExpressionParsedRouteContext GetExpectedRouteInfo()
         {
             return this.expectedRouteInfo ??
                    (this.expectedRouteInfo = RouteExpressionParser.Parse(this.actionCallExpression));
         }
 
-        private ResolvedRouteContext GetActualRouteInfo()
+        public ResolvedRouteContext GetActualRouteInfo()
         {
             return this.actualRouteInfo ??
                    (this.actualRouteInfo = InternalRouteResolver.Resolve(this.Services, this.Router, this.RouteContext));
         }
 
-        private void ThrowNewRouteAssertionException(string expected = null, string actual = null)
+        public void ThrowNewRouteAssertionException(string expected = null, string actual = null)
         {
             if (string.IsNullOrWhiteSpace(expected))
             {

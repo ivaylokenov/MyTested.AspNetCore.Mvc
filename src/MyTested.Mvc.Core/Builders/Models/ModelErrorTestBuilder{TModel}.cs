@@ -34,23 +34,6 @@
         protected TModel Model => this.TestContext.ModelAs<TModel>();
 
         /// <inheritdoc />
-        public IModelErrorDetailsTestBuilder<TModel> ContainingError(string errorKey)
-        {
-            if (!this.ModelState.ContainsKey(errorKey) || this.ModelState.Count == 0)
-            {
-                this.ThrowNewModelErrorAssertionException(
-                    "When calling {0} action in {1} expected to have a model error against key {2}, but none found.",
-                    errorKey);
-            }
-
-            return new ModelErrorDetailsTestBuilder<TModel>(
-                this.TestContext,
-                this,
-                errorKey,
-                this.ModelState[errorKey].Errors);
-        }
-        
-        /// <inheritdoc />
         public IModelErrorTestBuilder<TModel> AndAlso() => this;
 
         /// <inheritdoc />

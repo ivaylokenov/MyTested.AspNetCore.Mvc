@@ -4,10 +4,20 @@
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.Extensions.DependencyInjection;
 
-    public class ViewFeaturesTestPlugin : IServiceRegistrationPlugin
+    public class ViewFeaturesTestPlugin : IDefaultRegistrationPlugin, IServiceRegistrationPlugin
     {
         private readonly Type defaultTempDataServiceType = typeof(ITempDataProvider);
         private readonly Type defaultTempDataImplementationType = typeof(SessionStateTempDataProvider);
+
+        public long Priority => -1000;
+
+        public Action<IServiceCollection> DefaultServiceRegistrationDelegate
+            => serviceCollection => serviceCollection
+                .AddMvcCore()
+                .AddFormatterMappings()
+                .AddViews()
+                .AddDataAnnotations()
+                .AddJsonFormatters();
 
         public Func<ServiceDescriptor, bool> ServiceSelectorPredicate
         {

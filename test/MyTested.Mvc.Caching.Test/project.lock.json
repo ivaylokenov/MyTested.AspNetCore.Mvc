@@ -3475,6 +3475,7 @@
         "framework": ".NETStandard,Version=v1.5",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc.Core": "1.0.0",
+          "Microsoft.AspNetCore.Mvc.Formatters.Json": "1.0.0",
           "Microsoft.AspNetCore.TestHost": "1.0.0",
           "Microsoft.Extensions.Configuration.Binder": "1.0.0",
           "Microsoft.Extensions.Configuration.Json": "1.0.0",
@@ -3487,7 +3488,7 @@
           "netstandard1.5/MyTested.Mvc.Core.dll": {}
         }
       },
-      "MyTested.Mvc.Licensing/1.0.0-beta2": {
+      "MyTested.Mvc.Licensing/1.0.0-beta": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.4",
         "dependencies": {
@@ -5029,6 +5030,7 @@
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc.Core": "1.0.0",
+          "Microsoft.AspNetCore.Mvc.Formatters.Json": "1.0.0",
           "Microsoft.AspNetCore.TestHost": "1.0.0",
           "Microsoft.Extensions.Configuration.Binder": "1.0.0",
           "Microsoft.Extensions.Configuration.Json": "1.0.0",
@@ -5041,7 +5043,7 @@
           "net451/MyTested.Mvc.Core.dll": {}
         }
       },
-      "MyTested.Mvc.Licensing/1.0.0-beta2": {
+      "MyTested.Mvc.Licensing/1.0.0-beta": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "compile": {
@@ -10813,7 +10815,7 @@
       "path": "../../src/MyTested.Mvc.Core/project.json",
       "msbuildProject": "../../src/MyTested.Mvc.Core/MyTested.Mvc.Core.xproj"
     },
-    "MyTested.Mvc.Licensing/1.0.0-beta2": {
+    "MyTested.Mvc.Licensing/1.0.0-beta": {
       "type": "project",
       "path": "../../src/MyTested.Mvc.Licensing/project.json",
       "msbuildProject": "../../src/MyTested.Mvc.Licensing/MyTested.Mvc.Licensing.xproj"
@@ -10826,6 +10828,7 @@
   },
   "projectFileDependencyGroups": {
     "": [
+      "Microsoft.AspNetCore.Mvc >= 1.0.0-*",
       "MyTested.Mvc.Caching >= 1.0.0-*",
       "MyTested.Mvc.Test >= 1.0.0-*",
       "dotnet-test-xunit >= 1.0.0-*",

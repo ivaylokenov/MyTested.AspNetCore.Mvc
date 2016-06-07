@@ -58,6 +58,8 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MyTested.Mvc.ViewFeatures.T
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MyTested.Mvc.DataAnnotations", "src\MyTested.Mvc.DataAnnotations\MyTested.Mvc.DataAnnotations.xproj", "{2C375C22-4710-438F-A4C2-325C7D091710}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MyTested.Mvc.DataAnnotations.Test", "test\MyTested.Mvc.DataAnnotations.Test\MyTested.Mvc.DataAnnotations.Test.xproj", "{BAAAAB60-49AE-4BFE-B176-408C86746474}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -144,6 +146,10 @@ Global
 		{2C375C22-4710-438F-A4C2-325C7D091710}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C375C22-4710-438F-A4C2-325C7D091710}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C375C22-4710-438F-A4C2-325C7D091710}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAAAAB60-49AE-4BFE-B176-408C86746474}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAAAAB60-49AE-4BFE-B176-408C86746474}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAAAAB60-49AE-4BFE-B176-408C86746474}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAAAAB60-49AE-4BFE-B176-408C86746474}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -171,5 +177,6 @@ Global
 		{9C519326-85D8-440A-B64B-67797DBA2F20} = {D140FA14-A6C2-4279-8A41-35BC55279DA8}
 		{1C8F2E0F-811A-42E4-B35A-FAAD19D8257A} = {D140FA14-A6C2-4279-8A41-35BC55279DA8}
 		{2C375C22-4710-438F-A4C2-325C7D091710} = {09353A03-2B0C-496B-8EB1-2CB6A22D758B}
+		{BAAAAB60-49AE-4BFE-B176-408C86746474} = {D140FA14-A6C2-4279-8A41-35BC55279DA8}
 	EndGlobalSection
 EndGlobal

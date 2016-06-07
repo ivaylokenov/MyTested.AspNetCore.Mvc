@@ -102,22 +102,5 @@
                     Assert.IsAssignableFrom<NullReferenceException>(caughtException);
                 });            
         }
-
-        [Fact]
-        public void AndProvideShouldThrowExceptionIfActionIsVoid()
-        {
-            Test.AssertException<InvalidOperationException>(
-                () =>
-                {
-                    MyMvc
-                        .Controller<MvcController>()
-                        .Calling(c => c.EmptyActionWithException())
-                        .ShouldHave()
-                        .ValidModelState()
-                        .ShouldPassFor()
-                        .TheActionResult(actionResult => actionResult != null);
-                }, 
-                "Void methods cannot provide action result because they do not have return value.");
-        }
     }
 }

@@ -36,7 +36,7 @@
         /// Creates new <see cref="AndProvideTestBuilder"/>.
         /// </summary>
         /// <returns>Test builder of type <see cref="IBaseTestBuilderWithInvokedAction"/>.</returns>
-        protected IBaseTestBuilderWithInvokedAction NewAndProvideTestBuilder()
+        public IBaseTestBuilderWithInvokedAction NewAndProvideTestBuilder()
             => new AndProvideTestBuilder(this.TestContext);
     }
 }

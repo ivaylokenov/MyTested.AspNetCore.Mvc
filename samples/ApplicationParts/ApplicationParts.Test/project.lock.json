@@ -4062,7 +4062,6 @@
           "Microsoft.AspNetCore.Mvc": "1.0.0",
           "MyTested.Mvc.Caching": "1.0.0",
           "MyTested.Mvc.Core": "1.0.0",
-          "MyTested.Mvc.DataAnnotations": "1.0.0",
           "MyTested.Mvc.Session": "1.0.0",
           "MyTested.Mvc.ViewFeatures": "1.0.0"
         },
@@ -4092,6 +4091,7 @@
         "framework": ".NETStandard,Version=v1.5",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc.Core": "1.0.0",
+          "Microsoft.AspNetCore.Mvc.Formatters.Json": "1.0.0",
           "Microsoft.AspNetCore.TestHost": "1.0.0",
           "Microsoft.Extensions.Configuration.Binder": "1.0.0",
           "Microsoft.Extensions.Configuration.Json": "1.0.0",
@@ -4118,7 +4118,7 @@
           "netstandard1.5/MyTested.Mvc.DataAnnotations.dll": {}
         }
       },
-      "MyTested.Mvc.Licensing/1.0.0-beta2": {
+      "MyTested.Mvc.Licensing/1.0.0-beta": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.4",
         "dependencies": {
@@ -4151,7 +4151,7 @@
         "framework": ".NETStandard,Version=v1.5",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.0.0",
-          "MyTested.Mvc.Core": "1.0.0"
+          "MyTested.Mvc.DataAnnotations": "1.0.0"
         },
         "compile": {
           "netstandard1.5/MyTested.Mvc.ViewFeatures.dll": {}
@@ -10392,7 +10392,7 @@
       "path": "../../../src/MyTested.Mvc.DataAnnotations/project.json",
       "msbuildProject": "../../../src/MyTested.Mvc.DataAnnotations/MyTested.Mvc.DataAnnotations.xproj"
     },
-    "MyTested.Mvc.Licensing/1.0.0-beta2": {
+    "MyTested.Mvc.Licensing/1.0.0-beta": {
       "type": "project",
       "path": "../../../src/MyTested.Mvc.Licensing/project.json",
       "msbuildProject": "../../../src/MyTested.Mvc.Licensing/MyTested.Mvc.Licensing.xproj"

@@ -324,7 +324,10 @@
                 }
                 else
                 {
-                    serviceCollection.AddMvcCore();
+                    serviceCollection
+                        .AddMvcCore()
+                        .AddFormatterMappings()
+                        .AddJsonFormatters();
                 }
             }
 

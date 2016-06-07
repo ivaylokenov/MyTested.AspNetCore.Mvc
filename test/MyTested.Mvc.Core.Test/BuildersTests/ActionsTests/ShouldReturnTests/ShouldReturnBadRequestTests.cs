@@ -5,7 +5,7 @@
     using Setups.Controllers;
     using Xunit;
     
-    public class ShouldReturnHttpBadRequestTests
+    public class ShouldReturnBadRequestTests
     {
         [Fact]
         public void ShouldReturnBadRequestShouldNotThrowExceptionWhenResultIsHttpBadRequest()
@@ -13,18 +13,6 @@
             MyMvc
                 .Controller<MvcController>()
                 .Calling(c => c.BadRequestAction())
-                .ShouldReturn()
-                .BadRequest();
-        }
-
-        [Fact]
-        public void ShouldReturnBadRequestShouldNotThrowExceptionWhenResultIsInvalidModelStateResult()
-        {
-            var requestModelWithErrors = TestObjectFactory.GetRequestModelWithErrors();
-
-            MyMvc
-                .Controller<MvcController>()
-                .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
                 .ShouldReturn()
                 .BadRequest();
         }

@@ -10,7 +10,7 @@
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddSingleton<IMemoryCache, CustomMemoryCache>();
+            services.Replace<IMemoryCache, CustomMemoryCache>(ServiceLifetime.Singleton);
         }
 
         public void Configure(IApplicationBuilder app)

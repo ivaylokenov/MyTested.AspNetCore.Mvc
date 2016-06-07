@@ -25,7 +25,7 @@
         {
             this.services = TestApplication.Services;
             this.viewData = new ViewDataDictionary(this.services.GetService<IModelMetadataProvider>(), new ControllerContext().ModelState);
-            this.tempData = (TempDataDictionary)this.services.GetService<ITempDataDictionaryFactory>().GetTempData(this.CustomHttpContext ?? new DefaultHttpContext());
+            this.tempData = (TempDataDictionary)this.services.GetService<ITempDataDictionaryFactory>()?.GetTempData(this.CustomHttpContext ?? new DefaultHttpContext());
         }
         
         public FullPocoController(IInjectedService injectedService)
@@ -169,16 +169,6 @@
         public IActionResult TempDataAction()
         {
             if (this.CustomTempData["test"] != null)
-            {
-                return new OkResult();
-            }
-
-            return new BadRequestResult();
-        }
-
-        public IActionResult SessionAction()
-        {
-            if (this.CustomHttpContext.Session.GetString("test") != null)
             {
                 return new OkResult();
             }

@@ -5,7 +5,7 @@
     using Setups.Controllers;
     using Xunit;
 
-    public class ShouldReturnHttpStatusCodeTests
+    public class ShouldReturnStatusCodeTests
     {
         [Fact]
         public void ShouldReturnHttpStatusCodeShouldNotThrowExceptionWhenActionReturnsHttpStatusCodeResult()

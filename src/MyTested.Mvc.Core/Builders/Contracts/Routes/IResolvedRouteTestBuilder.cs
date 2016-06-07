@@ -64,18 +64,5 @@
         /// <param name="dataTokens">Dictionary of data tokens.</param>
         /// <returns>The same <see cref="IAndResolvedRouteTestBuilder"/>.</returns>
         IAndResolvedRouteTestBuilder ToDataTokens(IDictionary<string, object> dataTokens);
-
-        /// <summary>
-        /// Tests whether the resolved route has valid <see cref="Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary"/>.
-        /// </summary>
-        /// <returns>The same <see cref="IAndResolvedRouteTestBuilder"/>.</returns>
-        IAndResolvedRouteTestBuilder ToValidModelState();
-
-        /// <summary>
-        /// Tests whether the resolved route has invalid <see cref="Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary"/>.
-        /// </summary>
-        /// <param name="withNumberOfErrors">Expected number of errors. If default null is provided, the test builder checks only if any errors are found.</param>
-        /// <returns>The same <see cref="IAndResolvedRouteTestBuilder"/>.</returns>
-        IAndResolvedRouteTestBuilder ToInvalidModelState(int? withNumberOfErrors = null);
     }
 }

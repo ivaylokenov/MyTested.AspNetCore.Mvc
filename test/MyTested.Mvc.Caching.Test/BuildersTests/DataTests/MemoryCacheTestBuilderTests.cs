@@ -4,12 +4,20 @@
     using System.Collections.Generic;
     using Exceptions;
     using Microsoft.Extensions.Caching.Memory;
+    using Microsoft.Extensions.DependencyInjection;
     using Setups;
     using Setups.Controllers;
     using Xunit;
 
-    public class MemoryCacheTestBuilderTests
+    public class MemoryCacheTestBuilderTests : IDisposable
     {
+        public MemoryCacheTestBuilderTests()
+        {
+            MyMvc
+                .IsUsingDefaultConfiguration()
+                .WithServices(services => services.AddMemoryCache());
+        }
+
         [Fact]
         public void ContainingEntryWithKeyShouldNotThrowExceptionWithCorrectEntry()
         {
@@ -350,6 +358,11 @@
                         .Ok();
                 },
                 "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with the given value, but in fact it was different.");
+        }
+
+        public void Dispose()
+        {
+            MyMvc.IsUsingDefaultConfiguration();
         }
     }
 }

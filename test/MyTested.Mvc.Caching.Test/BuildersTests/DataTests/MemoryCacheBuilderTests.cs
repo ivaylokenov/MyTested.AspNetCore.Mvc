@@ -4,12 +4,20 @@
     using System.Collections.Generic;
     using Internal.Caching;
     using Microsoft.Extensions.Caching.Memory;
+    using Microsoft.Extensions.DependencyInjection;
     using Setups;
     using Setups.Controllers;
     using Xunit;
 
-    public class MemoryCacheBuilderTests
+    public class MemoryCacheBuilderTests : IDisposable
     {
+        public MemoryCacheBuilderTests()
+        {
+            MyMvc
+                .IsUsingDefaultConfiguration()
+                .WithServices(services => services.AddMemoryCache());
+        }
+
         [Fact]
         public void WithEntryShouldSetCorrectValues()
         {
@@ -119,6 +127,11 @@
                     ["second"] = "secondValue",
                     ["third"] = "thirdValue"
                 });
+        }
+
+        public void Dispose()
+        {
+            MyMvc.IsUsingDefaultConfiguration();
         }
     }
 }
