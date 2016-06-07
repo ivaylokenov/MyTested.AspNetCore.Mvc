@@ -1,4 +1,4 @@
-<h1>MyTested.AspNetCore.Mvc - Fluent testing for ASP.NET Core MVC</h1>
+<h1>MyTested.AspNetCore.Mvc (Alpha) - Fluent testing framework for ASP.NET Core MVC</h1>
 ====================================
 
 MyTested.AspNetCore.Mvc is a unit testing library providing easy fluent interface to test the [ASP.NET Core MVC](https://github.com/aspnet/Mvc) framework. It is testing framework agnostic, so you can combine it with a test runner of your choice (e.g. xUnit, NUnit, etc.).
