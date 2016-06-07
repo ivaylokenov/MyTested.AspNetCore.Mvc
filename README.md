@@ -27,9 +27,31 @@ For other interesting packages check out:
 ## How to use
 
 Make sure to check out the [tutorial](http://ivaylokenov.github.io/MyTested.AspNetCore.Mvc/tutorial/intro.html) (comming soon) and the [documentation](http://ivaylokenov.github.io/MyTested.AspNetCore.Mvc/guide/intro.html) (comming soon) for a preview of the available features.
+
 You can also check out the [provided samples](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/tree/master/samples) for real-life ASP.NET Core MVC application testing.
 
-Basically you can create a test case by using the fluent API the library provides. You are given a static `MyMvc` class from which all assertions can be easily configured.
+First we need to create a `TestStartup` class in the root of the test project in order to register the dependency injection services. The easiest way is to inherit from the web project's `Startup` class and replace some of the services with mocked ones by using the provided extension methods.
+
+```c#
+namespace MyApp.Tests
+{
+	using MyTested.AspNetCore.Mvc;
+	
+    using Microsoft.Extensions.DependencyInjection;
+
+	public class TestStartup : Startup
+	{
+		public void ConfigureTestServices(IServiceCollection services)
+		{
+			base.ConfigureServices(services);
+			
+			services.Replace<IRepository, MockedRepository>();
+		}
+	}
+}
+```
+
+And then you can create a test case by using the fluent API the library provides. You are given a static `MyMvc` class from which all assertions can be easily configured.
 
 ```c#
 namespace MyApp.Tests.Controllers
@@ -57,31 +79,9 @@ namespace MyApp.Tests.Controllers
 The example uses [xUnit](http://xunit.github.io/) but you can use whatever testing framework you want.
 Basically, MyTested.AspNetCore.Mvc throws an unhandled exception with a friendly error message if the assertion does not pass and the test fails.
 
-Here are some random examples of what the fluent testing API is capable of:
+Here are other random examples of what the fluent testing API is capable of:
 
 ```c#
-// first we need to create TestStartup class to register dependency injection services
-
-// the easiest way is to inherit from the web project's Startup class 
-// and replace some of the services with mocked ones
-
-public class TestStartup : Startup
-{
-	public TestStartup(IHostingEnvironment env)
-		: base(env)
-	{
-	}
- 
-	public void ConfigureTestServices(IServiceCollection services)
-	{
-		base.ConfigureServices(services);
-		
-		services.Replace<IRepository, MockedRepository>();
-	}
-}
-
-// and then we can write our tests
-
 // tests a route for correct controller, action and resolved route values
 MyMvc
 	.Routes()
@@ -99,7 +99,7 @@ MyMvc
 		String = "Text"
 	}));
 
-// creates controller with the registered services
+// instantiates controller with the registered services
 // and mocks authenticated user
 // and tests for valid model state
 // and tests for valid view bag entry
