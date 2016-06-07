@@ -10,7 +10,7 @@
   "dependencies": {
     "dotnet-test-xunit": "1.0.0-*",
     "XUnit": "2.1.0",
-    "MyTested.Mvc": "1.0.0-*",
+    "MyTested.AspNetCore.Mvc": "1.0.0-*",
     "MusicStore.Web": "1.0.0-*"
   },
   "frameworks": {

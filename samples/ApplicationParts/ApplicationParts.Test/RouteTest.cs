@@ -1,7 +1,7 @@
 ﻿namespace ApplicationParts.Test
 {
     using ApplicationParts.Controllers;
-    using MyTested.Mvc;
+    using MyTested.AspNetCore.Mvc;
     using Xunit;
 
     public class RouteTest

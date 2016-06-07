@@ -4198,38 +4198,38 @@
           "netcoreapp1.0/MusicStore.Web.dll": {}
         }
       },
-      "MyTested.Mvc/1.0.0-beta": {
+      "MyTested.AspNetCore.Mvc/1.0.0-alpha": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.5",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc": "1.0.0",
-          "MyTested.Mvc.Caching": "1.0.0",
-          "MyTested.Mvc.Core": "1.0.0",
-          "MyTested.Mvc.Session": "1.0.0",
-          "MyTested.Mvc.ViewFeatures": "1.0.0"
+          "MyTested.AspNetCore.Mvc.Caching": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Core": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Session": "1.0.0",
+          "MyTested.AspNetCore.Mvc.ViewFeatures": "1.0.0"
         },
         "compile": {
-          "netstandard1.5/MyTested.Mvc.dll": {}
+          "netstandard1.5/MyTested.AspNetCore.Mvc.dll": {}
         },
         "runtime": {
-          "netstandard1.5/MyTested.Mvc.dll": {}
+          "netstandard1.5/MyTested.AspNetCore.Mvc.dll": {}
         }
       },
-      "MyTested.Mvc.Caching/1.0.0-beta": {
+      "MyTested.AspNetCore.Mvc.Caching/1.0.0-alpha": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.5",
         "dependencies": {
           "Microsoft.Extensions.Caching.Memory": "1.0.0",
-          "MyTested.Mvc.Core": "1.0.0"
+          "MyTested.AspNetCore.Mvc.Core": "1.0.0"
         },
         "compile": {
-          "netstandard1.5/MyTested.Mvc.Caching.dll": {}
+          "netstandard1.5/MyTested.AspNetCore.Mvc.Caching.dll": {}
         },
         "runtime": {
-          "netstandard1.5/MyTested.Mvc.Caching.dll": {}
+          "netstandard1.5/MyTested.AspNetCore.Mvc.Caching.dll": {}
         }
       },
-      "MyTested.Mvc.Core/1.0.0-beta": {
+      "MyTested.AspNetCore.Mvc.Core/1.0.0-alpha": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.5",
         "dependencies": {
@@ -4238,30 +4238,30 @@
           "Microsoft.AspNetCore.TestHost": "1.0.0",
           "Microsoft.Extensions.Configuration.Binder": "1.0.0",
           "Microsoft.Extensions.Configuration.Json": "1.0.0",
-          "MyTested.Mvc.Licensing": "1.0.0"
+          "MyTested.AspNetCore.Mvc.Licensing": "1.0.0"
         },
         "compile": {
-          "netstandard1.5/MyTested.Mvc.Core.dll": {}
+          "netstandard1.5/MyTested.AspNetCore.Mvc.Core.dll": {}
         },
         "runtime": {
-          "netstandard1.5/MyTested.Mvc.Core.dll": {}
+          "netstandard1.5/MyTested.AspNetCore.Mvc.Core.dll": {}
         }
       },
-      "MyTested.Mvc.DataAnnotations/1.0.0-beta": {
+      "MyTested.AspNetCore.Mvc.DataAnnotations/1.0.0-alpha": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.5",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc.DataAnnotations": "1.0.0",
-          "MyTested.Mvc.Core": "1.0.0"
+          "MyTested.AspNetCore.Mvc.Core": "1.0.0"
         },
         "compile": {
-          "netstandard1.5/MyTested.Mvc.DataAnnotations.dll": {}
+          "netstandard1.5/MyTested.AspNetCore.Mvc.DataAnnotations.dll": {}
         },
         "runtime": {
-          "netstandard1.5/MyTested.Mvc.DataAnnotations.dll": {}
+          "netstandard1.5/MyTested.AspNetCore.Mvc.DataAnnotations.dll": {}
         }
       },
-      "MyTested.Mvc.Licensing/1.0.0-beta": {
+      "MyTested.AspNetCore.Mvc.Licensing/1.0.0-alpha": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.4",
         "dependencies": {
@@ -4269,38 +4269,38 @@
           "System.Security.Cryptography.Csp": "4.0.0-rc2"
         },
         "compile": {
-          "netstandard1.4/MyTested.Mvc.Licensing.dll": {}
+          "netstandard1.4/MyTested.AspNetCore.Mvc.Licensing.dll": {}
         },
         "runtime": {
-          "netstandard1.4/MyTested.Mvc.Licensing.dll": {}
+          "netstandard1.4/MyTested.AspNetCore.Mvc.Licensing.dll": {}
         }
       },
-      "MyTested.Mvc.Session/1.0.0-beta": {
+      "MyTested.AspNetCore.Mvc.Session/1.0.0-alpha": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.5",
         "dependencies": {
           "Microsoft.AspNetCore.Session": "1.0.0",
-          "MyTested.Mvc.Core": "1.0.0"
+          "MyTested.AspNetCore.Mvc.Core": "1.0.0"
         },
         "compile": {
-          "netstandard1.5/MyTested.Mvc.Session.dll": {}
+          "netstandard1.5/MyTested.AspNetCore.Mvc.Session.dll": {}
         },
         "runtime": {
-          "netstandard1.5/MyTested.Mvc.Session.dll": {}
+          "netstandard1.5/MyTested.AspNetCore.Mvc.Session.dll": {}
         }
       },
-      "MyTested.Mvc.ViewFeatures/1.0.0-beta": {
+      "MyTested.AspNetCore.Mvc.ViewFeatures/1.0.0-beta": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.5",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.0.0",
-          "MyTested.Mvc.DataAnnotations": "1.0.0"
+          "MyTested.AspNetCore.Mvc.DataAnnotations": "1.0.0"
         },
         "compile": {
-          "netstandard1.5/MyTested.Mvc.ViewFeatures.dll": {}
+          "netstandard1.5/MyTested.AspNetCore.Mvc.ViewFeatures.dll": {}
         },
         "runtime": {
-          "netstandard1.5/MyTested.Mvc.ViewFeatures.dll": {}
+          "netstandard1.5/MyTested.AspNetCore.Mvc.ViewFeatures.dll": {}
         }
       }
     },
@@ -6370,38 +6370,38 @@
           "net451/MusicStore.Web.dll": {}
         }
       },
-      "MyTested.Mvc/1.0.0-beta": {
+      "MyTested.AspNetCore.Mvc/1.0.0-alpha": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc": "1.0.0",
-          "MyTested.Mvc.Caching": "1.0.0",
-          "MyTested.Mvc.Core": "1.0.0",
-          "MyTested.Mvc.Session": "1.0.0",
-          "MyTested.Mvc.ViewFeatures": "1.0.0"
+          "MyTested.AspNetCore.Mvc.Caching": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Core": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Session": "1.0.0",
+          "MyTested.AspNetCore.Mvc.ViewFeatures": "1.0.0"
         },
         "compile": {
-          "net451/MyTested.Mvc.dll": {}
+          "net451/MyTested.AspNetCore.Mvc.dll": {}
         },
         "runtime": {
-          "net451/MyTested.Mvc.dll": {}
+          "net451/MyTested.AspNetCore.Mvc.dll": {}
         }
       },
-      "MyTested.Mvc.Caching/1.0.0-beta": {
+      "MyTested.AspNetCore.Mvc.Caching/1.0.0-alpha": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
           "Microsoft.Extensions.Caching.Memory": "1.0.0",
-          "MyTested.Mvc.Core": "1.0.0"
+          "MyTested.AspNetCore.Mvc.Core": "1.0.0"
         },
         "compile": {
-          "net451/MyTested.Mvc.Caching.dll": {}
+          "net451/MyTested.AspNetCore.Mvc.Caching.dll": {}
         },
         "runtime": {
-          "net451/MyTested.Mvc.Caching.dll": {}
+          "net451/MyTested.AspNetCore.Mvc.Caching.dll": {}
         }
       },
-      "MyTested.Mvc.Core/1.0.0-beta": {
+      "MyTested.AspNetCore.Mvc.Core/1.0.0-alpha": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
@@ -6410,65 +6410,65 @@
           "Microsoft.AspNetCore.TestHost": "1.0.0",
           "Microsoft.Extensions.Configuration.Binder": "1.0.0",
           "Microsoft.Extensions.Configuration.Json": "1.0.0",
-          "MyTested.Mvc.Licensing": "1.0.0"
+          "MyTested.AspNetCore.Mvc.Licensing": "1.0.0"
         },
         "compile": {
-          "net451/MyTested.Mvc.Core.dll": {}
+          "net451/MyTested.AspNetCore.Mvc.Core.dll": {}
         },
         "runtime": {
-          "net451/MyTested.Mvc.Core.dll": {}
+          "net451/MyTested.AspNetCore.Mvc.Core.dll": {}
         }
       },
-      "MyTested.Mvc.DataAnnotations/1.0.0-beta": {
+      "MyTested.AspNetCore.Mvc.DataAnnotations/1.0.0-alpha": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc.DataAnnotations": "1.0.0",
-          "MyTested.Mvc.Core": "1.0.0"
+          "MyTested.AspNetCore.Mvc.Core": "1.0.0"
         },
         "compile": {
-          "net451/MyTested.Mvc.DataAnnotations.dll": {}
+          "net451/MyTested.AspNetCore.Mvc.DataAnnotations.dll": {}
         },
         "runtime": {
-          "net451/MyTested.Mvc.DataAnnotations.dll": {}
+          "net451/MyTested.AspNetCore.Mvc.DataAnnotations.dll": {}
         }
       },
-      "MyTested.Mvc.Licensing/1.0.0-beta": {
+      "MyTested.AspNetCore.Mvc.Licensing/1.0.0-alpha": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "compile": {
-          "net451/MyTested.Mvc.Licensing.dll": {}
+          "net451/MyTested.AspNetCore.Mvc.Licensing.dll": {}
         },
         "runtime": {
-          "net451/MyTested.Mvc.Licensing.dll": {}
+          "net451/MyTested.AspNetCore.Mvc.Licensing.dll": {}
         }
       },
-      "MyTested.Mvc.Session/1.0.0-beta": {
+      "MyTested.AspNetCore.Mvc.Session/1.0.0-alpha": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
           "Microsoft.AspNetCore.Session": "1.0.0",
-          "MyTested.Mvc.Core": "1.0.0"
+          "MyTested.AspNetCore.Mvc.Core": "1.0.0"
         },
         "compile": {
-          "net451/MyTested.Mvc.Session.dll": {}
+          "net451/MyTested.AspNetCore.Mvc.Session.dll": {}
         },
         "runtime": {
-          "net451/MyTested.Mvc.Session.dll": {}
+          "net451/MyTested.AspNetCore.Mvc.Session.dll": {}
         }
       },
-      "MyTested.Mvc.ViewFeatures/1.0.0-beta": {
+      "MyTested.AspNetCore.Mvc.ViewFeatures/1.0.0-beta": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.0.0",
-          "MyTested.Mvc.DataAnnotations": "1.0.0"
+          "MyTested.AspNetCore.Mvc.DataAnnotations": "1.0.0"
         },
         "compile": {
-          "net451/MyTested.Mvc.ViewFeatures.dll": {}
+          "net451/MyTested.AspNetCore.Mvc.ViewFeatures.dll": {}
         },
         "runtime": {
-          "net451/MyTested.Mvc.ViewFeatures.dll": {}
+          "net451/MyTested.AspNetCore.Mvc.ViewFeatures.dll": {}
         }
       }
     }
@@ -12800,46 +12800,46 @@
       "path": "../MusicStore.Web/project.json",
       "msbuildProject": "../MusicStore.Web/MusicStore.Web.xproj"
     },
-    "MyTested.Mvc/1.0.0-beta": {
+    "MyTested.AspNetCore.Mvc/1.0.0-alpha": {
       "type": "project",
-      "path": "../../../src/MyTested.Mvc/project.json",
-      "msbuildProject": "../../../src/MyTested.Mvc/MyTested.Mvc.xproj"
+      "path": "../../../src/MyTested.AspNetCore.Mvc/project.json",
+      "msbuildProject": "../../../src/MyTested.AspNetCore.Mvc/MyTested.AspNetCore.Mvc.xproj"
     },
-    "MyTested.Mvc.Caching/1.0.0-beta": {
+    "MyTested.AspNetCore.Mvc.Caching/1.0.0-alpha": {
       "type": "project",
-      "path": "../../../src/MyTested.Mvc.Caching/project.json",
-      "msbuildProject": "../../../src/MyTested.Mvc.Caching/MyTested.Mvc.Caching.xproj"
+      "path": "../../../src/MyTested.AspNetCore.Mvc.Caching/project.json",
+      "msbuildProject": "../../../src/MyTested.AspNetCore.Mvc.Caching/MyTested.AspNetCore.Mvc.Caching.xproj"
     },
-    "MyTested.Mvc.Core/1.0.0-beta": {
+    "MyTested.AspNetCore.Mvc.Core/1.0.0-alpha": {
       "type": "project",
-      "path": "../../../src/MyTested.Mvc.Core/project.json",
-      "msbuildProject": "../../../src/MyTested.Mvc.Core/MyTested.Mvc.Core.xproj"
+      "path": "../../../src/MyTested.AspNetCore.Mvc.Core/project.json",
+      "msbuildProject": "../../../src/MyTested.AspNetCore.Mvc.Core/MyTested.AspNetCore.Mvc.Core.xproj"
     },
-    "MyTested.Mvc.DataAnnotations/1.0.0-beta": {
+    "MyTested.AspNetCore.Mvc.DataAnnotations/1.0.0-alpha": {
       "type": "project",
-      "path": "../../../src/MyTested.Mvc.DataAnnotations/project.json",
-      "msbuildProject": "../../../src/MyTested.Mvc.DataAnnotations/MyTested.Mvc.DataAnnotations.xproj"
+      "path": "../../../src/MyTested.AspNetCore.Mvc.DataAnnotations/project.json",
+      "msbuildProject": "../../../src/MyTested.AspNetCore.Mvc.DataAnnotations/MyTested.AspNetCore.Mvc.DataAnnotations.xproj"
     },
-    "MyTested.Mvc.Licensing/1.0.0-beta": {
+    "MyTested.AspNetCore.Mvc.Licensing/1.0.0-alpha": {
       "type": "project",
-      "path": "../../../src/MyTested.Mvc.Licensing/project.json",
-      "msbuildProject": "../../../src/MyTested.Mvc.Licensing/MyTested.Mvc.Licensing.xproj"
+      "path": "../../../src/MyTested.AspNetCore.Mvc.Licensing/project.json",
+      "msbuildProject": "../../../src/MyTested.AspNetCore.Mvc.Licensing/MyTested.AspNetCore.Mvc.Licensing.xproj"
     },
-    "MyTested.Mvc.Session/1.0.0-beta": {
+    "MyTested.AspNetCore.Mvc.Session/1.0.0-alpha": {
       "type": "project",
-      "path": "../../../src/MyTested.Mvc.Session/project.json",
-      "msbuildProject": "../../../src/MyTested.Mvc.Session/MyTested.Mvc.Session.xproj"
+      "path": "../../../src/MyTested.AspNetCore.Mvc.Session/project.json",
+      "msbuildProject": "../../../src/MyTested.AspNetCore.Mvc.Session/MyTested.AspNetCore.Mvc.Session.xproj"
     },
-    "MyTested.Mvc.ViewFeatures/1.0.0-beta": {
+    "MyTested.AspNetCore.Mvc.ViewFeatures/1.0.0-beta": {
       "type": "project",
-      "path": "../../../src/MyTested.Mvc.ViewFeatures/project.json",
-      "msbuildProject": "../../../src/MyTested.Mvc.ViewFeatures/MyTested.Mvc.ViewFeatures.xproj"
+      "path": "../../../src/MyTested.AspNetCore.Mvc.ViewFeatures/project.json",
+      "msbuildProject": "../../../src/MyTested.AspNetCore.Mvc.ViewFeatures/MyTested.AspNetCore.Mvc.ViewFeatures.xproj"
     }
   },
   "projectFileDependencyGroups": {
     "": [
       "MusicStore.Web >= 1.0.0-*",
-      "MyTested.Mvc >= 1.0.0-*",
+      "MyTested.AspNetCore.Mvc >= 1.0.0-*",
       "XUnit >= 2.1.0",
       "dotnet-test-xunit >= 1.0.0-*"
     ],

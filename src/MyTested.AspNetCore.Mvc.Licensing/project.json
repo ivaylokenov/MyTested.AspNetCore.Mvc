@@ -1,0 +1,36 @@
+﻿{
+  "title": "MyTested.AspNetCore.Mvc.Licensing",
+  "description": "My Tested ASP.NET Core MVC licensing components.",
+  "version": "1.0.0-alpha",
+  "authors": [ "Ivaylo Kenov" ],
+  "packOptions": {
+    "projectUrl": "https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc",
+    "licenseUrl": "https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/master/LICENSE",
+    "tags": [ "aspnetcore", "aspnetcoremvc", "testing", "unit", "tests", "fluent", "testing", "framework", "asp", "net", "core", "mvc", "test", "mymvc" ],
+    "requireLicenseAcceptance": true,
+    "repository": {
+      "type": "git",
+      "url": "git://github.com/ivaylokenov/MyTested.AspNetCore.Mvc"
+    }
+  },
+
+  "buildOptions": {
+    "warningsAsErrors": true,
+    "xmlDoc": true,
+    "optimize": true,
+    "nowarn": [
+      "CS1591"
+    ],
+    "keyFile": "../../tools/Key.snk"
+  },
+
+  "frameworks": {
+    "net451": { },
+    "netstandard1.4": {
+      "dependencies": {
+        "NETStandard.Library": "1.5.0-rc2-*",
+        "System.Security.Cryptography.Csp": "4.0.0-rc2-*"
+      }
+    }
+  }
+}

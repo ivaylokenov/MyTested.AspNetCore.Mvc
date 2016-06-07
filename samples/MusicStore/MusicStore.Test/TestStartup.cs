@@ -9,7 +9,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using Mocks;
     using Models;
-    using MyTested.Mvc;
+    using MyTested.AspNetCore.Mvc;
 
     public class TestStartup : Startup
     {

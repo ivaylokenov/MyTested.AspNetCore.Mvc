@@ -1,7 +1,7 @@
 ﻿namespace MusicStore.Test.Controllers
 {
     using MusicStore.Controllers;
-    using MyTested.Mvc;
+    using MyTested.AspNetCore.Mvc;
     using Xunit;
 
     public class HomeControllerTest

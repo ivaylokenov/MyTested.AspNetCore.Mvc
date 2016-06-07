@@ -3,7 +3,7 @@
     using System.Threading;
     using Models;
     using MusicStore.Controllers;
-    using MyTested.Mvc;
+    using MyTested.AspNetCore.Mvc;
     using Xunit;
 
     using HttpMethod = System.Net.Http.HttpMethod;
