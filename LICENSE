@@ -1,4 +1,4 @@
-MyTested.Mvc
+MyTested.AspNetCore.Mvc
 Code by Ivaylo Kenov. Copyright (c) 2015 Ivaylo Kenov.
 ===============================================================================
 
@@ -15,11 +15,11 @@ FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more det
 FOSS License Exception
 ===============================================================================
 
-This Exception applies to open source applications built with MyTested.Mvc and 
-MyTested.Mvc extensions ("The Software"), and to open source Derivative Works of 
+This Exception applies to open source applications built with MyTested.AspNetCore.Mvc and 
+MyTested.AspNetCore.Mvc extensions ("The Software"), and to open source Derivative Works of 
 the Software, that use the Software under the terms of GNU Affero General 
 Public License, version 3 ("AGPLv3"). The Exception extends AGPLv3 by providing 
-additional grants that allows developers of FOSS applications to include MyTested.Mvc 
+additional grants that allows developers of FOSS applications to include MyTested.AspNetCore.Mvc 
 with their FOSS applications in combination with other software licensed under 
 the licenses from the "Open Source License List" below, provided that:
 
@@ -65,5 +65,5 @@ Zlib/libpng License                                      -
 
 Commercial License
 ===========================================================================
-In addition to this license, MyTested.Mvc is offered under free or paid commercial licenses.
+In addition to this license, MyTested.AspNetCore.Mvc is offered under free or paid commercial licenses.
 see https://mytestedasp.net/products/mvc#pricing for details.
