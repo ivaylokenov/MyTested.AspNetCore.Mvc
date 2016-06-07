@@ -9,6 +9,7 @@
         private const string EnvironmentNameConfigKey = "Environment";
         private const string AutomaticStartupConfigKey = "AutomaticStartup";
         private const string FullStartupNameConfigKey = "FullStartupName";
+        private const string ModelStateValidationConfigKey = "ModelStateValidation";
         private const string LicenseConfigKey = "License";
         private const string LicensesConfigKey = "Licenses";
 
@@ -26,6 +27,8 @@
         internal bool AutomaticStartup => this.configuration.GetValue(AutomaticStartupConfigKey, true);
 
         internal string FullStartupName => this.configuration[FullStartupNameConfigKey];
+
+        internal bool ModelStateValidation => this.configuration.GetValue(ModelStateValidationConfigKey, true);
 
         internal IEnumerable<string> Licenses
         {

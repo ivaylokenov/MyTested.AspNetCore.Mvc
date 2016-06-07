@@ -17,7 +17,7 @@
                 .Controller<MvcController>()
                 .Calling(c => c.ModelStateCheck(requestModelWithErrors))
                 .ShouldHave()
-                .ModelStateFor<RequestModel>(modelState => modelState
+                .ModelState(modelState => modelState.For<RequestModel>()
                     .ContainingNoErrorFor(r => r.NonRequiredString)
                     .ContainingErrorFor(r => r.Integer)
                     .ContainingErrorFor(r => r.RequiredString));
@@ -35,7 +35,7 @@
                         .Controller<MvcController>()
                         .Calling(c => c.ModelStateCheck(requestModelWithErrors))
                         .ShouldHave()
-                        .ModelStateFor<RequestModel>(modelState => modelState
+                        .ModelState(modelState => modelState.For<RequestModel>()
                             .ContainingNoErrorFor(r => r.NonRequiredString)
                             .ContainingErrorFor(r => r.Integer)
                             .ContainingErrorFor(r => r.RequiredString)

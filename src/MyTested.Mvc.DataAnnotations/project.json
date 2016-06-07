@@ -1,6 +1,6 @@
-{
-  "title": "MyTested.Mvc.Caching",
-  "description": "My Tested MVC caching components for testing ASP.NET Core MVC.",
+﻿{
+  "title": "MyTested.Mvc.DataAnnotations",
+  "description": "My Tested MVC data annotations for testing ASP.NET Core MVC.",
   "version": "1.0.0-beta",
   "authors": [ "Ivaylo Kenov" ],
   "packOptions": {
@@ -25,7 +25,7 @@
   },
 
   "dependencies": {
-    "Microsoft.Extensions.Caching.Memory": "1.0.0-*",
+    "Microsoft.AspNetCore.Mvc.DataAnnotations": "1.0.0-*",
     "MyTested.Mvc.Core": "1.0.0-*"
   },
 

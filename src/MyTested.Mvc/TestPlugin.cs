@@ -5,7 +5,7 @@
 
     public class TestPlugin : IDefaultRegistrationPlugin
     {
-        public int Priority => int.MinValue;
+        public long Priority => 0;
 
         public Action<IServiceCollection> DefaultServiceRegistrationDelegate
             => serviceCollection => serviceCollection.AddMvc();

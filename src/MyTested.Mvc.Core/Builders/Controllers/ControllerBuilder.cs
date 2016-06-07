@@ -5,6 +5,7 @@
     using Base;
     using Contracts.Controllers;
     using Contracts.ShouldPassFor;
+    using Internal.Application;
     using Internal.Contracts;
     using Internal.Http;
     using Internal.TestContexts;
@@ -41,7 +42,7 @@
         {
             this.TestContext = testContext;
 
-            this.enabledValidation = true;
+            this.enabledValidation = TestApplication.TestConfiguration.ModelStateValidation;
             this.aggregatedServices = new Dictionary<Type, object>();
 
             this.ValidateControllerType();

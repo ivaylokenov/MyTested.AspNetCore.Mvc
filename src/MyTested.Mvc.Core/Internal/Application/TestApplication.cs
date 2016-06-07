@@ -359,10 +359,7 @@
 
             serviceCollection.ForEach(service =>
             {
-                var serviceType = service.ServiceType;
-                var implementationType = service.ImplementationType;
-
-                TestServiceProvider.SaveServiceLifetime(serviceType, service.Lifetime);
+                TestServiceProvider.SaveServiceLifetime(service.ServiceType, service.Lifetime);
 
                 foreach (var serviceRegistrationPlugin in ServiceRegistrationPlugins)
                 {

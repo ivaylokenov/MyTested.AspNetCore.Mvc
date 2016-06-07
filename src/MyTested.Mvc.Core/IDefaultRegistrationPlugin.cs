@@ -5,7 +5,7 @@
 
     public interface IDefaultRegistrationPlugin
     {
-        int Priority { get; }
+        long Priority { get; }
         
         Action<IServiceCollection> DefaultServiceRegistrationDelegate { get; }
     }

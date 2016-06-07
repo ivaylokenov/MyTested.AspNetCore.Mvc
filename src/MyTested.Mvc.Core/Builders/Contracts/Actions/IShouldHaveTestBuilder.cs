@@ -36,11 +36,9 @@
         /// <summary>
         /// Tests whether the action has specific <see cref="Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary"/> errors.
         /// </summary>
-        /// <typeparam name="TRequestModel">Request model type to be tested for errors.</typeparam>
-        /// <param name="modelErrorTestBuilder">Builder for testing specific <see cref="Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary"/>
-        /// errors for the provided model type.</param>
+        /// <param name="modelStateTestBuilder">Builder for testing specific <see cref="Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary"/> errors.</param>
         /// <returns>Test builder of <see cref="IAndTestBuilder{TActionResult}"/> type.</returns>
-        IAndTestBuilder<TActionResult> ModelStateFor<TRequestModel>(Action<IModelErrorTestBuilder<TRequestModel>> modelErrorTestBuilder);
+        IAndTestBuilder<TActionResult> ModelState(Action<IModelStateTestBuilder> modelStateTestBuilder);
 
         /// <summary>
         /// Tests whether the action has valid <see cref="Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary"/> with no errors.

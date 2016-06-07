@@ -72,7 +72,8 @@
                     With.Default<LoginViewModel>(),
                     With.No<string>()))
                 .ShouldHave()
-                .ModelStateFor<LoginViewModel>(modelState => modelState
+                .ModelState(modelState => modelState
+                    .For<LoginViewModel>()
                     .ContainingErrorFor(m => m.Email)
                     .ContainingErrorFor(m => m.Password))
                 .AndAlso()
@@ -177,7 +178,8 @@
                     model,
                     With.No<string>()))
                 .ShouldHave()
-                .ModelStateFor<ValidationSummary>(modelState => modelState
+                .ModelState(modelState => modelState
+                    .For<ValidationSummary>()
                     .ContainingError(string.Empty)
                     .ThatEquals("Invalid login attempt."))
                 .AndAlso()

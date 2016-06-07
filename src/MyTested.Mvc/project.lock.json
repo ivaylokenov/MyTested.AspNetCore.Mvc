@@ -1265,6 +1265,20 @@
           "net451/MyTested.Mvc.Core.dll": {}
         }
       },
+      "MyTested.Mvc.DataAnnotations/1.0.0-beta": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc.DataAnnotations": "1.0.0",
+          "MyTested.Mvc.Core": "1.0.0"
+        },
+        "compile": {
+          "net451/MyTested.Mvc.DataAnnotations.dll": {}
+        },
+        "runtime": {
+          "net451/MyTested.Mvc.DataAnnotations.dll": {}
+        }
+      },
       "MyTested.Mvc.Licensing/1.0.0-beta2": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
@@ -4013,6 +4027,20 @@
         },
         "runtime": {
           "netstandard1.5/MyTested.Mvc.Core.dll": {}
+        }
+      },
+      "MyTested.Mvc.DataAnnotations/1.0.0-beta": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.5",
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc.DataAnnotations": "1.0.0",
+          "MyTested.Mvc.Core": "1.0.0"
+        },
+        "compile": {
+          "netstandard1.5/MyTested.Mvc.DataAnnotations.dll": {}
+        },
+        "runtime": {
+          "netstandard1.5/MyTested.Mvc.DataAnnotations.dll": {}
         }
       },
       "MyTested.Mvc.Licensing/1.0.0-beta2": {
@@ -8825,6 +8853,11 @@
       "path": "../MyTested.Mvc.Core/project.json",
       "msbuildProject": "../MyTested.Mvc.Core/MyTested.Mvc.Core.xproj"
     },
+    "MyTested.Mvc.DataAnnotations/1.0.0-beta": {
+      "type": "project",
+      "path": "../MyTested.Mvc.DataAnnotations/project.json",
+      "msbuildProject": "../MyTested.Mvc.DataAnnotations/MyTested.Mvc.DataAnnotations.xproj"
+    },
     "MyTested.Mvc.Licensing/1.0.0-beta2": {
       "type": "project",
       "path": "../MyTested.Mvc.Licensing/project.json",
@@ -8846,6 +8879,7 @@
       "Microsoft.AspNetCore.Mvc >= 1.0.0-*",
       "MyTested.Mvc.Caching >= 1.0.0-*",
       "MyTested.Mvc.Core >= 1.0.0-*",
+      "MyTested.Mvc.DataAnnotations >= 1.0.0-*",
       "MyTested.Mvc.Session >= 1.0.0-*",
       "MyTested.Mvc.ViewFeatures >= 1.0.0-*"
     ],

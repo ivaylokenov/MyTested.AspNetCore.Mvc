@@ -14,9 +14,9 @@
     public partial class ShouldHaveTestBuilder<TActionResult>
     {
         /// <inheritdoc />
-        public IAndTestBuilder<TActionResult> ModelStateFor<TRequestModel>(Action<IModelErrorTestBuilder<TRequestModel>> modelErrorTestBuilder)
+        public IAndTestBuilder<TActionResult> ModelState(Action<IModelStateTestBuilder> modelStateTestBuilder)
         {
-            modelErrorTestBuilder(new ModelErrorTestBuilder<TRequestModel>(this.TestContext));
+            modelStateTestBuilder(new ModelStateTestBuilder(this.TestContext));
             return this.NewAndTestBuilder();
         }
 
