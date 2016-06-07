@@ -79,7 +79,9 @@ namespace MyApp.Tests.Controllers
 The example uses [xUnit](http://xunit.github.io/) but you can use whatever testing framework you want.
 Basically, MyTested.AspNetCore.Mvc throws an unhandled exception with a friendly error message if the assertion does not pass and the test fails.
 
-Here are other random examples of what the fluent testing API is capable of:
+## Examples
+
+Here are some random examples of what the fluent testing API is capable of:
 
 ```c#
 // tests a route for correct controller, action and resolved route values
