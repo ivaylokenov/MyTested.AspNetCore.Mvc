@@ -5,7 +5,7 @@ MyTested.AspNetCore.Mvc is a unit testing library (currently in Alpha version) p
 
 ## Getting started
 
-It is strongly advised to start with the [tutorial](http://ivaylokenov.github.io/MyTested.AspNetCore.Mvc/tutorial/intro.html) (comming soon) in order to get familiar with MyTested.AspNetCore.Mvc. Additionally, you may see the [documentation](http://ivaylokenov.github.io/MyTested.AspNetCore.Mvc/guide/intro.html) (comming soon) for full list of available features. MyTested.AspNetCore.Mvc is 100% covered by [more than 1500 unit tests](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/tree/master/test/) and should work correctly. Almost all items in the [issues page](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/issues) are expected future features and enhancements.
+It is strongly advised to start with the [tutorial](http://ivaylokenov.github.io/MyTested.AspNetCore.Mvc/tutorial/intro.html) (coming soon) in order to get familiar with MyTested.AspNetCore.Mvc. Additionally, you may see the [documentation](http://ivaylokenov.github.io/MyTested.AspNetCore.Mvc/guide/intro.html) (coming soon) for full list of available features. MyTested.AspNetCore.Mvc is 100% covered by [more than 1500 unit tests](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/tree/master/test/) and should work correctly. Almost all items in the [issues page](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/issues) are expected future features and enhancements.
 
 ## Installation
 
@@ -26,7 +26,7 @@ For other interesting packages check out:
 	
 ## How to use
 
-Make sure to check out the [tutorial](http://ivaylokenov.github.io/MyTested.AspNetCore.Mvc/tutorial/intro.html) (comming soon) and the [documentation](http://ivaylokenov.github.io/MyTested.AspNetCore.Mvc/guide/intro.html) (comming soon) for a preview of the available features.
+Make sure to check out the [tutorial](http://ivaylokenov.github.io/MyTested.AspNetCore.Mvc/tutorial/intro.html) (coming soon) and the [documentation](http://ivaylokenov.github.io/MyTested.AspNetCore.Mvc/guide/intro.html) (coming soon) for a preview of the available features.
 
 You can also check out the [provided samples](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/tree/master/samples) for real-life ASP.NET Core MVC application testing.
 
@@ -167,9 +167,9 @@ Code by Ivaylo Kenov. Copyright 2015 Ivaylo Kenov ([http://mytestedasp.net](http
 
 **Currently MyTested.AspNetCore.Mvc is in alpha version and it is not advised to use it in production environments. The testing framework is fully tested and working correctly but the fluent APIs may change in the final production-ready build.**
 
-MyTested.AspNetCore.Mvc source code is available under GNU Affero General Public License/FOSS License Exception. The free version of the library allows up to 500 assertions (around 100 test cases) per test project. Additionally, full-featured licenses can be requested for free by individuals, startups and educational institutions. Commercial licensing with private support is also available.
+MyTested.AspNetCore.Mvc source code is available under GNU Affero General Public License/FOSS License Exception. The free version of the library allows up to 500 assertions (around 100 test cases) per test project. Additionally, full-featured licenses can be requested for free by individuals, startups and educational institutions. Commercial licensing with private support will also be available with the final release.
 
-See [https://mytestedasp.net/products/mvc#pricing](https://mytestedasp.net/products/mvc#pricing) and the [LICENSE](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/master/LICENSE) for detailed information.
+See the [LICENSE](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/master/LICENSE) for detailed information.
 
 If you want an early-bird license key for free, send a contact message through [http://mytestedasp.net](http://mytestedasp.net).
 
