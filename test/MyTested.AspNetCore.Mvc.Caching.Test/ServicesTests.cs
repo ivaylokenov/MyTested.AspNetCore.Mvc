@@ -12,7 +12,7 @@
     using Setups.Startups;
     using Xunit;
 
-    public class MyMvcTests
+    public class ServicesTests
     {
         [Fact]
         public void MockedMemoryCacheShouldBeRegistedWithAddedCaching()
