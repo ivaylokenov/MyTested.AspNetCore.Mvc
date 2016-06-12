@@ -21,7 +21,7 @@
         public void ConfigureTestServices(IServiceCollection services)
         {
             base.ConfigureServices(services);
-            
+
             services.Remove<DbContextOptions<MusicStoreContext>>();
             services.AddDbContext<MusicStoreContext>(opts =>
             {
@@ -29,7 +29,7 @@
 
                 ((IDbContextOptionsBuilderInfrastructure)opts).AddOrUpdateExtension(new ScopedInMemoryOptionsExtension());
             });
-            
+
             services.ReplaceSingleton<SignInManager<ApplicationUser>, MockedSignInManager>();
         }
 
