@@ -40,6 +40,14 @@
 
             if (existingDbContext != null)
             {
+                if (existingDbContext.Lifetime != ServiceLifetime.Scoped)
+                {
+                    serviceCollection.Replace(
+                        existingDbContext.ServiceType,
+                        existingDbContext.ImplementationFactory,
+                        ServiceLifetime.Scoped);
+                }
+
                 var genericMethod = ReplaceDatabaseMethodInfo.MakeGenericMethod(existingDbContext.ImplementationType);
                 genericMethod.Invoke(null, new object[] { serviceCollection });
             }
