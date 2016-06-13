@@ -9,14 +9,14 @@
     public interface IModelDetailsTestBuilder<TResponseModel> : IModelErrorTestBuilder<TResponseModel>
     {
         /// <summary>
-        /// Tests whether the returned model from the invoked action passes given assertions.
+        /// Tests whether the returned model from the invoked action passes the given assertions.
         /// </summary>
         /// <param name="assertions">Action containing all assertions on the model.</param>
         /// <returns>Test builder of <see cref="IModelErrorTestBuilder{TResponseModel}"/>.</returns>
         IModelErrorTestBuilder<TResponseModel> Passing(Action<TResponseModel> assertions);
 
         /// <summary>
-        /// Tests whether the returned model from the invoked action passes given predicate.
+        /// Tests whether the returned model from the invoked action passes the given predicate.
         /// </summary>
         /// <param name="predicate">Predicate testing the model.</param>
         /// <returns>Test builder of <see cref="IModelErrorTestBuilder{TResponseModel}"/>.</returns>

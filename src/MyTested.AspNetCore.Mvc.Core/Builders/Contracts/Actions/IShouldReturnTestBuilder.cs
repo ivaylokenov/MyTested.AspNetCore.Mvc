@@ -83,14 +83,14 @@
         IContentTestBuilder Content(string content);
 
         /// <summary>
-        /// Tests whether <see cref="Microsoft.AspNetCore.Mvc.ContentResult"/> passes given assertions.
+        /// Tests whether <see cref="Microsoft.AspNetCore.Mvc.ContentResult"/> passes the given assertions.
         /// </summary>
         /// <param name="assertions">Action containing all assertions on the content.</param>
         /// <returns>Test builder of <see cref="IContentTestBuilder"/> type.</returns>
         IContentTestBuilder Content(Action<string> assertions);
 
         /// <summary>
-        /// Tests whether <see cref="Microsoft.AspNetCore.Mvc.ContentResult"/> passes given predicate.
+        /// Tests whether <see cref="Microsoft.AspNetCore.Mvc.ContentResult"/> passes the given predicate.
         /// </summary>
         /// <param name="predicate">Predicate testing the content.</param>
         /// <returns>Test builder of <see cref="IContentTestBuilder"/> type.</returns>

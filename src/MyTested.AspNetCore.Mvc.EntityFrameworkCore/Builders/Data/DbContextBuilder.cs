@@ -3,7 +3,6 @@
     using System;
     using Base;
     using Contracts.Data;
-    using Internal.Application;
     using Internal.TestContexts;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
@@ -28,17 +27,14 @@
             where TDbContext : DbContext
         {
             CommonValidator.CheckForNullReference(dbContextSetup, nameof(dbContextSetup));
-
-            var serviceLifetime = TestServiceProvider.GetServiceLifetime<TDbContext>();
-            if (serviceLifetime != ServiceLifetime.Scoped)
-            {
-                throw new InvalidOperationException("The 'WithSetup' method can be used only for services with scoped lifetime.");
-            }
-
-            var dbContext = this.TestContext.HttpContext.RequestServices.GetRequiredService<TDbContext>();
+            ServiceValidator.ValidateScopedServiceLifetime<TDbContext>(nameof(WithSetup));
+            
+            var dbContext = this.TestContext
+                .HttpContext
+                .RequestServices
+                .GetRequiredService<TDbContext>();
 
             dbContextSetup(dbContext);
-
             dbContext.SaveChanges();
         }
     }

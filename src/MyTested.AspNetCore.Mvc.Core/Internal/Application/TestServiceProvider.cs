@@ -58,7 +58,7 @@
             ServiceValidator.ValidateServices();
             return Current.GetService<TInstance>();
         }
-
+        
         /// <summary>
         /// Gets collection of services. Returns null if no service of this type is not found. Throws exception if there are no registered services.
         /// </summary>

@@ -1,6 +1,8 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Utilities.Validators
 {
+    using System;
     using Internal.Application;
+    using Microsoft.Extensions.DependencyInjection;
 
     /// <summary>
     /// Validator class containing application services validation logic.
@@ -27,6 +29,20 @@
             CommonValidator.CheckForNullReference(
                 service,
                 $"{typeof(TService).Name} could not be resolved from the services provider. Before running this test case, the service should be registered in the 'StartsFrom' method and");
+        }
+
+        /// <summary>
+        /// Validates whether service exists and has scoped <see cref="ServiceLifetime"/>.
+        /// </summary>
+        /// <typeparam name="TService">Type of service to validate.</typeparam>
+        /// <param name="methodName">Name of the calling method.</param>
+        public static void ValidateScopedServiceLifetime<TService>(string methodName)
+        {
+            var serviceLifetime = TestServiceProvider.GetServiceLifetime<TService>();
+            if (serviceLifetime != ServiceLifetime.Scoped)
+            {
+                throw new InvalidOperationException($"The '{methodName}' method can be used only for services with scoped lifetime.");
+            }
         }
 
         /// <summary>

@@ -25,14 +25,14 @@
         IAndCreatedTestBuilder AtLocation(string location);
 
         /// <summary>
-        /// Tests whether <see cref="CreatedResult"/> location passes given assertions.
+        /// Tests whether <see cref="CreatedResult"/> location passes the given assertions.
         /// </summary>
         /// <param name="assertions">Action containing all assertions on the location.</param>
         /// <returns>The same <see cref="IAndCreatedTestBuilder"/>.</returns>
         IAndCreatedTestBuilder AtLocationPassing(Action<string> assertions);
 
         /// <summary>
-        /// Tests whether <see cref="CreatedResult"/> location passes given predicate.
+        /// Tests whether <see cref="CreatedResult"/> location passes the given predicate.
         /// </summary>
         /// <param name="predicate">Predicate testing the location.</param>
         /// <returns>The same <see cref="IAndCreatedTestBuilder"/>.</returns>
