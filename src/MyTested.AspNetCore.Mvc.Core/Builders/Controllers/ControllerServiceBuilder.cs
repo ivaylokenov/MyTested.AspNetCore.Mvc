@@ -22,7 +22,7 @@
             var serviceLifetime = TestServiceProvider.GetServiceLifetime<TService>();
             if (serviceLifetime != ServiceLifetime.Scoped)
             {
-                throw new InvalidOperationException("This overload of the 'WithServiceSetupFor' method can be used only for services with scoped lifetime.");
+                throw new InvalidOperationException("The 'WithServiceSetupFor' method can be used only for services with scoped lifetime.");
             }
 
             scopedServiceSetup(this.HttpContext.RequestServices.GetService<TService>());

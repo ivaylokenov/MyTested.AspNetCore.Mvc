@@ -12,7 +12,7 @@
     public class ServicesTests
     {
         [Fact]
-        public static void ReplaceDbContextShouldReplaceNonInMemoryDatabaseWithInMemoryScopedOne()
+        public void ReplaceDbContextShouldReplaceNonInMemoryDatabaseWithInMemoryScopedOne()
         {
             var services = new ServiceCollection();
 
@@ -21,6 +21,35 @@
 
             services.ReplaceDbContext();
 
+            this.AssertCorrectDbContextAndOptions(services);
+        }
+
+        [Fact]
+        public void ReplaceDbContextShouldReplaceInMemoryDatabaseWithInMemoryScopedOne()
+        {
+            var services = new ServiceCollection();
+
+            services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase());
+
+            services.ReplaceDbContext();
+
+            this.AssertCorrectDbContextAndOptions(services);
+        }
+
+        [Fact]
+        public void ReplaceDbContextShouldNotAddDbContextIfMissing()
+        {
+            var services = new ServiceCollection();
+            
+            services.ReplaceDbContext();
+
+            var serviceProvider = services.BuildServiceProvider();
+
+            Assert.Null(serviceProvider.GetService<DbContext>());
+        }
+
+        private void AssertCorrectDbContextAndOptions(IServiceCollection services)
+        {
             var serviceProvider = services.BuildServiceProvider();
 
             var dbContextService = services.FirstOrDefault(s => s.ServiceType == typeof(CustomDbContext));
