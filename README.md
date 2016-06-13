@@ -45,7 +45,7 @@ namespace MyApp.Tests
 		{
 			base.ConfigureServices(services);
 			
-			services.Replace<IRepository, MockedRepository>();
+			services.Replace<IService, MockedService>();
 		}
 	}
 }
