@@ -13,9 +13,10 @@
         /// Replaces the default <see cref="IMemoryCache"/> with a mocked implementation.
         /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
-        public static void ReplaceMemoryCache(this IServiceCollection serviceCollection)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection ReplaceMemoryCache(this IServiceCollection serviceCollection)
         {
-            serviceCollection.Replace<IMemoryCache, MockedMemoryCache>(ServiceLifetime.Transient);
+            return serviceCollection.Replace<IMemoryCache, MockedMemoryCache>(ServiceLifetime.Transient);
         }
     }
 }

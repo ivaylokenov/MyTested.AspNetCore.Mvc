@@ -25,7 +25,8 @@
         /// Replaces the registered <see cref="DbContext"/> with an in memory scoped implementation.
         /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
-        public static void ReplaceDbContext(this IServiceCollection serviceCollection)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection ReplaceDbContext(this IServiceCollection serviceCollection)
         {
             var existingDbContextOptionsService =
                 serviceCollection.FirstOrDefault(s => BaseDbContextOptionsType.IsAssignableFrom(s.ServiceType));
@@ -51,6 +52,8 @@
                 var genericMethod = ReplaceDatabaseMethodInfo.MakeGenericMethod(existingDbContext.ImplementationType);
                 genericMethod.Invoke(null, new object[] { serviceCollection });
             }
+
+            return serviceCollection;
         }
 
         private static void ReplaceDatabase<TDbContext>(IServiceCollection serviceCollection)

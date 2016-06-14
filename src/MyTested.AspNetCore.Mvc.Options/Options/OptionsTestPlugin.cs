@@ -1,27 +1,25 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Options
 {
     using System;
-    using System.Linq;
     using Microsoft.Extensions.DependencyInjection;
-    using Utilities.Extensions;
+    using Microsoft.Extensions.Options;
 
     public class OptionsTestPlugin : IServiceRegistrationPlugin
     {
-        private const string OptionsPrefix = "IOptions<";
-
+        private readonly Type defaultOptionsServiceType = typeof(IOptions<>);
+        private readonly Type defaultOptionsImplementationType = typeof(OptionsManager<>);
+        
         public Func<ServiceDescriptor, bool> ServiceSelectorPredicate
         {
             get
             {
                 return
                     serviceDescriptor =>
-                        serviceDescriptor.ServiceType.Name.StartsWith(OptionsPrefix);
+                        serviceDescriptor.ServiceType == defaultOptionsServiceType &&
+                        serviceDescriptor.ImplementationType == defaultOptionsImplementationType;
             }
         }
 
-        public Action<IServiceCollection> ServiceRegistrationDelegate
-            => serviceCollection => serviceCollection
-                .ToArray()
-                .ForEach(s => serviceCollection.ReplaceLifetime(s.ServiceType, ServiceLifetime.Scoped));
+        public Action<IServiceCollection> ServiceRegistrationDelegate => serviceCollection => serviceCollection.ReplaceOptions();
     }
 }

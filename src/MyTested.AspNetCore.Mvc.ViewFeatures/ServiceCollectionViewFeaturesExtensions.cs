@@ -13,9 +13,10 @@
         /// Replaces the default <see cref="ITempDataProvider"/> with a mocked implementation.
         /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
-        public static void ReplaceTempDataProvider(this IServiceCollection serviceCollection)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection ReplaceTempDataProvider(this IServiceCollection serviceCollection)
         {
-            serviceCollection.ReplaceSingleton<ITempDataProvider, MockedTempDataProvider>();
+            return serviceCollection.ReplaceSingleton<ITempDataProvider, MockedTempDataProvider>();
         }
     }
 }

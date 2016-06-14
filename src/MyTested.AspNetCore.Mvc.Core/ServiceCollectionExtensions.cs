@@ -20,31 +20,35 @@
         /// Adds <see cref="IHttpContextAccessor"/> with singleton scope to the service collection.
         /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
-        public static void AddHttpContextAccessor(this IServiceCollection serviceCollection)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection AddHttpContextAccessor(this IServiceCollection serviceCollection)
         {
             CommonValidator.CheckForNullReference(serviceCollection, nameof(IServiceCollection));
-            serviceCollection.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            return serviceCollection.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         /// <summary>
         /// Adds <see cref="IActionContextAccessor"/> with singleton scope to the service collection.
         /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
-        public static void AddActionContextAccessor(this IServiceCollection serviceCollection)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection AddActionContextAccessor(this IServiceCollection serviceCollection)
         {
             CommonValidator.CheckForNullReference(serviceCollection, nameof(serviceCollection));
-            serviceCollection.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+            return serviceCollection.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
         }
-        
+
         /// <summary>
         /// Removes а service from the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="service">Type of the service which will be removed.</param>
-        public static void Remove(this IServiceCollection serviceCollection, Type service)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection Remove(this IServiceCollection serviceCollection, Type service)
         {
             CommonValidator.CheckForNullReference(service, nameof(service));
             RemoveServices(serviceCollection, s => s.ServiceType == service);
+            return serviceCollection;
         }
 
         /// <summary>
@@ -53,10 +57,12 @@
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="service">Type of the service which will be removed.</param>
         /// <param name="implementationType">Service implementation type which will be removed.</param>
-        public static void Remove(this IServiceCollection serviceCollection, Type service, Type implementationType)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection Remove(this IServiceCollection serviceCollection, Type service, Type implementationType)
         {
             CommonValidator.CheckForNullReference(service, nameof(service));
             RemoveServices(serviceCollection, s => s.ServiceType == service && s.ImplementationType == implementationType);
+            return serviceCollection;
         }
 
         /// <summary>
@@ -64,10 +70,11 @@
         /// </summary>
         /// <typeparam name="TServive">Type of the service which will be removed.</typeparam>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
-        public static void Remove<TServive>(this IServiceCollection serviceCollection)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection Remove<TServive>(this IServiceCollection serviceCollection)
             where TServive : class
         {
-            serviceCollection.Remove(typeof(TServive));
+            return serviceCollection.Remove(typeof(TServive));
         }
 
         /// <summary>
@@ -76,11 +83,12 @@
         /// <typeparam name="TServive">Type of the service which will be removed.</typeparam>
         /// <typeparam name="TImplementation">Service implementation type which will be removed.</typeparam>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
-        public static void Remove<TServive, TImplementation>(this IServiceCollection serviceCollection)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection Remove<TServive, TImplementation>(this IServiceCollection serviceCollection)
             where TServive : class
             where TImplementation : class, TServive
         {
-            serviceCollection.Remove(typeof(TServive), typeof(TImplementation));
+            return serviceCollection.Remove(typeof(TServive), typeof(TImplementation));
         }
 
         /// <summary>
@@ -88,10 +96,12 @@
         /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="service">Type of the service which will be removed.</param>
-        public static void RemoveTransient(this IServiceCollection serviceCollection, Type service)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection RemoveTransient(this IServiceCollection serviceCollection, Type service)
         {
             CommonValidator.CheckForNullReference(service, nameof(service));
             RemoveServices(serviceCollection, s => s.ServiceType == service && s.Lifetime == ServiceLifetime.Transient);
+            return serviceCollection;
         }
 
         /// <summary>
@@ -100,11 +110,13 @@
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="service">Type of the service which will be removed.</param>
         /// <param name="implementationType">Service implementation type which will be removed.</param>
-        public static void RemoveTransient(this IServiceCollection serviceCollection, Type service, Type implementationType)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection RemoveTransient(this IServiceCollection serviceCollection, Type service, Type implementationType)
         {
             CommonValidator.CheckForNullReference(service, nameof(service));
             CommonValidator.CheckForNullReference(implementationType, nameof(implementationType));
             RemoveServices(serviceCollection, s => s.ServiceType == service && s.ImplementationType == implementationType && s.Lifetime == ServiceLifetime.Transient);
+            return serviceCollection;
         }
 
         /// <summary>
@@ -112,10 +124,11 @@
         /// </summary>
         /// <typeparam name="TServive">Type of the service which will be removed.</typeparam>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
-        public static void RemoveTransient<TServive>(this IServiceCollection serviceCollection)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection RemoveTransient<TServive>(this IServiceCollection serviceCollection)
             where TServive : class
         {
-            serviceCollection.RemoveTransient(typeof(TServive));
+            return serviceCollection.RemoveTransient(typeof(TServive));
         }
 
         /// <summary>
@@ -124,11 +137,12 @@
         /// <typeparam name="TServive">Type of the service which will be removed.</typeparam>
         /// <typeparam name="TImplementation">Service implementation type which will be removed.</typeparam>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
-        public static void RemoveTransient<TServive, TImplementation>(this IServiceCollection serviceCollection)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection RemoveTransient<TServive, TImplementation>(this IServiceCollection serviceCollection)
             where TServive : class
             where TImplementation : class, TServive
         {
-            serviceCollection.RemoveTransient(typeof(TServive), typeof(TImplementation));
+            return serviceCollection.RemoveTransient(typeof(TServive), typeof(TImplementation));
         }
 
         /// <summary>
@@ -136,10 +150,12 @@
         /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="service">Type of the service which will be removed.</param>
-        public static void RemoveSingleton(this IServiceCollection serviceCollection, Type service)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection RemoveSingleton(this IServiceCollection serviceCollection, Type service)
         {
             CommonValidator.CheckForNullReference(service, nameof(service));
             RemoveServices(serviceCollection, s => s.ServiceType == service && s.Lifetime == ServiceLifetime.Singleton);
+            return serviceCollection;
         }
 
         /// <summary>
@@ -148,11 +164,13 @@
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="service">Type of the service which will be removed.</param>
         /// <param name="implementationType">Service implementation type which will be removed.</param>
-        public static void RemoveSingleton(this IServiceCollection serviceCollection, Type service, Type implementationType)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection RemoveSingleton(this IServiceCollection serviceCollection, Type service, Type implementationType)
         {
             CommonValidator.CheckForNullReference(service, nameof(service));
             CommonValidator.CheckForNullReference(implementationType, nameof(implementationType));
             RemoveServices(serviceCollection, s => s.ServiceType == service && s.ImplementationType == implementationType && s.Lifetime == ServiceLifetime.Singleton);
+            return serviceCollection;
         }
 
         /// <summary>
@@ -160,10 +178,11 @@
         /// </summary>
         /// <typeparam name="TServive">Type of the service which will be removed.</typeparam>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
-        public static void RemoveSingleton<TServive>(this IServiceCollection serviceCollection)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection RemoveSingleton<TServive>(this IServiceCollection serviceCollection)
             where TServive : class
         {
-            serviceCollection.RemoveSingleton(typeof(TServive));
+            return serviceCollection.RemoveSingleton(typeof(TServive));
         }
 
         /// <summary>
@@ -172,11 +191,12 @@
         /// <typeparam name="TServive">Type of the service which will be removed.</typeparam>
         /// <typeparam name="TImplementation">Service implementation type which will be removed.</typeparam>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
-        public static void RemoveSingleton<TServive, TImplementation>(this IServiceCollection serviceCollection)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection RemoveSingleton<TServive, TImplementation>(this IServiceCollection serviceCollection)
             where TServive : class
             where TImplementation : class, TServive
         {
-            serviceCollection.RemoveSingleton(typeof(TServive), typeof(TImplementation));
+            return serviceCollection.RemoveSingleton(typeof(TServive), typeof(TImplementation));
         }
 
         /// <summary>
@@ -184,10 +204,12 @@
         /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="service">Type of the service which will be removed.</param>
-        public static void RemoveScoped(this IServiceCollection serviceCollection, Type service)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection RemoveScoped(this IServiceCollection serviceCollection, Type service)
         {
             CommonValidator.CheckForNullReference(service, nameof(service));
             RemoveServices(serviceCollection, s => s.ServiceType == service && s.Lifetime == ServiceLifetime.Scoped);
+            return serviceCollection;
         }
 
         /// <summary>
@@ -196,11 +218,13 @@
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="service">Type of the service which will be removed.</param>
         /// <param name="implementationType">Service implementation type which will be removed.</param>
-        public static void RemoveScoped(this IServiceCollection serviceCollection, Type service, Type implementationType)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection RemoveScoped(this IServiceCollection serviceCollection, Type service, Type implementationType)
         {
             CommonValidator.CheckForNullReference(service, nameof(service));
             CommonValidator.CheckForNullReference(implementationType, nameof(implementationType));
             RemoveServices(serviceCollection, s => s.ServiceType == service && s.ImplementationType == implementationType && s.Lifetime == ServiceLifetime.Scoped);
+            return serviceCollection;
         }
 
         /// <summary>
@@ -208,10 +232,11 @@
         /// </summary>
         /// <typeparam name="TServive">Type of the service which will be removed.</typeparam>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
-        public static void RemoveScoped<TServive>(this IServiceCollection serviceCollection)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection RemoveScoped<TServive>(this IServiceCollection serviceCollection)
             where TServive : class
         {
-            serviceCollection.RemoveScoped(typeof(TServive));
+            return serviceCollection.RemoveScoped(typeof(TServive));
         }
 
         /// <summary>
@@ -220,11 +245,12 @@
         /// <typeparam name="TServive">Type of the service which will be removed.</typeparam>
         /// <typeparam name="TImplementation">Service implementation type which will be removed.</typeparam>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
-        public static void RemoveScoped<TServive, TImplementation>(this IServiceCollection serviceCollection)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection RemoveScoped<TServive, TImplementation>(this IServiceCollection serviceCollection)
             where TServive : class
             where TImplementation : class, TServive
         {
-            serviceCollection.RemoveScoped(typeof(TServive), typeof(TImplementation));
+            return serviceCollection.RemoveScoped(typeof(TServive), typeof(TImplementation));
         }
 
         /// <summary>
@@ -234,11 +260,12 @@
         /// <param name="service">Type of the service which will be replaced.</param>
         /// <param name="implementationType">Service implementation type which will be used for replacement.</param>
         /// <param name="lifetime">The <see cref="ServiceLifetime"/> which will be applied on the replaced service.</param>
-        public static void Replace(this IServiceCollection serviceCollection, Type service, Type implementationType, ServiceLifetime lifetime)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection Replace(this IServiceCollection serviceCollection, Type service, Type implementationType, ServiceLifetime lifetime)
         {
-            serviceCollection.Remove(service);
-            serviceCollection.Add(ServiceDescriptor.Describe(service, implementationType, lifetime));
+            serviceCollection.Remove(service).Add(ServiceDescriptor.Describe(service, implementationType, lifetime));
             TestServiceProvider.SaveServiceLifetime(service, lifetime);
+            return serviceCollection;
         }
 
         /// <summary>
@@ -248,11 +275,12 @@
         /// <param name="service">Type of the service which will be replaced.</param>
         /// <param name="implementationFactory">Service implementation factory which will be used for replacement.</param>
         /// <param name="lifetime">The <see cref="ServiceLifetime"/> which will be applied on the replaced service.</param>
-        public static void Replace(this IServiceCollection serviceCollection, Type service, Func<IServiceProvider, object> implementationFactory, ServiceLifetime lifetime)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection Replace(this IServiceCollection serviceCollection, Type service, Func<IServiceProvider, object> implementationFactory, ServiceLifetime lifetime)
         {
-            serviceCollection.Remove(service);
-            serviceCollection.Add(ServiceDescriptor.Describe(service, implementationFactory, lifetime));
+            serviceCollection.Remove(service).Add(ServiceDescriptor.Describe(service, implementationFactory, lifetime));
             TestServiceProvider.SaveServiceLifetime(service, lifetime);
+            return serviceCollection;
         }
 
         /// <summary>
@@ -261,7 +289,8 @@
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="service">Type of the service which will be replaced.</param>
         /// <param name="lifetime">The <see cref="ServiceLifetime"/> which will be applied on the replaced service.</param>
-        public static void ReplaceLifetime(this IServiceCollection serviceCollection, Type service, ServiceLifetime lifetime)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection ReplaceLifetime(this IServiceCollection serviceCollection, Type service, ServiceLifetime lifetime)
         {
             CommonValidator.CheckForNullReference(serviceCollection, nameof(serviceCollection));
 
@@ -279,6 +308,8 @@
                         serviceCollection.Replace(s.ServiceType, s.ImplementationFactory, lifetime);
                     }
                 });
+
+            return serviceCollection;
         }
 
         /// <summary>
@@ -287,10 +318,11 @@
         /// <typeparam name="TService">Type of the service which will be replaced.</typeparam>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="lifetime">The <see cref="ServiceLifetime"/> which will be applied on the replaced service.</param>
-        public static void ReplaceLifetime<TService>(this IServiceCollection serviceCollection, ServiceLifetime lifetime)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection ReplaceLifetime<TService>(this IServiceCollection serviceCollection, ServiceLifetime lifetime)
             where TService : class 
         {
-            serviceCollection.ReplaceLifetime(typeof(TService), lifetime);
+            return serviceCollection.ReplaceLifetime(typeof(TService), lifetime);
         }
 
         /// <summary>
@@ -300,11 +332,12 @@
         /// <typeparam name="TImplementation">Service implementation type which will be used for replacement.</typeparam>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="lifetime">The <see cref="ServiceLifetime"/> which will be applied on the replaced service.</param>
-        public static void Replace<TService, TImplementation>(this IServiceCollection serviceCollection, ServiceLifetime lifetime)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection Replace<TService, TImplementation>(this IServiceCollection serviceCollection, ServiceLifetime lifetime)
             where TService : class
             where TImplementation : class, TService
         {
-            serviceCollection.Replace(typeof(TService), typeof(TImplementation), lifetime);
+            return serviceCollection.Replace(typeof(TService), typeof(TImplementation), lifetime);
         }
 
         /// <summary>
@@ -313,10 +346,12 @@
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="service">Type of the service which will be replaced.</param>
         /// <param name="implementationType">Service implementation type which will be used for replacement.</param>
-        public static void ReplaceTransient(this IServiceCollection serviceCollection, Type service, Type implementationType)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection ReplaceTransient(this IServiceCollection serviceCollection, Type service, Type implementationType)
         {
-            serviceCollection.RemoveTransient(service);
-            serviceCollection.AddTransient(service, implementationType);
+            return serviceCollection
+                .RemoveTransient(service)
+                .AddTransient(service, implementationType);
         }
 
         /// <summary>
@@ -325,10 +360,12 @@
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="service">Type of the service which will be replaced.</param>
         /// <param name="implementationFactory">Service implementation factory which will be used for replacement.</param>
-        public static void ReplaceTransient(this IServiceCollection serviceCollection, Type service, Func<IServiceProvider, object> implementationFactory)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection ReplaceTransient(this IServiceCollection serviceCollection, Type service, Func<IServiceProvider, object> implementationFactory)
         {
-            serviceCollection.RemoveTransient(service);
-            serviceCollection.AddTransient(service, implementationFactory);
+            return serviceCollection
+                .RemoveTransient(service)
+                .AddTransient(service, implementationFactory);
         }
 
         /// <summary>
@@ -337,10 +374,11 @@
         /// <typeparam name="TService">Type of the service which will be replaced.</typeparam>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="implementationFactory">Service implementation factory which will be used for replacement.</param>
-        public static void ReplaceTransient<TService>(this IServiceCollection serviceCollection, Func<IServiceProvider, object> implementationFactory)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection ReplaceTransient<TService>(this IServiceCollection serviceCollection, Func<IServiceProvider, object> implementationFactory)
             where TService : class
         {
-            serviceCollection.ReplaceTransient(typeof(TService), implementationFactory);
+            return serviceCollection.ReplaceTransient(typeof(TService), implementationFactory);
         }
 
         /// <summary>
@@ -349,11 +387,12 @@
         /// <typeparam name="TService">Type of the service which will be replaced.</typeparam>
         /// <typeparam name="TImplementation">Service implementation type which will be used for replacement.</typeparam>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
-        public static void ReplaceTransient<TService, TImplementation>(this IServiceCollection serviceCollection)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection ReplaceTransient<TService, TImplementation>(this IServiceCollection serviceCollection)
             where TService : class
             where TImplementation : class, TService
         {
-            serviceCollection.ReplaceTransient(typeof(TService), typeof(TImplementation));
+            return serviceCollection.ReplaceTransient(typeof(TService), typeof(TImplementation));
         }
 
         /// <summary>
@@ -362,10 +401,12 @@
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="service">Type of the service which will be replaced.</param>
         /// <param name="implementationType">Service implementation type which will be used for replacement.</param>
-        public static void ReplaceSingleton(this IServiceCollection serviceCollection, Type service, Type implementationType)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection ReplaceSingleton(this IServiceCollection serviceCollection, Type service, Type implementationType)
         {
-            serviceCollection.RemoveSingleton(service);
-            serviceCollection.AddSingleton(service, implementationType);
+            return serviceCollection
+                .RemoveSingleton(service)
+                .AddSingleton(service, implementationType);
         }
 
         /// <summary>
@@ -374,10 +415,12 @@
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="service">Type of the service which will be replaced.</param>
         /// <param name="implementationFactory">Service implementation factory which will be used for replacement.</param>
-        public static void ReplaceSingleton(this IServiceCollection serviceCollection, Type service, Func<IServiceProvider, object> implementationFactory)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection ReplaceSingleton(this IServiceCollection serviceCollection, Type service, Func<IServiceProvider, object> implementationFactory)
         {
-            serviceCollection.RemoveSingleton(service);
-            serviceCollection.AddSingleton(service, implementationFactory);
+            return serviceCollection
+                .RemoveSingleton(service)
+                .AddSingleton(service, implementationFactory);
         }
 
         /// <summary>
@@ -386,10 +429,12 @@
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="service">Type of the service which will be replaced.</param>
         /// <param name="implementationInstance">Service implementation instance which will be used for replacement.</param>
-        public static void ReplaceSingleton(this IServiceCollection serviceCollection, Type service, object implementationInstance)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection ReplaceSingleton(this IServiceCollection serviceCollection, Type service, object implementationInstance)
         {
-            serviceCollection.RemoveSingleton(service);
-            serviceCollection.AddSingleton(service, implementationInstance);
+            return serviceCollection
+                .RemoveSingleton(service)
+                .AddSingleton(service, implementationInstance);
         }
 
         /// <summary>
@@ -398,10 +443,11 @@
         /// <typeparam name="TService">Type of the service which will be replaced.</typeparam>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="implementationFactory">Service implementation factory which will be used for replacement.</param>
-        public static void ReplaceSingleton<TService>(this IServiceCollection serviceCollection, Func<IServiceProvider, object> implementationFactory)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection ReplaceSingleton<TService>(this IServiceCollection serviceCollection, Func<IServiceProvider, object> implementationFactory)
             where TService : class
         {
-            serviceCollection.ReplaceSingleton(typeof(TService), implementationFactory);
+            return serviceCollection.ReplaceSingleton(typeof(TService), implementationFactory);
         }
 
         /// <summary>
@@ -410,10 +456,11 @@
         /// <typeparam name="TService">Type of the service which will be replaced.</typeparam>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="implementationInstance">Service implementation instance which will be used for replacement.</param>
-        public static void ReplaceSingleton<TService>(this IServiceCollection serviceCollection, object implementationInstance)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection ReplaceSingleton<TService>(this IServiceCollection serviceCollection, object implementationInstance)
             where TService : class
         {
-            serviceCollection.ReplaceSingleton(typeof(TService), implementationInstance);
+            return serviceCollection.ReplaceSingleton(typeof(TService), implementationInstance);
         }
 
         /// <summary>
@@ -422,11 +469,12 @@
         /// <typeparam name="TService">Type of the service which will be replaced.</typeparam>
         /// <typeparam name="TImplementation">Service implementation type which will be used for replacement.</typeparam>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
-        public static void ReplaceSingleton<TService, TImplementation>(this IServiceCollection serviceCollection)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection ReplaceSingleton<TService, TImplementation>(this IServiceCollection serviceCollection)
             where TService : class
             where TImplementation : class, TService
         {
-            serviceCollection.ReplaceSingleton(typeof(TService), typeof(TImplementation));
+            return serviceCollection.ReplaceSingleton(typeof(TService), typeof(TImplementation));
         }
 
         /// <summary>
@@ -435,10 +483,12 @@
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="service">Type of the service which will be replaced.</param>
         /// <param name="implementationType">Service implementation type which will be used for replacement.</param>
-        public static void ReplaceScoped(this IServiceCollection serviceCollection, Type service, Type implementationType)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection ReplaceScoped(this IServiceCollection serviceCollection, Type service, Type implementationType)
         {
-            serviceCollection.RemoveScoped(service);
-            serviceCollection.AddScoped(service, implementationType);
+            return serviceCollection
+                .RemoveScoped(service)
+                .AddScoped(service, implementationType);
         }
 
         /// <summary>
@@ -447,10 +497,12 @@
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="service">Type of the service which will be replaced.</param>
         /// <param name="implementationFactory">Service implementation factory which will be used for replacement.</param>
-        public static void ReplaceScoped(this IServiceCollection serviceCollection, Type service, Func<IServiceProvider, object> implementationFactory)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection ReplaceScoped(this IServiceCollection serviceCollection, Type service, Func<IServiceProvider, object> implementationFactory)
         {
-            serviceCollection.RemoveScoped(service);
-            serviceCollection.AddScoped(service, implementationFactory);
+            return serviceCollection
+                .RemoveScoped(service)
+                .AddScoped(service, implementationFactory);
         }
 
         /// <summary>
@@ -459,10 +511,11 @@
         /// <typeparam name="TService">Type of the service which will be replaced.</typeparam>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="implementationFactory">Service implementation factory which will be used for replacement.</param>
-        public static void ReplaceScoped<TService>(this IServiceCollection serviceCollection, Func<IServiceProvider, object> implementationFactory)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection ReplaceScoped<TService>(this IServiceCollection serviceCollection, Func<IServiceProvider, object> implementationFactory)
             where TService : class
         {
-            serviceCollection.ReplaceScoped(typeof(TService), implementationFactory);
+            return serviceCollection.ReplaceScoped(typeof(TService), implementationFactory);
         }
 
         /// <summary>
@@ -471,11 +524,12 @@
         /// <typeparam name="TService">Type of the service which will be replaced.</typeparam>
         /// <typeparam name="TImplementation">Service implementation type which will be used for replacement.</typeparam>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
-        public static void ReplaceScoped<TService, TImplementation>(this IServiceCollection serviceCollection)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection ReplaceScoped<TService, TImplementation>(this IServiceCollection serviceCollection)
             where TService : class
             where TImplementation : class, TService
         {
-            serviceCollection.ReplaceScoped(typeof(TService), typeof(TImplementation));
+            return serviceCollection.ReplaceScoped(typeof(TService), typeof(TImplementation));
         }
 
         /// <summary>

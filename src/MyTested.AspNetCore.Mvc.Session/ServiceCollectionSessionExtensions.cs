@@ -13,9 +13,10 @@
         /// Replaces the default <see cref="ISessionStore"/> with a mocked implementation.
         /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
-        public static void ReplaceSession(this IServiceCollection serviceCollection)
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection ReplaceSession(this IServiceCollection serviceCollection)
         {
-            serviceCollection.ReplaceTransient<ISessionStore, MockedSessionStore>();
+            return serviceCollection.ReplaceTransient<ISessionStore, MockedSessionStore>();
         }
     }
 }
