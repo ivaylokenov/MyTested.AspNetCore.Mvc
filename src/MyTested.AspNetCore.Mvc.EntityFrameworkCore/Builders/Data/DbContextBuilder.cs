@@ -7,7 +7,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using Utilities.Validators;
-
+    using Internal;
     /// <summary>
     /// Used for building <see cref="DbContext"/>.
     /// </summary>
@@ -23,18 +23,25 @@
         }
 
         /// <inheritdoc />
-        public void WithSetup<TDbContext>(Action<TDbContext> dbContextSetup)
+        public void WithEntities<TDbContext>(Action<TDbContext> dbContextSetup)
             where TDbContext : DbContext
         {
             CommonValidator.CheckForNullReference(dbContextSetup, nameof(dbContextSetup));
-            ServiceValidator.ValidateScopedServiceLifetime<TDbContext>(nameof(WithSetup));
-            
-            var dbContext = this.TestContext
-                .HttpContext
-                .RequestServices
-                .GetRequiredService<TDbContext>();
 
+            var dbContext = this.TestContext.GetDbContext<TDbContext>();
             dbContextSetup(dbContext);
+            dbContext.SaveChanges();
+        }
+
+        /// <inheritdoc />
+        public void WithSet<TDbContext, TEntity>(Action<DbSet<TEntity>> entitySetup)
+            where TDbContext : DbContext
+            where TEntity : class
+        {
+            CommonValidator.CheckForNullReference(entitySetup, nameof(entitySetup));
+
+            var dbContext = this.TestContext.GetDbContext<TDbContext>();
+            entitySetup(dbContext.Set<TEntity>());
             dbContext.SaveChanges();
         }
     }

@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.EntityFrameworkCore.Test.Setups
+﻿namespace MyTested.AspNetCore.Mvc.Test.Setups
 {
     using System.Linq;
     using Common;
@@ -11,6 +11,12 @@
         public DbContextController(CustomDbContext data)
         {
             this.data = data;
+        }
+
+        public IActionResult Create(CustomModel model)
+        {
+            this.data.Models.Add(model);
+            return this.Ok();
         }
 
         public IActionResult Find(int id)

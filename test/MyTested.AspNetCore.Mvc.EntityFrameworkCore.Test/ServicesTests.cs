@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.EntityFrameworkCore.Test
+﻿namespace MyTested.AspNetCore.Mvc.Test
 {
     using System.Linq;
     using Internal;

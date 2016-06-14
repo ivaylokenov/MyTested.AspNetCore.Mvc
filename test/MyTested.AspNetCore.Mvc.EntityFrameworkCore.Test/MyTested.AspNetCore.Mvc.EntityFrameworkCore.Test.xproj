@@ -7,7 +7,7 @@
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
     <ProjectGuid>285e08f2-2e5a-4226-b867-fd3df7c52053</ProjectGuid>
-    <RootNamespace>MyTested.AspNetCore.Mvc.EntityFrameworkCore.Test</RootNamespace>
+    <RootNamespace>MyTested.AspNetCore.Mvc.Test</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>

@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.EntityFrameworkCore.Test.Setups.Common
+﻿namespace MyTested.AspNetCore.Mvc.Test.Setups.Common
 {
     using Microsoft.EntityFrameworkCore;
 

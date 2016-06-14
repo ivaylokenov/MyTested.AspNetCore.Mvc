@@ -4,9 +4,9 @@
     using Base;
     using Contracts.Data;
     using Exceptions;
+    using Internal;
     using Internal.TestContexts;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.DependencyInjection;
     using Utilities;
     using Utilities.Extensions;
     using Utilities.Validators;
@@ -26,14 +26,14 @@
         }
 
         /// <inheritdoc />
-        public void WithEntries<TDbContext>(Func<TDbContext, bool> predicate) where TDbContext : DbContext
+        public void WithEntities<TDbContext>(Func<TDbContext, bool> predicate) where TDbContext : DbContext
         {
             CommonValidator.CheckForNullReference(predicate, nameof(predicate));
 
-            if (!predicate(this.GetDbContext<TDbContext>()))
+            if (!predicate(this.TestContext.GetDbContext<TDbContext>()))
             {
                 throw new DataProviderAssertionException(string.Format(
-                    "When calling {0} action in {1} expected the {2} entries to pass the given predicate, but it failed.",
+                    "When calling {0} action in {1} expected the {2} entities to pass the given predicate, but it failed.",
                     this.TestContext.ActionName,
                     this.TestContext.Controller.GetName(),
                     typeof(TDbContext).ToFriendlyTypeName()));
@@ -41,21 +41,39 @@
         }
 
         /// <inheritdoc />
-        public void WithEntries<TDbContext>(Action<TDbContext> assertions) where TDbContext : DbContext
+        public void WithEntities<TDbContext>(Action<TDbContext> assertions) where TDbContext : DbContext
         {
             CommonValidator.CheckForNullReference(assertions, nameof(assertions));
 
-            assertions(this.GetDbContext<TDbContext>());
+            assertions(this.TestContext.GetDbContext<TDbContext>());
         }
 
-        private TDbContext GetDbContext<TDbContext>()
+        /// <inheritdoc />
+        public void WithSet<TDbContext, TEntity>(Action<DbSet<TEntity>> assertions)
+            where TDbContext : DbContext
+            where TEntity : class
         {
-            ServiceValidator.ValidateScopedServiceLifetime<TDbContext>(nameof(WithEntries));
+            CommonValidator.CheckForNullReference(assertions, nameof(assertions));
 
-            return this.TestContext
-                .HttpContext
-                .RequestServices
-                .GetRequiredService<TDbContext>();
+            assertions(this.TestContext.GetDbContext<TDbContext>().Set<TEntity>());
+        }
+
+        /// <inheritdoc />
+        public void WithSet<TDbContext, TEntity>(Func<DbSet<TEntity>, bool> predicate)
+            where TDbContext : DbContext
+            where TEntity : class
+        {
+            CommonValidator.CheckForNullReference(predicate, nameof(predicate));
+
+            if (!predicate(this.TestContext.GetDbContext<TDbContext>().Set<TEntity>()))
+            {
+                throw new DataProviderAssertionException(string.Format(
+                    "When calling {0} action in {1} expected the {2} set of {3} to pass the given predicate, but it failed.",
+                    this.TestContext.ActionName,
+                    this.TestContext.Controller.GetName(),
+                    typeof(TDbContext).ToFriendlyTypeName(),
+                    typeof(TEntity).ToFriendlyTypeName()));
+            }
         }
     }
 }
