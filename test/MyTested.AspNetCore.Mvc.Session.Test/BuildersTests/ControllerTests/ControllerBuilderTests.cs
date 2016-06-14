@@ -10,7 +10,6 @@
 
     public class ControllerBuilderTests
     {
-
         [Fact]
         public void WithSessionShouldPopulateSessionCorrectly()
         {
