@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ControllerTests
+﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ControllersTests
 {
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;

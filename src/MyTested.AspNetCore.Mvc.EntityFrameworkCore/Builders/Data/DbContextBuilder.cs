@@ -5,9 +5,8 @@
     using Contracts.Data;
     using Internal.TestContexts;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.DependencyInjection;
     using Utilities.Validators;
-    using Internal;
+
     /// <summary>
     /// Used for building <see cref="DbContext"/>.
     /// </summary>

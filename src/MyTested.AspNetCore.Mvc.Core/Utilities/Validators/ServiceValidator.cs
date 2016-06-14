@@ -37,8 +37,19 @@
         /// <typeparam name="TService">Type of service to validate.</typeparam>
         /// <param name="methodName">Name of the calling method.</param>
         public static void ValidateScopedServiceLifetime<TService>(string methodName)
+            where TService : class
         {
-            var serviceLifetime = TestServiceProvider.GetServiceLifetime<TService>();
+            ValidateScopedServiceLifetime(typeof(TService), methodName);
+        }
+
+        /// <summary>
+        /// Validates whether service exists and has scoped <see cref="ServiceLifetime"/>.
+        /// </summary>
+        /// <param name="service">Type of service to validate.</param>
+        /// <param name="methodName">Name of the calling method.</param>
+        public static void ValidateScopedServiceLifetime(Type service, string methodName)
+        {
+            var serviceLifetime = TestServiceProvider.GetServiceLifetime(service);
             if (serviceLifetime != ServiceLifetime.Scoped)
             {
                 throw new InvalidOperationException($"The '{methodName}' method can be used only for services with scoped lifetime.");

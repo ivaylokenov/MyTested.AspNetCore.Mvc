@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Internal
+﻿namespace MyTested.AspNetCore.Mvc.Internal.TestContexts
 {
     using Microsoft.Extensions.DependencyInjection;
     using TestContexts;

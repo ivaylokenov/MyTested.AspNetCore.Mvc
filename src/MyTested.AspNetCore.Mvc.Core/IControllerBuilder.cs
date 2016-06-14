@@ -101,7 +101,8 @@
         /// <typeparam name="TService">Type of service to configure.</typeparam>
         /// <param name="scopedServiceSetup">Action configuring the service before running the test case.</param>
         /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>
-        IAndControllerBuilder<TController> WithServiceSetupFor<TService>(Action<TService> scopedServiceSetup);
+        IAndControllerBuilder<TController> WithServiceSetupFor<TService>(Action<TService> scopedServiceSetup)
+            where TService : class;
         
         /// <summary>
         /// Sets null value to the constructor service dependency of the given type.
