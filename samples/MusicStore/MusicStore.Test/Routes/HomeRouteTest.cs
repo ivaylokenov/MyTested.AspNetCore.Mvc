@@ -9,7 +9,7 @@
     public class HomeRouteTest
     {
         [Fact]
-        public void IndexShouldBeRoutedCorrectly()
+        public void GetIndexShouldBeRoutedCorrectly()
         {
             MyMvc
                 .Routes()
@@ -20,12 +20,30 @@
         }
 
         [Fact]
-        public void ErrorShouldBeRoutedCorrectly()
+        public void GetErrorShouldBeRoutedCorrectly()
         {
             MyMvc
                 .Routes()
                 .ShouldMap("/Home/Error")
                 .To<HomeController>(c => c.Error());
+        }
+
+        [Fact]
+        public void GetStatusCodeShouldBeRoutedCorrectly()
+        {
+            MyMvc
+                .Routes()
+                .ShouldMap("/Home/StatusCodePage")
+                .To<HomeController>(c => c.StatusCodePage());
+        }
+
+        [Fact]
+        public void GetAccessDeniedShouldBeRoutedCorrectly()
+        {
+            MyMvc
+                .Routes()
+                .ShouldMap("/Home/AccessDenied")
+                .To<HomeController>(c => c.AccessDenied());
         }
     }
 }

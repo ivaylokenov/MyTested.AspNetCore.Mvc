@@ -35,7 +35,7 @@
         }
 
         public IDictionary<string, object> BoundActionArguments { get; private set; }
-
+        
         protected override async Task<IDictionary<string, object>> BindActionArgumentsAsync()
         {
             return this.BoundActionArguments = await base.BindActionArgumentsAsync();

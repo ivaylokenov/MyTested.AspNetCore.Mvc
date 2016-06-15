@@ -28,14 +28,18 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="HttpRequestBuilder"/> class.
         /// </summary>
-        public HttpRequestBuilder()
+        public HttpRequestBuilder(HttpContext httpContext)
         {
-            this.request = new MockedHttpRequest
+            CommonValidator.CheckForNullReference(httpContext, nameof(HttpContext));
+
+            this.request = new MockedHttpRequest(httpContext)
             {
                 Scheme = HttpScheme.Http,
                 Path = "/"
             };
         }
+
+        public HttpContext HttpContext => this.request.HttpContext;
 
         /// <inheritdoc />
         public IAndHttpRequestBuilder WithBody(Stream body)
