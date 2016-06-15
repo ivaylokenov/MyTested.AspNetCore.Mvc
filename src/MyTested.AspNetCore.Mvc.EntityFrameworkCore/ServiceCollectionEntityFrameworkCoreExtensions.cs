@@ -59,6 +59,7 @@
         private static void ReplaceDatabase<TDbContext>(IServiceCollection serviceCollection)
             where TDbContext : DbContext
         {
+            serviceCollection.Replace<DbContext>(s => s.GetRequiredService<TDbContext>(), ServiceLifetime.Scoped);
             serviceCollection.AddDbContext<TDbContext>(opts =>
             {
                 opts.UseInMemoryDatabase();

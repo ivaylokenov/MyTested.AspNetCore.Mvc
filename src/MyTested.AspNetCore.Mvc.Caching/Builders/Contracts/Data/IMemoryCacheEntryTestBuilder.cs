@@ -21,7 +21,7 @@
         /// <param name="value">Cache entry value to set.</param>
         /// <returns>The same <see cref="IAndMemoryCacheEntryTestBuilder"/>.</returns>
         IAndMemoryCacheEntryTestBuilder WithValue(object value);
-
+        
         /// <summary>
         /// Sets the <see cref="MemoryCacheEntryOptions.AbsoluteExpiration"/> value to the built <see cref="IMemoryCache"/> entry.
         /// </summary>

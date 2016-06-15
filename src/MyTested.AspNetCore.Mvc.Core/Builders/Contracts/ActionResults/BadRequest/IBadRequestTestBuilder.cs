@@ -20,14 +20,14 @@
         /// <typeparam name="TError">Type of error object.</typeparam>
         /// <param name="error">Error object.</param>
         /// <returns>Test builder of type <see cref="IModelDetailsTestBuilder{TError}"/>.</returns>
-        IModelDetailsTestBuilder<TError> WithError<TError>(TError error);
+        IAndModelDetailsTestBuilder<TError> WithError<TError>(TError error);
 
         /// <summary>
         /// Tests whether <see cref="BadRequestObjectResult"/> contains error object of the provided type.
         /// </summary>
         /// <typeparam name="TError">Type of error object.</typeparam>
         /// <returns>Test builder of type <see cref="IModelDetailsTestBuilder{TError}"/>.</returns>
-        IModelDetailsTestBuilder<TError> WithErrorOfType<TError>();
+        IAndModelDetailsTestBuilder<TError> WithErrorOfType<TError>();
 
         /// <summary>
         /// Tests whether no specific error is returned from the <see cref="BadRequestObjectResult"/>.

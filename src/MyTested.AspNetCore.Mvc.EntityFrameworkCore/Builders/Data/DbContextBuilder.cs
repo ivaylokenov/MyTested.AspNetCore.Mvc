@@ -22,6 +22,12 @@
         }
 
         /// <inheritdoc />
+        public void WithEntities(Action<DbContext> dbContextSetup)
+        {
+            WithEntities<DbContext>(dbContextSetup);
+        }
+
+        /// <inheritdoc />
         public void WithEntities<TDbContext>(Action<TDbContext> dbContextSetup)
             where TDbContext : DbContext
         {

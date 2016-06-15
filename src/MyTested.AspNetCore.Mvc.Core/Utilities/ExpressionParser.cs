@@ -12,6 +12,11 @@
     /// </summary>
     public static class ExpressionParser
     {
+        internal const string IgnoredExpressionArgument = "!__Ignored_Expression_Value__!";
+
+        private static readonly Type TypeOfWith = typeof(With);
+        private static readonly Type TypeOfFrom = typeof(From);
+
         /// <summary>
         /// Parses method info from method call lambda expression.
         /// </summary>
@@ -82,9 +87,17 @@
 
                 if (expressionArgumentAsMethodCall.Object == null)
                 {
-                    if ((expressionMethodDeclaringType == typeof(With) &&
-                         expressionArgumentAsMethodCall.Method.Name != nameof(With.Default))
-                        || expressionMethodDeclaringType == typeof(From))
+                    var expressionArgumentMethodName = expressionArgumentAsMethodCall.Method.Name;
+
+                    if (expressionMethodDeclaringType == TypeOfWith &&
+                        expressionArgumentMethodName == nameof(With.Any))
+                    {
+                        return IgnoredExpressionArgument;
+                    }
+
+                    if ((expressionMethodDeclaringType == TypeOfWith &&
+                         expressionArgumentMethodName != nameof(With.Default))
+                        || expressionMethodDeclaringType == TypeOfFrom)
                     {
                         return null;
                     }

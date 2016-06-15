@@ -10,9 +10,9 @@
     /// <summary>
     /// Used for testing the model members.
     /// </summary>
-    /// <typeparam name="TResponseModel">Model from invoked action in ASP.NET Core MVC controller.</typeparam>
-    public class ModelDetailsTestBuilder<TResponseModel>
-        : ModelErrorTestBuilder<TResponseModel>, IModelDetailsTestBuilder<TResponseModel>
+    /// <typeparam name="TModel">Model from invoked action in ASP.NET Core MVC controller.</typeparam>
+    public class ModelDetailsTestBuilder<TModel>
+        : ModelErrorTestBuilder<TModel>, IAndModelDetailsTestBuilder<TModel>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelDetailsTestBuilder{TResponseModel}"/> class.
@@ -24,14 +24,14 @@
         }
         
         /// <inheritdoc />
-        public IModelErrorTestBuilder<TResponseModel> Passing(Action<TResponseModel> assertions)
+        public IAndModelErrorTestBuilder<TModel> Passing(Action<TModel> assertions)
         {
             assertions(this.Model);
-            return new ModelErrorTestBuilder<TResponseModel>(this.TestContext);
+            return new ModelErrorTestBuilder<TModel>(this.TestContext);
         }
 
         /// <inheritdoc />
-        public IModelErrorTestBuilder<TResponseModel> Passing(Func<TResponseModel, bool> predicate)
+        public IAndModelErrorTestBuilder<TModel> Passing(Func<TModel, bool> predicate)
         {
             if (!predicate(this.Model))
             {
@@ -39,10 +39,13 @@
                     "When calling {0} action in {1} expected response model {2} to pass the given condition, but it failed.",
                     this.ActionName,
                     this.Controller.GetName(),
-                    typeof(TResponseModel).ToFriendlyTypeName()));
+                    typeof(TModel).ToFriendlyTypeName()));
             }
 
-            return new ModelErrorTestBuilder<TResponseModel>(this.TestContext);
+            return new ModelErrorTestBuilder<TModel>(this.TestContext);
         }
+
+        /// <inheritdoc />
+        public new IModelDetailsTestBuilder<TModel> AndAlso() => this;
     }
 }

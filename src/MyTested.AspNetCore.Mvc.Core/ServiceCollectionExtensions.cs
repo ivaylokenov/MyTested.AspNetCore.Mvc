@@ -242,15 +242,15 @@
         /// <summary>
         /// Removes a scoped service from the <see cref="IServiceCollection"/>.
         /// </summary>
-        /// <typeparam name="TServive">Type of the service which will be removed.</typeparam>
+        /// <typeparam name="TService">Type of the service which will be removed.</typeparam>
         /// <typeparam name="TImplementation">Service implementation type which will be removed.</typeparam>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <returns>The same <see cref="IServiceCollection"/>.</returns>
-        public static IServiceCollection RemoveScoped<TServive, TImplementation>(this IServiceCollection serviceCollection)
-            where TServive : class
-            where TImplementation : class, TServive
+        public static IServiceCollection RemoveScoped<TService, TImplementation>(this IServiceCollection serviceCollection)
+            where TService : class
+            where TImplementation : class, TService
         {
-            return serviceCollection.RemoveScoped(typeof(TServive), typeof(TImplementation));
+            return serviceCollection.RemoveScoped(typeof(TService), typeof(TImplementation));
         }
 
         /// <summary>
@@ -271,6 +271,21 @@
         /// <summary>
         /// Replaces a service in the <see cref="IServiceCollection"/>.
         /// </summary>
+        /// <typeparam name="TService">Type of the service which will be replaced.</typeparam>
+        /// <typeparam name="TImplementation">Service implementation type which will be used for replacement.</typeparam>
+        /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
+        /// <param name="lifetime">The <see cref="ServiceLifetime"/> which will be applied on the replaced service.</param>
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection Replace<TService, TImplementation>(this IServiceCollection serviceCollection, ServiceLifetime lifetime)
+            where TService : class
+            where TImplementation : class, TService
+        {
+            return serviceCollection.Replace(typeof(TService), typeof(TImplementation), lifetime);
+        }
+
+        /// <summary>
+        /// Replaces a service in the <see cref="IServiceCollection"/>.
+        /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <param name="service">Type of the service which will be replaced.</param>
         /// <param name="implementationFactory">Service implementation factory which will be used for replacement.</param>
@@ -281,6 +296,20 @@
             serviceCollection.Remove(service).Add(ServiceDescriptor.Describe(service, implementationFactory, lifetime));
             TestServiceProvider.SaveServiceLifetime(service, lifetime);
             return serviceCollection;
+        }
+
+        /// <summary>
+        /// Replaces a service in the <see cref="IServiceCollection"/>.
+        /// </summary>
+        /// <typeparam name="TService">Type of the service which will be replaced.</typeparam>
+        /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
+        /// <param name="implementationFactory">Service implementation factory which will be used for replacement.</param>
+        /// <param name="lifetime">The <see cref="ServiceLifetime"/> which will be applied on the replaced service.</param>
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection Replace<TService>(this IServiceCollection serviceCollection, Func<IServiceProvider, object> implementationFactory, ServiceLifetime lifetime)
+            where TService : class
+        {
+            return serviceCollection.Replace(typeof(TService), implementationFactory, lifetime);
         }
 
         /// <summary>
@@ -320,26 +349,11 @@
         /// <param name="lifetime">The <see cref="ServiceLifetime"/> which will be applied on the replaced service.</param>
         /// <returns>The same <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection ReplaceLifetime<TService>(this IServiceCollection serviceCollection, ServiceLifetime lifetime)
-            where TService : class 
+            where TService : class
         {
             return serviceCollection.ReplaceLifetime(typeof(TService), lifetime);
         }
-
-        /// <summary>
-        /// Replaces a service in the <see cref="IServiceCollection"/>.
-        /// </summary>
-        /// <typeparam name="TService">Type of the service which will be replaced.</typeparam>
-        /// <typeparam name="TImplementation">Service implementation type which will be used for replacement.</typeparam>
-        /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
-        /// <param name="lifetime">The <see cref="ServiceLifetime"/> which will be applied on the replaced service.</param>
-        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
-        public static IServiceCollection Replace<TService, TImplementation>(this IServiceCollection serviceCollection, ServiceLifetime lifetime)
-            where TService : class
-            where TImplementation : class, TService
-        {
-            return serviceCollection.Replace(typeof(TService), typeof(TImplementation), lifetime);
-        }
-
+        
         /// <summary>
         /// Replaces a transient service in the <see cref="IServiceCollection"/>.
         /// </summary>

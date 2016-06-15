@@ -290,7 +290,15 @@
                     actualRouteValues.Action));
             }
 
-            expectedRouteValues.ActionArguments.ForEach(arg => this.ToRouteValue(arg.Key, arg.Value.Value));
+            expectedRouteValues.ActionArguments.ForEach(arg =>
+            {
+                if (arg.Value.Value.ToString() == ExpressionParser.IgnoredExpressionArgument)
+                {
+                    return;
+                }
+
+                this.ToRouteValue(arg.Key, arg.Value.Value);
+            });
         }
 
         public ExpressionParsedRouteContext GetExpectedRouteInfo()

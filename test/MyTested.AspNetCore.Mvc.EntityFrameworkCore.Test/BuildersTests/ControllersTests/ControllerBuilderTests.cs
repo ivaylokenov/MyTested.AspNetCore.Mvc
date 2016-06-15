@@ -32,7 +32,21 @@
                 .Ok()
                 .WithResponseModelOfType<CustomModel>()
                 .Passing(m => m.Name == "Test");
-            
+
+            MyMvc
+                .Controller<DbContextController>()
+                .WithDbContext(dbContext => dbContext
+                    .WithEntities(db => db.Add(new CustomModel
+                        {
+                            Id = 1,
+                            Name = "Test"
+                        })))
+                .Calling(c => c.Find(1))
+                .ShouldReturn()
+                .Ok()
+                .WithResponseModelOfType<CustomModel>()
+                .Passing(m => m.Name == "Test");
+
             MyMvc
                 .Controller<DbContextController>()
                 .WithDbContext(dbContext => dbContext

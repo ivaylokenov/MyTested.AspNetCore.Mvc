@@ -13,21 +13,21 @@
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <inheritdoc />
-        public IModelDetailsTestBuilder<TActionResult> ResultOfType(Type returnType)
+        public IAndModelDetailsTestBuilder<TActionResult> ResultOfType(Type returnType)
         {
             this.ValidateActionReturnType(returnType, true, true);
             return new ModelDetailsTestBuilder<TActionResult>(this.TestContext);
         }
 
         /// <inheritdoc />
-        public IModelDetailsTestBuilder<TActionResult> ResultOfType<TResponseModel>()
+        public IAndModelDetailsTestBuilder<TActionResult> ResultOfType<TResponseModel>()
         {
             this.ValidateActionReturnType<TResponseModel>(true);
             return new ModelDetailsTestBuilder<TActionResult>(this.TestContext);
         }
 
         /// <inheritdoc />
-        public IModelDetailsTestBuilder<TActionResult> Result<TResponseModel>(TResponseModel model)
+        public IAndModelDetailsTestBuilder<TActionResult> Result<TResponseModel>(TResponseModel model)
         {
             this.ValidateActionReturnType<TResponseModel>();
 

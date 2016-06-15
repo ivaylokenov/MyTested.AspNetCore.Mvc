@@ -294,12 +294,12 @@
         private void ThrowNewRedirectResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new RedirectResultAssertionException(string.Format(
-                    "When calling {0} action in {1} expected redirect result {2} {3}, but {4}.",
-                    this.ActionName,
-                    this.Controller.GetName(),
-                    propertyName,
-                    expectedValue,
-                    actualValue));
+                "When calling {0} action in {1} expected redirect result {2} {3}, but {4}.",
+                this.ActionName,
+                this.Controller.GetName(),
+                propertyName,
+                expectedValue,
+                actualValue));
         }
     }
 }

@@ -35,10 +35,12 @@
             else
             {
                 linkGenerationTestContext.Action = linkGenerationTestContext.Action
-                    ?? controllerTestContext.RouteData.Values["action"] as string;
+                    ?? controllerTestContext.RouteData.Values["action"] as string
+                    ?? controllerTestContext.ActionName;
 
                 linkGenerationTestContext.Controller = linkGenerationTestContext.Controller
-                    ?? controllerTestContext.RouteData.Values["controller"] as string;
+                    ?? controllerTestContext.RouteData.Values["controller"] as string
+                    ?? controllerTestContext.ControllerContext.ActionDescriptor.ControllerName;
 
                 uri = urlHelper.Action(
                     linkGenerationTestContext.Action,

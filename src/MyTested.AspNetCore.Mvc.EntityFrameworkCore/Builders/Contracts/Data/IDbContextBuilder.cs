@@ -9,6 +9,12 @@
     public interface IDbContextBuilder
     {
         /// <summary>
+        /// Sets initial values to the registered <see cref="DbContext"/>.
+        /// </summary>
+        /// <param name="dbContextSetup">Action setting the <see cref="DbContext"/>.</param>
+        void WithEntities(Action<DbContext> dbContextSetup);
+
+        /// <summary>
         /// Sets initial values to the provided <see cref="DbContext"/>.
         /// </summary>
         /// <typeparam name="TDbContext">Type of <see cref="DbContext"/> to set up.</typeparam>
