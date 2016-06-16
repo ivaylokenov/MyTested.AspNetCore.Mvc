@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Internal.Http
+﻿namespace MyTested.AspNetCore.Mvc.Internal.Routes
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -6,7 +6,7 @@
     using Microsoft.AspNetCore.Http.Features.Authentication;
     using Microsoft.AspNetCore.Mvc.Internal;
 
-    public class MockedAuthenticationHandler : IAuthenticationHandler
+    public class RouteAuthenticationHandler : IAuthenticationHandler
     {
         public Task AuthenticateAsync(AuthenticateContext context)
         {

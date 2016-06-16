@@ -148,7 +148,7 @@
         IAndControllerBuilder<TController> WithAuthenticatedUser();
 
         /// <summary>
-        /// Sets custom authenticated <see cref="HttpContext.User"/> using the provided user builder.
+        /// Sets custom authenticated <see cref="HttpContext.User"/> to the built controller using the provided user builder.
         /// </summary>
         /// <param name="userBuilder">Action setting the <see cref="HttpContext.User"/> by using <see cref="IClaimsPrincipalBuilder"/>.</param>
         /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>

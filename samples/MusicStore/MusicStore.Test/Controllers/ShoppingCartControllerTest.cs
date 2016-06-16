@@ -1,13 +1,13 @@
 ﻿namespace MusicStore.Test.Controllers
 {
     using System.Linq;
-    using System.Threading.Tasks;
+    using System.Threading;
     using Models;
     using MusicStore.Controllers;
     using MyTested.AspNetCore.Mvc;
     using ViewModels;
     using Xunit;
-    using System.Threading;
+
     public class ShoppingCartControllerTest
     {
         [Fact]

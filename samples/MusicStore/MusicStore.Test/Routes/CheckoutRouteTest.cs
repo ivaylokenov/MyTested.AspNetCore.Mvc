@@ -13,7 +13,9 @@
         {
             MyMvc
                 .Routes()
-                .ShouldMap("/Checkout/AddressAndPayment")
+                .ShouldMap(request => request
+                    .WithLocation("/Checkout/AddressAndPayment")
+                    .WithAuthenticatedUser())
                 .To<CheckoutController>(c => c.AddressAndPayment());
         }
 
@@ -47,6 +49,7 @@
                         Phone = phone,
                         Email = email,
                     })
+                    .WithAuthenticatedUser()
                     .WithAntiForgeryToken())
                 .To<CheckoutController>(c => c.AddressAndPayment(
                     With.Any<MusicStoreContext>(),
@@ -72,7 +75,9 @@
         {
             MyMvc
                 .Routes()
-                .ShouldMap("/Checkout/Complete/1")
+                .ShouldMap(request => request
+                    .WithLocation("/Checkout/Complete/1")
+                    .WithAuthenticatedUser())
                 .To<CheckoutController>(c => c.Complete(With.Any<MusicStoreContext>(), 1));
         }
     }

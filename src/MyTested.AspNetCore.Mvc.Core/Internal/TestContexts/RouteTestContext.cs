@@ -1,10 +1,9 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.TestContexts
 {
     using System;
-    using Builders.Authentication;
-    using Http;
     using Microsoft.AspNetCore.Routing;
     using Microsoft.AspNetCore.Http.Features.Authentication;
+    using Routes;
 
     public class RouteTestContext : HttpTestContext
     {
@@ -40,11 +39,9 @@
                 this.HttpContext.Features.Get<IHttpAuthenticationFeature>()
                 ?? new HttpAuthenticationFeature();
 
-            httpAuthenticationFeature.Handler = new MockedAuthenticationHandler();
+            httpAuthenticationFeature.Handler = new RouteAuthenticationHandler();
 
             this.HttpContext.Features.Set(httpAuthenticationFeature);
-
-            this.HttpContext.User = ClaimsPrincipalBuilder.DefaultAuthenticated;
         }
     }
 }

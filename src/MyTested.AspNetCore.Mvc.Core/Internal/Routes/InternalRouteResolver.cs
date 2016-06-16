@@ -80,7 +80,7 @@
 
             if (modelBindingActionInvoker.BoundActionArguments == null)
             {
-                return new ResolvedRouteContext("action could not be invoked because of the declared filters");
+                return new ResolvedRouteContext("action could not be invoked because of the declared filters. You must set the request properties so that they will pass through the pipeline");
             }
 
             return new ResolvedRouteContext(

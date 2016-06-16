@@ -7,7 +7,7 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Primitives;
     using Uris;
-
+    using Authentication;
     /// <summary>
     /// Used for building <see cref="HttpRequest"/>.
     /// </summary>
@@ -456,5 +456,18 @@
         /// <param name="uriBuilder">Builder for the URI.</param>
         /// <returns>The same <see cref="IAndHttpRequestBuilder"/>.</returns>
         IAndHttpRequestBuilder WithLocation(Action<IUriTestBuilder> uriBuilder);
+
+        /// <summary>
+        /// Sets default authenticated <see cref="HttpContext.User"/> to the built request with "TestId" identifier and "TestUser" username.
+        /// </summary>
+        /// <returns>The same <see cref="IAndHttpRequestBuilder"/>.</returns>
+        IAndHttpRequestBuilder WithAuthenticatedUser();
+
+        /// <summary>
+        /// Sets custom authenticated <see cref="HttpContext.User"/> to the built request using the provided user builder.
+        /// </summary>
+        /// <param name="userBuilder">Action setting the <see cref="HttpContext.User"/> by using <see cref="IClaimsPrincipalBuilder"/>.</param>
+        /// <returns>The same <see cref="IAndHttpRequestBuilder"/>.</returns>
+        IAndHttpRequestBuilder WithAuthenticatedUser(Action<IClaimsPrincipalBuilder> userBuilder);
     }
 }
