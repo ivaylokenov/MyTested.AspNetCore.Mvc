@@ -43,7 +43,7 @@
         /// <inheritdoc />
         public IAndControllerBuilder<TController> WithHttpRequest(Action<IHttpRequestBuilder> httpRequestBuilder)
         {
-            var newHttpRequestBuilder = new HttpRequestBuilder();
+            var newHttpRequestBuilder = new HttpRequestBuilder(this.HttpContext);
             httpRequestBuilder(newHttpRequestBuilder);
             newHttpRequestBuilder.ApplyTo(this.HttpRequest);
             return this;

@@ -1,7 +1,7 @@
 {
   "title": "MyTested.AspNetCore.Mvc.Caching",
   "description": "My Tested ASP.NET Core MVC caching components for testing ASP.NET Core MVC.",
-  "version": "1.0.0-alpha",
+  "version": "1.0.0-preview",
   "authors": [ "Ivaylo Kenov" ],
   "packOptions": {
     "projectUrl": "https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc",

@@ -3,6 +3,19 @@
   "version": 2,
   "targets": {
     ".NETFramework,Version=v4.5.1": {
+      "Ix-Async/1.2.5": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net45/System.Interactive.Async.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Interactive.Async.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Antiforgery/1.0.0-rc2-final": {
         "type": "package",
         "dependencies": {
@@ -599,6 +612,37 @@
           "lib/net451/Microsoft.DotNet.InternalAbstractions.dll": {}
         }
       },
+      "Microsoft.EntityFrameworkCore/1.0.0-rc2-final": {
+        "type": "package",
+        "dependencies": {
+          "Ix-Async": "1.2.5",
+          "Microsoft.Extensions.Caching.Memory": "1.0.0-rc2-final",
+          "Microsoft.Extensions.DependencyInjection": "1.0.0-rc2-final",
+          "Microsoft.Extensions.Logging": "1.0.0-rc2-final",
+          "Remotion.Linq": "2.0.2"
+        },
+        "frameworkAssemblies": [
+          "System.ComponentModel.DataAnnotations"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.EntityFrameworkCore.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.EntityFrameworkCore.dll": {}
+        }
+      },
+      "Microsoft.EntityFrameworkCore.InMemory/1.0.0-rc2-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "1.0.0-rc2-final"
+        },
+        "compile": {
+          "lib/net451/Microsoft.EntityFrameworkCore.InMemory.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.EntityFrameworkCore.InMemory.dll": {}
+        }
+      },
       "Microsoft.Extensions.Caching.Abstractions/1.0.0-rc2-final": {
         "type": "package",
         "dependencies": {
@@ -967,6 +1011,15 @@
           "lib/net45/Newtonsoft.Json.dll": {}
         }
       },
+      "Remotion.Linq/2.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Remotion.Linq.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Remotion.Linq.dll": {}
+        }
+      },
       "System.Buffers/4.0.0-rc2-24027": {
         "type": "package",
         "compile": {
@@ -1234,7 +1287,7 @@
           "lib/net45/_._": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.Caching/1.0.0-alpha": {
+      "MyTested.AspNetCore.Mvc.Caching/1.0.0-preview": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
@@ -1248,7 +1301,7 @@
           "net451/MyTested.AspNetCore.Mvc.Caching.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.Core/1.0.0-alpha": {
+      "MyTested.AspNetCore.Mvc.Core/1.0.0-preview": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
@@ -1266,7 +1319,7 @@
           "net451/MyTested.AspNetCore.Mvc.Core.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.DataAnnotations/1.0.0-alpha": {
+      "MyTested.AspNetCore.Mvc.DataAnnotations/1.0.0-preview": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
@@ -1280,7 +1333,21 @@
           "net451/MyTested.AspNetCore.Mvc.DataAnnotations.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.Licensing/1.0.0-alpha": {
+      "MyTested.AspNetCore.Mvc.EntityFrameworkCore/1.0.0-preview": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.InMemory": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Core": "1.0.0"
+        },
+        "compile": {
+          "net451/MyTested.AspNetCore.Mvc.EntityFrameworkCore.dll": {}
+        },
+        "runtime": {
+          "net451/MyTested.AspNetCore.Mvc.EntityFrameworkCore.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.Licensing/1.0.0-preview": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "compile": {
@@ -1290,7 +1357,21 @@
           "net451/MyTested.AspNetCore.Mvc.Licensing.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.Session/1.0.0-alpha": {
+      "MyTested.AspNetCore.Mvc.Options/1.0.0-preview": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "Microsoft.Extensions.Options": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Core": "1.0.0"
+        },
+        "compile": {
+          "net451/MyTested.AspNetCore.Mvc.Options.dll": {}
+        },
+        "runtime": {
+          "net451/MyTested.AspNetCore.Mvc.Options.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.Session/1.0.0-preview": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
@@ -1304,7 +1385,7 @@
           "net451/MyTested.AspNetCore.Mvc.Session.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.ViewFeatures/1.0.0-beta": {
+      "MyTested.AspNetCore.Mvc.ViewFeatures/1.0.0-preview": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
@@ -1320,6 +1401,15 @@
       }
     },
     ".NETStandard,Version=v1.5": {
+      "Ix-Async/1.2.5": {
+        "type": "package",
+        "compile": {
+          "lib/portable-windows8+net45+wp8/System.Interactive.Async.dll": {}
+        },
+        "runtime": {
+          "lib/portable-windows8+net45+wp8/System.Interactive.Async.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Antiforgery/1.0.0-rc2-final": {
         "type": "package",
         "dependencies": {
@@ -2040,6 +2130,40 @@
           "lib/netstandard1.3/Microsoft.DotNet.InternalAbstractions.dll": {}
         }
       },
+      "Microsoft.EntityFrameworkCore/1.0.0-rc2-final": {
+        "type": "package",
+        "dependencies": {
+          "Ix-Async": "1.2.5",
+          "Microsoft.Extensions.Caching.Memory": "1.0.0-rc2-final",
+          "Microsoft.Extensions.DependencyInjection": "1.0.0-rc2-final",
+          "Microsoft.Extensions.Logging": "1.0.0-rc2-final",
+          "Remotion.Linq": "2.0.2",
+          "System.Collections.Concurrent": "4.0.12-rc2-24027",
+          "System.ComponentModel.Annotations": "4.1.0-rc2-24027",
+          "System.Linq.Queryable": "4.0.1-rc2-24027",
+          "System.ObjectModel": "4.0.12-rc2-24027",
+          "System.Reflection.Extensions": "4.0.1-rc2-24027",
+          "System.Reflection.TypeExtensions": "4.1.0-rc2-24027"
+        },
+        "compile": {
+          "lib/netstandard1.3/Microsoft.EntityFrameworkCore.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Microsoft.EntityFrameworkCore.dll": {}
+        }
+      },
+      "Microsoft.EntityFrameworkCore.InMemory/1.0.0-rc2-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "1.0.0-rc2-final"
+        },
+        "compile": {
+          "lib/netstandard1.3/Microsoft.EntityFrameworkCore.InMemory.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Microsoft.EntityFrameworkCore.InMemory.dll": {}
+        }
+      },
       "Microsoft.Extensions.Caching.Abstractions/1.0.0-rc2-final": {
         "type": "package",
         "dependencies": {
@@ -2557,6 +2681,15 @@
           "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.dll": {}
         }
       },
+      "Remotion.Linq/2.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/portable-net45+win+wpa81+wp80/Remotion.Linq.dll": {}
+        },
+        "runtime": {
+          "lib/portable-net45+win+wpa81+wp80/Remotion.Linq.dll": {}
+        }
+      },
       "runtime.native.System/4.0.0-rc2-24027": {
         "type": "package"
       },
@@ -3072,6 +3205,25 @@
         },
         "runtime": {
           "lib/netstandard1.3/System.Linq.Expressions.dll": {}
+        }
+      },
+      "System.Linq.Queryable/4.0.1-rc2-24027": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections": "4.0.11-rc2-24027",
+          "System.Diagnostics.Debug": "4.0.11-rc2-24027",
+          "System.Linq": "4.1.0-rc2-24027",
+          "System.Linq.Expressions": "4.0.11-rc2-24027",
+          "System.Reflection": "4.1.0-rc2-24027",
+          "System.Reflection.Extensions": "4.0.1-rc2-24027",
+          "System.Resources.ResourceManager": "4.0.1-rc2-24027",
+          "System.Runtime": "4.1.0-rc2-24027"
+        },
+        "compile": {
+          "ref/netstandard1.0/System.Linq.Queryable.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/System.Linq.Queryable.dll": {}
         }
       },
       "System.Net.Http/4.0.1-rc2-24027": {
@@ -3999,7 +4151,7 @@
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.Caching/1.0.0-alpha": {
+      "MyTested.AspNetCore.Mvc.Caching/1.0.0-preview": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.5",
         "dependencies": {
@@ -4013,7 +4165,7 @@
           "netstandard1.5/MyTested.AspNetCore.Mvc.Caching.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.Core/1.0.0-alpha": {
+      "MyTested.AspNetCore.Mvc.Core/1.0.0-preview": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.5",
         "dependencies": {
@@ -4031,7 +4183,7 @@
           "netstandard1.5/MyTested.AspNetCore.Mvc.Core.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.DataAnnotations/1.0.0-alpha": {
+      "MyTested.AspNetCore.Mvc.DataAnnotations/1.0.0-preview": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.5",
         "dependencies": {
@@ -4045,7 +4197,21 @@
           "netstandard1.5/MyTested.AspNetCore.Mvc.DataAnnotations.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.Licensing/1.0.0-alpha": {
+      "MyTested.AspNetCore.Mvc.EntityFrameworkCore/1.0.0-preview": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.5",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.InMemory": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Core": "1.0.0"
+        },
+        "compile": {
+          "netstandard1.5/MyTested.AspNetCore.Mvc.EntityFrameworkCore.dll": {}
+        },
+        "runtime": {
+          "netstandard1.5/MyTested.AspNetCore.Mvc.EntityFrameworkCore.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.Licensing/1.0.0-preview": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.4",
         "dependencies": {
@@ -4059,7 +4225,21 @@
           "netstandard1.4/MyTested.AspNetCore.Mvc.Licensing.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.Session/1.0.0-alpha": {
+      "MyTested.AspNetCore.Mvc.Options/1.0.0-preview": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.5",
+        "dependencies": {
+          "Microsoft.Extensions.Options": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Core": "1.0.0"
+        },
+        "compile": {
+          "netstandard1.5/MyTested.AspNetCore.Mvc.Options.dll": {}
+        },
+        "runtime": {
+          "netstandard1.5/MyTested.AspNetCore.Mvc.Options.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.Session/1.0.0-preview": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.5",
         "dependencies": {
@@ -4073,7 +4253,7 @@
           "netstandard1.5/MyTested.AspNetCore.Mvc.Session.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.ViewFeatures/1.0.0-beta": {
+      "MyTested.AspNetCore.Mvc.ViewFeatures/1.0.0-preview": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.5",
         "dependencies": {
@@ -4090,6 +4270,20 @@
     }
   },
   "libraries": {
+    "Ix-Async/1.2.5": {
+      "sha512": "8EXO8q7cpDUH9G2q+UOPOO/6uZ9aN7mx/4xjFIfkp+qLWVJiYuglkRhjY8Ggs2CucXzHR8GHnovJKB5yQoYaJg==",
+      "type": "package",
+      "files": [
+        "Ix-Async.1.2.5.nupkg.sha512",
+        "Ix-Async.nuspec",
+        "lib/net40/System.Interactive.Async.XML",
+        "lib/net40/System.Interactive.Async.dll",
+        "lib/net45/System.Interactive.Async.XML",
+        "lib/net45/System.Interactive.Async.dll",
+        "lib/portable-windows8+net45+wp8/System.Interactive.Async.XML",
+        "lib/portable-windows8+net45+wp8/System.Interactive.Async.dll"
+      ]
+    },
     "Microsoft.AspNetCore.Antiforgery/1.0.0-rc2-final": {
       "sha512": "dvmfV1ExR2oqTt9rxhaRrutFBfta7fXY4o5nA8OU0f8CYzdZ7vyw7hyebAEE1p9SFXH5Km8/WFWkZ8uu3GNGPg==",
       "type": "package",
@@ -4627,6 +4821,32 @@
         "lib/netstandard1.3/Microsoft.DotNet.InternalAbstractions.dll"
       ]
     },
+    "Microsoft.EntityFrameworkCore/1.0.0-rc2-final": {
+      "sha512": "i9HsjubXO6JGGGIkLe/qle2TRD+78oraaVXVQ+koGDSmdhEb/hg71jmOvZQXKqZ3bakx2eG+6U4s2CcEfbPtGw==",
+      "type": "package",
+      "files": [
+        "Microsoft.EntityFrameworkCore.1.0.0-rc2-final.nupkg.sha512",
+        "Microsoft.EntityFrameworkCore.nuspec",
+        "lib/net451/Microsoft.EntityFrameworkCore.dll",
+        "lib/net451/Microsoft.EntityFrameworkCore.xml",
+        "lib/netcore50/Microsoft.EntityFrameworkCore.dll",
+        "lib/netcore50/Microsoft.EntityFrameworkCore.xml",
+        "lib/netstandard1.3/Microsoft.EntityFrameworkCore.dll",
+        "lib/netstandard1.3/Microsoft.EntityFrameworkCore.xml"
+      ]
+    },
+    "Microsoft.EntityFrameworkCore.InMemory/1.0.0-rc2-final": {
+      "sha512": "XEcyzQ0U/i7H6kZi/UBrNGoE3KfbxZO7k9UjkVN3PhfKbLwpNL5dlV04CjB/jtqI12ZjVf6erbwaPUjTNUTEhA==",
+      "type": "package",
+      "files": [
+        "Microsoft.EntityFrameworkCore.InMemory.1.0.0-rc2-final.nupkg.sha512",
+        "Microsoft.EntityFrameworkCore.InMemory.nuspec",
+        "lib/net451/Microsoft.EntityFrameworkCore.InMemory.dll",
+        "lib/net451/Microsoft.EntityFrameworkCore.InMemory.xml",
+        "lib/netstandard1.3/Microsoft.EntityFrameworkCore.InMemory.dll",
+        "lib/netstandard1.3/Microsoft.EntityFrameworkCore.InMemory.xml"
+      ]
+    },
     "Microsoft.Extensions.Caching.Abstractions/1.0.0-rc2-final": {
       "sha512": "Seu7cdYLYDFjYGd9KgzbAa5G6Xkzw6f6mSJjWemal1qNL505ktHMSbve6IPGScipL578rPwPTVqrTWWKIvmvLg==",
       "type": "package",
@@ -5065,6 +5285,22 @@
         "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.dll",
         "lib/portable-net45+wp80+win8+wpa81+dnxcore50/Newtonsoft.Json.xml",
         "tools/install.ps1"
+      ]
+    },
+    "Remotion.Linq/2.0.2": {
+      "sha512": "q3+x6KOsT2no9gB85hCTCY60hoez6G7/YugdZbJUZwoWdQlOhxLcJw+cdOUrhoL5Ondz0Aa8mupfH7hjzG8FxQ==",
+      "type": "package",
+      "files": [
+        "Remotion.Linq.2.0.2.nupkg.sha512",
+        "Remotion.Linq.nuspec",
+        "lib/net35/Remotion.Linq.XML",
+        "lib/net35/Remotion.Linq.dll",
+        "lib/net40/Remotion.Linq.XML",
+        "lib/net40/Remotion.Linq.dll",
+        "lib/net45/Remotion.Linq.XML",
+        "lib/net45/Remotion.Linq.dll",
+        "lib/portable-net45+win+wpa81+wp80/Remotion.Linq.dll",
+        "lib/portable-net45+win+wpa81+wp80/Remotion.Linq.xml"
       ]
     },
     "runtime.native.System/4.0.0-rc2-24027": {
@@ -6548,6 +6784,62 @@
         "ref/xamarintvos10/_._",
         "ref/xamarinwatchos10/_._",
         "runtimes/aot/lib/netcore50/System.Linq.Expressions.dll"
+      ]
+    },
+    "System.Linq.Queryable/4.0.1-rc2-24027": {
+      "sha512": "4D7vMlUik6PWAYE4j89AMRsc8CJERoRC4M7dBPQSwogd+fCblUMehDwBjRXI4lSEwgK2fhbkv46jJu6RlA20QA==",
+      "type": "package",
+      "files": [
+        "System.Linq.Queryable.4.0.1-rc2-24027.nupkg.sha512",
+        "System.Linq.Queryable.nuspec",
+        "ThirdPartyNotices.txt",
+        "dotnet_library_license.txt",
+        "lib/monoandroid10/_._",
+        "lib/monotouch10/_._",
+        "lib/net45/_._",
+        "lib/netcore50/System.Linq.Queryable.dll",
+        "lib/netstandard1.3/System.Linq.Queryable.dll",
+        "lib/portable-net45+win8+wp8+wpa81/_._",
+        "lib/win8/_._",
+        "lib/wp80/_._",
+        "lib/wpa81/_._",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "ref/monoandroid10/_._",
+        "ref/monotouch10/_._",
+        "ref/net45/_._",
+        "ref/netcore50/System.Linq.Queryable.dll",
+        "ref/netcore50/System.Linq.Queryable.xml",
+        "ref/netcore50/de/System.Linq.Queryable.xml",
+        "ref/netcore50/es/System.Linq.Queryable.xml",
+        "ref/netcore50/fr/System.Linq.Queryable.xml",
+        "ref/netcore50/it/System.Linq.Queryable.xml",
+        "ref/netcore50/ja/System.Linq.Queryable.xml",
+        "ref/netcore50/ko/System.Linq.Queryable.xml",
+        "ref/netcore50/ru/System.Linq.Queryable.xml",
+        "ref/netcore50/zh-hans/System.Linq.Queryable.xml",
+        "ref/netcore50/zh-hant/System.Linq.Queryable.xml",
+        "ref/netstandard1.0/System.Linq.Queryable.dll",
+        "ref/netstandard1.0/System.Linq.Queryable.xml",
+        "ref/netstandard1.0/de/System.Linq.Queryable.xml",
+        "ref/netstandard1.0/es/System.Linq.Queryable.xml",
+        "ref/netstandard1.0/fr/System.Linq.Queryable.xml",
+        "ref/netstandard1.0/it/System.Linq.Queryable.xml",
+        "ref/netstandard1.0/ja/System.Linq.Queryable.xml",
+        "ref/netstandard1.0/ko/System.Linq.Queryable.xml",
+        "ref/netstandard1.0/ru/System.Linq.Queryable.xml",
+        "ref/netstandard1.0/zh-hans/System.Linq.Queryable.xml",
+        "ref/netstandard1.0/zh-hant/System.Linq.Queryable.xml",
+        "ref/portable-net45+win8+wp8+wpa81/_._",
+        "ref/win8/_._",
+        "ref/wp80/_._",
+        "ref/wpa81/_._",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "ref/xamarintvos10/_._",
+        "ref/xamarinwatchos10/_._"
       ]
     },
     "System.Net.Http/4.0.1-rc2-24027": {
@@ -8845,32 +9137,42 @@
         "ref/xamarinwatchos10/_._"
       ]
     },
-    "MyTested.AspNetCore.Mvc.Caching/1.0.0-alpha": {
+    "MyTested.AspNetCore.Mvc.Caching/1.0.0-preview": {
       "type": "project",
       "path": "../MyTested.AspNetCore.Mvc.Caching/project.json",
       "msbuildProject": "../MyTested.AspNetCore.Mvc.Caching/MyTested.AspNetCore.Mvc.Caching.xproj"
     },
-    "MyTested.AspNetCore.Mvc.Core/1.0.0-alpha": {
+    "MyTested.AspNetCore.Mvc.Core/1.0.0-preview": {
       "type": "project",
       "path": "../MyTested.AspNetCore.Mvc.Core/project.json",
       "msbuildProject": "../MyTested.AspNetCore.Mvc.Core/MyTested.AspNetCore.Mvc.Core.xproj"
     },
-    "MyTested.AspNetCore.Mvc.DataAnnotations/1.0.0-alpha": {
+    "MyTested.AspNetCore.Mvc.DataAnnotations/1.0.0-preview": {
       "type": "project",
       "path": "../MyTested.AspNetCore.Mvc.DataAnnotations/project.json",
       "msbuildProject": "../MyTested.AspNetCore.Mvc.DataAnnotations/MyTested.AspNetCore.Mvc.DataAnnotations.xproj"
     },
-    "MyTested.AspNetCore.Mvc.Licensing/1.0.0-alpha": {
+    "MyTested.AspNetCore.Mvc.EntityFrameworkCore/1.0.0-preview": {
+      "type": "project",
+      "path": "../MyTested.AspNetCore.Mvc.EntityFrameworkCore/project.json",
+      "msbuildProject": "../MyTested.AspNetCore.Mvc.EntityFrameworkCore/MyTested.AspNetCore.Mvc.EntityFrameworkCore.xproj"
+    },
+    "MyTested.AspNetCore.Mvc.Licensing/1.0.0-preview": {
       "type": "project",
       "path": "../MyTested.AspNetCore.Mvc.Licensing/project.json",
       "msbuildProject": "../MyTested.AspNetCore.Mvc.Licensing/MyTested.AspNetCore.Mvc.Licensing.xproj"
     },
-    "MyTested.AspNetCore.Mvc.Session/1.0.0-alpha": {
+    "MyTested.AspNetCore.Mvc.Options/1.0.0-preview": {
+      "type": "project",
+      "path": "../MyTested.AspNetCore.Mvc.Options/project.json",
+      "msbuildProject": "../MyTested.AspNetCore.Mvc.Options/MyTested.AspNetCore.Mvc.Options.xproj"
+    },
+    "MyTested.AspNetCore.Mvc.Session/1.0.0-preview": {
       "type": "project",
       "path": "../MyTested.AspNetCore.Mvc.Session/project.json",
       "msbuildProject": "../MyTested.AspNetCore.Mvc.Session/MyTested.AspNetCore.Mvc.Session.xproj"
     },
-    "MyTested.AspNetCore.Mvc.ViewFeatures/1.0.0-beta": {
+    "MyTested.AspNetCore.Mvc.ViewFeatures/1.0.0-preview": {
       "type": "project",
       "path": "../MyTested.AspNetCore.Mvc.ViewFeatures/project.json",
       "msbuildProject": "../MyTested.AspNetCore.Mvc.ViewFeatures/MyTested.AspNetCore.Mvc.ViewFeatures.xproj"
@@ -8881,6 +9183,8 @@
       "Microsoft.AspNetCore.Mvc >= 1.0.0-*",
       "MyTested.AspNetCore.Mvc.Caching >= 1.0.0-*",
       "MyTested.AspNetCore.Mvc.Core >= 1.0.0-*",
+      "MyTested.AspNetCore.Mvc.EntityFrameworkCore >= 1.0.0-*",
+      "MyTested.AspNetCore.Mvc.Options >= 1.0.0-*",
       "MyTested.AspNetCore.Mvc.Session >= 1.0.0-*",
       "MyTested.AspNetCore.Mvc.ViewFeatures >= 1.0.0-*"
     ],

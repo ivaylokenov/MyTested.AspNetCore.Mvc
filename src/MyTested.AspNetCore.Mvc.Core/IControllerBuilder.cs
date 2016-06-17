@@ -101,7 +101,8 @@
         /// <typeparam name="TService">Type of service to configure.</typeparam>
         /// <param name="scopedServiceSetup">Action configuring the service before running the test case.</param>
         /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>
-        IAndControllerBuilder<TController> WithServiceSetupFor<TService>(Action<TService> scopedServiceSetup);
+        IAndControllerBuilder<TController> WithServiceSetupFor<TService>(Action<TService> scopedServiceSetup)
+            where TService : class;
         
         /// <summary>
         /// Sets null value to the constructor service dependency of the given type.
@@ -147,7 +148,7 @@
         IAndControllerBuilder<TController> WithAuthenticatedUser();
 
         /// <summary>
-        /// Sets custom authenticated <see cref="HttpContext.User"/> using the provided user builder.
+        /// Sets custom authenticated <see cref="HttpContext.User"/> to the built controller using the provided user builder.
         /// </summary>
         /// <param name="userBuilder">Action setting the <see cref="HttpContext.User"/> by using <see cref="IClaimsPrincipalBuilder"/>.</param>
         /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>

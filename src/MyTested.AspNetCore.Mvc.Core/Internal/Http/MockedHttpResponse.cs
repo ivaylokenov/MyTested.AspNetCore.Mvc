@@ -13,12 +13,12 @@
         /// Initializes a new instance of the <see cref="MockedHttpResponse"/> class.
         /// </summary>
         /// <param name="context">Default HTTP context.</param>
-        public MockedHttpResponse(DefaultHttpContext context)
+        public MockedHttpResponse(HttpContext context)
             : base(context)
         {
         }
 
-        public static MockedHttpResponse From(DefaultHttpContext httpContext, HttpResponse httpResponse)
+        public static MockedHttpResponse From(HttpContext httpContext, HttpResponse httpResponse)
         {
             return new MockedHttpResponse(httpContext)
             {

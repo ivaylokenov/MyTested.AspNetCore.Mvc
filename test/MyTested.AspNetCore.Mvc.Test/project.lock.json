@@ -1275,7 +1275,7 @@
           "lib/net45/xunit.execution.desktop.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.Core/1.0.0-beta": {
+      "MyTested.AspNetCore.Mvc.Core/1.0.0-preview": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
@@ -1293,7 +1293,7 @@
           "net451/MyTested.AspNetCore.Mvc.Core.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.Licensing/1.0.0-beta": {
+      "MyTested.AspNetCore.Mvc.Licensing/1.0.0-preview": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "compile": {
@@ -4021,7 +4021,7 @@
           "lib/portable-net45+win8+wp8+wpa81/xunit.execution.dotnet.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.Core/1.0.0-beta": {
+      "MyTested.AspNetCore.Mvc.Core/1.0.0-preview": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.5",
         "dependencies": {
@@ -4039,7 +4039,7 @@
           "netstandard1.5/MyTested.AspNetCore.Mvc.Core.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.Licensing/1.0.0-beta": {
+      "MyTested.AspNetCore.Mvc.Licensing/1.0.0-preview": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.4",
         "dependencies": {
@@ -8910,12 +8910,12 @@
         "xunit.extensibility.execution.nuspec"
       ]
     },
-    "MyTested.AspNetCore.Mvc.Core/1.0.0-beta": {
+    "MyTested.AspNetCore.Mvc.Core/1.0.0-preview": {
       "type": "project",
       "path": "../../src/MyTested.AspNetCore.Mvc.Core/project.json",
       "msbuildProject": "../../src/MyTested.AspNetCore.Mvc.Core/MyTested.AspNetCore.Mvc.Core.xproj"
     },
-    "MyTested.AspNetCore.Mvc.Licensing/1.0.0-beta": {
+    "MyTested.AspNetCore.Mvc.Licensing/1.0.0-preview": {
       "type": "project",
       "path": "../../src/MyTested.AspNetCore.Mvc.Licensing/project.json",
       "msbuildProject": "../../src/MyTested.AspNetCore.Mvc.Licensing/MyTested.AspNetCore.Mvc.Licensing.xproj"

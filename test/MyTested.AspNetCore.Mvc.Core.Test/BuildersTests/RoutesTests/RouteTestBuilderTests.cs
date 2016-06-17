@@ -413,6 +413,15 @@
                 .ShouldMap("/Home/Contact/1")
                 .To<HomeController>(c => c.Contact(1));
         }
+        
+        [Fact]
+        public void ToShouldResolveCorrectlyWithIgnoredParameter()
+        {
+            MyMvc
+                .Routes()
+                .ShouldMap("/Home/Contact/1")
+                .To<HomeController>(c => c.Contact(With.Any<int>()));
+        }
 
         [Fact]
         public void ToShouldResolveCorrectControllerAndActionWithNoModel()

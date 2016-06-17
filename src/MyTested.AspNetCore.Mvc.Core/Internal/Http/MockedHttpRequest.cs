@@ -8,12 +8,14 @@
     using Microsoft.AspNetCore.Http.Features;
     using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.Extensions.Primitives;
+    using Utilities.Validators;
 
     /// <summary>
     /// Mocked HTTP request object.
     /// </summary>
     public class MockedHttpRequest : HttpRequest
     {
+        private readonly HttpContext httpContext;
         private readonly IHeaderDictionary headerDictionary;
         private readonly FormFileCollection formFiles;
         private readonly Dictionary<string, string> cookieValues;
@@ -25,8 +27,11 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="MockedHttpRequest"/> class.
         /// </summary>
-        public MockedHttpRequest()
+        public MockedHttpRequest(HttpContext httpContext)
         {
+            CommonValidator.CheckForNullReference(httpContext, nameof(HttpContext));
+
+            this.httpContext = httpContext;
             this.headerDictionary = new HeaderDictionary();
             this.formFiles = new FormFileCollection();
             this.cookieValues = new Dictionary<string, string>();
@@ -83,10 +88,10 @@
         public override HostString Host { get; set; }
 
         /// <summary>
-        /// Gets the HttpContext for this request. Not used. Always returns null.
+        /// Gets the <see cref="Microsoft.AspNetCore.Http.HttpContext"/> for this request.
         /// </summary>
         /// <value>The HTTP request HTTP context.</value>
-        public override HttpContext HttpContext => null;
+        public override HttpContext HttpContext => this.httpContext;
 
         /// <summary>
         /// Returns true if the Scheme is 'https'.

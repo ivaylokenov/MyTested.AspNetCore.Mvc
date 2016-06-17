@@ -1,6 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.Routes
 {
     using System;
+    using System.Linq;
     using Contracts;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -75,6 +76,11 @@
             catch (Exception ex)
             {
                 return new ResolvedRouteContext($"exception was thrown when trying to bind the action arguments: '{ex.Unwrap().Message}'");
+            }
+
+            if (modelBindingActionInvoker.BoundActionArguments == null)
+            {
+                return new ResolvedRouteContext("action could not be invoked because of the declared filters. You must set the request properties so that they will pass through the pipeline");
             }
 
             return new ResolvedRouteContext(

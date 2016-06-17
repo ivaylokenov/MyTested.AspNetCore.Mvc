@@ -25,10 +25,10 @@
         }
         
         /// <inheritdoc />
-        public IModelDetailsTestBuilder<TModel> WithModel<TModel>(TModel model) => this.WithResponseModel(model);
+        public IAndModelDetailsTestBuilder<TModel> WithModel<TModel>(TModel model) => this.WithResponseModel(model);
 
         /// <inheritdoc />
-        public IModelDetailsTestBuilder<TModel> WithModelOfType<TModel>() => this.WithResponseModelOfType<TModel>();
+        public IAndModelDetailsTestBuilder<TModel> WithModelOfType<TModel>() => this.WithResponseModelOfType<TModel>();
 
         protected override object GetActualModel()
         {

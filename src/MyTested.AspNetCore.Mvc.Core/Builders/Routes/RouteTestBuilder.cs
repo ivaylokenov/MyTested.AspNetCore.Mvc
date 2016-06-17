@@ -50,7 +50,7 @@
         /// <inheritdoc />
         public IShouldMapTestBuilder ShouldMap(Action<IHttpRequestBuilder> httpRequestBuilder)
         {
-            var httpBuilder = new HttpRequestBuilder();
+            var httpBuilder = new HttpRequestBuilder(this.HttpContext);
             httpRequestBuilder(httpBuilder);
             httpBuilder.ApplyTo(this.HttpContext.Request);
             return this.ShouldMap(this.HttpContext);

@@ -46,14 +46,14 @@
         /// </summary>
         /// <typeparam name="TResponseModel">Expected response type.</typeparam>
         /// <returns>Test builder of <see cref="IModelDetailsTestBuilder{TActionResult}"/> type.</returns>
-        IModelDetailsTestBuilder<TActionResult> ResultOfType<TResponseModel>();
+        IAndModelDetailsTestBuilder<TActionResult> ResultOfType<TResponseModel>();
 
         /// <summary>
         /// Tests whether the action result is of the provided type.
         /// </summary>
         /// <param name="returnType">Expected return type.</param>
         /// <returns>Test builder of <see cref="IModelDetailsTestBuilder{TActionResult}"/> type.</returns>
-        IModelDetailsTestBuilder<TActionResult> ResultOfType(Type returnType);
+        IAndModelDetailsTestBuilder<TActionResult> ResultOfType(Type returnType);
 
         /// <summary>
         /// Tests whether the action result is deeply equal to the provided one.
@@ -61,7 +61,7 @@
         /// <typeparam name="TResponseModel">Expected response type.</typeparam>
         /// <param name="model">Expected return object.</param>
         /// <returns>Test builder of <see cref="IModelDetailsTestBuilder{TActionResult}"/> type.</returns>
-        IModelDetailsTestBuilder<TActionResult> Result<TResponseModel>(TResponseModel model);
+        IAndModelDetailsTestBuilder<TActionResult> Result<TResponseModel>(TResponseModel model);
 
         /// <summary>
         /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.ChallengeResult"/>.
@@ -83,14 +83,14 @@
         IContentTestBuilder Content(string content);
 
         /// <summary>
-        /// Tests whether <see cref="Microsoft.AspNetCore.Mvc.ContentResult"/> passes given assertions.
+        /// Tests whether <see cref="Microsoft.AspNetCore.Mvc.ContentResult"/> passes the given assertions.
         /// </summary>
         /// <param name="assertions">Action containing all assertions on the content.</param>
         /// <returns>Test builder of <see cref="IContentTestBuilder"/> type.</returns>
         IContentTestBuilder Content(Action<string> assertions);
 
         /// <summary>
-        /// Tests whether <see cref="Microsoft.AspNetCore.Mvc.ContentResult"/> passes given predicate.
+        /// Tests whether <see cref="Microsoft.AspNetCore.Mvc.ContentResult"/> passes the given predicate.
         /// </summary>
         /// <param name="predicate">Predicate testing the content.</param>
         /// <returns>Test builder of <see cref="IContentTestBuilder"/> type.</returns>

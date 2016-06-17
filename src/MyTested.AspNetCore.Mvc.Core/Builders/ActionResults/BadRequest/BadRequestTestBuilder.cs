@@ -42,13 +42,13 @@
         }
         
         /// <inheritdoc />
-        public IModelDetailsTestBuilder<TError> WithError<TError>(TError error)
+        public IAndModelDetailsTestBuilder<TError> WithError<TError>(TError error)
         {
             return this.WithResponseModel(error);
         }
 
         /// <inheritdoc />
-        public IModelDetailsTestBuilder<TError> WithErrorOfType<TError>()
+        public IAndModelDetailsTestBuilder<TError> WithErrorOfType<TError>()
         {
             return this.WithResponseModelOfType<TError>();
         }

@@ -2,10 +2,17 @@
 {
     using System;
     using Microsoft.AspNetCore.Routing;
+    using Microsoft.AspNetCore.Http.Features.Authentication;
+    using Routes;
 
     public class RouteTestContext : HttpTestContext
     {
         private RouteContext routeContext;
+
+        public RouteTestContext()
+        {
+            this.SetAuthentication();
+        }
 
         public IRouter Router { get; internal set; }
 
@@ -25,5 +32,16 @@
         }
 
         public override string ExceptionMessagePrefix => $"Expected route '{this.HttpContext.Request.Path}'";
+
+        private void SetAuthentication()
+        {
+            var httpAuthenticationFeature =
+                this.HttpContext.Features.Get<IHttpAuthenticationFeature>()
+                ?? new HttpAuthenticationFeature();
+
+            httpAuthenticationFeature.Handler = new RouteAuthenticationHandler();
+
+            this.HttpContext.Features.Set(httpAuthenticationFeature);
+        }
     }
 }

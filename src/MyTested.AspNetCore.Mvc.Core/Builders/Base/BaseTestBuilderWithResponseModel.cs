@@ -50,7 +50,7 @@
         protected string OfTypeErrorMessageFormat { get; set; }
 
         /// <inheritdoc />
-        public IModelDetailsTestBuilder<TResponseModel> WithResponseModelOfType<TResponseModel>()
+        public IAndModelDetailsTestBuilder<TResponseModel> WithResponseModelOfType<TResponseModel>()
         {
             var actualResponseDataType = this.GetReturnType();
             var expectedResponseDataType = typeof(TResponseModel);
@@ -74,7 +74,7 @@
         }
 
         /// <inheritdoc />
-        public IModelDetailsTestBuilder<TResponseModel> WithResponseModel<TResponseModel>(TResponseModel expectedModel)
+        public IAndModelDetailsTestBuilder<TResponseModel> WithResponseModel<TResponseModel>(TResponseModel expectedModel)
         {
             this.WithResponseModelOfType<TResponseModel>();
 

@@ -5,6 +5,8 @@
     using System.IO;
     using System.Linq;
     using System.Text;
+    using Authentication;
+    using Contracts.Authentication;
     using Contracts.Http;
     using Contracts.Uris;
     using Exceptions;
@@ -28,14 +30,18 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="HttpRequestBuilder"/> class.
         /// </summary>
-        public HttpRequestBuilder()
+        public HttpRequestBuilder(HttpContext httpContext)
         {
-            this.request = new MockedHttpRequest
+            CommonValidator.CheckForNullReference(httpContext, nameof(HttpContext));
+
+            this.request = new MockedHttpRequest(httpContext)
             {
                 Scheme = HttpScheme.Http,
                 Path = "/"
             };
         }
+
+        public HttpContext HttpContext => this.request.HttpContext;
 
         /// <inheritdoc />
         public IAndHttpRequestBuilder WithBody(Stream body)
@@ -419,6 +425,22 @@
             uriBuilder(mockedUriBuilder);
             var uri = mockedUriBuilder.GetUri();
             return this.WithLocation(uri);
+        }
+
+        /// <inheritdoc />
+        public IAndHttpRequestBuilder WithAuthenticatedUser()
+        {
+            this.HttpContext.User = ClaimsPrincipalBuilder.DefaultAuthenticated;
+            return this;
+        }
+
+        /// <inheritdoc />
+        public IAndHttpRequestBuilder WithAuthenticatedUser(Action<IClaimsPrincipalBuilder> userBuilder)
+        {
+            var newUserBuilder = new ClaimsPrincipalBuilder();
+            userBuilder(newUserBuilder);
+            this.HttpContext.User = newUserBuilder.GetClaimsPrincipal();
+            return this;
         }
 
         /// <inheritdoc />

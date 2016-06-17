@@ -45,7 +45,7 @@
 
         private static TestConfiguration testConfiguration;
         private static string testAssemblyName;
-        
+
         private static IHostingEnvironment environment;
 
         private static Type startupType;
@@ -128,7 +128,7 @@
                 return testAssemblyName;
             }
         }
-        
+
         internal static IHostingEnvironment Environment
         {
             get
@@ -163,8 +163,9 @@
 
         internal static void LoadPlugins()
         {
-            DependencyContext.Default
-                .RuntimeLibraries
+            DependencyContext
+                .Default
+                .GetDefaultAssemblyNames()
                 .Where(l => l.Name.StartsWith(TestFrameworkName))
                 .Select(l => Assembly.Load(new AssemblyName(l.Name)).GetType($"{l.Name}.{l.Name.Replace(TestFrameworkName, string.Empty).Trim('.')}TestPlugin"))
                 .Where(p => p != null)
@@ -245,17 +246,17 @@
 
             AdditionalConfiguration?.Invoke(configurationBuilder);
             AdditionalConfiguration = null;
-            
+
             return configurationBuilder.Build();
         }
 
         private static void FindTestAssemblyName()
         {
-            testAssemblyName = DependencyContext.Default
-                .RuntimeLibraries
-                .Where(l => l.Dependencies.Any(d => d.Name.StartsWith(TestFrameworkName)))
-                .Select(l => l.Name)
-                .First();
+            testAssemblyName = DependencyContext
+                .Default
+                .GetDefaultAssemblyNames()
+                .First()
+                .Name;
         }
 
         private static void PrepareLicensing()
@@ -372,7 +373,7 @@
                     }
                 }
             });
-            
+
             foreach (var applicablePlugin in applicablePlugins)
             {
                 applicablePlugin.ServiceRegistrationDelegate(serviceCollection);

@@ -690,7 +690,7 @@
                         .Ok()
                         .WithResponseModel("TestValue");
                 },
-                "This overload of the 'WithServiceSetupFor' method can be used only for services with scoped lifetime.");
+                "The 'WithServiceSetupFor' method can be used only for services with scoped lifetime.");
 
             MyMvc.IsUsingDefaultConfiguration();
         }

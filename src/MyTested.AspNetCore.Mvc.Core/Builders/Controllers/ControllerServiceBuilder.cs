@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using Contracts.Controllers;
-    using Internal.Application;
     using Microsoft.Extensions.DependencyInjection;
     using Utilities;
     using Utilities.Extensions;
@@ -16,15 +15,11 @@
     {
         /// <inheritdoc />
         public IAndControllerBuilder<TController> WithServiceSetupFor<TService>(Action<TService> scopedServiceSetup)
+            where TService : class
         {
             CommonValidator.CheckForNullReference(scopedServiceSetup, nameof(scopedServiceSetup));
-
-            var serviceLifetime = TestServiceProvider.GetServiceLifetime<TService>();
-            if (serviceLifetime != ServiceLifetime.Scoped)
-            {
-                throw new InvalidOperationException("This overload of the 'WithServiceSetupFor' method can be used only for services with scoped lifetime.");
-            }
-
+            ServiceValidator.ValidateScopedServiceLifetime<TService>(nameof(WithServiceSetupFor));
+            
             scopedServiceSetup(this.HttpContext.RequestServices.GetService<TService>());
 
             return this;

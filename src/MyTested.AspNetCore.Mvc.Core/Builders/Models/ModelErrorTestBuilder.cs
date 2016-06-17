@@ -1,7 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Models
 {
     using Base;
-    using Contracts.Base;
     using Contracts.Models;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
