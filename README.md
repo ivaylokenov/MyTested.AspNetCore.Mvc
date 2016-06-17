@@ -101,7 +101,9 @@ MyMvc
 	{
 		Integer = 1,
 		String = "Text"
-	}));
+	}))
+	.AndAlso()
+	.ToValidModelState();
 
 // instantiates controller with the registered services
 // and mocks authenticated user

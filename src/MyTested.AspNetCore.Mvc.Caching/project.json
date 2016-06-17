@@ -6,7 +6,9 @@
   "packOptions": {
     "projectUrl": "https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc",
     "licenseUrl": "https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/master/LICENSE",
-    "tags": [ "aspnetcore", "aspnetcoremvc", "testing", "unit", "tests", "fluent", "testing", "framework", "asp", "net", "core", "mvc", "test", "mymvc" ],
+    "iconUrl": "https://raw.githubusercontent.com/ivaylokenov/MyTested.AspNetCore.Mvc/master/tools/nuget-logo.png",
+    "owners": [ "Ivaylo Kenov" ],
+    "tags": [ "aspnetcore", "aspnetcoremvc", "testing", "unit", "tests", "fluent", "testing", "framework", "asp", "net", "core", "mvc", "test", "mymvc", "mytested" ],
     "requireLicenseAcceptance": true,
     "repository": {
       "type": "git",
