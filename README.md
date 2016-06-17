@@ -90,6 +90,8 @@ MyMvc
 	.ShouldMap(request => request
 		.WithLocation("/My/Action/1")
 		.WithMethod(HttpMethod.Post)
+		.WithAuthenticatedUser()
+		.WithAntiForgeryToken()
 		.WithJsonBody(new
 		{
 			Integer = 1,
@@ -125,6 +127,31 @@ MyMvc
         Assert.AreEqual(1, m.Id);
         Assert.AreEqual("Some property value", m.SomeProperty);
     });
+
+// instantiates controller with the registered services
+// and sets options for the current test
+// and sets session for the current test
+// and sets DbContext for the current test
+// and tests for added cache entry by the action
+// and tests model from view result
+MyMvc
+	.Controller<MvcController>()
+	.WithOptions(options => options
+		.For<AppSettings>(settings => settings.Cache = true))
+	.WithSession(session => session
+		.WithEntry("Session", "SessionValue"))
+	.WithDbContext(db => db.WithEntities(entities => entities
+		.AddRange(SampleDataProvider.GetModels())))
+	.Calling(c => c.SomeAction())
+	.ShouldHave()
+	.MemoryCache(cache => cache
+		.ContainingEntry(entry => entry
+			.WithKey("CacheEntry")
+			.WithSlidingExpiration(TimeSpan.FromMinutes(10))))
+	.AndAlso()
+	.ShouldReturn()
+	.View()
+	.WithModelOfType<ResponseModel>();
 	
 // tests whether the action is declared with filters
 MyMvc
@@ -167,7 +194,7 @@ Code by Ivaylo Kenov. Copyright 2015 Ivaylo Kenov ([http://mytestedasp.net](http
 
 **Currently MyTested.AspNetCore.Mvc is in alpha version and it is not advised to use it in production environments. The testing framework is fully tested and working correctly but the fluent APIs may change in the final production-ready build.**
 
-MyTested.AspNetCore.Mvc source code is available under GNU Affero General Public License/FOSS License Exception. The free version of the library allows up to 500 assertions (around 100 test cases) per test project. Additionally, full-featured licenses can be requested for free by individuals, startups and educational institutions. Commercial licensing with private support will also be available with the final release.
+MyTested.AspNetCore.Mvc source code is available under GNU Affero General Public License/FOSS License Exception. The free version of the library allows up to 500 assertions (around 100 test cases) per test project. Additionally, full-featured licenses can be requested for free by individuals, open-source projects, startups and educational institutions. Commercial licensing with private support will also be available with the final release.
 
 See the [LICENSE](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/master/LICENSE) for detailed information.
 
