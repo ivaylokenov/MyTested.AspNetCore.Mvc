@@ -11,7 +11,7 @@ It is strongly advised to start with the [tutorial](http://ivaylokenov.github.io
 
 You can install this library using NuGet into your test project (or reference it directly in your `project.json` file). Currently MyTested.AspNetCore.Mvc works with ASP.NET Core MVC RC2.
 
-    Install-Package MyTested.AspNetCore.Mvc
+    Install-Package MyTested.AspNetCore.Mvc -Pre
 
 After the downloading is complete, just add `using MyTested.AspNetCore.Mvc;` to your source code and you are ready to test in the most elegant and developer friendly way.
 	
