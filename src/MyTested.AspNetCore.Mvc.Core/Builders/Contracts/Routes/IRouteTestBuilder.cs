@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc
+﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Routes
 {
     using System;
     using Builders.Contracts.Http;

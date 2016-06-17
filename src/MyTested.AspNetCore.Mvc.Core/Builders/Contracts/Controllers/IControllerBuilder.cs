@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc
+﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Controllers
 {
     using System;
     using System.Collections.Generic;

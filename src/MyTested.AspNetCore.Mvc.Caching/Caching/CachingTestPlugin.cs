@@ -5,6 +5,7 @@
     using Internal.Application;
     using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.DependencyInjection;
+    using Plugins;
 
     public class CachingTestPlugin : IServiceRegistrationPlugin
     {

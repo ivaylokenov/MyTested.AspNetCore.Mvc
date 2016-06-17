@@ -29,6 +29,7 @@
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.ObjectPool;
     using Microsoft.Extensions.PlatformAbstractions;
+    using Plugins;
     using Routes;
     using Utilities.Extensions;
 

@@ -3,6 +3,7 @@
     using System;
     using Builders;
     using Builders.Contracts;
+    using Builders.Contracts.Controllers;
     using Builders.Controllers;
 
     /// <summary>

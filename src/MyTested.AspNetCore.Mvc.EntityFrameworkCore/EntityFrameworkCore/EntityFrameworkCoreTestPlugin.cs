@@ -4,6 +4,7 @@
     using System.Reflection;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
+    using Plugins;
 
     public class EntityFrameworkCoreTestPlugin : IServiceRegistrationPlugin
     {

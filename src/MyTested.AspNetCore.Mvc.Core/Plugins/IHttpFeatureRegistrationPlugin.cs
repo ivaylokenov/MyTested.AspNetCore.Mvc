@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc
+﻿namespace MyTested.AspNetCore.Mvc.Plugins
 {
     using System;
     using Microsoft.AspNetCore.Http;

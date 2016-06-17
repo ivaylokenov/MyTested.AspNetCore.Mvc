@@ -2,6 +2,7 @@
 {
     using System;
     using Microsoft.Extensions.DependencyInjection;
+    using Plugins;
 
     public class TestPlugin : IDefaultRegistrationPlugin
     {

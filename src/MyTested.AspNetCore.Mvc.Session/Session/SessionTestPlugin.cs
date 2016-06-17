@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Http.Features;
     using Microsoft.AspNetCore.Session;
     using Microsoft.Extensions.DependencyInjection;
+    using Plugins;
 
     public class SessionTestPlugin : IServiceRegistrationPlugin, IHttpFeatureRegistrationPlugin
     {
