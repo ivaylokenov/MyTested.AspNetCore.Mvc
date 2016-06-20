@@ -26,7 +26,7 @@ For other interesting packages check out:
 	
 ## How to use
 
-Make sure to check out the [tutorial](http://docs.mytestedasp.net/tutorial/intro.html) (coming soon), the [testing guide](http://docs.mytestedasp.net/guide/intro.html) (coming soon) or the [API reference](http://docs.mytestedasp.net/api/index.html) for a preview of the available features.
+Make sure to check out the [tutorial](http://docs.mytestedasp.net/tutorial/intro.html) (coming soon) and the [testing guide](http://docs.mytestedasp.net/guide/intro.html) (coming soon) for a preview of the available features.
 
 You can also check out the [provided samples](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/tree/master/samples) for real-life ASP.NET Core MVC application testing.
 
