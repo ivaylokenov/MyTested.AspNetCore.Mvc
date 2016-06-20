@@ -2,7 +2,7 @@
 {
     using System;
     using Base;
-    using Contracts;
+    using Contracts.Options;
     using Internal.TestContexts;
     using Utilities.Validators;
 

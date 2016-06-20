@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts
+﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Options
 {
     using System;
 
