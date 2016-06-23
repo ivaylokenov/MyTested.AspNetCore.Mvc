@@ -1,7 +1,7 @@
 <h1><img src="https://raw.githubusercontent.com/ivaylokenov/MyTested.AspNetCore.Mvc/master/tools/logo.png" align="left" alt="MyTested.WebApi" width="100">&nbsp; MyTested.AspNetCore.Mvc - Fluent testing<br />&nbsp; framework for ASP.NET Core MVC</h1>
 ====================================
 
-MyTested.AspNetCore.Mvc is a unit testing library (currently in Alpha version) providing easy fluent interface to test the [ASP.NET Core MVC](https://github.com/aspnet/Mvc) framework. It is testing framework agnostic, so you can combine it with a test runner of your choice (e.g. xUnit, NUnit, etc.).
+MyTested.AspNetCore.Mvc is a unit testing library (currently in Preview version) providing easy fluent interface to test the [ASP.NET Core MVC](https://github.com/aspnet/Mvc) framework. It is testing framework agnostic, so you can combine it with a test runner of your choice (e.g. xUnit, NUnit, etc.).
 
 ## Getting started
 
@@ -194,7 +194,7 @@ MyMvc
 
 Code by Ivaylo Kenov. Copyright 2015 Ivaylo Kenov ([http://mytestedasp.net](http://mytestedasp.net))
 
-**Currently MyTested.AspNetCore.Mvc is in alpha version and it is not advised to use it in production environments. The testing framework is fully tested and working correctly but the fluent APIs may change in the final production-ready build.**
+**Currently MyTested.AspNetCore.Mvc is in preview and it is not advised to use it in production environments. The testing framework is fully tested and working correctly but the fluent APIs may change in the final production-ready build.**
 
 MyTested.AspNetCore.Mvc source code is available under GNU Affero General Public License/FOSS License Exception. The free version of the library allows up to 500 assertions (around 100 test cases) per test project. Additionally, **full-featured licenses can be requested for free by individuals, open-source projects, startups and educational institutions**. Commercial licensing with private support will also be available with the final release.
 
