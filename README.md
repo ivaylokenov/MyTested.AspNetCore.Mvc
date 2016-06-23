@@ -1,7 +1,7 @@
 <h1><img src="https://raw.githubusercontent.com/ivaylokenov/MyTested.AspNetCore.Mvc/master/tools/logo.png" align="left" alt="MyTested.WebApi" width="100">&nbsp; MyTested.AspNetCore.Mvc - Fluent testing<br />&nbsp; framework for ASP.NET Core MVC</h1>
 ====================================
 
-MyTested.AspNetCore.Mvc is a unit testing library (currently in Preview version) providing easy fluent interface to test the [ASP.NET Core MVC](https://github.com/aspnet/Mvc) framework. It is testing framework agnostic, so you can combine it with a test runner of your choice (e.g. xUnit, NUnit, etc.).
+MyTested.AspNetCore.Mvc is a unit testing library (currently in preview version) providing easy fluent interface to test the [ASP.NET Core MVC](https://github.com/aspnet/Mvc) framework. It is testing framework agnostic, so you can combine it with a test runner of your choice (e.g. xUnit, NUnit, etc.).
 
 ## Getting started
 
