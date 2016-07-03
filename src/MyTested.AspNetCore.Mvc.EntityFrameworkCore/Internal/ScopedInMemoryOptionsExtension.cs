@@ -10,7 +10,7 @@
         public override void ApplyServices(IServiceCollection services)
         {
             services
-                .ReplaceLifetime<IInMemoryStore>(ServiceLifetime.Scoped)
+                .ReplaceLifetime<IInMemoryStoreSource>(ServiceLifetime.Scoped)
                 .ReplaceLifetime<InMemoryValueGeneratorCache>(ServiceLifetime.Scoped);
         }
     }

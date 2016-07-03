@@ -446,7 +446,7 @@
                 .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
                 .BadRequest()
-                .ContainingOutputFormatters(new CustomOutputFormatter());
+                .ContainingOutputFormatters(TestObjectFactory.GetOutputFormatter(), new CustomOutputFormatter());
         }
 
         [Fact]
@@ -462,11 +462,11 @@
                         .BadRequest()
                         .ContainingOutputFormatters(new List<IOutputFormatter>
                         {
-                            TestObjectFactory.GetOutputFormatter(),
-                            new CustomOutputFormatter()
+                            new CustomOutputFormatter(),
+                            new StringOutputFormatter()
                         });
                 },
-                "When calling FullHttpBadRequestAction action in MvcController expected bad request result output formatters to contain formatter of HttpNotAcceptableOutputFormatter type, but none was found.");
+                "When calling FullHttpBadRequestAction action in MvcController expected bad request result output formatters to contain formatter of StringOutputFormatter type, but none was found.");
         }
 
         [Fact]
@@ -482,7 +482,6 @@
                         .BadRequest()
                         .ContainingOutputFormatters(new List<IOutputFormatter>
                         {
-                            TestObjectFactory.GetOutputFormatter(),
                             new CustomOutputFormatter()
                         });
                 },
@@ -520,7 +519,7 @@
                 .BadRequest()
                 .WithStatusCode(201)
                 .AndAlso()
-                .ContainingOutputFormatters(TestObjectFactory.GetOutputFormatter());
+                .ContainingOutputFormatters(TestObjectFactory.GetOutputFormatter(), new CustomOutputFormatter());
         }
 
         [Fact]

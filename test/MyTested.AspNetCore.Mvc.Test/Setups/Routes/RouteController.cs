@@ -11,7 +11,7 @@
             return this.View();
         }
 
-        [HttpGet("[action]/{id}")]
+        [HttpGet("[action]")]
         public IActionResult Action(int id)
         {
             return this.View();
