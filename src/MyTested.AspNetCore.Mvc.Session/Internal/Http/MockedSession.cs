@@ -19,6 +19,8 @@
 
         public string Id { get; set; }
 
+        public bool IsAvailable => true;
+        
         public IEnumerable<string> Keys => this.session.Keys;
 
         public void Clear() => this.session.Clear();

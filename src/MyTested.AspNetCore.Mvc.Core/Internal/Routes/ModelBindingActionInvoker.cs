@@ -15,35 +15,25 @@
 
     public class ModelBindingActionInvoker : ControllerActionInvoker, IModelBindingActionInvoker
     {
-        private readonly ControllerActionDescriptor controllerActionDescriptor;
-
         public ModelBindingActionInvoker(
-            ActionContext actionContext,
-            ControllerActionInvokerCache controllerActionInvokerCache,
+            ControllerActionInvokerCache cache,
             IControllerFactory controllerFactory,
-            ControllerActionDescriptor descriptor,
-            IReadOnlyList<IInputFormatter> inputFormatters,
-            IControllerActionArgumentBinder controllerActionArgumentBinder,
-            IReadOnlyList<IModelValidatorProvider> modelValidatorProviders,
-            IReadOnlyList<IValueProviderFactory> valueProviderFactories,
+            IControllerArgumentBinder controllerArgumentBinder,
             ILogger logger,
             DiagnosticSource diagnosticSource,
+            ActionContext actionContext,
+            IReadOnlyList<IValueProviderFactory> valueProviderFactories,
             int maxModelValidationErrors)
-                : base(actionContext, controllerActionInvokerCache, controllerFactory, descriptor, inputFormatters, controllerActionArgumentBinder, modelValidatorProviders, valueProviderFactories, logger, diagnosticSource, maxModelValidationErrors)
+                : base(cache, controllerFactory, controllerArgumentBinder, logger, diagnosticSource, actionContext, valueProviderFactories, maxModelValidationErrors)
         {
-            this.controllerActionDescriptor = descriptor;
+            this.BoundActionArguments = new Dictionary<string, object>();
         }
 
         public IDictionary<string, object> BoundActionArguments { get; private set; }
         
-        protected override async Task<IDictionary<string, object>> BindActionArgumentsAsync()
+        public override Task InvokeAsync()
         {
-            return this.BoundActionArguments = await base.BindActionArgumentsAsync();
-        }
-
-        protected override Task<IActionResult> InvokeActionAsync(ActionExecutingContext actionExecutingContext)
-        {
-            return Task.FromResult<IActionResult>(new EmptyResult());
+            return TaskCache.CompletedTask;
         }
     }
 }

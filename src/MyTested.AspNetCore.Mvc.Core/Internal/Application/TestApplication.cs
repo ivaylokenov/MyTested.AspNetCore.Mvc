@@ -14,8 +14,8 @@
     using Logging;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Hosting.Builder;
     using Microsoft.AspNetCore.Hosting.Internal;
-    using Microsoft.AspNetCore.Hosting.Startup;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Abstractions;
@@ -224,15 +224,7 @@
         private static void Initialize()
         {
             var serviceCollection = GetInitialServiceCollection();
-
-            StartupMethods startupMethods = null;
-            if (StartupType != null)
-            {
-                startupMethods = serviceCollection
-                    .BuildServiceProvider()
-                    .GetRequiredService<IStartupLoader>()
-                    .LoadMethods(StartupType, null);
-            }
+            var startupMethods = PrepareStartup(serviceCollection);
 
             PrepareServices(serviceCollection, startupMethods);
             PrepareApplicationAndRoutes(startupMethods);
@@ -285,27 +277,49 @@
 
             // default server services
             serviceCollection.TryAddSingleton(Environment);
+
             serviceCollection.TryAddSingleton<ILoggerFactory>(MockedLoggerFactory.Create());
-
-            serviceCollection.AddTransient<IStartupLoader, StartupLoader>();
-
-            serviceCollection.TryAddTransient<IHttpContextFactory, HttpContextFactory>();
             serviceCollection.AddLogging();
+
+            serviceCollection.AddTransient<IApplicationBuilderFactory, ApplicationBuilderFactory>();
+            serviceCollection.TryAddTransient<IHttpContextFactory, HttpContextFactory>();
             serviceCollection.AddOptions();
 
             serviceCollection.TryAddSingleton<DiagnosticSource>(diagnosticSource);
             serviceCollection.TryAddSingleton(diagnosticSource);
 
+            serviceCollection.AddTransient<IStartupFilter, AutoRequestServicesStartupFilter>();
+
             serviceCollection.AddSingleton<ObjectPoolProvider, DefaultObjectPoolProvider>();
-
-            // platform services
-            AddPlatformServices(serviceCollection);
-
+            
             // testing framework services
             serviceCollection.TryAddSingleton<IValidControllersCache, ValidControllersCache>();
             serviceCollection.TryAddSingleton<IControllerActionDescriptorCache, ControllerActionDescriptorCache>();
 
             return serviceCollection;
+        }
+
+        private static StartupMethods PrepareStartup(IServiceCollection serviceCollection)
+        {
+            StartupMethods startupMethods = null;
+            if (StartupType != null)
+            {
+                startupMethods = StartupLoader.LoadMethods(
+                    serviceCollection.BuildServiceProvider(),
+                    StartupType,
+                    Environment.EnvironmentName);
+
+                if (typeof(IStartup).GetTypeInfo().IsAssignableFrom(StartupType.GetTypeInfo()))
+                {
+                    serviceCollection.AddSingleton(typeof(IStartup), StartupType);
+                }
+                else
+                {
+                    serviceCollection.AddSingleton(typeof(IStartup), sp => new ConventionBasedStartup(startupMethods));
+                }
+            }
+
+            return startupMethods;
         }
 
         private static void PrepareServices(IServiceCollection serviceCollection, StartupMethods startupMethods)
@@ -430,32 +444,12 @@
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
 
-                routeBuilder.Routes.Insert(0, AttributeRouting.CreateAttributeMegaRoute(
-                    routeBuilder.DefaultHandler,
-                    serviceProvider));
+                routeBuilder.Routes.Insert(0, AttributeRouting.CreateAttributeMegaRoute(serviceProvider));
             }
 
             router = routeBuilder.Build();
         }
-
-        private static void AddPlatformServices(IServiceCollection serviceCollection)
-        {
-            var defaultPlatformServices = PlatformServices.Default;
-            if (defaultPlatformServices != null)
-            {
-                if (defaultPlatformServices.Application != null)
-                {
-                    var appEnv = defaultPlatformServices.Application;
-                    serviceCollection.TryAddSingleton(appEnv);
-                }
-
-                if (defaultPlatformServices.Runtime != null)
-                {
-                    serviceCollection.TryAddSingleton(defaultPlatformServices.Runtime);
-                }
-            }
-        }
-
+        
         private static void TryLockedInitialization()
         {
             if (!initialiazed)

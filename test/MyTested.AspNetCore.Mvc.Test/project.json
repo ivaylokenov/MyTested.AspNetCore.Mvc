@@ -1,6 +1,4 @@
 ﻿{
-  "version": "1.0.0-beta", 
-
   "buildOptions": {
     "warningsAsErrors": true,
     "keyFile": "../../tools/Key.snk"
@@ -13,11 +11,18 @@
   },
 
   "frameworks": {
-    "net451": { },
-    "netstandard1.5": {
+    "netcoreapp1.0": {
       "imports": [
+        "dnxcore50",
         "portable-net451+win8"
-      ]
-    }
+      ],
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "version": "1.0.0-*",
+          "type": "platform"
+        }
+      }
+    },
+    "net451": {}
   }
 }

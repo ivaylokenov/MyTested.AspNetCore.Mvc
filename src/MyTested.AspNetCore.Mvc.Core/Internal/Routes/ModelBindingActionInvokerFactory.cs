@@ -16,11 +16,9 @@
 
     public class ModelBindingActionInvokerFactory : IModelBindingActionInvokerFactory
     {
-        private readonly IControllerActionArgumentBinder argumentBinder;
+        private readonly IControllerArgumentBinder argumentBinder;
         private readonly IControllerFactory controllerFactory;
         private readonly ControllerActionInvokerCache controllerActionInvokerCache;
-        private readonly IReadOnlyList<IInputFormatter> inputFormatters;
-        private readonly IReadOnlyList<IModelValidatorProvider> modelValidatorProviders;
         private readonly IReadOnlyList<IValueProviderFactory> valueProviderFactories;
         private readonly int maxModelValidationErrors;
         private readonly ILogger logger;
@@ -29,7 +27,7 @@
         public ModelBindingActionInvokerFactory(
             IControllerFactory controllerFactory,
             ControllerActionInvokerCache controllerActionInvokerCache,
-            IControllerActionArgumentBinder argumentBinder,
+            IControllerArgumentBinder argumentBinder,
             IOptions<MvcOptions> optionsAccessor,
             ILoggerFactory loggerFactory,
             DiagnosticSource diagnosticSource)
@@ -37,29 +35,22 @@
             this.controllerFactory = controllerFactory;
             this.argumentBinder = argumentBinder;
             this.controllerActionInvokerCache = controllerActionInvokerCache;
-            this.inputFormatters = optionsAccessor.Value.InputFormatters.ToArray();
-            this.modelValidatorProviders = optionsAccessor.Value.ModelValidatorProviders.ToArray();
             this.valueProviderFactories = optionsAccessor.Value.ValueProviderFactories.ToArray();
             this.maxModelValidationErrors = optionsAccessor.Value.MaxModelValidationErrors;
             this.logger = loggerFactory.CreateLogger<ControllerActionInvoker>();
             this.diagnosticSource = diagnosticSource;
         }
 
-        public IActionInvoker CreateModelBindingActionInvoker(
-            ActionContext actionContext,
-            ControllerActionDescriptor controllerActionDescriptor)
+        public IActionInvoker CreateModelBindingActionInvoker(ActionContext actionContext)
         {
             return new ModelBindingActionInvoker(
-                actionContext,
                 this.controllerActionInvokerCache,
                 this.controllerFactory,
-                controllerActionDescriptor,
-                this.inputFormatters,
                 this.argumentBinder,
-                this.modelValidatorProviders,
-                this.valueProviderFactories,
                 this.logger,
                 this.diagnosticSource,
+                actionContext,
+                this.valueProviderFactories,
                 this.maxModelValidationErrors);
         }
     }

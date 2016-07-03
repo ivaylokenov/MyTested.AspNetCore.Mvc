@@ -217,7 +217,7 @@
                     Assert.NotNull(controller);
                     Assert.NotNull((controller as FullPocoController).CustomControllerContext);
                     Assert.NotNull((controller as FullPocoController).CustomControllerContext.ActionDescriptor);
-                    Assert.Equal("OkResultAction", (controller as FullPocoController).CustomControllerContext.ActionDescriptor.Name);
+                    Assert.Equal("OkResultAction", (controller as FullPocoController).CustomControllerContext.ActionDescriptor.ActionName);
                 });
 
             MyMvc.IsUsingDefaultConfiguration();
@@ -895,11 +895,6 @@
                     Assert.NotNull(controller.CustomActionContext);
                     Assert.NotNull(controller.CustomControllerContext);
                     Assert.NotNull(controller.CustomControllerContext.HttpContext);
-                    Assert.NotNull(controller.CustomControllerContext.InputFormatters);
-                    Assert.NotEmpty(controller.CustomControllerContext.InputFormatters);
-                    Assert.NotNull(controller.CustomControllerContext.ValidatorProviders);
-                    Assert.NotEmpty(controller.CustomControllerContext.ValidatorProviders);
-                    Assert.NotNull(controller.CustomControllerContext.ValueProviders);
                     Assert.NotNull(controller.CustomHttpContext.Request);
                     Assert.NotNull(controller.CustomHttpContext.Response);
                     Assert.NotNull(controller.CustomControllerContext.ModelState);
@@ -923,11 +918,6 @@
                     Assert.NotNull(controller.HttpContext.RequestServices);
                     Assert.NotNull(controller.ControllerContext);
                     Assert.NotNull(controller.ControllerContext.HttpContext);
-                    Assert.NotNull(controller.ControllerContext.InputFormatters);
-                    Assert.NotEmpty(controller.ControllerContext.InputFormatters);
-                    Assert.NotNull(controller.ControllerContext.ValidatorProviders);
-                    Assert.NotEmpty(controller.ControllerContext.ValidatorProviders);
-                    Assert.NotNull(controller.ControllerContext.ValueProviders);
                     Assert.NotNull(controller.ViewBag);
                     Assert.NotNull(controller.ViewData);
                     Assert.NotNull(controller.TempData);
@@ -956,7 +946,7 @@
             {
                 ActionDescriptor = new ControllerActionDescriptor
                 {
-                    Name = "Test"
+                    ActionName = "Test"
                 }
             };
 
@@ -968,7 +958,7 @@
                 {
                     Assert.NotNull(controller);
                     Assert.NotNull(controller.CustomControllerContext);
-                    Assert.Equal("Test", controller.CustomControllerContext.ActionDescriptor.Name);
+                    Assert.Equal("Test", controller.CustomControllerContext.ActionDescriptor.ActionName);
                 });
 
             MyMvc.IsUsingDefaultConfiguration();

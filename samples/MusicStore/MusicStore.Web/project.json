@@ -2,8 +2,7 @@
   "authors": [
     "Microsoft"
   ],
-  "description": "Music store application on ASP.NET 5",
-  "version": "1.0.0-*",
+  "description": "Music store application on ASP.NET Core",
   "buildOptions": {
     "compile": {
       "include": [
@@ -59,8 +58,7 @@
     "Microsoft.Extensions.Configuration.EnvironmentVariables": "1.0.0-*",
     "Microsoft.Extensions.Configuration.Json": "1.0.0-*",
     "Microsoft.Extensions.Logging.Console": "1.0.0-*",
-    "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0-*",
-    "Microsoft.NETCore.Platforms": "1.0.1-*"
+    "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0-*"
   },
   "frameworks": {
     "net451": { },
@@ -70,11 +68,7 @@
           "version": "1.0.0-*",
           "type": "platform"
         }
-      },
-      "imports": [
-        "dnxcore50",
-        "portable-net451+win8"
-      ]
+      }
     }
   },
   "tools": {

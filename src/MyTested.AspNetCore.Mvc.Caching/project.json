@@ -1,7 +1,7 @@
 {
   "title": "MyTested.AspNetCore.Mvc.Caching",
   "description": "My Tested ASP.NET Core MVC caching components for testing ASP.NET Core MVC.",
-  "version": "1.0.0-preview",
+  "version": "1.0.0-preview-final",
   "authors": [ "Ivaylo Kenov" ],
   "packOptions": {
     "projectUrl": "https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc",
@@ -32,11 +32,7 @@
   },
 
   "frameworks": {
-    "net451": { },
-    "netstandard1.5": {
-      "imports": [
-        "portable-net451+win8"
-      ]
-    }
+    "net451": {},
+    "netstandard1.6": {}
   }
 }

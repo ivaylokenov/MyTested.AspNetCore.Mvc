@@ -42,7 +42,9 @@
             ActionDescriptor actionDescriptor;
             try
             {
-                actionDescriptor = actionSelector.Select(routeContext);
+                actionDescriptor = actionSelector.SelectBestCandidate(
+                    routeContext,
+                    actionSelector.SelectCandidates(routeContext));
             }
             catch (Exception ex)
             {
@@ -86,7 +88,7 @@
             return new ResolvedRouteContext(
                 controllerActionDescriptor.ControllerTypeInfo,
                 controllerActionDescriptor.ControllerName,
-                controllerActionDescriptor.Name,
+                controllerActionDescriptor.ActionName,
                 modelBindingActionInvoker.BoundActionArguments,
                 actionContext.RouteData,
                 actionContext.ModelState);

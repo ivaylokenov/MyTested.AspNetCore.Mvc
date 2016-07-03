@@ -36,17 +36,15 @@
             }
 
             var controllerName = controllerActionDescriptor.ControllerName;
-            var actionName = controllerActionDescriptor.Name;
+            var actionName = controllerActionDescriptor.ActionName;
 
             var routeValues = GetRouteValues(methodInfo, methodCallExpression, controllerActionDescriptor, considerParameterDescriptors);
 
-            // If there is a route constraint with specific expected value, add it to the result.
-            var routeConstraints = controllerActionDescriptor.RouteConstraints;
-            for (int i = 0; i < routeConstraints.Count; i++)
+            // If there is a required route value, add it to the result.
+            foreach (var requiredRouteValue in controllerActionDescriptor.RouteValues)
             {
-                var routeConstraint = routeConstraints[i];
-                var routeKey = routeConstraint.RouteKey;
-                var routeValue = routeConstraint.RouteValue;
+                var routeKey = requiredRouteValue.Key;
+                var routeValue = requiredRouteValue.Value;
 
                 if (string.Equals(routeKey, RouteGroupKey))
                 {
@@ -66,7 +64,7 @@
                     }
                     else
                     {
-                        routeValues[routeConstraint.RouteKey] = routeValue;
+                        routeValues[routeKey] = routeValue;
                     }
                 }
             }

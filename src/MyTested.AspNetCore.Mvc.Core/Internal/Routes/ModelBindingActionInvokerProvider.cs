@@ -27,9 +27,7 @@
 
             if (actionDescriptor != null)
             {
-                context.Result = this.actionInvokerFactory.CreateModelBindingActionInvoker(
-                    context.ActionContext,
-                    actionDescriptor);
+                context.Result = this.actionInvokerFactory.CreateModelBindingActionInvoker(context.ActionContext);
             }
         }
         
