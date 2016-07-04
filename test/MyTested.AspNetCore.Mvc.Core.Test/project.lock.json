@@ -3722,7 +3722,7 @@
           "netstandard1.4/MyTested.AspNetCore.Mvc.Licensing.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.Test/1.0.0-beta": {
+      "MyTested.AspNetCore.Mvc.Test/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v1.0",
         "dependencies": {
@@ -5339,7 +5339,7 @@
           "net451/MyTested.AspNetCore.Mvc.Licensing.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.Test/1.0.0-beta": {
+      "MyTested.AspNetCore.Mvc.Test/1.0.0": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
@@ -11418,7 +11418,7 @@
       "path": "../../src/MyTested.AspNetCore.Mvc.Licensing/project.json",
       "msbuildProject": "../../src/MyTested.AspNetCore.Mvc.Licensing/MyTested.AspNetCore.Mvc.Licensing.xproj"
     },
-    "MyTested.AspNetCore.Mvc.Test/1.0.0-beta": {
+    "MyTested.AspNetCore.Mvc.Test/1.0.0": {
       "type": "project",
       "path": "../MyTested.AspNetCore.Mvc.Test/project.json",
       "msbuildProject": "../MyTested.AspNetCore.Mvc.Test/MyTested.AspNetCore.Mvc.Test.xproj"

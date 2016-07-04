@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.Setups.Routes
 {
+    using System;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +19,11 @@
         public IActionResult Contact(int id)
         {
             return this.View();
+        }
+
+        public IActionResult FailingAction()
+        {
+            throw new InvalidOperationException();
         }
     }
 }
