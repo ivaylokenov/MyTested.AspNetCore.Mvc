@@ -142,7 +142,7 @@
                     {
                         var result = reader.ReadToEnd();
 
-                        Assert.Equal(@"{""Id"":1,""String"":""Test""}", result);
+                        Assert.Equal(@"{""id"":1,""string"":""Test""}", result);
                     }
                 });
         }
@@ -667,7 +667,7 @@
                     using (var reader = new StreamReader(builtRequest.Body))
                     {
                         var body = reader.ReadToEnd();
-                        Assert.Equal(@"{""Integer"":1,""RequiredString"":""Text"",""NonRequiredString"":null,""NotValidateInteger"":0}", body);
+                        Assert.Equal(@"{""integer"":1,""requiredString"":""Text"",""nonRequiredString"":null,""notValidateInteger"":0}", body);
                         Assert.Equal(ContentType.ApplicationJson, builtRequest.ContentType);
                         Assert.Equal(reader.BaseStream.Length, builtRequest.ContentLength);
                     }

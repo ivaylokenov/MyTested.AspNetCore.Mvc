@@ -397,11 +397,11 @@
                         .Ok()
                         .ContainingOutputFormatters(new List<IOutputFormatter>
                         {
-                            TestObjectFactory.GetOutputFormatter(),
+                            new StringOutputFormatter(),
                             new CustomOutputFormatter()
                         });
                 },
-                "When calling FullOkAction action in MvcController expected OK result output formatters to contain formatter of HttpNotAcceptableOutputFormatter type, but none was found.");
+                "When calling FullOkAction action in MvcController expected OK result output formatters to contain formatter of StringOutputFormatter type, but none was found.");
         }
 
         [Fact]

@@ -84,7 +84,7 @@
                 .WithDbContext(db => db
                     .WithEntities<MusicStoreContext>(entities => entities
                         .AddRange(CreateTestAlbums(itemPrice: 10))))
-                .Calling(c => c.AddToCart(albumId, CancellationToken.None))
+                .Calling(c => c.AddToCart(albumId))
                 .ShouldReturn()
                 .Redirect()
                 .To<ShoppingCartController>(c => c.Index())

@@ -1,6 +1,6 @@
 ﻿namespace ApplicationParts.Test
 {
-    using ApplicationParts.Controllers;
+    using Controllers;
     using MyTested.AspNetCore.Mvc;
     using Xunit;
 

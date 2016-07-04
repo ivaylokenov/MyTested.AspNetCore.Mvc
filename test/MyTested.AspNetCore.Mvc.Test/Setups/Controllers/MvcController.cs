@@ -316,7 +316,7 @@
             {
                 ContentTypes = new MediaTypeCollection { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) },
                 StatusCode = StatusCodes.Status201Created,
-                Formatters = new FormatterCollection<IOutputFormatter> { new CustomOutputFormatter() },
+                Formatters = new FormatterCollection<IOutputFormatter> { TestObjectFactory.GetOutputFormatter(), new CustomOutputFormatter() },
                 DeclaredType = typeof(List<ResponseModel>),
             };
         }
@@ -327,7 +327,7 @@
             {
                 ContentTypes = new MediaTypeCollection { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) },
                 StatusCode = StatusCodes.Status201Created,
-                Formatters = new FormatterCollection<IOutputFormatter> { new CustomOutputFormatter() },
+                Formatters = new FormatterCollection<IOutputFormatter> { TestObjectFactory.GetOutputFormatter(), new CustomOutputFormatter() },
                 DeclaredType = typeof(List<ResponseModel>),
             };
         }
@@ -489,7 +489,7 @@
             {
                 ContentTypes = new MediaTypeCollection { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) },
                 StatusCode = StatusCodes.Status201Created,
-                Formatters = new FormatterCollection<IOutputFormatter> { new CustomOutputFormatter() },
+                Formatters = new FormatterCollection<IOutputFormatter> { TestObjectFactory.GetOutputFormatter(), new CustomOutputFormatter() },
                 DeclaredType = typeof(List<ResponseModel>),
             };
         }
@@ -749,7 +749,7 @@
             {
                 ContentTypes = new MediaTypeCollection { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) },
                 StatusCode = StatusCodes.Status201Created,
-                Formatters = new FormatterCollection<IOutputFormatter> { new CustomOutputFormatter() },
+                Formatters = new FormatterCollection<IOutputFormatter> { TestObjectFactory.GetOutputFormatter(), new CustomOutputFormatter() },
                 DeclaredType = typeof(List<ResponseModel>),
             };
         }

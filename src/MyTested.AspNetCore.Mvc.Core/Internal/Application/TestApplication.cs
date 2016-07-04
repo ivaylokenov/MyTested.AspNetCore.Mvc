@@ -420,7 +420,7 @@
         private static void PrepareApplicationAndRoutes(StartupMethods startupMethods)
         {
             var applicationBuilder = new MockedApplicationBuilder(serviceProvider);
-
+            
             startupMethods?.ConfigureDelegate?.Invoke(applicationBuilder);
 
             AdditionalApplicationConfiguration?.Invoke(applicationBuilder);

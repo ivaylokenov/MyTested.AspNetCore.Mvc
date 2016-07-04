@@ -358,11 +358,11 @@
                         .StatusCode()
                         .ContainingOutputFormatters(new List<IOutputFormatter>
                         {
-                            TestObjectFactory.GetOutputFormatter(),
+                            new StringOutputFormatter(),
                             new CustomOutputFormatter()
                         });
                 },
-                "When calling FullObjectResultAction action in MvcController expected status code result output formatters to contain formatter of CustomOutputFormatter type, but none was found.");
+                "When calling FullObjectResultAction action in MvcController expected status code result output formatters to contain formatter of StringOutputFormatter type, but none was found.");
         }
 
         [Fact]

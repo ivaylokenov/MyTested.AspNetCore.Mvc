@@ -22,7 +22,7 @@
             MyMvc
                 .Routes()
                 .ShouldMap("/ShoppingCart/AddToCart/1")
-                .To<ShoppingCartController>(c => c.AddToCart(1, With.Any<CancellationToken>()));
+                .To<ShoppingCartController>(c => c.AddToCart(1));
         }
 
         [Fact]

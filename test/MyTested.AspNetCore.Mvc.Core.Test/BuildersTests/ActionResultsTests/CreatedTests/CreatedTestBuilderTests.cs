@@ -907,11 +907,11 @@
                         .Created()
                         .ContainingOutputFormatters(new List<IOutputFormatter>
                         {
-                            TestObjectFactory.GetOutputFormatter(),
-                            new CustomOutputFormatter()
+                            new CustomOutputFormatter(),
+                            new StringOutputFormatter()
                         });
                 },
-                "When calling FullCreatedAction action in MvcController expected created result output formatters to contain formatter of HttpNotAcceptableOutputFormatter type, but none was found.");
+                "When calling FullCreatedAction action in MvcController expected created result output formatters to contain formatter of StringOutputFormatter type, but none was found.");
         }
 
         [Fact]
