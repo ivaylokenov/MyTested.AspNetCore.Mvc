@@ -15,11 +15,10 @@
         "Hosting:Environment": "Development"
       }
     },
-    "web": {
-      "commandName": "web",
-      "environmentVariables": {
-        "Hosting:Environment": "Development"
-      }
+    "MusicStore.Web": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "http://localhost:5000"
     }
   }
 }
