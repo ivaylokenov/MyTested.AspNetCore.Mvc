@@ -9,7 +9,7 @@ It is strongly advised to start with the [tutorial](http://ivaylokenov.github.io
 
 ## Installation
 
-You can install this library using NuGet into your test project (or reference it directly in your `project.json` file). Currently MyTested.AspNetCore.Mvc works with ASP.NET Core MVC RC2.
+You can install this library using NuGet into your test project (or reference it directly in your `project.json` file). Currently MyTested.AspNetCore.Mvc works with ASP.NET Core MVC 1.0.0.
 
     Install-Package MyTested.AspNetCore.Mvc -Pre
 
