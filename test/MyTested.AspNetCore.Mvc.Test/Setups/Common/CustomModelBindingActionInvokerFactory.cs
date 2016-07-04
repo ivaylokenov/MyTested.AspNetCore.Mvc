@@ -7,7 +7,7 @@
 
     public class CustomModelBindingActionInvokerFactory : IModelBindingActionInvokerFactory
     {
-        public IActionInvoker CreateModelBindingActionInvoker(ActionContext actionContext, ControllerActionDescriptor controllerActionDescriptor)
+        public IActionInvoker CreateModelBindingActionInvoker(ActionContext actionContext)
         {
             return null;
         }

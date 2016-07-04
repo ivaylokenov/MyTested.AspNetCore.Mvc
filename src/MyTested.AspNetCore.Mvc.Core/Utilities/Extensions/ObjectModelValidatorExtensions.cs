@@ -8,11 +8,10 @@
         public static void Validate(this IObjectModelValidator objectModelValidator, ControllerContext controllerContext, object model)
         {
             objectModelValidator.Validate(
-                        controllerContext,
-                        new CompositeModelValidatorProvider(controllerContext.ValidatorProviders),
-                        validationState: null,
-                        prefix: string.Empty,
-                        model: model);
+                controllerContext,
+                validationState: null,
+                prefix: string.Empty,
+                model: model);
         }
     }
 }

@@ -2,12 +2,11 @@
   "authors": [
     "Microsoft"
   ],
-  "description": "Music store application on ASP.NET 5",
-  "version": "1.0.0-*",
+  "description": "Music store application on ASP.NET Core",
   "buildOptions": {
     "compile": {
       "include": [
-        "../../shared/**/*.cs" 
+        "../../shared/**/*.cs"
       ]
     },
     "copyToOutput": {
@@ -59,29 +58,21 @@
     "Microsoft.Extensions.Configuration.EnvironmentVariables": "1.0.0-*",
     "Microsoft.Extensions.Configuration.Json": "1.0.0-*",
     "Microsoft.Extensions.Logging.Console": "1.0.0-*",
-    "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0-*",
-    "Microsoft.NETCore.Platforms": "1.0.1-*"
+    "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0-*"
   },
   "frameworks": {
-    "net451": { },
+    "net451": {},
     "netcoreapp1.0": {
       "dependencies": {
         "Microsoft.NETCore.App": {
           "version": "1.0.0-*",
           "type": "platform"
         }
-      },
-      "imports": [
-        "dnxcore50",
-        "portable-net451+win8"
-      ]
+      }
     }
   },
   "tools": {
-    "Microsoft.AspNetCore.Server.IISIntegration.Tools": {
-      "version": "1.0.0-*",
-      "imports": "portable-net45+wp80+win8+wpa81+dnxcore50"
-    }
+    "Microsoft.AspNetCore.Server.IISIntegration.Tools": "1.0.0-*"
   },
   "scripts": {
     "postpublish": "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%"

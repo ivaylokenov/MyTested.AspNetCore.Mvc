@@ -326,7 +326,7 @@
                         .Calling(c => c.OkActionWithFormatter(formatter))
                         .ShouldReturn()
                         .Ok()
-                        .ContainingOutputFormatter(new JsonOutputFormatter());
+                        .ContainingOutputFormatter(TestObjectFactory.GetOutputFormatter());
                 },
                 "When calling OkActionWithFormatter action in MvcController expected OK result output formatters to contain the provided formatter, but such was not found.");
         }
@@ -368,7 +368,7 @@
                 .Ok()
                 .ContainingOutputFormatters(new List<IOutputFormatter>
                 {
-                    new JsonOutputFormatter(),
+                    TestObjectFactory.GetOutputFormatter(),
                     new CustomOutputFormatter()
                 });
         }
@@ -381,7 +381,7 @@
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
                 .Ok()
-                .ContainingOutputFormatters(new JsonOutputFormatter(), new CustomOutputFormatter());
+                .ContainingOutputFormatters(TestObjectFactory.GetOutputFormatter(), new CustomOutputFormatter());
         }
 
         [Fact]
@@ -397,11 +397,11 @@
                         .Ok()
                         .ContainingOutputFormatters(new List<IOutputFormatter>
                         {
-                            new JsonOutputFormatter(),
-                            new HttpNotAcceptableOutputFormatter()
+                            new StringOutputFormatter(),
+                            new CustomOutputFormatter()
                         });
                 },
-                "When calling FullOkAction action in MvcController expected OK result output formatters to contain formatter of HttpNotAcceptableOutputFormatter type, but none was found.");
+                "When calling FullOkAction action in MvcController expected OK result output formatters to contain formatter of StringOutputFormatter type, but none was found.");
         }
 
         [Fact]
@@ -417,7 +417,7 @@
                         .Ok()
                         .ContainingOutputFormatters(new List<IOutputFormatter>
                         {
-                            new JsonOutputFormatter()
+                            TestObjectFactory.GetOutputFormatter()
                         });
                 },
                 "When calling FullOkAction action in MvcController expected OK result output formatters to have 1 item, but instead found 2.");
@@ -436,9 +436,9 @@
                         .Ok()
                         .ContainingOutputFormatters(new List<IOutputFormatter>
                         {
-                            new JsonOutputFormatter(),
+                            TestObjectFactory.GetOutputFormatter(),
                             new CustomOutputFormatter(),
-                            new JsonOutputFormatter()
+                            TestObjectFactory.GetOutputFormatter()
                         });
                 },
                 "When calling FullOkAction action in MvcController expected OK result output formatters to have 3 items, but instead found 2.");
@@ -454,7 +454,7 @@
                 .Ok()
                 .WithStatusCode(201)
                 .AndAlso()
-                .ContainingOutputFormatters(new JsonOutputFormatter(), new CustomOutputFormatter());
+                .ContainingOutputFormatters(TestObjectFactory.GetOutputFormatter(), new CustomOutputFormatter());
         }
 
         [Fact]

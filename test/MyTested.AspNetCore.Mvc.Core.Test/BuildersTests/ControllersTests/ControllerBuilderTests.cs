@@ -315,8 +315,6 @@
                     Assert.NotNull(controller);
                     Assert.NotNull(controller.ControllerContext);
                     Assert.Null(controller.ControllerContext.HttpContext);
-                    Assert.Empty(controller.ControllerContext.InputFormatters);
-                    Assert.Empty(controller.ControllerContext.ValidatorProviders);
                 });
         }
 
@@ -332,7 +330,7 @@
                     Assert.NotNull(controller);
                     Assert.NotNull((controller as Controller).ControllerContext);
                     Assert.NotNull((controller as Controller).ControllerContext.ActionDescriptor);
-                    Assert.Equal("OkResultAction", (controller as Controller).ControllerContext.ActionDescriptor.Name);
+                    Assert.Equal("OkResultAction", (controller as Controller).ControllerContext.ActionDescriptor.ActionName);
                 });
         }
 
@@ -504,7 +502,7 @@
             {
                 ActionDescriptor = new ControllerActionDescriptor
                 {
-                    Name = "Test"
+                    ActionName = "Test"
                 }
             };
 
@@ -516,7 +514,7 @@
                 {
                     Assert.NotNull(controller);
                     Assert.NotNull(controller.ControllerContext);
-                    Assert.Equal("Test", controller.ControllerContext.ActionDescriptor.Name);
+                    Assert.Equal("Test", controller.ControllerContext.ActionDescriptor.ActionName);
                 });
         }
 
@@ -599,11 +597,6 @@
                     Assert.NotNull(controller.HttpContext.RequestServices);
                     Assert.NotNull(controller.ControllerContext);
                     Assert.NotNull(controller.ControllerContext.HttpContext);
-                    Assert.NotNull(controller.ControllerContext.InputFormatters);
-                    Assert.NotEmpty(controller.ControllerContext.InputFormatters);
-                    Assert.NotNull(controller.ControllerContext.ValidatorProviders);
-                    Assert.NotEmpty(controller.ControllerContext.ValidatorProviders);
-                    Assert.NotNull(controller.ControllerContext.ValueProviders);
                     Assert.NotNull(controller.ViewBag);
                     Assert.NotNull(controller.ViewData);
                     Assert.NotNull(controller.Request);

@@ -6,44 +6,45 @@
     using Contracts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Controllers;
-    using Microsoft.AspNetCore.Mvc.Filters;
-    using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
-    using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
     using Microsoft.Extensions.Logging;
 
     public class ModelBindingActionInvoker : ControllerActionInvoker, IModelBindingActionInvoker
     {
-        private readonly ControllerActionDescriptor controllerActionDescriptor;
+        private readonly IControllerFactory controllerFactory;
+        private readonly IControllerArgumentBinder controllerArgumentBinder;
+        private readonly ControllerContext controllerContext;
 
         public ModelBindingActionInvoker(
-            ActionContext actionContext,
-            ControllerActionInvokerCache controllerActionInvokerCache,
+            ControllerActionInvokerCache cache,
             IControllerFactory controllerFactory,
-            ControllerActionDescriptor descriptor,
-            IReadOnlyList<IInputFormatter> inputFormatters,
-            IControllerActionArgumentBinder controllerActionArgumentBinder,
-            IReadOnlyList<IModelValidatorProvider> modelValidatorProviders,
-            IReadOnlyList<IValueProviderFactory> valueProviderFactories,
+            IControllerArgumentBinder controllerArgumentBinder,
             ILogger logger,
             DiagnosticSource diagnosticSource,
+            ActionContext actionContext,
+            IReadOnlyList<IValueProviderFactory> valueProviderFactories,
             int maxModelValidationErrors)
-                : base(actionContext, controllerActionInvokerCache, controllerFactory, descriptor, inputFormatters, controllerActionArgumentBinder, modelValidatorProviders, valueProviderFactories, logger, diagnosticSource, maxModelValidationErrors)
+                : base(cache, controllerFactory, controllerArgumentBinder, logger, diagnosticSource, actionContext, valueProviderFactories, maxModelValidationErrors)
         {
-            this.controllerActionDescriptor = descriptor;
+            this.BoundActionArguments = new Dictionary<string, object>();
+
+            this.controllerFactory = controllerFactory;
+            this.controllerArgumentBinder = controllerArgumentBinder;
+
+            this.controllerContext = new ControllerContext(actionContext);
+            this.controllerContext.ModelState.MaxAllowedErrors = maxModelValidationErrors;
+            this.controllerContext.ValueProviderFactories = new List<IValueProviderFactory>(valueProviderFactories);
         }
 
         public IDictionary<string, object> BoundActionArguments { get; private set; }
         
-        protected override async Task<IDictionary<string, object>> BindActionArgumentsAsync()
+        public override Task InvokeAsync()
         {
-            return this.BoundActionArguments = await base.BindActionArgumentsAsync();
-        }
+            var controller = this.controllerFactory.CreateController(this.controllerContext);
+            this.controllerArgumentBinder.BindArgumentsAsync(controllerContext, controller, this.BoundActionArguments);
 
-        protected override Task<IActionResult> InvokeActionAsync(ActionExecutingContext actionExecutingContext)
-        {
-            return Task.FromResult<IActionResult>(new EmptyResult());
+            return TaskCache.CompletedTask;
         }
     }
 }

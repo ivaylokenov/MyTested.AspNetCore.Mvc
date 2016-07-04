@@ -1,25 +1,15 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.Controllers
 {
     using System;
-    using System.Collections.Generic;
-    using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Controllers;
-    using Microsoft.AspNetCore.Mvc.Formatters;
-    using Microsoft.AspNetCore.Mvc.ModelBinding;
-    using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
     using Microsoft.AspNetCore.Routing;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Options;
+    using TestContexts;
     using Utilities.Validators;
 
     public class MockedControllerContext : ControllerContext
     {
         private HttpTestContext testContext;
-        private MvcOptions options;
-        private FormatterCollection<IInputFormatter> inputFormatters;
-        private IList<IModelValidatorProvider> validatorProviders;
-        private IList<IValueProvider> valueProviders;
 
         public MockedControllerContext(HttpTestContext testContext)
         {
@@ -31,73 +21,7 @@
         {
             this.PrepareControllerContext(testContext);
         }
-
-        public override FormatterCollection<IInputFormatter> InputFormatters
-        {
-            get
-            {
-                if (this.inputFormatters == null)
-                {
-                    this.inputFormatters = this.Options.InputFormatters;
-                }
-
-                return this.inputFormatters;
-            }
-
-            set
-            {
-                CommonValidator.CheckForNullReference(value, nameof(this.InputFormatters));
-                this.inputFormatters = value;
-            }
-        }
-
-        public override IList<IModelValidatorProvider> ValidatorProviders
-        {
-            get
-            {
-                if (this.validatorProviders == null)
-                {
-                    this.validatorProviders = this.Options.ModelValidatorProviders;
-                }
-
-                return this.validatorProviders;
-            }
-
-            set
-            {
-                CommonValidator.CheckForNullReference(value, nameof(this.ValidatorProviders));
-                this.validatorProviders = value;
-            }
-        }
-
-        public override IList<IValueProvider> ValueProviders
-        {
-            get
-            {
-                if (this.valueProviders == null)
-                {
-                    var factoryContext = new ValueProviderFactoryContext(this);
-
-                    var valueProviderFactories = this.Options.ValueProviderFactories;
-                    for (var i = 0; i < valueProviderFactories.Count; i++)
-                    {
-                        var factory = valueProviderFactories[i];
-                        factory.CreateValueProviderAsync(factoryContext).Wait();
-                    }
-
-                    this.valueProviders = factoryContext.ValueProviders;
-                }
-
-                return this.valueProviders;
-            }
-
-            set
-            {
-                CommonValidator.CheckForNullReference(value, nameof(ValueProviders));
-                this.valueProviders = value;
-            }
-        }
-
+        
         private HttpTestContext TestContext
         {
             get
@@ -113,20 +37,7 @@
         }
 
         private IServiceProvider Services => this.testContext.HttpContext.RequestServices;
-
-        private MvcOptions Options
-        {
-            get
-            {
-                if (this.options == null)
-                {
-                    this.options = this.Services.GetRequiredService<IOptions<MvcOptions>>().Value;
-                }
-
-                return this.options;
-            }
-        }
-
+        
         public static ControllerContext FromActionContext(HttpTestContext testContext, ActionContext actionContext)
         {
             CommonValidator.CheckForNullReference(testContext, nameof(HttpTestContext));

@@ -871,7 +871,7 @@
                     services.AddActionContextAccessor();
                 });
 
-            var actionDescriptor = new ControllerActionDescriptor { Name = "Test" };
+            var actionDescriptor = new ControllerActionDescriptor { DisplayName = "Test" };
             var actionContext = new ActionContext { ActionDescriptor = actionDescriptor };
 
             MyMvc
@@ -882,7 +882,7 @@
                 {
                     Assert.NotNull(controller);
                     Assert.NotNull(controller.Context);
-                    Assert.Equal("Test", controller.Context.ActionDescriptor.Name);
+                    Assert.Equal("Test", controller.Context.ActionDescriptor.DisplayName);
                 });
 
             MyMvc.IsUsingDefaultConfiguration();
@@ -898,7 +898,7 @@
                     services.AddActionContextAccessor();
                 });
 
-            var actionDescriptor = new ControllerActionDescriptor { Name = "Test" };
+            var actionDescriptor = new ControllerActionDescriptor { DisplayName = "Test" };
 
             MyMvc
                 .Controller<ActionContextController>()
@@ -911,7 +911,7 @@
                 {
                     Assert.NotNull(controller);
                     Assert.NotNull(controller.Context);
-                    Assert.Equal("Test", controller.Context.ActionDescriptor.Name);
+                    Assert.Equal("Test", controller.Context.ActionDescriptor.DisplayName);
                 });
 
             MyMvc.IsUsingDefaultConfiguration();
@@ -927,7 +927,7 @@
                     services.AddActionContextAccessor();
                 });
 
-            var actionDescriptor = new ControllerActionDescriptor { Name = "Test" };
+            var actionDescriptor = new ControllerActionDescriptor { DisplayName = "Test" };
             var actionContext = new ControllerContext { ActionDescriptor = actionDescriptor };
 
             MyMvc
@@ -938,7 +938,7 @@
                 {
                     Assert.NotNull(controller);
                     Assert.NotNull(controller.Context);
-                    Assert.Equal("Test", controller.Context.ActionDescriptor.Name);
+                    Assert.Equal("Test", controller.Context.ActionDescriptor.DisplayName);
                 });
 
             MyMvc.IsUsingDefaultConfiguration();

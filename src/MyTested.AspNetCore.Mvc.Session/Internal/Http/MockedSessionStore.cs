@@ -6,8 +6,6 @@
 
     public class MockedSessionStore : ISessionStore
     {
-        public bool IsAvailable => true;
-
         public ISession Create(string sessionKey, TimeSpan idleTimeout, Func<bool> tryEstablishSession, bool isNewSessionKey)
         {
             return new MockedSession();

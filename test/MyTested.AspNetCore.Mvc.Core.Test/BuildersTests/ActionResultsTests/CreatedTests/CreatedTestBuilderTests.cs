@@ -836,7 +836,7 @@
                         .Calling(c => c.CreatedActionWithFormatter(formatter))
                         .ShouldReturn()
                         .Created()
-                        .ContainingOutputFormatter(new JsonOutputFormatter());
+                        .ContainingOutputFormatter(TestObjectFactory.GetOutputFormatter());
                 },
                 "When calling CreatedActionWithFormatter action in MvcController expected created result output formatters to contain the provided formatter, but such was not found.");
         }
@@ -878,7 +878,7 @@
                 .Created()
                 .ContainingOutputFormatters(new List<IOutputFormatter>
                 {
-                    new JsonOutputFormatter(),
+                    TestObjectFactory.GetOutputFormatter(),
                     new CustomOutputFormatter()
                 });
         }
@@ -891,7 +891,7 @@
                 .Calling(c => c.FullCreatedAction())
                 .ShouldReturn()
                 .Created()
-                .ContainingOutputFormatters(new JsonOutputFormatter(), new CustomOutputFormatter());
+                .ContainingOutputFormatters(TestObjectFactory.GetOutputFormatter(), new CustomOutputFormatter());
         }
 
         [Fact]
@@ -907,11 +907,11 @@
                         .Created()
                         .ContainingOutputFormatters(new List<IOutputFormatter>
                         {
-                            new JsonOutputFormatter(),
-                            new HttpNotAcceptableOutputFormatter()
+                            new CustomOutputFormatter(),
+                            new StringOutputFormatter()
                         });
                 },
-                "When calling FullCreatedAction action in MvcController expected created result output formatters to contain formatter of HttpNotAcceptableOutputFormatter type, but none was found.");
+                "When calling FullCreatedAction action in MvcController expected created result output formatters to contain formatter of StringOutputFormatter type, but none was found.");
         }
 
         [Fact]
@@ -927,7 +927,7 @@
                         .Created()
                         .ContainingOutputFormatters(new List<IOutputFormatter>
                         {
-                            new JsonOutputFormatter()
+                            TestObjectFactory.GetOutputFormatter()
                         });
                 },
                 "When calling FullCreatedAction action in MvcController expected created result output formatters to have 1 item, but instead found 2.");
@@ -946,9 +946,9 @@
                         .Created()
                         .ContainingOutputFormatters(new List<IOutputFormatter>
                         {
-                            new JsonOutputFormatter(),
+                            TestObjectFactory.GetOutputFormatter(),
                             new CustomOutputFormatter(),
-                            new JsonOutputFormatter()
+                            TestObjectFactory.GetOutputFormatter()
                         });
                 },
                 "When calling FullCreatedAction action in MvcController expected created result output formatters to have 3 items, but instead found 2.");

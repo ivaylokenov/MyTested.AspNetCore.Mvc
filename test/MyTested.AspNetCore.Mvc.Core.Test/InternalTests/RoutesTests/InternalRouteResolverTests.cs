@@ -320,6 +320,17 @@
             Assert.Null(routeInfo.ModelState);
         }
 
+        [Fact]
+        public void ResolveShouldNotCallTheActualActionCode()
+        {
+            var routeInfo = InternalRouteResolver.Resolve(
+                TestApplication.RouteServices,
+                TestApplication.Router,
+                this.GetRouteContext("/Home/FailingAction"));
+
+            Assert.True(routeInfo.IsResolved);
+        }
+
         private RouteContext GetRouteContext(string url, string method = "GET", string queryString = null, string body = null, string contentType = null)
         {
             MyMvc.IsUsingDefaultConfiguration();

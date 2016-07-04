@@ -7,8 +7,8 @@
   "testRunner": "xunit",
 
   "dependencies": {
-    "dotnet-test-xunit": "1.0.0-*",
-    "xunit": "2.1.0",
+    "dotnet-test-xunit": "2.2.0-*",
+    "xunit": "2.2.0-*",
     "Microsoft.AspNetCore.Mvc": "1.0.0-*",
     "Microsoft.EntityFrameworkCore.SqlServer": "1.0.0-*",
     "MyTested.AspNetCore.Mvc.EntityFrameworkCore": "1.0.0-*",

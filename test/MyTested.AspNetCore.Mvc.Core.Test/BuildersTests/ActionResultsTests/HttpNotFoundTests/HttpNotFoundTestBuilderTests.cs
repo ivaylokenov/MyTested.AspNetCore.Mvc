@@ -314,7 +314,7 @@
                         .Calling(c => c.HttpNotFoundActionWithFormatter(formatter))
                         .ShouldReturn()
                         .NotFound()
-                        .ContainingOutputFormatter(new JsonOutputFormatter());
+                        .ContainingOutputFormatter(TestObjectFactory.GetOutputFormatter());
                 },
                 "When calling HttpNotFoundActionWithFormatter action in MvcController expected HTTP not found result output formatters to contain the provided formatter, but such was not found.");
         }
@@ -356,7 +356,7 @@
                 .NotFound()
                 .ContainingOutputFormatters(new List<IOutputFormatter>
                 {
-                    new JsonOutputFormatter(),
+                    TestObjectFactory.GetOutputFormatter(),
                     new CustomOutputFormatter()
                 });
         }
@@ -369,7 +369,7 @@
                 .Calling(c => c.FullHttpNotFoundAction())
                 .ShouldReturn()
                 .NotFound()
-                .ContainingOutputFormatters(new JsonOutputFormatter(), new CustomOutputFormatter());
+                .ContainingOutputFormatters(TestObjectFactory.GetOutputFormatter(), new CustomOutputFormatter());
         }
 
         [Fact]
@@ -385,11 +385,11 @@
                         .NotFound()
                         .ContainingOutputFormatters(new List<IOutputFormatter>
                         {
-                            new JsonOutputFormatter(),
-                            new HttpNotAcceptableOutputFormatter()
+                            new StringOutputFormatter(),
+                            new CustomOutputFormatter()
                         });
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result output formatters to contain formatter of HttpNotAcceptableOutputFormatter type, but none was found.");
+                "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result output formatters to contain formatter of StringOutputFormatter type, but none was found.");
         }
 
         [Fact]
@@ -405,7 +405,7 @@
                         .NotFound()
                         .ContainingOutputFormatters(new List<IOutputFormatter>
                         {
-                            new JsonOutputFormatter()
+                            TestObjectFactory.GetOutputFormatter()
                         });
                 },
                 "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result output formatters to have 1 item, but instead found 2.");
@@ -424,9 +424,9 @@
                         .NotFound()
                         .ContainingOutputFormatters(new List<IOutputFormatter>
                         {
-                            new JsonOutputFormatter(),
+                            TestObjectFactory.GetOutputFormatter(),
                             new CustomOutputFormatter(),
-                            new JsonOutputFormatter()
+                            TestObjectFactory.GetOutputFormatter()
                         });
                 },
                 "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result output formatters to have 3 items, but instead found 2.");
@@ -442,7 +442,7 @@
                 .NotFound()
                 .WithStatusCode(201)
                 .AndAlso()
-                .ContainingOutputFormatters(new JsonOutputFormatter(), new CustomOutputFormatter());
+                .ContainingOutputFormatters(TestObjectFactory.GetOutputFormatter(), new CustomOutputFormatter());
         }
 
         [Fact]

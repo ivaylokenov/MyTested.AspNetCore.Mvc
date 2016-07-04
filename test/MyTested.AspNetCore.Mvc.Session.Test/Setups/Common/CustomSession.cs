@@ -10,6 +10,8 @@
     {
         public string Id => "Test";
 
+        public bool IsAvailable => true;
+
         public IEnumerable<string> Keys => Enumerable.Empty<string>();
 
         public void Clear()

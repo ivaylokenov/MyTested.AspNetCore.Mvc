@@ -37,12 +37,21 @@
             }
 
             var actionSelector = services.GetRequiredService<IActionSelector>();
-            var actionInvokerFactory = services.GetRequiredService<IActionInvokerFactory>();
 
             ActionDescriptor actionDescriptor;
             try
             {
-                actionDescriptor = actionSelector.Select(routeContext);
+                var actions = routeContext
+                    .RouteData
+                    .Routers
+                    .OfType<MvcAttributeRouteHandler>()
+                    .FirstOrDefault()
+                    ?.Actions
+                    ?? actionSelector.SelectCandidates(routeContext);
+                
+                actionDescriptor = actionSelector.SelectBestCandidate(
+                    routeContext,
+                    actions);
             }
             catch (Exception ex)
             {
@@ -61,6 +70,8 @@
             {
                 throw new InvalidOperationException("Only controller actions are supported by the route testing.");
             }
+
+            var actionInvokerFactory = services.GetRequiredService<IActionInvokerFactory>();
 
             var invoker = actionInvokerFactory.CreateInvoker(actionContext);
             var modelBindingActionInvoker = invoker as IModelBindingActionInvoker;
@@ -86,7 +97,7 @@
             return new ResolvedRouteContext(
                 controllerActionDescriptor.ControllerTypeInfo,
                 controllerActionDescriptor.ControllerName,
-                controllerActionDescriptor.Name,
+                controllerActionDescriptor.ActionName,
                 modelBindingActionInvoker.BoundActionArguments,
                 actionContext.RouteData,
                 actionContext.ModelState);

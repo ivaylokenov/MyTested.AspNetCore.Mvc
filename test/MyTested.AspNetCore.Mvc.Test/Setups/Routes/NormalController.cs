@@ -63,11 +63,12 @@
             return null;
         }
 
-        [MyRouteConstraint("id", "5")]
-        public IActionResult ActionWithConstraint(int id)
-        {
-            return null;
-        }
+        // MVC has bug - uncomment when resolved
+        //[MyRouteConstraint("id", "5")]
+        //public IActionResult ActionWithConstraint(int id)
+        //{
+        //    return null;
+        //}
 
         public IActionResult FromRouteAction([FromRoute]RequestModel model)
         {

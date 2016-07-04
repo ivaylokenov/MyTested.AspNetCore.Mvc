@@ -7,7 +7,7 @@
     using Internal;
     using Internal.Controllers;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Controllers;
+    using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.Extensions.DependencyInjection;
     using Utilities;
     using Utilities.Extensions;

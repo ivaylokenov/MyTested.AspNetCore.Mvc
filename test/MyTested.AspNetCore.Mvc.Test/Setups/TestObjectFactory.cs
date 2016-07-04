@@ -1,6 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.Setups
 {
     using System;
+    using System.Buffers;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Runtime.Serialization.Formatters;
@@ -83,7 +84,7 @@
         
         public static IOutputFormatter GetOutputFormatter()
         {
-            return new JsonOutputFormatter();
+            return new JsonOutputFormatter(GetJsonSerializerSettings(), ArrayPool<char>.Create());
         }
 
         public static Uri GetUri()
