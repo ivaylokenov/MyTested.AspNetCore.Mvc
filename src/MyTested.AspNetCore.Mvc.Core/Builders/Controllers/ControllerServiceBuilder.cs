@@ -20,7 +20,7 @@
             CommonValidator.CheckForNullReference(scopedServiceSetup, nameof(scopedServiceSetup));
             ServiceValidator.ValidateScopedServiceLifetime<TService>(nameof(WithServiceSetupFor));
             
-            scopedServiceSetup(this.HttpContext.RequestServices.GetService<TService>());
+            scopedServiceSetup(this.HttpContext.RequestServices.GetRequiredService<TService>());
 
             return this;
         }

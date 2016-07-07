@@ -101,7 +101,7 @@
 
         private void ValidateControllerType()
         {
-            var validControllers = this.Services.GetService<IValidControllersCache>();
+            var validControllers = this.Services.GetRequiredService<IValidControllersCache>();
             var controllerType = typeof(TController);
             if (!validControllers.IsValid(typeof(TController)))
             {
