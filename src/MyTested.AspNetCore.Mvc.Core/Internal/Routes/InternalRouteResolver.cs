@@ -12,6 +12,7 @@
     using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.DependencyInjection;
     using Utilities.Extensions;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Used for resolving HTTP request to a route.
@@ -82,7 +83,7 @@
 
             try
             {
-                modelBindingActionInvoker.InvokeAsync().Wait();
+                Task.Run(async() => await modelBindingActionInvoker.InvokeAsync()).Wait();
             }
             catch (Exception ex)
             {
@@ -116,7 +117,7 @@
                 return null;
             }
             
-            router.RouteAsync(routeContext).Wait();
+            Task.Run(async () => await router.RouteAsync(routeContext)).Wait();
 
             var routeData = routeContext.RouteData;
             routeContext.HttpContext.SetRouteData(routeData);

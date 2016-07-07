@@ -15,6 +15,7 @@
     using Utilities;
     using Utilities.Extensions;
     using Utilities.Validators;
+    using System.Threading.Tasks;
 
     public static class FormattersHelper
     {
@@ -53,7 +54,7 @@
                 return formatter;
             });
 
-            var result = inputFormatter.ReadAsync(inputFormatterContext).Result.Model;
+            var result = Task.Run(async () => await inputFormatter.ReadAsync(inputFormatterContext)).Result.Model;
 
             try
             {
@@ -90,7 +91,7 @@
                 return formatter;
             });
 
-            outputFormatter.WriteAsync(outputFormatterCanWriteContext).Wait();
+            Task.Run(async () => await outputFormatter.WriteAsync(outputFormatterCanWriteContext)).Wait();
 
             // copy memory stream because formatters close the original one
             return new MemoryStream(((MemoryStream)httpContext.Response.Body).ToArray());
