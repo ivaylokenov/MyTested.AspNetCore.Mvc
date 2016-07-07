@@ -15,7 +15,7 @@
     {
         public static Action GlobalTestCleanup { get; set; }
         
-        internal static ISet<IHttpFeatureRegistrationPlugin> HttpFeatureRegistrationPlugins { get; }
+        public static ISet<IHttpFeatureRegistrationPlugin> HttpFeatureRegistrationPlugins { get; }
             = new HashSet<IHttpFeatureRegistrationPlugin>();
 
         /// <summary>

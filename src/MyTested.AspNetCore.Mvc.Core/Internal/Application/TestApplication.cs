@@ -210,7 +210,7 @@
         internal static Type TryFindDefaultStartupType()
         {
             var applicationAssembly = Assembly.Load(new AssemblyName(testAssemblyName));
-
+            
             var startupName = TestConfiguration.FullStartupName ?? $"{Environment.EnvironmentName}Startup";
 
             // check root of the test project
@@ -245,7 +245,7 @@
 
         private static void FindTestAssemblyName()
         {
-            testAssemblyName = DependencyContext
+            testAssemblyName = TestConfiguration.TestAssemblyName ?? DependencyContext
                 .Default
                 .GetDefaultAssemblyNames()
                 .First()
