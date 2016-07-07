@@ -45,7 +45,7 @@
 
             try
             {
-                actionResult = actionInfo.ActionResult.Result;
+                actionResult = Task.Run(async () => await actionInfo.ActionResult).Result;
             }
             catch (AggregateException aggregateException)
             {
@@ -87,7 +87,7 @@
 
             try
             {
-                actionInfo.ActionResult.Wait();
+                Task.Run(async () => await actionInfo.ActionResult).Wait();
             }
             catch (AggregateException aggregateException)
             {
