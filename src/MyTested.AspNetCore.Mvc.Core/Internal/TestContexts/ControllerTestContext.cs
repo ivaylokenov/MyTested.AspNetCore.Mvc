@@ -196,12 +196,12 @@
 
         internal TModel ModelAs<TModel>() => this.Model.TryCastTo<TModel>();
 
-        internal void Apply<TActionResult>(ActionTestContext<TActionResult> testActionDescriptor)
+        internal void Apply<TActionResult>(ActionTestContext<TActionResult> actionTestContext)
         {
-            this.ActionName = testActionDescriptor.ActionName;
-            this.ActionCall = testActionDescriptor.ActionCall;
-            this.ActionResult = testActionDescriptor.ActionResult;
-            this.CaughtException = testActionDescriptor.CaughtException;
+            this.ActionName = actionTestContext.ActionName;
+            this.ActionCall = actionTestContext.ActionCall;
+            this.ActionResult = actionTestContext.ActionResult;
+            this.CaughtException = actionTestContext.CaughtException;
         }
     }
 }
