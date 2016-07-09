@@ -14,6 +14,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using Utilities;
     using Utilities.Extensions;
+    using Internal;
 
     /// <content>
     /// Used for building the controller which will be tested.
@@ -45,11 +46,11 @@
 
             try
             {
-                actionResult = Task.Run(async () => await actionInfo.ActionResult).Result;
+                actionResult = AsyncHelper.RunSync(() => actionInfo.ActionResult);
             }
-            catch (AggregateException aggregateException)
+            catch (Exception exception)
             {
-                actionInfo.CaughtException = aggregateException;
+                actionInfo.CaughtException = new AggregateException(exception);
             }
 
             this.TestContext.Apply(actionInfo);
@@ -76,6 +77,7 @@
             this.TestContext.ActionName = actionName;
             this.TestContext.ActionCall = actionCall;
             this.TestContext.CaughtException = caughtException;
+            this.TestContext.ActionResult = VoidActionResult.Instance;
 
             return new VoidActionResultTestBuilder(this.TestContext);
         }
@@ -87,14 +89,15 @@
 
             try
             {
-                Task.Run(async () => await actionInfo.ActionResult).Wait();
+                AsyncHelper.RunSync(() => actionInfo.ActionResult);
             }
-            catch (AggregateException aggregateException)
+            catch (Exception exception)
             {
-                actionInfo.CaughtException = aggregateException;
+                actionInfo.CaughtException = new AggregateException(exception);
             }
 
             this.TestContext.Apply(actionInfo);
+            this.TestContext.ActionResult = VoidActionResult.Instance;
 
             return new VoidActionResultTestBuilder(this.TestContext);
         }

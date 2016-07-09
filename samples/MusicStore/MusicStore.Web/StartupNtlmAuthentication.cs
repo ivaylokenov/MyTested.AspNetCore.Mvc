@@ -144,7 +144,7 @@ namespace MusicStore
             });
 
             //Populates the MusicStore sample data
-            Task.Run(async () => await SampleData.InitializeMusicStoreDatabaseAsync(app.ApplicationServices, false)).Wait();
+            SampleData.InitializeMusicStoreDatabase(app.ApplicationServices, false);
         }
     }
 }

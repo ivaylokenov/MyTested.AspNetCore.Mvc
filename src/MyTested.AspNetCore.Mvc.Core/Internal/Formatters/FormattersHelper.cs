@@ -54,7 +54,7 @@
                 return formatter;
             });
 
-            var result = Task.Run(async () => await inputFormatter.ReadAsync(inputFormatterContext)).Result.Model;
+            var result = AsyncHelper.RunSync(() => inputFormatter.ReadAsync(inputFormatterContext)).Model;
 
             try
             {
@@ -91,7 +91,7 @@
                 return formatter;
             });
 
-            Task.Run(async () => await outputFormatter.WriteAsync(outputFormatterCanWriteContext)).Wait();
+            AsyncHelper.RunSync(() => outputFormatter.WriteAsync(outputFormatterCanWriteContext));
 
             // copy memory stream because formatters close the original one
             return new MemoryStream(((MemoryStream)httpContext.Response.Body).ToArray());

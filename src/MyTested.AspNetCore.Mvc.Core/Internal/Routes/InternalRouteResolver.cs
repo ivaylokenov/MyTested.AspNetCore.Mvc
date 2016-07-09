@@ -83,7 +83,7 @@
 
             try
             {
-                Task.Run(async() => await modelBindingActionInvoker.InvokeAsync()).Wait();
+                AsyncHelper.RunSync(() => modelBindingActionInvoker.InvokeAsync());
             }
             catch (Exception ex)
             {
@@ -116,8 +116,8 @@
             {
                 return null;
             }
-            
-            Task.Run(async () => await router.RouteAsync(routeContext)).Wait();
+
+            AsyncHelper.RunSync(() => router.RouteAsync(routeContext));
 
             var routeData = routeContext.RouteData;
             routeContext.HttpContext.SetRouteData(routeData);

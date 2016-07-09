@@ -32,7 +32,6 @@
         /// <inheritdoc />
         public IShouldHaveTestBuilder<VoidActionResult> ShouldHave()
         {
-            this.TestContext.ActionResult = VoidActionResult.Instance;
             return new ShouldHaveTestBuilder<VoidActionResult>(this.TestContext);
         }
 
