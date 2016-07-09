@@ -95,13 +95,13 @@ namespace MusicStore.Models
             //    await roleManager.CreateAsync(new IdentityRole(adminRole));
             //}
 
-            var user = userManager.FindByNameAsync(configuration[defaultAdminUserName]).GetAwaiter().GetResult();
+            var user = userManager.FindByNameAsync(configuration[defaultAdminUserName]).ConfigureAwait(false).GetAwaiter().GetResult();
             if (user == null)
             {
                 user = new ApplicationUser { UserName = configuration[defaultAdminUserName] };
-                userManager.CreateAsync(user, configuration[defaultAdminPassword]).GetAwaiter().GetResult();
+                userManager.CreateAsync(user, configuration[defaultAdminPassword]).ConfigureAwait(false).GetAwaiter().GetResult();
                 //await userManager.AddToRoleAsync(user, adminRole);
-                userManager.AddClaimAsync(user, new Claim("ManageStore", "Allowed")).GetAwaiter().GetResult();
+                userManager.AddClaimAsync(user, new Claim("ManageStore", "Allowed")).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
 #if TESTING
@@ -111,10 +111,10 @@ namespace MusicStore.Models
                 for (int i = 0; i < 100; ++i)
                 {
                     var email = string.Format("User{0:D3}@example.com", i);
-                    var normalUser = userManager.FindByEmailAsync(email).GetAwaiter().GetResult();
+                    var normalUser = userManager.FindByEmailAsync(email).ConfigureAwait(false).GetAwaiter().GetResult();
                     if (normalUser == null)
                     {
-                        userManager.CreateAsync(new ApplicationUser { UserName = email, Email = email }, "Password~!1").GetAwaiter().GetResult();
+                        userManager.CreateAsync(new ApplicationUser { UserName = email, Email = email }, "Password~!1").ConfigureAwait(false).GetAwaiter().GetResult();
                     }
                 }
             }

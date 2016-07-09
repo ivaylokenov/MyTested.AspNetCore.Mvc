@@ -188,6 +188,7 @@
 
                     MyMvc.IsUsingDefaultConfiguration();
                 })
+                .ConfigureAwait(false)
                 .GetAwaiter()
                 .GetResult();
         }

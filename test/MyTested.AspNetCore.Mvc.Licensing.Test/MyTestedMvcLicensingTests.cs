@@ -34,6 +34,7 @@
 
                 await Assert.ThrowsAsync<InvalidLicenseException>(async () => await Task.WhenAll(tasks));
             })
+            .ConfigureAwait(false)
             .GetAwaiter()
             .GetResult();
         }
@@ -72,6 +73,7 @@
 
                 await Task.WhenAll(tasks);
             })
+            .ConfigureAwait(false)
             .GetAwaiter()
             .GetResult();
 
@@ -109,6 +111,7 @@
 
                 await Task.WhenAll(tasks);
             })
+            .ConfigureAwait(false)
             .GetAwaiter()
             .GetResult();
 

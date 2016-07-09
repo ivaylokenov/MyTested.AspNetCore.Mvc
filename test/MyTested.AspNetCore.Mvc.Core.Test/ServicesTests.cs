@@ -690,6 +690,7 @@
                     Assert.NotSame(fourthContextAsync, fifthContextAsync);
                     Assert.NotSame(thirdContextAsync, fifthContextAsync);
                 })
+                .ConfigureAwait(false)
                 .GetAwaiter()
                 .GetResult();
 
@@ -855,6 +856,7 @@
                     Assert.NotSame(fourthContextAsync, fifthContextAsync);
                     Assert.NotSame(thirdContextAsync, fifthContextAsync);
                 })
+                .ConfigureAwait(false)
                 .GetAwaiter()
                 .GetResult();
 

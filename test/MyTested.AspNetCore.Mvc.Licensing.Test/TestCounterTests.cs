@@ -37,6 +37,7 @@
                     caughtException = ex;
                 }
             })
+            .ConfigureAwait(false)
             .GetAwaiter()
             .GetResult();
 
@@ -75,6 +76,7 @@
                     caughtException = ex;
                 }
             })
+            .ConfigureAwait(false)
             .GetAwaiter()
             .GetResult();
 
@@ -113,6 +115,7 @@
                     caughtException = ex;
                 }
             })
+            .ConfigureAwait(false)
             .GetAwaiter()
             .GetResult();
 
