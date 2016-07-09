@@ -17,6 +17,7 @@
             return taskFactory
                 .StartNew(func)
                 .Unwrap()
+                .ConfigureAwait(false)
                 .GetAwaiter()
                 .GetResult();
         }
@@ -26,6 +27,7 @@
             taskFactory
                 .StartNew(func)
                 .Unwrap()
+                .ConfigureAwait(false)
                 .GetAwaiter()
                 .GetResult();
         }
