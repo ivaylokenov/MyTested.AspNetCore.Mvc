@@ -43,6 +43,7 @@
         {
             var actionInfo = this.GetAndValidateActionResult(actionCall);
             var actionResult = default(TActionResult);
+            actionInfo.ActionResult.ConfigureAwait(false);
 
             try
             {
@@ -86,6 +87,7 @@
         public IVoidActionResultTestBuilder Calling(Expression<Func<TController, Task>> actionCall)
         {
             var actionInfo = this.GetAndValidateActionResult(actionCall);
+            actionInfo.ActionResult.ConfigureAwait(false);
 
             try
             {

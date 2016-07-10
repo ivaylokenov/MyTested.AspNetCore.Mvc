@@ -54,7 +54,10 @@
                 return formatter;
             });
 
-            var result = AsyncHelper.RunSync(() => inputFormatter.ReadAsync(inputFormatterContext)).Model;
+            var task = inputFormatter.ReadAsync(inputFormatterContext);
+            task.ConfigureAwait(false);
+
+            var result = AsyncHelper.RunSync(() => task).Model;
 
             try
             {
@@ -91,7 +94,10 @@
                 return formatter;
             });
 
-            AsyncHelper.RunSync(() => outputFormatter.WriteAsync(outputFormatterCanWriteContext));
+            var task = outputFormatter.WriteAsync(outputFormatterCanWriteContext);
+            task.ConfigureAwait(false);
+
+            AsyncHelper.RunSync(() => task);
 
             // copy memory stream because formatters close the original one
             return new MemoryStream(((MemoryStream)httpContext.Response.Body).ToArray());
