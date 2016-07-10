@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using Xunit;
 
-[assembly: CollectionBehavior(MaxParallelThreads = 2)]
+[assembly: CollectionBehavior(MaxParallelThreads = -1)]
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information

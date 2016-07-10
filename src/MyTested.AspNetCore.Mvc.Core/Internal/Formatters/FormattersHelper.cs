@@ -15,7 +15,6 @@
     using Utilities;
     using Utilities.Extensions;
     using Utilities.Validators;
-    using System.Threading.Tasks;
 
     public static class FormattersHelper
     {
