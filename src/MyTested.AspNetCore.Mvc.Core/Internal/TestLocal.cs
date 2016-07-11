@@ -7,8 +7,7 @@
     using System.Threading;
 #endif
 
-    public class TestLocal<T>
-        where T : class
+    public class TestLocal<T> where T : class
     {
 #if NET451
         private static readonly string Key = $"__{typeof(T).FullName}_Current__";

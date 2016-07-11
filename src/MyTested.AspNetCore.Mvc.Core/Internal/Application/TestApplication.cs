@@ -196,7 +196,7 @@
 
         internal static void TryInitialize()
         {
-            if (TestConfiguration.AutomaticStartup)
+            if (!initialiazed && TestConfiguration.AutomaticStartup)
             {
                 startupType = TryFindDefaultStartupType();
 
