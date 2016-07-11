@@ -19,7 +19,7 @@
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModelOfType<ICollection<ResponseModel>>()
+                .WithModelOfType<ICollection<ResponseModel>>()
                 .Passing(m =>
                 {
                     Assert.Equal(2, m.Count);
@@ -38,7 +38,7 @@
                         .Calling(c => c.OkResultWithResponse())
                         .ShouldReturn()
                         .Ok()
-                        .WithResponseModelOfType<ICollection<ResponseModel>>()
+                        .WithModelOfType<ICollection<ResponseModel>>()
                         .Passing(m =>
                         {
                             Assert.Equal(1, m.First().IntegerValue);
@@ -55,7 +55,7 @@
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModelOfType<ICollection<ResponseModel>>()
+                .WithModelOfType<ICollection<ResponseModel>>()
                 .Passing(m => m.First().IntegerValue == 1);
         }
 
@@ -70,7 +70,7 @@
                         .Calling(c => c.OkResultWithResponse())
                         .ShouldReturn()
                         .Ok()
-                        .WithResponseModelOfType<IList<ResponseModel>>()
+                        .WithModelOfType<IList<ResponseModel>>()
                         .Passing(m => m.First().IntegerValue == 2);
                 }, 
                 "When calling OkResultWithResponse action in MvcController expected response model IList<ResponseModel> to pass the given condition, but it failed.");

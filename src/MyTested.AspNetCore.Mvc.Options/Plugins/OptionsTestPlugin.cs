@@ -1,9 +1,8 @@
-﻿namespace MyTested.AspNetCore.Mvc.Options
+﻿namespace MyTested.AspNetCore.Mvc.Plugins
 {
     using System;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Options;
-    using Plugins;
 
     public class OptionsTestPlugin : IServiceRegistrationPlugin
     {

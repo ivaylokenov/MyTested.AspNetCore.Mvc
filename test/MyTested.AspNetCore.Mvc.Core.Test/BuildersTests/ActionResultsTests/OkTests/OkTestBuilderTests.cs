@@ -49,7 +49,7 @@
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModelOfType<List<ResponseModel>>();
+                .WithModelOfType<List<ResponseModel>>();
         }
         
         [Fact]

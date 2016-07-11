@@ -1,10 +1,9 @@
-﻿namespace MyTested.AspNetCore.Mvc.EntityFrameworkCore
+﻿namespace MyTested.AspNetCore.Mvc.Plugins
 {
     using System;
     using System.Reflection;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
-    using Plugins;
 
     public class EntityFrameworkCoreTestPlugin : IServiceRegistrationPlugin
     {

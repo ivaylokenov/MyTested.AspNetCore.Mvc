@@ -54,7 +54,7 @@
             MyMvc
                 .Controller<AccountController>()
                 .Calling(c => c.Login(
-                    new LoginViewModel { Email = "Test", Password = "Test" },
+                    With.Default<LoginViewModel>(),
                     With.No<string>()))
                 .ShouldHave()
                 .ActionAttributes(attrs => attrs

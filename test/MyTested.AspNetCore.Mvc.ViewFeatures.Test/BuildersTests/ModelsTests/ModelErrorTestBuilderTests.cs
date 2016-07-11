@@ -19,7 +19,7 @@
                 .Calling(c => c.ModelStateCheck(requestBodyWithErrors))
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel(requestBodyWithErrors)
+                .WithModel(requestBodyWithErrors)
                 .ContainingErrorFor(r => r.RequiredString);
         }
 
@@ -36,7 +36,7 @@
                         .Calling(c => c.ModelStateCheck(requestBody))
                         .ShouldReturn()
                         .Ok()
-                        .WithResponseModel(requestBody)
+                        .WithModel(requestBody)
                         .ContainingErrorFor(r => r.RequiredString);
                 },
                 "When calling ModelStateCheck action in MvcController expected to have a model error against key RequiredString, but none found.");
@@ -52,7 +52,7 @@
                 .Calling(c => c.ModelStateCheck(requestBody))
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel(requestBody)
+                .WithModel(requestBody)
                 .ContainingNoErrorFor(r => r.RequiredString);
         }
 
@@ -69,7 +69,7 @@
                         .Calling(c => c.ModelStateCheck(requestBodyWithErrors))
                         .ShouldReturn()
                         .Ok()
-                        .WithResponseModel(requestBodyWithErrors)
+                        .WithModel(requestBodyWithErrors)
                         .ContainingNoErrorFor(r => r.RequiredString);
                 },
                 "When calling ModelStateCheck action in MvcController expected to have no model errors against key RequiredString, but found some.");
@@ -85,7 +85,7 @@
                 .Calling(c => c.ModelStateCheck(requestBody))
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel(requestBody)
+                .WithModel(requestBody)
                 .ContainingNoErrorFor(r => r.Integer)
                 .ContainingNoErrorFor(r => r.RequiredString);
         }
@@ -103,7 +103,7 @@
                         .Calling(c => c.ModelStateCheck(requestBodyWithErrors))
                         .ShouldReturn()
                         .Ok()
-                        .WithResponseModel(requestBodyWithErrors)
+                        .WithModel(requestBodyWithErrors)
                         .ContainingNoErrorFor(r => r.Integer)
                         .ContainingNoErrorFor(r => r.RequiredString);
                 },
@@ -118,7 +118,7 @@
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModelOfType<List<ResponseModel>>()
+                .WithModelOfType<List<ResponseModel>>()
                 .ContainingNoErrorFor(m => m.Count)
                 .AndAlso()
                 .ShouldPassFor()

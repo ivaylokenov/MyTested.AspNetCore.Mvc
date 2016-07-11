@@ -18,7 +18,7 @@
                 .Calling(c => c.TempDataAction())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel("Valid");
+                .WithModel("Valid");
         }
         
         [Fact]
@@ -35,7 +35,7 @@
                 .Calling(c => c.TempDataAction())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel("Valid");
+                .WithModel("Valid");
         }
         
         [Fact]
@@ -48,7 +48,7 @@
                 .Calling(c => c.TempDataAction())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel("Valid");
+                .WithModel("Valid");
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Base
 {
     using Contracts.Base;
-    using Contracts.Models;
     using Contracts.ShouldPassFor;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
@@ -24,12 +23,6 @@
         {
         }
         
-        /// <inheritdoc />
-        public IAndModelDetailsTestBuilder<TModel> WithModel<TModel>(TModel model) => this.WithResponseModel(model);
-
-        /// <inheritdoc />
-        public IAndModelDetailsTestBuilder<TModel> WithModelOfType<TModel>() => this.WithResponseModelOfType<TModel>();
-
         protected override object GetActualModel()
         {
             if (this.ActionResult is ViewResult)

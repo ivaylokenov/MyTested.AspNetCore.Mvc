@@ -30,7 +30,7 @@
                 .Calling(c => c.FullMemoryCacheAction(From.Services<IMemoryCache>()))
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel("Normal");
+                .WithModel("Normal");
         }
 
         [Fact]
@@ -49,7 +49,7 @@
                 .Calling(c => c.FullMemoryCacheAction(From.Services<IMemoryCache>()))
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel(new MockedCacheEntry("FullEntry")
+                .WithModel(new MockedCacheEntry("FullEntry")
                 {
                     Value = "FullEntryValid",
                     AbsoluteExpiration = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
@@ -80,7 +80,7 @@
                 .Calling(c => c.FullMemoryCacheAction(From.Services<IMemoryCache>()))
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel(new MockedCacheEntry("FullEntry")
+                .WithModel(new MockedCacheEntry("FullEntry")
                 {
                     Value = "FullEntryValid",
                     AbsoluteExpiration = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
@@ -121,7 +121,7 @@
                 .Calling(c => c.FullMemoryCacheAction(From.Services<IMemoryCache>()))
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel(new Dictionary<object, object>
+                .WithModel(new Dictionary<object, object>
                 {
                     ["first"] = "firstValue",
                     ["second"] = "secondValue",

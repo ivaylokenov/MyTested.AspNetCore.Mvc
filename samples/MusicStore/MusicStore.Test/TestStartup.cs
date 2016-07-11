@@ -10,7 +10,7 @@
     using System.Reflection;
     using Microsoft.AspNetCore.Mvc.ApplicationParts;
     using MyTested.AspNetCore.Mvc.Internal;
-    using MyTested.AspNetCore.Mvc.Session;
+    using MyTested.AspNetCore.Mvc.Plugins;
 #endif
 
     public class TestStartup : Startup

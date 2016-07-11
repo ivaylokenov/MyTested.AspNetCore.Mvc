@@ -34,6 +34,5 @@
                 errorKey,
                 actualModelErrorTestBuilder.ModelState[errorKey].Errors);
         }
-
     }
 }

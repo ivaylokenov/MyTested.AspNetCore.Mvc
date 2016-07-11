@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Session
+﻿namespace MyTested.AspNetCore.Mvc.Plugins
 {
     using System;
     using Internal.Http;
@@ -6,7 +6,6 @@
     using Microsoft.AspNetCore.Http.Features;
     using Microsoft.AspNetCore.Session;
     using Microsoft.Extensions.DependencyInjection;
-    using Plugins;
 
     public class SessionTestPlugin : IServiceRegistrationPlugin, IHttpFeatureRegistrationPlugin
     {

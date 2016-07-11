@@ -48,7 +48,7 @@
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
                 .StatusCode()
-                .WithResponseModelOfType<List<ResponseModel>>();
+                .WithModelOfType<List<ResponseModel>>();
         }
         
         [Fact]
@@ -415,7 +415,7 @@
                 .StatusCode()
                 .ContainingOutputFormatters(TestObjectFactory.GetOutputFormatter(), new CustomOutputFormatter())
                 .AndAlso()
-                .WithResponseModelOfType<IList<ResponseModel>>();
+                .WithModelOfType<IList<ResponseModel>>();
         }
 
         [Fact]

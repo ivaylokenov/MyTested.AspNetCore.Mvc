@@ -34,7 +34,7 @@
                 .Calling(c => c.FullSessionAction())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel("TestId");
+                .WithModel("TestId");
 
             MyMvc.IsUsingDefaultConfiguration();
         }
@@ -96,7 +96,7 @@
                         .Calling(c => c.FullSessionAction())
                         .ShouldReturn()
                         .Ok()
-                        .WithResponseModel("TestId");
+                        .WithModel("TestId");
                 },
                 "Setting session Id requires the registered ISession service to implement IMockedSession.");
 
@@ -122,7 +122,7 @@
                 .Calling(c => c.FullSessionAction())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel(new byte[] { 1, 2, 3 });
+                .WithModel(new byte[] { 1, 2, 3 });
 
             MyMvc.IsUsingDefaultConfiguration();
         }
@@ -146,7 +146,7 @@
                 .Calling(c => c.FullSessionAction())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel(1);
+                .WithModel(1);
 
             MyMvc.IsUsingDefaultConfiguration();
         }
@@ -175,7 +175,7 @@
                 .Calling(c => c.MultipleSessionValuesAction())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel(new SessionResponseModel
+                .WithModel(new SessionResponseModel
                 {
                     String = "test",
                     Integer = 1,
@@ -204,7 +204,7 @@
                 .Calling(c => c.FullSessionAction())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel(new byte[] { 1, 2, 3 });
+                .WithModel(new byte[] { 1, 2, 3 });
 
             MyMvc.IsUsingDefaultConfiguration();
         }
@@ -228,7 +228,7 @@
                 .Calling(c => c.FullSessionAction())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel("stringTest");
+                .WithModel("stringTest");
 
             MyMvc.IsUsingDefaultConfiguration();
         }
@@ -252,7 +252,7 @@
                 .Calling(c => c.FullSessionAction())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel(1);
+                .WithModel(1);
 
             MyMvc.IsUsingDefaultConfiguration();
         }

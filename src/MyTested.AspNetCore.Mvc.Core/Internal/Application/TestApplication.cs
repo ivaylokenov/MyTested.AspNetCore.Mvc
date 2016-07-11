@@ -168,7 +168,7 @@
                 .Default
                 .GetDefaultAssemblyNames()
                 .Where(l => l.Name.StartsWith(TestFrameworkName))
-                .Select(l => Assembly.Load(new AssemblyName(l.Name)).GetType($"{l.Name}.{l.Name.Replace(TestFrameworkName, string.Empty).Trim('.')}TestPlugin"))
+                .Select(l => Assembly.Load(new AssemblyName(l.Name)).GetType($"{TestFrameworkName}.Plugins.{l.Name.Replace(TestFrameworkName, string.Empty).Trim('.')}TestPlugin"))
                 .Where(p => p != null)
                 .ForEach(t =>
                 {

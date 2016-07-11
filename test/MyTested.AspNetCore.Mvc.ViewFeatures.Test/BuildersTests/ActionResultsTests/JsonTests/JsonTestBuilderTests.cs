@@ -19,7 +19,7 @@
                 .Calling(c => c.JsonAction())
                 .ShouldReturn()
                 .Json()
-                .WithResponseModelOfType<ICollection<ResponseModel>>();
+                .WithModelOfType<ICollection<ResponseModel>>();
         }
         
         [Fact]

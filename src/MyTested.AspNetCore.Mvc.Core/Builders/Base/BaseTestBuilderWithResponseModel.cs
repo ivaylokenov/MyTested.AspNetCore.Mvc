@@ -50,7 +50,7 @@
         protected string OfTypeErrorMessageFormat { get; set; }
 
         /// <inheritdoc />
-        public IAndModelDetailsTestBuilder<TResponseModel> WithResponseModelOfType<TResponseModel>()
+        public IAndModelDetailsTestBuilder<TResponseModel> WithModelOfType<TResponseModel>()
         {
             var actualResponseDataType = this.GetReturnType();
             var expectedResponseDataType = typeof(TResponseModel);
@@ -74,9 +74,9 @@
         }
 
         /// <inheritdoc />
-        public IAndModelDetailsTestBuilder<TResponseModel> WithResponseModel<TResponseModel>(TResponseModel expectedModel)
+        public IAndModelDetailsTestBuilder<TResponseModel> WithModel<TResponseModel>(TResponseModel expectedModel)
         {
-            this.WithResponseModelOfType<TResponseModel>();
+            this.WithModelOfType<TResponseModel>();
 
             var actualModel = this.GetActualModel<TResponseModel>();
             if (Reflection.AreNotDeeplyEqual(expectedModel, actualModel))

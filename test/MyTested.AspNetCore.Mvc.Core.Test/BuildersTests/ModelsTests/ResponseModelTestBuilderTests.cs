@@ -18,7 +18,7 @@
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModelOfType<ICollection<ResponseModel>>();
+                .WithModelOfType<ICollection<ResponseModel>>();
         }
 
         [Fact]
@@ -29,7 +29,7 @@
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModelOfType<IList<ResponseModel>>();
+                .WithModelOfType<IList<ResponseModel>>();
         }
 
         [Fact]
@@ -40,7 +40,7 @@
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModelOfType<List<ResponseModel>>();
+                .WithModelOfType<List<ResponseModel>>();
         }
 
         [Fact]
@@ -54,7 +54,7 @@
                         .Calling(c => c.OkResultAction())
                         .ShouldReturn()
                         .Ok()
-                        .WithResponseModelOfType<ResponseModel>();
+                        .WithModelOfType<ResponseModel>();
                 }, 
                 "When calling OkResultAction action in MvcController expected response model to be of ResponseModel type, but instead received null.");
         }
@@ -70,7 +70,7 @@
                         .Calling(c => c.OkResultWithInterfaceResponse())
                         .ShouldReturn()
                         .Ok()
-                        .WithResponseModelOfType<ResponseModel>();
+                        .WithModelOfType<ResponseModel>();
                 }, 
                 "When calling OkResultWithInterfaceResponse action in MvcController expected response model to be of ResponseModel type, but instead received List<ResponseModel>.");
         }
@@ -86,7 +86,7 @@
                         .Calling(c => c.OkResultWithInterfaceResponse())
                         .ShouldReturn()
                         .Ok()
-                        .WithResponseModelOfType<ICollection<int>>();
+                        .WithModelOfType<ICollection<int>>();
                 }, 
                 "When calling OkResultWithInterfaceResponse action in MvcController expected response model to be of ICollection<Int32> type, but instead received List<ResponseModel>.");
         }
@@ -101,7 +101,7 @@
                 .Calling(c => c.OkResultWithInterfaceResponse())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel(controller.ResponseModel);
+                .WithModel(controller.ResponseModel);
         }
 
         [Fact]
@@ -114,7 +114,7 @@
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel(controller.ResponseModel);
+                .WithModel(controller.ResponseModel);
         }
 
         [Fact]
@@ -133,7 +133,7 @@
                         .Calling(c => c.OkResultWithResponse())
                         .ShouldReturn()
                         .Ok()
-                        .WithResponseModel(another);
+                        .WithModel(another);
                 },
                 "When calling OkResultWithResponse action in MvcController expected response model List<ResponseModel> to be the given model, but in fact it was a different one.");
         }

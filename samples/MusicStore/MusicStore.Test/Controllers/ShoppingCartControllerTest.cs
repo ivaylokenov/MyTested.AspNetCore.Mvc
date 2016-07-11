@@ -119,7 +119,7 @@
                 .Calling(c => c.RemoveFromCart(cartItemId, CancellationToken.None))
                 .ShouldReturn()
                 .Json()
-                .WithResponseModelOfType<ShoppingCartRemoveViewModel>()
+                .WithModelOfType<ShoppingCartRemoveViewModel>()
                 .Passing(model =>
                 {
                     Assert.Equal(numberOfItem - 1, model.CartCount);

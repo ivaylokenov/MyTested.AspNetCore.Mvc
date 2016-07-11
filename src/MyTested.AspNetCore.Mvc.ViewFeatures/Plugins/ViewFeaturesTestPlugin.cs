@@ -1,9 +1,8 @@
-﻿namespace MyTested.AspNetCore.Mvc.ViewFeatures
+﻿namespace MyTested.AspNetCore.Mvc.Plugins
 {
     using System;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.Extensions.DependencyInjection;
-    using Plugins;
 
     public class ViewFeaturesTestPlugin : IDefaultRegistrationPlugin, IServiceRegistrationPlugin
     {

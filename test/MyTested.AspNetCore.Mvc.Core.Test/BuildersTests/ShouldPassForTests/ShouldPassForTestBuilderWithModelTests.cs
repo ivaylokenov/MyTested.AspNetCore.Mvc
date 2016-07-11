@@ -17,7 +17,7 @@
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModelOfType<ICollection<ResponseModel>>()
+                .WithModelOfType<ICollection<ResponseModel>>()
                 .ShouldPassFor()
                 .TheModel(model =>
                 {
@@ -33,7 +33,7 @@
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModelOfType<ICollection<ResponseModel>>()
+                .WithModelOfType<ICollection<ResponseModel>>()
                 .ShouldPassFor()
                 .TheModel(model => model != null);
         }
@@ -49,7 +49,7 @@
                         .Calling(c => c.FullOkAction())
                         .ShouldReturn()
                         .Ok()
-                        .WithResponseModelOfType<ICollection<ResponseModel>>()
+                        .WithModelOfType<ICollection<ResponseModel>>()
                         .ShouldPassFor()
                         .TheModel(model => model == null);
                 },

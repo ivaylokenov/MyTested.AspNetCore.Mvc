@@ -19,7 +19,7 @@
                 .Calling(c => c.OkResultActionWithRequestBody(1, requestBody))
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModelOfType<ICollection<ResponseModel>>()
+                .WithModelOfType<ICollection<ResponseModel>>()
                 .ContainingNoErrors();
         }
 
@@ -36,7 +36,7 @@
                         .Calling(c => c.OkResultActionWithRequestBody(1, requestBodyWithErrors))
                         .ShouldReturn()
                         .Ok()
-                        .WithResponseModelOfType<ICollection<ResponseModel>>()
+                        .WithModelOfType<ICollection<ResponseModel>>()
                         .ContainingNoErrors();
                 }, 
                 "When calling OkResultActionWithRequestBody action in MvcController expected to have valid model state with no errors, but it had some.");
@@ -52,7 +52,7 @@
                 .Calling(c => c.ModelStateCheck(requestBodyWithErrors))
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel(requestBodyWithErrors)
+                .WithModel(requestBodyWithErrors)
                 .ContainingError("RequiredString");
         }
 
@@ -69,7 +69,7 @@
                         .Calling(c => c.ModelStateCheck(requestBody))
                         .ShouldReturn()
                         .Ok()
-                        .WithResponseModel(requestBody)
+                        .WithModel(requestBody)
                         .ContainingError("Name");
                 }, 
                 "When calling ModelStateCheck action in MvcController expected to have a model error against key Name, but none found.");
@@ -83,7 +83,7 @@
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModelOfType<List<ResponseModel>>()
+                .WithModelOfType<List<ResponseModel>>()
                 .ShouldPassFor()
                 .TheModel(responseModel =>
                 {
@@ -101,7 +101,7 @@
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModelOfType<List<ResponseModel>>()
+                .WithModelOfType<List<ResponseModel>>()
                 .Passing(m => m.Count == 2)
                 .ShouldPassFor()
                 .TheModel(responseModel =>
@@ -120,7 +120,7 @@
                 .Calling(c => c.CustomModelStateError())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModelOfType<ICollection<ResponseModel>>()
+                .WithModelOfType<ICollection<ResponseModel>>()
                 .ContainingError("Test")
                 .ShouldPassFor()
                 .TheModel(responseModel =>
@@ -139,7 +139,7 @@
                 .Calling(c => c.CustomModelStateError())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModelOfType<ICollection<ResponseModel>>()
+                .WithModelOfType<ICollection<ResponseModel>>()
                 .ContainingError("Test").ThatEquals("Test error")
                 .ShouldPassFor()
                 .TheModel(responseModel =>

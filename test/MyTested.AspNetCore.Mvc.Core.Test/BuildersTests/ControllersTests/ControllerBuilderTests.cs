@@ -452,7 +452,7 @@
                 .Calling(c => c.UrlAction())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel("/api/test");
+                .WithModel("/api/test");
         }
 
         [Fact]
@@ -476,7 +476,7 @@
                         .Calling(c => c.UrlAction())
                         .ShouldReturn()
                         .Ok()
-                        .WithResponseModel("");
+                        .WithModel("");
                 },
                 "Route values are not present in the action call but are needed for successful pass of this test case. Consider calling 'WithResolvedRouteValues' on the controller builder to resolve them from the provided lambda expression or set the HTTP request path by using 'WithHttpRequest'.");
         }
@@ -657,7 +657,7 @@
                 .Calling(c => c.Index())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel("TestValue");
+                .WithModel("TestValue");
 
             MyMvc.IsUsingDefaultConfiguration();
         }
@@ -681,7 +681,7 @@
                         .Calling(c => c.Index())
                         .ShouldReturn()
                         .Ok()
-                        .WithResponseModel("TestValue");
+                        .WithModel("TestValue");
                 },
                 "The 'WithServiceSetupFor' method can be used only for services with scoped lifetime.");
 

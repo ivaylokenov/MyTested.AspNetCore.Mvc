@@ -22,7 +22,7 @@
                 .Calling(c => c.ObjectResultWithResponse())
                 .ShouldReturn()
                 .Object()
-                .WithResponseModelOfType<List<ResponseModel>>();
+                .WithModelOfType<List<ResponseModel>>();
         }
 
         [Fact]

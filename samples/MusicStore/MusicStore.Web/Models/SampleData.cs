@@ -38,12 +38,12 @@ namespace MusicStore.Models
         {
             var albums = GetAlbums(imgUrl, Genres, Artists);
 
-            AddOrUpdateAsync(serviceProvider, g => g.GenreId, Genres.Select(genre => genre.Value));
-            AddOrUpdateAsync(serviceProvider, a => a.ArtistId, Artists.Select(artist => artist.Value));
-            AddOrUpdateAsync(serviceProvider, a => a.AlbumId, albums);
+            AddOrUpdate(serviceProvider, g => g.GenreId, Genres.Select(genre => genre.Value));
+            AddOrUpdate(serviceProvider, a => a.ArtistId, Artists.Select(artist => artist.Value));
+            AddOrUpdate(serviceProvider, a => a.AlbumId, albums);
         }
         
-        private static void AddOrUpdateAsync<TEntity>(
+        private static void AddOrUpdate<TEntity>(
             IServiceProvider serviceProvider,
             Func<TEntity, object> propertyToMatch, IEnumerable<TEntity> entities)
             where TEntity : class

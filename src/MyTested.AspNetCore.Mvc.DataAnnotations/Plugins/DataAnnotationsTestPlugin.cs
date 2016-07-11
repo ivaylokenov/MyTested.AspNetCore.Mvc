@@ -1,8 +1,7 @@
-﻿namespace MyTested.AspNetCore.Mvc.DataAnnotations
+﻿namespace MyTested.AspNetCore.Mvc.Plugins
 {
     using System;
     using Microsoft.Extensions.DependencyInjection;
-    using Plugins;
 
     public class DataAnnotationsTestPlugin : IDefaultRegistrationPlugin
     {

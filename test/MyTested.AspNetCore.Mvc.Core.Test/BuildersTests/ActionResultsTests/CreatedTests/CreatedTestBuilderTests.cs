@@ -496,7 +496,7 @@
                 .Calling(c => c.CreatedAction())
                 .ShouldReturn()
                 .Created()
-                .WithResponseModelOfType<ICollection<ResponseModel>>();
+                .WithModelOfType<ICollection<ResponseModel>>();
         }
 
         [Fact]

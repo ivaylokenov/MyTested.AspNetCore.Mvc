@@ -12,7 +12,7 @@
         /// </summary>
         /// <typeparam name="TResponseModel">Type of the response model.</typeparam>
         /// <returns>Test builder of <see cref="IModelDetailsTestBuilder{TResponseModel}"/>.</returns>
-        IAndModelDetailsTestBuilder<TResponseModel> WithResponseModelOfType<TResponseModel>();
+        IAndModelDetailsTestBuilder<TResponseModel> WithModelOfType<TResponseModel>();
 
         /// <summary>
         /// Tests whether a deeply equal object to the provided one is returned from the invoked action.
@@ -20,6 +20,6 @@
         /// <typeparam name="TResponseModel">Type of the response model.</typeparam>
         /// <param name="expectedModel">Expected model to be returned.</param>
         /// <returns>Test builder of <see cref="IModelDetailsTestBuilder{TResponseModel}"/>.</returns>
-        IAndModelDetailsTestBuilder<TResponseModel> WithResponseModel<TResponseModel>(TResponseModel expectedModel);
+        IAndModelDetailsTestBuilder<TResponseModel> WithModel<TResponseModel>(TResponseModel expectedModel);
     }
 }

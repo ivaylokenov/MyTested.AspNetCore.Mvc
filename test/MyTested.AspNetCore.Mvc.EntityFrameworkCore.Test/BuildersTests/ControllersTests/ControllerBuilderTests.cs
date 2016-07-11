@@ -30,7 +30,7 @@
                 .Calling(c => c.Find(1))
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModelOfType<CustomModel>()
+                .WithModelOfType<CustomModel>()
                 .Passing(m => m.Name == "Test");
 
             MyMvc
@@ -44,7 +44,7 @@
                 .Calling(c => c.Find(1))
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModelOfType<CustomModel>()
+                .WithModelOfType<CustomModel>()
                 .Passing(m => m.Name == "Test");
 
             MyMvc
@@ -92,7 +92,7 @@
                 .Calling(c => c.Find(1))
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModelOfType<CustomModel>()
+                .WithModelOfType<CustomModel>()
                 .Passing(m => m.Name == "Test");
 
             MyMvc
