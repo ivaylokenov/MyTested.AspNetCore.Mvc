@@ -5,7 +5,6 @@
     using Builders.Contracts.Application;
     using Builders.Contracts.Controllers;
     using Builders.Contracts.Routes;
-    using Builders.Controllers;
     using Builders.Routes;
     using Internal.Application;
     using Internal.TestContexts;
@@ -63,7 +62,7 @@
         public static IControllerBuilder<TController> Controller<TController>()
             where TController : class
         {
-            return Controller((TController)null);
+            return new MyController<TController>();
         }
 
         /// <summary>
@@ -75,7 +74,7 @@
         public static IControllerBuilder<TController> Controller<TController>(TController controller)
             where TController : class
         {
-            return Controller(() => controller);
+            return new MyController<TController>(controller);
         }
 
         /// <summary>
@@ -87,7 +86,7 @@
         public static IControllerBuilder<TController> Controller<TController>(Func<TController> construction)
             where TController : class
         {
-            return new ControllerBuilder<TController>(new ControllerTestContext { ControllerConstruction = construction });
+            return new MyController<TController>(construction);
         }
     }
 }
