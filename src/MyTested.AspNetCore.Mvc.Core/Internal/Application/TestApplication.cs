@@ -36,6 +36,7 @@
     public static class TestApplication
     {
         private const string TestFrameworkName = "MyTested.AspNetCore.Mvc";
+        private const string ReleaseDate = "2016-06-01";
 
         private static readonly RequestDelegate NullHandler = c => TaskCache.CompletedTask;
         private static readonly ISet<IDefaultRegistrationPlugin> DefaultRegistrationPlugins = new HashSet<IDefaultRegistrationPlugin>();
@@ -161,6 +162,19 @@
             TestConfiguration.ApplicationName
                 ?? TestAssemblyName
                 ?? PlatformServices.Default.Application.ApplicationName;
+        
+        public static void TryInitialize()
+        {
+            if (!initialiazed && TestConfiguration.AutomaticStartup)
+            {
+                startupType = TryFindDefaultStartupType();
+
+                if (startupType != null)
+                {
+                    Initialize();
+                }
+            }
+        }
 
         internal static void LoadPlugins()
         {
@@ -192,19 +206,6 @@
                         TestHelper.HttpFeatureRegistrationPlugins.Add(httpFeatureRegistrationPlugin);
                     }
                 });
-        }
-
-        internal static void TryInitialize()
-        {
-            if (!initialiazed && TestConfiguration.AutomaticStartup)
-            {
-                startupType = TryFindDefaultStartupType();
-
-                if (startupType != null)
-                {
-                    Initialize();
-                }
-            }
         }
 
         internal static Type TryFindDefaultStartupType()
@@ -256,7 +257,7 @@
         {
             TestCounter.SetLicenseData(
                 TestConfiguration.Licenses,
-                DateTime.ParseExact(MyMvc.ReleaseDate, "yyyy-MM-dd", CultureInfo.InvariantCulture),
+                DateTime.ParseExact(ReleaseDate, "yyyy-MM-dd", CultureInfo.InvariantCulture),
                 TestAssemblyName);
         }
 

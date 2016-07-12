@@ -1,21 +1,16 @@
 ﻿namespace MyTested.AspNetCore.Mvc
 {
     using System;
-    using Builders;
     using Builders.Contracts.Application;
     using Builders.Contracts.Controllers;
     using Builders.Contracts.Routes;
-    using Builders.Routes;
     using Internal.Application;
-    using Internal.TestContexts;
 
     /// <summary>
     /// Starting point of the ASP.NET Core MVC testing framework. Provides methods to specify a test case.
     /// </summary>
     public static class MyMvc
     {
-        internal const string ReleaseDate = "2016-06-01";
-
         static MyMvc()
         {
             TestApplication.TryInitialize();
@@ -27,7 +22,7 @@
         /// <returns>Builder of <see cref="IApplicationConfigurationBuilder"/> type.</returns>
         public static IApplicationConfigurationBuilder IsUsingDefaultConfiguration()
         {
-            return new ApplicationConfigurationBuilder(null);
+            return new MyApplication();
         }
 
         /// <summary>
@@ -36,9 +31,9 @@
         /// <typeparam name="TStartup">Type of startup class.</typeparam>
         /// <returns>Builder of <see cref="IApplicationConfigurationBuilder"/> type.</returns>
         public static IApplicationConfigurationBuilder StartsFrom<TStartup>()
-            where TStartup : class, new()
+            where TStartup : class
         {
-            return new ApplicationConfigurationBuilder(typeof(TStartup));
+            return new MyApplication(typeof(TStartup));
         }
 
         /// <summary>
@@ -47,11 +42,7 @@
         /// <returns>Test builder of <see cref="IRouteTestBuilder"/> type.</returns>
         public static IRouteTestBuilder Routes()
         {
-            return new RouteTestBuilder(new RouteTestContext
-            {
-                Router = TestApplication.Router,
-                Services = TestApplication.RouteServices
-            });
+            return new MyRoutes();
         }
 
         /// <summary>

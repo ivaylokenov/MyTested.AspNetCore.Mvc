@@ -41,7 +41,7 @@
 
         public static IControllerBuilder<TController> Instance(Func<TController> construction)
         {
-            return new ControllerBuilder<TController>(new ControllerTestContext { ControllerConstruction = construction });
+            return new MyController<TController>(construction);
         }
     }
 }
