@@ -16,8 +16,8 @@
         [Fact]
         public void WithNoResponseModelShouldNotThrowExceptionIfNoResponseModelIsProvided()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.StatusCodeAction())
                 .ShouldReturn()
                 .StatusCode()
@@ -30,8 +30,8 @@
             Test.AssertException<ResponseModelAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
                         .StatusCode()
@@ -43,8 +43,8 @@
         [Fact]
         public void WithResponseModelShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
                 .StatusCode()
@@ -54,8 +54,8 @@
         [Fact]
         public void ContainingContentTypeShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
                 .StatusCode()
@@ -65,8 +65,8 @@
         [Fact]
         public void ContainingContentTypeAsMediaTypeHeaderValueShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
                 .StatusCode()
@@ -79,8 +79,8 @@
             Test.AssertException<StatusCodeResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
+                    MyController<MvcController>
+                       .Instance()
                        .Calling(c => c.FullObjectResultAction())
                        .ShouldReturn()
                        .StatusCode()
@@ -92,8 +92,8 @@
         [Fact]
         public void ContainingContentTypesAsStringValueShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
                 .StatusCode()
@@ -107,8 +107,8 @@
         [Fact]
         public void ContainingContentTypesAsStringShouldNotThrowExceptionWithCorrectParametersValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
                 .StatusCode()
@@ -121,8 +121,8 @@
             Test.AssertException<StatusCodeResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
                         .StatusCode()
@@ -141,8 +141,8 @@
             Test.AssertException<StatusCodeResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
                         .StatusCode()
@@ -160,8 +160,8 @@
             Test.AssertException<StatusCodeResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
                         .StatusCode()
@@ -178,8 +178,8 @@
         [Fact]
         public void ContainingContentTypesAsMediaTypeHeaderValueShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
                 .StatusCode()
@@ -193,8 +193,8 @@
         [Fact]
         public void ContainingContentTypesAsMediaTypeHeaderValueShouldNotThrowExceptionWithCorrectParametersValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
                 .StatusCode()
@@ -207,8 +207,8 @@
             Test.AssertException<StatusCodeResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
                         .StatusCode()
@@ -227,8 +227,8 @@
             Test.AssertException<StatusCodeResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
                         .StatusCode()
@@ -246,8 +246,8 @@
             Test.AssertException<StatusCodeResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
                         .StatusCode()
@@ -266,8 +266,8 @@
         {
             var formatter = TestObjectFactory.GetOutputFormatter();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ObjectActionWithFormatter(formatter))
                 .ShouldReturn()
                 .StatusCode()
@@ -282,8 +282,8 @@
                 {
                     var formatter = TestObjectFactory.GetOutputFormatter();
 
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ObjectActionWithFormatter(formatter))
                         .ShouldReturn()
                         .StatusCode()
@@ -295,8 +295,8 @@
         [Fact]
         public void ContainingOutputFormatterOfTypeShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
                 .StatusCode()
@@ -309,8 +309,8 @@
             Test.AssertException<StatusCodeResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
                         .StatusCode()
@@ -322,8 +322,8 @@
         [Fact]
         public void ContainingOutputFormattersShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
                 .StatusCode()
@@ -337,8 +337,8 @@
         [Fact]
         public void ContainingOutputFormattersShouldNotThrowExceptionWithCorrectParametersValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
                 .StatusCode()
@@ -351,8 +351,8 @@
             Test.AssertException<StatusCodeResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
                         .StatusCode()
@@ -371,8 +371,8 @@
             Test.AssertException<StatusCodeResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
                         .StatusCode()
@@ -390,8 +390,8 @@
             Test.AssertException<StatusCodeResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
                         .StatusCode()
@@ -408,8 +408,8 @@
         [Fact]
         public void AndAlsoShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
                 .StatusCode()
@@ -421,8 +421,8 @@
         [Fact]
         public void AndProvideTheActionResultShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
                 .StatusCode()

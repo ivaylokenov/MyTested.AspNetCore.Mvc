@@ -165,13 +165,16 @@
         
         public static void TryInitialize()
         {
-            if (!initialiazed && TestConfiguration.AutomaticStartup)
+            lock(Sync)
             {
-                startupType = TryFindDefaultStartupType();
-
-                if (startupType != null)
+                if (!initialiazed && TestConfiguration.AutomaticStartup)
                 {
-                    Initialize();
+                    startupType = TryFindDefaultStartupType();
+
+                    if (startupType != null)
+                    {
+                        Initialize();
+                    }
                 }
             }
         }

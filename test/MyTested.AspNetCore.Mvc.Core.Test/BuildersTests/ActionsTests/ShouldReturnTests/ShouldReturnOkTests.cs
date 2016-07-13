@@ -10,8 +10,8 @@
         [Fact]
         public void ShouldReturnOkResultShouldNotThrowExceptionWithOkResult()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.OkResultAction())
                 .ShouldReturn()
                 .Ok();
@@ -23,8 +23,8 @@
             Test.AssertException<ActionCallAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ActionWithExceptionAsync())
                         .ShouldReturn()
                         .Ok();
@@ -38,8 +38,8 @@
             Test.AssertException<ActionResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.BadRequestAction())
                         .ShouldReturn()
                         .Ok();
@@ -53,8 +53,8 @@
             Test.AssertException<ActionResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CustomActionResult())
                         .ShouldReturn()
                         .Ok();

@@ -31,8 +31,8 @@
                 new FormFile(stream, 0, 0, "SecondFile", "SecondFileName"),
             };
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpRequest(request => request
                     .WithBody(stream)
                     .WithContentLength(1)
@@ -125,8 +125,8 @@
         [Fact]
         public void WithBodyShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpRequest(request => request
                     .WithBody(
                         new
@@ -150,8 +150,8 @@
         [Fact]
         public void WithFormAsDictionaryShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpRequest(request => request
                     .WithFormFields(new Dictionary<string, IEnumerable<string>>
                     {
@@ -170,8 +170,8 @@
         [Fact]
         public void WithFormAsObjectShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpRequest(request => request
                     .WithFormFields(new
                     {
@@ -190,8 +190,8 @@
         [Fact]
         public void WithFormAsStringDictionaryShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpRequest(request => request
                     .WithFormFields(new Dictionary<string, string>
                     {
@@ -210,8 +210,8 @@
         [Fact]
         public void WithFormAsDictionaryAndStringValuesShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpRequest(request => request
                     .WithFormFields(new Dictionary<string, StringValues>
                     {
@@ -237,8 +237,8 @@
                 new FormFile(stream, 0, 0, "SecondFile", "SecondFileName"),
             };
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpRequest(request => request
                     .WithForm(new FormCollection(
                         new Dictionary<string, StringValues>
@@ -262,8 +262,8 @@
         [Fact]
         public void WithHeadersAsDictionaryShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpRequest(request => request
                     .WithHeaders(new Dictionary<string, IEnumerable<string>>
                     {
@@ -282,8 +282,8 @@
         [Fact]
         public void WithHeadersAsObjectDictionaryShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpRequest(request => request
                     .WithHeaders(new
                     {
@@ -302,8 +302,8 @@
         [Fact]
         public void WithHeadersAsStringDictionaryShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpRequest(request => request
                     .WithHeaders(new Dictionary<string, string>
                     {
@@ -322,8 +322,8 @@
         [Fact]
         public void WithHeadersAsDictionaryWithStringValuesShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpRequest(request => request
                     .WithHeaders(new Dictionary<string, StringValues>
                     {
@@ -342,8 +342,8 @@
         [Fact]
         public void WithHeadersShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpRequest(request => request
                     .WithHeaders(new HeaderDictionary(new Dictionary<string, StringValues>
                     {
@@ -362,8 +362,8 @@
         [Fact]
         public void WithQueryAsKeyValuePairShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpRequest(request => request
                     .WithQuery("Query", "QueryValue"))
                 .ShouldPassFor()
@@ -377,8 +377,8 @@
         [Fact]
         public void WithQueryAsKeyMultipleValuesPairShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpRequest(request => request
                     .WithQuery("Query", "QueryValue", "AnotherQueryValue"))
                 .ShouldPassFor()
@@ -392,8 +392,8 @@
         [Fact]
         public void WithQueryShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpRequest(request => request
                     .WithQuery(new Dictionary<string, IEnumerable<string>>
                     {
@@ -412,8 +412,8 @@
         [Fact]
         public void WithQueryAsStringDictionaryShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpRequest(request => request
                     .WithQuery(new Dictionary<string, string>
                     {
@@ -432,8 +432,8 @@
         [Fact]
         public void WithQueryAsObjectShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpRequest(request => request
                     .WithQuery(new
                     {
@@ -452,8 +452,8 @@
         [Fact]
         public void WithQueryAsDictionaryWithStringValuesShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpRequest(request => request
                     .WithQuery(new Dictionary<string, StringValues>
                     {
@@ -472,8 +472,8 @@
         [Fact]
         public void WithQueryAsCollectionShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpRequest(request => request
                     .WithQuery(new QueryCollection(new Dictionary<string, StringValues>
                     {
@@ -492,8 +492,8 @@
         [Fact]
         public void WithLocationShouldSetCorrectProperties()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpRequest(request => request.WithLocation("https://mytestesasp.net:1337/api/Projects/MyTested.AspNetCore.Mvc?version=1.0"))
                 .ShouldPassFor()
                 .TheHttpRequest(builtRequest =>
@@ -511,8 +511,8 @@
         [Fact]
         public void WithLocationAsBuilderShouldSetCorrectProperties()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpRequest(request => request
                     .WithLocation(location => location
                         .WithHost("mytestesasp.net")
@@ -539,8 +539,8 @@
             Test.AssertException<ArgumentException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .WithHttpRequest(request => request
                             .WithLocation(location => location
                                 .WithHost("mytestesasp.net")
@@ -558,8 +558,8 @@
             Test.AssertException<InvalidHttpRequestException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .WithHttpRequest(request => request
                             .WithLocation("!@#invalid!@#"));
                 },
@@ -569,8 +569,8 @@
         [Fact]
         public void WithStringBodyShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpRequest(request => request
                     .WithStringBody("test"))
                 .ShouldPassFor()
@@ -589,8 +589,8 @@
         [Fact]
         public void WithStringBodyShouldWorkCorrectlyAndRespectContentTypeAndLength()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpRequest(request => request
                     .WithContentType(ContentType.ApplicationXml)
                     .WithContentLength(100)
@@ -611,8 +611,8 @@
         [Fact]
         public void WithJsonBodyAsStringShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpRequest(request => request
                     .WithJsonBody(@"{""id"":1}"))
                 .ShouldPassFor()
@@ -631,8 +631,8 @@
         [Fact]
         public void WithJsonBodyAsStringShouldWorkCorrectlyAndRespectContentTypeAndLength()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpRequest(request => request
                     .WithContentType(ContentType.ApplicationXml)
                     .WithContentLength(100)
@@ -653,8 +653,8 @@
         [Fact]
         public void WithJsonBodyShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpRequest(request => request
                     .WithJsonBody(new RequestModel
                     {
@@ -677,8 +677,8 @@
         [Fact]
         public void WithJsonBodyShouldWorkCorrectlyAndRespectContentTypeAndLength()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpRequest(request => request
                     .WithContentType(ContentType.ApplicationXml)
                     .WithContentLength(100)
@@ -699,8 +699,8 @@
         [Fact]
         public void WithLocationShouldWorkWithAbsoluteUri()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpRequest(request => request.WithLocation("http://mytestedasp.net"))
                 .ShouldPassFor()
                 .TheHttpRequest(builtRequest =>
@@ -716,8 +716,8 @@
         [Fact]
         public void WithLocationShouldWorkWithAbsoluteUriAndQueryString()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpRequest(request => request.WithLocation("http://mytestedasp.net?test=text"))
                 .ShouldPassFor()
                 .TheHttpRequest(builtRequest =>
@@ -733,8 +733,8 @@
         [Fact]
         public void WithLocationShouldWorkWithRelativeUri()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpRequest(request => request.WithLocation("/Home/Index"))
                 .ShouldPassFor()
                 .TheHttpRequest(builtRequest =>
@@ -750,8 +750,8 @@
         [Fact]
         public void WithLocationShouldWorkWithRelativeUriAndQueryString()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpRequest(request => request.WithLocation("/Home/Index?test=text"))
                 .ShouldPassFor()
                 .TheHttpRequest(builtRequest =>
@@ -767,8 +767,8 @@
         [Fact]
         public void WithLocationShouldWorkWithFullUriAndQueryString()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpRequest(request => request.WithLocation("http://mytestedasp.net/Home/Index?test=text"))
                 .ShouldPassFor()
                 .TheHttpRequest(builtRequest =>

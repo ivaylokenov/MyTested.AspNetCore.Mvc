@@ -14,8 +14,8 @@
         [Fact]
         public void ContainingAttributeOfTypeShouldNotThrowExceptionWithActionWithTheAttribute()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.NormalActionWithAttributes())
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes.ContainingAttributeOfType<HttpGetAttribute>());
@@ -26,8 +26,8 @@
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.NormalActionWithAttributes())
                         .ShouldHave()
                         .ActionAttributes(attributes => attributes.ContainingAttributeOfType<HttpPatchAttribute>());
@@ -38,8 +38,8 @@
         [Fact]
         public void ChangingActionNameToShouldNotThrowExceptionWithActionWithTheAttribute()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.VariousAttributesAction())
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes.ChangingActionNameTo("NormalAction"));
@@ -51,8 +51,8 @@
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.VariousAttributesAction())
                         .ShouldHave()
                         .ActionAttributes(attributes => attributes.ChangingActionNameTo("AnotherAction"));
@@ -66,8 +66,8 @@
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.NormalActionWithAttributes())
                         .ShouldHave()
                         .ActionAttributes(attributes => attributes.ChangingActionNameTo("NormalAction"));
@@ -78,8 +78,8 @@
         [Fact]
         public void ChangingRouteToShouldNotThrowExceptionWithActionWithTheAttribute()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.VariousAttributesAction())
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes.ChangingRouteTo("/api/test"));
@@ -88,8 +88,8 @@
         [Fact]
         public void ChangingRouteToShouldNotThrowExceptionWithActionWithTheAttributeAndCasingDifference()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.VariousAttributesAction())
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes.ChangingRouteTo("/api/Test"));
@@ -101,8 +101,8 @@
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.VariousAttributesAction())
                         .ShouldHave()
                         .ActionAttributes(attributes => attributes.ChangingRouteTo("/api/another"));
@@ -113,8 +113,8 @@
         [Fact]
         public void ChangingRouteToShouldNotThrowExceptionWithActionWithTheAttributeAndCorrectName()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.VariousAttributesAction())
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes.ChangingRouteTo("/api/test", withName: "TestRoute"));
@@ -126,8 +126,8 @@
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.VariousAttributesAction())
                         .ShouldHave()
                         .ActionAttributes(attributes => attributes.ChangingRouteTo("/api/test", withName: "AnotherRoute"));
@@ -138,8 +138,8 @@
         [Fact]
         public void ChangingRouteToShouldNotThrowExceptionWithActionWithTheAttributeAndCorrectOrder()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.VariousAttributesAction())
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes.ChangingRouteTo("/api/test", withOrder: 1));
@@ -151,8 +151,8 @@
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.VariousAttributesAction())
                         .ShouldHave()
                         .ActionAttributes(attributes => attributes.ChangingRouteTo("/api/test", withOrder: 2));
@@ -166,8 +166,8 @@
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.NormalActionWithAttributes())
                         .ShouldHave()
                         .ActionAttributes(attributes => attributes.ChangingRouteTo("/api/test"));
@@ -178,8 +178,8 @@
         [Fact]
         public void AllowingAnonymousRequestsShouldNotThrowExceptionWithTheAttribute()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.VariousAttributesAction())
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes.AllowingAnonymousRequests());
@@ -191,8 +191,8 @@
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.NormalActionWithAttributes())
                         .ShouldHave()
                         .ActionAttributes(attributes => attributes.AllowingAnonymousRequests());
@@ -203,8 +203,8 @@
         [Fact]
         public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithTheAttribute()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.NormalActionWithAttributes())
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes.RestrictingForAuthorizedRequests());
@@ -216,8 +216,8 @@
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.VariousAttributesAction())
                         .ShouldHave()
                         .ActionAttributes(attributes => attributes.RestrictingForAuthorizedRequests());
@@ -228,8 +228,8 @@
         [Fact]
         public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithTheAttributeWithCorrectRoles()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.NormalActionWithAttributes())
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes.RestrictingForAuthorizedRequests(withAllowedRoles: "Admin,Moderator"));
@@ -241,8 +241,8 @@
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.NormalActionWithAttributes())
                         .ShouldHave()
                         .ActionAttributes(attributes => attributes.RestrictingForAuthorizedRequests(withAllowedRoles: "Admin"));
@@ -253,8 +253,8 @@
         [Fact]
         public void DisablingActionCallShouldNotThrowExceptionWithTheAttribute()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.VariousAttributesAction())
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes.DisablingActionCall());
@@ -266,8 +266,8 @@
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.NormalActionWithAttributes())
                         .ShouldHave()
                         .ActionAttributes(attributes => attributes.DisablingActionCall());
@@ -278,8 +278,8 @@
         [Fact]
         public void RestrictingForHttpMethodWithGenericShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.NormalActionWithAttributes())
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes.RestrictingForHttpMethod<HttpGetAttribute>());
@@ -288,8 +288,8 @@
         [Fact]
         public void RestrictingForHttpMethodWithStringShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.NormalActionWithAttributes())
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes.RestrictingForHttpMethod("GET"));
@@ -298,8 +298,8 @@
         [Fact]
         public void RestrictingForHttpMethodWithHttpMethodClassShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.NormalActionWithAttributes())
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes.RestrictingForHttpMethod(HttpMethod.Get));
@@ -308,8 +308,8 @@
         [Fact]
         public void RestrictingForHttpMethodWithListOfStringsShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.NormalActionWithAttributes())
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes.RestrictingForHttpMethods(new List<string> { "GET", "HEAD" }));
@@ -318,8 +318,8 @@
         [Fact]
         public void RestrictingForHttpMethodWithParamsOfStringsShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.NormalActionWithAttributes())
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes.RestrictingForHttpMethods("GET", "HEAD"));
@@ -328,8 +328,8 @@
         [Fact]
         public void RestrictingForHttpMethodWithListOfHttpMethodsShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.NormalActionWithAttributes())
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes.RestrictingForHttpMethods(new List<HttpMethod> { HttpMethod.Get, HttpMethod.Head }));
@@ -338,8 +338,8 @@
         [Fact]
         public void RestrictingForHttpMethodWithParamsOfHttpMethodShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.NormalActionWithAttributes())
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes.RestrictingForHttpMethods(HttpMethod.Get, HttpMethod.Head));
@@ -348,8 +348,8 @@
         [Fact]
         public void RestrictingForHttpMethodWithListOfHttpMethodsShouldWorkCorrectlyWithDoubleAttributes()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.VariousAttributesAction())
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes.RestrictingForHttpMethods(new List<HttpMethod>
@@ -366,8 +366,8 @@
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
+                    MyController<MvcController>
+                       .Instance()
                        .Calling(c => c.VariousAttributesAction())
                        .ShouldHave()
                        .ActionAttributes(attributes => attributes.RestrictingForHttpMethods(new List<HttpMethod>
@@ -383,8 +383,8 @@
         [Fact]
         public void AndAlsoShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.VariousAttributesAction())
                 .ShouldHave()
                 .ActionAttributes(attributes =>
@@ -398,8 +398,8 @@
         [Fact]
         public void WithNoShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.EmptyActionWithParameters(With.No<int>(), With.No<RequestModel>()))
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes.ChangingActionNameTo("Test"));

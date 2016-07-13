@@ -10,8 +10,8 @@
         [Fact]
         public void ActionResultAssertionsShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
                 .Ok()
@@ -25,8 +25,8 @@
         [Fact]
         public void ActionResultPredicateShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldPassFor()
                 .TheActionResult(actionResult => actionResult != null);
@@ -38,8 +38,8 @@
             Test.AssertException<InvalidAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullOkAction())
                         .ShouldPassFor()
                         .TheActionResult(actionResult => actionResult == null);

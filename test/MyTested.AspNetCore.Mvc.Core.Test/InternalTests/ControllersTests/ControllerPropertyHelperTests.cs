@@ -14,7 +14,7 @@
         [Fact]
         public void GetPropertiesShouldNotThrowExceptionForNormalController()
         {
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
 
             var helper = ControllerPropertyHelper.GetProperties<MvcController>();
 
@@ -48,7 +48,7 @@
         [Fact]
         public void GetPropertiesShouldNotThrowExceptionForPocoController()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -82,8 +82,8 @@
 
             Assert.NotNull(gotActionContext);
             Assert.Same(gotActionContext, controller.CustomActionContext);
-            
-            MyMvc.IsUsingDefaultConfiguration();
+
+            MyApplication.IsUsingDefaultConfiguration();
         }
     }
 }

@@ -11,8 +11,8 @@
         [Fact]
         public void ControllerAssertionsShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
                 .Ok()
@@ -26,8 +26,8 @@
         [Fact]
         public void ControllerPredicateShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldPassFor()
                 .TheController(controller => controller != null);
@@ -39,8 +39,8 @@
             Test.AssertException<InvalidAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullOkAction())
                         .ShouldPassFor()
                         .TheController(controller => controller == null);
@@ -51,8 +51,8 @@
         [Fact]
         public void ControllerAttributesAssertionsShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
                 .Ok()
@@ -66,8 +66,8 @@
         [Fact]
         public void ControllerAttributesPredicateShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldPassFor()
                 .TheControllerAttributes(attributes => attributes.Count() == 2);
@@ -79,8 +79,8 @@
             Test.AssertException<InvalidAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullOkAction())
                         .ShouldPassFor()
                         .TheControllerAttributes(attributes => attributes.Count() == 3);

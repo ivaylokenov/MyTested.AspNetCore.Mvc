@@ -10,8 +10,8 @@
         [Fact]
         public void ShouldReturnUnauthorizedShouldNotThrowExceptionWhenActionReturnsUnauthorizedResult()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.UnauthorizedAction())
                 .ShouldReturn()
                 .Unauthorized();
@@ -23,8 +23,8 @@
             Test.AssertException<ActionResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.BadRequestAction())
                         .ShouldReturn()
                         .Unauthorized();

@@ -16,8 +16,8 @@
         [Fact]
         public void WithNoResponseModelShouldNotThrowExceptionWithNoResponseModel()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.HttpNotFoundAction())
                 .ShouldReturn()
                 .NotFound()
@@ -30,8 +30,8 @@
             Test.AssertException<ResponseModelAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.HttpNotFoundWithObjectAction())
                         .ShouldReturn()
                         .NotFound()
@@ -43,8 +43,8 @@
         [Fact]
         public void WithStatusCodeShouldNotThrowExceptionWithCorrectStatusCode()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullHttpNotFoundAction())
                 .ShouldReturn()
                 .NotFound()
@@ -54,8 +54,8 @@
         [Fact]
         public void WithStatusCodeAsEnumShouldNotThrowExceptionWithCorrectStatusCode()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullHttpNotFoundAction())
                 .ShouldReturn()
                 .NotFound()
@@ -68,8 +68,8 @@
             Test.AssertException<NotFoundResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullHttpNotFoundAction())
                         .ShouldReturn()
                         .NotFound()
@@ -81,8 +81,8 @@
         [Fact]
         public void ContainingContentTypeShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullHttpNotFoundAction())
                 .ShouldReturn()
                 .NotFound()
@@ -92,8 +92,8 @@
         [Fact]
         public void ContainingContentTypeAsMediaTypeHeaderValueShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullHttpNotFoundAction())
                 .ShouldReturn()
                 .NotFound()
@@ -106,8 +106,8 @@
             Test.AssertException<NotFoundResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
+                    MyController<MvcController>
+                       .Instance()
                        .Calling(c => c.FullHttpNotFoundAction())
                        .ShouldReturn()
                        .NotFound()
@@ -119,8 +119,8 @@
         [Fact]
         public void ContainingContentTypesAsStringValueShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullHttpNotFoundAction())
                 .ShouldReturn()
                 .NotFound()
@@ -134,8 +134,8 @@
         [Fact]
         public void ContainingContentTypesAsStringShouldNotThrowExceptionWithCorrectParametersValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullHttpNotFoundAction())
                 .ShouldReturn()
                 .NotFound()
@@ -148,8 +148,8 @@
             Test.AssertException<NotFoundResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullHttpNotFoundAction())
                         .ShouldReturn()
                         .NotFound()
@@ -168,8 +168,8 @@
             Test.AssertException<NotFoundResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullHttpNotFoundAction())
                         .ShouldReturn()
                         .NotFound()
@@ -187,8 +187,8 @@
             Test.AssertException<NotFoundResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullHttpNotFoundAction())
                         .ShouldReturn()
                         .NotFound()
@@ -205,8 +205,8 @@
         [Fact]
         public void ContainingContentTypesAsMediaTypeHeaderValueShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullHttpNotFoundAction())
                 .ShouldReturn()
                 .NotFound()
@@ -220,8 +220,8 @@
         [Fact]
         public void ContainingContentTypesAsMediaTypeHeaderValueShouldNotThrowExceptionWithCorrectParametersValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullHttpNotFoundAction())
                 .ShouldReturn()
                 .NotFound()
@@ -234,8 +234,8 @@
             Test.AssertException<NotFoundResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullHttpNotFoundAction())
                         .ShouldReturn()
                         .NotFound()
@@ -254,8 +254,8 @@
             Test.AssertException<NotFoundResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullHttpNotFoundAction())
                         .ShouldReturn()
                         .NotFound()
@@ -273,8 +273,8 @@
             Test.AssertException<NotFoundResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullHttpNotFoundAction())
                         .ShouldReturn()
                         .NotFound()
@@ -293,8 +293,8 @@
         {
             var formatter = TestObjectFactory.GetOutputFormatter();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.HttpNotFoundActionWithFormatter(formatter))
                 .ShouldReturn()
                 .NotFound()
@@ -309,8 +309,8 @@
                 {
                     var formatter = TestObjectFactory.GetOutputFormatter();
 
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.HttpNotFoundActionWithFormatter(formatter))
                         .ShouldReturn()
                         .NotFound()
@@ -322,8 +322,8 @@
         [Fact]
         public void ContainingOutputFormatterOfTypeShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullHttpNotFoundAction())
                 .ShouldReturn()
                 .NotFound()
@@ -336,8 +336,8 @@
             Test.AssertException<NotFoundResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullHttpNotFoundAction())
                         .ShouldReturn()
                         .NotFound()
@@ -349,8 +349,8 @@
         [Fact]
         public void ContainingOutputFormattersShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullHttpNotFoundAction())
                 .ShouldReturn()
                 .NotFound()
@@ -364,8 +364,8 @@
         [Fact]
         public void ContainingOutputFormattersShouldNotThrowExceptionWithCorrectParametersValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullHttpNotFoundAction())
                 .ShouldReturn()
                 .NotFound()
@@ -378,8 +378,8 @@
             Test.AssertException<NotFoundResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullHttpNotFoundAction())
                         .ShouldReturn()
                         .NotFound()
@@ -398,8 +398,8 @@
             Test.AssertException<NotFoundResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullHttpNotFoundAction())
                         .ShouldReturn()
                         .NotFound()
@@ -417,8 +417,8 @@
             Test.AssertException<NotFoundResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullHttpNotFoundAction())
                         .ShouldReturn()
                         .NotFound()
@@ -435,8 +435,8 @@
         [Fact]
         public void AndAlsoShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullHttpNotFoundAction())
                 .ShouldReturn()
                 .NotFound()
@@ -448,8 +448,8 @@
         [Fact]
         public void AndProvideTheActionResultShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullHttpNotFoundAction())
                 .ShouldReturn()
                 .NotFound()

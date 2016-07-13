@@ -333,7 +333,7 @@
 
         private RouteContext GetRouteContext(string url, string method = "GET", string queryString = null, string body = null, string contentType = null)
         {
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
 
             var httpContext = new MockedHttpContext();
             httpContext.Request.Path = new PathString(url);

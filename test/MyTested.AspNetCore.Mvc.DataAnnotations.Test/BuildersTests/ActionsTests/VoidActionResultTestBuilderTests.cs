@@ -13,8 +13,8 @@
             Test.AssertException<ModelErrorAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.EmptyAction())
                         .ShouldHave()
                         .InvalidModelState();

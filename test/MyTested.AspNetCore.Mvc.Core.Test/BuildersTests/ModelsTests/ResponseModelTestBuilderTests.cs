@@ -13,8 +13,8 @@
         [Fact]
         public void WithResponseModelShouldNotThrowExceptionWithCorrectResponseModel()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
                 .Ok()
@@ -24,8 +24,8 @@
         [Fact]
         public void WithResponseModelShouldNotThrowExceptionWithIncorrectInheritedTypeArgument()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
                 .Ok()
@@ -35,8 +35,8 @@
         [Fact]
         public void WithResponseModelShouldNotThrowExceptionWithCorrectImplementatorTypeArgument()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
                 .Ok()
@@ -49,8 +49,8 @@
             Test.AssertException<ResponseModelAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.OkResultAction())
                         .ShouldReturn()
                         .Ok()
@@ -65,8 +65,8 @@
             Test.AssertException<ResponseModelAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.OkResultWithInterfaceResponse())
                         .ShouldReturn()
                         .Ok()
@@ -81,8 +81,8 @@
             Test.AssertException<ResponseModelAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.OkResultWithInterfaceResponse())
                         .ShouldReturn()
                         .Ok()
@@ -96,8 +96,8 @@
         {
             var controller = new MvcController();
 
-            MyMvc
-                .Controller(() => controller)
+            MyController<MvcController>
+                .Instance(() => controller)
                 .Calling(c => c.OkResultWithInterfaceResponse())
                 .ShouldReturn()
                 .Ok()
@@ -109,8 +109,8 @@
         {
             var controller = new MvcController();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
                 .Ok()
@@ -128,8 +128,8 @@
             Test.AssertException<ResponseModelAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.OkResultWithResponse())
                         .ShouldReturn()
                         .Ok()
@@ -141,8 +141,8 @@
         [Fact]
         public void WithNoResponseModelShouldNotThrowExceptionWhenNoResponseModel()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.OkResultAction())
                 .ShouldReturn()
                 .Ok()
@@ -155,8 +155,8 @@
             Test.AssertException<ResponseModelAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.OkResultWithResponse())
                         .ShouldReturn()
                         .Ok()

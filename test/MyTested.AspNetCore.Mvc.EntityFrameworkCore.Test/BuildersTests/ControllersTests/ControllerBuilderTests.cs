@@ -11,7 +11,7 @@
         [Fact]
         public void WithEntitesShouldSetupDbContext()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -19,8 +19,8 @@
                         options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=TestDb;Trusted_Connection=True;MultipleActiveResultSets=true;Connect Timeout=30;"));
                 });
 
-            MyMvc
-                .Controller<DbContextController>()
+            MyController<DbContextController>
+                .Instance()
                 .WithDbContext(dbContext => dbContext
                     .WithEntities<CustomDbContext>(db => db
                         .Models.Add(new CustomModel
@@ -33,8 +33,8 @@
                 .WithModelOfType<CustomModel>()
                 .Passing(m => m.Name == "Test");
 
-            MyMvc
-                .Controller<DbContextController>()
+            MyController<DbContextController>
+                .Instance()
                 .WithDbContext(dbContext => dbContext
                     .WithEntities(db => db.Add(new CustomModel
                         {
@@ -47,8 +47,8 @@
                 .WithModelOfType<CustomModel>()
                 .Passing(m => m.Name == "Test");
 
-            MyMvc
-                .Controller<DbContextController>()
+            MyController<DbContextController>
+                .Instance()
                 .WithDbContext(dbContext => dbContext
                     .WithEntities<CustomDbContext>(db => db
                         .Models.Add(new CustomModel
@@ -60,19 +60,19 @@
                 .ShouldReturn()
                 .NotFound();
 
-            MyMvc
-                .Controller<DbContextController>()
+            MyController<DbContextController>
+                .Instance()
                 .Calling(c => c.Find(1))
                 .ShouldReturn()
                 .NotFound();
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void WithSetShouldSetupDbContext()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -80,8 +80,8 @@
                         options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=TestDb;Trusted_Connection=True;MultipleActiveResultSets=true;Connect Timeout=30;"));
                 });
 
-            MyMvc
-                .Controller<DbContextController>()
+            MyController<DbContextController>
+                .Instance()
                 .WithDbContext(dbContext => dbContext
                     .WithSet<CustomDbContext, CustomModel>(set => set
                         .Add(new CustomModel
@@ -95,8 +95,8 @@
                 .WithModelOfType<CustomModel>()
                 .Passing(m => m.Name == "Test");
 
-            MyMvc
-                .Controller<DbContextController>()
+            MyController<DbContextController>
+                .Instance()
                 .WithDbContext(dbContext => dbContext
                     .WithSet<CustomDbContext, CustomModel>(set => set
                         .Add(new CustomModel
@@ -108,13 +108,13 @@
                 .ShouldReturn()
                 .NotFound();
 
-            MyMvc
-                .Controller<DbContextController>()
+            MyController<DbContextController>
+                .Instance()
                 .Calling(c => c.Find(1))
                 .ShouldReturn()
                 .NotFound();
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
     }
 }

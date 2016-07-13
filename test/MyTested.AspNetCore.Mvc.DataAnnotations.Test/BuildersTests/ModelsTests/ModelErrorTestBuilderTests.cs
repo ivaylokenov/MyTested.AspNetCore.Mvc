@@ -14,8 +14,8 @@
         {
             var requestBody = TestObjectFactory.GetValidRequestModel();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.OkResultActionWithRequestBody(1, requestBody))
                 .ShouldReturn()
                 .Ok()
@@ -31,8 +31,8 @@
             Test.AssertException<ModelErrorAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.OkResultActionWithRequestBody(1, requestBodyWithErrors))
                         .ShouldReturn()
                         .Ok()
@@ -47,8 +47,8 @@
         {
             var requestBodyWithErrors = TestObjectFactory.GetRequestModelWithErrors();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ModelStateCheck(requestBodyWithErrors))
                 .ShouldReturn()
                 .Ok()
@@ -64,8 +64,8 @@
             Test.AssertException<ModelErrorAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ModelStateCheck(requestBody))
                         .ShouldReturn()
                         .Ok()
@@ -78,8 +78,8 @@
         [Fact]
         public void AndProvideTheModelShouldReturnProperModelWhenThereIsResponseModel()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
                 .Ok()
@@ -96,8 +96,8 @@
         [Fact]
         public void AndProvideTheModelShouldReturnProperModelWhenThereIsResponseModelWithPassing()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
                 .Ok()
@@ -115,8 +115,8 @@
         [Fact]
         public void AndProvideTheModelShouldReturnProperModelWhenThereIsResponseModelWithModelStateError()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomModelStateError())
                 .ShouldReturn()
                 .Ok()
@@ -134,8 +134,8 @@
         [Fact]
         public void AndProvideTheModelShouldReturnProperModelWhenThereIsResponseModelWithModelStateErrorAndErrorCheck()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomModelStateError())
                 .ShouldReturn()
                 .Ok()

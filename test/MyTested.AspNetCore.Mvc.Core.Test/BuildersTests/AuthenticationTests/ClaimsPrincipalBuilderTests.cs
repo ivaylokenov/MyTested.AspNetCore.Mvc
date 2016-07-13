@@ -13,8 +13,8 @@
         [Fact]
         public void WithNameTypeShouldOverrideDefaultClaimType()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithAuthenticatedUser(user => user
                     .WithNameType("CustomUsername")
                     .WithUsername("MyUsername"))
@@ -31,8 +31,8 @@
         [Fact]
         public void WithRoleTypeShouldOverrideDefaultClaimType()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithAuthenticatedUser(user => user
                     .WithRoleType("CustomRole")
                     .InRole("MyRole"))
@@ -49,8 +49,8 @@
         [Fact]
         public void WithoutIdentifierShouldSetCorrectDefaultIdentifier()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithAuthenticatedUser()
                 .ShouldPassFor()
                 .TheController(controller =>
@@ -65,8 +65,8 @@
         [Fact]
         public void WithIdentifierShouldSetCorrectIdentifier()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithAuthenticatedUser(user => user
                     .WithIdentifier("TestingId"))
                 .ShouldPassFor()
@@ -82,8 +82,8 @@
         [Fact]
         public void WithClaimShouldSetCorrectClaim()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithAuthenticatedUser(user => user
                     .WithClaim("MyClaim", "MyValue"))
                 .ShouldPassFor()
@@ -99,8 +99,8 @@
         [Fact]
         public void WithClaimAsTypeShouldSetCorrectClaim()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithAuthenticatedUser(user => user
                     .WithClaim(new Claim("MyClaim", "MyValue")))
                 .ShouldPassFor()
@@ -116,8 +116,8 @@
         [Fact]
         public void WithClaimsShouldSetCorrectClaim()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithAuthenticatedUser(user => user
                     .WithClaims(new Claim("MyClaim", "MyValue"), new Claim("MySecondClaim", "MySecondValue")))
                 .ShouldPassFor()
@@ -136,8 +136,8 @@
         [Fact]
         public void WithClaimsAsEnumerableShouldSetCorrectClaim()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithAuthenticatedUser(user => user
                     .WithClaims(new List<Claim> { new Claim("MyClaim", "MyValue"), new Claim("MySecondClaim", "MySecondValue") }))
                 .ShouldPassFor()
@@ -156,8 +156,8 @@
         [Fact]
         public void WithClaimsIdentityShouldSetProperClaims()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithAuthenticatedUser(user => user
                     .WithIdentity(new ClaimsIdentity(new List<Claim> { new Claim("MyClaim", "MyValue"), new Claim("MySecondClaim", "MySecondValue") })))
                 .ShouldPassFor()
@@ -176,8 +176,8 @@
         [Fact]
         public void WithIdentityShouldSetProperClaims()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithAuthenticatedUser(user => user
                     .WithIdentity(new GenericIdentity("GenericName")))
                 .ShouldPassFor()
@@ -193,8 +193,8 @@
         [Fact]
         public void WithMultipleIdentitiesShouldSetProperClaims()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithAuthenticatedUser(user => user
                     .WithIdentity(new CustomIdentity("GenericName"))
                     .WithIdentity(new CustomIdentity("SecondGenericName")))
@@ -211,8 +211,8 @@
         [Fact]
         public void WithIdentityBuilderShouldSetProperClaims()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithAuthenticatedUser(user => user
                     .WithIdentity(identity => identity
                         .WithIdentifier("IdentityIdentifier")
@@ -237,8 +237,8 @@
         [Fact]
         public void WithFullIdentityBuilderShouldSetProperClaims()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithAuthenticatedUser(user => user
                     .WithIdentity(identity => identity
                         .WithNameType("CustomName")

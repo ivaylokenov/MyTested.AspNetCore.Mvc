@@ -13,7 +13,7 @@
         [Fact]
         public void DefaultConfigurationWithSessionShouldSetMockedSession()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -27,13 +27,13 @@
             Assert.NotNull(session);
             Assert.IsAssignableFrom<MockedSessionStore>(session);
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
         
         [Fact]
         public void ExplicitMockedSessionShouldOverrideIt()
         {
-            MyMvc
+            MyApplication
                 .StartsFrom<SessionDataStartup>()
                 .WithServices(services =>
                 {
@@ -45,13 +45,13 @@
             Assert.NotNull(session);
             Assert.IsAssignableFrom<MockedSessionStore>(session);
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void DefaultConfigurationShouldNotSetMockedSession()
         {
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
 
             var session = TestServiceProvider.GetService<ISessionStore>();
 
@@ -61,14 +61,14 @@
         [Fact]
         public void CustomSessionShouldOverrideTheMockedOne()
         {
-            MyMvc.StartsFrom<SessionDataStartup>();
+            MyApplication.StartsFrom<SessionDataStartup>();
 
             var session = TestServiceProvider.GetService<ISessionStore>();
 
             Assert.NotNull(session);
             Assert.IsAssignableFrom<CustomSessionStore>(session);
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
     }
 }

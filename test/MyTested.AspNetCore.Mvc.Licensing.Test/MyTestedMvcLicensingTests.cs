@@ -24,8 +24,8 @@
                 {
                     tasks.Add(Task.Run(() =>
                     {
-                        MyMvc
-                            .Controller<MvcController>()
+                        MyController<MvcController>
+                            .Instance()
                             .Calling(c => c.OkResultAction())
                             .ShouldReturn()
                             .Ok();
@@ -47,7 +47,7 @@
                 LicenseValidator.ClearLicenseDetails();
                 TestCounter.SetLicenseData(null, DateTime.MinValue, "MyTested.AspNetCore.Mvc.Tests");
 
-                MyMvc
+                MyApplication
                     .IsUsingDefaultConfiguration()
                     .WithTestConfiguration(config =>
                     {
@@ -63,8 +63,8 @@
                 {
                     tasks.Add(Task.Run(() =>
                     {
-                        MyMvc
-                            .Controller<MvcController>()
+                        MyController<MvcController>
+                            .Instance()
                             .Calling(c => c.OkResultAction())
                             .ShouldReturn()
                             .Ok();
@@ -77,7 +77,7 @@
             .GetAwaiter()
             .GetResult();
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
@@ -88,7 +88,7 @@
                 LicenseValidator.ClearLicenseDetails();
                 TestCounter.SetLicenseData(null, DateTime.MinValue, "MyTested.AspNetCore.Mvc.Tests");
 
-                MyMvc
+                MyApplication
                     .IsUsingDefaultConfiguration()
                     .WithTestConfiguration(config =>
                     {
@@ -101,8 +101,8 @@
                 {
                     tasks.Add(Task.Run(() =>
                     {
-                        MyMvc
-                            .Controller<MvcController>()
+                        MyController<MvcController>
+                            .Instance()
                             .Calling(c => c.OkResultAction())
                             .ShouldReturn()
                             .Ok();
@@ -115,7 +115,7 @@
             .GetAwaiter()
             .GetResult();
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
     }
 }

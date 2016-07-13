@@ -17,8 +17,8 @@
         [Fact]
         public void WithModelShouldNotThrowExceptionWithCorrectModel()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.IndexView())
                 .ShouldReturn()
                 .View("Index")
@@ -31,8 +31,8 @@
             Test.AssertException<ResponseModelAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.DefaultView())
                         .ShouldReturn()
                         .View()
@@ -47,8 +47,8 @@
             Test.AssertException<ResponseModelAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.IndexView())
                         .ShouldReturn()
                         .View("Index")
@@ -66,8 +66,8 @@
                     var model = TestObjectFactory.GetListOfResponseModels();
                     model[0].IntegerValue = int.MaxValue;
 
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.IndexView())
                         .ShouldReturn()
                         .View("Index")
@@ -79,8 +79,8 @@
         [Fact]
         public void WithModelOfTypeShouldNotThrowExceptionWithCorrectType()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.IndexView())
                 .ShouldReturn()
                 .View("Index")
@@ -90,8 +90,8 @@
         [Fact]
         public void WithStatusCodeAsIntShouldNotThrowExceptionWhenActionReturnsCorrectStatusCode()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomViewResult())
                 .ShouldReturn()
                 .View()
@@ -101,8 +101,8 @@
         [Fact]
         public void WithStatusCodeShouldNotThrowExceptionWhenActionReturnsCorrectStatusCode()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomViewResult())
                 .ShouldReturn()
                 .View()
@@ -115,8 +115,8 @@
             Test.AssertException<ViewResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CustomViewResult())
                         .ShouldReturn()
                         .View()
@@ -128,8 +128,8 @@
         [Fact]
         public void WithMediaTypeShouldNotThrowExceptionWithString()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomViewResult())
                 .ShouldReturn()
                 .View()
@@ -139,8 +139,8 @@
         [Fact]
         public void WithMediaTypeShouldNotThrowExceptionWithMediaTypeHeaderValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomViewResult())
                 .ShouldReturn()
                 .View()
@@ -150,8 +150,8 @@
         [Fact]
         public void WithMediaTypeShouldNotThrowExceptionWithMediaTypeHeaderValueConstant()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomViewResult())
                 .ShouldReturn()
                 .View()
@@ -164,8 +164,8 @@
             Test.AssertException<ViewResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CustomViewResult())
                         .ShouldReturn()
                         .View()
@@ -180,8 +180,8 @@
             Test.AssertException<ViewResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CustomViewResult())
                         .ShouldReturn()
                         .View()
@@ -193,8 +193,8 @@
         [Fact]
         public void WithMediaTypeShouldThrowExceptionWithNullMediaTypeHeaderValueAndNullActual()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.DefaultView())
                 .ShouldReturn()
                 .View()
@@ -207,8 +207,8 @@
             Test.AssertException<ViewResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.DefaultView())
                         .ShouldReturn()
                         .View()
@@ -222,8 +222,8 @@
         {
             var viewEngine = TestObjectFactory.GetViewEngine();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ViewWithViewEngine(viewEngine))
                 .ShouldReturn()
                 .View()
@@ -233,8 +233,8 @@
         [Fact]
         public void WithViewEngineShouldNotThrowExceptionWithNullViewEngine()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.DefaultView())
                 .ShouldReturn()
                 .View()
@@ -247,8 +247,8 @@
             Test.AssertException<ViewResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .WithoutValidation()
                         .Calling(c => c.ViewWithViewEngine(null))
                         .ShouldReturn()
@@ -261,8 +261,8 @@
         [Fact]
         public void WithViewEngineOfTypeShouldNotThrowExceptionWithValidViewEngine()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ViewWithViewEngine(new CustomViewEngine()))
                 .ShouldReturn()
                 .View()
@@ -275,8 +275,8 @@
             Test.AssertException<ViewResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ViewWithViewEngine(new CustomViewEngine()))
                         .ShouldReturn()
                         .View()
@@ -291,8 +291,8 @@
             Test.AssertException<ViewResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.DefaultView())
                         .ShouldReturn()
                         .View()
@@ -304,8 +304,8 @@
         [Fact]
         public void AndAlsoShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomViewResult())
                 .ShouldReturn()
                 .View()
@@ -317,8 +317,8 @@
         [Fact]
         public void WithModelShouldNotThrowExceptionWithCorrectModelForPartials()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.IndexPartialView())
                 .ShouldReturn()
                 .PartialView("_IndexPartial")
@@ -331,8 +331,8 @@
             Test.AssertException<ResponseModelAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.DefaultPartialView())
                         .ShouldReturn()
                         .PartialView()
@@ -347,8 +347,8 @@
             Test.AssertException<ResponseModelAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.IndexPartialView())
                         .ShouldReturn()
                         .PartialView("_IndexPartial")
@@ -366,8 +366,8 @@
                     var model = TestObjectFactory.GetListOfResponseModels();
                     model[0].IntegerValue = int.MaxValue;
 
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.IndexPartialView())
                         .ShouldReturn()
                         .PartialView("_IndexPartial")
@@ -379,8 +379,8 @@
         [Fact]
         public void WithModelOfTypeShouldNotThrowExceptionWithCorrectTypeForPartials()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.IndexPartialView())
                 .ShouldReturn()
                 .PartialView("_IndexPartial")
@@ -390,8 +390,8 @@
         [Fact]
         public void WithStatusCodeAsIntShouldNotThrowExceptionWhenActionReturnsCorrectStatusCodeForPartials()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomPartialViewResult())
                 .ShouldReturn()
                 .PartialView()
@@ -401,8 +401,8 @@
         [Fact]
         public void WithStatusCodeShouldNotThrowExceptionWhenActionReturnsCorrectStatusCodeForPartials()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomPartialViewResult())
                 .ShouldReturn()
                 .PartialView()
@@ -415,8 +415,8 @@
             Test.AssertException<ViewResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CustomPartialViewResult())
                         .ShouldReturn()
                         .PartialView()
@@ -428,8 +428,8 @@
         [Fact]
         public void WithMediaTypeShouldNotThrowExceptionWithStringForPartials()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomPartialViewResult())
                 .ShouldReturn()
                 .PartialView()
@@ -439,8 +439,8 @@
         [Fact]
         public void WithMediaTypeShouldNotThrowExceptionWithMediaTypeHeaderValueForPartials()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomPartialViewResult())
                 .ShouldReturn()
                 .PartialView()
@@ -450,8 +450,8 @@
         [Fact]
         public void WithMediaTypeShouldNotThrowExceptionWithMediaTypeHeaderValueConstantForPartials()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomPartialViewResult())
                 .ShouldReturn()
                 .PartialView()
@@ -464,8 +464,8 @@
             Test.AssertException<ViewResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CustomPartialViewResult())
                         .ShouldReturn()
                         .PartialView()
@@ -480,8 +480,8 @@
             Test.AssertException<ViewResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CustomPartialViewResult())
                         .ShouldReturn()
                         .PartialView()
@@ -493,8 +493,8 @@
         [Fact]
         public void WithMediaTypeShouldThrowExceptionWithNullMediaTypeHeaderValueAndNullActualForPartials()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.DefaultPartialView())
                 .ShouldReturn()
                 .PartialView()
@@ -507,8 +507,8 @@
             Test.AssertException<ViewResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.DefaultPartialView())
                         .ShouldReturn()
                         .PartialView()
@@ -522,8 +522,8 @@
         {
             var viewEngine = TestObjectFactory.GetViewEngine();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.PartialViewWithViewEngine(viewEngine))
                 .ShouldReturn()
@@ -534,8 +534,8 @@
         [Fact]
         public void WithViewEngineShouldNotThrowExceptionWithNullViewEngineForPartials()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.DefaultPartialView())
                 .ShouldReturn()
@@ -549,8 +549,8 @@
             Test.AssertException<ViewResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .WithoutValidation()
                         .Calling(c => c.PartialViewWithViewEngine(null))
                         .ShouldReturn()
@@ -563,8 +563,8 @@
         [Fact]
         public void WithViewEngineOfTypeShouldNotThrowExceptionWithValidViewEngineForPartials()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.PartialViewWithViewEngine(new CustomViewEngine()))
                 .ShouldReturn()
@@ -578,8 +578,8 @@
             Test.AssertException<ViewResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .WithoutValidation()
                         .Calling(c => c.PartialViewWithViewEngine(new CustomViewEngine()))
                         .ShouldReturn()
@@ -595,8 +595,8 @@
             Test.AssertException<ViewResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .WithoutValidation()
                         .Calling(c => c.DefaultPartialView())
                         .ShouldReturn()
@@ -609,8 +609,8 @@
         [Fact]
         public void AndAlsoShouldWorkCorrectlyForPartials()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomPartialViewResult())
                 .ShouldReturn()
                 .PartialView()
@@ -622,8 +622,8 @@
         [Fact]
         public void AndProvideTheActionResultShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.DefaultView())
                 .ShouldReturn()
                 .View()

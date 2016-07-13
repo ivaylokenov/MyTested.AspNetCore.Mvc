@@ -10,8 +10,8 @@
         [Fact]
         public void ShouldReturnNoContentShouldNotThrowExceptionWhenActionReturnsNoContentResult()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.NoContentResultAction())
                 .ShouldReturn()
                 .NoContent();
@@ -23,8 +23,8 @@
             Test.AssertException<ActionResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.BadRequestAction())
                         .ShouldReturn()
                         .NoContent();

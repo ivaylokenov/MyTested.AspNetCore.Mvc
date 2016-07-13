@@ -10,8 +10,8 @@
         [Fact]
         public void ShouldReturnHttpStatusCodeShouldNotThrowExceptionWhenActionReturnsHttpStatusCodeResult()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.StatusCodeAction())
                 .ShouldReturn()
                 .StatusCode();
@@ -23,8 +23,8 @@
             Test.AssertException<ActionResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.BadRequestAction())
                         .ShouldReturn()
                         .StatusCode();
@@ -35,8 +35,8 @@
         [Fact]
         public void ShouldReturnHttpStatusCodeShouldNotThrowExceptionWithCorrectStatusCode()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.StatusCodeAction())
                 .ShouldReturn()
                 .StatusCode(500);
@@ -48,8 +48,8 @@
             Test.AssertException<StatusCodeResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.StatusCodeAction())
                         .ShouldReturn()
                         .StatusCode(200);

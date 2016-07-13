@@ -14,8 +14,8 @@
         [Fact]
         public void PermanentShouldNotThrowExceptionWhenRedirectIsPermanent()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.LocalRedirectPermanentAction())
                 .ShouldReturn()
                 .LocalRedirect()
@@ -28,8 +28,8 @@
             Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.LocalRedirectAction())
                         .ShouldReturn()
                         .LocalRedirect()
@@ -41,8 +41,8 @@
         [Fact]
         public void ToUrlWithStringShouldNotThrowExceptionIfTheLocationIsCorrect()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.LocalRedirectAction())
                 .ShouldReturn()
                 .LocalRedirect()
@@ -55,8 +55,8 @@
             Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.LocalRedirectAction())
                         .ShouldReturn()
                         .LocalRedirect()
@@ -71,8 +71,8 @@
             Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.LocalRedirectAction())
                         .ShouldReturn()
                         .LocalRedirect()
@@ -84,8 +84,8 @@
         [Fact]
         public void ToUrlPassingShouldNotThrowExceptionWithValidaPredicate()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.LocalRedirectAction())
                 .ShouldReturn()
                 .LocalRedirect()
@@ -98,8 +98,8 @@
             Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.LocalRedirectAction())
                         .ShouldReturn()
                         .LocalRedirect()
@@ -111,8 +111,8 @@
         [Fact]
         public void ToUrlPassingShouldNotThrowExceptionWithValidaAssertions()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.LocalRedirectAction())
                 .ShouldReturn()
                 .LocalRedirect()
@@ -125,8 +125,8 @@
         [Fact]
         public void ToUrlWithUriShouldNotThrowExceptionIfTheLocationIsCorrect()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.LocalRedirectAction())
                 .ShouldReturn()
                 .LocalRedirect()
@@ -139,8 +139,8 @@
             Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.LocalRedirectAction())
                         .ShouldReturn()
                         .LocalRedirect()
@@ -152,8 +152,8 @@
         [Fact]
         public void ToUrlWithUriBuilderShouldNotThrowExceptionWithCorrectUri()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.LocalRedirectAction())
                 .ShouldReturn()
                 .LocalRedirect()
@@ -165,8 +165,8 @@
         {
             var urlHelper = TestObjectFactory.GetCustomUrlHelper();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.LocalRedirectActionWithCustomUrlHelper(urlHelper))
                 .ShouldReturn()
                 .LocalRedirect()
@@ -181,8 +181,8 @@
                 {
                     var urlHelper = TestObjectFactory.GetCustomUrlHelper();
 
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.LocalRedirectActionWithCustomUrlHelper(urlHelper))
                         .ShouldReturn()
                         .LocalRedirect()
@@ -196,8 +196,8 @@
         {
             var urlHelper = TestObjectFactory.GetCustomUrlHelper();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.LocalRedirectActionWithCustomUrlHelper(urlHelper))
                 .ShouldReturn()
                 .LocalRedirect()
@@ -212,8 +212,8 @@
                 {
                     var urlHelper = TestObjectFactory.GetCustomUrlHelper();
 
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.LocalRedirectActionWithCustomUrlHelper(urlHelper))
                         .ShouldReturn()
                         .LocalRedirect()
@@ -228,8 +228,8 @@
             Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.LocalRedirectActionWithCustomUrlHelper(null))
                         .ShouldReturn()
                         .LocalRedirect()
@@ -241,43 +241,43 @@
         [Fact]
         public void ToShouldWorkCorrectly()
         {
-            MyMvc.StartsFrom<RoutesStartup>();
+            MyApplication.StartsFrom<RoutesStartup>();
 
             Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.LocalRedirectActionWithCustomUrlHelper(null))
                         .ShouldReturn()
                         .LocalRedirect()
                         .To<NoAttributesController>(c => c.WithParameter(1));
                 },
                 "When calling LocalRedirectActionWithCustomUrlHelper action in MvcController expected local redirect result to have resolved location to '/api/Redirect/WithParameter?id=1', but in fact received '/api/test'.");
-            
-            MyMvc.IsUsingDefaultConfiguration();
+
+            MyApplication.IsUsingDefaultConfiguration();
         }
         
         [Fact]
         public void ToShouldWorkCorrectlyToAsyncAction()
         {
-            MyMvc.StartsFrom<RoutesStartup>();
+            MyApplication.StartsFrom<RoutesStartup>();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.LocalRedirectActionWithCustomUrlHelper(null))
                 .ShouldReturn()
                 .LocalRedirect()
                 .To<MvcController>(c => c.AsyncOkResultAction());
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void AndAlsoShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.LocalRedirectPermanentAction())
                 .ShouldReturn()
                 .LocalRedirect()

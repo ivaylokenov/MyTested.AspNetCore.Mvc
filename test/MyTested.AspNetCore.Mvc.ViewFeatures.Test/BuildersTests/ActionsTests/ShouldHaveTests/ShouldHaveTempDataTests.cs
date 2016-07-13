@@ -10,8 +10,8 @@
         [Fact]
         public void NoTempDataShouldNotThrowExceptionWithNoEntries()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.Ok())
                 .ShouldHave()
                 .NoTempData()
@@ -26,8 +26,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
+                    MyController<MvcController>
+                       .Instance()
                        .Calling(c => c.AddTempDataAction())
                        .ShouldHave()
                        .NoTempData()
@@ -41,8 +41,8 @@
         [Fact]
         public void TempDataWithNoNumberShouldNotThrowExceptionWithAnyEntries()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddTempDataAction())
                 .ShouldHave()
                 .TempData()
@@ -57,8 +57,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.Ok())
                         .ShouldHave()
                         .TempData()
@@ -72,8 +72,8 @@
         [Fact]
         public void TempDataWithNumberShouldNotThrowExceptionWithCorrectEntries()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddTempDataAction())
                 .ShouldHave()
                 .TempData(withNumberOfEntries: 2)
@@ -88,8 +88,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.Ok())
                         .ShouldHave()
                         .TempData(1)
@@ -106,8 +106,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddTempDataAction())
                         .ShouldHave()
                         .TempData(3)
@@ -121,8 +121,8 @@
         [Fact]
         public void TempDataWithBuilderShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddTempDataAction())
                 .ShouldHave()
                 .TempData(tempData => tempData

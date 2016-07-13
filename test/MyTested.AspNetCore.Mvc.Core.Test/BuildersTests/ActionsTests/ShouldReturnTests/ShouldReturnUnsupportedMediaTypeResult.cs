@@ -10,8 +10,8 @@
         [Fact]
         public void ShouldReturnUnsupportedMediaTypeShouldNotThrowExceptionWhenActionReturnsUnsupportedMediaTypeResult()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.UnsupportedMediaTypeResultAction())
                 .ShouldReturn()
                 .UnsupportedMediaType();
@@ -23,8 +23,8 @@
             Test.AssertException<ActionResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.BadRequestAction())
                         .ShouldReturn()
                         .UnsupportedMediaType();

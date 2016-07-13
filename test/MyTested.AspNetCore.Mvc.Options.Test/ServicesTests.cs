@@ -12,7 +12,7 @@
         [Fact]
         public void OptionsLifetimesShouldBeReplacedWithScoped()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -32,7 +32,7 @@
 
             Assert.Equal(ServiceLifetime.Scoped, TestServiceProvider.GetServiceLifetime(typeof(IOptions<>)));
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
     }
 }

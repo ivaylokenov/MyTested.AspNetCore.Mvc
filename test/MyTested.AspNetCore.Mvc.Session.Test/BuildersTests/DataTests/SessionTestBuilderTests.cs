@@ -13,7 +13,7 @@
         [Fact]
         public void ContainingEntryWithKeyShouldNotThrowExceptionWithCorrectEntry()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -22,8 +22,8 @@
                     services.AddSession();
                 });
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddSessionAction())
                 .ShouldHave()
                 .Session(session => session
@@ -34,13 +34,13 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void ContainingEntryWithKeyShouldThrowExceptionWithIncorrectEntry()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -52,8 +52,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
                         .Session(session => session.ContainingEntryWithKey("Invalid"))
@@ -63,13 +63,13 @@
                 },
                 "When calling AddSessionAction action in MvcController expected session to have entry with 'Invalid' key, but such was not found.");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void ContainingEntryWithByteValueShouldNotThrowExceptionWithCorrectEntry()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -78,8 +78,8 @@
                     services.AddSession();
                 });
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddSessionAction())
                 .ShouldHave()
                 .Session(session => session.ContainingEntryWithValue(new byte[] { 1, 2, 3 }))
@@ -87,13 +87,13 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void ContainingEntryWithByteValueShouldThrowExceptionWithIncorrectEntry()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -105,8 +105,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
                         .Session(session => session.ContainingEntryWithValue(new byte[] { 1, 2, 4 }))
@@ -116,13 +116,13 @@
                 },
                 "When calling AddSessionAction action in MvcController expected session to have entry with the provided value, but none was found.");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void ContainingEntryWithStringValueShouldNotThrowExceptionWithCorrectEntry()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -131,8 +131,8 @@
                     services.AddSession();
                 });
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddSessionAction())
                 .ShouldHave()
                 .Session(session => session.ContainingEntryWithValue("Text"))
@@ -140,13 +140,13 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void ContainingEntryWithStringValueShouldThrowExceptionWithIncorrectEntry()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -158,8 +158,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
                         .Session(session => session.ContainingEntryWithValue("Invalid"))
@@ -169,13 +169,13 @@
                 },
                 "When calling AddSessionAction action in MvcController expected session to have entry with the provided value, but none was found.");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void ContainingEntryWithIntegerValueShouldNotThrowExceptionWithCorrectEntry()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -184,8 +184,8 @@
                     services.AddSession();
                 });
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddSessionAction())
                 .ShouldHave()
                 .Session(session => session.ContainingEntryWithValue(1))
@@ -193,13 +193,13 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void ContainingEntryWithIntegerValueShouldThrowExceptionWithIncorrectEntry()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -211,8 +211,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
                         .Session(session => session.ContainingEntryWithValue(2))
@@ -222,13 +222,13 @@
                 },
                 "When calling AddSessionAction action in MvcController expected session to have entry with the provided value, but none was found.");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void ContainingEntryShouldNotThrowExceptionWithCorrectEntry()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -237,8 +237,8 @@
                     services.AddSession();
                 });
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddSessionAction())
                 .ShouldHave()
                 .Session(session => session.ContainingEntry("Bytes", new byte[] { 1, 2, 3 }))
@@ -246,13 +246,13 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void ContainingEntryShouldThrowExceptionWithIncorrectEntry()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -264,8 +264,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
                         .Session(session => session.ContainingEntry("Bytes", new byte[] { 1, 2, 4 }))
@@ -275,13 +275,13 @@
                 },
                 "When calling AddSessionAction action in MvcController expected session to have entry with 'Bytes' key and the provided value, but the value was different.");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void ContainingStringEntryShouldNotThrowExceptionWithCorrectEntry()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -290,8 +290,8 @@
                     services.AddSession();
                 });
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddSessionAction())
                 .ShouldHave()
                 .Session(session => session.ContainingEntry("String", "Text"))
@@ -299,13 +299,13 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void ContainingStringEntryShouldThrowExceptionWithIncorrectEntry()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -317,8 +317,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
                         .Session(session => session.ContainingEntry("String", "Invalid"))
@@ -328,13 +328,13 @@
                 },
                 "When calling AddSessionAction action in MvcController expected session to have entry with 'String' key and the provided value, but the value was different.");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void ContainingIntegerEntryShouldNotThrowExceptionWithCorrectEntry()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -343,8 +343,8 @@
                     services.AddSession();
                 });
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddSessionAction())
                 .ShouldHave()
                 .Session(session => session.ContainingEntry("Integer", 1))
@@ -352,13 +352,13 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void ContainingIntegerEntryShouldThrowExceptionWithIncorrectEntry()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -370,8 +370,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
                         .Session(session => session.ContainingEntry("Integer", 2))
@@ -381,13 +381,13 @@
                 },
                 "When calling AddSessionAction action in MvcController expected session to have entry with 'Integer' key and the provided value, but the value was different.");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void ContainingEntriesWithObjectShouldNotThrowExceptionWithCorrectEntry()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -396,8 +396,8 @@
                     services.AddSession();
                 });
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddSessionAction())
                 .ShouldHave()
                 .Session(session => session.ContainingEntries(new
@@ -410,13 +410,13 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void ContainingEntriesWithObjectShouldThrowExceptionWithIncorrectEntryKey()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -428,8 +428,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
                         .Session(session => session.ContainingEntries(new
@@ -444,13 +444,13 @@
                 },
                 "When calling AddSessionAction action in MvcController expected session to have entry with 'Strin' key and the provided value, but such was not found.");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void ContainingEntriesWithObjectShouldThrowExceptionWithIncorrectEntry()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -462,8 +462,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
                         .Session(session => session.ContainingEntries(new
@@ -478,13 +478,13 @@
                 },
                 "When calling AddSessionAction action in MvcController expected session to have entry with 'String' key and the provided value, but the value was different.");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
         
         [Fact]
         public void ContainingEntriesWithObjectShouldThrowExceptionWithDifferentCount()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -496,8 +496,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
                         .Session(session => session.ContainingEntries(new
@@ -511,13 +511,13 @@
                 },
                 "When calling AddSessionAction action in MvcController expected session to have 2 entries, but in fact found 3.");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
         
         [Fact]
         public void ContainingEntriesWithObjectDictionaryShouldNotThrowExceptionWithCorrectEntry()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -526,8 +526,8 @@
                     services.AddSession();
                 });
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddSessionAction())
                 .ShouldHave()
                 .Session(session => session.ContainingEntries(new Dictionary<string, object>
@@ -540,13 +540,13 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void ContainingEntriesWithObjectDictionaryShouldThrowExceptionWithIncorrectEntryKey()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -558,8 +558,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
                         .Session(session => session.ContainingEntries(new Dictionary<string, object>
@@ -574,13 +574,13 @@
                 },
                 "When calling AddSessionAction action in MvcController expected session to have entry with 'Strin' key and the provided value, but such was not found.");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void ContainingEntriesWithObjectDictionaryShouldThrowExceptionWithIncorrectEntry()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -592,8 +592,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
                         .Session(session => session.ContainingEntries(new Dictionary<string, object>
@@ -608,13 +608,13 @@
                 },
                 "When calling AddSessionAction action in MvcController expected session to have entry with 'String' key and the provided value, but the value was different.");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void ContainingEntriesWithObjectDictionaryShouldThrowExceptionWithDifferentCount()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -626,8 +626,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
                         .Session(session => session.ContainingEntries(new Dictionary<string, object>
@@ -641,13 +641,13 @@
                 },
                 "When calling AddSessionAction action in MvcController expected session to have 2 entries, but in fact found 3.");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
         
         [Fact]
         public void ContainingByteEntriesWithObjectDictionaryShouldNotThrowExceptionWithCorrectEntry()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -656,8 +656,8 @@
                     services.AddSession();
                 });
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddSessionAction())
                 .ShouldHave()
                 .Session(session => session.ContainingEntries(new Dictionary<string, byte[]>
@@ -668,13 +668,13 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void ContainingByteEntriesWithObjectDictionaryShouldThrowExceptionWithIncorrectEntryKey()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -686,8 +686,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
                         .Session(session => session.ContainingEntries(new Dictionary<string, byte[]>
@@ -700,13 +700,13 @@
                 },
                 "When calling AddSessionAction action in MvcController expected session to have entry with 'Byte' key and the provided value, but such was not found.");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void ContainingByteEntriesWithObjectDictionaryShouldThrowExceptionWithIncorrectEntry()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -718,8 +718,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
                         .Session(session => session.ContainingEntries(new Dictionary<string, byte[]>
@@ -732,13 +732,13 @@
                 },
                 "When calling AddSessionAction action in MvcController expected session to have entry with 'Bytes' key and the provided value, but the value was different.");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void ContainingByteEntriesWithObjectDictionaryShouldThrowExceptionWithDifferentCount()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -750,8 +750,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
                         .Session(session => session.ContainingEntries(new Dictionary<string, byte[]>
@@ -765,13 +765,13 @@
                 },
                 "When calling AddSessionAction action in MvcController expected session to have entry with 'Integer' key and the provided value, but the value was different.");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void ContainingStringEntriesWithObjectDictionaryShouldNotThrowExceptionWithCorrectEntry()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -780,8 +780,8 @@
                     services.AddSession();
                 });
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddSessionAction())
                 .ShouldHave()
                 .Session(session => session.ContainingEntries(new Dictionary<string, string>
@@ -792,13 +792,13 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void ContainingStringEntriesWithObjectDictionaryShouldThrowExceptionWithIncorrectEntryKey()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -810,8 +810,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
                         .Session(session => session.ContainingEntries(new Dictionary<string, string>
@@ -824,13 +824,13 @@
                 },
                 "When calling AddSessionAction action in MvcController expected session to have entry with 'Strin' key and the provided value, but such was not found.");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void ContainingStringEntriesWithObjectDictionaryShouldThrowExceptionWithIncorrectEntry()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -842,8 +842,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
                         .Session(session => session.ContainingEntries(new Dictionary<string, string>
@@ -856,13 +856,13 @@
                 },
                 "When calling AddSessionAction action in MvcController expected session to have entry with 'String' key and the provided value, but the value was different.");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void ContainingStringEntriesWithObjectDictionaryShouldThrowExceptionWithDifferentCount()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -874,8 +874,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
                         .Session(session => session.ContainingEntries(new Dictionary<string, string>
@@ -889,13 +889,13 @@
                 },
                 "When calling AddSessionAction action in MvcController expected session to have entry with 'Integer' key and the provided value, but the value was different.");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
         
         [Fact]
         public void ContainingIntegerEntriesWithObjectDictionaryShouldNotThrowExceptionWithCorrectEntry()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -904,8 +904,8 @@
                     services.AddSession();
                 });
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddSessionAction())
                 .ShouldHave()
                 .Session(session => session.ContainingEntries(new Dictionary<string, int>
@@ -916,13 +916,13 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void ContainingIntegerEntriesWithObjectDictionaryShouldThrowExceptionWithIncorrectEntryKey()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -934,8 +934,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
                         .Session(session => session.ContainingEntries(new Dictionary<string, int>
@@ -948,13 +948,13 @@
                 },
                 "When calling AddSessionAction action in MvcController expected session to have entry with 'Intege' key and the provided value, but such was not found.");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void ContainingIntegerEntriesWithObjectDictionaryShouldThrowExceptionWithIncorrectEntry()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -966,8 +966,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
                         .Session(session => session.ContainingEntries(new Dictionary<string, int>
@@ -980,13 +980,13 @@
                 },
                 "When calling AddSessionAction action in MvcController expected session to have entry with 'Integer' key and the provided value, but the value was different.");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void ContainingIntegerEntriesWithObjectDictionaryShouldThrowExceptionWithDifferentCount()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -998,8 +998,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
                         .Session(session => session.ContainingEntries(new Dictionary<string, int>
@@ -1013,7 +1013,7 @@
                 },
                 "When calling AddSessionAction action in MvcController expected session to have entry with 'String' key and the provided value, but the value was different.");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
     }
 }

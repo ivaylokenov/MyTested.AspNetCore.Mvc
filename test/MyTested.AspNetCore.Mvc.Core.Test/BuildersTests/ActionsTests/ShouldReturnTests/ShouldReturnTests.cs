@@ -13,8 +13,8 @@
         [Fact]
         public void ShouldReturnShouldNotThrowExceptionWithStructTypes()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.GenericStructAction())
                 .ShouldReturn()
                 .ResultOfType<bool>();
@@ -23,8 +23,8 @@
         [Fact]
         public void ShouldReturnShouldNotThrowExceptionWithStructTypesAndTypeOf()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.GenericStructAction())
                 .ShouldReturn()
                 .ResultOfType(typeof(bool));
@@ -33,8 +33,8 @@
         [Fact]
         public void ShouldReturnShouldNotThrowExceptionWithClassTypes()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.GenericAction())
                 .ShouldReturn()
                 .ResultOfType<ResponseModel>();
@@ -43,8 +43,8 @@
         [Fact]
         public void ShouldReturnShouldNotThrowExceptionWithClassTypesAndTypeOf()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.GenericAction())
                 .ShouldReturn()
                 .ResultOfType(typeof(ResponseModel));
@@ -53,8 +53,8 @@
         [Fact]
         public void ShouldReturnShouldNotThrowExceptionWithInterfaceTypes()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.GenericAction())
                 .ShouldReturn()
                 .ResultOfType<IResponseModel>();
@@ -63,8 +63,8 @@
         [Fact]
         public void ShouldReturnShouldNotThrowExceptionWithInterfaceTypesAndTypeOf()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.GenericAction())
                 .ShouldReturn()
                 .ResultOfType(typeof(IResponseModel));
@@ -73,8 +73,8 @@
         [Fact]
         public void ShouldReturnShouldThrowExceptionWithClassTypesAndInterfaceReturn()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.GenericInterfaceAction())
                 .ShouldReturn()
                 .ResultOfType<ResponseModel>();
@@ -83,8 +83,8 @@
         [Fact]
         public void ShouldReturnShouldThrowExceptionWithClassTypesAndTypeOfAndInterfaceReturn()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.GenericInterfaceAction())
                 .ShouldReturn()
                 .ResultOfType(typeof(ResponseModel));
@@ -96,8 +96,8 @@
             Test.AssertException<ActionResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.GenericInterfaceAction())
                         .ShouldReturn()
                         .ResultOfType(typeof(ICollection<>));
@@ -108,8 +108,8 @@
         [Fact]
         public void ShouldReturnShouldNotThrowExceptionWithInterfaceTypesAndInterfaceReturn()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.GenericInterfaceAction())
                 .ShouldReturn()
                 .ResultOfType<IResponseModel>();
@@ -118,8 +118,8 @@
         [Fact]
         public void ShouldReturnShouldNotThrowExceptionWithInterfaceTypesAndTypeOfAndInterfaceReturn()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.GenericInterfaceAction())
                 .ShouldReturn()
                 .ResultOfType(typeof(IResponseModel));
@@ -128,8 +128,8 @@
         [Fact]
         public void ShouldReturnShouldThrowExceptionWithDifferentInheritedGenericResult()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.GenericActionWithCollection())
                 .ShouldReturn()
                 .ResultOfType<IList<ResponseModel>>();
@@ -138,8 +138,8 @@
         [Fact]
         public void ShouldReturnShouldNotThrowExceptionWithNotInheritedGenericResult()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.GenericActionWithListCollection())
                 .ShouldReturn()
                 .ResultOfType<IList<ResponseModel>>();
@@ -148,8 +148,8 @@
         [Fact]
         public void ShouldReturnShouldNotThrowExceptionWithDifferentInheritedGenericResult()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.GenericActionWithListCollection())
                 .ShouldReturn()
                 .ResultOfType<ICollection<ResponseModel>>();
@@ -161,8 +161,8 @@
             Test.AssertException<ActionResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.GenericActionWithListCollection())
                         .ShouldReturn()
                         .ResultOfType<HashSet<ResponseModel>>();
@@ -173,8 +173,8 @@
         [Fact]
         public void ShouldReturnShouldNotExceptionWithConcreteGenericResultWithTypeOf()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.GenericActionWithListCollection())
                 .ShouldReturn()
                 .ResultOfType(typeof(List<ResponseModel>));
@@ -183,8 +183,8 @@
         [Fact]
         public void ShouldReturnShouldNotThrowExceptionWithNotInheritedGenericResultWithTypeOf()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.GenericActionWithListCollection())
                 .ShouldReturn()
                 .ResultOfType(typeof(IList<ResponseModel>));
@@ -193,8 +193,8 @@
         [Fact]
         public void ShouldReturnShouldNotThrowExceptionWithDifferentInheritedGenericResultWithTypeOf()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.GenericActionWithListCollection())
                 .ShouldReturn()
                 .ResultOfType(typeof(ICollection<ResponseModel>));
@@ -206,8 +206,8 @@
             Test.AssertException<ActionResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.GenericActionWithListCollection())
                         .ShouldReturn()
                         .ResultOfType(typeof(HashSet<ResponseModel>));
@@ -218,8 +218,8 @@
         [Fact]
         public void ShouldReturnShouldThrowExceptionWithDifferentInheritedGenericResultAndTypeOf()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.GenericActionWithCollection())
                 .ShouldReturn()
                 .ResultOfType(typeof(IList<ResponseModel>));
@@ -228,8 +228,8 @@
         [Fact]
         public void ShouldReturnShouldThrowExceptionWithDifferentGenericDefinitionAndTypeOf()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.GenericActionWithCollection())
                 .ShouldReturn()
                 .ResultOfType(typeof(List<>));
@@ -241,8 +241,8 @@
             Test.AssertException<ActionResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.GenericActionWithCollection())
                         .ShouldReturn()
                         .ResultOfType(typeof(HashSet<>));
@@ -253,8 +253,8 @@
         [Fact]
         public void ShouldReturnShouldThrowExceptionWithDifferentInheritedGenericDefinitionResultAndTypeOf()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.GenericActionWithCollection())
                 .ShouldReturn()
                 .ResultOfType(typeof(IList<>));
@@ -263,8 +263,8 @@
         [Fact]
         public void ShouldReturnShouldNotThrowExceptionWithCollectionOfClassTypes()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.GenericActionWithCollection())
                 .ShouldReturn()
                 .ResultOfType<ICollection<ResponseModel>>();
@@ -273,8 +273,8 @@
         [Fact]
         public void ShouldReturnShouldNotThrowExceptionWithCollectionOfClassTypesAndTypeOf()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.GenericActionWithCollection())
                 .ShouldReturn()
                 .ResultOfType(typeof(ICollection<ResponseModel>));
@@ -286,8 +286,8 @@
             Test.AssertException<ActionResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.GenericActionWithCollection())
                         .ShouldReturn()
                         .ResultOfType<ICollection<IResponseModel>>();
@@ -301,8 +301,8 @@
             Test.AssertException<ActionResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.GenericActionWithCollection())
                         .ShouldReturn()
                         .ResultOfType(typeof(ICollection<IResponseModel>));
@@ -313,8 +313,8 @@
         [Fact]
         public void ShouldReturnShouldNotThrowExceptionWithClassGenericDefinitionTypesAndTypeOf()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.GenericActionWithCollection())
                 .ShouldReturn()
                 .ResultOfType(typeof(ICollection<>));
@@ -323,8 +323,8 @@
         [Fact]
         public void ShouldReturnShouldWorkWithModelDetailsTestsWithTypeOf()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.GenericActionWithCollection())
                 .ShouldReturn()
                 .ResultOfType(typeof(ICollection<>))
@@ -334,8 +334,8 @@
         [Fact]
         public void ShouldReturnShouldWorkWithModelDetailsTestsWithGenericDefinition()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.GenericActionWithCollection())
                 .ShouldReturn()
                 .ResultOfType<ICollection<ResponseModel>>()
@@ -348,8 +348,8 @@
             Test.AssertException<ActionCallAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ActionWithException())
                         .ShouldReturn()
                         .ResultOfType<IActionResult>();
@@ -363,8 +363,8 @@
             Test.AssertException<ActionCallAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ActionWithExceptionAsync())
                         .ShouldReturn()
                         .ResultOfType<IActionResult>();
@@ -378,8 +378,8 @@
             Test.AssertException<ResponseModelAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.GenericActionWithCollection())
                         .ShouldReturn()
                         .ResultOfType<ICollection<ResponseModel>>()
@@ -394,8 +394,8 @@
             Test.AssertException<ActionResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
+                    MyController<MvcController>
+                       .Instance()
                        .Calling(c => c.GenericActionWithCollection())
                        .ShouldReturn()
                        .ResultOfType<ResponseModel>();
@@ -409,8 +409,8 @@
             Test.AssertException<ActionResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
+                    MyController<MvcController>
+                       .Instance()
                        .Calling(c => c.GenericActionWithCollection())
                        .ShouldReturn()
                        .ResultOfType(typeof(ResponseModel));
@@ -424,8 +424,8 @@
             Test.AssertException<ActionResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.GenericActionWithCollection())
                         .ShouldReturn()
                         .ResultOfType<ICollection<int>>();
@@ -439,8 +439,8 @@
             Test.AssertException<ActionResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
+                    MyController<MvcController>
+                       .Instance()
                        .Calling(c => c.GenericActionWithCollection())
                        .ShouldReturn()
                        .ResultOfType(typeof(ICollection<int>));
@@ -451,8 +451,8 @@
         [Fact]
         public void ShouldReturnResultShouldWorkCorrectlyWithCorrectModel()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.GenericActionWithCollection())
                 .ShouldReturn()
                 .Result(TestObjectFactory.GetListOfResponseModels());
@@ -464,8 +464,8 @@
             Test.AssertException<ActionResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.GenericInterfaceAction())
                         .ShouldReturn()
                         .Result(TestObjectFactory.GetListOfResponseModels());
@@ -482,8 +482,8 @@
                     var model = TestObjectFactory.GetListOfResponseModels();
                     model.Add(new ResponseModel());
                     
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.GenericInterfaceAction())
                         .ShouldReturn()
                         .Result(model);
@@ -494,8 +494,8 @@
         [Fact]
         public void DynamicResultShouldBeProperlyRecognised()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.DynamicResult())
                 .ShouldReturn()
                 .ResultOfType<List<ResponseModel>>();
@@ -504,8 +504,8 @@
         [Fact]
         public void WithShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.EmptyActionWithParameters(With.No<int>(), With.No<RequestModel>()))
                 .ShouldReturnEmpty();
         }

@@ -12,8 +12,8 @@
         [Fact]
         public void ModelAssertionsShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
                 .Ok()
@@ -28,8 +28,8 @@
         [Fact]
         public void ModelPredicateShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
                 .Ok()
@@ -44,8 +44,8 @@
             Test.AssertException<InvalidAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullOkAction())
                         .ShouldReturn()
                         .Ok()

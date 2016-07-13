@@ -10,8 +10,8 @@
         [Fact]
         public void NoAttributesShouldNotThrowExceptionWithControllerContainingNoAttributes()
         {
-            MyMvc
-                .Controller<NoAttributesController>()
+            MyController<NoAttributesController>
+                .Instance()
                 .ShouldHave()
                 .NoAttributes();
         }
@@ -22,8 +22,8 @@
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .ShouldHave()
                         .NoAttributes();
                 }, 
@@ -33,8 +33,8 @@
         [Fact]
         public void AttributesShouldNotThrowEceptionWithControllerContainingAttributes()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .ShouldHave()
                 .Attributes();
         }
@@ -45,8 +45,8 @@
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<NoAttributesController>()
+                    MyController<NoAttributesController>
+                        .Instance()
                         .ShouldHave()
                         .Attributes();
                 }, 
@@ -56,8 +56,8 @@
         [Fact]
         public void AttributesShouldNotThrowEceptionWithControllerContainingNumberOfAttributes()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .ShouldHave()
                 .Attributes(withTotalNumberOf: 2);
         }
@@ -68,8 +68,8 @@
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .ShouldHave()
                         .Attributes(withTotalNumberOf: 10);
                 }, 
@@ -82,8 +82,8 @@
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .ShouldHave()
                         .Attributes(withTotalNumberOf: 1);
                 },

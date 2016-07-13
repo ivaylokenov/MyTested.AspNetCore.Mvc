@@ -11,8 +11,8 @@
         [Fact]
         public void ContainingAttributeOfTypeShouldNotThrowExceptionWithControllerWithTheAttribute()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.ContainingAttributeOfType<AuthorizeAttribute>());
         }
@@ -23,8 +23,8 @@
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.ContainingAttributeOfType<AllowAnonymousAttribute>());
                 }, 
@@ -34,8 +34,8 @@
         [Fact]
         public void ChangingRouteToShouldNotThrowExceptionWithControllerWithTheAttribute()
         {
-            MyMvc
-                .Controller<AttributesController>()
+            MyController<AttributesController>
+                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.ChangingRouteTo("api/test"));
         }
@@ -43,8 +43,8 @@
         [Fact]
         public void ChangingRouteToShouldNotThrowExceptionWithControllerWithTheAttributeAndCaseDifference()
         {
-            MyMvc
-                .Controller<AttributesController>()
+            MyController<AttributesController>
+                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.ChangingRouteTo("api/Test"));
         }
@@ -55,8 +55,8 @@
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<AttributesController>()
+                    MyController<AttributesController>
+                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.ChangingRouteTo("api/another"));
                 }, 
@@ -66,8 +66,8 @@
         [Fact]
         public void ChangingRouteToShouldNotThrowExceptionWithControllerWithTheAttributeAndCorrectName()
         {
-            MyMvc
-                .Controller<AttributesController>()
+            MyController<AttributesController>
+                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.ChangingRouteTo("api/test", withName: "TestRouteAttributes"));
         }
@@ -78,8 +78,8 @@
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<AttributesController>()
+                    MyController<AttributesController>
+                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.ChangingRouteTo("api/test", withName: "AnotherRoute"));
                 }, 
@@ -89,8 +89,8 @@
         [Fact]
         public void ChangingRouteToShouldNotThrowExceptionWithActionWithTheAttributeAndCorrectOrder()
         {
-            MyMvc
-                .Controller<AttributesController>()
+            MyController<AttributesController>
+                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.ChangingRouteTo("api/test", withOrder: 1));
         }
@@ -101,8 +101,8 @@
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<AttributesController>()
+                    MyController<AttributesController>
+                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.ChangingRouteTo("api/test", withOrder: 2));
                 },
@@ -115,8 +115,8 @@
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<AreaController>()
+                    MyController<AreaController>
+                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.ChangingRouteTo("api/test"));
                 },
@@ -126,8 +126,8 @@
         [Fact]
         public void AllowingAnonymousRequestsShouldNotThrowExceptionWithTheAttribute()
         {
-            MyMvc
-                .Controller<AttributesController>()
+            MyController<AttributesController>
+                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.AllowingAnonymousRequests());
         }
@@ -138,8 +138,8 @@
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.AllowingAnonymousRequests());
                 },
@@ -149,8 +149,8 @@
         [Fact]
         public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithTheAttribute()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.RestrictingForAuthorizedRequests());
         }
@@ -161,8 +161,8 @@
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<AttributesController>()
+                    MyController<AttributesController>
+                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.RestrictingForAuthorizedRequests());
                 },
@@ -172,8 +172,8 @@
         [Fact]
         public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithTheAttributeWithCorrectRoles()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.RestrictingForAuthorizedRequests(withAllowedRoles: "Admin,Moderator"));
         }
@@ -184,8 +184,8 @@
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.RestrictingForAuthorizedRequests(withAllowedRoles: "Admin"));
                 }, 
@@ -195,8 +195,8 @@
         [Fact]
         public void AndAlsoShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<AttributesController>()
+            MyController<AttributesController>
+                .Instance()
                 .ShouldHave()
                 .Attributes(attributes
                     => attributes

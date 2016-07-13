@@ -13,7 +13,7 @@
         [Fact]
         public void WithSessionShouldPopulateSessionCorrectly()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -22,8 +22,8 @@
                     services.AddSession();
                 });
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithSession(session =>
                 {
                     session.WithEntry("test", "value");
@@ -32,7 +32,7 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
@@ -41,8 +41,8 @@
             Test.AssertException<InvalidOperationException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
+                    MyController<MvcController>
+                       .Instance()
                        .WithSession(session =>
                        {
                            session.WithEntry("test", "value");
@@ -57,7 +57,7 @@
         [Fact]
         public void WithSessionShouldPopulateSessionCorrectlyForPocoController()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -67,8 +67,8 @@
                     services.AddHttpContextAccessor();
                 });
 
-            MyMvc
-                .Controller<PocoController>()
+            MyController<MvcController>
+                .Instance()
                 .WithSession(session =>
                 {
                     session.WithEntry("test", "value");
@@ -77,7 +77,7 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
@@ -86,8 +86,8 @@
             Test.AssertException<InvalidOperationException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<PocoController>()
+                    MyController<MvcController>
+                       .Instance()
                        .WithSession(session =>
                        {
                            session.WithEntry("test", "value");
@@ -102,7 +102,7 @@
         [Fact]
         public void WithHttpContextShouldPopulateCustomHttpContextForPocoController()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -118,8 +118,8 @@
             httpContext.Response.ContentType = ContentType.ApplicationJson;
             httpContext.Response.ContentLength = 100;
 
-            MyMvc
-                .Controller<PocoController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpContext(httpContext)
                 .ShouldPassFor()
                 .TheHttpContext(setHttpContext =>
@@ -138,8 +138,8 @@
                     Assert.Same(httpContext.User, setHttpContext.User);
                 });
 
-            MyMvc
-                .Controller<PocoController>()
+            MyController<PocoController>
+                .Instance()
                 .WithHttpContext(httpContext)
                 .ShouldPassFor()
                 .TheController(controller =>
@@ -158,13 +158,13 @@
                     Assert.Same(httpContext.User, controller.CustomHttpContext.User);
                 });
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void WithHttpContextShouldPopulateCustomHttpContext()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -179,8 +179,8 @@
             httpContext.Response.ContentType = ContentType.ApplicationJson;
             httpContext.Response.ContentLength = 100;
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpContext(httpContext)
                 .ShouldPassFor()
                 .TheController(controller =>
@@ -214,7 +214,7 @@
                     Assert.Same(httpContext.User, setHttpContext.User);
                 });
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
     }
 }

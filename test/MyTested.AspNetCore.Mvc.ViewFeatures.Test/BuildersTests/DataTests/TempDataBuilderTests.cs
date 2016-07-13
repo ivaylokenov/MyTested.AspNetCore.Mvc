@@ -9,8 +9,8 @@
         [Fact]
         public void WithEntryShouldSetCorrectValues()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithTempData(tempData => tempData
                     .WithEntry("Test", "Valid")
                     .AndAlso()
@@ -24,8 +24,8 @@
         [Fact]
         public void WithEntriesShouldSetCorrectValues()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithTempData(tempData => tempData
                     .WithEntries(new Dictionary<string, object>
                     {
@@ -41,8 +41,8 @@
         [Fact]
         public void WithEntriesObjectShouldSetCorrectValues()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithTempData(tempData => tempData
                     .WithEntries(new { Test = "Valid", Second = "SecondValid" }))
                 .Calling(c => c.TempDataAction())

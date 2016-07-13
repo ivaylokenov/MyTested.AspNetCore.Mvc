@@ -10,8 +10,8 @@
         [Fact]
         public void ShouldReturnBadRequestShouldNotThrowExceptionWhenResultIsHttpBadRequest()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.BadRequestAction())
                 .ShouldReturn()
                 .BadRequest();
@@ -20,8 +20,8 @@
         [Fact]
         public void ShouldReturnBadRequestShouldNotThrowExceptionWhenResultIsBadRequestErrorMessageResult()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.BadRequestWithErrorAction())
                 .ShouldReturn()
                 .BadRequest();
@@ -33,8 +33,8 @@
             Test.AssertException<ActionResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.HttpNotFoundAction())
                         .ShouldReturn()
                         .BadRequest();

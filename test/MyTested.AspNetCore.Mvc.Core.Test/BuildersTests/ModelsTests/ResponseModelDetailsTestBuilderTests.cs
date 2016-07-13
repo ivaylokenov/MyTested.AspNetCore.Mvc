@@ -14,8 +14,8 @@
         [Fact]
         public void WithResponseModelShouldNotThrowExceptionWithCorrectAssertions()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
                 .Ok()
@@ -33,8 +33,8 @@
             Assert.Throws<EqualException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.OkResultWithResponse())
                         .ShouldReturn()
                         .Ok()
@@ -50,8 +50,8 @@
         [Fact]
         public void WithResponseModelShouldNotThrowExceptionWithCorrectPredicate()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
                 .Ok()
@@ -65,8 +65,8 @@
             Test.AssertException<ResponseModelAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.OkResultWithResponse())
                         .ShouldReturn()
                         .Ok()

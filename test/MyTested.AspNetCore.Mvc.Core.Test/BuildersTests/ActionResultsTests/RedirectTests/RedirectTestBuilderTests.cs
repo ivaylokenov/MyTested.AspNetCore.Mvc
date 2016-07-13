@@ -14,8 +14,8 @@
         [Fact]
         public void PermanentShouldNotThrowExceptionWhenRedirectIsPermanent()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.RedirectPermanentAction())
                 .ShouldReturn()
                 .Redirect()
@@ -28,8 +28,8 @@
             Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.RedirectToActionResult())
                         .ShouldReturn()
                         .Redirect()
@@ -41,8 +41,8 @@
         [Fact]
         public void ToUrlWithStringShouldNotThrowExceptionIfTheLocationIsCorrect()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.RedirectActionWithUri())
                 .ShouldReturn()
                 .Redirect()
@@ -55,8 +55,8 @@
             Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.RedirectActionWithUri())
                         .ShouldReturn()
                         .Redirect()
@@ -71,8 +71,8 @@
             Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.RedirectActionWithUri())
                         .ShouldReturn()
                         .Redirect()
@@ -84,8 +84,8 @@
         [Fact]
         public void ToUrlPassingShouldNotThrowExceptionWithValidaPredicate()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.RedirectActionWithUri())
                 .ShouldReturn()
                 .Redirect()
@@ -98,8 +98,8 @@
             Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.RedirectActionWithUri())
                         .ShouldReturn()
                         .Redirect()
@@ -111,8 +111,8 @@
         [Fact]
         public void ToUrlPassingShouldNotThrowExceptionWithValidaAssertions()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.RedirectActionWithUri())
                 .ShouldReturn()
                 .Redirect()
@@ -125,8 +125,8 @@
         [Fact]
         public void ToUrlWithUriShouldNotThrowExceptionIfTheLocationIsCorrect()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.RedirectActionWithUri())
                 .ShouldReturn()
                 .Redirect()
@@ -139,8 +139,8 @@
             Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.RedirectActionWithUri())
                         .ShouldReturn()
                         .Redirect()
@@ -152,8 +152,8 @@
         [Fact]
         public void ToUrlWithBuilderShouldNotThrowExceptionIfTheLocationIsCorrect()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.RedirectActionWithUri())
                 .ShouldReturn()
                 .Redirect()
@@ -178,8 +178,8 @@
             Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.RedirectActionWithUri())
                         .ShouldReturn()
                         .Redirect()
@@ -203,8 +203,8 @@
         [Fact]
         public void AtActionShouldNotThrowExceptionWithCorrectActionName()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.RedirectToActionResult())
                 .ShouldReturn()
                 .Redirect()
@@ -217,8 +217,8 @@
             Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                    .Controller<MvcController>()
+                    MyController<MvcController>
+                    .Instance()
                     .Calling(c => c.RedirectToActionResult())
                     .ShouldReturn()
                     .Redirect()
@@ -230,8 +230,8 @@
         [Fact]
         public void AtControllerShouldNotThrowExceptionWithCorrectControllerName()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.RedirectToActionResult())
                 .ShouldReturn()
                 .Redirect()
@@ -244,8 +244,8 @@
             Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                    .Controller<MvcController>()
+                    MyController<MvcController>
+                    .Instance()
                     .Calling(c => c.RedirectToActionResult())
                     .ShouldReturn()
                     .Redirect()
@@ -257,8 +257,8 @@
         [Fact]
         public void WithRouteNameShouldNotThrowExceptionWithCorrectRouteName()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.RedirectToRouteAction())
                 .ShouldReturn()
                 .Redirect()
@@ -271,8 +271,8 @@
             Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.RedirectToRouteAction())
                         .ShouldReturn()
                         .Redirect()
@@ -284,8 +284,8 @@
         [Fact]
         public void WithRouteValueShouldNotThrowExceptionWithCorrectRouteValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.RedirectToActionResult())
                 .ShouldReturn()
                 .Redirect()
@@ -295,8 +295,8 @@
         [Fact]
         public void WithRouteValueWithValueShouldNotThrowExceptionWithCorrectRouteValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.RedirectToActionResult())
                 .ShouldReturn()
                 .Redirect()
@@ -306,8 +306,8 @@
         [Fact]
         public void WithRouteValueOfTypeWithValueShouldNotThrowExceptionWithCorrectRouteValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.RedirectToActionResult())
                 .ShouldReturn()
                 .Redirect()
@@ -317,8 +317,8 @@
         [Fact]
         public void WithRouteValueOfTypeWithKeyWithValueShouldNotThrowExceptionWithCorrectRouteValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.RedirectToActionResult())
                 .ShouldReturn()
                 .Redirect()
@@ -331,8 +331,8 @@
             Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.RedirectToActionResult())
                         .ShouldReturn()
                         .Redirect()
@@ -344,8 +344,8 @@
         [Fact]
         public void WithRouteValueWithKeyAndValueShouldNotThrowExceptionWithCorrectRouteValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.RedirectToActionResult())
                 .ShouldReturn()
                 .Redirect()
@@ -358,8 +358,8 @@
             Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.RedirectToActionResult())
                         .ShouldReturn()
                         .Redirect()
@@ -374,8 +374,8 @@
             Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.RedirectToActionResult())
                         .ShouldReturn()
                         .Redirect()
@@ -387,8 +387,8 @@
         [Fact]
         public void WithRouteValuesWithObjectShouldNotThrowExceptionWithCorrectRouteValues()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.RedirectToActionResult())
                 .ShouldReturn()
                 .Redirect()
@@ -401,8 +401,8 @@
             Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.RedirectToActionResult())
                         .ShouldReturn()
                         .Redirect()
@@ -417,8 +417,8 @@
             Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.RedirectToActionResult())
                         .ShouldReturn()
                         .Redirect()
@@ -432,8 +432,8 @@
         {
             var urlHelper = TestObjectFactory.GetCustomUrlHelper();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.RedirectToActionWithCustomUrlHelperResult(urlHelper))
                 .ShouldReturn()
                 .Redirect()
@@ -448,8 +448,8 @@
                 {
                     var urlHelper = TestObjectFactory.GetCustomUrlHelper();
 
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.RedirectToActionWithCustomUrlHelperResult(urlHelper))
                         .ShouldReturn()
                         .Redirect()
@@ -463,8 +463,8 @@
         {
             var urlHelper = TestObjectFactory.GetCustomUrlHelper();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.RedirectToActionWithCustomUrlHelperResult(urlHelper))
                 .ShouldReturn()
                 .Redirect()
@@ -479,8 +479,8 @@
                 {
                     var urlHelper = TestObjectFactory.GetCustomUrlHelper();
 
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.RedirectToActionWithCustomUrlHelperResult(urlHelper))
                         .ShouldReturn()
                         .Redirect()
@@ -495,8 +495,8 @@
             Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.RedirectToActionResult())
                         .ShouldReturn()
                         .Redirect()
@@ -511,8 +511,8 @@
             Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.RedirectToRouteAction())
                         .ShouldReturn()
                         .Redirect()
@@ -524,43 +524,43 @@
         [Fact]
         public void AtShouldWorkCorrectlyWithCorrectActionCall()
         {
-            MyMvc.StartsFrom<RoutesStartup>();
+            MyApplication.StartsFrom<RoutesStartup>();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.RedirectToRouteAction())
                 .ShouldReturn()
                 .Redirect()
                 .To<NoAttributesController>(c => c.WithParameter(1));
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void AtShouldWorkCorrectlyWithCorrectVoidActionCall()
         {
-            MyMvc.StartsFrom<RoutesStartup>();
+            MyApplication.StartsFrom<RoutesStartup>();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.RedirectToRouteVoidAction())
                 .ShouldReturn()
                 .Redirect()
                 .To<NoAttributesController>(c => c.VoidAction());
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void AtShouldWorkCorrectlyWithCorrectTaskActionCall()
         {
-            MyMvc.StartsFrom<RoutesStartup>();
+            MyApplication.StartsFrom<RoutesStartup>();
 
             Test.AssertException<RedirectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.RedirectToRouteAction())
                         .ShouldReturn()
                         .Redirect()
@@ -568,14 +568,14 @@
                 },
                 "When calling RedirectToRouteAction action in MvcController expected redirect result to have resolved location to '/api/test', but in fact received '/api/Redirect/WithParameter?id=1'.");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void AndAlsoShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.RedirectToActionResult())
                 .ShouldReturn()
                 .Redirect()
@@ -587,8 +587,8 @@
         [Fact]
         public void AndProvideTheActionResultShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.RedirectToActionResult())
                 .ShouldReturn()
                 .Redirect()

@@ -12,8 +12,8 @@
         [Fact]
         public void ShouldReturnViewComponentShouldNotThrowExceptionWithViewComponent()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ViewComponentResultByName())
                 .ShouldReturn()
                 .ViewComponent();
@@ -25,8 +25,8 @@
             Test.AssertException<ActionResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
+                    MyController<MvcController>
+                       .Instance()
                        .Calling(c => c.BadRequestAction())
                        .ShouldReturn()
                        .ViewComponent();
@@ -37,8 +37,8 @@
         [Fact]
         public void ShouldReturnViewComponentShouldNotThrowExceptionWithCorrectViewComponentName()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ViewComponentResultByName())
                 .ShouldReturn()
                 .ViewComponent("TestComponent");
@@ -50,8 +50,8 @@
             Test.AssertException<ActionResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
+                    MyController<MvcController>
+                       .Instance()
                        .Calling(c => c.BadRequestAction())
                        .ShouldReturn()
                        .ViewComponent("TestComponent");
@@ -65,8 +65,8 @@
             Test.AssertException<ViewResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ViewComponentResultByName())
                         .ShouldReturn()
                         .ViewComponent("Incorrect");
@@ -77,8 +77,8 @@
         [Fact]
         public void ShouldReturnViewComponentShouldNotThrowExceptionWithCorrectViewComponentType()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ViewComponentResultByType())
                 .ShouldReturn()
                 .ViewComponent(typeof(CustomViewComponent));
@@ -90,8 +90,8 @@
             Test.AssertException<ActionResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
+                    MyController<MvcController>
+                       .Instance()
                        .Calling(c => c.BadRequestAction())
                        .ShouldReturn()
                        .ViewComponent(typeof(CustomViewComponent));
@@ -105,8 +105,8 @@
             Test.AssertException<ViewResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ViewComponentResultByType())
                         .ShouldReturn()
                         .ViewComponent(typeof(ViewComponent));

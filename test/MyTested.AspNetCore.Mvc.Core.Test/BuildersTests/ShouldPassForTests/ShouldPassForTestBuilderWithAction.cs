@@ -11,8 +11,8 @@
         [Fact]
         public void ActionAssertionsShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldPassFor()
                 .TheAction(action =>
@@ -24,8 +24,8 @@
         [Fact]
         public void ActionPredicateShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldPassFor()
                 .TheAction(action => action == "FullOkAction");
@@ -37,8 +37,8 @@
             Test.AssertException<InvalidAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullOkAction())
                         .ShouldPassFor()
                         .TheAction(action => action == "Invalid");
@@ -49,8 +49,8 @@
         [Fact]
         public void ActionAttributesAssertionsShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.NormalActionWithAttributes())
                 .ShouldPassFor()
                 .TheActionAttributes(attributes =>
@@ -62,8 +62,8 @@
         [Fact]
         public void ActionAttributesPredicateShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.NormalActionWithAttributes())
                 .ShouldPassFor()
                 .TheActionAttributes(attributes => attributes.Count() == 3);
@@ -75,8 +75,8 @@
             Test.AssertException<InvalidAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.NormalActionWithAttributes())
                         .ShouldPassFor()
                         .TheActionAttributes(attributes => attributes.Count() == 4);

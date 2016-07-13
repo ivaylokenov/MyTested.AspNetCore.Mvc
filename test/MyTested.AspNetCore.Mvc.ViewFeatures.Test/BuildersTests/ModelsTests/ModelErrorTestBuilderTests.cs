@@ -14,8 +14,8 @@
         {
             var requestBodyWithErrors = TestObjectFactory.GetRequestModelWithErrors();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ModelStateCheck(requestBodyWithErrors))
                 .ShouldReturn()
                 .Ok()
@@ -31,8 +31,8 @@
             Test.AssertException<ModelErrorAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ModelStateCheck(requestBody))
                         .ShouldReturn()
                         .Ok()
@@ -47,8 +47,8 @@
         {
             var requestBody = TestObjectFactory.GetValidRequestModel();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ModelStateCheck(requestBody))
                 .ShouldReturn()
                 .Ok()
@@ -64,8 +64,8 @@
             Test.AssertException<ModelErrorAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ModelStateCheck(requestBodyWithErrors))
                         .ShouldReturn()
                         .Ok()
@@ -80,8 +80,8 @@
         {
             var requestBody = TestObjectFactory.GetValidRequestModel();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ModelStateCheck(requestBody))
                 .ShouldReturn()
                 .Ok()
@@ -98,8 +98,8 @@
             Test.AssertException<ModelErrorAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ModelStateCheck(requestBodyWithErrors))
                         .ShouldReturn()
                         .Ok()
@@ -113,8 +113,8 @@
         [Fact]
         public void AndProvideTheModelShouldReturnProperModelWhenThereIsResponseModelWithModelStateCheck()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
                 .Ok()

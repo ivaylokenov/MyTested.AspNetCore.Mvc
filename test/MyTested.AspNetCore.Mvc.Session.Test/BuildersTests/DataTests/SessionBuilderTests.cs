@@ -16,7 +16,7 @@
         [Fact]
         public void WithIdShouldSetIdCorrectly()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -25,8 +25,8 @@
                     services.AddSession();
                 });
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithSession(session => session
                     .WithId("TestId")
                     .AndAlso()
@@ -36,13 +36,13 @@
                 .Ok()
                 .WithModel("TestId");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
         
         [Fact]
         public void WithoutIdShouldSetRandomId()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -51,8 +51,8 @@
                     services.AddSession();
                 });
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithSession(session => session
                     .WithEntry("HasId", "HasIdValue"))
                 .Calling(c => c.FullSessionAction())
@@ -71,14 +71,14 @@
                     Assert.NotNull(modelAsString);
                     Assert.NotEmpty(modelAsString);
 
-                    MyMvc.IsUsingDefaultConfiguration();
+                    MyApplication.IsUsingDefaultConfiguration();
                 });
         }
 
         [Fact]
         public void WithIdAndAnotherSessionShouldThrowException()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -88,8 +88,8 @@
             Test.AssertException<InvalidOperationException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .WithSession((Action<Builders.Contracts.Data.ISessionBuilder>)(session => session
                             .WithId("TestId")
                             .WithEntry("HasId", "HasIdValue")))
@@ -100,13 +100,13 @@
                 },
                 "Setting session Id requires the registered ISession service to implement IMockedSession.");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void WithEntryShouldSetCorrectEntry()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -115,8 +115,8 @@
                     services.AddSession();
                 });
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithSession(session => session
                     .WithEntry("ByteEntry", new byte[] { 1, 2, 3 }))
                 .Calling(c => c.FullSessionAction())
@@ -124,13 +124,13 @@
                 .Ok()
                 .WithModel(new byte[] { 1, 2, 3 });
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
         
         [Fact]
         public void WithIntegerEntryShouldSetCorrectEntry()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -139,8 +139,8 @@
                     services.AddSession();
                 });
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithSession(session => session
                     .WithEntry("IntEntry", 1))
                 .Calling(c => c.FullSessionAction())
@@ -148,13 +148,13 @@
                 .Ok()
                 .WithModel(1);
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void WithEntriesAsObjectShouldWorkCorrectly()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -163,8 +163,8 @@
                     services.AddSession();
                 });
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithSession(session => session
                     .WithEntries(new
                     {
@@ -182,13 +182,13 @@
                     Byte = new byte[] { 1, 2, 3 }
                 });
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
         
         [Fact]
         public void WithEntriesAsByteDictionaryShouldWorkCorrectly()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -197,8 +197,8 @@
                     services.AddSession();
                 });
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithSession(session => session
                     .WithEntries(new Dictionary<string, byte[]> { ["ByteEntry"] = new byte[] { 1, 2, 3 }, ["Test"] = null }))
                 .Calling(c => c.FullSessionAction())
@@ -206,13 +206,13 @@
                 .Ok()
                 .WithModel(new byte[] { 1, 2, 3 });
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void WithEntriesAsStringDictionaryShouldWorkCorrectly()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -221,8 +221,8 @@
                     services.AddSession();
                 });
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithSession(session => session
                     .WithEntries(new Dictionary<string, string> { ["StringEntry"] = "stringTest" }))
                 .Calling(c => c.FullSessionAction())
@@ -230,13 +230,13 @@
                 .Ok()
                 .WithModel("stringTest");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
         
         [Fact]
         public void WithEntriesAsIntDictionaryShouldWorkCorrectly()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -245,8 +245,8 @@
                     services.AddSession();
                 });
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithSession(session => session
                     .WithEntries(new Dictionary<string, int> { ["IntEntry"] = 1 }))
                 .Calling(c => c.FullSessionAction())
@@ -254,7 +254,7 @@
                 .Ok()
                 .WithModel(1);
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
     }
 }

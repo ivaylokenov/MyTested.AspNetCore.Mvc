@@ -10,8 +10,8 @@
         [Fact]
         public void ShouldReturnNullShouldNotThrowExceptionWhenReturnValueNull()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.NullAction())
                 .ShouldReturn()
                 .Null();
@@ -23,8 +23,8 @@
             Test.AssertException<ActionCallAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.GenericStructAction())
                         .ShouldReturn()
                         .Null();
@@ -38,8 +38,8 @@
             Test.AssertException<ActionResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.OkResultAction())
                         .ShouldReturn()
                         .Null();
@@ -50,8 +50,8 @@
         [Fact]
         public void ShouldReturnNotNullShouldNotThrowExceptionWhenReturnValueNotNull()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.OkResultAction())
                 .ShouldReturn()
                 .NotNull();
@@ -63,8 +63,8 @@
             Test.AssertException<ActionCallAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.GenericStructAction())
                         .ShouldReturn()
                         .NotNull();
@@ -78,8 +78,8 @@
             Test.AssertException<ActionResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.NullAction())
                         .ShouldReturn()
                         .NotNull();
@@ -90,8 +90,8 @@
         [Fact]
         public void ShouldReturnDefaultShouldNotThrowExceptionWhenReturnValueIDefaultForClass()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.NullAction())
                 .ShouldReturn()
                 .DefaultValue();
@@ -100,8 +100,8 @@
         [Fact]
         public void ShouldReturnDefaultShouldNotThrowExceptionWhenReturnValueIsNotDefaultForStructs()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.DefaultStructAction())
                 .ShouldReturn()
                 .DefaultValue();
@@ -113,8 +113,8 @@
             Test.AssertException<ActionResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.OkResultAction())
                         .ShouldReturn()
                         .DefaultValue();

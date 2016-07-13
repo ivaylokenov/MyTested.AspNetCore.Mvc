@@ -10,8 +10,8 @@
         [Fact]
         public void CaughtExceptionAssertionsShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
                 .Ok()
@@ -25,8 +25,8 @@
         [Fact]
         public void CaughtExceptionPredicateShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldPassFor()
                 .TheCaughtException(exception => exception == null);
@@ -38,8 +38,8 @@
             Test.AssertException<InvalidAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullOkAction())
                         .ShouldPassFor()
                         .TheCaughtException(exception => exception != null);
@@ -53,8 +53,8 @@
             Test.AssertException<InvalidAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ActionWithException())
                         .ShouldPassFor()
                         .TheCaughtException(exception => exception == null);
@@ -65,8 +65,8 @@
         [Fact]
         public void HttpResponseAssertionsShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
                 .Ok()
@@ -80,8 +80,8 @@
         [Fact]
         public void HttpResponsePredicateShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldPassFor()
                 .TheHttpResponse(response => response != null);
@@ -93,8 +93,8 @@
             Test.AssertException<InvalidAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullOkAction())
                         .ShouldPassFor()
                         .TheHttpResponse(response => response == null);

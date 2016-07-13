@@ -10,8 +10,8 @@
         [Fact]
         public void ShouldReturnContentShouldNotThrowExceptionWithNegotiatedContentResult()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ContentAction())
                 .ShouldReturn()
                 .Content("content");
@@ -20,8 +20,8 @@
         [Fact]
         public void ShouldReturnContentShouldNotThrowExceptionWithMediaTypeContentResult()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ContentActionWithMediaType())
                 .ShouldReturn()
                 .Content("content");
@@ -33,8 +33,8 @@
             Test.AssertException<ContentResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ContentAction())
                         .ShouldReturn()
                         .Content("incorrect");
@@ -48,8 +48,8 @@
             Test.AssertException<ActionResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.BadRequestAction())
                         .ShouldReturn()
                         .Content("content");
@@ -60,8 +60,8 @@
         [Fact]
         public void ShouldReturnContentWithPredicateShouldNotThrowExceptionWithValidPredicate()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ContentAction())
                 .ShouldReturn()
                 .Content(content => content.StartsWith("con"));
@@ -73,8 +73,8 @@
             Test.AssertException<ContentResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ContentAction())
                         .ShouldReturn()
                         .Content(content => content.StartsWith("invalid"));
@@ -85,8 +85,8 @@
         [Fact]
         public void ShouldReturnContentWithAssertionsShouldNotThrowExceptionWithValidPredicate()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ContentAction())
                 .ShouldReturn()
                 .Content(content =>

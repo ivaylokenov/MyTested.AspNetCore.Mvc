@@ -11,8 +11,8 @@
         [Fact]
         public void ContainingEntryWithKeyShouldNotThrowExceptionWithCorrectEntry()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddViewDataAction())
                 .ShouldHave()
                 .ViewData(viewData => viewData
@@ -30,8 +30,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
+                    MyController<MvcController>
+                       .Instance()
                        .Calling(c => c.AddViewDataAction())
                        .ShouldHave()
                        .ViewData(viewData => viewData.ContainingEntryWithKey("Invalid"))
@@ -45,8 +45,8 @@
         [Fact]
         public void ContainingEntryWithValueShouldNotThrowExceptionWithCorrectEntry()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddViewDataAction())
                 .ShouldHave()
                 .ViewData(viewData => viewData.ContainingEntryWithValue("DataValue"))
@@ -61,8 +61,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
+                    MyController<MvcController>
+                       .Instance()
                        .Calling(c => c.AddViewDataAction())
                        .ShouldHave()
                        .ViewData(viewData => viewData.ContainingEntryWithValue("Invalid"))
@@ -76,8 +76,8 @@
         [Fact]
         public void ContainingEntryOfTypeShouldNotThrowExceptionWithCorrectEntry()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddViewDataAction())
                 .ShouldHave()
                 .ViewData(viewData => viewData.ContainingEntryOfType<string>())
@@ -92,8 +92,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
+                    MyController<MvcController>
+                       .Instance()
                        .Calling(c => c.AddViewDataAction())
                        .ShouldHave()
                        .ViewData(viewData => viewData.ContainingEntryOfType<int>())
@@ -107,8 +107,8 @@
         [Fact]
         public void ContainingEntryOfTypeAndKeyShouldNotThrowExceptionWithCorrectEntry()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddViewDataAction())
                 .ShouldHave()
                 .ViewData(viewData => viewData.ContainingEntryOfType<string>("Test"))
@@ -123,8 +123,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
+                    MyController<MvcController>
+                       .Instance()
                        .Calling(c => c.AddViewDataAction())
                        .ShouldHave()
                        .ViewData(viewData => viewData.ContainingEntryOfType<string>("Invalid"))
@@ -141,8 +141,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
+                    MyController<MvcController>
+                       .Instance()
                        .Calling(c => c.AddViewDataAction())
                        .ShouldHave()
                        .ViewData(viewData => viewData.ContainingEntryOfType<int>("Test"))
@@ -156,8 +156,8 @@
         [Fact]
         public void ContainingEntryShouldNotThrowExceptionWithCorrectEntry()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddViewDataAction())
                 .ShouldHave()
                 .ViewData(viewData => viewData.ContainingEntry("Test", "DataValue"))
@@ -172,8 +172,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
+                    MyController<MvcController>
+                       .Instance()
                        .Calling(c => c.AddViewDataAction())
                        .ShouldHave()
                        .ViewData(viewData => viewData.ContainingEntry("Invalid", "DataValue"))
@@ -190,8 +190,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
+                    MyController<MvcController>
+                       .Instance()
                        .Calling(c => c.AddViewDataAction())
                        .ShouldHave()
                        .ViewData(viewData => viewData.ContainingEntry("Test", "Invalid"))
@@ -205,8 +205,8 @@
         [Fact]
         public void ContainingEntriesShouldNotThrowExceptionWithCorrectValues()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddViewDataAction())
                 .ShouldHave()
                 .ViewData(viewData => viewData.ContainingEntries(new Dictionary<string, object>
@@ -222,8 +222,8 @@
         [Fact]
         public void ContainingEntriesWithObjectShouldNotThrowExceptionWithCorrectValues()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddViewDataAction())
                 .ShouldHave()
                 .ViewData(viewData => viewData.ContainingEntries(new
@@ -242,8 +242,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddViewDataAction())
                         .ShouldHave()
                         .ViewData(viewData => viewData.ContainingEntries(new Dictionary<string, object>
@@ -263,8 +263,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddViewDataAction())
                         .ShouldHave()
                         .ViewData(viewData => viewData.ContainingEntries(new Dictionary<string, object>
@@ -286,8 +286,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddViewDataAction())
                         .ShouldHave()
                         .ViewData(viewData => viewData.ContainingEntries(new Dictionary<string, object>
@@ -308,8 +308,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddViewDataAction())
                         .ShouldHave()
                         .ViewData(viewData => viewData.ContainingEntries(new Dictionary<string, object>

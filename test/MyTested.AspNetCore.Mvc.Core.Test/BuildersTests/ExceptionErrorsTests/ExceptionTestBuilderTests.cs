@@ -11,8 +11,8 @@
         [Fact]
         public void OfTypeShouldNotThrowExceptionWhenExceptionIsOfTheProvidedType()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ActionWithException())
                 .ShouldThrow()
                 .Exception()
@@ -25,8 +25,8 @@
             Test.AssertException<InvalidExceptionAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ActionWithException())
                         .ShouldThrow()
                         .Exception()
@@ -38,8 +38,8 @@
         [Fact]
         public void WithMessageShouldNotThrowExceptionWhenExceptionIsWithCorrectMessage()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ActionWithException())
                 .ShouldThrow()
                 .Exception()
@@ -54,14 +54,14 @@
             Test.AssertException<InvalidExceptionAssertionException>(
                    () =>
                    {
-                       MyMvc
-                        .Controller<MvcController>()
-                        .Calling(c => c.ActionWithException())
-                        .ShouldThrow()
-                        .Exception()
-                        .OfType<NullReferenceException>()
-                        .AndAlso()
-                        .WithMessage("Exception message");
+                        MyController<MvcController>
+                            .Instance()
+                            .Calling(c => c.ActionWithException())
+                            .ShouldThrow()
+                            .Exception()
+                            .OfType<NullReferenceException>()
+                            .AndAlso()
+                            .WithMessage("Exception message");
                    },
                    "When calling ActionWithException action in MvcController expected exception with message 'Exception message', but instead received 'Test exception message'.");
         }

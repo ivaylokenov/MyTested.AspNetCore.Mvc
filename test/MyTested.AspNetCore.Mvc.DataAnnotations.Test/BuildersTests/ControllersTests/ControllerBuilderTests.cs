@@ -11,8 +11,8 @@
         [Fact]
         public void WithoutValidationShouldNotValidateTheRequestModel()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.ModelStateCheck(TestObjectFactory.GetRequestModelWithErrors()))
                 .ShouldHave()
@@ -24,8 +24,8 @@
         {
             var requestModel = TestObjectFactory.GetRequestModelWithErrors();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.OkResultActionWithRequestBody(1, requestModel))
                 .ShouldReturn()
                 .Ok()
@@ -44,8 +44,8 @@
         [Fact]
         public void UsingTryValidateModelInsideControllerShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.TryValidateModelAction())
                 .ShouldReturn()
                 .BadRequest();

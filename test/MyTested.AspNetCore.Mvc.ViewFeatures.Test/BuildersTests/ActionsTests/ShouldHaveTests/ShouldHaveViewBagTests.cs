@@ -10,8 +10,8 @@
         [Fact]
         public void NoViewBagShouldNotThrowExceptionWithNoEntries()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.Ok())
                 .ShouldHave()
                 .NoViewBag()
@@ -26,8 +26,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
+                    MyController<MvcController>
+                       .Instance()
                        .Calling(c => c.AddViewBagAction())
                        .ShouldHave()
                        .NoViewBag()
@@ -41,8 +41,8 @@
         [Fact]
         public void ViewBagWithNoNumberShouldNotThrowExceptionWithAnyEntries()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddViewBagAction())
                 .ShouldHave()
                 .ViewBag()
@@ -57,8 +57,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.Ok())
                         .ShouldHave()
                         .ViewBag()
@@ -72,8 +72,8 @@
         [Fact]
         public void ViewBagWithNumberShouldNotThrowExceptionWithCorrectEntries()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddViewBagAction())
                 .ShouldHave()
                 .ViewBag(withNumberOfEntries: 2)
@@ -88,8 +88,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.Ok())
                         .ShouldHave()
                         .ViewBag(1)
@@ -106,8 +106,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddViewBagAction())
                         .ShouldHave()
                         .ViewBag(3)
@@ -121,8 +121,8 @@
         [Fact]
         public void ViewBagWithBuilderShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddViewBagAction())
                 .ShouldHave()
                 .ViewBag(viewBag => viewBag

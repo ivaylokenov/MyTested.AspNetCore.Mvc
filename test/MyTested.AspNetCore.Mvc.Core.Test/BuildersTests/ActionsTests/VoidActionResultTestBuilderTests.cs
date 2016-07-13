@@ -11,8 +11,8 @@
         [Fact]
         public void ShouldReturnEmptyShouldNotThrowExceptionWithNormalVoidAction()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.EmptyAction())
                 .ShouldReturnEmpty();
         }
@@ -23,8 +23,8 @@
             Test.AssertException<ActionCallAssertionException>(
                 () => 
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.EmptyActionWithException())
                         .ShouldReturnEmpty();
                 }, 
@@ -37,8 +37,8 @@
             Test.AssertException<ActionCallAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.EmptyActionWithExceptionAsync())
                         .ShouldReturnEmpty();
                 },
@@ -48,8 +48,8 @@
         [Fact]
         public void ShouldThrowExceptionShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.EmptyActionWithException())
                 .ShouldThrow()
                 .Exception()

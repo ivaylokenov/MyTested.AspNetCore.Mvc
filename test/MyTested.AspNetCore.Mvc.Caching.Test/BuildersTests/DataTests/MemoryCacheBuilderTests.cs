@@ -13,7 +13,7 @@
     {
         public MemoryCacheBuilderTests()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services => services.AddMemoryCache());
         }
@@ -21,8 +21,8 @@
         [Fact]
         public void WithEntryShouldSetCorrectValues()
         {
-            MyMvc
-                .Controller<MemoryCacheController>()
+            MyController<MemoryCacheController>
+                .Instance()
                 .WithMemoryCache(memoryCache => memoryCache
                     .WithEntry("Normal", "NormalValid")
                     .AndAlso()
@@ -36,8 +36,8 @@
         [Fact]
         public void WithCacheOptionsShouldSetCorrectValues()
         {
-            MyMvc
-                .Controller<MemoryCacheController>()
+            MyController<MemoryCacheController>
+                .Instance()
                 .WithMemoryCache(memoryCache => memoryCache
                     .WithEntry("FullEntry", "FullEntryValid", new MemoryCacheEntryOptions
                     {
@@ -62,8 +62,8 @@
         [Fact]
         public void WithCacheBuilderShouldSetCorrectValues()
         {
-            MyMvc
-                .Controller<MemoryCacheController>()
+            MyController<MemoryCacheController>
+                .Instance()
                 .WithMemoryCache(memoryCache => memoryCache
                     .WithEntry(entry => entry
                         .WithKey("FullEntry")
@@ -95,8 +95,8 @@
         {
             Test.AssertException<InvalidOperationException>(() =>
             {
-                MyMvc
-                    .Controller<MemoryCacheController>()
+                MyController<MemoryCacheController>
+                    .Instance()
                     .WithMemoryCache(memoryCache => memoryCache
                         .WithEntry(entry => entry.WithValue("WithoutKey")))
                     .Calling(c => c.FullMemoryCacheAction(From.Services<IMemoryCache>()))
@@ -109,8 +109,8 @@
         [Fact]
         public void WithCacheEntriesShouldSetCorrectValues()
         {
-            MyMvc
-                .Controller<MemoryCacheController>()
+            MyController<MemoryCacheController>
+                .Instance()
                 .WithMemoryCache(memoryCache => memoryCache
                     .WithEntries(new Dictionary<object, object>
                     {
@@ -131,7 +131,7 @@
 
         public void Dispose()
         {
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
     }
 }

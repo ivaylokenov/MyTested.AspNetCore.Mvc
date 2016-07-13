@@ -13,8 +13,8 @@
         {
             var requestModelWithErrors = TestObjectFactory.GetRequestModelWithErrors();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ModelStateCheck(requestModelWithErrors))
                 .ShouldHave()
                 .ModelState(modelState => modelState.For<RequestModel>()
@@ -40,8 +40,8 @@
             Test.AssertException<ModelErrorAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ModelStateCheck(requestModelWithErrors))
                         .ShouldHave()
                         .ModelState(modelState => modelState.For<RequestModel>()
@@ -58,8 +58,8 @@
         {
             var requestModelWithErrors = TestObjectFactory.GetRequestModelWithErrors();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ModelStateCheck(requestModelWithErrors))
                 .ShouldHave()
                 .ModelState(modelState => modelState.For<RequestModel>()
@@ -76,8 +76,8 @@
             Test.AssertException<ModelErrorAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ModelStateCheck(requestModelWithErrors))
                         .ShouldHave()
                         .ModelState(modelState => modelState.For<RequestModel>()
@@ -93,8 +93,8 @@
         {
             var requestModelWithErrors = TestObjectFactory.GetRequestModelWithErrors();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ModelStateCheck(requestModelWithErrors))
                 .ShouldHave()
                 .ModelState(modelState => modelState.For<RequestModel>()
@@ -111,8 +111,8 @@
             Test.AssertException<ModelErrorAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ModelStateCheck(requestModelWithErrors))
                         .ShouldHave()
                         .ModelState(modelState => modelState.For<RequestModel>()
@@ -128,8 +128,8 @@
         {
             var requestModelWithErrors = TestObjectFactory.GetRequestModelWithErrors();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ModelStateCheck(requestModelWithErrors))
                 .ShouldHave()
                 .ModelState(modelState => modelState.For<RequestModel>()
@@ -146,8 +146,8 @@
             Test.AssertException<ModelErrorAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ModelStateCheck(requestModelWithErrors))
                         .ShouldHave()
                         .ModelState(modelState => modelState.For<RequestModel>()
@@ -161,8 +161,8 @@
         [Fact]
         public void NestedModelsShouldBeResolvedCorrectlyWithModelStateFor()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ModelStateWithNestedError())
                 .ShouldHave()
                 .ModelState(modelState => modelState.For<NestedModel>()
