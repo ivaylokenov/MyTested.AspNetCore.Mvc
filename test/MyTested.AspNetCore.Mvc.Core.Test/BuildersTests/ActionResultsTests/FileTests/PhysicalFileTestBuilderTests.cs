@@ -11,8 +11,8 @@
         [Fact]
         public void WithContentTypeAsStringShouldNotThrowExceptionWithValidContentType()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.PhysicalFileResult())
                 .ShouldReturn()
                 .PhysicalFile()
@@ -22,8 +22,8 @@
         [Fact]
         public void WithContentTypeAsMediaTypeHeaderValueShouldNotThrowExceptionWithValidContentType()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.PhysicalFileResult())
                 .ShouldReturn()
                 .PhysicalFile()
@@ -36,8 +36,8 @@
             Test.AssertException<FileResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.PhysicalFileResult())
                         .ShouldReturn()
                         .PhysicalFile()
@@ -49,8 +49,8 @@
         [Fact]
         public void WithFileDownloadNameShouldNotThrowExceptionWithValidFileDownloadName()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.PhysicalFileResult())
                 .ShouldReturn()
                 .PhysicalFile()
@@ -63,8 +63,8 @@
             Test.AssertException<FileResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.PhysicalFileResult())
                         .ShouldReturn()
                         .PhysicalFile()
@@ -79,8 +79,8 @@
             Test.AssertException<FileResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.PhysicalFileResult())
                         .ShouldReturn()
                         .PhysicalFile()
@@ -92,8 +92,8 @@
         [Fact]
         public void WithPhysicalPathShouldNotThrowExceptionWithValidPath()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.PhysicalFileResult())
                 .ShouldReturn()
                 .PhysicalFile()
@@ -106,8 +106,8 @@
             Test.AssertException<FileResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                    .Controller<MvcController>()
+                    MyController<MvcController>
+                    .Instance()
                     .Calling(c => c.PhysicalFileResult())
                     .ShouldReturn()
                     .PhysicalFile()
@@ -122,8 +122,8 @@
             Test.AssertException<FileResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                    .Controller<MvcController>()
+                    MyController<MvcController>
+                    .Instance()
                     .Calling(c => c.PhysicalFileResult())
                     .ShouldReturn()
                     .PhysicalFile()
@@ -135,8 +135,8 @@
         [Fact]
         public void AndAlsoShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.PhysicalFileResult())
                 .ShouldReturn()
                 .PhysicalFile()

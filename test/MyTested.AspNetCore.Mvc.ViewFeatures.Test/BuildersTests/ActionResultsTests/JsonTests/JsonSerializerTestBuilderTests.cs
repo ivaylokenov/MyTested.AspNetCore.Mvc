@@ -17,8 +17,8 @@
         [Fact]
         public void WithCheckAdditionalContentShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
                 .Json()
@@ -32,13 +32,13 @@
             Test.AssertException<JsonResultAssertionException>(
                    () =>
                    {
-                       MyMvc
-                        .Controller<MvcController>()
-                        .Calling(c => c.JsonWithSettingsAction())
-                        .ShouldReturn()
-                        .Json()
-                        .WithJsonSerializerSettings(s =>
-                            s.WithCheckAdditionalContent(true));
+                        MyController<MvcController>
+                            .Instance()
+                            .Calling(c => c.JsonWithSettingsAction())
+                            .ShouldReturn()
+                            .Json()
+                            .WithJsonSerializerSettings(s =>
+                                s.WithCheckAdditionalContent(true));
                    },
                    "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have enabled checking for additional content, but in fact it was disabled.");
         }
@@ -46,8 +46,8 @@
         [Fact]
         public void WithCultureShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
                 .Json()
@@ -61,8 +61,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
                         .Json()
@@ -79,8 +79,8 @@
             jsonSerializerSettings.Culture = CultureInfo.InvariantCulture;
             jsonSerializerSettings.ConstructorHandling = ConstructorHandling.Default;
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
@@ -92,8 +92,8 @@
         [Fact]
         public void WithContractResolverOfTypeShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
                 .Json()
@@ -107,8 +107,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
                         .Json()
@@ -125,8 +125,8 @@
             jsonSerializerSettings.MaxDepth = int.MaxValue;
             jsonSerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
@@ -140,8 +140,8 @@
         {
             var jsonSettings = TestObjectFactory.GetJsonSerializerSettings();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
                 .ShouldReturn()
@@ -156,8 +156,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
                         .Json()
@@ -175,8 +175,8 @@
             jsonSerializerSettings.MaxDepth = int.MaxValue;
             jsonSerializerSettings.ContractResolver = contractResolver;
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
@@ -192,8 +192,8 @@
             var jsonConverter = new CustomJsonConverter();
             jsonSerializerSettings.Converters.Add(jsonConverter);
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
@@ -211,8 +211,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .WithoutValidation()        
                         .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                         .ShouldReturn()
@@ -230,8 +230,8 @@
             var jsonConverter = new CustomJsonConverter();
             jsonSerializerSettings.Converters.Add(jsonConverter);
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
@@ -249,8 +249,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .WithoutValidation()
                         .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                         .ShouldReturn()
@@ -268,8 +268,8 @@
             var jsonConverter = new CustomJsonConverter();
             jsonSerializerSettings.Converters.Add(jsonConverter);
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
@@ -285,8 +285,8 @@
             var jsonConverter = new CustomJsonConverter();
             jsonSerializerSettings.Converters.Add(jsonConverter);
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
@@ -306,8 +306,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .WithoutValidation()
                         .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                         .ShouldReturn()
@@ -329,8 +329,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .WithoutValidation()
                         .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                         .ShouldReturn()
@@ -352,8 +352,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .WithoutValidation()
                         .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                         .ShouldReturn()
@@ -367,8 +367,8 @@
         [Fact]
         public void WithConstructorHandlingShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
@@ -383,8 +383,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .WithoutValidation()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
@@ -402,8 +402,8 @@
             jsonSerializerSettings.MaxDepth = int.MaxValue;
             jsonSerializerSettings.ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor;
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
@@ -415,8 +415,8 @@
         [Fact]
         public void WithDateFormatHandlingShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
                 .Json()
@@ -430,8 +430,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
                         .Json()
@@ -444,8 +444,8 @@
         [Fact]
         public void WithDateFormatStringShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
                 .Json()
@@ -459,8 +459,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
                         .Json()
@@ -477,8 +477,8 @@
             jsonSerializerSettings.MaxDepth = int.MaxValue;
             jsonSerializerSettings.DateFormatHandling = DateFormatHandling.MicrosoftDateFormat;
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
@@ -490,8 +490,8 @@
         [Fact]
         public void WithDateParseHandlingShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
                 .Json()
@@ -505,8 +505,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
                         .Json()
@@ -523,8 +523,8 @@
             jsonSerializerSettings.MaxDepth = int.MaxValue;
             jsonSerializerSettings.DateParseHandling = DateParseHandling.DateTimeOffset;
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
@@ -536,8 +536,8 @@
         [Fact]
         public void WithDateTimeZoneHandlingShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
                 .Json()
@@ -551,8 +551,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
                         .Json()
@@ -569,8 +569,8 @@
             jsonSerializerSettings.MaxDepth = int.MaxValue;
             jsonSerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Local;
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
@@ -582,8 +582,8 @@
         [Fact]
         public void WithDefaultValueHandlingShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
                 .Json()
@@ -597,8 +597,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
                         .Json()
@@ -615,8 +615,8 @@
             jsonSerializerSettings.MaxDepth = int.MaxValue;
             jsonSerializerSettings.DefaultValueHandling = DefaultValueHandling.Ignore;
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
@@ -632,8 +632,8 @@
             var equalityComparer = new CustomEqualityComparer();
             jsonSettings.EqualityComparer = equalityComparer;
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
                 .ShouldReturn()
@@ -648,8 +648,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
                         .Json()
@@ -664,8 +664,8 @@
         {
             var jsonSettings = TestObjectFactory.GetJsonSerializerSettings();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
                 .ShouldReturn()
@@ -680,8 +680,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
                         .Json()
@@ -696,8 +696,8 @@
         {
             var jsonSettings = TestObjectFactory.GetJsonSerializerSettings();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
                 .ShouldReturn()
@@ -709,8 +709,8 @@
         [Fact]
         public void WithFloatFormatHandlingShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
                 .Json()
@@ -724,8 +724,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
+                    MyController<MvcController>
+                       .Instance()
                        .Calling(c => c.JsonWithSettingsAction())
                        .ShouldReturn()
                        .Json()
@@ -738,8 +738,8 @@
         [Fact]
         public void WithFloatParseHandlingShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
                 .Json()
@@ -753,8 +753,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
+                    MyController<MvcController>
+                       .Instance()
                        .Calling(c => c.JsonWithSettingsAction())
                        .ShouldReturn()
                        .Json()
@@ -767,8 +767,8 @@
         [Fact]
         public void WithMetadataPropertyHandlingShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
                 .Json()
@@ -782,8 +782,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
+                    MyController<MvcController>
+                       .Instance()
                        .Calling(c => c.JsonWithSettingsAction())
                        .ShouldReturn()
                        .Json()
@@ -800,8 +800,8 @@
             var referenceResolver = new CustomJsonReferenceResolver();
             jsonSettings.ReferenceResolverProvider = () => referenceResolver;
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
                 .ShouldReturn()
@@ -816,8 +816,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
                         .Json()
@@ -832,8 +832,8 @@
         {
             var jsonSettings = TestObjectFactory.GetJsonSerializerSettings();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
                 .ShouldReturn()
@@ -848,8 +848,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
                         .Json()
@@ -864,8 +864,8 @@
         {
             var jsonSettings = TestObjectFactory.GetJsonSerializerSettings();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
                 .ShouldReturn()
@@ -877,8 +877,8 @@
         [Fact]
         public void WithStringEscapeHandlingShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
                 .Json()
@@ -892,8 +892,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
                         .Json()
@@ -906,8 +906,8 @@
         [Fact]
         public void WithFormattingShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
                 .Json()
@@ -921,8 +921,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
+                    MyController<MvcController>
+                       .Instance()
                        .Calling(c => c.JsonWithSettingsAction())
                        .ShouldReturn()
                        .Json()
@@ -939,8 +939,8 @@
             jsonSerializerSettings.MaxDepth = int.MaxValue;
             jsonSerializerSettings.Formatting = Formatting.Indented;
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
@@ -952,8 +952,8 @@
         [Fact]
         public void WithMaxDepthShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
                 .Json()
@@ -967,8 +967,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
                         .Json()
@@ -984,8 +984,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
                         .Json()
@@ -1004,8 +1004,8 @@
                     var jsonSerializerSettings = TestObjectFactory.GetJsonSerializerSettings();
                     jsonSerializerSettings.MaxDepth = null;
 
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .WithoutValidation()
                         .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                         .ShouldReturn()
@@ -1023,8 +1023,8 @@
             jsonSerializerSettings.MaxDepth = int.MaxValue;
             jsonSerializerSettings.Formatting = Formatting.None;
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
@@ -1036,8 +1036,8 @@
         [Fact]
         public void WithMissingMemberHandlingShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
                 .Json()
@@ -1051,8 +1051,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
                         .Json()
@@ -1069,8 +1069,8 @@
             jsonSerializerSettings.MaxDepth = int.MaxValue;
             jsonSerializerSettings.MissingMemberHandling = MissingMemberHandling.Error;
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
@@ -1082,8 +1082,8 @@
         [Fact]
         public void WithNullValueHandlingShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
                 .Json()
@@ -1097,8 +1097,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
                         .Json()
@@ -1115,8 +1115,8 @@
             jsonSerializerSettings.MaxDepth = int.MaxValue;
             jsonSerializerSettings.NullValueHandling = NullValueHandling.Include;
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
@@ -1128,8 +1128,8 @@
         [Fact]
         public void WithObjectCreationHandlingShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
                 .Json()
@@ -1143,8 +1143,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
                         .Json()
@@ -1161,8 +1161,8 @@
             jsonSerializerSettings.MaxDepth = int.MaxValue;
             jsonSerializerSettings.ObjectCreationHandling = ObjectCreationHandling.Replace;
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
@@ -1174,8 +1174,8 @@
         [Fact]
         public void WithPreserveReferencesHandlingShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
                 .Json()
@@ -1189,8 +1189,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
                         .Json()
@@ -1207,8 +1207,8 @@
             jsonSerializerSettings.MaxDepth = int.MaxValue;
             jsonSerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.Arrays;
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
@@ -1220,8 +1220,8 @@
         [Fact]
         public void WithReferenceLoopHandlingShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
                 .Json()
@@ -1235,8 +1235,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
+                    MyController<MvcController>
+                       .Instance()
                        .Calling(c => c.JsonWithSettingsAction())
                        .ShouldReturn()
                        .Json()
@@ -1253,8 +1253,8 @@
             jsonSerializerSettings.MaxDepth = int.MaxValue;
             jsonSerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
@@ -1266,8 +1266,8 @@
         [Fact]
         public void WithTypeNameAssemblyFormatShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
                 .Json()
@@ -1281,8 +1281,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
                         .Json()
@@ -1299,8 +1299,8 @@
             jsonSerializerSettings.MaxDepth = int.MaxValue;
             jsonSerializerSettings.TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple;
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
@@ -1312,8 +1312,8 @@
         [Fact]
         public void WithTypeNameHandlingShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
                 .Json()
@@ -1327,8 +1327,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
                         .Json()
@@ -1345,8 +1345,8 @@
             jsonSerializerSettings.MaxDepth = int.MaxValue;
             jsonSerializerSettings.TypeNameHandling = TypeNameHandling.Arrays;
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
@@ -1362,8 +1362,8 @@
             var traceWriter = new CustomJsonTraceWriter();
             jsonSettings.TraceWriter = traceWriter;
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
                 .ShouldReturn()
@@ -1378,8 +1378,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
                         .Json()
@@ -1394,8 +1394,8 @@
         {
             var jsonSettings = TestObjectFactory.GetJsonSerializerSettings();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
                 .ShouldReturn()
@@ -1410,8 +1410,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
                         .Json()
@@ -1426,8 +1426,8 @@
         {
             var jsonSettings = TestObjectFactory.GetJsonSerializerSettings();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
                 .ShouldReturn()
@@ -1439,8 +1439,8 @@
         [Fact]
         public void AndAlsoShouldNotThrowExceptionWithCorrectValues()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
                 .Json()
@@ -1458,8 +1458,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
                         .Json()

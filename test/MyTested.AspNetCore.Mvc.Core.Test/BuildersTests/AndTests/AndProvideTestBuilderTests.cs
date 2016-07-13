@@ -12,8 +12,8 @@
         [Fact]
         public void AndProvideShouldReturnProperController()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.BadRequestWithErrorAction())
                 .ShouldReturn()
                 .BadRequest()
@@ -29,8 +29,8 @@
         [Fact]
         public void AndProvideTheControllerAttributesShouldReturnProperAttributes()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .ShouldHave()
                 .Attributes()
                 .ShouldPassFor()
@@ -43,8 +43,8 @@
         [Fact]
         public void AndProvideShouldReturnProperActionName()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.BadRequestWithErrorAction())
                 .ShouldReturn()
                 .BadRequest()
@@ -59,8 +59,8 @@
         [Fact]
         public void AndProvideShouldReturnProperActionAttributes()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.VariousAttributesAction())
                 .ShouldHave()
                 .ActionAttributes()
@@ -74,8 +74,8 @@
         [Fact]
         public void AndProvideShouldReturnProperActionResult()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.LocalRedirect("URL"))
                 .ShouldReturn()
                 .LocalRedirect()
@@ -90,8 +90,8 @@
         [Fact]
         public void AndProvideShouldReturnProperCaughtException()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ActionWithException())
                 .ShouldThrow()
                 .Exception()

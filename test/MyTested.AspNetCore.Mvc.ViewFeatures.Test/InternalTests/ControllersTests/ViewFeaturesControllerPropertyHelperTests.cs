@@ -14,7 +14,7 @@
         [Fact]
         public void GetPropertiesShouldNotThrowExceptionForNormalController()
         {
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
 
             var helper = ViewFeaturesControllerPropertyHelper.GetViewFeatureProperties<MvcController>();
 
@@ -59,7 +59,7 @@
         [Fact]
         public void GetPropertiesShouldNotThrowExceptionForPocoController()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -104,13 +104,13 @@
             Assert.NotNull(gotTempData);
             Assert.Same(gotTempData, controller.CustomTempData);
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void GetPropertiesShouldNotThrowExceptionForPrivateProperties()
         {
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
 
             var helper = ViewFeaturesControllerPropertyHelper.GetViewFeatureProperties<PrivatePocoController>();
 

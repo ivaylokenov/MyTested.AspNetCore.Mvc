@@ -14,8 +14,8 @@
         [Fact]
         public void WithResponseModelOfTypeShouldWorkCorrectlyWithJson()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.JsonAction())
                 .ShouldReturn()
                 .Json()
@@ -25,8 +25,8 @@
         [Fact]
         public void WithDefaultJsonSettingsShouldNotThrowExeptionWithDefaultJsonSettings()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.JsonAction())
                 .ShouldReturn()
                 .Json()
@@ -36,8 +36,8 @@
         [Fact]
         public void WithJsonSerializerSettingsShouldNotThrowExceptionWithSameJsonSettings()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
                 .Json()
@@ -47,8 +47,8 @@
         [Fact]
         public void WithHttpStatusCodeShouldNotThrowExceptionWithCorrectStatusCode()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.JsonWithStatusCodeAction())
                 .ShouldReturn()
                 .Json()
@@ -61,8 +61,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.JsonWithStatusCodeAction())
                         .ShouldReturn()
                         .Json()
@@ -74,8 +74,8 @@
         [Fact]
         public void WithContentTypeShouldNotThrowExceptionWithCorrectContentType()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.JsonWithStatusCodeAction())
                 .ShouldReturn()
                 .Json()
@@ -88,8 +88,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.JsonWithStatusCodeAction())
                         .ShouldReturn()
                         .Json()
@@ -101,8 +101,8 @@
         [Fact]
         public void WithContentTypeAsMediaTypeHeaderValueShouldNotThrowExceptionWithCorrectContentType()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.JsonWithStatusCodeAction())
                 .ShouldReturn()
                 .Json()
@@ -115,8 +115,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.JsonWithStatusCodeAction())
                         .ShouldReturn()
                         .Json()
@@ -134,8 +134,8 @@
             Test.AssertException<JsonResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
                         .Json()
@@ -147,8 +147,8 @@
         [Fact]
         public void AndAlsoShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.JsonWithStatusCodeAction())
                 .ShouldReturn()
                 .Json()

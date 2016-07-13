@@ -12,8 +12,8 @@
         [Fact]
         public void WithAllowRefreshShouldNotThrowExceptionWithValidValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ChallengeWithAuthenticationProperties())
                 .ShouldReturn()
                 .Challenge()
@@ -26,8 +26,8 @@
             Test.AssertException<AuthenticationPropertiesAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationProperties())
                         .ShouldReturn()
                         .Challenge()
@@ -42,8 +42,8 @@
             Test.AssertException<AuthenticationPropertiesAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ChallengeWithEmptyAuthenticationProperties())
                         .ShouldReturn()
                         .Challenge()
@@ -58,8 +58,8 @@
             Test.AssertException<AuthenticationPropertiesAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationProperties())
                         .ShouldReturn()
                         .Challenge()
@@ -71,8 +71,8 @@
         [Fact]
         public void WithExpiresShouldNotThrowExceptionWithValidValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ChallengeWithAuthenticationProperties())
                 .ShouldReturn()
                 .Challenge()
@@ -85,8 +85,8 @@
             Test.AssertException<AuthenticationPropertiesAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationProperties())
                         .ShouldReturn()
                         .Challenge()
@@ -101,8 +101,8 @@
             Test.AssertException<AuthenticationPropertiesAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ChallengeWithEmptyAuthenticationProperties())
                         .ShouldReturn()
                         .Challenge()
@@ -117,8 +117,8 @@
             Test.AssertException<AuthenticationPropertiesAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationProperties())
                         .ShouldReturn()
                         .Challenge()
@@ -130,8 +130,8 @@
         [Fact]
         public void WithIsPersistentShouldNotThrowExceptionWithValidValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ChallengeWithAuthenticationProperties())
                 .ShouldReturn()
                 .Challenge()
@@ -144,8 +144,8 @@
             Test.AssertException<AuthenticationPropertiesAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationProperties())
                         .ShouldReturn()
                         .Challenge()
@@ -157,8 +157,8 @@
         [Fact]
         public void WithIssuedShouldNotThrowExceptionWithValidValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ChallengeWithAuthenticationProperties())
                 .ShouldReturn()
                 .Challenge()
@@ -171,8 +171,8 @@
             Test.AssertException<AuthenticationPropertiesAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationProperties())
                         .ShouldReturn()
                         .Challenge()
@@ -187,8 +187,8 @@
             Test.AssertException<AuthenticationPropertiesAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ChallengeWithEmptyAuthenticationProperties())
                         .ShouldReturn()
                         .Challenge()
@@ -203,8 +203,8 @@
             Test.AssertException<AuthenticationPropertiesAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationProperties())
                         .ShouldReturn()
                         .Challenge()
@@ -216,8 +216,8 @@
         [Fact]
         public void WithItemShouldNotThrowExceptionWithValidItemKey()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ChallengeWithAuthenticationProperties())
                 .ShouldReturn()
                 .Challenge()
@@ -230,8 +230,8 @@
             Test.AssertException<AuthenticationPropertiesAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationProperties())
                         .ShouldReturn()
                         .Challenge()
@@ -243,8 +243,8 @@
         [Fact]
         public void WithItemAndValueShouldNotThrowExceptionWithValidItemKey()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ChallengeWithAuthenticationProperties())
                 .ShouldReturn()
                 .Challenge()
@@ -257,8 +257,8 @@
             Test.AssertException<AuthenticationPropertiesAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationProperties())
                         .ShouldReturn()
                         .Challenge()
@@ -273,8 +273,8 @@
             Test.AssertException<AuthenticationPropertiesAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationProperties())
                         .ShouldReturn()
                         .Challenge()
@@ -286,8 +286,8 @@
         [Fact]
         public void WithItemsShouldNotThrowExceptionWithValidValues()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ChallengeWithAuthenticationProperties())
                 .ShouldReturn()
                 .Challenge()
@@ -304,8 +304,8 @@
             Test.AssertException<AuthenticationPropertiesAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationProperties())
                         .ShouldReturn()
                         .Challenge()
@@ -323,8 +323,8 @@
             Test.AssertException<AuthenticationPropertiesAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationProperties())
                         .ShouldReturn()
                         .Challenge()
@@ -344,8 +344,8 @@
             Test.AssertException<AuthenticationPropertiesAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationProperties())
                         .ShouldReturn()
                         .Challenge()
@@ -361,8 +361,8 @@
         [Fact]
         public void WithRedirectUriShouldNotThrowExceptionWithValidValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ForbidWithAuthenticationProperties())
                 .ShouldReturn()
                 .Forbid()
@@ -375,8 +375,8 @@
             Test.AssertException<AuthenticationPropertiesAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationProperties())
                         .ShouldReturn()
                         .Challenge()
@@ -391,8 +391,8 @@
             Test.AssertException<AuthenticationPropertiesAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ForbidWithEmptyAuthenticationProperties())
                         .ShouldReturn()
                         .Forbid()
@@ -407,8 +407,8 @@
             Test.AssertException<AuthenticationPropertiesAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationProperties())
                         .ShouldReturn()
                         .Challenge()
@@ -420,8 +420,8 @@
         [Fact]
         public void AndAlsoShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ChallengeWithAuthenticationProperties())
                 .ShouldReturn()
                 .Challenge()

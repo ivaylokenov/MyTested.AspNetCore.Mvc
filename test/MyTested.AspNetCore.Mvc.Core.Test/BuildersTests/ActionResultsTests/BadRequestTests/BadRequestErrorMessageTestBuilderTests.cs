@@ -10,8 +10,8 @@
         [Fact]
         public void ThatEqualsShouldNotThrowExceptionWithProperErrorMessage()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.BadRequestWithErrorAction())
                 .ShouldReturn()
                 .BadRequest()
@@ -25,8 +25,8 @@
             Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.BadRequestWithErrorAction())
                         .ShouldReturn()
                         .BadRequest()
@@ -39,8 +39,8 @@
         [Fact]
         public void BeginningWithShouldNotThrowExceptionWithProperErrorMessage()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.BadRequestWithErrorAction())
                 .ShouldReturn()
                 .BadRequest()
@@ -54,8 +54,8 @@
             Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.BadRequestWithErrorAction())
                         .ShouldReturn()
                         .BadRequest()
@@ -68,8 +68,8 @@
         [Fact]
         public void EndingWithShouldNotThrowExceptionWithProperErrorMessage()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.BadRequestWithErrorAction())
                 .ShouldReturn()
                 .BadRequest()
@@ -83,8 +83,8 @@
             Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.BadRequestWithErrorAction())
                         .ShouldReturn()
                         .BadRequest()
@@ -97,8 +97,8 @@
         [Fact]
         public void ContainingShouldNotThrowExceptionWithProperErrorMessage()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.BadRequestWithErrorAction())
                 .ShouldReturn()
                 .BadRequest()
@@ -112,8 +112,8 @@
             Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.BadRequestWithErrorAction())
                         .ShouldReturn()
                         .BadRequest()

@@ -24,8 +24,8 @@
         [Fact]
         public void CallingShouldPopulateCorrectActionNameAndActionResultWithNormalActionCall()
         {
-            var actionResultTestBuilder = MyMvc
-                .Controller<MvcController>()
+            var actionResultTestBuilder = MyController<MvcController>
+                .Instance()
                 .Calling(c => c.OkResultAction());
 
             this.CheckActionResultTestBuilder(actionResultTestBuilder, "OkResultAction");
@@ -34,8 +34,8 @@
         [Fact]
         public void CallingShouldPopulateCorrectActionNameAndActionResultWithAsyncActionCall()
         {
-            var actionResultTestBuilder = MyMvc
-                .Controller<MvcController>()
+            var actionResultTestBuilder = MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AsyncOkResultAction());
 
             this.CheckActionResultTestBuilder(actionResultTestBuilder, "AsyncOkResultAction");
@@ -44,8 +44,8 @@
         [Fact]
         public void CallingShouldPopulateCorrectActionNameWithNormalVoidActionCall()
         {
-            var voidActionResultTestBuilder = MyMvc
-                .Controller<MvcController>()
+            var voidActionResultTestBuilder = MyController<MvcController>
+                .Instance()
                 .Calling(c => c.EmptyAction());
 
             this.CheckActionName(voidActionResultTestBuilder, "EmptyAction");
@@ -54,8 +54,8 @@
         [Fact]
         public void CallingShouldPopulateCorrectActionNameWithTaskActionCall()
         {
-            var voidActionResultTestBuilder = MyMvc
-                .Controller<MvcController>()
+            var voidActionResultTestBuilder = MyController<MvcController>
+                .Instance()
                 .Calling(c => c.EmptyActionAsync());
 
             this.CheckActionName(voidActionResultTestBuilder, "EmptyActionAsync");
@@ -66,8 +66,8 @@
         {
             var requestModel = TestObjectFactory.GetValidRequestModel();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.OkResultActionWithRequestBody(1, requestModel))
                 .ShouldReturn()
                 .Ok()
@@ -85,8 +85,8 @@
         [Fact]
         public void WithAuthenticatedUserShouldPopulateUserPropertyWithDefaultValues()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithAuthenticatedUser()
                 .Calling(c => c.AuthorizedAction())
                 .ShouldReturn()
@@ -107,8 +107,8 @@
         [Fact]
         public void WithAuthenticatedUserShouldPopulateProperUserWhenUserWithUserBuilder()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithAuthenticatedUser(user => user
                     .WithUsername("NewUserName")
                     .WithAuthenticationType("Custom")
@@ -143,8 +143,8 @@
         [Fact]
         public void WithAuthenticatedNotCalledShouldNotHaveAuthorizedUser()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AuthorizedAction())
                 .ShouldReturn()
                 .NotFound()
@@ -163,8 +163,8 @@
         [Fact]
         public void WithResolvedDependencyForShouldChooseCorrectConstructorWithLessDependencies()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithServiceFor<IInjectedService>(new InjectedService())
                 .ShouldPassFor()
                 .TheController(controller =>
@@ -179,8 +179,8 @@
         [Fact]
         public void WithResolvedDependencyForShouldChooseCorrectConstructorWithMoreDependencies()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithServiceFor<IAnotherInjectedService>(new AnotherInjectedService())
                 .WithServiceFor<IInjectedService>(new InjectedService())
                 .ShouldPassFor()
@@ -196,8 +196,8 @@
         [Fact]
         public void WithResolvedDependencyForShouldChooseCorrectConstructorWithAllDependencies()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithServiceFor<IAnotherInjectedService>(new AnotherInjectedService())
                 .WithServiceFor<RequestModel>(new RequestModel())
                 .WithServiceFor<IInjectedService>(new InjectedService())
@@ -214,8 +214,8 @@
         [Fact]
         public void WithResolvedDependencyForShouldContinueTheNormalExecutionFlowOfTestBuilders()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithServiceFor(new RequestModel())
                 .WithServiceFor(new AnotherInjectedService())
                 .WithServiceFor(new InjectedService())
@@ -228,8 +228,8 @@
         [Fact]
         public void AndAlsoShouldContinueTheNormalExecutionFlowOfTestBuilders()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithServiceFor(new RequestModel())
                 .AndAlso()
                 .WithServiceFor(new AnotherInjectedService())
@@ -245,8 +245,8 @@
         [Fact]
         public void WithResolvedDependenciesShouldWorkCorrectWithCollectionOfObjects()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithServices(new List<object> { new RequestModel(), new AnotherInjectedService(), new InjectedService() })
                 .WithAuthenticatedUser()
                 .Calling(c => c.AuthorizedAction())
@@ -257,8 +257,8 @@
         [Fact]
         public void WithResolvedDependenciesShouldWorkCorrectWithParamsOfObjects()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithServices(new RequestModel(), new AnotherInjectedService(), new InjectedService())
                 .WithAuthenticatedUser()
                 .Calling(c => c.AuthorizedAction())
@@ -272,8 +272,8 @@
             Test.AssertException<InvalidOperationException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .WithServiceFor<RequestModel>(new RequestModel())
                         .WithServiceFor<IAnotherInjectedService>(new AnotherInjectedService())
                         .WithServiceFor<IInjectedService>(new InjectedService())
@@ -288,8 +288,8 @@
             Test.AssertException<UnresolvedServicesException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<NoParameterlessConstructorController>()
+                    MyController<NoParameterlessConstructorController>
+                        .Instance()
                         .WithServiceFor<RequestModel>(new RequestModel())
                         .WithServiceFor<IAnotherInjectedService>(new AnotherInjectedService())
                         .WithServiceFor<ResponseModel>(new ResponseModel())
@@ -303,8 +303,8 @@
         [Fact]
         public void PrepareControllerShouldSetCorrectPropertiesWithCustomSetup()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithSetup(c =>
                 {
                     c.ControllerContext = new ControllerContext();
@@ -321,8 +321,8 @@
         [Fact]
         public void CallingShouldPopulateCorrectActionDescriptor()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.OkResultAction())
                 .ShouldPassFor()
                 .TheController(controller =>
@@ -339,8 +339,8 @@
         {
             var httpContext = new DefaultHttpContext();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpContext(httpContext)
                 .ShouldPassFor()
                 .TheHttpContext(context =>
@@ -358,8 +358,8 @@
             httpContext.Response.ContentType = ContentType.ApplicationJson;
             httpContext.Response.ContentLength = 100;
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpContext(httpContext)
                 .ShouldPassFor()
                 .TheController(controller =>
@@ -395,8 +395,8 @@
         [Fact]
         public void WithHttpContextSetupShouldPopulateContextProperties()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpContext(httpContext =>
                 {
                     httpContext.Request.ContentType = ContentType.ApplicationOctetStream;
@@ -411,8 +411,8 @@
         [Fact]
         public void WithRequestShouldNotWorkWithDefaultRequestAction()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.WithRequest())
                 .ShouldReturn()
                 .BadRequest();
@@ -421,8 +421,8 @@
         [Fact]
         public void WithRequestShouldWorkWithSetRequestAction()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpRequest(req => req.WithFormField("Test", "TestValue"))
                 .Calling(c => c.WithRequest())
                 .ShouldReturn()
@@ -435,8 +435,8 @@
             var httpContext = new MockedHttpContext();
             httpContext.Request.Form = new FormCollection(new Dictionary<string, StringValues> { ["Test"] = "TestValue" });
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpRequest(httpContext.Request)
                 .Calling(c => c.WithRequest())
                 .ShouldReturn()
@@ -446,8 +446,8 @@
         [Fact]
         public void UsingUrlHelperInsideControllerShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithRouteData()
                 .Calling(c => c.UrlAction())
                 .ShouldReturn()
@@ -458,8 +458,8 @@
         [Fact]
         public void UsingTryUpdateModelAsyncShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.TryUpdateModelAction())
                 .ShouldReturn()
                 .Ok();
@@ -471,8 +471,8 @@
             Test.AssertException<InvalidOperationException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.UrlAction())
                         .ShouldReturn()
                         .Ok()
@@ -487,8 +487,8 @@
             Assert.Throws<ActionCallAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.IndexOutOfRangeException())
                         .ShouldReturn()
                         .Ok();
@@ -506,8 +506,8 @@
                 }
             };
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithControllerContext(controllerContext)
                 .ShouldPassFor()
                 .TheController(controller =>
@@ -521,8 +521,8 @@
         [Fact]
         public void WithControllerContextSetupShouldSetCorrectControllerContext()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithControllerContext(controllerContext =>
                 {
                     controllerContext.RouteData.Values.Add("testkey", "testvalue");
@@ -542,8 +542,8 @@
             Test.AssertException<UnresolvedServicesException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<NoParameterlessConstructorController>()
+                    MyController<NoParameterlessConstructorController>
+                        .Instance()
                         .WithServiceFor<RequestModel>(new RequestModel())
                         .WithServiceFor<IAnotherInjectedService>(new AnotherInjectedService())
                         .WithServiceFor<ResponseModel>(new ResponseModel())
@@ -557,20 +557,20 @@
         [Fact]
         public void CallingShouldWorkCorrectlyWithFromServices()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
                     services.AddHttpContextAccessor();
                 });
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.WithService(From.Services<IHttpContextAccessor>()))
                 .ShouldReturn()
                 .Ok();
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
@@ -579,7 +579,7 @@
             Test.AssertException<InvalidOperationException>(
                 () =>
                 {
-                    MyMvc.Controller<RequestModel>();
+                    MyController<RequestModel>.Instance();
                 },
                 "RequestModel is not a valid controller type.");
         }
@@ -587,8 +587,8 @@
         [Fact]
         public void PrepareControllerShouldSetCorrectPropertiesWithDefaultServices()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .ShouldPassFor()
                 .TheController(controller =>
                 {
@@ -613,15 +613,15 @@
         [Fact]
         public void WithServiceSetupForShouldSetupScopedServiceCorrectly()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
                     services.AddScoped<IScopedService, ScopedService>();
                 });
 
-            MyMvc
-                .Controller<ServicesController>()
+            MyController<ServicesController>
+                .Instance()
                 .WithNoServiceFor<IScopedService>()
                 .WithServiceSetupFor<IScopedService>(s => s.Value = "Custom")
                 .Calling(c => c.DoNotSetValue())
@@ -629,8 +629,8 @@
                 .ResultOfType<string>()
                 .Passing(r => r == "Custom");
             
-            MyMvc
-                .Controller<ServicesController>()
+            MyController<ServicesController>
+                .Instance()
                 .WithNoServiceFor<IScopedService>()
                 .WithServiceSetupFor<IScopedService>(s => s.Value = "SecondCustom")
                 .Calling(c => c.FromServices(From.Services<IScopedService>()))
@@ -638,34 +638,34 @@
                 .ResultOfType<string>()
                 .Passing(r => r == "SecondCustom");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void WithServiceSetupForShouldSetupScopedServiceCorrectlyWithConstructorInjection()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
                     services.AddScoped<IScopedService, ScopedService>();
                 });
 
-            MyMvc
-                .Controller<ScopedServiceController>()
+            MyController<ScopedServiceController>
+                .Instance()
                 .WithServiceSetupFor<IScopedService>(s => s.Value = "TestValue")
                 .Calling(c => c.Index())
                 .ShouldReturn()
                 .Ok()
                 .WithModel("TestValue");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
         
         [Fact]
         public void WithServiceSetupForShouldThrowExceptionWithNoScopedService()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -675,8 +675,8 @@
             Test.AssertException<InvalidOperationException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<ScopedServiceController>()
+                    MyController<ScopedServiceController>
+                        .Instance()
                         .WithServiceSetupFor<IScopedService>(s => s.Value = "TestValue")
                         .Calling(c => c.Index())
                         .ShouldReturn()
@@ -685,7 +685,7 @@
                 },
                 "The 'WithServiceSetupFor' method can be used only for services with scoped lifetime.");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
         
         private void CheckActionResultTestBuilder<TActionResult>(

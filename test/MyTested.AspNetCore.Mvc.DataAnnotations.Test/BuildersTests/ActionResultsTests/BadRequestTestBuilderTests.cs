@@ -16,8 +16,8 @@
                 {
                     var requestModelWithErrors = TestObjectFactory.GetRequestModelWithErrors();
 
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
                         .ShouldReturn()
                         .BadRequest()
@@ -31,8 +31,8 @@
         {
             var requestModelWithErrors = TestObjectFactory.GetRequestModelWithErrors();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
                 .ShouldReturn()
                 .BadRequest()
@@ -47,8 +47,8 @@
             modelState.AddModelError("Integer", "The field Integer must be between 1 and 2147483647.");
             modelState.AddModelError("RequiredString", "The RequiredString field is required.");
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
                 .ShouldReturn()
                 .BadRequest()
@@ -66,8 +66,8 @@
                     modelState.AddModelError("Integer", "The field Integer must be between 1 and 2147483647.");
                     modelState.AddModelError("String", "The RequiredString field is required.");
 
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
                         .ShouldReturn()
                         .BadRequest()
@@ -84,8 +84,8 @@
                 {
                     var modelState = new ModelStateDictionary();
 
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.BadRequestWithErrorAction())
                         .ShouldReturn()
                         .BadRequest()
@@ -104,8 +104,8 @@
                     var modelState = new ModelStateDictionary();
                     modelState.AddModelError("Integer", "The field Integer must be between 1 and 2147483647.");
 
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
                         .ShouldReturn()
                         .BadRequest()
@@ -126,8 +126,8 @@
                     modelState.AddModelError("RequiredString", "The RequiredString field is required.");
                     modelState.AddModelError("NonRequiredString", "The NonRequiredString field is required.");
 
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
                         .ShouldReturn()
                         .BadRequest()
@@ -147,8 +147,8 @@
                     modelState.AddModelError("Integer", "The field Integer must be between 1 and 2147483647.");
                     modelState.AddModelError("RequiredString", "The RequiredString field is not required.");
 
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
                         .ShouldReturn()
                         .BadRequest()
@@ -169,8 +169,8 @@
                     modelState.AddModelError("RequiredString", "The RequiredString field is not required.");
                     modelState.AddModelError("RequiredString", "The RequiredString field is required.");
 
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
                         .ShouldReturn()
                         .BadRequest()

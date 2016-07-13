@@ -15,8 +15,8 @@
         [Fact]
         public void WithContentTypeAsStringShouldNotThrowExceptionWithValidContentType()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FileWithVirtualPath())
                 .ShouldReturn()
                 .File()
@@ -26,8 +26,8 @@
         [Fact]
         public void WithContentTypeAsMediaTypeHeaderValueShouldNotThrowExceptionWithValidContentType()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FileWithVirtualPath())
                 .ShouldReturn()
                 .File()
@@ -40,8 +40,8 @@
             Test.AssertException<FileResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FileWithVirtualPath())
                         .ShouldReturn()
                         .File()
@@ -53,8 +53,8 @@
         [Fact]
         public void WithFileDownloadNameShouldNotThrowExceptionWithValidFileDownloadName()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FileWithVirtualPath())
                 .ShouldReturn()
                 .File()
@@ -67,8 +67,8 @@
             Test.AssertException<FileResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FileWithVirtualPath())
                         .ShouldReturn()
                         .File()
@@ -83,8 +83,8 @@
             Test.AssertException<FileResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FileWithStream())
                         .ShouldReturn()
                         .File()
@@ -96,8 +96,8 @@
         [Fact]
         public void WithStreamShouldNotThrowExceptionWithValidStreamContents()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FileWithStream())
                 .ShouldReturn()
                 .File()
@@ -110,8 +110,8 @@
             Test.AssertException<FileResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FileWithStream())
                         .ShouldReturn()
                         .File()
@@ -123,8 +123,8 @@
         [Fact]
         public void WithFileNameShouldNotThrowExceptionWithValidFileName()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FileWithVirtualPath())
                 .ShouldReturn()
                 .File()
@@ -137,8 +137,8 @@
             Test.AssertException<FileResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FileWithVirtualPath())
                         .ShouldReturn()
                         .File()
@@ -152,8 +152,8 @@
         {
             var fileProvider = TestObjectFactory.GetFileProvider();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.FileWithFileProvider(fileProvider))
                 .ShouldReturn()
@@ -164,8 +164,8 @@
         [Fact]
         public void WithFileProviderShouldNotThrowExceptionWithNullFileProvider()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.FileWithNullProvider())
                 .ShouldReturn()
@@ -179,8 +179,8 @@
             Test.AssertException<FileResultAssertionException>(
                    () =>
                    {
-                       MyMvc
-                           .Controller<MvcController>()
+                       MyController<MvcController>
+                           .Instance()
                            .Calling(c => c.FileWithVirtualPath())
                            .ShouldReturn()
                            .File()
@@ -195,8 +195,8 @@
             Test.AssertException<FileResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .WithoutValidation()
                         .Calling(c => c.FileWithFileProvider(null))
                         .ShouldReturn()
@@ -209,8 +209,8 @@
         [Fact]
         public void WithFileProviderOfTypeShouldNotThrowExceptionWithValidFileProvider()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.FileWithFileProvider(null))
                 .ShouldReturn()
@@ -224,8 +224,8 @@
             Test.AssertException<FileResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .WithoutValidation()
                         .Calling(c => c.FileWithFileProvider(null))
                         .ShouldReturn()
@@ -241,8 +241,8 @@
             Test.AssertException<FileResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .WithoutValidation()
                         .Calling(c => c.FileWithNullProvider())
                         .ShouldReturn()
@@ -255,8 +255,8 @@
         [Fact]
         public void WithFileContentsShouldNotThrowExceptionWithValidFileContents()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FileWithContents())
                 .ShouldReturn()
                 .File()
@@ -269,8 +269,8 @@
             Test.AssertException<FileResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FileWithContents())
                         .ShouldReturn()
                         .File()
@@ -282,8 +282,8 @@
         [Fact]
         public void AndAlsoShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FileWithContents())
                 .ShouldReturn()
                 .File()
@@ -295,8 +295,8 @@
         [Fact]
         public void AndProvideTheActionResultShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FileWithContents())
                 .ShouldReturn()
                 .File()

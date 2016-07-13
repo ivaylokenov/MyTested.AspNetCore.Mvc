@@ -17,8 +17,8 @@
         [Fact]
         public void WithNoResponseModelShouldNotThrowExceptionIfNoResponseModelIsProvided()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.OkResultAction())
                 .ShouldReturn()
                 .Ok()
@@ -31,8 +31,8 @@
             Test.AssertException<ResponseModelAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.OkResultWithResponse())
                         .ShouldReturn()
                         .Ok()
@@ -44,8 +44,8 @@
         [Fact]
         public void WithResponseModelShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
                 .Ok()
@@ -55,8 +55,8 @@
         [Fact]
         public void WithStatusCodeShouldNotThrowExceptionWithCorrectStatusCode()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
                 .Ok()
@@ -66,8 +66,8 @@
         [Fact]
         public void WithStatusCodeAsEnumShouldNotThrowExceptionWithCorrectStatusCode()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
                 .Ok()
@@ -80,8 +80,8 @@
             Test.AssertException<OkResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullOkAction())
                         .ShouldReturn()
                         .Ok()
@@ -93,8 +93,8 @@
         [Fact]
         public void ContainingContentTypeShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
                 .Ok()
@@ -104,8 +104,8 @@
         [Fact]
         public void ContainingContentTypeAsMediaTypeHeaderValueShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
                 .Ok()
@@ -118,8 +118,8 @@
             Test.AssertException<OkResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
+                    MyController<MvcController>
+                       .Instance()
                        .Calling(c => c.FullOkAction())
                        .ShouldReturn()
                        .Ok()
@@ -131,8 +131,8 @@
         [Fact]
         public void ContainingContentTypesAsStringValueShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
                 .Ok()
@@ -146,8 +146,8 @@
         [Fact]
         public void ContainingContentTypesAsStringShouldNotThrowExceptionWithCorrectParametersValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
                 .Ok()
@@ -160,8 +160,8 @@
             Test.AssertException<OkResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullOkAction())
                         .ShouldReturn()
                         .Ok()
@@ -180,8 +180,8 @@
             Test.AssertException<OkResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullOkAction())
                         .ShouldReturn()
                         .Ok()
@@ -199,8 +199,8 @@
             Test.AssertException<OkResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullOkAction())
                         .ShouldReturn()
                         .Ok()
@@ -217,8 +217,8 @@
         [Fact]
         public void ContainingContentTypesAsMediaTypeHeaderValueShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
                 .Ok()
@@ -232,8 +232,8 @@
         [Fact]
         public void ContainingContentTypesAsMediaTypeHeaderValueShouldNotThrowExceptionWithCorrectParametersValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
                 .Ok()
@@ -246,8 +246,8 @@
             Test.AssertException<OkResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullOkAction())
                         .ShouldReturn()
                         .Ok()
@@ -266,8 +266,8 @@
             Test.AssertException<OkResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullOkAction())
                         .ShouldReturn()
                         .Ok()
@@ -285,8 +285,8 @@
             Test.AssertException<OkResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullOkAction())
                         .ShouldReturn()
                         .Ok()
@@ -305,8 +305,8 @@
         {
             var formatter = TestObjectFactory.GetOutputFormatter();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.OkActionWithFormatter(formatter))
                 .ShouldReturn()
                 .Ok()
@@ -321,8 +321,8 @@
                 {
                     var formatter = TestObjectFactory.GetOutputFormatter();
 
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.OkActionWithFormatter(formatter))
                         .ShouldReturn()
                         .Ok()
@@ -334,8 +334,8 @@
         [Fact]
         public void ContainingOutputFormatterOfTypeShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
                 .Ok()
@@ -348,8 +348,8 @@
             Test.AssertException<OkResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullOkAction())
                         .ShouldReturn()
                         .Ok()
@@ -361,8 +361,8 @@
         [Fact]
         public void ContainingOutputFormattersShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
                 .Ok()
@@ -376,8 +376,8 @@
         [Fact]
         public void ContainingOutputFormattersShouldNotThrowExceptionWithCorrectParametersValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
                 .Ok()
@@ -390,8 +390,8 @@
             Test.AssertException<OkResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullOkAction())
                         .ShouldReturn()
                         .Ok()
@@ -410,8 +410,8 @@
             Test.AssertException<OkResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullOkAction())
                         .ShouldReturn()
                         .Ok()
@@ -429,8 +429,8 @@
             Test.AssertException<OkResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullOkAction())
                         .ShouldReturn()
                         .Ok()
@@ -447,8 +447,8 @@
         [Fact]
         public void AndAlsoShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
                 .Ok()
@@ -460,8 +460,8 @@
         [Fact]
         public void AndProvideTheActionResultShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
                 .Ok()

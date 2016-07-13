@@ -10,8 +10,8 @@
         [Fact]
         public void NoViewDataShouldNotThrowExceptionWithNoEntries()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.Ok())
                 .ShouldHave()
                 .NoViewData()
@@ -26,8 +26,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
+                    MyController<MvcController>
+                       .Instance()
                        .Calling(c => c.AddViewDataAction())
                        .ShouldHave()
                        .NoViewData()
@@ -41,8 +41,8 @@
         [Fact]
         public void ViewDataWithNoNumberShouldNotThrowExceptionWithAnyEntries()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddViewDataAction())
                 .ShouldHave()
                 .ViewData()
@@ -57,8 +57,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.Ok())
                         .ShouldHave()
                         .ViewData()
@@ -72,8 +72,8 @@
         [Fact]
         public void ViewDataWithNumberShouldNotThrowExceptionWithCorrectEntries()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddViewDataAction())
                 .ShouldHave()
                 .ViewData(withNumberOfEntries: 2)
@@ -88,8 +88,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.Ok())
                         .ShouldHave()
                         .ViewData(1)
@@ -106,8 +106,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddViewDataAction())
                         .ShouldHave()
                         .ViewData(3)
@@ -121,8 +121,8 @@
         [Fact]
         public void ViewDataWithBuilderShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddViewDataAction())
                 .ShouldHave()
                 .ViewData(viewData => viewData

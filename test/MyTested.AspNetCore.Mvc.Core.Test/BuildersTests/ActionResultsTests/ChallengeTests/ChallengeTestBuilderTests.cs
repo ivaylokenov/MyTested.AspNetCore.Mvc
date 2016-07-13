@@ -11,8 +11,8 @@
         [Fact]
         public void ShouldReturnChallengeShouldNotThrowExceptionIfResultIsChallengeWithCorrectAuthenticationScheme()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ChallengeWithAuthenticationSchemes())
                 .ShouldReturn()
                 .Challenge()
@@ -25,8 +25,8 @@
             Test.AssertException<ChallengeResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationSchemes())
                         .ShouldReturn()
                         .Challenge()
@@ -38,8 +38,8 @@
         [Fact]
         public void ShouldReturnChallengeShouldNotThrowExceptionIfResultIsChallengeWithCorrectMultipleAuthenticationSchemes()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ChallengeWithAuthenticationSchemes())
                 .ShouldReturn()
                 .Challenge()
@@ -52,8 +52,8 @@
             Test.AssertException<ChallengeResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationSchemes())
                         .ShouldReturn()
                         .Challenge()
@@ -68,8 +68,8 @@
             Test.AssertException<ChallengeResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationSchemes())
                         .ShouldReturn()
                         .Challenge()
@@ -81,8 +81,8 @@
         [Fact]
         public void ShouldReturnChallengeShouldNotThrowExceptionIfResultIsChallengeWithCorrectMultipleAuthenticationSchemesAsParams()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ChallengeWithAuthenticationSchemes())
                 .ShouldReturn()
                 .Challenge()
@@ -92,8 +92,8 @@
         [Fact]
         public void ShouldReturnChallengeShouldNotThrowExceptionWithValidAuthenticationProperties()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ChallengeWithAuthenticationProperties())
                 .ShouldReturn()
                 .Challenge()
@@ -110,8 +110,8 @@
 
                     authenticationProperties.AllowRefresh = false;
 
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationProperties())
                         .ShouldReturn()
                         .Challenge()
@@ -123,8 +123,8 @@
         [Fact]
         public void AndAlsoShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ChallengeWithAuthenticationSchemes())
                 .ShouldReturn()
                 .Challenge()

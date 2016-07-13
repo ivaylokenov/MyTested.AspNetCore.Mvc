@@ -13,7 +13,7 @@
     {
         public MemoryCacheEntryTestBuilderTests()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services => services.AddMemoryCache());
         }
@@ -21,8 +21,8 @@
         [Fact]
         public void WithValidShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddMemoryCacheAction())
                 .ShouldHave()
                 .MemoryCache(memoryCache => memoryCache
@@ -40,8 +40,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddMemoryCacheAction())
                         .ShouldHave()
                         .MemoryCache(memoryCache => memoryCache
@@ -58,8 +58,8 @@
         [Fact]
         public void WithAbsoluteExpirationShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddMemoryCacheAction())
                 .ShouldHave()
                 .MemoryCache(memoryCache => memoryCache
@@ -77,8 +77,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddMemoryCacheAction())
                         .ShouldHave()
                         .MemoryCache(memoryCache => memoryCache
@@ -95,8 +95,8 @@
         [Fact]
         public void WithAbsoluteExpirationRelativeToNowShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddMemoryCacheAction())
                 .ShouldHave()
                 .MemoryCache(memoryCache => memoryCache
@@ -114,8 +114,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddMemoryCacheAction())
                         .ShouldHave()
                         .MemoryCache(memoryCache => memoryCache
@@ -132,8 +132,8 @@
         [Fact]
         public void WithPriorityShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddMemoryCacheAction())
                 .ShouldHave()
                 .MemoryCache(memoryCache => memoryCache
@@ -151,8 +151,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddMemoryCacheAction())
                         .ShouldHave()
                         .MemoryCache(memoryCache => memoryCache
@@ -169,8 +169,8 @@
         [Fact]
         public void WithSlidingExpirationShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddMemoryCacheAction())
                 .ShouldHave()
                 .MemoryCache(memoryCache => memoryCache
@@ -188,8 +188,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddMemoryCacheAction())
                         .ShouldHave()
                         .MemoryCache(memoryCache => memoryCache
@@ -206,7 +206,7 @@
         [Fact]
         public void WithNoMockedMemoryCacheSomeMethodsShouldThrowException()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -216,8 +216,8 @@
             Test.AssertException<InvalidOperationException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddMemoryCacheAction())
                         .ShouldHave()
                         .MemoryCache(memoryCache => memoryCache
@@ -230,12 +230,12 @@
                 },
                 "This test requires the registered IMemoryCache service to implement IMockedMemoryCache.");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         public void Dispose()
         {
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
     }
 }

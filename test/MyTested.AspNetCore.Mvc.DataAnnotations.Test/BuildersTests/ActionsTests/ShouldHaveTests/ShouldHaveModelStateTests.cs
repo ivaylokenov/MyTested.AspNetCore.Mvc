@@ -12,8 +12,8 @@
         {
             var requestModel = TestObjectFactory.GetValidRequestModel();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ModelStateCheck(requestModel))
                 .ShouldHave()
                 .ValidModelState();
@@ -27,8 +27,8 @@
             Test.AssertException<ModelErrorAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ModelStateCheck(requestModelWithErrors))
                         .ShouldHave()
                         .ValidModelState();
@@ -41,8 +41,8 @@
         {
             var requestModelWithErrors = TestObjectFactory.GetRequestModelWithErrors();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ModelStateCheck(requestModelWithErrors))
                 .ShouldHave()
                 .InvalidModelState();
@@ -53,8 +53,8 @@
         {
             var requestModelWithErrors = TestObjectFactory.GetRequestModelWithErrors();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ModelStateCheck(requestModelWithErrors))
                 .ShouldHave()
                 .InvalidModelState(2);
@@ -68,8 +68,8 @@
             Test.AssertException<ModelErrorAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ModelStateCheck(requestModelWithErrors))
                         .ShouldHave()
                         .InvalidModelState(5);
@@ -85,8 +85,8 @@
             Test.AssertException<ModelErrorAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ModelStateCheck(requestModel))
                         .ShouldHave()
                         .InvalidModelState();
@@ -102,8 +102,8 @@
             Test.AssertException<ModelErrorAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ModelStateCheck(requestModel))
                         .ShouldHave()
                         .InvalidModelState(withNumberOfErrors: 5);
@@ -116,8 +116,8 @@
         {
             var requestModel = TestObjectFactory.GetValidRequestModel();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ModelStateCheck(requestModel))
                 .ShouldHave()
                 .ValidModelState()
@@ -131,8 +131,8 @@
         {
             var requestModelWithErrors = TestObjectFactory.GetRequestModelWithErrors();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ModelStateCheck(requestModelWithErrors))
                 .ShouldHave()
                 .InvalidModelState()

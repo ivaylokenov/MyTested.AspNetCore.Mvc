@@ -10,8 +10,8 @@
         [Fact]
         public void ShouldReturnViewShouldNotThrowExceptionWithDefaultView()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.DefaultView())
                 .ShouldReturn()
                 .View();
@@ -20,8 +20,8 @@
         [Fact]
         public void ShouldReturnViewWithNameShouldNotThrowExceptionWithCorrectName()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.IndexView())
                 .ShouldReturn()
                 .View("Index");
@@ -33,8 +33,8 @@
             Test.AssertException<ActionResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
+                    MyController<MvcController>
+                       .Instance()
                        .Calling(c => c.BadRequestAction())
                        .ShouldReturn()
                        .View();
@@ -48,8 +48,8 @@
             Test.AssertException<ViewResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
+                    MyController<MvcController>
+                       .Instance()
                        .Calling(c => c.IndexView())
                        .ShouldReturn()
                        .View("Incorrect");
@@ -60,8 +60,8 @@
         [Fact]
         public void ShouldReturnViewWithNameShouldNotThrowExceptionWithCorrectModel()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.DefaultViewWithModel())
                 .ShouldReturn()
                 .View(TestObjectFactory.GetListOfResponseModels());
@@ -70,8 +70,8 @@
         [Fact]
         public void ShouldReturnViewWithNameShouldNotThrowExceptionWithCorrectNameAndModel()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.IndexView())
                 .ShouldReturn()
                 .View("Index", TestObjectFactory.GetListOfResponseModels());
@@ -80,8 +80,8 @@
         [Fact]
         public void ShouldReturnPartialViewShouldNotThrowExceptionWithDefaultPartialView()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.DefaultPartialView())
                 .ShouldReturn()
                 .PartialView();
@@ -90,8 +90,8 @@
         [Fact]
         public void ShouldReturnPartialViewWithNameShouldNotThrowExceptionWithCorrectName()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.IndexPartialView())
                 .ShouldReturn()
                 .PartialView("_IndexPartial");
@@ -100,8 +100,8 @@
         [Fact]
         public void ShouldReturnPartialViewWithNameShouldNotThrowExceptionWithCorrectModel()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.DefaultPartialViewWithModel())
                 .ShouldReturn()
                 .PartialView(TestObjectFactory.GetListOfResponseModels());
@@ -110,8 +110,8 @@
         [Fact]
         public void ShouldReturnPartialViewWithNameShouldNotThrowExceptionWithCorrectNameAndModel()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.IndexPartialView())
                 .ShouldReturn()
                 .PartialView("_IndexPartial", TestObjectFactory.GetListOfResponseModels());
@@ -123,8 +123,8 @@
             Test.AssertException<ActionResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
+                    MyController<MvcController>
+                       .Instance()
                        .Calling(c => c.DefaultView())
                        .ShouldReturn()
                        .PartialView();
@@ -138,8 +138,8 @@
             Test.AssertException<ViewResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
+                    MyController<MvcController>
+                       .Instance()
                        .Calling(c => c.IndexPartialView())
                        .ShouldReturn()
                        .PartialView("Incorrect");

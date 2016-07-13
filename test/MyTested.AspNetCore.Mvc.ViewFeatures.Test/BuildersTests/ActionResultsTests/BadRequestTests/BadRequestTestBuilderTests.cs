@@ -16,8 +16,8 @@
             modelState.AddModelError("Integer", "The field Integer must be between 1 and 2147483647.");
             modelState.AddModelError("RequiredString", "The RequiredString field is required.");
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
                 .ShouldReturn()
                 .BadRequest()

@@ -10,8 +10,8 @@
         [Fact]
         public void HttpContextAssertionsShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpContext(context => context.Request.Scheme = "Test")
                 .ShouldPassFor()
                 .TheHttpContext(context =>
@@ -23,8 +23,8 @@
         [Fact]
         public void HttpContextPredicateShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpContext(context => context.Request.Scheme = "Test")
                 .ShouldPassFor()
                 .TheHttpContext(context => context.Request.Scheme == "Test");
@@ -36,8 +36,8 @@
             Test.AssertException<InvalidAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .WithHttpContext(context => context.Request.Scheme = "Test")
                         .ShouldPassFor()
                         .TheHttpContext(context => context.Request.Scheme == "Invalid");
@@ -48,8 +48,8 @@
         [Fact]
         public void HttpRequestAssertionsShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpContext(context => context.Request.Scheme = "Test")
                 .ShouldPassFor()
                 .TheHttpRequest(request =>
@@ -61,8 +61,8 @@
         [Fact]
         public void HttpRequestPredicateShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithHttpContext(context => context.Request.Scheme = "Test")
                 .ShouldPassFor()
                 .TheHttpRequest(request => request.Scheme == "Test");
@@ -74,8 +74,8 @@
             Test.AssertException<InvalidAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .WithHttpContext(context => context.Request.Scheme = "Test")
                         .ShouldPassFor()
                         .TheHttpRequest(request => request.Scheme == "Invalid");

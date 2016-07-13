@@ -16,8 +16,8 @@
         [Fact]
         public void VoidActionShouldNotThrowExceptionWithCorrectResponse()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomResponseAction())
                 .ShouldHave()
                 .HttpResponse(response => response
@@ -42,13 +42,13 @@
         [Fact]
         public void ActionShouldNotThrowExceptionWithCorrectResponse()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomVoidResponseAction())
                 .ShouldReturnEmpty();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomVoidResponseAction())
                 .ShouldHave()
                 .HttpResponse(response => response
@@ -75,8 +75,8 @@
             Test.AssertException<HttpResponseAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CustomResponseBodyWithBytesAction())
                         .ShouldHave()
                         .HttpResponse(response => response.WithContentLength(10));
@@ -90,8 +90,8 @@
             Test.AssertException<HttpResponseAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CustomResponseBodyWithBytesAction())
                         .ShouldHave()
                         .HttpResponse(response => response.WithContentType(ContentType.ApplicationXml));
@@ -102,8 +102,8 @@
         [Fact]
         public void WithResponseCookieBuilderShouldNotThrowExceptionWithCorrectCookie()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomVoidResponseAction())
                 .ShouldHave()
                 .HttpResponse(response => response
@@ -128,8 +128,8 @@
         [Fact]
         public void WithResponseCookieBuilderShouldNotThrowExceptionWithCorrectValuePredicate()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomVoidResponseAction())
                 .ShouldHave()
                 .HttpResponse(response => response
@@ -142,8 +142,8 @@
         [Fact]
         public void WithResponseCookieBuilderShouldNotThrowExceptionWithCorrectValueAssertions()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomVoidResponseAction())
                 .ShouldHave()
                 .HttpResponse(response => response
@@ -162,8 +162,8 @@
             Test.AssertException<HttpResponseAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CustomVoidResponseAction())
                         .ShouldHave()
                         .HttpResponse(response => response.ContainingCookie("Invalid"));
@@ -177,8 +177,8 @@
             Test.AssertException<HttpResponseAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CustomVoidResponseAction())
                         .ShouldHave()
                         .HttpResponse(response => response.ContainingCookie("TestCookie", "Invalid"));
@@ -192,8 +192,8 @@
             Test.AssertException<HttpResponseAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
+                    MyController<MvcController>
+                       .Instance()
                        .Calling(c => c.CustomVoidResponseAction())
                        .ShouldHave()
                        .HttpResponse(response => response.ContainingCookie("TestCookie", "TestCookieValue", new CookieOptions
@@ -211,8 +211,8 @@
         [Fact]
         public void ContainingCookiesShouldNotThrowExceptionWithValidCookies()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomVoidResponseAction())
                 .ShouldHave()
                 .HttpResponse(response => response.ContainingCookies(new Dictionary<string, string> { ["TestCookie"] = "TestCookieValue", ["AnotherCookie"] = "TestCookieValue" }));
@@ -221,8 +221,8 @@
         [Fact]
         public void ContainingCookiesShouldNotThrowExceptionWithValidCookiesAsObject()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomVoidResponseAction())
                 .ShouldHave()
                 .HttpResponse(response => response.ContainingCookies(new { TestCookie = "TestCookieValue", AnotherCookie = "TestCookieValue" }));
@@ -234,8 +234,8 @@
             Test.AssertException<HttpResponseAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CustomVoidResponseAction())
                         .ShouldHave()
                         .HttpResponse(response => response.ContainingCookies(new Dictionary<string, string> { ["TestCookie"] = "TestCookieValue" }));
@@ -249,8 +249,8 @@
             Test.AssertException<HttpResponseAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CustomVoidResponseAction())
                         .ShouldHave()
                         .HttpResponse(response => response.ContainingCookies(new Dictionary<string, string> { ["TestCookie"] = "TestCookieValue", ["AnotherCookie"] = "TestCookieValue", ["YetAnotherCookie"] = "TestCookieValue", }));
@@ -264,8 +264,8 @@
             Test.AssertException<HttpResponseAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.OkResultAction())
                         .ShouldHave()
                         .HttpResponse(response => response.ContainingCookie("Test"));
@@ -279,8 +279,8 @@
             Test.AssertException<HttpResponseAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CustomCookieHeadersAction(null))
                         .ShouldHave()
                         .HttpResponse(response => response.ContainingCookie("Test"));
@@ -294,8 +294,8 @@
             Test.AssertException<HttpResponseAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CustomCookieHeadersAction(string.Empty))
                         .ShouldHave()
                         .HttpResponse(response => response.ContainingCookie("Test"));
@@ -309,8 +309,8 @@
             Test.AssertException<InvalidOperationException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CustomVoidResponseAction())
                         .ShouldHave()
                         .HttpResponse(response => response
@@ -332,8 +332,8 @@
             Test.AssertException<HttpResponseAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CustomVoidResponseAction())
                         .ShouldHave()
                         .HttpResponse(response => response
@@ -356,8 +356,8 @@
             Test.AssertException<HttpResponseAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CustomVoidResponseAction())
                         .ShouldHave()
                         .HttpResponse(response => response.ContainingHeader("Invalid"));
@@ -371,8 +371,8 @@
             Test.AssertException<HttpResponseAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CustomVoidResponseAction())
                         .ShouldHave()
                         .HttpResponse(response => response
@@ -387,8 +387,8 @@
             Test.AssertException<HttpResponseAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CustomVoidResponseAction())
                         .ShouldHave()
                         .HttpResponse(response => response
@@ -400,8 +400,8 @@
         [Fact]
         public void ContainingHeaderWithMultipleValuesShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomVoidResponseAction())
                 .ShouldHave()
                 .HttpResponse(response => response.ContainingHeader("TestHeader", new List<string> { "TestHeaderValue" }));
@@ -410,8 +410,8 @@
         [Fact]
         public void ContainingHeaderWithMultipleValuesAsParamsShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomVoidResponseAction())
                 .ShouldHave()
                 .HttpResponse(response => response.ContainingHeader("TestHeader", new string[] { "TestHeaderValue" }));
@@ -423,8 +423,8 @@
             Test.AssertException<HttpResponseAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CustomVoidResponseAction())
                         .ShouldHave()
                         .HttpResponse(response => response.ContainingHeader("MultipleTestHeader", new string[] { "Invalid" }));
@@ -438,8 +438,8 @@
             Test.AssertException<HttpResponseAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CustomVoidResponseAction())
                         .ShouldHave()
                         .HttpResponse(response => response.ContainingHeader("MultipleTestHeader", new string[] { "Invalid", "Second", "Third" }));
@@ -460,8 +460,8 @@
                 ["Set-Cookie"] = new[] { "TestCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly", "AnotherCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly" },
             };
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomVoidResponseAction())
                 .ShouldHave()
                 .HttpResponse(response => response.ContainingHeaders(headers));
@@ -479,8 +479,8 @@
             Test.AssertException<HttpResponseAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CustomVoidResponseAction())
                         .ShouldHave()
                         .HttpResponse(response => response.ContainingHeaders(headers));
@@ -501,8 +501,8 @@
             Test.AssertException<HttpResponseAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CustomVoidResponseAction())
                         .ShouldHave()
                         .HttpResponse(response => response.ContainingHeaders(headers));
@@ -513,8 +513,8 @@
         [Fact]
         public void ContainingHeadersWithHeadersObjectShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomVoidResponseAction())
                 .ShouldHave()
                 .HttpResponse(response => response.ContainingHeaders(new
@@ -531,8 +531,8 @@
         [Fact]
         public void ContainingHeadersWithHeadersStringDicrionaryShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomVoidResponseAction())
                 .ShouldHave()
                 .HttpResponse(response => response.ContainingHeaders(new Dictionary<string, string>
@@ -549,8 +549,8 @@
         [Fact]
         public void ContainingHeadersWithHeadersStringValuesDicrionaryShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomVoidResponseAction())
                 .ShouldHave()
                 .HttpResponse(response => response.ContainingHeaders(new Dictionary<string, StringValues>
@@ -567,8 +567,8 @@
         [Fact]
         public void ContainingHeadersWithHeadersEnumerableDicrionaryShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomVoidResponseAction())
                 .ShouldHave()
                 .HttpResponse(response => response.ContainingHeaders(new Dictionary<string, IEnumerable<string>>
@@ -585,8 +585,8 @@
         [Fact]
         public void WithBodyAsStreamShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomResponseBodyWithBytesAction())
                 .ShouldHave()
                 .HttpResponse(response => response.WithBody(new MemoryStream(new byte[] { 1, 2, 3 })));
@@ -598,8 +598,8 @@
             Test.AssertException<HttpResponseAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CustomResponseBodyWithBytesAction())
                         .ShouldHave()
                         .HttpResponse(response => response.WithBody(new MemoryStream(new byte[] { 1, 2, 3, 4 })));
@@ -610,8 +610,8 @@
         [Fact]
         public void WithBodyOfTypeShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomResponseAction())
                 .ShouldHave()
                 .HttpResponse(response => response.WithBodyOfType<RequestModel>(ContentType.ApplicationJson));
@@ -623,8 +623,8 @@
             Test.AssertException<HttpResponseAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CustomResponseAction())
                         .ShouldHave()
                         .HttpResponse(response => response.WithBodyOfType<int>(ContentType.ApplicationJson));
@@ -635,8 +635,8 @@
         [Fact]
         public void WithBodyShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomResponseAction())
                 .ShouldHave()
                 .HttpResponse(response => response.WithBody(new RequestModel { Integer = 1, RequiredString = "Text" }, ContentType.ApplicationJson));
@@ -645,8 +645,8 @@
         [Fact]
         public void WithStringBodyShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomResponseBodyWithStringBody())
                 .ShouldHave()
                 .HttpResponse(response => response.WithStringBody("Test"));
@@ -655,8 +655,8 @@
         [Fact]
         public void WithJsonBodyShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomResponseAction())
                 .ShouldHave()
                 .HttpResponse(response => response.WithJsonBody(new RequestModel { Integer = 1, RequiredString = "Text" }));
@@ -668,8 +668,8 @@
             Test.AssertException<HttpResponseAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CustomResponseAction())
                         .ShouldHave()
                         .HttpResponse(response => response.WithJsonBody(new RequestModel { Integer = 2, RequiredString = "Text" }));
@@ -680,8 +680,8 @@
         [Fact]
         public void WithJsonBodyAsStringShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomResponseAction())
                 .ShouldHave()
                 .HttpResponse(response => response.WithJsonBody(@"{""Integer"":1,""RequiredString"":""Text""}"));

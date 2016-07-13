@@ -11,8 +11,8 @@
         [Fact]
         public void ShouldReturnForbidShouldNotThrowExceptionIfResultIsForbidWithCorrectAuthenticationScheme()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ForbidWithAuthenticationSchemes())
                 .ShouldReturn()
                 .Forbid()
@@ -25,8 +25,8 @@
             Test.AssertException<ForbidResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ForbidWithAuthenticationSchemes())
                         .ShouldReturn()
                         .Forbid()
@@ -38,8 +38,8 @@
         [Fact]
         public void ShouldReturnForbidShouldNotThrowExceptionIfResultIsForbidWithCorrectMultipleAuthenticationSchemes()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ForbidWithAuthenticationSchemes())
                 .ShouldReturn()
                 .Forbid()
@@ -52,8 +52,8 @@
             Test.AssertException<ForbidResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ForbidWithAuthenticationSchemes())
                         .ShouldReturn()
                         .Forbid()
@@ -68,8 +68,8 @@
             Test.AssertException<ForbidResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ForbidWithAuthenticationSchemes())
                         .ShouldReturn()
                         .Forbid()
@@ -81,8 +81,8 @@
         [Fact]
         public void ShouldReturnForbidShouldNotThrowExceptionIfResultIsForbidWithCorrectMultipleAuthenticationSchemesAsParams()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ForbidWithAuthenticationSchemes())
                 .ShouldReturn()
                 .Forbid()
@@ -92,8 +92,8 @@
         [Fact]
         public void ShouldReturnForbidShouldNotThrowExceptionWithValidAuthenticationProperties()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ForbidWithAuthenticationProperties())
                 .ShouldReturn()
                 .Forbid()
@@ -110,8 +110,8 @@
 
                     authenticationProperties.AllowRefresh = false;
 
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ForbidWithAuthenticationProperties())
                         .ShouldReturn()
                         .Forbid()
@@ -123,8 +123,8 @@
         [Fact]
         public void AndAlsoShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ForbidWithAuthenticationSchemes())
                 .ShouldReturn()
                 .Forbid()

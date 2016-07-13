@@ -10,8 +10,8 @@
         [Fact]
         public void NoActionAttributesShouldNotThrowExceptionWithActionContainingNoAttributes()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.OkResultAction())
                 .ShouldHave()
                 .NoActionAttributes();
@@ -20,8 +20,8 @@
         [Fact]
         public void NoActionAttributesShouldNotThrowExceptionWithVoidActionContainingNoAttributes()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.EmptyAction())
                 .ShouldHave()
                 .NoActionAttributes();
@@ -33,8 +33,8 @@
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.NormalActionWithAttributes())
                         .ShouldHave()
                         .NoActionAttributes();
@@ -48,8 +48,8 @@
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.EmptyActionWithAttributes())
                         .ShouldHave()
                         .NoActionAttributes();
@@ -60,8 +60,8 @@
         [Fact]
         public void ActionAttributesShouldNotThrowEceptionWithActionContainingAttributes()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.NormalActionWithAttributes())
                 .ShouldHave()
                 .ActionAttributes();
@@ -73,8 +73,8 @@
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.OkResultAction())
                         .ShouldHave()
                         .ActionAttributes();
@@ -85,8 +85,8 @@
         [Fact]
         public void ActionAttributesShouldNotThrowEceptionWithVoidActionContainingAttributes()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.EmptyActionWithAttributes())
                 .ShouldHave()
                 .ActionAttributes();
@@ -98,8 +98,8 @@
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.EmptyAction())
                         .ShouldHave()
                         .ActionAttributes();
@@ -110,8 +110,8 @@
         [Fact]
         public void ActionAttributesShouldNotThrowEceptionWithActionContainingNumberOfAttributes()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.NormalActionWithAttributes())
                 .ShouldHave()
                 .ActionAttributes(withTotalNumberOf: 3);
@@ -123,8 +123,8 @@
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.NormalActionWithAttributes())
                         .ShouldHave()
                         .ActionAttributes(withTotalNumberOf: 10);
@@ -138,8 +138,8 @@
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.NormalActionWithAttributes())
                         .ShouldHave()
                         .ActionAttributes(withTotalNumberOf: 1);

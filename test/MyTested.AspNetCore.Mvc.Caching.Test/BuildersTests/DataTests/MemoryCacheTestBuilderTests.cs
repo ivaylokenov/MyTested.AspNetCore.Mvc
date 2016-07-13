@@ -13,7 +13,7 @@
     {
         public MemoryCacheTestBuilderTests()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services => services.AddMemoryCache());
         }
@@ -21,8 +21,8 @@
         [Fact]
         public void ContainingEntryWithKeyShouldNotThrowExceptionWithCorrectEntry()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddMemoryCacheAction())
                 .ShouldHave()
                 .MemoryCache(cache => cache
@@ -33,30 +33,30 @@
                 .ShouldReturn()
                 .Ok();
         }
-        
+
         [Fact]
         public void ContainingEntryWithKeyShouldThrowExceptionWithIncorrectEntry()
         {
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
-                       .Calling(c => c.AddMemoryCacheAction())
-                       .ShouldHave()
-                       .MemoryCache(cache => cache.ContainingEntryWithKey("invalid"))
-                       .AndAlso()
-                       .ShouldReturn()
-                       .Ok();
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.AddMemoryCacheAction())
+                        .ShouldHave()
+                        .MemoryCache(cache => cache.ContainingEntryWithKey("invalid"))
+                        .AndAlso()
+                        .ShouldReturn()
+                        .Ok();
                 },
                 "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with the given key, but such was not found.");
         }
-        
+
         [Fact]
         public void ContainingEntryWithValueShouldNotThrowExceptionWithCorrectEntry()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddMemoryCacheAction())
                 .ShouldHave()
                 .MemoryCache(cache => cache.ContainingEntryWithValue("value"))
@@ -71,23 +71,23 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
-                       .Calling(c => c.AddMemoryCacheAction())
-                       .ShouldHave()
-                       .MemoryCache(cache => cache.ContainingEntryWithValue("invalid"))
-                       .AndAlso()
-                       .ShouldReturn()
-                       .Ok();
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.AddMemoryCacheAction())
+                        .ShouldHave()
+                        .MemoryCache(cache => cache.ContainingEntryWithValue("invalid"))
+                        .AndAlso()
+                        .ShouldReturn()
+                        .Ok();
                 },
                 "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with the provided value, but none was found.");
         }
-        
+
         [Fact]
         public void ContainingEntryOfTypeShouldNotThrowExceptionWithCorrectEntry()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddMemoryCacheAction())
                 .ShouldHave()
                 .MemoryCache(cache => cache.ContainingEntryOfType<string>())
@@ -102,23 +102,23 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
-                       .Calling(c => c.AddMemoryCacheAction())
-                       .ShouldHave()
-                       .MemoryCache(cache => cache.ContainingEntryOfType<int>())
-                       .AndAlso()
-                       .ShouldReturn()
-                       .Ok();
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.AddMemoryCacheAction())
+                        .ShouldHave()
+                        .MemoryCache(cache => cache.ContainingEntryOfType<int>())
+                        .AndAlso()
+                        .ShouldReturn()
+                        .Ok();
                 },
                 "When calling AddMemoryCacheAction action in MvcController expected memory cache to have at least one entry of Int32 type, but none was found.");
         }
-        
+
         [Fact]
         public void ContainingEntryOfTypeAndKeyShouldNotThrowExceptionWithCorrectEntry()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddMemoryCacheAction())
                 .ShouldHave()
                 .MemoryCache(cache => cache.ContainingEntryOfType<string>("test"))
@@ -133,14 +133,14 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
-                       .Calling(c => c.AddMemoryCacheAction())
-                       .ShouldHave()
-                       .MemoryCache(cache => cache.ContainingEntryOfType<string>("invalid"))
-                       .AndAlso()
-                       .ShouldReturn()
-                       .Ok();
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.AddMemoryCacheAction())
+                        .ShouldHave()
+                        .MemoryCache(cache => cache.ContainingEntryOfType<string>("invalid"))
+                        .AndAlso()
+                        .ShouldReturn()
+                        .Ok();
                 },
                 "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with the given key, but such was not found.");
         }
@@ -151,23 +151,23 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
-                       .Calling(c => c.AddMemoryCacheAction())
-                       .ShouldHave()
-                       .MemoryCache(cache => cache.ContainingEntryOfType<int>("test"))
-                       .AndAlso()
-                       .ShouldReturn()
-                       .Ok();
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.AddMemoryCacheAction())
+                        .ShouldHave()
+                        .MemoryCache(cache => cache.ContainingEntryOfType<int>("test"))
+                        .AndAlso()
+                        .ShouldReturn()
+                        .Ok();
                 },
                 "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with the given key and value of Int32 type, but in fact found String.");
         }
-        
+
         [Fact]
         public void ContainingEntryShouldNotThrowExceptionWithCorrectEntry()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddMemoryCacheAction())
                 .ShouldHave()
                 .MemoryCache(cache => cache.ContainingEntry("test", "value"))
@@ -182,14 +182,14 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
-                       .Calling(c => c.AddMemoryCacheAction())
-                       .ShouldHave()
-                       .MemoryCache(cache => cache.ContainingEntry("invalid", "value"))
-                       .AndAlso()
-                       .ShouldReturn()
-                       .Ok();
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.AddMemoryCacheAction())
+                        .ShouldHave()
+                        .MemoryCache(cache => cache.ContainingEntry("invalid", "value"))
+                        .AndAlso()
+                        .ShouldReturn()
+                        .Ok();
                 },
                 "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with the given key, but such was not found.");
         }
@@ -200,14 +200,14 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
-                       .Calling(c => c.AddMemoryCacheAction())
-                       .ShouldHave()
-                       .MemoryCache(cache => cache.ContainingEntry("test", "invalid"))
-                       .AndAlso()
-                       .ShouldReturn()
-                       .Ok();
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.AddMemoryCacheAction())
+                        .ShouldHave()
+                        .MemoryCache(cache => cache.ContainingEntry("test", "invalid"))
+                        .AndAlso()
+                        .ShouldReturn()
+                        .Ok();
                 },
                 "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with the given value, but in fact it was different.");
         }
@@ -215,8 +215,8 @@
         [Fact]
         public void ContainingEntryWithOptionsShouldNotThrowExceptionWithCorrectEntry()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddMemoryCacheAction())
                 .ShouldHave()
                 .MemoryCache(cache => cache.ContainingEntry("test", "value", new MemoryCacheEntryOptions
@@ -237,20 +237,20 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
-                       .Calling(c => c.AddMemoryCacheAction())
-                       .ShouldHave()
-                       .MemoryCache(cache => cache.ContainingEntry("test", "value", new MemoryCacheEntryOptions
-                       {
-                           AbsoluteExpiration = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
-                           AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(2),
-                           Priority = CacheItemPriority.High,
-                           SlidingExpiration = TimeSpan.FromMinutes(5)
-                       }))
-                       .AndAlso()
-                       .ShouldReturn()
-                       .Ok();
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.AddMemoryCacheAction())
+                        .ShouldHave()
+                        .MemoryCache(cache => cache.ContainingEntry("test", "value", new MemoryCacheEntryOptions
+                        {
+                            AbsoluteExpiration = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
+                            AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(2),
+                            Priority = CacheItemPriority.High,
+                            SlidingExpiration = TimeSpan.FromMinutes(5)
+                        }))
+                        .AndAlso()
+                        .ShouldReturn()
+                        .Ok();
                 },
                 "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with the given options, but in fact they were different.");
         }
@@ -258,8 +258,8 @@
         [Fact]
         public void ContainingEntriesShouldNotThrowExceptionWithCorrectValues()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddMemoryCacheAction())
                 .ShouldHave()
                 .MemoryCache(cache => cache.ContainingEntries(new Dictionary<object, object>
@@ -271,15 +271,15 @@
                 .ShouldReturn()
                 .Ok();
         }
-        
+
         [Fact]
         public void ContainingEntriesShouldThrowExceptionWithIncorrectCount()
         {
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddMemoryCacheAction())
                         .ShouldHave()
                         .MemoryCache(cache => cache.ContainingEntries(new Dictionary<object, object>
@@ -292,15 +292,15 @@
                 },
                 "When calling AddMemoryCacheAction action in MvcController expected memory cache to have 1 entry, but in fact found 2.");
         }
-        
+
         [Fact]
         public void ContainingEntriesShouldThrowExceptionWithIncorrectManyCount()
         {
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddMemoryCacheAction())
                         .ShouldHave()
                         .MemoryCache(cache => cache.ContainingEntries(new Dictionary<object, object>
@@ -315,15 +315,15 @@
                 },
                 "When calling AddMemoryCacheAction action in MvcController expected memory cache to have 3 entries, but in fact found 2.");
         }
-        
+
         [Fact]
         public void ContainingEntriesShouldThrowExceptionWithInvalidKey()
         {
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddMemoryCacheAction())
                         .ShouldHave()
                         .MemoryCache(cache => cache.ContainingEntries(new Dictionary<object, object>
@@ -337,15 +337,15 @@
                 },
                 "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with the given key, but such was not found.");
         }
-        
+
         [Fact]
         public void ContainingEntriesShouldThrowExceptionWithInvalidValue()
         {
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddMemoryCacheAction())
                         .ShouldHave()
                         .MemoryCache(cache => cache.ContainingEntries(new Dictionary<object, object>
@@ -362,7 +362,7 @@
 
         public void Dispose()
         {
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
     }
 }

@@ -11,7 +11,7 @@
         [Fact]
         public void DefaultConfigurationShouldSetMockedTempDataProvider()
         {
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
 
             var tempDataProvider = TestServiceProvider.GetService<ITempDataProvider>();
 
@@ -22,7 +22,7 @@
         [Fact]
         public void ExplicitMockedTempDataProviderShouldOverrideIt()
         {
-            MyMvc
+            MyApplication
                 .StartsFrom<DataStartup>()
                 .WithServices(services =>
                 {
@@ -34,7 +34,7 @@
             Assert.NotNull(tempDataProvider);
             Assert.IsAssignableFrom<MockedTempDataProvider>(tempDataProvider);
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
     }
 }

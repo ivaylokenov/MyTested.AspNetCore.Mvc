@@ -17,8 +17,8 @@
         [Fact]
         public void WithResponseModelShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ObjectResultWithResponse())
                 .ShouldReturn()
                 .Object()
@@ -28,8 +28,8 @@
         [Fact]
         public void WithStatusCodeShouldNotThrowExceptionWithCorrectStatusCode()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
                 .Object()
@@ -39,8 +39,8 @@
         [Fact]
         public void WithStatusCodeAsEnumShouldNotThrowExceptionWithCorrectStatusCode()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
                 .Object()
@@ -53,8 +53,8 @@
             Test.AssertException<ObjectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
                         .Object()
@@ -66,8 +66,8 @@
         [Fact]
         public void ContainingContentTypeShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
                 .Object()
@@ -77,8 +77,8 @@
         [Fact]
         public void ContainingContentTypeAsMediaTypeHeaderValueShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
                 .Object()
@@ -91,8 +91,8 @@
             Test.AssertException<ObjectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
+                    MyController<MvcController>
+                       .Instance()
                        .Calling(c => c.FullObjectResultAction())
                        .ShouldReturn()
                        .Object()
@@ -104,8 +104,8 @@
         [Fact]
         public void ContainingContentTypesAsStringValueShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
                 .Object()
@@ -119,8 +119,8 @@
         [Fact]
         public void ContainingContentTypesAsStringShouldNotThrowExceptionWithCorrectParametersValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
                 .Object()
@@ -133,8 +133,8 @@
             Test.AssertException<ObjectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
                         .Object()
@@ -153,8 +153,8 @@
             Test.AssertException<ObjectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
                         .Object()
@@ -172,8 +172,8 @@
             Test.AssertException<ObjectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
                         .Object()
@@ -190,8 +190,8 @@
         [Fact]
         public void ContainingContentTypesAsMediaTypeHeaderValueShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
                 .Object()
@@ -205,8 +205,8 @@
         [Fact]
         public void ContainingContentTypesAsMediaTypeHeaderValueShouldNotThrowExceptionWithCorrectParametersValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
                 .Object()
@@ -219,8 +219,8 @@
             Test.AssertException<ObjectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
                         .Object()
@@ -239,8 +239,8 @@
             Test.AssertException<ObjectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
                         .Object()
@@ -258,8 +258,8 @@
             Test.AssertException<ObjectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
                         .Object()
@@ -278,8 +278,8 @@
         {
             var formatter = TestObjectFactory.GetOutputFormatter();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ObjectActionWithFormatter(formatter))
                 .ShouldReturn()
                 .Object()
@@ -294,8 +294,8 @@
                 {
                     var formatter = TestObjectFactory.GetOutputFormatter();
 
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ObjectActionWithFormatter(formatter))
                         .ShouldReturn()
                         .Object()
@@ -307,8 +307,8 @@
         [Fact]
         public void ContainingOutputFormatterOfTypeShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
                 .Object()
@@ -321,8 +321,8 @@
             Test.AssertException<ObjectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
                         .Object()
@@ -334,8 +334,8 @@
         [Fact]
         public void ContainingOutputFormattersShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
                 .Object()
@@ -349,8 +349,8 @@
         [Fact]
         public void ContainingOutputFormattersShouldNotThrowExceptionWithCorrectParametersValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
                 .Object()
@@ -363,8 +363,8 @@
             Test.AssertException<ObjectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
                         .Object()
@@ -383,8 +383,8 @@
             Test.AssertException<ObjectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
                         .Object()
@@ -402,8 +402,8 @@
             Test.AssertException<ObjectResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
                         .Object()
@@ -420,8 +420,8 @@
         [Fact]
         public void AndAlsoShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
                 .Object()
@@ -433,8 +433,8 @@
         [Fact]
         public void AndProvideTheActionResultShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
                 .Object()

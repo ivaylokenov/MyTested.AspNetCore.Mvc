@@ -11,8 +11,8 @@
         [Fact]
         public void ContainingInnerExceptionOfTypeShouldNotThrowIfInnerExceptionIsCorrect()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ActionWithAggregateException())
                 .ShouldThrow()
                 .AggregateException()
@@ -25,8 +25,8 @@
             Test.AssertException<InvalidExceptionAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ActionWithAggregateException())
                         .ShouldThrow()
                         .AggregateException()
@@ -38,8 +38,8 @@
         [Fact]
         public void AndAlsoShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ActionWithAggregateException())
                 .ShouldThrow()
                 .AggregateException()

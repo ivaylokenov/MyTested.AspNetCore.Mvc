@@ -11,8 +11,8 @@
         [Fact]
         public void ThatEqualsShouldNotThrowExceptionWithProperErrorMessage()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ActionWithException())
                 .ShouldThrow()
                 .Exception()
@@ -24,8 +24,8 @@
         [Fact]
         public void ThatEqualsShouldNotThrowExceptionWithProperErrorMessageAndFirstCallingWithMessage()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ActionWithException())
                 .ShouldThrow()
                 .Exception()
@@ -40,8 +40,8 @@
             Test.AssertException<InvalidExceptionAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ActionWithException())
                         .ShouldThrow()
                         .Exception()
@@ -55,8 +55,8 @@
         [Fact]
         public void BeginningWithShouldNotThrowExceptionWithProperErrorMessage()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ActionWithException())
                 .ShouldThrow()
                 .Exception()
@@ -71,8 +71,8 @@
             Test.AssertException<InvalidExceptionAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ActionWithException())
                         .ShouldThrow()
                         .Exception()
@@ -86,8 +86,8 @@
         [Fact]
         public void EndingWithShouldNotThrowExceptionWithProperErrorMessage()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ActionWithException())
                 .ShouldThrow()
                 .Exception()
@@ -102,8 +102,8 @@
             Test.AssertException<InvalidExceptionAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ActionWithException())
                         .ShouldThrow()
                         .Exception()
@@ -117,8 +117,8 @@
         [Fact]
         public void ContainingShouldNotThrowExceptionWithProperErrorMessage()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ActionWithException())
                 .ShouldThrow()
                 .Exception()
@@ -133,8 +133,8 @@
             Test.AssertException<InvalidExceptionAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ActionWithException())
                         .ShouldThrow()
                         .Exception()

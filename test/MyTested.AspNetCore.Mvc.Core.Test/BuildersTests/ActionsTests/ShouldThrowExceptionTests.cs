@@ -11,8 +11,8 @@
         [Fact]
         public void ShouldThrowExceptionShouldCatchAndValidateThereIsException()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ActionWithException())
                 .ShouldThrow()
                 .Exception();
@@ -24,8 +24,8 @@
             Test.AssertException<ActionCallAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.OkResultAction())
                         .ShouldThrow()
                         .Exception();
@@ -36,8 +36,8 @@
         [Fact]
         public void ShouldThrowExceptionShouldCatchAndValidateTypeOfException()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ActionWithException())
                 .ShouldThrow()
                 .Exception()
@@ -50,8 +50,8 @@
             Test.AssertException<InvalidExceptionAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ActionWithException())
                         .ShouldThrow()
                         .Exception()
@@ -63,8 +63,8 @@
         [Fact]
         public void ShouldThrowAggregateExceptionShouldCatchAndValidateAggregateException()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ActionWithAggregateException())
                 .ShouldThrow()
                 .AggregateException();
@@ -76,8 +76,8 @@
             Test.AssertException<InvalidExceptionAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ActionWithException())
                         .ShouldThrow()
                         .AggregateException();
@@ -88,8 +88,8 @@
         [Fact]
         public void ShouldThrowAggregateExceptionShouldCatchAndValidateAggregateExceptionWithSpecificNumberOfInnerExceptions()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ActionWithAggregateException())
                 .ShouldThrow()
                 .AggregateException(2);
@@ -101,8 +101,8 @@
             Test.AssertException<InvalidExceptionAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ActionWithAggregateException())
                         .ShouldThrow()
                         .AggregateException(3);

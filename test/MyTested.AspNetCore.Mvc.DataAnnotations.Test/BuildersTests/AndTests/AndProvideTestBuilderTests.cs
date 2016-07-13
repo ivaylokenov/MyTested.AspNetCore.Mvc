@@ -13,8 +13,8 @@
             Test.AssertException<InvalidOperationException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.EmptyActionWithException())
                         .ShouldHave()
                         .ValidModelState()

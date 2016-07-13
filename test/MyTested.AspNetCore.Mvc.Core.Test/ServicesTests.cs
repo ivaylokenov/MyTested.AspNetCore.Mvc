@@ -36,7 +36,7 @@
         [Fact]
         public void UsesDefaultServicesShouldPopulateDefaultServices()
         {
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
 
             var markerService = TestServiceProvider.GetService<MvcMarkerService>();
 
@@ -46,7 +46,7 @@
         [Fact]
         public void IsUsingShouldAddServices()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(TestObjectFactory.GetCustomServicesRegistrationAction());
 
@@ -56,17 +56,17 @@
             Assert.NotNull(injectedService);
             Assert.NotNull(anotherInjectedService);
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void IsUsingShouldAddServicesWithOptions()
         {
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
 
             var initialSetOptions = TestServiceProvider.GetServices<IConfigureOptions<MvcOptions>>();
 
-            MyMvc.IsUsingDefaultConfiguration()
+            MyApplication.IsUsingDefaultConfiguration()
                 .WithServices(TestObjectFactory.GetCustomServicesWithOptionsRegistrationAction());
 
             var injectedService = TestServiceProvider.GetService<IInjectedService>();
@@ -80,39 +80,39 @@
             Assert.NotNull(setOptions);
             Assert.Equal(initialSetOptions.Count() + 1, setOptions.Count());
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void IsUsingWithStartUpClassShouldWorkCorrectlyWithAction()
         {
-            MyMvc.StartsFrom<CustomStartup>();
+            MyApplication.StartsFrom<CustomStartup>();
 
             var injectedService = TestServiceProvider.GetService<IInjectedService>();
 
             Assert.NotNull(injectedService);
             Assert.IsAssignableFrom(typeof(ReplaceableInjectedService), injectedService);
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void IsUsingWithStartUpClassShouldWorkCorrectlyWithFunc()
         {
-            MyMvc.StartsFrom<CustomStartupWithBuiltProvider>();
+            MyApplication.StartsFrom<CustomStartupWithBuiltProvider>();
 
             var injectedService = TestServiceProvider.GetService<IInjectedService>();
 
             Assert.NotNull(injectedService);
             Assert.IsAssignableFrom(typeof(ReplaceableInjectedService), injectedService);
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void IsUsingWithAdditionalServicesShouldUseThem()
         {
-            MyMvc
+            MyApplication
                 .StartsFrom<CustomStartup>()
                 .WithServices(services =>
                 {
@@ -124,7 +124,7 @@
             Assert.NotNull(injectedServices);
             Assert.IsAssignableFrom(typeof(InjectedService), injectedServices);
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
@@ -133,7 +133,7 @@
             Test.AssertException<InvalidOperationException>(
                 () =>
                 {
-                    MyMvc.StartsFrom<MvcController>();
+                    MyApplication.StartsFrom<MvcController>();
                     TestServiceProvider.GetService<IInjectedService>();
                 },
                 "A public method named 'ConfigureTest' or 'Configure' could not be found in the 'MyTested.AspNetCore.Mvc.Test.Setups.Controllers.MvcController' type.");
@@ -142,13 +142,13 @@
         [Fact]
         public void IsUsingShouldRecreateServicesEverytimeItIsInvoked()
         {
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
 
             var markerService = TestServiceProvider.GetService<MvcMarkerService>();
 
             Assert.NotNull(markerService);
 
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(TestObjectFactory.GetCustomServicesRegistrationAction());
 
@@ -158,7 +158,7 @@
             Assert.NotNull(injectedService);
             Assert.NotNull(anotherInjectedService);
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
 
             Test.AssertException<NullReferenceException>(
                 () =>
@@ -167,7 +167,7 @@
                 },
                 "IInjectedService could not be resolved from the services provider. Before running this test case, the service should be registered in the 'StartsFrom' method and cannot be null.");
 
-            MyMvc.IsUsingDefaultConfiguration()
+            MyApplication.IsUsingDefaultConfiguration()
                 .WithServices(TestObjectFactory.GetCustomServicesRegistrationAction());
 
             injectedService = TestServiceProvider.GetService<IInjectedService>();
@@ -176,16 +176,16 @@
             Assert.NotNull(injectedService);
             Assert.NotNull(anotherInjectedService);
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void ControllerWithoutConstructorFunctionShouldPopulateCorrectNewInstanceOfControllerType()
         {
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .ShouldPassFor()
                 .TheController(controller =>
                 {
@@ -197,8 +197,8 @@
         [Fact]
         public void ControllerWithConstructorFunctionShouldPopulateCorrectNewInstanceOfControllerType()
         {
-            MyMvc
-                .Controller(() => new MvcController(new InjectedService()))
+            MyController<MvcController>
+                .Instance(() => new MvcController(new InjectedService()))
                 .ShouldPassFor()
                 .TheController(controller =>
                 {
@@ -215,8 +215,8 @@
         {
             var instance = new MvcController();
 
-            MyMvc
-                .Controller(instance)
+            MyController<MvcController>
+                .Instance(instance)
                 .ShouldPassFor()
                 .TheController(controller =>
                 {
@@ -228,7 +228,7 @@
         [Fact]
         public void ControllerWithNoParameterlessConstructorAndWithRegisteredServicesShouldPopulateCorrectInstanceOfControllerType()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -236,8 +236,8 @@
                     services.AddTransient<IAnotherInjectedService, AnotherInjectedService>();
                 });
 
-            MyMvc
-                .Controller<NoParameterlessConstructorController>()
+            MyController<NoParameterlessConstructorController>
+                .Instance()
                 .ShouldPassFor()
                 .TheController(controller =>
                 {
@@ -248,32 +248,32 @@
                     Assert.IsAssignableFrom<AnotherInjectedService>(controller.AnotherInjectedService);
                 });
             
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void ControllerWithNoParameterlessConstructorAndNoServicesShouldThrowProperException()
         {
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
 
             Test.AssertException<UnresolvedServicesException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<NoParameterlessConstructorController>()
+                    MyController<NoParameterlessConstructorController>
+                        .Instance()
                         .Calling(c => c.OkAction())
                         .ShouldReturn()
                         .Ok();
                 },
                 "NoParameterlessConstructorController could not be instantiated because it contains no constructor taking no parameters.");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void DefaultConfigShouldSetMvc()
         {
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
 
             var service = TestServiceProvider.GetRequiredService<MvcMarkerService>();
 
@@ -283,7 +283,7 @@
         [Fact]
         public void DefaultConfigShouldSetDefaultRoutes()
         {
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
 
             var routes = TestApplication.Router as RouteCollection;
 
@@ -294,7 +294,7 @@
         [Fact]
         public void DefaultConfigAndAdditionalServicesShouldWorkCorrectly()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -305,7 +305,7 @@
 
             Assert.NotNull(service);
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
@@ -313,7 +313,7 @@
         {
             var set = false;
 
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithApplication(app =>
                 {
@@ -327,7 +327,7 @@
         [Fact]
         public void DefaultConfigAndAdditionalRoutesShouldSetOnlyThem()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithRoutes(routes =>
                 {
@@ -345,7 +345,7 @@
         [Fact]
         public void CustomStartupShouldSetServicesAndRoutesCorrectly()
         {
-            MyMvc.StartsFrom<CustomStartup>();
+            MyApplication.StartsFrom<CustomStartup>();
 
             var service = TestApplication.Services.GetRequiredService<IInjectedService>();
 
@@ -356,13 +356,13 @@
             Assert.NotNull(routes);
             Assert.Equal(2, routes.Count);
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void CustomStartupWithAdditionalServiceShouldSetThem()
         {
-            MyMvc.StartsFrom<CustomStartup>()
+            MyApplication.StartsFrom<CustomStartup>()
                 .WithServices(services =>
                 {
                     services.AddTransient<IAnotherInjectedService, AnotherInjectedService>();
@@ -377,7 +377,7 @@
             Assert.NotNull(routes);
             Assert.Equal(2, routes.Count);
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
@@ -385,7 +385,7 @@
         {
             var set = false;
 
-            MyMvc.StartsFrom<CustomStartup>()
+            MyApplication.StartsFrom<CustomStartup>()
                 .WithApplication(app =>
                 {
                     set = true;
@@ -402,13 +402,13 @@
             Assert.NotNull(routes);
             Assert.Equal(2, routes.Count);
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void WithCustomStartupAndAdditionalRoutesShouldWorkCorrectly()
         {
-            MyMvc.StartsFrom<CustomStartup>()
+            MyApplication.StartsFrom<CustomStartup>()
                 .WithRoutes(routes =>
                 {
                     routes.MapRoute(
@@ -425,13 +425,13 @@
             Assert.NotNull(routesCollection);
             Assert.Equal(3, routesCollection.Count);
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void WithoutAdditionalServicesTheDefaultActionInvokersShouldBeSet()
         {
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
 
             var services = TestApplication.Services;
             var actionInvokerProviders = services.GetServices<IActionInvokerProvider>();
@@ -454,13 +454,13 @@
             Assert.NotNull(routeModelBindingActionInvokerFactory);
             Assert.IsAssignableFrom<ModelBindingActionInvokerFactory>(routeModelBindingActionInvokerFactory);
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void WithCustomImplementationsForTheRouteTestingTheCorrectServicesShouldBeSet()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(customServices =>
                 {
@@ -490,13 +490,13 @@
             Assert.NotNull(routeModelBindingActionInvokerFactory);
             Assert.IsAssignableFrom<CustomModelBindingActionInvokerFactory>(routeModelBindingActionInvokerFactory);
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
         
         [Fact]
         public void CustomConfigureOptionsShouldNotOverrideTheDefaultTestOnes()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -512,13 +512,13 @@
             Assert.Contains(typeof(StringInputFormatter), builtOptions.Value.InputFormatters.Select(f => f.GetType()));
             Assert.Equal(1, builtOptions.Value.Conventions.Count);
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void WithoutHttpContextFactoryTheDefaultMockedHttpContextShouldBeProvided()
         {
-            MyMvc.IsUsingDefaultConfiguration()
+            MyApplication.IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
                     services.RemoveTransient<IHttpContextFactory>();
@@ -533,13 +533,13 @@
             Assert.NotNull(httpContext);
             Assert.Equal(ContentType.FormUrlEncoded, httpContext.Request.ContentType);
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void WithHttpContextFactoryShouldReturnMockedHttpContextBasedOnTheFactoryCreatedHttpContext()
         {
-            MyMvc.IsUsingDefaultConfiguration()
+            MyApplication.IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
                     services.ReplaceTransient<IHttpContextFactory, CustomHttpContextFactory>();
@@ -554,13 +554,13 @@
             Assert.NotNull(httpContext);
             Assert.Equal(ContentType.AudioVorbis, httpContext.Request.ContentType);
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void IHttpContextAccessorShouldWorkCorrectlySynchronously()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -571,16 +571,16 @@
             HttpContext firstContext = null;
             HttpContext secondContext = null;
 
-            MyMvc
-                .Controller<HttpContextController>()
+            MyController<HttpContextController>
+                .Instance()
                 .ShouldPassFor()
                 .TheController(controller =>
                 {
                     firstContext = controller.Context;
                 });
 
-            MyMvc
-                .Controller<HttpContextController>()
+            MyController<HttpContextController>
+                .Instance()
                 .ShouldPassFor()
                 .TheController(controller =>
                 {
@@ -595,13 +595,13 @@
             Assert.Equal(ContentType.AudioVorbis, firstContext.Request.ContentType);
             Assert.Equal(ContentType.AudioVorbis, secondContext.Request.ContentType);
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void IHttpContextAccessorShouldWorkCorrectlyAsynchronously()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -621,8 +621,8 @@
                     {
                         Task.Run(() =>
                         {
-                            MyMvc
-                                .Controller<HttpContextController>()
+                            MyController<HttpContextController>
+                                .Instance()
                                 .ShouldPassFor()
                                 .TheController(controller =>
                                 {
@@ -631,8 +631,8 @@
                         }),
                         Task.Run(() =>
                         {
-                            MyMvc
-                                .Controller<HttpContextController>()
+                            MyController<HttpContextController>
+                                .Instance()
                                 .ShouldPassFor()
                                 .TheController(controller =>
                                 {
@@ -641,8 +641,8 @@
                         }),
                         Task.Run(() =>
                         {
-                            MyMvc
-                                .Controller<HttpContextController>()
+                            MyController<HttpContextController>
+                                .Instance()
                                 .ShouldPassFor()
                                 .TheController(controller =>
                                 {
@@ -651,8 +651,8 @@
                         }),
                         Task.Run(() =>
                         {
-                            MyMvc
-                                .Controller<HttpContextController>()
+                            MyController<HttpContextController>
+                                .Instance()
                                 .ShouldPassFor()
                                 .TheController(controller =>
                                 {
@@ -661,8 +661,8 @@
                         }),
                         Task.Run(() =>
                         {
-                            MyMvc
-                                .Controller<HttpContextController>()
+                            MyController<HttpContextController>
+                                .Instance()
                                 .ShouldPassFor()
                                 .TheController(controller =>
                                 {
@@ -694,13 +694,13 @@
                 .GetAwaiter()
                 .GetResult();
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void WithCustomHttpContextShouldSetItToAccessor()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -710,8 +710,8 @@
             var httpContext = new DefaultHttpContext();
             httpContext.Request.ContentType = ContentType.AudioVorbis;
 
-            MyMvc
-                .Controller<HttpContextController>()
+            MyController<HttpContextController>
+                .Instance()
                 .WithHttpContext(httpContext)
                 .ShouldPassFor()
                 .TheController(controller =>
@@ -723,13 +723,13 @@
                     Assert.Equal(ContentType.AudioVorbis, controller.Context.Request.ContentType);
                 });
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void IActionContextAccessorShouldWorkCorrectlySynchronously()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -739,16 +739,16 @@
             ActionContext firstContext = null;
             ActionContext secondContext = null;
 
-            MyMvc
-                .Controller<ActionContextController>()
+            MyController<ActionContextController>
+                .Instance()
                 .ShouldPassFor()
                 .TheController(controller =>
                 {
                     firstContext = controller.Context;
                 });
 
-            MyMvc
-                .Controller<ActionContextController>()
+            MyController<ActionContextController>
+                .Instance()
                 .ShouldPassFor()
                 .TheController(controller =>
                 {
@@ -761,13 +761,13 @@
             Assert.IsAssignableFrom<MockedControllerContext>(secondContext);
             Assert.NotSame(firstContext, secondContext);
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void IActionContextAccessorShouldWorkCorrectlyAsynchronously()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -787,8 +787,8 @@
                     {
                         Task.Run(() =>
                         {
-                            MyMvc
-                                .Controller<ActionContextController>()
+                            MyController<ActionContextController>
+                                .Instance()
                                 .ShouldPassFor()
                                 .TheController(controller =>
                                 {
@@ -797,8 +797,8 @@
                         }),
                         Task.Run(() =>
                         {
-                            MyMvc
-                                .Controller<ActionContextController>()
+                            MyController<ActionContextController>
+                                .Instance()
                                 .ShouldPassFor()
                                 .TheController(controller =>
                                 {
@@ -807,8 +807,8 @@
                         }),
                         Task.Run(() =>
                         {
-                            MyMvc
-                                .Controller<ActionContextController>()
+                            MyController<ActionContextController>
+                                .Instance()
                                 .ShouldPassFor()
                                 .TheController(controller =>
                                 {
@@ -817,8 +817,8 @@
                         }),
                         Task.Run(() =>
                         {
-                            MyMvc
-                                .Controller<ActionContextController>()
+                            MyController<ActionContextController>
+                                .Instance()
                                 .ShouldPassFor()
                                 .TheController(controller =>
                                 {
@@ -827,8 +827,8 @@
                         }),
                         Task.Run(() =>
                         {
-                            MyMvc
-                                .Controller<ActionContextController>()
+                            MyController<ActionContextController>
+                                .Instance()
                                 .ShouldPassFor()
                                 .TheController(controller =>
                                 {
@@ -860,13 +860,13 @@
                 .GetAwaiter()
                 .GetResult();
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void WithCustomActionContextShouldSetItToAccessor()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -876,8 +876,8 @@
             var actionDescriptor = new ControllerActionDescriptor { DisplayName = "Test" };
             var actionContext = new ActionContext { ActionDescriptor = actionDescriptor };
 
-            MyMvc
-                .Controller<ActionContextController>()
+            MyController<ActionContextController>
+                .Instance()
                 .WithActionContext(actionContext)
                 .ShouldPassFor()
                 .TheController(controller =>
@@ -887,13 +887,13 @@
                     Assert.Equal("Test", controller.Context.ActionDescriptor.DisplayName);
                 });
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void WithCustomActionContextFuncShouldSetItToAccessor()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -902,8 +902,8 @@
 
             var actionDescriptor = new ControllerActionDescriptor { DisplayName = "Test" };
 
-            MyMvc
-                .Controller<ActionContextController>()
+            MyController<ActionContextController>
+                .Instance()
                 .WithActionContext(actionContext =>
                 {
                     actionContext.ActionDescriptor = actionDescriptor;
@@ -916,13 +916,13 @@
                     Assert.Equal("Test", controller.Context.ActionDescriptor.DisplayName);
                 });
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void WithCustomControllerContextShouldSetItToAccessor()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -932,8 +932,8 @@
             var actionDescriptor = new ControllerActionDescriptor { DisplayName = "Test" };
             var actionContext = new ControllerContext { ActionDescriptor = actionDescriptor };
 
-            MyMvc
-                .Controller<ActionContextController>()
+            MyController<ActionContextController>
+                .Instance()
                 .WithControllerContext(actionContext)
                 .ShouldPassFor()
                 .TheController(controller =>
@@ -943,80 +943,80 @@
                     Assert.Equal("Test", controller.Context.ActionDescriptor.DisplayName);
                 });
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
         
         [Fact]
         public void MockedMemoryCacheShouldNotBeRegisteredIfNoCacheIsAdded()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services => services.RemoveSingleton<IMemoryCache>());
 
             Assert.Null(TestServiceProvider.GetService<IMemoryCache>());
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
         
         [Fact]
         public void CustomTempDataProviderShouldOverrideTheMockedOne()
         {
-            MyMvc.StartsFrom<DataStartup>();
+            MyApplication.StartsFrom<DataStartup>();
 
             var tempDataProvider = TestServiceProvider.GetService<ITempDataProvider>();
 
             Assert.NotNull(tempDataProvider);
             Assert.IsAssignableFrom<CustomTempDataProvider>(tempDataProvider);
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void ScopedServicesShouldRemainThroughTheTestCase()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
                     services.TryAddScoped<IScopedService, ScopedService>();
                 });
 
-            MyMvc
-                .Controller<ServicesController>()
+            MyController<ServicesController>
+                .Instance()
                 .Calling(c => c.SetValue())
                 .ShouldReturn()
                 .ResultOfType<string>()
                 .Passing(r => r == "Scoped");
-            
-            MyMvc
-                .Controller<ServicesController>()
+
+            MyController<ServicesController>
+                .Instance()
                 .WithNoServiceFor<IScopedService>()
                 .Calling(c => c.DoNotSetValue())
                 .ShouldReturn()
                 .ResultOfType<string>()
                 .Passing(r => r == "Default");
 
-            MyMvc
-                .Controller<ServicesController>()
+            MyController<ServicesController>
+                .Instance()
                 .Calling(c => c.DoNotSetValue())
                 .ShouldReturn()
                 .ResultOfType<string>()
                 .Passing(r => r == "Constructor");
 
-            MyMvc
-                .Controller<ServicesController>()
+            MyController<ServicesController>
+                .Instance()
                 .Calling(c => c.FromServices(From.Services<IScopedService>()))
                 .ShouldReturn()
                 .ResultOfType<string>()
                 .Passing(r => r == "Constructor");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void ServiceLifeTimesShouldBeSavedCorrectly()
         {
-            MyMvc
+            MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
@@ -1041,7 +1041,7 @@
             var transientServiceLifetime = TestServiceProvider.GetServiceLifetime<IAnotherInjectedService>();
             Assert.Equal(ServiceLifetime.Transient, transientServiceLifetime);
             
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
     }
 }

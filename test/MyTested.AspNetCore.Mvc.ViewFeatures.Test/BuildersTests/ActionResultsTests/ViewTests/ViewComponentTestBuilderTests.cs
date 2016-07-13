@@ -17,8 +17,8 @@
         [Fact]
         public void WithStatusCodeAsIntShouldNotThrowExceptionWhenActionReturnsCorrectStatusCode()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomViewComponentResult())
                 .ShouldReturn()
                 .ViewComponent()
@@ -28,8 +28,8 @@
         [Fact]
         public void WithStatusCodeShouldNotThrowExceptionWhenActionReturnsCorrectStatusCode()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomViewComponentResult())
                 .ShouldReturn()
                 .ViewComponent()
@@ -42,8 +42,8 @@
             Test.AssertException<ViewResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CustomViewComponentResult())
                         .ShouldReturn()
                         .ViewComponent()
@@ -55,8 +55,8 @@
         [Fact]
         public void WithMediaTypeShouldNotThrowExceptionWithString()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomViewComponentResult())
                 .ShouldReturn()
                 .ViewComponent()
@@ -66,8 +66,8 @@
         [Fact]
         public void WithMediaTypeShouldNotThrowExceptionWithMediaTypeHeaderValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomViewComponentResult())
                 .ShouldReturn()
                 .ViewComponent()
@@ -77,8 +77,8 @@
         [Fact]
         public void WithMediaTypeShouldNotThrowExceptionWithMediaTypeHeaderValueConstant()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomViewComponentResult())
                 .ShouldReturn()
                 .ViewComponent()
@@ -91,8 +91,8 @@
             Test.AssertException<ViewResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CustomViewComponentResult())
                         .ShouldReturn()
                         .ViewComponent()
@@ -107,8 +107,8 @@
             Test.AssertException<ViewResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CustomViewComponentResult())
                         .ShouldReturn()
                         .ViewComponent()
@@ -120,8 +120,8 @@
         [Fact]
         public void WithMediaTypeShouldThrowExceptionWithNullMediaTypeHeaderValueAndNullActual()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ViewComponentResultByName())
                 .ShouldReturn()
                 .ViewComponent()
@@ -134,8 +134,8 @@
             Test.AssertException<ViewResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ViewComponentResultByName())
                         .ShouldReturn()
                         .ViewComponent()
@@ -149,8 +149,8 @@
         {
             var viewEngine = TestObjectFactory.GetViewEngine();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ViewComponentWithViewEngine(viewEngine))
                 .ShouldReturn()
                 .ViewComponent()
@@ -160,8 +160,8 @@
         [Fact]
         public void WithViewEngineShouldNotThrowExceptionWithNullViewEngine()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ViewComponentResultByName())
                 .ShouldReturn()
                 .ViewComponent()
@@ -174,8 +174,8 @@
             Test.AssertException<ViewResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .WithoutValidation()
                         .Calling(c => c.ViewComponentWithViewEngine(null))
                         .ShouldReturn()
@@ -188,8 +188,8 @@
         [Fact]
         public void WithViewEngineOfTypeShouldNotThrowExceptionWithValidViewEngine()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ViewComponentWithViewEngine(new CustomViewEngine()))
                 .ShouldReturn()
                 .ViewComponent()
@@ -202,8 +202,8 @@
             Test.AssertException<ViewResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ViewComponentWithViewEngine(new CustomViewEngine()))
                         .ShouldReturn()
                         .ViewComponent()
@@ -218,8 +218,8 @@
             Test.AssertException<ViewResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ViewComponentResultByName())
                         .ShouldReturn()
                         .ViewComponent()
@@ -231,8 +231,8 @@
         [Fact]
         public void WithArgumentShouldNotThrowExceptionWithCorrectArgumentName()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ViewComponentResultByType())
                 .ShouldReturn()
                 .ViewComponent()
@@ -242,8 +242,8 @@
         [Fact]
         public void WithArgumentOfTypeAndNameShouldNotThrowExceptionWithCorrectArgumentName()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ViewComponentResultByType())
                 .ShouldReturn()
                 .ViewComponent()
@@ -256,8 +256,8 @@
             Test.AssertException<ViewResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ViewComponentResultByType())
                         .ShouldReturn()
                         .ViewComponent()
@@ -272,8 +272,8 @@
             Test.AssertException<ViewResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ViewComponentResultByType())
                         .ShouldReturn()
                         .ViewComponent()
@@ -288,8 +288,8 @@
             Test.AssertException<ViewResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ViewComponentResultByType())
                         .ShouldReturn()
                         .ViewComponent()
@@ -303,8 +303,8 @@
         {
             var responseModels = TestObjectFactory.GetListOfResponseModels();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ViewComponentResultByType())
                 .ShouldReturn()
                 .ViewComponent()
@@ -316,8 +316,8 @@
         {
             var responseModels = TestObjectFactory.GetListOfResponseModels();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ViewComponentResultByType())
                 .ShouldReturn()
                 .ViewComponent()
@@ -330,8 +330,8 @@
             Test.AssertException<ViewResultAssertionException>(
                    () =>
                    {
-                       MyMvc
-                           .Controller<MvcController>()
+                       MyController<MvcController>
+                           .Instance()
                            .Calling(c => c.ViewComponentResultByType())
                            .ShouldReturn()
                            .ViewComponent()
@@ -345,8 +345,8 @@
         {
             var responseModels = TestObjectFactory.GetListOfResponseModels();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ViewComponentResultByType())
                 .ShouldReturn()
                 .ViewComponent()
@@ -359,8 +359,8 @@
             Test.AssertException<ViewResultAssertionException>(
                    () =>
                    {
-                       MyMvc
-                           .Controller<MvcController>()
+                       MyController<MvcController>
+                           .Instance()
                            .Calling(c => c.ViewComponentResultByType())
                            .ShouldReturn()
                            .ViewComponent()
@@ -372,8 +372,8 @@
         [Fact]
         public void WithArgumentsShouldNotThrowExceptionWithCorrectArguments()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ViewComponentResultByName())
                 .ShouldReturn()
                 .ViewComponent()
@@ -386,8 +386,8 @@
             Test.AssertException<ViewResultAssertionException>(
                     (() =>
                     {
-                        MyMvc
-                         .Controller<MvcController>()
+                        MyController<MvcController>
+                         .Instance()
                          .Calling(c => c.ViewComponentResultByName())
                          .ShouldReturn()
                          .ViewComponent()
@@ -402,8 +402,8 @@
             Test.AssertException<ViewResultAssertionException>(
                     (() =>
                     {
-                        MyMvc
-                         .Controller<MvcController>()
+                        MyController<MvcController>
+                         .Instance()
                          .Calling(c => c.ViewComponentResultByName())
                          .ShouldReturn()
                          .ViewComponent()
@@ -415,8 +415,8 @@
         [Fact]
         public void WithArgumentsShouldThrowExceptionWithCorrectArgumentsAsDictionary()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ViewComponentResultByName())
                 .ShouldReturn()
                 .ViewComponent()
@@ -426,8 +426,8 @@
         [Fact]
         public void AndAlsoShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CustomViewComponentResult())
                 .ShouldReturn()
                 .ViewComponent()
@@ -439,8 +439,8 @@
         [Fact]
         public void AndProvideTheActionResultShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ViewComponentResultByName())
                 .ShouldReturn()
                 .ViewComponent()

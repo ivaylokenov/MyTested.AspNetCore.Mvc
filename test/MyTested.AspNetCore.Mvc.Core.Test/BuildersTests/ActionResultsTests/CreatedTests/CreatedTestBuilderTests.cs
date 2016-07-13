@@ -19,8 +19,8 @@
         [Fact]
         public void AtLocationWithStringShouldNotThrowExceptionIfTheLocationIsCorrect()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CreatedAction())
                 .ShouldReturn()
                 .Created()
@@ -33,8 +33,8 @@
             Test.AssertException<CreatedResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CreatedAction())
                         .ShouldReturn()
                         .Created()
@@ -46,8 +46,8 @@
         [Fact]
         public void AtLocationWithStringShouldNotThrowExceptionIfTheLocationIsCorrectWithAssertions()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CreatedAction())
                 .ShouldReturn()
                 .Created()
@@ -63,8 +63,8 @@
             Test.AssertException<CreatedResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CreatedAction())
                         .ShouldReturn()
                         .Created()
@@ -79,8 +79,8 @@
             Test.AssertException<CreatedResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CreatedAction())
                         .ShouldReturn()
                         .Created()
@@ -92,8 +92,8 @@
         [Fact]
         public void AtLocationWithUriShouldNotThrowExceptionIfTheLocationIsCorrect()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CreatedAction())
                 .ShouldReturn()
                 .Created()
@@ -106,8 +106,8 @@
             Test.AssertException<CreatedResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CreatedAction())
                         .ShouldReturn()
                         .Created()
@@ -119,8 +119,8 @@
         [Fact]
         public void AtLocationWithBuilderShouldNotThrowExceptionIfTheLocationIsCorrect()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CreatedAction())
                 .ShouldReturn()
                 .Created()
@@ -145,8 +145,8 @@
             Test.AssertException<CreatedResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CreatedAction())
                         .ShouldReturn()
                         .Created()
@@ -170,8 +170,8 @@
         [Fact]
         public void AtActionShouldNotThrowExceptionWithCorrectActionName()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CreatedAtActionResult())
                 .ShouldReturn()
                 .Created()
@@ -184,8 +184,8 @@
             Test.AssertException<CreatedResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                    .Controller<MvcController>()
+                    MyController<MvcController>
+                    .Instance()
                     .Calling(c => c.CreatedAtActionResult())
                     .ShouldReturn()
                     .Created()
@@ -197,8 +197,8 @@
         [Fact]
         public void AtControllerShouldNotThrowExceptionWithCorrectControllerName()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CreatedAtActionResult())
                 .ShouldReturn()
                 .Created()
@@ -211,8 +211,8 @@
             Test.AssertException<CreatedResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                    .Controller<MvcController>()
+                    MyController<MvcController>
+                    .Instance()
                     .Calling(c => c.CreatedAtActionResult())
                     .ShouldReturn()
                     .Created()
@@ -224,8 +224,8 @@
         [Fact]
         public void WithRouteNameShouldNotThrowExceptionWithCorrectRouteName()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CreatedAtRouteAction())
                 .ShouldReturn()
                 .Created()
@@ -238,8 +238,8 @@
             Test.AssertException<CreatedResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CreatedAtRouteAction())
                         .ShouldReturn()
                         .Created()
@@ -251,8 +251,8 @@
         [Fact]
         public void WithRouteValueShouldNotThrowExceptionWithCorrectRouteValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CreatedAtActionResult())
                 .ShouldReturn()
                 .Created()
@@ -262,8 +262,8 @@
         [Fact]
         public void WithRouteValueWithValueShouldNotThrowExceptionWithCorrectRouteValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CreatedAtActionResult())
                 .ShouldReturn()
                 .Created()
@@ -273,8 +273,8 @@
         [Fact]
         public void WithRouteValueOfTypeWithValueShouldNotThrowExceptionWithCorrectRouteValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CreatedAtActionResult())
                 .ShouldReturn()
                 .Created()
@@ -284,8 +284,8 @@
         [Fact]
         public void WithRouteValueOfTypeWithKeyWithValueShouldNotThrowExceptionWithCorrectRouteValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CreatedAtActionResult())
                 .ShouldReturn()
                 .Created()
@@ -298,8 +298,8 @@
             Test.AssertException<CreatedResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CreatedAtActionResult())
                         .ShouldReturn()
                         .Created()
@@ -311,8 +311,8 @@
         [Fact]
         public void WithRouteValueWithValueAndKeyShouldNotThrowExceptionWithCorrectRouteValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CreatedAtActionResult())
                 .ShouldReturn()
                 .Created()
@@ -325,8 +325,8 @@
             Test.AssertException<CreatedResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CreatedAtActionResult())
                         .ShouldReturn()
                         .Created()
@@ -341,8 +341,8 @@
             Test.AssertException<CreatedResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CreatedAtActionResult())
                         .ShouldReturn()
                         .Created()
@@ -354,8 +354,8 @@
         [Fact]
         public void WithRouteValuesWithObjectShouldNotThrowExceptionWithCorrectRouteValues()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CreatedAtActionResult())
                 .ShouldReturn()
                 .Created()
@@ -368,8 +368,8 @@
             Test.AssertException<CreatedResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CreatedAtActionResult())
                         .ShouldReturn()
                         .Created()
@@ -384,8 +384,8 @@
             Test.AssertException<CreatedResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CreatedAtActionResult())
                         .ShouldReturn()
                         .Created()
@@ -399,8 +399,8 @@
         {
             var urlHelper = TestObjectFactory.GetCustomUrlHelper();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CreatedAtActionWithCustomHelperResult(urlHelper))
                 .ShouldReturn()
                 .Created()
@@ -415,8 +415,8 @@
                 {
                     var urlHelper = TestObjectFactory.GetCustomUrlHelper();
 
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CreatedAtActionWithCustomHelperResult(urlHelper))
                         .ShouldReturn()
                         .Created()
@@ -430,8 +430,8 @@
         {
             var urlHelper = TestObjectFactory.GetCustomUrlHelper();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CreatedAtActionWithCustomHelperResult(urlHelper))
                 .ShouldReturn()
                 .Created()
@@ -446,8 +446,8 @@
                 {
                     var urlHelper = TestObjectFactory.GetCustomUrlHelper();
 
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CreatedAtActionWithCustomHelperResult(urlHelper))
                         .ShouldReturn()
                         .Created()
@@ -462,8 +462,8 @@
             Test.AssertException<CreatedResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CreatedAtActionResult())
                         .ShouldReturn()
                         .Created()
@@ -478,8 +478,8 @@
             Test.AssertException<CreatedResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CreatedAtRouteAction())
                         .ShouldReturn()
                         .Created()
@@ -491,8 +491,8 @@
         [Fact]
         public void WithResponseModelOfTypeShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CreatedAction())
                 .ShouldReturn()
                 .Created()
@@ -502,58 +502,58 @@
         [Fact]
         public void AtShouldWorkCorrectlyWithCorrectActionCall()
         {
-            MyMvc.StartsFrom<RoutesStartup>();
+            MyApplication.StartsFrom<RoutesStartup>();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CreatedAtRouteAction())
                 .ShouldReturn()
                 .Created()
                 .At<NoAttributesController>(c => c.WithParameter(1));
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void AtShouldWorkCorrectlyWithCorrectTaskActionCall()
         {
-            MyMvc.StartsFrom<RoutesStartup>();
+            MyApplication.StartsFrom<RoutesStartup>();
 
             Test.AssertException<CreatedResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CreatedAtRouteAction())
                         .ShouldReturn()
                         .Created()
                         .At<MvcController>(c => c.AsyncOkResultAction());
                 },
                 "When calling CreatedAtRouteAction action in MvcController expected created result to have resolved location to '/api/test', but in fact received '/api/Redirect/WithParameter?id=1'.");
-            
-            MyMvc.IsUsingDefaultConfiguration();
+
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void AtShouldWorkCorrectlyWithCorrectVoidActionCall()
         {
-            MyMvc.StartsFrom<RoutesStartup>();
+            MyApplication.StartsFrom<RoutesStartup>();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CreatedAtRouteVoidAction())
                 .ShouldReturn()
                 .Created()
                 .At<NoAttributesController>(c => c.VoidAction());
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
         public void AndAlsoShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CreatedAtActionResult())
                 .ShouldReturn()
                 .Created()
@@ -565,8 +565,8 @@
         [Fact]
         public void WithStatusCodeShouldNotThrowExceptionWithCorrectStatusCode()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullCreatedAction())
                 .ShouldReturn()
                 .Created()
@@ -576,8 +576,8 @@
         [Fact]
         public void WithStatusCodeAsEnumShouldNotThrowExceptionWithCorrectStatusCode()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullCreatedAction())
                 .ShouldReturn()
                 .Created()
@@ -590,8 +590,8 @@
             Test.AssertException<CreatedResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullCreatedAction())
                         .ShouldReturn()
                         .Created()
@@ -603,8 +603,8 @@
         [Fact]
         public void ContainingContentTypeShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullCreatedAction())
                 .ShouldReturn()
                 .Created()
@@ -614,8 +614,8 @@
         [Fact]
         public void ContainingContentTypeAsMediaTypeHeaderValueShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullCreatedAction())
                 .ShouldReturn()
                 .Created()
@@ -628,8 +628,8 @@
             Test.AssertException<CreatedResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
+                    MyController<MvcController>
+                       .Instance()
                        .Calling(c => c.FullCreatedAction())
                        .ShouldReturn()
                        .Created()
@@ -641,8 +641,8 @@
         [Fact]
         public void ContainingContentTypesAsStringValueShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullCreatedAction())
                 .ShouldReturn()
                 .Created()
@@ -656,8 +656,8 @@
         [Fact]
         public void ContainingContentTypesAsStringShouldNotThrowExceptionWithCorrectParametersValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullCreatedAction())
                 .ShouldReturn()
                 .Created()
@@ -670,8 +670,8 @@
             Test.AssertException<CreatedResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullCreatedAction())
                         .ShouldReturn()
                         .Created()
@@ -690,8 +690,8 @@
             Test.AssertException<CreatedResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullCreatedAction())
                         .ShouldReturn()
                         .Created()
@@ -709,8 +709,8 @@
             Test.AssertException<CreatedResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullCreatedAction())
                         .ShouldReturn()
                         .Created()
@@ -727,8 +727,8 @@
         [Fact]
         public void ContainingContentTypesAsMediaTypeHeaderValueShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullCreatedAction())
                 .ShouldReturn()
                 .Created()
@@ -742,8 +742,8 @@
         [Fact]
         public void ContainingContentTypesAsMediaTypeHeaderValueShouldNotThrowExceptionWithCorrectParametersValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullCreatedAction())
                 .ShouldReturn()
                 .Created()
@@ -756,8 +756,8 @@
             Test.AssertException<CreatedResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullCreatedAction())
                         .ShouldReturn()
                         .Created()
@@ -776,8 +776,8 @@
             Test.AssertException<CreatedResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullCreatedAction())
                         .ShouldReturn()
                         .Created()
@@ -795,8 +795,8 @@
             Test.AssertException<CreatedResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullCreatedAction())
                         .ShouldReturn()
                         .Created()
@@ -815,8 +815,8 @@
         {
             var formatter = TestObjectFactory.GetOutputFormatter();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CreatedActionWithFormatter(formatter))
                 .ShouldReturn()
                 .Created()
@@ -831,8 +831,8 @@
                 {
                     var formatter = TestObjectFactory.GetOutputFormatter();
 
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.CreatedActionWithFormatter(formatter))
                         .ShouldReturn()
                         .Created()
@@ -844,8 +844,8 @@
         [Fact]
         public void ContainingOutputFormatterOfTypeShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullCreatedAction())
                 .ShouldReturn()
                 .Created()
@@ -858,8 +858,8 @@
             Test.AssertException<CreatedResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullCreatedAction())
                         .ShouldReturn()
                         .Created()
@@ -871,8 +871,8 @@
         [Fact]
         public void ContainingOutputFormattersShouldNotThrowExceptionWithCorrectValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullCreatedAction())
                 .ShouldReturn()
                 .Created()
@@ -886,8 +886,8 @@
         [Fact]
         public void ContainingOutputFormattersShouldNotThrowExceptionWithCorrectParametersValue()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.FullCreatedAction())
                 .ShouldReturn()
                 .Created()
@@ -900,8 +900,8 @@
             Test.AssertException<CreatedResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullCreatedAction())
                         .ShouldReturn()
                         .Created()
@@ -920,8 +920,8 @@
             Test.AssertException<CreatedResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullCreatedAction())
                         .ShouldReturn()
                         .Created()
@@ -939,8 +939,8 @@
             Test.AssertException<CreatedResultAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.FullCreatedAction())
                         .ShouldReturn()
                         .Created()
@@ -957,8 +957,8 @@
         [Fact]
         public void AndProvideTheActionResultShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.CreatedAction())
                 .ShouldReturn()
                 .Created()

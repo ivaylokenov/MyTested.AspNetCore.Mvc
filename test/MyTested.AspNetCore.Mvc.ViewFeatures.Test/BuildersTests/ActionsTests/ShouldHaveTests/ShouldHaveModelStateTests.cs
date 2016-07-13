@@ -13,8 +13,8 @@
         {
             var requestModelWithErrors = TestObjectFactory.GetRequestModelWithErrors();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ModelStateCheck(requestModelWithErrors))
                 .ShouldHave()
                 .ModelState(modelState => modelState.For<RequestModel>()
@@ -31,8 +31,8 @@
             Test.AssertException<InvalidOperationException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ModelStateCheck(requestModelWithErrors))
                         .ShouldHave()
                         .ModelState(modelState => modelState.For<RequestModel>()
