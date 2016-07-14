@@ -1,13 +1,37 @@
 ﻿{
-  "version": "1.0.0-*",
+  "title": "MyTested.AspNetCore.Mvc.Abstractions",
+  "description": "My Tested ASP.NET Core MVC abstractions and interfaces for testing ASP.NET Core MVC.",
+  "version": "1.0.0-preview-final",
+  "authors": [ "Ivaylo Kenov" ],
+  "packOptions": {
+    "projectUrl": "https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc",
+    "licenseUrl": "https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/master/LICENSE",
+    "iconUrl": "https://raw.githubusercontent.com/ivaylokenov/MyTested.AspNetCore.Mvc/master/tools/nuget-logo.png",
+    "owners": [ "Ivaylo Kenov" ],
+    "tags": [ "aspnetcore", "aspnetcoremvc", "testing", "unit", "tests", "fluent", "testing", "framework", "asp", "net", "core", "mvc", "test", "mymvc", "mytested" ],
+    "requireLicenseAcceptance": true,
+    "repository": {
+      "type": "git",
+      "url": "git://github.com/ivaylokenov/MyTested.AspNetCore.Mvc"
+    }
+  },
+
+  "buildOptions": {
+    "warningsAsErrors": true,
+    "xmlDoc": true,
+    "optimize": true,
+    "nowarn": [
+      "CS1591"
+    ],
+    "keyFile": "../../tools/Key.snk"
+  },
 
   "dependencies": {
-    "NETStandard.Library": "1.6.0"
+    "Microsoft.AspNetCore.Http": "1.0.0-*"
   },
 
   "frameworks": {
-    "netstandard1.6": {
-      "imports": "dnxcore50"
-    }
+    "net451": {},
+    "netstandard1.6": {}
   }
 }

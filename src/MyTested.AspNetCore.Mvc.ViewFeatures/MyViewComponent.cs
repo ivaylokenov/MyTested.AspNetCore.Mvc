@@ -19,8 +19,8 @@
         {
         }
 
-        public MyViewComponent(TViewComponent controller)
-            : this(() => controller)
+        public MyViewComponent(TViewComponent viewComponent)
+            : this(() => viewComponent)
         {
         }
 

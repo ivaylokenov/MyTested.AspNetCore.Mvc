@@ -4,6 +4,7 @@
     using Builders.Contracts.Application;
     using Builders.Contracts.Controllers;
     using Builders.Contracts.Routes;
+    using Builders.Contracts.ViewComponents;
     using Internal.Application;
 
     /// <summary>
@@ -78,6 +79,41 @@
             where TController : class
         {
             return new MyController<TController>(construction);
+        }
+
+        /// <summary>
+        /// Starts a view component test.
+        /// </summary>
+        /// <typeparam name="TViewComponent">Class representing ASP.NET Core MVC view component.</typeparam>
+        /// <returns>Test builder of <see cref="IViewComponentBuilder{TViewComponent}"/> type.</returns>
+        public static IViewComponentBuilder<TViewComponent> ViewComponent<TViewComponent>()
+            where TViewComponent : class
+        {
+            return new MyViewComponent<TViewComponent>();
+        }
+
+        /// <summary>
+        /// Starts a view component test.
+        /// </summary>
+        /// <typeparam name="TViewComponent">Class representing ASP.NET Core MVC view component.</typeparam>
+        /// <param name="viewComponent">Instance of the ASP.NET Core MVC view component to use.</param>
+        /// <returns>Test builder of <see cref="IViewComponentBuilder{TViewComponent}"/> type.</returns>
+        public static IViewComponentBuilder<TViewComponent> ViewComponent<TViewComponent>(TViewComponent viewComponent)
+            where TViewComponent : class
+        {
+            return new MyViewComponent<TViewComponent>(viewComponent);
+        }
+
+        /// <summary>
+        /// Starts a view component test.
+        /// </summary>
+        /// <typeparam name="TViewComponent">Class representing ASP.NET Core MVC view component.</typeparam>
+        /// <param name="construction">Construction function returning the instantiated view component.</param>
+        /// <returns>Test builder of <see cref="IViewComponentBuilder{TViewComponent}"/> type.</returns>
+        public static IViewComponentBuilder<TViewComponent> ViewComponent<TViewComponent>(Func<TViewComponent> construction)
+            where TViewComponent : class
+        {
+            return new MyViewComponent<TViewComponent>(construction);
         }
     }
 }

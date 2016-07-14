@@ -1040,6 +1040,19 @@
           "lib/net45/_._": {}
         }
       },
+      "MyTested.AspNetCore.Mvc.Abstractions/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "Microsoft.AspNetCore.Http": "1.0.0"
+        },
+        "compile": {
+          "net451/MyTested.AspNetCore.Mvc.Abstractions.dll": {}
+        },
+        "runtime": {
+          "net451/MyTested.AspNetCore.Mvc.Abstractions.dll": {}
+        }
+      },
       "MyTested.AspNetCore.Mvc.Core/1.0.0-preview-final": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
@@ -1049,6 +1062,7 @@
           "Microsoft.AspNetCore.TestHost": "1.0.0",
           "Microsoft.Extensions.Configuration.Binder": "1.0.0",
           "Microsoft.Extensions.Configuration.Json": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0",
           "MyTested.AspNetCore.Mvc.Licensing": "1.0.0"
         },
         "compile": {
@@ -3427,6 +3441,19 @@
           "lib/netstandard1.3/System.Xml.XDocument.dll": {}
         }
       },
+      "MyTested.AspNetCore.Mvc.Abstractions/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.6",
+        "dependencies": {
+          "Microsoft.AspNetCore.Http": "1.0.0"
+        },
+        "compile": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Abstractions.dll": {}
+        },
+        "runtime": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Abstractions.dll": {}
+        }
+      },
       "MyTested.AspNetCore.Mvc.Core/1.0.0-preview-final": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.6",
@@ -3436,6 +3463,7 @@
           "Microsoft.AspNetCore.TestHost": "1.0.0",
           "Microsoft.Extensions.Configuration.Binder": "1.0.0",
           "Microsoft.Extensions.Configuration.Json": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0",
           "MyTested.AspNetCore.Mvc.Licensing": "1.0.0"
         },
         "compile": {
@@ -7954,6 +7982,11 @@
         "ref/xamarintvos10/_._",
         "ref/xamarinwatchos10/_._"
       ]
+    },
+    "MyTested.AspNetCore.Mvc.Abstractions/1.0.0-preview-final": {
+      "type": "project",
+      "path": "../MyTested.AspNetCore.Mvc.Abstractions/project.json",
+      "msbuildProject": "../MyTested.AspNetCore.Mvc.Abstractions/MyTested.AspNetCore.Mvc.Abstractions.xproj"
     },
     "MyTested.AspNetCore.Mvc.Core/1.0.0-preview-final": {
       "type": "project",
