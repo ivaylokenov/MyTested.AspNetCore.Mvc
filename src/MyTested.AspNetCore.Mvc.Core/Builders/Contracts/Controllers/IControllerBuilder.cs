@@ -4,14 +4,13 @@
     using System.Collections.Generic;
     using System.Linq.Expressions;
     using System.Threading.Tasks;
-    using Builders.Contracts.Actions;
-    using Builders.Contracts.Authentication;
-    using Builders.Contracts.Base;
-    using Builders.Contracts.Controllers;
-    using Builders.Contracts.Http;
-    using Builders.Contracts.ShouldPassFor;
+    using Actions;
+    using Authentication;
+    using Base;
+    using Http;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using ShouldPassFor;
 
     /// <summary>
     /// Used for building the controller which will be tested.
