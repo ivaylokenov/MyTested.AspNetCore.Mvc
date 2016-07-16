@@ -25,7 +25,7 @@
         /// <inheritdoc />
         public IBaseTestBuilderWithInvokedAction ShouldReturnEmpty()
         {
-            CommonValidator.CheckForException(this.CaughtException);
+            ActionValidator.CheckForException(this.CaughtException);
             return this.NewAndProvideTestBuilder();
         }
 

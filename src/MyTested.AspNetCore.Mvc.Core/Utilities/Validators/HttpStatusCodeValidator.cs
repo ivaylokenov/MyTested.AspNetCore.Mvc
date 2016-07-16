@@ -2,7 +2,7 @@
 {
     using System;
     using System.Net;
-    using Utilities.Extensions;
+    using Extensions;
 
     /// <summary>
     /// Validator class containing HTTP status code validation logic.

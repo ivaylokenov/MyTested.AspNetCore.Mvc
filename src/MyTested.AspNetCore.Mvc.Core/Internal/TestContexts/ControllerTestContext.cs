@@ -62,7 +62,7 @@
 
             internal set
             {
-                CommonValidator.CheckForNotWhiteSpaceString(value, nameof(this.ActionName));
+                ActionValidator.CheckForNotWhiteSpaceString(value, nameof(this.ActionName));
                 this.actionName = value;
             }
         }
@@ -78,7 +78,7 @@
 
             internal set
             {
-                CommonValidator.CheckForNullReference(value, nameof(this.ActionCall));
+                ActionValidator.CheckForNullReference(value, nameof(this.ActionCall));
                 this.actionCall = value;
             }
         }
@@ -138,7 +138,7 @@
             
             internal set
             {
-                CommonValidator.CheckForNullReference(value, nameof(RouteData));
+                ActionValidator.CheckForNullReference(value, nameof(RouteData));
                 this.ControllerContext.RouteData = value;
                 base.RouteData = value;
             }
@@ -181,7 +181,7 @@
 
             set
             {
-                CommonValidator.CheckForNullReference(value, nameof(ControllerContext));
+                ActionValidator.CheckForNullReference(value, nameof(ControllerContext));
                 this.controllerContext = value;
             }
         }

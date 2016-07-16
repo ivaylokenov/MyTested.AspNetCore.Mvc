@@ -31,7 +31,7 @@
 
             set
             {
-                CommonValidator.CheckForNullReference(value, nameof(TestContext));
+                ActionValidator.CheckForNullReference(value, nameof(TestContext));
                 this.testContext = value;
             }
         }
@@ -40,8 +40,8 @@
         
         public static ControllerContext FromActionContext(HttpTestContext testContext, ActionContext actionContext)
         {
-            CommonValidator.CheckForNullReference(testContext, nameof(HttpTestContext));
-            CommonValidator.CheckForNullReference(actionContext, nameof(ActionContext));
+            ActionValidator.CheckForNullReference(testContext, nameof(HttpTestContext));
+            ActionValidator.CheckForNullReference(actionContext, nameof(ActionContext));
 
             actionContext.HttpContext = actionContext.HttpContext ?? testContext.HttpContext;
             actionContext.RouteData = actionContext.RouteData ?? testContext.RouteData ?? new RouteData();

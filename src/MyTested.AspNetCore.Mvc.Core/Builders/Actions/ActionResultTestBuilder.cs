@@ -29,7 +29,7 @@
         /// <inheritdoc />
         public IShouldHaveTestBuilder<TActionResult> ShouldHave()
         {
-            CommonValidator.CheckForException(this.CaughtException);
+            ActionValidator.CheckForException(this.CaughtException);
             return new ShouldHaveTestBuilder<TActionResult>(this.TestContext);
         }
 
@@ -52,7 +52,7 @@
         public IShouldReturnTestBuilder<TActionResult> ShouldReturn()
         {
             TestHelper.ExecuteTestCleanup();
-            CommonValidator.CheckForException(this.CaughtException);
+            ActionValidator.CheckForException(this.CaughtException);
             return new ShouldReturnTestBuilder<TActionResult>(this.TestContext);
         }
     }

@@ -32,7 +32,7 @@
         /// </summary>
         public HttpRequestBuilder(HttpContext httpContext)
         {
-            CommonValidator.CheckForNullReference(httpContext, nameof(HttpContext));
+            ActionValidator.CheckForNullReference(httpContext, nameof(HttpContext));
 
             this.request = new MockedHttpRequest(httpContext)
             {

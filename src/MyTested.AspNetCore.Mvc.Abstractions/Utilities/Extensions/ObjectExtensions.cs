@@ -7,7 +7,7 @@
     using Utilities;
 
     /// <summary>
-    /// Provides extension methods to Object class.
+    /// Provides extension methods to all objects.
     /// </summary>
     public static class ObjectExtensions
     {

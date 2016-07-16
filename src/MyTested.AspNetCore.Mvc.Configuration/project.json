@@ -1,6 +1,6 @@
 ﻿{
-  "title": "MyTested.AspNetCore.Mvc.Abstractions",
-  "description": "My Tested ASP.NET Core MVC abstractions and interfaces for testing ASP.NET Core MVC.",
+  "title": "MyTested.AspNetCore.Mvc.Configuration",
+  "description": "My Tested ASP.NET Core MVC configuration components for testing ASP.NET Core MVC.",
   "version": "1.0.0-preview-final",
   "authors": [ "Ivaylo Kenov" ],
   "packOptions": {
@@ -27,8 +27,6 @@
   },
 
   "dependencies": {
-    "Microsoft.AspNetCore.Mvc.Core": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.Licensing": "1.0.0-*"
   },
 
   "frameworks": {

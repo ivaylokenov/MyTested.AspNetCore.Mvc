@@ -34,7 +34,7 @@
         /// <inheritdoc />
         public IAndControllerBuilder<TController> WithActionContext(ActionContext actionContext)
         {
-            CommonValidator.CheckForNullReference(actionContext, nameof(ActionContext));
+            ActionValidator.CheckForNullReference(actionContext, nameof(ActionContext));
             this.TestContext.ControllerContext = MockedControllerContext.FromActionContext(this.TestContext, actionContext);
             return this;
         }

@@ -20,7 +20,7 @@
         /// <inheritdoc />
         public IAndControllerBuilder<TController> WithHttpContext(HttpContext httpContext)
         {
-            CommonValidator.CheckForNullReference(httpContext, nameof(HttpContext));
+            ActionValidator.CheckForNullReference(httpContext, nameof(HttpContext));
             this.TestContext.HttpContext = httpContext;
             return this;
         }
@@ -35,7 +35,7 @@
         /// <inheritdoc />
         public IAndControllerBuilder<TController> WithHttpRequest(HttpRequest httpRequest)
         {
-            CommonValidator.CheckForNullReference(httpRequest, nameof(HttpRequest));
+            ActionValidator.CheckForNullReference(httpRequest, nameof(HttpRequest));
             this.HttpContext.CustomRequest = httpRequest;
             return this;
         }

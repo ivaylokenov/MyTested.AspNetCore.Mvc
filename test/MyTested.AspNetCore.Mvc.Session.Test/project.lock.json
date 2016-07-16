@@ -3609,7 +3609,8 @@
         "type": "project",
         "framework": ".NETStandard,Version=v1.6",
         "dependencies": {
-          "Microsoft.AspNetCore.Http": "1.0.0"
+          "Microsoft.AspNetCore.Mvc.Core": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Licensing": "1.0.0"
         },
         "compile": {
           "netstandard1.6/MyTested.AspNetCore.Mvc.Abstractions.dll": {}
@@ -3627,8 +3628,7 @@
           "Microsoft.AspNetCore.TestHost": "1.0.0",
           "Microsoft.Extensions.Configuration.Binder": "1.0.0",
           "Microsoft.Extensions.Configuration.Json": "1.0.0",
-          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0",
-          "MyTested.AspNetCore.Mvc.Licensing": "1.0.0"
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0"
         },
         "compile": {
           "netstandard1.6/MyTested.AspNetCore.Mvc.Core.dll": {}
@@ -5278,7 +5278,8 @@
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
-          "Microsoft.AspNetCore.Http": "1.0.0"
+          "Microsoft.AspNetCore.Mvc.Core": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Licensing": "1.0.0"
         },
         "compile": {
           "net451/MyTested.AspNetCore.Mvc.Abstractions.dll": {}
@@ -5296,8 +5297,7 @@
           "Microsoft.AspNetCore.TestHost": "1.0.0",
           "Microsoft.Extensions.Configuration.Binder": "1.0.0",
           "Microsoft.Extensions.Configuration.Json": "1.0.0",
-          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0",
-          "MyTested.AspNetCore.Mvc.Licensing": "1.0.0"
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0"
         },
         "compile": {
           "net451/MyTested.AspNetCore.Mvc.Core.dll": {}

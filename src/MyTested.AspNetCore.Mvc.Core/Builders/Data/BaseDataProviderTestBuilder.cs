@@ -21,10 +21,10 @@
         protected BaseDataProviderTestBuilder(ControllerTestContext testContext, string dataProviderName)
             : base(testContext)
         {
-            CommonValidator.CheckForNotWhiteSpaceString(dataProviderName);
+            ActionValidator.CheckForNotWhiteSpaceString(dataProviderName);
             this.DataProviderName = dataProviderName;
             this.DataProvider = this.GetDataProvider();
-            CommonValidator.CheckForNullReference(this.DataProvider);
+            ActionValidator.CheckForNullReference(this.DataProvider);
         }
 
         /// <summary>

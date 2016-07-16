@@ -401,18 +401,18 @@
 
         private static void PrepareRouteServices(IServiceCollection serviceCollection)
         {
-            var modelBindingActionInvokerFactoryType = typeof(IModelBindingActionInvokerFactory);
+            var modelBindingActionInvokerFactoryServiceType = typeof(IModelBindingActionInvokerFactory);
 
-            if (serviceCollection.All(s => s.ServiceType != modelBindingActionInvokerFactoryType))
+            if (serviceCollection.All(s => s.ServiceType != modelBindingActionInvokerFactoryServiceType))
             {
                 serviceCollection.TryAddEnumerable(
                     ServiceDescriptor.Transient<IActionInvokerProvider, ModelBindingActionInvokerProvider>());
-                serviceCollection.TryAddSingleton(modelBindingActionInvokerFactoryType, typeof(ModelBindingActionInvokerFactory));
+                serviceCollection.TryAddSingleton(modelBindingActionInvokerFactoryServiceType, typeof(ModelBindingActionInvokerFactory));
             }
 
             routeServiceProvider = serviceCollection.BuildServiceProvider();
 
-            serviceCollection.RemoveSingleton(modelBindingActionInvokerFactoryType);
+            serviceCollection.RemoveSingleton(modelBindingActionInvokerFactoryServiceType);
 
             var actionInvokerProviders = serviceCollection.Where(s => s.ServiceType == typeof(IActionInvokerProvider)).ToList();
             if (actionInvokerProviders.Count > 1)

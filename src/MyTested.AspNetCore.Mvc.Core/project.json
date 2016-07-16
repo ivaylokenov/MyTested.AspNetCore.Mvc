@@ -32,8 +32,7 @@
     "Microsoft.AspNetCore.TestHost": "1.0.0-*",
     "Microsoft.Extensions.Configuration.Json": "1.0.0-*",
     "Microsoft.Extensions.Configuration.Binder": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.Licensing": "1.0.0-*"
+    "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0-*"
   },
 
   "frameworks": {

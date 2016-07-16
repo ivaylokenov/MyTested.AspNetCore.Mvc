@@ -34,7 +34,7 @@
 
             set
             {
-                CommonValidator.CheckForNullReference(value, nameof(this.TestContext));
+                ActionValidator.CheckForNullReference(value, nameof(this.TestContext));
                 this.testContext = value;
             }
         }
