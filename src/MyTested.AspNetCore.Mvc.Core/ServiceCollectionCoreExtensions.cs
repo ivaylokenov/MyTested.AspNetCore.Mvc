@@ -5,7 +5,7 @@
     using Internal.Contracts;
     using Internal.Controllers;
     using Internal.Formatters;
-    using Internal.Routes;
+    using Internal.Routing;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Abstractions;

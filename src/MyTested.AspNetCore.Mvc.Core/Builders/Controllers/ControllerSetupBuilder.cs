@@ -34,7 +34,7 @@
         /// <inheritdoc />
         public IAndControllerBuilder<TController> WithActionContext(ActionContext actionContext)
         {
-            ActionValidator.CheckForNullReference(actionContext, nameof(ActionContext));
+            CommonValidator.CheckForNullReference(actionContext, nameof(ActionContext));
             this.TestContext.ControllerContext = MockedControllerContext.FromActionContext(this.TestContext, actionContext);
             return this;
         }
@@ -72,7 +72,7 @@
                 else
                 {
                     // no custom dependencies are set, try create instance with the global services
-                    controller = TestHelper.TryCreateInstance<TController>();
+                    controller = CoreTestHelper.TryCreateInstance<TController>();
                 }
 
                 if (controller == null && !explicitDependenciesAreSet)

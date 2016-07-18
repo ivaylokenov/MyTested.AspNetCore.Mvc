@@ -5,7 +5,7 @@
     using Contracts.Routes;
     using Utilities;
     using Microsoft.AspNetCore.Routing;
-    using Internal.Routes;
+    using Internal.Routing;
     using Exceptions;
     using Utilities.Extensions;
     using System.Linq;
@@ -310,7 +310,7 @@
         public ResolvedRouteContext GetActualRouteInfo()
         {
             return this.actualRouteInfo ??
-                   (this.actualRouteInfo = InternalRouteResolver.Resolve(this.Services, this.Router, this.RouteContext));
+                   (this.actualRouteInfo = CoreRouteResolver.Resolve(this.Services, this.Router, this.RouteContext));
         }
 
         public void ThrowNewRouteAssertionException(string expected = null, string actual = null)

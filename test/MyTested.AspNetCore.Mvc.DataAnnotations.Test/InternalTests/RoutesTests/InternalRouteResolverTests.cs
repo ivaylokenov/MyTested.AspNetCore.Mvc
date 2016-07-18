@@ -4,10 +4,10 @@
     using System.Reflection;
     using Internal.Application;
     using Internal.Http;
-    using Internal.Routes;
+    using Internal.Routing;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Routing;
-    using Setups.Routes;
+    using Setups.Routing;
     using Xunit;
 
     public class InternalRouteResolverTests
@@ -15,7 +15,7 @@
         [Fact]
         public void ResolveShouldResolveCorrectlyWithPartialJsonContentBody()
         {
-            var routeInfo = InternalRouteResolver.Resolve(
+            var routeInfo = CoreRouteResolver.Resolve(
                 TestApplication.RouteServices,
                 TestApplication.Router,
                 this.GetRouteContext("/Normal/ActionWithModel/5", "POST", body: @"{""Integer"":5}",

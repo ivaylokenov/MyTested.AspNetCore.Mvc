@@ -25,7 +25,7 @@
             this.TestContext = testContext;
         }
 
-        internal HttpContext HttpContext => this.TestContext.HttpContext;
+        public HttpContext HttpContext => this.TestContext.HttpContext;
 
         /// <summary>
         /// Gets the currently used <see cref="HttpTestContext"/>.

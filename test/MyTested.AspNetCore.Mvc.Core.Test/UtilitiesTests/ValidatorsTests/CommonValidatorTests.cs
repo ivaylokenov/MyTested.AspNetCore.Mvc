@@ -48,7 +48,7 @@
         [Fact]
         public void CheckForExceptionShouldNotThrowIfExceptionNull()
         {
-            CommonValidator.CheckForException(null);
+            ActionValidator.CheckForException(null);
         }
 
         [Fact]
@@ -57,7 +57,7 @@
             Test.AssertException<ActionCallAssertionException>(
                 () =>
                 {
-                    CommonValidator.CheckForException(new NullReferenceException(string.Empty));
+                    ActionValidator.CheckForException(new NullReferenceException(string.Empty));
                 }, 
                 "NullReferenceException was thrown but was not caught or expected.");
         }
@@ -68,7 +68,7 @@
             Test.AssertException<ActionCallAssertionException>(
                 () =>
                 {
-                    CommonValidator.CheckForException(new NullReferenceException("Test"));
+                    ActionValidator.CheckForException(new NullReferenceException("Test"));
                 }, 
                 "NullReferenceException with 'Test' message was thrown but was not caught or expected.");
         }
@@ -86,7 +86,7 @@
             Test.AssertException<ActionCallAssertionException>(
                 () =>
                 {
-                    CommonValidator.CheckForException(aggregateException);
+                    ActionValidator.CheckForException(aggregateException);
                 }, 
                 "AggregateException (containing NullReferenceException with 'Null test' message, InvalidCastException with 'Cast test' message, InvalidOperationException with 'Operation test' message) was thrown but was not caught or expected.");
         }
@@ -148,7 +148,7 @@
         [Fact]
         public void CheckIfTypeCanBeNullShouldThrowExceptionWithStruct()
         {
-            Test.AssertException<ActionCallAssertionException>(
+            Test.AssertException<InvalidOperationException>(
                 () =>
                 {
                     CommonValidator.CheckIfTypeCanBeNull(typeof(int));

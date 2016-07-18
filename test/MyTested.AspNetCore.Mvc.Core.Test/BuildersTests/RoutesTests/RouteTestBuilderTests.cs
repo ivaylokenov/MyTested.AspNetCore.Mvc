@@ -8,7 +8,7 @@
     using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.AspNetCore.Mvc.Routing;
     using Setups;
-    using Setups.Routes;
+    using Setups.Routing;
     using Setups.Startups;
     using Xunit;
 

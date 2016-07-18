@@ -25,7 +25,7 @@
                 return this.mockedHttpContext;
             }
 
-            internal set
+            set
             {
                 CommonValidator.CheckForNullReference(value, nameof(HttpContext));
                 this.mockedHttpContext = MockedHttpContext.From(value);
@@ -53,7 +53,7 @@
                 return this.routeData;
             }
 
-            internal set
+            set
             {
                 CommonValidator.CheckForNullReference(value, nameof(RouteData));
                 this.routeData = value;
@@ -64,6 +64,6 @@
 
         public abstract string ExceptionMessagePrefix { get; }
 
-        internal MockedHttpContext MockedHttpContext => this.mockedHttpContext;
+        public MockedHttpContext MockedHttpContext => this.mockedHttpContext;
     }
 }

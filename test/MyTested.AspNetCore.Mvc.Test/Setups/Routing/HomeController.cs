@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Test.Setups.Routes
+﻿namespace MyTested.AspNetCore.Mvc.Test.Setups.Routing
 {
     using System;
     using System.Threading.Tasks;

@@ -1,10 +1,11 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ActionsTests.ShouldReturnTests
 {
+    using System;
     using Exceptions;
     using Setups;
     using Setups.Controllers;
     using Xunit;
-    
+
     public class ShouldReturnNullOrDefaultTests
     {
         [Fact]
@@ -20,7 +21,7 @@
         [Fact]
         public void ShouldReturnNullShouldThrowExceptionWhenReturnValueNotNullable()
         {
-            Test.AssertException<ActionCallAssertionException>(
+            Test.AssertException<InvalidOperationException>(
                 () =>
                 {
                     MyController<MvcController>
@@ -60,7 +61,7 @@
         [Fact]
         public void ShouldReturnNotNullShouldThrowExceptionWhenReturnValueNotNullable()
         {
-            Test.AssertException<ActionCallAssertionException>(
+            Test.AssertException<InvalidOperationException>(
                 () =>
                 {
                     MyController<MvcController>

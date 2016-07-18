@@ -1,8 +1,8 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.InternalTests.ControllersTests
 {
     using System;
-    using Internal.Application;
     using Internal.Controllers;
+    using Internal.Services;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Setups;

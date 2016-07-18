@@ -27,7 +27,7 @@
         /// <inheritdoc />
         public IBaseTestBuilderWithActionResult<TActionResult> Null()
         {
-            ActionValidator.CheckIfTypeCanBeNull(typeof(TActionResult));
+            CommonValidator.CheckIfTypeCanBeNull(typeof(TActionResult));
             if (!this.CheckValidDefaultValue())
             {
                 this.ThrowNewActionResultAssertionException(string.Format(
@@ -41,7 +41,7 @@
         /// <inheritdoc />
         public IBaseTestBuilderWithActionResult<TActionResult> NotNull()
         {
-            ActionValidator.CheckIfTypeCanBeNull(typeof(TActionResult));
+            CommonValidator.CheckIfTypeCanBeNull(typeof(TActionResult));
             if (this.CheckValidDefaultValue())
             {
                 this.ThrowNewActionResultAssertionException(string.Format(
@@ -54,7 +54,7 @@
 
         private bool CheckValidDefaultValue()
         {
-            return ActionValidator.CheckForDefaultValue(this.ActionResult) && this.CaughtException == null;
+            return CommonValidator.CheckForDefaultValue(this.ActionResult) && this.CaughtException == null;
         }
 
         private void ThrowNewActionResultAssertionException(string message)

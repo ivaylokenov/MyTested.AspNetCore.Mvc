@@ -36,7 +36,7 @@
                         Assert.Equal("Test", value);
                     });
                 }, 
-                "Expected action result to contain a 'InvalidValue' property to test, but in fact such property was not found.");
+                "Expected result to contain 'InvalidValue' property to test, but in fact such property was not found.");
         }
     }
 }

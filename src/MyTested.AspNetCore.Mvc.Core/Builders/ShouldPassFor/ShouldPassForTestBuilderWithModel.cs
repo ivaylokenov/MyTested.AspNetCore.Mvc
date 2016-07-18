@@ -39,7 +39,7 @@
         {
             var model = this.TestContext.ModelAs<TModel>();
 
-            ActionValidator.CheckForEqualityWithDefaultValue(model, "AndProvideTheModel can be used when there is response model from the action.");
+            CommonValidator.CheckForEqualityWithDefaultValue(model, "AndProvideTheModel can be used when there is response model from the action.");
 
             return model;
         }

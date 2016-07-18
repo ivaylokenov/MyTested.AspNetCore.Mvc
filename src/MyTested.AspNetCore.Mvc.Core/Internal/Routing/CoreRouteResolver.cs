@@ -16,7 +16,7 @@
     /// <summary>
     /// Used for resolving HTTP request to a route.
     /// </summary>
-    public static class MvcRouteResolver
+    public static class CoreRouteResolver
     {
         /// <summary>
         /// Resolves HTTP request to a route using the provided route context and the action selector and invoker services.

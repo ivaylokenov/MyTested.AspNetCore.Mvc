@@ -16,7 +16,7 @@
     /// <summary>
     /// Used for testing action attributes.
     /// </summary>
-    public class ActionAttributesTestBuilder : BaseAttributesTestBuilder, IAndActionAttributesTestBuilder
+    public class ActionAttributesTestBuilder : CoreAttributesTestBuilder, IAndActionAttributesTestBuilder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ActionAttributesTestBuilder"/> class.
@@ -26,7 +26,7 @@
             : base(testContext)
         {
         }
-
+        
         /// <inheritdoc />
         public IAndActionAttributesTestBuilder ContainingAttributeOfType<TAttribute>()
             where TAttribute : Attribute

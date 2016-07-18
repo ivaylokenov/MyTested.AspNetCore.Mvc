@@ -1,7 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.InternalTests.RoutesTests
 {
-    using Internal.Routes;
-    using Setups.Routes;
+    using Internal.Routing;
+    using Setups.Routing;
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;

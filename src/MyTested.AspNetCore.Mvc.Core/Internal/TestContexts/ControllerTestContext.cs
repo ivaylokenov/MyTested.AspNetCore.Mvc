@@ -10,7 +10,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.AspNetCore.Routing;
-    using Routes;
+    using Routing;
     using Utilities;
     using Utilities.Extensions;
     using Utilities.Validators;
@@ -62,7 +62,7 @@
 
             internal set
             {
-                ActionValidator.CheckForNotWhiteSpaceString(value, nameof(this.ActionName));
+                CommonValidator.CheckForNotWhiteSpaceString(value, nameof(this.ActionName));
                 this.actionName = value;
             }
         }
@@ -78,7 +78,7 @@
 
             internal set
             {
-                ActionValidator.CheckForNullReference(value, nameof(this.ActionCall));
+                CommonValidator.CheckForNullReference(value, nameof(this.ActionCall));
                 this.actionCall = value;
             }
         }
@@ -136,9 +136,9 @@
                 return this.expressionRouteData;
             }
             
-            internal set
+            set
             {
-                ActionValidator.CheckForNullReference(value, nameof(RouteData));
+                CommonValidator.CheckForNullReference(value, nameof(RouteData));
                 this.ControllerContext.RouteData = value;
                 base.RouteData = value;
             }
@@ -181,7 +181,7 @@
 
             set
             {
-                ActionValidator.CheckForNullReference(value, nameof(ControllerContext));
+                CommonValidator.CheckForNullReference(value, nameof(ControllerContext));
                 this.controllerContext = value;
             }
         }

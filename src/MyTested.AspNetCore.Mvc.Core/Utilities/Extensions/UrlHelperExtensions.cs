@@ -1,7 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Utilities.Extensions
 {
     using System.Linq.Expressions;
-    using Internal.Routes;
+    using Internal.Routing;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
 

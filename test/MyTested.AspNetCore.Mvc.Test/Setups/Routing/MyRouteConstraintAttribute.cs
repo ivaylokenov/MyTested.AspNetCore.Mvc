@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Test.Setups.Routes
+﻿namespace MyTested.AspNetCore.Mvc.Test.Setups.Routing
 {
     // MVC has bug - uncomment when resolved
     //using Microsoft.AspNetCore.Mvc.Routing;

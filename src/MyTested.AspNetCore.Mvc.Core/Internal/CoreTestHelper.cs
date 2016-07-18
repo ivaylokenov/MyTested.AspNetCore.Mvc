@@ -1,11 +1,11 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal
 {
-    using Application;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.AspNetCore.Mvc.Internal;
+    using Services;
 
-    public class MvcTestHelper
+    public class CoreTestHelper
     {
         /// <summary>
         /// Tries to create instance of the provided type. Returns null if not successful.

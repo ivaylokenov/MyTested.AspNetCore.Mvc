@@ -12,7 +12,7 @@
     /// </summary>
     public static class ExpressionParser
     {
-        internal const string IgnoredExpressionArgument = "!__Ignored_Expression_Value__!";
+        public const string IgnoredExpressionArgument = "!__Ignored_Expression_Value__!";
 
         private static readonly Type TypeOfWith = typeof(With);
         private static readonly Type TypeOfFrom = typeof(From);

@@ -31,7 +31,7 @@
 
             set
             {
-                ActionValidator.CheckForNullReference(value, nameof(TestContext));
+                CommonValidator.CheckForNullReference(value, nameof(TestContext));
                 this.testContext = value;
             }
         }
@@ -40,8 +40,8 @@
         
         public static ControllerContext FromActionContext(HttpTestContext testContext, ActionContext actionContext)
         {
-            ActionValidator.CheckForNullReference(testContext, nameof(HttpTestContext));
-            ActionValidator.CheckForNullReference(actionContext, nameof(ActionContext));
+            CommonValidator.CheckForNullReference(testContext, nameof(HttpTestContext));
+            CommonValidator.CheckForNullReference(actionContext, nameof(ActionContext));
 
             actionContext.HttpContext = actionContext.HttpContext ?? testContext.HttpContext;
             actionContext.RouteData = actionContext.RouteData ?? testContext.RouteData ?? new RouteData();
@@ -55,7 +55,7 @@
             this.TestContext = testContext;
             this.HttpContext = testContext.HttpContext;
             this.RouteData = testContext.RouteData ?? new RouteData();
-            TestHelper.SetActionContextToAccessor(this);
+            CoreTestHelper.SetActionContextToAccessor(this);
         }
     }
 }

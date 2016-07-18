@@ -2,6 +2,7 @@
 {
     using Internal.Application;
     using Internal.Http;
+    using Internal.Services;
     using Microsoft.AspNetCore.Session;
     using Microsoft.Extensions.DependencyInjection;
     using Setups.Common;

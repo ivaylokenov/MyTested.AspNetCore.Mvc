@@ -148,7 +148,7 @@
             }
         }
 
-        internal static TestConfiguration TestConfiguration
+        public static TestConfiguration TestConfiguration
         {
             get
             {

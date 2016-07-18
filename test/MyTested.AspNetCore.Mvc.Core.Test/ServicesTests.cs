@@ -11,7 +11,8 @@
     using Internal.Controllers;
     using Internal.Formatters;
     using Internal.Http;
-    using Internal.Routes;
+    using Internal.Routing;
+    using Internal.Services;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -473,9 +474,10 @@
             var actionInvokerProviders = services.GetServices<IActionInvokerProvider>();
             var modelBindingActionInvokerFactory = services.GetService<IModelBindingActionInvokerFactory>();
 
-            Assert.Equal(1, actionInvokerProviders.Count());
+            Assert.Equal(2, actionInvokerProviders.Count());
             Assert.True(actionInvokerProviders.Any(a => a.GetType() == typeof(ControllerActionInvokerProvider)));
-            Assert.Null(modelBindingActionInvokerFactory);
+            Assert.True(actionInvokerProviders.Any(a => a.GetType() == typeof(CustomActionInvokerProvider)));
+            Assert.NotNull(modelBindingActionInvokerFactory);
 
             var routeServices = TestApplication.RouteServices;
             var routeActionInvokerProviders = routeServices.GetServices<IActionInvokerProvider>();

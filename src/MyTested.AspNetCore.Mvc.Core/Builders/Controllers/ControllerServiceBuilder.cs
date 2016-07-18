@@ -17,7 +17,7 @@
         public IAndControllerBuilder<TController> WithServiceSetupFor<TService>(Action<TService> scopedServiceSetup)
             where TService : class
         {
-            ActionValidator.CheckForNullReference(scopedServiceSetup, nameof(scopedServiceSetup));
+            CommonValidator.CheckForNullReference(scopedServiceSetup, nameof(scopedServiceSetup));
             ServiceValidator.ValidateScopedServiceLifetime<TService>(nameof(WithServiceSetupFor));
             
             scopedServiceSetup(this.HttpContext.RequestServices.GetRequiredService<TService>());

@@ -74,7 +74,7 @@
         /// <value>Object of HttpResponse type.</value>
         public override HttpResponse Response => this.httpResponse;
 
-        internal HttpRequest CustomRequest
+        public HttpRequest CustomRequest
         {
             set { this.httpRequest = value ?? new DefaultHttpRequest(this); }
         }
