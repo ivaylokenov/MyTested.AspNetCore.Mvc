@@ -6,10 +6,6 @@
     using System.Globalization;
     using System.Linq;
     using System.Reflection;
-    using Caching;
-    using Contracts;
-    using Controllers;
-    using Formatters;
     using Licensing;
     using Logging;
     using Microsoft.AspNetCore.Builder;
@@ -17,9 +13,6 @@
     using Microsoft.AspNetCore.Hosting.Builder;
     using Microsoft.AspNetCore.Hosting.Internal;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Abstractions;
-    using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.Configuration;
@@ -30,7 +23,7 @@
     using Microsoft.Extensions.ObjectPool;
     using Microsoft.Extensions.PlatformAbstractions;
     using Plugins;
-    using Routes;
+    using Services;
     using Utilities.Extensions;
 
     public static class TestApplication
@@ -38,9 +31,13 @@
         private const string TestFrameworkName = "MyTested.AspNetCore.Mvc";
         private const string ReleaseDate = "2016-06-01";
 
-        private static readonly RequestDelegate NullHandler = c => TaskCache.CompletedTask;
-        private static readonly ISet<IDefaultRegistrationPlugin> DefaultRegistrationPlugins = new HashSet<IDefaultRegistrationPlugin>();
-        private static readonly ISet<IServiceRegistrationPlugin> ServiceRegistrationPlugins = new HashSet<IServiceRegistrationPlugin>();
+        private static readonly RequestDelegate NullHandler;
+
+        private static readonly ISet<IDefaultRegistrationPlugin> DefaultRegistrationPlugins;
+        private static readonly ISet<IServiceRegistrationPlugin> ServiceRegistrationPlugins;
+        private static readonly ISet<IRouteServiceRegistrationPlugin> RouteServiceRegistrationPlugins;
+        private static readonly ISet<IInitializationPlugin> InitializationPlugins;
+
         private static readonly object Sync;
 
         private static bool initialiazed;
@@ -58,7 +55,14 @@
 
         static TestApplication()
         {
+            NullHandler = c => TaskCache.CompletedTask;
             Sync = new object();
+
+            DefaultRegistrationPlugins = new HashSet<IDefaultRegistrationPlugin>();
+            ServiceRegistrationPlugins = new HashSet<IServiceRegistrationPlugin>();
+            RouteServiceRegistrationPlugins = new HashSet<IRouteServiceRegistrationPlugin>();
+            InitializationPlugins = new HashSet<IInitializationPlugin>();
+
             LoadPlugins();
             PrepareTestConfiguration();
             FindTestAssemblyName();
@@ -203,6 +207,18 @@
                         ServiceRegistrationPlugins.Add(servicePlugin);
                     }
 
+                    var routeServicePlugin = plugin as IRouteServiceRegistrationPlugin;
+                    if (routeServicePlugin != null)
+                    {
+                        RouteServiceRegistrationPlugins.Add(routeServicePlugin);
+                    }
+
+                    var initializationPlugin = plugin as IInitializationPlugin;
+                    if (initializationPlugin != null)
+                    {
+                        InitializationPlugins.Add(initializationPlugin);
+                    }
+
                     var httpFeatureRegistrationPlugin = plugin as IHttpFeatureRegistrationPlugin;
                     if (httpFeatureRegistrationPlugin != null)
                     {
@@ -296,10 +312,6 @@
 
             serviceCollection.AddSingleton<ObjectPoolProvider, DefaultObjectPoolProvider>();
             
-            // testing framework services
-            serviceCollection.TryAddSingleton<IValidControllersCache, ValidControllersCache>();
-            serviceCollection.TryAddSingleton<IControllerActionDescriptorCache, ControllerActionDescriptorCache>();
-
             return serviceCollection;
         }
 
@@ -344,36 +356,18 @@
                 }
                 else
                 {
-                    serviceCollection
-                        .AddMvcCore()
-                        .AddFormatterMappings()
-                        .AddJsonFormatters();
+                    serviceCollection.AddMvcCore();
                 }
             }
 
             AdditionalServices?.Invoke(serviceCollection);
-
-            // custom MVC options
-            serviceCollection.Configure<MvcOptions>(options =>
-            {
-                // add controller conventions to save all valid controller types
-                options.Conventions.Add(new ValidControllersCache());
-
-                // string input formatter helps with HTTP request processing
-                var inputFormatters = options.InputFormatters.OfType<TextInputFormatter>();
-                if (!inputFormatters.Any(f => f.SupportedMediaTypes.Contains(ContentType.TextPlain)))
-                {
-                    options.InputFormatters.Add(new StringInputFormatter());
-                }
-            });
-
+            
             TryReplaceKnownServices(serviceCollection);
             PrepareRouteServices(serviceCollection);
 
             serviceProvider = serviceCollection.BuildServiceProvider();
 
-            // this call prepares all application conventions and fills the controller action descriptor cache
-            serviceProvider.GetService<IControllerActionDescriptorCache>();
+            InitializationPlugins.ForEach(plugin => plugin.InitializationDelegate(serviceProvider));
         }
 
         private static void TryReplaceKnownServices(IServiceCollection serviceCollection)
@@ -401,24 +395,14 @@
 
         private static void PrepareRouteServices(IServiceCollection serviceCollection)
         {
-            var modelBindingActionInvokerFactoryServiceType = typeof(IModelBindingActionInvokerFactory);
+            var routeServiceCollection = new ServiceCollection().Add(serviceCollection);
 
-            if (serviceCollection.All(s => s.ServiceType != modelBindingActionInvokerFactoryServiceType))
+            foreach (var routeServiceRegistrationPlugin in RouteServiceRegistrationPlugins)
             {
-                serviceCollection.TryAddEnumerable(
-                    ServiceDescriptor.Transient<IActionInvokerProvider, ModelBindingActionInvokerProvider>());
-                serviceCollection.TryAddSingleton(modelBindingActionInvokerFactoryServiceType, typeof(ModelBindingActionInvokerFactory));
+                routeServiceRegistrationPlugin.RouteServiceRegistrationDelegate(routeServiceCollection);
             }
 
-            routeServiceProvider = serviceCollection.BuildServiceProvider();
-
-            serviceCollection.RemoveSingleton(modelBindingActionInvokerFactoryServiceType);
-
-            var actionInvokerProviders = serviceCollection.Where(s => s.ServiceType == typeof(IActionInvokerProvider)).ToList();
-            if (actionInvokerProviders.Count > 1)
-            {
-                serviceCollection.Remove(actionInvokerProviders.LastOrDefault());
-            }
+            routeServiceProvider = routeServiceCollection.BuildServiceProvider();
         }
 
         private static void PrepareApplicationAndRoutes(StartupMethods startupMethods)

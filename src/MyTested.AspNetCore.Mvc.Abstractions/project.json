@@ -27,7 +27,10 @@
   },
 
   "dependencies": {
+    "Microsoft.Extensions.Configuration.Json": "1.0.0-*",
     "Microsoft.AspNetCore.Mvc.Core": "1.0.0-*",
+    "Microsoft.AspNetCore.TestHost": "1.0.0-*",
+    "MyTested.AspNetCore.Mvc.Configuration": "1.0.0-*",
     "MyTested.AspNetCore.Mvc.Licensing": "1.0.0-*"
   },
 

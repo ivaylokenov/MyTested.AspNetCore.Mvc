@@ -27,6 +27,7 @@
   },
 
   "dependencies": {
+    "Microsoft.Extensions.Configuration.Binder": "1.0.0-*"
   },
 
   "frameworks": {

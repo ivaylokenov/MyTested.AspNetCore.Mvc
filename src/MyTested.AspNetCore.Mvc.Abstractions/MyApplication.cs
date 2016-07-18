@@ -1,6 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc
 {
-    using Builders;
+    using Builders.Application;
     using Builders.Contracts.Application;
     using Internal.Application;
     using System;

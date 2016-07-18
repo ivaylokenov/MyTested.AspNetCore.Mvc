@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using Microsoft.Extensions.Configuration;
 
-    internal class TestConfiguration
+    public class TestConfiguration
     {
         private const string TestAssemblyNameConfigKey = "TestAssemblyName";
         private const string ApplicationNameConfigKey = "ApplicationName";
@@ -21,19 +21,19 @@
             this.configuration = configuration;
         }
 
-        internal string TestAssemblyName => this.configuration[TestAssemblyNameConfigKey];
+        public string TestAssemblyName => this.configuration[TestAssemblyNameConfigKey];
 
-        internal string ApplicationName => this.configuration[ApplicationNameConfigKey];
+        public string ApplicationName => this.configuration[ApplicationNameConfigKey];
 
-        internal string EnvironmentName => this.configuration[EnvironmentNameConfigKey] ?? "Test";
+        public string EnvironmentName => this.configuration[EnvironmentNameConfigKey] ?? "Test";
 
-        internal bool AutomaticStartup => this.configuration.GetValue(AutomaticStartupConfigKey, true);
+        public bool AutomaticStartup => this.configuration.GetValue(AutomaticStartupConfigKey, true);
 
-        internal string FullStartupName => this.configuration[FullStartupNameConfigKey];
+        public string FullStartupName => this.configuration[FullStartupNameConfigKey];
 
-        internal bool ModelStateValidation => this.configuration.GetValue(ModelStateValidationConfigKey, true);
+        public bool ModelStateValidation => this.configuration.GetValue(ModelStateValidationConfigKey, true);
 
-        internal IEnumerable<string> Licenses
+        public IEnumerable<string> Licenses
         {
             get
             {
@@ -49,7 +49,7 @@
             }
         }
 
-        internal static TestConfiguration With(IConfiguration configuration)
+        public static TestConfiguration With(IConfiguration configuration)
         {
             return new TestConfiguration(configuration);
         }

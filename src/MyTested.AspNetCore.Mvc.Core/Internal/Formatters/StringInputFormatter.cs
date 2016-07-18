@@ -10,7 +10,7 @@
     {
         public StringInputFormatter()
         {
-            SupportedMediaTypes.Add(MediaTypeHeaderValue.Parse("text/plain"));
+            SupportedMediaTypes.Add(MediaTypeHeaderValue.Parse(ContentType.TextPlain));
 
             SupportedEncodings.Add(Encoding.UTF8);
             SupportedEncodings.Add(Encoding.Unicode);

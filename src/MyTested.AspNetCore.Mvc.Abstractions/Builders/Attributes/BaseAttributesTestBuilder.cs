@@ -13,13 +13,13 @@
     /// <summary>
     /// Base class for all attribute test builders.
     /// </summary>
-    public abstract class BaseAttributesTestBuilder : BaseTestBuilderWithController
+    public abstract class BaseAttributesTestBuilder : BaseTestBuilder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseAttributesTestBuilder"/> class.
         /// </summary>
-        /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
-        protected BaseAttributesTestBuilder(ControllerTestContext testContext)
+        /// <param name="testContext"><see cref="HttpTestContext"/> containing data about the currently executed assertion chain.</param>
+        protected BaseAttributesTestBuilder(HttpTestContext testContext)
             : base(testContext)
         {
             this.Validations = new List<Action<IEnumerable<object>>>();

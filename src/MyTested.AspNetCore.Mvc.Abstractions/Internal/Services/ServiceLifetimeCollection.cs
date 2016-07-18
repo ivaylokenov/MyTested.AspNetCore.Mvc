@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Internal.Application
+﻿namespace MyTested.AspNetCore.Mvc.Internal.Services
 {
     using System;
     using System.Collections.Generic;

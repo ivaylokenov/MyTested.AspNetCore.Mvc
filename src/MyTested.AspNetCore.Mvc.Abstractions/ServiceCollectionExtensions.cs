@@ -3,9 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Internal.Application;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc.Infrastructure;
+    using Internal.Services;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
     using Utilities.Extensions;
@@ -17,28 +15,6 @@
     public static class ServiceCollectionExtensions
     {
         /// <summary>
-        /// Adds <see cref="IHttpContextAccessor"/> with singleton scope to the service collection.
-        /// </summary>
-        /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
-        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
-        public static IServiceCollection AddHttpContextAccessor(this IServiceCollection serviceCollection)
-        {
-            ActionValidator.CheckForNullReference(serviceCollection, nameof(IServiceCollection));
-            return serviceCollection.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-        }
-
-        /// <summary>
-        /// Adds <see cref="IActionContextAccessor"/> with singleton scope to the service collection.
-        /// </summary>
-        /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
-        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
-        public static IServiceCollection AddActionContextAccessor(this IServiceCollection serviceCollection)
-        {
-            ActionValidator.CheckForNullReference(serviceCollection, nameof(serviceCollection));
-            return serviceCollection.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
-        }
-
-        /// <summary>
         /// Removes а service from the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
@@ -46,7 +22,7 @@
         /// <returns>The same <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection Remove(this IServiceCollection serviceCollection, Type service)
         {
-            ActionValidator.CheckForNullReference(service, nameof(service));
+            CommonValidator.CheckForNullReference(service, nameof(service));
             RemoveServices(serviceCollection, s => s.ServiceType == service);
             return serviceCollection;
         }
@@ -60,7 +36,7 @@
         /// <returns>The same <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection Remove(this IServiceCollection serviceCollection, Type service, Type implementationType)
         {
-            ActionValidator.CheckForNullReference(service, nameof(service));
+            CommonValidator.CheckForNullReference(service, nameof(service));
             RemoveServices(serviceCollection, s => s.ServiceType == service && s.ImplementationType == implementationType);
             return serviceCollection;
         }
@@ -99,7 +75,7 @@
         /// <returns>The same <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection RemoveTransient(this IServiceCollection serviceCollection, Type service)
         {
-            ActionValidator.CheckForNullReference(service, nameof(service));
+            CommonValidator.CheckForNullReference(service, nameof(service));
             RemoveServices(serviceCollection, s => s.ServiceType == service && s.Lifetime == ServiceLifetime.Transient);
             return serviceCollection;
         }
@@ -113,8 +89,8 @@
         /// <returns>The same <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection RemoveTransient(this IServiceCollection serviceCollection, Type service, Type implementationType)
         {
-            ActionValidator.CheckForNullReference(service, nameof(service));
-            ActionValidator.CheckForNullReference(implementationType, nameof(implementationType));
+            CommonValidator.CheckForNullReference(service, nameof(service));
+            CommonValidator.CheckForNullReference(implementationType, nameof(implementationType));
             RemoveServices(serviceCollection, s => s.ServiceType == service && s.ImplementationType == implementationType && s.Lifetime == ServiceLifetime.Transient);
             return serviceCollection;
         }
@@ -153,7 +129,7 @@
         /// <returns>The same <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection RemoveSingleton(this IServiceCollection serviceCollection, Type service)
         {
-            ActionValidator.CheckForNullReference(service, nameof(service));
+            CommonValidator.CheckForNullReference(service, nameof(service));
             RemoveServices(serviceCollection, s => s.ServiceType == service && s.Lifetime == ServiceLifetime.Singleton);
             return serviceCollection;
         }
@@ -167,8 +143,8 @@
         /// <returns>The same <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection RemoveSingleton(this IServiceCollection serviceCollection, Type service, Type implementationType)
         {
-            ActionValidator.CheckForNullReference(service, nameof(service));
-            ActionValidator.CheckForNullReference(implementationType, nameof(implementationType));
+            CommonValidator.CheckForNullReference(service, nameof(service));
+            CommonValidator.CheckForNullReference(implementationType, nameof(implementationType));
             RemoveServices(serviceCollection, s => s.ServiceType == service && s.ImplementationType == implementationType && s.Lifetime == ServiceLifetime.Singleton);
             return serviceCollection;
         }
@@ -207,7 +183,7 @@
         /// <returns>The same <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection RemoveScoped(this IServiceCollection serviceCollection, Type service)
         {
-            ActionValidator.CheckForNullReference(service, nameof(service));
+            CommonValidator.CheckForNullReference(service, nameof(service));
             RemoveServices(serviceCollection, s => s.ServiceType == service && s.Lifetime == ServiceLifetime.Scoped);
             return serviceCollection;
         }
@@ -221,8 +197,8 @@
         /// <returns>The same <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection RemoveScoped(this IServiceCollection serviceCollection, Type service, Type implementationType)
         {
-            ActionValidator.CheckForNullReference(service, nameof(service));
-            ActionValidator.CheckForNullReference(implementationType, nameof(implementationType));
+            CommonValidator.CheckForNullReference(service, nameof(service));
+            CommonValidator.CheckForNullReference(implementationType, nameof(implementationType));
             RemoveServices(serviceCollection, s => s.ServiceType == service && s.ImplementationType == implementationType && s.Lifetime == ServiceLifetime.Scoped);
             return serviceCollection;
         }
@@ -321,7 +297,7 @@
         /// <returns>The same <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection ReplaceLifetime(this IServiceCollection serviceCollection, Type service, ServiceLifetime lifetime)
         {
-            ActionValidator.CheckForNullReference(serviceCollection, nameof(serviceCollection));
+            CommonValidator.CheckForNullReference(serviceCollection, nameof(serviceCollection));
 
             serviceCollection
                 .Where(s => s.ServiceType == service)
@@ -353,7 +329,7 @@
         {
             return serviceCollection.ReplaceLifetime(typeof(TService), lifetime);
         }
-        
+
         /// <summary>
         /// Replaces a transient service in the <see cref="IServiceCollection"/>.
         /// </summary>
@@ -553,7 +529,7 @@
         /// <param name="descriptor"><see cref="ServiceDescriptor"/> providing the services.</param>
         public static void ReplaceEnumerable(this IServiceCollection serviceCollection, ServiceDescriptor descriptor)
         {
-            ActionValidator.CheckForNullReference(descriptor, nameof(descriptor));
+            CommonValidator.CheckForNullReference(descriptor, nameof(descriptor));
             RemoveServices(serviceCollection, s => s.ServiceType == descriptor.ServiceType && s.Lifetime == descriptor.Lifetime);
             serviceCollection.TryAddEnumerable(descriptor);
         }
@@ -565,13 +541,13 @@
         /// <param name="descriptors"><see cref="ServiceDescriptor"/> providing the services.</param>
         public static void ReplaceEnumerable(this IServiceCollection serviceCollection, IEnumerable<ServiceDescriptor> descriptors)
         {
-            ActionValidator.CheckForNullReference(descriptors, nameof(descriptors));
+            CommonValidator.CheckForNullReference(descriptors, nameof(descriptors));
             descriptors.ForEach(serviceCollection.ReplaceEnumerable);
         }
 
         private static void RemoveServices(IServiceCollection serviceCollection, Func<ServiceDescriptor, bool> predicate)
         {
-            ActionValidator.CheckForNullReference(serviceCollection, nameof(IServiceCollection));
+            CommonValidator.CheckForNullReference(serviceCollection, nameof(IServiceCollection));
 
             serviceCollection
                 .Where(predicate)

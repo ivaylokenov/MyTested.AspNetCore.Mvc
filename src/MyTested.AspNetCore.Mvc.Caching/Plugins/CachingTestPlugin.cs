@@ -2,9 +2,9 @@
 {
     using System;
     using Internal;
-    using Internal.Application;
     using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.DependencyInjection;
+    using Internal.Services;
 
     public class CachingTestPlugin : IServiceRegistrationPlugin
     {

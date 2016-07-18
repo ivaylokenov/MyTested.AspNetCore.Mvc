@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Builders
+﻿namespace MyTested.AspNetCore.Mvc.Builders.Application
 {
     using System;
     using Contracts.Application;
