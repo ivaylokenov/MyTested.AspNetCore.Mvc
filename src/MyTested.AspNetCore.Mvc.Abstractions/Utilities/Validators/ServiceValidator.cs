@@ -1,7 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Utilities.Validators
 {
     using System;
-    using Internal.Application;
+    using Internal.Services;
     using Microsoft.Extensions.DependencyInjection;
 
     /// <summary>
@@ -14,7 +14,7 @@
         /// </summary>
         public static void ValidateServices()
         {
-            ActionValidator.CheckForNullReference(
+            CommonValidator.CheckForNullReference(
                 TestServiceProvider.Global,
                 "'StartsFrom' method should be called before running this test case. MyMvc must be configured and services");
         }
@@ -26,7 +26,7 @@
         /// <param name="service">Service object to validate.</param>
         public static void ValidateServiceExists<TService>(TService service)
         {
-            ActionValidator.CheckForNullReference(
+            CommonValidator.CheckForNullReference(
                 service,
                 $"{typeof(TService).Name} could not be resolved from the services provider. Before running this test case, the service should be registered in the 'StartsFrom' method and");
         }
@@ -63,7 +63,7 @@
         /// <param name="contentType">Content type for which a formatter was not resolved.</param>
         public static void ValidateFormatterExists(object formatter, string contentType)
         {
-            ActionValidator.CheckForNullReference(
+            CommonValidator.CheckForNullReference(
                 formatter,
                 $"Formatter able to process '{contentType}' could not be resolved from the services provider. Before running this test case, the formatter should be registered in the 'StartsFrom' method and");
         }

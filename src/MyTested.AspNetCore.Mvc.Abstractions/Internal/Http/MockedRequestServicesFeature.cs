@@ -1,10 +1,10 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.Http
 {
     using System;
-    using Application;
     using Microsoft.AspNetCore.Http.Features;
     using Microsoft.Extensions.DependencyInjection;
-    
+    using Services;
+
     /// <summary>
     /// Mocked request services feature.
     /// </summary>

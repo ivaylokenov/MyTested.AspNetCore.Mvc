@@ -42,7 +42,7 @@
         private MockedHttpContext(HttpContext context)
             : this(context.Features)
         {
-            ActionValidator.CheckForNullReference(context, nameof(HttpContext));
+            CommonValidator.CheckForNullReference(context, nameof(HttpContext));
 
             this.PrepareFeatures();
 

@@ -1,10 +1,9 @@
-﻿namespace MyTested.AspNetCore.Mvc.Internal.Routes
+﻿namespace MyTested.AspNetCore.Mvc.Internal.Routing
 {
     using System;
     using System.Linq;
     using System.Threading.Tasks;
     using Contracts;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Abstractions;
     using Microsoft.AspNetCore.Mvc.Controllers;
@@ -17,7 +16,7 @@
     /// <summary>
     /// Used for resolving HTTP request to a route.
     /// </summary>
-    public static class InternalRouteResolver
+    public static class MvcRouteResolver
     {
         /// <summary>
         /// Resolves HTTP request to a route using the provided route context and the action selector and invoker services.
@@ -30,7 +29,7 @@
         {
             try
             {
-                ResolveRouteData(router, routeContext);
+                RouteDataResolver.ResolveRouteData(router, routeContext);
             }
             catch (Exception ex)
             {
@@ -102,27 +101,6 @@
                 modelBindingActionInvoker.BoundActionArguments,
                 actionContext.RouteData,
                 actionContext.ModelState);
-        }
-
-        public static RouteData ResolveRouteData(IRouter router, HttpContext httpContext)
-        {
-            return ResolveRouteData(router, new RouteContext(httpContext));
-        }
-
-        public static RouteData ResolveRouteData(IRouter router, RouteContext routeContext)
-        {
-            var path = routeContext.HttpContext.Request?.Path;
-            if (path == null || !path.HasValue || path.Value == string.Empty)
-            {
-                return null;
-            }
-            
-            AsyncHelper.RunSync(() => router.RouteAsync(routeContext));
-
-            var routeData = routeContext.RouteData;
-            routeContext.HttpContext.SetRouteData(routeData);
-
-            return routeData;
         }
     }
 }

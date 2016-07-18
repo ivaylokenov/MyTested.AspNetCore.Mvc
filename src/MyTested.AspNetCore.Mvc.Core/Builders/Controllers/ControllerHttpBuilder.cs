@@ -8,7 +8,7 @@
     using Contracts.Http;
     using Http;
     using Internal.Application;
-    using Internal.Routes;
+    using Internal.Routing;
     using Microsoft.AspNetCore.Http;
     using Utilities.Validators;
 
@@ -20,7 +20,7 @@
         /// <inheritdoc />
         public IAndControllerBuilder<TController> WithHttpContext(HttpContext httpContext)
         {
-            ActionValidator.CheckForNullReference(httpContext, nameof(HttpContext));
+            CommonValidator.CheckForNullReference(httpContext, nameof(HttpContext));
             this.TestContext.HttpContext = httpContext;
             return this;
         }
@@ -35,7 +35,7 @@
         /// <inheritdoc />
         public IAndControllerBuilder<TController> WithHttpRequest(HttpRequest httpRequest)
         {
-            ActionValidator.CheckForNullReference(httpRequest, nameof(HttpRequest));
+            CommonValidator.CheckForNullReference(httpRequest, nameof(HttpRequest));
             this.HttpContext.CustomRequest = httpRequest;
             return this;
         }

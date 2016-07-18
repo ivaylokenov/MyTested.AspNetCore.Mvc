@@ -1,6 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc
 {
-    using Internal.Application;
+    using Internal.Services;
 
     /// <summary>
     /// Provides easy resolving of expression method argument values from the application <see cref="System.IServiceProvider"/>.

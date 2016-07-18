@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Internal.Routes
+﻿namespace MyTested.AspNetCore.Mvc.Internal.Routing
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;

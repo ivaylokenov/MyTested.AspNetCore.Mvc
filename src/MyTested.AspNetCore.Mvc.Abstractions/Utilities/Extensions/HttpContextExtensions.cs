@@ -1,6 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Utilities.Extensions
 {
-    using Internal.Routes;
+    using Internal.Routing;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Routing;
 

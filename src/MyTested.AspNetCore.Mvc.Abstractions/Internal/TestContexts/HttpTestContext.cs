@@ -4,7 +4,7 @@
     using Http;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Routing;
-    using Routes;
+    using Routing;
     using Utilities.Validators;
 
     public abstract class HttpTestContext
@@ -46,7 +46,7 @@
                     this.routeData = this.HttpContext.GetRouteData();
                     if (this.routeData == null)
                     {
-                        this.routeData = InternalRouteResolver.ResolveRouteData(TestApplication.Router, this.HttpContext);
+                        this.routeData = RouteDataResolver.ResolveRouteData(TestApplication.Router, this.HttpContext);
                     }
                 }
                 
