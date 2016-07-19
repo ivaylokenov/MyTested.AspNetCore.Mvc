@@ -21,11 +21,12 @@
         private ControllerContext controllerContext;
         private IEnumerable<object> controllerAttributes;
         private string actionName;
+        private MethodInfo action;
         private LambdaExpression actionCall;
         private IEnumerable<object> actionAttributes;
         private object model;
         private RouteData expressionRouteData;
-        
+
         public object Controller
         {
             get
@@ -66,7 +67,18 @@
             }
         }
 
-        public MethodInfo Action => ExpressionParser.GetMethodInfo(this.ActionCall);
+        public MethodInfo Action
+        {
+            get
+            {
+                if (this.action == null)
+                {
+                    this.action = ExpressionParser.GetMethodInfo(this.ActionCall);
+                }
+
+                return this.action;
+            }
+        }
 
         public LambdaExpression ActionCall
         {
@@ -134,7 +146,7 @@
 
                 return this.expressionRouteData;
             }
-            
+
             set
             {
                 CommonValidator.CheckForNullReference(value, nameof(RouteData));
@@ -144,11 +156,11 @@
         }
 
         public ModelStateDictionary ModelState => this.ControllerContext.ModelState;
-        
+
         public override string ExceptionMessagePrefix => $"When calling {this.ActionName} action in {this.Controller.GetName()} expected";
 
         internal Func<object> ControllerConstruction { get; set; }
-        
+
         internal ControllerContext ControllerContext
         {
             get
@@ -161,7 +173,7 @@
                         this.controllerContext.RouteData = this.RouteData ?? this.controllerContext.RouteData;
                     }
                 }
-                
+
                 return this.controllerContext;
             }
 

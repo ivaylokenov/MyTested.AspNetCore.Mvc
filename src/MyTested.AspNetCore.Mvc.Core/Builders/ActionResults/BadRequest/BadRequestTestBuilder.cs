@@ -60,9 +60,9 @@
             if (actualResult == null)
             {
                 throw new ResponseModelAssertionException(string.Format(
-                        "When calling {0} action in {1} expected bad request result to not have error message, but in fact such was found.",
-                        this.ActionName,
-                        this.Controller.GetName()));
+                    "When calling {0} action in {1} expected bad request result to not have error message, but in fact such was found.",
+                    this.ActionName,
+                    this.Controller.GetName()));
             }
 
             return this;
