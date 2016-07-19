@@ -18,7 +18,6 @@
     public class ControllerTestContext : HttpTestContext
     {
         private object controller;
-        private ControllerPropertyHelper controllerProperties;
         private ControllerContext controllerContext;
         private IEnumerable<object> controllerAttributes;
         private string actionName;
@@ -150,19 +149,6 @@
 
         internal Func<object> ControllerConstruction { get; set; }
         
-        internal ControllerPropertyHelper ControllerProperties
-        {
-            get
-            {
-                if (this.controllerProperties == null)
-                {
-                    this.controllerProperties = ControllerPropertyHelper.GetProperties(this.Controller.GetType());
-                }
-
-                return this.controllerProperties;
-            }
-        }
-
         internal ControllerContext ControllerContext
         {
             get

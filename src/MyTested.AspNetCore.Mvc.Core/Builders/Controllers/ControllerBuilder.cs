@@ -20,7 +20,7 @@
     /// Used for building the controller which will be tested.
     /// </summary>
     /// <typeparam name="TController">Class representing ASP.NET Core MVC controller.</typeparam>
-    public partial class ControllerBuilder<TController> : BaseTestBuilder, IAndControllerBuilder<TController>
+    public partial class ControllerBuilder<TController> : BaseTestBuilderWithComponent<IAndControllerBuilder<TController>>, IAndControllerBuilder<TController>
         where TController : class
     {
         private readonly IDictionary<Type, object> aggregatedServices;
@@ -40,6 +40,7 @@
         public ControllerBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
+            this.Builder = this;
             this.TestContext = testContext;
 
             this.enabledValidation = TestApplication.TestConfiguration.ModelStateValidation;
