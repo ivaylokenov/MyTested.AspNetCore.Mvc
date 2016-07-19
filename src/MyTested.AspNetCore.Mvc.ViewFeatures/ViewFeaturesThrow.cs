@@ -16,7 +16,7 @@
             throw new ViewResultAssertionException(string.Format(
                 "When calling {0} action in {1} expected {2} result to be {3}, but instead received {4}.",
                 baseTestBuilderWithInvokedAction.ActionName,
-                baseTestBuilderWithInvokedAction.Controller.GetName(),
+                baseTestBuilderWithInvokedAction.Component.GetName(),
                 viewType,
                 ViewTestHelper.GetFriendlyViewName(expectedViewName),
                 ViewTestHelper.GetFriendlyViewName(actualViewName)));

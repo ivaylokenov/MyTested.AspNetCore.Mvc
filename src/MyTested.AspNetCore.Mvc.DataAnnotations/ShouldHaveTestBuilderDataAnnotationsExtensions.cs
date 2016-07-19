@@ -69,7 +69,7 @@
                 throw new ModelErrorAssertionException(string.Format(
                     "When calling {0} action in {1} expected to have invalid model state{2}, {3}.",
                     actualShouldHaveTestBuilder.ActionName,
-                    actualShouldHaveTestBuilder.Controller.GetName(),
+                    actualShouldHaveTestBuilder.Component.GetName(),
                     withNumberOfErrors == null ? string.Empty : $" with {withNumberOfErrors} errors",
                     withNumberOfErrors == null ? "but was in fact valid" : $"but in fact contained {actualModelStateErrors}"));
             }

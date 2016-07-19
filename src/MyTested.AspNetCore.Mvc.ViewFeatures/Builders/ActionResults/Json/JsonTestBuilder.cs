@@ -136,7 +136,7 @@
             throw new JsonResultAssertionException(string.Format(
                     "When calling {0} action in {1} expected JSON result {2} {3}, but {4}.",
                     this.ActionName,
-                    this.Controller.GetName(),
+                    this.Component.GetName(),
                     propertyName,
                     expectedValue,
                     actualValue));

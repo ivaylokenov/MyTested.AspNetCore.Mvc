@@ -53,7 +53,7 @@
             throw new AttributeAssertionException(string.Format(
                 "When calling {0} action in {1} expected action to {2}, but {3}.",
                 this.ActionName,
-                this.Controller.GetName(),
+                this.Component.GetName(),
                 expectedValue,
                 actualValue));
         }

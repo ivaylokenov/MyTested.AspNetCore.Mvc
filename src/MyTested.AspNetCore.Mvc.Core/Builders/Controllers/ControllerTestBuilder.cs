@@ -14,7 +14,7 @@
     /// <summary>
     /// Used for testing controllers.
     /// </summary>
-    public class ControllerTestBuilder : BaseTestBuilderWithController, IControllerTestBuilder
+    public class ControllerTestBuilder : BaseTestBuilderWithComponent, IControllerTestBuilder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ControllerTestBuilder"/> class.
@@ -26,20 +26,20 @@
         }
 
         /// <inheritdoc />
-        public IBaseTestBuilderWithController NoAttributes()
+        public IBaseTestBuilderWithComponent NoAttributes()
         {
             AttributesValidator.ValidateNoAttributes(
-                this.ControllerLevelAttributes,
+                this.ComponentLevelAttributes,
                 this.ThrowNewAttributeAssertionException);
 
             return this;
         }
 
         /// <inheritdoc />
-        public IBaseTestBuilderWithController Attributes(int? withTotalNumberOf = null)
+        public IBaseTestBuilderWithComponent Attributes(int? withTotalNumberOf = null)
         {
             AttributesValidator.ValidateNumberOfAttributes(
-                this.ControllerLevelAttributes,
+                this.ComponentLevelAttributes,
                 this.ThrowNewAttributeAssertionException,
                 withTotalNumberOf);
 
@@ -47,13 +47,13 @@
         }
 
         /// <inheritdoc />
-        public IBaseTestBuilderWithController Attributes(Action<IControllerAttributesTestBuilder> attributesTestBuilder)
+        public IBaseTestBuilderWithComponent Attributes(Action<IControllerAttributesTestBuilder> attributesTestBuilder)
         {
             var newAttributesTestBuilder = new ControllerAttributesTestBuilder(this.TestContext);
             attributesTestBuilder(newAttributesTestBuilder);
 
             AttributesValidator.ValidateAttributes(
-                this.ControllerLevelAttributes,
+                this.ComponentLevelAttributes,
                 newAttributesTestBuilder,
                 this.ThrowNewAttributeAssertionException);
 
@@ -64,7 +64,7 @@
         {
             throw new AttributeAssertionException(string.Format(
                 "When testing {0} was expected to {1}, but {2}.",
-                this.Controller.GetName(),
+                this.Component.GetName(),
                 expectedValue,
                 actualValue));
         }

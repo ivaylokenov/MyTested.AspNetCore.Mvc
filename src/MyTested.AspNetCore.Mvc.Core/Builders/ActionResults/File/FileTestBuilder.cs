@@ -151,7 +151,7 @@
                 throw new FileResultAssertionException(string.Format(
                     "When calling {0} action in {1} expected file result to contain {2}, but it could not be found.",
                     this.ActionName,
-                    this.Controller.GetName(),
+                    this.Component.GetName(),
                     containment));
             }
 

@@ -64,7 +64,7 @@
                 throw new ResponseModelAssertionException(string.Format(
                     this.OfTypeErrorMessageFormat,
                     this.ActionName,
-                    this.Controller.GetName(),
+                    this.Component.GetName(),
                     typeof(TResponseModel).ToFriendlyTypeName(),
                     actualResponseDataType.ToFriendlyTypeName()));
             }
@@ -84,7 +84,7 @@
                 throw new ResponseModelAssertionException(string.Format(
                     this.ErrorMessageFormat,
                     this.ActionName,
-                    this.Controller.GetName(),
+                    this.Component.GetName(),
                     typeof(TResponseModel).ToFriendlyTypeName()));
             }
 
@@ -101,7 +101,7 @@
                 throw new ResponseModelAssertionException(string.Format(
                     "When calling {0} action in {1} expected to not have response model but in fact response model was found.",
                     this.ActionName,
-                    this.Controller.GetName()));
+                    this.Component.GetName()));
             }
         }
 
@@ -248,7 +248,7 @@
                 throw new ResponseModelAssertionException(string.Format(
                     "When calling {0} action in {1} expected response model to be a {2}, but instead received null.",
                     this.ActionName,
-                    this.Controller.GetName(),
+                    this.Component.GetName(),
                     typeof(TResponseModel).ToFriendlyTypeName()));
             }
         }
@@ -261,7 +261,7 @@
                 throw new ActionResultAssertionException(string.Format(
                     "When calling {0} action in {1} expected action result to inherit from ObjectResult, but it did not.",
                     this.ActionName,
-                    this.Controller.GetName()));
+                    this.Component.GetName()));
             }
 
             return objectResult;

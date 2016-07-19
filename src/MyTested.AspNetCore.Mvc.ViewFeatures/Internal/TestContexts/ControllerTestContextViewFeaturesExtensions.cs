@@ -6,9 +6,6 @@
 
     public static class ControllerTestContextViewFeaturesExtensions
     {
-        internal static TController ControllerAs<TController>(this ControllerTestContext controllerTestContext)
-            where TController : class => controllerTestContext.Controller as TController;
-
         public static ITempDataDictionary GetTempData(this ControllerTestContext controllerTestContext)
             => controllerTestContext.ControllerAs<Controller>()?.TempData
             ?? ViewFeaturesControllerPropertyHelper

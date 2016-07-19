@@ -33,7 +33,7 @@
 
             if (Reflection.AreNotDeeplyEqual(model, this.ActionResult))
             {
-                throw new ResponseModelAssertionException($"When calling {this.ActionName} action in {this.Controller.GetName()} expected the response model to be the given model, but in fact it was a different one.");
+                throw new ResponseModelAssertionException($"When calling {this.ActionName} action in {this.Component.GetName()} expected the response model to be the given model, but in fact it was a different one.");
             }
 
             this.TestContext.Model = model;

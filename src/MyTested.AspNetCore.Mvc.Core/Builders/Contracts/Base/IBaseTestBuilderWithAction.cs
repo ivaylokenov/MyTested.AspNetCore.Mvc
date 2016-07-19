@@ -5,7 +5,7 @@
     /// <summary>
     /// Base interface for all test builders with action call.
     /// </summary>
-    public interface IBaseTestBuilderWithAction : IBaseTestBuilderWithController
+    public interface IBaseTestBuilderWithAction : IBaseTestBuilderWithComponent
     {
         /// <summary>
         /// Allows additional testing on various components.

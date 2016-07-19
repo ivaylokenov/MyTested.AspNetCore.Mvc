@@ -8,7 +8,7 @@
     /// <summary>
     /// Test builder allowing additional assertions on various components.
     /// </summary>
-    public class ShouldPassForTestBuilderWithAction : ShouldPassForTestBuilderWithController<object>,
+    public class ShouldPassForTestBuilderWithAction : ShouldPassForTestBuilderWithComponent<object>,
         IShouldPassForTestBuilderWithAction
     {
         /// <summary>

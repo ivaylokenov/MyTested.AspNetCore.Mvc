@@ -45,7 +45,7 @@
             throw new ModelErrorAssertionException(string.Format(
                     messageFormat,
                     this.ActionName,
-                    this.Controller.GetName(),
+                    this.Component.GetName(),
                     errorKey));
         }
     }

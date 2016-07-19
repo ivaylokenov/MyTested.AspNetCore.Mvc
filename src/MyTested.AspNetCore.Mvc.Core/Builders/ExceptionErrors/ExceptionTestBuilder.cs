@@ -32,7 +32,7 @@
                 throw new InvalidExceptionAssertionException(string.Format(
                     "When calling {0} action in {1} expected {2}, but instead received {3}.",
                     this.ActionName,
-                    this.Controller.GetName(),
+                    this.Component.GetName(),
                     expectedExceptionType.ToFriendlyTypeName(),
                     this.CaughtException.GetName()));
             }
@@ -57,7 +57,7 @@
                 throw new InvalidExceptionAssertionException(string.Format(
                     "When calling {0} action in {1} expected exception with message '{2}', but instead received '{3}'.",
                     this.ActionName,
-                    this.Controller.GetName(),
+                    this.Component.GetName(),
                     message,
                     actualExceptionMessage));
             }
@@ -81,7 +81,7 @@
                 throw new InvalidExceptionAssertionException(string.Format(
                     "When calling {0} action in {1} expected exception message ('{2}') to pass the given predicate, but it failed.",
                     this.ActionName,
-                    this.Controller.GetName(),
+                    this.Component.GetName(),
                     actualExceptionMessage));
             }
 

@@ -11,7 +11,7 @@
     /// <summary>
     /// Base class for all test builders with action call.
     /// </summary>
-    public abstract class BaseTestBuilderWithAction : BaseTestBuilderWithController, IBaseTestBuilderWithAction
+    public abstract class BaseTestBuilderWithAction : BaseTestBuilderWithComponent, IBaseTestBuilderWithAction
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseTestBuilderWithAction"/> class.
@@ -47,7 +47,7 @@
                 throw new ModelErrorAssertionException(string.Format(
                     "When calling {0} action in {1} expected to have valid model state with no errors, but it had some.",
                     this.ActionName,
-                    this.Controller.GetName()));
+                    this.Component.GetName()));
             }
         }
     }

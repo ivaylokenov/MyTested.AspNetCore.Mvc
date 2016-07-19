@@ -86,7 +86,7 @@
             throw new InvalidExceptionAssertionException(string.Format(
                 messageFormat,
                 this.ActionName,
-                this.Controller.GetName(),
+                this.Component.GetName(),
                 operation,
                 this.actualMessage));
         }

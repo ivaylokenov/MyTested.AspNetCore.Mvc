@@ -20,7 +20,7 @@
     /// Used for building the controller which will be tested.
     /// </summary>
     /// <typeparam name="TController">Class representing ASP.NET Core MVC controller.</typeparam>
-    public partial class ControllerBuilder<TController> : BaseTestBuilderWithComponent<IAndControllerBuilder<TController>>, IAndControllerBuilder<TController>
+    public partial class ControllerBuilder<TController> : BaseTestBuilderWithComponentBuilder<IAndControllerBuilder<TController>>, IAndControllerBuilder<TController>
         where TController : class
     {
         private readonly IDictionary<Type, object> aggregatedServices;
@@ -94,10 +94,10 @@
         }
 
         /// <inheritdoc />
-        public new IShouldPassForTestBuilderWithController<TController> ShouldPassFor()
+        public new IShouldPassForTestBuilderWithComponent<TController> ShouldPassFor()
         {
             this.BuildControllerIfNotExists();
-            return new ShouldPassForTestBuilderWithController<TController>(this.TestContext);
+            return new ShouldPassForTestBuilderWithComponent<TController>(this.TestContext);
         }
 
         private void ValidateControllerType()

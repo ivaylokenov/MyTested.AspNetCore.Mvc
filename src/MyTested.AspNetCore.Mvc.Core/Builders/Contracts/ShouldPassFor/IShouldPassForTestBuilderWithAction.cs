@@ -6,7 +6,7 @@
     /// <summary>
     /// Test builder allowing additional assertions on various components.
     /// </summary>
-    public interface IShouldPassForTestBuilderWithAction : IShouldPassForTestBuilderWithController<object>
+    public interface IShouldPassForTestBuilderWithAction : IShouldPassForTestBuilderWithComponent<object>
     {
         /// <summary>
         /// Tests whether the action passes the given assertions.

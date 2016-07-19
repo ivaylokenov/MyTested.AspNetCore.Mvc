@@ -16,7 +16,7 @@
     /// Used for building the controller which will be tested.
     /// </summary>
     /// <typeparam name="TController">Class representing ASP.NET Core MVC controller.</typeparam>
-    public interface IControllerBuilder<TController> : IBaseTestBuilderWithComponent<IAndControllerBuilder<TController>>
+    public interface IControllerBuilder<TController> : IBaseTestBuilderWithComponentBuilder<IAndControllerBuilder<TController>>
         where TController : class
     {
         /// <summary>
@@ -193,7 +193,7 @@
         /// <summary>
         /// Allows additional testing on various components.
         /// </summary>
-        /// <returns>Test builder of <see cref="IShouldPassForTestBuilderWithController{TController}"/> type.</returns>
-        new IShouldPassForTestBuilderWithController<TController> ShouldPassFor();
+        /// <returns>Test builder of <see cref="IShouldPassForTestBuilderWithComponent{TController}"/> type.</returns>
+        new IShouldPassForTestBuilderWithComponent<TController> ShouldPassFor();
     }
 }

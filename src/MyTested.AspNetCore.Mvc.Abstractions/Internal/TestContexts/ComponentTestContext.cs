@@ -4,9 +4,9 @@
     using System.Collections.Generic;
     using System.Linq.Expressions;
     using System.Reflection;
-    using Microsoft.AspNetCore.Routing;
     using Utilities;
     using Utilities.Validators;
+    using Utilities.Extensions;
 
     public abstract class ComponentTestContext : HttpTestContext
     {
@@ -17,7 +17,6 @@
         private LambdaExpression methodCall;
         private IEnumerable<object> methodAttributes;
         private object model;
-        private RouteData expressionRouteData;
 
         public object Component
         {
@@ -120,6 +119,16 @@
             }
         }
         
-        protected Func<object> ComponentConstruction { get; set; }
+        public Func<object> ComponentConstruction { get; set; }
+
+        public TComponent ComponentAs<TComponent>()
+            where TComponent : class => this.Component as TComponent;
+
+        public TMethodResult MethodResultAs<TMethodResult>() => this.MethodResult.TryCastTo<TMethodResult>();
+
+        public TException CaughtExceptionAs<TException>()
+            where TException : Exception => this.CaughtException as TException;
+
+        public TModel ModelAs<TModel>() => this.Model.TryCastTo<TModel>();
     }
 }

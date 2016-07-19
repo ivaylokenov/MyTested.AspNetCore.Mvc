@@ -8,16 +8,16 @@
     /// <summary>
     /// Test builder allowing additional assertions on various components.
     /// </summary>
-    /// <typeparam name="TController">Class representing ASP.NET Core MVC controller.</typeparam>
-    public class ShouldPassForTestBuilderWithController<TController> : ShouldPassForTestBuilder,
-        IShouldPassForTestBuilderWithController<TController>
+    /// <typeparam name="TController">Class representing ASP.NET Core MVC component.</typeparam>
+    public class ShouldPassForTestBuilderWithComponent<TController> : ShouldPassForTestBuilder,
+        IShouldPassForTestBuilderWithComponent<TController>
         where TController : class
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ShouldPassForTestBuilderWithController{TController}"/> class.
+        /// Initializes a new instance of the <see cref="ShouldPassForTestBuilderWithComponent{TController}"/> class.
         /// </summary>
         /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
-        public ShouldPassForTestBuilderWithController(ControllerTestContext testContext)
+        public ShouldPassForTestBuilderWithComponent(ComponentTestContext testContext)
             : base(testContext)
         {
             this.TestContext = testContext;
@@ -27,31 +27,31 @@
         /// Gets the currently used <see cref="ControllerTestContext"/>.
         /// </summary>
         /// <value>Result of type <see cref="ControllerTestContext"/>.</value>
-        protected ControllerTestContext TestContext { get; private set; }
+        protected ComponentTestContext TestContext { get; private set; }
 
         /// <inheritdoc />
-        public IShouldPassForTestBuilderWithController<TController> TheController(Action<TController> assertions)
+        public IShouldPassForTestBuilderWithComponent<TController> TheController(Action<TController> assertions)
         {
             assertions(this.TestContext.ControllerAs<TController>());
             return this;
         }
 
         /// <inheritdoc />
-        public IShouldPassForTestBuilderWithController<TController> TheController(Func<TController, bool> predicate)
+        public IShouldPassForTestBuilderWithComponent<TController> TheController(Func<TController, bool> predicate)
         {
             this.ValidateFor(predicate, this.TestContext.ControllerAs<TController>());
             return this;
         }
 
         /// <inheritdoc />
-        public IShouldPassForTestBuilderWithController<TController> TheControllerAttributes(Action<IEnumerable<object>> assertions)
+        public IShouldPassForTestBuilderWithComponent<TController> TheControllerAttributes(Action<IEnumerable<object>> assertions)
         {
             assertions(this.TestContext.ControllerAttributes);
             return this;
         }
 
         /// <inheritdoc />
-        public IShouldPassForTestBuilderWithController<TController> TheControllerAttributes(Func<IEnumerable<object>, bool> predicate)
+        public IShouldPassForTestBuilderWithComponent<TController> TheControllerAttributes(Func<IEnumerable<object>, bool> predicate)
         {
             this.ValidateFor(predicate, this.TestContext.ControllerAttributes, "controller attributes");
             return this;

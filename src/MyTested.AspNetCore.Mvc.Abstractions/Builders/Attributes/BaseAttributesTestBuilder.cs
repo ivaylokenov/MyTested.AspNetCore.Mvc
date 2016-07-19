@@ -112,20 +112,17 @@
             var testAllowedRoles = !string.IsNullOrEmpty(withAllowedRoles);
             if (testAllowedRoles)
             {
-                if (testAllowedRoles)
+                this.Validations.Add(attrs =>
                 {
-                    this.Validations.Add(attrs =>
+                    var authorizeAttribute = this.GetAttributeOfType<AuthorizeAttribute>(attrs);
+                    var actualRoles = authorizeAttribute.Roles;
+                    if (withAllowedRoles != actualRoles)
                     {
-                        var authorizeAttribute = this.GetAttributeOfType<AuthorizeAttribute>(attrs);
-                        var actualRoles = authorizeAttribute.Roles;
-                        if (withAllowedRoles != actualRoles)
-                        {
-                            failedValidationAction(
-                                $"{authorizeAttribute.GetName()} with allowed '{withAllowedRoles}' roles",
-                                $"in fact found '{actualRoles}'");
-                        }
-                    });
-                }
+                        failedValidationAction(
+                            $"{authorizeAttribute.GetName()} with allowed '{withAllowedRoles}' roles",
+                            $"in fact found '{actualRoles}'");
+                    }
+                });
             }
         }
 

@@ -30,7 +30,7 @@
                 throw new ContentResultAssertionException(string.Format(
                     "When calling {0} action in {1} expected content result to contain '{2}', but instead received '{3}'.",
                     this.ActionName,
-                    this.Controller.GetName(),
+                    this.Component.GetName(),
                     content,
                     actualContent));
             }
@@ -61,7 +61,7 @@
                 throw new ContentResultAssertionException(string.Format(
                     "When calling {0} action in {1} expected content result ('{2}') to pass the given predicate, but it failed.",
                     this.ActionName,
-                    this.Controller.GetName(),
+                    this.Component.GetName(),
                     actualContent));
             }
 
