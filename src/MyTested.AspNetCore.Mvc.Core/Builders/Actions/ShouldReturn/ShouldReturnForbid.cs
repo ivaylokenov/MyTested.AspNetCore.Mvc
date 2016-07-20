@@ -12,7 +12,7 @@
         /// <inheritdoc />
         public IForbidTestBuilder Forbid()
         {
-            this.TestContext.ActionResult = this.GetReturnObject<ForbidResult>();
+            this.TestContext.MethodResult = this.GetReturnObject<ForbidResult>();
             return new ForbidTestBuilder(this.TestContext);
         }
     }

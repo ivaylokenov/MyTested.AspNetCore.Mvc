@@ -101,7 +101,7 @@
             Action<IAuthenticationPropertiesTestBuilder> authenticationPropertiesBuilder,
             ControllerTestContext testContext)
         {
-            var actionResult = testContext.ActionResultAs<dynamic>();
+            var actionResult = testContext.MethodResultAs<dynamic>();
             var actualAuthenticationProperties = 
                 (AuthenticationProperties)TryGetAuthenticationProperties(actionResult) ?? new AuthenticationProperties();
 

@@ -44,7 +44,7 @@
                 throw new InvalidExceptionAssertionException(string.Format(
                     "When calling {0} action in {1} expected AggregateException to contain {2} inner exceptions, but in fact contained {3}.",
                     this.ActionName,
-                    this.Component.GetName(),
+                    this.Controller.GetName(),
                     withNumberOfInnerExceptions,
                     innerExceptionsCount));
             }

@@ -7,15 +7,15 @@
     public static class ControllerTestContextViewFeaturesExtensions
     {
         public static ITempDataDictionary GetTempData(this ControllerTestContext controllerTestContext)
-            => controllerTestContext.ControllerAs<Controller>()?.TempData
+            => controllerTestContext.ComponentAs<Controller>()?.TempData
             ?? ViewFeaturesControllerPropertyHelper
-                .GetViewFeatureProperties(controllerTestContext.Controller.GetType())
-                .TempDataGetter(controllerTestContext.Controller);
+                .GetViewFeatureProperties(controllerTestContext.Component.GetType())
+                .TempDataGetter(controllerTestContext.Component);
 
         public static ViewDataDictionary GetViewData(this ControllerTestContext controllerTestContext)
-            => controllerTestContext.ControllerAs<Controller>()?.ViewData
+            => controllerTestContext.ComponentAs<Controller>()?.ViewData
             ?? ViewFeaturesControllerPropertyHelper
-                .GetViewFeatureProperties(controllerTestContext.Controller.GetType())
-                .ViewDataGetter(controllerTestContext.Controller);
+                .GetViewFeatureProperties(controllerTestContext.Component.GetType())
+                .ViewDataGetter(controllerTestContext.Component);
     }
 }

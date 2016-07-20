@@ -127,7 +127,7 @@
             throw new ObjectResultAssertionException(string.Format(
                 "When calling {0} action in {1} expected object result {2} {3}, but {4}.",
                 this.ActionName,
-                this.Component.GetName(),
+                this.Controller.GetName(),
                 propertyName,
                 expectedValue,
                 actualValue));

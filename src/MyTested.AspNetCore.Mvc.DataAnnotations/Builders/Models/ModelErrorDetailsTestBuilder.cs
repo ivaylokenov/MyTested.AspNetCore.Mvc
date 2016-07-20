@@ -106,7 +106,7 @@
             throw new ModelErrorAssertionException(string.Format(
                     messageFormat,
                     this.ActionName,
-                    this.Component.GetName(),
+                    this.Controller.GetName(),
                     this.currentErrorKey,
                     operation,
                     string.Join(", ", this.aggregatedErrors)));

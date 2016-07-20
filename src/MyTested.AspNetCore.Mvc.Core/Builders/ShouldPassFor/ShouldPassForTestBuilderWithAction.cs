@@ -8,7 +8,7 @@
     /// <summary>
     /// Test builder allowing additional assertions on various components.
     /// </summary>
-    public class ShouldPassForTestBuilderWithAction : ShouldPassForTestBuilderWithComponent<object>,
+    public class ShouldPassForTestBuilderWithAction : ShouldPassForTestBuilderWithController<object>,
         IShouldPassForTestBuilderWithAction
     {
         /// <summary>
@@ -23,28 +23,28 @@
         /// <inheritdoc />
         public IShouldPassForTestBuilderWithAction TheAction(Action<string> assertions)
         {
-            assertions(this.TestContext.ActionName);
+            assertions(this.TestContext.MethodName);
             return this;
         }
 
         /// <inheritdoc />
         public IShouldPassForTestBuilderWithAction TheAction(Func<string, bool> predicate)
         {
-            this.ValidateFor(predicate, this.TestContext.ActionName, "action name");
+            this.ValidateFor(predicate, this.TestContext.MethodName, "action name");
             return this;
         }
 
         /// <inheritdoc />
         public IShouldPassForTestBuilderWithAction TheActionAttributes(Action<IEnumerable<object>> assertions)
         {
-            assertions(this.TestContext.ActionAttributes);
+            assertions(this.TestContext.MethodAttributes);
             return this;
         }
 
         /// <inheritdoc />
         public IShouldPassForTestBuilderWithAction TheActionAttributes(Func<IEnumerable<object>, bool> predicate)
         {
-            this.ValidateFor(predicate, this.TestContext.ActionAttributes, "action attributes");
+            this.ValidateFor(predicate, this.TestContext.MethodAttributes, "action attributes");
             return this;
         }
     }

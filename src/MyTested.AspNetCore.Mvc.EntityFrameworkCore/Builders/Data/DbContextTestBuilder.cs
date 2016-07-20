@@ -33,8 +33,8 @@
             {
                 throw new DataProviderAssertionException(string.Format(
                     "When calling {0} action in {1} expected the {2} entities to pass the given predicate, but it failed.",
-                    this.TestContext.ActionName,
-                    this.TestContext.Controller.GetName(),
+                    this.TestContext.MethodName,
+                    this.TestContext.Component.GetName(),
                     typeof(TDbContext).ToFriendlyTypeName()));
             }
         }
@@ -68,8 +68,8 @@
             {
                 throw new DataProviderAssertionException(string.Format(
                     "When calling {0} action in {1} expected the {2} set of {3} to pass the given predicate, but it failed.",
-                    this.TestContext.ActionName,
-                    this.TestContext.Controller.GetName(),
+                    this.TestContext.MethodName,
+                    this.TestContext.Component.GetName(),
                     typeof(TDbContext).ToFriendlyTypeName(),
                     typeof(TEntity).ToFriendlyTypeName()));
             }

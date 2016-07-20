@@ -88,7 +88,7 @@
             throw new BadRequestResultAssertionException(string.Format(
                 messageFormat,
                 this.ActionName,
-                this.Component.GetName(),
+                this.Controller.GetName(),
                 operation,
                 this.actualMessage));
         }

@@ -49,7 +49,7 @@
             }
 
             this.aggregatedServices.Add(typeOfService, service);
-            this.TestContext.ControllerConstruction = () => null;
+            this.TestContext.ComponentConstruction = () => null;
             return this;
         }
 

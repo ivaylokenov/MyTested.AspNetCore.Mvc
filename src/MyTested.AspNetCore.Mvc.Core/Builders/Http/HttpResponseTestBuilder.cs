@@ -455,7 +455,7 @@
             throw new HttpResponseAssertionException(string.Format(
                 "When calling {0} action in {1} expected HTTP response {2} {3}, but {4}.",
                 this.ActionName,
-                this.Component.GetName(),
+                this.Controller.GetName(),
                 propertyName,
                 expectedValue,
                 actualValue));

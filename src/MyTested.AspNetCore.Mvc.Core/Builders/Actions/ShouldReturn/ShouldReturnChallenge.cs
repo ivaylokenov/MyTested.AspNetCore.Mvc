@@ -12,7 +12,7 @@
         /// <inheritdoc />
         public IChallengeTestBuilder Challenge()
         {
-            this.TestContext.ActionResult = this.GetReturnObject<ChallengeResult>();
+            this.TestContext.MethodResult = this.GetReturnObject<ChallengeResult>();
             return new ChallengeTestBuilder(this.TestContext);
         }
     }

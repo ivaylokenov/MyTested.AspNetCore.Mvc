@@ -23,7 +23,7 @@
         private INotFoundTestBuilder ReturnNotFoundTestBuilder<TNotFoundResult>()
             where TNotFoundResult : ActionResult
         {
-            this.TestContext.ActionResult = this.GetReturnObject<TNotFoundResult>();
+            this.TestContext.MethodResult = this.GetReturnObject<TNotFoundResult>();
             return new NotFoundTestBuilder<TNotFoundResult>(this.TestContext);
         }
     }

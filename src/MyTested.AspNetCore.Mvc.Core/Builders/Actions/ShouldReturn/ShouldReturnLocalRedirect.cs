@@ -12,7 +12,7 @@
         /// <inheritdoc />
         public ILocalRedirectTestBuilder LocalRedirect()
         {
-            this.TestContext.ActionResult = this.GetReturnObject<LocalRedirectResult>();
+            this.TestContext.MethodResult = this.GetReturnObject<LocalRedirectResult>();
             return new LocalRedirectTestBuilder(this.TestContext);
         }
     }

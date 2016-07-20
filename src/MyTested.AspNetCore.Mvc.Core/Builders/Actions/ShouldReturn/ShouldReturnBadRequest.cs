@@ -23,7 +23,7 @@
         private IBadRequestTestBuilder ReturnBadRequestTestBuilder<TBadRequestResult>()
             where TBadRequestResult : ActionResult
         {
-            this.TestContext.ActionResult = this.GetReturnObject<TBadRequestResult>();
+            this.TestContext.MethodResult = this.GetReturnObject<TBadRequestResult>();
             return new BadRequestTestBuilder<TBadRequestResult>(this.TestContext);
         }
     }

@@ -197,7 +197,7 @@
             throw new AuthenticationPropertiesAssertionException(string.Format(
                 "When calling {0} action in {1} expected authentication properties to {2}, but {3}.",
                 this.ActionName,
-                this.Component.GetName(),
+                this.Controller.GetName(),
                 expectedValue,
                 actualValue));
         }

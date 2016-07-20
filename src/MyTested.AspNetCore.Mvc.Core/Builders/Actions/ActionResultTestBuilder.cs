@@ -42,7 +42,7 @@
                 throw new ActionCallAssertionException(string.Format(
                     "When calling {0} action in {1} thrown exception was expected, but in fact none was caught.",
                     this.ActionName,
-                    this.Component.GetName()));
+                    this.Controller.GetName()));
             }
             
             return new ShouldThrowTestBuilder(this.TestContext);

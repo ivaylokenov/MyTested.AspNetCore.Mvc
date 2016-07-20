@@ -16,7 +16,7 @@
     /// <summary>
     /// Used for testing action attributes.
     /// </summary>
-    public class ActionAttributesTestBuilder : CoreAttributesTestBuilder, IAndActionAttributesTestBuilder
+    public class ActionAttributesTestBuilder : BaseAttributesTestBuilder, IAndActionAttributesTestBuilder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ActionAttributesTestBuilder"/> class.
@@ -162,8 +162,8 @@
         {
             throw new AttributeAssertionException(string.Format(
                 "When calling {0} action in {1} expected action to have {2}, but {3}.",
-                this.TestContext.ActionName,
-                this.Controller.GetName(),
+                this.TestContext.MethodName,
+                this.TestContext.Component.GetName(),
                 expectedValue,
                 actualValue));
         }

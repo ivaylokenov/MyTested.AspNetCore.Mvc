@@ -10,7 +10,7 @@
     /// <summary>
     /// Used for testing controller attributes.
     /// </summary>
-    public class ControllerAttributesTestBuilder : CoreAttributesTestBuilder, IAndControllerAttributesTestBuilder
+    public class ControllerAttributesTestBuilder : BaseAttributesTestBuilder, IAndControllerAttributesTestBuilder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ControllerAttributesTestBuilder"/> class.
@@ -71,7 +71,7 @@
         {
             throw new AttributeAssertionException(string.Format(
                 "When testing {0} was expected to have {1}, but {2}.",
-                this.Controller.GetName(),
+                this.TestContext.Component.GetName(),
                 expectedValue,
                 actualValue));
         }

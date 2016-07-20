@@ -55,7 +55,7 @@
                 throw new BadRequestResultAssertionException(string.Format(
                         "When calling {0} action in {1} expected bad request model state dictionary to contain {2} keys, but found {3}.",
                         actualBadRequestTestBuilder.ActionName,
-                        actualBadRequestTestBuilder.Component.GetName(),
+                        actualBadRequestTestBuilder.Controller.GetName(),
                         expectedKeysCount,
                         actualKeysCount));
             }
@@ -69,7 +69,7 @@
                     throw new BadRequestResultAssertionException(string.Format(
                         "When calling {0} action in {1} expected bad request model state dictionary to contain {2} key, but none found.",
                         actualBadRequestTestBuilder.ActionName,
-                        actualBadRequestTestBuilder.Component.GetName(),
+                        actualBadRequestTestBuilder.Controller.GetName(),
                         expectedKey));
                 }
 
@@ -81,7 +81,7 @@
                     throw new BadRequestResultAssertionException(string.Format(
                         "When calling {0} action in {1} expected bad request model state dictionary to contain {2} errors for {3} key, but found {4}.",
                         actualBadRequestTestBuilder.ActionName,
-                        actualBadRequestTestBuilder.Component.GetName(),
+                        actualBadRequestTestBuilder.Controller.GetName(),
                         expectedSortedErrors.Count,
                         expectedKey,
                         actualSortedErrors.Count));
@@ -126,7 +126,7 @@
                 throw new BadRequestResultAssertionException(string.Format(
                     "When calling {0} action in {1} expected bad request result to contain error object, but it could not be found.",
                     badRequestTestBuilderBase.ActionName,
-                    badRequestTestBuilderBase.Component.GetName()));
+                    badRequestTestBuilderBase.Controller.GetName()));
             }
 
             return actualBadRequestTestBuilder;

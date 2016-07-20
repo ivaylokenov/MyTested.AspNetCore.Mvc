@@ -37,7 +37,7 @@
 
         private TActionResult GetActionResult()
         {
-            var actionResult = this.TestContext.ActionResultAs<TActionResult>();
+            var actionResult = this.TestContext.MethodResultAs<TActionResult>();
 
             if (actionResult?.GetType() == typeof(VoidActionResult))
             {

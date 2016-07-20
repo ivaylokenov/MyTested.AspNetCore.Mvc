@@ -23,7 +23,7 @@
         private IOkTestBuilder ReturnOkTestBuilder<THttpOkResult>()
             where THttpOkResult : ActionResult
         {
-            this.TestContext.ActionResult = this.GetReturnObject<THttpOkResult>();
+            this.TestContext.MethodResult = this.GetReturnObject<THttpOkResult>();
             return new OkTestBuilder<THttpOkResult>(this.TestContext);
         }
     }

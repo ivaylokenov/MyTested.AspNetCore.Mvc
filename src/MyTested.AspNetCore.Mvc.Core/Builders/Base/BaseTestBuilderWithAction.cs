@@ -11,7 +11,7 @@
     /// <summary>
     /// Base class for all test builders with action call.
     /// </summary>
-    public abstract class BaseTestBuilderWithAction : BaseTestBuilderWithComponent, IBaseTestBuilderWithAction
+    public abstract class BaseTestBuilderWithAction : BaseTestBuilderWithController, IBaseTestBuilderWithAction
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseTestBuilderWithAction"/> class.
@@ -26,13 +26,13 @@
         /// Gets the action name which will be tested.
         /// </summary>
         /// <value>Action name to be tested.</value>
-        public string ActionName => this.TestContext.ActionName;
+        public string ActionName => this.TestContext.MethodName;
 
         /// <summary>
         /// Gets the action attributes which will be tested.
         /// </summary>
         /// <value>Action attributes to be tested.</value>
-        public IEnumerable<object> ActionLevelAttributes => this.TestContext.ActionAttributes;
+        public IEnumerable<object> ActionLevelAttributes => this.TestContext.MethodAttributes;
         
         /// <inheritdoc />
         public new IShouldPassForTestBuilderWithAction ShouldPassFor() => new ShouldPassForTestBuilderWithAction(this.TestContext);
@@ -47,7 +47,7 @@
                 throw new ModelErrorAssertionException(string.Format(
                     "When calling {0} action in {1} expected to have valid model state with no errors, but it had some.",
                     this.ActionName,
-                    this.Component.GetName()));
+                    this.Controller.GetName()));
             }
         }
     }

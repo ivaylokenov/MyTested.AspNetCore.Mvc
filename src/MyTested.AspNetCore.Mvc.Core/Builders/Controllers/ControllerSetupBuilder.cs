@@ -60,7 +60,7 @@
                 this.PrepareControllerContext();
             }
 
-            var controller = this.TestContext.Controller;
+            var controller = this.TestContext.Component;
             if (controller == null)
             {
                 var explicitDependenciesAreSet = this.aggregatedServices.Any();
@@ -95,7 +95,7 @@
                         this.aggregatedServices.Count == 0 ? "no" : $"{joinedFriendlyServices} as"));
                 }
 
-                this.TestContext.ControllerConstruction = () => controller;
+                this.TestContext.ComponentConstruction = () => controller;
             }
 
             if (!this.isPreparedForTesting)
@@ -115,11 +115,11 @@
         {
             var controllerPropertyActivators = this.Services.GetServices<IControllerPropertyActivator>();
 
-            controllerPropertyActivators.ForEach(a => a.Activate(this.TestContext.ControllerContext, this.TestContext.Controller));
+            controllerPropertyActivators.ForEach(a => a.Activate(this.TestContext.ControllerContext, this.TestContext.Component));
 
             this.ControllerPreparationAction?.Invoke(this.TestContext);
 
-            this.controllerSetupAction?.Invoke(this.TestContext.ControllerAs<TController>());
+            this.controllerSetupAction?.Invoke(this.TestContext.ComponentAs<TController>());
         }
     }
 }

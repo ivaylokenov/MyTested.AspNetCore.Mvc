@@ -1,10 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Base
 {
-    using System.Collections.Generic;
     using Contracts.Base;
-    using Contracts.ShouldPassFor;
     using Internal.TestContexts;
-    using ShouldPassFor;
     using Utilities.Validators;
 
     /// <summary>
@@ -23,19 +20,7 @@
         {
             this.TestContext = testContext;
         }
-
-        /// <summary>
-        /// Gets the component which will be tested.
-        /// </summary>
-        /// <value>Component which will be tested.</value>
-        public object Component => this.TestContext.Component;
-
-        /// <summary>
-        /// Gets the component attributes which will be tested.
-        /// </summary>
-        /// <value>Component attributes which will be tested.</value>
-        internal IEnumerable<object> ComponentLevelAttributes => this.TestContext.ComponentAttributes;
-
+        
         /// <summary>
         /// Gets the currently used <see cref="ComponentTestContext"/>.
         /// </summary>
@@ -49,13 +34,9 @@
 
             private set
             {
-                CommonValidator.CheckForNullReference(value.Component, nameof(this.Component));
+                CommonValidator.CheckForNullReference(value.Component, nameof(value.Component));
                 this.testContext = value;
             }
         }
-
-        /// <inheritdoc />
-        public new IShouldPassForTestBuilderWithComponent<object> ShouldPassFor() 
-            => new ShouldPassForTestBuilderWithComponent<object>(this.TestContext);
     }
 }

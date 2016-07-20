@@ -28,14 +28,14 @@
         /// <inheritdoc />
         public IPhysicalFileTestBuilder PhysicalFile()
         {
-            this.TestContext.ActionResult = this.GetReturnObject<PhysicalFileResult>();
+            this.TestContext.MethodResult = this.GetReturnObject<PhysicalFileResult>();
             return new PhysicalFileTestBuilder(this.TestContext);
         }
 
         private IFileTestBuilder ReturnFileTestBuilder<TFileResult>()
             where TFileResult : FileResult
         {
-            this.TestContext.ActionResult = this.GetReturnObject<TFileResult>();
+            this.TestContext.MethodResult = this.GetReturnObject<TFileResult>();
             return new FileTestBuilder<TFileResult>(this.TestContext);
         }
     }

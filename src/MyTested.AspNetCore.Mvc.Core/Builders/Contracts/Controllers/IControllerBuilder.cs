@@ -193,7 +193,7 @@
         /// <summary>
         /// Allows additional testing on various components.
         /// </summary>
-        /// <returns>Test builder of <see cref="IShouldPassForTestBuilderWithComponent{TController}"/> type.</returns>
-        new IShouldPassForTestBuilderWithComponent<TController> ShouldPassFor();
+        /// <returns>Test builder of <see cref="IShouldPassForTestBuilderWithController{TController}"/> type.</returns>
+        new IShouldPassForTestBuilderWithController<TController> ShouldPassFor();
     }
 }

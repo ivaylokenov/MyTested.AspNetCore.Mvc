@@ -51,7 +51,7 @@
                 return this.methodName;
             }
 
-            protected set
+            set
             {
                 CommonValidator.CheckForNotWhiteSpaceString(value, nameof(this.MethodName));
                 this.methodName = value;
@@ -78,7 +78,7 @@
                 return this.methodCall;
             }
 
-            protected set
+            set
             {
                 CommonValidator.CheckForNullReference(value, nameof(this.MethodCall));
                 this.methodCall = value;
@@ -99,7 +99,7 @@
                 return this.methodAttributes;
             }
         }
-        public Exception CaughtException { get; protected set; }
+        public Exception CaughtException { get; set; }
 
         public object Model
         {

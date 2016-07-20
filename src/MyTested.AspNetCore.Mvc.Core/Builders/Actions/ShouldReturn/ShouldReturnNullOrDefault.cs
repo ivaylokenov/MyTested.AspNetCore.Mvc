@@ -62,7 +62,7 @@
             throw new ActionResultAssertionException(string.Format(
                     "When calling {0} action in {1} expected action result to be {2}",
                     this.ActionName,
-                    this.Component.GetName(),
+                    this.Controller.GetName(),
                     message));
         }
     }

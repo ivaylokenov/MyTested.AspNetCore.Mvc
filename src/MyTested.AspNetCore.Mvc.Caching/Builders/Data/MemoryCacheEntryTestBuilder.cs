@@ -129,8 +129,8 @@
         {
             throw new DataProviderAssertionException(string.Format(
                 "When calling {0} action in {1} expected memory cache {2}, but {3}.",
-                this.testContext.ActionName,
-                this.testContext.Controller.GetName(),
+                this.testContext.MethodName,
+                this.testContext.Component.GetName(),
                 expectedValue,
                 actualValue));
         }

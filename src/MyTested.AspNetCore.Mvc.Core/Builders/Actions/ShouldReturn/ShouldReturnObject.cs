@@ -12,7 +12,7 @@
         /// <inheritdoc />
         public IObjectTestBuilder Object()
         {
-            this.TestContext.ActionResult = this.GetReturnObject<ObjectResult>();
+            this.TestContext.MethodResult = this.GetReturnObject<ObjectResult>();
             return new ObjectTestBuilder(this.TestContext);
         }
     }

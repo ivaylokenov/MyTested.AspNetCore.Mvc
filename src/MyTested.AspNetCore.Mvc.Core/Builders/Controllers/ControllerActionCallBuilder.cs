@@ -54,7 +54,7 @@
             }
 
             this.TestContext.Apply(actionInfo);
-            this.TestContext.ActionResult = actionResult;
+            this.TestContext.MethodResult = actionResult;
 
             return new ActionResultTestBuilder<TActionResult>(this.TestContext);
         }
@@ -74,10 +74,10 @@
                 caughtException = exception;
             }
 
-            this.TestContext.ActionName = actionName;
-            this.TestContext.ActionCall = actionCall;
+            this.TestContext.MethodName = actionName;
+            this.TestContext.MethodCall = actionCall;
             this.TestContext.CaughtException = caughtException;
-            this.TestContext.ActionResult = VoidActionResult.Instance;
+            this.TestContext.MethodResult = VoidActionResult.Instance;
 
             return new VoidActionResultTestBuilder(this.TestContext);
         }
@@ -97,7 +97,7 @@
             }
 
             this.TestContext.Apply(actionInfo);
-            this.TestContext.ActionResult = VoidActionResult.Instance;
+            this.TestContext.MethodResult = VoidActionResult.Instance;
 
             return new VoidActionResultTestBuilder(this.TestContext);
         }

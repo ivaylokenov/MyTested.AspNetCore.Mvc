@@ -54,7 +54,7 @@
             get
             {
                 this.BuildControllerIfNotExists();
-                return this.TestContext.ControllerAs<TController>();
+                return this.TestContext.ComponentAs<TController>();
             }
         }
 
@@ -94,10 +94,10 @@
         }
 
         /// <inheritdoc />
-        public new IShouldPassForTestBuilderWithComponent<TController> ShouldPassFor()
+        public new IShouldPassForTestBuilderWithController<TController> ShouldPassFor()
         {
             this.BuildControllerIfNotExists();
-            return new ShouldPassForTestBuilderWithComponent<TController>(this.TestContext);
+            return new ShouldPassForTestBuilderWithController<TController>(this.TestContext);
         }
 
         private void ValidateControllerType()

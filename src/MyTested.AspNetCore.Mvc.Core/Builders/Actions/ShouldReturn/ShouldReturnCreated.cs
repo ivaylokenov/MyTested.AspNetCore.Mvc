@@ -28,7 +28,7 @@
         private ICreatedTestBuilder ReturnCreatedTestBuilder<TCreatedResult>()
             where TCreatedResult : ObjectResult
         {
-            this.TestContext.ActionResult = this.GetReturnObject<TCreatedResult>();
+            this.TestContext.MethodResult = this.GetReturnObject<TCreatedResult>();
             return new CreatedTestBuilder<TCreatedResult>(this.TestContext);
         }
     }

@@ -62,7 +62,7 @@
                 throw new ResponseModelAssertionException(string.Format(
                     "When calling {0} action in {1} expected bad request result to not have error message, but in fact such was found.",
                     this.ActionName,
-                    this.Component.GetName()));
+                    this.Controller.GetName()));
             }
 
             return this;
@@ -190,7 +190,7 @@
                 throw new BadRequestResultAssertionException(string.Format(
                     "When calling {0} action in {1} expected bad request error message ('{2}') to pass the given predicate, but it failed.",
                     this.ActionName,
-                    this.Component.GetName(),
+                    this.Controller.GetName(),
                     actualErrorMessage));
             }
 
@@ -214,7 +214,7 @@
                 throw new BadRequestResultAssertionException(string.Format(
                     "When calling {0} action in {1} expected bad request result to contain error object, but it could not be found.",
                     this.ActionName,
-                    this.Component.GetName()));
+                    this.Controller.GetName()));
             }
 
             return actualBadRequestResult.Value;
@@ -275,7 +275,7 @@
             throw new BadRequestResultAssertionException(string.Format(
                 "When calling {0} action in {1} expected bad request result {2} {3}, but {4}.",
                 this.ActionName,
-                this.Component.GetName(),
+                this.Controller.GetName(),
                 propertyName,
                 expectedValue,
                 actualValue));

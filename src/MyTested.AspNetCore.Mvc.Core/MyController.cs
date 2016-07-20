@@ -25,7 +25,7 @@
         }
 
         public MyController(Func<TController> construction)
-            : base(new ControllerTestContext { ControllerConstruction = construction })
+            : base(new ControllerTestContext { ComponentConstruction = construction })
         {
         }
 

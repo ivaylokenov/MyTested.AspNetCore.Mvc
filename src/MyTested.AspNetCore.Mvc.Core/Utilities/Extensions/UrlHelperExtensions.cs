@@ -36,7 +36,7 @@
             {
                 linkGenerationTestContext.Action = linkGenerationTestContext.Action
                     ?? controllerTestContext.RouteData.Values["action"] as string
-                    ?? controllerTestContext.ActionName;
+                    ?? controllerTestContext.MethodName;
 
                 linkGenerationTestContext.Controller = linkGenerationTestContext.Controller
                     ?? controllerTestContext.RouteData.Values["controller"] as string

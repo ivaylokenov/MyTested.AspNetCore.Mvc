@@ -45,9 +45,7 @@
         public ModelStateDictionary ModelState => this.ControllerContext.ModelState;
 
         public override string ExceptionMessagePrefix => $"When calling {this.MethodName} action in {this.Component.GetName()} expected";
-
-        internal Func<object> ControllerConstruction { get; set; }
-
+        
         internal ControllerContext ControllerContext
         {
             get

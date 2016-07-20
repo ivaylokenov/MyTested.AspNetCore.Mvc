@@ -15,7 +15,7 @@
         /// <inheritdoc />
         public IContentTestBuilder Content()
         {
-            this.TestContext.ActionResult = this.GetReturnObject<ContentResult>();
+            this.TestContext.MethodResult = this.GetReturnObject<ContentResult>();
             return new ContentTestBuilder(this.TestContext);
         }
 
@@ -30,12 +30,12 @@
                 throw new ContentResultAssertionException(string.Format(
                     "When calling {0} action in {1} expected content result to contain '{2}', but instead received '{3}'.",
                     this.ActionName,
-                    this.Component.GetName(),
+                    this.Controller.GetName(),
                     content,
                     actualContent));
             }
 
-            this.TestContext.ActionResult = contentResult;
+            this.TestContext.MethodResult = contentResult;
             return new ContentTestBuilder(this.TestContext);
         }
 
@@ -61,7 +61,7 @@
                 throw new ContentResultAssertionException(string.Format(
                     "When calling {0} action in {1} expected content result ('{2}') to pass the given predicate, but it failed.",
                     this.ActionName,
-                    this.Component.GetName(),
+                    this.Controller.GetName(),
                     actualContent));
             }
 

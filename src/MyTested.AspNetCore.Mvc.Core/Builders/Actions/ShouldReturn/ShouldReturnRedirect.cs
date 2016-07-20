@@ -28,7 +28,7 @@
         private IRedirectTestBuilder ReturnRedirectTestBuilder<TRedirectResult>()
             where TRedirectResult : ActionResult
         {
-            this.TestContext.ActionResult = this.GetReturnObject<TRedirectResult>();
+            this.TestContext.MethodResult = this.GetReturnObject<TRedirectResult>();
             return new RedirectTestBuilder<TRedirectResult>(this.TestContext);
         }
     }

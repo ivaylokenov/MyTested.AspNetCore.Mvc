@@ -40,11 +40,11 @@
         {
             if (this.ActionResult is StatusCodeResult)
             {
-                this.TestContext.ActionResult = this.GetReturnObject<StatusCodeResult>();
+                this.TestContext.MethodResult = this.GetReturnObject<StatusCodeResult>();
                 return new StatusCodeTestBuilder<StatusCodeResult>(this.TestContext);
             }
 
-            this.TestContext.ActionResult = this.GetReturnObject<ObjectResult>();
+            this.TestContext.MethodResult = this.GetReturnObject<ObjectResult>();
             return new StatusCodeTestBuilder<ObjectResult>(this.TestContext);
         }
         
@@ -53,7 +53,7 @@
             throw new StatusCodeResultAssertionException(string.Format(
                     "When calling {0} action in {1} expected status code result {2} {3}, but {4}.",
                     this.ActionName,
-                    this.Component.GetName(),
+                    this.Controller.GetName(),
                     propertyName,
                     expectedValue,
                     actualValue));
