@@ -6,6 +6,7 @@
     using Builders.Contracts.And;
     using Builders.Contracts.Data;
     using Builders.Data;
+    using Utilities.Validators;
 
     /// <summary>
     /// Contains <see cref="Microsoft.Extensions.Caching.Memory.IMemoryCache"/> extension methods for <see cref="IShouldHaveTestBuilder{TActionResult}"/>.
@@ -24,7 +25,9 @@
 
             if (actualShouldHaveTestBuilder.TestContext.GetMockedMemoryCache().Count > 0)
             {
-                actualShouldHaveTestBuilder.ThrowNewDataProviderAssertionExceptionWithNoEntries(MemoryCacheTestBuilder.MemoryCacheName);
+                DataProviderValidator.ThrowNewDataProviderAssertionExceptionWithNoEntries(
+                    actualShouldHaveTestBuilder.TestContext,
+                    MemoryCacheTestBuilder.MemoryCacheName);
             }
 
             return actualShouldHaveTestBuilder.NewAndTestBuilder();
@@ -44,7 +47,8 @@
         {
             var actualShouldHaveTestBuilder = (ShouldHaveTestBuilder<TActionResult>)shouldHaveTestBuilder;
 
-            actualShouldHaveTestBuilder.ValidateDataProviderNumberOfEntries(
+            DataProviderValidator.ValidateDataProviderNumberOfEntries(
+                actualShouldHaveTestBuilder.TestContext,
                 MemoryCacheTestBuilder.MemoryCacheName,
                 withNumberOfEntries,
                 actualShouldHaveTestBuilder.TestContext.GetMockedMemoryCache().Count);

@@ -7,6 +7,7 @@
     using Builders.Contracts.Data;
     using Builders.Data;
     using Internal.TestContexts;
+    using Utilities.Validators;
 
     /// <summary>
     /// Contains <see cref="Microsoft.AspNetCore.Mvc.Controller.ViewBag"/> extension methods for <see cref="IShouldHaveTestBuilder{TActionResult}"/>.
@@ -25,7 +26,9 @@
 
             if (actualShouldHaveTestBuilder.TestContext.GetViewData().Count > 0)
             {
-                actualShouldHaveTestBuilder.ThrowNewDataProviderAssertionExceptionWithNoEntries(ViewBagTestBuilder.ViewBagName);
+                DataProviderValidator.ThrowNewDataProviderAssertionExceptionWithNoEntries(
+                    actualShouldHaveTestBuilder.TestContext,
+                    ViewBagTestBuilder.ViewBagName);
             }
 
             return actualShouldHaveTestBuilder.NewAndTestBuilder();
@@ -45,7 +48,8 @@
         {
             var actualShouldHaveTestBuilder = (ShouldHaveTestBuilder<TActionResult>)shouldHaveTestBuilder;
 
-            actualShouldHaveTestBuilder.ValidateDataProviderNumberOfEntries(
+            DataProviderValidator.ValidateDataProviderNumberOfEntries(
+                actualShouldHaveTestBuilder.TestContext,
                 ViewBagTestBuilder.ViewBagName,
                 withNumberOfEntries,
                 actualShouldHaveTestBuilder.TestContext.GetViewData().Count);

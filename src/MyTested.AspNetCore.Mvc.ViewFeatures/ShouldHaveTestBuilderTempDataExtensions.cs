@@ -7,6 +7,7 @@
     using Builders.Contracts.Data;
     using Builders.Data;
     using Internal.TestContexts;
+    using Utilities.Validators;
 
     /// <summary>
     /// Contains <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ITempDataDictionary"/> extension methods for <see cref="IShouldHaveTestBuilder{TActionResult}"/>.
@@ -25,7 +26,9 @@
 
             if (actualShouldHaveTestBuilder.TestContext.GetTempData().Count > 0)
             {
-                actualShouldHaveTestBuilder.ThrowNewDataProviderAssertionExceptionWithNoEntries(TempDataTestBuilder.TempDataName);
+                DataProviderValidator.ThrowNewDataProviderAssertionExceptionWithNoEntries(
+                    actualShouldHaveTestBuilder.TestContext,
+                    TempDataTestBuilder.TempDataName);
             }
 
             return actualShouldHaveTestBuilder.NewAndTestBuilder();
@@ -44,7 +47,8 @@
         {
             var actualShouldHaveTestBuilder = (ShouldHaveTestBuilder<TActionResult>)shouldHaveTestBuilder;
 
-            actualShouldHaveTestBuilder.ValidateDataProviderNumberOfEntries(
+            DataProviderValidator.ValidateDataProviderNumberOfEntries(
+                actualShouldHaveTestBuilder.TestContext,
                 TempDataTestBuilder.TempDataName,
                 withNumberOfEntries,
                 actualShouldHaveTestBuilder.TestContext.GetTempData().Count);

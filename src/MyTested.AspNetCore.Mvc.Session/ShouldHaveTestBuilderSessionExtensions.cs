@@ -7,6 +7,7 @@
     using Builders.Contracts.And;
     using Builders.Contracts.Data;
     using Builders.Data;
+    using Utilities.Validators;
 
     /// <summary>
     /// Contains <see cref="Microsoft.AspNetCore.Http.ISession"/> extension methods for <see cref="IShouldHaveTestBuilder{TActionResult}"/>.
@@ -25,7 +26,9 @@
 
             if (actualShouldHaveTestBuilder.TestContext.Session.Keys.Any())
             {
-                actualShouldHaveTestBuilder.ThrowNewDataProviderAssertionExceptionWithNoEntries(SessionTestBuilder.SessionName);
+                DataProviderValidator.ThrowNewDataProviderAssertionExceptionWithNoEntries(
+                    actualShouldHaveTestBuilder.TestContext,
+                    SessionTestBuilder.SessionName);
             }
 
             return actualShouldHaveTestBuilder.NewAndTestBuilder();
@@ -45,7 +48,8 @@
         {
             var actualShouldHaveTestBuilder = (ShouldHaveTestBuilder<TActionResult>)shouldHaveTestBuilder;
 
-            actualShouldHaveTestBuilder.ValidateDataProviderNumberOfEntries(
+            DataProviderValidator.ValidateDataProviderNumberOfEntries(
+                actualShouldHaveTestBuilder.TestContext,
                 SessionTestBuilder.SessionName,
                 withNumberOfEntries,
                 actualShouldHaveTestBuilder.TestContext.Session.Keys.Count());

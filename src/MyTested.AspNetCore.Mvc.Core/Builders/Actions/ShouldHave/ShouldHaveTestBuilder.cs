@@ -32,36 +32,5 @@
             httpResponseTestBuilder(new HttpResponseTestBuilder(this.TestContext));
             return this.NewAndTestBuilder();
         }
-
-        public void ValidateDataProviderNumberOfEntries(string name, int? expectedCount, int actualCount)
-        {
-            if (actualCount == 0
-                || (expectedCount != null && actualCount != expectedCount))
-            {
-                this.ThrowNewDataProviderAssertionException(
-                    name,
-                    expectedCount == null ? " entries" : $" with {expectedCount} {(expectedCount != 1 ? "entries" : "entry")}",
-                    expectedCount == null ? "none were found" : $"in fact contained {actualCount}");
-            }
-        }
-
-        public void ThrowNewDataProviderAssertionExceptionWithNoEntries(string name)
-        {
-            this.ThrowNewDataProviderAssertionException(
-                name,
-                " with no entries",
-                "in fact it had some");
-        }
-
-        public void ThrowNewDataProviderAssertionException(string name, string expectedValue, string actualValue)
-        {
-            throw new DataProviderAssertionException(string.Format(
-                "When calling {0} action in {1} expected to have {2}{3}, but {4}.",
-                this.ActionName,
-                this.Controller.GetName(),
-                name,
-                expectedValue,
-                actualValue));
-        }
     }
 }
