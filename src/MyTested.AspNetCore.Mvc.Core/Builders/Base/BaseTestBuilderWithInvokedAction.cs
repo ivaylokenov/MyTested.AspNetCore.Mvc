@@ -26,7 +26,7 @@
         /// Gets the caught exception. Returns null, if such does not exist.
         /// </summary>
         /// <value>Result of type <see cref="Exception"/>.</value>
-        internal Exception CaughtException => this.TestContext.CaughtException;
+        public Exception CaughtException => this.TestContext.CaughtException;
         
         /// <inheritdoc />
         public new IShouldPassForTestBuilderWithInvokedAction ShouldPassFor()

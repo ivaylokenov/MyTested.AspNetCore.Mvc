@@ -10,12 +10,12 @@
     /// <summary>
     /// Base class for all test builders with component.
     /// </summary>
-    public abstract class BaseTestBuilderWithController : BaseTestBuilder, IBaseTestBuilderWithController
+    public abstract class BaseTestBuilderWithController : BaseTestBuilderWithComponent, IBaseTestBuilderWithController
     {
         private ControllerTestContext testContext;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseTestBuilderWithComponent"/> class.
+        /// Initializes a new instance of the <see cref="BaseTestBuilderWithController"/> class.
         /// </summary>
         /// <param name="testContext"><see cref="ComponentTestContext"/> containing data about the currently executed assertion chain.</param>
         protected BaseTestBuilderWithController(ControllerTestContext testContext)
@@ -34,7 +34,7 @@
         /// Gets the component attributes which will be tested.
         /// </summary>
         /// <value>Component attributes which will be tested.</value>
-        internal IEnumerable<object> ControllerLevelAttributes => this.TestContext.ComponentAttributes;
+        public IEnumerable<object> ControllerLevelAttributes => this.TestContext.ComponentAttributes;
 
         /// <summary>
         /// Gets the currently used <see cref="ControllerTestContext"/>.

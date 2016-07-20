@@ -5,7 +5,7 @@
     /// <summary>
     /// Base class for all test builders with controller.
     /// </summary>
-    public interface IBaseTestBuilderWithController : IBaseTestBuilder
+    public interface IBaseTestBuilderWithController : IBaseTestBuilderWithComponent
     {
         /// <summary>
         /// Allows additional testing on various components.
