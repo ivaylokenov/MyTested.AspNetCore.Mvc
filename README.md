@@ -3,6 +3,8 @@
 
 MyTested.AspNetCore.Mvc is a unit testing library (currently in preview version) providing easy fluent interface to test the [ASP.NET Core MVC](https://github.com/aspnet/Mvc) framework. It is testing framework agnostic, so you can combine it with a test runner of your choice (e.g. xUnit, NUnit, etc.).
 
+[![Build status](https://ci.appveyor.com/api/projects/status/3xlag3a7f87bg4on?svg=true)](https://ci.appveyor.com/project/ivaylokenov/mytested-aspnetcore-mvc) [![NuGet Version](http://img.shields.io/nuget/v/MyTested.AspNetCore.Mvc.svg?style=flat)](https://www.nuget.org/packages/MyTested.AspNetCore.Mvc/) 
+
 ## Getting started
 
 It is strongly advised to start with the [tutorial](http://docs.mytestedasp.net/tutorial/intro.html) (coming soon) in order to get familiar with MyTested.AspNetCore.Mvc. Additionally, you may see the [testing guide](http://docs.mytestedasp.net/guide/intro.html) (coming soon) or the [API reference](http://docs.mytestedasp.net/api/index.html) for full list of available features. MyTested.AspNetCore.Mvc is 100% covered by [more than 1500 unit tests](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/tree/master/test/) and should work correctly. Almost all items in the [issues page](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/issues) are expected future features and enhancements.
