@@ -16,7 +16,7 @@
     /// <summary>
     /// Used for testing <see cref="IMemoryCache"/>.
     /// </summary>
-    public class MemoryCacheTestBuilder : BaseTestBuilderWithInvokedAction, IAndMemoryCacheTestBuilder
+    public class MemoryCacheTestBuilder : BaseTestBuilderWithComponent, IAndMemoryCacheTestBuilder
     {
         internal const string MemoryCacheName = "memory cache";
 
@@ -28,8 +28,8 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="MemoryCacheTestBuilder"/> class.
         /// </summary>
-        /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
-        public MemoryCacheTestBuilder(ControllerTestContext testContext)
+        /// <param name="testContext"><see cref="ComponentTestContext"/> containing data about the currently executed assertion chain.</param>
+        public MemoryCacheTestBuilder(ComponentTestContext testContext)
             : base(testContext)
         {
             this.memoryCache = this.GetMemoryCache();
@@ -217,8 +217,8 @@
         {
             throw new DataProviderAssertionException(string.Format(
                 "When calling {0} action in {1} expected {2} {3}, but {4}.",
-                this.ActionName,
-                this.Controller.GetName(),
+                this.TestContext.MethodName,
+                this.TestContext.Component.GetName(),
                 propertyName,
                 expectedValue,
                 actualValue));

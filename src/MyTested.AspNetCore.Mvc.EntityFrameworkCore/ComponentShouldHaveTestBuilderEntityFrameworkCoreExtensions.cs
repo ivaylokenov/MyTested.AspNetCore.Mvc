@@ -9,7 +9,7 @@
     /// <summary>
     /// Contains <see cref="Microsoft.EntityFrameworkCore.DbContext"/> extension methods for <see cref="IBaseTestBuilderWithComponentShouldHaveTestBuilder{TBuilder}"/>.
     /// </summary>
-    public static class ComponentShouldHaveBuilderEntityFrameworkCoreExtensions
+    public static class ComponentShouldHaveTestBuilderEntityFrameworkCoreExtensions
     {
         /// <summary>
         /// Tests whether the action saves entities in the <see cref="Microsoft.EntityFrameworkCore.DbContext"/>.
@@ -21,6 +21,7 @@
         public static TBuilder DbContext<TBuilder>(
             this IBaseTestBuilderWithComponentShouldHaveTestBuilder<TBuilder> builder,
             Action<IDbContextTestBuilder> dbContextTestBuilder)
+            where TBuilder : IBaseTestBuilder
         {
             var actualBuilder = (BaseTestBuilderWithComponentShouldHaveTestBuilder<TBuilder>)builder;
 

@@ -5,6 +5,7 @@
 
     public abstract class BaseTestBuilderWithComponentBuilder<TBuilder> : BaseTestBuilder,
         IBaseTestBuilderWithComponentBuilder<TBuilder>
+        where TBuilder : IBaseTestBuilder
     {
         private TBuilder builder;
 
