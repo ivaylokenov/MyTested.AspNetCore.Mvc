@@ -11,14 +11,14 @@
     /// Class containing AndAlso() method allowing additional assertions after action tests.
     /// </summary>
     /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
-    public class AndTestBuilder<TActionResult> : BaseTestBuilderWithActionResult<TActionResult>,
-        IAndTestBuilder<TActionResult>
+    public class AndActionResultTestBuilder<TActionResult> : BaseTestBuilderWithActionResult<TActionResult>,
+        IAndActionResultTestBuilder<TActionResult>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AndTestBuilder{TActionResult}"/> class.
+        /// Initializes a new instance of the <see cref="AndActionResultTestBuilder{TActionResult}"/> class.
         /// </summary>
         /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
-        public AndTestBuilder(ControllerTestContext testContext)
+        public AndActionResultTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
             TestHelper.ExecuteTestCleanup();

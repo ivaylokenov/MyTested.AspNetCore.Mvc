@@ -7,7 +7,7 @@
     /// Class containing AndAlso() method allowing additional assertions after the action tests.
     /// </summary>
     /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
-    public interface IAndTestBuilder<TActionResult> : IBaseTestBuilderWithActionResult<TActionResult>
+    public interface IAndActionResultTestBuilder<TActionResult> : IBaseTestBuilderWithActionResult<TActionResult>
     {
         /// <summary>
         /// Method allowing additional assertions after the action tests.

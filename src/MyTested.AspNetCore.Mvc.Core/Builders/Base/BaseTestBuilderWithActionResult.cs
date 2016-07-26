@@ -37,20 +37,18 @@
         /// <summary>
         /// Initializes new instance of builder providing AndAlso method.
         /// </summary>
-        /// <returns>Test builder of type <see cref="IAndTestBuilder{TActionResult}"/>.</returns>
-        public IAndTestBuilder<TActionResult> NewAndTestBuilder()
+        /// <returns>Test builder of type <see cref="IAndActionResultTestBuilder{TActionResult}"/>.</returns>
+        public IAndActionResultTestBuilder<TActionResult> NewAndTestBuilder()
         {
-            return new AndTestBuilder<TActionResult>(this.TestContext);
+            return new AndActionResultTestBuilder<TActionResult>(this.TestContext);
         }
 
         /// <summary>
-        /// Creates new <see cref="AndProvideTestBuilder{TActionResult}"/>.
+        /// Creates new <see cref="AndShouldPassForTestBuilder{TActionResult}"/>.
         /// </summary>
         /// <returns>Base test builder of type <see cref="IBaseTestBuilderWithActionResult{TActionResult}"/>.</returns>
-        public new IBaseTestBuilderWithActionResult<TActionResult> NewAndProvideTestBuilder()
-        {
-            return new AndProvideTestBuilder<TActionResult>(this.TestContext);
-        }
+        public new IBaseTestBuilderWithActionResult<TActionResult> NewAndShouldPassForTestBuilder()
+            => new AndShouldPassForTestBuilder<TActionResult>(this.TestContext);
 
         /// <summary>
         /// Returns the actual action result casted as dynamic type.

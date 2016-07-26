@@ -13,13 +13,13 @@
     /// <summary>
     /// Used for testing <see cref="DbContext"/>.
     /// </summary>
-    public class DbContextTestBuilder : BaseTestBuilderWithInvokedAction, IDbContextTestBuilder
+    public class DbContextTestBuilder : BaseTestBuilderWithComponent, IDbContextTestBuilder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DbContextTestBuilder"/> class.
         /// </summary>
-        /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
-        public DbContextTestBuilder(ControllerTestContext testContext)
+        /// <param name="testContext"><see cref="ComponentTestContext"/> containing data about the currently executed assertion chain.</param>
+        public DbContextTestBuilder(ComponentTestContext testContext)
             : base(testContext)
         {
         }

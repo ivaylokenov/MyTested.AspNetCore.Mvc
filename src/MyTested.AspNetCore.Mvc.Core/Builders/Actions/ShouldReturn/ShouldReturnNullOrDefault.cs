@@ -21,7 +21,7 @@
                     typeof(TActionResult).ToFriendlyTypeName()));
             }
 
-            return this.NewAndProvideTestBuilder();
+            return this.NewAndShouldPassForTestBuilder();
         }
 
         /// <inheritdoc />
@@ -35,7 +35,7 @@
                     typeof(TActionResult).ToFriendlyTypeName()));
             }
 
-            return this.NewAndProvideTestBuilder();
+            return this.NewAndShouldPassForTestBuilder();
         }
 
         /// <inheritdoc />
@@ -49,7 +49,7 @@
                     typeof(TActionResult).ToFriendlyTypeName()));
             }
 
-            return this.NewAndProvideTestBuilder();
+            return this.NewAndShouldPassForTestBuilder();
         }
 
         private bool CheckValidDefaultValue()

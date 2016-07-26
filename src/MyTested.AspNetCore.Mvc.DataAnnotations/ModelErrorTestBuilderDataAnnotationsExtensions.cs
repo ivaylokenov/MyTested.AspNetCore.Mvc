@@ -3,6 +3,7 @@
     using Builders.Contracts.Base;
     using Builders.Contracts.Models;
     using Builders.Models;
+    using Utilities.Validators;
 
     /// <summary>
     /// Contains <see cref="Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary"/> extension methods for <see cref="IModelErrorTestBuilder"/>.
@@ -18,9 +19,9 @@
         {
             var actualModelErrorTestBuilder = (ModelErrorTestBuilder)modelErrorTestBuilder;
 
-            actualModelErrorTestBuilder.CheckValidModelState();
+            ModelStateValidator.CheckValidModelState(actualModelErrorTestBuilder.TestContext);
 
-            return actualModelErrorTestBuilder.NewAndProvideTestBuilder();
+            return actualModelErrorTestBuilder.NewAndShouldPassForTestBuilder();
         }
     }
 }

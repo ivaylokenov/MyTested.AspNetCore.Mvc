@@ -33,10 +33,10 @@
             => new ShouldPassForTestBuilderWithInvokedAction(this.TestContext);
 
         /// <summary>
-        /// Creates new <see cref="AndProvideTestBuilder"/>.
+        /// Creates new <see cref="AndShouldPassForTestBuilder"/>.
         /// </summary>
         /// <returns>Test builder of type <see cref="IBaseTestBuilderWithInvokedAction"/>.</returns>
-        public IBaseTestBuilderWithInvokedAction NewAndProvideTestBuilder()
-            => new AndProvideTestBuilder(this.TestContext);
+        public IBaseTestBuilderWithInvokedAction NewAndShouldPassForTestBuilder()
+            => new AndShouldPassForTestBuilder(this.TestContext);
     }
 }

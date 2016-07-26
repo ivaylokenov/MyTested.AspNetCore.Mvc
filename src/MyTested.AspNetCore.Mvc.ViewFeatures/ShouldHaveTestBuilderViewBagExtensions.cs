@@ -19,8 +19,8 @@
         /// </summary>
         /// <typeparam name="TActionResult">Type of action result type.</typeparam>
         /// <param name="shouldHaveTestBuilder">Instance of <see cref="IShouldHaveTestBuilder{TActionResult}"/> type.</param>
-        /// <returns>Test builder of <see cref="IAndTestBuilder{TActionResult}"/> type.</returns>
-        public static IAndTestBuilder<TActionResult> NoViewBag<TActionResult>(this IShouldHaveTestBuilder<TActionResult> shouldHaveTestBuilder)
+        /// <returns>Test builder of <see cref="IAndActionResultTestBuilder{TActionResult}"/> type.</returns>
+        public static IAndActionResultTestBuilder<TActionResult> NoViewBag<TActionResult>(this IShouldHaveTestBuilder<TActionResult> shouldHaveTestBuilder)
         {
             var actualShouldHaveTestBuilder = (ShouldHaveTestBuilder<TActionResult>)shouldHaveTestBuilder;
 
@@ -31,7 +31,7 @@
                     ViewBagTestBuilder.ViewBagName);
             }
 
-            return actualShouldHaveTestBuilder.NewAndTestBuilder();
+            return actualShouldHaveTestBuilder.Builder;
         }
 
         /// <summary>
@@ -41,8 +41,8 @@
         /// <param name="shouldHaveTestBuilder">Instance of <see cref="IShouldHaveTestBuilder{TActionResult}"/> type.</param>
         /// <param name="withNumberOfEntries">Expected number of <see cref="Microsoft.AspNetCore.Mvc.Controller.ViewBag"/> entries.
         /// If default null is provided, the test builder checks only if any entries are found.</param>
-        /// <returns>Test builder of <see cref="IAndTestBuilder{TActionResult}"/> type.</returns>
-        public static IAndTestBuilder<TActionResult> ViewBag<TActionResult>(
+        /// <returns>Test builder of <see cref="IAndActionResultTestBuilder{TActionResult}"/> type.</returns>
+        public static IAndActionResultTestBuilder<TActionResult> ViewBag<TActionResult>(
             this IShouldHaveTestBuilder<TActionResult> shouldHaveTestBuilder,
             int? withNumberOfEntries = null)
         {
@@ -54,7 +54,7 @@
                 withNumberOfEntries,
                 actualShouldHaveTestBuilder.TestContext.GetViewData().Count);
 
-            return actualShouldHaveTestBuilder.NewAndTestBuilder();
+            return actualShouldHaveTestBuilder.Builder;
         }
 
         /// <summary>
@@ -63,8 +63,8 @@
         /// <typeparam name="TActionResult">Type of action result type.</typeparam>
         /// <param name="shouldHaveTestBuilder">Instance of <see cref="IShouldHaveTestBuilder{TActionResult}"/> type.</param>
         /// <param name="viewBagTestBuilder">Builder for testing specific <see cref="Microsoft.AspNetCore.Mvc.Controller.ViewBag"/> entries.</param>
-        /// <returns>Test builder of <see cref="IAndTestBuilder{TActionResult}"/> type.</returns>
-        public static IAndTestBuilder<TActionResult> ViewBag<TActionResult>(
+        /// <returns>Test builder of <see cref="IAndActionResultTestBuilder{TActionResult}"/> type.</returns>
+        public static IAndActionResultTestBuilder<TActionResult> ViewBag<TActionResult>(
             this IShouldHaveTestBuilder<TActionResult> shouldHaveTestBuilder,
             Action<IViewBagTestBuilder> viewBagTestBuilder)
         {
@@ -72,7 +72,7 @@
 
             viewBagTestBuilder(new ViewBagTestBuilder(actualShouldHaveTestBuilder.TestContext));
 
-            return actualShouldHaveTestBuilder.NewAndTestBuilder();
+            return actualShouldHaveTestBuilder.Builder;
         }
     }
 }

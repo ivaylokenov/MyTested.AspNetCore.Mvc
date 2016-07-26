@@ -9,6 +9,7 @@
     using Builders.Models;
     using Exceptions;
     using Utilities.Extensions;
+    using Utilities.Validators;
 
     /// <summary>
     /// Contains <see cref="Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary"/> extension methods for <see cref="IShouldHaveTestBuilder{TActionResult}"/>.
@@ -21,8 +22,8 @@
         /// <typeparam name="TActionResult">Type of action result type.</typeparam>
         /// <param name="shouldHaveTestBuilder">Instance of <see cref="IShouldHaveTestBuilder{TActionResult}"/> type.</param>
         /// <param name="modelStateTestBuilder">Builder for testing specific <see cref="Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary"/> errors.</param>
-        /// <returns>Test builder of <see cref="IAndTestBuilder{TActionResult}"/> type.</returns>
-        public static IAndTestBuilder<TActionResult> ModelState<TActionResult>(
+        /// <returns>Test builder of <see cref="IAndActionResultTestBuilder{TActionResult}"/> type.</returns>
+        public static IAndActionResultTestBuilder<TActionResult> ModelState<TActionResult>(
             this IShouldHaveTestBuilder<TActionResult> shouldHaveTestBuilder,
             Action<IModelStateTestBuilder> modelStateTestBuilder)
         {
@@ -30,7 +31,7 @@
 
             modelStateTestBuilder(new ModelStateTestBuilder(actualShouldHaveTestBuilder.TestContext));
 
-            return actualShouldHaveTestBuilder.NewAndTestBuilder();
+            return actualShouldHaveTestBuilder.Builder;
         }
 
         /// <summary>
@@ -38,14 +39,14 @@
         /// </summary>
         /// <typeparam name="TActionResult">Type of action result type.</typeparam>
         /// <param name="shouldHaveTestBuilder">Instance of <see cref="IShouldHaveTestBuilder{TActionResult}"/> type.</param>
-        /// <returns>Test builder of <see cref="IAndTestBuilder{TActionResult}"/> type.</returns>
-        public static IAndTestBuilder<TActionResult> ValidModelState<TActionResult>(this IShouldHaveTestBuilder<TActionResult> shouldHaveTestBuilder)
+        /// <returns>Test builder of <see cref="IAndActionResultTestBuilder{TActionResult}"/> type.</returns>
+        public static IAndActionResultTestBuilder<TActionResult> ValidModelState<TActionResult>(this IShouldHaveTestBuilder<TActionResult> shouldHaveTestBuilder)
         {
             var actualShouldHaveTestBuilder = (ShouldHaveTestBuilder<TActionResult>)shouldHaveTestBuilder;
+            
+            ModelStateValidator.CheckValidModelState(actualShouldHaveTestBuilder.TestContext);
 
-            actualShouldHaveTestBuilder.CheckValidModelState();
-
-            return actualShouldHaveTestBuilder.NewAndTestBuilder();
+            return actualShouldHaveTestBuilder.Builder;
         }
 
         /// <summary>
@@ -55,8 +56,8 @@
         /// <param name="shouldHaveTestBuilder">Instance of <see cref="IShouldHaveTestBuilder{TActionResult}"/> type.</param>
         /// <param name="withNumberOfErrors">Expected number of <see cref="Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary"/> errors.
         /// If default null is provided, the test builder checks only if any errors are found.</param>
-        /// <returns>Test builder of <see cref="IAndTestBuilder{TActionResult}"/> type.</returns>
-        public static IAndTestBuilder<TActionResult> InvalidModelState<TActionResult>(
+        /// <returns>Test builder of <see cref="IAndActionResultTestBuilder{TActionResult}"/> type.</returns>
+        public static IAndActionResultTestBuilder<TActionResult> InvalidModelState<TActionResult>(
             this IShouldHaveTestBuilder<TActionResult> shouldHaveTestBuilder,
             int? withNumberOfErrors = null)
         {
@@ -68,13 +69,13 @@
             {
                 throw new ModelErrorAssertionException(string.Format(
                     "When calling {0} action in {1} expected to have invalid model state{2}, {3}.",
-                    actualShouldHaveTestBuilder.ActionName,
-                    actualShouldHaveTestBuilder.Controller.GetName(),
+                    actualShouldHaveTestBuilder.TestContext.MethodName,
+                    actualShouldHaveTestBuilder.TestContext.Component.GetName(),
                     withNumberOfErrors == null ? string.Empty : $" with {withNumberOfErrors} errors",
                     withNumberOfErrors == null ? "but was in fact valid" : $"but in fact contained {actualModelStateErrors}"));
             }
 
-            return actualShouldHaveTestBuilder.NewAndTestBuilder();
+            return actualShouldHaveTestBuilder.Builder;
         }
     }
 }

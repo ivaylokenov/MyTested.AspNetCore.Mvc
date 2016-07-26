@@ -19,8 +19,8 @@
         /// </summary>
         /// <typeparam name="TActionResult">Type of action result type.</typeparam>
         /// <param name="shouldHaveTestBuilder">Instance of <see cref="IShouldHaveTestBuilder{TActionResult}"/> type.</param>
-        /// <returns>Test builder of <see cref="IAndTestBuilder{TActionResult}"/> type.</returns>
-        public static IAndTestBuilder<TActionResult> NoViewData<TActionResult>(this IShouldHaveTestBuilder<TActionResult> shouldHaveTestBuilder)
+        /// <returns>Test builder of <see cref="IAndActionResultTestBuilder{TActionResult}"/> type.</returns>
+        public static IAndActionResultTestBuilder<TActionResult> NoViewData<TActionResult>(this IShouldHaveTestBuilder<TActionResult> shouldHaveTestBuilder)
         {
             var actualShouldHaveTestBuilder = (ShouldHaveTestBuilder<TActionResult>)shouldHaveTestBuilder;
 
@@ -31,7 +31,7 @@
                     ViewDataTestBuilder.ViewDataName);
             }
 
-            return actualShouldHaveTestBuilder.NewAndTestBuilder();
+            return actualShouldHaveTestBuilder.Builder;
         }
 
         /// <summary>
@@ -41,8 +41,8 @@
         /// <param name="shouldHaveTestBuilder">Instance of <see cref="IShouldHaveTestBuilder{TActionResult}"/> type.</param>
         /// <param name="withNumberOfEntries">Expected number of <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary"/> entries.
         /// If default null is provided, the test builder checks only if any entries are found.</param>
-        /// <returns>Test builder of <see cref="IAndTestBuilder{TActionResult}"/> type.</returns>
-        public static IAndTestBuilder<TActionResult> ViewData<TActionResult>(
+        /// <returns>Test builder of <see cref="IAndActionResultTestBuilder{TActionResult}"/> type.</returns>
+        public static IAndActionResultTestBuilder<TActionResult> ViewData<TActionResult>(
             this IShouldHaveTestBuilder<TActionResult> shouldHaveTestBuilder,
             int? withNumberOfEntries = null)
         {
@@ -54,7 +54,7 @@
                 withNumberOfEntries,
                 actualShouldHaveTestBuilder.TestContext.GetViewData().Count);
 
-            return actualShouldHaveTestBuilder.NewAndTestBuilder();
+            return actualShouldHaveTestBuilder.Builder;
         }
 
         /// <summary>
@@ -63,8 +63,8 @@
         /// <typeparam name="TActionResult">Type of action result type.</typeparam>
         /// <param name="shouldHaveTestBuilder">Instance of <see cref="IShouldHaveTestBuilder{TActionResult}"/> type.</param>
         /// <param name="viewDataTestBuilder">Builder for testing specific <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary"/> entries.</param>
-        /// <returns>Test builder of <see cref="IAndTestBuilder{TActionResult}"/> type.</returns>
-        public static IAndTestBuilder<TActionResult> ViewData<TActionResult>(
+        /// <returns>Test builder of <see cref="IAndActionResultTestBuilder{TActionResult}"/> type.</returns>
+        public static IAndActionResultTestBuilder<TActionResult> ViewData<TActionResult>(
             this IShouldHaveTestBuilder<TActionResult> shouldHaveTestBuilder,
             Action<IViewDataTestBuilder> viewDataTestBuilder)
         {
@@ -72,7 +72,7 @@
 
             viewDataTestBuilder(new ViewDataTestBuilder(actualShouldHaveTestBuilder.TestContext));
 
-            return actualShouldHaveTestBuilder.NewAndTestBuilder();
+            return actualShouldHaveTestBuilder.Builder;
         }
     }
 }

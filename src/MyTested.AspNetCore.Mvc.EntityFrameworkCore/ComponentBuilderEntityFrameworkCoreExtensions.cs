@@ -15,7 +15,7 @@
         /// <summary>
         /// Sets initial values to the <see cref="DbContext"/> on the tested component.
         /// </summary>
-        /// <typeparam name="TBuilder">Class representing ASP.NET Core MVC component.</typeparam>
+        /// <typeparam name="TBuilder">Class representing ASP.NET Core MVC test builder.</typeparam>
         /// <param name="builder">Instance of <see cref="IBaseTestBuilderWithComponentBuilder{TBuilder}"/> type.</param>
         /// <param name="dbContextBuilder">Action setting the <see cref="DbContext"/> by using <see cref="IDbContextBuilder"/>.</param>
         /// <returns>The same component builder.</returns>

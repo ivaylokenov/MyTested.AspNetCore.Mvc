@@ -4,16 +4,16 @@
     using Internal.TestContexts;
 
     /// <summary>
-    /// Provides controller, action and action result information.
+    /// Provides additional testing methods.
     /// </summary>
     /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
-    public class AndProvideTestBuilder<TActionResult> : BaseTestBuilderWithActionResult<TActionResult>
+    public class AndShouldPassForTestBuilder<TActionResult> : BaseTestBuilderWithActionResult<TActionResult>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AndProvideTestBuilder{TActionResult}"/> class.
+        /// Initializes a new instance of the <see cref="AndShouldPassForTestBuilder{TActionResult}"/> class.
         /// </summary>
         /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
-        public AndProvideTestBuilder(ControllerTestContext testContext)
+        public AndShouldPassForTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
         }

@@ -1,6 +1,5 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.TestContexts
 {
-    using System;
     using System.Linq;
     using Application;
     using Controllers;

@@ -4,15 +4,15 @@
     using Internal.TestContexts;
 
     /// <summary>
-    /// Provides controller and action information.
+    /// Provides additional testing methods.
     /// </summary>
-    public class AndProvideTestBuilder : BaseTestBuilderWithInvokedAction
+    public class AndShouldPassForTestBuilder : BaseTestBuilderWithInvokedAction
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AndProvideTestBuilder"/> class.
+        /// Initializes a new instance of the <see cref="AndShouldPassForTestBuilder"/> class.
         /// </summary>
         /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
-        public AndProvideTestBuilder(ControllerTestContext testContext)
+        public AndShouldPassForTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
         }

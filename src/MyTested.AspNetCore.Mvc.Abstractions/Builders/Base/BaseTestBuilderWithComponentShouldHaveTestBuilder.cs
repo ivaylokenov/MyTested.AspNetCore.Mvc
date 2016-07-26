@@ -3,12 +3,12 @@
     using Contracts.Base;
     using Internal.TestContexts;
 
-    public abstract class BaseTestBuilderWithComponentBuilder<TBuilder> : BaseTestBuilder,
-        IBaseTestBuilderWithComponentBuilder<TBuilder>
+    public abstract class BaseTestBuilderWithComponentShouldHaveTestBuilder<TBuilder> : BaseTestBuilderWithComponent,
+        IBaseTestBuilderWithComponentShouldHaveTestBuilder<TBuilder>
     {
         private TBuilder builder;
 
-        protected BaseTestBuilderWithComponentBuilder(HttpTestContext testContext)
+        protected BaseTestBuilderWithComponentShouldHaveTestBuilder(ComponentTestContext testContext)
             : base(testContext)
         {
         }
@@ -22,7 +22,7 @@
                     this.builder = this.SetBuilder();
                 }
 
-                return builder;
+                return this.builder;
             }
         }
 

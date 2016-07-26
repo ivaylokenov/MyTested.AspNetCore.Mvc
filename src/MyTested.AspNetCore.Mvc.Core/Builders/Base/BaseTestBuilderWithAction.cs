@@ -36,19 +36,5 @@
         
         /// <inheritdoc />
         public new IShouldPassForTestBuilderWithAction ShouldPassFor() => new ShouldPassForTestBuilderWithAction(this.TestContext);
-
-        /// <summary>
-        /// Tests whether the tested action's model state is valid.
-        /// </summary>
-        public void CheckValidModelState()
-        {
-            if (!this.TestContext.ModelState.IsValid)
-            {
-                throw new ModelErrorAssertionException(string.Format(
-                    "When calling {0} action in {1} expected to have valid model state with no errors, but it had some.",
-                    this.ActionName,
-                    this.Controller.GetName()));
-            }
-        }
     }
 }

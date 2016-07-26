@@ -12,7 +12,7 @@
         public IBaseTestBuilderWithActionResult<TActionResult> Empty()
         {
             this.ValidateActionReturnType<EmptyResult>();
-            return this.NewAndProvideTestBuilder();
+            return this.NewAndShouldPassForTestBuilder();
         }
     }
 }

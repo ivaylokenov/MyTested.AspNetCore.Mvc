@@ -40,7 +40,6 @@
         public ControllerBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
-            this.Builder = this;
             this.TestContext = testContext;
 
             this.enabledValidation = TestApplication.TestConfiguration.ModelStateValidation;
@@ -79,7 +78,7 @@
         private HttpRequest HttpRequest => this.HttpContext.Request;
 
         private IServiceProvider Services => this.HttpContext.RequestServices;
-
+        
         /// <inheritdoc />
         public IAndControllerBuilder<TController> AndAlso()
         {
@@ -99,6 +98,8 @@
             this.BuildControllerIfNotExists();
             return new ShouldPassForTestBuilderWithController<TController>(this.TestContext);
         }
+
+        protected override IAndControllerBuilder<TController> SetBuilder() => this;
 
         private void ValidateControllerType()
         {

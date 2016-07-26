@@ -18,8 +18,8 @@
         /// </summary>
         /// <typeparam name="TActionResult">Type of action result type.</typeparam>
         /// <param name="shouldHaveTestBuilder">Instance of <see cref="IShouldHaveTestBuilder{TActionResult}"/> type.</param>
-        /// <returns>Test builder of <see cref="IAndTestBuilder{TActionResult}"/> type.</returns>
-        public static IAndTestBuilder<TActionResult> NoMemoryCache<TActionResult>(this IShouldHaveTestBuilder<TActionResult> shouldHaveTestBuilder)
+        /// <returns>Test builder of <see cref="IAndActionResultTestBuilder{TActionResult}"/> type.</returns>
+        public static IAndActionResultTestBuilder<TActionResult> NoMemoryCache<TActionResult>(this IShouldHaveTestBuilder<TActionResult> shouldHaveTestBuilder)
         {
             var actualShouldHaveTestBuilder = (ShouldHaveTestBuilder<TActionResult>)shouldHaveTestBuilder;
 
@@ -30,7 +30,7 @@
                     MemoryCacheTestBuilder.MemoryCacheName);
             }
 
-            return actualShouldHaveTestBuilder.NewAndTestBuilder();
+            return actualShouldHaveTestBuilder.Builder;
         }
 
         /// <summary>
@@ -40,8 +40,8 @@
         /// <param name="shouldHaveTestBuilder">Instance of <see cref="IShouldHaveTestBuilder{TActionResult}"/> type.</param>
         /// <param name="withNumberOfEntries">Expected number of <see cref="Microsoft.Extensions.Caching.Memory.IMemoryCache"/> entries.
         /// If default null is provided, the test builder checks only if any entries are found.</param>
-        /// <returns>Test builder of <see cref="IAndTestBuilder{TActionResult}"/> type.</returns>
-        public static IAndTestBuilder<TActionResult> MemoryCache<TActionResult>(
+        /// <returns>Test builder of <see cref="IAndActionResultTestBuilder{TActionResult}"/> type.</returns>
+        public static IAndActionResultTestBuilder<TActionResult> MemoryCache<TActionResult>(
             this IShouldHaveTestBuilder<TActionResult> shouldHaveTestBuilder,
             int? withNumberOfEntries = null)
         {
@@ -53,7 +53,7 @@
                 withNumberOfEntries,
                 actualShouldHaveTestBuilder.TestContext.GetMockedMemoryCache().Count);
 
-            return actualShouldHaveTestBuilder.NewAndTestBuilder();
+            return actualShouldHaveTestBuilder.Builder;
         }
 
         /// <summary>
@@ -62,8 +62,8 @@
         /// <typeparam name="TActionResult">Type of action result type.</typeparam>
         /// <param name="shouldHaveTestBuilder">Instance of <see cref="IShouldHaveTestBuilder{TActionResult}"/> type.</param>
         /// <param name="memoryCacheTestBuilder">Builder for testing specific <see cref="Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary"/> entries.</param>
-        /// <returns>Test builder of <see cref="IAndTestBuilder{TActionResult}"/> type.</returns>
-        public static IAndTestBuilder<TActionResult> MemoryCache<TActionResult>(
+        /// <returns>Test builder of <see cref="IAndActionResultTestBuilder{TActionResult}"/> type.</returns>
+        public static IAndActionResultTestBuilder<TActionResult> MemoryCache<TActionResult>(
             this IShouldHaveTestBuilder<TActionResult> shouldHaveTestBuilder,
             Action<IMemoryCacheTestBuilder> memoryCacheTestBuilder)
         {
@@ -71,7 +71,7 @@
 
             memoryCacheTestBuilder(new MemoryCacheTestBuilder(actualShouldHaveTestBuilder.TestContext));
 
-            return actualShouldHaveTestBuilder.NewAndTestBuilder();
+            return actualShouldHaveTestBuilder.Builder;
         }
     }
 }
