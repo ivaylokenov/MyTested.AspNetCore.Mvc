@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Builders
+﻿namespace MyTested.AspNetCore.Mvc.Builders.Options
 {
     using System;
     using Base;

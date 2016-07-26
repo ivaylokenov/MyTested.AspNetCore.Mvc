@@ -1,33 +1,33 @@
 ﻿namespace MyTested.AspNetCore.Mvc
 {
     using System;
-    using Builders;
+    using Builders.Base;
+    using Builders.Contracts.Base;
     using Builders.Contracts.Options;
-    using Builders.Contracts.Controllers;
-    using Builders.Controllers;
+    using Builders.Options;
 
     /// <summary>
-    /// Contains configuration options extension methods for <see cref="IControllerBuilder{TController}"/>.
+    /// Contains configuration options extension methods for <see cref="IBaseTestBuilderWithComponentBuilder{TBuilder}"/>.
     /// </summary>
     public static class ControllerBuilderOptionsExtensions
     {
         /// <summary>
-        /// Sets initial values to the configuration options on the tested controller.
+        /// Sets initial values to the configuration options on the tested component.
         /// </summary>
-        /// <typeparam name="TController">Class representing ASP.NET Core MVC controller.</typeparam>
-        /// <param name="controllerBuilder">Instance of <see cref="IControllerBuilder{TController}"/> type.</param>
+        /// <typeparam name="TBuilder">Class representing ASP.NET Core MVC test builder.</typeparam>
+        /// <param name="builder">Instance of <see cref="IBaseTestBuilderWithComponentBuilder{TBuilder}"/> type.</param>
         /// <param name="optionsBuilder">Action setting the configuration options by using <see cref="IOptionsBuilder"/>.</param>
-        /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>
-        public static IControllerBuilder<TController> WithOptions<TController>(
-            this IControllerBuilder<TController> controllerBuilder,
+        /// <returns>The same component builder.</returns>
+        public static TBuilder WithOptions<TBuilder>(
+            this IBaseTestBuilderWithComponentBuilder<TBuilder> builder,
             Action<IOptionsBuilder> optionsBuilder)
-            where TController : class
+            where TBuilder : IBaseTestBuilder
         {
-            var actualControllerBuilder = (ControllerBuilder<TController>)controllerBuilder;
+            var actualBuilder = (BaseTestBuilderWithComponentBuilder<TBuilder>)builder;
 
-            optionsBuilder(new OptionsBuilder(actualControllerBuilder.TestContext));
+            optionsBuilder(new OptionsBuilder(actualBuilder.TestContext));
 
-            return actualControllerBuilder;
+            return actualBuilder.Builder;
         }
     }
 }
