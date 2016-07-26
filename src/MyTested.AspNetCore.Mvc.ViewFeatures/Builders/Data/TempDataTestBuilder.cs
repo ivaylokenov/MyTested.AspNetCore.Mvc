@@ -11,6 +11,8 @@
     {
         internal const string TempDataName = "temp data";
 
+        private readonly ControllerTestContext testContext;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TempDataTestBuilder"/> class.
         /// </summary>
@@ -18,6 +20,7 @@
         public TempDataTestBuilder(ControllerTestContext testContext)
             : base(testContext, TempDataName)
         {
+            this.testContext = testContext;
         }
 
         /// <summary>
@@ -33,6 +36,6 @@
         /// When overridden in derived class provides a way to built the data provider as <see cref="IDictionary{TKey,TValue}"/>.
         /// </summary>
         /// <returns>Data provider as <see cref="IDictionary{TKey,TValue}"/>.</returns>
-        protected override IDictionary<string, object> GetDataProvider() => this.TestContext.GetTempData();
+        protected override IDictionary<string, object> GetDataProvider() => this.testContext.GetTempData();
     }
 }

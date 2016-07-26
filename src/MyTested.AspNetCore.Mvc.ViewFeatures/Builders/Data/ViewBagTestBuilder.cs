@@ -11,6 +11,8 @@
     {
         internal const string ViewBagName = "view bag";
 
+        private readonly ControllerTestContext testContext;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ViewBagTestBuilder"/> class.
         /// </summary>
@@ -18,6 +20,7 @@
         public ViewBagTestBuilder(ControllerTestContext testContext)
             : base(testContext, ViewBagName)
         {
+            this.testContext = testContext;
         }
 
         /// <summary>
@@ -33,6 +36,6 @@
         /// When overridden in derived class provides a way to built the data provider as <see cref="IDictionary{TKey,TValue}"/>.
         /// </summary>
         /// <returns>Data provider as <see cref="IDictionary{TKey,TValue}"/></returns>
-        protected override IDictionary<string, object> GetDataProvider() => this.TestContext.GetViewData();
+        protected override IDictionary<string, object> GetDataProvider() => this.testContext.GetViewData();
     }
 }

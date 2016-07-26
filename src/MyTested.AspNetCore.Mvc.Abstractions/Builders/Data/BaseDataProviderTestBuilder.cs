@@ -11,20 +11,20 @@
     /// <summary>
     /// Base class for all data provider test builder.
     /// </summary>
-    public abstract class BaseDataProviderTestBuilder : BaseTestBuilderWithInvokedAction
+    public abstract class BaseDataProviderTestBuilder : BaseTestBuilderWithComponent
     {
+        private IDictionary<string, object> dataProvider;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseDataProviderTestBuilder"/> class.
         /// </summary>
-        /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
+        /// <param name="testContext"><see cref="ComponentTestContext"/> containing data about the currently executed assertion chain.</param>
         /// <param name="dataProviderName">Name of the data provider.</param>
-        protected BaseDataProviderTestBuilder(ControllerTestContext testContext, string dataProviderName)
+        protected BaseDataProviderTestBuilder(ComponentTestContext testContext, string dataProviderName)
             : base(testContext)
         {
             CommonValidator.CheckForNotWhiteSpaceString(dataProviderName);
             this.DataProviderName = dataProviderName;
-            this.DataProvider = this.GetDataProvider();
-            CommonValidator.CheckForNullReference(this.DataProvider);
         }
 
         /// <summary>
@@ -37,7 +37,20 @@
         /// Gets the data provider as <see cref="IDictionary{TKey,TValue}"/>.
         /// </summary>
         /// <value>Data provider as <see cref="IDictionary{TKey,TValue}"/>.</value>
-        protected IDictionary<string, object> DataProvider { get; private set; }
+        protected IDictionary<string, object> DataProvider
+        {
+            get
+            {
+                if (this.dataProvider == null)
+                {
+                    this.dataProvider = this.GetDataProvider();
+                    CommonValidator.CheckForNullReference(this.dataProvider, nameof(this.DataProvider));
+                }
+
+                return this.dataProvider;
+            }
+        }
+
 
         /// <summary>
         /// When overridden in derived class provides a way to built the data provider as <see cref="IDictionary{TKey,TValue}"/>.
@@ -143,8 +156,8 @@
         {
             throw new DataProviderAssertionException(string.Format(
                     "When calling {0} action in {1} expected {2} {3}, but {4}.",
-                    this.ActionName,
-                    this.Controller.GetName(),
+                    this.TestContext.MethodName,
+                    this.TestContext.Component.GetName(),
                     propertyName,
                     expectedValue,
                     actualValue));

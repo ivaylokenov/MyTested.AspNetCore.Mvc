@@ -9,7 +9,7 @@
     /// <summary>
     /// Contains configuration options extension methods for <see cref="IBaseTestBuilderWithComponentBuilder{TBuilder}"/>.
     /// </summary>
-    public static class ControllerBuilderOptionsExtensions
+    public static class ComponentBuilderOptionsExtensions
     {
         /// <summary>
         /// Sets initial values to the configuration options on the tested component.
