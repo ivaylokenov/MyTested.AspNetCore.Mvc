@@ -23,7 +23,7 @@
             Action<IDbContextTestBuilder> dbContextTestBuilder)
             where TBuilder : IBaseTestBuilder
         {
-            var actualBuilder = (BaseTestBuilderWithComponentShouldHaveTestBuilder<TBuilder>)builder;
+            var actualBuilder = (BaseTestBuilderWithComponentBuilder<TBuilder>)builder;
 
             dbContextTestBuilder(new DbContextTestBuilder(actualBuilder.TestContext));
             

@@ -34,7 +34,7 @@
 
             private set
             {
-                CommonValidator.CheckForNullReference(value.Component, nameof(value.Component));
+                CommonValidator.CheckForNullReference(value, nameof(this.TestContext));
                 this.testContext = value;
             }
         }

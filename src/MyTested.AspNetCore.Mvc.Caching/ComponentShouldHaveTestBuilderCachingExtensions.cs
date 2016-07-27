@@ -21,7 +21,7 @@
         public static TBuilder NoMemoryCache<TBuilder>(this IBaseTestBuilderWithComponentShouldHaveTestBuilder<TBuilder> builder)
             where TBuilder : IBaseTestBuilder
         {
-            var actualBuilder = (BaseTestBuilderWithComponentShouldHaveTestBuilder<TBuilder>)builder;
+            var actualBuilder = (BaseTestBuilderWithComponentBuilder<TBuilder>)builder;
 
             if (actualBuilder.TestContext.GetMockedMemoryCache().Count > 0)
             {
@@ -46,7 +46,7 @@
             int? withNumberOfEntries = null)
             where TBuilder : IBaseTestBuilder
         {
-            var actualBuilder = (BaseTestBuilderWithComponentShouldHaveTestBuilder<TBuilder>)builder;
+            var actualBuilder = (BaseTestBuilderWithComponentBuilder<TBuilder>)builder;
 
             DataProviderValidator.ValidateDataProviderNumberOfEntries(
                 actualBuilder.TestContext,
@@ -69,7 +69,7 @@
             Action<IMemoryCacheTestBuilder> memoryCacheTestBuilder)
             where TBuilder : IBaseTestBuilder
         {
-            var actualBuilder = (BaseTestBuilderWithComponentShouldHaveTestBuilder<TBuilder>)builder;
+            var actualBuilder = (BaseTestBuilderWithComponentBuilder<TBuilder>)builder;
 
             memoryCacheTestBuilder(new MemoryCacheTestBuilder(actualBuilder.TestContext));
 

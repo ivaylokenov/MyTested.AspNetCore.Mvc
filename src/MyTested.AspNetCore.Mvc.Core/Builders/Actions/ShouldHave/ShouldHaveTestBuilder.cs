@@ -15,7 +15,7 @@
     /// </summary>
     /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
     public partial class ShouldHaveTestBuilder<TActionResult>
-        : BaseTestBuilderWithComponentShouldHaveTestBuilder<IAndActionResultTestBuilder<TActionResult>>, IShouldHaveTestBuilder<TActionResult>
+        : BaseTestBuilderWithComponentBuilder<IAndActionResultTestBuilder<TActionResult>>, IShouldHaveTestBuilder<TActionResult>
     {
         private ControllerTestContext testContext;
 

@@ -22,7 +22,7 @@
         public static TBuilder NoSession<TBuilder>(this IBaseTestBuilderWithComponentShouldHaveTestBuilder<TBuilder> builder)
             where TBuilder : IBaseTestBuilder
         {
-            var actualBuilder = (BaseTestBuilderWithComponentShouldHaveTestBuilder<TBuilder>)builder;
+            var actualBuilder = (BaseTestBuilderWithComponentBuilder<TBuilder>)builder;
 
             if (actualBuilder.TestContext.Session.Keys.Any())
             {
@@ -47,7 +47,7 @@
             int? withNumberOfEntries = null)
             where TBuilder : IBaseTestBuilder
         {
-            var actualBuilder = (BaseTestBuilderWithComponentShouldHaveTestBuilder<TBuilder>)builder;
+            var actualBuilder = (BaseTestBuilderWithComponentBuilder<TBuilder>)builder;
 
             DataProviderValidator.ValidateDataProviderNumberOfEntries(
                 actualBuilder.TestContext,
@@ -70,7 +70,7 @@
             Action<ISessionTestBuilder> sessionTestBuilder)
             where TBuilder : IBaseTestBuilder
         {
-            var actualBuilder = (BaseTestBuilderWithComponentShouldHaveTestBuilder<TBuilder>)builder;
+            var actualBuilder = (BaseTestBuilderWithComponentBuilder<TBuilder>)builder;
 
             sessionTestBuilder(new SessionTestBuilder(actualBuilder.TestContext));
 
