@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Test.InternalTests.RoutesTests
+﻿namespace MyTested.AspNetCore.Mvc.Test.InternalTests.RoutingTests
 {
     using Internal.Routing;
     using Setups.Routing;

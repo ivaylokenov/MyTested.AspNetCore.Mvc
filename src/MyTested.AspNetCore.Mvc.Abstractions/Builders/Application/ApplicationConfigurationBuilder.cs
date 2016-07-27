@@ -46,7 +46,7 @@
         /// <inheritdoc />
         public IApplicationConfigurationBuilder WithRoutes(Action<IRouteBuilder> routes)
         {
-            TestApplication.AdditionalRoutes += routes;
+            TestApplication.AdditionalRouting += routes;
             return this;
         }
     }

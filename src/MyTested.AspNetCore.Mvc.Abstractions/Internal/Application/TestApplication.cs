@@ -35,7 +35,7 @@
 
         private static readonly ISet<IDefaultRegistrationPlugin> DefaultRegistrationPlugins;
         private static readonly ISet<IServiceRegistrationPlugin> ServiceRegistrationPlugins;
-        private static readonly ISet<IRouteServiceRegistrationPlugin> RouteServiceRegistrationPlugins;
+        private static readonly ISet<IRoutingServiceRegistrationPlugin> RoutingServiceRegistrationPlugins;
         private static readonly ISet<IInitializationPlugin> InitializationPlugins;
 
         private static readonly object Sync;
@@ -50,7 +50,7 @@
         private static Type startupType;
 
         private static volatile IServiceProvider serviceProvider;
-        private static volatile IServiceProvider routeServiceProvider;
+        private static volatile IServiceProvider routingServiceProvider;
         private static volatile IRouter router;
 
         static TestApplication()
@@ -60,7 +60,7 @@
 
             DefaultRegistrationPlugins = new HashSet<IDefaultRegistrationPlugin>();
             ServiceRegistrationPlugins = new HashSet<IServiceRegistrationPlugin>();
-            RouteServiceRegistrationPlugins = new HashSet<IRouteServiceRegistrationPlugin>();
+            RoutingServiceRegistrationPlugins = new HashSet<IRoutingServiceRegistrationPlugin>();
             InitializationPlugins = new HashSet<IInitializationPlugin>();
 
             LoadPlugins();
@@ -78,12 +78,12 @@
             }
         }
 
-        public static IServiceProvider RouteServices
+        public static IServiceProvider RoutingServices
         {
             get
             {
                 TryLockedInitialization();
-                return routeServiceProvider;
+                return routingServiceProvider;
             }
         }
 
@@ -116,7 +116,7 @@
 
         internal static Action<IApplicationBuilder> AdditionalApplicationConfiguration { get; set; }
 
-        internal static Action<IRouteBuilder> AdditionalRoutes { get; set; }
+        internal static Action<IRouteBuilder> AdditionalRouting { get; set; }
 
         internal static string TestAssemblyName
         {
@@ -207,10 +207,10 @@
                         ServiceRegistrationPlugins.Add(servicePlugin);
                     }
 
-                    var routeServicePlugin = plugin as IRouteServiceRegistrationPlugin;
-                    if (routeServicePlugin != null)
+                    var routingServicePlugin = plugin as IRoutingServiceRegistrationPlugin;
+                    if (routingServicePlugin != null)
                     {
-                        RouteServiceRegistrationPlugins.Add(routeServicePlugin);
+                        RoutingServiceRegistrationPlugins.Add(routingServicePlugin);
                     }
 
                     var initializationPlugin = plugin as IInitializationPlugin;
@@ -247,7 +247,7 @@
             var startupMethods = PrepareStartup(serviceCollection);
 
             PrepareServices(serviceCollection, startupMethods);
-            PrepareApplicationAndRoutes(startupMethods);
+            PrepareApplicationAndRouting(startupMethods);
 
             initialiazed = true;
         }
@@ -363,7 +363,7 @@
             AdditionalServices?.Invoke(serviceCollection);
             
             TryReplaceKnownServices(serviceCollection);
-            PrepareRouteServices(serviceCollection);
+            PrepareRoutingServices(serviceCollection);
 
             serviceProvider = serviceCollection.BuildServiceProvider();
 
@@ -393,19 +393,19 @@
             }
         }
 
-        private static void PrepareRouteServices(IServiceCollection serviceCollection)
+        private static void PrepareRoutingServices(IServiceCollection serviceCollection)
         {
-            var routeServiceCollection = new ServiceCollection().Add(serviceCollection);
+            var routingServiceCollection = new ServiceCollection().Add(serviceCollection);
 
-            foreach (var routeServiceRegistrationPlugin in RouteServiceRegistrationPlugins)
+            foreach (var routingServiceRegistrationPlugin in RoutingServiceRegistrationPlugins)
             {
-                routeServiceRegistrationPlugin.RouteServiceRegistrationDelegate(routeServiceCollection);
+                routingServiceRegistrationPlugin.RoutingServiceRegistrationDelegate(routingServiceCollection);
             }
 
-            routeServiceProvider = routeServiceCollection.BuildServiceProvider();
+            routingServiceProvider = routingServiceCollection.BuildServiceProvider();
         }
 
-        private static void PrepareApplicationAndRoutes(StartupMethods startupMethods)
+        private static void PrepareApplicationAndRouting(StartupMethods startupMethods)
         {
             var applicationBuilder = new MockedApplicationBuilder(serviceProvider);
             
@@ -424,7 +424,7 @@
                 routeBuilder.Routes.Add(route);
             }
 
-            AdditionalRoutes?.Invoke(routeBuilder);
+            AdditionalRouting?.Invoke(routeBuilder);
 
             if (StartupType == null || routeBuilder.Routes.Count == 0)
             {
@@ -458,11 +458,11 @@
             environment = null;
             startupType = null;
             serviceProvider = null;
-            routeServiceProvider = null;
+            routingServiceProvider = null;
             router = null;
             AdditionalServices = null;
             AdditionalApplicationConfiguration = null;
-            AdditionalRoutes = null;
+            AdditionalRouting = null;
             TestServiceProvider.Current = null;
             TestServiceProvider.ClearServiceLifetimes();
         }

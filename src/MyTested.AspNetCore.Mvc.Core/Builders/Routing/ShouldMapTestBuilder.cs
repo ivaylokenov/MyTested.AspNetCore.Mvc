@@ -1,14 +1,13 @@
-﻿namespace MyTested.AspNetCore.Mvc.Builders.Routes
+﻿namespace MyTested.AspNetCore.Mvc.Builders.Routing
 {
     using System;
     using System.Linq.Expressions;
-    using Contracts.Routes;
+    using Contracts.Routing;
     using Utilities;
     using Microsoft.AspNetCore.Routing;
     using Internal.Routing;
     using Exceptions;
     using Utilities.Extensions;
-    using System.Linq;
     using System.Collections.Generic;
     using Internal.TestContexts;
     using System.Threading.Tasks;

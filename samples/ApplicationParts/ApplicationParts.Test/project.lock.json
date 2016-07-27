@@ -4183,6 +4183,7 @@
           "MyTested.AspNetCore.Mvc.Caching": "1.0.0",
           "MyTested.AspNetCore.Mvc.Core": "1.0.0",
           "MyTested.AspNetCore.Mvc.EntityFrameworkCore": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Http": "1.0.0",
           "MyTested.AspNetCore.Mvc.Options": "1.0.0",
           "MyTested.AspNetCore.Mvc.Session": "1.0.0",
           "MyTested.AspNetCore.Mvc.ViewFeatures": "1.0.0"
@@ -4279,6 +4280,19 @@
         },
         "runtime": {
           "netstandard1.6/MyTested.AspNetCore.Mvc.EntityFrameworkCore.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.Http/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.6",
+        "dependencies": {
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0"
+        },
+        "compile": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Http.dll": {}
+        },
+        "runtime": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Http.dll": {}
         }
       },
       "MyTested.AspNetCore.Mvc.Licensing/1.0.0-preview-final": {
@@ -10840,6 +10854,11 @@
       "type": "project",
       "path": "../../../src/MyTested.AspNetCore.Mvc.EntityFrameworkCore/project.json",
       "msbuildProject": "../../../src/MyTested.AspNetCore.Mvc.EntityFrameworkCore/MyTested.AspNetCore.Mvc.EntityFrameworkCore.xproj"
+    },
+    "MyTested.AspNetCore.Mvc.Http/1.0.0-preview-final": {
+      "type": "project",
+      "path": "../../../src/MyTested.AspNetCore.Mvc.Http/project.json",
+      "msbuildProject": "../../../src/MyTested.AspNetCore.Mvc.Http/MyTested.AspNetCore.Mvc.Http.xproj"
     },
     "MyTested.AspNetCore.Mvc.Licensing/1.0.0-preview-final": {
       "type": "project",

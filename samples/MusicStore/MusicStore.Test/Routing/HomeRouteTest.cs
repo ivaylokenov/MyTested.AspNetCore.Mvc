@@ -1,4 +1,4 @@
-﻿namespace MusicStore.Test.Routes
+﻿namespace MusicStore.Test.Routing
 {
     using Microsoft.Extensions.Caching.Memory;
     using Models;
@@ -12,7 +12,7 @@
         public void GetIndexShouldBeRoutedCorrectly()
         {
             MyMvc
-                .Routes()
+                .Routing()
                 .ShouldMap("/Home/Index")
                 .To<HomeController>(c => c.Index(
                     With.Any<MusicStoreContext>(),
@@ -23,7 +23,7 @@
         public void GetErrorShouldBeRoutedCorrectly()
         {
             MyMvc
-                .Routes()
+                .Routing()
                 .ShouldMap("/Home/Error")
                 .To<HomeController>(c => c.Error());
         }
@@ -32,7 +32,7 @@
         public void GetStatusCodeShouldBeRoutedCorrectly()
         {
             MyMvc
-                .Routes()
+                .Routing()
                 .ShouldMap("/Home/StatusCodePage")
                 .To<HomeController>(c => c.StatusCodePage());
         }
@@ -41,7 +41,7 @@
         public void GetAccessDeniedShouldBeRoutedCorrectly()
         {
             MyMvc
-                .Routes()
+                .Routing()
                 .ShouldMap("/Home/AccessDenied")
                 .To<HomeController>(c => c.AccessDenied());
         }

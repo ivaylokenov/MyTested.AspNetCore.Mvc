@@ -12,7 +12,7 @@
     /// <summary>
     /// Used for testing <see cref="HttpResponse"/>.
     /// </summary>
-    public interface IHttpResponseTestBuilder : IBaseTestBuilderWithInvokedAction
+    public interface IHttpResponseTestBuilder : IBaseTestBuilderWithComponent
     {
         /// <summary>
         /// Tests whether <see cref="HttpResponse.Body"/> has the same contents as the provided <see cref="Stream"/>.

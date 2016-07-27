@@ -1,4 +1,4 @@
-﻿namespace MusicStore.Test.Routes
+﻿namespace MusicStore.Test.Routing
 {
     using MusicStore.Controllers;
     using MyTested.AspNetCore.Mvc;
@@ -11,7 +11,7 @@
         public void IndexShouldBeRoutedCorrectly()
         {
             MyMvc
-                .Routes()
+                .Routing()
                 .ShouldMap("/ShoppingCart/Index")
                 .To<ShoppingCartController>(c => c.Index());
         }
@@ -20,7 +20,7 @@
         public void AddToCartShouldBeRoutedCorrectly()
         {
             MyMvc
-                .Routes()
+                .Routing()
                 .ShouldMap("/ShoppingCart/AddToCart/1")
                 .To<ShoppingCartController>(c => c.AddToCart(1));
         }
@@ -29,7 +29,7 @@
         public void RemoveFromCartShouldBeRoutedCorrectly()
         {
             MyMvc
-                .Routes()
+                .Routing()
                 .ShouldMap(request => request
                     .WithMethod(HttpMethod.Post)
                     .WithLocation("/ShoppingCart/RemoveFromCart/1")

@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.RoutesTests
+﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.RoutingTests
 {
     using System;
     using System.Collections.Generic;
@@ -17,7 +17,7 @@
         [Fact]
         public void ToActionShouldNotThrowExceptionWithCorrectAction()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap("/")
                 .ToAction("Index");
@@ -26,7 +26,7 @@
         [Fact]
         public void ToActionShouldNotThrowExceptionWithCorrectFullAction()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap("/Home/Index")
                 .To<HomeController>(c => c.Index());
@@ -38,7 +38,7 @@
             Test.AssertException<RouteAssertionException>(
                 () =>
                 {
-                    MyRoutes
+                    MyRouting
                         .Configuration()
                         .ShouldMap("/")
                         .ToAction("Home");
@@ -49,7 +49,7 @@
         [Fact]
         public void ToControllerShouldNotThrowExceptionWithCorrectController()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap("/")
                 .ToController("Home");
@@ -58,7 +58,7 @@
         [Fact]
         public void ToControllerAndActionShouldNotThrowExceptionWithCorrectActionAndController()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap("/")
                 .To("Index", "Home");
@@ -67,7 +67,7 @@
         [Fact]
         public void ToControllerWithGenericShouldNotThrowExceptionWithCorrectController()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap("/")
                 .To<HomeController>();
@@ -79,7 +79,7 @@
             Test.AssertException<RouteAssertionException>(
                 () =>
                 {
-                    MyRoutes
+                    MyRouting
                         .Configuration()
                         .ShouldMap("/")
                         .To<RouteController>();
@@ -93,7 +93,7 @@
             Test.AssertException<RouteAssertionException>(
                 () =>
                 {
-                    MyRoutes
+                    MyRouting
                         .Configuration()
                         .ShouldMap("/")
                         .ToController("Index");
@@ -104,7 +104,7 @@
         [Fact]
         public void ToRouteValueShouldNotThrowExceptionWithCorrectRouteValueKey()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap("/Home/Contact/1")
                 .ToRouteValue("id");
@@ -116,7 +116,7 @@
             Test.AssertException<RouteAssertionException>(
                 () =>
                 {
-                    MyRoutes
+                    MyRouting
                         .Configuration()
                         .ShouldMap("/Home/Contact/1")
                         .ToRouteValue("name");
@@ -127,7 +127,7 @@
         [Fact]
         public void ToRouteValueShouldNotThrowExceptionWithCorrectRouteValue()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap("/Home/Contact/1")
                 .ToRouteValue("id", 1);
@@ -139,7 +139,7 @@
             Test.AssertException<RouteAssertionException>(
                 () =>
                 {
-                    MyRoutes
+                    MyRouting
                         .Configuration()
                         .ShouldMap("/Home/Contact/1")
                         .ToRouteValue("id", 2);
@@ -150,7 +150,7 @@
         [Fact]
         public void ToRouteValuesShouldNotThrowExceptionWithCorrectRouteValues()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap("/Home/Contact/1")
                 .ToRouteValues(new { controller = "Home", action = "Contact", id = 1 });
@@ -159,7 +159,7 @@
         [Fact]
         public void ToRouteValuesShouldNotMakeCountCheckWithProvidedLambda()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap("/Home/Contact/1")
                 .To<HomeController>(c => c.Contact(1))
@@ -170,7 +170,7 @@
         [Fact]
         public void ToRouteValuesShouldNotThrowExceptionWithCorrectRouteValuesAsDictionary()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap("/Home/Contact/1")
                 .ToRouteValues(new Dictionary<string, object>
@@ -187,7 +187,7 @@
             Test.AssertException<RouteAssertionException>(
                 () =>
                 {
-                    MyRoutes
+                    MyRouting
                         .Configuration()
                         .ShouldMap("/Home/Contact/1")
                         .ToRouteValues(new { controller = "Home", action = "Index", id = 1 });
@@ -201,7 +201,7 @@
             Test.AssertException<RouteAssertionException>(
                 () =>
                 {
-                    MyRoutes
+                    MyRouting
                         .Configuration()
                         .ShouldMap("/Home/Contact/1")
                         .ToRouteValues(new { id = 1 });
@@ -215,7 +215,7 @@
             Test.AssertException<RouteAssertionException>(
                 () =>
                 {
-                    MyRoutes
+                    MyRouting
                         .Configuration()
                         .ShouldMap("/Home/Contact/1")
                         .ToRouteValues(new { id = 1, query = "invalid", another = "another", fourth = "test" });
@@ -226,9 +226,9 @@
         [Fact]
         public void ToDataTokenShouldNotThrowExceptionWithCorrectDataTokenKey()
         {
-            MyApplication.StartsFrom<RoutesStartup>();
+            MyApplication.StartsFrom<RoutingStartup>();
 
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap("/Test")
                 .ToDataToken("random");
@@ -239,12 +239,12 @@
         [Fact]
         public void ToDataTokenShouldThrowExceptionWithIncorrectDataTokenKey()
         {
-            MyApplication.StartsFrom<RoutesStartup>();
+            MyApplication.StartsFrom<RoutingStartup>();
 
             Test.AssertException<RouteAssertionException>(
                 () =>
                 {
-                    MyRoutes
+                    MyRouting
                         .Configuration()
                         .ShouldMap("/Test")
                         .ToDataToken("name");
@@ -257,9 +257,9 @@
         [Fact]
         public void ToDataTokenShouldNotThrowExceptionWithCorrectDataToken()
         {
-            MyApplication.StartsFrom<RoutesStartup>();
+            MyApplication.StartsFrom<RoutingStartup>();
 
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap("/Test")
                 .ToDataToken("random", "value");
@@ -270,12 +270,12 @@
         [Fact]
         public void ToDataTokenShouldThrowExceptionWithIncorrectDataToken()
         {
-            MyApplication.StartsFrom<RoutesStartup>();
+            MyApplication.StartsFrom<RoutingStartup>();
 
             Test.AssertException<RouteAssertionException>(
                 () =>
                 {
-                    MyRoutes
+                    MyRouting
                         .Configuration()
                         .ShouldMap("/Test")
                         .ToDataToken("random", 2);
@@ -288,9 +288,9 @@
         [Fact]
         public void ToDataTokensShouldNotThrowExceptionWithCorrectDataTokens()
         {
-            MyApplication.StartsFrom<RoutesStartup>();
+            MyApplication.StartsFrom<RoutingStartup>();
 
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap("/Test")
                 .ToDataTokens(new { random = "value", another = "token" });
@@ -301,9 +301,9 @@
         [Fact]
         public void ToDataTokensShouldNotThrowExceptionWithCorrectDataTokensAsDictionary()
         {
-            MyApplication.StartsFrom<RoutesStartup>();
+            MyApplication.StartsFrom<RoutingStartup>();
 
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap("/Test")
                 .ToDataTokens(new Dictionary<string, object>
@@ -318,12 +318,12 @@
         [Fact]
         public void ToDataTokensShouldThrowExceptionWithIncorrectDataTokens()
         {
-            MyApplication.StartsFrom<RoutesStartup>();
+            MyApplication.StartsFrom<RoutingStartup>();
 
             Test.AssertException<RouteAssertionException>(
                 () =>
                 {
-                    MyRoutes
+                    MyRouting
                         .Configuration()
                         .ShouldMap("/Test")
                         .ToDataTokens(new { random = "value", another = "invalid" });
@@ -336,12 +336,12 @@
         [Fact]
         public void ToDataTokenShouldThrowExceptionWithIncorrectDataTokensWithSingleCountError()
         {
-            MyApplication.StartsFrom<RoutesStartup>();
+            MyApplication.StartsFrom<RoutingStartup>();
 
             Test.AssertException<RouteAssertionException>(
                 () =>
                 {
-                    MyRoutes
+                    MyRouting
                         .Configuration()
                         .ShouldMap("/Test")
                         .ToDataTokens(new { id = 1 });
@@ -354,12 +354,12 @@
         [Fact]
         public void ToDataTokensShouldThrowExceptionWithIncorrectDataTokensWithMultipleCountError()
         {
-            MyApplication.StartsFrom<RoutesStartup>();
+            MyApplication.StartsFrom<RoutingStartup>();
 
             Test.AssertException<RouteAssertionException>(
                 () =>
                 {
-                    MyRoutes
+                    MyRouting
                         .Configuration()
                         .ShouldMap("/Test")
                         .ToDataTokens(new { id = 1, query = "invalid", another = "another", fourth = "test" });
@@ -372,7 +372,7 @@
         [Fact]
         public void ToShouldResolveCorrectControllerAndActionWithEmptyPath()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap("/")
                 .To<HomeController>(c => c.Index());
@@ -381,7 +381,7 @@
         [Fact]
         public void ToShouldResolveCorrectControllerAndAction()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap("/Home/AsyncMethod")
                 .To<HomeController>(c => c.AsyncMethod());
@@ -390,7 +390,7 @@
         [Fact]
         public void ToShouldResolveCorrectControllerAndActionIfNoLocationIsSet()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap(request => request.WithMethod(HttpMethod.Post))
                 .To<HomeController>(c => c.Index());
@@ -399,7 +399,7 @@
         [Fact]
         public void ToShouldResolveCorrectControllerAndActionWithPartialPath()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap("/Home")
                 .To<HomeController>(c => c.Index());
@@ -408,7 +408,7 @@
         [Fact]
         public void ToShouldResolveCorrectControllerAndActionWithNormalPath()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap("/Home/Index")
                 .To<HomeController>(c => c.Index());
@@ -417,7 +417,7 @@
         [Fact]
         public void ToShouldResolveCorrectControllerAndActionWithNormalPathAndRouteParameter()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap("/Home/Contact/1")
                 .To<HomeController>(c => c.Contact(1));
@@ -426,7 +426,7 @@
         [Fact]
         public void ToShouldResolveCorrectlyWithIgnoredParameter()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap("/Home/Contact/1")
                 .To<HomeController>(c => c.Contact(With.Any<int>()));
@@ -435,7 +435,7 @@
         [Fact]
         public void ToShouldResolveCorrectControllerAndActionWithNoModel()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap("/Normal/ActionWithMultipleParameters/1")
                 .To<NormalController>(c => c.ActionWithMultipleParameters(1, With.No<string>(), With.No<RequestModel>()));
@@ -444,7 +444,7 @@
         [Fact]
         public void ToShouldResolveCorrectControllerAndActionWithQueryString()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap("/Normal/ActionWithMultipleParameters/1?text=test")
                 .To<NormalController>(c => c.ActionWithMultipleParameters(1, "test", With.No<RequestModel>()));
@@ -453,7 +453,7 @@
         [Fact]
         public void ToShouldResolveCorrectControllerAndActionWithRequestModelAsString()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap(request => request
                     .WithLocation("/Normal/ActionWithMultipleParameters/1")
@@ -472,7 +472,7 @@
         [Fact]
         public void ToShouldResolveCorrectControllerAndActionWithRequestModelAsInstance()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap(request => request
                     .WithLocation("/Normal/ActionWithMultipleParameters/1")
@@ -495,7 +495,7 @@
         [Fact]
         public void ToShouldResolveCorrectControllerAndActionWithRequestModelAsObject()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap(request => request
                     .WithLocation("/Normal/ActionWithMultipleParameters/1")
@@ -518,7 +518,7 @@
         [Fact]
         public void ToShouldResolveCorrectControllerAndActionWithActionNameAttribute()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap("/Normal/AnotherName")
                 .To<NormalController>(c => c.ActionWithChangedName());
@@ -527,7 +527,7 @@
         [Fact]
         public void ToShouldResolveCorrectControllerAndActionWithRouteAttributes()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap("/AttributeController/AttributeAction")
                 .To<RouteController>(c => c.Index());
@@ -536,7 +536,7 @@
         [Fact]
         public void ToShouldResolveCorrectControllerAndActionWithRouteAttributesWithParameter()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap("/AttributeController/Action/1")
                 .To<RouteController>(c => c.Action(1));
@@ -545,7 +545,7 @@
         [Fact]
         public void ToShouldResolveCorrectControllerAndActionWithPocoController()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap("/Poco/Action/1")
                 .To<PocoController>(c => c.Action(1));
@@ -554,9 +554,9 @@
         [Fact]
         public void ToShouldResolveCorrectControllerAndActionWithEmptyArea()
         {
-            MyApplication.StartsFrom<RoutesStartup>();
+            MyApplication.StartsFrom<RoutingStartup>();
 
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap("/Files")
                 .To<DefaultController>(c => c.Test("None"));
@@ -567,9 +567,9 @@
         [Fact]
         public void ToShouldResolveCorrectControllerAndActionWithNonEmptyArea()
         {
-            MyApplication.StartsFrom<RoutesStartup>();
+            MyApplication.StartsFrom<RoutingStartup>();
 
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap("/Files/Default/Download/Test")
                 .To<DefaultController>(c => c.Download("Test"));
@@ -580,9 +580,9 @@
         [Fact]
         public void ToShouldResolveCorrectControllerAndActionWithDefaultValues()
         {
-            MyApplication.StartsFrom<RoutesStartup>();
+            MyApplication.StartsFrom<RoutingStartup>();
 
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap("/CustomRoute")
                 .To<NormalController>(c => c.FromRouteAction(new RequestModel { Integer = 1, String = "test" }));
@@ -590,20 +590,10 @@
             MyApplication.IsUsingDefaultConfiguration();
         }
         
-        // MVC has bug - uncomment when resolved
-        //[Fact]
-        //public void ToShouldResolveCorrectControllerAndActionWithRouteConstraints()
-        //{
-        //    MyRoutes
-        //        .Configuration()
-        //        .ShouldMap("/Normal/ActionWithConstraint/5")
-        //        .To<NormalController>(c => c.ActionWithConstraint(5));
-        //}
-
         [Fact]
         public void ToShouldResolveCorrectControllerAndActionWithConventions()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap("/ChangedController/ChangedAction?ChangedParameter=1")
                 .To<ConventionsController>(c => c.ConventionsAction(1));
@@ -615,7 +605,7 @@
             Test.AssertException<RouteAssertionException>(
                 () =>
                 {
-                    MyRoutes
+                    MyRouting
                         .Configuration()
                         .ShouldMap("/Normal/ActionWithModel/1")
                         .To<HomeController>(c => c.Index());
@@ -629,7 +619,7 @@
             Test.AssertException<RouteAssertionException>(
                 () =>
                 {
-                    MyRoutes
+                    MyRouting
                         .Configuration()
                         .ShouldMap("/")
                         .To<HomeController>(c => c.Contact(1));
@@ -643,7 +633,7 @@
             Test.AssertException<RouteAssertionException>(
                 () =>
                 {
-                    MyRoutes
+                    MyRouting
                         .Configuration()
                         .ShouldMap("/")
                         .To<RouteController>(c => c.Index());
@@ -654,7 +644,7 @@
         [Fact]
         public void ToShouldResolveNonExistingRouteWithInvalidGetMethod()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap("/Normal/ActionWithModel/1")
                 .ToNonExistingRoute();
@@ -666,7 +656,7 @@
             Test.AssertException<RouteAssertionException>(
                 () =>
                 {
-                    MyRoutes
+                    MyRouting
                         .Configuration()
                         .ShouldMap("/")
                         .ToNonExistingRoute();
@@ -677,7 +667,7 @@
         [Fact]
         public void ToShouldResolveCorrectControllerAndActionWithCorrectHttpMethod()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap(request => request
                     .WithMethod(HttpMethod.Post)
@@ -688,9 +678,9 @@
         [Fact]
         public void ToShouldResolveCorrectControllerAndActionWithFromRouteAction()
         {
-            MyApplication.StartsFrom<RoutesStartup>();
+            MyApplication.StartsFrom<RoutingStartup>();
 
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap("/CustomRoute")
                 .To<NormalController>(c => c.FromRouteAction(new RequestModel
@@ -705,7 +695,7 @@
         [Fact]
         public void ToShouldResolveCorrectControllerAndActionWithFromQueryAction()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap("/Normal/FromQueryAction?Integer=1&String=test")
                 .To<NormalController>(c => c.FromQueryAction(new RequestModel
@@ -718,7 +708,7 @@
         [Fact]
         public void ToShouldResolveCorrectControllerAndActionWithFromFormAction()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap(request => request
                     .WithLocation("/Normal/FromFormAction")
@@ -734,7 +724,7 @@
         [Fact]
         public void ToShouldResolveCorrectControllerAndActionWithFromHeaderAction()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap(request => request
                     .WithLocation("/Normal/FromHeaderAction")
@@ -745,7 +735,7 @@
         [Fact]
         public void ToShouldResolveCorrectControllerAndActionWithFromServicesAction()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap("/Normal/FromServicesAction")
                 .To<NormalController>(c => c.FromServicesAction(From.Services<IActionSelector>()));
@@ -757,7 +747,7 @@
             var request = new DefaultHttpRequest(new DefaultHttpContext());
             request.Path = "/Normal/FromServicesAction";
 
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap(request)
                 .To<NormalController>(c => c.FromServicesAction(From.Services<IActionSelector>()));
@@ -766,7 +756,7 @@
         [Fact]
         public void ShouldMapWithUriShouldWorkCorrectly()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap(new Uri("/Normal/FromServicesAction", UriKind.Relative))
                 .To<NormalController>(c => c.FromServicesAction(From.Services<IActionSelector>()));
@@ -775,7 +765,7 @@
         [Fact]
         public void UltimateCrazyModelBindingTest()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap(request => request
                     .WithLocation("/Normal/UltimateModelBinding/100?myQuery=Test")

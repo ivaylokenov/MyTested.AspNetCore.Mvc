@@ -241,7 +241,7 @@
         [Fact]
         public void ToShouldWorkCorrectly()
         {
-            MyApplication.StartsFrom<RoutesStartup>();
+            MyApplication.StartsFrom<RoutingStartup>();
 
             Test.AssertException<RedirectResultAssertionException>(
                 () =>
@@ -261,7 +261,7 @@
         [Fact]
         public void ToShouldWorkCorrectlyToAsyncAction()
         {
-            MyApplication.StartsFrom<RoutesStartup>();
+            MyApplication.StartsFrom<RoutingStartup>();
 
             MyController<MvcController>
                 .Instance()

@@ -1,29 +1,29 @@
 ﻿namespace MyTested.AspNetCore.Mvc
 {
-    using Builders.Contracts.Routes;
-    using Builders.Routes;
+    using Builders.Contracts.Routing;
+    using Builders.Routing;
     using Internal.Application;
     using Internal.TestContexts;
 
-    public class MyRoutes : RouteTestBuilder
+    public class MyRouting : RouteTestBuilder
     {
-        static MyRoutes()
+        static MyRouting()
         {
             TestApplication.TryInitialize();
         }
 
-        public MyRoutes()
+        public MyRouting()
             : base(new RouteTestContext
             {
                 Router = TestApplication.Router,
-                Services = TestApplication.RouteServices
+                Services = TestApplication.RoutingServices
             })
         {
         }
 
         public static IRouteTestBuilder Configuration()
         {
-            return new MyRoutes();
+            return new MyRouting();
         }
     }
 }

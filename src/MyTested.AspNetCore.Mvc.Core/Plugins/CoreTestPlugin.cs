@@ -5,7 +5,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.AspNetCore.Mvc.Internal;
 
-    public class CoreTestPlugin : IDefaultRegistrationPlugin, IServiceRegistrationPlugin, IRouteServiceRegistrationPlugin, IInitializationPlugin
+    public class CoreTestPlugin : IDefaultRegistrationPlugin, IServiceRegistrationPlugin, IRoutingServiceRegistrationPlugin, IInitializationPlugin
     {
         private readonly Type defaultMvcMarkerServiceType = typeof(MvcMarkerService);
         
@@ -22,7 +22,7 @@
 
         public Action<IServiceCollection> ServiceRegistrationDelegate => serviceCollection => serviceCollection.ReplaceMvcCore();
 
-        public Action<IServiceCollection> RouteServiceRegistrationDelegate => serviceCollection => serviceCollection.ReplaceMvcRouting();
+        public Action<IServiceCollection> RoutingServiceRegistrationDelegate => serviceCollection => serviceCollection.ReplaceMvcRouting();
 
         // this call prepares all application conventions and fills the controller action descriptor cache
         public Action<IServiceProvider> InitializationDelegate => serviceProvider => serviceProvider.GetService<IControllerActionDescriptorCache>();

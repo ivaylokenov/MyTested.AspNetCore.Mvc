@@ -96,7 +96,7 @@ Here are some random examples of what the fluent testing API is capable of:
 ```c#
 // tests a route for correct controller, action and resolved route values
 MyMvc
-	.Routes()
+	.Routing()
 	.ShouldMap(request => request
 		.WithLocation("/My/Action/1")
 		.WithMethod(HttpMethod.Post)

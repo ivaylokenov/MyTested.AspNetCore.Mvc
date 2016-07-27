@@ -16,7 +16,7 @@
         public void ResolveShouldResolveCorrectlyWithPartialJsonContentBody()
         {
             var routeInfo = CoreRouteResolver.Resolve(
-                TestApplication.RouteServices,
+                TestApplication.RoutingServices,
                 TestApplication.Router,
                 this.GetRouteContext("/Normal/ActionWithModel/5", "POST", body: @"{""Integer"":5}",
                     contentType: ContentType.ApplicationJson));

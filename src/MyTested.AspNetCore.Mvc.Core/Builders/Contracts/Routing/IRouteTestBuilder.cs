@@ -1,8 +1,7 @@
-﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Routes
+﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Routing
 {
     using System;
-    using Builders.Contracts.Http;
-    using Builders.Contracts.Routes;
+    using Http;
     using Microsoft.AspNetCore.Http;
 
     /// <summary>

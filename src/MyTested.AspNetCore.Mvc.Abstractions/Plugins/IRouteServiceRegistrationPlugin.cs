@@ -3,8 +3,8 @@
     using System;
     using Microsoft.Extensions.DependencyInjection;
 
-    public interface IRouteServiceRegistrationPlugin
+    public interface IRoutingServiceRegistrationPlugin
     {
-        Action<IServiceCollection> RouteServiceRegistrationDelegate { get; }
+        Action<IServiceCollection> RoutingServiceRegistrationDelegate { get; }
     }
 }

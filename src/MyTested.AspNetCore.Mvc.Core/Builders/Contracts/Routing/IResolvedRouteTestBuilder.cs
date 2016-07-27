@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Routes
+﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Routing
 {
     using System.Collections.Generic;
 

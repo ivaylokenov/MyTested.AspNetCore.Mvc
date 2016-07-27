@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Routes
+﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Routing
 {
     /// <summary>
     /// Used for adding AndAlso() method to the route test builder.

@@ -502,7 +502,7 @@
         [Fact]
         public void AtShouldWorkCorrectlyWithCorrectActionCall()
         {
-            MyApplication.StartsFrom<RoutesStartup>();
+            MyApplication.StartsFrom<RoutingStartup>();
 
             MyController<MvcController>
                 .Instance()
@@ -517,7 +517,7 @@
         [Fact]
         public void AtShouldWorkCorrectlyWithCorrectTaskActionCall()
         {
-            MyApplication.StartsFrom<RoutesStartup>();
+            MyApplication.StartsFrom<RoutingStartup>();
 
             Test.AssertException<CreatedResultAssertionException>(
                 () =>
@@ -537,7 +537,7 @@
         [Fact]
         public void AtShouldWorkCorrectlyWithCorrectVoidActionCall()
         {
-            MyApplication.StartsFrom<RoutesStartup>();
+            MyApplication.StartsFrom<RoutingStartup>();
 
             MyController<MvcController>
                 .Instance()

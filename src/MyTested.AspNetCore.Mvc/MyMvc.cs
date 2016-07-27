@@ -3,7 +3,7 @@
     using System;
     using Builders.Contracts.Application;
     using Builders.Contracts.Controllers;
-    using Builders.Contracts.Routes;
+    using Builders.Contracts.Routing;
     using Builders.Contracts.ViewComponents;
     using Internal.Application;
 
@@ -41,9 +41,9 @@
         /// Starts a route test.
         /// </summary>
         /// <returns>Test builder of <see cref="IRouteTestBuilder"/> type.</returns>
-        public static IRouteTestBuilder Routes()
+        public static IRouteTestBuilder Routing()
         {
-            return new MyRoutes();
+            return new MyRouting();
         }
 
         /// <summary>

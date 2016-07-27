@@ -6,7 +6,7 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>c4d78d04-d99c-48d7-9339-1e2d0f616a4c</ProjectGuid>
+    <ProjectGuid>5b60f95f-8a87-4166-8c75-1328e7063365</ProjectGuid>
     <RootNamespace>MyTested.AspNetCore.Mvc</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>

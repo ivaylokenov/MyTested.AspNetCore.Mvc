@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Builders.Routes
+﻿namespace MyTested.AspNetCore.Mvc.Builders.Routing
 {
     using System;
     using Internal.TestContexts;

@@ -8,6 +8,7 @@
     using Microsoft.Extensions.Primitives;
     using Uris;
     using Authentication;
+
     /// <summary>
     /// Used for building <see cref="HttpRequest"/>.
     /// </summary>

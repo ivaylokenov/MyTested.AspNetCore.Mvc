@@ -21,7 +21,7 @@
     /// <summary>
     /// Used for testing <see cref="HttpResponse"/>.
     /// </summary>
-    public class HttpResponseTestBuilder : BaseTestBuilderWithInvokedAction,
+    public class HttpResponseTestBuilder : BaseTestBuilderWithComponent,
         IAndHttpResponseTestBuilder
     {
         private static Encoding defaultEncoding = Encoding.UTF8;
@@ -454,8 +454,8 @@
         {
             throw new HttpResponseAssertionException(string.Format(
                 "When calling {0} action in {1} expected HTTP response {2} {3}, but {4}.",
-                this.ActionName,
-                this.Controller.GetName(),
+                this.TestContext.MethodName,
+                this.TestContext.Component.GetName(),
                 propertyName,
                 expectedValue,
                 actualValue));

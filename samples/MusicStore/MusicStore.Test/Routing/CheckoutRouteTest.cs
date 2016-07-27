@@ -1,4 +1,4 @@
-﻿namespace MusicStore.Test.Routes
+﻿namespace MusicStore.Test.Routing
 {
     using System.Threading;
     using Models;
@@ -12,7 +12,7 @@
         public void GetAddressAndPaymentShouldBeRoutedCorrectly()
         {
             MyMvc
-                .Routes()
+                .Routing()
                 .ShouldMap(request => request
                     .WithLocation("/Checkout/AddressAndPayment")
                     .WithAuthenticatedUser())
@@ -33,7 +33,7 @@
             var email = "test@email.com";
 
             MyMvc
-                .Routes()
+                .Routing()
                 .ShouldMap(request => request
                     .WithMethod(HttpMethod.Post)
                     .WithLocation("/Checkout/AddressAndPayment")
@@ -74,7 +74,7 @@
         public void GetCompleteShouldBeRoutedCorrectly()
         {
             MyMvc
-                .Routes()
+                .Routing()
                 .ShouldMap(request => request
                     .WithLocation("/Checkout/Complete/1")
                     .WithAuthenticatedUser())

@@ -1,4 +1,4 @@
-﻿namespace MusicStore.Test.Routes
+﻿namespace MusicStore.Test.Routing
 {
     using Microsoft.Extensions.Caching.Memory;
     using MusicStore.Controllers;
@@ -11,7 +11,7 @@
         public void IndexShouldBeRoutedCorrectly()
         {
             MyMvc
-                .Routes()
+                .Routing()
                 .ShouldMap("/Store/Index")
                 .To<StoreController>(c => c.Index());
         }
@@ -20,7 +20,7 @@
         public void BrowseShouldBeRoutedCorrectly()
         {
             MyMvc
-                .Routes()
+                .Routing()
                 .ShouldMap("/Store/Browse?genre=Disco")
                 .To<StoreController>(c => c.Browse("Disco"));
         }
@@ -29,7 +29,7 @@
         public void DetailsShouldBeRoutedCorrectly()
         {
             MyMvc
-                .Routes()
+                .Routing()
                 .ShouldMap("/Store/Details/1")
                 .To<StoreController>(c => c.Details(With.Any<IMemoryCache>(), 1)); ;
         }
