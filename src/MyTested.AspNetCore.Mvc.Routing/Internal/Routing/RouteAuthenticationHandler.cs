@@ -1,8 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.Routing
 {
-    using System.Collections.Generic;
     using System.Threading.Tasks;
-    using Builders.Authentication;
     using Microsoft.AspNetCore.Http.Features.Authentication;
     using Microsoft.AspNetCore.Mvc.Internal;
 
@@ -10,11 +8,6 @@
     {
         public Task AuthenticateAsync(AuthenticateContext context)
         {
-            context.Authenticated(
-                ClaimsPrincipalBuilder.DefaultAuthenticated,
-                new Dictionary<string, string>(),
-                new Dictionary<string, object>());
-
             return TaskCache.CompletedTask;
         }
 

@@ -38,11 +38,11 @@
         /// <summary>
         /// Validates whether StatusCode is the same as the provided one from action result containing such property.
         /// </summary>
-        /// <param name="actionResult">Action result with StatusCode.</param>
+        /// <param name="result">Component result with StatusCode.</param>
         /// <param name="expectedHttpStatusCode">Expected HTTP status code.</param>
         /// <param name="failedValidationAction">Action to call in case of failed validation.</param>
         public static void ValidateHttpStatusCode(
-            dynamic actionResult,
+            dynamic result,
             HttpStatusCode expectedHttpStatusCode,
             Action<string, string, string> failedValidationAction)
         {
@@ -50,7 +50,7 @@
             {
                 ValidateHttpStatusCode(
                     expectedHttpStatusCode,
-                    (int?)actionResult.StatusCode,
+                    (int?)result.StatusCode,
                     failedValidationAction);
             });
         }

@@ -75,9 +75,9 @@
         /// <inheritdoc />
         public IUriTestBuilder AndAlso() => this;
 
-        internal MockedUri GetMockedUri() => this.MockedUri;
+        public MockedUri GetMockedUri() => this.MockedUri;
 
-        internal Uri GetUri()
+        public Uri GetUri()
         {
             var uriBuilder = new SystemUriBuilder(
                 this.MockedUri.Scheme,

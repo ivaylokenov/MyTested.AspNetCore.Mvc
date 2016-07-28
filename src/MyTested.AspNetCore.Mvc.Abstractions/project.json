@@ -1,6 +1,6 @@
 ﻿{
   "title": "MyTested.AspNetCore.Mvc.Abstractions",
-  "description": "My Tested ASP.NET Core MVC abstractions and interfaces for testing ASP.NET Core MVC.",
+  "description": "My Tested ASP.NET Core MVC common abstractions and interfaces.",
   "version": "1.0.0-preview-final",
   "authors": [ "Ivaylo Kenov" ],
   "packOptions": {

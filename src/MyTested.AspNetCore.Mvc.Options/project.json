@@ -1,6 +1,6 @@
 ﻿{
   "title": "MyTested.AspNetCore.Mvc.Options",
-  "description": "My Tested ASP.NET Core MVC configuration options components for testing ASP.NET Core MVC.",
+  "description": "My Tested ASP.NET Core MVC configuration options components.",
   "version": "1.0.0-preview-final",
   "authors": [ "Ivaylo Kenov" ],
   "packOptions": {

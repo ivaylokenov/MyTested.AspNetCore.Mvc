@@ -1,6 +1,6 @@
 {
   "title": "MyTested.AspNetCore.Mvc.Core",
-  "description": "My Tested ASP.NET Core MVC core components. Contains common assertion methods for testing the ASP.NET Core MVC framework.",
+  "description": "My Tested ASP.NET Core MVC core components.",
   "version": "1.0.0-preview-final",
   "authors": [ "Ivaylo Kenov" ],
   "packOptions": {

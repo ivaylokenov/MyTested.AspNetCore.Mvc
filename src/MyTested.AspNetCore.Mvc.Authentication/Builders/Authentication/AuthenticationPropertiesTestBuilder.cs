@@ -12,7 +12,7 @@
     /// <summary>
     /// Used for testing authentication properties.
     /// </summary>
-    public class AuthenticationPropertiesTestBuilder : BaseTestBuilderWithAction, IAndAuthenticationPropertiesTestBuilder
+    public class AuthenticationPropertiesTestBuilder : BaseTestBuilderWithComponent, IAndAuthenticationPropertiesTestBuilder
     {
         private const int DefaultItemsCount = 5;
 
@@ -22,8 +22,8 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="AuthenticationPropertiesTestBuilder"/> class.
         /// </summary>
-        /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
-        public AuthenticationPropertiesTestBuilder(ControllerTestContext testContext)
+        /// <param name="testContext"><see cref="ComponentTestContext"/> containing data about the currently executed assertion chain.</param>
+        public AuthenticationPropertiesTestBuilder(ComponentTestContext testContext)
             :base(testContext)
         {
             this.authenticationProperties = new AuthenticationProperties();
@@ -196,8 +196,8 @@
         {
             throw new AuthenticationPropertiesAssertionException(string.Format(
                 "When calling {0} action in {1} expected authentication properties to {2}, but {3}.",
-                this.ActionName,
-                this.Controller.GetName(),
+                this.TestContext.MethodName,
+                this.TestContext.Component.GetName(),
                 expectedValue,
                 actualValue));
         }

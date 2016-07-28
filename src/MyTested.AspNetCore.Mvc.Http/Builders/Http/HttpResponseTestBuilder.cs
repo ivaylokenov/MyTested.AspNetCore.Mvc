@@ -32,8 +32,8 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="HttpResponseTestBuilder"/> class.
         /// </summary>
-        /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
-        public HttpResponseTestBuilder(ControllerTestContext testContext)
+        /// <param name="testContext"><see cref="ComponentTestContext"/> containing data about the currently executed assertion chain.</param>
+        public HttpResponseTestBuilder(ComponentTestContext testContext)
             : base(testContext)
         {
             this.httpResponse = testContext.HttpResponse;

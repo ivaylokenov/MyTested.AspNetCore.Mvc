@@ -10,6 +10,7 @@
     using Internal.Application;
     using Internal.Routing;
     using Microsoft.AspNetCore.Http;
+    using Utilities.Extensions;
     using Utilities.Validators;
 
     /// <content>
@@ -84,9 +85,7 @@
             if (this.resolveRouteValues)
             {
                 this.TestContext.RouteData = RouteExpressionParser.ResolveRouteData(TestApplication.Router, actionCall);
-                RouteExpressionParser.ApplyAdditionaRouteValues(
-                    this.additionalRouteValues,
-                    this.TestContext.RouteData.Values);
+                this.TestContext.RouteData.Values.Add(this.additionalRouteValues);
             }
         }
     }

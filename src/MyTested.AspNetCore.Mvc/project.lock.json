@@ -1412,6 +1412,19 @@
           "net451/MyTested.AspNetCore.Mvc.Abstractions.dll": {}
         }
       },
+      "MyTested.AspNetCore.Mvc.Authentication/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "MyTested.AspNetCore.Mvc.Http": "1.0.0"
+        },
+        "compile": {
+          "net451/MyTested.AspNetCore.Mvc.Authentication.dll": {}
+        },
+        "runtime": {
+          "net451/MyTested.AspNetCore.Mvc.Authentication.dll": {}
+        }
+      },
       "MyTested.AspNetCore.Mvc.Caching/1.0.0-preview-final": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
@@ -1517,6 +1530,19 @@
         },
         "runtime": {
           "net451/MyTested.AspNetCore.Mvc.Options.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.Routing/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "MyTested.AspNetCore.Mvc.Http": "1.0.0"
+        },
+        "compile": {
+          "net451/MyTested.AspNetCore.Mvc.Routing.dll": {}
+        },
+        "runtime": {
+          "net451/MyTested.AspNetCore.Mvc.Routing.dll": {}
         }
       },
       "MyTested.AspNetCore.Mvc.Session/1.0.0-preview-final": {
@@ -4473,6 +4499,19 @@
           "netstandard1.6/MyTested.AspNetCore.Mvc.Abstractions.dll": {}
         }
       },
+      "MyTested.AspNetCore.Mvc.Authentication/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.6",
+        "dependencies": {
+          "MyTested.AspNetCore.Mvc.Http": "1.0.0"
+        },
+        "compile": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Authentication.dll": {}
+        },
+        "runtime": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Authentication.dll": {}
+        }
+      },
       "MyTested.AspNetCore.Mvc.Caching/1.0.0-preview-final": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.6",
@@ -4582,6 +4621,19 @@
         },
         "runtime": {
           "netstandard1.6/MyTested.AspNetCore.Mvc.Options.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.Routing/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.6",
+        "dependencies": {
+          "MyTested.AspNetCore.Mvc.Http": "1.0.0"
+        },
+        "compile": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Routing.dll": {}
+        },
+        "runtime": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Routing.dll": {}
         }
       },
       "MyTested.AspNetCore.Mvc.Session/1.0.0-preview-final": {
@@ -9731,6 +9783,11 @@
       "path": "../MyTested.AspNetCore.Mvc.Abstractions/project.json",
       "msbuildProject": "../MyTested.AspNetCore.Mvc.Abstractions/MyTested.AspNetCore.Mvc.Abstractions.xproj"
     },
+    "MyTested.AspNetCore.Mvc.Authentication/1.0.0-preview-final": {
+      "type": "project",
+      "path": "../MyTested.AspNetCore.Mvc.Authentication/project.json",
+      "msbuildProject": "../MyTested.AspNetCore.Mvc.Authentication/MyTested.AspNetCore.Mvc.Authentication.xproj"
+    },
     "MyTested.AspNetCore.Mvc.Caching/1.0.0-preview-final": {
       "type": "project",
       "path": "../MyTested.AspNetCore.Mvc.Caching/project.json",
@@ -9771,6 +9828,11 @@
       "path": "../MyTested.AspNetCore.Mvc.Options/project.json",
       "msbuildProject": "../MyTested.AspNetCore.Mvc.Options/MyTested.AspNetCore.Mvc.Options.xproj"
     },
+    "MyTested.AspNetCore.Mvc.Routing/1.0.0-preview-final": {
+      "type": "project",
+      "path": "../MyTested.AspNetCore.Mvc.Routing/project.json",
+      "msbuildProject": "../MyTested.AspNetCore.Mvc.Routing/MyTested.AspNetCore.Mvc.Routing.xproj"
+    },
     "MyTested.AspNetCore.Mvc.Session/1.0.0-preview-final": {
       "type": "project",
       "path": "../MyTested.AspNetCore.Mvc.Session/project.json",
@@ -9785,11 +9847,12 @@
   "projectFileDependencyGroups": {
     "": [
       "Microsoft.AspNetCore.Mvc >= 1.0.0-*",
+      "MyTested.AspNetCore.Mvc.Authentication >= 1.0.0-*",
       "MyTested.AspNetCore.Mvc.Caching >= 1.0.0-*",
       "MyTested.AspNetCore.Mvc.Core >= 1.0.0-*",
       "MyTested.AspNetCore.Mvc.EntityFrameworkCore >= 1.0.0-*",
-      "MyTested.AspNetCore.Mvc.Http >= 1.0.0-*",
       "MyTested.AspNetCore.Mvc.Options >= 1.0.0-*",
+      "MyTested.AspNetCore.Mvc.Routing >= 1.0.0-*",
       "MyTested.AspNetCore.Mvc.Session >= 1.0.0-*",
       "MyTested.AspNetCore.Mvc.ViewFeatures >= 1.0.0-*"
     ],

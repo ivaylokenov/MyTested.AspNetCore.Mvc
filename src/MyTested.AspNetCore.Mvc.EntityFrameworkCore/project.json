@@ -1,6 +1,6 @@
 ﻿{
   "title": "MyTested.AspNetCore.Mvc.EntityFrameworkCore",
-  "description": "My Tested ASP.NET Core MVC components for testing ASP.NET Core MVC with Entity Framework Core.",
+  "description": "My Tested ASP.NET Core MVC Entity Framework Core components.",
   "version": "1.0.0-preview-final",
   "authors": [ "Ivaylo Kenov" ],
   "packOptions": {

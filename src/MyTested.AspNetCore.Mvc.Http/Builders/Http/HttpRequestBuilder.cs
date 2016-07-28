@@ -5,8 +5,6 @@
     using System.IO;
     using System.Linq;
     using System.Text;
-    using Authentication;
-    using Contracts.Authentication;
     using Contracts.Http;
     using Contracts.Uris;
     using Exceptions;
@@ -426,27 +424,11 @@
             var uri = mockedUriBuilder.GetUri();
             return this.WithLocation(uri);
         }
-
-        /// <inheritdoc />
-        public IAndHttpRequestBuilder WithAuthenticatedUser()
-        {
-            this.HttpContext.User = ClaimsPrincipalBuilder.DefaultAuthenticated;
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndHttpRequestBuilder WithAuthenticatedUser(Action<IClaimsPrincipalBuilder> userBuilder)
-        {
-            var newUserBuilder = new ClaimsPrincipalBuilder();
-            userBuilder(newUserBuilder);
-            this.HttpContext.User = newUserBuilder.GetClaimsPrincipal();
-            return this;
-        }
-
+        
         /// <inheritdoc />
         public IHttpRequestBuilder AndAlso() => this;
 
-        internal void ApplyTo(HttpRequest httpRequest)
+        public void ApplyTo(HttpRequest httpRequest)
         {
             this.request.Initialize();
 

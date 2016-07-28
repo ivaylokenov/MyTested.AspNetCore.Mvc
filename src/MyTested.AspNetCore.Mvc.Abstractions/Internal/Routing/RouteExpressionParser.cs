@@ -69,8 +69,8 @@
                 }
             }
 
-            ApplyAdditionaRouteValues(additionalRouteValues, routeValues);
-            
+            routeValues.Add(additionalRouteValues);
+
             return new ExpressionParsedRouteContext(
                 controllerType,
                 controllerName,
@@ -92,27 +92,14 @@
 
             return routeData;
         }
-
-        public static void ApplyAdditionaRouteValues(object routeValues, IDictionary<string, object> result)
-        {
-            if (routeValues != null)
-            {
-                var additionalRouteValues = new RouteValueDictionary(routeValues);
-
-                foreach (var additionalRouteValue in additionalRouteValues)
-                {
-                    result[additionalRouteValue.Key] = additionalRouteValue.Value;
-                }
-            }
-        }
-
-        private static IDictionary<string, object> GetRouteValues(
+        
+        private static RouteValueDictionary GetRouteValues(
             MethodInfo methodInfo,
             MethodCallExpression methodCallExpression,
             ControllerActionDescriptor controllerActionDescriptor,
             bool considerParameterDescriptors)
         {
-            var result = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
+            var result = new RouteValueDictionary();
 
             var arguments = methodCallExpression.Arguments;
             if (arguments.Count == 0)
