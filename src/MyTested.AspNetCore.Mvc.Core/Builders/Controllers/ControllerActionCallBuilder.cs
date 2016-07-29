@@ -123,7 +123,7 @@
         private string GetAndValidateAction(LambdaExpression actionCall)
         {
             this.BuildControllerIfNotExists();
-            this.SetRouteData(actionCall);
+            this.PreInvocationAction?.Invoke(this.TestContext);
 
             var methodInfo = ExpressionParser.GetMethodInfo(actionCall);
 

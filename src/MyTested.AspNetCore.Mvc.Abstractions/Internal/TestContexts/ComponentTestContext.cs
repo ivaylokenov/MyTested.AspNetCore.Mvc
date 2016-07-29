@@ -99,6 +99,7 @@
                 return this.methodAttributes;
             }
         }
+
         public Exception CaughtException { get; set; }
 
         public object Model

@@ -52,19 +52,6 @@
         IAndControllerBuilder<TController> WithActionContext(Action<ActionContext> actionContextSetup);
         
         /// <summary>
-        /// Indicates that route values should be extracted from the provided action call expression.
-        /// </summary>
-        /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>
-        IAndControllerBuilder<TController> WithRouteData();
-
-        /// <summary>
-        /// Indicates that route values should be extracted from the provided action call expression adding the given additional values.
-        /// </summary>
-        /// <param name="additionalRouteValues">Anonymous object containing route values.</param>
-        /// <returns>The same <see cref="IControllerBuilder{TController}"/>.</returns>
-        IAndControllerBuilder<TController> WithRouteData(object additionalRouteValues);
-        
-        /// <summary>
         /// Configures a service with scoped lifetime by using the provided <see cref="Action"/> delegate.
         /// </summary>
         /// <typeparam name="TService">Type of service to configure.</typeparam>

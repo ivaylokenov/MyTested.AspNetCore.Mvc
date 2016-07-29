@@ -30,8 +30,6 @@
         private Action<TController> controllerSetupAction;
         private bool isPreparedForTesting;
         private bool enabledValidation;
-        private bool resolveRouteValues;
-        private object additionalRouteValues;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ControllerBuilder{TController}"/> class.
@@ -70,8 +68,6 @@
                 this.testContext = value;
             }
         }
-
-        public Action<ControllerTestContext> ControllerPreparationAction { get; set; }
 
         private new MockedHttpContext HttpContext => this.TestContext.MockedHttpContext;
 

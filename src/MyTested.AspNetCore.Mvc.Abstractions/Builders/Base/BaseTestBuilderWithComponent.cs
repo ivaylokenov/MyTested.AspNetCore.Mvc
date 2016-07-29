@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Base
 {
+    using System;
     using Contracts.Base;
     using Internal.TestContexts;
     using Utilities.Validators;
@@ -38,5 +39,9 @@
                 this.testContext = value;
             }
         }
+        
+        public Action<ComponentTestContext> ComponentPreparationAction { get; set; }
+
+        public Action<ComponentTestContext> PreInvocationAction { get; set; }
     }
 }

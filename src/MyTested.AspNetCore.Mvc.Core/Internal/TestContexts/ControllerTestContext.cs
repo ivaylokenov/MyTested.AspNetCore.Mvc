@@ -6,14 +6,18 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.AspNetCore.Routing;
-    using Routing;
     using Utilities.Extensions;
     using Utilities.Validators;
+    using Routing;
 
     public class ControllerTestContext : ComponentTestContext
     {
         private ControllerContext controllerContext;
         private RouteData expressionRouteData;
+
+        public ModelStateDictionary ModelState => this.ControllerContext.ModelState;
+
+        public override string ExceptionMessagePrefix => $"When calling {this.MethodName} action in {this.Component.GetName()} expected";
         
         public override RouteData RouteData
         {
@@ -41,10 +45,6 @@
             }
         }
 
-        public ModelStateDictionary ModelState => this.ControllerContext.ModelState;
-
-        public override string ExceptionMessagePrefix => $"When calling {this.MethodName} action in {this.Component.GetName()} expected";
-        
         internal ControllerContext ControllerContext
         {
             get

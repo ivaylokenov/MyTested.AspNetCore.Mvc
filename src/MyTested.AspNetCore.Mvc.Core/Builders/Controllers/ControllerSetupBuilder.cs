@@ -117,7 +117,7 @@
 
             controllerPropertyActivators.ForEach(a => a.Activate(this.TestContext.ControllerContext, this.TestContext.Component));
 
-            this.ControllerPreparationAction?.Invoke(this.TestContext);
+            this.ComponentPreparationAction?.Invoke(this.TestContext);
 
             this.controllerSetupAction?.Invoke(this.TestContext.ComponentAs<TController>());
         }
