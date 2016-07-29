@@ -5,8 +5,6 @@
     using Base;
     using Contracts.Actions;
     using Contracts.And;
-    using Contracts.Http;
-    using Http;
     using Internal.TestContexts;
     using Utilities.Validators;
 
@@ -49,12 +47,5 @@
 
         protected override IAndActionResultTestBuilder<TActionResult> SetBuilder()
             => new AndActionResultTestBuilder<TActionResult>(this.TestContext);
-
-        /// <inheritdoc />
-        public IAndActionResultTestBuilder<TActionResult> HttpResponse(Action<IHttpResponseTestBuilder> httpResponseTestBuilder)
-        {
-            httpResponseTestBuilder(new HttpResponseTestBuilder(this.TestContext));
-            return this.Builder;
-        }
     }
 }

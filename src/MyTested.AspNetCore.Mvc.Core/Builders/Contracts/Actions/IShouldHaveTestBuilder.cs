@@ -4,7 +4,6 @@
     using And;
     using Attributes;
     using Base;
-    using Http;
 
     /// <summary>
     /// Used for testing the action's additional data - action attributes, HTTP response, view bag and more.
@@ -31,12 +30,5 @@
         /// <param name="attributesTestBuilder">Builder for testing specific attributes on the action.</param>
         /// <returns>Test builder of <see cref="IAndActionResultTestBuilder{TActionResult}"/> type.</returns>
         IAndActionResultTestBuilder<TActionResult> ActionAttributes(Action<IActionAttributesTestBuilder> attributesTestBuilder);
-        
-        /// <summary>
-        /// Tests whether the action applies additional features to the <see cref="Microsoft.AspNetCore.Http.HttpResponse"/>.
-        /// </summary>
-        /// <param name="httpResponseTestBuilder">Builder for testing the <see cref="Microsoft.AspNetCore.Http.HttpResponse"/>.</param>
-        /// <returns>Test builder of <see cref="IAndActionResultTestBuilder{TActionResult}"/> type.</returns>
-        IAndActionResultTestBuilder<TActionResult> HttpResponse(Action<IHttpResponseTestBuilder> httpResponseTestBuilder);
     }
 }
