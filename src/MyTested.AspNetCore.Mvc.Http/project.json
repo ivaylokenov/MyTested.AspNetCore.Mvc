@@ -27,6 +27,7 @@
   },
 
   "dependencies": {
+    "Microsoft.AspNetCore.Mvc.Formatters.Json": "1.0.0-*",
     "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0-*"
   },
 

@@ -72,7 +72,7 @@
                 else
                 {
                     // no custom dependencies are set, try create instance with the global services
-                    controller = CoreTestHelper.TryCreateInstance<TController>();
+                    controller = ControllerTestHelper.TryCreateInstance<TController>();
                 }
 
                 if (controller == null && !explicitDependenciesAreSet)

@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Internal.Caching;
+    using Internal.Contracts;
     using Internal.Services;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -14,6 +16,13 @@
     /// </summary>
     public static class ServiceCollectionExtensions
     {
+        public static IServiceCollection AddCoreTesting(this IServiceCollection serviceCollection)
+        {
+            CommonValidator.CheckForNullReference(serviceCollection, nameof(serviceCollection));
+            serviceCollection.TryAddSingleton<IControllerActionDescriptorCache, ControllerActionDescriptorCache>();
+            return serviceCollection;
+        }
+
         /// <summary>
         /// Removes а service from the <see cref="IServiceCollection"/>.
         /// </summary>

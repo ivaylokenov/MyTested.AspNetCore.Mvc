@@ -5,7 +5,7 @@
     using Microsoft.AspNetCore.Mvc.Internal;
     using Services;
 
-    public class CoreTestHelper
+    public class ControllerTestHelper
     {
         /// <summary>
         /// Tries to create instance of the provided type. Returns null if not successful.

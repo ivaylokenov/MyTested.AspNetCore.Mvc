@@ -1,16 +1,16 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Routing
 {
     using System;
-    using System.Linq.Expressions;
-    using Contracts.Routing;
-    using Utilities;
-    using Microsoft.AspNetCore.Routing;
-    using Internal.Routing;
-    using Exceptions;
-    using Utilities.Extensions;
     using System.Collections.Generic;
-    using Internal.TestContexts;
+    using System.Linq.Expressions;
     using System.Threading.Tasks;
+    using Contracts.Routing;
+    using Exceptions;
+    using Internal.Routing;
+    using Internal.TestContexts;
+    using Microsoft.AspNetCore.Routing;
+    using Utilities;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Used for building and testing a route.
@@ -309,7 +309,7 @@
         public ResolvedRouteContext GetActualRouteInfo()
         {
             return this.actualRouteInfo ??
-                   (this.actualRouteInfo = CoreRouteResolver.Resolve(this.Services, this.Router, this.RouteContext));
+                   (this.actualRouteInfo = MvcRouteResolver.Resolve(this.Services, this.Router, this.RouteContext));
         }
 
         public void ThrowNewRouteAssertionException(string expected = null, string actual = null)

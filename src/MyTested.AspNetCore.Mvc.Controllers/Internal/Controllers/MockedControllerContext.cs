@@ -55,7 +55,7 @@
             this.TestContext = testContext;
             this.HttpContext = testContext.HttpContext;
             this.RouteData = testContext.RouteData ?? new RouteData();
-            CoreTestHelper.SetActionContextToAccessor(this);
+            ControllerTestHelper.SetActionContextToAccessor(this);
         }
     }
 }

@@ -15,7 +15,7 @@
         [Fact]
         public void ResolveShouldResolveCorrectControllerAndActionWithDefaultRoute()
         {
-            var routeInfo = CoreRouteResolver.Resolve(
+            var routeInfo = MvcRouteResolver.Resolve(
                 TestApplication.RoutingServices,
                 TestApplication.Router,
                 this.GetRouteContext("/"));
@@ -32,7 +32,7 @@
         [Fact]
         public void ResolveShouldResolveCorrectControllerAndActionWithActionNameAttribute()
         {
-            var routeInfo = CoreRouteResolver.Resolve(
+            var routeInfo = MvcRouteResolver.Resolve(
                 TestApplication.RoutingServices,
                 TestApplication.Router,
                 this.GetRouteContext("/Normal/AnotherName"));
@@ -49,7 +49,7 @@
         [Fact]
         public void ResolveShouldResolveCorrectlyWithRouteAttribute()
         {
-            var routeInfo = CoreRouteResolver.Resolve(
+            var routeInfo = MvcRouteResolver.Resolve(
                 TestApplication.RoutingServices,
                 TestApplication.Router,
                 this.GetRouteContext("/AttributeController/AttributeAction"));
@@ -66,7 +66,7 @@
         [Fact]
         public void ResolveShouldResolveCorrectlyWithParameter()
         {
-            var routeInfo = CoreRouteResolver.Resolve(
+            var routeInfo = MvcRouteResolver.Resolve(
                 TestApplication.RoutingServices,
                 TestApplication.Router,
                 this.GetRouteContext("/Normal/ActionWithParameters/5"));
@@ -84,7 +84,7 @@
         [Fact]
         public void ResolveShouldResolveCorrectlyWithParameterOfDifferentType()
         {
-            var routeInfo = CoreRouteResolver.Resolve(
+            var routeInfo = MvcRouteResolver.Resolve(
                 TestApplication.RoutingServices,
                 TestApplication.Router,
                 this.GetRouteContext("/Normal/ActionWithStringParameters/Test"));
@@ -102,7 +102,7 @@
         [Fact]
         public void ResolveShouldResolveCorrectlyWithNonMatchingParameterOfDifferentType()
         {
-            var routeInfo = CoreRouteResolver.Resolve(
+            var routeInfo = MvcRouteResolver.Resolve(
                 TestApplication.RoutingServices,
                 TestApplication.Router,
                 this.GetRouteContext("/Normal/ActionWithParameters/Test"));
@@ -119,7 +119,7 @@
         [Fact]
         public void ResolveShouldResolveCorrectlyWithParameterAndQueryString()
         {
-            var routeInfo = CoreRouteResolver.Resolve(
+            var routeInfo = MvcRouteResolver.Resolve(
                 TestApplication.RoutingServices,
                 TestApplication.Router,
                 this.GetRouteContext("/Normal/ActionWithMultipleParameters/5", queryString: "?text=test", contentType: ContentType.ApplicationJson));
@@ -139,7 +139,7 @@
         [Fact]
         public void ResolveShouldResolveCorrectlyWithSpecificMethod()
         {
-            var routeInfo = CoreRouteResolver.Resolve(
+            var routeInfo = MvcRouteResolver.Resolve(
                 TestApplication.RoutingServices,
                 TestApplication.Router,
                 this.GetRouteContext("/Normal/GetMethod"));
@@ -156,7 +156,7 @@
         [Fact]
         public void ResolveShouldResolveCorrectlyWithWrongSpecificMethod()
         {
-            var routeInfo = CoreRouteResolver.Resolve(
+            var routeInfo = MvcRouteResolver.Resolve(
                 TestApplication.RoutingServices,
                 TestApplication.Router,
                 this.GetRouteContext("/Normal/GetMethod", "POST"));
@@ -173,7 +173,7 @@
         [Fact]
         public void ResolveShouldResolveCorrectlyWithFullQueryString()
         {
-            var routeInfo = CoreRouteResolver.Resolve(
+            var routeInfo = MvcRouteResolver.Resolve(
                 TestApplication.RoutingServices,
                 TestApplication.Router,
                 this.GetRouteContext("/Normal/QueryString", "POST", "?first=test&second=5"));
@@ -192,7 +192,7 @@
         [Fact]
         public void ResolveShouldResolveCorrectlyWithPartialQueryString()
         {
-            var routeInfo = CoreRouteResolver.Resolve(
+            var routeInfo = MvcRouteResolver.Resolve(
                 TestApplication.RoutingServices,
                 TestApplication.Router,
                 this.GetRouteContext("/Normal/QueryString", "POST", "?first=test"));
@@ -210,7 +210,7 @@
         [Fact]
         public void ResolveShouldResolveCorrectlyWithMissingQueryString()
         {
-            var routeInfo = CoreRouteResolver.Resolve(
+            var routeInfo = MvcRouteResolver.Resolve(
                 TestApplication.RoutingServices,
                 TestApplication.Router,
                 this.GetRouteContext("/Normal/QueryString", "POST"));
@@ -227,7 +227,7 @@
         [Fact]
         public void ResolveShouldResolveCorrectlyJsonContentBody()
         {
-            var routeInfo = CoreRouteResolver.Resolve(
+            var routeInfo = MvcRouteResolver.Resolve(
                 TestApplication.RoutingServices,
                 TestApplication.Router,
                 this.GetRouteContext("/Normal/ActionWithModel/5", "POST", body: @"{""Integer"":5,""String"":""Test""}", contentType: ContentType.ApplicationJson));
@@ -253,7 +253,7 @@
         [Fact]
         public void ResolveShouldResolveCorrectlyWithEmptyJsonContentBody()
         {
-            var routeInfo = CoreRouteResolver.Resolve(
+            var routeInfo = MvcRouteResolver.Resolve(
                 TestApplication.RoutingServices,
                 TestApplication.Router,
                 this.GetRouteContext("/Normal/ActionWithModel/5", "POST", contentType: ContentType.ApplicationJson));
@@ -277,7 +277,7 @@
         [Fact]
         public void ResolveShouldResolveCorrectlyWithJsonContentBodyAndQueryString()
         {
-            var routeInfo = CoreRouteResolver.Resolve(
+            var routeInfo = MvcRouteResolver.Resolve(
                 TestApplication.RoutingServices,
                 TestApplication.Router,
                 this.GetRouteContext("/Normal/ActionWithMultipleParameters/5", "POST", body: @"{""Integer"":5,""String"":""Test""}", queryString: "?text=test", contentType: ContentType.ApplicationJson));
@@ -304,7 +304,7 @@
         [Fact]
         public void ResolveShouldReturnProperErrorWhenTwoActionsAreMatched()
         {
-            var routeInfo = CoreRouteResolver.Resolve(
+            var routeInfo = MvcRouteResolver.Resolve(
                 TestApplication.RoutingServices,
                 TestApplication.Router,
                 this.GetRouteContext("/Normal/ActionWithOverloads"));
@@ -323,7 +323,7 @@
         [Fact]
         public void ResolveShouldNotCallTheActualActionCode()
         {
-            var routeInfo = CoreRouteResolver.Resolve(
+            var routeInfo = MvcRouteResolver.Resolve(
                 TestApplication.RoutingServices,
                 TestApplication.Router,
                 this.GetRouteContext("/Home/FailingAction"));
