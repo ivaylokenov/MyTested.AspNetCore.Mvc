@@ -11,7 +11,8 @@
     public abstract class ComponentTestContext : HttpTestContext
     {
         private object component;
-        private IEnumerable<object> controllerAttributes;
+        private IEnumerable<object> componentAttributes;
+        private IDictionary<Type, object> aggregatedServices;
         private string methodName;
         private MethodInfo method;
         private LambdaExpression methodCall;
@@ -35,12 +36,25 @@
         {
             get
             {
-                if (this.controllerAttributes == null)
+                if (this.componentAttributes == null)
                 {
-                    this.controllerAttributes = Reflection.GetCustomAttributes(this.Component);
+                    this.componentAttributes = Reflection.GetCustomAttributes(this.Component);
                 }
 
-                return this.controllerAttributes;
+                return this.componentAttributes;
+            }
+        }
+
+        public IDictionary<Type, object> AggregatedServices
+        {
+            get
+            {
+                if (this.aggregatedServices == null)
+                {
+                    this.aggregatedServices = new Dictionary<Type, object>();
+                }
+
+                return this.aggregatedServices;
             }
         }
 
@@ -119,8 +133,12 @@
                 this.model = value;
             }
         }
-        
+
         public Func<object> ComponentConstruction { get; set; }
+        
+        public Action ComponentPreparationAction { get; set; }
+
+        public Action PreMethodInvocationAction { get; set; }
 
         public TComponent ComponentAs<TComponent>()
             where TComponent : class => this.Component as TComponent;

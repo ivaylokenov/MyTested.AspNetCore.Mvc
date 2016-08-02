@@ -1,7 +1,5 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Controllers
 {
-    using Base;
-
     /// <summary>
     /// Used for adding AndAlso() method to the controller builder.
     /// </summary>

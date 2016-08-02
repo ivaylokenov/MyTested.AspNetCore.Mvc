@@ -63,11 +63,11 @@
             var controller = this.TestContext.Component;
             if (controller == null)
             {
-                var explicitDependenciesAreSet = this.aggregatedServices.Any();
+                var explicitDependenciesAreSet = this.TestContext.AggregatedServices.Any();
                 if (explicitDependenciesAreSet)
                 {
                     // custom dependencies are set, try create instance with them
-                    controller = Reflection.TryCreateInstance<TController>(this.aggregatedServices);
+                    controller = Reflection.TryCreateInstance<TController>(this.TestContext.AggregatedServices);
                 }
                 else
                 {
@@ -83,7 +83,7 @@
 
                 if (controller == null)
                 {
-                    var friendlyServiceNames = this.aggregatedServices
+                    var friendlyServiceNames = this.TestContext.AggregatedServices
                         .Keys
                         .Select(k => k.ToFriendlyTypeName());
 
@@ -92,7 +92,7 @@
                     throw new UnresolvedServicesException(string.Format(
                         "{0} could not be instantiated because it contains no constructor taking {1} parameters.",
                         typeof(TController).ToFriendlyTypeName(),
-                        this.aggregatedServices.Count == 0 ? "no" : $"{joinedFriendlyServices} as"));
+                        this.TestContext.AggregatedServices.Count == 0 ? "no" : $"{joinedFriendlyServices} as"));
                 }
 
                 this.TestContext.ComponentConstruction = () => controller;
@@ -117,7 +117,7 @@
 
             controllerPropertyActivators.ForEach(a => a.Activate(this.TestContext.ControllerContext, this.TestContext.Component));
 
-            this.ComponentPreparationAction?.Invoke(this.TestContext);
+            this.TestContext.ComponentPreparationAction?.Invoke();
 
             this.controllerSetupAction?.Invoke(this.TestContext.ComponentAs<TController>());
         }

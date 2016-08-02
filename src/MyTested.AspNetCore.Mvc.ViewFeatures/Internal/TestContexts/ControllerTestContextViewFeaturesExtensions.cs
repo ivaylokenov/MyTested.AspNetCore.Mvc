@@ -6,16 +6,16 @@
 
     public static class ControllerTestContextViewFeaturesExtensions
     {
-        public static ITempDataDictionary GetTempData(this ControllerTestContext controllerTestContext)
-            => controllerTestContext.ComponentAs<Controller>()?.TempData
+        public static ITempDataDictionary GetTempData(this ComponentTestContext testContext)
+            => testContext.ComponentAs<Controller>()?.TempData
             ?? ViewFeaturesControllerPropertyHelper
-                .GetViewFeatureProperties(controllerTestContext.Component.GetType())
-                .TempDataGetter(controllerTestContext.Component);
+                .GetViewFeatureProperties(testContext.Component.GetType())
+                .TempDataGetter(testContext.Component);
 
-        public static ViewDataDictionary GetViewData(this ControllerTestContext controllerTestContext)
-            => controllerTestContext.ComponentAs<Controller>()?.ViewData
+        public static ViewDataDictionary GetViewData(this ComponentTestContext testContext)
+            => testContext.ComponentAs<Controller>()?.ViewData
             ?? ViewFeaturesControllerPropertyHelper
-                .GetViewFeatureProperties(controllerTestContext.Component.GetType())
-                .ViewDataGetter(controllerTestContext.Component);
+                .GetViewFeatureProperties(testContext.Component.GetType())
+                .ViewDataGetter(testContext.Component);
     }
 }

@@ -1481,6 +1481,19 @@
           "net451/MyTested.AspNetCore.Mvc.DataAnnotations.dll": {}
         }
       },
+      "MyTested.AspNetCore.Mvc.DependencyInjection/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0"
+        },
+        "compile": {
+          "net451/MyTested.AspNetCore.Mvc.DependencyInjection.dll": {}
+        },
+        "runtime": {
+          "net451/MyTested.AspNetCore.Mvc.DependencyInjection.dll": {}
+        }
+      },
       "MyTested.AspNetCore.Mvc.EntityFrameworkCore/1.0.0-preview-final": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
@@ -4566,6 +4579,19 @@
         },
         "runtime": {
           "netstandard1.6/MyTested.AspNetCore.Mvc.DataAnnotations.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.DependencyInjection/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.6",
+        "dependencies": {
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0"
+        },
+        "compile": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.DependencyInjection.dll": {}
+        },
+        "runtime": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.DependencyInjection.dll": {}
         }
       },
       "MyTested.AspNetCore.Mvc.EntityFrameworkCore/1.0.0-preview-final": {
@@ -9808,6 +9834,11 @@
       "path": "../MyTested.AspNetCore.Mvc.DataAnnotations/project.json",
       "msbuildProject": "../MyTested.AspNetCore.Mvc.DataAnnotations/MyTested.AspNetCore.Mvc.DataAnnotations.xproj"
     },
+    "MyTested.AspNetCore.Mvc.DependencyInjection/1.0.0-preview-final": {
+      "type": "project",
+      "path": "../MyTested.AspNetCore.Mvc.DependencyInjection/project.json",
+      "msbuildProject": "../MyTested.AspNetCore.Mvc.DependencyInjection/MyTested.AspNetCore.Mvc.DependencyInjection.xproj"
+    },
     "MyTested.AspNetCore.Mvc.EntityFrameworkCore/1.0.0-preview-final": {
       "type": "project",
       "path": "../MyTested.AspNetCore.Mvc.EntityFrameworkCore/project.json",
@@ -9850,6 +9881,7 @@
       "MyTested.AspNetCore.Mvc.Authentication >= 1.0.0-*",
       "MyTested.AspNetCore.Mvc.Caching >= 1.0.0-*",
       "MyTested.AspNetCore.Mvc.Core >= 1.0.0-*",
+      "MyTested.AspNetCore.Mvc.DependencyInjection >= 1.0.0-*",
       "MyTested.AspNetCore.Mvc.EntityFrameworkCore >= 1.0.0-*",
       "MyTested.AspNetCore.Mvc.Options >= 1.0.0-*",
       "MyTested.AspNetCore.Mvc.Routing >= 1.0.0-*",

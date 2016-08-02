@@ -7,7 +7,6 @@
     using System.Threading.Tasks;
     using Actions;
     using Contracts.Actions;
-    using Contracts.Controllers;
     using Internal.Contracts;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
@@ -21,13 +20,6 @@
     /// </content>
     public partial class ControllerBuilder<TController>
     {
-        /// <inheritdoc />
-        public IAndControllerBuilder<TController> WithoutValidation()
-        {
-            this.enabledValidation = false;
-            return this;
-        }
-
         /// <inheritdoc />
         public IActionResultTestBuilder<TActionResult> Calling<TActionResult>(Expression<Func<TController, TActionResult>> actionCall)
         {
@@ -123,11 +115,11 @@
         private string GetAndValidateAction(LambdaExpression actionCall)
         {
             this.BuildControllerIfNotExists();
-            this.PreInvocationAction?.Invoke(this.TestContext);
+            this.TestContext.PreMethodInvocationAction?.Invoke();
 
             var methodInfo = ExpressionParser.GetMethodInfo(actionCall);
 
-            if (this.enabledValidation)
+            if (this.EnabledValidation)
             {
                 this.ValidateModelState(actionCall);
             }

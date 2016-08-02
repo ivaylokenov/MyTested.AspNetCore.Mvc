@@ -1,7 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Controllers
 {
     using System;
-    using System.Collections.Generic;
     using Base;
     using Contracts.Controllers;
     using Contracts.ShouldPassFor;
@@ -23,13 +22,10 @@
     public partial class ControllerBuilder<TController> : BaseTestBuilderWithComponentBuilder<IAndControllerBuilder<TController>>, IAndControllerBuilder<TController>
         where TController : class
     {
-        private readonly IDictionary<Type, object> aggregatedServices;
-
         private ControllerTestContext testContext;
         private Action<ControllerContext> controllerContextAction;
         private Action<TController> controllerSetupAction;
         private bool isPreparedForTesting;
-        private bool enabledValidation;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ControllerBuilder{TController}"/> class.
@@ -40,8 +36,7 @@
         {
             this.TestContext = testContext;
 
-            this.enabledValidation = TestApplication.TestConfiguration.ModelStateValidation;
-            this.aggregatedServices = new Dictionary<Type, object>();
+            this.EnabledValidation = TestApplication.TestConfiguration.ModelStateValidation;
 
             this.ValidateControllerType();
         }
@@ -68,6 +63,8 @@
                 this.testContext = value;
             }
         }
+
+        public bool EnabledValidation { get; set; }
 
         private new MockedHttpContext HttpContext => this.TestContext.MockedHttpContext;
 
