@@ -360,7 +360,7 @@
 
         public IActionResult ChallengeWithAuthenticationSchemes()
         {
-            return this.Challenge(AuthenticationScheme.Basic, AuthenticationScheme.NTLM);
+            return this.Challenge("Basic", "NTLM");
         }
 
         public IActionResult ChallengeWithAuthenticationProperties()
@@ -380,7 +380,7 @@
 
         public IActionResult ForbidWithAuthenticationSchemes()
         {
-            return this.Forbid(AuthenticationScheme.Basic, AuthenticationScheme.NTLM);
+            return this.Forbid("Basic", "NTLM");
         }
 
         public IActionResult ForbidWithAuthenticationProperties()
@@ -991,7 +991,7 @@
             writer.Flush();
 
             response.ContentType = ContentType.ApplicationJson;
-            response.StatusCode = HttpStatusCode.InternalServerError;
+            response.StatusCode = 500;
             response.Headers.Add("TestHeader", "TestHeaderValue");
             response.Headers.Add("AnotherTestHeader", "AnotherTestHeaderValue");
             response.Headers.Add("MultipleTestHeader", new[] { "FirstMultipleTestHeaderValue", "AnotherMultipleTestHeaderValue" });

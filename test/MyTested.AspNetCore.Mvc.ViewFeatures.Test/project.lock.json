@@ -3706,7 +3706,7 @@
         "dependencies": {
           "Microsoft.AspNetCore.Mvc": "1.0.0",
           "Microsoft.NETCore.App": "1.0.0",
-          "MyTested.AspNetCore.Mvc.Core": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0",
           "xunit": "2.2.0"
         },
         "compile": {
@@ -5420,7 +5420,7 @@
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc": "1.0.0",
-          "MyTested.AspNetCore.Mvc.Core": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0",
           "xunit": "2.2.0"
         },
         "compile": {

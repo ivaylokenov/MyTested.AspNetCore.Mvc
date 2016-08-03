@@ -82,6 +82,16 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MyTested.AspNetCore.Mvc.Con
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MyTested.AspNetCore.Mvc.DependencyInjection", "src\MyTested.AspNetCore.Mvc.DependencyInjection\MyTested.AspNetCore.Mvc.DependencyInjection.xproj", "{C15BB589-9421-4D9C-A26D-61FF1BCD17AC}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MyTested.AspNetCore.Mvc.Test.Setups", "test\MyTested.AspNetCore.Mvc.Test.Setups\MyTested.AspNetCore.Mvc.Test.Setups.xproj", "{3F114973-4E8D-4E90-88E8-EA681D6978BD}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MyTested.AspNetCore.Mvc.Abstractions.Test", "test\MyTested.AspNetCore.Mvc.Abstractions.Test\MyTested.AspNetCore.Mvc.Abstractions.Test.xproj", "{28610D5E-173A-4A36-8E6E-C5CEFEBDD2B9}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MyTested.AspNetCore.Mvc.Authentication.Test", "test\MyTested.AspNetCore.Mvc.Authentication.Test\MyTested.AspNetCore.Mvc.Authentication.Test.xproj", "{6DD2FCA0-A52B-4BBB-A9A5-785461AB481C}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MyTested.AspNetCore.Mvc.Configuration.Test", "test\MyTested.AspNetCore.Mvc.Configuration.Test\MyTested.AspNetCore.Mvc.Configuration.Test.xproj", "{8D626A3C-55CD-4FAF-B10E-E6771E33B764}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MyTested.AspNetCore.Mvc.Controllers.Test", "test\MyTested.AspNetCore.Mvc.Controllers.Test\MyTested.AspNetCore.Mvc.Controllers.Test.xproj", "{55B3D29C-624E-47EA-8F36-22515181A618}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -216,6 +226,26 @@ Global
 		{C15BB589-9421-4D9C-A26D-61FF1BCD17AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C15BB589-9421-4D9C-A26D-61FF1BCD17AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C15BB589-9421-4D9C-A26D-61FF1BCD17AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F114973-4E8D-4E90-88E8-EA681D6978BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F114973-4E8D-4E90-88E8-EA681D6978BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F114973-4E8D-4E90-88E8-EA681D6978BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F114973-4E8D-4E90-88E8-EA681D6978BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28610D5E-173A-4A36-8E6E-C5CEFEBDD2B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28610D5E-173A-4A36-8E6E-C5CEFEBDD2B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28610D5E-173A-4A36-8E6E-C5CEFEBDD2B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28610D5E-173A-4A36-8E6E-C5CEFEBDD2B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DD2FCA0-A52B-4BBB-A9A5-785461AB481C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DD2FCA0-A52B-4BBB-A9A5-785461AB481C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DD2FCA0-A52B-4BBB-A9A5-785461AB481C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DD2FCA0-A52B-4BBB-A9A5-785461AB481C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D626A3C-55CD-4FAF-B10E-E6771E33B764}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D626A3C-55CD-4FAF-B10E-E6771E33B764}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D626A3C-55CD-4FAF-B10E-E6771E33B764}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D626A3C-55CD-4FAF-B10E-E6771E33B764}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55B3D29C-624E-47EA-8F36-22515181A618}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55B3D29C-624E-47EA-8F36-22515181A618}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55B3D29C-624E-47EA-8F36-22515181A618}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55B3D29C-624E-47EA-8F36-22515181A618}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -255,5 +285,10 @@ Global
 		{18B6C20B-9C4B-4444-AD61-8DAF57012599} = {09353A03-2B0C-496B-8EB1-2CB6A22D758B}
 		{9B2A773E-3A37-44F3-83D0-5D156526FA84} = {09353A03-2B0C-496B-8EB1-2CB6A22D758B}
 		{C15BB589-9421-4D9C-A26D-61FF1BCD17AC} = {09353A03-2B0C-496B-8EB1-2CB6A22D758B}
+		{3F114973-4E8D-4E90-88E8-EA681D6978BD} = {D140FA14-A6C2-4279-8A41-35BC55279DA8}
+		{28610D5E-173A-4A36-8E6E-C5CEFEBDD2B9} = {D140FA14-A6C2-4279-8A41-35BC55279DA8}
+		{6DD2FCA0-A52B-4BBB-A9A5-785461AB481C} = {D140FA14-A6C2-4279-8A41-35BC55279DA8}
+		{8D626A3C-55CD-4FAF-B10E-E6771E33B764} = {D140FA14-A6C2-4279-8A41-35BC55279DA8}
+		{55B3D29C-624E-47EA-8F36-22515181A618} = {D140FA14-A6C2-4279-8A41-35BC55279DA8}
 	EndGlobalSection
 EndGlobal
