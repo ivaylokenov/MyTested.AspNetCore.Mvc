@@ -360,7 +360,7 @@
 
         public IActionResult ChallengeWithAuthenticationSchemes()
         {
-            return this.Challenge("Basic", "NTLM");
+            return this.Challenge(AuthenticationScheme.Basic, AuthenticationScheme.NTLM);
         }
 
         public IActionResult ChallengeWithAuthenticationProperties()
@@ -380,7 +380,7 @@
 
         public IActionResult ForbidWithAuthenticationSchemes()
         {
-            return this.Forbid("Basic", "NTLM");
+            return this.Forbid(AuthenticationScheme.Basic, AuthenticationScheme.NTLM);
         }
 
         public IActionResult ForbidWithAuthenticationProperties()

@@ -1,7 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.UtilitiesTests.ValidatorsTests
 {
     using System;
-    using Builders.Authentication;
     using Setups;
     using Setups.Controllers;
     using Utilities;
@@ -13,7 +12,7 @@
         [Fact]
         public void ValidateNoAttributesShouldNotFailWithNoAttributes()
         {
-            var attributes = Reflection.GetCustomAttributes(new ClaimsPrincipalBuilder());
+            var attributes = Reflection.GetCustomAttributes(new AttributesValidatorTests());
 
             AttributesValidator.ValidateNoAttributes(attributes, TestObjectFactory.GetFailingValidationActionWithTwoParameteres());
         }
@@ -53,7 +52,7 @@
             Test.AssertException<NullReferenceException>(
                 () =>
                 {
-                    var attributes = Reflection.GetCustomAttributes(new ClaimsPrincipalBuilder());
+                    var attributes = Reflection.GetCustomAttributes(new AttributesValidatorTests());
 
                     AttributesValidator.ValidateNumberOfAttributes(attributes, TestObjectFactory.GetFailingValidationActionWithTwoParameteres());
                 },

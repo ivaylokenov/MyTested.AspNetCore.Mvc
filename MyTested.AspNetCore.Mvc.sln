@@ -92,6 +92,12 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MyTested.AspNetCore.Mvc.Con
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MyTested.AspNetCore.Mvc.Controllers.Test", "test\MyTested.AspNetCore.Mvc.Controllers.Test\MyTested.AspNetCore.Mvc.Controllers.Test.xproj", "{55B3D29C-624E-47EA-8F36-22515181A618}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MyTested.AspNetCore.Mvc.DependencyInjection.Test", "test\MyTested.AspNetCore.Mvc.DependencyInjection.Test\MyTested.AspNetCore.Mvc.DependencyInjection.Test.xproj", "{41E51D79-AC4A-42A3-A55D-912DDB6F0FA9}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MyTested.AspNetCore.Mvc.Http.Test", "test\MyTested.AspNetCore.Mvc.Http.Test\MyTested.AspNetCore.Mvc.Http.Test.xproj", "{D9F6A7BB-6E8E-4983-8007-3BC0D23016D0}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MyTested.AspNetCore.Mvc.Routing.Test", "test\MyTested.AspNetCore.Mvc.Routing.Test\MyTested.AspNetCore.Mvc.Routing.Test.xproj", "{56348217-F55C-4C61-8779-B94C009DC4BE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -246,6 +252,18 @@ Global
 		{55B3D29C-624E-47EA-8F36-22515181A618}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55B3D29C-624E-47EA-8F36-22515181A618}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55B3D29C-624E-47EA-8F36-22515181A618}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41E51D79-AC4A-42A3-A55D-912DDB6F0FA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41E51D79-AC4A-42A3-A55D-912DDB6F0FA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41E51D79-AC4A-42A3-A55D-912DDB6F0FA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41E51D79-AC4A-42A3-A55D-912DDB6F0FA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9F6A7BB-6E8E-4983-8007-3BC0D23016D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9F6A7BB-6E8E-4983-8007-3BC0D23016D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9F6A7BB-6E8E-4983-8007-3BC0D23016D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9F6A7BB-6E8E-4983-8007-3BC0D23016D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56348217-F55C-4C61-8779-B94C009DC4BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56348217-F55C-4C61-8779-B94C009DC4BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56348217-F55C-4C61-8779-B94C009DC4BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56348217-F55C-4C61-8779-B94C009DC4BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -290,5 +308,8 @@ Global
 		{6DD2FCA0-A52B-4BBB-A9A5-785461AB481C} = {D140FA14-A6C2-4279-8A41-35BC55279DA8}
 		{8D626A3C-55CD-4FAF-B10E-E6771E33B764} = {D140FA14-A6C2-4279-8A41-35BC55279DA8}
 		{55B3D29C-624E-47EA-8F36-22515181A618} = {D140FA14-A6C2-4279-8A41-35BC55279DA8}
+		{41E51D79-AC4A-42A3-A55D-912DDB6F0FA9} = {D140FA14-A6C2-4279-8A41-35BC55279DA8}
+		{D9F6A7BB-6E8E-4983-8007-3BC0D23016D0} = {D140FA14-A6C2-4279-8A41-35BC55279DA8}
+		{56348217-F55C-4C61-8779-B94C009DC4BE} = {D140FA14-A6C2-4279-8A41-35BC55279DA8}
 	EndGlobalSection
 EndGlobal

@@ -9,8 +9,8 @@
         [Fact]
         public void HomeIndexShouldMatchCorrectController()
         {
-            MyMvc
-                .Routing()
+            MyRouting
+                .Configuration()
                 .ShouldMap("/")
                 .To<HomeController>(c => c.Index());
         }

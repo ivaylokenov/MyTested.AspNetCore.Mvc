@@ -3700,7 +3700,7 @@
           "netstandard1.6/MyTested.AspNetCore.Mvc.Routing.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.Test/1.0.0": {
+      "MyTested.AspNetCore.Mvc.Test.Setups/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v1.0",
         "dependencies": {
@@ -3710,10 +3710,10 @@
           "xunit": "2.2.0"
         },
         "compile": {
-          "netcoreapp1.0/MyTested.AspNetCore.Mvc.Test.dll": {}
+          "netcoreapp1.0/MyTested.AspNetCore.Mvc.Test.Setups.dll": {}
         },
         "runtime": {
-          "netcoreapp1.0/MyTested.AspNetCore.Mvc.Test.dll": {}
+          "netcoreapp1.0/MyTested.AspNetCore.Mvc.Test.Setups.dll": {}
         }
       },
       "MyTested.AspNetCore.Mvc.ViewFeatures/1.0.0-preview-final": {
@@ -5415,7 +5415,7 @@
           "net451/MyTested.AspNetCore.Mvc.Routing.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.Test/1.0.0": {
+      "MyTested.AspNetCore.Mvc.Test.Setups/1.0.0": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
@@ -5424,10 +5424,10 @@
           "xunit": "2.2.0"
         },
         "compile": {
-          "net451/MyTested.AspNetCore.Mvc.Test.dll": {}
+          "net451/MyTested.AspNetCore.Mvc.Test.Setups.dll": {}
         },
         "runtime": {
-          "net451/MyTested.AspNetCore.Mvc.Test.dll": {}
+          "net451/MyTested.AspNetCore.Mvc.Test.Setups.dll": {}
         }
       },
       "MyTested.AspNetCore.Mvc.ViewFeatures/1.0.0-preview-final": {
@@ -11478,10 +11478,10 @@
       "path": "../../src/MyTested.AspNetCore.Mvc.Routing/project.json",
       "msbuildProject": "../../src/MyTested.AspNetCore.Mvc.Routing/MyTested.AspNetCore.Mvc.Routing.xproj"
     },
-    "MyTested.AspNetCore.Mvc.Test/1.0.0": {
+    "MyTested.AspNetCore.Mvc.Test.Setups/1.0.0": {
       "type": "project",
-      "path": "../MyTested.AspNetCore.Mvc.Test/project.json",
-      "msbuildProject": "../MyTested.AspNetCore.Mvc.Test/MyTested.AspNetCore.Mvc.Test.xproj"
+      "path": "../MyTested.AspNetCore.Mvc.Test.Setups/project.json",
+      "msbuildProject": "../MyTested.AspNetCore.Mvc.Test.Setups/MyTested.AspNetCore.Mvc.Test.Setups.xproj"
     },
     "MyTested.AspNetCore.Mvc.ViewFeatures/1.0.0-preview-final": {
       "type": "project",
@@ -11491,7 +11491,7 @@
   },
   "projectFileDependencyGroups": {
     "": [
-      "MyTested.AspNetCore.Mvc.Test >= 1.0.0-*",
+      "MyTested.AspNetCore.Mvc.Test.Setups >= 1.0.0-*",
       "MyTested.AspNetCore.Mvc.ViewFeatures >= 1.0.0-*",
       "dotnet-test-xunit >= 2.2.0-*",
       "xunit >= 2.2.0-*"

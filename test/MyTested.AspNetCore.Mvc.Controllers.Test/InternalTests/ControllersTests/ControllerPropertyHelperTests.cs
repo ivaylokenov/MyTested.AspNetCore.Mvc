@@ -5,6 +5,7 @@
     using Internal.Services;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.DependencyInjection;
     using Setups;
     using Setups.Controllers;
     using Xunit;
@@ -52,7 +53,7 @@
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
-                    services.AddHttpContextAccessor();
+                    services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
                 });
 
             var helper = ControllerPropertyHelper.GetProperties<FullPocoController>();

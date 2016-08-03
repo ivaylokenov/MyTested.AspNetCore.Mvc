@@ -3618,6 +3618,19 @@
           "netstandard1.6/MyTested.AspNetCore.Mvc.Configuration.dll": {}
         }
       },
+      "MyTested.AspNetCore.Mvc.Controllers/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.6",
+        "dependencies": {
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0"
+        },
+        "compile": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Controllers.dll": {}
+        },
+        "runtime": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Controllers.dll": {}
+        }
+      },
       "MyTested.AspNetCore.Mvc.Http/1.0.0-preview-final": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.6",
@@ -5267,6 +5280,19 @@
         },
         "runtime": {
           "net451/MyTested.AspNetCore.Mvc.Configuration.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.Controllers/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0"
+        },
+        "compile": {
+          "net451/MyTested.AspNetCore.Mvc.Controllers.dll": {}
+        },
+        "runtime": {
+          "net451/MyTested.AspNetCore.Mvc.Controllers.dll": {}
         }
       },
       "MyTested.AspNetCore.Mvc.Http/1.0.0-preview-final": {
@@ -11312,6 +11338,11 @@
       "path": "../../src/MyTested.AspNetCore.Mvc.Configuration/project.json",
       "msbuildProject": "../../src/MyTested.AspNetCore.Mvc.Configuration/MyTested.AspNetCore.Mvc.Configuration.xproj"
     },
+    "MyTested.AspNetCore.Mvc.Controllers/1.0.0-preview-final": {
+      "type": "project",
+      "path": "../../src/MyTested.AspNetCore.Mvc.Controllers/project.json",
+      "msbuildProject": "../../src/MyTested.AspNetCore.Mvc.Controllers/MyTested.AspNetCore.Mvc.Controllers.xproj"
+    },
     "MyTested.AspNetCore.Mvc.Http/1.0.0-preview-final": {
       "type": "project",
       "path": "../../src/MyTested.AspNetCore.Mvc.Http/project.json",
@@ -11330,6 +11361,7 @@
   },
   "projectFileDependencyGroups": {
     "": [
+      "MyTested.AspNetCore.Mvc.Controllers >= 1.0.0-*",
       "MyTested.AspNetCore.Mvc.Http >= 1.0.0-*",
       "MyTested.AspNetCore.Mvc.Test.Setups >= 1.0.0-*",
       "dotnet-test-xunit >= 2.2.0-*",

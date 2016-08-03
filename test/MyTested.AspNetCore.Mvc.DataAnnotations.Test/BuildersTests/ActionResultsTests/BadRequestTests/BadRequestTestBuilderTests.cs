@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ActionResultsTests
+﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ActionResultsTests.BadRequestTests
 {
     using Exceptions;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
