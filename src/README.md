@@ -7,6 +7,7 @@ MyTested.AspNetCore.Mvc Packages
  - `MyTested.AspNetCore.Mvc.Controllers` - contains setup and assertion methods for controllers
  - `MyTested.AspNetCore.Mvc.Routing` - contains setup and assertion methods for routes
  - `MyTested.AspNetCore.Mvc.Core` - contains setup and assertion methods for MVC core features
+ - `MyTested.AspNetCore.Mvc.ViewActionResults` - contains setup and assertion methods for view action results
  - `MyTested.AspNetCore.Mvc.ViewFeatures` - contains setup and assertion methods for MVC view features
  - `MyTested.AspNetCore.Mvc.Http` - contains setup and assertion methods for HTTP context, request and response
  - `MyTested.AspNetCore.Mvc.Authentication` - contains setup for `ClaimsPrincipal`
