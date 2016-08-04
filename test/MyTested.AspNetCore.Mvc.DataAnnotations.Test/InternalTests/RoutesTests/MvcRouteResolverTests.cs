@@ -10,7 +10,7 @@
     using Setups.Routing;
     using Xunit;
 
-    public class InternalRouteResolverTests
+    public class MvcRouteResolverTests
     {
         [Fact]
         public void ResolveShouldResolveCorrectlyWithPartialJsonContentBody()

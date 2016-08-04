@@ -301,7 +301,7 @@
                             .With<IInjectedService>(new InjectedService())
                             .With<IAnotherInjectedService>(new AnotherInjectedService()));
                 },
-                "Dependency AnotherInjectedService is already registered for FullPocoController controller.");
+                "Dependency AnotherInjectedService is already registered.");
         }
 
         [Fact]
@@ -340,7 +340,7 @@
                             .With<IInjectedService>(new InjectedService())
                             .With<IAnotherInjectedService>(new AnotherInjectedService()));
                 },
-                "Dependency AnotherInjectedService is already registered for MvcController controller.");
+                "Dependency AnotherInjectedService is already registered.");
         }
 
         [Fact]
@@ -359,7 +359,7 @@
                         .ShouldReturn()
                         .Ok();
                 },
-                "NoParameterlessConstructorController could not be instantiated because it contains no constructor taking RequestModel, AnotherInjectedService, ResponseModel as parameters.");
+                "NoParameterlessConstructorController could not be instantiated because it contains no constructor taking RequestModel, ResponseModel, AnotherInjectedService as parameters.");
         }
         
         [Fact]
@@ -378,7 +378,7 @@
                         .ShouldReturn()
                         .Ok();
                 },
-                "NoParameterlessConstructorController could not be instantiated because it contains no constructor taking RequestModel, AnotherInjectedService, ResponseModel as parameters.");
+                "NoParameterlessConstructorController could not be instantiated because it contains no constructor taking RequestModel, ResponseModel, AnotherInjectedService as parameters.");
         }
 
         [Fact]
@@ -458,7 +458,7 @@
                         .Ok()
                         .WithModel("TestValue");
                 },
-                "The 'WithServiceSetupFor' method can be used only for services with scoped lifetime.");
+                "The 'WithSetupFor' method can be used only for services with scoped lifetime.");
 
             MyApplication.IsUsingDefaultConfiguration();
         }

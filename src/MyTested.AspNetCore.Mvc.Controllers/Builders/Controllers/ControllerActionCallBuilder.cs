@@ -115,6 +115,8 @@
         private string GetAndValidateAction(LambdaExpression actionCall)
         {
             this.BuildControllerIfNotExists();
+
+            this.TestContext.MethodCall = actionCall;
             this.TestContext.PreMethodInvocationAction?.Invoke();
 
             var methodInfo = ExpressionParser.GetMethodInfo(actionCall);

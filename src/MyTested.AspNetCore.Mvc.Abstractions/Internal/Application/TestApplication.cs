@@ -173,10 +173,11 @@
             {
                 if (!initialiazed && TestConfiguration.AutomaticStartup)
                 {
-                    startupType = TryFindDefaultStartupType();
+                    var defaultStartupType = TryFindDefaultStartupType();
 
-                    if (startupType != null)
+                    if (defaultStartupType != null)
                     {
+                        startupType = defaultStartupType;
                         Initialize();
                     }
                 }
