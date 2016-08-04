@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Internal;
-    using Internal.Application;
+    using Internal.Services;
     using Internal.Caching;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Caching.Memory;

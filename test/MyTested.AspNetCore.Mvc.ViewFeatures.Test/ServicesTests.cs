@@ -1,7 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test
 {
     using Internal;
-    using Internal.Application;
+    using Internal.Services;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Setups.Startups;
     using Xunit;

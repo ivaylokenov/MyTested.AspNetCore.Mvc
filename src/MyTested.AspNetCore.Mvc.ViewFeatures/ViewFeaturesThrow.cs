@@ -14,12 +14,12 @@
                string actualViewName)
         {
             throw new ViewResultAssertionException(string.Format(
-                    "When calling {0} action in {1} expected {2} result to be {3}, but instead received {4}.",
-                    baseTestBuilderWithInvokedAction.ActionName,
-                    baseTestBuilderWithInvokedAction.Controller.GetName(),
-                    viewType,
-                    ViewTestHelper.GetFriendlyViewName(expectedViewName),
-                    ViewTestHelper.GetFriendlyViewName(actualViewName)));
+                "When calling {0} action in {1} expected {2} result to be {3}, but instead received {4}.",
+                baseTestBuilderWithInvokedAction.ActionName,
+                baseTestBuilderWithInvokedAction.Controller.GetName(),
+                viewType,
+                ViewTestHelper.GetFriendlyViewName(expectedViewName),
+                ViewTestHelper.GetFriendlyViewName(actualViewName)));
         }
     }
 }

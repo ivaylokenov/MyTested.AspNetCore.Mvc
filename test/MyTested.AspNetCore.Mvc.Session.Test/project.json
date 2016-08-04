@@ -15,8 +15,9 @@
     "dotnet-test-xunit": "2.2.0-*",
     "xunit": "2.2.0-*",
     "Microsoft.AspNetCore.Mvc": "1.0.0-*",
+    "MyTested.AspNetCore.Mvc.Controllers": "1.0.0-*",
     "MyTested.AspNetCore.Mvc.Session": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.Test": "1.0.0-*"
+    "MyTested.AspNetCore.Mvc.Test.Setups": "1.0.0-*"
   },
 
   "frameworks": {

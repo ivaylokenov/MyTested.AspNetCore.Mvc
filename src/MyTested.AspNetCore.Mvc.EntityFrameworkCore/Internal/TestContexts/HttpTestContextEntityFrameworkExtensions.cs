@@ -1,7 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.TestContexts
 {
     using Microsoft.Extensions.DependencyInjection;
-    using TestContexts;
     using Utilities.Validators;
 
     public static class HttpTestContextEntityFrameworkExtensions

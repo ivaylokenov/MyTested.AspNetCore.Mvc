@@ -6,7 +6,8 @@
 
   "dependencies": {
     "Microsoft.AspNetCore.Mvc": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.Core": "1.0.0-*",
+    "MyTested.AspNetCore.Mvc": "1.0.0-*",
+    "MyTested.AspNetCore.Mvc.Test.Setups": "1.0.0-*",
     "xunit": "2.2.0-*"
   },
 

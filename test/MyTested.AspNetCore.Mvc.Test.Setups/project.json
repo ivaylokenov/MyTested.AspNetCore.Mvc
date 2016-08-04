@@ -1,0 +1,25 @@
+﻿{
+  "buildOptions": {
+    "warningsAsErrors": true,
+    "keyFile": "../../tools/Key.snk"
+  },
+
+  "dependencies": {
+    "Microsoft.AspNetCore.Mvc": "1.0.0-*",
+    "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0-*",
+    "xunit": "2.2.0-*"
+  },
+
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": "dotnet5.4",
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "version": "1.0.0-*",
+          "type": "platform"
+        }
+      }
+    },
+    "net451": {}
+  }
+}

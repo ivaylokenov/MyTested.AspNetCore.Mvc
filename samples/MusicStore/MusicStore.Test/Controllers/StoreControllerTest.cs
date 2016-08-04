@@ -18,7 +18,10 @@
             MyMvc
                 .Controller<StoreController>()
                 .WithDbContext(db => db
-                    .WithEntities(entities => CreateTestGenres(numberOfGenres: 10, numberOfAlbums: 1, dbContext: entities)))
+                    .WithEntities(entities => CreateTestGenres(
+                        numberOfGenres: 10,
+                        numberOfAlbums: 1,
+                        dbContext: entities)))
                 .Calling(c => c.Index())
                 .ShouldReturn()
                 .View()
@@ -44,7 +47,10 @@
             MyMvc
                 .Controller<StoreController>()
                 .WithDbContext(db => db
-                    .WithEntities(entities => CreateTestGenres(numberOfGenres: 3, numberOfAlbums: 3, dbContext: entities)))
+                    .WithEntities(entities => CreateTestGenres(
+                        numberOfGenres: 3,
+                        numberOfAlbums: 3,
+                        dbContext: entities)))
                 .Calling(c => c.Browse(genre))
                 .ShouldReturn()
                 .View()
@@ -78,7 +84,10 @@
                 .WithOptions(options => options
                     .For<AppSettings>(settings => settings.CacheDbResults = true))
                 .WithDbContext(db => db
-                    .WithEntities(entities => genres = CreateTestGenres(numberOfGenres: 3, numberOfAlbums: 3, dbContext: entities)))
+                    .WithEntities(entities => genres = CreateTestGenres(
+                        numberOfGenres: 3,
+                        numberOfAlbums: 3,
+                        dbContext: entities)))
                 .Calling(c => c.Details(From.Services<IMemoryCache>(), 1))
                 .ShouldHave()
                 .MemoryCache(cache => cache

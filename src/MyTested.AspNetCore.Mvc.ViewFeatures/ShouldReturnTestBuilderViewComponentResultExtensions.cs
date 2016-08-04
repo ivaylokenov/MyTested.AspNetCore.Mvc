@@ -23,7 +23,7 @@
         {
             var actualShouldReturnTestBuilder = (ShouldReturnTestBuilder<TActionResult>)shouldReturnTestBuilder;
 
-            actualShouldReturnTestBuilder.TestContext.ActionResult = actualShouldReturnTestBuilder.GetReturnObject<ViewComponentResult>();
+            actualShouldReturnTestBuilder.TestContext.MethodResult = actualShouldReturnTestBuilder.GetReturnObject<ViewComponentResult>();
 
             return new ViewComponentTestBuilder(actualShouldReturnTestBuilder.TestContext);
         }
@@ -53,7 +53,7 @@
                     actualViewComponentName);
             }
 
-            actualShouldReturnTestBuilder.TestContext.ActionResult = viewComponentResult;
+            actualShouldReturnTestBuilder.TestContext.MethodResult = viewComponentResult;
             return new ViewComponentTestBuilder(actualShouldReturnTestBuilder.TestContext);
         }
 
@@ -82,7 +82,7 @@
                     actualViewComponentType.ToFriendlyTypeName());
             }
 
-            actualShouldReturnTestBuilder.TestContext.ActionResult = viewComponentResult;
+            actualShouldReturnTestBuilder.TestContext.MethodResult = viewComponentResult;
             return new ViewComponentTestBuilder(actualShouldReturnTestBuilder.TestContext);
         }
     }

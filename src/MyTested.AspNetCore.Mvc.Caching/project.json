@@ -1,6 +1,6 @@
 {
   "title": "MyTested.AspNetCore.Mvc.Caching",
-  "description": "My Tested ASP.NET Core MVC caching components for testing ASP.NET Core MVC.",
+  "description": "My Tested ASP.NET Core MVC caching components.",
   "version": "1.0.0-preview-final",
   "authors": [ "Ivaylo Kenov" ],
   "packOptions": {
@@ -28,7 +28,7 @@
 
   "dependencies": {
     "Microsoft.Extensions.Caching.Memory": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.Core": "1.0.0-*"
+    "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0-*"
   },
 
   "frameworks": {

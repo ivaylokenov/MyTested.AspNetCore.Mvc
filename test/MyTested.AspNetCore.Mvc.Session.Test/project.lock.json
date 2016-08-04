@@ -3605,22 +3605,47 @@
           "lib/netstandard1.1/xunit.runner.utility.dotnet.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.Core/1.0.0-preview-final": {
+      "MyTested.AspNetCore.Mvc.Abstractions/1.0.0-preview-final": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.6",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc.Core": "1.0.0",
-          "Microsoft.AspNetCore.Mvc.Formatters.Json": "1.0.0",
           "Microsoft.AspNetCore.TestHost": "1.0.0",
-          "Microsoft.Extensions.Configuration.Binder": "1.0.0",
           "Microsoft.Extensions.Configuration.Json": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Configuration": "1.0.0",
           "MyTested.AspNetCore.Mvc.Licensing": "1.0.0"
         },
         "compile": {
-          "netstandard1.6/MyTested.AspNetCore.Mvc.Core.dll": {}
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Abstractions.dll": {}
         },
         "runtime": {
-          "netstandard1.6/MyTested.AspNetCore.Mvc.Core.dll": {}
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Abstractions.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.Configuration/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.6",
+        "dependencies": {
+          "Microsoft.Extensions.Configuration.Binder": "1.0.0"
+        },
+        "compile": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Configuration.dll": {}
+        },
+        "runtime": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Configuration.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.Controllers/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.6",
+        "dependencies": {
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0"
+        },
+        "compile": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Controllers.dll": {}
+        },
+        "runtime": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Controllers.dll": {}
         }
       },
       "MyTested.AspNetCore.Mvc.Licensing/1.0.0-preview-final": {
@@ -3642,7 +3667,7 @@
         "framework": ".NETStandard,Version=v1.6",
         "dependencies": {
           "Microsoft.AspNetCore.Session": "1.0.0",
-          "MyTested.AspNetCore.Mvc.Core": "1.0.0"
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0"
         },
         "compile": {
           "netstandard1.6/MyTested.AspNetCore.Mvc.Session.dll": {}
@@ -3651,20 +3676,20 @@
           "netstandard1.6/MyTested.AspNetCore.Mvc.Session.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.Test/1.0.0": {
+      "MyTested.AspNetCore.Mvc.Test.Setups/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v1.0",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc": "1.0.0",
           "Microsoft.NETCore.App": "1.0.0",
-          "MyTested.AspNetCore.Mvc.Core": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0",
           "xunit": "2.2.0"
         },
         "compile": {
-          "netcoreapp1.0/MyTested.AspNetCore.Mvc.Test.dll": {}
+          "netcoreapp1.0/MyTested.AspNetCore.Mvc.Test.Setups.dll": {}
         },
         "runtime": {
-          "netcoreapp1.0/MyTested.AspNetCore.Mvc.Test.dll": {}
+          "netcoreapp1.0/MyTested.AspNetCore.Mvc.Test.Setups.dll": {}
         }
       }
     },
@@ -5260,22 +5285,47 @@
           "lib/net45/xunit.runner.utility.desktop.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.Core/1.0.0-preview-final": {
+      "MyTested.AspNetCore.Mvc.Abstractions/1.0.0-preview-final": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc.Core": "1.0.0",
-          "Microsoft.AspNetCore.Mvc.Formatters.Json": "1.0.0",
           "Microsoft.AspNetCore.TestHost": "1.0.0",
-          "Microsoft.Extensions.Configuration.Binder": "1.0.0",
           "Microsoft.Extensions.Configuration.Json": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Configuration": "1.0.0",
           "MyTested.AspNetCore.Mvc.Licensing": "1.0.0"
         },
         "compile": {
-          "net451/MyTested.AspNetCore.Mvc.Core.dll": {}
+          "net451/MyTested.AspNetCore.Mvc.Abstractions.dll": {}
         },
         "runtime": {
-          "net451/MyTested.AspNetCore.Mvc.Core.dll": {}
+          "net451/MyTested.AspNetCore.Mvc.Abstractions.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.Configuration/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "Microsoft.Extensions.Configuration.Binder": "1.0.0"
+        },
+        "compile": {
+          "net451/MyTested.AspNetCore.Mvc.Configuration.dll": {}
+        },
+        "runtime": {
+          "net451/MyTested.AspNetCore.Mvc.Configuration.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.Controllers/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0"
+        },
+        "compile": {
+          "net451/MyTested.AspNetCore.Mvc.Controllers.dll": {}
+        },
+        "runtime": {
+          "net451/MyTested.AspNetCore.Mvc.Controllers.dll": {}
         }
       },
       "MyTested.AspNetCore.Mvc.Licensing/1.0.0-preview-final": {
@@ -5293,7 +5343,7 @@
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
           "Microsoft.AspNetCore.Session": "1.0.0",
-          "MyTested.AspNetCore.Mvc.Core": "1.0.0"
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0"
         },
         "compile": {
           "net451/MyTested.AspNetCore.Mvc.Session.dll": {}
@@ -5302,19 +5352,19 @@
           "net451/MyTested.AspNetCore.Mvc.Session.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.Test/1.0.0": {
+      "MyTested.AspNetCore.Mvc.Test.Setups/1.0.0": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc": "1.0.0",
-          "MyTested.AspNetCore.Mvc.Core": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0",
           "xunit": "2.2.0"
         },
         "compile": {
-          "net451/MyTested.AspNetCore.Mvc.Test.dll": {}
+          "net451/MyTested.AspNetCore.Mvc.Test.Setups.dll": {}
         },
         "runtime": {
-          "net451/MyTested.AspNetCore.Mvc.Test.dll": {}
+          "net451/MyTested.AspNetCore.Mvc.Test.Setups.dll": {}
         }
       }
     }
@@ -11324,10 +11374,20 @@
         "xunit.runner.utility.nuspec"
       ]
     },
-    "MyTested.AspNetCore.Mvc.Core/1.0.0-preview-final": {
+    "MyTested.AspNetCore.Mvc.Abstractions/1.0.0-preview-final": {
       "type": "project",
-      "path": "../../src/MyTested.AspNetCore.Mvc.Core/project.json",
-      "msbuildProject": "../../src/MyTested.AspNetCore.Mvc.Core/MyTested.AspNetCore.Mvc.Core.xproj"
+      "path": "../../src/MyTested.AspNetCore.Mvc.Abstractions/project.json",
+      "msbuildProject": "../../src/MyTested.AspNetCore.Mvc.Abstractions/MyTested.AspNetCore.Mvc.Abstractions.xproj"
+    },
+    "MyTested.AspNetCore.Mvc.Configuration/1.0.0-preview-final": {
+      "type": "project",
+      "path": "../../src/MyTested.AspNetCore.Mvc.Configuration/project.json",
+      "msbuildProject": "../../src/MyTested.AspNetCore.Mvc.Configuration/MyTested.AspNetCore.Mvc.Configuration.xproj"
+    },
+    "MyTested.AspNetCore.Mvc.Controllers/1.0.0-preview-final": {
+      "type": "project",
+      "path": "../../src/MyTested.AspNetCore.Mvc.Controllers/project.json",
+      "msbuildProject": "../../src/MyTested.AspNetCore.Mvc.Controllers/MyTested.AspNetCore.Mvc.Controllers.xproj"
     },
     "MyTested.AspNetCore.Mvc.Licensing/1.0.0-preview-final": {
       "type": "project",
@@ -11339,17 +11399,18 @@
       "path": "../../src/MyTested.AspNetCore.Mvc.Session/project.json",
       "msbuildProject": "../../src/MyTested.AspNetCore.Mvc.Session/MyTested.AspNetCore.Mvc.Session.xproj"
     },
-    "MyTested.AspNetCore.Mvc.Test/1.0.0": {
+    "MyTested.AspNetCore.Mvc.Test.Setups/1.0.0": {
       "type": "project",
-      "path": "../MyTested.AspNetCore.Mvc.Test/project.json",
-      "msbuildProject": "../MyTested.AspNetCore.Mvc.Test/MyTested.AspNetCore.Mvc.Test.xproj"
+      "path": "../MyTested.AspNetCore.Mvc.Test.Setups/project.json",
+      "msbuildProject": "../MyTested.AspNetCore.Mvc.Test.Setups/MyTested.AspNetCore.Mvc.Test.Setups.xproj"
     }
   },
   "projectFileDependencyGroups": {
     "": [
       "Microsoft.AspNetCore.Mvc >= 1.0.0-*",
+      "MyTested.AspNetCore.Mvc.Controllers >= 1.0.0-*",
       "MyTested.AspNetCore.Mvc.Session >= 1.0.0-*",
-      "MyTested.AspNetCore.Mvc.Test >= 1.0.0-*",
+      "MyTested.AspNetCore.Mvc.Test.Setups >= 1.0.0-*",
       "dotnet-test-xunit >= 2.2.0-*",
       "xunit >= 2.2.0-*"
     ],

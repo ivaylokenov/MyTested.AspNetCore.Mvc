@@ -15,14 +15,14 @@
     /// </summary>
     public class MemoryCacheEntryTestBuilder : MemoryCacheEntryBuilder, IAndMemoryCacheEntryTestBuilder
     {
-        private readonly ControllerTestContext testContext;
+        private readonly ComponentTestContext testContext;
         private readonly ICollection<Action<ICacheEntry, ICacheEntry>> validations;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MemoryCacheEntryTestBuilder"/> class.
         /// </summary>
-        /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
-        public MemoryCacheEntryTestBuilder(ControllerTestContext testContext)
+        /// <param name="testContext"><see cref="ComponentTestContext"/> containing data about the currently executed assertion chain.</param>
+        public MemoryCacheEntryTestBuilder(ComponentTestContext testContext)
         {
             CommonValidator.CheckForNullReference(testContext, nameof(testContext));
 
@@ -129,8 +129,8 @@
         {
             throw new DataProviderAssertionException(string.Format(
                 "When calling {0} action in {1} expected memory cache {2}, but {3}.",
-                this.testContext.ActionName,
-                this.testContext.Controller.GetName(),
+                this.testContext.MethodName,
+                this.testContext.Component.GetName(),
                 expectedValue,
                 actualValue));
         }

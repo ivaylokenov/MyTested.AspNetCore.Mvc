@@ -9,7 +9,7 @@
         [Fact]
         public void ToValidModelStateShouldNotThrowExceptionWithValidModelState()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap(request => request
                     .WithPath("/Normal/ActionWithModel/5")
@@ -24,7 +24,7 @@
             Test.AssertException<RouteAssertionException>(
                 () =>
                 {
-                    MyRoutes
+                    MyRouting
                         .Configuration()
                         .ShouldMap(request => request
                             .WithPath("/Normal/Invalid/5")
@@ -41,7 +41,7 @@
             Test.AssertException<RouteAssertionException>(
                 () =>
                 {
-                    MyRoutes
+                    MyRouting
                         .Configuration()
                         .ShouldMap(request => request
                             .WithPath("/Normal/ActionWithModel/5")
@@ -55,7 +55,7 @@
         [Fact]
         public void ToInvalidModelStateShouldNotThrowExceptionWithInvalidModelState()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap(request => request
                     .WithPath("/Normal/ActionWithModel/5")
@@ -67,7 +67,7 @@
         [Fact]
         public void ToInvalidModelStateShouldNotThrowExceptionWithInvalidModelStateAndCorrectNumberOfErrors()
         {
-            MyRoutes
+            MyRouting
                 .Configuration()
                 .ShouldMap(request => request
                     .WithPath("/Normal/ActionWithModel/5")
@@ -82,7 +82,7 @@
             Test.AssertException<RouteAssertionException>(
                 () =>
                 {
-                    MyRoutes
+                    MyRouting
                         .Configuration()
                         .ShouldMap(request => request
                             .WithPath("/Normal/ActionWithModel/5")
@@ -99,7 +99,7 @@
             Test.AssertException<RouteAssertionException>(
                 () =>
                 {
-                    MyRoutes
+                    MyRouting
                         .Configuration()
                         .ShouldMap(request => request
                             .WithPath("/Normal/ActionWithModel/5")
@@ -116,7 +116,7 @@
             Test.AssertException<RouteAssertionException>(
                 () =>
                 {
-                    MyRoutes
+                    MyRouting
                         .Configuration()
                         .ShouldMap(request => request
                             .WithPath("/Normal/ActionWithModel/5")
@@ -133,7 +133,7 @@
             Test.AssertException<RouteAssertionException>(
                 () =>
                 {
-                    MyRoutes
+                    MyRouting
                         .Configuration()
                         .ShouldMap(request => request
                             .WithPath("/Normal/Invalid/5")

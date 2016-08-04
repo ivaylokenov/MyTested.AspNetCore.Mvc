@@ -21,7 +21,7 @@
         {
             var actualShouldReturnTestBuilder = (ShouldReturnTestBuilder<TActionResult>)shouldReturnTestBuilder;
 
-            actualShouldReturnTestBuilder.TestContext.ActionResult = actualShouldReturnTestBuilder.GetReturnObject<JsonResult>();
+            actualShouldReturnTestBuilder.TestContext.MethodResult = actualShouldReturnTestBuilder.GetReturnObject<JsonResult>();
 
             return new JsonTestBuilder(actualShouldReturnTestBuilder.TestContext);
         }

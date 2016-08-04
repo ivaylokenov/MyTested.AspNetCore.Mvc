@@ -5,7 +5,7 @@
     using Base;
     using Contracts.ActionResults.Json;
     using Exceptions;
-    using Internal.Application;
+    using Internal.Services;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Options;

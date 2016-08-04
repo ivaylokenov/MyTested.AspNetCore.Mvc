@@ -7,6 +7,7 @@
     using Builders.Contracts.Data;
     using Builders.Data;
     using Internal.TestContexts;
+    using Utilities.Validators;
 
     /// <summary>
     /// Contains <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ITempDataDictionary"/> extension methods for <see cref="IShouldHaveTestBuilder{TActionResult}"/>.
@@ -18,17 +19,19 @@
         /// </summary>
         /// <typeparam name="TActionResult">Type of action result type.</typeparam>
         /// <param name="shouldHaveTestBuilder">Instance of <see cref="IShouldHaveTestBuilder{TActionResult}"/> type.</param>
-        /// <returns>Test builder of <see cref="IAndTestBuilder{TActionResult}"/> type.</returns>
-        public static IAndTestBuilder<TActionResult> NoTempData<TActionResult>(this IShouldHaveTestBuilder<TActionResult> shouldHaveTestBuilder)
+        /// <returns>Test builder of <see cref="IAndActionResultTestBuilder{TActionResult}"/> type.</returns>
+        public static IAndActionResultTestBuilder<TActionResult> NoTempData<TActionResult>(this IShouldHaveTestBuilder<TActionResult> shouldHaveTestBuilder)
         {
             var actualShouldHaveTestBuilder = (ShouldHaveTestBuilder<TActionResult>)shouldHaveTestBuilder;
 
             if (actualShouldHaveTestBuilder.TestContext.GetTempData().Count > 0)
             {
-                actualShouldHaveTestBuilder.ThrowNewDataProviderAssertionExceptionWithNoEntries(TempDataTestBuilder.TempDataName);
+                DataProviderValidator.ThrowNewDataProviderAssertionExceptionWithNoEntries(
+                    actualShouldHaveTestBuilder.TestContext,
+                    TempDataTestBuilder.TempDataName);
             }
 
-            return actualShouldHaveTestBuilder.NewAndTestBuilder();
+            return actualShouldHaveTestBuilder.Builder;
         }
         /// <summary>
         /// Tests whether the action sets entries in the <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ITempDataDictionary"/>.
@@ -37,19 +40,20 @@
         /// <param name="shouldHaveTestBuilder">Instance of <see cref="IShouldHaveTestBuilder{TActionResult}"/> type.</param>
         /// <param name="withNumberOfEntries">Expected number of <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ITempDataDictionary"/> entries.
         /// If default null is provided, the test builder checks only if any entries are found.</param>
-        /// <returns>Test builder of <see cref="IAndTestBuilder{TActionResult}"/> type.</returns>
-        public static IAndTestBuilder<TActionResult> TempData<TActionResult>(
+        /// <returns>Test builder of <see cref="IAndActionResultTestBuilder{TActionResult}"/> type.</returns>
+        public static IAndActionResultTestBuilder<TActionResult> TempData<TActionResult>(
             this IShouldHaveTestBuilder<TActionResult> shouldHaveTestBuilder,
             int? withNumberOfEntries = null)
         {
             var actualShouldHaveTestBuilder = (ShouldHaveTestBuilder<TActionResult>)shouldHaveTestBuilder;
 
-            actualShouldHaveTestBuilder.ValidateDataProviderNumberOfEntries(
+            DataProviderValidator.ValidateDataProviderNumberOfEntries(
+                actualShouldHaveTestBuilder.TestContext,
                 TempDataTestBuilder.TempDataName,
                 withNumberOfEntries,
                 actualShouldHaveTestBuilder.TestContext.GetTempData().Count);
 
-            return actualShouldHaveTestBuilder.NewAndTestBuilder();
+            return actualShouldHaveTestBuilder.Builder;
         }
         /// <summary>
         /// Tests whether the action sets specific entries in the <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ITempDataDictionary"/>.
@@ -57,8 +61,8 @@
         /// <typeparam name="TActionResult">Type of action result type.</typeparam>
         /// <param name="shouldHaveTestBuilder">Instance of <see cref="IShouldHaveTestBuilder{TActionResult}"/> type.</param>
         /// <param name="tempDataTestBuilder">Builder for testing specific <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ITempDataDictionary"/> entries.</param>
-        /// <returns>Test builder of <see cref="IAndTestBuilder{TActionResult}"/> type.</returns>
-        public static IAndTestBuilder<TActionResult> TempData<TActionResult>(
+        /// <returns>Test builder of <see cref="IAndActionResultTestBuilder{TActionResult}"/> type.</returns>
+        public static IAndActionResultTestBuilder<TActionResult> TempData<TActionResult>(
             this IShouldHaveTestBuilder<TActionResult> shouldHaveTestBuilder,
             Action<ITempDataTestBuilder> tempDataTestBuilder)
         {
@@ -66,7 +70,7 @@
 
             tempDataTestBuilder(new TempDataTestBuilder(actualShouldHaveTestBuilder.TestContext));
 
-            return actualShouldHaveTestBuilder.NewAndTestBuilder();
+            return actualShouldHaveTestBuilder.Builder;
         }
     }
 }
