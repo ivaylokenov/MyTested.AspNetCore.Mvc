@@ -387,11 +387,11 @@
                     (() =>
                     {
                         MyController<MvcController>
-                         .Instance()
-                         .Calling(c => c.ViewComponentResultByName())
-                         .ShouldReturn()
-                         .ViewComponent()
-                         .ContainingArguments(new { id = 1, text = "text", incorrect = 15 });
+                             .Instance()
+                             .Calling(c => c.ViewComponentResultByName())
+                             .ShouldReturn()
+                             .ViewComponent()
+                             .ContainingArguments(new { id = 1, text = "text", incorrect = 15 });
                     }),
                    "When calling ViewComponentResultByName action in MvcController expected view component result arguments to have 3 entries, but in fact found 2.");
         }

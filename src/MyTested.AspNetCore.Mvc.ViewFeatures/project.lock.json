@@ -1147,6 +1147,20 @@
         "runtime": {
           "net451/MyTested.AspNetCore.Mvc.Routing.dll": {}
         }
+      },
+      "MyTested.AspNetCore.Mvc.ViewActionResults/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Controllers": "1.0.0"
+        },
+        "compile": {
+          "net451/MyTested.AspNetCore.Mvc.ViewActionResults.dll": {}
+        },
+        "runtime": {
+          "net451/MyTested.AspNetCore.Mvc.ViewActionResults.dll": {}
+        }
       }
     },
     ".NETStandard,Version=v1.6": {
@@ -3603,6 +3617,20 @@
         },
         "runtime": {
           "netstandard1.6/MyTested.AspNetCore.Mvc.Routing.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.ViewActionResults/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.6",
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Controllers": "1.0.0"
+        },
+        "compile": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.ViewActionResults.dll": {}
+        },
+        "runtime": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.ViewActionResults.dll": {}
         }
       }
     }
@@ -8126,12 +8154,18 @@
       "type": "project",
       "path": "../MyTested.AspNetCore.Mvc.Routing/project.json",
       "msbuildProject": "../MyTested.AspNetCore.Mvc.Routing/MyTested.AspNetCore.Mvc.Routing.xproj"
+    },
+    "MyTested.AspNetCore.Mvc.ViewActionResults/1.0.0-preview-final": {
+      "type": "project",
+      "path": "../MyTested.AspNetCore.Mvc.ViewActionResults/project.json",
+      "msbuildProject": "../MyTested.AspNetCore.Mvc.ViewActionResults/MyTested.AspNetCore.Mvc.ViewActionResults.xproj"
     }
   },
   "projectFileDependencyGroups": {
     "": [
       "Microsoft.AspNetCore.Mvc.ViewFeatures >= 1.0.0-*",
-      "MyTested.AspNetCore.Mvc.DataAnnotations >= 1.0.0-*"
+      "MyTested.AspNetCore.Mvc.DataAnnotations >= 1.0.0-*",
+      "MyTested.AspNetCore.Mvc.ViewActionResults >= 1.0.0-*"
     ],
     ".NETFramework,Version=v4.5.1": [],
     ".NETStandard,Version=v1.6": []

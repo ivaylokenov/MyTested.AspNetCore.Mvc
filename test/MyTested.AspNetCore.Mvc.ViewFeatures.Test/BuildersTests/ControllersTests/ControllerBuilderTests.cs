@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Security.Claims;
     using Builders.Contracts.Actions;
     using Builders.Contracts.Base;
     using Exceptions;
@@ -15,12 +14,43 @@
     using Microsoft.Extensions.Primitives;
     using Setups;
     using Setups.Controllers;
-    using Setups.Models;
-    using Setups.Services;
     using Xunit;
 
     public class ControllerBuilderTests
     {
+        [Fact]
+        public void RouteDataShouldBePopulatedWhenRequestAndPathAreProvided()
+        {
+            MyApplication.IsUsingDefaultConfiguration();
+
+            MyController<MvcController>
+                .Instance()
+                .WithHttpRequest(req => req.WithPath("/Mvc/WithRouteData/1"))
+                .Calling(c => c.WithRouteData(1))
+                .ShouldReturn()
+                .View();
+        }
+
+        [Fact]
+        public void RouteDataShouldBePopulatedWhenRequestAndPathAreProvidedForPocoController()
+        {
+            MyApplication
+                .IsUsingDefaultConfiguration()
+                .WithServices(services =>
+                {
+                    services.AddHttpContextAccessor();
+                });
+
+            MyController<FullPocoController>
+                .Instance()
+                .WithHttpRequest(req => req.WithPath("/Mvc/WithRouteData/1"))
+                .Calling(c => c.WithRouteData(1))
+                .ShouldReturn()
+                .View();
+
+            MyApplication.IsUsingDefaultConfiguration();
+        }
+
         [Fact]
         public void WithTempDataShouldPopulateTempDataCorrectly()
         {
@@ -91,39 +121,6 @@
                 {
                     Assert.Equal(1, controller.CustomTempData.Count);
                 });
-
-            MyApplication.IsUsingDefaultConfiguration();
-        }
-
-        [Fact]
-        public void RouteDataShouldBePopulatedWhenRequestAndPathAreProvided()
-        {
-            MyApplication.IsUsingDefaultConfiguration();
-
-            MyController<MvcController>
-                .Instance()
-                .WithHttpRequest(req => req.WithPath("/Mvc/WithRouteData/1"))
-                .Calling(c => c.WithRouteData(1))
-                .ShouldReturn()
-                .View();
-        }
-
-        [Fact]
-        public void RouteDataShouldBePopulatedWhenRequestAndPathAreProvidedForPocoController()
-        {
-            MyApplication
-                .IsUsingDefaultConfiguration()
-                .WithServices(services =>
-                {
-                    services.AddHttpContextAccessor();
-                });
-
-            MyController<FullPocoController>
-                .Instance()
-                .WithHttpRequest(req => req.WithPath("/Mvc/WithRouteData/1"))
-                .Calling(c => c.WithRouteData(1))
-                .ShouldReturn()
-                .View();
 
             MyApplication.IsUsingDefaultConfiguration();
         }

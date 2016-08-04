@@ -98,6 +98,10 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MyTested.AspNetCore.Mvc.Htt
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MyTested.AspNetCore.Mvc.Routing.Test", "test\MyTested.AspNetCore.Mvc.Routing.Test\MyTested.AspNetCore.Mvc.Routing.Test.xproj", "{56348217-F55C-4C61-8779-B94C009DC4BE}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MyTested.AspNetCore.Mvc.ViewActionResults", "src\MyTested.AspNetCore.Mvc.ViewActionResults\MyTested.AspNetCore.Mvc.ViewActionResults.xproj", "{9050F562-C77C-471E-8968-FAF2ED4E6F28}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MyTested.AspNetCore.Mvc.ViewActionResults.Test", "test\MyTested.AspNetCore.Mvc.ViewActionResults.Test\MyTested.AspNetCore.Mvc.ViewActionResults.Test.xproj", "{0FE597F3-3495-440A-A16C-AC1F01CC7C89}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -264,6 +268,14 @@ Global
 		{56348217-F55C-4C61-8779-B94C009DC4BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56348217-F55C-4C61-8779-B94C009DC4BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56348217-F55C-4C61-8779-B94C009DC4BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9050F562-C77C-471E-8968-FAF2ED4E6F28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9050F562-C77C-471E-8968-FAF2ED4E6F28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9050F562-C77C-471E-8968-FAF2ED4E6F28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9050F562-C77C-471E-8968-FAF2ED4E6F28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FE597F3-3495-440A-A16C-AC1F01CC7C89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FE597F3-3495-440A-A16C-AC1F01CC7C89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FE597F3-3495-440A-A16C-AC1F01CC7C89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FE597F3-3495-440A-A16C-AC1F01CC7C89}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -311,5 +323,7 @@ Global
 		{41E51D79-AC4A-42A3-A55D-912DDB6F0FA9} = {D140FA14-A6C2-4279-8A41-35BC55279DA8}
 		{D9F6A7BB-6E8E-4983-8007-3BC0D23016D0} = {D140FA14-A6C2-4279-8A41-35BC55279DA8}
 		{56348217-F55C-4C61-8779-B94C009DC4BE} = {D140FA14-A6C2-4279-8A41-35BC55279DA8}
+		{9050F562-C77C-471E-8968-FAF2ED4E6F28} = {09353A03-2B0C-496B-8EB1-2CB6A22D758B}
+		{0FE597F3-3495-440A-A16C-AC1F01CC7C89} = {D140FA14-A6C2-4279-8A41-35BC55279DA8}
 	EndGlobalSection
 EndGlobal

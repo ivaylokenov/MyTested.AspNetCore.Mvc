@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Reflection;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
+    using Microsoft.AspNetCore.Mvc;
 
     public class ViewFeaturesControllerPropertyHelper : ControllerPropertyHelper
     {

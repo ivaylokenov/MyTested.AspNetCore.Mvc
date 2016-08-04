@@ -8,7 +8,7 @@
     {
         private readonly Type defaultTempDataServiceType = typeof(ITempDataProvider);
         private readonly Type defaultTempDataImplementationType = typeof(SessionStateTempDataProvider);
-
+        
         public long Priority => -1000;
 
         public Action<IServiceCollection> DefaultServiceRegistrationDelegate

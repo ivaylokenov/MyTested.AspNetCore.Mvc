@@ -1,6 +1,5 @@
 ﻿namespace MyTested.AspNetCore.Mvc
 {
-    using Internal.Caching;
     using Internal.Contracts;
     using Internal.Controllers;
     using Microsoft.AspNetCore.Mvc;
