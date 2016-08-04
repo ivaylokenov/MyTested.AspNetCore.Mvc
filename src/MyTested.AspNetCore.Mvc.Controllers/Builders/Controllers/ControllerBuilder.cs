@@ -38,7 +38,9 @@
 
             this.EnabledValidation = TestApplication.TestConfiguration.ModelStateValidation;
 
+#if NETSTANDARD1_6
             this.ValidateControllerType();
+#endif
         }
         
         private TController Controller

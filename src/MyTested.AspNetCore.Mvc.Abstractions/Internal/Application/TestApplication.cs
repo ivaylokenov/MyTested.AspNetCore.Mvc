@@ -166,10 +166,10 @@
             TestConfiguration.ApplicationName
                 ?? TestAssemblyName
                 ?? PlatformServices.Default.Application.ApplicationName;
-        
+
         public static void TryInitialize()
         {
-            lock(Sync)
+            lock (Sync)
             {
                 if (!initialiazed && TestConfiguration.AutomaticStartup)
                 {
@@ -231,7 +231,7 @@
         internal static Type TryFindDefaultStartupType()
         {
             var applicationAssembly = Assembly.Load(new AssemblyName(testAssemblyName));
-            
+
             var startupName = TestConfiguration.FullStartupName ?? $"{Environment.EnvironmentName}Startup";
 
             // check root of the test project
@@ -312,7 +312,7 @@
             serviceCollection.AddTransient<IStartupFilter, AutoRequestServicesStartupFilter>();
 
             serviceCollection.AddSingleton<ObjectPoolProvider, DefaultObjectPoolProvider>();
-            
+
             return serviceCollection;
         }
 
@@ -362,7 +362,7 @@
             }
 
             AdditionalServices?.Invoke(serviceCollection);
-            
+
             TryReplaceKnownServices(serviceCollection);
             PrepareRoutingServices(serviceCollection);
 
@@ -409,7 +409,7 @@
         private static void PrepareApplicationAndRouting(StartupMethods startupMethods)
         {
             var applicationBuilder = new MockedApplicationBuilder(serviceProvider);
-            
+
             startupMethods?.ConfigureDelegate?.Invoke(applicationBuilder);
 
             AdditionalApplicationConfiguration?.Invoke(applicationBuilder);
@@ -438,7 +438,7 @@
 
             router = routeBuilder.Build();
         }
-        
+
         private static void TryLockedInitialization()
         {
             if (!initialiazed)

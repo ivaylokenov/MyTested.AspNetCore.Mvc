@@ -27,6 +27,7 @@
             services.ReplaceSingleton<SignInManager<ApplicationUser>, MockedSignInManager>();
 
             // temporary workaround while DependencyContext issues are fixed for .NET 4.5.1
+            // controller type validation is also removed for .NET 4.5.1
 #if NET451
             var mvc = services.AddMvc();
             var applicationParts = mvc.PartManager.ApplicationParts;
@@ -35,11 +36,15 @@
 
             TestHelper.HttpFeatureRegistrationPlugins.Add(new SessionTestPlugin());
 
-            services.ReplaceDbContext();
-            services.ReplaceMemoryCache();
-            services.ReplaceSession();
-            services.ReplaceOptions();
-            services.ReplaceTempDataProvider();
+            services
+                .AddCoreTesting()
+                .AddControllersTesting()
+                .AddRoutingTesting()
+                .ReplaceDbContext()
+                .ReplaceMemoryCache()
+                .ReplaceSession()
+                .ReplaceOptions()
+                .ReplaceTempDataProvider();
 #endif
         }
     }
