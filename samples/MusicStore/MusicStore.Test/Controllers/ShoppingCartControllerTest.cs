@@ -52,7 +52,7 @@
                 .Controller<ShoppingCartController>()
                 .WithSession(session => session.WithEntry("Session", cartId))
                 .WithDbContext(db => db
-                    .WithEntities<MusicStoreContext>(entities => 
+                    .WithEntities(entities => 
                     {
                         var cartItems = CreateTestCartItems(
                             cartId,
@@ -82,7 +82,7 @@
                 .Controller<ShoppingCartController>()
                 .WithSession(session => session.WithEntry("Session", "CartId_A"))
                 .WithDbContext(db => db
-                    .WithEntities<MusicStoreContext>(entities => entities
+                    .WithEntities(entities => entities
                         .AddRange(CreateTestAlbums(itemPrice: 10))))
                 .Calling(c => c.AddToCart(albumId))
                 .ShouldReturn()
@@ -110,7 +110,7 @@
                 .Controller<ShoppingCartController>()
                 .WithSession(session => session.WithEntry("Session", cartId))
                 .WithDbContext(db => db
-                    .WithEntities<MusicStoreContext>(entities =>
+                    .WithEntities(entities =>
                     {
                         var cartItems = CreateTestCartItems(cartId, unitPrice, numberOfItem);
                         entities.AddRange(cartItems.Select(n => n.Album).Distinct());
