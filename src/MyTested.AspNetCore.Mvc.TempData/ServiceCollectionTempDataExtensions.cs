@@ -7,7 +7,7 @@
     /// <summary>
     /// Contains view features extension methods for <see cref="IServiceCollection"/>.
     /// </summary>
-    public static class ServiceCollectionViewFeaturesExtensions
+    public static class ServiceCollectionTempDataExtensions
     {
         /// <summary>
         /// Replaces the default <see cref="ITempDataProvider"/> with a mocked implementation.

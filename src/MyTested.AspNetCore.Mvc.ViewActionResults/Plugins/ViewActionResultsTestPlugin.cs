@@ -3,7 +3,7 @@
     using System;
     using Microsoft.Extensions.DependencyInjection;
 
-    public class ViewFeaturesTestPlugin : IDefaultRegistrationPlugin
+    public class ViewActionResultsTestPlugin : IDefaultRegistrationPlugin
     {
         public long Priority => -1000;
 

@@ -10,7 +10,7 @@
     /// <summary>
     /// Contains <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.TempDataDictionary"/> extension methods for <see cref="IControllerBuilder{TController}"/>.
     /// </summary>
-    public static class ControllerBuilderViewFeaturesExtensions
+    public static class ControllerBuilderTempDataExtensions
     {
         /// <summary>
         /// Sets initial values to the <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.TempDataDictionary"/> on the tested controller.

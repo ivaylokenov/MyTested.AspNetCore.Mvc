@@ -5,7 +5,6 @@
     using System.Linq;
     using System.Reflection;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
-    using Microsoft.AspNetCore.Mvc;
 
     public class ViewFeaturesControllerPropertyHelper : ControllerPropertyHelper
     {
@@ -13,7 +12,6 @@
             new ConcurrentDictionary<Type, ViewFeaturesControllerPropertyHelper>();
 
         private Func<object, ViewDataDictionary> viewDataGetter;
-        private Func<object, ITempDataDictionary> tempDataGetter;
 
         public ViewFeaturesControllerPropertyHelper(Type controllerType)
             : base(controllerType)
@@ -30,19 +28,6 @@
                 }
 
                 return this.viewDataGetter;
-            }
-        }
-
-        public Func<object, ITempDataDictionary> TempDataGetter
-        {
-            get
-            {
-                if (this.tempDataGetter == null)
-                {
-                    this.TryCreateTempDataGetterDelegate();
-                }
-
-                return this.tempDataGetter;
             }
         }
 
@@ -63,14 +48,6 @@
             this.ThrowNewInvalidOperationExceptionIfNull(viewDataProperty, nameof(ViewDataDictionary));
 
             this.viewDataGetter = MakeFastPropertyGetter<ViewDataDictionary>(viewDataProperty);
-        }
-
-        private void TryCreateTempDataGetterDelegate()
-        {
-            var tempDataProperty = this.Properties.FirstOrDefault(pr => typeof(ITempDataDictionary).GetTypeInfo().IsAssignableFrom(pr.PropertyType));
-            this.ThrowNewInvalidOperationExceptionIfNull(tempDataProperty, nameof(TempDataDictionary));
-
-            this.tempDataGetter = MakeFastPropertyGetter<ITempDataDictionary>(tempDataProperty);
         }
     }
 }

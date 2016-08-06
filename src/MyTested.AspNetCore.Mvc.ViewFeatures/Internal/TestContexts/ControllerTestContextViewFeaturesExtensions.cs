@@ -6,12 +6,6 @@
 
     public static class ControllerTestContextViewFeaturesExtensions
     {
-        public static ITempDataDictionary GetTempData(this ComponentTestContext testContext)
-            => testContext.ComponentAs<Controller>()?.TempData
-            ?? ViewFeaturesControllerPropertyHelper
-                .GetViewFeatureProperties(testContext.Component.GetType())
-                .TempDataGetter(testContext.Component);
-
         public static ViewDataDictionary GetViewData(this ComponentTestContext testContext)
             => testContext.ComponentAs<Controller>()?.ViewData
             ?? ViewFeaturesControllerPropertyHelper

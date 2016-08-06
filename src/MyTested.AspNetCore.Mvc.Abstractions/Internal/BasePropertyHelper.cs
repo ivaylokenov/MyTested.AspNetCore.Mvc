@@ -1,0 +1,73 @@
+﻿namespace MyTested.AspNetCore.Mvc.Internal
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using Utilities;
+
+    public abstract class BasePropertyHelper
+    {
+        private const string InvalidDelegateErrorMessage = "The {0} property cannot be activated for value of {1} type.";
+
+        private static readonly MethodInfo CallPropertyGetterOpenGenericMethod =
+            typeof(BasePropertyHelper).GetTypeInfo().GetDeclaredMethod(nameof(CallPropertyGetter));
+        
+        protected BasePropertyHelper(Type type)
+        {
+            this.Type = type;
+            this.Properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+        }
+
+        protected Type Type { get; private set; }
+
+        protected IEnumerable<PropertyInfo> Properties { get; private set; }
+        
+        protected static Func<object, TResult> MakeFastPropertyGetter<TResult>(PropertyInfo propertyInfo)
+        {
+            try
+            {
+                var propertyGetMethod = propertyInfo.GetMethod;
+
+                var typeInput = propertyGetMethod.DeclaringType;
+                var typeOutput = propertyGetMethod.ReturnType;
+
+                var delegateType = typeof(Func<,>).MakeGenericType(typeInput, typeOutput);
+                var propertyGetterDelegate = propertyGetMethod.CreateDelegate(delegateType);
+
+                var wrapperDelegateMethod = CallPropertyGetterOpenGenericMethod.MakeGenericMethod(typeInput, typeOutput);
+                var accessorDelegate = wrapperDelegateMethod.CreateDelegate(
+                    typeof(Func<object, TResult>),
+                    propertyGetterDelegate);
+
+                return (Func<object, TResult>)accessorDelegate;
+            }
+            catch
+            {
+                throw new InvalidOperationException(string.Format(InvalidDelegateErrorMessage, propertyInfo.Name, typeof(TResult)));
+            }
+        }
+
+        protected PropertyInfo FindPropertyWithAttribute<TAttribute>()
+            where TAttribute : Attribute
+        {
+            return this.Properties.FirstOrDefault(pr => pr.GetCustomAttribute(typeof(TAttribute), true) != null);
+        }
+
+        protected void ThrowNewInvalidOperationExceptionIfNull(object value, string propertyName)
+        {
+            if (value == null)
+            {
+                throw new InvalidOperationException($"{propertyName} could not be found on the provided {this.Type.ToFriendlyTypeName()}. The property should be specified manually by providing controller instance or using the specified helper methods.");
+            }
+        }
+
+        // Called via reflection
+        private static TValue CallPropertyGetter<TDeclaringType, TValue>(
+            Func<TDeclaringType, TValue> getter,
+            object target)
+        {
+            return getter((TDeclaringType)target);
+        }
+    }
+}

@@ -1,22 +1,23 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.InternalTests.ControllersTests
 {
-    using System;
     using Internal.Controllers;
     using Internal.Services;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.DependencyInjection.Extensions;
     using Setups;
     using Setups.Controllers;
+    using System;
     using Xunit;
 
-    public class ViewFeaturesControllerPropertyHelperTests
+    public class TempDataControllerPropertyHelperTests
     {
         [Fact]
         public void GetPropertiesShouldNotThrowExceptionForNormalController()
         {
             MyApplication.IsUsingDefaultConfiguration();
 
-            var helper = ViewFeaturesControllerPropertyHelper.GetViewFeatureProperties<MvcController>();
+            var helper = TempDataControllerPropertyHelper.GetTempDataProperties<MvcController>();
 
             var controller = new MvcController();
             var controllerContext = new ControllerContext
@@ -44,10 +45,11 @@
                 },
                 "ActionContext could not be found on the provided MvcController. The property should be specified manually by providing controller instance or using the specified helper methods.");
 
-            var gotViewData = helper.ViewDataGetter(controller);
+            var tempData = controller.TempData;
+            var gotTempData = helper.TempDataGetter(controller);
 
-            Assert.NotNull(gotViewData);
-            Assert.Same(gotViewData, controller.ViewData);
+            Assert.NotNull(gotTempData);
+            Assert.Same(gotTempData, controller.TempData);
         }
 
         [Fact]
@@ -57,10 +59,10 @@
                 .IsUsingDefaultConfiguration()
                 .WithServices(services =>
                 {
-                    services.AddHttpContextAccessor();
+                    services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
                 });
 
-            var helper = ViewFeaturesControllerPropertyHelper.GetViewFeatureProperties<FullPocoController>();
+            var helper = TempDataControllerPropertyHelper.GetTempDataProperties<FullPocoController>();
 
             var controllerContext = new ControllerContext();
             var controller = new FullPocoController
@@ -88,12 +90,25 @@
             Assert.NotNull(gotActionContext);
             Assert.Same(gotActionContext, controller.CustomActionContext);
 
-            var gotViewData = helper.ViewDataGetter(controller);
+            var gotTempData = helper.TempDataGetter(controller);
 
-            Assert.NotNull(gotViewData);
-            Assert.Same(gotViewData, controller.CustomViewData);
-            
+            Assert.NotNull(gotTempData);
+            Assert.Same(gotTempData, controller.CustomTempData);
+
             MyApplication.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void GetPropertiesShouldNotThrowExceptionForPrivateProperties()
+        {
+            MyApplication.IsUsingDefaultConfiguration();
+
+            var helper = TempDataControllerPropertyHelper.GetTempDataProperties<PrivatePocoController>();
+
+            var controller = new PrivatePocoController(TestServiceProvider.Global);
+
+            var gotTempData = helper.TempDataGetter(controller);
+            Assert.NotNull(gotTempData);
         }
     }
 }
