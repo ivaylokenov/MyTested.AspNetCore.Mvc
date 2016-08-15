@@ -4,7 +4,8 @@
     "keyFile": "../../tools/Key.snk",
     "copyToOutput": {
       "include": [
-        "config.json"
+        "config.json",
+        "testconfig.json"
       ]
     }
   },

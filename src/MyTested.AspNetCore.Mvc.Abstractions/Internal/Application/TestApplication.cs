@@ -175,11 +175,13 @@
                 {
                     var defaultStartupType = TryFindDefaultStartupType();
 
-                    if (defaultStartupType != null)
+                    if (defaultStartupType == null)
                     {
-                        startupType = defaultStartupType;
-                        Initialize();
+                        throw new InvalidOperationException($"{Environment.EnvironmentName}Startup class could not be found at the root of the test project. Either add it or set 'AutomaticStartup' in the 'testconfig.json' file to 'false'.");
                     }
+
+                    startupType = defaultStartupType;
+                    Initialize();
                 }
             }
         }
