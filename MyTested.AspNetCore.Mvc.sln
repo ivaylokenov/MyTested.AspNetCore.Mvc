@@ -106,6 +106,8 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MyTested.AspNetCore.Mvc.Tem
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MyTested.AspNetCore.Mvc.TempData.Test", "test\MyTested.AspNetCore.Mvc.TempData.Test\MyTested.AspNetCore.Mvc.TempData.Test.xproj", "{DE25BE38-9AF4-4BB4-A12A-B2FB1D5D8C75}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MyTested.AspNetCore.Mvc.ViewData", "src\MyTested.AspNetCore.Mvc.ViewData\MyTested.AspNetCore.Mvc.ViewData.xproj", "{86D4B1F6-3ACA-415E-A3C5-1DF3648F1EDC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -288,6 +290,10 @@ Global
 		{DE25BE38-9AF4-4BB4-A12A-B2FB1D5D8C75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE25BE38-9AF4-4BB4-A12A-B2FB1D5D8C75}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE25BE38-9AF4-4BB4-A12A-B2FB1D5D8C75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86D4B1F6-3ACA-415E-A3C5-1DF3648F1EDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86D4B1F6-3ACA-415E-A3C5-1DF3648F1EDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86D4B1F6-3ACA-415E-A3C5-1DF3648F1EDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86D4B1F6-3ACA-415E-A3C5-1DF3648F1EDC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -339,5 +345,6 @@ Global
 		{0FE597F3-3495-440A-A16C-AC1F01CC7C89} = {D140FA14-A6C2-4279-8A41-35BC55279DA8}
 		{64DB9A46-8DC1-4DE6-99EB-939A015DA2AD} = {09353A03-2B0C-496B-8EB1-2CB6A22D758B}
 		{DE25BE38-9AF4-4BB4-A12A-B2FB1D5D8C75} = {D140FA14-A6C2-4279-8A41-35BC55279DA8}
+		{86D4B1F6-3ACA-415E-A3C5-1DF3648F1EDC} = {09353A03-2B0C-496B-8EB1-2CB6A22D758B}
 	EndGlobalSection
 EndGlobal

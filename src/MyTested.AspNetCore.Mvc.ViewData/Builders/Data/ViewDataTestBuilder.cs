@@ -11,13 +11,13 @@
     {
         internal const string ViewDataName = "view data";
 
-        private readonly ControllerTestContext testContext;
+        private readonly ComponentTestContext testContext;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ViewDataTestBuilder"/> class.
         /// </summary>
-        /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
-        public ViewDataTestBuilder(ControllerTestContext testContext)
+        /// <param name="testContext"><see cref="ComponentTestContext"/> containing data about the currently executed assertion chain.</param>
+        public ViewDataTestBuilder(ComponentTestContext testContext)
             : base(testContext, ViewDataName)
         {
             this.testContext = testContext;

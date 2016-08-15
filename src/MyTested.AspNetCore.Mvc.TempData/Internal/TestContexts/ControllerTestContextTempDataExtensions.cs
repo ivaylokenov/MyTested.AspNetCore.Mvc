@@ -6,7 +6,7 @@
 
     public static class ControllerTestContextTempDataExtensions
     {
-        public static ITempDataDictionary GetTempData(this ComponentTestContext testContext)
+        public static ITempDataDictionary GetTempData(this ControllerTestContext testContext)
             => testContext.ComponentAs<Controller>()?.TempData
             ?? TempDataControllerPropertyHelper
                 .GetTempDataProperties(testContext.Component.GetType())

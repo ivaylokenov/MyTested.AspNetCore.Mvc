@@ -5,19 +5,19 @@
     using Internal.TestContexts;
 
     /// <summary>
-    /// Used for testing <see cref="Microsoft.AspNetCore.Mvc.Controller.ViewBag"/>.
+    /// Used for testing dynamic view bag.
     /// </summary>
     public class ViewBagTestBuilder : BaseDataProviderWithStringKeyTestBuilder<IAndViewBagTestBuilder>, IAndViewBagTestBuilder
     {
         internal const string ViewBagName = "view bag";
 
-        private readonly ControllerTestContext testContext;
+        private readonly ComponentTestContext testContext;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ViewBagTestBuilder"/> class.
         /// </summary>
-        /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
-        public ViewBagTestBuilder(ControllerTestContext testContext)
+        /// <param name="testContext"><see cref="ComponentTestContext"/> containing data about the currently executed assertion chain.</param>
+        public ViewBagTestBuilder(ComponentTestContext testContext)
             : base(testContext, ViewBagName)
         {
             this.testContext = testContext;

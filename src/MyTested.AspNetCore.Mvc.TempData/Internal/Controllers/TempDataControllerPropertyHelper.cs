@@ -8,8 +8,10 @@
 
     public class TempDataControllerPropertyHelper : ControllerPropertyHelper
     {
-        private static readonly ConcurrentDictionary<Type, TempDataControllerPropertyHelper> ControllerPropertiesCache =
+        private static readonly ConcurrentDictionary<Type, TempDataControllerPropertyHelper> TempDataControllerPropertiesCache =
             new ConcurrentDictionary<Type, TempDataControllerPropertyHelper>();
+
+        private static readonly TypeInfo TypeOfTempDataDictionary = typeof(ITempDataDictionary).GetTypeInfo();
 
         private Func<object, ITempDataDictionary> tempDataGetter;
 
@@ -39,12 +41,12 @@
 
         public static TempDataControllerPropertyHelper GetTempDataProperties(Type type)
         {
-            return ControllerPropertiesCache.GetOrAdd(type, _ => new TempDataControllerPropertyHelper(type));
+            return TempDataControllerPropertiesCache.GetOrAdd(type, _ => new TempDataControllerPropertyHelper(type));
         }
 
         private void TryCreateTempDataGetterDelegate()
         {
-            var tempDataProperty = this.Properties.FirstOrDefault(pr => typeof(ITempDataDictionary).GetTypeInfo().IsAssignableFrom(pr.PropertyType));
+            var tempDataProperty = this.Properties.FirstOrDefault(pr => TypeOfTempDataDictionary.IsAssignableFrom(pr.PropertyType));
             this.ThrowNewInvalidOperationExceptionIfNull(tempDataProperty, nameof(TempDataDictionary));
 
             this.tempDataGetter = MakeFastPropertyGetter<ITempDataDictionary>(tempDataProperty);
