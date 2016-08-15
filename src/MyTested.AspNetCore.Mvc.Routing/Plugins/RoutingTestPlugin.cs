@@ -5,7 +5,7 @@
 
     public class RoutingTestPlugin : IDefaultRegistrationPlugin, IRoutingServiceRegistrationPlugin
     {
-        public long Priority => -9000;
+        public long Priority => -8000;
 
         public Action<IServiceCollection> DefaultServiceRegistrationDelegate =>
             serviceCollection => serviceCollection

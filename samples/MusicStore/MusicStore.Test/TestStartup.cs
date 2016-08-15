@@ -37,14 +37,8 @@
             TestHelper.HttpFeatureRegistrationPlugins.Add(new SessionTestPlugin());
 
             services
-                .AddCoreTesting()
-                .AddControllersTesting()
-                .AddRoutingTesting()
-                .ReplaceDbContext()
-                .ReplaceMemoryCache()
-                .ReplaceSession()
-                .ReplaceOptions()
-                .ReplaceTempDataProvider();
+                .AddMvcTesting()
+                .AddRoutingTesting();
 #endif
         }
     }

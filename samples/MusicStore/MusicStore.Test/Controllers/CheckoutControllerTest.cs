@@ -67,7 +67,7 @@
                 .WithAuthenticatedUser()
                 .WithRouteData()
                 .WithDbContext(db => db
-                    .WithEntities<MusicStoreContext>(entities =>
+                    .WithEntities(entities =>
                     {
                         var cartItems = CreateTestCartItems(
                             cartId,
@@ -121,7 +121,7 @@
                 .Controller<CheckoutController>()
                 .WithAuthenticatedUser(user => user.WithUsername("TestUser"))
                 .WithDbContext(dbContext =>
-                    dbContext.WithSet<MusicStoreContext, Order>(o => o.Add(new Order
+                    dbContext.WithSet<Order>(o => o.Add(new Order
                     {
                         OrderId = 1,
                         Username = "TestUser"
@@ -138,7 +138,7 @@
                 .Controller<CheckoutController>()
                 .WithAuthenticatedUser(user => user.WithUsername("TestUser"))
                 .WithDbContext(dbContext =>
-                    dbContext.WithSet<MusicStoreContext, Order>(o => o.Add(new Order
+                    dbContext.WithSet<Order>(o => o.Add(new Order
                     {
                         OrderId = 1,
                         Username = "AnotherUser"
