@@ -9,13 +9,6 @@
     public interface IMemoryCacheEntryTestBuilder
     {
         /// <summary>
-        /// Sets the key of the built <see cref="IMemoryCache"/> entry.
-        /// </summary>
-        /// <param name="key">Cache entry key to set.</param>
-        /// <returns>The same <see cref="IAndMemoryCacheEntryTestBuilder"/>.</returns>
-        IAndMemoryCacheEntryTestBuilder WithKey(object key);
-
-        /// <summary>
         /// Sets the value of the built <see cref="IMemoryCache"/> entry.
         /// </summary>
         /// <param name="value">Cache entry value to set.</param>

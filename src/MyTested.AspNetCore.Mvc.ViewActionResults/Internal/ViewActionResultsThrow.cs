@@ -1,11 +1,11 @@
-﻿namespace MyTested.AspNetCore.Mvc
+﻿namespace MyTested.AspNetCore.Mvc.Internal
 {
     using Builders.Base;
     using Exceptions;
     using Internal;
     using Utilities.Extensions;
 
-    public static class ViewFeaturesThrow
+    public static class ViewActionResultsThrow
     {
         public static void NewViewResultAssertionException(
                BaseTestBuilderWithInvokedAction baseTestBuilderWithInvokedAction,

@@ -4,15 +4,12 @@
     using System.Collections.Generic;
     using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.Primitives;
-    using Utilities.Validators;
 
     public class MockedCacheEntry : ICacheEntry
     {
         private readonly IList<IChangeToken> expirationTokens;
         private readonly IList<PostEvictionCallbackRegistration> postEvictionCallbacks;
-
-        private object key;
-
+        
         public MockedCacheEntry()
         {
             this.expirationTokens = new List<IChangeToken>();
@@ -25,19 +22,7 @@
             this.Key = key;
         }
 
-        public object Key
-        {
-            get
-            {
-                return this.key;
-            }
-
-            internal set
-            {
-                CommonValidator.CheckForNullReference(value, nameof(this.key));
-                this.key = value;
-            }
-        }
+        public object Key { get; internal set; }
 
         public DateTimeOffset? AbsoluteExpiration { get; set; }
 

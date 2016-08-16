@@ -98,12 +98,12 @@
                 MyController<MemoryCacheController>
                     .Instance()
                     .WithMemoryCache(memoryCache => memoryCache
-                        .WithEntry(entry => entry.WithValue("WithoutKey")))
+                        .WithEntry(entry => entry.WithKey(null)))
                     .Calling(c => c.FullMemoryCacheAction(From.Services<IMemoryCache>()))
                     .ShouldReturn()
                     .Ok();
             },
-            "Cache entry key must be provided. 'WithKey' method must be called on the memory cache entry builder in order to run this test case successfully.");
+            "Cache entry key must be provided. 'WithKey' method must be called with а non-null value.");
         }
 
         [Fact]

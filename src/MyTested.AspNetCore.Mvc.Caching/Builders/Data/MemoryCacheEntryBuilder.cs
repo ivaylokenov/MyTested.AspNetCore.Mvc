@@ -8,7 +8,7 @@
     /// <summary>
     /// Used for building mocked <see cref="IMemoryCache"/> entry.
     /// </summary>
-    public class MemoryCacheEntryBuilder : IAndMemoryCacheEntryTestBuilder
+    public class MemoryCacheEntryBuilder : IMemoryCacheEntryKeyTestBuilder, IAndMemoryCacheEntryTestBuilder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MemoryCacheEntryBuilder"/> class.
@@ -73,7 +73,7 @@
         {
             if (this.MemoryCacheEntry.Key == null)
             {
-                throw new InvalidOperationException("Cache entry key must be provided. 'WithKey' method must be called on the memory cache entry builder in order to run this test case successfully.");
+                throw new InvalidOperationException("Cache entry key must be provided. 'WithKey' method must be called with а non-null value.");
             }
             
             return this.MemoryCacheEntry;

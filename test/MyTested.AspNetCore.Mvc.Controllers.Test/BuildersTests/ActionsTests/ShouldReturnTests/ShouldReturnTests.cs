@@ -385,7 +385,7 @@
                         .ResultOfType<ICollection<ResponseModel>>()
                         .Passing(c => c.Count == 1);
                 }, 
-                "When calling GenericActionWithCollection action in MvcController expected response model ICollection<ResponseModel> to pass the given condition, but it failed.");
+                "When calling GenericActionWithCollection action in MvcController expected response model ICollection<ResponseModel> to pass the given predicate, but it failed.");
         }
 
         [Fact]

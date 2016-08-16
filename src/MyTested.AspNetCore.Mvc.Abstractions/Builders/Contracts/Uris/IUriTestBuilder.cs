@@ -1,7 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Uris
 {
     /// <summary>
-    /// Used for testing <see cref="System.Uri"/> location..
+    /// Used for testing <see cref="System.Uri"/> location.
     /// </summary>
     public interface IUriTestBuilder
     {

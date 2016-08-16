@@ -1,8 +1,11 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Data
 {
+    using System;
     using System.Collections.Generic;
+    using Contracts.Data;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Routing;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Base class for all test builders with data provider containing string as key.
@@ -59,6 +62,23 @@
         public TDataProviderTestBuilder ContainingEntry(string key, object value)
         {
             this.ValidateContainingEntry(key, value);
+            return this.DataProviderTestBuilder;
+        }
+
+        /// <inheritdoc />
+        public TDataProviderTestBuilder ContainingEntry(Action<IDataProviderEntryKeyTestBuilder> dataProviderEntryTestBuilder)
+        {
+            var newDataProviderEntryBuilder = new DataProviderEntryTestBuilder(this.TestContext, this.DataProviderName);
+            dataProviderEntryTestBuilder(newDataProviderEntryBuilder);
+
+            var key = newDataProviderEntryBuilder.GetDataProviderEntryKey();
+            this.ContainingEntryWithKey(key);
+
+            var actualEntry = this.DataProvider[key];
+
+            var validations = newDataProviderEntryBuilder.GetDataProviderEntryValidations();
+            validations.ForEach(v => v(actualEntry));
+            
             return this.DataProviderTestBuilder;
         }
 

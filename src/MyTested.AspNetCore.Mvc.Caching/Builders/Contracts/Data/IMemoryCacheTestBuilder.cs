@@ -61,7 +61,7 @@
         /// </summary>
         /// <param name="memoryCacheEntryTestBuilder">Builder for setting specific cache entry tests.</param>
         /// <returns>The same <see cref="IAndMemoryCacheBuilder"/>.</returns>
-        IAndMemoryCacheTestBuilder ContainingEntry(Action<IMemoryCacheEntryTestBuilder> memoryCacheEntryTestBuilder);
+        IAndMemoryCacheTestBuilder ContainingEntry(Action<IMemoryCacheEntryKeyTestBuilder> memoryCacheEntryTestBuilder);
 
         /// <summary>
         /// Tests whether the <see cref="IMemoryCache"/> contains the provided entries. 

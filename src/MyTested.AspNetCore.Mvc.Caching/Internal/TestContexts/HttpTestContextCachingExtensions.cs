@@ -1,7 +1,6 @@
-﻿namespace MyTested.AspNetCore.Mvc
+﻿namespace MyTested.AspNetCore.Mvc.Internal.TestContexts
 {
-    using Internal.Contracts;
-    using Internal.TestContexts;
+    using Contracts;
     using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.DependencyInjection;
     using Utilities.Extensions;

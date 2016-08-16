@@ -31,7 +31,7 @@
         /// Gets or sets the data provider name.
         /// </summary>
         /// <value>Name of the data provider as string.</value>
-        protected string DataProviderName { get; set; }
+        protected string DataProviderName { get; private set; }
 
         /// <summary>
         /// Gets the data provider as <see cref="IDictionary{TKey,TValue}"/>.
@@ -50,8 +50,7 @@
                 return this.dataProvider;
             }
         }
-
-
+        
         /// <summary>
         /// When overridden in derived class provides a way to built the data provider as <see cref="IDictionary{TKey,TValue}"/>.
         /// </summary>
@@ -155,12 +154,12 @@
         protected void ThrowNewDataProviderAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new DataProviderAssertionException(string.Format(
-                    "When calling {0} action in {1} expected {2} {3}, but {4}.",
-                    this.TestContext.MethodName,
-                    this.TestContext.Component.GetName(),
-                    propertyName,
-                    expectedValue,
-                    actualValue));
+                "When calling {0} action in {1} expected {2} {3}, but {4}.",
+                this.TestContext.MethodName,
+                this.TestContext.Component.GetName(),
+                propertyName,
+                expectedValue,
+                actualValue));
         }
     }
 }

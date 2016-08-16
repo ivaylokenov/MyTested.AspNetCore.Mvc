@@ -128,7 +128,7 @@
         }
 
         /// <inheritdoc />
-        public IAndMemoryCacheTestBuilder ContainingEntry(Action<IMemoryCacheEntryTestBuilder> memoryCacheEntryTestBuilder)
+        public IAndMemoryCacheTestBuilder ContainingEntry(Action<IMemoryCacheEntryKeyTestBuilder> memoryCacheEntryTestBuilder)
         {
             var mockedMemoryCache = this.GetMockedMemoryCache();
 
