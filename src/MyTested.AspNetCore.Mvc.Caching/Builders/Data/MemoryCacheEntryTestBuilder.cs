@@ -31,8 +31,14 @@
 
         internal ComponentTestContext TestContext { get; private set; }
 
+        public new IAndMemoryCacheEntryTestBuilder WithKey(object key)
+        {
+            base.WithKey(key);
+            return this;
+        }
+
         /// <inheritdoc />
-        public override IAndMemoryCacheEntryTestBuilder WithValue(object value)
+        public new IAndMemoryCacheEntryTestBuilder WithValue(object value)
         {
             this.validations.Add((expected, actual) =>
             {
@@ -44,7 +50,8 @@
                 }
             });
 
-            return base.WithValue(value);
+            base.WithValue(value);
+            return this;
         }
         
         /// <inheritdoc />
@@ -67,7 +74,7 @@
         }
 
         /// <inheritdoc />
-        public override IAndMemoryCacheEntryTestBuilder WithAbsoluteExpiration(DateTimeOffset? absoluteExpiration)
+        public new IAndMemoryCacheEntryTestBuilder WithAbsoluteExpiration(DateTimeOffset? absoluteExpiration)
         {
             this.validations.Add((expected, actual) =>
             {
@@ -82,11 +89,12 @@
                 }
             });
 
-            return base.WithAbsoluteExpiration(absoluteExpiration);
+            base.WithAbsoluteExpiration(absoluteExpiration);
+            return this;
         }
 
         /// <inheritdoc />
-        public override IAndMemoryCacheEntryTestBuilder WithAbsoluteExpirationRelativeToNow(TimeSpan? absoluteExpirationRelativeToNow)
+        public new IAndMemoryCacheEntryTestBuilder WithAbsoluteExpirationRelativeToNow(TimeSpan? absoluteExpirationRelativeToNow)
         {
             this.validations.Add((expected, actual) =>
             {
@@ -101,11 +109,12 @@
                 }
             });
 
-            return base.WithAbsoluteExpirationRelativeToNow(absoluteExpirationRelativeToNow);
+            base.WithAbsoluteExpirationRelativeToNow(absoluteExpirationRelativeToNow);
+            return this;
         }
 
         /// <inheritdoc />
-        public override IAndMemoryCacheEntryTestBuilder WithPriority(CacheItemPriority priority)
+        public new IAndMemoryCacheEntryTestBuilder WithPriority(CacheItemPriority priority)
         {
             this.validations.Add((expected, actual) =>
             {
@@ -120,11 +129,12 @@
                 }
             });
 
-            return base.WithPriority(priority);
+            base.WithPriority(priority);
+            return this;
         }
 
         /// <inheritdoc />
-        public override IAndMemoryCacheEntryTestBuilder WithSlidingExpiration(TimeSpan? slidingExpiration)
+        public new IAndMemoryCacheEntryTestBuilder WithSlidingExpiration(TimeSpan? slidingExpiration)
         {
             this.validations.Add((expected, actual) =>
             {
@@ -139,8 +149,12 @@
                 }
             });
 
-            return base.WithSlidingExpiration(slidingExpiration);
+            base.WithSlidingExpiration(slidingExpiration);
+            return this;
         }
+
+        /// <inheritdoc />
+        public new IMemoryCacheEntryTestBuilder AndAlso() => this;
 
         internal ICollection<Action<ICacheEntry, ICacheEntry>> GetMockedMemoryCacheEntryValidations()
             => this.validations;

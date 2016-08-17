@@ -31,7 +31,7 @@
         /// </summary>
         /// <param name="memoryCacheEntryBuilder">Builder for creating cache entry.</param>
         /// <returns>The same <see cref="IAndMemoryCacheBuilder"/>.</returns>
-        IAndMemoryCacheBuilder WithEntry(Action<IMemoryCacheEntryKeyTestBuilder> memoryCacheEntryBuilder);
+        IAndMemoryCacheBuilder WithEntry(Action<IMemoryCacheEntryKeyBuilder> memoryCacheEntryBuilder);
 
         /// <summary>
         /// Adds cache entries to the mocked <see cref="IMemoryCache"/>.
