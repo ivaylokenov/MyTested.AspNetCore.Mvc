@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Data
 {
+    using System;
     using System.Collections.Generic;
 
     /// <summary>
@@ -44,6 +45,13 @@
         /// <param name="value">Value of the view bag entry.</param>
         /// <returns>The same <see cref="IAndViewBagTestBuilder"/>.</returns>
         IAndViewBagTestBuilder ContainingEntry(string key, object value);
+
+        /// <summary>
+        /// Tests whether the dynamic view bag contains specific entry by using a builder. 
+        /// </summary>
+        /// <param name="viewBagEntryTestBuilder">Builder for setting specific dynamic view bag entry tests.</param>
+        /// <returns>The same <see cref="IAndViewBagTestBuilder"/>.</returns>
+        IAndViewBagTestBuilder ContainingEntry(Action<IDataProviderEntryKeyTestBuilder> viewBagEntryTestBuilder);
 
         /// <summary>
         /// Tests whether the dynamic view bag contains the provided entries. 

@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Data
 {
+    using System;
     using System.Collections.Generic;
 
     /// <summary>
@@ -44,6 +45,13 @@
         /// <param name="value">Value of the temp data entry.</param>
         /// <returns>The same <see cref="IAndTempDataTestBuilder"/>.</returns>
         IAndTempDataTestBuilder ContainingEntry(string key, object value);
+
+        /// <summary>
+        /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ITempDataDictionary"/> contains specific entry by using a builder. 
+        /// </summary>
+        /// <param name="tempDataEntryTestBuilder">Builder for setting specific <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ITempDataDictionary"/> entry tests.</param>
+        /// <returns>The same <see cref="IAndTempDataTestBuilder"/>.</returns>
+        IAndTempDataTestBuilder ContainingEntry(Action<IDataProviderEntryKeyTestBuilder> tempDataEntryTestBuilder);
 
         /// <summary>
         /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ITempDataDictionary"/> contains the provided entries. 

@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Data
 {
+    using System;
     using System.Collections.Generic;
 
     /// <summary>
@@ -44,6 +45,13 @@
         /// <param name="value">Value of the view data entry.</param>
         /// <returns>The same <see cref="IAndViewDataTestBuilder"/>.</returns>
         IAndViewDataTestBuilder ContainingEntry(string key, object value);
+
+        /// <summary>
+        /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary"/> contains specific entry by using a builder. 
+        /// </summary>
+        /// <param name="viewDataEntryTestBuilder">Builder for setting specific <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary"/> entry tests.</param>
+        /// <returns>The same <see cref="IAndViewDataTestBuilder"/>.</returns>
+        IAndViewDataTestBuilder ContainingEntry(Action<IDataProviderEntryKeyTestBuilder> viewDataEntryTestBuilder);
 
         /// <summary>
         /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary"/> contains the provided entries. 
