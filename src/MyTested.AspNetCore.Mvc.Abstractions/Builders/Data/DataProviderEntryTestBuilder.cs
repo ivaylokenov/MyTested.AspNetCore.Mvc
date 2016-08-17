@@ -61,11 +61,11 @@
         }
 
         /// <inheritdoc />
-        public IAndDataProviderEntryDetailsTestBuilder<TEntry> WithValueOfType<TEntry>()
+        public IAndDataProviderEntryDetailsTestBuilder<TValue> WithValueOfType<TValue>()
         {
             this.validations.Add((actual) =>
             {
-                var expectedType = typeof(TEntry);
+                var expectedType = typeof(TValue);
                 var actualType = actual.GetType();
 
                 if (Reflection.AreDifferentTypes(expectedType, actualType))
@@ -76,7 +76,7 @@
                 }
             });
 
-            return new DataProviderEntryDetailsTestBuilder<TEntry>(this);
+            return new DataProviderEntryDetailsTestBuilder<TValue>(this);
         }
 
         /// <inheritdoc />

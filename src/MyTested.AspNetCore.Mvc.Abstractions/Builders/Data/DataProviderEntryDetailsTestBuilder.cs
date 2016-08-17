@@ -8,13 +8,13 @@
     /// <summary>
     /// Used for testing data provider entry details.
     /// </summary>
-    /// <typeparam name="TEntry">Type of data provider entry value.</typeparam>
-    public class DataProviderEntryDetailsTestBuilder<TEntry> : BaseTestBuilderWithComponent, IAndDataProviderEntryDetailsTestBuilder<TEntry>
+    /// <typeparam name="TValue">Type of data provider entry value.</typeparam>
+    public class DataProviderEntryDetailsTestBuilder<TValue> : BaseTestBuilderWithComponent, IAndDataProviderEntryDetailsTestBuilder<TValue>
     {
         private readonly DataProviderEntryTestBuilder dataProviderEntryTestBuilder;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DataProviderEntryDetailsTestBuilder{TEntry}"/> class.
+        /// Initializes a new instance of the <see cref="DataProviderEntryDetailsTestBuilder{TValue}"/> class.
         /// </summary>
         /// <param name="dataProviderEntryTestBuilder">Test builder of <see cref="DataProviderEntryTestBuilder"/> type.</param>
         public DataProviderEntryDetailsTestBuilder(DataProviderEntryTestBuilder dataProviderEntryTestBuilder)
@@ -25,23 +25,23 @@
         }
 
         /// <inheritdoc />
-        public IAndDataProviderEntryDetailsTestBuilder<TEntry> Passing(Action<TEntry> assertions)
+        public IAndDataProviderEntryDetailsTestBuilder<TValue> Passing(Action<TValue> assertions)
         {
             this.dataProviderEntryTestBuilder
                 .GetDataProviderEntryValidations()
-                .Add(actual => assertions((TEntry)actual));
+                .Add(actual => assertions((TValue)actual));
 
             return this;
         }
 
         /// <inheritdoc />
-        public IAndDataProviderEntryDetailsTestBuilder<TEntry> Passing(Func<TEntry, bool> predicate)
+        public IAndDataProviderEntryDetailsTestBuilder<TValue> Passing(Func<TValue, bool> predicate)
         {
             this.dataProviderEntryTestBuilder
                 .GetDataProviderEntryValidations()
                 .Add(actual =>
                 {
-                    if (!predicate((TEntry)actual))
+                    if (!predicate((TValue)actual))
                     {
                         var entryKey = this.dataProviderEntryTestBuilder.GetDataProviderEntryKey();
 
@@ -55,6 +55,6 @@
         }
 
         /// <inheritdoc />
-        public IDataProviderEntryDetailsTestBuilder<TEntry> AndAlso() => this;
+        public IDataProviderEntryDetailsTestBuilder<TValue> AndAlso() => this;
     }
 }

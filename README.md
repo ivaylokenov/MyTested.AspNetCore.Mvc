@@ -169,7 +169,9 @@ MyMvc
 	.MemoryCache(cache => cache
 		.ContainingEntry(entry => entry
 			.WithKey("CacheEntry")
-			.WithSlidingExpiration(TimeSpan.FromMinutes(10))))
+			.WithSlidingExpiration(TimeSpan.FromMinutes(10))
+			.WithValueOfType<CachedModel>()
+			.Passing(a => a.Id == 1)))
 	.AndAlso()
 	.ShouldReturn()
 	.View()

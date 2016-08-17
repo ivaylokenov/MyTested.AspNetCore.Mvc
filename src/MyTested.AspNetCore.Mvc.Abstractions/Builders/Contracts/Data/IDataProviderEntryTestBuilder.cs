@@ -15,8 +15,8 @@
         /// <summary>
         /// Tests whether the value of the built data provider entry is of the same type as the provided one.
         /// </summary>
-        /// <typeparam name="TEntry">Type of the data provider entry.</typeparam>
+        /// <typeparam name="TValue">Type of the data provider entry.</typeparam>
         /// <returns>The same <see cref="IAndDataProviderEntryTestBuilder"/>.</returns>
-        IAndDataProviderEntryDetailsTestBuilder<TEntry> WithValueOfType<TEntry>();
+        IAndDataProviderEntryDetailsTestBuilder<TValue> WithValueOfType<TValue>();
     }
 }

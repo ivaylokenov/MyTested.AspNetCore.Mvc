@@ -55,11 +55,11 @@
         }
         
         /// <inheritdoc />
-        public IAndMemoryCacheEntryDetailsTestBuilder<TEntry> WithValueOfType<TEntry>()
+        public IMemoryCacheEntryDetailsTestBuilder<TValue> WithValueOfType<TValue>()
         {
             this.validations.Add((expected, actual) =>
             {
-                var expectedType = typeof(TEntry);
+                var expectedType = typeof(TValue);
                 var actualType = actual.Value.GetType();
 
                 if (Reflection.AreDifferentTypes(expectedType, actualType))
@@ -70,7 +70,7 @@
                 }
             });
 
-            return new MemoryCacheEntryDetailsTestBuilder<TEntry>(this);
+            return new MemoryCacheEntryDetailsTestBuilder<TValue>(this);
         }
 
         /// <inheritdoc />

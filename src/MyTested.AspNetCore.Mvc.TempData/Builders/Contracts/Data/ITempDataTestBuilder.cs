@@ -18,25 +18,25 @@
         /// <summary>
         /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ITempDataDictionary"/> contains entry with the provided value.
         /// </summary>
-        /// <typeparam name="TEntry">Type of the temp data entry value.</typeparam>
+        /// <typeparam name="TValue">Type of the temp data entry value.</typeparam>
         /// <param name="value">Value of the temp data entry.</param>
         /// <returns>The same <see cref="IAndTempDataTestBuilder"/>.</returns>
-        IAndTempDataTestBuilder ContainingEntryWithValue<TEntry>(TEntry value);
+        IAndTempDataTestBuilder ContainingEntryWithValue<TValue>(TValue value);
 
         /// <summary>
         /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ITempDataDictionary"/> contains entry with value of the provided type.
         /// </summary>
-        /// <typeparam name="TEntry">Type of the temp data entry value.</typeparam>
+        /// <typeparam name="TValue">Type of the temp data entry value.</typeparam>
         /// <returns>The same <see cref="IAndTempDataTestBuilder"/>.</returns>
-        IAndTempDataTestBuilder ContainingEntryOfType<TEntry>();
+        IAndTempDataTestBuilder ContainingEntryOfType<TValue>();
 
         /// <summary>
         /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ITempDataDictionary"/> contains entry with value of the provided type and the given key.
         /// </summary>
-        /// <typeparam name="TEntry">Type of the temp data entry value.</typeparam>
+        /// <typeparam name="TValue">Type of the temp data entry value.</typeparam>
         /// <param name="key">Key of the temp data entry.</param>
         /// <returns>The same <see cref="IAndTempDataTestBuilder"/>.</returns>
-        IAndTempDataTestBuilder ContainingEntryOfType<TEntry>(string key);
+        IAndTempDataTestBuilder ContainingEntryOfType<TValue>(string key);
 
         /// <summary>
         /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ITempDataDictionary"/> contains entry with the provided key and corresponding value.

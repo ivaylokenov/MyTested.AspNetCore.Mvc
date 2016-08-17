@@ -8,13 +8,13 @@
     /// <summary>
     /// Used for testing <see cref="Microsoft.Extensions.Caching.Memory.IMemoryCache"/> entry details.
     /// </summary>
-    /// <typeparam name="TEntry">Type of <see cref="Microsoft.Extensions.Caching.Memory.IMemoryCache"/> entry value.</typeparam>
-    public class MemoryCacheEntryDetailsTestBuilder<TEntry> : BaseTestBuilderWithComponent, IAndMemoryCacheEntryDetailsTestBuilder<TEntry>
+    /// <typeparam name="TValue">Type of <see cref="Microsoft.Extensions.Caching.Memory.IMemoryCache"/> entry value.</typeparam>
+    public class MemoryCacheEntryDetailsTestBuilder<TValue> : MemoryCacheEntryTestBuilder, IMemoryCacheEntryDetailsTestBuilder<TValue>
     {
         private readonly MemoryCacheEntryTestBuilder memoryCacheEntryTestBuilder;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MemoryCacheEntryDetailsTestBuilder{TEntry}"/> class.
+        /// Initializes a new instance of the <see cref="MemoryCacheEntryDetailsTestBuilder{TValue}"/> class.
         /// </summary>
         /// <param name="memoryCacheEntryTestBuilder">Test builder of <see cref="MemoryCacheEntryTestBuilder"/> type.</param>
         public MemoryCacheEntryDetailsTestBuilder(MemoryCacheEntryTestBuilder memoryCacheEntryTestBuilder)
@@ -25,23 +25,23 @@
         }
 
         /// <inheritdoc />
-        public IAndMemoryCacheEntryDetailsTestBuilder<TEntry> Passing(Action<TEntry> assertions)
+        public IAndMemoryCacheEntryTestBuilder Passing(Action<TValue> assertions)
         {
             this.memoryCacheEntryTestBuilder
                 .GetMockedMemoryCacheEntryValidations()
-                .Add((expected, actual) => assertions((TEntry)actual.Value));
+                .Add((expected, actual) => assertions((TValue)actual.Value));
 
             return this;
         }
 
         /// <inheritdoc />
-        public IAndMemoryCacheEntryDetailsTestBuilder<TEntry> Passing(Func<TEntry, bool> predicate)
+        public IAndMemoryCacheEntryTestBuilder Passing(Func<TValue, bool> predicate)
         {
             this.memoryCacheEntryTestBuilder
                 .GetMockedMemoryCacheEntryValidations()
                 .Add((expected, actual) =>
                 {
-                    if (!predicate((TEntry)actual.Value))
+                    if (!predicate((TValue)actual.Value))
                     {
                         var memoryCacheEntry = this.memoryCacheEntryTestBuilder.GetMockedMemoryCacheEntry();
 
@@ -53,8 +53,5 @@
 
             return this;
         }
-
-        /// <inheritdoc />
-        public IMemoryCacheEntryDetailsTestBuilder<TEntry> AndAlso() => this;
     }
 }

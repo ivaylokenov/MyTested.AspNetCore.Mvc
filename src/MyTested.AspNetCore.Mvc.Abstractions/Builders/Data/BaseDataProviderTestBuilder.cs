@@ -73,9 +73,9 @@
         /// <summary>
         /// Validates whether the data provider contains entry with the given value.
         /// </summary>
-        /// <typeparam name="TEntry">Type of the value.</typeparam>
+        /// <typeparam name="TValue">Type of the value.</typeparam>
         /// <param name="value">Value to validate.</param>
-        protected void ValidateContainingEntryWithValue<TEntry>(TEntry value)
+        protected void ValidateContainingEntryWithValue<TValue>(TValue value)
         {
             DictionaryValidator.ValidateValue(
                 this.DataProviderName,
@@ -87,10 +87,10 @@
         /// <summary>
         /// Validates whether the data provider contains entry value with the given type.
         /// </summary>
-        /// <typeparam name="TEntry">Type of the value.</typeparam>
-        protected void ValidateContainingEntryOfType<TEntry>()
+        /// <typeparam name="TValue">Type of the value.</typeparam>
+        protected void ValidateContainingEntryOfType<TValue>()
         {
-            DictionaryValidator.ValidateValueOfType<TEntry>(
+            DictionaryValidator.ValidateValueOfType<TValue>(
                 this.DataProviderName,
                 this.DataProvider,
                 this.ThrowNewDataProviderAssertionException);
@@ -99,11 +99,11 @@
         /// <summary>
         /// Validates whether the data provider contains entry value with the given type and corresponding key.
         /// </summary>
-        /// <typeparam name="TEntry">Type of the value.</typeparam>
+        /// <typeparam name="TValue">Type of the value.</typeparam>
         /// <param name="key">Key to validate.</param>
-        protected void ValidateContainingEntryOfType<TEntry>(string key)
+        protected void ValidateContainingEntryOfType<TValue>(string key)
         {
-            DictionaryValidator.ValidateStringKeyAndValueOfType<TEntry>(
+            DictionaryValidator.ValidateStringKeyAndValueOfType<TValue>(
                 this.DataProviderName,
                 this.DataProvider,
                 key,

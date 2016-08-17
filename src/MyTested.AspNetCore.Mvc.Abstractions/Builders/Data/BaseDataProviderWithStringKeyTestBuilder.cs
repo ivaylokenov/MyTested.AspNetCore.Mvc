@@ -38,23 +38,23 @@
         }
 
         /// <inheritdoc />
-        public TDataProviderTestBuilder ContainingEntryWithValue<TEntry>(TEntry value)
+        public TDataProviderTestBuilder ContainingEntryWithValue<TValue>(TValue value)
         {
             this.ValidateContainingEntryWithValue(value);
             return this.DataProviderTestBuilder;
         }
 
         /// <inheritdoc />
-        public TDataProviderTestBuilder ContainingEntryOfType<TEntry>()
+        public TDataProviderTestBuilder ContainingEntryOfType<TValue>()
         {
-            this.ValidateContainingEntryOfType<TEntry>();
+            this.ValidateContainingEntryOfType<TValue>();
             return this.DataProviderTestBuilder;
         }
 
         /// <inheritdoc />
-        public TDataProviderTestBuilder ContainingEntryOfType<TEntry>(string key)
+        public TDataProviderTestBuilder ContainingEntryOfType<TValue>(string key)
         {
-            this.ValidateContainingEntryOfType<TEntry>(key);
+            this.ValidateContainingEntryOfType<TValue>(key);
             return this.DataProviderTestBuilder;
         }
 

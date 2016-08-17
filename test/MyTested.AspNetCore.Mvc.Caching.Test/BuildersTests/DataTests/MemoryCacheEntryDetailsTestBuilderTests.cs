@@ -57,19 +57,18 @@
                 () =>
                 {
                     MyController<MvcController>
-                    .Instance()
-                    .Calling(c => c.AddMemoryCacheAction())
-                    .ShouldHave()
-                    .MemoryCache(memoryCache => memoryCache
-                        .ContainingEntry(entry => entry
-                            .WithKey("test")
-                            .AndAlso()
-                            .WithValueOfType<string>()
-                            .AndAlso()
-                            .Passing(v => v.StartsWith("inv"))))
-                    .AndAlso()
-                    .ShouldReturn()
-                    .Ok();
+                        .Instance()
+                        .Calling(c => c.AddMemoryCacheAction())
+                        .ShouldHave()
+                        .MemoryCache(memoryCache => memoryCache
+                            .ContainingEntry(entry => entry
+                                .WithKey("test")
+                                .AndAlso()
+                                .WithValueOfType<string>()
+                                .Passing(v => v.StartsWith("inv"))))
+                        .AndAlso()
+                        .ShouldReturn()
+                        .Ok();
                 },
                 "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with 'test' key and value passing the given predicate, but it failed.");
         }

@@ -18,9 +18,9 @@
         /// <summary>
         /// Tests whether the built <see cref="IMemoryCache"/> entry has value of the provided type.
         /// </summary>
-        /// <typeparam name="TEntry">Type of cache entry value.</typeparam>
-        /// <returns>Test builder of <see cref="IAndMemoryCacheEntryDetailsTestBuilder{TEntry}"/> type.</returns>
-        IAndMemoryCacheEntryDetailsTestBuilder<TEntry> WithValueOfType<TEntry>();
+        /// <typeparam name="TValue">Type of cache entry value.</typeparam>
+        /// <returns>Test builder of <see cref="IMemoryCacheEntryDetailsTestBuilder{TValue}"/> type.</returns>
+        IMemoryCacheEntryDetailsTestBuilder<TValue> WithValueOfType<TValue>();
 
         /// <summary>
         /// Sets the <see cref="MemoryCacheEntryOptions.AbsoluteExpiration"/> value to the built <see cref="IMemoryCache"/> entry.
