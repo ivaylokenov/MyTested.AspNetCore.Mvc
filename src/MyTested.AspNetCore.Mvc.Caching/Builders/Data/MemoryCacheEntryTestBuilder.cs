@@ -60,7 +60,7 @@
             this.validations.Add((expected, actual) =>
             {
                 var expectedType = typeof(TEntry);
-                var actualType = actual.GetType();
+                var actualType = actual.Value.GetType();
 
                 if (Reflection.AreDifferentTypes(expectedType, actualType))
                 {

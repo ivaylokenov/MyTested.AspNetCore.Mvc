@@ -201,6 +201,78 @@
                 },
                 "When calling AddViewDataAction action in MvcController expected view data to have entry with 'Test' key and the provided value, but the value was different.");
         }
+        
+        [Fact]
+        public void ContainingEntryShouldNotThrowExceptionWithCorrectPassingValue()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.AddViewDataAction())
+                .ShouldHave()
+                .ViewData(viewData => viewData
+                    .ContainingEntry(entry => entry
+                        .WithKey("Test")
+                        .WithValue("DataValue")))
+                .AndAlso()
+                .ShouldReturn()
+                .Ok();
+        }
+
+        [Fact]
+        public void ContainingEntryShouldNotThrowExceptionWithCorrectPassingAssertions()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.AddViewDataAction())
+                .ShouldHave()
+                .ViewData(viewData => viewData
+                    .ContainingEntry(entry => entry
+                        .WithKey("Test")
+                        .WithValueOfType<string>()
+                        .Passing(v => Assert.True(v.StartsWith("Data")))))
+                .AndAlso()
+                .ShouldReturn()
+                .Ok();
+        }
+
+        [Fact]
+        public void ContainingEntryShouldNotThrowExceptionWithCorrectPassingPredicate()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.AddViewDataAction())
+                .ShouldHave()
+                .ViewData(viewData => viewData
+                    .ContainingEntry(entry => entry
+                        .WithKey("Test")
+                        .WithValueOfType<string>()
+                        .Passing(v => v.StartsWith("Data"))))
+                .AndAlso()
+                .ShouldReturn()
+                .Ok();
+        }
+
+        [Fact]
+        public void ContainingEntryShouldThrowExceptionWithIncorrectPassingPredicate()
+        {
+            Test.AssertException<DataProviderAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.AddViewDataAction())
+                        .ShouldHave()
+                        .ViewData(viewData => viewData
+                            .ContainingEntry(entry => entry
+                                .WithKey("Test")
+                                .WithValueOfType<string>()
+                                .Passing(v => v.StartsWith("Inv"))))
+                        .AndAlso()
+                        .ShouldReturn()
+                        .Ok();
+                },
+                "When calling AddViewDataAction action in MvcController expected view data to have entry with 'Test' key and value passing the given predicate, but it failed.");
+        }
 
         [Fact]
         public void ContainingEntriesShouldNotThrowExceptionWithCorrectValues()

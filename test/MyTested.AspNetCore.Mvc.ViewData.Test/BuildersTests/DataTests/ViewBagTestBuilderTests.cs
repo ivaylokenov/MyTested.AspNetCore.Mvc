@@ -201,6 +201,80 @@
                 },
                 "When calling AddViewBagAction action in MvcController expected view bag to have entry with 'Test' key and the provided value, but the value was different.");
         }
+        
+        [Fact]
+        public void ContainingEntryShouldNotThrowExceptionWithCorrectPassingValue()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.AddViewBagAction())
+                .ShouldHave()
+                .ViewBag(viewBag => viewBag
+                    .ContainingEntry(entry => entry
+                        .WithKey("Test")
+                        .WithValue("BagValue")))
+                .AndAlso()
+                .ShouldReturn()
+                .Ok();
+        }
+
+        [Fact]
+        public void ContainingEntryShouldNotThrowExceptionWithCorrectPassingAssertions()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.AddViewBagAction())
+                .ShouldHave()
+                .ViewBag(viewBag => viewBag
+                    .ContainingEntry(entry => entry
+                        .WithKey("Test")
+                        .WithValueOfType<string>()
+                        .Passing(v => Assert.True(v.StartsWith("Bag")))))
+                .AndAlso()
+                .ShouldReturn()
+                .Ok();
+        }
+
+        [Fact]
+        public void ContainingEntryShouldNotThrowExceptionWithCorrectPassingPredicate()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.AddViewBagAction())
+                .ShouldHave()
+                .ViewBag(viewBag => viewBag
+                    .ContainingEntry(entry => entry
+                        .WithKey("Test")
+                        .WithValueOfType<string>()
+                        .Passing(v => v.StartsWith("Bag"))))
+                .AndAlso()
+                .ShouldReturn()
+                .Ok();
+        }
+
+        [Fact]
+        public void ContainingEntryShouldThrowExceptionWithIncorrectPassingPredicate()
+        {
+            Test.AssertException<DataProviderAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.AddViewBagAction())
+                        .ShouldHave()
+                        .ViewBag(viewBag => viewBag
+                            .ContainingEntry(entry => entry
+                                .WithKey("Test")
+                                .AndAlso()
+                                .WithValueOfType<string>()
+                                .AndAlso()
+                                .Passing(v => v.StartsWith("Inv"))))
+                        .AndAlso()
+                        .ShouldReturn()
+                        .Ok();
+                },
+                "When calling AddViewBagAction action in MvcController expected view bag to have entry with 'Test' key and value passing the given predicate, but it failed.");
+        }
 
         [Fact]
         public void ContainingEntriesShouldNotThrowExceptionWithCorrectValues()

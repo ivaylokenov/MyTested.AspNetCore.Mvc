@@ -29,7 +29,7 @@
         {
             this.memoryCacheEntryTestBuilder
                 .GetMockedMemoryCacheEntryValidations()
-                .Add((expected, actual) => assertions((TEntry)actual));
+                .Add((expected, actual) => assertions((TEntry)actual.Value));
 
             return this;
         }
@@ -41,7 +41,7 @@
                 .GetMockedMemoryCacheEntryValidations()
                 .Add((expected, actual) =>
                 {
-                    if (!predicate((TEntry)actual))
+                    if (!predicate((TEntry)actual.Value))
                     {
                         var memoryCacheEntry = this.memoryCacheEntryTestBuilder.GetMockedMemoryCacheEntry();
 
