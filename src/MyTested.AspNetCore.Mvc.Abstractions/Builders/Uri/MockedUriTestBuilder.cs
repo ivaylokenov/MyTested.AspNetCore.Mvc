@@ -1,14 +1,14 @@
-﻿namespace MyTested.AspNetCore.Mvc.Builders.Uris
+﻿namespace MyTested.AspNetCore.Mvc.Builders.Uri
 {
     using System;
     using System.Collections.Generic;
-    using Contracts.Uris;
+    using Contracts.Uri;
     using Internal;
 
     /// <summary>
     /// Used for testing <see cref="Uri"/>.
     /// </summary>
-    public class MockedUriTestBuilder : MockedUriBuilder
+    public class MockedUriTestBuilder : MockedUriBuilder, IAndUriTestBuilder
     {
         private readonly ICollection<Func<MockedUri, Uri, bool>> validations;
 
@@ -21,21 +21,25 @@
         }
 
         /// <inheritdoc />
-        public override IAndUriTestBuilder WithHost(string host)
+        public new IAndUriTestBuilder WithHost(string host)
         {
             this.validations.Add((expected, actual) => expected.Host == actual.Host);
-            return base.WithHost(host);
+            base.WithHost(host);
+
+            return this;
         }
 
         /// <inheritdoc />
-        public override IAndUriTestBuilder WithPort(int port)
+        public new IAndUriTestBuilder WithPort(int port)
         {
             this.validations.Add((expected, actual) => expected.Port == actual.Port);
-            return base.WithPort(port);
+            base.WithPort(port);
+
+            return this;
         }
 
         /// <inheritdoc />
-        public override IAndUriTestBuilder WithAbsolutePath(string absolutePath)
+        public new IAndUriTestBuilder WithAbsolutePath(string absolutePath)
         {
             this.validations.Add((expected, actual) =>
             {
@@ -47,28 +51,36 @@
                 return expected.AbsolutePath == actual.OriginalString;
             });
 
-            return base.WithAbsolutePath(absolutePath);
+            base.WithAbsolutePath(absolutePath);
+
+            return this;
         }
 
         /// <inheritdoc />
-        public override IAndUriTestBuilder WithScheme(string scheme)
+        public new IAndUriTestBuilder WithScheme(string scheme)
         {
             this.validations.Add((expected, actual) => expected.Scheme == actual.Scheme);
-            return base.WithScheme(scheme);
+            base.WithScheme(scheme);
+
+            return this;
         }
 
         /// <inheritdoc />
-        public override IAndUriTestBuilder WithQuery(string query)
+        public new IAndUriTestBuilder WithQuery(string query)
         {
             this.validations.Add((expected, actual) => expected.Query == actual.Query);
-            return base.WithQuery(query);
+            base.WithQuery(query);
+
+            return this;
         }
 
         /// <inheritdoc />
-        public override IAndUriTestBuilder WithFragment(string fragment)
+        public new IAndUriTestBuilder WithFragment(string fragment)
         {
             this.validations.Add((expected, actual) => expected.Fragment == actual.Fragment);
-            return base.WithFragment(fragment);
+            base.WithFragment(fragment);
+
+            return this;
         }
 
         /// <inheritdoc />
@@ -89,6 +101,9 @@
             this.validations.Add((expected, actual) => predicate(actual));
             return this;
         }
+
+        /// <inheritdoc />
+        public new IUriTestBuilder AndAlso() => this;
 
         internal ICollection<Func<MockedUri, Uri, bool>> GetMockedUriValidations() => this.validations;
     }

@@ -25,42 +25,42 @@
         protected MockedCacheEntry MemoryCacheEntry { get; private set; }
 
         /// <inheritdoc />
-        public virtual IAndMemoryCacheEntryBuilder WithKey(object key)
+        public IAndMemoryCacheEntryBuilder WithKey(object key)
         {
             this.MemoryCacheEntry.Key = key;
             return this;
         }
 
         /// <inheritdoc />
-        public virtual IAndMemoryCacheEntryBuilder WithValue(object value)
+        public IAndMemoryCacheEntryBuilder WithValue(object value)
         {
             this.MemoryCacheEntry.Value = value;
             return this;
         }
 
         /// <inheritdoc />
-        public virtual IAndMemoryCacheEntryBuilder WithAbsoluteExpiration(DateTimeOffset? absoluteExpiration)
+        public IAndMemoryCacheEntryBuilder WithAbsoluteExpiration(DateTimeOffset? absoluteExpiration)
         {
             this.MemoryCacheEntry.AbsoluteExpiration = absoluteExpiration;
             return this;
         }
 
         /// <inheritdoc />
-        public virtual IAndMemoryCacheEntryBuilder WithAbsoluteExpirationRelativeToNow(TimeSpan? absoluteExpirationRelativeToNow)
+        public IAndMemoryCacheEntryBuilder WithAbsoluteExpirationRelativeToNow(TimeSpan? absoluteExpirationRelativeToNow)
         {
             this.MemoryCacheEntry.AbsoluteExpirationRelativeToNow = absoluteExpirationRelativeToNow;
             return this;
         }
 
         /// <inheritdoc />
-        public virtual IAndMemoryCacheEntryBuilder WithPriority(CacheItemPriority priority)
+        public IAndMemoryCacheEntryBuilder WithPriority(CacheItemPriority priority)
         {
             this.MemoryCacheEntry.Priority = priority;
             return this;
         }
 
         /// <inheritdoc />
-        public virtual IAndMemoryCacheEntryBuilder WithSlidingExpiration(TimeSpan? slidingExpiration)
+        public IAndMemoryCacheEntryBuilder WithSlidingExpiration(TimeSpan? slidingExpiration)
         {
             this.MemoryCacheEntry.SlidingExpiration = slidingExpiration;
             return this;

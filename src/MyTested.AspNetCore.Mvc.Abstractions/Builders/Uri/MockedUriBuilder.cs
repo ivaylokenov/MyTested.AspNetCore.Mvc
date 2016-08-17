@@ -1,7 +1,7 @@
-﻿namespace MyTested.AspNetCore.Mvc.Builders.Uris
+﻿namespace MyTested.AspNetCore.Mvc.Builders.Uri
 {
     using System;
-    using Contracts.Uris;
+    using Contracts.Uri;
     using Internal;
 
     using SystemUriBuilder = System.UriBuilder;
@@ -9,7 +9,7 @@
     /// <summary>
     /// Used for building <see cref="Uri"/>.
     /// </summary>
-    public class MockedUriBuilder : IAndUriTestBuilder
+    public class MockedUriBuilder : IAndUriBuilder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MockedUriBuilder"/> class.
@@ -26,35 +26,35 @@
         protected MockedUri MockedUri { get; private set; }
 
         /// <inheritdoc />
-        public virtual IAndUriTestBuilder WithHost(string host)
+        public IAndUriBuilder WithHost(string host)
         {
             this.MockedUri.Host = host;
             return this;
         }
 
         /// <inheritdoc />
-        public virtual IAndUriTestBuilder WithPort(int port)
+        public IAndUriBuilder WithPort(int port)
         {
             this.MockedUri.Port = port;
             return this;
         }
 
         /// <inheritdoc />
-        public virtual IAndUriTestBuilder WithAbsolutePath(string absolutePath)
+        public IAndUriBuilder WithAbsolutePath(string absolutePath)
         {
             this.MockedUri.AbsolutePath = absolutePath;
             return this;
         }
 
         /// <inheritdoc />
-        public virtual IAndUriTestBuilder WithScheme(string scheme)
+        public IAndUriBuilder WithScheme(string scheme)
         {
             this.MockedUri.Scheme = scheme;
             return this;
         }
 
         /// <inheritdoc />
-        public virtual IAndUriTestBuilder WithQuery(string query)
+        public IAndUriBuilder WithQuery(string query)
         {
             if (!query.StartsWith("?"))
             {
@@ -66,14 +66,14 @@
         }
 
         /// <inheritdoc />
-        public virtual IAndUriTestBuilder WithFragment(string fragment)
+        public IAndUriBuilder WithFragment(string fragment)
         {
             this.MockedUri.Fragment = fragment;
             return this;
         }
 
         /// <inheritdoc />
-        public IUriTestBuilder AndAlso() => this;
+        public IUriBuilder AndAlso() => this;
 
         public MockedUri GetMockedUri() => this.MockedUri;
 

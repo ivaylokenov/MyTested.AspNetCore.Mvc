@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Uris
+﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Uri
 {
     /// <summary>
     /// Used for adding AndAlso() method to the <see cref="System.Uri"/> tests.

@@ -8,7 +8,7 @@
     using Contracts.ActionResults.Redirect;
     using Contracts.Base;
     using Contracts.ShouldPassFor;
-    using Contracts.Uris;
+    using Contracts.Uri;
     using Exceptions;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
