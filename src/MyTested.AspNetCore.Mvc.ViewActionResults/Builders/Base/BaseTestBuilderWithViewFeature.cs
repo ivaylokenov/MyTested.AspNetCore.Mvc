@@ -1,10 +1,8 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Base
 {
     using Contracts.Base;
-    using Contracts.ShouldPassFor;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
-    using ShouldPassFor;
 
     /// <summary>
     /// Base class for all test builders with view features.
@@ -32,9 +30,5 @@
 
             return (this.ActionResult as PartialViewResult)?.ViewData?.Model;
         }
-
-        /// <inheritdoc />
-        IShouldPassForTestBuilderWithActionResult<ActionResult> IBaseTestBuilderWithActionResult<ActionResult>.ShouldPassFor()
-            => new ShouldPassForTestBuilderWithActionResult<ActionResult>(this.TestContext);
     }
 }

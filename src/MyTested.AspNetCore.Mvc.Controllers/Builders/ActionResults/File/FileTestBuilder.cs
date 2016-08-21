@@ -4,13 +4,11 @@
     using System.Linq;
     using Contracts.ActionResults.File;
     using Contracts.Base;
-    using Contracts.ShouldPassFor;
     using Exceptions;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.FileProviders;
     using Microsoft.Net.Http.Headers;
-    using ShouldPassFor;
     using Utilities;
     using Utilities.Extensions;
 
@@ -138,10 +136,7 @@
 
         /// <inheritdoc />
         public IFileTestBuilder AndAlso() => this;
-
-        IShouldPassForTestBuilderWithActionResult<FileResult> IBaseTestBuilderWithActionResult<FileResult>.ShouldPassFor()
-            => new ShouldPassForTestBuilderWithActionResult<FileResult>(this.TestContext);
-
+        
         private TExpectedFileResult GetFileResult<TExpectedFileResult>(string containment)
             where TExpectedFileResult : class
         {

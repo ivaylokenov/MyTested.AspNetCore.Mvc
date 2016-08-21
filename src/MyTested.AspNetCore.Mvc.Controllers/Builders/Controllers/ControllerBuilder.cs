@@ -3,7 +3,6 @@
     using System;
     using Base;
     using Contracts.Controllers;
-    using Contracts.ShouldPassFor;
     using Internal.Application;
     using Internal.Contracts;
     using Internal.Http;
@@ -11,7 +10,6 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
-    using ShouldPassFor;
     using Utilities;
     using Utilities.Validators;
 
@@ -86,14 +84,7 @@
             this.BuildControllerIfNotExists();
             return new ControllerTestBuilder(this.TestContext);
         }
-
-        /// <inheritdoc />
-        public new IShouldPassForTestBuilderWithController<TController> ShouldPassFor()
-        {
-            this.BuildControllerIfNotExists();
-            return new ShouldPassForTestBuilderWithController<TController>(this.TestContext);
-        }
-
+        
         protected override IAndControllerBuilder<TController> SetBuilder() => this;
 
         private void ValidateControllerType()

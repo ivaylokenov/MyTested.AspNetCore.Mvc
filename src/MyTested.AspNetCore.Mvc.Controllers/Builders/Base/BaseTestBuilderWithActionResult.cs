@@ -3,9 +3,7 @@
     using And;
     using Contracts.And;
     using Contracts.Base;
-    using Contracts.ShouldPassFor;
     using Internal.TestContexts;
-    using ShouldPassFor;
     using Utilities;
 
     /// <summary>
@@ -30,10 +28,6 @@
         /// <value>Action result to be tested.</value>
         public TActionResult ActionResult => this.TestContext.MethodResultAs<TActionResult>();
         
-        /// <inheritdoc />
-        public new IShouldPassForTestBuilderWithActionResult<TActionResult> ShouldPassFor()
-            => new ShouldPassForTestBuilderWithActionResult<TActionResult>(this.TestContext);
-
         /// <summary>
         /// Initializes new instance of builder providing AndAlso method.
         /// </summary>

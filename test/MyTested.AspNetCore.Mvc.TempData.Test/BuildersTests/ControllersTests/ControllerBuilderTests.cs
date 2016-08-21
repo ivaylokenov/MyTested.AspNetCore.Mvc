@@ -28,8 +28,7 @@
                 .Instance()
                 .WithTempData(tempData => tempData
                     .WithEntry("key", "value"))
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<MvcController>(controller =>
                 {
                     Assert.Equal(1, controller.TempData.Count);
                 });
@@ -72,8 +71,7 @@
                 .Instance()
                 .WithTempData(tempData => tempData
                     .WithEntry("key", "value"))
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<FullPocoController>(controller =>
                 {
                     Assert.Equal(1, controller.CustomTempData.Count);
                 });

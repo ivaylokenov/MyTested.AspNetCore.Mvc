@@ -3,14 +3,11 @@
     using System.Collections.Generic;
     using Base;
     using Contracts.ActionResults.StatusCode;
-    using Contracts.Base;
-    using Contracts.ShouldPassFor;
     using Exceptions;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.Net.Http.Headers;
-    using ShouldPassFor;
     using Utilities.Extensions;
 
     /// <summary>
@@ -120,9 +117,6 @@
 
         /// <inheritdoc />
         public IStatusCodeTestBuilder AndAlso() => this;
-
-        IShouldPassForTestBuilderWithActionResult<ActionResult> IBaseTestBuilderWithActionResult<ActionResult>.ShouldPassFor()
-            => new ShouldPassForTestBuilderWithActionResult<ActionResult>(this.TestContext);
 
         /// <summary>
         /// Throws new status code result assertion exception for the provided property name, expected value and actual value.

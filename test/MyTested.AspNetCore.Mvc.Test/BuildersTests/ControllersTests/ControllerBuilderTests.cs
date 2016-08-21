@@ -30,8 +30,7 @@
             MyController<MvcController>
                 .Instance()
                 .WithHttpContext(httpContext)
-                .ShouldPassFor()
-                .TheHttpContext(setHttpContext =>
+                .ShouldPassForThe<HttpContext>(setHttpContext =>
                 {
                     Assert.Equal("Custom", setHttpContext.Request.Scheme);
                     Assert.IsAssignableFrom<MockedHttpResponse>(setHttpContext.Response);
@@ -50,8 +49,7 @@
             MyController<PocoController>
                 .Instance()
                 .WithHttpContext(httpContext)
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<PocoController>(controller =>
                 {
                     Assert.Equal("Custom", controller.CustomHttpContext.Request.Scheme);
                     Assert.IsAssignableFrom<MockedHttpResponse>(controller.CustomHttpContext.Response);
@@ -91,8 +89,7 @@
             MyController<MvcController>
                 .Instance()
                 .WithHttpContext(httpContext)
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<MvcController>(controller =>
                 {
                     Assert.Equal("Custom", controller.HttpContext.Request.Scheme);
                     Assert.IsAssignableFrom<MockedHttpResponse>(controller.HttpContext.Response);
@@ -107,7 +104,8 @@
                     Assert.Same(httpContext.TraceIdentifier, controller.HttpContext.TraceIdentifier);
                     Assert.Same(httpContext.User, controller.HttpContext.User);
                 })
-                .TheHttpContext(setHttpContext =>
+                .AndAlso()
+                .ShouldPassForThe<HttpContext>(setHttpContext =>
                 {
                     Assert.Equal("Custom", setHttpContext.Request.Scheme);
                     Assert.IsAssignableFrom<MockedHttpResponse>(setHttpContext.Response);

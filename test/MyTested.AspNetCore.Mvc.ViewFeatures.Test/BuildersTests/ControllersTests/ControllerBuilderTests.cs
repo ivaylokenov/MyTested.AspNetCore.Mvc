@@ -50,7 +50,7 @@
 
             MyApplication.IsUsingDefaultConfiguration();
         }
-        
+
         [Fact]
         public void CallingShouldPopulateCorrectActionDescriptorForPocoController()
         {
@@ -64,8 +64,7 @@
             MyController<FullPocoController>
                 .Instance()
                 .Calling(c => c.OkResultAction())
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<FullPocoController>(controller =>
                 {
                     Assert.NotNull(controller);
                     Assert.NotNull((controller as FullPocoController).CustomControllerContext);
@@ -113,8 +112,7 @@
                 .Calling(c => c.OkResultActionWithRequestBody(1, requestModel))
                 .ShouldReturn()
                 .Ok()
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<FullPocoController>(controller =>
                 {
                     var modelState = (controller as FullPocoController).CustomControllerContext.ModelState;
 
@@ -242,8 +240,7 @@
                 .Calling(c => c.OkResultActionWithRequestBody(1, requestModel))
                 .ShouldReturn()
                 .Ok()
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<FullPocoController>(controller =>
                 {
                     var modelState = (controller as FullPocoController).CustomControllerContext.ModelState;
 
@@ -272,8 +269,7 @@
                 .Calling(c => c.AuthorizedAction())
                 .ShouldReturn()
                 .NotFound()
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<FullPocoController>(controller =>
                 {
                     var controllerUser = (controller as FullPocoController).CustomHttpContext.User;
 
@@ -285,7 +281,7 @@
 
             MyApplication.IsUsingDefaultConfiguration();
         }
-        
+
         [Fact]
         public void PrepareControllerShouldSetCorrectPropertiesWithCustomSetupForPocoController()
         {
@@ -302,8 +298,7 @@
                 {
                     c.PublicProperty = new object();
                 })
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<FullPocoController>(controller =>
                 {
                     Assert.NotNull(controller);
                     Assert.NotNull(controller.PublicProperty);
@@ -327,8 +322,7 @@
             MyController<FullPocoController>
                 .Instance()
                 .WithHttpContext(httpContext)
-                .ShouldPassFor()
-                .TheHttpContext(context =>
+                .ShouldPassForThe<HttpContext>(context =>
                 {
                     Assert.Throws<InvalidOperationException>(() => context.Session);
                 });
@@ -353,8 +347,7 @@
             MyController<FullPocoController>
                 .Instance()
                 .WithHttpContext(httpContext)
-                .ShouldPassFor()
-                .TheHttpContext(setHttpContext =>
+                .ShouldPassForThe<HttpContext>(setHttpContext =>
                 {
                     Assert.Equal("Custom", setHttpContext.Request.Scheme);
                     Assert.IsAssignableFrom<MockedHttpResponse>(setHttpContext.Response);
@@ -372,8 +365,7 @@
             MyController<FullPocoController>
                 .Instance()
                 .WithHttpContext(httpContext)
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<FullPocoController>(controller =>
                 {
                     Assert.Equal("Custom", controller.CustomHttpContext.Request.Scheme);
                     Assert.IsAssignableFrom<MockedHttpResponse>(controller.CustomHttpContext.Response);
@@ -407,8 +399,7 @@
                 {
                     httpContext.Request.ContentType = ContentType.ApplicationOctetStream;
                 })
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<FullPocoController>(controller =>
                 {
                     Assert.Equal(ContentType.ApplicationOctetStream, controller.CustomHttpContext.Request.ContentType);
                 });
@@ -536,8 +527,7 @@
 
             MyController<FullPocoController>
                 .Instance()
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<FullPocoController>(controller =>
                 {
                     Assert.NotNull(controller);
                     Assert.NotNull(controller.CustomHttpContext);
@@ -559,8 +549,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<MvcController>(controller =>
                 {
                     Assert.NotNull(controller);
                     Assert.NotNull(controller.HttpContext);
@@ -580,7 +569,7 @@
                     Assert.Null(controller.ControllerContext.ActionDescriptor);
                 });
         }
-        
+
         [Fact]
         public void WithControllerContextShouldSetControllerContextForPocoController()
         {
@@ -602,8 +591,7 @@
             MyController<FullPocoController>
                 .Instance()
                 .WithControllerContext(controllerContext)
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<FullPocoController>(controller =>
                 {
                     Assert.NotNull(controller);
                     Assert.NotNull(controller.CustomControllerContext);
@@ -629,8 +617,7 @@
                 {
                     controllerContext.RouteData.Values.Add("testkey", "testvalue");
                 })
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<FullPocoController>(controller =>
                 {
                     Assert.NotNull(controller);
                     Assert.NotNull(controller.CustomControllerContext);
@@ -647,8 +634,7 @@
             this.CheckActionName(actionResultTestBuilder, expectedActionName);
 
             actionResultTestBuilder
-                .ShouldPassFor()
-                .TheActionResult(actionResult =>
+                .ShouldPassForThe<IActionResult>(actionResult =>
                 {
                     Assert.NotNull(actionResult);
                     Assert.IsAssignableFrom<OkResult>(actionResult);

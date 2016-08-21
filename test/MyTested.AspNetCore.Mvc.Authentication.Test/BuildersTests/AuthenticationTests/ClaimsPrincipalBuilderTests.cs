@@ -6,6 +6,7 @@
     using System.Security.Principal;
     using Setups.Common;
     using Setups.Controllers;
+    using Microsoft.AspNetCore.Mvc;
     using Xunit;
 
     public class ClaimsPrincipalBuilderTests
@@ -18,8 +19,7 @@
                 .WithAuthenticatedUser(user => user
                     .WithNameType("CustomUsername")
                     .WithUsername("MyUsername"))
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<MvcController>(controller =>
                 {
                     var claim = controller.User.Claims.FirstOrDefault(c => c.Type == "CustomUsername");
 
@@ -36,8 +36,7 @@
                 .WithAuthenticatedUser(user => user
                     .WithRoleType("CustomRole")
                     .InRole("MyRole"))
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<MvcController>(controller =>
                 {
                     var claim = controller.User.Claims.FirstOrDefault(c => c.Type == "CustomRole");
 
@@ -52,8 +51,7 @@
             MyController<MvcController>
                 .Instance()
                 .WithAuthenticatedUser()
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<Controller>(controller =>
                 {
                     var claim = controller.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
 
@@ -69,10 +67,9 @@
                 .Instance()
                 .WithAuthenticatedUser(user => user
                     .WithIdentifier("TestingId"))
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<MvcController>(controller =>
                 {
-                    var claim = controller.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+                        var claim = controller.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
 
                     Assert.NotNull(claim);
                     Assert.Equal("TestingId", claim.Value);
@@ -86,8 +83,7 @@
                 .Instance()
                 .WithAuthenticatedUser(user => user
                     .WithClaim("MyClaim", "MyValue"))
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<MvcController>(controller =>
                 {
                     var claim = controller.User.Claims.FirstOrDefault(c => c.Type == "MyClaim");
 
@@ -103,8 +99,7 @@
                 .Instance()
                 .WithAuthenticatedUser(user => user
                     .WithClaim(new Claim("MyClaim", "MyValue")))
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<MvcController>(controller =>
                 {
                     var claim = controller.User.Claims.FirstOrDefault(c => c.Type == "MyClaim");
 
@@ -120,8 +115,7 @@
                 .Instance()
                 .WithAuthenticatedUser(user => user
                     .WithClaims(new Claim("MyClaim", "MyValue"), new Claim("MySecondClaim", "MySecondValue")))
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<MvcController>(controller =>
                 {
                     var claim = controller.User.Claims.FirstOrDefault(c => c.Type == "MyClaim");
                     var secondClaim = controller.User.Claims.FirstOrDefault(c => c.Type == "MySecondClaim");
@@ -140,8 +134,7 @@
                 .Instance()
                 .WithAuthenticatedUser(user => user
                     .WithClaims(new List<Claim> { new Claim("MyClaim", "MyValue"), new Claim("MySecondClaim", "MySecondValue") }))
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<MvcController>(controller =>
                 {
                     var claim = controller.User.Claims.FirstOrDefault(c => c.Type == "MyClaim");
                     var secondClaim = controller.User.Claims.FirstOrDefault(c => c.Type == "MySecondClaim");
@@ -160,8 +153,7 @@
                 .Instance()
                 .WithAuthenticatedUser(user => user
                     .WithIdentity(new ClaimsIdentity(new List<Claim> { new Claim("MyClaim", "MyValue"), new Claim("MySecondClaim", "MySecondValue") })))
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<MvcController>(controller =>
                 {
                     var claim = controller.User.Claims.FirstOrDefault(c => c.Type == "MyClaim");
                     var secondClaim = controller.User.Claims.FirstOrDefault(c => c.Type == "MySecondClaim");
@@ -180,8 +172,7 @@
                 .Instance()
                 .WithAuthenticatedUser(user => user
                     .WithIdentity(new GenericIdentity("GenericName")))
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<MvcController>(controller =>
                 {
                     var claim = controller.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
 
@@ -198,8 +189,7 @@
                 .WithAuthenticatedUser(user => user
                     .WithIdentity(new CustomIdentity("GenericName"))
                     .WithIdentity(new CustomIdentity("SecondGenericName")))
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<MvcController>(controller =>
                 {
                     var claim = controller.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
 
@@ -218,8 +208,7 @@
                         .WithIdentifier("IdentityIdentifier")
                         .WithUsername("IdentityUsername")
                         .InRole("IdentityRole")))
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<MvcController>(controller =>
                 {
                     var usernameClaim = controller.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
                     var userIdClaim = controller.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
@@ -254,8 +243,7 @@
                         .InRole("IdentityRole")
                         .InRoles("AnotherRole", "ThirdRole")
                         .InRoles(new List<string> { "ListRole", "AnotherListRole" })))
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<MvcController>(controller =>
                 {
                     var usernameClaim = controller.User.Claims.FirstOrDefault(c => c.Type == "CustomName");
                     var userIdClaim = controller.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);

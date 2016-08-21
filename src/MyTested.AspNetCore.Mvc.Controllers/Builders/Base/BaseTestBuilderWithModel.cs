@@ -1,9 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Base
 {
     using Contracts.Base;
-    using Contracts.ShouldPassFor;
     using Internal.TestContexts;
-    using ShouldPassFor;
 
     /// <summary>
     /// Base class for all test builders with model.
@@ -18,12 +16,6 @@
         protected BaseTestBuilderWithModel(ControllerTestContext testContext)
             : base(testContext)
         {
-        }
-        
-        /// <inheritdoc />
-        public new IShouldPassForTestBuilderWithModel<TModel> ShouldPassFor()
-        {
-            return new ShouldPassForTestBuilderWithModel<TModel>(this.TestContext);
         }
     }
 }

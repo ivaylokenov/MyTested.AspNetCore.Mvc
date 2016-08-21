@@ -19,18 +19,10 @@
         public Action<IServiceProvider> InitializationDelegate => serviceProvider => serviceProvider.GetService<IControllerActionDescriptorCache>();
 
         public object TryGetValue(Type type, ComponentTestContext testContext)
-        {
-            if (Reflection.AreAssignable(baseHttpContextType, type))
-            {
-                return testContext.HttpContext;
-            }
-
-            if (Reflection.AreAssignable(baseHttpRequestType, type))
-            {
-                return testContext.HttpRequest;
-            }
-
-            return null;
-        }
+            => Reflection.AreAssignable(baseHttpContextType, type) // HttpContext
+                ? testContext.HttpContext
+                : Reflection.AreAssignable(baseHttpRequestType, type) // HttpRequest
+                ? (object)testContext.HttpRequest
+                : null;
     }
 }
