@@ -1,10 +1,14 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Base
 {
     using System;
-    using System.Collections.Generic;
+    using Contracts.And;
     using Contracts.Base;
+    using Exceptions;
+    using Internal;
     using Internal.TestContexts;
+    using Utilities;
     using Utilities.Validators;
+    using And;
 
     /// <summary>
     /// Base class for all test builders with component.
@@ -22,7 +26,7 @@
         {
             this.TestContext = testContext;
         }
-        
+
         /// <summary>
         /// Gets the currently used <see cref="ComponentTestContext"/>.
         /// </summary>
@@ -39,6 +43,26 @@
                 CommonValidator.CheckForNullReference(value, nameof(this.TestContext));
                 this.testContext = value;
             }
+        }
+
+        /// <inheritdoc />
+        public IAndTestBuilder ShouldPassForThe<TComponent>(Action<TComponent> assertions)
+            where TComponent : class
+        {
+            assertions(TestHelper.TryGetShouldPassForValue<TComponent>(this.TestContext));
+            return new AndTestBuilder(this.TestContext);
+        }
+
+        /// <inheritdoc />
+        public IAndTestBuilder ShouldPassForThe<TComponent>(Func<TComponent, bool> predicate)
+            where TComponent : class
+        {
+            if (!predicate(TestHelper.TryGetShouldPassForValue<TComponent>(this.TestContext)))
+            {
+                throw new InvalidAssertionException($"Expected {typeof(TComponent).ToFriendlyTypeName()} to pass the given predicate but it failed.");
+            }
+
+            return new AndTestBuilder(this.TestContext);
         }
     }
 }

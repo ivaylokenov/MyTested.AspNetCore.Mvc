@@ -18,8 +18,7 @@
             MyController<MvcController>
                 .Instance()
                 .WithHttpContext(httpContext)
-                .ShouldPassFor()
-                .TheHttpContext(context =>
+                .ShouldPassForThe<HttpContext>(context =>
                 {
                     Assert.Throws<InvalidOperationException>(() => context.Session);
                 });

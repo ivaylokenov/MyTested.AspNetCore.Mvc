@@ -29,7 +29,7 @@
     public static class TestApplication
     {
         private const string TestFrameworkName = "MyTested.AspNetCore.Mvc";
-        private const string ReleaseDate = "2016-06-01";
+        private const string ReleaseDate = "2016-09-01";
 
         private static readonly RequestDelegate NullHandler;
 
@@ -226,6 +226,12 @@
                     if (httpFeatureRegistrationPlugin != null)
                     {
                         TestHelper.HttpFeatureRegistrationPlugins.Add(httpFeatureRegistrationPlugin);
+                    }
+
+                    var shouldPassForPlugin = plugin as IShouldPassForPlugin;
+                    if (shouldPassForPlugin != null)
+                    {
+                        TestHelper.ShouldPassForPlugins.Add(shouldPassForPlugin);
                     }
                 });
         }

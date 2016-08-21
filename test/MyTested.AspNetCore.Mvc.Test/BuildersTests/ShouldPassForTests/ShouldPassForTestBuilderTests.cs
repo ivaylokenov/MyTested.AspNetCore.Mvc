@@ -1,6 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ShouldPassForTests
 {
     using Exceptions;
+    using Microsoft.AspNetCore.Http;
     using Setups;
     using Setups.Controllers;
     using Xunit;
@@ -13,8 +14,7 @@
             MyController<MvcController>
                 .Instance()
                 .WithHttpContext(context => context.Request.Scheme = "Test")
-                .ShouldPassFor()
-                .TheHttpContext(context =>
+                .ShouldPassForThe<HttpContext>(context =>
                 {
                     Assert.Equal("Test", context.Request.Scheme);
                 });
@@ -26,8 +26,7 @@
             MyController<MvcController>
                 .Instance()
                 .WithHttpContext(context => context.Request.Scheme = "Test")
-                .ShouldPassFor()
-                .TheHttpContext(context => context.Request.Scheme == "Test");
+                .ShouldPassForThe<HttpContext>(context => context.Request.Scheme == "Test");
         }
 
         [Fact]
@@ -39,10 +38,9 @@
                     MyController<MvcController>
                         .Instance()
                         .WithHttpContext(context => context.Request.Scheme = "Test")
-                        .ShouldPassFor()
-                        .TheHttpContext(context => context.Request.Scheme == "Invalid");
+                        .ShouldPassForThe<HttpContext>(context => context.Request.Scheme == "Invalid");
                 },
-                "Expected the HttpContext to pass the given predicate but it failed.");
+                "Expected HttpContext to pass the given predicate but it failed.");
         }
 
         [Fact]
@@ -51,8 +49,7 @@
             MyController<MvcController>
                 .Instance()
                 .WithHttpContext(context => context.Request.Scheme = "Test")
-                .ShouldPassFor()
-                .TheHttpRequest(request =>
+                .ShouldPassForThe<HttpRequest>(request =>
                 {
                     Assert.Equal("Test", request.Scheme);
                 });
@@ -64,8 +61,7 @@
             MyController<MvcController>
                 .Instance()
                 .WithHttpContext(context => context.Request.Scheme = "Test")
-                .ShouldPassFor()
-                .TheHttpRequest(request => request.Scheme == "Test");
+                .ShouldPassForThe<HttpRequest>(request => request.Scheme == "Test");
         }
 
         [Fact]
@@ -77,10 +73,9 @@
                     MyController<MvcController>
                         .Instance()
                         .WithHttpContext(context => context.Request.Scheme = "Test")
-                        .ShouldPassFor()
-                        .TheHttpRequest(request => request.Scheme == "Invalid");
+                        .ShouldPassForThe<HttpRequest>(request => request.Scheme == "Invalid");
                 },
-                "Expected the HttpRequest to pass the given predicate but it failed.");
+                "Expected HttpRequest to pass the given predicate but it failed.");
         }
     }
 }
