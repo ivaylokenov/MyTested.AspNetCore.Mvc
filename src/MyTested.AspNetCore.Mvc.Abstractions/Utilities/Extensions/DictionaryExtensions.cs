@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Utilities.Extensions
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Internal.TestContexts;
@@ -18,17 +19,27 @@
                 });
         }
 
-        public static IDictionary<string, object> ToRouteValues(this IDictionary<string, MethodArgumentTestContext> dictionary)
+        public static IDictionary<string, object> ToRouteValues(
+            this IDictionary<string, MethodArgumentTestContext> dictionary,
+            Func<KeyValuePair<string, MethodArgumentTestContext>, bool> filter = null)
         {
-            return dictionary.ToDictionary(
+            var result = dictionary.AsEnumerable();
+
+            if (filter != null)
+            {
+                result = result.Where(filter);
+            }
+
+            return result.ToDictionary(
                 a => a.Key,
                 a => a.Value.Value);
         }
 
         public static IDictionary<string, object> ToSortedRouteValues(
-            this IDictionary<string, MethodArgumentTestContext> dictionary)
+            this IDictionary<string, MethodArgumentTestContext> dictionary,
+            Func<KeyValuePair<string, MethodArgumentTestContext>, bool> filter = null)
         {
-            return new SortedDictionary<string, object>(dictionary.ToRouteValues());
+            return new SortedDictionary<string, object>(dictionary.ToRouteValues(filter));
         }
     }
 }
