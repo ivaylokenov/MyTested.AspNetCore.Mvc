@@ -12,7 +12,7 @@
         public IBaseTestBuilderWithActionResult<TActionResult> Unauthorized()
         {
             this.ValidateActionReturnType<UnauthorizedResult>();
-            return this.NewAndShouldPassForTestBuilder();
+            return this.NewAndTestBuilderWithActionResult();
         }
     }
 }

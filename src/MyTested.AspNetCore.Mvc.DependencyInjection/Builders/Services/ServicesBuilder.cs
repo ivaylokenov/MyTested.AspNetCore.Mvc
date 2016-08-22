@@ -38,7 +38,7 @@
             }
 
             this.TestContext.AggregatedServices.Add(typeOfService, service);
-            this.TestContext.ComponentConstruction = () => null;
+            this.TestContext.ComponentConstructionDelegate = () => null;
 
             return this;
         }

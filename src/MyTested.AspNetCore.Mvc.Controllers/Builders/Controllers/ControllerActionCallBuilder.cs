@@ -114,10 +114,10 @@
 
         private string GetAndValidateAction(LambdaExpression actionCall)
         {
-            this.BuildComponentAction();
+            this.TestContext.ComponentBuildDelegate?.Invoke();
 
             this.TestContext.MethodCall = actionCall;
-            this.TestContext.PreMethodInvocationAction?.Invoke();
+            this.TestContext.PreMethodInvocationDelegate?.Invoke();
 
             var methodInfo = ExpressionParser.GetMethodInfo(actionCall);
 

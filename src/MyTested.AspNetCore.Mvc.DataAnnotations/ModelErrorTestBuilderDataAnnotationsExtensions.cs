@@ -21,7 +21,7 @@
 
             ModelStateValidator.CheckValidModelState(actualModelErrorTestBuilder.TestContext);
 
-            return actualModelErrorTestBuilder.NewAndShouldPassForTestBuilder();
+            return actualModelErrorTestBuilder.NewAndTestBuilderWithInvokedAction();
         }
     }
 }

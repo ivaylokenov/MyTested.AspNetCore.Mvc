@@ -46,7 +46,7 @@
         {
             get
             {
-                this.BuildComponentAction();
+                this.TestContext.ComponentBuildDelegate?.Invoke();
                 return this.TestContext.ComponentAs<TController>();
             }
         }
@@ -82,7 +82,7 @@
         /// <inheritdoc />
         public IControllerTestBuilder ShouldHave()
         {
-            this.BuildComponentAction();
+            this.TestContext.ComponentBuildDelegate?.Invoke();
             return new ControllerTestBuilder(this.TestContext);
         }
         

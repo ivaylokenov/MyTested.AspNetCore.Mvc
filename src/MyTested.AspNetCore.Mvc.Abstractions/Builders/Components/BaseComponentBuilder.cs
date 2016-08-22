@@ -10,7 +10,7 @@
         public BaseComponentBuilder(ComponentTestContext testContext)
             : base(testContext)
         {
-            this.BuildComponentAction += this.BuildComponentIfNotExists;
+            this.TestContext.ComponentBuildDelegate += this.BuildComponentIfNotExists;
         }
 
         protected abstract void BuildComponentIfNotExists();

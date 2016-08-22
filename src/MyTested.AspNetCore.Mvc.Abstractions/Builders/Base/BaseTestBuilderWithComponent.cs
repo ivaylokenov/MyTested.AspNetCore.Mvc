@@ -25,7 +25,6 @@
             : base(testContext)
         {
             this.TestContext = testContext;
-            this.BuildComponentAction += () => { };
         }
 
         /// <summary>
@@ -45,14 +44,12 @@
                 this.testContext = value;
             }
         }
-
-        protected Action BuildComponentAction { get; set; }
-
+        
         /// <inheritdoc />
         public IAndTestBuilder ShouldPassForThe<TComponent>(Action<TComponent> assertions)
             where TComponent : class
         {
-            this.BuildComponentAction();
+            this.TestContext.ComponentBuildDelegate?.Invoke();
 
             assertions(TestHelper.TryGetShouldPassForValue<TComponent>(this.TestContext));
 
@@ -63,7 +60,7 @@
         public IAndTestBuilder ShouldPassForThe<TComponent>(Func<TComponent, bool> predicate)
             where TComponent : class
         {
-            this.BuildComponentAction();
+            this.TestContext.ComponentBuildDelegate?.Invoke();
 
             if (!predicate(TestHelper.TryGetShouldPassForValue<TComponent>(this.TestContext)))
             {

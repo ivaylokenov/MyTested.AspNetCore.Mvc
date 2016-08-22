@@ -38,7 +38,7 @@
         {
             var actualBuilder = (BaseTestBuilderWithComponentBuilder<TBuilder>)builder;
 
-            actualBuilder.TestContext.PreMethodInvocationAction += () =>
+            actualBuilder.TestContext.PreMethodInvocationDelegate += () =>
             {
                 var testContext = actualBuilder.TestContext;
                 testContext.RouteData = RouteExpressionParser.ResolveRouteData(TestApplication.Router, testContext.MethodCall);

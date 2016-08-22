@@ -6,13 +6,13 @@
     /// <summary>
     /// Provides additional testing methods.
     /// </summary>
-    public class AndShouldPassForTestBuilder : BaseTestBuilderWithInvokedAction
+    public class AndTestBuilderWithInvokedAction : BaseTestBuilderWithInvokedAction
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AndShouldPassForTestBuilder"/> class.
+        /// Initializes a new instance of the <see cref="AndTestBuilderWithInvokedAction"/> class.
         /// </summary>
         /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
-        public AndShouldPassForTestBuilder(ControllerTestContext testContext)
+        public AndTestBuilderWithInvokedAction(ControllerTestContext testContext)
             : base(testContext)
         {
         }

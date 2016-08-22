@@ -27,10 +27,10 @@
         public Exception CaughtException => this.TestContext.CaughtException;
         
         /// <summary>
-        /// Creates new <see cref="AndShouldPassForTestBuilder"/>.
+        /// Creates new <see cref="AndTestBuilderWithInvokedAction"/>.
         /// </summary>
         /// <returns>Test builder of type <see cref="IBaseTestBuilderWithInvokedAction"/>.</returns>
-        public IBaseTestBuilderWithInvokedAction NewAndShouldPassForTestBuilder()
-            => new AndShouldPassForTestBuilder(this.TestContext);
+        public IBaseTestBuilderWithInvokedAction NewAndTestBuilderWithInvokedAction()
+            => new AndTestBuilderWithInvokedAction(this.TestContext);
     }
 }

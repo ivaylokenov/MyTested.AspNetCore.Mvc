@@ -95,7 +95,7 @@
                         this.TestContext.AggregatedServices.Count == 0 ? "no" : $"{joinedFriendlyServices} as"));
                 }
 
-                this.TestContext.ComponentConstruction = () => controller;
+                this.TestContext.ComponentConstructionDelegate = () => controller;
             }
 
             if (!this.isPreparedForTesting)
@@ -117,7 +117,7 @@
 
             controllerPropertyActivators.ForEach(a => a.Activate(this.TestContext.ControllerContext, this.TestContext.Component));
 
-            this.TestContext.ComponentPreparationAction?.Invoke();
+            this.TestContext.ComponentPreparationDelegate?.Invoke();
 
             this.controllerSetupAction?.Invoke(this.TestContext.ComponentAs<TController>());
         }

@@ -26,7 +26,7 @@
         public IBaseTestBuilderWithInvokedAction ShouldReturnEmpty()
         {
             ActionValidator.CheckForException(this.CaughtException);
-            return this.NewAndShouldPassForTestBuilder();
+            return this.NewAndTestBuilderWithInvokedAction();
         }
 
         /// <inheritdoc />

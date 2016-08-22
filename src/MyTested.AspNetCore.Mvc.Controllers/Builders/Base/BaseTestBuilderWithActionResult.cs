@@ -38,11 +38,11 @@
         }
 
         /// <summary>
-        /// Creates new <see cref="AndShouldPassForTestBuilder{TActionResult}"/>.
+        /// Creates new <see cref="AndTestBuilderWithActionResult{TActionResult}"/>.
         /// </summary>
         /// <returns>Base test builder of type <see cref="IBaseTestBuilderWithActionResult{TActionResult}"/>.</returns>
-        public new IBaseTestBuilderWithActionResult<TActionResult> NewAndShouldPassForTestBuilder()
-            => new AndShouldPassForTestBuilder<TActionResult>(this.TestContext);
+        public IBaseTestBuilderWithActionResult<TActionResult> NewAndTestBuilderWithActionResult()
+            => new AndTestBuilderWithActionResult<TActionResult>(this.TestContext);
 
         /// <summary>
         /// Returns the actual action result casted as dynamic type.

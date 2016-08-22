@@ -26,7 +26,7 @@
         {
             var actualControllerBuilder = (ControllerBuilder<TController>)controllerBuilder;
 
-            actualControllerBuilder.TestContext.ComponentPreparationAction += () =>
+            actualControllerBuilder.TestContext.ComponentPreparationDelegate += () =>
             {
                 tempDataBuilder(new TempDataBuilder(actualControllerBuilder.TestContext.GetTempData()));
             };
