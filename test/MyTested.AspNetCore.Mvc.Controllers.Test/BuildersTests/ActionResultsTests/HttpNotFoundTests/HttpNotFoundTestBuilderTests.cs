@@ -453,8 +453,7 @@
                 .Calling(c => c.FullHttpNotFoundAction())
                 .ShouldReturn()
                 .NotFound()
-                .ShouldPassFor()
-                .TheActionResult(actionResult =>
+                .ShouldPassForThe<IActionResult>(actionResult =>
                 {
                     Assert.NotNull(actionResult);
                     Assert.IsAssignableFrom<NotFoundObjectResult>(actionResult);

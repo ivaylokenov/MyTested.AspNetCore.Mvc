@@ -1,6 +1,8 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ShouldPassForTests
 {
+    using System;
     using Exceptions;
+    using Microsoft.AspNetCore.Http;
     using Setups;
     using Setups.Controllers;
     using Xunit;
@@ -15,8 +17,7 @@
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
                 .Ok()
-                .ShouldPassFor()
-                .TheCaughtException(exception =>
+                .ShouldPassForThe<Exception>(exception =>
                 {
                     Assert.Null(exception);
                 });
@@ -28,8 +29,7 @@
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.FullOkAction())
-                .ShouldPassFor()
-                .TheCaughtException(exception => exception == null);
+                .ShouldPassForThe<Exception>(exception => exception == null);
         }
 
         [Fact]
@@ -41,8 +41,7 @@
                     MyController<MvcController>
                         .Instance()
                         .Calling(c => c.FullOkAction())
-                        .ShouldPassFor()
-                        .TheCaughtException(exception => exception != null);
+                        .ShouldPassForThe<Exception>(exception => exception != null);
                 },
                 "Expected the caught exception to pass the given predicate but it failed.");
         }
@@ -56,8 +55,7 @@
                     MyController<MvcController>
                         .Instance()
                         .Calling(c => c.ActionWithException())
-                        .ShouldPassFor()
-                        .TheCaughtException(exception => exception == null);
+                        .ShouldPassForThe<Exception>(exception => exception == null);
                 },
                 "Expected the NullReferenceException to pass the given predicate but it failed.");
         }
@@ -70,8 +68,7 @@
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
                 .Ok()
-                .ShouldPassFor()
-                .TheHttpResponse(response =>
+                .ShouldPassForThe<HttpResponse>(response =>
                 {
                     Assert.NotNull(response);
                 });
@@ -83,8 +80,7 @@
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.FullOkAction())
-                .ShouldPassFor()
-                .TheHttpResponse(response => response != null);
+                .ShouldPassForThe<HttpResponse>(response => response != null);
         }
 
         [Fact]
@@ -96,8 +92,7 @@
                     MyController<MvcController>
                         .Instance()
                         .Calling(c => c.FullOkAction())
-                        .ShouldPassFor()
-                        .TheHttpResponse(response => response == null);
+                        .ShouldPassForThe<HttpResponse>(response => response == null);
                 },
                 "Expected the HttpResponse to pass the given predicate but it failed.");
         }

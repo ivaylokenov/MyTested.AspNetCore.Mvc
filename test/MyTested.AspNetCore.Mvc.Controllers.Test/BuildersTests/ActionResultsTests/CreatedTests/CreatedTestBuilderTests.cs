@@ -962,8 +962,7 @@
                 .Calling(c => c.CreatedAction())
                 .ShouldReturn()
                 .Created()
-                .ShouldPassFor()
-                .TheActionResult(actionResult =>
+                .ShouldPassForThe<IActionResult>(actionResult =>
                 {
                     Assert.NotNull(actionResult);
                     Assert.IsAssignableFrom<CreatedResult>(actionResult);

@@ -18,8 +18,7 @@
                 .ShouldReturn()
                 .BadRequest()
                 .WithErrorMessage()
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<MvcController>(controller =>
                 {
                     Assert.NotNull(controller);
                     Assert.IsAssignableFrom<MvcController>(controller);
@@ -33,29 +32,12 @@
                 .Instance()
                 .ShouldHave()
                 .Attributes()
-                .ShouldPassFor()
-                .TheControllerAttributes(attributes =>
+                .ShouldPassForThe<ControllerAttributes>(attributes =>
                 {
                     Assert.Equal(2, attributes.Count());
                 });
         }
-
-        [Fact]
-        public void AndProvideShouldReturnProperActionName()
-        {
-            MyController<MvcController>
-                .Instance()
-                .Calling(c => c.BadRequestWithErrorAction())
-                .ShouldReturn()
-                .BadRequest()
-                .WithErrorMessage()
-                .ShouldPassFor()
-                .TheAction(actionName =>
-                {
-                    Assert.Equal("BadRequestWithErrorAction", actionName);
-                });
-        }
-
+        
         [Fact]
         public void AndProvideShouldReturnProperActionAttributes()
         {
@@ -64,8 +46,7 @@
                 .Calling(c => c.VariousAttributesAction())
                 .ShouldHave()
                 .ActionAttributes()
-                .ShouldPassFor()
-                .TheActionAttributes(attributes =>
+                .ShouldPassForThe<ActionAttributes>(attributes =>
                 {
                     Assert.Equal(6, attributes.Count());
                 });
@@ -79,8 +60,7 @@
                 .Calling(c => c.LocalRedirect("URL"))
                 .ShouldReturn()
                 .LocalRedirect()
-                .ShouldPassFor()
-                .TheActionResult(actionResult =>
+                .ShouldPassForThe<IActionResult>(actionResult =>
                 {
                     Assert.NotNull(actionResult);
                     Assert.IsAssignableFrom<LocalRedirectResult>(actionResult);
@@ -95,8 +75,7 @@
                 .Calling(c => c.ActionWithException())
                 .ShouldThrow()
                 .Exception()
-                .ShouldPassFor()
-                .TheCaughtException(caughtException =>
+                .ShouldPassForThe<Exception>(caughtException =>
                 {
                     Assert.NotNull(caughtException);
                     Assert.IsAssignableFrom<NullReferenceException>(caughtException);

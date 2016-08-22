@@ -211,8 +211,7 @@
                 .Calling(c => c.FileWithContents())
                 .ShouldReturn()
                 .File()
-                .ShouldPassFor()
-                .TheActionResult(actionResult =>
+                .ShouldPassForThe<IActionResult>(actionResult =>
                 {
                     Assert.NotNull(actionResult);
                     Assert.IsAssignableFrom<FileResult>(actionResult);

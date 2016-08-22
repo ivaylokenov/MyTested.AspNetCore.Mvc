@@ -15,6 +15,7 @@
     using Setups;
     using Setups.Controllers;
     using Xunit;
+    using Builders.Base;
 
     public class ControllerBuilderTests
     {
@@ -643,14 +644,11 @@
 
         private void CheckActionName(IBaseTestBuilderWithInvokedAction testBuilder, string expectedActionName)
         {
-            testBuilder
-                .ShouldPassFor()
-                .TheAction(actionName =>
-                {
-                    Assert.NotNull(actionName);
-                    Assert.NotEmpty(actionName);
-                    Assert.Equal(expectedActionName, actionName);
-                });
+            var actionName = (testBuilder as BaseTestBuilderWithInvokedAction)?.ActionName;
+
+            Assert.NotNull(actionName);
+            Assert.NotEmpty(actionName);
+            Assert.Equal(expectedActionName, actionName);
         }
     }
 }

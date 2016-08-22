@@ -9,51 +9,12 @@
     public class ShouldPassForTestBuilderWithAction
     {
         [Fact]
-        public void ActionAssertionsShouldWorkCorrectly()
-        {
-            MyController<MvcController>
-                .Instance()
-                .Calling(c => c.FullOkAction())
-                .ShouldPassFor()
-                .TheAction(action =>
-                {
-                    Assert.Equal("FullOkAction", action);
-                });
-        }
-
-        [Fact]
-        public void ActionPredicateShouldWorkCorrectly()
-        {
-            MyController<MvcController>
-                .Instance()
-                .Calling(c => c.FullOkAction())
-                .ShouldPassFor()
-                .TheAction(action => action == "FullOkAction");
-        }
-
-        [Fact]
-        public void ActionPredicateShouldThrowExceptionWithInvalidTest()
-        {
-            Test.AssertException<InvalidAssertionException>(
-                () =>
-                {
-                    MyController<MvcController>
-                        .Instance()
-                        .Calling(c => c.FullOkAction())
-                        .ShouldPassFor()
-                        .TheAction(action => action == "Invalid");
-                },
-                "Expected the action name to pass the given predicate but it failed.");
-        }
-
-        [Fact]
         public void ActionAttributesAssertionsShouldWorkCorrectly()
         {
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.NormalActionWithAttributes())
-                .ShouldPassFor()
-                .TheActionAttributes(attributes =>
+                .ShouldPassForThe<ActionAttributes>(attributes =>
                 {
                     Assert.Equal(3, attributes.Count());
                 });
@@ -65,8 +26,7 @@
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.NormalActionWithAttributes())
-                .ShouldPassFor()
-                .TheActionAttributes(attributes => attributes.Count() == 3);
+                .ShouldPassForThe<ActionAttributes>(attributes => attributes.Count() == 3);
         }
 
         [Fact]
@@ -78,8 +38,7 @@
                     MyController<MvcController>
                         .Instance()
                         .Calling(c => c.NormalActionWithAttributes())
-                        .ShouldPassFor()
-                        .TheActionAttributes(attributes => attributes.Count() == 4);
+                        .ShouldPassForThe<ActionAttributes>(attributes => attributes.Count() == 4);
                 },
                 "Expected the action attributes to pass the given predicate but it failed.");
         }

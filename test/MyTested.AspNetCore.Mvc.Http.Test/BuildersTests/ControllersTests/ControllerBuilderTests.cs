@@ -36,8 +36,7 @@
             MyController<MvcController>
                 .Instance()
                 .WithHttpContext(httpContext)
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<MvcController>(controller =>
                 {
                     Assert.Equal("Custom", controller.HttpContext.Request.Scheme);
                     Assert.IsAssignableFrom<MockedHttpResponse>(controller.HttpContext.Response);
@@ -51,7 +50,7 @@
                     Assert.Same(httpContext.TraceIdentifier, controller.HttpContext.TraceIdentifier);
                     Assert.Same(httpContext.User, controller.HttpContext.User);
                 })
-                .TheHttpContext(setHttpContext =>
+                .ShouldPassForThe<HttpContext>(setHttpContext =>
                 {
                     Assert.Equal("Custom", setHttpContext.Request.Scheme);
                     Assert.IsAssignableFrom<MockedHttpResponse>(setHttpContext.Response);
@@ -76,8 +75,7 @@
                 {
                     httpContext.Request.ContentType = ContentType.ApplicationOctetStream;
                 })
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<MvcController>(controller =>
                 {
                     Assert.Equal(ContentType.ApplicationOctetStream, controller.HttpContext.Request.ContentType);
                 });

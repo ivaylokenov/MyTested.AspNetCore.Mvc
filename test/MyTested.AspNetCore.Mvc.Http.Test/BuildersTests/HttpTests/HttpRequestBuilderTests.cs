@@ -76,8 +76,7 @@
                     .WithProtocol("protocol")
                     .WithQueryString("?key=value&another=yetanother")
                     .WithHttps())
-                .ShouldPassFor()
-                .TheHttpRequest(builtRequest =>
+                .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     Assert.Same(stream, builtRequest.Body);
                     Assert.Equal(1, builtRequest.ContentLength);
@@ -135,8 +134,7 @@
                             String = "Test"
                         },
                         ContentType.ApplicationJson))
-                .ShouldPassFor()
-                .TheHttpRequest(builtRequest =>
+                .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     using (var reader = new StreamReader(builtRequest.Body))
                     {
@@ -158,8 +156,7 @@
                         ["Field"] = new List<string> { "FieldValue" },
                         ["AnotherField"] = new List<string> { "AnotherFieldValue", "SecondFieldValue" },
                     }))
-                .ShouldPassFor()
-                .TheHttpRequest(builtRequest =>
+                .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     Assert.Equal(2, builtRequest.Form.Count);
                     Assert.Equal("FieldValue", builtRequest.Form["Field"]);
@@ -178,8 +175,7 @@
                         Field = "FieldValue",
                         AnotherField = "AnotherFieldValue"
                     }))
-                .ShouldPassFor()
-                .TheHttpRequest(builtRequest =>
+                .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     Assert.Equal(2, builtRequest.Form.Count);
                     Assert.Equal("FieldValue", builtRequest.Form["Field"]);
@@ -198,8 +194,7 @@
                         ["Field"] = "FieldValue",
                         ["AnotherField"] = "AnotherFieldValue"
                     }))
-                .ShouldPassFor()
-                .TheHttpRequest(builtRequest =>
+                .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     Assert.Equal(2, builtRequest.Form.Count);
                     Assert.Equal("FieldValue", builtRequest.Form["Field"]);
@@ -218,8 +213,7 @@
                         ["Field"] = new StringValues("FieldValue"),
                         ["AnotherField"] = new StringValues(new[] { "AnotherFieldValue", "SecondFieldValue" }),
                     }))
-                .ShouldPassFor()
-                .TheHttpRequest(builtRequest =>
+                .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     Assert.Equal(2, builtRequest.Form.Count);
                     Assert.Equal("FieldValue", builtRequest.Form["Field"]);
@@ -247,8 +241,7 @@
                             ["AnotherField"] = new StringValues(new[] { "AnotherFieldValue", "SecondFieldValue" }),
                         },
                         files)))
-                .ShouldPassFor()
-                .TheHttpRequest(builtRequest =>
+                .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     Assert.Equal(2, builtRequest.Form.Count);
                     Assert.Equal("FieldValue", builtRequest.Form["Field"]);
@@ -270,8 +263,7 @@
                         ["Header"] = new List<string> { "HeaderValue" },
                         ["AnotherHeader"] = new List<string> { "AnotherHeaderValue", "SecondHeaderValue" },
                     }))
-                .ShouldPassFor()
-                .TheHttpRequest(builtRequest =>
+                .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     Assert.Equal(2, builtRequest.Headers.Count);
                     Assert.Equal("HeaderValue", builtRequest.Headers["Header"]);
@@ -290,8 +282,7 @@
                         Header = "HeaderValue",
                         AnotherHeader = "AnotherHeaderValue"
                     }))
-                .ShouldPassFor()
-                .TheHttpRequest(builtRequest =>
+                .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     Assert.Equal(2, builtRequest.Headers.Count);
                     Assert.Equal("HeaderValue", builtRequest.Headers["Header"]);
@@ -310,8 +301,7 @@
                         ["Header"] = "HeaderValue",
                         ["AnotherHeader"] = "AnotherHeaderValue"
                     }))
-                .ShouldPassFor()
-                .TheHttpRequest(builtRequest =>
+                .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     Assert.Equal(2, builtRequest.Headers.Count);
                     Assert.Equal("HeaderValue", builtRequest.Headers["Header"]);
@@ -330,8 +320,7 @@
                         ["Header"] = new StringValues("HeaderValue"),
                         ["AnotherHeader"] = new StringValues(new[] { "AnotherHeaderValue", "SecondHeaderValue" }),
                     }))
-                .ShouldPassFor()
-                .TheHttpRequest(builtRequest =>
+                .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     Assert.Equal(2, builtRequest.Headers.Count);
                     Assert.Equal("HeaderValue", builtRequest.Headers["Header"]);
@@ -350,8 +339,7 @@
                         ["Header"] = new StringValues("HeaderValue"),
                         ["AnotherHeader"] = new StringValues(new[] { "AnotherHeaderValue", "SecondHeaderValue" })
                     })))
-                .ShouldPassFor()
-                .TheHttpRequest(builtRequest =>
+                .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     Assert.Equal(2, builtRequest.Headers.Count);
                     Assert.Equal("HeaderValue", builtRequest.Headers["Header"]);
@@ -366,8 +354,7 @@
                 .Instance()
                 .WithHttpRequest(request => request
                     .WithQuery("Query", "QueryValue"))
-                .ShouldPassFor()
-                .TheHttpRequest(builtRequest =>
+                .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     Assert.Equal(1, builtRequest.Query.Count);
                     Assert.Equal("QueryValue", builtRequest.Query["Query"]);
@@ -381,8 +368,7 @@
                 .Instance()
                 .WithHttpRequest(request => request
                     .WithQuery("Query", "QueryValue", "AnotherQueryValue"))
-                .ShouldPassFor()
-                .TheHttpRequest(builtRequest =>
+                .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     Assert.Equal(1, builtRequest.Query.Count);
                     Assert.Equal("QueryValue,AnotherQueryValue", builtRequest.Query["Query"]);
@@ -400,8 +386,7 @@
                         { "MyDictQuery", new[] { "MyDictQueryValue" } },
                         { "AnotherDictQuery", new[] { "AnotherDictQueryValue" } }
                     }))
-                .ShouldPassFor()
-                .TheHttpRequest(builtRequest =>
+                .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     Assert.Equal(2, builtRequest.Query.Count);
                     Assert.Equal("MyDictQueryValue", builtRequest.Query["MyDictQuery"]);
@@ -420,8 +405,7 @@
                         { "MyDictQuery", "MyDictQueryValue" },
                         { "AnotherDictQuery", "AnotherDictQueryValue" }
                     }))
-                .ShouldPassFor()
-                .TheHttpRequest(builtRequest =>
+                .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     Assert.Equal(2, builtRequest.Query.Count);
                     Assert.Equal("MyDictQueryValue", builtRequest.Query["MyDictQuery"]);
@@ -440,8 +424,7 @@
                         MyDictQuery = "MyDictQueryValue",
                         AnotherDictQuery = "AnotherDictQueryValue"
                     }))
-                .ShouldPassFor()
-                .TheHttpRequest(builtRequest =>
+                .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     Assert.Equal(2, builtRequest.Query.Count);
                     Assert.Equal("MyDictQueryValue", builtRequest.Query["MyDictQuery"]);
@@ -460,8 +443,7 @@
                         { "MyDictQuery", new[] { "MyDictQueryValue" } },
                         { "AnotherDictQuery", new[] { "AnotherDictQueryValue" } }
                     }))
-                .ShouldPassFor()
-                .TheHttpRequest(builtRequest =>
+                .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     Assert.Equal(2, builtRequest.Query.Count);
                     Assert.Equal("MyDictQueryValue", builtRequest.Query["MyDictQuery"]);
@@ -480,8 +462,7 @@
                         { "MyDictQuery", new[] { "MyDictQueryValue" } },
                         { "AnotherDictQuery", new[] { "AnotherDictQueryValue" } }
                     })))
-                .ShouldPassFor()
-                .TheHttpRequest(builtRequest =>
+                .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     Assert.Equal(2, builtRequest.Query.Count);
                     Assert.Equal("MyDictQueryValue", builtRequest.Query["MyDictQuery"]);
@@ -495,8 +476,7 @@
             MyController<MvcController>
                 .Instance()
                 .WithHttpRequest(request => request.WithLocation("https://mytestesasp.net:1337/api/Projects/MyTested.AspNetCore.Mvc?version=1.0"))
-                .ShouldPassFor()
-                .TheHttpRequest(builtRequest =>
+                .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     Assert.Equal("mytestesasp.net:1337", builtRequest.Host.Value);
                     Assert.Equal("/api/Projects/MyTested.AspNetCore.Mvc", builtRequest.Path);
@@ -520,8 +500,7 @@
                         .WithScheme("https")
                         .WithAbsolutePath("api/Projects/MyTested.AspNetCore.Mvc")
                         .WithQuery("?version=1.0")))
-                .ShouldPassFor()
-                .TheHttpRequest(builtRequest =>
+                .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     Assert.Equal("mytestesasp.net:1337", builtRequest.Host.Value);
                     Assert.Equal("/api/Projects/MyTested.AspNetCore.Mvc", builtRequest.Path);
@@ -573,8 +552,7 @@
                 .Instance()
                 .WithHttpRequest(request => request
                     .WithStringBody("test"))
-                .ShouldPassFor()
-                .TheHttpRequest(builtRequest =>
+                .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     using (var reader = new StreamReader(builtRequest.Body))
                     {
@@ -595,8 +573,7 @@
                     .WithContentType(ContentType.ApplicationXml)
                     .WithContentLength(100)
                     .WithStringBody("test"))
-                .ShouldPassFor()
-                .TheHttpRequest(builtRequest =>
+                .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     using (var reader = new StreamReader(builtRequest.Body))
                     {
@@ -615,8 +592,7 @@
                 .Instance()
                 .WithHttpRequest(request => request
                     .WithJsonBody(@"{""id"":1}"))
-                .ShouldPassFor()
-                .TheHttpRequest(builtRequest =>
+                .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     using (var reader = new StreamReader(builtRequest.Body))
                     {
@@ -637,8 +613,7 @@
                     .WithContentType(ContentType.ApplicationXml)
                     .WithContentLength(100)
                     .WithJsonBody(@"{""id"":1}"))
-                .ShouldPassFor()
-                .TheHttpRequest(builtRequest =>
+                .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     using (var reader = new StreamReader(builtRequest.Body))
                     {
@@ -661,8 +636,7 @@
                         Integer = 1,
                         RequiredString = "Text"
                     }))
-                .ShouldPassFor()
-                .TheHttpRequest(builtRequest =>
+                .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     using (var reader = new StreamReader(builtRequest.Body))
                     {
@@ -683,8 +657,7 @@
                     .WithContentType(ContentType.ApplicationXml)
                     .WithContentLength(100)
                     .WithJsonBody(@"{""id"":1}"))
-                .ShouldPassFor()
-                .TheHttpRequest(builtRequest =>
+                .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     using (var reader = new StreamReader(builtRequest.Body))
                     {
@@ -702,8 +675,7 @@
             MyController<MvcController>
                 .Instance()
                 .WithHttpRequest(request => request.WithLocation("http://mytestedasp.net"))
-                .ShouldPassFor()
-                .TheHttpRequest(builtRequest =>
+                .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     Assert.Equal("mytestedasp.net:80", builtRequest.Host.Value);
                     Assert.Equal("/", builtRequest.PathBase);
@@ -719,8 +691,7 @@
             MyController<MvcController>
                 .Instance()
                 .WithHttpRequest(request => request.WithLocation("http://mytestedasp.net?test=text"))
-                .ShouldPassFor()
-                .TheHttpRequest(builtRequest =>
+                .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     Assert.Equal("mytestedasp.net:80", builtRequest.Host.Value);
                     Assert.Equal("/", builtRequest.PathBase);
@@ -736,8 +707,7 @@
             MyController<MvcController>
                 .Instance()
                 .WithHttpRequest(request => request.WithLocation("/Home/Index"))
-                .ShouldPassFor()
-                .TheHttpRequest(builtRequest =>
+                .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     Assert.Equal(null, builtRequest.Host.Value);
                     Assert.Equal("/Home/Index", builtRequest.PathBase);
@@ -753,8 +723,7 @@
             MyController<MvcController>
                 .Instance()
                 .WithHttpRequest(request => request.WithLocation("/Home/Index?test=text"))
-                .ShouldPassFor()
-                .TheHttpRequest(builtRequest =>
+                .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     Assert.Equal(null, builtRequest.Host.Value);
                     Assert.Equal("/Home/Index", builtRequest.PathBase);
@@ -770,8 +739,7 @@
             MyController<MvcController>
                 .Instance()
                 .WithHttpRequest(request => request.WithLocation("http://mytestedasp.net/Home/Index?test=text"))
-                .ShouldPassFor()
-                .TheHttpRequest(builtRequest =>
+                .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     Assert.Equal("mytestedasp.net:80", builtRequest.Host.Value);
                     Assert.Equal("/Home/Index", builtRequest.PathBase);

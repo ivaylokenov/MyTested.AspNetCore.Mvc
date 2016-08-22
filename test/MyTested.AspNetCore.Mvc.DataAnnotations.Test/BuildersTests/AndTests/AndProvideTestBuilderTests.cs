@@ -4,6 +4,7 @@
     using Setups;
     using Setups.Controllers;
     using Xunit;
+    using Microsoft.AspNetCore.Mvc;
 
     public class AndProvideTestBuilderTests
     {
@@ -18,8 +19,7 @@
                         .Calling(c => c.EmptyActionWithException())
                         .ShouldHave()
                         .ValidModelState()
-                        .ShouldPassFor()
-                        .TheActionResult(actionResult => actionResult != null);
+                        .ShouldPassForThe<IActionResult>(actionResult => actionResult != null);
                 },
                 "Void methods cannot provide action result because they do not have return value.");
         }

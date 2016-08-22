@@ -444,8 +444,7 @@
                 .Calling(c => c.ViewComponentResultByName())
                 .ShouldReturn()
                 .ViewComponent()
-                .ShouldPassFor()
-                .TheActionResult(actionResult =>
+                .ShouldPassForThe<IActionResult>(actionResult =>
                 {
                     Assert.NotNull(actionResult);
                     Assert.IsAssignableFrom<ViewComponentResult>(actionResult);

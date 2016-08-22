@@ -95,8 +95,7 @@
                 .Instance()
                 .WithServices(services => services
                     .With<IInjectedService>(new InjectedService()))
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<MvcController>(controller =>
                 {
                     Assert.NotNull(controller);
                     Assert.NotNull(controller.InjectedService);
@@ -113,8 +112,7 @@
                 .WithServices(services => services
                     .With<IAnotherInjectedService>(new AnotherInjectedService())
                     .With<IInjectedService>(new InjectedService()))
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<MvcController>(controller =>
                 {
                     Assert.NotNull(controller);
                     Assert.NotNull(controller.InjectedService);
@@ -132,8 +130,7 @@
                     .With<IAnotherInjectedService>(new AnotherInjectedService())
                     .With<RequestModel>(new RequestModel())
                     .With<IInjectedService>(new InjectedService()))
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<MvcController>(controller =>
                 {
                     Assert.NotNull(controller);
                     Assert.NotNull(controller.InjectedService);
@@ -181,8 +178,7 @@
                 .Instance()
                 .WithServices(services => services
                     .With<IInjectedService>(new InjectedService()))
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<FullPocoController>(controller =>
                 {
                     Assert.NotNull(controller);
                     Assert.NotNull(controller.InjectedService);
@@ -201,8 +197,7 @@
                 .WithServices(services => services
                     .With<IAnotherInjectedService>(new AnotherInjectedService())
                     .With<IInjectedService>(new InjectedService()))
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<FullPocoController>(controller =>
                 {
                     Assert.NotNull(controller);
                     Assert.NotNull(controller.InjectedService);
@@ -222,8 +217,7 @@
                     .With<IAnotherInjectedService>(new AnotherInjectedService())
                     .With<RequestModel>(new RequestModel())
                     .With<IInjectedService>(new InjectedService()))
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<FullPocoController>(controller =>
                 {
                     Assert.NotNull(controller);
                     Assert.NotNull(controller.InjectedService);
