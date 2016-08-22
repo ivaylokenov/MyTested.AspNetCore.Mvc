@@ -2,6 +2,7 @@
 {
     using System;
     using Base;
+    using Components;
     using Contracts.Controllers;
     using Internal.Application;
     using Internal.Contracts;
@@ -17,7 +18,7 @@
     /// Used for building the controller which will be tested.
     /// </summary>
     /// <typeparam name="TController">Class representing ASP.NET Core MVC controller.</typeparam>
-    public partial class ControllerBuilder<TController> : BaseTestBuilderWithComponentBuilder<IAndControllerBuilder<TController>>, IAndControllerBuilder<TController>
+    public partial class ControllerBuilder<TController> : BaseComponentBuilder<IAndControllerBuilder<TController>>, IAndControllerBuilder<TController>
         where TController : class
     {
         private ControllerTestContext testContext;
@@ -45,7 +46,7 @@
         {
             get
             {
-                this.BuildControllerIfNotExists();
+                this.BuildComponentAction();
                 return this.TestContext.ComponentAs<TController>();
             }
         }
@@ -81,7 +82,7 @@
         /// <inheritdoc />
         public IControllerTestBuilder ShouldHave()
         {
-            this.BuildControllerIfNotExists();
+            this.BuildComponentAction();
             return new ControllerTestBuilder(this.TestContext);
         }
         

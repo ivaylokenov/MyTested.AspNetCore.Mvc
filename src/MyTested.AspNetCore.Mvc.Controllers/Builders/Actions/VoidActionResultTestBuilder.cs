@@ -30,9 +30,9 @@
         }
 
         /// <inheritdoc />
-        public IShouldHaveTestBuilder<VoidActionResult> ShouldHave()
+        public IShouldHaveTestBuilder<VoidMethodResult> ShouldHave()
         {
-            return new ShouldHaveTestBuilder<VoidActionResult>(this.TestContext);
+            return new ShouldHaveTestBuilder<VoidMethodResult>(this.TestContext);
         }
 
         /// <inheritdoc />

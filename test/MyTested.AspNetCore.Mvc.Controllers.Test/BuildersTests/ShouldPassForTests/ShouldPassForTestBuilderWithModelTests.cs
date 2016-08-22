@@ -50,7 +50,7 @@
                         .WithModelOfType<ICollection<ResponseModel>>()
                         .ShouldPassForThe<ICollection<ResponseModel>>(model => model == null);
                 },
-                "Expected the List<ResponseModel> to pass the given predicate but it failed.");
+                "Expected ICollection<ResponseModel> to pass the given predicate but it failed.");
         }
     }
 }

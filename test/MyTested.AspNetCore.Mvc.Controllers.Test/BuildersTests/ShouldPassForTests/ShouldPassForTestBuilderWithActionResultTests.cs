@@ -16,7 +16,7 @@
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
                 .Ok()
-                .ShouldPassForThe<OkResult>(actionResult =>
+                .ShouldPassForThe<OkObjectResult>(actionResult =>
                 {
                     Assert.NotNull(actionResult);
                 });
@@ -30,7 +30,7 @@
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
                 .Ok()
-                .ShouldPassForThe<OkResult>(actionResult => actionResult != null);
+                .ShouldPassForThe<OkObjectResult>(actionResult => actionResult != null);
         }
 
         [Fact]
@@ -44,9 +44,9 @@
                         .Calling(c => c.FullOkAction())
                         .ShouldReturn()
                         .Ok()
-                        .ShouldPassForThe<OkResult>(actionResult => actionResult == null);
+                        .ShouldPassForThe<OkObjectResult>(actionResult => actionResult == null);
                 },
-                "Expected the OkObjectResult to pass the given predicate but it failed.");
+                "Expected OkObjectResult to pass the given predicate but it failed.");
         }
     }
 }

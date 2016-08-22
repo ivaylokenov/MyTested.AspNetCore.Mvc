@@ -14,12 +14,10 @@
         {
             MyController<MvcController>
                 .Instance()
-                .Calling(c => c.FullOkAction())
-                .ShouldReturn()
-                .Ok()
+                .Calling(c => c.IndexOutOfRangeException())
                 .ShouldPassForThe<Exception>(exception =>
                 {
-                    Assert.Null(exception);
+                    Assert.NotNull(exception);
                 });
         }
 
@@ -28,8 +26,8 @@
         {
             MyController<MvcController>
                 .Instance()
-                .Calling(c => c.FullOkAction())
-                .ShouldPassForThe<Exception>(exception => exception == null);
+                .Calling(c => c.IndexOutOfRangeException())
+                .ShouldPassForThe<Exception>(exception => exception != null);
         }
 
         [Fact]
@@ -40,10 +38,10 @@
                 {
                     MyController<MvcController>
                         .Instance()
-                        .Calling(c => c.FullOkAction())
-                        .ShouldPassForThe<Exception>(exception => exception != null);
+                        .Calling(c => c.IndexOutOfRangeException())
+                        .ShouldPassForThe<Exception>(exception => exception == null);
                 },
-                "Expected the caught exception to pass the given predicate but it failed.");
+                "Expected Exception to pass the given predicate but it failed.");
         }
         
         [Fact]
@@ -55,9 +53,9 @@
                     MyController<MvcController>
                         .Instance()
                         .Calling(c => c.ActionWithException())
-                        .ShouldPassForThe<Exception>(exception => exception == null);
+                        .ShouldPassForThe<NullReferenceException>(exception => exception == null);
                 },
-                "Expected the NullReferenceException to pass the given predicate but it failed.");
+                "Expected NullReferenceException to pass the given predicate but it failed.");
         }
 
         [Fact]
@@ -94,7 +92,7 @@
                         .Calling(c => c.FullOkAction())
                         .ShouldPassForThe<HttpResponse>(response => response == null);
                 },
-                "Expected the HttpResponse to pass the given predicate but it failed.");
+                "Expected HttpResponse to pass the given predicate but it failed.");
         }
     }
 }

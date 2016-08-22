@@ -1,9 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ControllersTests
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
-    using System.Security.Claims;
     using Builders.Contracts.Actions;
     using Builders.Contracts.Base;
     using Exceptions;
@@ -11,10 +9,7 @@
     using Setups;
     using Setups.Controllers;
     using Setups.Models;
-    using Setups.Services;
     using Xunit;
-    using Internal.Http;
-    using Microsoft.Extensions.Primitives;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc.Controllers;
@@ -274,7 +269,7 @@
             this.CheckActionName(actionResultTestBuilder, expectedActionName);
 
             actionResultTestBuilder
-                .ShouldPassForThe<MvcController>(actionResult =>
+                .ShouldPassForThe<IActionResult>(actionResult =>
                 {
                     Assert.NotNull(actionResult);
                     Assert.IsAssignableFrom<OkResult>(actionResult);

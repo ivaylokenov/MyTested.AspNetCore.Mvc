@@ -40,7 +40,7 @@
                         .Calling(c => c.NormalActionWithAttributes())
                         .ShouldPassForThe<ActionAttributes>(attributes => attributes.Count() == 4);
                 },
-                "Expected the action attributes to pass the given predicate but it failed.");
+                "Expected ActionAttributes to pass the given predicate but it failed.");
         }
     }
 }

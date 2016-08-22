@@ -41,7 +41,7 @@
                             .ContainingErrorFor(r => r.RequiredString))
                         .ShouldPassForThe<ResponseModel>(model => model != null);
                 },
-                "AndProvideTheModel can be used when there is response model from the action.");
+                "ResponseModel could not be resolved for the 'ShouldPassForThe<TComponent>' method call.");
         }
     }
 }

@@ -55,15 +55,20 @@
             var result = testContext.ComponentAs<TComponent>()
                 ?? testContext.MethodResultAs<TComponent>()
                 ?? testContext.ModelAs<TComponent>();
+            
+            if (result != null)
+            {
+                return result;
+            }
 
             foreach (var shouldPassForPlugin in ShouldPassForPlugins)
             {
+                result = shouldPassForPlugin.TryGetValue(typeof(TComponent), testContext) as TComponent;
+
                 if (result != null)
                 {
                     return result;
                 }
-
-                result = shouldPassForPlugin.TryGetValue(typeof(TComponent), testContext) as TComponent;
             }
 
             throw new InvalidOperationException($"{typeof(TComponent).ToFriendlyTypeName()} could not be resolved for the 'ShouldPassForThe<TComponent>' method call.");

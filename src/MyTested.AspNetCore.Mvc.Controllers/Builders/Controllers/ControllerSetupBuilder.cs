@@ -53,7 +53,7 @@
             return this;
         }
 
-        private void BuildControllerIfNotExists()
+        protected override void BuildComponentIfNotExists()
         {
             if (!this.isPreparedForTesting)
             {

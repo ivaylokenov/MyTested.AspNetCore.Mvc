@@ -42,7 +42,7 @@
                         .Calling(c => c.FullOkAction())
                         .ShouldPassForThe<MvcController>(controller => controller == null);
                 },
-                "Expected the MvcController to pass the given predicate but it failed.");
+                "Expected MvcController to pass the given predicate but it failed.");
         }
 
         [Fact]
@@ -79,7 +79,7 @@
                         .Calling(c => c.FullOkAction())
                         .ShouldPassForThe<ControllerAttributes>(attributes => attributes.Count() == 3);
                 },
-                "Expected the controller attributes to pass the given predicate but it failed.");
+                "Expected ControllerAttributes to pass the given predicate but it failed.");
         }
     }
 }

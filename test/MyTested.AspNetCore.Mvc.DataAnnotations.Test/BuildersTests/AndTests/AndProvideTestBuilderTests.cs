@@ -21,7 +21,7 @@
                         .ValidModelState()
                         .ShouldPassForThe<IActionResult>(actionResult => actionResult != null);
                 },
-                "Void methods cannot provide action result because they do not have return value.");
+                "IActionResult could not be resolved for the 'ShouldPassForThe<TComponent>' method call.");
         }
     }
 }
