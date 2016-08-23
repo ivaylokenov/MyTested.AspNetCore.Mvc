@@ -1,3 +1,5 @@
 ﻿{
-  "AutomaticStartup": false
+  "General": {
+    "AutomaticStartup": false
+  }
 }

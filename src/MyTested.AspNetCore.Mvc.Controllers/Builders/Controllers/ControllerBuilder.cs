@@ -35,7 +35,7 @@
         {
             this.TestContext = testContext;
 
-            this.EnabledValidation = TestApplication.TestConfiguration.ModelStateValidation;
+            this.EnabledValidation = TestApplication.TestConfiguration.Controllers.ModelStateValidation;
 
 #if NETSTANDARD1_6
             this.ValidateControllerType();

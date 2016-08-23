@@ -6,6 +6,7 @@
     using System.Globalization;
     using System.Linq;
     using System.Reflection;
+    using Configuration;
     using Licensing;
     using Logging;
     using Microsoft.AspNetCore.Builder;
@@ -163,7 +164,7 @@
         }
 
         internal static string ApplicationName =>
-            TestConfiguration.ApplicationName
+            TestConfiguration.General.ApplicationName
                 ?? TestAssemblyName
                 ?? PlatformServices.Default.Application.ApplicationName;
 
@@ -171,13 +172,13 @@
         {
             lock (Sync)
             {
-                if (!initialiazed && TestConfiguration.AutomaticStartup)
+                if (!initialiazed && TestConfiguration.General.AutomaticStartup)
                 {
                     var defaultStartupType = TryFindDefaultStartupType();
 
                     if (defaultStartupType == null)
                     {
-                        throw new InvalidOperationException($"{Environment.EnvironmentName}Startup class could not be found at the root of the test project. Either add it or set 'AutomaticStartup' in the 'testconfig.json' file to 'false'.");
+                        throw new InvalidOperationException($"{Environment.EnvironmentName}Startup class could not be found at the root of the test project. Either add it or set 'General.AutomaticStartup' in the 'testconfig.json' file to 'false'.");
                     }
 
                     startupType = defaultStartupType;
@@ -240,7 +241,7 @@
         {
             var applicationAssembly = Assembly.Load(new AssemblyName(testAssemblyName));
 
-            var startupName = TestConfiguration.FullStartupName ?? $"{Environment.EnvironmentName}Startup";
+            var startupName = TestConfiguration.General.FullStartupName ?? $"{Environment.EnvironmentName}Startup";
 
             // check root of the test project
             var startup =
@@ -274,7 +275,7 @@
 
         private static void FindTestAssemblyName()
         {
-            testAssemblyName = TestConfiguration.TestAssemblyName ?? DependencyContext
+            testAssemblyName = TestConfiguration.General.TestAssemblyName ?? DependencyContext
                 .Default
                 .GetDefaultAssemblyNames()
                 .First()
@@ -294,7 +295,7 @@
             return new HostingEnvironment
             {
                 ApplicationName = ApplicationName,
-                EnvironmentName = TestConfiguration.EnvironmentName,
+                EnvironmentName = TestConfiguration.General.EnvironmentName,
                 ContentRootPath = PlatformServices.Default.Application.ApplicationBasePath
             };
         }
