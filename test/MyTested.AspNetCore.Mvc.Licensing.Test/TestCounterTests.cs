@@ -43,6 +43,7 @@
 
             Assert.NotNull(caughtException);
             Assert.IsAssignableFrom<InvalidLicenseException>(caughtException);
+            Assert.Equal("The free-quota limit of 500 assertions per test project has been reached. Please visit https://mytestedasp.net/core/mvc#pricing to request a free license or upgrade to a commercial one.", caughtException.Message);
         }
 
         [Fact]
@@ -82,6 +83,7 @@
 
             Assert.NotNull(caughtException);
             Assert.IsAssignableFrom<InvalidLicenseException>(caughtException);
+            Assert.Equal("You have invalid license: 'License is not valid for this version of My Tested ASP.NET Core MVC. License expired on 2017-10-15. This version of My Tested ASP.NET Core MVC was released on 2018-10-10'. The free-quota limit of 500 assertions per test project has been reached. Please visit https://mytestedasp.net/core/mvc#pricing to request a free license or upgrade to a commercial one.", caughtException.Message);
         }
 
         [Fact]
