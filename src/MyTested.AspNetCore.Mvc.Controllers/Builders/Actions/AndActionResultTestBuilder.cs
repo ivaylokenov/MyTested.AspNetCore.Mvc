@@ -1,9 +1,7 @@
-﻿namespace MyTested.AspNetCore.Mvc.Builders.And
+﻿namespace MyTested.AspNetCore.Mvc.Builders.Actions
 {
-    using Actions;
-    using Base;
+    using ShouldHave;
     using Contracts.Actions;
-    using Contracts.And;
     using Internal;
     using Internal.TestContexts;
 
@@ -11,7 +9,7 @@
     /// Class containing AndAlso() method allowing additional assertions after action tests.
     /// </summary>
     /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
-    public class AndActionResultTestBuilder<TActionResult> : BaseTestBuilderWithActionResult<TActionResult>,
+    public class AndActionResultTestBuilder<TActionResult> : ShouldHaveTestBuilder<TActionResult>,
         IAndActionResultTestBuilder<TActionResult>
     {
         /// <summary>

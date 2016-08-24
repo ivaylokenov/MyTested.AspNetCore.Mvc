@@ -47,6 +47,9 @@
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.OkResultWithResponse())
+                .ShouldHave()
+                .NoActionAttributes()
+                .AndAlso()
                 .ShouldReturn()
                 .Ok()
                 .WithModelOfType<List<ResponseModel>>();

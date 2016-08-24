@@ -1,10 +1,8 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Actions.ShouldHave
 {
-    using System;
-    using And;
+    using Actions;
     using Base;
     using Contracts.Actions;
-    using Contracts.And;
     using Internal.TestContexts;
     using Utilities.Validators;
 

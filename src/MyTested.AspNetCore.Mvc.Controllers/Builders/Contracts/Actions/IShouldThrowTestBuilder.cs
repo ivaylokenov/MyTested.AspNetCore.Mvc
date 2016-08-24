@@ -1,12 +1,11 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Actions
 {
-    using Base;
     using ExceptionErrors;
 
     /// <summary>
     /// Used for testing whether the action throws exception.
     /// </summary>
-    public interface IShouldThrowTestBuilder : IBaseTestBuilderWithInvokedAction
+    public interface IShouldThrowTestBuilder
     {
         /// <summary>
         /// Tests whether the action throws any exception.

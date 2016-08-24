@@ -1,7 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Actions
 {
     using System;
-    using And;
     using Attributes;
     using Base;
 

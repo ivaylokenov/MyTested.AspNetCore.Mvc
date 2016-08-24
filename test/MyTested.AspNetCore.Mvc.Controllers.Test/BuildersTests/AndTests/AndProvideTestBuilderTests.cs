@@ -46,6 +46,7 @@
                 .Calling(c => c.VariousAttributesAction())
                 .ShouldHave()
                 .ActionAttributes()
+                .AndAlso()
                 .ShouldPassForThe<ActionAttributes>(attributes =>
                 {
                     Assert.Equal(6, attributes.Count());

@@ -1,13 +1,10 @@
-﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.And
+﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Actions
 {
-    using Actions;
-    using Base;
-
     /// <summary>
     /// Contains AndAlso() method allowing additional assertions after the action result tests.
     /// </summary>
     /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
-    public interface IAndActionResultTestBuilder<TActionResult> : IBaseTestBuilderWithActionResult<TActionResult>
+    public interface IAndActionResultTestBuilder<TActionResult> : IShouldHaveTestBuilder<TActionResult>
     {
         /// <summary>
         /// Method allowing additional assertions after the action tests.

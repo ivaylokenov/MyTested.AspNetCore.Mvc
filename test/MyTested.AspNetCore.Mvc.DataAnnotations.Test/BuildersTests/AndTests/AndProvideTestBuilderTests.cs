@@ -19,6 +19,7 @@
                         .Calling(c => c.EmptyActionWithException())
                         .ShouldHave()
                         .ValidModelState()
+                        .AndAlso()
                         .ShouldPassForThe<IActionResult>(actionResult => actionResult != null);
                 },
                 "IActionResult could not be resolved for the 'ShouldPassForThe<TComponent>' method call.");
