@@ -31,7 +31,7 @@
         /// Gets or sets the data provider name.
         /// </summary>
         /// <value>Name of the data provider as string.</value>
-        protected string DataProviderName { get; set; }
+        protected string DataProviderName { get; private set; }
 
         /// <summary>
         /// Gets the data provider as <see cref="IDictionary{TKey,TValue}"/>.
@@ -50,8 +50,7 @@
                 return this.dataProvider;
             }
         }
-
-
+        
         /// <summary>
         /// When overridden in derived class provides a way to built the data provider as <see cref="IDictionary{TKey,TValue}"/>.
         /// </summary>
@@ -74,9 +73,9 @@
         /// <summary>
         /// Validates whether the data provider contains entry with the given value.
         /// </summary>
-        /// <typeparam name="TEntry">Type of the value.</typeparam>
+        /// <typeparam name="TValue">Type of the value.</typeparam>
         /// <param name="value">Value to validate.</param>
-        protected void ValidateContainingEntryWithValue<TEntry>(TEntry value)
+        protected void ValidateContainingEntryWithValue<TValue>(TValue value)
         {
             DictionaryValidator.ValidateValue(
                 this.DataProviderName,
@@ -88,10 +87,10 @@
         /// <summary>
         /// Validates whether the data provider contains entry value with the given type.
         /// </summary>
-        /// <typeparam name="TEntry">Type of the value.</typeparam>
-        protected void ValidateContainingEntryOfType<TEntry>()
+        /// <typeparam name="TValue">Type of the value.</typeparam>
+        protected void ValidateContainingEntryOfType<TValue>()
         {
-            DictionaryValidator.ValidateValueOfType<TEntry>(
+            DictionaryValidator.ValidateValueOfType<TValue>(
                 this.DataProviderName,
                 this.DataProvider,
                 this.ThrowNewDataProviderAssertionException);
@@ -100,11 +99,11 @@
         /// <summary>
         /// Validates whether the data provider contains entry value with the given type and corresponding key.
         /// </summary>
-        /// <typeparam name="TEntry">Type of the value.</typeparam>
+        /// <typeparam name="TValue">Type of the value.</typeparam>
         /// <param name="key">Key to validate.</param>
-        protected void ValidateContainingEntryOfType<TEntry>(string key)
+        protected void ValidateContainingEntryOfType<TValue>(string key)
         {
-            DictionaryValidator.ValidateStringKeyAndValueOfType<TEntry>(
+            DictionaryValidator.ValidateStringKeyAndValueOfType<TValue>(
                 this.DataProviderName,
                 this.DataProvider,
                 key,
@@ -155,12 +154,12 @@
         protected void ThrowNewDataProviderAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new DataProviderAssertionException(string.Format(
-                    "When calling {0} action in {1} expected {2} {3}, but {4}.",
-                    this.TestContext.MethodName,
-                    this.TestContext.Component.GetName(),
-                    propertyName,
-                    expectedValue,
-                    actualValue));
+                "When calling {0} action in {1} expected {2} {3}, but {4}.",
+                this.TestContext.MethodName,
+                this.TestContext.Component.GetName(),
+                propertyName,
+                expectedValue,
+                actualValue));
         }
     }
 }

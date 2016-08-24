@@ -121,8 +121,7 @@
                 .WithModelOfType<List<ResponseModel>>()
                 .ContainingNoErrorFor(m => m.Count)
                 .AndAlso()
-                .ShouldPassFor()
-                .TheModel(responseModel =>
+                .ShouldPassForThe<List<ResponseModel>>(responseModel =>
                 {
                     Assert.NotNull(responseModel);
                     Assert.IsAssignableFrom<List<ResponseModel>>(responseModel);

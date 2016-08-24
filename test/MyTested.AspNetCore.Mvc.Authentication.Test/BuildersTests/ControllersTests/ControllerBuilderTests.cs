@@ -16,10 +16,9 @@
                 .Calling(c => c.AuthorizedAction())
                 .ShouldReturn()
                 .Ok()
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<Controller>(controller =>
                 {
-                    var controllerUser = (controller as Controller).User;
+                    var controllerUser = controller.User;
 
                     Assert.Equal(false, controllerUser.IsInRole("Any"));
                     Assert.Equal("TestUser", controllerUser.Identity.Name);
@@ -48,10 +47,9 @@
                 .Calling(c => c.AuthorizedAction())
                 .ShouldReturn()
                 .Ok()
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<Controller>(controller =>
                 {
-                    var controllerUser = (controller as Controller).User;
+                    var controllerUser = controller.User;
 
                     Assert.Equal("NewUserName", controllerUser.Identity.Name);
                     Assert.Equal("Custom", controllerUser.Identity.AuthenticationType);
@@ -81,10 +79,9 @@
                 .Calling(c => c.AuthorizedAction())
                 .ShouldReturn()
                 .Ok()
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<FullPocoController>(controller =>
                 {
-                    var controllerUser = (controller as FullPocoController).CustomHttpContext.User;
+                    var controllerUser = controller.CustomHttpContext.User;
 
                     Assert.Equal(false, controllerUser.IsInRole("Any"));
                     Assert.Equal("TestUser", controllerUser.Identity.Name);
@@ -122,10 +119,9 @@
                 .Calling(c => c.AuthorizedAction())
                 .ShouldReturn()
                 .Ok()
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<FullPocoController>(controller =>
                 {
-                    var controllerUser = (controller as FullPocoController).CustomHttpContext.User;
+                    var controllerUser = controller.CustomHttpContext.User;
 
                     Assert.Equal("NewUserName", controllerUser.Identity.Name);
                     Assert.Equal("Custom", controllerUser.Identity.AuthenticationType);

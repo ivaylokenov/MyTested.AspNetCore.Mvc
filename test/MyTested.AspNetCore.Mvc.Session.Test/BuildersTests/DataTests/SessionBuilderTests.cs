@@ -38,7 +38,7 @@
 
             MyApplication.IsUsingDefaultConfiguration();
         }
-        
+
         [Fact]
         public void WithoutIdShouldSetRandomId()
         {
@@ -58,8 +58,7 @@
                 .Calling(c => c.FullSessionAction())
                 .ShouldReturn()
                 .Ok()
-                .ShouldPassFor()
-                .TheActionResult(actionResult =>
+                .ShouldPassForThe<OkObjectResult>(actionResult =>
                 {
                     var okObjectResult = actionResult as OkObjectResult;
 
@@ -126,7 +125,7 @@
 
             MyApplication.IsUsingDefaultConfiguration();
         }
-        
+
         [Fact]
         public void WithIntegerEntryShouldSetCorrectEntry()
         {
@@ -184,7 +183,7 @@
 
             MyApplication.IsUsingDefaultConfiguration();
         }
-        
+
         [Fact]
         public void WithEntriesAsByteDictionaryShouldWorkCorrectly()
         {
@@ -232,7 +231,7 @@
 
             MyApplication.IsUsingDefaultConfiguration();
         }
-        
+
         [Fact]
         public void WithEntriesAsIntDictionaryShouldWorkCorrectly()
         {

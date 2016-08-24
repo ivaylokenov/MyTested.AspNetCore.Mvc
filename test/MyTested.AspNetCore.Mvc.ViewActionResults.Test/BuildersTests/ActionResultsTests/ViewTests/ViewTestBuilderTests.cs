@@ -627,8 +627,7 @@
                 .Calling(c => c.DefaultView())
                 .ShouldReturn()
                 .View()
-                .ShouldPassFor()
-                .TheActionResult(actionResult =>
+                .ShouldPassForThe<IActionResult>(actionResult =>
                 {
                     Assert.NotNull(actionResult);
                     Assert.IsAssignableFrom<ViewResult>(actionResult);

@@ -1,11 +1,9 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Base
 {
     using Contracts.Base;
-    using Contracts.ShouldPassFor;
     using Internal.TestContexts;
     using Licensing;
     using Microsoft.AspNetCore.Http;
-    using ShouldPassFor;
     using Utilities.Validators;
 
     /// <summary>
@@ -45,8 +43,5 @@
                 this.testContext = value;
             }
         }
-        
-        /// <inheritdoc />
-        public IShouldPassForTestBuilder ShouldPassFor() => new ShouldPassForTestBuilder(this.TestContext);
     }
 }

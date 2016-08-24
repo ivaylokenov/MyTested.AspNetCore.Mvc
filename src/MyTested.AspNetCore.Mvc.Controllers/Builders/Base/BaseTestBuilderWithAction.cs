@@ -2,11 +2,7 @@
 {
     using System.Collections.Generic;
     using Contracts.Base;
-    using Contracts.ShouldPassFor;
-    using Exceptions;
     using Internal.TestContexts;
-    using ShouldPassFor;
-    using Utilities.Extensions;
 
     /// <summary>
     /// Base class for all test builders with action call.
@@ -33,8 +29,5 @@
         /// </summary>
         /// <value>Action attributes to be tested.</value>
         public IEnumerable<object> ActionLevelAttributes => this.TestContext.MethodAttributes;
-        
-        /// <inheritdoc />
-        public new IShouldPassForTestBuilderWithAction ShouldPassFor() => new ShouldPassForTestBuilderWithAction(this.TestContext);
     }
 }

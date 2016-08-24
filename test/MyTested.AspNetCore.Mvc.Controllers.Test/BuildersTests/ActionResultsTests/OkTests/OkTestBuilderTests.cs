@@ -47,6 +47,9 @@
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.OkResultWithResponse())
+                .ShouldHave()
+                .NoActionAttributes()
+                .AndAlso()
                 .ShouldReturn()
                 .Ok()
                 .WithModelOfType<List<ResponseModel>>();
@@ -465,8 +468,7 @@
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
                 .Ok()
-                .ShouldPassFor()
-                .TheActionResult(actionResult =>
+                .ShouldPassForThe<IActionResult>(actionResult =>
                 {
                     Assert.NotNull(actionResult);
                     Assert.IsAssignableFrom<OkObjectResult>(actionResult);

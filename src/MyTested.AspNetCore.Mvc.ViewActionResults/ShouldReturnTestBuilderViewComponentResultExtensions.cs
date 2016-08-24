@@ -5,6 +5,7 @@
     using Builders.Actions.ShouldReturn;
     using Builders.Contracts.ActionResults.View;
     using Builders.Contracts.Actions;
+    using Internal;
     using Microsoft.AspNetCore.Mvc;
     using Utilities;
 
@@ -46,7 +47,7 @@
 
             if (viewComponentName != actualViewComponentName)
             {
-                ViewFeaturesThrow.NewViewResultAssertionException(
+                ViewActionResultsThrow.NewViewResultAssertionException(
                     actualShouldReturnTestBuilder,
                     "view component",
                     viewComponentName,
@@ -75,7 +76,7 @@
 
             if (viewComponentType != actualViewComponentType)
             {
-                ViewFeaturesThrow.NewViewResultAssertionException(
+                ViewActionResultsThrow.NewViewResultAssertionException(
                     actualShouldReturnTestBuilder,
                     "view component",
                     viewComponentType.ToFriendlyTypeName(),

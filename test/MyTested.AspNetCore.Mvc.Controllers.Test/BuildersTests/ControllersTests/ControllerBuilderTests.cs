@@ -1,9 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ControllersTests
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
-    using System.Security.Claims;
     using Builders.Contracts.Actions;
     using Builders.Contracts.Base;
     using Exceptions;
@@ -11,13 +9,11 @@
     using Setups;
     using Setups.Controllers;
     using Setups.Models;
-    using Setups.Services;
     using Xunit;
-    using Internal.Http;
-    using Microsoft.Extensions.Primitives;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc.Controllers;
+    using Builders.Base;
 
     public class ControllerBuilderTests
     {
@@ -60,7 +56,7 @@
 
             this.CheckActionName(voidActionResultTestBuilder, "EmptyActionAsync");
         }
-        
+
         [Fact]
         public void CallingShouldHaveValidModelStateWhenThereAreNoModelErrors()
         {
@@ -71,10 +67,9 @@
                 .Calling(c => c.OkResultActionWithRequestBody(1, requestModel))
                 .ShouldReturn()
                 .Ok()
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<MvcController>(controller =>
                 {
-                    var modelState = (controller as Controller).ModelState;
+                    var modelState = controller.ModelState;
 
                     Assert.True(modelState.IsValid);
                     Assert.Equal(0, modelState.Values.Count());
@@ -90,8 +85,7 @@
                 .Calling(c => c.AuthorizedAction())
                 .ShouldReturn()
                 .NotFound()
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<MvcController>(controller =>
                 {
                     var controllerUser = (controller as Controller).User;
 
@@ -101,7 +95,7 @@
                     Assert.Equal(false, controllerUser.Identity.IsAuthenticated);
                 });
         }
-        
+
         [Fact]
         public void PrepareControllerShouldSetCorrectPropertiesWithCustomSetup()
         {
@@ -111,8 +105,7 @@
                 {
                     c.ControllerContext = new ControllerContext();
                 })
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<MvcController>(controller =>
                 {
                     Assert.NotNull(controller);
                     Assert.NotNull(controller.ControllerContext);
@@ -126,8 +119,7 @@
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.OkResultAction())
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<MvcController>(controller =>
                 {
                     Assert.NotNull(controller);
                     Assert.NotNull((controller as Controller).ControllerContext);
@@ -135,7 +127,7 @@
                     Assert.Equal("OkResultAction", (controller as Controller).ControllerContext.ActionDescriptor.ActionName);
                 });
         }
-        
+
         [Fact]
         public void UsingTryUpdateModelAsyncShouldWorkCorrectly()
         {
@@ -145,7 +137,7 @@
                 .ShouldReturn()
                 .Ok();
         }
-        
+
         [Fact]
         public void UnresolvedRouteValuesShouldHaveFriendlyException()
         {
@@ -159,7 +151,7 @@
                         .Ok()
                         .WithModel("");
                 },
-                "Route values are not present in the action call but are needed for successful pass of this test case. Consider calling 'WithResolvedRouteValues' on the controller builder to resolve them from the provided lambda expression or set the HTTP request path by using 'WithHttpRequest'.");
+                "Route values are not present in the method call but are needed for successful pass of this test case. Consider calling 'WithRouteData' on the component builder to resolve them from the provided lambda expression or set the HTTP request path by using 'WithHttpRequest'.");
         }
 
         [Fact]
@@ -190,8 +182,7 @@
             MyController<MvcController>
                 .Instance()
                 .WithControllerContext(controllerContext)
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<MvcController>(controller =>
                 {
                     Assert.NotNull(controller);
                     Assert.NotNull(controller.ControllerContext);
@@ -208,8 +199,7 @@
                 {
                     controllerContext.RouteData.Values.Add("testkey", "testvalue");
                 })
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<MvcController>(controller =>
                 {
                     Assert.NotNull(controller);
                     Assert.NotNull(controller.ControllerContext);
@@ -246,14 +236,13 @@
                 },
                 "RequestModel is not a valid controller type.");
         }
-        
+
         [Fact]
         public void PrepareControllerShouldSetCorrectPropertiesWithDefaultServices()
         {
             MyController<MvcController>
                 .Instance()
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<MvcController>(controller =>
                 {
                     Assert.NotNull(controller);
                     Assert.NotNull(controller.HttpContext);
@@ -272,7 +261,7 @@
                     Assert.Null(controller.ControllerContext.ActionDescriptor);
                 });
         }
-        
+
         private void CheckActionResultTestBuilder<TActionResult>(
             IActionResultTestBuilder<TActionResult> actionResultTestBuilder,
             string expectedActionName)
@@ -280,8 +269,7 @@
             this.CheckActionName(actionResultTestBuilder, expectedActionName);
 
             actionResultTestBuilder
-                .ShouldPassFor()
-                .TheActionResult(actionResult =>
+                .ShouldPassForThe<IActionResult>(actionResult =>
                 {
                     Assert.NotNull(actionResult);
                     Assert.IsAssignableFrom<OkResult>(actionResult);
@@ -290,14 +278,11 @@
 
         private void CheckActionName(IBaseTestBuilderWithInvokedAction testBuilder, string expectedActionName)
         {
-            testBuilder
-                .ShouldPassFor()
-                .TheAction(actionName =>
-                {
-                    Assert.NotNull(actionName);
-                    Assert.NotEmpty(actionName);
-                    Assert.Equal(expectedActionName, actionName);
-                });
+            var actionName = (testBuilder as BaseTestBuilderWithInvokedAction)?.ActionName;
+
+            Assert.NotNull(actionName);
+            Assert.NotEmpty(actionName);
+            Assert.Equal(expectedActionName, actionName);
         }
     }
 }

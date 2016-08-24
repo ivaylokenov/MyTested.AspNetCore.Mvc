@@ -73,7 +73,7 @@
                         .WithModelOfType<IList<ResponseModel>>()
                         .Passing(m => m.First().IntegerValue == 2);
                 }, 
-                "When calling OkResultWithResponse action in MvcController expected response model IList<ResponseModel> to pass the given condition, but it failed.");
+                "When calling OkResultWithResponse action in MvcController expected response model IList<ResponseModel> to pass the given predicate, but it failed.");
         }
     }
 }

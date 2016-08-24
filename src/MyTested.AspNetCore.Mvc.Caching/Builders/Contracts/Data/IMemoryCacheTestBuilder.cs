@@ -19,17 +19,17 @@
         /// <summary>
         /// Tests whether the <see cref="IMemoryCache"/> contains entry with the provided value.
         /// </summary>
-        /// <typeparam name="TEntry">Type of the cache entry value.</typeparam>
+        /// <typeparam name="TValue">Type of the cache entry value.</typeparam>
         /// <param name="value">Value of the cache entry.</param>
         /// <returns>The same <see cref="IAndMemoryCacheBuilder"/>.</returns>
-        IAndMemoryCacheTestBuilder ContainingEntryWithValue<TEntry>(TEntry value);
+        IAndMemoryCacheTestBuilder ContainingEntryWithValue<TValue>(TValue value);
 
         /// <summary>
         /// Tests whether the <see cref="IMemoryCache"/> contains entry with value of the provided type.
         /// </summary>
-        /// <typeparam name="TEntry">Type of the cache entry value.</typeparam>
+        /// <typeparam name="TValue">Type of the cache entry value.</typeparam>
         /// <returns>The same <see cref="IAndMemoryCacheBuilder"/>.</returns>
-        IAndMemoryCacheTestBuilder ContainingEntryOfType<TEntry>();
+        IAndMemoryCacheTestBuilder ContainingEntryOfType<TValue>();
 
         /// <summary>
         /// Tests whether the <see cref="IMemoryCache"/> contains entry with the provided key and corresponding value.
@@ -42,10 +42,10 @@
         /// <summary>
         /// Tests whether the <see cref="IMemoryCache"/> contains entry with value of the provided type and the given key.
         /// </summary>
-        /// <typeparam name="TEntry">Type of the cache entry value.</typeparam>
+        /// <typeparam name="TValue">Type of the cache entry value.</typeparam>
         /// <param name="key">Key of the cache entry.</param>
         /// <returns>The same <see cref="IAndMemoryCacheBuilder"/>.</returns>
-        IAndMemoryCacheTestBuilder ContainingEntryOfType<TEntry>(object key);
+        IAndMemoryCacheTestBuilder ContainingEntryOfType<TValue>(object key);
 
         /// <summary>
         /// Tests whether the <see cref="IMemoryCache"/> contains entry with the provided key, corresponding value and the deeply equal options to the given ones.
@@ -61,7 +61,7 @@
         /// </summary>
         /// <param name="memoryCacheEntryTestBuilder">Builder for setting specific cache entry tests.</param>
         /// <returns>The same <see cref="IAndMemoryCacheBuilder"/>.</returns>
-        IAndMemoryCacheTestBuilder ContainingEntry(Action<IMemoryCacheEntryTestBuilder> memoryCacheEntryTestBuilder);
+        IAndMemoryCacheTestBuilder ContainingEntry(Action<IMemoryCacheEntryKeyTestBuilder> memoryCacheEntryTestBuilder);
 
         /// <summary>
         /// Tests whether the <see cref="IMemoryCache"/> contains the provided entries. 

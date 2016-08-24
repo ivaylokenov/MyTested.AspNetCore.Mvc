@@ -6,6 +6,7 @@
     using System.Globalization;
     using System.Linq;
     using System.Reflection;
+    using Configuration;
     using Licensing;
     using Logging;
     using Microsoft.AspNetCore.Builder;
@@ -29,7 +30,7 @@
     public static class TestApplication
     {
         private const string TestFrameworkName = "MyTested.AspNetCore.Mvc";
-        private const string ReleaseDate = "2016-06-01";
+        private const string ReleaseDate = "2016-09-01";
 
         private static readonly RequestDelegate NullHandler;
 
@@ -163,7 +164,7 @@
         }
 
         internal static string ApplicationName =>
-            TestConfiguration.ApplicationName
+            TestConfiguration.General.ApplicationName
                 ?? TestAssemblyName
                 ?? PlatformServices.Default.Application.ApplicationName;
 
@@ -171,15 +172,17 @@
         {
             lock (Sync)
             {
-                if (!initialiazed && TestConfiguration.AutomaticStartup)
+                if (!initialiazed && TestConfiguration.General.AutomaticStartup)
                 {
                     var defaultStartupType = TryFindDefaultStartupType();
 
-                    if (defaultStartupType != null)
+                    if (defaultStartupType == null)
                     {
-                        startupType = defaultStartupType;
-                        Initialize();
+                        throw new InvalidOperationException($"{Environment.EnvironmentName}Startup class could not be found at the root of the test project. Either add it or set 'General.AutomaticStartup' in the 'testconfig.json' file to 'false'.");
                     }
+
+                    startupType = defaultStartupType;
+                    Initialize();
                 }
             }
         }
@@ -225,6 +228,12 @@
                     {
                         TestHelper.HttpFeatureRegistrationPlugins.Add(httpFeatureRegistrationPlugin);
                     }
+
+                    var shouldPassForPlugin = plugin as IShouldPassForPlugin;
+                    if (shouldPassForPlugin != null)
+                    {
+                        TestHelper.ShouldPassForPlugins.Add(shouldPassForPlugin);
+                    }
                 });
         }
 
@@ -232,12 +241,12 @@
         {
             var applicationAssembly = Assembly.Load(new AssemblyName(testAssemblyName));
 
-            var startupName = TestConfiguration.FullStartupName ?? $"{Environment.EnvironmentName}Startup";
+            var startupType = TestConfiguration.General.StartupType ?? $"{Environment.EnvironmentName}Startup";
 
             // check root of the test project
             var startup =
-                applicationAssembly.GetType(startupName) ??
-                applicationAssembly.GetType($"{testAssemblyName}.{startupName}");
+                applicationAssembly.GetType(startupType) ??
+                applicationAssembly.GetType($"{testAssemblyName}.{startupType}");
 
             return startup;
         }
@@ -266,7 +275,7 @@
 
         private static void FindTestAssemblyName()
         {
-            testAssemblyName = TestConfiguration.TestAssemblyName ?? DependencyContext
+            testAssemblyName = TestConfiguration.General.TestAssemblyName ?? DependencyContext
                 .Default
                 .GetDefaultAssemblyNames()
                 .First()
@@ -286,7 +295,7 @@
             return new HostingEnvironment
             {
                 ApplicationName = ApplicationName,
-                EnvironmentName = TestConfiguration.EnvironmentName,
+                EnvironmentName = TestConfiguration.General.EnvironmentName,
                 ContentRootPath = PlatformServices.Default.Application.ApplicationBasePath
             };
         }

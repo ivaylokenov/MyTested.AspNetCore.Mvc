@@ -55,16 +55,14 @@
 
             MyController<HttpContextController>
                 .Instance()
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<HttpContextController>(controller =>
                 {
                     firstContext = controller.Context;
                 });
 
             MyController<HttpContextController>
                 .Instance()
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<HttpContextController>(controller =>
                 {
                     secondContext = controller.Context;
                 });
@@ -105,8 +103,7 @@
                         {
                             MyController<HttpContextController>
                                 .Instance()
-                                .ShouldPassFor()
-                                .TheController(controller =>
+                                .ShouldPassForThe<HttpContextController>(controller =>
                                 {
                                     firstContextAsync = controller.Context;
                                 });
@@ -115,8 +112,7 @@
                         {
                             MyController<HttpContextController>
                                 .Instance()
-                                .ShouldPassFor()
-                                .TheController(controller =>
+                                .ShouldPassForThe<HttpContextController>(controller =>
                                 {
                                     secondContextAsync = controller.Context;
                                 });
@@ -125,8 +121,7 @@
                         {
                             MyController<HttpContextController>
                                 .Instance()
-                                .ShouldPassFor()
-                                .TheController(controller =>
+                                .ShouldPassForThe<HttpContextController>(controller =>
                                 {
                                     thirdContextAsync = controller.Context;
                                 });
@@ -135,8 +130,7 @@
                         {
                             MyController<HttpContextController>
                                 .Instance()
-                                .ShouldPassFor()
-                                .TheController(controller =>
+                                .ShouldPassForThe<HttpContextController>(controller =>
                                 {
                                     fourthContextAsync = controller.Context;
                                 });
@@ -145,8 +139,7 @@
                         {
                             MyController<HttpContextController>
                                 .Instance()
-                                .ShouldPassFor()
-                                .TheController(controller =>
+                                .ShouldPassForThe<HttpContextController>(controller =>
                                 {
                                     fifthContextAsync = controller.Context;
                                 });
@@ -195,8 +188,7 @@
             MyController<HttpContextController>
                 .Instance()
                 .WithHttpContext(httpContext)
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<HttpContextController>(controller =>
                 {
                     Assert.NotNull(controller);
                     Assert.NotNull(controller.HttpContext);

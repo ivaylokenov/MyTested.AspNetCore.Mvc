@@ -2,10 +2,9 @@
 {
     using System;
     using And;
+    using Contracts.And;
     using Contracts.Base;
-    using Contracts.ShouldPassFor;
     using Internal.TestContexts;
-    using ShouldPassFor;
 
     /// <summary>
     /// Base class for test builders with invoked action.
@@ -28,15 +27,11 @@
         /// <value>Result of type <see cref="Exception"/>.</value>
         public Exception CaughtException => this.TestContext.CaughtException;
         
-        /// <inheritdoc />
-        public new IShouldPassForTestBuilderWithInvokedAction ShouldPassFor()
-            => new ShouldPassForTestBuilderWithInvokedAction(this.TestContext);
-
         /// <summary>
-        /// Creates new <see cref="AndShouldPassForTestBuilder"/>.
+        /// Creates new <see cref="AndTestBuilderWithInvokedAction"/>.
         /// </summary>
         /// <returns>Test builder of type <see cref="IBaseTestBuilderWithInvokedAction"/>.</returns>
-        public IBaseTestBuilderWithInvokedAction NewAndShouldPassForTestBuilder()
-            => new AndShouldPassForTestBuilder(this.TestContext);
+        public IAndTestBuilderWithInvokedAction NewAndTestBuilderWithInvokedAction()
+            => new AndTestBuilderWithInvokedAction(this.TestContext);
     }
 }

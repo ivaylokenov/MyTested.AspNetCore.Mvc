@@ -7,6 +7,7 @@
     using MyTested.AspNetCore.Mvc;
     using ViewModels;
     using Xunit;
+    using Microsoft.AspNetCore.Http;
 
     public class ShoppingCartControllerTest
     {
@@ -89,8 +90,7 @@
                 .Redirect()
                 .To<ShoppingCartController>(c => c.Index())
                 .AndAlso()
-                .ShouldPassFor()
-                .TheHttpContext(async httpContext =>
+                .ShouldPassForThe<HttpContext>(async httpContext =>
                 {
                     var cart = ShoppingCart.GetCart(From.Services<MusicStoreContext>(), httpContext);
                     Assert.Equal(1, (await cart.GetCartItems()).Count);
@@ -127,8 +127,7 @@
                     Assert.Equal(" has been removed from your shopping cart.", model.Message);
                 })
                 .AndAlso()
-                .ShouldPassFor()
-                .TheHttpContext(async httpContext =>
+                .ShouldPassForThe<HttpContext>(async httpContext =>
                 {
                     var cart = ShoppingCart.GetCart(From.Services<MusicStoreContext>(), httpContext);
                     Assert.False((await cart.GetCartItems()).Any(c => c.CartItemId == cartItemId));

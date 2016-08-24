@@ -279,8 +279,15 @@
                 .GetRequiredService<IUrlHelperFactory>()
                 .GetUrlHelper(actionContext);
 
-            var expectedUri = urlHelper.ExpressionLink(expectedRouteValuesAsLambdaExpression);
-            var actualUri = urlHelper.GenerateLink(linkGenerationTestContext, controllerTestContext);
+            ICollection<string> ignoredRouteKeys;
+            var expectedUri = urlHelper.ExpressionLink(
+                expectedRouteValuesAsLambdaExpression,
+                out ignoredRouteKeys);
+            
+            var actualUri = urlHelper.GenerateLink(
+                linkGenerationTestContext,
+                controllerTestContext,
+                ignoredRouteKeys);
 
             if (!string.Equals(expectedUri, actualUri, StringComparison.OrdinalIgnoreCase))
             {

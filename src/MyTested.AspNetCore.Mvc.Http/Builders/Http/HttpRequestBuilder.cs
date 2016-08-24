@@ -6,13 +6,13 @@
     using System.Linq;
     using System.Text;
     using Contracts.Http;
-    using Contracts.Uris;
+    using Contracts.Uri;
     using Exceptions;
     using Internal.Formatters;
     using Internal.Http;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Primitives;
-    using Uris;
+    using Uri;
     using Utilities.Extensions;
     using Utilities.Validators;
 
@@ -417,7 +417,7 @@
         }
 
         /// <inheritdoc />
-        public IAndHttpRequestBuilder WithLocation(Action<IUriTestBuilder> uriBuilder)
+        public IAndHttpRequestBuilder WithLocation(Action<IUriBuilder> uriBuilder)
         {
             var mockedUriBuilder = new MockedUriBuilder();
             uriBuilder(mockedUriBuilder);

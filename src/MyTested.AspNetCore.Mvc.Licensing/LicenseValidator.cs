@@ -18,7 +18,7 @@
 
         public static bool Validate(IEnumerable<string> licenses, DateTime releaseDate, string projectNamespace)
         {
-            if (licenses == null)
+            if (licenses == null || !licenses.Any())
             {
                 throw new InvalidLicenseException("No license provided");
             }

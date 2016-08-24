@@ -1,6 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ShouldPassForTests
 {
     using Exceptions;
+    using Microsoft.AspNetCore.Mvc;
     using Setups;
     using Setups.Controllers;
     using Xunit;
@@ -15,8 +16,7 @@
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
                 .Ok()
-                .ShouldPassFor()
-                .TheActionResult(actionResult =>
+                .ShouldPassForThe<OkObjectResult>(actionResult =>
                 {
                     Assert.NotNull(actionResult);
                 });
@@ -28,8 +28,9 @@
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.FullOkAction())
-                .ShouldPassFor()
-                .TheActionResult(actionResult => actionResult != null);
+                .ShouldReturn()
+                .Ok()
+                .ShouldPassForThe<OkObjectResult>(actionResult => actionResult != null);
         }
 
         [Fact]
@@ -41,10 +42,11 @@
                     MyController<MvcController>
                         .Instance()
                         .Calling(c => c.FullOkAction())
-                        .ShouldPassFor()
-                        .TheActionResult(actionResult => actionResult == null);
+                        .ShouldReturn()
+                        .Ok()
+                        .ShouldPassForThe<OkObjectResult>(actionResult => actionResult == null);
                 },
-                "Expected the OkObjectResult to pass the given predicate but it failed.");
+                "Expected OkObjectResult to pass the given predicate but it failed.");
         }
     }
 }

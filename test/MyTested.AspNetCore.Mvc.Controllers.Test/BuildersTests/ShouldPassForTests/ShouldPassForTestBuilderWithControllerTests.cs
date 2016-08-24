@@ -16,8 +16,7 @@
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
                 .Ok()
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<MvcController>(controller =>
                 {
                     Assert.NotNull(controller);
                 });
@@ -29,8 +28,7 @@
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.FullOkAction())
-                .ShouldPassFor()
-                .TheController(controller => controller != null);
+                .ShouldPassForThe<MvcController>(controller => controller != null);
         }
 
         [Fact]
@@ -42,10 +40,9 @@
                     MyController<MvcController>
                         .Instance()
                         .Calling(c => c.FullOkAction())
-                        .ShouldPassFor()
-                        .TheController(controller => controller == null);
+                        .ShouldPassForThe<MvcController>(controller => controller == null);
                 },
-                "Expected the MvcController to pass the given predicate but it failed.");
+                "Expected MvcController to pass the given predicate but it failed.");
         }
 
         [Fact]
@@ -56,8 +53,7 @@
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
                 .Ok()
-                .ShouldPassFor()
-                .TheControllerAttributes(attributes =>
+                .ShouldPassForThe<ControllerAttributes>(attributes =>
                 {
                     Assert.Equal(2, attributes.Count());
                 });
@@ -69,8 +65,7 @@
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.FullOkAction())
-                .ShouldPassFor()
-                .TheControllerAttributes(attributes => attributes.Count() == 2);
+                .ShouldPassForThe<ControllerAttributes>(attributes => attributes.Count() == 2);
         }
 
         [Fact]
@@ -82,10 +77,9 @@
                     MyController<MvcController>
                         .Instance()
                         .Calling(c => c.FullOkAction())
-                        .ShouldPassFor()
-                        .TheControllerAttributes(attributes => attributes.Count() == 3);
+                        .ShouldPassForThe<ControllerAttributes>(attributes => attributes.Count() == 3);
                 },
-                "Expected the controller attributes to pass the given predicate but it failed.");
+                "Expected ControllerAttributes to pass the given predicate but it failed.");
         }
     }
 }

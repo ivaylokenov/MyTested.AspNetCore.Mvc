@@ -2,9 +2,7 @@
 {
     using System.Collections.Generic;
     using Contracts.Base;
-    using Contracts.ShouldPassFor;
     using Internal.TestContexts;
-    using ShouldPassFor;
     using Utilities.Validators;
 
     /// <summary>
@@ -53,9 +51,5 @@
                 this.testContext = value;
             }
         }
-
-        /// <inheritdoc />
-        public new IShouldPassForTestBuilderWithController<object> ShouldPassFor() 
-            => new ShouldPassForTestBuilderWithController<object>(this.TestContext);
     }
 }

@@ -1,22 +1,17 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.BadRequest
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Net;
     using Base;
-    using Contracts.Base;
     using Contracts.ActionResults.BadRequest;
     using Contracts.Models;
-    using Contracts.ShouldPassFor;
     using Exceptions;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.Net.Http.Headers;
-    using Models;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Net;
-    using ShouldPassFor;
     using Utilities.Extensions;
 
     /// <summary>
@@ -199,10 +194,7 @@
 
         /// <inheritdoc />
         public IBadRequestTestBuilder AndAlso() => this;
-
-        IShouldPassForTestBuilderWithActionResult<ActionResult> IBaseTestBuilderWithActionResult<ActionResult>.ShouldPassFor()
-            => new ShouldPassForTestBuilderWithActionResult<ActionResult>(this.TestContext);
-
+        
         protected override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)
             => this.ThrowNewHttpBadRequestResultAssertionException(propertyName, expectedValue, actualValue);
         

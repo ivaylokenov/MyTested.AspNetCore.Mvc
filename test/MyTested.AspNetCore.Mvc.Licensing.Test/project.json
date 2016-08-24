@@ -3,6 +3,7 @@
     "warningsAsErrors": true,
     "keyFile": "../../tools/Key.snk",
     "copyToOutput": [
+      "testconfig.json",
       "multilicenseconfig.json"
     ]
   },

@@ -2,7 +2,7 @@
 {
     using System;
     using System.Linq;
-    using Builders.Uris;
+    using Builders.Uri;
 
     /// <summary>
     /// Validator class containing URI validation logic.

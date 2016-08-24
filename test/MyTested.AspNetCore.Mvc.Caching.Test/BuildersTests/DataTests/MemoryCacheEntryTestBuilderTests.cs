@@ -52,7 +52,7 @@
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with the given value, but in fact it was different.");
+                "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with 'test' key and the given value, but in fact it was different.");
         }
         
         [Fact]
@@ -89,7 +89,7 @@
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with '2/1/2016 1:01:01 AM +00:00' absolute expiration, but in fact found '1/1/2016 1:01:01 AM +00:00'.");
+                "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with 'test' key and '2/1/2016 1:01:01 AM +00:00' absolute expiration, but in fact found '1/1/2016 1:01:01 AM +00:00'.");
         }
 
         [Fact]
@@ -126,7 +126,7 @@
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with '00:02:00' absolute expiration relative to now, but in fact found '00:01:00'.");
+                "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with 'test' key and '00:02:00' absolute expiration relative to now, but in fact found '00:01:00'.");
         }
         
         [Fact]
@@ -163,7 +163,7 @@
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with Low priority, but in fact found High.");
+                "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with 'test' key and Low priority, but in fact found High.");
         }
         
         [Fact]
@@ -200,7 +200,7 @@
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with '00:10:00' sliding expiration, but in fact found '00:05:00'.");
+                "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with 'test' key and '00:10:00' sliding expiration, but in fact found '00:05:00'.");
         }
 
         [Fact]

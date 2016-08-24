@@ -5,7 +5,7 @@
     using System.Threading.Tasks;
     using Base;
     using Contracts.ActionResults.LocalRedirect;
-    using Contracts.Uris;
+    using Contracts.Uri;
     using Exceptions;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;

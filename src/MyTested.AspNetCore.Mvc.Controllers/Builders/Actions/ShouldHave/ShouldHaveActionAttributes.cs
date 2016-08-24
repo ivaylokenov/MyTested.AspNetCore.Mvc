@@ -2,7 +2,7 @@
 {
     using System;
     using Attributes;
-    using Contracts.And;
+    using Contracts.Actions;
     using Contracts.Attributes;
     using Exceptions;
     using Utilities.Extensions;

@@ -7,13 +7,11 @@
     using Base;
     using Contracts.ActionResults.Redirect;
     using Contracts.Base;
-    using Contracts.ShouldPassFor;
-    using Contracts.Uris;
+    using Contracts.Uri;
     using Exceptions;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Routing;
-    using ShouldPassFor;
     using Utilities.Extensions;
     using Utilities.Validators;
 
@@ -259,9 +257,6 @@
 
         /// <inheritdoc />
         public IRedirectTestBuilder AndAlso() => this;
-
-        IShouldPassForTestBuilderWithActionResult<ActionResult> IBaseTestBuilderWithActionResult<ActionResult>.ShouldPassFor()
-            => new ShouldPassForTestBuilderWithActionResult<ActionResult>(this.TestContext);
         
         private TExpectedRedirectResult GetRedirectResult<TExpectedRedirectResult>(string containment)
             where TExpectedRedirectResult : class

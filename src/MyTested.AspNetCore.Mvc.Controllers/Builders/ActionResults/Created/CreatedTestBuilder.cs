@@ -8,15 +8,13 @@
     using Base;
     using Contracts.ActionResults.Created;
     using Contracts.Base;
-    using Contracts.ShouldPassFor;
-    using Contracts.Uris;
+    using Contracts.Uri;
     using Exceptions;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.AspNetCore.Routing;
     using Microsoft.Net.Http.Headers;
-    using ShouldPassFor;
     using Utilities.Extensions;
     using Utilities.Validators;
 
@@ -332,10 +330,7 @@
 
         /// <inheritdoc />
         public ICreatedTestBuilder AndAlso() => this;
-
-        IShouldPassForTestBuilderWithActionResult<ObjectResult> IBaseTestBuilderWithActionResult<ObjectResult>.ShouldPassFor()
-            => new ShouldPassForTestBuilderWithActionResult<ObjectResult>(this.TestContext);
-
+        
         /// <summary>
         /// Throws new created result assertion exception for the provided property name, expected value and actual value.
         /// </summary>

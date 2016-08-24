@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Builders.ActionResults.BadRequest;
@@ -101,18 +102,24 @@
         /// <summary>
         /// Tests whether <see cref="BadRequestObjectResult"/> contains specific model state errors using test builder.
         /// </summary>
-        /// <typeparam name="TRequestModel">Type of model for which the model state errors will be tested.</typeparam>
         /// <param name="badRequestTestBuilder">Instance of <see cref="IBadRequestTestBuilder"/> type.</param>
+        /// <param name="modelStateTestBuilder">Model state errors test builder.</param>
         /// <returns>The same <see cref="IAndBadRequestTestBuilder"/>.</returns>
-        public static IModelErrorTestBuilder<TRequestModel> WithModelStateErrorFor<TRequestModel>(this IBadRequestTestBuilder badRequestTestBuilder)
+        public static IAndBadRequestTestBuilder WithModelStateError(
+            this IBadRequestTestBuilder badRequestTestBuilder,
+            Action<IModelStateTestBuilder> modelStateTestBuilder)
         {
             var actualBadRequestTestBuilder = GetBadRequestTestBuilder(badRequestTestBuilder);
 
             actualBadRequestTestBuilder.TestContext.Model = actualBadRequestTestBuilder.GetBadRequestObjectResultValue();
 
-            return new ModelErrorTestBuilder<TRequestModel>(
+            var newModelStateTestBuilder = new ModelStateTestBuilder(
                 actualBadRequestTestBuilder.TestContext,
                 modelState: actualBadRequestTestBuilder.GetModelStateFromSerializableError(actualBadRequestTestBuilder.TestContext.Model));
+
+            modelStateTestBuilder(newModelStateTestBuilder);
+
+            return actualBadRequestTestBuilder;
         }
 
         private static BadRequestTestBuilder<BadRequestObjectResult> GetBadRequestTestBuilder(IBadRequestTestBuilder badRequestTestBuilder)

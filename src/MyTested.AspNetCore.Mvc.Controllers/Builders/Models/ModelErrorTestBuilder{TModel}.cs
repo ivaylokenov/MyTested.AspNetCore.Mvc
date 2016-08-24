@@ -1,12 +1,10 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Models
 {
     using Contracts.Models;
-    using Contracts.ShouldPassFor;
     using Exceptions;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
-    using ShouldPassFor;
     using Utilities.Extensions;
 
     /// <summary>
@@ -35,10 +33,6 @@
 
         /// <inheritdoc />
         public IModelErrorTestBuilder<TModel> AndAlso() => this;
-
-        /// <inheritdoc />
-        public new IShouldPassForTestBuilderWithModel<TModel> ShouldPassFor()
-            => new ShouldPassForTestBuilderWithModel<TModel>(this.TestContext);
         
         public void ThrowNewModelErrorAssertionException(string messageFormat, string errorKey)
         {

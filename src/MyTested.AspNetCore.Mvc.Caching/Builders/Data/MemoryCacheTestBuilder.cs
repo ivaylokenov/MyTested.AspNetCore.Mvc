@@ -43,7 +43,7 @@
         }
 
         /// <inheritdoc />
-        public IAndMemoryCacheTestBuilder ContainingEntryWithValue<TEntry>(TEntry value)
+        public IAndMemoryCacheTestBuilder ContainingEntryWithValue<TValue>(TValue value)
         {
             DictionaryValidator.ValidateValue(
                 MemoryCacheName,
@@ -55,9 +55,9 @@
         }
 
         /// <inheritdoc />
-        public IAndMemoryCacheTestBuilder ContainingEntryOfType<TEntry>()
+        public IAndMemoryCacheTestBuilder ContainingEntryOfType<TValue>()
         {
-            DictionaryValidator.ValidateValueOfType<TEntry>(
+            DictionaryValidator.ValidateValueOfType<TValue>(
                 MemoryCacheName,
                 this.GetMemoryCacheAsDictionary(),
                 this.ThrowNewDataProviderAssertionException);
@@ -66,10 +66,10 @@
         }
 
         /// <inheritdoc />
-        public IAndMemoryCacheTestBuilder ContainingEntryOfType<TEntry>(object key)
+        public IAndMemoryCacheTestBuilder ContainingEntryOfType<TValue>(object key)
         {
             var value = this.GetValue(key);
-            var expectedType = typeof(TEntry);
+            var expectedType = typeof(TValue);
             var actualType = value.GetType();
 
             if (Reflection.AreDifferentTypes(expectedType, actualType))
@@ -128,7 +128,7 @@
         }
 
         /// <inheritdoc />
-        public IAndMemoryCacheTestBuilder ContainingEntry(Action<IMemoryCacheEntryTestBuilder> memoryCacheEntryTestBuilder)
+        public IAndMemoryCacheTestBuilder ContainingEntry(Action<IMemoryCacheEntryKeyTestBuilder> memoryCacheEntryTestBuilder)
         {
             var mockedMemoryCache = this.GetMockedMemoryCache();
 

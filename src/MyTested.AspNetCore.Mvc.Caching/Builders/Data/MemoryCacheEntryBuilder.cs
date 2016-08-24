@@ -8,7 +8,7 @@
     /// <summary>
     /// Used for building mocked <see cref="IMemoryCache"/> entry.
     /// </summary>
-    public class MemoryCacheEntryBuilder : IAndMemoryCacheEntryTestBuilder
+    public class MemoryCacheEntryBuilder : IMemoryCacheEntryKeyBuilder, IAndMemoryCacheEntryBuilder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MemoryCacheEntryBuilder"/> class.
@@ -25,55 +25,55 @@
         protected MockedCacheEntry MemoryCacheEntry { get; private set; }
 
         /// <inheritdoc />
-        public virtual IAndMemoryCacheEntryTestBuilder WithKey(object key)
+        public IAndMemoryCacheEntryBuilder WithKey(object key)
         {
             this.MemoryCacheEntry.Key = key;
             return this;
         }
 
         /// <inheritdoc />
-        public virtual IAndMemoryCacheEntryTestBuilder WithValue(object value)
+        public IAndMemoryCacheEntryBuilder WithValue(object value)
         {
             this.MemoryCacheEntry.Value = value;
             return this;
         }
 
         /// <inheritdoc />
-        public virtual IAndMemoryCacheEntryTestBuilder WithAbsoluteExpiration(DateTimeOffset? absoluteExpiration)
+        public IAndMemoryCacheEntryBuilder WithAbsoluteExpiration(DateTimeOffset? absoluteExpiration)
         {
             this.MemoryCacheEntry.AbsoluteExpiration = absoluteExpiration;
             return this;
         }
 
         /// <inheritdoc />
-        public virtual IAndMemoryCacheEntryTestBuilder WithAbsoluteExpirationRelativeToNow(TimeSpan? absoluteExpirationRelativeToNow)
+        public IAndMemoryCacheEntryBuilder WithAbsoluteExpirationRelativeToNow(TimeSpan? absoluteExpirationRelativeToNow)
         {
             this.MemoryCacheEntry.AbsoluteExpirationRelativeToNow = absoluteExpirationRelativeToNow;
             return this;
         }
 
         /// <inheritdoc />
-        public virtual IAndMemoryCacheEntryTestBuilder WithPriority(CacheItemPriority priority)
+        public IAndMemoryCacheEntryBuilder WithPriority(CacheItemPriority priority)
         {
             this.MemoryCacheEntry.Priority = priority;
             return this;
         }
 
         /// <inheritdoc />
-        public virtual IAndMemoryCacheEntryTestBuilder WithSlidingExpiration(TimeSpan? slidingExpiration)
+        public IAndMemoryCacheEntryBuilder WithSlidingExpiration(TimeSpan? slidingExpiration)
         {
             this.MemoryCacheEntry.SlidingExpiration = slidingExpiration;
             return this;
         }
 
         /// <inheritdoc />
-        public IMemoryCacheEntryTestBuilder AndAlso() => this;
+        public IMemoryCacheEntryBuilder AndAlso() => this;
 
         internal ICacheEntry GetMockedMemoryCacheEntry()
         {
             if (this.MemoryCacheEntry.Key == null)
             {
-                throw new InvalidOperationException("Cache entry key must be provided. 'WithKey' method must be called on the memory cache entry builder in order to run this test case successfully.");
+                throw new InvalidOperationException("Cache entry key must be provided. 'WithKey' method must be called with а non-null value.");
             }
             
             return this.MemoryCacheEntry;

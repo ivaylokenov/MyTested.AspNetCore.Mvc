@@ -2,8 +2,8 @@
 {
     using System;
     using Base;
+    using Components;
     using Contracts.Controllers;
-    using Contracts.ShouldPassFor;
     using Internal.Application;
     using Internal.Contracts;
     using Internal.Http;
@@ -11,7 +11,6 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
-    using ShouldPassFor;
     using Utilities;
     using Utilities.Validators;
 
@@ -19,7 +18,7 @@
     /// Used for building the controller which will be tested.
     /// </summary>
     /// <typeparam name="TController">Class representing ASP.NET Core MVC controller.</typeparam>
-    public partial class ControllerBuilder<TController> : BaseTestBuilderWithComponentBuilder<IAndControllerBuilder<TController>>, IAndControllerBuilder<TController>
+    public partial class ControllerBuilder<TController> : BaseComponentBuilder<IAndControllerBuilder<TController>>, IAndControllerBuilder<TController>
         where TController : class
     {
         private ControllerTestContext testContext;
@@ -36,7 +35,7 @@
         {
             this.TestContext = testContext;
 
-            this.EnabledValidation = TestApplication.TestConfiguration.ModelStateValidation;
+            this.EnabledValidation = TestApplication.TestConfiguration.Controllers.ModelStateValidation;
 
 #if NETSTANDARD1_6
             this.ValidateControllerType();
@@ -47,7 +46,7 @@
         {
             get
             {
-                this.BuildControllerIfNotExists();
+                this.TestContext.ComponentBuildDelegate?.Invoke();
                 return this.TestContext.ComponentAs<TController>();
             }
         }
@@ -83,17 +82,10 @@
         /// <inheritdoc />
         public IControllerTestBuilder ShouldHave()
         {
-            this.BuildControllerIfNotExists();
+            this.TestContext.ComponentBuildDelegate?.Invoke();
             return new ControllerTestBuilder(this.TestContext);
         }
-
-        /// <inheritdoc />
-        public new IShouldPassForTestBuilderWithController<TController> ShouldPassFor()
-        {
-            this.BuildControllerIfNotExists();
-            return new ShouldPassForTestBuilderWithController<TController>(this.TestContext);
-        }
-
+        
         protected override IAndControllerBuilder<TController> SetBuilder() => this;
 
         private void ValidateControllerType()

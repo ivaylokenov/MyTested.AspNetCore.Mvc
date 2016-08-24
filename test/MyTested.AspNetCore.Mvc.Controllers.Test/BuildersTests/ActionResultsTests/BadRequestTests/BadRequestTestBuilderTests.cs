@@ -530,8 +530,7 @@
                 .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
                 .BadRequest()
-                .ShouldPassFor()
-                .TheActionResult(actionResult =>
+                .ShouldPassForThe<IActionResult>(actionResult =>
                 {
                     Assert.NotNull(actionResult);
                     Assert.IsAssignableFrom<BadRequestObjectResult>(actionResult);

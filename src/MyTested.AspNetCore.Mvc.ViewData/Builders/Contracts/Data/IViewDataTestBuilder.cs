@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Data
 {
+    using System;
     using System.Collections.Generic;
 
     /// <summary>
@@ -17,25 +18,25 @@
         /// <summary>
         /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary"/> contains entry with the provided value.
         /// </summary>
-        /// <typeparam name="TEntry">Type of the view data entry value.</typeparam>
+        /// <typeparam name="TValue">Type of the view data entry value.</typeparam>
         /// <param name="value">Value of the view data entry.</param>
         /// <returns>The same <see cref="IAndViewDataTestBuilder"/>.</returns>
-        IAndViewDataTestBuilder ContainingEntryWithValue<TEntry>(TEntry value);
+        IAndViewDataTestBuilder ContainingEntryWithValue<TValue>(TValue value);
 
         /// <summary>
         /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary"/> contains entry with value of the provided type.
         /// </summary>
-        /// <typeparam name="TEntry">Type of the view data entry value.</typeparam>
+        /// <typeparam name="TValue">Type of the view data entry value.</typeparam>
         /// <returns>The same <see cref="IAndViewDataTestBuilder"/>.</returns>
-        IAndViewDataTestBuilder ContainingEntryOfType<TEntry>();
+        IAndViewDataTestBuilder ContainingEntryOfType<TValue>();
 
         /// <summary>
         /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary"/> contains entry with value of the provided type and the given key.
         /// </summary>
-        /// <typeparam name="TEntry">Type of the view data entry value.</typeparam>
+        /// <typeparam name="TValue">Type of the view data entry value.</typeparam>
         /// <param name="key">Key of the view data entry.</param>
         /// <returns>The same <see cref="IAndViewDataTestBuilder"/>.</returns>
-        IAndViewDataTestBuilder ContainingEntryOfType<TEntry>(string key);
+        IAndViewDataTestBuilder ContainingEntryOfType<TValue>(string key);
 
         /// <summary>
         /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary"/> contains entry with the provided key and corresponding value.
@@ -44,6 +45,13 @@
         /// <param name="value">Value of the view data entry.</param>
         /// <returns>The same <see cref="IAndViewDataTestBuilder"/>.</returns>
         IAndViewDataTestBuilder ContainingEntry(string key, object value);
+
+        /// <summary>
+        /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary"/> contains specific entry by using a builder. 
+        /// </summary>
+        /// <param name="viewDataEntryTestBuilder">Builder for setting specific <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary"/> entry tests.</param>
+        /// <returns>The same <see cref="IAndViewDataTestBuilder"/>.</returns>
+        IAndViewDataTestBuilder ContainingEntry(Action<IDataProviderEntryKeyTestBuilder> viewDataEntryTestBuilder);
 
         /// <summary>
         /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary"/> contains the provided entries. 

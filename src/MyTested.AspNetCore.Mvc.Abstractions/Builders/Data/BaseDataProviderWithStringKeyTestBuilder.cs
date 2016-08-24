@@ -1,8 +1,11 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Data
 {
+    using System;
     using System.Collections.Generic;
+    using Contracts.Data;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Routing;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Base class for all test builders with data provider containing string as key.
@@ -35,23 +38,23 @@
         }
 
         /// <inheritdoc />
-        public TDataProviderTestBuilder ContainingEntryWithValue<TEntry>(TEntry value)
+        public TDataProviderTestBuilder ContainingEntryWithValue<TValue>(TValue value)
         {
             this.ValidateContainingEntryWithValue(value);
             return this.DataProviderTestBuilder;
         }
 
         /// <inheritdoc />
-        public TDataProviderTestBuilder ContainingEntryOfType<TEntry>()
+        public TDataProviderTestBuilder ContainingEntryOfType<TValue>()
         {
-            this.ValidateContainingEntryOfType<TEntry>();
+            this.ValidateContainingEntryOfType<TValue>();
             return this.DataProviderTestBuilder;
         }
 
         /// <inheritdoc />
-        public TDataProviderTestBuilder ContainingEntryOfType<TEntry>(string key)
+        public TDataProviderTestBuilder ContainingEntryOfType<TValue>(string key)
         {
-            this.ValidateContainingEntryOfType<TEntry>(key);
+            this.ValidateContainingEntryOfType<TValue>(key);
             return this.DataProviderTestBuilder;
         }
 
@@ -59,6 +62,23 @@
         public TDataProviderTestBuilder ContainingEntry(string key, object value)
         {
             this.ValidateContainingEntry(key, value);
+            return this.DataProviderTestBuilder;
+        }
+
+        /// <inheritdoc />
+        public TDataProviderTestBuilder ContainingEntry(Action<IDataProviderEntryKeyTestBuilder> dataProviderEntryTestBuilder)
+        {
+            var newDataProviderEntryBuilder = new DataProviderEntryTestBuilder(this.TestContext, this.DataProviderName);
+            dataProviderEntryTestBuilder(newDataProviderEntryBuilder);
+
+            var key = newDataProviderEntryBuilder.GetDataProviderEntryKey();
+            this.ContainingEntryWithKey(key);
+
+            var actualEntry = this.DataProvider[key];
+
+            var validations = newDataProviderEntryBuilder.GetDataProviderEntryValidations();
+            validations.ForEach(v => v(actualEntry));
+            
             return this.DataProviderTestBuilder;
         }
 

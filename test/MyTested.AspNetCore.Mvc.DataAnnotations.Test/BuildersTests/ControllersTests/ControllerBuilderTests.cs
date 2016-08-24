@@ -29,8 +29,7 @@
                 .Calling(c => c.OkResultActionWithRequestBody(1, requestModel))
                 .ShouldReturn()
                 .Ok()
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<MvcController>(controller =>
                 {
                     var modelState = (controller as Controller).ModelState;
 

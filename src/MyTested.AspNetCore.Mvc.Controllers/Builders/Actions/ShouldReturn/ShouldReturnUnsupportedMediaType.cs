@@ -12,7 +12,7 @@
         public IBaseTestBuilderWithActionResult<TActionResult> UnsupportedMediaType()
         {
             this.ValidateActionReturnType<UnsupportedMediaTypeResult>();
-            return this.NewAndShouldPassForTestBuilder();
+            return this.NewAndTestBuilderWithActionResult();
         }
     }
 }

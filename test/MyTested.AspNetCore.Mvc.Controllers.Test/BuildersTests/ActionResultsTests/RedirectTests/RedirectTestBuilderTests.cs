@@ -522,7 +522,7 @@
         }
         
         [Fact]
-        public void AtShouldWorkCorrectlyWithCorrectActionCall()
+        public void ToShouldWorkCorrectlyWithCorrectActionCall()
         {
             MyApplication.StartsFrom<RoutingStartup>();
 
@@ -537,7 +537,22 @@
         }
 
         [Fact]
-        public void AtShouldWorkCorrectlyWithCorrectVoidActionCall()
+        public void ToShouldWorkCorrectlyWithWithAnyCall()
+        {
+            MyApplication.StartsFrom<RoutingStartup>();
+
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.RedirectToRouteAction())
+                .ShouldReturn()
+                .Redirect()
+                .To<NoAttributesController>(c => c.WithParameter(With.Any<int>()));
+
+            MyApplication.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void ToShouldWorkCorrectlyWithCorrectVoidActionCall()
         {
             MyApplication.StartsFrom<RoutingStartup>();
 
@@ -552,7 +567,7 @@
         }
 
         [Fact]
-        public void AtShouldWorkCorrectlyWithCorrectTaskActionCall()
+        public void ToShouldWorkCorrectlyWithCorrectTaskActionCall()
         {
             MyApplication.StartsFrom<RoutingStartup>();
 
@@ -592,8 +607,7 @@
                 .Calling(c => c.RedirectToActionResult())
                 .ShouldReturn()
                 .Redirect()
-                .ShouldPassFor()
-                .TheActionResult(actionResult =>
+                .ShouldPassForThe<IActionResult>(actionResult =>
                 {
                     Assert.NotNull(actionResult);
                     Assert.IsAssignableFrom<RedirectToActionResult>(actionResult);

@@ -169,7 +169,9 @@ MyMvc
 	.MemoryCache(cache => cache
 		.ContainingEntry(entry => entry
 			.WithKey("CacheEntry")
-			.WithSlidingExpiration(TimeSpan.FromMinutes(10))))
+			.WithSlidingExpiration(TimeSpan.FromMinutes(10))
+			.WithValueOfType<CachedModel>()
+			.Passing(a => a.Id == 1)))
 	.AndAlso()
 	.ShouldReturn()
 	.View()
@@ -187,7 +189,8 @@ MyMvc
 		.ChangingActionNameTo("AnotherAction"));
 	
 // tests whether model state error exists by using lambda expression
-// and specific tests for the error messages
+// and with specific tests for the error messages
+// and tests whether the action return view with the same request model
 MyMvc
 	.Controller<MvcController>()
 	.Calling(c => c.MyAction(requestWithErrors))
@@ -196,7 +199,10 @@ MyMvc
 		.ContainingNoErrorFor(m => m.NonRequiredProperty)
 		.AndAlso()
 		.ContainingErrorFor(m => m.RequiredProperty)
-		.ThatEquals("The RequiredProperty field is required."));
+		.ThatEquals("The RequiredProperty field is required."))
+	.AndAlso()
+	.ShouldReturn()
+	.View(requestWithErrors);
 
 // tests whether the action throws
 // with exception of certain type and with certain message

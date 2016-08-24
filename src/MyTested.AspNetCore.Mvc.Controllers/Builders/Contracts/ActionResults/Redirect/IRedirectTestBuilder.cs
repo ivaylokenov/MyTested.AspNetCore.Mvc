@@ -6,7 +6,7 @@
     using System.Threading.Tasks;
     using Base;
     using Microsoft.AspNetCore.Mvc;
-    using Uris;
+    using Uri;
 
     /// <summary>
     /// Used for testing <see cref="RedirectResult"/>, <see cref="RedirectToActionResult"/> or <see cref="RedirectToRouteResult"/>.

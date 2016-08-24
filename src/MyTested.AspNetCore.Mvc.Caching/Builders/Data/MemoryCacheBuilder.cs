@@ -42,7 +42,7 @@
         }
 
         /// <inheritdoc />
-        public IAndMemoryCacheBuilder WithEntry(Action<IMemoryCacheEntryTestBuilder> memoryCacheEntryBuilder)
+        public IAndMemoryCacheBuilder WithEntry(Action<IMemoryCacheEntryKeyBuilder> memoryCacheEntryBuilder)
         {
             var newMemoryCacheEntryBuilder = new MemoryCacheEntryBuilder();
             memoryCacheEntryBuilder(newMemoryCacheEntryBuilder);

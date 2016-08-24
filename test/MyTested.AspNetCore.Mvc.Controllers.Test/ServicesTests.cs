@@ -22,8 +22,7 @@
 
             MyController<MvcController>
                 .Instance()
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<MvcController>(controller =>
                 {
                     Assert.NotNull(controller);
                     Assert.IsAssignableFrom<MvcController>(controller);
@@ -35,8 +34,7 @@
         {
             MyController<MvcController>
                 .Instance(() => new MvcController(new InjectedService()))
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<MvcController>(controller =>
                 {
                     Assert.NotNull(controller);
                     Assert.IsAssignableFrom<MvcController>(controller);
@@ -53,8 +51,7 @@
 
             MyController<MvcController>
                 .Instance(instance)
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<MvcController>(controller =>
                 {
                     Assert.NotNull(controller);
                     Assert.IsAssignableFrom<MvcController>(controller);
@@ -74,8 +71,7 @@
 
             MyController<NoParameterlessConstructorController>
                 .Instance()
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<NoParameterlessConstructorController>(controller =>
                 {
                     Assert.NotNull(controller);
                     Assert.NotNull(controller.Service);
@@ -105,7 +101,7 @@
 
             MyApplication.IsUsingDefaultConfiguration();
         }
-        
+
         [Fact]
         public void IActionContextAccessorShouldWorkCorrectlySynchronously()
         {
@@ -121,16 +117,14 @@
 
             MyController<ActionContextController>
                 .Instance()
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<ActionContextController>(controller =>
                 {
                     firstContext = controller.Context;
                 });
 
             MyController<ActionContextController>
                 .Instance()
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<ActionContextController>(controller =>
                 {
                     secondContext = controller.Context;
                 });
@@ -169,8 +163,7 @@
                         {
                             MyController<ActionContextController>
                                 .Instance()
-                                .ShouldPassFor()
-                                .TheController(controller =>
+                                .ShouldPassForThe<ActionContextController>(controller =>
                                 {
                                     firstContextAsync = controller.Context;
                                 });
@@ -179,8 +172,7 @@
                         {
                             MyController<ActionContextController>
                                 .Instance()
-                                .ShouldPassFor()
-                                .TheController(controller =>
+                                .ShouldPassForThe<ActionContextController>(controller =>
                                 {
                                     secondContextAsync = controller.Context;
                                 });
@@ -189,8 +181,7 @@
                         {
                             MyController<ActionContextController>
                                 .Instance()
-                                .ShouldPassFor()
-                                .TheController(controller =>
+                                .ShouldPassForThe<ActionContextController>(controller =>
                                 {
                                     thirdContextAsync = controller.Context;
                                 });
@@ -199,8 +190,7 @@
                         {
                             MyController<ActionContextController>
                                 .Instance()
-                                .ShouldPassFor()
-                                .TheController(controller =>
+                                .ShouldPassForThe<ActionContextController>(controller =>
                                 {
                                     fourthContextAsync = controller.Context;
                                 });
@@ -209,8 +199,7 @@
                         {
                             MyController<ActionContextController>
                                 .Instance()
-                                .ShouldPassFor()
-                                .TheController(controller =>
+                                .ShouldPassForThe<ActionContextController>(controller =>
                                 {
                                     fifthContextAsync = controller.Context;
                                 });
@@ -259,8 +248,7 @@
             MyController<ActionContextController>
                 .Instance()
                 .WithActionContext(actionContext)
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<ActionContextController>(controller =>
                 {
                     Assert.NotNull(controller);
                     Assert.NotNull(controller.Context);
@@ -288,8 +276,7 @@
                 {
                     actionContext.ActionDescriptor = actionDescriptor;
                 })
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<ActionContextController>(controller =>
                 {
                     Assert.NotNull(controller);
                     Assert.NotNull(controller.Context);
@@ -315,8 +302,7 @@
             MyController<ActionContextController>
                 .Instance()
                 .WithControllerContext(actionContext)
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<ActionContextController>(controller =>
                 {
                     Assert.NotNull(controller);
                     Assert.NotNull(controller.Context);

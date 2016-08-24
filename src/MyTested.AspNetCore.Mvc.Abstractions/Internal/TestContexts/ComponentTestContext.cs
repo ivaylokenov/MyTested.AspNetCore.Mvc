@@ -25,7 +25,7 @@
             {
                 if (this.component == null)
                 {
-                    this.component = this.ComponentConstruction();
+                    this.component = this.ComponentConstructionDelegate();
                 }
 
                 return this.component;
@@ -134,11 +134,13 @@
             }
         }
 
-        public Func<object> ComponentConstruction { get; set; }
-        
-        public Action ComponentPreparationAction { get; set; }
+        public Func<object> ComponentConstructionDelegate { get; set; }
 
-        public Action PreMethodInvocationAction { get; set; }
+        public Action ComponentBuildDelegate { get; set; }
+        
+        public Action ComponentPreparationDelegate { get; set; }
+
+        public Action PreMethodInvocationDelegate { get; set; }
 
         public TComponent ComponentAs<TComponent>()
             where TComponent : class => this.Component as TComponent;

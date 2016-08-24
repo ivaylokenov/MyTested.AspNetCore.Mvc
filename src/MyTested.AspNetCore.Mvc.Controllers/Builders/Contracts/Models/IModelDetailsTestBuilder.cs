@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Models
 {
+    using And;
     using System;
 
     /// <summary>
@@ -13,13 +14,13 @@
         /// </summary>
         /// <param name="assertions">Action containing all assertions on the model.</param>
         /// <returns>Test builder of <see cref="IAndModelErrorTestBuilder{TResponseModel}"/>.</returns>
-        IAndModelErrorTestBuilder<TModel> Passing(Action<TModel> assertions);
+        IAndTestBuilderWithInvokedAction Passing(Action<TModel> assertions);
 
         /// <summary>
         /// Tests whether the returned model from the invoked action passes the given predicate.
         /// </summary>
         /// <param name="predicate">Predicate testing the model.</param>
         /// <returns>Test builder of <see cref="IAndModelErrorTestBuilder{TResponseModel}"/>.</returns>
-        IAndModelErrorTestBuilder<TModel> Passing(Func<TModel, bool> predicate);
+        IAndTestBuilderWithInvokedAction Passing(Func<TModel, bool> predicate);
     }
 }

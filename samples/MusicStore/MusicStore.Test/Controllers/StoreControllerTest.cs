@@ -93,7 +93,9 @@
                 .MemoryCache(cache => cache
                     .ContainingEntry(entry => entry
                         .WithKey("album_1")
-                        .WithSlidingExpiration(TimeSpan.FromMinutes(10))))
+                        .WithSlidingExpiration(TimeSpan.FromMinutes(10))
+                        .WithValueOfType<Album>()
+                        .Passing(a => a.AlbumId == 1)))
                 .AndAlso()
                 .ShouldReturn()
                 .View()

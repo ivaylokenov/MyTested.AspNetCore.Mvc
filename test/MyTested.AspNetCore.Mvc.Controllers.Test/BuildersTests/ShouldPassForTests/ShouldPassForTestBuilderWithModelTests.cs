@@ -18,8 +18,7 @@
                 .ShouldReturn()
                 .Ok()
                 .WithModelOfType<ICollection<ResponseModel>>()
-                .ShouldPassFor()
-                .TheModel(model =>
+                .ShouldPassForThe<ICollection<ResponseModel>>(model =>
                 {
                     Assert.NotNull(model);
                 });
@@ -34,8 +33,7 @@
                 .ShouldReturn()
                 .Ok()
                 .WithModelOfType<ICollection<ResponseModel>>()
-                .ShouldPassFor()
-                .TheModel(model => model != null);
+                .ShouldPassForThe<ICollection<ResponseModel>>(model => model != null);
         }
 
         [Fact]
@@ -50,10 +48,9 @@
                         .ShouldReturn()
                         .Ok()
                         .WithModelOfType<ICollection<ResponseModel>>()
-                        .ShouldPassFor()
-                        .TheModel(model => model == null);
+                        .ShouldPassForThe<ICollection<ResponseModel>>(model => model == null);
                 },
-                "Expected the List<ResponseModel> to pass the given predicate but it failed.");
+                "Expected ICollection<ResponseModel> to pass the given predicate but it failed.");
         }
     }
 }

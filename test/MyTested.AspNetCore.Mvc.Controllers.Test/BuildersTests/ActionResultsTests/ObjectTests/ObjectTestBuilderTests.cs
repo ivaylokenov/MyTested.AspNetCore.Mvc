@@ -438,8 +438,7 @@
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
                 .Object()
-                .ShouldPassFor()
-                .TheActionResult(actionResult =>
+                .ShouldPassForThe<IActionResult>(actionResult =>
                 {
                     Assert.NotNull(actionResult);
                     Assert.IsAssignableFrom<ObjectResult>(actionResult);

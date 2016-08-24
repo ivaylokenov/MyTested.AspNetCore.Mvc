@@ -7,6 +7,8 @@
     using Microsoft.AspNetCore.Http.Features;
     using Plugins;
     using Services;
+    using TestContexts;
+    using Utilities;
 
     public static class TestHelper
     {
@@ -14,6 +16,9 @@
         
         public static ISet<IHttpFeatureRegistrationPlugin> HttpFeatureRegistrationPlugins { get; }
             = new HashSet<IHttpFeatureRegistrationPlugin>();
+
+        public static ISet<IShouldPassForPlugin> ShouldPassForPlugins { get; }
+            = new HashSet<IShouldPassForPlugin>();
         
         public static MockedHttpContext CreateMockedHttpContext()
         {
@@ -42,6 +47,31 @@
             {
                 httpContextAccessor.HttpContext = httpContext;
             }
+        }
+
+        public static TComponent TryGetShouldPassForValue<TComponent>(ComponentTestContext testContext)
+            where TComponent : class
+        {
+            var result = testContext.ComponentAs<TComponent>()
+                ?? testContext.MethodResultAs<TComponent>()
+                ?? testContext.ModelAs<TComponent>();
+            
+            if (result != null)
+            {
+                return result;
+            }
+
+            foreach (var shouldPassForPlugin in ShouldPassForPlugins)
+            {
+                result = shouldPassForPlugin.TryGetValue(typeof(TComponent), testContext) as TComponent;
+
+                if (result != null)
+                {
+                    return result;
+                }
+            }
+
+            throw new InvalidOperationException($"{typeof(TComponent).ToFriendlyTypeName()} could not be resolved for the 'ShouldPassForThe<TComponent>' method call.");
         }
 
         public static void ExecuteTestCleanup() => GlobalTestCleanup?.Invoke();

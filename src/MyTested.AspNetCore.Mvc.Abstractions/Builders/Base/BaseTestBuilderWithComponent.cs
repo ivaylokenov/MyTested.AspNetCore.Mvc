@@ -1,9 +1,13 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Base
 {
     using System;
-    using System.Collections.Generic;
+    using And;
+    using Contracts.And;
     using Contracts.Base;
+    using Exceptions;
+    using Internal;
     using Internal.TestContexts;
+    using Utilities;
     using Utilities.Validators;
 
     /// <summary>
@@ -22,7 +26,7 @@
         {
             this.TestContext = testContext;
         }
-        
+
         /// <summary>
         /// Gets the currently used <see cref="ComponentTestContext"/>.
         /// </summary>
@@ -40,5 +44,32 @@
                 this.testContext = value;
             }
         }
+        
+        /// <inheritdoc />
+        public IAndTestBuilder ShouldPassForThe<TComponent>(Action<TComponent> assertions)
+            where TComponent : class
+        {
+            this.TestContext.ComponentBuildDelegate?.Invoke();
+
+            assertions(TestHelper.TryGetShouldPassForValue<TComponent>(this.TestContext));
+
+            return new AndTestBuilder(this.TestContext);
+        }
+
+        /// <inheritdoc />
+        public IAndTestBuilder ShouldPassForThe<TComponent>(Func<TComponent, bool> predicate)
+            where TComponent : class
+        {
+            this.TestContext.ComponentBuildDelegate?.Invoke();
+
+            if (!predicate(TestHelper.TryGetShouldPassForValue<TComponent>(this.TestContext)))
+            {
+                throw new InvalidAssertionException($"Expected {typeof(TComponent).ToFriendlyTypeName()} to pass the given predicate but it failed.");
+            }
+
+            return new AndTestBuilder(this.TestContext);
+        }
+
+        protected IAndTestBuilder NewAndTestBuilder() => new AndTestBuilder(this.TestContext);
     }
 }

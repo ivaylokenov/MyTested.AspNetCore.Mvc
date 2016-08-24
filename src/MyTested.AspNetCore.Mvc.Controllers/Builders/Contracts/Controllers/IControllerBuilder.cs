@@ -6,7 +6,6 @@
     using Actions;
     using Base;
     using Microsoft.AspNetCore.Mvc;
-    using ShouldPassFor;
 
     /// <summary>
     /// Used for building the controller which will be tested.
@@ -85,11 +84,5 @@
         /// <param name="actionCall">Method call expression indicating invoked asynchronous void action.</param>
         /// <returns>Test builder of <see cref="IActionResultTestBuilder{TActionResult}"/> type.</returns>
         IVoidActionResultTestBuilder Calling(Expression<Func<TController, Task>> actionCall);
-
-        /// <summary>
-        /// Allows additional testing on various components.
-        /// </summary>
-        /// <returns>Test builder of <see cref="IShouldPassForTestBuilderWithController{TController}"/> type.</returns>
-        new IShouldPassForTestBuilderWithController<TController> ShouldPassFor();
     }
 }

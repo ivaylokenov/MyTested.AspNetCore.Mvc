@@ -69,7 +69,7 @@
             this.TestContext.MethodName = actionName;
             this.TestContext.MethodCall = actionCall;
             this.TestContext.CaughtException = caughtException;
-            this.TestContext.MethodResult = VoidActionResult.Instance;
+            this.TestContext.MethodResult = VoidMethodResult.Instance;
 
             return new VoidActionResultTestBuilder(this.TestContext);
         }
@@ -89,7 +89,7 @@
             }
 
             this.TestContext.Apply(actionInfo);
-            this.TestContext.MethodResult = VoidActionResult.Instance;
+            this.TestContext.MethodResult = VoidMethodResult.Instance;
 
             return new VoidActionResultTestBuilder(this.TestContext);
         }
@@ -114,10 +114,10 @@
 
         private string GetAndValidateAction(LambdaExpression actionCall)
         {
-            this.BuildControllerIfNotExists();
+            this.TestContext.ComponentBuildDelegate?.Invoke();
 
             this.TestContext.MethodCall = actionCall;
-            this.TestContext.PreMethodInvocationAction?.Invoke();
+            this.TestContext.PreMethodInvocationDelegate?.Invoke();
 
             var methodInfo = ExpressionParser.GetMethodInfo(actionCall);
 

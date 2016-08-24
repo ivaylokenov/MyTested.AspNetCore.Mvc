@@ -1,6 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Models
 {
     using System;
+    using Contracts.And;
     using Contracts.Models;
     using Exceptions;
     using Internal.TestContexts;
@@ -24,25 +25,25 @@
         }
         
         /// <inheritdoc />
-        public IAndModelErrorTestBuilder<TModel> Passing(Action<TModel> assertions)
+        public IAndTestBuilderWithInvokedAction Passing(Action<TModel> assertions)
         {
             assertions(this.Model);
-            return new ModelErrorTestBuilder<TModel>(this.TestContext);
+            return this.NewAndTestBuilderWithInvokedAction();
         }
 
         /// <inheritdoc />
-        public IAndModelErrorTestBuilder<TModel> Passing(Func<TModel, bool> predicate)
+        public IAndTestBuilderWithInvokedAction Passing(Func<TModel, bool> predicate)
         {
             if (!predicate(this.Model))
             {
                 throw new ResponseModelAssertionException(string.Format(
-                    "When calling {0} action in {1} expected response model {2} to pass the given condition, but it failed.",
+                    "When calling {0} action in {1} expected response model {2} to pass the given predicate, but it failed.",
                     this.ActionName,
                     this.Controller.GetName(),
                     typeof(TModel).ToFriendlyTypeName()));
             }
 
-            return new ModelErrorTestBuilder<TModel>(this.TestContext);
+            return this.NewAndTestBuilderWithInvokedAction();
         }
 
         /// <inheritdoc />

@@ -21,7 +21,7 @@
     /// Used for testing returned action result.
     /// </summary>
     /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
-    public interface IShouldReturnTestBuilder<TActionResult> : IBaseTestBuilderWithActionResult<TActionResult>
+    public interface IShouldReturnTestBuilder<TActionResult>
     {
         /// <summary>
         /// Tests whether the action result is the default value of the type.

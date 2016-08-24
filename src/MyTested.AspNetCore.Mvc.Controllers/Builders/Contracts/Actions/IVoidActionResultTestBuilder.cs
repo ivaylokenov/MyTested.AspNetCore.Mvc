@@ -18,7 +18,7 @@
         /// Used for testing the action's additional data - action attributes, HTTP response, view bag and more.
         /// </summary>
         /// <returns>Test builder of <see cref="IShouldHaveTestBuilder{VoidActionResult}"/> type.</returns>
-        IShouldHaveTestBuilder<VoidActionResult> ShouldHave();
+        IShouldHaveTestBuilder<VoidMethodResult> ShouldHave();
 
         /// <summary>
         /// Used for testing whether the action throws exception.

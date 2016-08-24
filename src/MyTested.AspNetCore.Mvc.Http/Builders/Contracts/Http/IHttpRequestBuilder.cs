@@ -6,7 +6,7 @@
     using System.Text;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Primitives;
-    using Uris;
+    using Uri;
 
     /// <summary>
     /// Used for building <see cref="HttpRequest"/>.
@@ -455,6 +455,6 @@
         /// </summary>
         /// <param name="uriBuilder">Builder for the URI.</param>
         /// <returns>The same <see cref="IAndHttpRequestBuilder"/>.</returns>
-        IAndHttpRequestBuilder WithLocation(Action<IUriTestBuilder> uriBuilder);
+        IAndHttpRequestBuilder WithLocation(Action<IUriBuilder> uriBuilder);
     }
 }

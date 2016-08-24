@@ -3,9 +3,7 @@
     using And;
     using Contracts.And;
     using Contracts.Base;
-    using Contracts.ShouldPassFor;
     using Internal.TestContexts;
-    using ShouldPassFor;
     using Utilities;
 
     /// <summary>
@@ -30,25 +28,12 @@
         /// <value>Action result to be tested.</value>
         public TActionResult ActionResult => this.TestContext.MethodResultAs<TActionResult>();
         
-        /// <inheritdoc />
-        public new IShouldPassForTestBuilderWithActionResult<TActionResult> ShouldPassFor()
-            => new ShouldPassForTestBuilderWithActionResult<TActionResult>(this.TestContext);
-
         /// <summary>
-        /// Initializes new instance of builder providing AndAlso method.
-        /// </summary>
-        /// <returns>Test builder of type <see cref="IAndActionResultTestBuilder{TActionResult}"/>.</returns>
-        public IAndActionResultTestBuilder<TActionResult> NewAndTestBuilder()
-        {
-            return new AndActionResultTestBuilder<TActionResult>(this.TestContext);
-        }
-
-        /// <summary>
-        /// Creates new <see cref="AndShouldPassForTestBuilder{TActionResult}"/>.
+        /// Creates new <see cref="AndTestBuilderWithActionResult{TActionResult}"/>.
         /// </summary>
         /// <returns>Base test builder of type <see cref="IBaseTestBuilderWithActionResult{TActionResult}"/>.</returns>
-        public new IBaseTestBuilderWithActionResult<TActionResult> NewAndShouldPassForTestBuilder()
-            => new AndShouldPassForTestBuilder<TActionResult>(this.TestContext);
+        public IBaseTestBuilderWithActionResult<TActionResult> NewAndTestBuilderWithActionResult()
+            => new AndTestBuilderWithActionResult<TActionResult>(this.TestContext);
 
         /// <summary>
         /// Returns the actual action result casted as dynamic type.
