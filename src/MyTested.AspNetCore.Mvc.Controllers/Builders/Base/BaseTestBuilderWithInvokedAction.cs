@@ -2,6 +2,7 @@
 {
     using System;
     using And;
+    using Contracts.And;
     using Contracts.Base;
     using Internal.TestContexts;
 
@@ -30,7 +31,7 @@
         /// Creates new <see cref="AndTestBuilderWithInvokedAction"/>.
         /// </summary>
         /// <returns>Test builder of type <see cref="IBaseTestBuilderWithInvokedAction"/>.</returns>
-        public IBaseTestBuilderWithInvokedAction NewAndTestBuilderWithInvokedAction()
+        public IAndTestBuilderWithInvokedAction NewAndTestBuilderWithInvokedAction()
             => new AndTestBuilderWithInvokedAction(this.TestContext);
     }
 }

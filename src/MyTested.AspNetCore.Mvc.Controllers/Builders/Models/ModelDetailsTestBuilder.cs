@@ -1,6 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Models
 {
     using System;
+    using Contracts.And;
     using Contracts.Models;
     using Exceptions;
     using Internal.TestContexts;
@@ -24,14 +25,14 @@
         }
         
         /// <inheritdoc />
-        public IAndModelErrorTestBuilder<TModel> Passing(Action<TModel> assertions)
+        public IAndTestBuilderWithInvokedAction Passing(Action<TModel> assertions)
         {
             assertions(this.Model);
-            return new ModelErrorTestBuilder<TModel>(this.TestContext);
+            return this.NewAndTestBuilderWithInvokedAction();
         }
 
         /// <inheritdoc />
-        public IAndModelErrorTestBuilder<TModel> Passing(Func<TModel, bool> predicate)
+        public IAndTestBuilderWithInvokedAction Passing(Func<TModel, bool> predicate)
         {
             if (!predicate(this.Model))
             {
@@ -42,7 +43,7 @@
                     typeof(TModel).ToFriendlyTypeName()));
             }
 
-            return new ModelErrorTestBuilder<TModel>(this.TestContext);
+            return this.NewAndTestBuilderWithInvokedAction();
         }
 
         /// <inheritdoc />

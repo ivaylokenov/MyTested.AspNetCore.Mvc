@@ -4,7 +4,6 @@
     using System.Net;
     using Base;
     using Contracts.ActionResults.Ok;
-    using Contracts.Base;
     using Exceptions;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;

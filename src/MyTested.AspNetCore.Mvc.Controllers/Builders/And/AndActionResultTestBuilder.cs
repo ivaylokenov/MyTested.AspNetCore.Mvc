@@ -26,8 +26,6 @@
 
         /// <inheritdoc />
         public IActionResultTestBuilder<TActionResult> AndAlso()
-        {
-            return new ActionResultTestBuilder<TActionResult>(this.TestContext);
-        }
+            => new ActionResultTestBuilder<TActionResult>(this.TestContext);
     }
 }

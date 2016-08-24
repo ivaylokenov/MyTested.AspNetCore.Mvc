@@ -1,12 +1,14 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.And
 {
     using Base;
+    using Contracts.And;
     using Internal.TestContexts;
+    using Contracts.Base;
 
     /// <summary>
     /// Provides additional testing methods.
     /// </summary>
-    public class AndTestBuilderWithInvokedAction : BaseTestBuilderWithInvokedAction
+    public class AndTestBuilderWithInvokedAction : BaseTestBuilderWithInvokedAction, IAndTestBuilderWithInvokedAction
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AndTestBuilderWithInvokedAction"/> class.
@@ -16,5 +18,8 @@
             : base(testContext)
         {
         }
+
+        /// <inheritdoc />
+        public IBaseTestBuilderWithInvokedAction AndAlso() => this;
     }
 }

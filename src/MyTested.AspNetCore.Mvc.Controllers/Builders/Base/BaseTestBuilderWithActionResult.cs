@@ -29,15 +29,6 @@
         public TActionResult ActionResult => this.TestContext.MethodResultAs<TActionResult>();
         
         /// <summary>
-        /// Initializes new instance of builder providing AndAlso method.
-        /// </summary>
-        /// <returns>Test builder of type <see cref="IAndActionResultTestBuilder{TActionResult}"/>.</returns>
-        public IAndActionResultTestBuilder<TActionResult> NewAndTestBuilder()
-        {
-            return new AndActionResultTestBuilder<TActionResult>(this.TestContext);
-        }
-
-        /// <summary>
         /// Creates new <see cref="AndTestBuilderWithActionResult{TActionResult}"/>.
         /// </summary>
         /// <returns>Base test builder of type <see cref="IBaseTestBuilderWithActionResult{TActionResult}"/>.</returns>
