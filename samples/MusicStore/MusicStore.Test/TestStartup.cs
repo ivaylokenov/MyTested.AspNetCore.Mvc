@@ -36,6 +36,9 @@
 
             TestHelper.HttpFeatureRegistrationPlugins.Add(new SessionTestPlugin());
 
+            TestHelper.ShouldPassForPlugins.Add(new AbstractionsTestPlugin());
+            TestHelper.ShouldPassForPlugins.Add(new ControllersTestPlugin());
+
             services
                 .AddMvcTesting()
                 .AddRoutingTesting();

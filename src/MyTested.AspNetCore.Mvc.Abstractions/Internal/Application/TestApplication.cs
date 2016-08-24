@@ -241,12 +241,12 @@
         {
             var applicationAssembly = Assembly.Load(new AssemblyName(testAssemblyName));
 
-            var startupName = TestConfiguration.General.FullStartupName ?? $"{Environment.EnvironmentName}Startup";
+            var startupType = TestConfiguration.General.StartupType ?? $"{Environment.EnvironmentName}Startup";
 
             // check root of the test project
             var startup =
-                applicationAssembly.GetType(startupName) ??
-                applicationAssembly.GetType($"{testAssemblyName}.{startupName}");
+                applicationAssembly.GetType(startupType) ??
+                applicationAssembly.GetType($"{testAssemblyName}.{startupType}");
 
             return startup;
         }

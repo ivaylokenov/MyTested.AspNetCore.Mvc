@@ -4,9 +4,10 @@
 
     public class GeneralTestConfiguration : BaseConfiguration
     {
+        private const string WebAssemblyNameConfigKey = "WebAssemblyName";
         private const string TestAssemblyNameConfigKey = "TestAssemblyName";
         private const string AutomaticStartupConfigKey = "AutomaticStartup";
-        private const string FullStartupNameConfigKey = "FullStartupName";
+        private const string StartupTypeConfigKey = "StartupType";
         private const string ApplicationNameConfigKey = "ApplicationName";
         private const string EnvironmentNameConfigKey = "Environment";
 
@@ -15,15 +16,17 @@
         {
             this.Prefix = "General";
         }
+
+        public string WebAssemblyName => this.GetValue(WebAssemblyNameConfigKey);
         
         public string TestAssemblyName => this.GetValue(TestAssemblyNameConfigKey);
+
+        public bool AutomaticStartup => this.GetValue(AutomaticStartupConfigKey, true);
+
+        public string StartupType => this.GetValue(StartupTypeConfigKey);
 
         public string ApplicationName => this.GetValue(ApplicationNameConfigKey);
 
         public string EnvironmentName => this.GetValue(EnvironmentNameConfigKey, "Test");
-
-        public bool AutomaticStartup => this.GetValue(AutomaticStartupConfigKey, true);
-
-        public string FullStartupName => this.GetValue(FullStartupNameConfigKey);
     }
 }
