@@ -23,6 +23,7 @@ This package will include all available assertion methods in your test project, 
  - `MyTested.AspNetCore.Mvc.TempData` - contains setup and assertion methods for `ITempDataDictionary`
  - `MyTested.AspNetCore.Mvc.ViewData` - contains assertion methods for `ViewDataDictionary` and dynamic `ViewBag`
  - `MyTested.AspNetCore.Mvc.ViewActionResults` - contains setup and assertion methods for view action results
+ - `MyTested.AspNetCore.Mvc.ViewComponents` - contains setup and assertion methods for view components
  - `MyTested.AspNetCore.Mvc.ViewFeatures` - contains setup and assertion methods for MVC view features
  - `MyTested.AspNetCore.Mvc.Http` - contains setup and assertion methods for HTTP context, request and response
  - `MyTested.AspNetCore.Mvc.Authentication` - contains setup methods for `ClaimsPrincipal`

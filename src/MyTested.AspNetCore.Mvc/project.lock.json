@@ -1451,6 +1451,20 @@
           "net451/MyTested.AspNetCore.Mvc.ViewActionResults.dll": {}
         }
       },
+      "MyTested.AspNetCore.Mvc.ViewComponents/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0"
+        },
+        "compile": {
+          "net451/MyTested.AspNetCore.Mvc.ViewComponents.dll": {}
+        },
+        "runtime": {
+          "net451/MyTested.AspNetCore.Mvc.ViewComponents.dll": {}
+        }
+      },
       "MyTested.AspNetCore.Mvc.ViewData/1.0.0-preview-final": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
@@ -1473,6 +1487,7 @@
           "MyTested.AspNetCore.Mvc.DataAnnotations": "1.0.0",
           "MyTested.AspNetCore.Mvc.TempData": "1.0.0",
           "MyTested.AspNetCore.Mvc.ViewActionResults": "1.0.0",
+          "MyTested.AspNetCore.Mvc.ViewComponents": "1.0.0",
           "MyTested.AspNetCore.Mvc.ViewData": "1.0.0"
         },
         "compile": {
@@ -4446,6 +4461,20 @@
           "netstandard1.6/MyTested.AspNetCore.Mvc.ViewActionResults.dll": {}
         }
       },
+      "MyTested.AspNetCore.Mvc.ViewComponents/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.6",
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0"
+        },
+        "compile": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.ViewComponents.dll": {}
+        },
+        "runtime": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.ViewComponents.dll": {}
+        }
+      },
       "MyTested.AspNetCore.Mvc.ViewData/1.0.0-preview-final": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.6",
@@ -4468,6 +4497,7 @@
           "MyTested.AspNetCore.Mvc.DataAnnotations": "1.0.0",
           "MyTested.AspNetCore.Mvc.TempData": "1.0.0",
           "MyTested.AspNetCore.Mvc.ViewActionResults": "1.0.0",
+          "MyTested.AspNetCore.Mvc.ViewComponents": "1.0.0",
           "MyTested.AspNetCore.Mvc.ViewData": "1.0.0"
         },
         "compile": {
@@ -9522,6 +9552,11 @@
       "type": "project",
       "path": "../MyTested.AspNetCore.Mvc.ViewActionResults/project.json",
       "msbuildProject": "../MyTested.AspNetCore.Mvc.ViewActionResults/MyTested.AspNetCore.Mvc.ViewActionResults.xproj"
+    },
+    "MyTested.AspNetCore.Mvc.ViewComponents/1.0.0-preview-final": {
+      "type": "project",
+      "path": "../MyTested.AspNetCore.Mvc.ViewComponents/project.json",
+      "msbuildProject": "../MyTested.AspNetCore.Mvc.ViewComponents/MyTested.AspNetCore.Mvc.ViewComponents.xproj"
     },
     "MyTested.AspNetCore.Mvc.ViewData/1.0.0-preview-final": {
       "type": "project",

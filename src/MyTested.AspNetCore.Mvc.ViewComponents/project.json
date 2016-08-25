@@ -1,6 +1,6 @@
 ﻿{
-  "title": "MyTested.AspNetCore.Mvc.ViewFeatures",
-  "description": "My Tested ASP.NET Core MVC view features components.",
+  "title": "MyTested.AspNetCore.Mvc.Session",
+  "description": "My Tested ASP.NET Core MVC view components assertion methods.",
   "version": "1.0.0-preview-final",
   "authors": [ "Ivaylo Kenov" ],
   "packOptions": {
@@ -28,11 +28,7 @@
 
   "dependencies": {
     "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.DataAnnotations": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.TempData": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.ViewData": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.ViewActionResults": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.ViewComponents": "1.0.0-*"
+    "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0-*"
   },
 
   "frameworks": {
