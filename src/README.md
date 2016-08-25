@@ -19,4 +19,5 @@ MyTested.AspNetCore.Mvc Packages
  - `MyTested.AspNetCore.Mvc.Caching` - contains setup and assertion methods for `IMemoryCache`
  - `MyTested.AspNetCore.Mvc.Session` - contains setup and assertion methods for `ISession`
  - `MyTested.AspNetCore.Mvc.Options` - contains setup and assertion methods for `IOptions`
- - `MyTested.AspNetCore.Mvc` - combines all packages listed above
+ - `MyTested.AspNetCore.Mvc` - contains MVC related assertion methods
+ - `MyTested.AspNetCore.Mvc.Universe` - combines all packages listed above

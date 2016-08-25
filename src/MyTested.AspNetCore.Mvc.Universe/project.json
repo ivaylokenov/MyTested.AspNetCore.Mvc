@@ -1,5 +1,5 @@
 ﻿{
-  "title": "MyTested.AspNetCore.Mvc",
+  "title": "MyTested.AspNetCore.Mvc.Universe",
   "description": "My Tested ASP.NET Core MVC is a powerful unit testing library providing easy fluent interface to test the ASP.NET Core MVC framework.",
   "version": "1.0.0-preview-final",
   "authors": [ "Ivaylo Kenov" ],
@@ -27,11 +27,11 @@
   },
 
   "dependencies": {
-    "Microsoft.AspNetCore.Mvc": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.Core": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.DependencyInjection": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.Options": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.ViewFeatures": "1.0.0-*"
+    "MyTested.AspNetCore.Mvc": "1.0.0-*",
+    "MyTested.AspNetCore.Mvc.Authentication": "1.0.0-*",
+    "MyTested.AspNetCore.Mvc.Caching": "1.0.0-*",
+    "MyTested.AspNetCore.Mvc.EntityFrameworkCore": "1.0.0-*",
+    "MyTested.AspNetCore.Mvc.Session": "1.0.0-*"
   },
 
   "frameworks": {

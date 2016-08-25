@@ -3,17 +3,17 @@
     using Microsoft.Extensions.DependencyInjection;
     using Utilities.Validators;
 
-    public static class ServiceCollectionExtensions
+    public static class UniverseServiceCollectionExtensions
     {
-        public static IServiceCollection AddMvcTesting(this IServiceCollection serviceCollection)
+        public static IServiceCollection AddMvcUniverseTesting(this IServiceCollection serviceCollection)
         {
             CommonValidator.CheckForNullReference(serviceCollection, nameof(serviceCollection));
 
             serviceCollection
-                .AddMvcCoreTesting()
-                .AddStringInputFormatter()
-                .ReplaceTempDataProvider()
-                .ReplaceOptions();
+                .AddMvcTesting()
+                .ReplaceDbContext()
+                .ReplaceMemoryCache()
+                .ReplaceSession();
 
             return serviceCollection;
         }
