@@ -8,17 +8,14 @@
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
-    using Utilities;
-    using Utilities.Validators;
 
     /// <summary>
     /// Used for building the controller which will be tested.
     /// </summary>
     /// <typeparam name="TController">Class representing ASP.NET Core MVC controller.</typeparam>
-    public partial class ControllerBuilder<TController> : BaseComponentBuilder<TController, IAndControllerBuilder<TController>>, IAndControllerBuilder<TController>
+    public partial class ControllerBuilder<TController> : BaseComponentBuilder<TController, ControllerTestContext, IAndControllerBuilder<TController>>, IAndControllerBuilder<TController>
         where TController : class
     {
-        private ControllerTestContext testContext;
         private Action<ControllerContext> controllerContextAction;
         private Action<TController> controllerSetupAction;
 
@@ -29,30 +26,17 @@
         public ControllerBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
-            this.TestContext = testContext;
-
-            this.EnabledValidation = TestApplication.TestConfiguration.Controllers.ModelStateValidation;
-
-#if NETSTANDARD1_6
-            this.ValidateControllerType();
-#endif
+            this.EnabledModelStateValidation = TestApplication.TestConfiguration.Controllers.ModelStateValidation;
         }
         
-        public new ControllerTestContext TestContext
-        {
-            get
-            {
-                return this.testContext;
-            }
+        public bool EnabledModelStateValidation { get; set; }
 
-            set
-            {
-                CommonValidator.CheckForNullReference(value, nameof(this.TestContext));
-                this.testContext = value;
-            }
-        }
+        protected override string ComponentName => "controller";
 
-        public bool EnabledValidation { get; set; }
+        protected override bool IsValidComponent
+            => this.Services
+                .GetRequiredService<IValidControllersCache>()
+                .IsValid(typeof(TController));
 
         /// <inheritdoc />
         public IAndControllerBuilder<TController> AndAlso() => this;
@@ -65,15 +49,5 @@
         }
         
         protected override IAndControllerBuilder<TController> SetBuilder() => this;
-
-        private void ValidateControllerType()
-        {
-            var validControllers = this.Services.GetRequiredService<IValidControllersCache>();
-            var controllerType = typeof(TController);
-            if (!validControllers.IsValid(typeof(TController)))
-            {
-                throw new InvalidOperationException($"{controllerType.ToFriendlyTypeName()} is not a valid controller type.");
-            }
-        }
     }
 }

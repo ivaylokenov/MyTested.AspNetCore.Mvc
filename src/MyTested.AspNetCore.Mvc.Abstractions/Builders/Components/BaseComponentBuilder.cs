@@ -10,17 +10,39 @@
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Http;
     using Utilities;
+    using Utilities.Validators;
 
-    public abstract class BaseComponentBuilder<TComponent, TBuilder> : BaseTestBuilderWithComponentBuilder<TBuilder>
+    public abstract class BaseComponentBuilder<TComponent, TTestContext, TBuilder> : BaseTestBuilderWithComponentBuilder<TBuilder>
         where TComponent : class
+        where TTestContext : ComponentTestContext
         where TBuilder : IBaseTestBuilder
     {
+        private TTestContext testContext;
         private bool isPreparedForTesting;
 
-        public BaseComponentBuilder(ComponentTestContext testContext)
+        public BaseComponentBuilder(TTestContext testContext)
             : base(testContext)
         {
+            this.TestContext = testContext;
             this.TestContext.ComponentBuildDelegate += this.BuildComponentIfNotExists;
+
+#if NETSTANDARD1_6
+            this.ValidateComponentType();
+#endif
+        }
+
+        public new TTestContext TestContext
+        {
+            get
+            {
+                return this.testContext;
+            }
+
+            set
+            {
+                CommonValidator.CheckForNullReference(value, nameof(this.TestContext));
+                this.testContext = value;
+            }
         }
         
         protected new MockedHttpContext HttpContext => this.TestContext.MockedHttpContext;
@@ -37,6 +59,10 @@
                 return this.TestContext.ComponentAs<TComponent>();
             }
         }
+
+        protected abstract string ComponentName { get; }
+
+        protected abstract bool IsValidComponent { get; }
         
         protected virtual void BuildComponentIfNotExists()
         {
@@ -87,6 +113,14 @@
             {
                 this.PrepareComponent();
                 this.isPreparedForTesting = true;
+            }
+        }
+
+        protected void ValidateComponentType()
+        {
+            if (!this.IsValidComponent)
+            {
+                throw new InvalidOperationException($"{typeof(TComponent).ToFriendlyTypeName()} is not a valid {this.ComponentName} type.");
             }
         }
 

@@ -1,6 +1,5 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.Controllers
 {
-    using System;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Controllers;
     using Microsoft.AspNetCore.Routing;
@@ -35,8 +34,6 @@
                 this.testContext = value;
             }
         }
-
-        private IServiceProvider Services => this.testContext.HttpContext.RequestServices;
         
         public static ControllerContext FromActionContext(HttpTestContext testContext, ActionContext actionContext)
         {

@@ -1,15 +1,11 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Controllers
 {
     using System;
-    using System.Linq;
     using Contracts.Controllers;
-    using Exceptions;
-    using Internal;
     using Internal.Controllers;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.Extensions.DependencyInjection;
-    using Utilities;
     using Utilities.Extensions;
     using Utilities.Validators;
 

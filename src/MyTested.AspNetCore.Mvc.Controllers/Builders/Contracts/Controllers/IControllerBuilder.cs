@@ -15,7 +15,7 @@
         where TController : class
     {
         /// <summary>
-        /// Used for testing controller additional data.
+        /// Used for testing controller additional details.
         /// </summary>
         /// <returns>Test builder of <see cref="IControllerTestBuilder"/> type.</returns>
         IControllerTestBuilder ShouldHave();

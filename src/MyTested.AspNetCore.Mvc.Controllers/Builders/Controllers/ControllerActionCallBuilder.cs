@@ -121,7 +121,7 @@
 
             var methodInfo = ExpressionParser.GetMethodInfo(actionCall);
 
-            if (this.EnabledValidation)
+            if (this.EnabledModelStateValidation)
             {
                 this.ValidateModelState(actionCall);
             }

@@ -20,7 +20,7 @@
         {
             var actualControllerBuilder = (ControllerBuilder<TController>)controllerBuilder;
 
-            actualControllerBuilder.EnabledValidation = false;
+            actualControllerBuilder.EnabledModelStateValidation = false;
 
             return actualControllerBuilder;
         }
