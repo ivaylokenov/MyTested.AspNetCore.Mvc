@@ -25,7 +25,7 @@
         }
 
         public MyViewComponent(Func<TViewComponent> construction)
-            : base(new ViewComponentTestContext { ViewComponentConstruction = construction })
+            : base(new ViewComponentTestContext { ComponentConstructionDelegate = construction })
         {
         }
 

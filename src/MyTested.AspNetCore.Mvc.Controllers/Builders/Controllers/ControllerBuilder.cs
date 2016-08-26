@@ -1,14 +1,11 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Controllers
 {
     using System;
-    using Base;
     using Components;
     using Contracts.Controllers;
     using Internal.Application;
     using Internal.Contracts;
-    using Internal.Http;
     using Internal.TestContexts;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
     using Utilities;
@@ -18,13 +15,12 @@
     /// Used for building the controller which will be tested.
     /// </summary>
     /// <typeparam name="TController">Class representing ASP.NET Core MVC controller.</typeparam>
-    public partial class ControllerBuilder<TController> : BaseComponentBuilder<IAndControllerBuilder<TController>>, IAndControllerBuilder<TController>
+    public partial class ControllerBuilder<TController> : BaseComponentBuilder<TController, IAndControllerBuilder<TController>>, IAndControllerBuilder<TController>
         where TController : class
     {
         private ControllerTestContext testContext;
         private Action<ControllerContext> controllerContextAction;
         private Action<TController> controllerSetupAction;
-        private bool isPreparedForTesting;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ControllerBuilder{TController}"/> class.
@@ -42,15 +38,6 @@
 #endif
         }
         
-        private TController Controller
-        {
-            get
-            {
-                this.TestContext.ComponentBuildDelegate?.Invoke();
-                return this.TestContext.ComponentAs<TController>();
-            }
-        }
-
         public new ControllerTestContext TestContext
         {
             get
@@ -67,17 +54,8 @@
 
         public bool EnabledValidation { get; set; }
 
-        private new MockedHttpContext HttpContext => this.TestContext.MockedHttpContext;
-
-        private HttpRequest HttpRequest => this.HttpContext.Request;
-
-        private IServiceProvider Services => this.HttpContext.RequestServices;
-        
         /// <inheritdoc />
-        public IAndControllerBuilder<TController> AndAlso()
-        {
-            return this;
-        }
+        public IAndControllerBuilder<TController> AndAlso() => this;
 
         /// <inheritdoc />
         public IControllerTestBuilder ShouldHave()

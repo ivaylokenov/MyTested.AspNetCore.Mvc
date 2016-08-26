@@ -59,7 +59,7 @@
 
             try
             {
-                actionCall.Compile().Invoke(this.Controller);
+                actionCall.Compile().Invoke(this.Component);
             }
             catch (Exception exception)
             {
@@ -102,7 +102,7 @@
 
             try
             {
-                actionResult = actionCall.Compile().Invoke(this.Controller);
+                actionResult = actionCall.Compile().Invoke(this.Component);
             }
             catch (Exception exception)
             {

@@ -1,11 +1,10 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.TestContexts
 {
     using System;
+    using Utilities.Extensions;
 
-    public class ViewComponentTestContext : HttpTestContext
+    public class ViewComponentTestContext : ComponentTestContext
     {
-        internal Func<object> ViewComponentConstruction { get; set; }
-
-        public override string ExceptionMessagePrefix => $"When calling invoking ViewComponent expected";
+        public override string ExceptionMessagePrefix => $"When invoking {this.Component.GetName()} expected";
     }
 }

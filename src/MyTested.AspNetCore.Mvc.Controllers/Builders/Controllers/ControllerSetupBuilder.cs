@@ -52,66 +52,14 @@
             this.controllerSetupAction += controllerSetup;
             return this;
         }
-
-        protected override void BuildComponentIfNotExists()
-        {
-            if (!this.isPreparedForTesting)
-            {
-                this.PrepareControllerContext();
-            }
-
-            var controller = this.TestContext.Component;
-            if (controller == null)
-            {
-                var explicitDependenciesAreSet = this.TestContext.AggregatedServices.Any();
-                if (explicitDependenciesAreSet)
-                {
-                    // custom dependencies are set, try create instance with them
-                    controller = Reflection.TryCreateInstance<TController>(this.TestContext.AggregatedServices);
-                }
-                else
-                {
-                    // no custom dependencies are set, try create instance with the global services
-                    controller = ControllerTestHelper.TryCreateInstance<TController>();
-                }
-
-                if (controller == null && !explicitDependenciesAreSet)
-                {
-                    // no controller at this point, try to create one with default constructor
-                    controller = Reflection.TryFastCreateInstance<TController>();
-                }
-
-                if (controller == null)
-                {
-                    var friendlyServiceNames = this.TestContext.AggregatedServices
-                        .Keys
-                        .Select(k => k.ToFriendlyTypeName());
-
-                    var joinedFriendlyServices = string.Join(", ", friendlyServiceNames);
-
-                    throw new UnresolvedServicesException(string.Format(
-                        "{0} could not be instantiated because it contains no constructor taking {1} parameters.",
-                        typeof(TController).ToFriendlyTypeName(),
-                        this.TestContext.AggregatedServices.Count == 0 ? "no" : $"{joinedFriendlyServices} as"));
-                }
-
-                this.TestContext.ComponentConstructionDelegate = () => controller;
-            }
-
-            if (!this.isPreparedForTesting)
-            {
-                this.PrepareController();
-                this.isPreparedForTesting = true;
-            }
-        }
-
-        private void PrepareControllerContext()
+        
+        protected override void PrepareComponentContext()
         {
             var controllerContext = this.TestContext.ControllerContext;
             this.controllerContextAction?.Invoke(controllerContext);
         }
 
-        private void PrepareController()
+        protected override void PrepareComponent()
         {
             var controllerPropertyActivators = this.Services.GetServices<IControllerPropertyActivator>();
 

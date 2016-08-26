@@ -5,6 +5,7 @@
     using Http;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Features;
+    using Microsoft.AspNetCore.Mvc.Internal;
     using Plugins;
     using Services;
     using TestContexts;
@@ -46,6 +47,31 @@
             if (httpContextAccessor != null)
             {
                 httpContextAccessor.HttpContext = httpContext;
+            }
+        }
+        
+        /// <summary>
+        /// Tries to create instance of the provided type. Returns null if not successful.
+        /// </summary>
+        /// <typeparam name="TInstance">Type to create.</typeparam>
+        /// <returns>Instance of TInstance type.</returns>
+        public static TInstance TryCreateInstance<TInstance>()
+            where TInstance : class
+        {
+            var instance = TestServiceProvider.GetService<TInstance>();
+            if (instance != null)
+            {
+                return instance;
+            }
+
+            try
+            {
+                var typeActivatorCache = TestServiceProvider.GetRequiredService<ITypeActivatorCache>();
+                return typeActivatorCache.CreateInstance<TInstance>(TestServiceProvider.Current, typeof(TInstance));
+            }
+            catch
+            {
+                return null;
             }
         }
 
