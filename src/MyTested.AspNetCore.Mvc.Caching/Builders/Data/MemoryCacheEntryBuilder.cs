@@ -15,14 +15,14 @@
         /// </summary>
         public MemoryCacheEntryBuilder()
         {
-            this.MemoryCacheEntry = new MockedCacheEntry();
+            this.MemoryCacheEntry = new CacheEntryMock();
         }
 
         /// <summary>
         /// Gets the mocked <see cref="IMemoryCache"/> entry.
         /// </summary>
         /// <value>The built <see cref="ICacheEntry"/>.</value>
-        protected MockedCacheEntry MemoryCacheEntry { get; private set; }
+        protected CacheEntryMock MemoryCacheEntry { get; private set; }
 
         /// <inheritdoc />
         public IAndMemoryCacheEntryBuilder WithKey(object key)
@@ -69,7 +69,7 @@
         /// <inheritdoc />
         public IMemoryCacheEntryBuilder AndAlso() => this;
 
-        internal ICacheEntry GetMockedMemoryCacheEntry()
+        internal ICacheEntry GetMemoryCacheEntryMock()
         {
             if (this.MemoryCacheEntry.Key == null)
             {

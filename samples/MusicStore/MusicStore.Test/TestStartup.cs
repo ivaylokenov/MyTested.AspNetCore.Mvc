@@ -24,7 +24,7 @@
         {
             base.ConfigureServices(services);
             
-            services.ReplaceSingleton<SignInManager<ApplicationUser>, MockedSignInManager>();
+            services.ReplaceSingleton<SignInManager<ApplicationUser>, SignInManagerMock>();
 
             // temporary workaround while DependencyContext issues are fixed for .NET 4.5.1
             // controller type validation is also removed for .NET 4.5.1

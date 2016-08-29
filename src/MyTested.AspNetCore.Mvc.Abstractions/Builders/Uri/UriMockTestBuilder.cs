@@ -8,16 +8,16 @@
     /// <summary>
     /// Used for testing <see cref="Uri"/>.
     /// </summary>
-    public class MockedUriTestBuilder : MockedUriBuilder, IAndUriTestBuilder
+    public class UriMockTestBuilder : UriMockBuilder, IAndUriTestBuilder
     {
-        private readonly ICollection<Func<MockedUri, Uri, bool>> validations;
+        private readonly ICollection<Func<UriMock, Uri, bool>> validations;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MockedUriTestBuilder"/> class.
+        /// Initializes a new instance of the <see cref="UriMockTestBuilder"/> class.
         /// </summary>
-        public MockedUriTestBuilder()
+        public UriMockTestBuilder()
         {
-            this.validations = new List<Func<MockedUri, Uri, bool>>();
+            this.validations = new List<Func<UriMock, Uri, bool>>();
         }
 
         /// <inheritdoc />
@@ -105,6 +105,6 @@
         /// <inheritdoc />
         public new IUriTestBuilder AndAlso() => this;
 
-        internal ICollection<Func<MockedUri, Uri, bool>> GetMockedUriValidations() => this.validations;
+        internal ICollection<Func<UriMock, Uri, bool>> GetUriMockValidations() => this.validations;
     }
 }

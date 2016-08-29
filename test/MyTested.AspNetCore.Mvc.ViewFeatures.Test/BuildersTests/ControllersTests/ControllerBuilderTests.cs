@@ -351,7 +351,7 @@
                 .ShouldPassForThe<HttpContext>(setHttpContext =>
                 {
                     Assert.Equal("Custom", setHttpContext.Request.Scheme);
-                    Assert.IsAssignableFrom<MockedHttpResponse>(setHttpContext.Response);
+                    Assert.IsAssignableFrom<HttpResponseMock>(setHttpContext.Response);
                     Assert.Same(httpContext.Response.Body, setHttpContext.Response.Body);
                     Assert.Equal(httpContext.Response.ContentLength, setHttpContext.Response.ContentLength);
                     Assert.Equal(httpContext.Response.ContentType, setHttpContext.Response.ContentType);
@@ -369,7 +369,7 @@
                 .ShouldPassForThe<FullPocoController>(controller =>
                 {
                     Assert.Equal("Custom", controller.CustomHttpContext.Request.Scheme);
-                    Assert.IsAssignableFrom<MockedHttpResponse>(controller.CustomHttpContext.Response);
+                    Assert.IsAssignableFrom<HttpResponseMock>(controller.CustomHttpContext.Response);
                     Assert.Same(httpContext.Response.Body, controller.CustomHttpContext.Response.Body);
                     Assert.Equal(httpContext.Response.ContentLength, controller.CustomHttpContext.Response.ContentLength);
                     Assert.Equal(httpContext.Response.ContentType, controller.CustomHttpContext.Response.ContentType);
@@ -457,7 +457,7 @@
                     services.AddHttpContextAccessor();
                 });
 
-            var httpContext = new MockedHttpContext();
+            var httpContext = new HttpContextMock();
             httpContext.Request.Form = new FormCollection(new Dictionary<string, StringValues> { ["Test"] = "TestValue" });
 
             MyController<FullPocoController>
@@ -539,7 +539,22 @@
                     Assert.NotNull(controller.CustomHttpContext.Response);
                     Assert.NotNull(controller.CustomControllerContext.ModelState);
                     Assert.NotNull(controller.CustomHttpContext.User);
-                    Assert.Null(controller.CustomControllerContext.ActionDescriptor);
+                    Assert.NotNull(controller.CustomControllerContext.ActionDescriptor);
+                    Assert.NotNull(controller.CustomControllerContext.ValueProviderFactories);
+                    Assert.Empty(controller.CustomControllerContext.ValueProviderFactories);
+                    Assert.NotNull(controller.CustomControllerContext.ActionDescriptor.ActionConstraints);
+                    Assert.Empty(controller.CustomControllerContext.ActionDescriptor.ActionConstraints);
+                    Assert.NotNull(controller.CustomControllerContext.ActionDescriptor.AttributeRouteInfo);
+                    Assert.NotNull(controller.CustomControllerContext.ActionDescriptor.BoundProperties);
+                    Assert.Empty(controller.CustomControllerContext.ActionDescriptor.BoundProperties);
+                    Assert.NotNull(controller.CustomControllerContext.ActionDescriptor.FilterDescriptors);
+                    Assert.Empty(controller.CustomControllerContext.ActionDescriptor.FilterDescriptors);
+                    Assert.NotNull(controller.CustomControllerContext.ActionDescriptor.Parameters);
+                    Assert.Empty(controller.CustomControllerContext.ActionDescriptor.Parameters);
+                    Assert.NotNull(controller.CustomControllerContext.ActionDescriptor.Properties);
+                    Assert.Empty(controller.CustomControllerContext.ActionDescriptor.Properties);
+                    Assert.NotNull(controller.CustomControllerContext.ActionDescriptor.RouteValues);
+                    Assert.Empty(controller.CustomControllerContext.ActionDescriptor.RouteValues);
                 });
 
             MyApplication.IsUsingDefaultConfiguration();
@@ -567,7 +582,22 @@
                     Assert.NotNull(controller.ObjectValidator);
                     Assert.NotNull(controller.Url);
                     Assert.NotNull(controller.User);
-                    Assert.Null(controller.ControllerContext.ActionDescriptor);
+                    Assert.NotNull(controller.ControllerContext.ActionDescriptor);
+                    Assert.NotNull(controller.ControllerContext.ValueProviderFactories);
+                    Assert.Empty(controller.ControllerContext.ValueProviderFactories);
+                    Assert.NotNull(controller.ControllerContext.ActionDescriptor.ActionConstraints);
+                    Assert.Empty(controller.ControllerContext.ActionDescriptor.ActionConstraints);
+                    Assert.NotNull(controller.ControllerContext.ActionDescriptor.AttributeRouteInfo);
+                    Assert.NotNull(controller.ControllerContext.ActionDescriptor.BoundProperties);
+                    Assert.Empty(controller.ControllerContext.ActionDescriptor.BoundProperties);
+                    Assert.NotNull(controller.ControllerContext.ActionDescriptor.FilterDescriptors);
+                    Assert.Empty(controller.ControllerContext.ActionDescriptor.FilterDescriptors);
+                    Assert.NotNull(controller.ControllerContext.ActionDescriptor.Parameters);
+                    Assert.Empty(controller.ControllerContext.ActionDescriptor.Parameters);
+                    Assert.NotNull(controller.ControllerContext.ActionDescriptor.Properties);
+                    Assert.Empty(controller.ControllerContext.ActionDescriptor.Properties);
+                    Assert.NotNull(controller.ControllerContext.ActionDescriptor.RouteValues);
+                    Assert.Empty(controller.ControllerContext.ActionDescriptor.RouteValues);
                 });
         }
 

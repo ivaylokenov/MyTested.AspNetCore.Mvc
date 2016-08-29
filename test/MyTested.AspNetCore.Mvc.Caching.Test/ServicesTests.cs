@@ -15,19 +15,19 @@
     public class ServicesTests
     {
         [Fact]
-        public void MockedMemoryCacheShouldBeRegistedWithAddedCaching()
+        public void MockMemoryCacheShouldBeRegistedWithAddedCaching()
         {
             MyApplication
                 .IsUsingDefaultConfiguration()
                 .WithServices(services => services.AddMemoryCache());
 
-            Assert.IsAssignableFrom<MockedMemoryCache>(TestServiceProvider.GetService<IMemoryCache>());
+            Assert.IsAssignableFrom<MemoryCacheMock>(TestServiceProvider.GetService<IMemoryCache>());
 
             MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
-        public void MockedMemoryCacheShouldBeDifferentForEveryCallSynchronously()
+        public void MockMemoryCacheShouldBeDifferentForEveryCallSynchronously()
         {
             MyApplication
                 .IsUsingDefaultConfiguration()
@@ -51,7 +51,7 @@
         }
 
         [Fact]
-        public void MockedMemoryCacheShouldBeDifferentForEveryCallSynchronouslyWithCachedControllerBuilder()
+        public void MockMemoryCacheShouldBeDifferentForEveryCallSynchronouslyWithCachedControllerBuilder()
         {
             MyApplication
                 .IsUsingDefaultConfiguration()
@@ -75,7 +75,7 @@
         }
 
         [Fact]
-        public void DefaultConfigurationShouldSetMockedMemoryCache()
+        public void DefaultConfigurationShouldSetMockMemoryCache()
         {
             MyApplication
                 .IsUsingDefaultConfiguration()
@@ -84,13 +84,13 @@
             var memoryCache = TestServiceProvider.GetService<IMemoryCache>();
 
             Assert.NotNull(memoryCache);
-            Assert.IsAssignableFrom<MockedMemoryCache>(memoryCache);
+            Assert.IsAssignableFrom<MemoryCacheMock>(memoryCache);
 
             MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
-        public void CustomMemoryCacheShouldOverrideTheMockedOne()
+        public void CustomMemoryCacheShouldOverrideTheMockOne()
         {
             MyApplication.StartsFrom<CachingDataStartup>();
 
@@ -103,7 +103,7 @@
         }
 
         [Fact]
-        public void ExplicitMockedMemoryCacheShouldOverrideIt()
+        public void ExplicitMockMemoryCacheShouldOverrideIt()
         {
             MyApplication
                 .StartsFrom<DataStartup>()
@@ -115,13 +115,13 @@
             var memoryCache = TestServiceProvider.GetService<IMemoryCache>();
 
             Assert.NotNull(memoryCache);
-            Assert.IsAssignableFrom<MockedMemoryCache>(memoryCache);
+            Assert.IsAssignableFrom<MemoryCacheMock>(memoryCache);
 
             MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
-        public void MockedMemoryCacheShouldBeDifferentForEveryCallAsynchronously()
+        public void MockMemoryCacheShouldBeDifferentForEveryCallAsynchronously()
         {
             Task
                 .Run(async () =>

@@ -1,6 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc
 {
-    using Internal.Http;
+    using Internal.Session;
     using Microsoft.AspNetCore.Session;
     using Microsoft.Extensions.DependencyInjection;
 
@@ -16,7 +16,7 @@
         /// <returns>The same <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection ReplaceSession(this IServiceCollection serviceCollection)
         {
-            return serviceCollection.ReplaceTransient<ISessionStore, MockedSessionStore>();
+            return serviceCollection.ReplaceTransient<ISessionStore, SessionStoreMock>();
         }
     }
 }

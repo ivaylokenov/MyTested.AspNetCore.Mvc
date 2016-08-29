@@ -21,12 +21,12 @@
         public static ISet<IShouldPassForPlugin> ShouldPassForPlugins { get; }
             = new HashSet<IShouldPassForPlugin>();
         
-        public static MockedHttpContext CreateMockedHttpContext()
+        public static HttpContextMock CreateHttpContextMock()
         {
             var httpContextFactory = TestServiceProvider.GetService<IHttpContextFactory>();
             var httpContext = httpContextFactory != null
-                ? MockedHttpContext.From(httpContextFactory.Create(new FeatureCollection()))
-                : new MockedHttpContext();
+                ? HttpContextMock.From(httpContextFactory.Create(new FeatureCollection()))
+                : new HttpContextMock();
 
             SetHttpContextToAccessor(httpContext);
 

@@ -10,7 +10,7 @@
         public static IMemoryCache GetMemoryCache(this HttpTestContext testContext)
             => testContext.HttpContext.RequestServices.GetRequiredService<IMemoryCache>();
 
-        internal static IMockedMemoryCache GetMockedMemoryCache(this HttpTestContext testContext)
-            => testContext.GetMemoryCache().AsMockedMemoryCache();
+        internal static IMemoryCacheMock GetMemoryCacheMock(this HttpTestContext testContext)
+            => testContext.GetMemoryCache().AsMemoryCacheMock();
     }
 }

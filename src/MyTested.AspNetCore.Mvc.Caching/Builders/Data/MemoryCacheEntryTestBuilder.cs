@@ -156,7 +156,7 @@
         /// <inheritdoc />
         public new IMemoryCacheEntryTestBuilder AndAlso() => this;
 
-        internal ICollection<Action<ICacheEntry, ICacheEntry>> GetMockedMemoryCacheEntryValidations()
+        internal ICollection<Action<ICacheEntry, ICacheEntry>> GetMemoryCacheEntryMockValidations()
             => this.validations;
 
         internal void ThrowNewDataProviderAssertionException(string expectedValue, string actualValue)

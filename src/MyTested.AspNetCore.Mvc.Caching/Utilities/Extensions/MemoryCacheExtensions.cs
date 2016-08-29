@@ -6,12 +6,12 @@
 
     public static class MemoryCacheExtensions
     {
-        public static IMockedMemoryCache AsMockedMemoryCache(this IMemoryCache memoryCache)
+        public static IMemoryCacheMock AsMemoryCacheMock(this IMemoryCache memoryCache)
         {
-            var mockedMemoryCache = memoryCache as IMockedMemoryCache;
+            var mockedMemoryCache = memoryCache as IMemoryCacheMock;
             if (mockedMemoryCache == null)
             {
-                throw new InvalidOperationException("This test requires the registered IMemoryCache service to implement IMockedMemoryCache.");
+                throw new InvalidOperationException("This test requires the registered IMemoryCache service to implement IMemoryCacheMock.");
             }
 
             return mockedMemoryCache;

@@ -49,7 +49,7 @@
                 .Calling(c => c.FullMemoryCacheAction(From.Services<IMemoryCache>()))
                 .ShouldReturn()
                 .Ok()
-                .WithModel(new MockedCacheEntry("FullEntry")
+                .WithModel(new CacheEntryMock("FullEntry")
                 {
                     Value = "FullEntryValid",
                     AbsoluteExpiration = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
@@ -80,7 +80,7 @@
                 .Calling(c => c.FullMemoryCacheAction(From.Services<IMemoryCache>()))
                 .ShouldReturn()
                 .Ok()
-                .WithModel(new MockedCacheEntry("FullEntry")
+                .WithModel(new CacheEntryMock("FullEntry")
                 {
                     Value = "FullEntryValid",
                     AbsoluteExpiration = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)),

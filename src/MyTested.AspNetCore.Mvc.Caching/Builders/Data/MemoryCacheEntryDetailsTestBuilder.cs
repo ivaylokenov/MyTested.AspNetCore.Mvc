@@ -28,7 +28,7 @@
         public IAndMemoryCacheEntryTestBuilder Passing(Action<TValue> assertions)
         {
             this.memoryCacheEntryTestBuilder
-                .GetMockedMemoryCacheEntryValidations()
+                .GetMemoryCacheEntryMockValidations()
                 .Add((expected, actual) => assertions((TValue)actual.Value));
 
             return this;
@@ -38,12 +38,12 @@
         public IAndMemoryCacheEntryTestBuilder Passing(Func<TValue, bool> predicate)
         {
             this.memoryCacheEntryTestBuilder
-                .GetMockedMemoryCacheEntryValidations()
+                .GetMemoryCacheEntryMockValidations()
                 .Add((expected, actual) =>
                 {
                     if (!predicate((TValue)actual.Value))
                     {
-                        var memoryCacheEntry = this.memoryCacheEntryTestBuilder.GetMockedMemoryCacheEntry();
+                        var memoryCacheEntry = this.memoryCacheEntryTestBuilder.GetMemoryCacheEntryMock();
 
                         this.memoryCacheEntryTestBuilder.ThrowNewDataProviderAssertionException(
                             $"to have entry with '{memoryCacheEntry.Key}' key and value passing the given predicate",

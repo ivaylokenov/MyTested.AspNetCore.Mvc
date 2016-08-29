@@ -60,7 +60,7 @@
         /// <param name="authenticationType">Authentication type to use for the authenticated identity.</param>
         /// <param name="nameType">Type of the username claim. Default is <see cref="ClaimTypes.Name"/>.</param>
         /// <param name="roleType">Type of the role claim. Default is <see cref="ClaimTypes.Role"/>.</param>
-        /// <returns>Mocked <see cref="ClaimsIdentity"/>.</returns>
+        /// <returns>Mock of <see cref="ClaimsIdentity"/>.</returns>
         protected static ClaimsIdentity CreateAuthenticatedClaimsIdentity(
             ICollection<Claim> claims = null,
             string authenticationType = null,
@@ -88,7 +88,7 @@
         /// <summary>
         /// Creates new authenticated claims identity by using the accumulated claims and authentication type.
         /// </summary>
-        /// <returns>Mocked <see cref="ClaimsIdentity"/>.</returns>
+        /// <returns>Mock of <see cref="ClaimsIdentity"/>.</returns>
         protected ClaimsIdentity GetAuthenticatedClaimsIdentity()
         {
             return CreateAuthenticatedClaimsIdentity(

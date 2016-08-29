@@ -45,7 +45,7 @@
             }
         }
         
-        protected new MockedHttpContext HttpContext => this.TestContext.MockedHttpContext;
+        protected new HttpContextMock HttpContext => this.TestContext.HttpContextMock;
 
         protected HttpRequest HttpRequest => this.HttpContext.Request;
 

@@ -4,11 +4,11 @@
     using Microsoft.Extensions.Logging;
 
     /// <summary>
-    /// Mocked <see cref="ILogger"/>.
+    /// Mock of <see cref="ILogger"/>.
     /// </summary>
-    public class MockedLogger : ILogger
+    public class LoggerMock : ILogger
     {
-        public static MockedLogger Instance { get; } = new MockedLogger();
+        public static LoggerMock Instance { get; } = new LoggerMock();
 
         /// <summary>
         /// Returns empty <see cref="IDisposable"/> object.
@@ -18,7 +18,7 @@
         /// <returns>Disposable object.</returns>
         public IDisposable BeginScope<TState>(TState state)
         {
-            return MockedDisposable.Instance;
+            return DisposableMock.Instance;
         }
 
         /// <summary>

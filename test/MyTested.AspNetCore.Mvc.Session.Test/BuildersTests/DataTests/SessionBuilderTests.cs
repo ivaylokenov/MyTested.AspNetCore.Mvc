@@ -89,15 +89,15 @@
                 {
                     MyController<MvcController>
                         .Instance()
-                        .WithSession((Action<Builders.Contracts.Data.ISessionBuilder>)(session => session
+                        .WithSession(session => session
                             .WithId("TestId")
-                            .WithEntry("HasId", "HasIdValue")))
+                            .WithEntry("HasId", "HasIdValue"))
                         .Calling(c => c.FullSessionAction())
                         .ShouldReturn()
                         .Ok()
                         .WithModel("TestId");
                 },
-                "Setting session Id requires the registered ISession service to implement IMockedSession.");
+                "Setting session Id requires the registered ISession service to implement ISessionMock.");
 
             MyApplication.IsUsingDefaultConfiguration();
         }

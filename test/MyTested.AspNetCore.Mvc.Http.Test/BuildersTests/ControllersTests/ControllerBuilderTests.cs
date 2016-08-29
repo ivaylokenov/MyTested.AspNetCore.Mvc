@@ -39,7 +39,7 @@
                 .ShouldPassForThe<MvcController>(controller =>
                 {
                     Assert.Equal("Custom", controller.HttpContext.Request.Scheme);
-                    Assert.IsAssignableFrom<MockedHttpResponse>(controller.HttpContext.Response);
+                    Assert.IsAssignableFrom<HttpResponseMock>(controller.HttpContext.Response);
                     Assert.Same(httpContext.Response.Body, controller.HttpContext.Response.Body);
                     Assert.Equal(httpContext.Response.ContentLength, controller.HttpContext.Response.ContentLength);
                     Assert.Equal(httpContext.Response.ContentType, controller.HttpContext.Response.ContentType);
@@ -53,7 +53,7 @@
                 .ShouldPassForThe<HttpContext>(setHttpContext =>
                 {
                     Assert.Equal("Custom", setHttpContext.Request.Scheme);
-                    Assert.IsAssignableFrom<MockedHttpResponse>(setHttpContext.Response);
+                    Assert.IsAssignableFrom<HttpResponseMock>(setHttpContext.Response);
                     Assert.Same(httpContext.Response.Body, setHttpContext.Response.Body);
                     Assert.Equal(httpContext.Response.ContentLength, setHttpContext.Response.ContentLength);
                     Assert.Equal(httpContext.Response.ContentType, setHttpContext.Response.ContentType);
@@ -105,7 +105,7 @@
         [Fact]
         public void WithRequestAsObjectShouldWorkWithSetRequestAction()
         {
-            var httpContext = new MockedHttpContext();
+            var httpContext = new HttpContextMock();
             httpContext.Request.Form = new FormCollection(new Dictionary<string, StringValues> { ["Test"] = "TestValue" });
 
             MyController<MvcController>

@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using Microsoft.Extensions.Caching.Memory;
 
-    public interface IMockedMemoryCache : IMemoryCache
+    public interface IMemoryCacheMock : IMemoryCache
     {
         int Count { get; }
 

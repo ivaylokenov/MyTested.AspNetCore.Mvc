@@ -5,18 +5,18 @@
     using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.Primitives;
 
-    public class MockedCacheEntry : ICacheEntry
+    public class CacheEntryMock : ICacheEntry
     {
         private readonly IList<IChangeToken> expirationTokens;
         private readonly IList<PostEvictionCallbackRegistration> postEvictionCallbacks;
         
-        public MockedCacheEntry()
+        public CacheEntryMock()
         {
             this.expirationTokens = new List<IChangeToken>();
             this.postEvictionCallbacks = new List<PostEvictionCallbackRegistration>();
         }
 
-        public MockedCacheEntry(object key)
+        public CacheEntryMock(object key)
             : this()
         {
             this.Key = key;

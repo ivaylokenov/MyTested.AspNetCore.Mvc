@@ -11,9 +11,9 @@
     using Utilities.Validators;
 
     /// <summary>
-    /// Mocked HTTP request object.
+    /// Mock of HTTP request object.
     /// </summary>
-    public class MockedHttpRequest : HttpRequest
+    public class HttpRequestMock : HttpRequest
     {
         private readonly HttpContext httpContext;
         private readonly IHeaderDictionary headerDictionary;
@@ -25,9 +25,9 @@
         private IFormFeature formFeature;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MockedHttpRequest"/> class.
+        /// Initializes a new instance of the <see cref="HttpRequestMock"/> class.
         /// </summary>
-        public MockedHttpRequest(HttpContext httpContext)
+        public HttpRequestMock(HttpContext httpContext)
         {
             CommonValidator.CheckForNullReference(httpContext, nameof(HttpContext));
 

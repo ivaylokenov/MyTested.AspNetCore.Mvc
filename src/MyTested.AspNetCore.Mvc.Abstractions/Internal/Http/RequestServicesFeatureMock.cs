@@ -6,9 +6,9 @@
     using Services;
 
     /// <summary>
-    /// Mocked request services feature.
+    /// Mock of request services feature.
     /// </summary>
-    public class MockedRequestServicesFeature : IServiceProvidersFeature, IDisposable
+    public class RequestServicesFeatureMock : IServiceProvidersFeature, IDisposable
     {
         private IServiceProvider requestServices;
         private IServiceScope scope;

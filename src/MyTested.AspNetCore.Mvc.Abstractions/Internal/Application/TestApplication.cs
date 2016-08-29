@@ -308,7 +308,7 @@
             // default server services
             serviceCollection.TryAddSingleton(Environment);
 
-            serviceCollection.TryAddSingleton<ILoggerFactory>(MockedLoggerFactory.Create());
+            serviceCollection.TryAddSingleton<ILoggerFactory>(LoggerFactoryMock.Create());
             serviceCollection.AddLogging();
 
             serviceCollection.AddTransient<IApplicationBuilderFactory, ApplicationBuilderFactory>();
@@ -417,7 +417,7 @@
 
         private static void PrepareApplicationAndRouting(StartupMethods startupMethods)
         {
-            var applicationBuilder = new MockedApplicationBuilder(serviceProvider);
+            var applicationBuilder = new ApplicationBuilderMock(serviceProvider);
 
             startupMethods?.ConfigureDelegate?.Invoke(applicationBuilder);
 

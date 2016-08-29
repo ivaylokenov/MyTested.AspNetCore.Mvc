@@ -1,9 +1,9 @@
-﻿namespace MyTested.AspNetCore.Mvc.Internal.Http
+﻿namespace MyTested.AspNetCore.Mvc.Internal.Session
 {
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Features;
 
-    public class MockedSessionFeature : ISessionFeature
+    public class SessionFeatureMock : ISessionFeature
     {
         public ISession Session { get; set; }
     }

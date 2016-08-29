@@ -9,47 +9,47 @@
     /// <summary>
     /// Used for building <see cref="Uri"/>.
     /// </summary>
-    public class MockedUriBuilder : IAndUriBuilder
+    public class UriMockBuilder : IAndUriBuilder
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MockedUriBuilder"/> class.
+        /// Initializes a new instance of the <see cref="UriMockBuilder"/> class.
         /// </summary>
-        public MockedUriBuilder()
+        public UriMockBuilder()
         {
-            this.MockedUri = new MockedUri();
+            this.UriMock = new UriMock();
         }
 
         /// <summary>
-        /// Gets the built mocked <see cref="Uri"/> instance.
+        /// Gets the built <see cref="Uri"/> instance.
         /// </summary>
-        /// <value>Mocked <see cref="Uri"/>.</value>
-        protected MockedUri MockedUri { get; private set; }
+        /// <value>Mock of <see cref="Uri"/>.</value>
+        protected UriMock UriMock { get; private set; }
 
         /// <inheritdoc />
         public IAndUriBuilder WithHost(string host)
         {
-            this.MockedUri.Host = host;
+            this.UriMock.Host = host;
             return this;
         }
 
         /// <inheritdoc />
         public IAndUriBuilder WithPort(int port)
         {
-            this.MockedUri.Port = port;
+            this.UriMock.Port = port;
             return this;
         }
 
         /// <inheritdoc />
         public IAndUriBuilder WithAbsolutePath(string absolutePath)
         {
-            this.MockedUri.AbsolutePath = absolutePath;
+            this.UriMock.AbsolutePath = absolutePath;
             return this;
         }
 
         /// <inheritdoc />
         public IAndUriBuilder WithScheme(string scheme)
         {
-            this.MockedUri.Scheme = scheme;
+            this.UriMock.Scheme = scheme;
             return this;
         }
 
@@ -61,30 +61,30 @@
                 throw new ArgumentException("Query string must start with the '?' symbol.");
             }
 
-            this.MockedUri.Query = query;
+            this.UriMock.Query = query;
             return this;
         }
 
         /// <inheritdoc />
         public IAndUriBuilder WithFragment(string fragment)
         {
-            this.MockedUri.Fragment = fragment;
+            this.UriMock.Fragment = fragment;
             return this;
         }
 
         /// <inheritdoc />
         public IUriBuilder AndAlso() => this;
 
-        public MockedUri GetMockedUri() => this.MockedUri;
+        public UriMock GetUriMock() => this.UriMock;
 
         public Uri GetUri()
         {
             var uriBuilder = new SystemUriBuilder(
-                this.MockedUri.Scheme,
-                this.MockedUri.Host,
-                this.MockedUri.Port ?? 80,
-                this.MockedUri.AbsolutePath,
-                this.MockedUri.Query);
+                this.UriMock.Scheme,
+                this.UriMock.Host,
+                this.UriMock.Port ?? 80,
+                this.UriMock.AbsolutePath,
+                this.UriMock.Query);
 
             return uriBuilder.Uri;
         }

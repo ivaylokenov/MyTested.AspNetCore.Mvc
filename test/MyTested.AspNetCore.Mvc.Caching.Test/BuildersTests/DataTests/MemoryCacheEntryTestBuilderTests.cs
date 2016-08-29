@@ -204,7 +204,7 @@
         }
 
         [Fact]
-        public void WithNoMockedMemoryCacheSomeMethodsShouldThrowException()
+        public void WithNoMockMemoryCacheSomeMethodsShouldThrowException()
         {
             MyApplication
                 .IsUsingDefaultConfiguration()
@@ -228,7 +228,7 @@
                         .ShouldReturn()
                         .Ok();
                 },
-                "This test requires the registered IMemoryCache service to implement IMockedMemoryCache.");
+                "This test requires the registered IMemoryCache service to implement IMemoryCacheMock.");
 
             MyApplication.IsUsingDefaultConfiguration();
         }

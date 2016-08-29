@@ -5,22 +5,22 @@
     using Microsoft.AspNetCore.Http.Internal;
 
     /// <summary>
-    /// Mocked HTTP response.
+    /// Mock of HTTP response.
     /// </summary>
-    public class MockedHttpResponse : DefaultHttpResponse
+    public class HttpResponseMock : DefaultHttpResponse
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MockedHttpResponse"/> class.
+        /// Initializes a new instance of the <see cref="HttpResponseMock"/> class.
         /// </summary>
         /// <param name="context">Default HTTP context.</param>
-        public MockedHttpResponse(HttpContext context)
+        public HttpResponseMock(HttpContext context)
             : base(context)
         {
         }
 
-        public static MockedHttpResponse From(HttpContext httpContext, HttpResponse httpResponse)
+        public static HttpResponseMock From(HttpContext httpContext, HttpResponse httpResponse)
         {
-            return new MockedHttpResponse(httpContext)
+            return new HttpResponseMock(httpContext)
             {
                 Body = httpResponse.Body,
                 ContentLength = httpResponse.ContentLength,

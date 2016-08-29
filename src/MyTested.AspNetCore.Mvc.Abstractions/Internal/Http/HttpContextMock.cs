@@ -6,18 +6,18 @@
     using Utilities.Validators;
 
     /// <summary>
-    /// Mocked HTTP context object.
+    /// Mock of HTTP context.
     /// </summary>
-    public class MockedHttpContext : DefaultHttpContext
+    public class HttpContextMock : DefaultHttpContext
     {
         private readonly HttpResponse httpResponse;
 
         private HttpRequest httpRequest;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MockedHttpContext"/> class.
+        /// Initializes a new instance of the <see cref="HttpContextMock"/> class.
         /// </summary>
-        public MockedHttpContext()
+        public HttpContextMock()
             : this(new FeatureCollection())
         {
             this.PrepareFeatures();
@@ -25,21 +25,21 @@
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MockedHttpContext"/> class with the provided features.
+        /// Initializes a new instance of the <see cref="HttpContextMock"/> class with the provided features.
         /// </summary>
         /// <param name="features">HTTP features to initialize.</param>
-        public MockedHttpContext(IFeatureCollection features)
+        public HttpContextMock(IFeatureCollection features)
             : base(features)
         {
             this.CustomRequest = this.httpRequest;
-            this.httpResponse = this.httpResponse ?? new MockedHttpResponse(this);
+            this.httpResponse = this.httpResponse ?? new HttpResponseMock(this);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MockedHttpContext"/> class by copying the properties from the provided one.
+        /// Initializes a new instance of the <see cref="HttpContextMock"/> class by copying the properties from the provided one.
         /// </summary>
         /// <param name="context">HttpContext to copy properties from.</param>
-        private MockedHttpContext(HttpContext context)
+        private HttpContextMock(HttpContext context)
             : this(context.Features)
         {
             CommonValidator.CheckForNullReference(context, nameof(HttpContext));
@@ -47,7 +47,7 @@
             this.PrepareFeatures();
 
             this.httpRequest = context.Request;
-            this.httpResponse = MockedHttpResponse.From(this, context.Response);
+            this.httpResponse = HttpResponseMock.From(this, context.Response);
             this.Items = context.Items;
             this.RequestAborted = context.RequestAborted;
             this.RequestServices = context.RequestServices;
@@ -79,9 +79,9 @@
             set { this.httpRequest = value ?? new DefaultHttpRequest(this); }
         }
 
-        public static MockedHttpContext From(HttpContext httpContext)
+        public static HttpContextMock From(HttpContext httpContext)
         {
-            return new MockedHttpContext(httpContext);
+            return new HttpContextMock(httpContext);
         }
 
         private void PrepareFeatures()
@@ -98,7 +98,7 @@
 
             if (this.Features.Get<IServiceProvidersFeature>() == null)
             {
-                this.Features.Set<IServiceProvidersFeature>(new MockedRequestServicesFeature());
+                this.Features.Set<IServiceProvidersFeature>(new RequestServicesFeatureMock());
             }
 
             TestHelper.ApplyHttpFeatures(this);

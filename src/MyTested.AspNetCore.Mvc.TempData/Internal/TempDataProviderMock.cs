@@ -4,7 +4,7 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
-    public class MockedTempDataProvider : ITempDataProvider
+    public class TempDataProviderMock : ITempDataProvider
     {
         public IDictionary<string, object> LoadTempData(HttpContext context)
         {

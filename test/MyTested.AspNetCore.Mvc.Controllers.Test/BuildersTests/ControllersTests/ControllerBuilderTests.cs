@@ -258,7 +258,22 @@
                     Assert.NotNull(controller.ObjectValidator);
                     Assert.NotNull(controller.Url);
                     Assert.NotNull(controller.User);
-                    Assert.Null(controller.ControllerContext.ActionDescriptor);
+                    Assert.NotNull(controller.ControllerContext.ActionDescriptor);
+                    Assert.NotNull(controller.ControllerContext.ValueProviderFactories);
+                    Assert.Empty(controller.ControllerContext.ValueProviderFactories);
+                    Assert.NotNull(controller.ControllerContext.ActionDescriptor.ActionConstraints);
+                    Assert.Empty(controller.ControllerContext.ActionDescriptor.ActionConstraints);
+                    Assert.NotNull(controller.ControllerContext.ActionDescriptor.AttributeRouteInfo);
+                    Assert.NotNull(controller.ControllerContext.ActionDescriptor.BoundProperties);
+                    Assert.Empty(controller.ControllerContext.ActionDescriptor.BoundProperties);
+                    Assert.NotNull(controller.ControllerContext.ActionDescriptor.FilterDescriptors);
+                    Assert.Empty(controller.ControllerContext.ActionDescriptor.FilterDescriptors);
+                    Assert.NotNull(controller.ControllerContext.ActionDescriptor.Parameters);
+                    Assert.Empty(controller.ControllerContext.ActionDescriptor.Parameters);
+                    Assert.NotNull(controller.ControllerContext.ActionDescriptor.Properties);
+                    Assert.Empty(controller.ControllerContext.ActionDescriptor.Properties);
+                    Assert.NotNull(controller.ControllerContext.ActionDescriptor.RouteValues);
+                    Assert.Empty(controller.ControllerContext.ActionDescriptor.RouteValues);
                 });
         }
 

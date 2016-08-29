@@ -131,8 +131,8 @@
 
             Assert.NotNull(firstContext);
             Assert.NotNull(secondContext);
-            Assert.IsAssignableFrom<MockedControllerContext>(firstContext);
-            Assert.IsAssignableFrom<MockedControllerContext>(secondContext);
+            Assert.IsAssignableFrom<ControllerContextMock>(firstContext);
+            Assert.IsAssignableFrom<ControllerContextMock>(secondContext);
             Assert.NotSame(firstContext, secondContext);
 
             MyApplication.IsUsingDefaultConfiguration();
@@ -213,11 +213,11 @@
                     Assert.NotNull(thirdContextAsync);
                     Assert.NotNull(fourthContextAsync);
                     Assert.NotNull(fifthContextAsync);
-                    Assert.IsAssignableFrom<MockedControllerContext>(firstContextAsync);
-                    Assert.IsAssignableFrom<MockedControllerContext>(secondContextAsync);
-                    Assert.IsAssignableFrom<MockedControllerContext>(thirdContextAsync);
-                    Assert.IsAssignableFrom<MockedControllerContext>(fourthContextAsync);
-                    Assert.IsAssignableFrom<MockedControllerContext>(fifthContextAsync);
+                    Assert.IsAssignableFrom<ControllerContextMock>(firstContextAsync);
+                    Assert.IsAssignableFrom<ControllerContextMock>(secondContextAsync);
+                    Assert.IsAssignableFrom<ControllerContextMock>(thirdContextAsync);
+                    Assert.IsAssignableFrom<ControllerContextMock>(fourthContextAsync);
+                    Assert.IsAssignableFrom<ControllerContextMock>(fifthContextAsync);
                     Assert.NotSame(firstContextAsync, secondContextAsync);
                     Assert.NotSame(firstContextAsync, thirdContextAsync);
                     Assert.NotSame(secondContextAsync, thirdContextAsync);

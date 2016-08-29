@@ -62,18 +62,18 @@
         /// <param name="failedValidationAction">Action to execute, if the validation fails.</param>
         public static void ValidateLocation(
             dynamic result,
-            Action<MockedUriTestBuilder> uriTestBuilder,
+            Action<UriMockTestBuilder> uriTestBuilder,
             Action<string, string, string> failedValidationAction)
         {
             RuntimeBinderValidator.ValidateBinding(() =>
             {
                 var actualUri = (string)GetUrlFromDynamic(result);
 
-                var newUriTestBuilder = new MockedUriTestBuilder();
+                var newUriTestBuilder = new UriMockTestBuilder();
                 uriTestBuilder(newUriTestBuilder);
-                var expectedUri = newUriTestBuilder.GetMockedUri();
+                var expectedUri = newUriTestBuilder.GetUriMock();
                 
-                var validations = newUriTestBuilder.GetMockedUriValidations();
+                var validations = newUriTestBuilder.GetUriMockValidations();
                 var actualUriWithUnknownKind = new Uri(actualUri, UriKind.RelativeOrAbsolute);
                 if (validations.Any(v => !v(expectedUri, actualUriWithUnknownKind)))
                 {

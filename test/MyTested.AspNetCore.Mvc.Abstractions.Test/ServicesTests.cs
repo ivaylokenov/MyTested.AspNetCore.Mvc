@@ -335,7 +335,7 @@
         }
 
         [Fact]
-        public void WithoutHttpContextFactoryTheDefaultMockedHttpContextShouldBeProvided()
+        public void WithoutHttpContextFactoryTheDefaultMockHttpContextShouldBeProvided()
         {
             MyApplication.IsUsingDefaultConfiguration()
                 .WithServices(services =>
@@ -347,7 +347,7 @@
 
             Assert.Null(httpContextFactory);
 
-            var httpContext = TestHelper.CreateMockedHttpContext();
+            var httpContext = TestHelper.CreateHttpContextMock();
 
             Assert.NotNull(httpContext);
             Assert.Equal(ContentType.FormUrlEncoded, httpContext.Request.ContentType);
@@ -356,7 +356,7 @@
         }
 
         [Fact]
-        public void WithHttpContextFactoryShouldReturnMockedHttpContextBasedOnTheFactoryCreatedHttpContext()
+        public void WithHttpContextFactoryShouldReturnMockHttpContextBasedOnTheFactoryCreatedHttpContext()
         {
             MyApplication.IsUsingDefaultConfiguration()
                 .WithServices(services =>
@@ -368,7 +368,7 @@
 
             Assert.NotNull(httpContextFactory);
 
-            var httpContext = TestHelper.CreateMockedHttpContext();
+            var httpContext = TestHelper.CreateHttpContextMock();
 
             Assert.NotNull(httpContext);
             Assert.Equal(ContentType.AudioVorbis, httpContext.Request.ContentType);
@@ -377,7 +377,7 @@
         }
         
         [Fact]
-        public void MockedMemoryCacheShouldNotBeRegisteredIfNoCacheIsAdded()
+        public void MockMemoryCacheShouldNotBeRegisteredIfNoCacheIsAdded()
         {
             MyApplication
                 .IsUsingDefaultConfiguration()
@@ -389,7 +389,7 @@
         }
         
         [Fact]
-        public void CustomTempDataProviderShouldOverrideTheMockedOne()
+        public void CustomTempDataProviderShouldOverrideTheMockOne()
         {
             MyApplication.StartsFrom<DataStartup>();
 

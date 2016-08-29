@@ -51,7 +51,7 @@
             {
                 if (this.controllerContext == null)
                 {
-                    this.controllerContext = new MockedControllerContext(this);
+                    this.controllerContext = ControllerContextMock.Default(this);
                     if (!this.controllerContext.RouteData.Values.Any())
                     {
                         this.controllerContext.RouteData = this.RouteData ?? this.controllerContext.RouteData;

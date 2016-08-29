@@ -5,14 +5,14 @@
     using Microsoft.Extensions.Caching.Memory;
     using Contracts;
 
-    public class MockedMemoryCache : IMockedMemoryCache
+    public class MemoryCacheMock : IMemoryCacheMock
     {
         private static readonly TestLocal<IDictionary<object, ICacheEntry>> Current
             = new TestLocal<IDictionary<object, ICacheEntry>>();
 
         private readonly IDictionary<object, ICacheEntry> cache;
 
-        public MockedMemoryCache()
+        public MemoryCacheMock()
         {
             this.cache = this.GetCurrentCache();
         }
@@ -34,7 +34,7 @@
 
         public ICacheEntry CreateEntry(object key)
         {
-            var value = new MockedCacheEntry(key);
+            var value = new CacheEntryMock(key);
             this.cache[key] = value;
             return value;
         }

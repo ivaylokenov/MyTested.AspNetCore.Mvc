@@ -3,13 +3,13 @@
     using System;
 
     /// <summary>
-    /// Mocked IDisposable object.
+    /// Mock of <see cref="IDisposable"/> object.
     /// </summary>
-    public class MockedDisposable : IDisposable
+    public class DisposableMock : IDisposable
     {
-        private static MockedDisposable defaultMockedDisposable = new MockedDisposable();
+        private static DisposableMock defaultDisposableMock = new DisposableMock();
 
-        public static MockedDisposable Instance => defaultMockedDisposable;
+        public static DisposableMock Instance => defaultDisposableMock;
 
         /// <summary>
         /// Does nothing.

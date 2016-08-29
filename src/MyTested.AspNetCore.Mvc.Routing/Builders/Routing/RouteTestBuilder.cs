@@ -22,7 +22,7 @@
         {
         }
 
-        private MockedHttpContext HttpContext => this.TestContext.MockedHttpContext;
+        private HttpContextMock HttpContext => this.TestContext.HttpContextMock;
 
         /// <inheritdoc />
         public IShouldMapTestBuilder ShouldMap(string location)

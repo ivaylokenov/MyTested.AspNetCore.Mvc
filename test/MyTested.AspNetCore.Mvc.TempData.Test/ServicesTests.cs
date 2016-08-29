@@ -9,18 +9,18 @@
     public class ServicesTests
     {
         [Fact]
-        public void DefaultConfigurationShouldSetMockedTempDataProvider()
+        public void DefaultConfigurationShouldSetMockTempDataProvider()
         {
             MyApplication.IsUsingDefaultConfiguration();
 
             var tempDataProvider = TestServiceProvider.GetService<ITempDataProvider>();
 
             Assert.NotNull(tempDataProvider);
-            Assert.IsAssignableFrom<MockedTempDataProvider>(tempDataProvider);
+            Assert.IsAssignableFrom<TempDataProviderMock>(tempDataProvider);
         }
 
         [Fact]
-        public void ExplicitMockedTempDataProviderShouldOverrideIt()
+        public void ExplicitMockTempDataProviderShouldOverrideIt()
         {
             MyApplication
                 .StartsFrom<DataStartup>()
@@ -32,7 +32,7 @@
             var tempDataProvider = TestServiceProvider.GetService<ITempDataProvider>();
 
             Assert.NotNull(tempDataProvider);
-            Assert.IsAssignableFrom<MockedTempDataProvider>(tempDataProvider);
+            Assert.IsAssignableFrom<TempDataProviderMock>(tempDataProvider);
 
             MyApplication.IsUsingDefaultConfiguration();
         }

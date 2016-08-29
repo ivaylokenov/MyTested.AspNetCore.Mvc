@@ -16,7 +16,7 @@
         /// <returns>The same <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection ReplaceTempDataProvider(this IServiceCollection serviceCollection)
         {
-            return serviceCollection.ReplaceSingleton<ITempDataProvider, MockedTempDataProvider>();
+            return serviceCollection.ReplaceSingleton<ITempDataProvider, TempDataProviderMock>();
         }
     }
 }

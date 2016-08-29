@@ -8,7 +8,7 @@
     {
         public static void SetRouteData(this HttpContext httpContext, RouteData routeData)
         {
-            httpContext.Features[typeof(IRoutingFeature)] = new MockedRoutingFeature
+            httpContext.Features[typeof(IRoutingFeature)] = new RoutingFeatureMock
             {
                 RouteData = routeData
             };

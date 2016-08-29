@@ -2,7 +2,7 @@
 {
     using Microsoft.AspNetCore.Routing;
 
-    public class MockedRoutingFeature : IRoutingFeature
+    public class RoutingFeatureMock : IRoutingFeature
     {
         public RouteData RouteData { get; set; }
     }

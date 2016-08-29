@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Internal.Http
+﻿namespace MyTested.AspNetCore.Mvc.Internal.Session
 {
     using System;
     using System.Collections.Generic;
@@ -7,11 +7,11 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc.Internal;
 
-    public class MockedSession : ISession, IMockedSession
+    public class SessionMock : ISession, ISessionMock
     {
         private readonly IDictionary<string, byte[]> session;
 
-        public MockedSession()
+        public SessionMock()
         {
             this.Id = Guid.NewGuid().ToString();
             this.session = new Dictionary<string, byte[]>();

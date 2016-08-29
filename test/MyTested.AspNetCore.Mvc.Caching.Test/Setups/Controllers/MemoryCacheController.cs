@@ -8,7 +8,7 @@
     {
         public IActionResult FullMemoryCacheAction([FromServices]IMemoryCache cache)
         {
-            var mockedMemoryCache = cache as IMockedMemoryCache;
+            var mockedMemoryCache = cache as IMemoryCacheMock;
             if (mockedMemoryCache == null)
             {
                 return this.Unauthorized();

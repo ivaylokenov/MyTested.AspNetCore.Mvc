@@ -11,9 +11,9 @@
     using Microsoft.AspNetCore.Routing;
 
     /// <summary>
-    /// Mocked <see cref="IApplicationBuilder"/>. Used for extracting registered routes.
+    /// Mock of <see cref="IApplicationBuilder"/>. Used for extracting registered routes.
     /// </summary>
-    public class MockedApplicationBuilder : IApplicationBuilder
+    public class ApplicationBuilderMock : IApplicationBuilder
     {
         private const string ServerFeaturesPropertyName = "server.Features";
         private const string ApplicationServicesPropertyName = "application.Services";
@@ -21,10 +21,10 @@
         private readonly IList<Func<RequestDelegate, RequestDelegate>> components = new List<Func<RequestDelegate, RequestDelegate>>();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MockedApplicationBuilder"/> class.
+        /// Initializes a new instance of the <see cref="ApplicationBuilderMock"/> class.
         /// </summary>
         /// <param name="serviceProvider">Application service provider.</param>
-        public MockedApplicationBuilder(IServiceProvider serviceProvider)
+        public ApplicationBuilderMock(IServiceProvider serviceProvider)
         {
             this.Properties = new Dictionary<string, object>();
             this.Routes = new RouteCollection();
@@ -32,10 +32,10 @@
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MockedApplicationBuilder"/> class.
+        /// Initializes a new instance of the <see cref="ApplicationBuilderMock"/> class.
         /// </summary>
         /// <param name="builder">Application builder to copy properties from.</param>
-        public MockedApplicationBuilder(IApplicationBuilder builder)
+        public ApplicationBuilderMock(IApplicationBuilder builder)
         {
             this.Properties = builder.Properties;
         }
@@ -94,7 +94,7 @@
         /// <returns>Result of <see cref="IApplicationBuilder"/> type.</returns>
         public IApplicationBuilder New()
         {
-            return new MockedApplicationBuilder(this);
+            return new ApplicationBuilderMock(this);
         }
 
         /// <summary>

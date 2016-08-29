@@ -9,27 +9,27 @@
 
     public abstract class HttpTestContext
     {
-        private MockedHttpContext mockedHttpContext;
+        private HttpContextMock httpContextMock;
         private RouteData routeData;
 
         protected HttpTestContext()
         {
             TestHelper.ExecuteTestCleanup();
-            this.mockedHttpContext = TestHelper.CreateMockedHttpContext();
+            this.httpContextMock = TestHelper.CreateHttpContextMock();
         }
 
         public HttpContext HttpContext
         {
             get
             {
-                return this.mockedHttpContext;
+                return this.httpContextMock;
             }
 
             set
             {
                 CommonValidator.CheckForNullReference(value, nameof(HttpContext));
-                this.mockedHttpContext = MockedHttpContext.From(value);
-                TestHelper.SetHttpContextToAccessor(this.mockedHttpContext);
+                this.httpContextMock = HttpContextMock.From(value);
+                TestHelper.SetHttpContextToAccessor(this.httpContextMock);
             }
         }
 
@@ -64,6 +64,6 @@
 
         public abstract string ExceptionMessagePrefix { get; }
 
-        public MockedHttpContext MockedHttpContext => this.mockedHttpContext;
+        public HttpContextMock HttpContextMock => this.httpContextMock;
     }
 }

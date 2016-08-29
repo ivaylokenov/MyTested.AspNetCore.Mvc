@@ -8,13 +8,13 @@
     using Microsoft.Extensions.Options;
     using Models;
 
-    public class MockedSignInManager : SignInManager<ApplicationUser>
+    public class SignInManagerMock : SignInManager<ApplicationUser>
     {
         internal const string ValidUser = "Valid@valid.com";
         internal const string TwoFactorRequired = "TwoFactor@invalid.com";
         internal const string LockedOutUser = "Locked@invalid.com";
 
-        public MockedSignInManager(
+        public SignInManagerMock(
             UserManager<ApplicationUser> userManager,
             IHttpContextAccessor contextAccessor,
             IUserClaimsPrincipalFactory<ApplicationUser> claimsFactory,
