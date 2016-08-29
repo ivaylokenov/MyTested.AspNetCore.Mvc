@@ -41,7 +41,7 @@
 
             actionContext.HttpContext = actionContext.HttpContext ?? testContext.HttpContext;
             actionContext.RouteData = actionContext.RouteData ?? testContext.RouteData ?? new RouteData();
-            actionContext.ActionDescriptor = actionContext.ActionDescriptor ?? ControllerActionDescriptorMock.Default;
+            actionContext.ActionDescriptor = actionContext.ActionDescriptor ?? ActionDescriptorMock.Default;
 
             return new ControllerContextMock(testContext, actionContext);
         }

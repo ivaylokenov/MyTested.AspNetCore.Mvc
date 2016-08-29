@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Internal.Controllers
+﻿namespace MyTested.AspNetCore.Mvc.Internal
 {
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc.Controllers;
@@ -7,9 +7,9 @@
     using Microsoft.AspNetCore.Mvc.Abstractions;
     using Microsoft.AspNetCore.Mvc.Filters;
 
-    public class ControllerActionDescriptorMock : ControllerActionDescriptor
+    public class ActionDescriptorMock : ActionDescriptor
     {
-        public static ControllerActionDescriptor Default
+        public static ActionDescriptor Default
             => new ControllerActionDescriptor
             {
                 ActionConstraints = new List<IActionConstraintMetadata>(),

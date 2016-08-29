@@ -1,6 +1,9 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.ViewComponents
 {
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.AspNetCore.Mvc.ViewComponents;
+    using System.Collections.Generic;
+    using System.Text.Encodings.Web;
     using TestContexts;
     using Utilities.Validators;
 
@@ -8,14 +11,9 @@
     {
         private HttpTestContext testContext;
         
-        public ViewComponentContextMock(HttpTestContext testContext)
-        {
-            this.TestContext = testContext;
-        }
-
         private ViewComponentContextMock(HttpTestContext testContext, ViewComponentContext viewComponentContext)
-            : this (testContext)
         {
+            this.PrepareViewComponentContext(testContext, viewComponentContext);
         }
         
         private HttpTestContext TestContext
@@ -38,13 +36,20 @@
             CommonValidator.CheckForNullReference(viewComponentContext, nameof(ViewComponentContext));
 
             viewComponentContext.ViewComponentDescriptor = viewComponentContext.ViewComponentDescriptor ?? new ViewComponentDescriptor();
-            viewComponentContext.ViewContext = viewComponentContext.ViewContext ?? new ViewContextMock(testContext);
+            viewComponentContext.ViewContext = ViewContextMock.FromViewContext(testContext, viewComponentContext.ViewContext ?? new ViewContext());
+            viewComponentContext.Arguments = viewComponentContext.Arguments ?? new Dictionary<string, object>();
+            viewComponentContext.HtmlEncoder = viewComponentContext.HtmlEncoder ?? HtmlEncoder.Default;
 
             return new ViewComponentContextMock(testContext, viewComponentContext);
         }
 
-        private void PrepareViewComponentContext(HttpTestContext testContext)
+        private void PrepareViewComponentContext(HttpTestContext testContext, ViewComponentContext viewComponentContext)
         {
+            this.TestContext = testContext;
+            this.Arguments = viewComponentContext.Arguments;
+            this.HtmlEncoder = viewComponentContext.HtmlEncoder;
+            this.ViewComponentDescriptor = viewComponentContext.ViewComponentDescriptor;
+            this.ViewContext = viewComponentContext.ViewContext;
         }
     }
 }
