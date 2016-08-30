@@ -63,7 +63,7 @@
 
                 linkGenerationTestContext.Controller = linkGenerationTestContext.Controller
                     ?? controllerTestContext.RouteData.Values["controller"] as string
-                    ?? controllerTestContext.ControllerContext.ActionDescriptor.ControllerName;
+                    ?? controllerTestContext.ComponentContext.ActionDescriptor.ControllerName;
 
                 uri = urlHelper.Action(
                     linkGenerationTestContext.Action,

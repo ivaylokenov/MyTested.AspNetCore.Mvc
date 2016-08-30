@@ -31,7 +31,7 @@
         public IAndControllerBuilder<TController> WithActionContext(ActionContext actionContext)
         {
             CommonValidator.CheckForNullReference(actionContext, nameof(ActionContext));
-            this.TestContext.ControllerContext = ControllerContextMock.FromActionContext(this.TestContext, actionContext);
+            this.TestContext.ComponentContext = ControllerContextMock.FromActionContext(this.TestContext, actionContext);
             return this;
         }
 
@@ -51,15 +51,15 @@
         
         protected override void PrepareComponentContext()
         {
-            var controllerContext = this.TestContext.ControllerContext;
+            var controllerContext = this.TestContext.ComponentContext;
             this.controllerContextAction?.Invoke(controllerContext);
         }
 
         protected override void PrepareComponent()
         {
-            var controllerPropertyActivators = this.Services.GetServices<IControllerPropertyActivator>();
-
-            controllerPropertyActivators.ForEach(a => a.Activate(this.TestContext.ControllerContext, this.TestContext.Component));
+            this.Services
+                .GetServices<IControllerPropertyActivator>()
+                ?.ForEach(a => a.Activate(this.TestContext.ComponentContext, this.TestContext.Component));
 
             this.TestContext.ComponentPreparationDelegate?.Invoke();
 

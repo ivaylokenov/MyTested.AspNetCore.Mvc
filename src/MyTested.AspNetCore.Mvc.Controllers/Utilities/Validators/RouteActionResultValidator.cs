@@ -269,7 +269,7 @@
             LambdaExpression expectedRouteValuesAsLambdaExpression,
             Action<string, string, string> failedValidationAction)
         {
-            var actionContext = controllerTestContext.ControllerContext;
+            var actionContext = controllerTestContext.ComponentContext;
             if (!actionContext.RouteData.Routers.Any())
             {
                 actionContext.RouteData.Routers.Add(TestApplication.Router);

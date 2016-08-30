@@ -38,7 +38,7 @@
 
             try
             {
-                actionResult = AsyncHelper.RunSync(() => actionInfo.ActionResult);
+                actionResult = AsyncHelper.RunSync(() => actionInfo.MethodResult);
             }
             catch (Exception exception)
             {
@@ -81,7 +81,7 @@
 
             try
             {
-                AsyncHelper.RunSync(() => actionInfo.ActionResult);
+                AsyncHelper.RunSync(() => actionInfo.MethodResult);
             }
             catch (Exception exception)
             {
@@ -94,7 +94,7 @@
             return new VoidActionResultTestBuilder(this.TestContext);
         }
 
-        private ActionTestContext<TActionResult> GetAndValidateActionResult<TActionResult>(Expression<Func<TController, TActionResult>> actionCall)
+        private InvocationTestContext<TActionResult> GetAndValidateActionResult<TActionResult>(Expression<Func<TController, TActionResult>> actionCall)
         {
             var actionName = this.GetAndValidateAction(actionCall);
             var actionResult = default(TActionResult);
@@ -109,7 +109,7 @@
                 caughtException = exception;
             }
 
-            return new ActionTestContext<TActionResult>(actionName, actionCall, actionResult, caughtException);
+            return new InvocationTestContext<TActionResult>(actionName, actionCall, actionResult, caughtException);
         }
 
         private string GetAndValidateAction(LambdaExpression actionCall)
@@ -141,7 +141,7 @@
                 {
                     if (argument.Value != null)
                     {
-                        validator.Validate(this.TestContext.ControllerContext, argument.Value);
+                        validator.Validate(this.TestContext.ComponentContext, argument.Value);
                     }
                 });
             }
@@ -149,7 +149,7 @@
 
         private void SetActionDescriptor(MethodInfo methodInfo)
         {
-            var controllerContext = this.TestContext.ControllerContext;
+            var controllerContext = this.TestContext.ComponentContext;
             if (controllerContext.ActionDescriptor?.MethodInfo == null)
             {
                 var controllerActionDescriptorCache = this.Services.GetService<IControllerActionDescriptorCache>();
