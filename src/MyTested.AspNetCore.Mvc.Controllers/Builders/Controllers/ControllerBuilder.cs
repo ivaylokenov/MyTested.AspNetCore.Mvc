@@ -5,7 +5,10 @@
     using Internal.Application;
     using Internal.Contracts;
     using Internal.TestContexts;
+    using Microsoft.AspNetCore.Mvc.Controllers;
+    using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.Extensions.DependencyInjection;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Used for building the controller which will be tested.
@@ -44,5 +47,26 @@
         }
         
         protected override IAndControllerBuilder<TController> SetBuilder() => this;
+        
+        protected override TController TryCreateComponentWithFactory()
+        {
+            try
+            {
+                return this.Services
+                    .GetService<IControllerFactory>()
+                    ?.CreateController(this.TestContext.ComponentContext) as TController;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        protected override void ActivateComponent()
+        {
+            this.Services
+                .GetServices<IControllerPropertyActivator>()
+                ?.ForEach(a => a.Activate(this.TestContext.ComponentContext, this.TestContext.Component));
+        }
     }
 }

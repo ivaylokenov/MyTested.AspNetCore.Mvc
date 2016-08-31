@@ -8,12 +8,10 @@
     using Actions;
     using Contracts.Actions;
     using Internal.Contracts;
-    using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
     using Microsoft.Extensions.DependencyInjection;
     using Utilities;
     using Utilities.Extensions;
-    using Internal;
 
     /// <content>
     /// Used for building the controller which will be tested.
@@ -23,112 +21,39 @@
         /// <inheritdoc />
         public IActionResultTestBuilder<TActionResult> Calling<TActionResult>(Expression<Func<TController, TActionResult>> actionCall)
         {
-            var actionInfo = this.GetAndValidateActionResult(actionCall);
-
-            this.TestContext.Apply(actionInfo);
-
+            this.Invoke(actionCall);
             return new ActionResultTestBuilder<TActionResult>(this.TestContext);
         }
 
         /// <inheritdoc />
         public IActionResultTestBuilder<TActionResult> Calling<TActionResult>(Expression<Func<TController, Task<TActionResult>>> actionCall)
         {
-            var actionInfo = this.GetAndValidateActionResult(actionCall);
-            var actionResult = default(TActionResult);
-
-            try
-            {
-                actionResult = AsyncHelper.RunSync(() => actionInfo.MethodResult);
-            }
-            catch (Exception exception)
-            {
-                actionInfo.CaughtException = new AggregateException(exception);
-            }
-
-            this.TestContext.Apply(actionInfo);
-            this.TestContext.MethodResult = actionResult;
-
+            this.Invoke(actionCall);
             return new ActionResultTestBuilder<TActionResult>(this.TestContext);
         }
 
         /// <inheritdoc />
         public IVoidActionResultTestBuilder Calling(Expression<Action<TController>> actionCall)
         {
-            var actionName = this.GetAndValidateAction(actionCall);
-            Exception caughtException = null;
-
-            try
-            {
-                actionCall.Compile().Invoke(this.Component);
-            }
-            catch (Exception exception)
-            {
-                caughtException = exception;
-            }
-
-            this.TestContext.MethodName = actionName;
-            this.TestContext.MethodCall = actionCall;
-            this.TestContext.CaughtException = caughtException;
-            this.TestContext.MethodResult = VoidMethodResult.Instance;
-
+            this.Invoke(actionCall);
             return new VoidActionResultTestBuilder(this.TestContext);
         }
 
         /// <inheritdoc />
         public IVoidActionResultTestBuilder Calling(Expression<Func<TController, Task>> actionCall)
         {
-            var actionInfo = this.GetAndValidateActionResult(actionCall);
-
-            try
-            {
-                AsyncHelper.RunSync(() => actionInfo.MethodResult);
-            }
-            catch (Exception exception)
-            {
-                actionInfo.CaughtException = new AggregateException(exception);
-            }
-
-            this.TestContext.Apply(actionInfo);
-            this.TestContext.MethodResult = VoidMethodResult.Instance;
-
+            this.Invoke(actionCall);
             return new VoidActionResultTestBuilder(this.TestContext);
         }
 
-        private InvocationTestContext<TActionResult> GetAndValidateActionResult<TActionResult>(Expression<Func<TController, TActionResult>> actionCall)
+        protected override void ProcessAndValidateMethod(LambdaExpression methodCall, MethodInfo methodInfo)
         {
-            var actionName = this.GetAndValidateAction(actionCall);
-            var actionResult = default(TActionResult);
-            Exception caughtException = null;
-
-            try
-            {
-                actionResult = actionCall.Compile().Invoke(this.Component);
-            }
-            catch (Exception exception)
-            {
-                caughtException = exception;
-            }
-
-            return new InvocationTestContext<TActionResult>(actionName, actionCall, actionResult, caughtException);
-        }
-
-        private string GetAndValidateAction(LambdaExpression actionCall)
-        {
-            this.TestContext.ComponentBuildDelegate?.Invoke();
-
-            this.TestContext.MethodCall = actionCall;
-            this.TestContext.PreMethodInvocationDelegate?.Invoke();
-
-            var methodInfo = ExpressionParser.GetMethodInfo(actionCall);
+            this.SetActionDescriptor(methodInfo);
 
             if (this.EnabledModelStateValidation)
             {
-                this.ValidateModelState(actionCall);
+                this.ValidateModelState(methodCall);
             }
-
-            this.SetActionDescriptor(methodInfo);
-            
-            return methodInfo.Name;
         }
 
         private void ValidateModelState(LambdaExpression actionCall)

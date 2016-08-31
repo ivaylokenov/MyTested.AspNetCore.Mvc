@@ -12,15 +12,13 @@
     using Utilities;
     using Utilities.Validators;
 
-    public abstract class BaseComponentBuilder<TComponent, TTestContext, TBuilder> : BaseTestBuilderWithComponentBuilder<TBuilder>
+    public abstract partial class BaseComponentBuilder<TComponent, TTestContext, TBuilder> : BaseTestBuilderWithComponentBuilder<TBuilder>
         where TComponent : class
         where TTestContext : ComponentTestContext
         where TBuilder : IBaseTestBuilder
     {
         private TTestContext testContext;
         private bool isPreparedForTesting;
-
-        private Action<TComponent> componentSetupAction;
 
         public BaseComponentBuilder(TTestContext testContext)
             : base(testContext)
@@ -68,13 +66,7 @@
 
         protected bool SkipComponentActivation { get; set; }
         
-        public TBuilder WithSetup(Action<TComponent> componentSetup)
-        {
-            this.componentSetupAction += componentSetup;
-            return this.Builder;
-        }
-
-        protected virtual void BuildComponentIfNotExists()
+        protected void BuildComponentIfNotExists()
         {
             if (!this.isPreparedForTesting)
             {
@@ -143,8 +135,6 @@
                 throw new InvalidOperationException($"{typeof(TComponent).ToFriendlyTypeName()} is not a valid {this.ComponentName} type.");
             }
         }
-
-        protected abstract void PrepareComponentContext();
 
         protected abstract TComponent TryCreateComponentWithFactory();
 

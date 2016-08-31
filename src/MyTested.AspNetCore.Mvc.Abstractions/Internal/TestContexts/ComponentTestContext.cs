@@ -151,5 +151,13 @@
             where TException : Exception => this.CaughtException as TException;
 
         public TModel ModelAs<TModel>() => this.Model.TryCastTo<TModel>();
+        
+        public void Apply<TMethodResult>(InvocationTestContext<TMethodResult> invocationTestContext)
+        {
+            this.MethodName = invocationTestContext.MethodName;
+            this.MethodCall = invocationTestContext.MethodCall;
+            this.MethodResult = invocationTestContext.MethodResult;
+            this.CaughtException = invocationTestContext.CaughtException;
+        }
     }
 }

@@ -66,13 +66,5 @@
         public Action<TComponentContext> ComponentContextPreparationDelegate { get; set; }
 
         protected abstract TComponentContext DefaultComponentContext { get; }
-        
-        public void Apply<TMethodResult>(InvocationTestContext<TMethodResult> invocationTestContext)
-        {
-            this.MethodName = invocationTestContext.MethodName;
-            this.MethodCall = invocationTestContext.MethodCall;
-            this.MethodResult = invocationTestContext.MethodResult;
-            this.CaughtException = invocationTestContext.CaughtException;
-        }
     }
 }
