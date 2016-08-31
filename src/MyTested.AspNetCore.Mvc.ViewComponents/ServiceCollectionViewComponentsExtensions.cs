@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc
 {
+    using Internal.Caching;
     using Internal.Contracts;
     using Internal.ViewComponents;
     using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +14,7 @@
             CommonValidator.CheckForNullReference(serviceCollection, nameof(serviceCollection));
 
             serviceCollection.TryAddSingleton<IViewComponentPropertyActivator, ViewComponentPropertyActivator>();
+            serviceCollection.TryAddSingleton<IViewComponentDescriptorCache, ViewComponentDescriptorCache>();
 
             return serviceCollection;
         }
