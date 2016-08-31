@@ -56,6 +56,20 @@
             }
         }
 
+        private void SetActionDescriptor(MethodInfo methodInfo)
+        {
+            var controllerContext = this.TestContext.ComponentContext;
+            if (controllerContext.ActionDescriptor?.MethodInfo == null)
+            {
+                var controllerActionDescriptorCache = this.Services.GetService<IControllerActionDescriptorCache>();
+                if (controllerActionDescriptorCache != null)
+                {
+                    controllerContext.ActionDescriptor
+                        = controllerActionDescriptorCache.TryGetActionDescriptor(methodInfo);
+                }
+            }
+        }
+
         private void ValidateModelState(LambdaExpression actionCall)
         {
             var arguments = ExpressionParser.ResolveMethodArguments(actionCall).ToArray();
@@ -69,20 +83,6 @@
                         validator.Validate(this.TestContext.ComponentContext, argument.Value);
                     }
                 });
-            }
-        }
-
-        private void SetActionDescriptor(MethodInfo methodInfo)
-        {
-            var controllerContext = this.TestContext.ComponentContext;
-            if (controllerContext.ActionDescriptor?.MethodInfo == null)
-            {
-                var controllerActionDescriptorCache = this.Services.GetService<IControllerActionDescriptorCache>();
-                if (controllerActionDescriptorCache != null)
-                {
-                    controllerContext.ActionDescriptor
-                        = controllerActionDescriptorCache.TryGetActionDescriptor(methodInfo);
-                }
             }
         }
     }
