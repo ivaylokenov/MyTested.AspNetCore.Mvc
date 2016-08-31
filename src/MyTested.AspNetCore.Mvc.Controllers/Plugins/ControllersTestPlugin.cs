@@ -4,7 +4,6 @@
     using Microsoft.Extensions.DependencyInjection;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
     using Utilities;
 
     public class ControllersTestPlugin : BaseTestPlugin, IDefaultRegistrationPlugin, IServiceRegistrationPlugin, IShouldPassForPlugin

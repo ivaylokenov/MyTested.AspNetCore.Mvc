@@ -20,6 +20,8 @@
         private TTestContext testContext;
         private bool isPreparedForTesting;
 
+        private Action<TComponent> componentSetupAction;
+
         public BaseComponentBuilder(TTestContext testContext)
             : base(testContext)
         {
@@ -63,7 +65,15 @@
         protected abstract string ComponentName { get; }
 
         protected abstract bool IsValidComponent { get; }
+
+        protected bool SkipComponentActivation { get; set; }
         
+        public TBuilder WithSetup(Action<TComponent> componentSetup)
+        {
+            this.componentSetupAction += componentSetup;
+            return this.Builder;
+        }
+
         protected virtual void BuildComponentIfNotExists()
         {
             if (!this.isPreparedForTesting)
@@ -82,8 +92,18 @@
                 }
                 else
                 {
-                    // no custom dependencies are set, try create instance with the global services
-                    component = TestHelper.TryCreateInstance<TComponent>();
+                    // no custom dependencies are set, try create instance with component factory
+                    component = this.TryCreateComponentWithFactory();
+
+                    if (component != null)
+                    {
+                        this.SkipComponentActivation = true;
+                    }
+                    else
+                    {
+                        // no component from the factory, try create instance with the global services
+                        component = TestHelper.TryCreateInstance<TComponent>();
+                    }
                 }
 
                 if (component == null && !explicitDependenciesAreSet)
@@ -126,6 +146,20 @@
 
         protected abstract void PrepareComponentContext();
 
-        protected abstract void PrepareComponent();
+        protected abstract TComponent TryCreateComponentWithFactory();
+
+        protected abstract void ActivateComponent();
+
+        private void PrepareComponent()
+        {
+            if (!this.SkipComponentActivation)
+            {
+                this.ActivateComponent();
+            }
+
+            this.TestContext.ComponentPreparationDelegate?.Invoke();
+
+            this.componentSetupAction?.Invoke(this.TestContext.ComponentAs<TComponent>());
+        }
     }
 }

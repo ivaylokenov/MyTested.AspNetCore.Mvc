@@ -9,28 +9,12 @@
 
     public class ControllerContextMock : ControllerContext
     {
-        private HttpTestContext testContext;
-
-        private ControllerContextMock(HttpTestContext testContext, ActionContext actionContext)
+        private ControllerContextMock(ActionContext actionContext)
             : base(actionContext)
         {
-            this.PrepareControllerContext(testContext);
+            this.PrepareControllerContext(actionContext);
         }
-
-        private HttpTestContext TestContext
-        {
-            get
-            {
-                return this.testContext;
-            }
-
-            set
-            {
-                CommonValidator.CheckForNullReference(value, nameof(TestContext));
-                this.testContext = value;
-            }
-        }
-
+        
         public static ControllerContext Default(HttpTestContext testContext)
             => FromActionContext(testContext, new ActionContext());
 
@@ -38,19 +22,18 @@
         {
             CommonValidator.CheckForNullReference(testContext, nameof(HttpTestContext));
             CommonValidator.CheckForNullReference(actionContext, nameof(ActionContext));
-
+            
             actionContext.HttpContext = actionContext.HttpContext ?? testContext.HttpContext;
             actionContext.RouteData = actionContext.RouteData ?? testContext.RouteData ?? new RouteData();
             actionContext.ActionDescriptor = actionContext.ActionDescriptor ?? ActionDescriptorMock.Default;
 
-            return new ControllerContextMock(testContext, actionContext);
+            return new ControllerContextMock(actionContext);
         }
 
-        private void PrepareControllerContext(HttpTestContext testContext)
+        private void PrepareControllerContext(ActionContext actionContext)
         {
-            this.TestContext = testContext;
-            this.HttpContext = testContext.HttpContext;
-            this.RouteData = testContext.RouteData ?? new RouteData();
+            this.HttpContext = actionContext.HttpContext;
+            this.RouteData = actionContext.RouteData;
             this.ValueProviderFactories = this.ValueProviderFactories ?? new List<IValueProviderFactory>();
 
             ControllerTestHelper.SetActionContextToAccessor(this);

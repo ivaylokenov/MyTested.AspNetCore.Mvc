@@ -6,14 +6,17 @@
     using System.Reflection;
     using Utilities;
 
-    public abstract class BasePropertyHelper
+    public abstract class PropertyHelper
     {
         private const string InvalidDelegateErrorMessage = "The {0} property cannot be activated for value of {1} type.";
 
         private static readonly MethodInfo CallPropertyGetterOpenGenericMethod =
-            typeof(BasePropertyHelper).GetTypeInfo().GetDeclaredMethod(nameof(CallPropertyGetter));
+            typeof(PropertyHelper).GetTypeInfo().GetDeclaredMethod(nameof(CallPropertyGetter));
         
-        protected BasePropertyHelper(Type type)
+        private static readonly MethodInfo CallPropertySetterOpenGenericMethod =
+            typeof(PropertyHelper).GetTypeInfo().GetDeclaredMethod(nameof(CallPropertySetter));
+
+        protected PropertyHelper(Type type)
         {
             this.Type = type;
             this.Properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
@@ -23,7 +26,7 @@
 
         protected IEnumerable<PropertyInfo> Properties { get; private set; }
         
-        protected static Func<object, TResult> MakeFastPropertyGetter<TResult>(PropertyInfo propertyInfo)
+        public static Func<object, TResult> MakeFastPropertyGetter<TResult>(PropertyInfo propertyInfo)
         {
             try
             {
@@ -48,6 +51,25 @@
             }
         }
 
+        public static Action<object, object> MakeFastPropertySetter(PropertyInfo propertyInfo)
+        {
+            var setMethod = propertyInfo.SetMethod;
+            var parameters = setMethod.GetParameters();
+            
+            var typeInput = setMethod.DeclaringType;
+            var parameterType = parameters[0].ParameterType;
+            
+            var propertySetterAsAction =
+                setMethod.CreateDelegate(typeof(Action<,>).MakeGenericType(typeInput, parameterType));
+            var callPropertySetterClosedGenericMethod =
+                CallPropertySetterOpenGenericMethod.MakeGenericMethod(typeInput, parameterType);
+            var callPropertySetterDelegate =
+                callPropertySetterClosedGenericMethod.CreateDelegate(
+                    typeof(Action<object, object>), propertySetterAsAction);
+
+            return (Action<object, object>)callPropertySetterDelegate;
+        }
+
         protected PropertyInfo FindPropertyWithAttribute<TAttribute>()
             where TAttribute : Attribute
         {
@@ -68,6 +90,15 @@
             object target)
         {
             return getter((TDeclaringType)target);
+        }
+
+        // Called via reflection
+        private static void CallPropertySetter<TDeclaringType, TValue>(
+            Action<TDeclaringType, TValue> setter,
+            object target,
+            object value)
+        {
+            setter((TDeclaringType)target, (TValue)value);
         }
     }
 }

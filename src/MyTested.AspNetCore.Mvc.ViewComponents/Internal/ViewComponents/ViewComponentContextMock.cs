@@ -30,6 +30,9 @@
             }
         }
 
+        public static ViewComponentContextMock FromViewContext(HttpTestContext testContext, ViewContext viewContext)
+            => FromViewComponentContext(testContext, new ViewComponentContext { ViewContext = viewContext });
+
         public static ViewComponentContextMock FromViewComponentContext(HttpTestContext testContext, ViewComponentContext viewComponentContext)
         {
             CommonValidator.CheckForNullReference(testContext, nameof(HttpTestContext));

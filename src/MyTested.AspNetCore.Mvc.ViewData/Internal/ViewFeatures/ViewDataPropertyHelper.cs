@@ -6,7 +6,7 @@
     using System.Reflection;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
-    public class ViewDataPropertyHelper : BasePropertyHelper
+    public class ViewDataPropertyHelper : PropertyHelper
     {
         private static readonly ConcurrentDictionary<Type, ViewDataPropertyHelper> ViewDataPropertiesCache =
             new ConcurrentDictionary<Type, ViewDataPropertyHelper>();

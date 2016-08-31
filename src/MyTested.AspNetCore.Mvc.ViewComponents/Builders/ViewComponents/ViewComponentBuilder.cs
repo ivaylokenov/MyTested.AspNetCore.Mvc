@@ -11,7 +11,7 @@
     /// Used for building the view component which will be tested.
     /// </summary>
     /// <typeparam name="TViewComponent">Class representing ASP.NET Core MVC view component.</typeparam>
-    public class ViewComponentBuilder<TViewComponent> : BaseComponentBuilder<TViewComponent, ViewComponentTestContext, IAndViewComponentBuilder<TViewComponent>>, IAndViewComponentBuilder<TViewComponent>
+    public partial class ViewComponentBuilder<TViewComponent> : BaseComponentBuilder<TViewComponent, ViewComponentTestContext, IAndViewComponentBuilder<TViewComponent>>, IAndViewComponentBuilder<TViewComponent>
         where TViewComponent : class
     {
         public ViewComponentBuilder(ViewComponentTestContext testContext)
@@ -35,15 +35,5 @@
         }
 
         protected override IAndViewComponentBuilder<TViewComponent> SetBuilder() => this;
-        
-        protected override void PrepareComponentContext()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override void PrepareComponent()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

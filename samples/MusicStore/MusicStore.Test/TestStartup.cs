@@ -40,7 +40,7 @@
             TestHelper.ShouldPassForPlugins.Add(new ControllersTestPlugin());
 
             services
-                .AddMvcTesting()
+                .AddMvcUniverseTesting()
                 .AddRoutingTesting();
 #endif
         }

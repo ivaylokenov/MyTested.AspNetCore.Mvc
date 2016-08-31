@@ -3,17 +3,15 @@
     using Microsoft.Extensions.DependencyInjection;
     using Utilities.Validators;
 
-    public static class ServiceCollectionExtensions
+    public static class ServiceCollectionViewFeaturesExtensions
     {
-        public static IServiceCollection AddMvcTesting(this IServiceCollection serviceCollection)
+        public static IServiceCollection AddViewFeaturesTesting(this IServiceCollection serviceCollection)
         {
             CommonValidator.CheckForNullReference(serviceCollection, nameof(serviceCollection));
 
             serviceCollection
-                .AddMvcCoreTesting()
-                .AddViewFeaturesTesting()
-                .AddStringInputFormatter()
-                .ReplaceOptions();
+                .AddViewComponentsTesting()
+                .ReplaceTempDataProvider();
 
             return serviceCollection;
         }

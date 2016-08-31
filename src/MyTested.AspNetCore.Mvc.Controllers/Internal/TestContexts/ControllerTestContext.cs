@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.TestContexts
 {
+    using System.Reflection;
     using Controllers;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -13,13 +14,5 @@
 
         protected override ControllerContext DefaultComponentContext
             => ControllerContextMock.Default(this);
-
-        internal void Apply<TMethodResult>(InvocationTestContext<TMethodResult> invocationTestContext)
-        {
-            this.MethodName = invocationTestContext.MethodName;
-            this.MethodCall = invocationTestContext.MethodCall;
-            this.MethodResult = invocationTestContext.MethodResult;
-            this.CaughtException = invocationTestContext.CaughtException;
-        }
     }
 }

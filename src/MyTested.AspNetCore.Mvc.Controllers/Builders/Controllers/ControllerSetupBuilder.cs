@@ -1,13 +1,15 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Controllers
 {
     using System;
+    using System.Reflection;
     using Contracts.Controllers;
     using Internal.Controllers;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.Extensions.DependencyInjection;
     using Utilities.Extensions;
     using Utilities.Validators;
+    using Microsoft.AspNetCore.Mvc.Controllers;
+    using Microsoft.AspNetCore.Mvc.Internal;
 
     /// <content>
     /// Used for building the controller which will be tested.
@@ -23,7 +25,7 @@
         /// <inheritdoc />
         public IAndControllerBuilder<TController> WithControllerContext(Action<ControllerContext> controllerContextSetup)
         {
-            this.controllerContextAction += controllerContextSetup;
+            this.TestContext.ComponentContextPreparationDelegate += controllerContextSetup;
             return this;
         }
 
@@ -38,32 +40,36 @@
         /// <inheritdoc />
         public IAndControllerBuilder<TController> WithActionContext(Action<ActionContext> actionContextSetup)
         {
-            this.controllerContextAction += actionContextSetup;
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndControllerBuilder<TController> WithSetup(Action<TController> controllerSetup)
-        {
-            this.controllerSetupAction += controllerSetup;
+            this.TestContext.ComponentContextPreparationDelegate += actionContextSetup;
             return this;
         }
         
         protected override void PrepareComponentContext()
         {
             var controllerContext = this.TestContext.ComponentContext;
-            this.controllerContextAction?.Invoke(controllerContext);
+            controllerContext.ActionDescriptor.ControllerTypeInfo = typeof(TController).GetTypeInfo();
+            this.TestContext.ComponentContextPreparationDelegate?.Invoke(controllerContext);
         }
 
-        protected override void PrepareComponent()
+        protected override TController TryCreateComponentWithFactory()
+        {
+            try
+            {
+                return this.Services
+                    .GetService<IControllerFactory>()
+                    ?.CreateController(this.TestContext.ComponentContext) as TController;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        protected override void ActivateComponent()
         {
             this.Services
                 .GetServices<IControllerPropertyActivator>()
                 ?.ForEach(a => a.Activate(this.TestContext.ComponentContext, this.TestContext.Component));
-
-            this.TestContext.ComponentPreparationDelegate?.Invoke();
-
-            this.controllerSetupAction?.Invoke(this.TestContext.ComponentAs<TController>());
         }
     }
 }

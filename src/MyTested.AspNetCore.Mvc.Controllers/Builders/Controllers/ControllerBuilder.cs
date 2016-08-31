@@ -1,12 +1,10 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Controllers
 {
-    using System;
     using Components;
     using Contracts.Controllers;
     using Internal.Application;
     using Internal.Contracts;
     using Internal.TestContexts;
-    using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
 
     /// <summary>
@@ -16,9 +14,6 @@
     public partial class ControllerBuilder<TController> : BaseComponentBuilder<TController, ControllerTestContext, IAndControllerBuilder<TController>>, IAndControllerBuilder<TController>
         where TController : class
     {
-        private Action<ControllerContext> controllerContextAction;
-        private Action<TController> controllerSetupAction;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ControllerBuilder{TController}"/> class.
         /// </summary>

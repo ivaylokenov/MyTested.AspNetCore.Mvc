@@ -12,32 +12,29 @@
 
     public class ViewContextMock : ViewContext
     {
-        private HttpTestContext testContext;
+        private ViewContextMock(ViewContext viewContext)
+        {
+            this.PrepareViewContext(viewContext);
+        }
         
-        private ViewContextMock(HttpTestContext testContext, ViewContext viewContext)
-        {
-            this.PrepareViewContext(testContext, viewContext);
-        }
+        public static ViewContext Default(HttpTestContext testContext)
+            => FromViewContext(testContext, new ViewContext());
 
-        private HttpTestContext TestContext
-        {
-            get
+        public static ViewContext FromActionContext(HttpTestContext testContext, ActionContext actionContext)
+            => FromViewContext(testContext, new ViewContext
             {
-                return this.testContext;
-            }
+                HttpContext = actionContext.HttpContext,
+                RouteData = actionContext.RouteData,
+                ActionDescriptor = actionContext.ActionDescriptor,
+            });
 
-            set
-            {
-                CommonValidator.CheckForNullReference(value, nameof(TestContext));
-                this.testContext = value;
-            }
-        }
-
-        public static ViewContextMock FromViewContext(HttpTestContext testContext, ViewContext viewContext)
+        public static ViewContext FromViewContext(HttpTestContext testContext, ViewContext viewContext)
         {
             CommonValidator.CheckForNullReference(testContext, nameof(HttpTestContext));
             CommonValidator.CheckForNullReference(viewContext, nameof(ViewContext));
 
+            viewContext.HttpContext = viewContext.HttpContext ?? testContext.HttpContext;
+            viewContext.RouteData = viewContext.RouteData ?? testContext.RouteData ?? new RouteData();
             viewContext.ActionDescriptor = viewContext.ActionDescriptor ?? ActionDescriptorMock.Default;
             viewContext.FormContext = viewContext.FormContext ?? new FormContext();
             viewContext.View = viewContext.View ?? NullView.Instance;
@@ -46,7 +43,7 @@
             PrepareDataProviders(testContext, viewContext);
             ApplyHtmlHelperOptions(testContext, viewContext);
            
-            return new ViewContextMock(testContext, viewContext);
+            return new ViewContextMock(viewContext);
         }
 
         private static void PrepareDataProviders(HttpTestContext testContext, ViewContext viewContext)
@@ -77,11 +74,10 @@
             }
         }
 
-        private void PrepareViewContext(HttpTestContext testContext, ViewContext viewContext)
+        private void PrepareViewContext(ViewContext viewContext)
         {
-            this.TestContext = testContext;
-            this.HttpContext = testContext.HttpContext;
-            this.RouteData = testContext.RouteData ?? new RouteData();
+            this.HttpContext = viewContext.HttpContext;
+            this.RouteData = viewContext.RouteData;
             this.ActionDescriptor = viewContext.ActionDescriptor;
             this.ClientValidationEnabled = viewContext.ClientValidationEnabled;
             this.ExecutingFilePath = viewContext.ExecutingFilePath;
