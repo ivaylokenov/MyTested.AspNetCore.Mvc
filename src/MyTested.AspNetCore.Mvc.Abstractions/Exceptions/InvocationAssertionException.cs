@@ -5,13 +5,13 @@
     /// <summary>
     /// <see cref="Exception"/> for invalid action call.
     /// </summary>
-    public class ActionCallAssertionException : Exception
+    public class InvocationAssertionException : Exception
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ActionCallAssertionException"/> class.
+        /// Initializes a new instance of the <see cref="InvocationAssertionException"/> class.
         /// </summary>
         /// <param name="message">The message that describes the error.</param>
-        public ActionCallAssertionException(string message)
+        public InvocationAssertionException(string message)
             : base(message)
         {
         }

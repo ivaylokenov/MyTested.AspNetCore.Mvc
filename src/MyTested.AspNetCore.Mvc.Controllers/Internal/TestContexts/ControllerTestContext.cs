@@ -1,6 +1,5 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.TestContexts
 {
-    using System.Reflection;
     using Controllers;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ModelBinding;

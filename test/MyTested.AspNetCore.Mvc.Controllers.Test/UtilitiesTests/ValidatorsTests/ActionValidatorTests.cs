@@ -12,47 +12,47 @@
         [Fact]
         public void CheckForExceptionShouldNotThrowIfExceptionNull()
         {
-            ActionValidator.CheckForException(null);
+            InvocationValidator.CheckForException(null, string.Empty);
         }
 
         [Fact]
         public void CheckForExceptionShouldThrowIfExceptionNotNullWithEmptyMessage()
         {
-            Test.AssertException<ActionCallAssertionException>(
+            Test.AssertException<InvocationAssertionException>(
                 () =>
                 {
-                    ActionValidator.CheckForException(new NullReferenceException(string.Empty));
+                    InvocationValidator.CheckForException(new NullReferenceException(string.Empty), "Test");
                 },
-                "NullReferenceException was thrown but was not caught or expected.");
+                "Test no exception but NullReferenceException was thrown without being caught.");
         }
 
         [Fact]
         public void CheckForExceptionShouldThrowIfExceptionNotNullWithMessage()
         {
-            Test.AssertException<ActionCallAssertionException>(
+            Test.AssertException<InvocationAssertionException>(
                 () =>
                 {
-                    ActionValidator.CheckForException(new NullReferenceException("Test"));
+                    InvocationValidator.CheckForException(new NullReferenceException("Test"), "Test");
                 },
-                "NullReferenceException with 'Test' message was thrown but was not caught or expected.");
+                "Test no exception but NullReferenceException with 'Test' message was thrown without being caught.");
         }
 
         [Fact]
         public void CheckForExceptionShouldThrowWithProperMessageIfExceptionIsAggregateException()
         {
             var aggregateException = new AggregateException(new List<Exception>
-                    {
-                        new NullReferenceException("Null test"),
-                        new InvalidCastException("Cast test"),
-                        new InvalidOperationException("Operation test")
-                    });
+                {
+                    new NullReferenceException("Null test"),
+                    new InvalidCastException("Cast test"),
+                    new InvalidOperationException("Operation test")
+                });
 
-            Test.AssertException<ActionCallAssertionException>(
+            Test.AssertException<InvocationAssertionException>(
                 () =>
                 {
-                    ActionValidator.CheckForException(aggregateException);
+                    InvocationValidator.CheckForException(aggregateException, "Test");
                 },
-                "AggregateException (containing NullReferenceException with 'Null test' message, InvalidCastException with 'Cast test' message, InvalidOperationException with 'Operation test' message) was thrown but was not caught or expected.");
+                "Test no exception but AggregateException (containing NullReferenceException with 'Null test' message, InvalidCastException with 'Cast test' message, InvalidOperationException with 'Operation test' message) was thrown without being caught.");
         }
     }
 }

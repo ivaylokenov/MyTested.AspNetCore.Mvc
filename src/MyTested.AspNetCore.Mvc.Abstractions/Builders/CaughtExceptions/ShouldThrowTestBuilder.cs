@@ -1,26 +1,23 @@
-﻿namespace MyTested.AspNetCore.Mvc.Builders.Actions
+﻿namespace MyTested.AspNetCore.Mvc.Builders.CaughtExceptions
 {
     using System;
     using Base;
-    using Contracts.Actions;
-    using Contracts.ExceptionErrors;
-    using ExceptionErrors;
+    using Contracts.CaughtExceptions;
     using Exceptions;
     using Internal.TestContexts;
-    using Utilities.Extensions;
 
     /// <summary>
-    /// Used for testing whether action throws <see cref="System.Exception"/>.
+    /// Used for testing whether method invocation throws <see cref="System.Exception"/>.
     /// </summary>
-    public class ShouldThrowTestBuilder : BaseTestBuilderWithInvokedAction, IShouldThrowTestBuilder
+    public class ShouldThrowTestBuilder : BaseTestBuilderWithComponent, IShouldThrowTestBuilder
     {
         private readonly IExceptionTestBuilder exceptionTestBuilder;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ShouldThrowTestBuilder"/> class.
         /// </summary>
-        /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
-        public ShouldThrowTestBuilder(ControllerTestContext testContext)
+        /// <param name="testContext"><see cref="ComponentTestContext"/> containing data about the currently executed assertion chain.</param>
+        public ShouldThrowTestBuilder(ComponentTestContext testContext)
             : base(testContext)
         {
             this.exceptionTestBuilder = new ExceptionTestBuilder(this.TestContext);
@@ -36,15 +33,15 @@
         public IAggregateExceptionTestBuilder AggregateException(int? withNumberOfInnerExceptions = null)
         {
             this.exceptionTestBuilder.OfType<AggregateException>();
-            var aggregateException = this.CaughtException as AggregateException;
+            var aggregateException = this.TestContext.CaughtException as AggregateException;
             var innerExceptionsCount = aggregateException.InnerExceptions.Count;
             if (withNumberOfInnerExceptions.HasValue &&
                 withNumberOfInnerExceptions != innerExceptionsCount)
             {
                 throw new InvalidExceptionAssertionException(string.Format(
-                    "When calling {0} action in {1} expected AggregateException to contain {2} inner exceptions, but in fact contained {3}.",
-                    this.ActionName,
-                    this.Controller.GetName(),
+                    "{0} {1} to contain {2} inner exceptions, but in fact contained {3}.",
+                    this.TestContext.ExceptionMessagePrefix,
+                    nameof(AggregateException),
                     withNumberOfInnerExceptions,
                     innerExceptionsCount));
             }

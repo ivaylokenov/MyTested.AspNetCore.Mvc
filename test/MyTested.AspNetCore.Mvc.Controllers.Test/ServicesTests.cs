@@ -11,7 +11,6 @@
     using Setups.Controllers;
     using Setups.Services;
     using Xunit;
-    using Microsoft.Extensions.DependencyInjection.Extensions;
 
     public class ServicesTests
     {

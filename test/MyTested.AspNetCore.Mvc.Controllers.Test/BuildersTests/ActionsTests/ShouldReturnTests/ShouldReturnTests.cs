@@ -345,7 +345,7 @@
         [Fact]
         public void ShouldReturnShouldThrowExceptionIfActionThrowsExceptionWithDefaultReturnValue()
         {
-            Test.AssertException<ActionCallAssertionException>(
+            Test.AssertException<InvocationAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
@@ -353,14 +353,14 @@
                         .Calling(c => c.ActionWithException())
                         .ShouldReturn()
                         .ResultOfType<IActionResult>();
-                }, 
-                "NullReferenceException with 'Test exception message' message was thrown but was not caught or expected.");
+                },
+                "When calling ActionWithException action in MvcController expected no exception but NullReferenceException with 'Test exception message' message was thrown without being caught.");
         }
 
         [Fact]
         public void ShouldReturnWithAsyncShouldThrowExceptionIfActionThrowsExceptionWithDefaultReturnValue()
         {
-            Test.AssertException<ActionCallAssertionException>(
+            Test.AssertException<InvocationAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
@@ -368,8 +368,8 @@
                         .Calling(c => c.ActionWithExceptionAsync())
                         .ShouldReturn()
                         .ResultOfType<IActionResult>();
-                }, 
-                "AggregateException (containing NullReferenceException with 'Test exception message' message) was thrown but was not caught or expected.");
+                },
+                "When calling ActionWithExceptionAsync action in MvcController expected no exception but AggregateException (containing NullReferenceException with 'Test exception message' message) was thrown without being caught.");
         }
 
         [Fact]

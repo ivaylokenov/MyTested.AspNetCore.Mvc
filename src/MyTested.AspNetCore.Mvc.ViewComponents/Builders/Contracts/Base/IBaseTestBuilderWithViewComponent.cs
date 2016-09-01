@@ -1,6 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Base
 {
-    public interface IBaseTestBuilderWithViewComponent
+    public interface IBaseTestBuilderWithViewComponent : IBaseTestBuilderWithComponent
     {
     }
 }

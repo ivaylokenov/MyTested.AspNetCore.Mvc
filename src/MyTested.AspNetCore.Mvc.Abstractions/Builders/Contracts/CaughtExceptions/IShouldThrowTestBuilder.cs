@@ -1,20 +1,18 @@
-﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Actions
+﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.CaughtExceptions
 {
-    using ExceptionErrors;
-
     /// <summary>
-    /// Used for testing whether the action throws exception.
+    /// Used for testing whether the method invocation throws exception.
     /// </summary>
     public interface IShouldThrowTestBuilder
     {
         /// <summary>
-        /// Tests whether the action throws any exception.
+        /// Tests whether the method invocation throws any exception.
         /// </summary>
         /// <returns>Test builder of <see cref="IExceptionTestBuilder"/> type.</returns>
         IExceptionTestBuilder Exception();
 
         /// <summary>
-        /// Tests whether the action throws <see cref="System.AggregateException"/>.
+        /// Tests whether the method invocation throws <see cref="System.AggregateException"/>.
         /// </summary>
         /// <param name="withNumberOfInnerExceptions">Optional expected number of total inner exceptions.</param>
         /// <returns>Test builder of <see cref="IAggregateExceptionTestBuilder"/> type.</returns>

@@ -16,7 +16,7 @@
     /// <summary>
     /// Used for testing action attributes.
     /// </summary>
-    public class ActionAttributesTestBuilder : BaseAttributesTestBuilder, IAndActionAttributesTestBuilder
+    public class ActionAttributesTestBuilder : ControllerActionAttributesTestBuilder, IAndActionAttributesTestBuilder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ActionAttributesTestBuilder"/> class.

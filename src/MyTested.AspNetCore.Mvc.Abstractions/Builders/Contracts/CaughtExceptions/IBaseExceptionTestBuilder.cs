@@ -1,11 +1,11 @@
-﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors
+﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.CaughtExceptions
 {
     using Base;
 
     /// <summary>
     /// Used for testing expected <see cref="System.Exception"/> messages.
     /// </summary>
-    public interface IBaseExceptionTestBuilder : IBaseTestBuilderWithInvokedAction
+    public interface IBaseExceptionTestBuilder : IBaseTestBuilderWithComponent
     {
         /// <summary>
         /// Tests <see cref="System.Exception.Message"/> using test builder.

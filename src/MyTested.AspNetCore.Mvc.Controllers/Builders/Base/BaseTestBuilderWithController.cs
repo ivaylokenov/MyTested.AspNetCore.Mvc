@@ -32,7 +32,7 @@
         /// Gets the controller attributes which will be tested.
         /// </summary>
         /// <value>Controller attributes which will be tested.</value>
-        public IEnumerable<object> ControllerLevelAttributes => this.TestContext.ComponentAttributes;
+        public IEnumerable<object> ControllerAttributes => this.TestContext.ComponentAttributes;
 
         /// <summary>
         /// Gets the currently used <see cref="ControllerTestContext"/>.

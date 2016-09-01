@@ -135,7 +135,7 @@
                     services.AddHttpContextAccessor();
                 });
 
-            Assert.Throws<ActionCallAssertionException>(
+            Assert.Throws<InvocationAssertionException>(
                 () =>
                 {
                     MyController<FullPocoController>

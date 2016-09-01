@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors
+﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.CaughtExceptions
 {
     using System;
 

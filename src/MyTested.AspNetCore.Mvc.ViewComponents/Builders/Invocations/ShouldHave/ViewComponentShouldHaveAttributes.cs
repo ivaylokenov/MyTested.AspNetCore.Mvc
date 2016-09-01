@@ -1,32 +1,29 @@
-﻿namespace MyTested.AspNetCore.Mvc.Builders.Actions.ShouldHave
+﻿namespace MyTested.AspNetCore.Mvc.Builders.Invocations.ShouldHave
 {
     using System;
     using Attributes;
-    using Contracts.Actions;
     using Contracts.Attributes;
+    using Contracts.Invocations;
     using Exceptions;
     using Utilities.Validators;
 
-    /// <content>
-    /// Class containing methods for testing action attributes.
-    /// </content>
-    public partial class ShouldHaveTestBuilder<TActionResult>
+    public partial class ViewComponentShouldHaveTestBuilder<TInvocationResult>
     {
         /// <inheritdoc />
-        public IAndActionResultTestBuilder<TActionResult> NoActionAttributes()
+        public IAndViewComponentResultTestBuilder<TInvocationResult> NoAttributes()
         {
             AttributesValidator.ValidateNoAttributes(
-                this.TestContext.MethodAttributes,
+                this.TestContext.ComponentAttributes,
                 this.ThrowNewAttributeAssertionException);
 
             return this.Builder;
         }
 
         /// <inheritdoc />
-        public IAndActionResultTestBuilder<TActionResult> ActionAttributes(int? withTotalNumberOf = null)
+        public IAndViewComponentResultTestBuilder<TInvocationResult> Attributes(int? withTotalNumberOf = null)
         {
             AttributesValidator.ValidateNumberOfAttributes(
-                this.TestContext.MethodAttributes,
+                this.TestContext.ComponentAttributes,
                 this.ThrowNewAttributeAssertionException,
                 withTotalNumberOf);
 
@@ -34,13 +31,14 @@
         }
 
         /// <inheritdoc />
-        public IAndActionResultTestBuilder<TActionResult> ActionAttributes(Action<IActionAttributesTestBuilder> attributesTestBuilder)
+        public IAndViewComponentResultTestBuilder<TInvocationResult> Attributes(
+            Action<IViewComponentAttributesTestBuilder> attributesTestBuilder)
         {
-            var newAttributesTestBuilder = new ActionAttributesTestBuilder(this.TestContext);
+            var newAttributesTestBuilder = new ViewComponentAttributesTestBuilder(this.TestContext);
             attributesTestBuilder(newAttributesTestBuilder);
 
             AttributesValidator.ValidateAttributes(
-                this.TestContext.MethodAttributes,
+                this.TestContext.ComponentAttributes,
                 newAttributesTestBuilder,
                 this.ThrowNewAttributeAssertionException);
 

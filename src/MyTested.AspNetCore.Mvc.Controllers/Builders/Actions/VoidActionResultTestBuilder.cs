@@ -3,6 +3,8 @@
     using Base;
     using Contracts.Actions;
     using Contracts.Base;
+    using Contracts.CaughtExceptions;
+    using CaughtExceptions;
     using Internal;
     using Internal.TestContexts;
     using ShouldHave;
@@ -25,19 +27,23 @@
         /// <inheritdoc />
         public IBaseTestBuilderWithInvokedAction ShouldReturnEmpty()
         {
-            ActionValidator.CheckForException(this.CaughtException);
+            TestHelper.ExecuteTestCleanup();
+            InvocationValidator.CheckForException(this.CaughtException, this.TestContext.ExceptionMessagePrefix);
             return this.NewAndTestBuilderWithInvokedAction();
         }
 
         /// <inheritdoc />
         public IShouldHaveTestBuilder<VoidMethodResult> ShouldHave()
         {
+            InvocationValidator.CheckForException(this.CaughtException, this.TestContext.ExceptionMessagePrefix);
             return new ShouldHaveTestBuilder<VoidMethodResult>(this.TestContext);
         }
 
         /// <inheritdoc />
         public IShouldThrowTestBuilder ShouldThrow()
         {
+            TestHelper.ExecuteTestCleanup();
+            InvocationValidator.CheckForNullException(this.CaughtException, this.TestContext.ExceptionMessagePrefix);
             return new ShouldThrowTestBuilder(this.TestContext);
         }
     }

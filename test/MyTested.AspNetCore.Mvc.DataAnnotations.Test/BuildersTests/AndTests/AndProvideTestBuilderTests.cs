@@ -16,7 +16,7 @@
                 {
                     MyController<MvcController>
                         .Instance()
-                        .Calling(c => c.EmptyActionWithException())
+                        .Calling(c => c.EmptyAction())
                         .ShouldHave()
                         .ValidModelState()
                         .AndAlso()

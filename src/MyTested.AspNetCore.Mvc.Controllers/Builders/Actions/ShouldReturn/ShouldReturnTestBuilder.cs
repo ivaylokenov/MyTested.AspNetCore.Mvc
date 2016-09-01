@@ -28,7 +28,7 @@
 
         private void ValidateActionReturnType(Type typeOfExpectedReturnValue, bool canBeAssignable = false, bool allowDifferentGenericTypeDefinitions = false)
         {
-            ActionValidator.CheckForException(this.CaughtException);
+            InvocationValidator.CheckForException(this.CaughtException, this.TestContext.ExceptionMessagePrefix);
 
             var typeInfoOfExpectedReturnValue = typeOfExpectedReturnValue.GetTypeInfo();
 

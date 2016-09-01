@@ -6,15 +6,16 @@
     using Extensions;
 
     /// <summary>
-    /// Validator class containing common validation logic.
+    /// Validator class containing invocation validation logic.
     /// </summary>
-    public static class ActionValidator
+    public static class InvocationValidator
     {
         /// <summary>
-        /// Validated whether a non-null exception is provided and throws ActionCallAssertionException with proper message.
+        /// Validated whether a non-null exception is provided and throws <see cref="InvocationAssertionException"/> with proper message.
         /// </summary>
         /// <param name="exception">Exception to be validated.</param>
-        public static void CheckForException(Exception exception)
+        /// <param name="exceptionMessagePrefix">Prefix to put in front of the exception message.</param>
+        public static void CheckForException(Exception exception, string exceptionMessagePrefix)
         {
             if (exception != null)
             {
@@ -37,10 +38,20 @@
                     throw new InvalidOperationException("Route values are not present in the method call but are needed for successful pass of this test case. Consider calling 'WithRouteData' on the component builder to resolve them from the provided lambda expression or set the HTTP request path by using 'WithHttpRequest'.");
                 }
                 
-                throw new ActionCallAssertionException(string.Format(
-                    "{0}{1} was thrown but was not caught or expected.",
+                throw new InvocationAssertionException(string.Format(
+                    "{0} no exception but {1}{2} was thrown without being caught.",
+                    exceptionMessagePrefix,
                     exception.GetType().ToFriendlyTypeName(),
                     message));
+            }
+        }
+
+        public static void CheckForNullException(Exception exception, string exceptionMessagePrefix)
+        {
+            if (exception == null)
+            {
+                throw new InvocationAssertionException(
+                    $"{exceptionMessagePrefix} exception to be thrown, but in fact none was caught.");
             }
         }
         

@@ -20,7 +20,7 @@
         [Fact]
         public void ShouldReturnOkWithAsyncShouldThrowExceptionIfActionThrowsExceptionWithDefaultReturnValue()
         {
-            Test.AssertException<ActionCallAssertionException>(
+            Test.AssertException<InvocationAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
@@ -28,8 +28,8 @@
                         .Calling(c => c.ActionWithExceptionAsync())
                         .ShouldReturn()
                         .Ok();
-                }, 
-                "AggregateException (containing NullReferenceException with 'Test exception message' message) was thrown but was not caught or expected.");
+                },
+                "When calling ActionWithExceptionAsync action in MvcController expected no exception but AggregateException (containing NullReferenceException with 'Test exception message' message) was thrown without being caught.");
         }
 
         [Fact]

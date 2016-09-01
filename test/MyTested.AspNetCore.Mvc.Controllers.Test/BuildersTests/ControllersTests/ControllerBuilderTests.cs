@@ -157,7 +157,7 @@
         [Fact]
         public void NormalIndexOutOfRangeExceptionShouldShowNormalMessage()
         {
-            Assert.Throws<ActionCallAssertionException>(
+            Assert.Throws<InvocationAssertionException>(
                 () =>
                 {
                     MyController<MvcController>

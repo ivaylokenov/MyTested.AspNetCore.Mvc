@@ -1,16 +1,15 @@
-﻿namespace MyTested.AspNetCore.Mvc.Builders.ExceptionErrors
+﻿namespace MyTested.AspNetCore.Mvc.Builders.CaughtExceptions
 {
     using Base;
-    using Contracts.ExceptionErrors;
+    using Contracts.CaughtExceptions;
     using Exceptions;
     using Internal.TestContexts;
-    using Utilities.Extensions;
 
     /// <summary>
     /// Used for testing <see cref="System.Exception"/> messages.
     /// </summary>
     public class ExceptionMessageTestBuilder
-        : BaseTestBuilderWithInvokedAction, IExceptionMessageTestBuilder
+        : BaseTestBuilderWithComponent, IExceptionMessageTestBuilder
     {
         private readonly IAndExceptionTestBuilder exceptionTestBuilder;
         private readonly string actualMessage;
@@ -18,10 +17,10 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="ExceptionMessageTestBuilder"/> class.
         /// </summary>
-        /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
+        /// <param name="testContext"><see cref="ComponentTestContext"/> containing data about the currently executed assertion chain.</param>
         /// <param name="exceptionTestBuilder">Test builder of <see cref="IAndExceptionTestBuilder"/> type.</param>
         public ExceptionMessageTestBuilder(
-            ControllerTestContext testContext,
+            ComponentTestContext testContext,
             IAndExceptionTestBuilder exceptionTestBuilder)
             : base(testContext)
         {
@@ -35,7 +34,7 @@
             if (this.actualMessage != errorMessage)
             {
                 this.ThrowNewInvalidExceptionAssertionException(
-                    "When calling {0} action in {1} expected exception message to be '{2}', but instead found '{3}'.",
+                    "{0} exception message to be '{1}', but instead found '{2}'.",
                     errorMessage);
             }
 
@@ -48,7 +47,7 @@
             if (!this.actualMessage.StartsWith(beginMessage))
             {
                 this.ThrowNewInvalidExceptionAssertionException(
-                    "When calling {0} action in {1} expected exception message to begin with '{2}', but instead found '{3}'.",
+                    "{0} exception message to begin with '{1}', but instead found '{2}'.",
                     beginMessage);
             }
 
@@ -61,7 +60,7 @@
             if (!this.actualMessage.EndsWith(endMessage))
             {
                 this.ThrowNewInvalidExceptionAssertionException(
-                    "When calling {0} action in {1} expected exception message to end with '{2}', but instead found '{3}'.",
+                    "{0} exception message to end with '{1}', but instead found '{2}'.",
                     endMessage);
             }
 
@@ -74,7 +73,7 @@
             if (!this.actualMessage.Contains(containsMessage))
             {
                 this.ThrowNewInvalidExceptionAssertionException(
-                    "When calling {0} action in {1} expected exception message to contain '{2}', but instead found '{3}'.",
+                    "{0} exception message to contain '{1}', but instead found '{2}'.",
                     containsMessage);
             }
 
@@ -85,8 +84,7 @@
         {
             throw new InvalidExceptionAssertionException(string.Format(
                 messageFormat,
-                this.ActionName,
-                this.Controller.GetName(),
+                this.TestContext.ExceptionMessagePrefix,
                 operation,
                 this.actualMessage));
         }

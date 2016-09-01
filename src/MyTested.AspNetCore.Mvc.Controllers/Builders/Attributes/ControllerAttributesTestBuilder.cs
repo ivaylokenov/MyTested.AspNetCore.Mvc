@@ -10,7 +10,7 @@
     /// <summary>
     /// Used for testing controller attributes.
     /// </summary>
-    public class ControllerAttributesTestBuilder : BaseAttributesTestBuilder, IAndControllerAttributesTestBuilder
+    public class ControllerAttributesTestBuilder : ControllerActionAttributesTestBuilder, IAndControllerAttributesTestBuilder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ControllerAttributesTestBuilder"/> class.
