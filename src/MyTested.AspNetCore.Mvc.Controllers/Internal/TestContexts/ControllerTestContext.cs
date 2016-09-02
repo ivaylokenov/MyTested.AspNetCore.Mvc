@@ -7,8 +7,6 @@
 
     public class ControllerTestContext : ActionTestContext<ControllerContext>
     {
-        public ModelStateDictionary ModelState => this.ComponentContext.ModelState;
-
         public override string ExceptionMessagePrefix => $"When calling {this.MethodName} action in {this.Component.GetName()} expected";
 
         protected override ControllerContext DefaultComponentContext

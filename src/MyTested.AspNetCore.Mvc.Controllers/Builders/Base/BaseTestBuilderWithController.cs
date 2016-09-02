@@ -8,7 +8,7 @@
     /// <summary>
     /// Base class for all test builders with controller.
     /// </summary>
-    public abstract class BaseTestBuilderWithController : BaseTestBuilderWithComponent, IBaseTestBuilderWithController
+    public abstract class BaseTestBuilderWithController : BaseTestBuilderWithActionContext, IBaseTestBuilderWithController
     {
         private ControllerTestContext testContext;
 

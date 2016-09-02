@@ -10,7 +10,7 @@
     public class ViewComponentTestContext : ActionTestContext<ViewContext>
     {
         private ViewComponentContext viewComponentContext;
-
+        
         public override string ExceptionMessagePrefix => $"When invoking {this.Component.GetName()} expected";
 
         protected override ViewContext DefaultComponentContext

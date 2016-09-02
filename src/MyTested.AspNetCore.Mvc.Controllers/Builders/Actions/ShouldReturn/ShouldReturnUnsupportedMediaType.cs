@@ -2,6 +2,7 @@
 {
     using Contracts.Base;
     using Microsoft.AspNetCore.Mvc;
+    using Utilities.Validators;
 
     /// <content>
     /// Class containing methods for testing <see cref="UnsupportedMediaTypeResult"/>.
@@ -11,7 +12,7 @@
         /// <inheritdoc />
         public IBaseTestBuilderWithActionResult<TActionResult> UnsupportedMediaType()
         {
-            this.ValidateActionReturnType<UnsupportedMediaTypeResult>();
+            InvocationResultValidator.ValidateInvocationReturnType<UnsupportedMediaTypeResult>(this.TestContext);
             return this.NewAndTestBuilderWithActionResult();
         }
     }

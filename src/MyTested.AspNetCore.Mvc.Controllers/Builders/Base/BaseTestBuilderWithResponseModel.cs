@@ -258,7 +258,7 @@
             var objectResult = this.ActionResult as ObjectResult;
             if (objectResult == null)
             {
-                throw new ActionResultAssertionException(string.Format(
+                throw new InvocationResultAssertionException(string.Format(
                     "When calling {0} action in {1} expected action result to inherit from ObjectResult, but it did not.",
                     this.ActionName,
                     this.Controller.GetName()));

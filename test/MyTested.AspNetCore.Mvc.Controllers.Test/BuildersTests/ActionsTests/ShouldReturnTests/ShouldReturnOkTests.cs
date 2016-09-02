@@ -35,7 +35,7 @@
         [Fact]
         public void ShouldReturnOkResultShouldThrowExceptionWithOtherThanOkResult()
         {
-            Test.AssertException<ActionResultAssertionException>(
+            Test.AssertException<InvocationResultAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
@@ -44,13 +44,13 @@
                         .ShouldReturn()
                         .Ok();
                 }, 
-                "When calling BadRequestAction action in MvcController expected action result to be OkResult, but instead received BadRequestResult.");
+                "When calling BadRequestAction action in MvcController expected result to be OkResult, but instead received BadRequestResult.");
         }
 
         [Fact]
         public void ShouldReturnOkResultShouldThrowExceptionWithInheritedOkResult()
         {
-            Test.AssertException<ActionResultAssertionException>(
+            Test.AssertException<InvocationResultAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
@@ -59,7 +59,7 @@
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling CustomActionResult action in MvcController expected action result to be OkResult, but instead received CustomActionResult.");
+                "When calling CustomActionResult action in MvcController expected result to be OkResult, but instead received CustomActionResult.");
         }
     }
 }

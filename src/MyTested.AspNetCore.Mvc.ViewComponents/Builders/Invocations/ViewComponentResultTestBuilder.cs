@@ -4,10 +4,11 @@
     using Contracts.Invocations;
     using Contracts.CaughtExceptions;
     using CaughtExceptions;
+    using Internal;
     using Internal.TestContexts;
     using ShouldHave;
+    using ShouldReturn;
     using Utilities.Validators;
-    using Internal;
 
     /// <summary>
     /// Used for building the view component result which will be tested.
@@ -34,6 +35,14 @@
             TestHelper.ExecuteTestCleanup();
             InvocationValidator.CheckForNullException(this.CaughtException, this.TestContext.ExceptionMessagePrefix);
             return new ShouldThrowTestBuilder(this.TestContext);
+        }
+
+        /// <inheritdoc />
+        public IViewComponentShouldReturnTestBuilder<TInvocationResult> ShouldReturn()
+        {
+            TestHelper.ExecuteTestCleanup();
+            InvocationValidator.CheckForException(this.CaughtException, this.TestContext.ExceptionMessagePrefix);
+            return new ViewComponentShouldReturnTestBuilder<TInvocationResult>(this.TestContext);
         }
     }
 }

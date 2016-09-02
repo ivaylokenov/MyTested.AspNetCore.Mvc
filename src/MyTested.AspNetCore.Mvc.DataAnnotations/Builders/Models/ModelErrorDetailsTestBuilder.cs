@@ -13,7 +13,7 @@
     /// Used for testing specific <see cref="ModelStateDictionary"/> errors.
     /// </summary>
     /// <typeparam name="TModel">Model from invoked action in ASP.NET Core MVC controller.</typeparam>
-    public class ModelErrorDetailsTestBuilder<TModel> : BaseTestBuilderWithModel<TModel>, IModelErrorDetailsTestBuilder<TModel>
+    public class ModelErrorDetailsTestBuilder<TModel> : BaseTestBuilderWithComponent, IModelErrorDetailsTestBuilder<TModel>
     {
         private readonly IAndModelErrorTestBuilder<TModel> modelErrorTestBuilder;
         private readonly string currentErrorKey;
@@ -22,12 +22,12 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelErrorDetailsTestBuilder{TModel}"/> class.
         /// </summary>
-        /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
+        /// <param name="testContext"><see cref="ActionTestContext"/> containing data about the currently executed assertion chain.</param>
         /// <param name="modelErrorTestBuilder">Test builder of <see cref="IAndModelErrorTestBuilder{TModel}"/> type.</param>
         /// <param name="errorKey">Key in <see cref="ModelStateDictionary"/> corresponding to this particular error.</param>
         /// <param name="aggregatedErrors">All errors found in <see cref="ModelStateDictionary"/> for given error key.</param>
         public ModelErrorDetailsTestBuilder(
-            ControllerTestContext testContext,
+            ActionTestContext testContext,
             IAndModelErrorTestBuilder<TModel> modelErrorTestBuilder,
             string errorKey,
             IEnumerable<ModelError> aggregatedErrors)
@@ -105,8 +105,8 @@
         {
             throw new ModelErrorAssertionException(string.Format(
                     messageFormat,
-                    this.ActionName,
-                    this.Controller.GetName(),
+                    this.TestContext.MethodName,
+                    this.TestContext.Component.GetName(),
                     this.currentErrorKey,
                     operation,
                     string.Join(", ", this.aggregatedErrors)));

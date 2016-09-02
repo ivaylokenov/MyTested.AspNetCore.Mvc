@@ -13,10 +13,10 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelErrorTestBuilder{TModel}"/> class.
         /// </summary>
-        /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
+        /// <param name="testContext"><see cref="ActionTestContext"/> containing data about the currently executed assertion chain.</param>
         /// <param name="modelState">Optional <see cref="ModelStateDictionary"/> to use the class with. Default is Default is <see cref="ControllerBase"/>'s <see cref="ModelStateDictionary"/>.</param>
         public ModelStateTestBuilder(
-            ControllerTestContext testContext,
+            ActionTestContext testContext,
             ModelStateDictionary modelState = null)
             : base(testContext, modelState)
         {

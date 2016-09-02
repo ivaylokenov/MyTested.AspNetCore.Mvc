@@ -59,7 +59,7 @@
 
         private void ThrowNewActionResultAssertionException(string message)
         {
-            throw new ActionResultAssertionException(string.Format(
+            throw new InvocationResultAssertionException(string.Format(
                     "When calling {0} action in {1} expected action result to be {2}",
                     this.ActionName,
                     this.Controller.GetName(),

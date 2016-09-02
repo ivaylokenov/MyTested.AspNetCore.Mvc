@@ -2,6 +2,7 @@
 {
     using Contracts.Base;
     using Microsoft.AspNetCore.Mvc;
+    using Utilities.Validators;
 
     /// <content>
     /// Class containing methods for testing <see cref="UnauthorizedResult"/>.
@@ -11,7 +12,7 @@
         /// <inheritdoc />
         public IBaseTestBuilderWithActionResult<TActionResult> Unauthorized()
         {
-            this.ValidateActionReturnType<UnauthorizedResult>();
+            InvocationResultValidator.ValidateInvocationReturnType<UnauthorizedResult>(this.TestContext);
             return this.NewAndTestBuilderWithActionResult();
         }
     }

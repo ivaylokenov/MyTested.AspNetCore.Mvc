@@ -5,7 +5,8 @@
     /// <summary>
     /// Used for testing <see cref="Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary"/> errors.
     /// </summary>
-    public interface IModelErrorTestBuilder : IBaseTestBuilderWithInvokedAction
+    /// <typeparam name="TModel">Model from invoked method in ASP.NET Core MVC.</typeparam>
+    public interface IModelErrorTestBuilder<TModel> : IModelErrorTestBuilder, IBaseTestBuilderWithComponent
     {
     }
 }

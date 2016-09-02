@@ -3,7 +3,7 @@
     /// <summary>
     /// Used for adding AndAlso() method to the <see cref="Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary"/> error tests.
     /// </summary>
-    /// <typeparam name="TModel">Model from invoked action in ASP.NET Core MVC controller.</typeparam>
+    /// <typeparam name="TModel">Model from invoked method in ASP.NET Core MVC.</typeparam>
     public interface IAndModelErrorTestBuilder<TModel> : IModelErrorTestBuilder<TModel>
     {
         /// <summary>

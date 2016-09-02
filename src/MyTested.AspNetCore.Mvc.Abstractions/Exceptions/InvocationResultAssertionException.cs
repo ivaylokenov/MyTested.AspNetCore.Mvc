@@ -5,13 +5,13 @@
     /// <summary>
     /// <see cref="Exception"/> for invalid action return type.
     /// </summary>
-    public class ActionResultAssertionException : Exception
+    public class InvocationResultAssertionException : Exception
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ActionResultAssertionException"/> class.
+        /// Initializes a new instance of the <see cref="InvocationResultAssertionException"/> class.
         /// </summary>
         /// <param name="message">The message that describes the error.</param>
-        public ActionResultAssertionException(string message)
+        public InvocationResultAssertionException(string message)
             : base(message)
         {
         }

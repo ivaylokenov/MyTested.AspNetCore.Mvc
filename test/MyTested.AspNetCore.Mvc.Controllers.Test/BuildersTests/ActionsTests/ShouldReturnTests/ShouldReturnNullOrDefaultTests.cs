@@ -36,7 +36,7 @@
         [Fact]
         public void ShouldReturnNullShouldThrowExceptionWhenReturnValueNotNull()
         {
-            Test.AssertException<ActionResultAssertionException>(
+            Test.AssertException<InvocationResultAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
@@ -76,7 +76,7 @@
         [Fact]
         public void ShouldReturnNotNullShouldThrowExceptionWhenReturnValueNotNull()
         {
-            Test.AssertException<ActionResultAssertionException>(
+            Test.AssertException<InvocationResultAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
@@ -111,7 +111,7 @@
         [Fact]
         public void ShouldReturnDefaultShouldThrowExceptionWhenReturnValueIsNotDefault()
         {
-            Test.AssertException<ActionResultAssertionException>(
+            Test.AssertException<InvocationResultAssertionException>(
                 () =>
                 {
                     MyController<MvcController>

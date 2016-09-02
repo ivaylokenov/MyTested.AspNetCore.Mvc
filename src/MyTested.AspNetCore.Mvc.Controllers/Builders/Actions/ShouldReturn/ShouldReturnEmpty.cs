@@ -2,6 +2,7 @@
 {
     using Contracts.Base;
     using Microsoft.AspNetCore.Mvc;
+    using Utilities.Validators;
 
     /// <content>
     /// Class containing methods for testing <see cref="EmptyResult"/>.
@@ -11,7 +12,7 @@
         /// <inheritdoc />
         public IBaseTestBuilderWithActionResult<TActionResult> Empty()
         {
-            this.ValidateActionReturnType<EmptyResult>();
+            InvocationResultValidator.ValidateInvocationReturnType<EmptyResult>(this.TestContext);
             return this.NewAndTestBuilderWithActionResult();
         }
     }

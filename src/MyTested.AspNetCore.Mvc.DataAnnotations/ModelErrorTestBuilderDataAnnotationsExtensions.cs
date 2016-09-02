@@ -15,13 +15,13 @@
         /// </summary>
         /// <param name="modelErrorTestBuilder">Instance of <see cref="IModelErrorTestBuilder"/> type.</param>
         /// <returns>Test builder of <see cref="IBaseTestBuilderWithInvokedAction"/> type.</returns>
-        public static IBaseTestBuilderWithInvokedAction ContainingNoErrors(this IModelErrorTestBuilder modelErrorTestBuilder)
+        public static IBaseTestBuilder ContainingNoErrors(this IModelErrorTestBuilder modelErrorTestBuilder)
         {
             var actualModelErrorTestBuilder = (ModelErrorTestBuilder)modelErrorTestBuilder;
 
             ModelStateValidator.CheckValidModelState(actualModelErrorTestBuilder.TestContext);
 
-            return actualModelErrorTestBuilder.NewAndTestBuilderWithInvokedAction();
+            return actualModelErrorTestBuilder;
         }
     }
 }

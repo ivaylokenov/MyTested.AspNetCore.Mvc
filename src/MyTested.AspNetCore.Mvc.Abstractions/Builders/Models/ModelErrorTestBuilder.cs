@@ -8,15 +8,15 @@
     /// <summary>
     /// Used for testing the <see cref="ModelStateDictionary"/> errors.
     /// </summary>
-    public class ModelErrorTestBuilder : BaseTestBuilderWithInvokedAction, IModelErrorTestBuilder
+    public class ModelErrorTestBuilder : BaseTestBuilderWithActionContext, IModelErrorTestBuilder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelErrorTestBuilder"/> class.
         /// </summary>
-        /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
+        /// <param name="testContext"><see cref="ActionTestContext"/> containing data about the currently executed assertion chain.</param>
         /// <param name="modelState">Optional <see cref="ModelStateDictionary"/> to use the test builder with. Default is controller's <see cref="ModelStateDictionary"/>.</param>
         public ModelErrorTestBuilder(
-            ControllerTestContext testContext,
+            ActionTestContext testContext,
             ModelStateDictionary modelState = null)
             : base(testContext)
         {

@@ -40,7 +40,7 @@
         [Fact]
         public void ShouldReturnCreatedShouldThrowExceptionWithBadRequestResult()
         {
-            Test.AssertException<ActionResultAssertionException>(
+            Test.AssertException<InvocationResultAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
@@ -49,7 +49,7 @@
                         .ShouldReturn()
                         .Created();
                 },
-                "When calling BadRequestAction action in MvcController expected action result to be CreatedResult, but instead received BadRequestResult.");
+                "When calling BadRequestAction action in MvcController expected result to be CreatedResult, but instead received BadRequestResult.");
         }
     }
 }

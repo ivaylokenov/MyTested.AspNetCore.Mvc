@@ -3,7 +3,6 @@
     using System;
     using Builders.Actions.ShouldHave;
     using Builders.Contracts.Actions;
-    using Builders.Contracts.And;
     using Builders.Contracts.Data;
     using Builders.Data;
     using Internal.TestContexts;

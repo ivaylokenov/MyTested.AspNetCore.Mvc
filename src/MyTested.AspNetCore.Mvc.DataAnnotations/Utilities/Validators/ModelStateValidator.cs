@@ -13,7 +13,7 @@
         /// <summary>
         /// Tests whether the tested action's model state is valid.
         /// </summary>
-        public static void CheckValidModelState(ControllerTestContext testContext)
+        public static void CheckValidModelState(ActionTestContext testContext)
         {
             if (!testContext.ModelState.IsValid)
             {
