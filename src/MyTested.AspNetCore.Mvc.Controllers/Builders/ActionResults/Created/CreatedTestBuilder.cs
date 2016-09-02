@@ -7,7 +7,6 @@
     using System.Threading.Tasks;
     using Base;
     using Contracts.ActionResults.Created;
-    using Contracts.Base;
     using Contracts.Uri;
     using Exceptions;
     using Internal.TestContexts;
@@ -15,7 +14,6 @@
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.AspNetCore.Routing;
     using Microsoft.Net.Http.Headers;
-    using Utilities.Extensions;
     using Utilities.Validators;
 
     /// <summary>
@@ -26,6 +24,8 @@
         : BaseTestBuilderWithResponseModel<TCreatedResult>, IAndCreatedTestBuilder
         where TCreatedResult : ObjectResult
     {
+        private readonly ControllerTestContext controllerTestContext;
+
         private const string Location = "location";
         private const string RouteName = "route name";
         private const string RouteValues = "route values";
@@ -40,6 +40,8 @@
         public CreatedTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
+            CommonValidator.CheckForNullReference(testContext, nameof(ControllerTestContext));
+            this.controllerTestContext = testContext;
         }
 
         /// <inheritdoc />
@@ -223,7 +225,7 @@
         public IAndCreatedTestBuilder ContainingRouteKey(string key)
         {
             RouteActionResultValidator.ValidateRouteValue(
-                this.ActionResult,
+                this.TestContext.MethodResult,
                 key,
                 this.ThrowNewCreatedResultAssertionException);
 
@@ -234,7 +236,7 @@
         public IAndCreatedTestBuilder ContainingRouteValue<TRouteValue>(TRouteValue value)
         {
             RouteActionResultValidator.ValidateRouteValue(
-                this.ActionResult,
+                this.TestContext.MethodResult,
                 value,
                 this.ThrowNewCreatedResultAssertionException);
 
@@ -245,7 +247,7 @@
         public IAndCreatedTestBuilder ContainingRouteValueOfType<TRouteValue>()
         {
             RouteActionResultValidator.ValidateRouteValueOfType<TRouteValue>(
-                this.ActionResult,
+                this.TestContext.MethodResult,
                 this.ThrowNewCreatedResultAssertionException);
 
             return this;
@@ -255,7 +257,7 @@
         public IAndCreatedTestBuilder ContainingRouteValueOfType<TRouteValue>(string key)
         {
             RouteActionResultValidator.ValidateRouteValueOfType<TRouteValue>(
-                this.ActionResult,
+                this.TestContext.MethodResult,
                 key,
                 this.ThrowNewCreatedResultAssertionException);
 
@@ -266,7 +268,7 @@
         public IAndCreatedTestBuilder ContainingRouteValue(string key, object value)
         {
             RouteActionResultValidator.ValidateRouteValue(
-                this.ActionResult,
+                this.TestContext.MethodResult,
                 key,
                 value,
                 this.ThrowNewCreatedResultAssertionException);
@@ -284,7 +286,7 @@
             var includeCountCheck = this.createdAtExpression == null;
 
             RouteActionResultValidator.ValidateRouteValues(
-                this.ActionResult,
+                this.TestContext.MethodResult,
                 routeValues,
                 includeCountCheck,
                 this.ThrowNewCreatedResultAssertionException);
@@ -296,7 +298,7 @@
         public IAndCreatedTestBuilder WithUrlHelper(IUrlHelper urlHelper)
         {
             RouteActionResultValidator.ValidateUrlHelper(
-                this.ActionResult,
+                this.TestContext.MethodResult,
                 urlHelper,
                 this.ThrowNewCreatedResultAssertionException);
 
@@ -308,7 +310,7 @@
             where TUrlHelper : IUrlHelper
         {
             RouteActionResultValidator.ValidateUrlHelperOfType<TUrlHelper>(
-                this.ActionResult,
+                this.TestContext.MethodResult,
                 this.ThrowNewCreatedResultAssertionException);
 
             return this;
@@ -343,7 +345,7 @@
         private TExpectedCreatedResult GetCreatedResult<TExpectedCreatedResult>(string containment)
             where TExpectedCreatedResult : class
         {
-            var actualRedirectResult = this.ActionResult as TExpectedCreatedResult;
+            var actualRedirectResult = this.TestContext.MethodResult as TExpectedCreatedResult;
             if (actualRedirectResult == null)
             {
                 this.ThrowNewCreatedResultAssertionException(
@@ -360,8 +362,8 @@
             this.createdAtExpression = actionCall;
 
             RouteActionResultValidator.ValidateExpressionLink(
-                this.TestContext,
-                LinkGenerationTestContext.FromCreatedResult(this.ActionResult),
+                this.controllerTestContext,
+                LinkGenerationTestContext.FromCreatedResult(this.TestContext.MethodResult as IActionResult),
                 actionCall,
                 this.ThrowNewCreatedResultAssertionException);
 
@@ -371,9 +373,8 @@
         private void ThrowNewCreatedResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new CreatedResultAssertionException(string.Format(
-                "When calling {0} action in {1} expected created result {2} {3}, but {4}.",
-                this.ActionName,
-                this.Controller.GetName(),
+                "{0} created result {1} {2}, but {3}.",
+                this.TestContext.ExceptionMessagePrefix,
                 propertyName,
                 expectedValue,
                 actualValue));

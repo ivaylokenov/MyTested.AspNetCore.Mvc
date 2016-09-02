@@ -24,6 +24,12 @@
         }
 
         /// <summary>
+        /// Returns the provided object casted as dynamic type.
+        /// </summary>
+        /// <returns>Object of dynamic type.</returns>
+        public static dynamic AsDynamic(this object obj) => obj?.GetType().CastTo<dynamic>(obj);
+
+        /// <summary>
         /// Gets friendly type name of object. Useful for generic types.
         /// </summary>
         /// <param name="obj">Object to get friendly name from.</param>

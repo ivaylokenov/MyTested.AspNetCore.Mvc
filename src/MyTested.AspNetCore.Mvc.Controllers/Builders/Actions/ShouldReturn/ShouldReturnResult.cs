@@ -18,14 +18,14 @@
         }
 
         /// <inheritdoc />
-        public IAndModelDetailsTestBuilder<TActionResult> ResultOfType<TResponseModel>()
+        public IAndModelDetailsTestBuilder<TActionResult> ResultOfType<TResult>()
         {
-            InvocationResultValidator.ValidateInvocationResultType<TResponseModel>(this.TestContext, true);
+            InvocationResultValidator.ValidateInvocationResultType<TResult>(this.TestContext, true);
             return new ModelDetailsTestBuilder<TActionResult>(this.TestContext);
         }
 
         /// <inheritdoc />
-        public IAndModelDetailsTestBuilder<TActionResult> Result<TResponseModel>(TResponseModel model)
+        public IAndModelDetailsTestBuilder<TActionResult> Result<TResult>(TResult model)
         {
             InvocationResultValidator.ValidateInvocationResult(this.TestContext, model);
             return new ModelDetailsTestBuilder<TActionResult>(this.TestContext);

@@ -101,5 +101,15 @@
         }
 
         public static void ExecuteTestCleanup() => GlobalTestCleanup?.Invoke();
+
+        /// <summary>
+        /// Gets formatted friendly name.
+        /// </summary>
+        /// <param name="name">Name to format.</param>
+        /// <returns>Formatted string.</returns>
+        public static string GetFriendlyName(string name)
+        {
+            return name == null ? "the default one" : $"'{name}'";
+        }
     }
 }

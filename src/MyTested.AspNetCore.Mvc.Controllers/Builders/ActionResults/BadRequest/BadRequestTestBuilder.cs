@@ -22,8 +22,8 @@
         : BaseTestBuilderWithResponseModel<THttpBadRequestResult>, IAndBadRequestTestBuilder
         where THttpBadRequestResult : ActionResult
     {
-        private const string ErrorMessage = "When calling {0} action in {1} expected bad request result error to be the given object, but in fact it was a different.";
-        private const string OfTypeErrorMessage = "When calling {0} action in {1} expected bad request result error to be of {2} type, but instead received {3}.";
+        private const string ErrorMessage = "{0} bad request result error to be the given object, but in fact it was a different.";
+        private const string OfTypeErrorMessage = "{0} bad request result error to be of {1} type, but instead received {2}.";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BadRequestTestBuilder{TBadRequestResult}"/> class.
@@ -35,7 +35,7 @@
             this.ErrorMessageFormat = ErrorMessage;
             this.OfTypeErrorMessageFormat = OfTypeErrorMessage;
         }
-        
+
         /// <inheritdoc />
         public IAndModelDetailsTestBuilder<TError> WithError<TError>(TError error)
         {
@@ -51,13 +51,12 @@
         /// <inheritdoc />
         public IAndBadRequestTestBuilder WithNoError()
         {
-            var actualResult = this.ActionResult as BadRequestResult;
+            var actualResult = this.TestContext.MethodResult as BadRequestResult;
             if (actualResult == null)
             {
                 throw new ResponseModelAssertionException(string.Format(
-                    "When calling {0} action in {1} expected bad request result to not have error message, but in fact such was found.",
-                    this.ActionName,
-                    this.Controller.GetName()));
+                    "{0} bad request result to not have error message, but in fact such was found.",
+                    this.TestContext.ExceptionMessagePrefix));
             }
 
             return this;
@@ -183,9 +182,8 @@
             if (!predicate(actualErrorMessage))
             {
                 throw new BadRequestResultAssertionException(string.Format(
-                    "When calling {0} action in {1} expected bad request error message ('{2}') to pass the given predicate, but it failed.",
-                    this.ActionName,
-                    this.Controller.GetName(),
+                    "{0} bad request error message ('{2}') to pass the given predicate, but it failed.",
+                    this.TestContext.ExceptionMessagePrefix,
                     actualErrorMessage));
             }
 
@@ -194,19 +192,18 @@
 
         /// <inheritdoc />
         public IBadRequestTestBuilder AndAlso() => this;
-        
+
         protected override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)
             => this.ThrowNewHttpBadRequestResultAssertionException(propertyName, expectedValue, actualValue);
-        
+
         public object GetBadRequestObjectResultValue()
         {
-            var actualBadRequestResult = this.ActionResult as BadRequestObjectResult;
+            var actualBadRequestResult = this.TestContext.MethodResult as BadRequestObjectResult;
             if (actualBadRequestResult == null)
             {
                 throw new BadRequestResultAssertionException(string.Format(
-                    "When calling {0} action in {1} expected bad request result to contain error object, but it could not be found.",
-                    this.ActionName,
-                    this.Controller.GetName()));
+                    "{0} bad request result to contain error object, but it could not be found.",
+                    this.TestContext.ExceptionMessagePrefix));
             }
 
             return actualBadRequestResult.Value;
@@ -265,9 +262,8 @@
         private void ThrowNewHttpBadRequestResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new BadRequestResultAssertionException(string.Format(
-                "When calling {0} action in {1} expected bad request result {2} {3}, but {4}.",
-                this.ActionName,
-                this.Controller.GetName(),
+                "{0} bad request result {1} {2}, but {3}.",
+                this.TestContext.ExceptionMessagePrefix,
                 propertyName,
                 expectedValue,
                 actualValue));

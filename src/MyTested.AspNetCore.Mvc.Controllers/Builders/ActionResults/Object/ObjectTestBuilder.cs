@@ -9,7 +9,6 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.Net.Http.Headers;
-    using Utilities.Extensions;
 
     /// <summary>
     /// Used for testing <see cref="ObjectResult"/>.
@@ -125,9 +124,8 @@
         private void ThrowNewObjectResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new ObjectResultAssertionException(string.Format(
-                "When calling {0} action in {1} expected object result {2} {3}, but {4}.",
-                this.ActionName,
-                this.Controller.GetName(),
+                "{0} object result {1} {2}, but {3}.",
+                this.TestContext.ExceptionMessagePrefix,
                 propertyName,
                 expectedValue,
                 actualValue));

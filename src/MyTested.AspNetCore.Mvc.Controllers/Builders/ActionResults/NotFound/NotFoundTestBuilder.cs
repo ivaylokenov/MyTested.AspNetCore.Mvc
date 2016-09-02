@@ -4,13 +4,11 @@
     using System.Net;
     using Base;
     using Contracts.ActionResults.NotFound;
-    using Contracts.Base;
     using Exceptions;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.Net.Http.Headers;
-    using Utilities.Extensions;
 
     /// <summary>
     /// Used for testing HTTP not found result.
@@ -136,12 +134,11 @@
         private void ThrowNewHttpNotFoundResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new NotFoundResultAssertionException(string.Format(
-                    "When calling {0} action in {1} expected HTTP not found result {2} {3}, but {4}.",
-                    this.ActionName,
-                    this.Controller.GetName(),
-                    propertyName,
-                    expectedValue,
-                    actualValue));
+                "{0} HTTP not found result {1} {2}, but {3}.",
+                this.TestContext.ExceptionMessagePrefix,
+                propertyName,
+                expectedValue,
+                actualValue));
         }
     }
 }

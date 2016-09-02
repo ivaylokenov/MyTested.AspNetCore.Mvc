@@ -5,10 +5,10 @@
     using Builders.Actions.ShouldReturn;
     using Builders.Contracts.ActionResults.View;
     using Builders.Contracts.Actions;
-    using Internal;
     using Microsoft.AspNetCore.Mvc;
     using Utilities;
     using Utilities.Validators;
+    using Exceptions;
 
     /// <summary>
     /// Contains <see cref="ViewComponentResult"/> extension methods for <see cref="IShouldReturnTestBuilder{TActionResult}"/>.
@@ -50,14 +50,13 @@
 
             if (viewComponentName != actualViewComponentName)
             {
-                ViewActionResultsThrow.NewViewResultAssertionException(
-                    actualShouldReturnTestBuilder,
+                throw ViewResultAssertionException.ForNameEquality(
+                    actualShouldReturnTestBuilder.TestContext.ExceptionMessagePrefix,
                     "view component",
                     viewComponentName,
                     actualViewComponentName);
             }
-
-            actualShouldReturnTestBuilder.TestContext.MethodResult = viewComponentResult;
+            
             return new ViewComponentTestBuilder(actualShouldReturnTestBuilder.TestContext);
         }
 
@@ -81,14 +80,13 @@
 
             if (viewComponentType != actualViewComponentType)
             {
-                ViewActionResultsThrow.NewViewResultAssertionException(
-                    actualShouldReturnTestBuilder,
+                throw ViewResultAssertionException.ForNameEquality(
+                    actualShouldReturnTestBuilder.TestContext.ExceptionMessagePrefix,
                     "view component",
                     viewComponentType.ToFriendlyTypeName(),
                     actualViewComponentType.ToFriendlyTypeName());
             }
-
-            actualShouldReturnTestBuilder.TestContext.MethodResult = viewComponentResult;
+            
             return new ViewComponentTestBuilder(actualShouldReturnTestBuilder.TestContext);
         }
     }

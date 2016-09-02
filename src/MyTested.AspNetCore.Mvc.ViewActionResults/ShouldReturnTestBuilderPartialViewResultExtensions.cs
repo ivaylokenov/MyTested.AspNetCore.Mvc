@@ -4,7 +4,7 @@
     using Builders.Actions.ShouldReturn;
     using Builders.Contracts.ActionResults.View;
     using Builders.Contracts.Actions;
-    using Internal;
+    using Exceptions;
     using Microsoft.AspNetCore.Mvc;
     using Utilities.Validators;
 
@@ -45,8 +45,8 @@
             var actualViewName = viewResult.ViewName;
             if (viewName != actualViewName)
             {
-                ViewActionResultsThrow.NewViewResultAssertionException(
-                    actualShouldReturnTestBuilder,
+                throw ViewResultAssertionException.ForNameEquality(
+                    actualShouldReturnTestBuilder.TestContext.ExceptionMessagePrefix,
                     viewType,
                     viewName,
                     actualViewName);

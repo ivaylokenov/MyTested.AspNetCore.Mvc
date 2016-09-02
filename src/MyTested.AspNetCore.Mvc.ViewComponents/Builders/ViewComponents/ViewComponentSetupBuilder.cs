@@ -8,6 +8,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.AspNetCore.Mvc.ViewComponents;
+    using Microsoft.AspNetCore.Mvc.ViewEngines;
     using Microsoft.Extensions.DependencyInjection;
     using Utilities.Extensions;
     using Utilities.Validators;
@@ -67,7 +68,7 @@
             this.TestContext.ComponentContextPreparationDelegate += actionContextSetup;
             return this;
         }
-
+        
         protected override void PrepareComponentContext()
         {
             var viewContext = this.TestContext.ComponentContext;

@@ -10,7 +10,7 @@
     /// Used for testing specific bad request text error messages.
     /// </summary>
     public class BadRequestErrorMessageTestBuilder
-        : BaseTestBuilderWithInvokedAction, IBadRequestErrorMessageTestBuilder
+        : BaseTestBuilderWithComponent, IBadRequestErrorMessageTestBuilder
     {
         private readonly string actualMessage;
         private readonly IAndBadRequestTestBuilder badRequestTestBuilder;
@@ -18,11 +18,11 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="BadRequestErrorMessageTestBuilder"/> class.
         /// </summary>
-        /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
+        /// <param name="testContext"><see cref="ComponentTestContext"/> containing data about the currently executed assertion chain.</param>
         /// <param name="actualMessage">Actual text error message received from bad request result.</param>
         /// <param name="badRequestTestBuilder">Bad request test builder.</param>
         public BadRequestErrorMessageTestBuilder(
-            ControllerTestContext testContext,
+            ComponentTestContext testContext,
             string actualMessage,
             IAndBadRequestTestBuilder badRequestTestBuilder)
             : base(testContext)
@@ -87,8 +87,8 @@
         {
             throw new BadRequestResultAssertionException(string.Format(
                 messageFormat,
-                this.ActionName,
-                this.Controller.GetName(),
+                this.TestContext.MethodName,
+                this.TestContext.Component.GetName(),
                 operation,
                 this.actualMessage));
         }

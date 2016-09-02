@@ -1,30 +1,28 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Exceptions
 {
-    using System;
     using Internal;
+    using System;
 
     /// <summary>
     /// <see cref="Exception"/> for invalid <see cref="Microsoft.AspNetCore.Mvc.ViewResult"/>, <see cref="Microsoft.AspNetCore.Mvc.PartialViewResult"/> or <see cref="Microsoft.AspNetCore.Mvc.ViewComponentResult"/>.
     /// </summary>
-    public class ViewResultAssertionException : Exception
+    public class ViewViewComponentResultAssertionException : Exception
     {
-        public static ViewResultAssertionException ForNameEquality(
+        public static ViewViewComponentResultAssertionException ForNameEquality(
             string messagePrefix,
-            string viewType,
             string expectedViewName,
             string actualViewName)
-            => new ViewResultAssertionException(string.Format(
-                "{0} {1} result to be {2}, but instead received {3}.",
+            => new ViewViewComponentResultAssertionException(string.Format(
+                "{0} view result to be {1}, but instead received {2}.",
                 messagePrefix,
-                viewType,
                 TestHelper.GetFriendlyName(expectedViewName),
                 TestHelper.GetFriendlyName(actualViewName)));
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ViewResultAssertionException"/> class.
+        /// Initializes a new instance of the <see cref="ViewViewComponentResultAssertionException"/> class.
         /// </summary>
         /// <param name="message">The message that describes the error.</param>
-        public ViewResultAssertionException(string message)
+        public ViewViewComponentResultAssertionException(string message)
             : base(message)
         {
         }

@@ -23,7 +23,7 @@
         /// <param name="testContext"><see cref="ComponentTestContext"/> containing data about the currently executed assertion chain.</param>
         public MemoryCacheEntryTestBuilder(ComponentTestContext testContext)
         {
-            CommonValidator.CheckForNullReference(testContext, nameof(testContext));
+            CommonValidator.CheckForNullReference(testContext, nameof(ComponentTestContext));
 
             this.validations = new List<Action<ICacheEntry, ICacheEntry>>();
             this.TestContext = testContext;

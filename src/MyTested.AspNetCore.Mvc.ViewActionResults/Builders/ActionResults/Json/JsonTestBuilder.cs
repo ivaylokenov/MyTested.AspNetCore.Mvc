@@ -19,6 +19,8 @@
     /// </summary>
     public class JsonTestBuilder : BaseTestBuilderWithResponseModel<JsonResult>, IAndJsonTestBuilder
     {
+        private readonly ControllerTestContext controllerTestContext;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonTestBuilder"/> class.
         /// </summary>
@@ -26,6 +28,8 @@
         public JsonTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
+            CommonValidator.CheckForNullReference(testContext, nameof(ControllerTestContext));
+            this.controllerTestContext = testContext;
         }
 
         /// <inheritdoc />
@@ -37,7 +41,7 @@
         {
             HttpStatusCodeValidator.ValidateHttpStatusCode(
                 statusCode,
-                this.ActionResult.StatusCode,
+                this.GetJsonResult().StatusCode,
                 this.ThrowNewJsonResultAssertionException);
 
             return this;
@@ -48,7 +52,7 @@
         {
             ContentTypeValidator.ValidateContentType(
                 contentType,
-                this.ActionResult.ContentType,
+                this.GetJsonResult().ContentType,
                 this.ThrowNewJsonResultAssertionException);
 
             return this;
@@ -70,11 +74,11 @@
         public IAndJsonTestBuilder WithJsonSerializerSettings(
             Action<IJsonSerializerSettingsTestBuilder> jsonSerializerSettingsBuilder)
         {
-            var actualJsonSerializerSettings = this.ActionResult.SerializerSettings
+            var actualJsonSerializerSettings = this.GetJsonResult().SerializerSettings
                 ?? this.GetServiceDefaultSerializerSettings()
                 ?? new JsonSerializerSettings();
 
-            var newJsonSerializerSettingsTestBuilder = new JsonSerializerSettingsTestBuilder(this.TestContext);
+            var newJsonSerializerSettingsTestBuilder = new JsonSerializerSettingsTestBuilder(this.controllerTestContext);
             jsonSerializerSettingsBuilder(newJsonSerializerSettingsTestBuilder);
             var expectedJsonSerializerSettings = newJsonSerializerSettingsTestBuilder.GetJsonSerializerSettings();
 
@@ -89,7 +93,7 @@
 
         protected override object GetActualModel()
         {
-            return this.ActionResult?.Value;
+            return this.GetJsonResult()?.Value;
         }
 
         /// <summary>
@@ -100,6 +104,8 @@
         /// <param name="actualValue">Actual value of the tested property.</param>
         protected override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)
             => this.ThrowNewJsonResultAssertionException(propertyName, expectedValue, actualValue);
+
+        private JsonResult GetJsonResult() => this.TestContext.MethodResult as JsonResult;
 
         private JsonSerializerSettings GetServiceDefaultSerializerSettings()
             => TestServiceProvider.GetService<IOptions<MvcJsonOptions>>()?.Value?.SerializerSettings;
@@ -134,9 +140,8 @@
         private void ThrowNewJsonResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new JsonResultAssertionException(string.Format(
-                    "When calling {0} action in {1} expected JSON result {2} {3}, but {4}.",
-                    this.ActionName,
-                    this.Controller.GetName(),
+                    "{0} JSON result {1} {2}, but {3}.",
+                    this.TestContext.ExceptionMessagePrefix,
                     propertyName,
                     expectedValue,
                     actualValue));

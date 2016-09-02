@@ -4,28 +4,21 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
-    using Contracts.Base;
-    using Contracts.Models;
     using Exceptions;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.Net.Http.Headers;
-    using Models;
     using Utilities;
-    using Utilities.Extensions;
     using Utilities.Validators;
 
     /// <summary>
     /// Base class for all test builders with response model.
     /// </summary>
     /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
-    public abstract class BaseTestBuilderWithResponseModel<TActionResult>
-        : BaseTestBuilderWithActionResult<TActionResult>, IBaseTestBuilderWithResponseModel
+    public abstract class BaseTestBuilderWithResponseModel<TActionResult> : BaseTestBuilderWithResponseModel
+        where TActionResult : class
     {
-        private const string ErrorMessage = "When calling {0} action in {1} expected response model {2} to be the given model, but in fact it was a different one.";
-        private const string OfTypeErrorMessage = "When calling {0} action in {1} expected response model to be of {2} type, but instead received {3}.";
-
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseTestBuilderWithResponseModel{TActionResult}"/> class.
         /// </summary>
@@ -33,75 +26,19 @@
         protected BaseTestBuilderWithResponseModel(ControllerTestContext testContext)
             : base(testContext)
         {
-            this.ErrorMessageFormat = ErrorMessage;
-            this.OfTypeErrorMessageFormat = OfTypeErrorMessage;
         }
 
-        /// <summary>
-        /// Gets or sets the error message format for the response model assertions.
-        /// </summary>
-        /// <value>String value.</value>
-        protected string ErrorMessageFormat { get; set; }
-
-        /// <summary>
-        /// Gets or sets the error message format for the response model type assertions.
-        /// </summary>
-        /// <value>String value.</value>
-        protected string OfTypeErrorMessageFormat { get; set; }
-
-        /// <inheritdoc />
-        public IAndModelDetailsTestBuilder<TResponseModel> WithModelOfType<TResponseModel>()
-        {
-            var actualResponseDataType = this.GetReturnType();
-            var expectedResponseDataType = typeof(TResponseModel);
-
-            var responseDataTypeIsAssignable = Reflection.AreAssignable(
-                    expectedResponseDataType,
-                    actualResponseDataType);
-
-            if (!responseDataTypeIsAssignable)
-            {
-                throw new ResponseModelAssertionException(string.Format(
-                    this.OfTypeErrorMessageFormat,
-                    this.ActionName,
-                    this.Controller.GetName(),
-                    typeof(TResponseModel).ToFriendlyTypeName(),
-                    actualResponseDataType.ToFriendlyTypeName()));
-            }
-
-            this.TestContext.Model = this.GetActualModel<TResponseModel>();
-            return new ModelDetailsTestBuilder<TResponseModel>(this.TestContext);
-        }
-
-        /// <inheritdoc />
-        public IAndModelDetailsTestBuilder<TResponseModel> WithModel<TResponseModel>(TResponseModel expectedModel)
-        {
-            this.WithModelOfType<TResponseModel>();
-
-            var actualModel = this.GetActualModel<TResponseModel>();
-            if (Reflection.AreNotDeeplyEqual(expectedModel, actualModel))
-            {
-                throw new ResponseModelAssertionException(string.Format(
-                    this.ErrorMessageFormat,
-                    this.ActionName,
-                    this.Controller.GetName(),
-                    typeof(TResponseModel).ToFriendlyTypeName()));
-            }
-
-            this.TestContext.Model = actualModel;
-            return new ModelDetailsTestBuilder<TResponseModel>(this.TestContext);
-        }
+        protected TActionResult ActionResult => this.TestContext.MethodResultAs<TActionResult>();
 
         protected void WithNoResponseModel<TExpectedActionResult>()
             where TExpectedActionResult : ActionResult
         {
-            var actualResult = this.ActionResult as TExpectedActionResult;
+            var actualResult = this.TestContext.MethodResult as TExpectedActionResult;
             if (actualResult == null)
             {
                 throw new ResponseModelAssertionException(string.Format(
-                    "When calling {0} action in {1} expected to not have response model but in fact response model was found.",
-                    this.ActionName,
-                    this.Controller.GetName()));
+                    "{0} to not have response model but in fact response model was found.",
+                    this.TestContext.ExceptionMessagePrefix));
             }
         }
 
@@ -121,7 +58,7 @@
         protected void ValidateStatusCode(HttpStatusCode statusCode)
         {
             HttpStatusCodeValidator.ValidateHttpStatusCode(
-                this.ActionResult,
+                this.TestContext.MethodResult,
                 statusCode,
                 this.ThrowNewFailedValidationException);
         }
@@ -142,7 +79,7 @@
         protected void ValidateContainingOfContentType(MediaTypeHeaderValue contentType)
         {
             ContentTypeValidator.ValidateContainingOfContentType(
-                this.ActionResult,
+                this.TestContext.MethodResult,
                 contentType,
                 this.ThrowNewFailedValidationException);
         }
@@ -172,7 +109,7 @@
         protected void ValidateContentTypes(IEnumerable<MediaTypeHeaderValue> contentTypes)
         {
             ContentTypeValidator.ValidateContentTypes(
-                this.ActionResult,
+                this.TestContext.MethodResult,
                 contentTypes,
                 this.ThrowNewFailedValidationException);
         }
@@ -237,31 +174,29 @@
         /// <param name="actualValue">Actual value of the tested property.</param>
         protected abstract void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue);
 
-        private TResponseModel GetActualModel<TResponseModel>()
+        protected override TModel GetActualModel<TModel>()
         {
             try
             {
-                return (TResponseModel)this.GetActualModel();
+                return (TModel)this.GetActualModel();
             }
             catch (InvalidCastException)
             {
                 throw new ResponseModelAssertionException(string.Format(
-                    "When calling {0} action in {1} expected response model to be a {2}, but instead received null.",
-                    this.ActionName,
-                    this.Controller.GetName(),
-                    typeof(TResponseModel).ToFriendlyTypeName()));
+                    "{0} response model to be a {1}, but instead received null.",
+                    this.TestContext.ExceptionMessagePrefix,
+                    typeof(TModel).ToFriendlyTypeName()));
             }
         }
 
         private ObjectResult GetObjectResult()
         {
-            var objectResult = this.ActionResult as ObjectResult;
+            var objectResult = this.TestContext.MethodResult as ObjectResult;
             if (objectResult == null)
             {
                 throw new InvocationResultAssertionException(string.Format(
-                    "When calling {0} action in {1} expected action result to inherit from ObjectResult, but it did not.",
-                    this.ActionName,
-                    this.Controller.GetName()));
+                    "{0} action result to inherit from ObjectResult, but it did not.",
+                    this.TestContext.ExceptionMessagePrefix));
             }
 
             return objectResult;
@@ -269,14 +204,14 @@
 
         protected virtual object GetActualModel()
         {
-            return (this.ActionResult as ObjectResult)?.Value;
+            return (this.TestContext.MethodResult as ObjectResult)?.Value;
         }
 
-        private Type GetReturnType()
+        protected override Type GetReturnType()
         {
-            if (this.ActionResult is ObjectResult)
+            if (this.TestContext.MethodResult is ObjectResult)
             {
-                var declaredType = (this.ActionResult as ObjectResult).DeclaredType;
+                var declaredType = (this.TestContext.MethodResult as ObjectResult).DeclaredType;
                 if (declaredType != null)
                 {
                     return declaredType;

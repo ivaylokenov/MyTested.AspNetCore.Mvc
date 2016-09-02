@@ -44,9 +44,9 @@
         /// <summary>
         /// Tests whether the action result is of the provided type.
         /// </summary>
-        /// <typeparam name="TResponseModel">Expected response type.</typeparam>
+        /// <typeparam name="TResult">Expected response type.</typeparam>
         /// <returns>Test builder of <see cref="IModelDetailsTestBuilder{TActionResult}"/> type.</returns>
-        IAndModelDetailsTestBuilder<TActionResult> ResultOfType<TResponseModel>();
+        IAndModelDetailsTestBuilder<TActionResult> ResultOfType<TResult>();
 
         /// <summary>
         /// Tests whether the action result is of the provided type.
@@ -58,10 +58,10 @@
         /// <summary>
         /// Tests whether the action result is deeply equal to the provided one.
         /// </summary>
-        /// <typeparam name="TResponseModel">Expected response type.</typeparam>
+        /// <typeparam name="TResult">Expected response type.</typeparam>
         /// <param name="model">Expected return object.</param>
         /// <returns>Test builder of <see cref="IModelDetailsTestBuilder{TActionResult}"/> type.</returns>
-        IAndModelDetailsTestBuilder<TActionResult> Result<TResponseModel>(TResponseModel model);
+        IAndModelDetailsTestBuilder<TActionResult> Result<TResult>(TResult model);
 
         /// <summary>
         /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.ChallengeResult"/>.
