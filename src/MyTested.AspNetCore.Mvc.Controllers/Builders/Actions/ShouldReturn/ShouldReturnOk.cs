@@ -3,6 +3,7 @@
     using ActionResults.Ok;
     using Contracts.ActionResults.Ok;
     using Microsoft.AspNetCore.Mvc;
+    using Utilities.Validators;
 
     /// <content>
     /// Class containing methods for testing <see cref="OkResult"/> or <see cref="OkObjectResult"/>.
@@ -19,11 +20,11 @@
 
             return this.ReturnOkTestBuilder<OkResult>();
         }
-        
+
         private IOkTestBuilder ReturnOkTestBuilder<THttpOkResult>()
             where THttpOkResult : ActionResult
         {
-            this.TestContext.MethodResult = this.GetReturnObject<THttpOkResult>();
+            InvocationResultValidator.ValidateInvocationResultType<THttpOkResult>(this.TestContext);
             return new OkTestBuilder<THttpOkResult>(this.TestContext);
         }
     }

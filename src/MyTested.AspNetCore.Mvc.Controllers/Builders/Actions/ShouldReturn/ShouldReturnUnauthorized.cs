@@ -12,7 +12,7 @@
         /// <inheritdoc />
         public IBaseTestBuilderWithActionResult<TActionResult> Unauthorized()
         {
-            InvocationResultValidator.ValidateInvocationReturnType<UnauthorizedResult>(this.TestContext);
+            InvocationResultValidator.ValidateInvocationResultType<UnauthorizedResult>(this.TestContext);
             return this.NewAndTestBuilderWithActionResult();
         }
     }

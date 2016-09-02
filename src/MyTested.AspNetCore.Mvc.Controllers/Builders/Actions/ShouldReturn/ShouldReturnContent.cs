@@ -5,7 +5,7 @@
     using Contracts.ActionResults.Content;
     using Exceptions;
     using Microsoft.AspNetCore.Mvc;
-    using Utilities.Extensions;
+    using Utilities.Validators;
 
     /// <content>
     /// Class containing methods for testing <see cref="ContentResult"/>.
@@ -15,34 +15,31 @@
         /// <inheritdoc />
         public IContentTestBuilder Content()
         {
-            this.TestContext.MethodResult = this.GetReturnObject<ContentResult>();
+            InvocationResultValidator.ValidateInvocationResultType<ContentResult>(this.TestContext);
             return new ContentTestBuilder(this.TestContext);
         }
 
         /// <inheritdoc />
         public IContentTestBuilder Content(string content)
         {
-            var contentResult = this.GetReturnObject<ContentResult>();
+            var contentResult = InvocationResultValidator.GetInvocationResult<ContentResult>(this.TestContext);
             var actualContent = contentResult.Content;
 
             if (content != contentResult.Content)
             {
-                throw new ContentResultAssertionException(string.Format(
-                    "When calling {0} action in {1} expected content result to contain '{2}', but instead received '{3}'.",
-                    this.ActionName,
-                    this.Controller.GetName(),
+                throw ContentResultAssertionException.ForEquality(
+                    this.TestContext.ExceptionMessagePrefix,
                     content,
-                    actualContent));
+                    actualContent);
             }
-
-            this.TestContext.MethodResult = contentResult;
+            
             return new ContentTestBuilder(this.TestContext);
         }
 
         /// <inheritdoc />
         public IContentTestBuilder Content(Action<string> assertions)
         {
-            var contentResult = this.GetReturnObject<ContentResult>();
+            var contentResult = InvocationResultValidator.GetInvocationResult<ContentResult>(this.TestContext);
             var actualContent = contentResult.Content;
 
             assertions(actualContent);
@@ -53,16 +50,14 @@
         /// <inheritdoc />
         public IContentTestBuilder Content(Func<string, bool> predicate)
         {
-            var contentResult = this.GetReturnObject<ContentResult>();
+            var contentResult = InvocationResultValidator.GetInvocationResult<ContentResult>(this.TestContext);
             var actualContent = contentResult.Content;
 
             if (!predicate(actualContent))
             {
-                throw new ContentResultAssertionException(string.Format(
-                    "When calling {0} action in {1} expected content result ('{2}') to pass the given predicate, but it failed.",
-                    this.ActionName,
-                    this.Controller.GetName(),
-                    actualContent));
+                throw ContentResultAssertionException.ForPredicate(
+                    this.TestContext.ExceptionMessagePrefix,
+                    actualContent);
             }
 
             return new ContentTestBuilder(this.TestContext);

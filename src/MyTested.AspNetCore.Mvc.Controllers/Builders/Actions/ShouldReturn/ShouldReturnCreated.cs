@@ -3,6 +3,7 @@
     using ActionResults.Created;
     using Contracts.ActionResults.Created;
     using Microsoft.AspNetCore.Mvc;
+    using Utilities.Validators;
 
     /// <content>
     /// Class containing methods for testing <see cref="CreatedResult"/>, <see cref="CreatedAtActionResult"/> or <see cref="CreatedAtRouteResult"/>.
@@ -28,7 +29,7 @@
         private ICreatedTestBuilder ReturnCreatedTestBuilder<TCreatedResult>()
             where TCreatedResult : ObjectResult
         {
-            this.TestContext.MethodResult = this.GetReturnObject<TCreatedResult>();
+            InvocationResultValidator.ValidateInvocationResultType<TCreatedResult>(this.TestContext);
             return new CreatedTestBuilder<TCreatedResult>(this.TestContext);
         }
     }

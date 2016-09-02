@@ -3,6 +3,7 @@
     using ActionResults.LocalRedirect;
     using Contracts.ActionResults.LocalRedirect;
     using Microsoft.AspNetCore.Mvc;
+    using Utilities.Validators;
 
     /// <content>
     /// Class containing methods for testing <see cref="LocalRedirectResult"/>.
@@ -12,7 +13,7 @@
         /// <inheritdoc />
         public ILocalRedirectTestBuilder LocalRedirect()
         {
-            this.TestContext.MethodResult = this.GetReturnObject<LocalRedirectResult>();
+            InvocationResultValidator.ValidateInvocationResultType<LocalRedirectResult>(this.TestContext);
             return new LocalRedirectTestBuilder(this.TestContext);
         }
     }

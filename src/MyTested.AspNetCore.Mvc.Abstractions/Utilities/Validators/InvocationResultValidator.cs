@@ -7,7 +7,7 @@
 
     public static class InvocationResultValidator
     {
-        public static void ValidateInvocationReturnType(
+        public static void ValidateInvocationResultType(
             ComponentTestContext testContext,
             Type typeOfExpectedReturnValue,
             bool canBeAssignable = false,
@@ -71,12 +71,31 @@
             }
         }
 
-        public static void ValidateInvocationReturnType<TExpectedType>(
+        public static void ValidateInvocationResultType<TExpectedType>(
             ComponentTestContext testContext,
             bool canBeAssignable = false,
             bool allowDifferentGenericTypeDefinitions = false)
         {
-            ValidateInvocationReturnType(testContext, typeof(TExpectedType), canBeAssignable, allowDifferentGenericTypeDefinitions);
+            ValidateInvocationResultType(testContext, typeof(TExpectedType), canBeAssignable, allowDifferentGenericTypeDefinitions);
+        }
+
+        public static void ValidateInvocationResult<TResult>(ComponentTestContext testContext, TResult model)
+        {
+            ValidateInvocationResultType<TResult>(testContext);
+
+            if (Reflection.AreNotDeeplyEqual(model, testContext.MethodResult))
+            {
+                throw ResponseModelAssertionException.From(testContext.ExceptionMessagePrefix);
+            }
+
+            testContext.Model = model;
+        }
+        
+        public static TResult GetInvocationResult<TResult>(ComponentTestContext testContext)
+            where TResult : class
+        {
+            ValidateInvocationResultType<TResult>(testContext);
+            return testContext.MethodResult as TResult;
         }
 
         private static void ThrowNewInvocationResultAssertionException(

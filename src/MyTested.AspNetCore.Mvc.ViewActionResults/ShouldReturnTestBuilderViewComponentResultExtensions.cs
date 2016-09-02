@@ -8,6 +8,7 @@
     using Internal;
     using Microsoft.AspNetCore.Mvc;
     using Utilities;
+    using Utilities.Validators;
 
     /// <summary>
     /// Contains <see cref="ViewComponentResult"/> extension methods for <see cref="IShouldReturnTestBuilder{TActionResult}"/>.
@@ -23,8 +24,8 @@
         public static IViewComponentTestBuilder ViewComponent<TActionResult>(this IShouldReturnTestBuilder<TActionResult> shouldReturnTestBuilder)
         {
             var actualShouldReturnTestBuilder = (ShouldReturnTestBuilder<TActionResult>)shouldReturnTestBuilder;
-
-            actualShouldReturnTestBuilder.TestContext.MethodResult = actualShouldReturnTestBuilder.GetReturnObject<ViewComponentResult>();
+            
+            InvocationResultValidator.ValidateInvocationResultType<ViewComponentResult>(actualShouldReturnTestBuilder.TestContext);
 
             return new ViewComponentTestBuilder(actualShouldReturnTestBuilder.TestContext);
         }
@@ -42,7 +43,9 @@
         {
             var actualShouldReturnTestBuilder = (ShouldReturnTestBuilder<TActionResult>)shouldReturnTestBuilder;
 
-            var viewComponentResult = actualShouldReturnTestBuilder.GetReturnObject<ViewComponentResult>();
+            var viewComponentResult = InvocationResultValidator
+                .GetInvocationResult<ViewComponentResult>(actualShouldReturnTestBuilder.TestContext);
+
             var actualViewComponentName = viewComponentResult.ViewComponentName;
 
             if (viewComponentName != actualViewComponentName)
@@ -71,7 +74,9 @@
         {
             var actualShouldReturnTestBuilder = (ShouldReturnTestBuilder<TActionResult>)shouldReturnTestBuilder;
 
-            var viewComponentResult = actualShouldReturnTestBuilder.GetReturnObject<ViewComponentResult>();
+            var viewComponentResult = InvocationResultValidator
+                .GetInvocationResult<ViewComponentResult>(actualShouldReturnTestBuilder.TestContext);
+
             var actualViewComponentType = viewComponentResult.ViewComponentType;
 
             if (viewComponentType != actualViewComponentType)

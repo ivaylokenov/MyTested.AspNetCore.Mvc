@@ -12,7 +12,7 @@
         /// <inheritdoc />
         public IBaseTestBuilderWithActionResult<TActionResult> Empty()
         {
-            InvocationResultValidator.ValidateInvocationReturnType<EmptyResult>(this.TestContext);
+            InvocationResultValidator.ValidateInvocationResultType<EmptyResult>(this.TestContext);
             return this.NewAndTestBuilderWithActionResult();
         }
     }

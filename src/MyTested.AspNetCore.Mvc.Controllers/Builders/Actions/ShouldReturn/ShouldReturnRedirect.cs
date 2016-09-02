@@ -3,6 +3,7 @@
     using ActionResults.Redirect;
     using Contracts.ActionResults.Redirect;
     using Microsoft.AspNetCore.Mvc;
+    using Utilities.Validators;
 
     /// <content>
     /// Class containing methods for testing <see cref="RedirectResult"/>, <see cref="RedirectToActionResult"/> or <see cref="RedirectToRouteResult"/>.
@@ -28,7 +29,7 @@
         private IRedirectTestBuilder ReturnRedirectTestBuilder<TRedirectResult>()
             where TRedirectResult : ActionResult
         {
-            this.TestContext.MethodResult = this.GetReturnObject<TRedirectResult>();
+            InvocationResultValidator.ValidateInvocationResultType<TRedirectResult>(this.TestContext);
             return new RedirectTestBuilder<TRedirectResult>(this.TestContext);
         }
     }

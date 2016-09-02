@@ -40,23 +40,23 @@
         {
             if (this.ActionResult is StatusCodeResult)
             {
-                this.TestContext.MethodResult = this.GetReturnObject<StatusCodeResult>();
+                InvocationResultValidator.ValidateInvocationResultType<StatusCodeResult>(this.TestContext);
                 return new StatusCodeTestBuilder<StatusCodeResult>(this.TestContext);
             }
 
-            this.TestContext.MethodResult = this.GetReturnObject<ObjectResult>();
+            InvocationResultValidator.ValidateInvocationResultType<ObjectResult>(this.TestContext);
             return new StatusCodeTestBuilder<ObjectResult>(this.TestContext);
         }
-        
+
         private void ThrowNewStatusCodeResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new StatusCodeResultAssertionException(string.Format(
-                    "When calling {0} action in {1} expected status code result {2} {3}, but {4}.",
-                    this.ActionName,
-                    this.Controller.GetName(),
-                    propertyName,
-                    expectedValue,
-                    actualValue));
+                "When calling {0} action in {1} expected status code result {2} {3}, but {4}.",
+                this.ActionName,
+                this.Controller.GetName(),
+                propertyName,
+                expectedValue,
+                actualValue));
         }
     }
 }

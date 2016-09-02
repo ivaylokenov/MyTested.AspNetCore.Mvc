@@ -6,6 +6,7 @@
     using Builders.Contracts.Actions;
     using Internal;
     using Microsoft.AspNetCore.Mvc;
+    using Utilities.Validators;
 
     /// <summary>
     /// Contains <see cref="PartialViewResult"/> extension methods for <see cref="IShouldReturnTestBuilder{TActionResult}"/>.
@@ -35,9 +36,12 @@
             string viewName)
         {
             var actualShouldReturnTestBuilder = (ShouldReturnTestBuilder<TActionResult>)shouldReturnTestBuilder;
-
+            
             var viewType = "partial view";
-            var viewResult = actualShouldReturnTestBuilder.GetReturnObject<PartialViewResult>();
+
+            var viewResult = InvocationResultValidator
+                .GetInvocationResult<PartialViewResult>(actualShouldReturnTestBuilder.TestContext);
+
             var actualViewName = viewResult.ViewName;
             if (viewName != actualViewName)
             {

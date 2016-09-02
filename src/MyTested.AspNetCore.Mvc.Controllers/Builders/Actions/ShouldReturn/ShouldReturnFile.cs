@@ -3,6 +3,7 @@
     using ActionResults.File;
     using Contracts.ActionResults.File;
     using Microsoft.AspNetCore.Mvc;
+    using Utilities.Validators;
 
     /// <content>
     /// Class containing methods for testing <see cref="FileStreamResult"/>, <see cref="VirtualFileResult"/>, <see cref="FileContentResult"/> or <see cref="PhysicalFileResult"/>.
@@ -28,14 +29,14 @@
         /// <inheritdoc />
         public IPhysicalFileTestBuilder PhysicalFile()
         {
-            this.TestContext.MethodResult = this.GetReturnObject<PhysicalFileResult>();
+            InvocationResultValidator.ValidateInvocationResultType<PhysicalFileResult>(this.TestContext);
             return new PhysicalFileTestBuilder(this.TestContext);
         }
 
         private IFileTestBuilder ReturnFileTestBuilder<TFileResult>()
             where TFileResult : FileResult
         {
-            this.TestContext.MethodResult = this.GetReturnObject<TFileResult>();
+            InvocationResultValidator.ValidateInvocationResultType<TFileResult>(this.TestContext);
             return new FileTestBuilder<TFileResult>(this.TestContext);
         }
     }

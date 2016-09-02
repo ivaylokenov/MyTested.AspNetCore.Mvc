@@ -12,7 +12,7 @@
         /// <inheritdoc />
         public IBaseTestBuilderWithActionResult<TActionResult> UnsupportedMediaType()
         {
-            InvocationResultValidator.ValidateInvocationReturnType<UnsupportedMediaTypeResult>(this.TestContext);
+            InvocationResultValidator.ValidateInvocationResultType<UnsupportedMediaTypeResult>(this.TestContext);
             return this.NewAndTestBuilderWithActionResult();
         }
     }
