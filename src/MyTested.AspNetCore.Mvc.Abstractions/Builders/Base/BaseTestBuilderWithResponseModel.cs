@@ -68,8 +68,23 @@
             this.TestContext.Model = actualModel;
             return new ModelDetailsTestBuilder<TModel>(this.TestContext);
         }
+        
+        protected virtual TModel GetActualModel<TModel>()
+        {
+            try
+            {
+                return (TModel)this.GetActualModel();
+            }
+            catch (InvalidCastException)
+            {
+                throw new ResponseModelAssertionException(string.Format(
+                    "{0} response model to be a {1}, but instead received null.",
+                    this.TestContext.ExceptionMessagePrefix,
+                    typeof(TModel).ToFriendlyTypeName()));
+            }
+        }
 
-        protected abstract TModel GetActualModel<TModel>();
+        protected abstract object GetActualModel();
 
         protected abstract Type GetReturnType();
     }

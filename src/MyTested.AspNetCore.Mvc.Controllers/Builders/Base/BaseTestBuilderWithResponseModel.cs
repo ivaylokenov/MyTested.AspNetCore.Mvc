@@ -173,22 +173,7 @@
         /// <param name="expectedValue">Expected value of the tested property.</param>
         /// <param name="actualValue">Actual value of the tested property.</param>
         protected abstract void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue);
-
-        protected override TModel GetActualModel<TModel>()
-        {
-            try
-            {
-                return (TModel)this.GetActualModel();
-            }
-            catch (InvalidCastException)
-            {
-                throw new ResponseModelAssertionException(string.Format(
-                    "{0} response model to be a {1}, but instead received null.",
-                    this.TestContext.ExceptionMessagePrefix,
-                    typeof(TModel).ToFriendlyTypeName()));
-            }
-        }
-
+        
         private ObjectResult GetObjectResult()
         {
             var objectResult = this.TestContext.MethodResult as ObjectResult;
@@ -202,7 +187,7 @@
             return objectResult;
         }
 
-        protected virtual object GetActualModel()
+        protected override object GetActualModel()
         {
             return (this.TestContext.MethodResult as ObjectResult)?.Value;
         }

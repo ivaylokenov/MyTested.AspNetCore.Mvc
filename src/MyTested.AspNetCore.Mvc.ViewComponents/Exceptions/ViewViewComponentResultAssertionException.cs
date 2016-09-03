@@ -18,6 +18,21 @@
                 TestHelper.GetFriendlyName(expectedViewName),
                 TestHelper.GetFriendlyName(actualViewName)));
 
+        public static ViewViewComponentResultAssertionException ForViewEngineEquality(
+            string messagePrefix)
+            => new ViewViewComponentResultAssertionException(string.Format(
+                $"{messagePrefix} view result ViewEngine to be the same as the provided one, but instead received different result."));
+
+        public static ViewViewComponentResultAssertionException ForViewEngineType(
+            string messagePrefix,
+            string expectedViewEngineType,
+            string actualViewEngineType)
+            => new ViewViewComponentResultAssertionException(string.Format(
+                "{0} view result ViewEngine to be of {1} type, but instead received {2}.",
+                messagePrefix,
+                expectedViewEngineType,
+                actualViewEngineType));
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ViewViewComponentResultAssertionException"/> class.
         /// </summary>
