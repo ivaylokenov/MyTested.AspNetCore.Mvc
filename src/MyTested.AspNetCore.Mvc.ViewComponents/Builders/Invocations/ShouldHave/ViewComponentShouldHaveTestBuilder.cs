@@ -13,6 +13,7 @@
         public ViewComponentShouldHaveTestBuilder(ViewComponentTestContext testContext)
             : base(testContext)
         {
+            this.TestContext = testContext;
         }
 
         /// <summary>

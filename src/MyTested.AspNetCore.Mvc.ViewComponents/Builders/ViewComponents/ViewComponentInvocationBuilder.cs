@@ -39,7 +39,7 @@
             if (viewComponentContext.ViewComponentDescriptor?.MethodInfo == null)
             {
                 var viewComponentDescriptorCache = this.Services.GetService<IViewComponentDescriptorCache>();
-                if (viewComponentDescriptorCache == null)
+                if (viewComponentDescriptorCache != null)
                 {
                     viewComponentContext.ViewComponentDescriptor
                         = viewComponentDescriptorCache.TryGetViewComponentDescriptor(methodInfo);

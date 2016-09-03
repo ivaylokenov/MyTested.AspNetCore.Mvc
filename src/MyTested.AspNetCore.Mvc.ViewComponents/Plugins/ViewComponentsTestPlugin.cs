@@ -5,7 +5,7 @@
     using Internal.TestContexts;
     using Utilities;
 
-    public class ViewComponentsTestPlugins : BaseTestPlugin, IDefaultRegistrationPlugin, IServiceRegistrationPlugin, IShouldPassForPlugin
+    public class ViewComponentsTestPlugin : BaseTestPlugin, IDefaultRegistrationPlugin, IServiceRegistrationPlugin, IShouldPassForPlugin
     {
         private readonly Type viewComponentAttributesType = typeof(ViewComponentAttributes);
 

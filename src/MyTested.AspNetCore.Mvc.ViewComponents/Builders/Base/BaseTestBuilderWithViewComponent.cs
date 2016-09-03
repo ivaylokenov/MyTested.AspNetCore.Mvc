@@ -4,11 +4,11 @@
     using Contracts.Base;
     using Internal.TestContexts;
     using Utilities.Validators;
-
+    
     /// <summary>
     /// Base class for all test builders with view component.
     /// </summary>
-    public class BaseTestBuilderWithViewComponent : BaseTestBuilderWithComponent, IBaseTestBuilderWithViewComponent
+    public abstract class BaseTestBuilderWithViewComponent : BaseTestBuilderWithComponent, IBaseTestBuilderWithViewComponent
     {
         private ViewComponentTestContext testContext;
 
