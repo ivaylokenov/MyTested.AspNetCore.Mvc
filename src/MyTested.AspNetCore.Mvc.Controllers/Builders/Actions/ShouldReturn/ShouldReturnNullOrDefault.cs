@@ -20,7 +20,7 @@
                     "the default value of {0}, but in fact it was not.",
                     typeof(TActionResult).ToFriendlyTypeName()));
             }
-
+            
             return this.NewAndTestBuilderWithActionResult();
         }
 

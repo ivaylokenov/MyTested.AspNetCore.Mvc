@@ -9,6 +9,9 @@
     using Utilities;
     using Exceptions;
 
+    /// <summary>
+    /// Used for testing <see cref="ViewViewComponentResult"/>.
+    /// </summary>
     public class ViewTestBuilder : BaseTestBuilderWithResponseModel, IAndViewTestBuilder
     {
         private readonly ViewViewComponentResult viewResult;

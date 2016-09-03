@@ -9,7 +9,7 @@
     /// <summary>
     /// Base class for controller action test builders.
     /// </summary>
-    public class ControllerActionAttributesTestBuilder : BaseAttributesTestBuilder
+    public abstract class ControllerActionAttributesTestBuilder : BaseAttributesTestBuilder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ControllerActionAttributesTestBuilder"/> class.

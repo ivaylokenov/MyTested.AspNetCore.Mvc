@@ -14,17 +14,17 @@
     public partial class ViewComponentBuilder<TViewComponent>
     {
         /// <inheritdoc />
-        public IViewComponentResultTestBuilder<TActionResult> InvokedWith<TActionResult>(Expression<Func<TViewComponent, TActionResult>> actionCall)
+        public IViewComponentResultTestBuilder<TInvocationResult> InvokedWith<TInvocationResult>(Expression<Func<TViewComponent, TInvocationResult>> invocationCall)
         {
-            this.Invoke(actionCall);
-            return new ViewComponentResultTestBuilder<TActionResult>(this.TestContext);
+            this.Invoke(invocationCall);
+            return new ViewComponentResultTestBuilder<TInvocationResult>(this.TestContext);
         }
 
         /// <inheritdoc />
-        public IViewComponentResultTestBuilder<TActionResult> InvokedWith<TActionResult>(Expression<Func<TViewComponent, Task<TActionResult>>> actionCall)
+        public IViewComponentResultTestBuilder<TInvocationResult> InvokedWith<TInvocationResult>(Expression<Func<TViewComponent, Task<TInvocationResult>>> invocationCall)
         {
-            this.Invoke(actionCall);
-            return new ViewComponentResultTestBuilder<TActionResult>(this.TestContext);
+            this.Invoke(invocationCall);
+            return new ViewComponentResultTestBuilder<TInvocationResult>(this.TestContext);
         }
 
         protected override void ProcessAndValidateMethod(LambdaExpression invocationCall, MethodInfo methodInfo)

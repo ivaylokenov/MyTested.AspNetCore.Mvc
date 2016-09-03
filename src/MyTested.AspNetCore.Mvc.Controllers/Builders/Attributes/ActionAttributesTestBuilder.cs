@@ -158,12 +158,11 @@
             return this;
         }
 
-        private void ThrowNewAttributeAssertionException(string expectedValue, string actualValue)
+        protected override void ThrowNewAttributeAssertionException(string expectedValue, string actualValue)
         {
             throw new AttributeAssertionException(string.Format(
-                "When calling {0} action in {1} expected action to have {2}, but {3}.",
-                this.TestContext.MethodName,
-                this.TestContext.Component.GetName(),
+                "{0} action to have {1}, but {2}.",
+                this.TestContext.ExceptionMessagePrefix,
                 expectedValue,
                 actualValue));
         }

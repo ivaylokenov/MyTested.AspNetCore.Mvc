@@ -9,17 +9,17 @@
     public partial class ViewComponentShouldReturnTestBuilder<TInvocationResult>
     {
         /// <inheritdoc />
-        public IBaseTestBuilderWithComponent Content()
+        public IBaseTestBuilderWithViewComponentResult<TInvocationResult> Content()
         {
             this.TransformContentResultToString();
 
             InvocationResultValidator.ValidateInvocationResultType<string>(this.TestContext);
 
-            return this;
+            return this.NewAndTestBuilderWithViewComponentResult();
         }
 
         /// <inheritdoc />
-        public IBaseTestBuilderWithComponent Content(string content)
+        public IBaseTestBuilderWithViewComponentResult<TInvocationResult> Content(string content)
         {
             this.TransformContentResultToString();
 
@@ -32,12 +32,12 @@
                     content,
                     actualContent);
             }
-            
-            return this;
+
+            return this.NewAndTestBuilderWithViewComponentResult();
         }
 
         /// <inheritdoc />
-        public IBaseTestBuilderWithComponent Content(Action<string> assertions)
+        public IBaseTestBuilderWithViewComponentResult<TInvocationResult> Content(Action<string> assertions)
         {
             this.TransformContentResultToString();
 
@@ -45,11 +45,11 @@
 
             assertions(actualContent);
 
-            return this;
+            return this.NewAndTestBuilderWithViewComponentResult();
         }
 
         /// <inheritdoc />
-        public IBaseTestBuilderWithComponent Content(Func<string, bool> predicate)
+        public IBaseTestBuilderWithViewComponentResult<TInvocationResult> Content(Func<string, bool> predicate)
         {
             this.TransformContentResultToString();
 
@@ -62,7 +62,7 @@
                     actualContent);
             }
 
-            return this;
+            return this.NewAndTestBuilderWithViewComponentResult();
         }
 
         private void TransformContentResultToString()

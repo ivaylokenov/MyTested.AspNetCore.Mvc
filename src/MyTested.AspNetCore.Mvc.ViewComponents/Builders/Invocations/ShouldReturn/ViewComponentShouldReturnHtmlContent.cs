@@ -11,14 +11,14 @@
     public partial class ViewComponentShouldReturnTestBuilder<TInvocationResult>
     {
         /// <inheritdoc />
-        public IBaseTestBuilderWithComponent HtmlContent()
+        public IBaseTestBuilderWithViewComponentResult<TInvocationResult> HtmlContent()
         {
             InvocationResultValidator.ValidateInvocationResultType<IHtmlContent>(this.TestContext);
-            return this;
+            return this.NewAndTestBuilderWithViewComponentResult();
         }
 
         /// <inheritdoc />
-        public IBaseTestBuilderWithComponent HtmlContent(string htmlContent)
+        public IBaseTestBuilderWithViewComponentResult<TInvocationResult> HtmlContent(string htmlContent)
         {
             var actualContent = this.GetHtmlContentAsString();
 
@@ -30,21 +30,21 @@
                     actualContent);
             }
 
-            return this;
+            return this.NewAndTestBuilderWithViewComponentResult();
         }
 
         /// <inheritdoc />
-        public IBaseTestBuilderWithComponent HtmlContent(Action<string> assertions)
+        public IBaseTestBuilderWithViewComponentResult<TInvocationResult> HtmlContent(Action<string> assertions)
         {
             var actualContent = this.GetHtmlContentAsString();
 
             assertions(actualContent);
 
-            return this;
+            return this.NewAndTestBuilderWithViewComponentResult();
         }
 
         /// <inheritdoc />
-        public IBaseTestBuilderWithComponent HtmlContent(Func<string, bool> predicate)
+        public IBaseTestBuilderWithViewComponentResult<TInvocationResult> HtmlContent(Func<string, bool> predicate)
         {
             var actualContent = this.GetHtmlContentAsString();
 
@@ -55,7 +55,7 @@
                     actualContent);
             }
 
-            return this;
+            return this.NewAndTestBuilderWithViewComponentResult();
         }
 
         private string GetHtmlContentAsString()

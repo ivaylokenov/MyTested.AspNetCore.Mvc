@@ -1,6 +1,8 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Invocations.ShouldReturn
 {
+    using And;
     using Base;
+    using Contracts.Base;
     using Contracts.Invocations;
     using Internal.TestContexts;
 
@@ -11,5 +13,8 @@
             : base(testContext)
         {
         }
+
+        private IBaseTestBuilderWithViewComponentResult<TInvocationResult> NewAndTestBuilderWithViewComponentResult()
+            => new AndTestBuilderWithViewComponentResult<TInvocationResult>(this.TestContext);
     }
 }

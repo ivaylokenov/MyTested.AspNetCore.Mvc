@@ -1,8 +1,10 @@
-﻿using MyTested.AspNetCore.Mvc.Internal.TestContexts;
-
-namespace MyTested.AspNetCore.Mvc.Builders.Base
+﻿namespace MyTested.AspNetCore.Mvc.Builders.Base
 {
-    public class BaseTestBuilderWithViewComponentResult<TInvocationResult> : BaseTestBuilderWithViewComponentInvocation
+    using Contracts.Base;
+    using Internal.TestContexts;
+
+    public class BaseTestBuilderWithViewComponentResult<TInvocationResult> : BaseTestBuilderWithViewComponentInvocation,
+        IBaseTestBuilderWithViewComponentResult<TInvocationResult>
     {
         public BaseTestBuilderWithViewComponentResult(ViewComponentTestContext testContext)
             : base(testContext)

@@ -6,6 +6,8 @@
     using Base;
     using Internal.TestContexts;
     using Utilities;
+    using Exceptions;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Base class for all attribute test builders.
@@ -34,7 +36,7 @@
         }
 
         /// <summary>
-        /// Tests whether the action attributes contain the provided attribute type.
+        /// Tests whether the attributes contain the provided attribute type.
         /// </summary>
         /// <typeparam name="TAttribute">Type of expected attribute.</typeparam>
         /// <param name="failedValidationAction">Action to execute, if the validation fails.</param>
@@ -75,6 +77,15 @@
             where TAttribute : Attribute
         {
             return attributes.FirstOrDefault(a => a.GetType() == typeof(TAttribute)) as TAttribute;
+        }
+        
+        protected virtual void ThrowNewAttributeAssertionException(string expectedValue, string actualValue)
+        {
+            throw new AttributeAssertionException(string.Format(
+                "When testing {0} was expected to have {1}, but {2}.",
+                this.TestContext.Component.GetName(),
+                expectedValue,
+                actualValue));
         }
     }
 }

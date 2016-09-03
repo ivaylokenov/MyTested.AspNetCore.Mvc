@@ -2,10 +2,8 @@
 {
     using System;
     using Contracts.Attributes;
-    using Exceptions;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Authorization;
-    using Utilities.Extensions;
 
     /// <summary>
     /// Used for testing controller attributes.
@@ -65,15 +63,6 @@
         public IControllerAttributesTestBuilder AndAlso()
         {
             return this;
-        }
-
-        private void ThrowNewAttributeAssertionException(string expectedValue, string actualValue)
-        {
-            throw new AttributeAssertionException(string.Format(
-                "When testing {0} was expected to have {1}, but {2}.",
-                this.TestContext.Component.GetName(),
-                expectedValue,
-                actualValue));
         }
     }
 }

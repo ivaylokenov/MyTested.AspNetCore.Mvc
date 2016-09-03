@@ -1,6 +1,5 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ViewComponents
 {
-    using System;
     using System.Reflection;
     using Components;
     using Contracts.ViewComponents;

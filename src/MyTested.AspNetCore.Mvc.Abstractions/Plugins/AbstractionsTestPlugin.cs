@@ -5,12 +5,10 @@
     using Internal.TestContexts;
     using Microsoft.Extensions.DependencyInjection;
     using Utilities;
-    using Microsoft.AspNetCore.Http;
 
     public class AbstractionsTestPlugin : BaseTestPlugin, IServiceRegistrationPlugin, IInitializationPlugin, IShouldPassForPlugin
     {
-        private readonly Type baseHttpContextType = typeof(HttpContext);
-        private readonly Type baseHttpRequestType = typeof(HttpRequest);
+        private readonly Type exceptionType = typeof(Exception);
 
         public Action<IServiceCollection> ServiceRegistrationDelegate =>
             serviceCollection => serviceCollection.AddCoreTesting();
@@ -19,10 +17,8 @@
         public Action<IServiceProvider> InitializationDelegate => serviceProvider => serviceProvider.GetService<IControllerActionDescriptorCache>();
 
         public object TryGetValue(Type type, ComponentTestContext testContext)
-            => Reflection.AreAssignable(baseHttpContextType, type) // HttpContext
-                ? testContext.HttpContext
-                : Reflection.AreAssignable(baseHttpRequestType, type) // HttpRequest
-                ? (object)testContext.HttpRequest
+            => Reflection.AreAssignable(exceptionType, type) // Exception
+                ? testContext.CaughtException
                 : null;
     }
 }

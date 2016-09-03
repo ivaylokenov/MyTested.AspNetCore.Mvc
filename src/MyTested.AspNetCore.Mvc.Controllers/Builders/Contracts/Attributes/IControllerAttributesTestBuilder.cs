@@ -5,16 +5,8 @@
     /// <summary>
     /// Used for testing controller attributes.
     /// </summary>
-    public interface IControllerAttributesTestBuilder
+    public interface IControllerAttributesTestBuilder : IBaseAttributesTestBuilder<IAndControllerAttributesTestBuilder>
     {
-        /// <summary>
-        /// Checks whether the collected attributes contain the provided attribute type.
-        /// </summary>
-        /// <typeparam name="TAttribute">Type of expected attribute.</typeparam>
-        /// <returns>The same <see cref="IAndControllerAttributesTestBuilder"/>.</returns>
-        IAndControllerAttributesTestBuilder ContainingAttributeOfType<TAttribute>()
-            where TAttribute : Attribute;
-
         /// <summary>
         /// Checks whether the collected attributes contain <see cref="Microsoft.AspNetCore.Mvc.RouteAttribute"/>.
         /// </summary>

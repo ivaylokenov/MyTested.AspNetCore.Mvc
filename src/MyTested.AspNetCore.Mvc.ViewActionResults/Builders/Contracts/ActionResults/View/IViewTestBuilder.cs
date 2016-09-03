@@ -54,7 +54,7 @@
         /// Tests whether <see cref="Microsoft.AspNetCore.Mvc.ViewResult"/> or <see cref="Microsoft.AspNetCore.Mvc.PartialViewResult"/>
         /// has the same <see cref="IViewEngine"/> type as the provided one.
         /// </summary>
-        /// <typeparam name="TViewEngine">View engine of type IViewEngine.</typeparam>
+        /// <typeparam name="TViewEngine">View engine of type <see cref="IViewEngine"/>.</typeparam>
         /// <returns>The same <see cref="IAndViewTestBuilder"/>.</returns>
         IAndViewTestBuilder WithViewEngineOfType<TViewEngine>()
             where TViewEngine : IViewEngine;
