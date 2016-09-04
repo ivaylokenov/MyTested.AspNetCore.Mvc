@@ -11,19 +11,14 @@
         /// <inheritdoc />
         public IBaseTestBuilderWithViewComponentResult<TInvocationResult> Content()
         {
-            this.TransformContentResultToString();
-
-            InvocationResultValidator.ValidateInvocationResultType<string>(this.TestContext);
-
+            InvocationResultValidator.ValidateInvocationResultType<ContentViewComponentResult>(this.TestContext);
             return this.NewAndTestBuilderWithViewComponentResult();
         }
 
         /// <inheritdoc />
         public IBaseTestBuilderWithViewComponentResult<TInvocationResult> Content(string content)
         {
-            this.TransformContentResultToString();
-
-            var actualContent = InvocationResultValidator.GetInvocationResult<string>(this.TestContext);
+            var actualContent = this.GetActualContent();
 
             if (content != actualContent)
             {
@@ -39,9 +34,7 @@
         /// <inheritdoc />
         public IBaseTestBuilderWithViewComponentResult<TInvocationResult> Content(Action<string> assertions)
         {
-            this.TransformContentResultToString();
-
-            var actualContent = InvocationResultValidator.GetInvocationResult<string>(this.TestContext);
+            var actualContent = this.GetActualContent();
 
             assertions(actualContent);
 
@@ -51,9 +44,7 @@
         /// <inheritdoc />
         public IBaseTestBuilderWithViewComponentResult<TInvocationResult> Content(Func<string, bool> predicate)
         {
-            this.TransformContentResultToString();
-
-            var actualContent = InvocationResultValidator.GetInvocationResult<string>(this.TestContext);
+            var actualContent = this.GetActualContent();
 
             if (!predicate(actualContent))
             {
@@ -65,12 +56,9 @@
             return this.NewAndTestBuilderWithViewComponentResult();
         }
 
-        private void TransformContentResultToString()
-        {
-            if (this.TestContext.MethodResult is ContentViewComponentResult)
-            {
-                this.TestContext.MethodResult = ((ContentViewComponentResult)this.TestContext.MethodResult).Content;
-            }
-        }
+        private string GetActualContent()
+            => InvocationResultValidator
+                .GetInvocationResult<ContentViewComponentResult>(this.TestContext)
+                .Content;
     }
 }

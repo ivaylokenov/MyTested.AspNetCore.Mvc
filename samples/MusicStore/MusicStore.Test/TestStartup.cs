@@ -37,6 +37,7 @@
             TestHelper.HttpFeatureRegistrationPlugins.Add(new SessionTestPlugin());
 
             TestHelper.ShouldPassForPlugins.Add(new AbstractionsTestPlugin());
+            TestHelper.ShouldPassForPlugins.Add(new HttpTestPlugin());
             TestHelper.ShouldPassForPlugins.Add(new ControllersTestPlugin());
 
             services

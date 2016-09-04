@@ -310,5 +310,33 @@
 
             MyApplication.IsUsingDefaultConfiguration();
         }
+        
+        [Fact]
+        public void WithControllerContextFuncShouldSetItToAccessor()
+        {
+            MyApplication
+                .IsUsingDefaultConfiguration()
+                .WithServices(services =>
+                {
+                    services.AddActionContextAccessor();
+                });
+
+            var actionDescriptor = new ControllerActionDescriptor { DisplayName = "Test" };;
+
+            MyController<ActionContextController>
+                .Instance()
+                .WithControllerContext(controllerContext =>
+                {
+                    controllerContext.ActionDescriptor = actionDescriptor;
+                })
+                .ShouldPassForThe<ActionContextController>(controller =>
+                {
+                    Assert.NotNull(controller);
+                    Assert.NotNull(controller.Context);
+                    Assert.Equal("Test", controller.Context.ActionDescriptor.DisplayName);
+                });
+
+            MyApplication.IsUsingDefaultConfiguration();
+        }
     }
 }

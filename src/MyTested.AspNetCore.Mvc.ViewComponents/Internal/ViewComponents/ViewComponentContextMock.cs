@@ -53,6 +53,8 @@
             this.HtmlEncoder = viewComponentContext.HtmlEncoder;
             this.ViewComponentDescriptor = viewComponentContext.ViewComponentDescriptor;
             this.ViewContext = viewComponentContext.ViewContext;
+
+            TestHelper.SetActionContextToAccessor(this.ViewContext);
         }
     }
 }

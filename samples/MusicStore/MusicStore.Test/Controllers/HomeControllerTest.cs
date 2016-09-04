@@ -30,10 +30,7 @@
                 .ShouldReturn()
                 .View()
                 .WithModelOfType<List<Album>>()
-                .Passing(albums =>
-                {
-                    Assert.Equal(6, albums.Count);
-                });
+                .Passing(albums => Assert.Equal(6, albums.Count));
         }
         
         [Fact]

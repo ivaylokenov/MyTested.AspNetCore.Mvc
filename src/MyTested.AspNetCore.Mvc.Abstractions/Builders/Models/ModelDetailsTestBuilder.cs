@@ -38,9 +38,8 @@
             if (!predicate(this.Model))
             {
                 throw new ResponseModelAssertionException(string.Format(
-                    "When calling {0} action in {1} expected response model {2} to pass the given predicate, but it failed.",
-                    this.TestContext.MethodName,
-                    this.TestContext.Component.GetName(),
+                    "{0} response model {1} to pass the given predicate, but it failed.",
+                    this.TestContext.ExceptionMessagePrefix,
                     typeof(TModel).ToFriendlyTypeName()));
             }
 

@@ -13,7 +13,9 @@
         /// <inheritdoc />
         public IBaseTestBuilderWithViewComponentResult<TInvocationResult> HtmlContent()
         {
-            InvocationResultValidator.ValidateInvocationResultType<IHtmlContent>(this.TestContext);
+            InvocationResultValidator
+                .ValidateInvocationResultType<IHtmlContent>(this.TestContext, canBeAssignable: true);
+
             return this.NewAndTestBuilderWithViewComponentResult();
         }
 
@@ -60,7 +62,8 @@
 
         private string GetHtmlContentAsString()
         {
-            var htmlContentResult = InvocationResultValidator.GetInvocationResult<IHtmlContent>(this.TestContext);
+            var htmlContentResult = InvocationResultValidator
+                .GetInvocationResult<IHtmlContent>(this.TestContext, canBeAssignable: true);
 
             var stringBuilder = new StringBuilder();
             using (var stringWriter = new StringWriter(stringBuilder))

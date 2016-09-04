@@ -10,6 +10,8 @@
     using Services;
     using TestContexts;
     using Utilities;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Infrastructure;
 
     public static class TestHelper
     {
@@ -50,6 +52,15 @@
             }
         }
         
+        public static void SetActionContextToAccessor(ActionContext actionContext)
+        {
+            var actionContextAccessor = TestServiceProvider.GetService<IActionContextAccessor>();
+            if (actionContextAccessor != null)
+            {
+                actionContextAccessor.ActionContext = actionContext;
+            }
+        }
+
         /// <summary>
         /// Tries to create instance of the provided type. Returns null if not successful.
         /// </summary>

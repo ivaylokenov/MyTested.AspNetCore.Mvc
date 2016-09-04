@@ -6,6 +6,7 @@
     using Contracts.Invocations;
     using Exceptions;
     using Utilities.Validators;
+    using Utilities.Extensions;
 
     public partial class ViewComponentShouldHaveTestBuilder<TInvocationResult>
     {
@@ -48,7 +49,7 @@
         private void ThrowNewAttributeAssertionException(string expectedValue, string actualValue)
         {
             throw new AttributeAssertionException(
-                $"{this.TestContext.ExceptionMessagePrefix} action to {expectedValue}, but {actualValue}.");
+                $"When testing {this.TestContext.Component.GetName()} was expected to {expectedValue}, but {actualValue}.");
         }
     }
 }

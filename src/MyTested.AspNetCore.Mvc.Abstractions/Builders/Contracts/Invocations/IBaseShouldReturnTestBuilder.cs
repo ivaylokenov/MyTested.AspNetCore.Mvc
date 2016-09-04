@@ -27,8 +27,8 @@
         /// Tests whether the result is of the provided type.
         /// </summary>
         /// <typeparam name="TResult">Expected response type.</typeparam>
-        /// <returns>Test builder of <see cref="IModelDetailsTestBuilder{TInvocationResult}"/> type.</returns>
-        IAndModelDetailsTestBuilder<TInvocationResult> ResultOfType<TResult>();
+        /// <returns>Test builder of <see cref="IModelDetailsTestBuilder{TResult}"/> type.</returns>
+        IAndModelDetailsTestBuilder<TResult> ResultOfType<TResult>();
 
         /// <summary>
         /// Tests whether the result is of the provided type.
@@ -42,8 +42,7 @@
         /// </summary>
         /// <typeparam name="TResult">Expected response type.</typeparam>
         /// <param name="model">Expected return object.</param>
-        /// <returns>Test builder of <see cref="IModelDetailsTestBuilder{TInvocationResult}"/> type.</returns>
-        IAndModelDetailsTestBuilder<TInvocationResult> Result<TResult>(TResult model);
-
+        /// <returns>Test builder of <see cref="IModelDetailsTestBuilder{TResult}"/> type.</returns>
+        IAndModelDetailsTestBuilder<TResult> Result<TResult>(TResult model);
     }
 }

@@ -23,7 +23,7 @@
             var actualViewName = viewResult.ViewName;
             if (viewName != actualViewName)
             {
-                ViewViewComponentResultAssertionException.ForNameEquality(
+                throw ViewViewComponentResultAssertionException.ForNameEquality(
                     this.TestContext.ExceptionMessagePrefix,
                     viewName,
                     actualViewName);

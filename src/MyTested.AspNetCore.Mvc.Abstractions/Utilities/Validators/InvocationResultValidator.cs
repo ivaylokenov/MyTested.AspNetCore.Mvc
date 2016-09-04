@@ -91,10 +91,12 @@
             testContext.Model = model;
         }
         
-        public static TResult GetInvocationResult<TResult>(ComponentTestContext testContext)
+        public static TResult GetInvocationResult<TResult>(
+            ComponentTestContext testContext,
+            bool canBeAssignable = false)
             where TResult : class
         {
-            ValidateInvocationResultType<TResult>(testContext);
+            ValidateInvocationResultType<TResult>(testContext, canBeAssignable);
             return testContext.MethodResult as TResult;
         }
 

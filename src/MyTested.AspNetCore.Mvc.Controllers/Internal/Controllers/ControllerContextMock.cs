@@ -36,7 +36,7 @@
             this.RouteData = actionContext.RouteData;
             this.ValueProviderFactories = this.ValueProviderFactories ?? new List<IValueProviderFactory>();
 
-            ControllerTestHelper.SetActionContextToAccessor(this);
+            TestHelper.SetActionContextToAccessor(this);
         }
     }
 }

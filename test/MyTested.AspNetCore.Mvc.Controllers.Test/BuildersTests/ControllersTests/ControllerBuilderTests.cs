@@ -58,26 +58,6 @@
         }
 
         [Fact]
-        public void CallingShouldHaveValidModelStateWhenThereAreNoModelErrors()
-        {
-            var requestModel = TestObjectFactory.GetValidRequestModel();
-
-            MyController<MvcController>
-                .Instance()
-                .Calling(c => c.OkResultActionWithRequestBody(1, requestModel))
-                .ShouldReturn()
-                .Ok()
-                .ShouldPassForThe<MvcController>(controller =>
-                {
-                    var modelState = controller.ModelState;
-
-                    Assert.True(modelState.IsValid);
-                    Assert.Equal(0, modelState.Values.Count());
-                    Assert.Equal(0, modelState.Keys.Count());
-                });
-        }
-
-        [Fact]
         public void WithAuthenticatedNotCalledShouldNotHaveAuthorizedUser()
         {
             MyController<MvcController>
@@ -87,7 +67,7 @@
                 .NotFound()
                 .ShouldPassForThe<MvcController>(controller =>
                 {
-                    var controllerUser = (controller as Controller).User;
+                    var controllerUser = controller.User;
 
                     Assert.Equal(false, controllerUser.IsInRole("Any"));
                     Assert.Equal(null, controllerUser.Identity.Name);
