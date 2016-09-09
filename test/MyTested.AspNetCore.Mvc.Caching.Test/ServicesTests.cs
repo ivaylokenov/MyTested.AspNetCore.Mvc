@@ -11,6 +11,7 @@
     using Setups.Controllers;
     using Setups.Startups;
     using Xunit;
+    using Setups.ViewComponents;
 
     public class ServicesTests
     {
@@ -46,6 +47,30 @@
                 .Calling(c => c.MemoryCacheAction())
                 .ShouldReturn()
                 .BadRequest();
+
+            MyApplication.IsUsingDefaultConfiguration();
+        }
+        
+        [Fact]
+        public void MockMemoryCacheShouldBeDifferentForEveryViewComponentCallSynchronously()
+        {
+            MyApplication
+                .IsUsingDefaultConfiguration()
+                .WithServices(services => services.AddMemoryCache());
+
+            // second call should not have cache entries
+            MyViewComponent<MemoryCacheComponent>
+                .Instance()
+                .WithMemoryCache(cache => cache.WithEntry("test", "value"))
+                .InvokedWith(c => c.Invoke())
+                .ShouldReturn()
+                .View();
+
+            MyViewComponent<MemoryCacheComponent>
+                .Instance()
+                .InvokedWith(c => c.Invoke())
+                .ShouldReturn()
+                .Content("No cache");
 
             MyApplication.IsUsingDefaultConfiguration();
         }

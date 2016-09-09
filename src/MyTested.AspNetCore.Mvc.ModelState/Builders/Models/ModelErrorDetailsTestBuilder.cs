@@ -46,7 +46,7 @@
             if (this.aggregatedErrors.All(e => e != errorMessage))
             {
                 this.ThrowNewModelErrorAssertionException(
-                    "When calling {0} action in {1} expected error message for key {2} to be '{3}', but instead found '{4}'.",
+                    "{0} error message for key {1} to be '{2}', but instead found '{3}'.",
                     errorMessage);
             }
 
@@ -59,7 +59,7 @@
             if (!this.aggregatedErrors.Any(e => e.StartsWith(beginMessage)))
             {
                 this.ThrowNewModelErrorAssertionException(
-                    "When calling {0} action in {1} expected error message for key '{2}' to begin with '{3}', but instead found '{4}'.",
+                    "{0} error message for key '{1}' to begin with '{2}', but instead found '{3}'.",
                     beginMessage);
             }
 
@@ -72,7 +72,7 @@
             if (!this.aggregatedErrors.Any(e => e.EndsWith(endMessage)))
             {
                 this.ThrowNewModelErrorAssertionException(
-                    "When calling {0} action in {1} expected error message for key '{2}' to end with '{3}', but instead found '{4}'.",
+                    "{0} error message for key '{1}' to end with '{2}', but instead found '{3}'.",
                     endMessage);
             }
 
@@ -85,7 +85,7 @@
             if (!this.aggregatedErrors.Any(e => e.Contains(containsMessage)))
             {
                 this.ThrowNewModelErrorAssertionException(
-                    "When calling {0} action in {1} expected error message for key '{2}' to contain '{3}', but instead found '{4}'.",
+                    "{0} error message for key '{1}' to contain '{2}', but instead found '{3}'.",
                     containsMessage);
             }
 
@@ -104,12 +104,11 @@
         private void ThrowNewModelErrorAssertionException(string messageFormat, string operation)
         {
             throw new ModelErrorAssertionException(string.Format(
-                    messageFormat,
-                    this.TestContext.MethodName,
-                    this.TestContext.Component.GetName(),
-                    this.currentErrorKey,
-                    operation,
-                    string.Join(", ", this.aggregatedErrors)));
+                messageFormat,
+                this.TestContext.ExceptionMessagePrefix,
+                this.currentErrorKey,
+                operation,
+                string.Join(", ", this.aggregatedErrors)));
         }
     }
 }

@@ -162,9 +162,8 @@
         internal void ThrowNewDataProviderAssertionException(string expectedValue, string actualValue)
         {
             throw new DataProviderAssertionException(string.Format(
-                "When calling {0} action in {1} expected memory cache {2}, but {3}.",
-                this.TestContext.MethodName,
-                this.TestContext.Component.GetName(),
+                "{0} memory cache {1}, but {2}.",
+                this.TestContext.ExceptionMessagePrefix,
                 expectedValue,
                 actualValue));
         }

@@ -128,9 +128,8 @@
                 var badRequestTestBuilderBase = (BaseTestBuilderWithInvokedAction)badRequestTestBuilder;
 
                 throw new BadRequestResultAssertionException(string.Format(
-                    "When calling {0} action in {1} expected bad request result to contain error object, but it could not be found.",
-                    badRequestTestBuilderBase.ActionName,
-                    badRequestTestBuilderBase.Controller.GetName()));
+                    "{0} bad request result to contain error object, but it could not be found.",
+                    badRequestTestBuilderBase.TestContext.ExceptionMessagePrefix));
             }
 
             return actualBadRequestTestBuilder;

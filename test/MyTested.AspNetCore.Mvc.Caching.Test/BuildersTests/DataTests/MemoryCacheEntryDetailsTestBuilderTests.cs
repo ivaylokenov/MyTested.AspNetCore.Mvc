@@ -6,6 +6,7 @@
     using Setups;
     using Setups.Controllers;
     using Xunit;
+    using Setups.ViewComponents;
 
     public class MemoryCacheEntryDetailsTestBuilderTests : IDisposable
     {
@@ -71,6 +72,46 @@
                         .Ok();
                 },
                 "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with 'test' key and value passing the given predicate, but it failed.");
+        }
+
+        [Fact]
+        public void WithValidShouldNotThrowExceptionWithViewComponentCorrectValuePredicate()
+        {
+            MyViewComponent<MemoryCacheValuesComponent>
+                .Instance()
+                .InvokedWith(c => c.Invoke())
+                .ShouldHave()
+                .MemoryCache(memoryCache => memoryCache
+                    .ContainingEntry(entry => entry
+                        .WithKey("test")
+                        .WithValueOfType<string>()
+                        .Passing(v => v.StartsWith("val"))))
+                .AndAlso()
+                .ShouldReturn()
+                .View();
+        }
+
+        [Fact]
+        public void WithValidShouldThrowExceptionWithViewComponentIncorrectValuePredicate()
+        {
+            Test.AssertException<DataProviderAssertionException>(
+                () =>
+                {
+                    MyViewComponent<MemoryCacheValuesComponent>
+                        .Instance()
+                        .InvokedWith(c => c.Invoke())
+                        .ShouldHave()
+                        .MemoryCache(memoryCache => memoryCache
+                            .ContainingEntry(entry => entry
+                                .WithKey("test")
+                                .AndAlso()
+                                .WithValueOfType<string>()
+                                .Passing(v => v.StartsWith("inv"))))
+                        .AndAlso()
+                        .ShouldReturn()
+                        .View();
+                },
+                "When invoking MemoryCacheValuesComponent expected memory cache to have entry with 'test' key and value passing the given predicate, but it failed.");
         }
 
         public void Dispose()

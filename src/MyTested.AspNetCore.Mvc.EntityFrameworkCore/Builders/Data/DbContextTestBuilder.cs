@@ -44,9 +44,8 @@
             if (!predicate(this.TestContext.GetDbContext<TDbContext>()))
             {
                 throw new DataProviderAssertionException(string.Format(
-                    "When calling {0} action in {1} expected the {2} entities to pass the given predicate, but it failed.",
-                    this.TestContext.MethodName,
-                    this.TestContext.Component.GetName(),
+                    "{0} the {1} entities to pass the given predicate, but it failed.",
+                    this.TestContext.ExceptionMessagePrefix,
                     typeof(TDbContext).ToFriendlyTypeName()));
             }
 
@@ -99,9 +98,8 @@
             if (!predicate(this.TestContext.GetDbContext<TDbContext>().Set<TEntity>()))
             {
                 throw new DataProviderAssertionException(string.Format(
-                    "When calling {0} action in {1} expected the {2} set of {3} to pass the given predicate, but it failed.",
-                    this.TestContext.MethodName,
-                    this.TestContext.Component.GetName(),
+                    "{0} the {1} set of {2} to pass the given predicate, but it failed.",
+                    this.TestContext.ExceptionMessagePrefix,
                     typeof(TDbContext).ToFriendlyTypeName(),
                     typeof(TEntity).ToFriendlyTypeName()));
             }

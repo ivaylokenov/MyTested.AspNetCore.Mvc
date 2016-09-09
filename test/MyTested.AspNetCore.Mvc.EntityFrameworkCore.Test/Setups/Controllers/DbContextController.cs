@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Test.Setups
+﻿namespace MyTested.AspNetCore.Mvc.Test.Setups.Controllers
 {
     using System.Linq;
     using Common;

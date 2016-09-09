@@ -9,19 +9,19 @@
     using Utilities.Validators;
 
     /// <summary>
-    /// Contains <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ITempDataDictionary"/> extension methods for <see cref="IShouldHaveTestBuilder{TActionResult}"/>.
+    /// Contains <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ITempDataDictionary"/> extension methods for <see cref="IShouldHaveTestBuilder{TResult}"/>.
     /// </summary>
     public static class ShouldHaveTestBuilderTempDataExtensions
     {
         /// <summary>
-        /// Tests whether the action does not set any <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ITempDataDictionary"/> entries.
+        /// Tests whether the component does not set any <see cref="Microsoft.AspNetCore.Mvc.ViewFeatures.ITempDataDictionary"/> entries.
         /// </summary>
-        /// <typeparam name="TActionResult">Type of action result type.</typeparam>
-        /// <param name="shouldHaveTestBuilder">Instance of <see cref="IShouldHaveTestBuilder{TActionResult}"/> type.</param>
-        /// <returns>Test builder of <see cref="IAndActionResultTestBuilder{TActionResult}"/> type.</returns>
-        public static IAndActionResultTestBuilder<TActionResult> NoTempData<TActionResult>(this IShouldHaveTestBuilder<TActionResult> shouldHaveTestBuilder)
+        /// <typeparam name="TResult">Type of action result type.</typeparam>
+        /// <param name="shouldHaveTestBuilder">Instance of <see cref="IShouldHaveTestBuilder{TResult}"/> type.</param>
+        /// <returns>Test builder of <see cref="IAndActionResultTestBuilder{TResult}"/> type.</returns>
+        public static IAndActionResultTestBuilder<TResult> NoTempData<TResult>(this IShouldHaveTestBuilder<TResult> shouldHaveTestBuilder)
         {
-            var actualShouldHaveTestBuilder = (ShouldHaveTestBuilder<TActionResult>)shouldHaveTestBuilder;
+            var actualShouldHaveTestBuilder = (ShouldHaveTestBuilder<TResult>)shouldHaveTestBuilder;
 
             if (actualShouldHaveTestBuilder.TestContext.GetTempData().Count > 0)
             {

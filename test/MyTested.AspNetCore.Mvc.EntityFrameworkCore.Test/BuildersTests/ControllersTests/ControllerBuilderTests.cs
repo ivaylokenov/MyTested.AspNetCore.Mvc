@@ -2,7 +2,7 @@
 {
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
-    using Setups;
+    using Setups.Controllers;
     using Setups.Common;
     using Xunit;
 

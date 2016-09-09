@@ -6,7 +6,7 @@
     /// <summary>
     /// Contains <see cref="Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary"/> extension methods for <see cref="IModelErrorTestBuilder{TModel}"/>.
     /// </summary>
-    public static class ModelErrorTestBuilderWithModelDataAnnotationsExtensions
+    public static class ModelErrorTestBuilderWithModelModelStateExtensions
     {
         /// <summary>
         /// Tests whether the tested <see cref="Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary"/> contains error by key.
@@ -24,7 +24,7 @@
                 || actualModelErrorTestBuilder.ModelState.Count == 0)
             {
                 actualModelErrorTestBuilder.ThrowNewModelErrorAssertionException(
-                    "When calling {0} action in {1} expected to have a model error against key {2}, but none found.",
+                    "{0} to have a model error against key {1}, but none found.",
                     errorKey);
             }
 

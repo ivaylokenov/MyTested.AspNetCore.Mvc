@@ -3915,6 +3915,20 @@
         "runtime": {
           "netcoreapp1.0/MyTested.AspNetCore.Mvc.Test.Setups.dll": {}
         }
+      },
+      "MyTested.AspNetCore.Mvc.ViewComponents/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.6",
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0"
+        },
+        "compile": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.ViewComponents.dll": {}
+        },
+        "runtime": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.ViewComponents.dll": {}
+        }
       }
     },
     ".NETFramework,Version=v4.5.1": {
@@ -5693,6 +5707,20 @@
         },
         "runtime": {
           "net451/MyTested.AspNetCore.Mvc.Test.Setups.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.ViewComponents/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0"
+        },
+        "compile": {
+          "net451/MyTested.AspNetCore.Mvc.ViewComponents.dll": {}
+        },
+        "runtime": {
+          "net451/MyTested.AspNetCore.Mvc.ViewComponents.dll": {}
         }
       }
     }
@@ -11967,6 +11995,11 @@
       "type": "project",
       "path": "../MyTested.AspNetCore.Mvc.Test.Setups/project.json",
       "msbuildProject": "../MyTested.AspNetCore.Mvc.Test.Setups/MyTested.AspNetCore.Mvc.Test.Setups.xproj"
+    },
+    "MyTested.AspNetCore.Mvc.ViewComponents/1.0.0-preview-final": {
+      "type": "project",
+      "path": "../../src/MyTested.AspNetCore.Mvc.ViewComponents/project.json",
+      "msbuildProject": "../../src/MyTested.AspNetCore.Mvc.ViewComponents/MyTested.AspNetCore.Mvc.ViewComponents.xproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -11976,6 +12009,7 @@
       "MyTested.AspNetCore.Mvc.Controllers >= 1.0.0-*",
       "MyTested.AspNetCore.Mvc.EntityFrameworkCore >= 1.0.0-*",
       "MyTested.AspNetCore.Mvc.Test.Setups >= 1.0.0-*",
+      "MyTested.AspNetCore.Mvc.ViewComponents >= 1.0.0-*",
       "dotnet-test-xunit >= 2.2.0-*",
       "xunit >= 2.2.0-*"
     ],

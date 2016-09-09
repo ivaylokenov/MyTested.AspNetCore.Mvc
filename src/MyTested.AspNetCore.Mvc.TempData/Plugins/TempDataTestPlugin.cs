@@ -6,7 +6,7 @@
 
     public class TempDataTestPlugin : IDefaultRegistrationPlugin, IServiceRegistrationPlugin
     {
-        public long Priority => 1000;
+        public long Priority => -1000;
 
         public Action<IServiceCollection> DefaultServiceRegistrationDelegate
             => serviceCollection => serviceCollection

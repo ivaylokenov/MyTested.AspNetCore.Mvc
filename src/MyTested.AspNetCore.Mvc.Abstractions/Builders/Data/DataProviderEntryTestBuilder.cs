@@ -7,7 +7,6 @@
     using Internal.TestContexts;
     using Utilities;
     using Utilities.Validators;
-    using Utilities.Extensions;
     using Exceptions;
 
     /// <summary>
@@ -98,9 +97,8 @@
         internal void ThrowNewDataProviderAssertionException(string expectedValue, string actualValue)
         {
             throw new DataProviderAssertionException(string.Format(
-                "When calling {0} action in {1} expected {2} {3}, but {4}.",
-                this.TestContext.MethodName,
-                this.TestContext.Component.GetName(),
+                "{0} {1} {2}, but {3}.",
+                this.TestContext.ExceptionMessagePrefix,
                 this.dataProviderName,
                 expectedValue,
                 actualValue));

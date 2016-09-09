@@ -5,6 +5,7 @@
     using Microsoft.EntityFrameworkCore;
     using Setups;
     using Setups.Common;
+    using Setups.Controllers;
     using Xunit;
 
     public class ShouldHaveDbContextTests

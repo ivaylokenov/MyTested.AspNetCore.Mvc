@@ -37,7 +37,7 @@
             if (this.actualMessage != errorMessage)
             {
                 this.ThrowNewBadRequestResultAssertionException(
-                    "When calling {0} action in {1} expected bad request error message to be '{2}', but instead found '{3}'.",
+                    "{0} bad request error message to be '{1}', but instead found '{2}'.",
                     errorMessage);
             }
 
@@ -50,7 +50,7 @@
             if (!this.actualMessage.StartsWith(beginMessage))
             {
                 this.ThrowNewBadRequestResultAssertionException(
-                    "When calling {0} action in {1} expected bad request error message to begin with '{2}', but instead found '{3}'.",
+                    "{0} bad request error message to begin with '{1}', but instead found '{2}'.",
                     beginMessage);
             }
 
@@ -63,7 +63,7 @@
             if (!this.actualMessage.EndsWith(endMessage))
             {
                 this.ThrowNewBadRequestResultAssertionException(
-                    "When calling {0} action in {1} expected bad request error message to end with '{2}', but instead found '{3}'.",
+                    "{0} bad request error message to end with '{1}', but instead found '{2}'.",
                     endMessage);
             }
 
@@ -76,7 +76,7 @@
             if (!this.actualMessage.Contains(containsMessage))
             {
                 this.ThrowNewBadRequestResultAssertionException(
-                    "When calling {0} action in {1} expected bad request error message to contain '{2}', but instead found '{3}'.",
+                    "{0} bad request error message to contain '{1}', but instead found '{2}'.",
                     containsMessage);
             }
 
@@ -87,8 +87,7 @@
         {
             throw new BadRequestResultAssertionException(string.Format(
                 messageFormat,
-                this.TestContext.MethodName,
-                this.TestContext.Component.GetName(),
+                this.TestContext.ExceptionMessagePrefix,
                 operation,
                 this.actualMessage));
         }

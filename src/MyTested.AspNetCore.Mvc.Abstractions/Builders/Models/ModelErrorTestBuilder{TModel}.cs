@@ -38,8 +38,7 @@
         {
             throw new ModelErrorAssertionException(string.Format(
                     messageFormat,
-                    this.TestContext.MethodName,
-                    this.TestContext.Component.GetName(),
+                    this.TestContext.ExceptionMessagePrefix,
                     errorKey));
         }
     }

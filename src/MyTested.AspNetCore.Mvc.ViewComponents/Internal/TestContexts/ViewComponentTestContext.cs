@@ -1,6 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.TestContexts
 {
     using System;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.AspNetCore.Mvc.ViewComponents;
     using Utilities.Extensions;
@@ -12,6 +13,8 @@
         private ViewComponentContext viewComponentContext;
         
         public override string ExceptionMessagePrefix => $"When invoking {this.Component.GetName()} expected";
+
+        public override ModelStateDictionary ModelState => this.viewComponentContext.ViewData.ModelState;
 
         protected override ViewContext DefaultComponentContext
             => ViewContextMock.Default(this);

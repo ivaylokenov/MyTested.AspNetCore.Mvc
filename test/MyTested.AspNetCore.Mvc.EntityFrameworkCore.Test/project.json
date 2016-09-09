@@ -18,6 +18,7 @@
     "Microsoft.EntityFrameworkCore.SqlServer": "1.0.0-*",
     "MyTested.AspNetCore.Mvc.Controllers": "1.0.0-*",
     "MyTested.AspNetCore.Mvc.EntityFrameworkCore": "1.0.0-*",
+    "MyTested.AspNetCore.Mvc.ViewComponents": "1.0.0-*",
     "MyTested.AspNetCore.Mvc.Test.Setups": "1.0.0-*"
   },
 

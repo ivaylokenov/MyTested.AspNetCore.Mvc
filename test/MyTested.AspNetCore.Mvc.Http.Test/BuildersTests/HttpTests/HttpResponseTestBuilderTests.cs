@@ -6,6 +6,7 @@
     using Setups;
     using Setups.Controllers;
     using Setups.Models;
+    using Setups.ViewComponents;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -685,6 +686,46 @@
                 .Calling(c => c.CustomResponseAction())
                 .ShouldHave()
                 .HttpResponse(response => response.WithJsonBody(@"{""Integer"":1,""RequiredString"":""Text""}"));
+        }
+        
+        [Fact]
+        public void ViewComponentInvocationShouldNotThrowExceptionWithCorrectResponse()
+        {
+            MyViewComponent<HttpResponseComponent>
+                .Instance()
+                .InvokedWith(c => c.Invoke())
+                .ShouldHave()
+                .HttpResponse(response => response
+                    .WithContentType(ContentType.ApplicationJson)
+                    .AndAlso()
+                    .WithContentLength(100)
+                    .AndAlso()
+                    .WithStatusCode(HttpStatusCode.InternalServerError)
+                    .AndAlso()
+                    .ContainingHeader("TestHeader", "TestHeaderValue")
+                    .ContainingCookie("TestCookie", "TestCookieValue", new CookieOptions
+                    {
+                        HttpOnly = true,
+                        Secure = true,
+                        Domain = "testdomain.com",
+                        Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)),
+                        Path = "/"
+                    }));
+        }
+
+        [Fact]
+        public void ViewComponentWithJsonBodyShouldThrowExceptionWithWrongBody()
+        {
+            Test.AssertException<HttpResponseAssertionException>(
+                () =>
+                {
+                    MyViewComponent<HttpResponseComponent>
+                        .Instance()
+                        .InvokedWith(c => c.Invoke())
+                        .ShouldHave()
+                        .HttpResponse(response => response.WithJsonBody(new RequestModel { Integer = 2, RequiredString = "Text" }));
+                },
+                "When invoking HttpResponseComponent expected HTTP response body to be the given object, but in fact it was different.");
         }
     }
 }

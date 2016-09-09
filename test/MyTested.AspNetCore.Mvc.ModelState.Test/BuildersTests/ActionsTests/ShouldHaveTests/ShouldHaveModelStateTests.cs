@@ -3,8 +3,9 @@
     using Exceptions;
     using Setups;
     using Setups.Controllers;
+    using Setups.ViewComponents;
     using Xunit;
-    
+
     public class ShouldHaveModelStateTests
     {
         [Fact]
@@ -139,6 +140,108 @@
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
+        }
+
+        [Fact]
+        public void ShouldHaveValidModelStateShouldBeValidWithViewComponentValidModelState()
+        {
+            MyViewComponent<NormalComponent>
+                .Instance()
+                .InvokedWith(c => c.Invoke())
+                .ShouldHave()
+                .ValidModelState();
+        }
+
+        [Fact]
+        public void ShouldHaveValidModelStateShouldThrowExceptionWithInvalidViewComponentModelState()
+        {
+            Test.AssertException<ModelErrorAssertionException>(
+                () =>
+                {
+                    MyViewComponent<NormalComponent>
+                        .Instance()
+                        .WithSetup(vc => vc.ModelState.AddModelError("Test", "InvalidTest"))
+                        .InvokedWith(c => c.Invoke())
+                        .ShouldHave()
+                        .ValidModelState();
+                },
+                "When invoking NormalComponent expected to have valid model state with no errors, but it had some.");
+        }
+
+        [Fact]
+        public void ShouldHaveInvalidModelStateShouldBeValidWithInvalidViewComponentModelState()
+        {
+            MyViewComponent<NormalComponent>
+                .Instance()
+                .WithSetup(vc => vc.ModelState.AddModelError("Test", "InvalidTest"))
+                .InvokedWith(c => c.Invoke())
+                .ShouldHave()
+                .InvalidModelState();
+        }
+
+        [Fact]
+        public void ShouldHaveInvalidModelStateShouldBeValidWithInvalidViewComponentModelStateAndCorrectNumberOfErrors()
+        {
+            MyViewComponent<NormalComponent>
+                .Instance()
+                .WithSetup(vc =>
+                {
+                    vc.ModelState.AddModelError("Test", "InvalidTest");
+                    vc.ModelState.AddModelError("Another", "InvalidAnotherTest");
+                })
+                .InvokedWith(c => c.Invoke())
+                .ShouldHave()
+                .InvalidModelState(2);
+        }
+
+        [Fact]
+        public void ShouldHaveInvalidModelStateShouldBeInvalidWithInvalidViewComponentModelStateAndIncorrectNumberOfErrors()
+        {
+            Test.AssertException<ModelErrorAssertionException>(
+                () =>
+                {
+                    MyViewComponent<NormalComponent>
+                        .Instance()
+                        .WithSetup(vc =>
+                        {
+                            vc.ModelState.AddModelError("Test", "InvalidTest");
+                            vc.ModelState.AddModelError("Another", "InvalidAnotherTest");
+                        })
+                        .InvokedWith(c => c.Invoke())
+                        .ShouldHave()
+                        .InvalidModelState(5);
+                },
+                "When invoking NormalComponent expected to have invalid model state with 5 errors, but in fact contained 2.");
+        }
+
+        [Fact]
+        public void ShouldHaveInvalidModelStateShouldThrowExceptionWithValidViewComponentModelState()
+        {
+            Test.AssertException<ModelErrorAssertionException>(
+                () =>
+                {
+                    MyViewComponent<NormalComponent>
+                        .Instance()
+                        .InvokedWith(c => c.Invoke())
+                        .ShouldHave()
+                        .InvalidModelState();
+                },
+                "When invoking NormalComponent expected to have invalid model state, but was in fact valid.");
+        }
+
+        [Fact]
+        public void ShouldHaveInvalidModelStateShouldThrowExceptionWithViewComponentModelStateAndProvidedNumberOfErrors()
+        {
+            Test.AssertException<ModelErrorAssertionException>(
+                () =>
+                {
+                    MyViewComponent<NormalComponent>
+                        .Instance()
+                        .InvokedWith(c => c.Invoke())
+                        .ShouldHave()
+                        .InvalidModelState(withNumberOfErrors: 5);
+                },
+                "When invoking NormalComponent expected to have invalid model state with 5 errors, but in fact contained 0.");
         }
     }
 }

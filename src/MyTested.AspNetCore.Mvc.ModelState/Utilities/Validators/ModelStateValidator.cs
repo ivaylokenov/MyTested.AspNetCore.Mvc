@@ -18,9 +18,8 @@
             if (!testContext.ModelState.IsValid)
             {
                 throw new ModelErrorAssertionException(string.Format(
-                    "When calling {0} action in {1} expected to have valid model state with no errors, but it had some.",
-                    testContext.MethodName,
-                    testContext.Component.GetName()));
+                    "{0} to have valid model state with no errors, but it had some.",
+                    testContext.ExceptionMessagePrefix));
             }
         }
     }

@@ -10,7 +10,7 @@
     public class InvocationTestContext<TResult>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="InvocationTestContext{TActionResult}"/> class.
+        /// Initializes a new instance of the <see cref="InvocationTestContext{TResult}"/> class.
         /// </summary>
         /// <param name="methodName">Name of the method.</param>
         /// <param name="methodCall"><see cref="LambdaExpression"/> representing the method call.</param>
