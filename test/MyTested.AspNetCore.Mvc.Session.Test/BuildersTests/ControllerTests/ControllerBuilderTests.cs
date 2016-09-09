@@ -1,8 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ControllerTests
 {
     using System;
-    using Internal.Http;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;
     using Setups;
     using Setups.Controllers;

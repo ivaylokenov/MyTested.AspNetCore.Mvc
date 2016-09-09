@@ -27,7 +27,8 @@ This package will include all available assertion methods in your test project, 
  - `MyTested.AspNetCore.Mvc.ViewFeatures` - contains setup and assertion methods for MVC view features
  - `MyTested.AspNetCore.Mvc.Http` - contains setup and assertion methods for HTTP context, request and response
  - `MyTested.AspNetCore.Mvc.Authentication` - contains setup methods for `ClaimsPrincipal`
- - `MyTested.AspNetCore.Mvc.DataAnnotations` - contains setup and assertion methods for `ModelState` validations
+ - `MyTested.AspNetCore.Mvc.ModelState` - contains setup and assertion methods for `ModelStateDictionary` validations
+ - `MyTested.AspNetCore.Mvc.DataAnnotations` - contains setup and assertion methods for data annotation validations
  - `MyTested.AspNetCore.Mvc.EntityFrameworkCore` - contains setup and assertion methods for `DbContext`
  - `MyTested.AspNetCore.Mvc.DependencyInjection` - contains setup methods for dependency injection services
  - `MyTested.AspNetCore.Mvc.Caching` - contains setup and assertion methods for `IMemoryCache`

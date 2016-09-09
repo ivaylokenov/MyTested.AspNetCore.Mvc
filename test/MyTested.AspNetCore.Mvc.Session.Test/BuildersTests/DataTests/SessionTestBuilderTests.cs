@@ -7,6 +7,7 @@
     using Setups;
     using Setups.Controllers;
     using Xunit;
+    using Setups.ViewComponents;
 
     public class SessionTestBuilderTests
     {
@@ -1012,6 +1013,62 @@
                         .Ok();
                 },
                 "When calling AddSessionAction action in MvcController expected session to have entry with 'String' key and the provided value, but the value was different.");
+
+            MyApplication.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void ContainingEntryWithKeyShouldNotThrowExceptionWithCorrectViewComponentEntry()
+        {
+            MyApplication
+                .IsUsingDefaultConfiguration()
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
+                    services.AddSession();
+                });
+
+            MyViewComponent<AddSessionComponent>
+                .Instance()
+                .InvokedWith(c => c.Invoke())
+                .ShouldHave()
+                .Session(session => session
+                    .ContainingEntryWithKey("Integer")
+                    .AndAlso()
+                    .ContainingEntryWithKey("String"))
+                .AndAlso()
+                .ShouldReturn()
+                .View();
+
+            MyApplication.IsUsingDefaultConfiguration();
+        }
+
+        [Fact]
+        public void ContainingEntryWithKeyShouldThrowExceptionWithIncorrectViewComponentEntry()
+        {
+            MyApplication
+                .IsUsingDefaultConfiguration()
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
+                    services.AddSession();
+                });
+
+            Test.AssertException<DataProviderAssertionException>(
+                () =>
+                {
+                    MyViewComponent<AddSessionComponent>
+                        .Instance()
+                        .InvokedWith(c => c.Invoke())
+                        .ShouldHave()
+                        .Session(session => session.ContainingEntryWithKey("Invalid"))
+                        .AndAlso()
+                        .ShouldReturn()
+                        .View();
+                },
+                "When invoking AddSessionComponent expected session to have entry with 'Invalid' key, but such was not found.");
 
             MyApplication.IsUsingDefaultConfiguration();
         }

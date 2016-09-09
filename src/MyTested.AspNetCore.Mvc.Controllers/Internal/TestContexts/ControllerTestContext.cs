@@ -1,8 +1,8 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.TestContexts
 {
+    using System.Linq.Expressions;
     using Controllers;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Utilities.Extensions;
 
     public class ControllerTestContext : ActionTestContext<ControllerContext>
@@ -11,5 +11,7 @@
 
         protected override ControllerContext DefaultComponentContext
             => ControllerContextMock.Default(this);
+
+        public override LambdaExpression RouteDataMethodCall => this.MethodCall;
     }
 }

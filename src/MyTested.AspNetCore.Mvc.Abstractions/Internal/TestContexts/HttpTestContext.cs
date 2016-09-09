@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.TestContexts
 {
+    using System.Linq.Expressions;
     using Application;
     using Http;
     using Microsoft.AspNetCore.Http;
@@ -59,7 +60,9 @@
                 this.routeData = value;
             }
         }
-        
+
+        public virtual LambdaExpression RouteDataMethodCall => null;
+
         public ISession Session => this.HttpContext.Session;
 
         public abstract string ExceptionMessagePrefix { get; }

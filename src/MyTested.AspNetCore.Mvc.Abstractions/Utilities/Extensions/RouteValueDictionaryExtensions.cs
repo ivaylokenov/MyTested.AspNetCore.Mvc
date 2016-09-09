@@ -1,7 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Utilities.Extensions
 {
     using Microsoft.AspNetCore.Routing;
-    using System.Collections.Generic;
 
     public static class RouteValueDictionaryExtensions
     {

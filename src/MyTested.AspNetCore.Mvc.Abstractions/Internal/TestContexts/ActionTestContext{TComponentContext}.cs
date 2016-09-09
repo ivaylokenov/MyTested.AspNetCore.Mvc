@@ -25,9 +25,9 @@
                     return routeData;
                 }
 
-                if (this.expressionRouteData == null && this.MethodCall != null)
+                if (this.expressionRouteData == null && this.RouteDataMethodCall != null)
                 {
-                    this.expressionRouteData = RouteExpressionParser.ResolveRouteData(TestApplication.Router, this.MethodCall);
+                    this.expressionRouteData = RouteExpressionParser.ResolveRouteData(TestApplication.Router, this.RouteDataMethodCall);
                 }
 
                 return this.expressionRouteData;
