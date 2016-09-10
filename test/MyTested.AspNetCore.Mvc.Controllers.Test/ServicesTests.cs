@@ -11,7 +11,6 @@
     using Setups.Controllers;
     using Setups.Services;
     using Xunit;
-    using Microsoft.Extensions.DependencyInjection.Extensions;
 
     public class ServicesTests
     {
@@ -131,8 +130,8 @@
 
             Assert.NotNull(firstContext);
             Assert.NotNull(secondContext);
-            Assert.IsAssignableFrom<MockedControllerContext>(firstContext);
-            Assert.IsAssignableFrom<MockedControllerContext>(secondContext);
+            Assert.IsAssignableFrom<ControllerContextMock>(firstContext);
+            Assert.IsAssignableFrom<ControllerContextMock>(secondContext);
             Assert.NotSame(firstContext, secondContext);
 
             MyApplication.IsUsingDefaultConfiguration();
@@ -213,11 +212,11 @@
                     Assert.NotNull(thirdContextAsync);
                     Assert.NotNull(fourthContextAsync);
                     Assert.NotNull(fifthContextAsync);
-                    Assert.IsAssignableFrom<MockedControllerContext>(firstContextAsync);
-                    Assert.IsAssignableFrom<MockedControllerContext>(secondContextAsync);
-                    Assert.IsAssignableFrom<MockedControllerContext>(thirdContextAsync);
-                    Assert.IsAssignableFrom<MockedControllerContext>(fourthContextAsync);
-                    Assert.IsAssignableFrom<MockedControllerContext>(fifthContextAsync);
+                    Assert.IsAssignableFrom<ControllerContextMock>(firstContextAsync);
+                    Assert.IsAssignableFrom<ControllerContextMock>(secondContextAsync);
+                    Assert.IsAssignableFrom<ControllerContextMock>(thirdContextAsync);
+                    Assert.IsAssignableFrom<ControllerContextMock>(fourthContextAsync);
+                    Assert.IsAssignableFrom<ControllerContextMock>(fifthContextAsync);
                     Assert.NotSame(firstContextAsync, secondContextAsync);
                     Assert.NotSame(firstContextAsync, thirdContextAsync);
                     Assert.NotSame(secondContextAsync, thirdContextAsync);
@@ -302,6 +301,34 @@
             MyController<ActionContextController>
                 .Instance()
                 .WithControllerContext(actionContext)
+                .ShouldPassForThe<ActionContextController>(controller =>
+                {
+                    Assert.NotNull(controller);
+                    Assert.NotNull(controller.Context);
+                    Assert.Equal("Test", controller.Context.ActionDescriptor.DisplayName);
+                });
+
+            MyApplication.IsUsingDefaultConfiguration();
+        }
+        
+        [Fact]
+        public void WithControllerContextFuncShouldSetItToAccessor()
+        {
+            MyApplication
+                .IsUsingDefaultConfiguration()
+                .WithServices(services =>
+                {
+                    services.AddActionContextAccessor();
+                });
+
+            var actionDescriptor = new ControllerActionDescriptor { DisplayName = "Test" };;
+
+            MyController<ActionContextController>
+                .Instance()
+                .WithControllerContext(controllerContext =>
+                {
+                    controllerContext.ActionDescriptor = actionDescriptor;
+                })
                 .ShouldPassForThe<ActionContextController>(controller =>
                 {
                     Assert.NotNull(controller);

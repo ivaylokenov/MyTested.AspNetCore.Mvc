@@ -69,7 +69,5 @@
 
             return new AndTestBuilder(this.TestContext);
         }
-
-        protected IAndTestBuilder NewAndTestBuilder() => new AndTestBuilder(this.TestContext);
     }
 }

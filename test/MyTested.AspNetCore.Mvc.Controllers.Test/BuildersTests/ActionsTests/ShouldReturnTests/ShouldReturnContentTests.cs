@@ -45,7 +45,7 @@
         [Fact]
         public void ShouldReturnContentShouldThrowExceptionWithBadRequestResult()
         {
-            Test.AssertException<ActionResultAssertionException>(
+            Test.AssertException<InvocationResultAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
@@ -53,8 +53,8 @@
                         .Calling(c => c.BadRequestAction())
                         .ShouldReturn()
                         .Content("content");
-                }, 
-                "When calling BadRequestAction action in MvcController expected action result to be ContentResult, but instead received BadRequestResult.");
+                },
+                "When calling BadRequestAction action in MvcController expected result to be ContentResult, but instead received BadRequestResult.");
         }
 
         [Fact]

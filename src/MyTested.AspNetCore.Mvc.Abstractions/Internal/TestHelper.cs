@@ -5,10 +5,13 @@
     using Http;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Features;
+    using Microsoft.AspNetCore.Mvc.Internal;
     using Plugins;
     using Services;
     using TestContexts;
     using Utilities;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Infrastructure;
 
     public static class TestHelper
     {
@@ -20,12 +23,12 @@
         public static ISet<IShouldPassForPlugin> ShouldPassForPlugins { get; }
             = new HashSet<IShouldPassForPlugin>();
         
-        public static MockedHttpContext CreateMockedHttpContext()
+        public static HttpContextMock CreateHttpContextMock()
         {
             var httpContextFactory = TestServiceProvider.GetService<IHttpContextFactory>();
             var httpContext = httpContextFactory != null
-                ? MockedHttpContext.From(httpContextFactory.Create(new FeatureCollection()))
-                : new MockedHttpContext();
+                ? HttpContextMock.From(httpContextFactory.Create(new FeatureCollection()))
+                : new HttpContextMock();
 
             SetHttpContextToAccessor(httpContext);
 
@@ -46,6 +49,40 @@
             if (httpContextAccessor != null)
             {
                 httpContextAccessor.HttpContext = httpContext;
+            }
+        }
+        
+        public static void SetActionContextToAccessor(ActionContext actionContext)
+        {
+            var actionContextAccessor = TestServiceProvider.GetService<IActionContextAccessor>();
+            if (actionContextAccessor != null)
+            {
+                actionContextAccessor.ActionContext = actionContext;
+            }
+        }
+
+        /// <summary>
+        /// Tries to create instance of the provided type. Returns null if not successful.
+        /// </summary>
+        /// <typeparam name="TInstance">Type to create.</typeparam>
+        /// <returns>Instance of TInstance type.</returns>
+        public static TInstance TryCreateInstance<TInstance>()
+            where TInstance : class
+        {
+            var instance = TestServiceProvider.GetService<TInstance>();
+            if (instance != null)
+            {
+                return instance;
+            }
+
+            try
+            {
+                var typeActivatorCache = TestServiceProvider.GetRequiredService<ITypeActivatorCache>();
+                return typeActivatorCache.CreateInstance<TInstance>(TestServiceProvider.Current, typeof(TInstance));
+            }
+            catch
+            {
+                return null;
             }
         }
 
@@ -75,5 +112,15 @@
         }
 
         public static void ExecuteTestCleanup() => GlobalTestCleanup?.Invoke();
+
+        /// <summary>
+        /// Gets formatted friendly name.
+        /// </summary>
+        /// <param name="name">Name to format.</param>
+        /// <returns>Formatted string.</returns>
+        public static string GetFriendlyName(string name)
+        {
+            return name == null ? "the default one" : $"'{name}'";
+        }
     }
 }

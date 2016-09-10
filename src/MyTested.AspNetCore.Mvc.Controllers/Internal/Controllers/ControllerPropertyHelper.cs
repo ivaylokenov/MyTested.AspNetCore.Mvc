@@ -4,7 +4,7 @@
     using System.Collections.Concurrent;
     using Microsoft.AspNetCore.Mvc;
 
-    public class ControllerPropertyHelper : BasePropertyHelper
+    public class ControllerPropertyHelper : PropertyHelper
     {
         private static readonly ConcurrentDictionary<Type, ControllerPropertyHelper> ControllerPropertiesCache =
             new ConcurrentDictionary<Type, ControllerPropertyHelper>();
@@ -15,7 +15,6 @@
         public ControllerPropertyHelper(Type controllerType)
             : base (controllerType)
         {
-            
         }
 
         public Func<object, ControllerContext> ControllerContextGetter

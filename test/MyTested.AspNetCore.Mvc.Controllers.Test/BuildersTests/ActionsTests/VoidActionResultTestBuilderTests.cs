@@ -20,21 +20,21 @@
         [Fact]
         public void ShouldReturnEmptyShouldThrowExceptionIfActionThrowsException()
         {
-            Test.AssertException<ActionCallAssertionException>(
+            Test.AssertException<InvocationAssertionException>(
                 () => 
                 {
                     MyController<MvcController>
                         .Instance()
                         .Calling(c => c.EmptyActionWithException())
                         .ShouldReturnEmpty();
-                }, 
-                "NullReferenceException with 'Test exception message' message was thrown but was not caught or expected.");
+                },
+                "When calling EmptyActionWithException action in MvcController expected no exception but NullReferenceException with 'Test exception message' message was thrown without being caught.");
         }
 
         [Fact]
         public void ShouldReturnEmptyWithAsyncShouldThrowExceptionIfActionThrowsException()
         {
-            Test.AssertException<ActionCallAssertionException>(
+            Test.AssertException<InvocationAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
@@ -42,7 +42,7 @@
                         .Calling(c => c.EmptyActionWithExceptionAsync())
                         .ShouldReturnEmpty();
                 },
-                "AggregateException (containing NullReferenceException with 'Test exception message' message) was thrown but was not caught or expected.");
+                "When calling EmptyActionWithExceptionAsync action in MvcController expected no exception but AggregateException (containing NullReferenceException with 'Test exception message' message) was thrown without being caught.");
         }
 
         [Fact]

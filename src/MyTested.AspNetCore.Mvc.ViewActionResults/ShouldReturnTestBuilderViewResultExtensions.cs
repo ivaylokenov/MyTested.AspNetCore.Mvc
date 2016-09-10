@@ -4,8 +4,9 @@
     using Builders.Actions.ShouldReturn;
     using Builders.Contracts.ActionResults.View;
     using Builders.Contracts.Actions;
-    using Internal;
+    using Exceptions;
     using Microsoft.AspNetCore.Mvc;
+    using Utilities.Validators;
 
     /// <summary>
     /// Contains <see cref="ViewResult"/> extension methods for <see cref="IShouldReturnTestBuilder{TActionResult}"/>.
@@ -37,12 +38,15 @@
             var actualShouldReturnTestBuilder = (ShouldReturnTestBuilder<TActionResult>)shouldReturnTestBuilder;
 
             var viewType = "view";
-            var viewResult = actualShouldReturnTestBuilder.GetReturnObject<ViewResult>();
+
+            var viewResult = InvocationResultValidator
+                .GetInvocationResult<ViewResult>(actualShouldReturnTestBuilder.TestContext);
+            
             var actualViewName = viewResult.ViewName;
             if (viewName != actualViewName)
             {
-                ViewActionResultsThrow.NewViewResultAssertionException(
-                    actualShouldReturnTestBuilder,
+                throw ViewResultAssertionException.ForNameEquality(
+                    actualShouldReturnTestBuilder.TestContext.ExceptionMessagePrefix,
                     viewType,
                     viewName,
                     actualViewName);

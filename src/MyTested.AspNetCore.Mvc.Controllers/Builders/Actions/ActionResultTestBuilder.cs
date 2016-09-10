@@ -2,12 +2,12 @@
 {
     using Base;
     using Contracts.Actions;
-    using Exceptions;
+    using Contracts.CaughtExceptions;
+    using CaughtExceptions;
     using Internal;
     using Internal.TestContexts;
     using ShouldHave;
     using ShouldReturn;
-    using Utilities.Extensions;
     using Utilities.Validators;
 
     /// <summary>
@@ -29,7 +29,7 @@
         /// <inheritdoc />
         public IShouldHaveTestBuilder<TActionResult> ShouldHave()
         {
-            ActionValidator.CheckForException(this.CaughtException);
+            InvocationValidator.CheckForException(this.CaughtException, this.TestContext.ExceptionMessagePrefix);
             return new ShouldHaveTestBuilder<TActionResult>(this.TestContext);
         }
 
@@ -37,14 +37,7 @@
         public IShouldThrowTestBuilder ShouldThrow()
         {
             TestHelper.ExecuteTestCleanup();
-            if (this.CaughtException == null)
-            {
-                throw new ActionCallAssertionException(string.Format(
-                    "When calling {0} action in {1} thrown exception was expected, but in fact none was caught.",
-                    this.ActionName,
-                    this.Controller.GetName()));
-            }
-            
+            InvocationValidator.CheckForNullException(this.CaughtException, this.TestContext.ExceptionMessagePrefix);
             return new ShouldThrowTestBuilder(this.TestContext);
         }
 
@@ -52,7 +45,7 @@
         public IShouldReturnTestBuilder<TActionResult> ShouldReturn()
         {
             TestHelper.ExecuteTestCleanup();
-            ActionValidator.CheckForException(this.CaughtException);
+            InvocationValidator.CheckForException(this.CaughtException, this.TestContext.ExceptionMessagePrefix);
             return new ShouldReturnTestBuilder<TActionResult>(this.TestContext);
         }
     }

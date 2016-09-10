@@ -30,7 +30,7 @@
         [Fact]
         public void ShouldReturnNotFoundShouldThrowExceptionWhenActionDoesNotReturnNotFound()
         {
-            Test.AssertException<ActionResultAssertionException>(
+            Test.AssertException<InvocationResultAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
@@ -39,7 +39,7 @@
                         .ShouldReturn()
                         .BadRequest();
                 },
-                "When calling HttpNotFoundAction action in MvcController expected action result to be BadRequestResult, but instead received NotFoundResult.");
+                "When calling HttpNotFoundAction action in MvcController expected result to be BadRequestResult, but instead received NotFoundResult.");
         }
     }
 }

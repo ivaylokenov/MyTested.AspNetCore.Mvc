@@ -16,7 +16,7 @@
         /// <returns>The same <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection ReplaceMemoryCache(this IServiceCollection serviceCollection)
         {
-            return serviceCollection.Replace<IMemoryCache, MockedMemoryCache>(ServiceLifetime.Transient);
+            return serviceCollection.Replace<IMemoryCache, MemoryCacheMock>(ServiceLifetime.Transient);
         }
     }
 }

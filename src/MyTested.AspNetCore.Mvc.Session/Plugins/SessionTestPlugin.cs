@@ -1,7 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Plugins
 {
     using System;
-    using Internal.Http;
+    using Internal.Session;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Features;
     using Microsoft.AspNetCore.Session;
@@ -37,16 +37,16 @@
                         if (httpContext.Features.Get<ISessionFeature>() == null)
                         {
                             ISession mockedSession;
-                            if (sessionStore is MockedSessionStore)
+                            if (sessionStore is SessionStoreMock)
                             {
-                                mockedSession = new MockedSession();
+                                mockedSession = new SessionMock();
                             }
                             else
                             {
                                 mockedSession = sessionStore.Create(Guid.NewGuid().ToString(), TimeSpan.Zero, () => true, true);
                             }
 
-                            httpContext.Features.Set<ISessionFeature>(new MockedSessionFeature
+                            httpContext.Features.Set<ISessionFeature>(new SessionFeatureMock
                             {
                                 Session = mockedSession
                             });

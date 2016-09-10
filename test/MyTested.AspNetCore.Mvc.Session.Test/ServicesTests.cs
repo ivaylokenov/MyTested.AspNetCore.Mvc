@@ -1,7 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test
 {
-    using Internal.Application;
-    using Internal.Http;
+    using Internal.Session;
     using Internal.Services;
     using Microsoft.AspNetCore.Session;
     using Microsoft.Extensions.DependencyInjection;
@@ -12,7 +11,7 @@
     public class ServicesTests
     {
         [Fact]
-        public void DefaultConfigurationWithSessionShouldSetMockedSession()
+        public void DefaultConfigurationWithSessionShouldSetMockSession()
         {
             MyApplication
                 .IsUsingDefaultConfiguration()
@@ -26,13 +25,13 @@
             var session = TestServiceProvider.GetService<ISessionStore>();
 
             Assert.NotNull(session);
-            Assert.IsAssignableFrom<MockedSessionStore>(session);
+            Assert.IsAssignableFrom<SessionStoreMock>(session);
 
             MyApplication.IsUsingDefaultConfiguration();
         }
         
         [Fact]
-        public void ExplicitMockedSessionShouldOverrideIt()
+        public void ExplicitMockSessionShouldOverrideIt()
         {
             MyApplication
                 .StartsFrom<SessionDataStartup>()
@@ -44,13 +43,13 @@
             var session = TestServiceProvider.GetService<ISessionStore>();
 
             Assert.NotNull(session);
-            Assert.IsAssignableFrom<MockedSessionStore>(session);
+            Assert.IsAssignableFrom<SessionStoreMock>(session);
 
             MyApplication.IsUsingDefaultConfiguration();
         }
 
         [Fact]
-        public void DefaultConfigurationShouldNotSetMockedSession()
+        public void DefaultConfigurationShouldNotSetMockSession()
         {
             MyApplication.IsUsingDefaultConfiguration();
 
@@ -60,7 +59,7 @@
         }
 
         [Fact]
-        public void CustomSessionShouldOverrideTheMockedOne()
+        public void CustomSessionShouldOverrideTheMockOne()
         {
             MyApplication.StartsFrom<SessionDataStartup>();
 

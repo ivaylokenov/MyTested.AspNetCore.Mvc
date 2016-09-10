@@ -20,7 +20,7 @@
         [Fact]
         public void ShouldReturnChallengeShouldThrowExceptionIfResultIsNotChallenge()
         {
-            Test.AssertException<ActionResultAssertionException>(
+            Test.AssertException<InvocationResultAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
@@ -29,7 +29,7 @@
                         .ShouldReturn()
                         .Challenge();
                 },
-                "When calling BadRequestAction action in MvcController expected action result to be ChallengeResult, but instead received BadRequestResult.");
+                "When calling BadRequestAction action in MvcController expected result to be ChallengeResult, but instead received BadRequestResult.");
         }
     }
 }

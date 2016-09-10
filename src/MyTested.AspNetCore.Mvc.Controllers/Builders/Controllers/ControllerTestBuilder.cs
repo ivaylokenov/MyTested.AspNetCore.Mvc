@@ -29,7 +29,7 @@
         public IBaseTestBuilderWithController NoAttributes()
         {
             AttributesValidator.ValidateNoAttributes(
-                this.ControllerLevelAttributes,
+                this.ControllerAttributes,
                 this.ThrowNewAttributeAssertionException);
 
             return this;
@@ -39,7 +39,7 @@
         public IBaseTestBuilderWithController Attributes(int? withTotalNumberOf = null)
         {
             AttributesValidator.ValidateNumberOfAttributes(
-                this.ControllerLevelAttributes,
+                this.ControllerAttributes,
                 this.ThrowNewAttributeAssertionException,
                 withTotalNumberOf);
 
@@ -53,7 +53,7 @@
             attributesTestBuilder(newAttributesTestBuilder);
 
             AttributesValidator.ValidateAttributes(
-                this.ControllerLevelAttributes,
+                this.ControllerAttributes,
                 newAttributesTestBuilder,
                 this.ThrowNewAttributeAssertionException);
 

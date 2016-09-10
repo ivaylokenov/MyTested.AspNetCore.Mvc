@@ -1,7 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Utilities.Validators
 {
     using Exceptions;
-    using Extensions;
     using Internal.TestContexts;
 
     public static class DataProviderValidator
@@ -35,9 +34,8 @@
             string actualValue)
         {
             throw new DataProviderAssertionException(string.Format(
-                "When calling {0} action in {1} expected to have {2}{3}, but {4}.",
-                testContext.MethodName,
-                testContext.Component.GetName(),
+                "{0} to have {1}{2}, but {3}.",
+                testContext.ExceptionMessagePrefix,
                 name,
                 expectedValue,
                 actualValue));

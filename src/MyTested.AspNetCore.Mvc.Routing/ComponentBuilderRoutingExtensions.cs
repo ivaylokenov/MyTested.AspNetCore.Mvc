@@ -4,6 +4,7 @@
     using Builders.Contracts.Base;
     using Internal.Application;
     using Internal.Routing;
+    using Microsoft.AspNetCore.Routing;
     using Utilities.Extensions;
 
     /// <summary>
@@ -41,7 +42,20 @@
             actualBuilder.TestContext.PreMethodInvocationDelegate += () =>
             {
                 var testContext = actualBuilder.TestContext;
-                testContext.RouteData = RouteExpressionParser.ResolveRouteData(TestApplication.Router, testContext.MethodCall);
+
+                if (testContext.RouteDataMethodCall != null)
+                {
+                    testContext.RouteData = RouteExpressionParser.ResolveRouteData(
+                        TestApplication.Router,
+                        testContext.RouteDataMethodCall);
+                }
+
+                if (testContext.RouteData == null)
+                {
+                    testContext.RouteData = new RouteData();
+                    testContext.RouteData.Routers.Add(TestApplication.Router);
+                }
+                
                 testContext.RouteData.Values.Add(additionalRouteValues);
             };
 

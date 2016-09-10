@@ -11,12 +11,9 @@
 
             serviceCollection
                 .AddMvcCoreTesting()
+                .AddViewFeaturesTesting()
                 .AddStringInputFormatter()
-                .ReplaceTempDataProvider()
-                .ReplaceDbContext()
-                .ReplaceMemoryCache()
-                .ReplaceOptions()
-                .ReplaceSession();
+                .ReplaceOptions();
 
             return serviceCollection;
         }

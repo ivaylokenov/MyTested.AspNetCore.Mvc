@@ -1,7 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Base
 {
     using And;
-    using Contracts.And;
     using Contracts.Base;
     using Internal.TestContexts;
     using Utilities;
@@ -34,14 +33,5 @@
         /// <returns>Base test builder of type <see cref="IBaseTestBuilderWithActionResult{TActionResult}"/>.</returns>
         public IBaseTestBuilderWithActionResult<TActionResult> NewAndTestBuilderWithActionResult()
             => new AndTestBuilderWithActionResult<TActionResult>(this.TestContext);
-
-        /// <summary>
-        /// Returns the actual action result casted as dynamic type.
-        /// </summary>
-        /// <returns>Object of dynamic type.</returns>
-        protected dynamic GetActionResultAsDynamic()
-        {
-            return this.ActionResult.GetType().CastTo<dynamic>(this.ActionResult);
-        }
     }
 }

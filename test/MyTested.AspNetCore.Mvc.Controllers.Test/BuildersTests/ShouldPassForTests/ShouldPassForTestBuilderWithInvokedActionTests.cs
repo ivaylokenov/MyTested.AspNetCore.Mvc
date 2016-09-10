@@ -57,42 +57,5 @@
                 },
                 "Expected NullReferenceException to pass the given predicate but it failed.");
         }
-
-        [Fact]
-        public void HttpResponseAssertionsShouldWorkCorrectly()
-        {
-            MyController<MvcController>
-                .Instance()
-                .Calling(c => c.FullOkAction())
-                .ShouldReturn()
-                .Ok()
-                .ShouldPassForThe<HttpResponse>(response =>
-                {
-                    Assert.NotNull(response);
-                });
-        }
-
-        [Fact]
-        public void HttpResponsePredicateShouldWorkCorrectly()
-        {
-            MyController<MvcController>
-                .Instance()
-                .Calling(c => c.FullOkAction())
-                .ShouldPassForThe<HttpResponse>(response => response != null);
-        }
-
-        [Fact]
-        public void HttpResponsePredicateShouldThrowExceptionWithInvalidTest()
-        {
-            Test.AssertException<InvalidAssertionException>(
-                () =>
-                {
-                    MyController<MvcController>
-                        .Instance()
-                        .Calling(c => c.FullOkAction())
-                        .ShouldPassForThe<HttpResponse>(response => response == null);
-                },
-                "Expected HttpResponse to pass the given predicate but it failed.");
-        }
     }
 }

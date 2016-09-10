@@ -6,9 +6,9 @@
     using Utilities.Validators;
 
     /// <summary>
-    /// Base class for all test builders with component.
+    /// Base class for all test builders with controller.
     /// </summary>
-    public abstract class BaseTestBuilderWithController : BaseTestBuilderWithComponent, IBaseTestBuilderWithController
+    public abstract class BaseTestBuilderWithController : BaseTestBuilderWithActionContext, IBaseTestBuilderWithController
     {
         private ControllerTestContext testContext;
 
@@ -23,16 +23,16 @@
         }
 
         /// <summary>
-        /// Gets the component which will be tested.
+        /// Gets the controller which will be tested.
         /// </summary>
-        /// <value>Component which will be tested.</value>
+        /// <value>Controller which will be tested.</value>
         public object Controller => this.TestContext.Component;
 
         /// <summary>
-        /// Gets the component attributes which will be tested.
+        /// Gets the controller attributes which will be tested.
         /// </summary>
-        /// <value>Component attributes which will be tested.</value>
-        public IEnumerable<object> ControllerLevelAttributes => this.TestContext.ComponentAttributes;
+        /// <value>Controller attributes which will be tested.</value>
+        public IEnumerable<object> ControllerAttributes => this.TestContext.ComponentAttributes;
 
         /// <summary>
         /// Gets the currently used <see cref="ControllerTestContext"/>.

@@ -58,26 +58,6 @@
         }
 
         [Fact]
-        public void CallingShouldHaveValidModelStateWhenThereAreNoModelErrors()
-        {
-            var requestModel = TestObjectFactory.GetValidRequestModel();
-
-            MyController<MvcController>
-                .Instance()
-                .Calling(c => c.OkResultActionWithRequestBody(1, requestModel))
-                .ShouldReturn()
-                .Ok()
-                .ShouldPassForThe<MvcController>(controller =>
-                {
-                    var modelState = controller.ModelState;
-
-                    Assert.True(modelState.IsValid);
-                    Assert.Equal(0, modelState.Values.Count());
-                    Assert.Equal(0, modelState.Keys.Count());
-                });
-        }
-
-        [Fact]
         public void WithAuthenticatedNotCalledShouldNotHaveAuthorizedUser()
         {
             MyController<MvcController>
@@ -87,7 +67,7 @@
                 .NotFound()
                 .ShouldPassForThe<MvcController>(controller =>
                 {
-                    var controllerUser = (controller as Controller).User;
+                    var controllerUser = controller.User;
 
                     Assert.Equal(false, controllerUser.IsInRole("Any"));
                     Assert.Equal(null, controllerUser.Identity.Name);
@@ -157,7 +137,7 @@
         [Fact]
         public void NormalIndexOutOfRangeExceptionShouldShowNormalMessage()
         {
-            Assert.Throws<ActionCallAssertionException>(
+            Assert.Throws<InvocationAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
@@ -258,7 +238,22 @@
                     Assert.NotNull(controller.ObjectValidator);
                     Assert.NotNull(controller.Url);
                     Assert.NotNull(controller.User);
-                    Assert.Null(controller.ControllerContext.ActionDescriptor);
+                    Assert.NotNull(controller.ControllerContext.ActionDescriptor);
+                    Assert.NotNull(controller.ControllerContext.ValueProviderFactories);
+                    Assert.Empty(controller.ControllerContext.ValueProviderFactories);
+                    Assert.NotNull(controller.ControllerContext.ActionDescriptor.ActionConstraints);
+                    Assert.Empty(controller.ControllerContext.ActionDescriptor.ActionConstraints);
+                    Assert.NotNull(controller.ControllerContext.ActionDescriptor.AttributeRouteInfo);
+                    Assert.NotNull(controller.ControllerContext.ActionDescriptor.BoundProperties);
+                    Assert.Empty(controller.ControllerContext.ActionDescriptor.BoundProperties);
+                    Assert.NotNull(controller.ControllerContext.ActionDescriptor.FilterDescriptors);
+                    Assert.Empty(controller.ControllerContext.ActionDescriptor.FilterDescriptors);
+                    Assert.NotNull(controller.ControllerContext.ActionDescriptor.Parameters);
+                    Assert.Empty(controller.ControllerContext.ActionDescriptor.Parameters);
+                    Assert.NotNull(controller.ControllerContext.ActionDescriptor.Properties);
+                    Assert.Empty(controller.ControllerContext.ActionDescriptor.Properties);
+                    Assert.NotNull(controller.ControllerContext.ActionDescriptor.RouteValues);
+                    Assert.Empty(controller.ControllerContext.ActionDescriptor.RouteValues);
                 });
         }
 

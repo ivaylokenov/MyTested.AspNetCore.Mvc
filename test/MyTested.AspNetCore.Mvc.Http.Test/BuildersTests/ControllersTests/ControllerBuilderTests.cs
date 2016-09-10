@@ -6,7 +6,9 @@
     using Internal.Http;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Primitives;
+    using Setups;
     using Setups.Controllers;
+    using Exceptions;
 
     public class ControllerBuilderTests
     {
@@ -39,7 +41,7 @@
                 .ShouldPassForThe<MvcController>(controller =>
                 {
                     Assert.Equal("Custom", controller.HttpContext.Request.Scheme);
-                    Assert.IsAssignableFrom<MockedHttpResponse>(controller.HttpContext.Response);
+                    Assert.IsAssignableFrom<HttpResponseMock>(controller.HttpContext.Response);
                     Assert.Same(httpContext.Response.Body, controller.HttpContext.Response.Body);
                     Assert.Equal(httpContext.Response.ContentLength, controller.HttpContext.Response.ContentLength);
                     Assert.Equal(httpContext.Response.ContentType, controller.HttpContext.Response.ContentType);
@@ -53,7 +55,7 @@
                 .ShouldPassForThe<HttpContext>(setHttpContext =>
                 {
                     Assert.Equal("Custom", setHttpContext.Request.Scheme);
-                    Assert.IsAssignableFrom<MockedHttpResponse>(setHttpContext.Response);
+                    Assert.IsAssignableFrom<HttpResponseMock>(setHttpContext.Response);
                     Assert.Same(httpContext.Response.Body, setHttpContext.Response.Body);
                     Assert.Equal(httpContext.Response.ContentLength, setHttpContext.Response.ContentLength);
                     Assert.Equal(httpContext.Response.ContentType, setHttpContext.Response.ContentType);
@@ -105,7 +107,7 @@
         [Fact]
         public void WithRequestAsObjectShouldWorkWithSetRequestAction()
         {
-            var httpContext = new MockedHttpContext();
+            var httpContext = new HttpContextMock();
             httpContext.Request.Form = new FormCollection(new Dictionary<string, StringValues> { ["Test"] = "TestValue" });
 
             MyController<MvcController>
@@ -116,5 +118,41 @@
                 .Ok();
         }
 
+        [Fact]
+        public void HttpResponseAssertionsShouldWorkCorrectly()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.FullOkAction())
+                .ShouldReturn()
+                .Ok()
+                .ShouldPassForThe<HttpResponse>(response =>
+                {
+                    Assert.NotNull(response);
+                });
+        }
+
+        [Fact]
+        public void HttpResponsePredicateShouldWorkCorrectly()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.FullOkAction())
+                .ShouldPassForThe<HttpResponse>(response => response != null);
+        }
+
+        [Fact]
+        public void HttpResponsePredicateShouldThrowExceptionWithInvalidTest()
+        {
+            Test.AssertException<InvalidAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.FullOkAction())
+                        .ShouldPassForThe<HttpResponse>(response => response == null);
+                },
+                "Expected HttpResponse to pass the given predicate but it failed.");
+        }
     }
 }

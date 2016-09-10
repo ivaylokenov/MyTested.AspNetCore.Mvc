@@ -10,6 +10,7 @@
     using Setups.Controllers;
     using Setups.Models;
     using Xunit;
+    using Setups.ViewComponents;
 
     public class SessionBuilderTests
     {
@@ -89,15 +90,15 @@
                 {
                     MyController<MvcController>
                         .Instance()
-                        .WithSession((Action<Builders.Contracts.Data.ISessionBuilder>)(session => session
+                        .WithSession(session => session
                             .WithId("TestId")
-                            .WithEntry("HasId", "HasIdValue")))
+                            .WithEntry("HasId", "HasIdValue"))
                         .Calling(c => c.FullSessionAction())
                         .ShouldReturn()
                         .Ok()
                         .WithModel("TestId");
                 },
-                "Setting session Id requires the registered ISession service to implement IMockedSession.");
+                "Setting session Id requires the registered ISession service to implement ISessionMock.");
 
             MyApplication.IsUsingDefaultConfiguration();
         }
@@ -252,6 +253,55 @@
                 .ShouldReturn()
                 .Ok()
                 .WithModel(1);
+
+            MyApplication.IsUsingDefaultConfiguration();
+        }
+        
+        [Fact]
+        public void WithIdShouldSetIdCorrectlyInViewComponent()
+        {
+            MyApplication
+                .IsUsingDefaultConfiguration()
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
+                    services.AddSession();
+                });
+
+            MyViewComponent<FullSessionComponent>
+                .Instance()
+                .WithSession(session => session
+                    .WithId("TestId")
+                    .AndAlso()
+                    .WithEntry("HasId", "HasIdValue"))
+                .InvokedWith(c => c.Invoke())
+                .ShouldReturn()
+                .Content("TestId");
+
+            MyApplication.IsUsingDefaultConfiguration();
+        }
+        
+        [Fact]
+        public void WithEntryShouldSetCorrectEntryInViewComponent()
+        {
+            MyApplication
+                .IsUsingDefaultConfiguration()
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
+                    services.AddSession();
+                });
+
+            MyViewComponent<FullSessionComponent>
+                .Instance()
+                .WithSession(session => session
+                    .WithEntry("ByteEntry", new byte[] { 1, 2, 3 }))
+                .InvokedWith(c => c.Invoke())
+                .ShouldReturn()
+                .View()
+                .WithModel(new byte[] { 1, 2, 3 });
 
             MyApplication.IsUsingDefaultConfiguration();
         }

@@ -8,7 +8,6 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.Net.Http.Headers;
-    using Utilities.Extensions;
 
     /// <summary>
     /// Used for testing status code result.
@@ -129,7 +128,7 @@
         
         private void ValidateObjectResult()
         {
-            var objectResult = this.ActionResult as ObjectResult;
+            var objectResult = this.TestContext.MethodResult as ObjectResult;
             if (objectResult == null)
             {
                 this.ThrowNewStatusCodeResultAssertionException("to inherit", nameof(ObjectResult), "in fact it did not");
@@ -139,12 +138,11 @@
         private void ThrowNewStatusCodeResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new StatusCodeResultAssertionException(string.Format(
-                    "When calling {0} action in {1} expected status code result {2} {3}, but {4}.",
-                    this.ActionName,
-                    this.Controller.GetName(),
-                    propertyName,
-                    expectedValue,
-                    actualValue));
+                "{0} status code result {1} {2}, but {3}.",
+                this.TestContext.ExceptionMessagePrefix,
+                propertyName,
+                expectedValue,
+                actualValue));
         }
     }
 }

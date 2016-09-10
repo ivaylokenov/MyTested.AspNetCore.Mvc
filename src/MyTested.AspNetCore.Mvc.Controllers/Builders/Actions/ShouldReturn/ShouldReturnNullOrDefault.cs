@@ -20,7 +20,7 @@
                     "the default value of {0}, but in fact it was not.",
                     typeof(TActionResult).ToFriendlyTypeName()));
             }
-
+            
             return this.NewAndTestBuilderWithActionResult();
         }
 
@@ -59,11 +59,11 @@
 
         private void ThrowNewActionResultAssertionException(string message)
         {
-            throw new ActionResultAssertionException(string.Format(
-                    "When calling {0} action in {1} expected action result to be {2}",
-                    this.ActionName,
-                    this.Controller.GetName(),
-                    message));
+            throw new InvocationResultAssertionException(string.Format(
+                "When calling {0} action in {1} expected action result to be {2}",
+                this.ActionName,
+                this.Controller.GetName(),
+                message));
         }
     }
 }

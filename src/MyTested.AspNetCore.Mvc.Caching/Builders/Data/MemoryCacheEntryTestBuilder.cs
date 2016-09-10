@@ -23,7 +23,7 @@
         /// <param name="testContext"><see cref="ComponentTestContext"/> containing data about the currently executed assertion chain.</param>
         public MemoryCacheEntryTestBuilder(ComponentTestContext testContext)
         {
-            CommonValidator.CheckForNullReference(testContext, nameof(testContext));
+            CommonValidator.CheckForNullReference(testContext, nameof(ComponentTestContext));
 
             this.validations = new List<Action<ICacheEntry, ICacheEntry>>();
             this.TestContext = testContext;
@@ -156,15 +156,14 @@
         /// <inheritdoc />
         public new IMemoryCacheEntryTestBuilder AndAlso() => this;
 
-        internal ICollection<Action<ICacheEntry, ICacheEntry>> GetMockedMemoryCacheEntryValidations()
+        internal ICollection<Action<ICacheEntry, ICacheEntry>> GetMemoryCacheEntryMockValidations()
             => this.validations;
 
         internal void ThrowNewDataProviderAssertionException(string expectedValue, string actualValue)
         {
             throw new DataProviderAssertionException(string.Format(
-                "When calling {0} action in {1} expected memory cache {2}, but {3}.",
-                this.TestContext.MethodName,
-                this.TestContext.Component.GetName(),
+                "{0} memory cache {1}, but {2}.",
+                this.TestContext.ExceptionMessagePrefix,
                 expectedValue,
                 actualValue));
         }

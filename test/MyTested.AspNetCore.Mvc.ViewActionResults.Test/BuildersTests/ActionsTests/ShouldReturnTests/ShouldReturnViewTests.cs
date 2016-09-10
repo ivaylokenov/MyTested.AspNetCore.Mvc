@@ -30,7 +30,7 @@
         [Fact]
         public void ShouldReturnViewShouldThrowExceptionIfActionResultIsNotViewResult()
         {
-            Test.AssertException<ActionResultAssertionException>(
+            Test.AssertException<InvocationResultAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
@@ -39,7 +39,7 @@
                        .ShouldReturn()
                        .View();
                 },
-                "When calling BadRequestAction action in MvcController expected action result to be ViewResult, but instead received BadRequestResult.");
+                "When calling BadRequestAction action in MvcController expected result to be ViewResult, but instead received BadRequestResult.");
         }
 
         [Fact]
@@ -120,7 +120,7 @@
         [Fact]
         public void ShouldReturnPartialViewShouldThrowExceptionIfActionResultIsNotPartialViewResult()
         {
-            Test.AssertException<ActionResultAssertionException>(
+            Test.AssertException<InvocationResultAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
@@ -129,7 +129,7 @@
                        .ShouldReturn()
                        .PartialView();
                 },
-                "When calling DefaultView action in MvcController expected action result to be PartialViewResult, but instead received ViewResult.");
+                "When calling DefaultView action in MvcController expected result to be PartialViewResult, but instead received ViewResult.");
         }
         
         [Fact]

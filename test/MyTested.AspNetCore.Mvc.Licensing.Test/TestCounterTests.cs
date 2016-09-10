@@ -9,7 +9,7 @@
     public class TestCounterTests
     {
         [Fact]
-        public void IncrementAndValidateShouldThrowExceptionWithNoLicense()
+        public void IncrementAndValidateShouldThrowExceptionWithNullLicense()
         {
             Exception caughtException = null;
 
@@ -17,6 +17,44 @@
             {
                 LicenseValidator.ClearLicenseDetails();
                 TestCounter.SetLicenseData(null, new DateTime(2018, 10, 10), "MyTested.AspNetCore.Mvc.Tests");
+
+                var tasks = new List<Task>();
+
+                for (int i = 0; i < 1000; i++)
+                {
+                    tasks.Add(Task.Run(() =>
+                    {
+                        TestCounter.IncrementAndValidate();
+                    }));
+                }
+
+                try
+                {
+                    await Task.WhenAll(tasks);
+                }
+                catch (Exception ex)
+                {
+                    caughtException = ex;
+                }
+            })
+            .ConfigureAwait(false)
+            .GetAwaiter()
+            .GetResult();
+
+            Assert.NotNull(caughtException);
+            Assert.IsAssignableFrom<InvalidLicenseException>(caughtException);
+            Assert.Equal("The free-quota limit of 500 assertions per test project has been reached. Please visit https://mytestedasp.net/core/mvc#pricing to request a free license or upgrade to a commercial one.", caughtException.Message);
+        }
+
+        [Fact]
+        public void IncrementAndValidateShouldThrowExceptionWithNoLicense()
+        {
+            Exception caughtException = null;
+
+            Task.Run(async () =>
+            {
+                LicenseValidator.ClearLicenseDetails();
+                TestCounter.SetLicenseData(new string[0], new DateTime(2018, 10, 10), "MyTested.AspNetCore.Mvc.Tests");
 
                 var tasks = new List<Task>();
 

@@ -4,7 +4,7 @@
     using Microsoft.AspNetCore.Mvc.Controllers;
 
     /// <summary>
-    /// Caches controller action descriptors by MethodInfo.
+    /// Caches controller action descriptors by <see cref="MethodInfo"/>.
     /// </summary>
     public interface IControllerActionDescriptorCache
     {

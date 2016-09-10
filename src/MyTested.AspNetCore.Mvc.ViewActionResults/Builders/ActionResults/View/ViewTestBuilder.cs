@@ -43,7 +43,7 @@
         public IAndViewTestBuilder WithStatusCode(HttpStatusCode statusCode)
         {
             HttpStatusCodeValidator.ValidateHttpStatusCode(
-                this.ActionResult,
+                this.TestContext.MethodResult,
                 statusCode,
                 this.ThrowNewViewResultAssertionException);
 
@@ -54,7 +54,7 @@
         public IAndViewTestBuilder WithContentType(string contentType)
         {
             ContentTypeValidator.ValidateContentType(
-                this.ActionResult,
+                this.TestContext.MethodResult,
                 contentType,
                 this.ThrowNewViewResultAssertionException);
 
@@ -119,7 +119,7 @@
             IViewEngine viewEngine = null;
             RuntimeBinderValidator.ValidateBinding(() =>
             {
-                viewEngine = this.GetActionResultAsDynamic().ViewEngine;
+                viewEngine = this.TestContext.MethodResult.AsDynamic()?.ViewEngine;
             });
 
             return viewEngine;
@@ -134,13 +134,12 @@
         protected void ThrowNewViewResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new ViewResultAssertionException(string.Format(
-                    "When calling {0} action in {1} expected {2} result {3} {4}, but {5}.",
-                    this.ActionName,
-                    this.Controller.GetName(),
-                    this.viewType,
-                    propertyName,
-                    expectedValue,
-                    actualValue));
+                "{0} {1} result {2} {3}, but {4}.",
+                this.TestContext.ExceptionMessagePrefix,
+                this.viewType,
+                propertyName,
+                expectedValue,
+                actualValue));
         }
     }
 }

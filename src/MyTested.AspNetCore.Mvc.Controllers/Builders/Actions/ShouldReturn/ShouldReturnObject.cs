@@ -3,6 +3,7 @@
     using ActionResults.Object;
     using Contracts.ActionResults.Object;
     using Microsoft.AspNetCore.Mvc;
+    using Utilities.Validators;
 
     /// <content>
     /// Class containing methods for testing <see cref="ObjectResult"/>.
@@ -12,7 +13,7 @@
         /// <inheritdoc />
         public IObjectTestBuilder Object()
         {
-            this.TestContext.MethodResult = this.GetReturnObject<ObjectResult>();
+            InvocationResultValidator.ValidateInvocationResultType<ObjectResult>(this.TestContext);
             return new ObjectTestBuilder(this.TestContext);
         }
     }

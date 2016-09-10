@@ -78,6 +78,5 @@
 
             MyApplication.IsUsingDefaultConfiguration();
         }
-
     }
 }

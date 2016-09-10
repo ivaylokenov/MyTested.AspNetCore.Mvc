@@ -3,6 +3,7 @@
     using ActionResults.BadRequest;
     using Contracts.ActionResults.BadRequest;
     using Microsoft.AspNetCore.Mvc;
+    using Utilities.Validators;
 
     /// <content>
     /// Class containing methods for testing <see cref="BadRequestResult"/> or <see cref="BadRequestObjectResult"/>.
@@ -23,7 +24,7 @@
         private IBadRequestTestBuilder ReturnBadRequestTestBuilder<TBadRequestResult>()
             where TBadRequestResult : ActionResult
         {
-            this.TestContext.MethodResult = this.GetReturnObject<TBadRequestResult>();
+            InvocationResultValidator.ValidateInvocationResultType<TBadRequestResult>(this.TestContext);
             return new BadRequestTestBuilder<TBadRequestResult>(this.TestContext);
         }
     }

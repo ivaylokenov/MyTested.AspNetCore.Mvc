@@ -20,7 +20,7 @@
         [Fact]
         public void ShouldReturnOkWithAsyncShouldThrowExceptionIfActionThrowsExceptionWithDefaultReturnValue()
         {
-            Test.AssertException<ActionCallAssertionException>(
+            Test.AssertException<InvocationAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
@@ -28,14 +28,14 @@
                         .Calling(c => c.ActionWithExceptionAsync())
                         .ShouldReturn()
                         .Ok();
-                }, 
-                "AggregateException (containing NullReferenceException with 'Test exception message' message) was thrown but was not caught or expected.");
+                },
+                "When calling ActionWithExceptionAsync action in MvcController expected no exception but AggregateException (containing NullReferenceException with 'Test exception message' message) was thrown without being caught.");
         }
 
         [Fact]
         public void ShouldReturnOkResultShouldThrowExceptionWithOtherThanOkResult()
         {
-            Test.AssertException<ActionResultAssertionException>(
+            Test.AssertException<InvocationResultAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
@@ -44,13 +44,13 @@
                         .ShouldReturn()
                         .Ok();
                 }, 
-                "When calling BadRequestAction action in MvcController expected action result to be OkResult, but instead received BadRequestResult.");
+                "When calling BadRequestAction action in MvcController expected result to be OkResult, but instead received BadRequestResult.");
         }
 
         [Fact]
         public void ShouldReturnOkResultShouldThrowExceptionWithInheritedOkResult()
         {
-            Test.AssertException<ActionResultAssertionException>(
+            Test.AssertException<InvocationResultAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
@@ -59,7 +59,7 @@
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling CustomActionResult action in MvcController expected action result to be OkResult, but instead received CustomActionResult.");
+                "When calling CustomActionResult action in MvcController expected result to be OkResult, but instead received CustomActionResult.");
         }
     }
 }

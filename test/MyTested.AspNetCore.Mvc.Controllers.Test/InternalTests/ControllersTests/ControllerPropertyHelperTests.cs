@@ -43,7 +43,7 @@
                 {
                     var gotActionContext = helper.ActionContextGetter(controller);
                 },
-                "ActionContext could not be found on the provided MvcController. The property should be specified manually by providing controller instance or using the specified helper methods.");
+                "ActionContext could not be found on the provided MvcController. The property should be specified manually by providing component instance or using the specified helper methods.");
         }
 
         [Fact]

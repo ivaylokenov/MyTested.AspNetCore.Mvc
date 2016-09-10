@@ -15,7 +15,7 @@
     {
         private static readonly ConcurrentDictionary<MethodInfo, ControllerActionDescriptor> Cache =
             new ConcurrentDictionary<MethodInfo, ControllerActionDescriptor>();
-
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="ControllerActionDescriptorCache"/> class.
         /// </summary>
@@ -25,16 +25,12 @@
             this.PrepareCache(provider);
         }
 
-        /// <summary>
-        /// Gets the controller action descriptor for the provided method info.
-        /// </summary>
-        /// <param name="methodInfo">Method info of the controller action descriptor to get.</param>
-        /// <returns>Controller action descriptor.</returns>
+        /// <inheritdoc />
         public ControllerActionDescriptor GetActionDescriptor(MethodInfo methodInfo)
         {
             if (!Cache.Any())
             {
-                throw new InvalidOperationException("Controller actions could not be found by the MVC application. Controllers may need to be added as services by calling 'AddMvc().AddControllersAsServices()' or 'AddMvcControllersAsServices()' on the service collection.");
+                throw new InvalidOperationException("Controller actions could not be found by the MVC application. Controllers may need to be added as services by calling 'AddMvc().AddControllersAsServices()' on the service collection. You may also add the external controllers assembly as an application part by calling 'AddMvc().AddApplicationPart()'.");
             }
 
             return this.TryGetActionDescriptor(methodInfo);

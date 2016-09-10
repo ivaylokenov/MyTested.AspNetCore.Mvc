@@ -5,9 +5,8 @@
     using System.Linq;
     using Base;
     using Internal.TestContexts;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
     using Utilities;
+    using Exceptions;
     using Utilities.Extensions;
 
     /// <summary>
@@ -37,7 +36,7 @@
         }
 
         /// <summary>
-        /// Tests whether the action attributes contain the provided attribute type.
+        /// Tests whether the attributes contain the provided attribute type.
         /// </summary>
         /// <typeparam name="TAttribute">Type of expected attribute.</typeparam>
         /// <param name="failedValidationAction">Action to execute, if the validation fails.</param>
@@ -54,76 +53,6 @@
                         "in fact such was not found");
                 }
             });
-        }
-
-        /// <summary>
-        /// Tests whether the action attributes contain RouteAttribute.
-        /// </summary>
-        /// <param name="template">Expected overridden route template of the action.</param>
-        /// <param name="failedValidationAction">Action to execute, if the validation fails.</param>
-        /// <param name="withName">Optional expected route name.</param>
-        /// <param name="withOrder">Optional expected route order.</param>
-        protected void ChangingRouteTo(
-            string template,
-            Action<string, string> failedValidationAction,
-            string withName = null,
-            int? withOrder = null)
-        {
-            this.ContainingAttributeOfType<RouteAttribute>(failedValidationAction);
-            this.Validations.Add(attrs =>
-            {
-                var routeAttribute = this.TryGetAttributeOfType<RouteAttribute>(attrs);
-                var actualTemplate = routeAttribute.Template;
-                if (!string.Equals(template, actualTemplate, StringComparison.OrdinalIgnoreCase))
-                {
-                    failedValidationAction(
-                        $"{routeAttribute.GetName()} with '{template}' template",
-                        $"in fact found '{actualTemplate}'");
-                }
-
-                var actualName = routeAttribute.Name;
-                if (!string.IsNullOrEmpty(withName) && withName != actualName)
-                {
-                    failedValidationAction(
-                        $"{routeAttribute.GetName()} with '{withName}' name",
-                        $"in fact found '{actualName}'");
-                }
-
-                var actualOrder = routeAttribute.Order;
-                if (withOrder.HasValue && withOrder != actualOrder)
-                {
-                    failedValidationAction(
-                        $"{routeAttribute.GetName()} with order of {withOrder}",
-                        $"in fact found {actualOrder}");
-                }
-            });
-        }
-
-        /// <summary>
-        /// Tests whether the action attributes contain <see cref="Microsoft.AspNetCore.Authorization.AuthorizeAttribute"/>.
-        /// </summary>
-        /// <param name="failedValidationAction">Action to execute, if the validation fails.</param>
-        /// <param name="withAllowedRoles">Optional expected authorized roles.</param>
-        protected void RestrictingForAuthorizedRequests(
-            Action<string, string> failedValidationAction,
-            string withAllowedRoles = null)
-        {
-            this.ContainingAttributeOfType<AuthorizeAttribute>(failedValidationAction);
-            var testAllowedRoles = !string.IsNullOrEmpty(withAllowedRoles);
-            if (testAllowedRoles)
-            {
-                this.Validations.Add(attrs =>
-                {
-                    var authorizeAttribute = this.GetAttributeOfType<AuthorizeAttribute>(attrs);
-                    var actualRoles = authorizeAttribute.Roles;
-                    if (withAllowedRoles != actualRoles)
-                    {
-                        failedValidationAction(
-                            $"{authorizeAttribute.GetName()} with allowed '{withAllowedRoles}' roles",
-                            $"in fact found '{actualRoles}'");
-                    }
-                });
-            }
         }
 
         /// <summary>
@@ -148,6 +77,15 @@
             where TAttribute : Attribute
         {
             return attributes.FirstOrDefault(a => a.GetType() == typeof(TAttribute)) as TAttribute;
+        }
+        
+        protected virtual void ThrowNewAttributeAssertionException(string expectedValue, string actualValue)
+        {
+            throw new AttributeAssertionException(string.Format(
+                "When testing {0} was expected to have {1}, but {2}.",
+                this.TestContext.Component.GetName(),
+                expectedValue,
+                actualValue));
         }
     }
 }

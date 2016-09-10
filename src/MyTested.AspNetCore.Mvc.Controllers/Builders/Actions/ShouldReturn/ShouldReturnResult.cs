@@ -2,10 +2,8 @@
 {
     using System;
     using Contracts.Models;
-    using Exceptions;
     using Models;
-    using Utilities;
-    using Utilities.Extensions;
+    using Utilities.Validators;
 
     /// <content>
     /// Class containing methods for testing return type.
@@ -15,36 +13,22 @@
         /// <inheritdoc />
         public IAndModelDetailsTestBuilder<TActionResult> ResultOfType(Type returnType)
         {
-            this.ValidateActionReturnType(returnType, true, true);
+            InvocationResultValidator.ValidateInvocationResultType(this.TestContext, returnType, true, true);
             return new ModelDetailsTestBuilder<TActionResult>(this.TestContext);
         }
 
         /// <inheritdoc />
-        public IAndModelDetailsTestBuilder<TActionResult> ResultOfType<TResponseModel>()
+        public IAndModelDetailsTestBuilder<TResult> ResultOfType<TResult>()
         {
-            this.ValidateActionReturnType<TResponseModel>(true);
-            return new ModelDetailsTestBuilder<TActionResult>(this.TestContext);
+            InvocationResultValidator.ValidateInvocationResultType<TResult>(this.TestContext, true);
+            return new ModelDetailsTestBuilder<TResult>(this.TestContext);
         }
 
         /// <inheritdoc />
-        public IAndModelDetailsTestBuilder<TActionResult> Result<TResponseModel>(TResponseModel model)
+        public IAndModelDetailsTestBuilder<TResult> Result<TResult>(TResult model)
         {
-            this.ValidateActionReturnType<TResponseModel>();
-
-            if (Reflection.AreNotDeeplyEqual(model, this.ActionResult))
-            {
-                throw new ResponseModelAssertionException($"When calling {this.ActionName} action in {this.Controller.GetName()} expected the response model to be the given model, but in fact it was a different one.");
-            }
-
-            this.TestContext.Model = model;
-            return new ModelDetailsTestBuilder<TActionResult>(this.TestContext);
-        }
-
-        public TReturnObject GetReturnObject<TReturnObject>()
-            where TReturnObject : class
-        {
-            this.ValidateActionReturnType<TReturnObject>();
-            return this.ActionResult as TReturnObject;
+            InvocationResultValidator.ValidateInvocationResult(this.TestContext, model);
+            return new ModelDetailsTestBuilder<TResult>(this.TestContext);
         }
     }
 }

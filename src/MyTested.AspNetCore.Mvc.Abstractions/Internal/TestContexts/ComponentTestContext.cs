@@ -18,7 +18,7 @@
         private LambdaExpression methodCall;
         private IEnumerable<object> methodAttributes;
         private object model;
-
+        
         public object Component
         {
             get
@@ -141,7 +141,7 @@
         public Action ComponentPreparationDelegate { get; set; }
 
         public Action PreMethodInvocationDelegate { get; set; }
-
+        
         public TComponent ComponentAs<TComponent>()
             where TComponent : class => this.Component as TComponent;
 
@@ -151,5 +151,13 @@
             where TException : Exception => this.CaughtException as TException;
 
         public TModel ModelAs<TModel>() => this.Model.TryCastTo<TModel>();
+        
+        public void Apply<TMethodResult>(InvocationTestContext<TMethodResult> invocationTestContext)
+        {
+            this.MethodName = invocationTestContext.MethodName;
+            this.MethodCall = invocationTestContext.MethodCall;
+            this.MethodResult = invocationTestContext.MethodResult;
+            this.CaughtException = invocationTestContext.CaughtException;
+        }
     }
 }

@@ -24,7 +24,7 @@
         {
             base.ConfigureServices(services);
             
-            services.ReplaceSingleton<SignInManager<ApplicationUser>, MockedSignInManager>();
+            services.ReplaceSingleton<SignInManager<ApplicationUser>, SignInManagerMock>();
 
             // temporary workaround while DependencyContext issues are fixed for .NET 4.5.1
             // controller type validation is also removed for .NET 4.5.1
@@ -37,10 +37,11 @@
             TestHelper.HttpFeatureRegistrationPlugins.Add(new SessionTestPlugin());
 
             TestHelper.ShouldPassForPlugins.Add(new AbstractionsTestPlugin());
+            TestHelper.ShouldPassForPlugins.Add(new HttpTestPlugin());
             TestHelper.ShouldPassForPlugins.Add(new ControllersTestPlugin());
 
             services
-                .AddMvcTesting()
+                .AddMvcUniverseTesting()
                 .AddRoutingTesting();
 #endif
         }

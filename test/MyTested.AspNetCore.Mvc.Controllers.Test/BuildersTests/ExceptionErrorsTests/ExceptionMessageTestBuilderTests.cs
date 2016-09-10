@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ExceptionErrorsTests
+﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.CaughtExceptionsTests
 {
     using System;
     using Exceptions;

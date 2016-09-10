@@ -335,7 +335,7 @@
         {
             MyApplication.IsUsingDefaultConfiguration();
 
-            var httpContext = new MockedHttpContext();
+            var httpContext = new HttpContextMock();
             httpContext.Request.Path = new PathString(url);
             httpContext.Request.QueryString = new QueryString(queryString);
             httpContext.Request.Method = method;

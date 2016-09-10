@@ -29,7 +29,7 @@
             stream.Restart();
 
             // formatters do not support non HTTP context processing
-            var httpContext = new MockedHttpContext();
+            var httpContext = new HttpContextMock();
             httpContext.Request.Body = stream;
             httpContext.Request.ContentType = contentType;
 
@@ -68,7 +68,7 @@
         public static Stream WriteToStream<TBody>(TBody value, string contentType, Encoding encoding)
         {
             // formatters do not support non HTTP context processing
-            var httpContext = new MockedHttpContext();
+            var httpContext = new HttpContextMock();
             httpContext.Response.Body = new MemoryStream();
 
             var outputFormatterCanWriteContext = new OutputFormatterWriteContext(

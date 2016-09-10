@@ -3,6 +3,7 @@
     using ActionResults.Challenge;
     using Contracts.ActionResults.Challenge;
     using Microsoft.AspNetCore.Mvc;
+    using Utilities.Validators;
 
     /// <content>
     /// Class containing methods for testing <see cref="ChallengeResult"/>.
@@ -12,7 +13,7 @@
         /// <inheritdoc />
         public IChallengeTestBuilder Challenge()
         {
-            this.TestContext.MethodResult = this.GetReturnObject<ChallengeResult>();
+            InvocationResultValidator.ValidateInvocationResultType<ChallengeResult>(this.TestContext);
             return new ChallengeTestBuilder(this.TestContext);
         }
     }

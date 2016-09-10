@@ -3,6 +3,7 @@
     using ActionResults.HttpNotFound;
     using Contracts.ActionResults.NotFound;
     using Microsoft.AspNetCore.Mvc;
+    using Utilities.Validators;
 
     /// <content>
     /// Class containing methods for testing <see cref="NotFoundResult"/> or <see cref="NotFoundObjectResult"/>.
@@ -23,7 +24,7 @@
         private INotFoundTestBuilder ReturnNotFoundTestBuilder<TNotFoundResult>()
             where TNotFoundResult : ActionResult
         {
-            this.TestContext.MethodResult = this.GetReturnObject<TNotFoundResult>();
+            InvocationResultValidator.ValidateInvocationResultType<TNotFoundResult>(this.TestContext);
             return new NotFoundTestBuilder<TNotFoundResult>(this.TestContext);
         }
     }

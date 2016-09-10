@@ -55,7 +55,7 @@
             if (actualModelErrorTestBuilder.ModelState.ContainsKey(memberName))
             {
                 actualModelErrorTestBuilder.ThrowNewModelErrorAssertionException(
-                    "When calling {0} action in {1} expected to have no model errors against key {2}, but found some.",
+                    "{0} to have no model errors against key {1}, but found some.",
                     memberName);
             }
 

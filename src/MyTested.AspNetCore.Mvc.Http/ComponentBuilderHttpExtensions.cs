@@ -69,7 +69,7 @@
 
             var actualBuilder = (BaseTestBuilderWithComponentBuilder<TBuilder>)builder;
 
-            actualBuilder.TestContext.MockedHttpContext.CustomRequest = httpRequest;
+            actualBuilder.TestContext.HttpContextMock.CustomRequest = httpRequest;
 
             return actualBuilder.Builder;
         }

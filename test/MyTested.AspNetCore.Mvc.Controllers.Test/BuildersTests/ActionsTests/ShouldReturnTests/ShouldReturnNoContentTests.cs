@@ -20,7 +20,7 @@
         [Fact]
         public void ShouldReturnNoContentShouldThrowExceptionWhenActionDoesNotReturnNoContentResult()
         {
-            Test.AssertException<ActionResultAssertionException>(
+            Test.AssertException<InvocationResultAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
@@ -29,7 +29,7 @@
                         .ShouldReturn()
                         .NoContent();
                 },
-                "When calling BadRequestAction action in MvcController expected action result to be NoContentResult, but instead received BadRequestResult.");
+                "When calling BadRequestAction action in MvcController expected result to be NoContentResult, but instead received BadRequestResult.");
         }
     }
 }

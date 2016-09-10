@@ -9,16 +9,8 @@
     /// <summary>
     /// Used for testing action attributes.
     /// </summary>
-    public interface IActionAttributesTestBuilder
+    public interface IActionAttributesTestBuilder : IBaseAttributesTestBuilder<IAndActionAttributesTestBuilder>
     {
-        /// <summary>
-        /// Tests whether the action attributes contain the provided attribute type.
-        /// </summary>
-        /// <typeparam name="TAttribute">Type of expected attribute.</typeparam>
-        /// <returns>The same <see cref="IAndActionAttributesTestBuilder"/>.</returns>
-        IAndActionAttributesTestBuilder ContainingAttributeOfType<TAttribute>()
-            where TAttribute : Attribute;
-
         /// <summary>
         /// Tests whether the action attributes contain <see cref="Microsoft.AspNetCore.Mvc.ActionNameAttribute"/>.
         /// </summary>

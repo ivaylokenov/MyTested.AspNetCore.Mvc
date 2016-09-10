@@ -86,8 +86,8 @@
         {
             var model = new LoginViewModel
             {
-                Email = MockedSignInManager.ValidUser,
-                Password = MockedSignInManager.ValidUser
+                Email = SignInManagerMock.ValidUser,
+                Password = SignInManagerMock.ValidUser
             };
             
             MyMvc
@@ -107,8 +107,8 @@
         {
             var model = new LoginViewModel
             {
-                Email = MockedSignInManager.ValidUser,
-                Password = MockedSignInManager.ValidUser
+                Email = SignInManagerMock.ValidUser,
+                Password = SignInManagerMock.ValidUser
             };
 
             var returnUrl = "/Store/Index";
@@ -128,8 +128,8 @@
         {
             var model = new LoginViewModel
             {
-                Email = MockedSignInManager.TwoFactorRequired,
-                Password = MockedSignInManager.TwoFactorRequired,
+                Email = SignInManagerMock.TwoFactorRequired,
+                Password = SignInManagerMock.TwoFactorRequired,
                 RememberMe = true
             };
 
@@ -150,8 +150,8 @@
         {
             var model = new LoginViewModel
             {
-                Email = MockedSignInManager.LockedOutUser,
-                Password = MockedSignInManager.LockedOutUser
+                Email = SignInManagerMock.LockedOutUser,
+                Password = SignInManagerMock.LockedOutUser
             };
 
             MyMvc

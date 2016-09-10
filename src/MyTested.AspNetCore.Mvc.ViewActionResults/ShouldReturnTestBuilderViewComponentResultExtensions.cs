@@ -5,9 +5,10 @@
     using Builders.Actions.ShouldReturn;
     using Builders.Contracts.ActionResults.View;
     using Builders.Contracts.Actions;
-    using Internal;
     using Microsoft.AspNetCore.Mvc;
     using Utilities;
+    using Utilities.Validators;
+    using Exceptions;
 
     /// <summary>
     /// Contains <see cref="ViewComponentResult"/> extension methods for <see cref="IShouldReturnTestBuilder{TActionResult}"/>.
@@ -23,8 +24,8 @@
         public static IViewComponentTestBuilder ViewComponent<TActionResult>(this IShouldReturnTestBuilder<TActionResult> shouldReturnTestBuilder)
         {
             var actualShouldReturnTestBuilder = (ShouldReturnTestBuilder<TActionResult>)shouldReturnTestBuilder;
-
-            actualShouldReturnTestBuilder.TestContext.MethodResult = actualShouldReturnTestBuilder.GetReturnObject<ViewComponentResult>();
+            
+            InvocationResultValidator.ValidateInvocationResultType<ViewComponentResult>(actualShouldReturnTestBuilder.TestContext);
 
             return new ViewComponentTestBuilder(actualShouldReturnTestBuilder.TestContext);
         }
@@ -42,19 +43,20 @@
         {
             var actualShouldReturnTestBuilder = (ShouldReturnTestBuilder<TActionResult>)shouldReturnTestBuilder;
 
-            var viewComponentResult = actualShouldReturnTestBuilder.GetReturnObject<ViewComponentResult>();
+            var viewComponentResult = InvocationResultValidator
+                .GetInvocationResult<ViewComponentResult>(actualShouldReturnTestBuilder.TestContext);
+
             var actualViewComponentName = viewComponentResult.ViewComponentName;
 
             if (viewComponentName != actualViewComponentName)
             {
-                ViewActionResultsThrow.NewViewResultAssertionException(
-                    actualShouldReturnTestBuilder,
+                throw ViewResultAssertionException.ForNameEquality(
+                    actualShouldReturnTestBuilder.TestContext.ExceptionMessagePrefix,
                     "view component",
                     viewComponentName,
                     actualViewComponentName);
             }
-
-            actualShouldReturnTestBuilder.TestContext.MethodResult = viewComponentResult;
+            
             return new ViewComponentTestBuilder(actualShouldReturnTestBuilder.TestContext);
         }
 
@@ -71,19 +73,20 @@
         {
             var actualShouldReturnTestBuilder = (ShouldReturnTestBuilder<TActionResult>)shouldReturnTestBuilder;
 
-            var viewComponentResult = actualShouldReturnTestBuilder.GetReturnObject<ViewComponentResult>();
+            var viewComponentResult = InvocationResultValidator
+                .GetInvocationResult<ViewComponentResult>(actualShouldReturnTestBuilder.TestContext);
+
             var actualViewComponentType = viewComponentResult.ViewComponentType;
 
             if (viewComponentType != actualViewComponentType)
             {
-                ViewActionResultsThrow.NewViewResultAssertionException(
-                    actualShouldReturnTestBuilder,
+                throw ViewResultAssertionException.ForNameEquality(
+                    actualShouldReturnTestBuilder.TestContext.ExceptionMessagePrefix,
                     "view component",
                     viewComponentType.ToFriendlyTypeName(),
                     actualViewComponentType.ToFriendlyTypeName());
             }
-
-            actualShouldReturnTestBuilder.TestContext.MethodResult = viewComponentResult;
+            
             return new ViewComponentTestBuilder(actualShouldReturnTestBuilder.TestContext);
         }
     }

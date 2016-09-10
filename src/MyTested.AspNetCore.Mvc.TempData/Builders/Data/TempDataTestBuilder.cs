@@ -10,17 +10,14 @@
     public class TempDataTestBuilder : BaseDataProviderWithStringKeyTestBuilder<IAndTempDataTestBuilder>, IAndTempDataTestBuilder
     {
         internal const string TempDataName = "temp data";
-
-        private readonly ControllerTestContext testContext;
-
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="TempDataTestBuilder"/> class.
         /// </summary>
-        /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
-        public TempDataTestBuilder(ControllerTestContext testContext)
+        /// <param name="testContext"><see cref="ComponentTestContext"/> containing data about the currently executed assertion chain.</param>
+        public TempDataTestBuilder(ComponentTestContext testContext)
             : base(testContext, TempDataName)
         {
-            this.testContext = testContext;
         }
 
         /// <summary>
@@ -36,6 +33,6 @@
         /// When overridden in derived class provides a way to built the data provider as <see cref="IDictionary{TKey,TValue}"/>.
         /// </summary>
         /// <returns>Data provider as <see cref="IDictionary{TKey,TValue}"/>.</returns>
-        protected override IDictionary<string, object> GetDataProvider() => this.testContext.GetTempData();
+        protected override IDictionary<string, object> GetDataProvider() => this.TestContext.GetTempData();
     }
 }

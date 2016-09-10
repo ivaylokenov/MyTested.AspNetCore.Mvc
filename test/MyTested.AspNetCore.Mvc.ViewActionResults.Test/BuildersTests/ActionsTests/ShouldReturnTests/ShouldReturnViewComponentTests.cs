@@ -22,7 +22,7 @@
         [Fact]
         public void ShouldReturnViewComponentShouldThrowExceptionWithIncorrectViewComponent()
         {
-            Test.AssertException<ActionResultAssertionException>(
+            Test.AssertException<InvocationResultAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
@@ -31,7 +31,7 @@
                        .ShouldReturn()
                        .ViewComponent();
                 },
-                "When calling BadRequestAction action in MvcController expected action result to be ViewComponentResult, but instead received BadRequestResult.");
+                "When calling BadRequestAction action in MvcController expected result to be ViewComponentResult, but instead received BadRequestResult.");
         }
 
         [Fact]
@@ -47,7 +47,7 @@
         [Fact]
         public void ShouldReturnViewComponentShouldThrowExceptionWithIncorrectViewComponentWithName()
         {
-            Test.AssertException<ActionResultAssertionException>(
+            Test.AssertException<InvocationResultAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
@@ -56,7 +56,7 @@
                        .ShouldReturn()
                        .ViewComponent("TestComponent");
                 },
-                "When calling BadRequestAction action in MvcController expected action result to be ViewComponentResult, but instead received BadRequestResult.");
+                "When calling BadRequestAction action in MvcController expected result to be ViewComponentResult, but instead received BadRequestResult.");
         }
 
         [Fact]
@@ -87,7 +87,7 @@
         [Fact]
         public void ShouldReturnViewComponentShouldThrowExceptionWithIncorrectViewComponentWithType()
         {
-            Test.AssertException<ActionResultAssertionException>(
+            Test.AssertException<InvocationResultAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
@@ -96,7 +96,7 @@
                        .ShouldReturn()
                        .ViewComponent(typeof(CustomViewComponent));
                 },
-                "When calling BadRequestAction action in MvcController expected action result to be ViewComponentResult, but instead received BadRequestResult.");
+                "When calling BadRequestAction action in MvcController expected result to be ViewComponentResult, but instead received BadRequestResult.");
         }
 
         [Fact]

@@ -453,9 +453,8 @@
         private void ThrowNewHttpResponseAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new HttpResponseAssertionException(string.Format(
-                "When calling {0} action in {1} expected HTTP response {2} {3}, but {4}.",
-                this.TestContext.MethodName,
-                this.TestContext.Component.GetName(),
+                "{0} HTTP response {1} {2}, but {3}.",
+                this.TestContext.ExceptionMessagePrefix,
                 propertyName,
                 expectedValue,
                 actualValue));

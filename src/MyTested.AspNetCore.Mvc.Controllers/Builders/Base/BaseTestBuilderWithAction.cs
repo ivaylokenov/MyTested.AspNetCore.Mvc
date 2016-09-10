@@ -28,6 +28,6 @@
         /// Gets the action attributes which will be tested.
         /// </summary>
         /// <value>Action attributes to be tested.</value>
-        public IEnumerable<object> ActionLevelAttributes => this.TestContext.MethodAttributes;
+        public IEnumerable<object> ActionAttributes => this.TestContext.MethodAttributes;
     }
 }

@@ -3,6 +3,7 @@
     using ActionResults.Forbid;
     using Contracts.ActionResults.Forbid;
     using Microsoft.AspNetCore.Mvc;
+    using Utilities.Validators;
 
     /// <content>
     /// Class containing methods for testing <see cref="ForbidResult"/>.
@@ -12,7 +13,7 @@
         /// <inheritdoc />
         public IForbidTestBuilder Forbid()
         {
-            this.TestContext.MethodResult = this.GetReturnObject<ForbidResult>();
+            InvocationResultValidator.ValidateInvocationResultType<ForbidResult>(this.TestContext);
             return new ForbidTestBuilder(this.TestContext);
         }
     }

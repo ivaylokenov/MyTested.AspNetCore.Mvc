@@ -69,8 +69,8 @@
 
             Assert.NotNull(firstContext);
             Assert.NotNull(secondContext);
-            Assert.IsAssignableFrom<MockedHttpContext>(firstContext);
-            Assert.IsAssignableFrom<MockedHttpContext>(secondContext);
+            Assert.IsAssignableFrom<HttpContextMock>(firstContext);
+            Assert.IsAssignableFrom<HttpContextMock>(secondContext);
             Assert.NotSame(firstContext, secondContext);
             Assert.Equal(ContentType.AudioVorbis, firstContext.Request.ContentType);
             Assert.Equal(ContentType.AudioVorbis, secondContext.Request.ContentType);
@@ -153,11 +153,11 @@
                     Assert.NotNull(thirdContextAsync);
                     Assert.NotNull(fourthContextAsync);
                     Assert.NotNull(fifthContextAsync);
-                    Assert.IsAssignableFrom<MockedHttpContext>(firstContextAsync);
-                    Assert.IsAssignableFrom<MockedHttpContext>(secondContextAsync);
-                    Assert.IsAssignableFrom<MockedHttpContext>(thirdContextAsync);
-                    Assert.IsAssignableFrom<MockedHttpContext>(fourthContextAsync);
-                    Assert.IsAssignableFrom<MockedHttpContext>(fifthContextAsync);
+                    Assert.IsAssignableFrom<HttpContextMock>(firstContextAsync);
+                    Assert.IsAssignableFrom<HttpContextMock>(secondContextAsync);
+                    Assert.IsAssignableFrom<HttpContextMock>(thirdContextAsync);
+                    Assert.IsAssignableFrom<HttpContextMock>(fourthContextAsync);
+                    Assert.IsAssignableFrom<HttpContextMock>(fifthContextAsync);
                     Assert.NotSame(firstContextAsync, secondContextAsync);
                     Assert.NotSame(firstContextAsync, thirdContextAsync);
                     Assert.NotSame(secondContextAsync, thirdContextAsync);

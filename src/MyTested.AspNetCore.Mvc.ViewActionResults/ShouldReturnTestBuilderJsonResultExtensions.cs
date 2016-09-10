@@ -5,6 +5,7 @@
     using Builders.Contracts.ActionResults.Json;
     using Builders.Contracts.Actions;
     using Microsoft.AspNetCore.Mvc;
+    using Utilities.Validators;
 
     /// <summary>
     /// Contains <see cref="JsonResult"/> extension methods for <see cref="IShouldReturnTestBuilder{TActionResult}"/>.
@@ -21,7 +22,7 @@
         {
             var actualShouldReturnTestBuilder = (ShouldReturnTestBuilder<TActionResult>)shouldReturnTestBuilder;
 
-            actualShouldReturnTestBuilder.TestContext.MethodResult = actualShouldReturnTestBuilder.GetReturnObject<JsonResult>();
+            InvocationResultValidator.ValidateInvocationResultType<JsonResult>(actualShouldReturnTestBuilder.TestContext);
 
             return new JsonTestBuilder(actualShouldReturnTestBuilder.TestContext);
         }

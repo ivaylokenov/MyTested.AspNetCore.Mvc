@@ -982,42 +982,6 @@
             throw new NullReferenceException("Test exception message");
         }
 
-        private void SetCustomResponse()
-        {
-            var response = this.Response;
-            response.Body = new MemoryStream();
-            var writer = new StreamWriter(response.Body);
-            writer.Write(@"{""Integer"":1,""RequiredString"":""Text""}");
-            writer.Flush();
-
-            response.ContentType = ContentType.ApplicationJson;
-            response.StatusCode = 500;
-            response.Headers.Add("TestHeader", "TestHeaderValue");
-            response.Headers.Add("AnotherTestHeader", "AnotherTestHeaderValue");
-            response.Headers.Add("MultipleTestHeader", new[] { "FirstMultipleTestHeaderValue", "AnotherMultipleTestHeaderValue" });
-            response.Cookies.Append(
-                "TestCookie",
-                "TestCookieValue",
-                new CookieOptions
-                {
-                    HttpOnly = true,
-                    Secure = true,
-                    Domain = "testdomain.com",
-                    Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)),
-                    Path = "/"
-                });
-            response.Cookies.Append(
-                "AnotherCookie",
-                "TestCookieValue",
-                new CookieOptions
-                {
-                    HttpOnly = true,
-                    Secure = true,
-                    Domain = "testdomain.com",
-                    Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)),
-                    Path = "/"
-                });
-            response.ContentLength = 100;
-        }
+        private void SetCustomResponse() => TestObjectFactory.SetCustomHttpResponseProperties(this.Response);
     }
 }

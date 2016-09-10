@@ -1,0 +1,46 @@
+﻿namespace MyTested.AspNetCore.Mvc.Internal.Caching
+{
+    using System;
+    using System.Collections.Generic;
+    using Microsoft.Extensions.Caching.Memory;
+    using Microsoft.Extensions.Primitives;
+
+    public class CacheEntryMock : ICacheEntry
+    {
+        private readonly IList<IChangeToken> expirationTokens;
+        private readonly IList<PostEvictionCallbackRegistration> postEvictionCallbacks;
+        
+        public CacheEntryMock()
+        {
+            this.expirationTokens = new List<IChangeToken>();
+            this.postEvictionCallbacks = new List<PostEvictionCallbackRegistration>();
+        }
+
+        public CacheEntryMock(object key)
+            : this()
+        {
+            this.Key = key;
+        }
+
+        public object Key { get; internal set; }
+
+        public DateTimeOffset? AbsoluteExpiration { get; set; }
+
+        public TimeSpan? AbsoluteExpirationRelativeToNow { get; set; }
+
+        public IList<IChangeToken> ExpirationTokens => this.expirationTokens;
+
+        public IList<PostEvictionCallbackRegistration> PostEvictionCallbacks => this.postEvictionCallbacks;
+
+        public CacheItemPriority Priority { get; set; }
+
+        public TimeSpan? SlidingExpiration { get; set; }
+
+        public object Value { get; set; }
+
+        public void Dispose()
+        {
+            // intentionally does nothing
+        }
+    }
+}

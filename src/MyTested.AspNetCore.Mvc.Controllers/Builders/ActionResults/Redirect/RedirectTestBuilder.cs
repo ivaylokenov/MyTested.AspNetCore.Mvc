@@ -42,7 +42,7 @@
         {
             RuntimeBinderValidator.ValidateBinding(() =>
             {
-                var dynamicActionResult = this.GetActionResultAsDynamic();
+                var dynamicActionResult = this.ActionResult.AsDynamic();
                 if (!dynamicActionResult.Permanent)
                 {
                     this.ThrowNewRedirectResultAssertionException(

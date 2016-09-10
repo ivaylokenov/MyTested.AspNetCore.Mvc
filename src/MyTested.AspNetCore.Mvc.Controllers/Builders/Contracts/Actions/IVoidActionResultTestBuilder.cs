@@ -1,6 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Actions
 {
     using Base;
+    using CaughtExceptions;
     using Internal;
 
     /// <summary>

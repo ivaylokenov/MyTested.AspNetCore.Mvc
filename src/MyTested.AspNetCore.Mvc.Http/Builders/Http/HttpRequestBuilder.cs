@@ -23,7 +23,7 @@
     {
         private static Encoding defaultEncoding = Encoding.UTF8;
 
-        private readonly MockedHttpRequest request;
+        private readonly HttpRequestMock request;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HttpRequestBuilder"/> class.
@@ -32,7 +32,7 @@
         {
             CommonValidator.CheckForNullReference(httpContext, nameof(HttpContext));
 
-            this.request = new MockedHttpRequest(httpContext)
+            this.request = new HttpRequestMock(httpContext)
             {
                 Scheme = HttpScheme.Http,
                 Path = "/"
@@ -419,7 +419,7 @@
         /// <inheritdoc />
         public IAndHttpRequestBuilder WithLocation(Action<IUriBuilder> uriBuilder)
         {
-            var mockedUriBuilder = new MockedUriBuilder();
+            var mockedUriBuilder = new UriMockBuilder();
             uriBuilder(mockedUriBuilder);
             var uri = mockedUriBuilder.GetUri();
             return this.WithLocation(uri);

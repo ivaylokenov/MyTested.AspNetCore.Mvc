@@ -20,7 +20,7 @@
         [Fact]
         public void ShouldReturnJsonShouldThrowExceptionIfResultIsNotJson()
         {
-            Test.AssertException<ActionResultAssertionException>(
+            Test.AssertException<InvocationResultAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
@@ -29,7 +29,7 @@
                         .ShouldReturn()
                         .Json();
                 }, 
-                "When calling BadRequestAction action in MvcController expected action result to be JsonResult, but instead received BadRequestResult.");
+                "When calling BadRequestAction action in MvcController expected result to be JsonResult, but instead received BadRequestResult.");
         }
     }
 }

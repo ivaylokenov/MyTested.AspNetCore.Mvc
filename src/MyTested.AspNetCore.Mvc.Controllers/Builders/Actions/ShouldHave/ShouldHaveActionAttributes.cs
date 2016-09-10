@@ -5,7 +5,6 @@
     using Contracts.Actions;
     using Contracts.Attributes;
     using Exceptions;
-    using Utilities.Extensions;
     using Utilities.Validators;
 
     /// <content>
@@ -50,12 +49,8 @@
 
         private void ThrowNewAttributeAssertionException(string expectedValue, string actualValue)
         {
-            throw new AttributeAssertionException(string.Format(
-                "When calling {0} action in {1} expected action to {2}, but {3}.",
-                this.TestContext.MethodName,
-                this.TestContext.Component.GetName(),
-                expectedValue,
-                actualValue));
+            throw new AttributeAssertionException(
+                $"{this.TestContext.ExceptionMessagePrefix} action to {expectedValue}, but {actualValue}.");
         }
     }
 }

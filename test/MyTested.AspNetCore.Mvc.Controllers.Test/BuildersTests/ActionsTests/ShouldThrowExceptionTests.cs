@@ -21,7 +21,7 @@
         [Fact]
         public void ShouldThrowExceptionShouldThrowIfNoExceptionIsCaught()
         {
-            Test.AssertException<ActionCallAssertionException>(
+            Test.AssertException<InvocationAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
@@ -30,7 +30,7 @@
                         .ShouldThrow()
                         .Exception();
                 }, 
-                "When calling OkResultAction action in MvcController thrown exception was expected, but in fact none was caught.");
+                "When calling OkResultAction action in MvcController expected exception to be thrown, but in fact none was caught.");
         }
 
         [Fact]

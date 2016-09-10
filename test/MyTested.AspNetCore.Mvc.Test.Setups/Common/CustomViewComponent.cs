@@ -4,5 +4,9 @@
 
     public class CustomViewComponent : ViewComponent
     {
+        public IViewComponentResult Invoke()
+        {
+            return this.View();
+        }
     }
 }

@@ -46,7 +46,7 @@
         {
             var newMemoryCacheEntryBuilder = new MemoryCacheEntryBuilder();
             memoryCacheEntryBuilder(newMemoryCacheEntryBuilder);
-            var memoryCacheEntry = newMemoryCacheEntryBuilder.GetMockedMemoryCacheEntry();
+            var memoryCacheEntry = newMemoryCacheEntryBuilder.GetMemoryCacheEntryMock();
 
             return this.WithEntry(memoryCacheEntry.Key, memoryCacheEntry.Value, new MemoryCacheEntryOptions
             {

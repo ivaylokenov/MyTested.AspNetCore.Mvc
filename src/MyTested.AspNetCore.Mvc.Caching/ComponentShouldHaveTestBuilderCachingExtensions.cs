@@ -24,7 +24,7 @@
         {
             var actualBuilder = (BaseTestBuilderWithComponentBuilder<TBuilder>)builder;
 
-            if (actualBuilder.TestContext.GetMockedMemoryCache().Count > 0)
+            if (actualBuilder.TestContext.GetMemoryCacheMock().Count > 0)
             {
                 DataProviderValidator.ThrowNewDataProviderAssertionExceptionWithNoEntries(
                     actualBuilder.TestContext,
@@ -53,7 +53,7 @@
                 actualBuilder.TestContext,
                 MemoryCacheTestBuilder.MemoryCacheName,
                 withNumberOfEntries,
-                actualBuilder.TestContext.GetMockedMemoryCache().Count);
+                actualBuilder.TestContext.GetMemoryCacheMock().Count);
 
             return actualBuilder.Builder;
         }

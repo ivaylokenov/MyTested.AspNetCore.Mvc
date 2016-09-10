@@ -22,7 +22,7 @@
 
         private readonly IMemoryCache memoryCache;
 
-        private IMockedMemoryCache mockedMemoryCache;
+        private IMemoryCacheMock memoryCacheMock;
         private IDictionary<object, object> memoryCacheAsDictionary;
 
         /// <summary>
@@ -101,7 +101,7 @@
         /// <inheritdoc />
         public IAndMemoryCacheTestBuilder ContainingEntry(object key, object value, MemoryCacheEntryOptions options)
         {
-            var mockedMemoryCache = this.GetMockedMemoryCache();
+            var mockedMemoryCache = this.GetMemoryCacheMock();
 
             this.ContainingEntry(key, value);
 
@@ -130,11 +130,11 @@
         /// <inheritdoc />
         public IAndMemoryCacheTestBuilder ContainingEntry(Action<IMemoryCacheEntryKeyTestBuilder> memoryCacheEntryTestBuilder)
         {
-            var mockedMemoryCache = this.GetMockedMemoryCache();
+            var mockedMemoryCache = this.GetMemoryCacheMock();
 
             var newMemoryCacheEntryBuilder = new MemoryCacheEntryTestBuilder(this.TestContext);
             memoryCacheEntryTestBuilder(newMemoryCacheEntryBuilder);
-            var expectedMemoryCacheEntry = newMemoryCacheEntryBuilder.GetMockedMemoryCacheEntry();
+            var expectedMemoryCacheEntry = newMemoryCacheEntryBuilder.GetMemoryCacheEntryMock();
 
             var key = expectedMemoryCacheEntry.Key;
             this.ContainingEntryWithKey(key);
@@ -142,7 +142,7 @@
             ICacheEntry actualMemoryCacheEntry;
             mockedMemoryCache.TryGetCacheEntry(key, out actualMemoryCacheEntry);
 
-            var validations = newMemoryCacheEntryBuilder.GetMockedMemoryCacheEntryValidations();
+            var validations = newMemoryCacheEntryBuilder.GetMemoryCacheEntryMockValidations();
             validations.ForEach(v => v(expectedMemoryCacheEntry, actualMemoryCacheEntry));
 
             return this;
@@ -177,14 +177,14 @@
                 .GetRequiredService<IMemoryCache>();
         }
 
-        private IMockedMemoryCache GetMockedMemoryCache()
+        private IMemoryCacheMock GetMemoryCacheMock()
         {
-            if (this.mockedMemoryCache == null)
+            if (this.memoryCacheMock == null)
             {
-                this.mockedMemoryCache = this.memoryCache.AsMockedMemoryCache();
+                this.memoryCacheMock = this.memoryCache.AsMemoryCacheMock();
             }
 
-            return this.mockedMemoryCache;
+            return this.memoryCacheMock;
         }
 
         private IDictionary<object, object> GetMemoryCacheAsDictionary()
@@ -192,7 +192,7 @@
             if (this.memoryCacheAsDictionary == null)
             {
                 this.memoryCacheAsDictionary = this
-                    .GetMockedMemoryCache()
+                    .GetMemoryCacheMock()
                     .GetCacheAsDictionary();
             }
 
@@ -216,9 +216,8 @@
         private void ThrowNewDataProviderAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new DataProviderAssertionException(string.Format(
-                "When calling {0} action in {1} expected {2} {3}, but {4}.",
-                this.TestContext.MethodName,
-                this.TestContext.Component.GetName(),
+                "{0} {1} {2}, but {3}.",
+                this.TestContext.ExceptionMessagePrefix,
                 propertyName,
                 expectedValue,
                 actualValue));
