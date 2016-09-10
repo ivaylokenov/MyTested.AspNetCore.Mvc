@@ -1,7 +1,7 @@
-﻿namespace MyTested.AspNetCore.Mvc.Test.InternalTests.ControllersTests
+﻿namespace MyTested.AspNetCore.Mvc.Test.InternalTests
 {
+    using Internal;
     using Internal.Services;
-    using Internal.ViewFeatures;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Setups.Controllers;

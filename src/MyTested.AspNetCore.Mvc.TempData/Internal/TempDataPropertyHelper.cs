@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Internal.Controllers
+﻿namespace MyTested.AspNetCore.Mvc.Internal
 {
     using System;
     using System.Collections.Concurrent;
@@ -6,17 +6,17 @@
     using System.Reflection;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
-    public class TempDataControllerPropertyHelper : ControllerPropertyHelper
+    public class TempDataPropertyHelper : PropertyHelper
     {
-        private static readonly ConcurrentDictionary<Type, TempDataControllerPropertyHelper> TempDataControllerPropertiesCache =
-            new ConcurrentDictionary<Type, TempDataControllerPropertyHelper>();
+        private static readonly ConcurrentDictionary<Type, TempDataPropertyHelper> TempDataPropertiesCache =
+            new ConcurrentDictionary<Type, TempDataPropertyHelper>();
 
         private static readonly TypeInfo TypeOfTempDataDictionary = typeof(ITempDataDictionary).GetTypeInfo();
 
         private Func<object, ITempDataDictionary> tempDataGetter;
 
-        public TempDataControllerPropertyHelper(Type controllerType)
-            : base(controllerType)
+        public TempDataPropertyHelper(Type type)
+            : base(type)
         {
         }
 
@@ -33,15 +33,15 @@
             }
         }
 
-        public static TempDataControllerPropertyHelper GetTempDataProperties<TController>()
+        public static TempDataPropertyHelper GetTempDataProperties<TController>()
             where TController : class
         {
             return GetTempDataProperties(typeof(TController));
         }
 
-        public static TempDataControllerPropertyHelper GetTempDataProperties(Type type)
+        public static TempDataPropertyHelper GetTempDataProperties(Type type)
         {
-            return TempDataControllerPropertiesCache.GetOrAdd(type, _ => new TempDataControllerPropertyHelper(type));
+            return TempDataPropertiesCache.GetOrAdd(type, _ => new TempDataPropertyHelper(type));
         }
 
         private void TryCreateTempDataGetterDelegate()

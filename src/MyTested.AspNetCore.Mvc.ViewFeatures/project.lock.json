@@ -1168,7 +1168,7 @@
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.0.0",
-          "MyTested.AspNetCore.Mvc.Controllers": "1.0.0"
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0"
         },
         "compile": {
           "net451/MyTested.AspNetCore.Mvc.TempData.dll": {}
@@ -3696,7 +3696,7 @@
         "framework": ".NETStandard,Version=v1.6",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.0.0",
-          "MyTested.AspNetCore.Mvc.Controllers": "1.0.0"
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0"
         },
         "compile": {
           "netstandard1.6/MyTested.AspNetCore.Mvc.TempData.dll": {}

@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Internal.ViewFeatures
+﻿namespace MyTested.AspNetCore.Mvc.Internal
 {
     using System;
     using System.Collections.Concurrent;

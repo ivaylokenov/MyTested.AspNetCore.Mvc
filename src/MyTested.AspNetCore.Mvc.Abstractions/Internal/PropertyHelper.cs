@@ -80,7 +80,7 @@
         {
             if (value == null)
             {
-                throw new InvalidOperationException($"{propertyName} could not be found on the provided {this.Type.ToFriendlyTypeName()}. The property should be specified manually by providing controller instance or using the specified helper methods.");
+                throw new InvalidOperationException($"{propertyName} could not be found on the provided {this.Type.ToFriendlyTypeName()}. The property should be specified manually by providing component instance or using the specified helper methods.");
             }
         }
 

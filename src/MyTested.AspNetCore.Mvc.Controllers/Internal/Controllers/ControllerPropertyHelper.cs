@@ -9,13 +9,12 @@
         private static readonly ConcurrentDictionary<Type, ControllerPropertyHelper> ControllerPropertiesCache =
             new ConcurrentDictionary<Type, ControllerPropertyHelper>();
 
-        private Func<object, ControllerContext> controllerContextGetter; // DO I NEED THESE???
-        private Func<object, ActionContext> actionContextGetter; // DO I NEED THESE?
+        private Func<object, ControllerContext> controllerContextGetter;
+        private Func<object, ActionContext> actionContextGetter;
 
         public ControllerPropertyHelper(Type controllerType)
             : base (controllerType)
         {
-            
         }
 
         public Func<object, ControllerContext> ControllerContextGetter

@@ -237,6 +237,49 @@
                     Assert.NotNull(viewComponent.ViewContext.Writer);
                 });
         }
+        
+        [Fact]
+        public void PrepareControllerShouldSetCorrectPropertiesWithDefaultServicesForPocoComponent()
+        {
+            MyViewComponent<PocoViewComponent>
+                .Instance()
+                .ShouldPassForThe<PocoViewComponent>(viewComponent =>
+                {
+                    Assert.NotNull(viewComponent);
+                    Assert.NotNull(viewComponent.Context);
+                    Assert.NotNull(viewComponent.Context.ViewContext);
+                    Assert.NotNull(viewComponent.Context.ViewContext.HttpContext);
+                    Assert.NotNull(viewComponent.Context.ViewContext.HttpContext.RequestServices);
+                    Assert.NotNull(viewComponent.Context);
+                    Assert.IsAssignableFrom<ViewComponentContextMock>(viewComponent.Context);
+                    Assert.NotNull(viewComponent.Context.ViewData);
+                    Assert.NotNull(viewComponent.Context.ViewContext.HttpContext.Request);
+                    Assert.NotNull(viewComponent.Context.ViewContext.HttpContext.User);
+                    Assert.IsAssignableFrom<ViewContextMock>(viewComponent.Context.ViewContext);
+                    Assert.NotNull(viewComponent.Context.Arguments);
+                    Assert.Empty(viewComponent.Context.Arguments);
+                    Assert.NotNull(viewComponent.Context.HtmlEncoder);
+                    Assert.NotNull(viewComponent.Context.ViewComponentDescriptor);
+                    Assert.NotNull(viewComponent.Context.ViewContext);
+                    Assert.NotNull(viewComponent.Context.ViewData);
+                    Assert.NotNull(viewComponent.Context.Writer);
+                    Assert.NotNull(viewComponent.Context.ViewContext.ActionDescriptor);
+                    Assert.False(viewComponent.Context.ViewContext.ClientValidationEnabled);
+                    Assert.Null(viewComponent.Context.ViewContext.ExecutingFilePath);
+                    Assert.NotNull(viewComponent.Context.ViewContext.FormContext);
+                    Assert.Equal(Html5DateRenderingMode.Rfc3339, viewComponent.Context.ViewContext.Html5DateRenderingMode);
+                    Assert.NotNull(viewComponent.Context.ViewContext.HttpContext);
+                    Assert.NotNull(viewComponent.Context.ViewContext.ModelState);
+                    Assert.NotNull(viewComponent.Context.ViewContext.RouteData);
+                    Assert.NotNull(viewComponent.Context.ViewContext.TempData);
+                    Assert.Null(viewComponent.Context.ViewContext.ValidationMessageElement);
+                    Assert.Null(viewComponent.Context.ViewContext.ValidationSummaryMessageElement);
+                    Assert.NotNull(viewComponent.Context.ViewContext.View);
+                    Assert.NotNull(viewComponent.Context.ViewContext.ViewBag);
+                    Assert.NotNull(viewComponent.Context.ViewContext.ViewData);
+                    Assert.NotNull(viewComponent.Context.ViewContext.Writer);
+                });
+        }
 
         [Fact]
         public void WithArgumentsShouldResolveCorrectly()
