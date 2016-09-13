@@ -9,4 +9,4 @@ Here you can find couple of working samples, which will get you started with the
 
 ## Functional Test Samples
 
- - ApplicationParts - minimalistic functional sample testing whether controllers are found correctly when registered from external assemblies.
+ - ApplicationParts - minimalistic functional sample testing whether controllers are found correctly when registered from external assemblies. Uses manual Startup configuration and [NUnit](https://github.com/nunit/dotnet-test-nunit).

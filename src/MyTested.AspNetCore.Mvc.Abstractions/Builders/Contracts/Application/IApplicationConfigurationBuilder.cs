@@ -5,6 +5,7 @@
     using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using System.Reflection;
 
     /// <summary>
     /// Configures the tested application.
@@ -38,5 +39,26 @@
         /// <param name="routes">Action for route registration.</param>
         /// <returns>The same <see cref="IApplicationConfigurationBuilder"/>.</returns>
         IApplicationConfigurationBuilder WithRoutes(Action<IRouteBuilder> routes);
+
+        /// <summary>
+        /// Sets the test assembly for the tested application.
+        /// </summary>
+        /// <param name="objectFromTestAssembly">Instance object from the test assembly.</param>
+        /// <returns>The same <see cref="IApplicationConfigurationBuilder"/>.</returns>
+        IApplicationConfigurationBuilder WithTestAssembly(object objectFromTestAssembly);
+
+        /// <summary>
+        /// Sets the test assembly for the tested application.
+        /// </summary>
+        /// <param name="typeFromTestAssembly">Type from the test assembly.</param>
+        /// <returns>The same <see cref="IApplicationConfigurationBuilder"/>.</returns>
+        IApplicationConfigurationBuilder WithTestAssembly(Type typeFromTestAssembly);
+
+        /// <summary>
+        /// Sets the test assembly for the tested application.
+        /// </summary>
+        /// <param name="assembly">The assembly to set as test assembly.</param>
+        /// <returns>The same <see cref="IApplicationConfigurationBuilder"/>.</returns>
+        IApplicationConfigurationBuilder WithTestAssembly(Assembly assembly);
     }
 }

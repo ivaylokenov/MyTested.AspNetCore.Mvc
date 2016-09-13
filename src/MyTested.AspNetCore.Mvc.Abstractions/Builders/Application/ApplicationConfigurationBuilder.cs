@@ -7,6 +7,7 @@
     using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using System.Reflection;
 
     /// <summary>
     /// Configures the tested application.
@@ -47,6 +48,25 @@
         public IApplicationConfigurationBuilder WithRoutes(Action<IRouteBuilder> routes)
         {
             TestApplication.AdditionalRouting += routes;
+            return this;
+        }
+
+        /// <inheritdoc />
+        public IApplicationConfigurationBuilder WithTestAssembly(object objectFromTestAssembly)
+        {
+            return this.WithTestAssembly(objectFromTestAssembly?.GetType());
+        }
+
+        /// <inheritdoc />
+        public IApplicationConfigurationBuilder WithTestAssembly(Type typeFromTestAssembly)
+        {
+            return this.WithTestAssembly(typeFromTestAssembly.GetTypeInfo().Assembly);
+        }
+
+        /// <inheritdoc />
+        public IApplicationConfigurationBuilder WithTestAssembly(Assembly assembly)
+        {
+            TestApplication.TestAssembly = assembly;
             return this;
         }
     }

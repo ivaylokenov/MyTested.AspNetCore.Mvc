@@ -1,15 +1,18 @@
 ﻿{
   "buildOptions": {
     "warningsAsErrors": true,
+    "preserveCompilationContext": true,
     "copyToOutput": {
       "include": [
-        "config.json"
+        "testconfig.json"
       ]
     }
   },
   "dependencies": {
-    "dotnet-test-xunit": "2.2.0-*",
-    "xunit": "2.2.0-*",
+    "NUnit": "3.4.1",
+    "dotnet-test-nunit": "3.4.0-beta-2",
+    "MyTested.AspNetCore.Mvc.Controllers": "1.0.0-*",
+    "MyTested.AspNetCore.Mvc.ViewActionResults": "1.0.0-*",
     "MyTested.AspNetCore.Mvc.Routing": "1.0.0-*",
     "ApplicationParts.Web": "1.0.0-*",
     "ApplicationParts.Controllers": "1.0.0-*",
@@ -17,14 +20,15 @@
   },
   "frameworks": {
     "netcoreapp1.0": {
-      "imports": "dotnet5.4",
+      "imports": "portable-net45+win8",
       "dependencies": {
         "Microsoft.NETCore.App": {
           "version": "1.0.0-*",
           "type": "platform"
         }
       }
-    }
+    },
+    "net451": {}
   },
-  "testRunner": "xunit"
+  "testRunner": "nunit"
 }

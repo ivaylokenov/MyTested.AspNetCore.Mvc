@@ -10,6 +10,7 @@
   },
 
   "frameworks": {
-    "netstandard1.6": {}
+    "netstandard1.6": {},
+    "net451": {}
   }
 }

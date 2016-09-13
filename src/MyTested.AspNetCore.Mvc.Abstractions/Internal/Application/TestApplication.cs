@@ -16,6 +16,7 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.AspNetCore.Routing;
+    using Microsoft.DotNet.InternalAbstractions;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -30,7 +31,7 @@
     public static class TestApplication
     {
         private const string TestFrameworkName = "MyTested.AspNetCore.Mvc";
-        private const string ReleaseDate = "2016-09-01";
+        private const string ReleaseDate = "2016-10-01";
 
         private static readonly RequestDelegate NullHandler;
 
@@ -43,12 +44,13 @@
 
         private static bool initialiazed;
 
-        private static TestConfiguration testConfiguration;
         private static string testAssemblyName;
+        private static TestConfiguration testConfiguration;
 
         private static IHostingEnvironment environment;
 
         private static Type startupType;
+        private static string startupAssemblyName;
 
         private static volatile IServiceProvider serviceProvider;
         private static volatile IServiceProvider routingServiceProvider;
@@ -64,7 +66,10 @@
             RoutingServiceRegistrationPlugins = new HashSet<IRoutingServiceRegistrationPlugin>();
             InitializationPlugins = new HashSet<IInitializationPlugin>();
 
-            LoadPlugins();
+#if NET451
+            FindTestAssembly();
+#endif
+
             PrepareTestConfiguration();
             FindTestAssemblyName();
             PrepareLicensing();
@@ -97,6 +102,8 @@
             }
         }
 
+        internal static Assembly TestAssembly { get; set; }
+
         internal static Type StartupType
         {
             get
@@ -106,7 +113,11 @@
 
             set
             {
-                Reset();
+                if (initialiazed)
+                {
+                    Reset();
+                }
+
                 startupType = value;
             }
         }
@@ -119,20 +130,16 @@
 
         internal static Action<IRouteBuilder> AdditionalRouting { get; set; }
 
-        internal static string TestAssemblyName
+        internal static string StartupAssemblyName
         {
             get
             {
-                if (string.IsNullOrWhiteSpace(testAssemblyName))
+                if (string.IsNullOrWhiteSpace(startupAssemblyName))
                 {
-                    var startUpAssemblyFullName = StartupType?.GetTypeInfo().Assembly.FullName;
-                    if (startUpAssemblyFullName != null)
-                    {
-                        testAssemblyName = new AssemblyName(testAssemblyName).Name;
-                    }
+                    startupAssemblyName = StartupType?.GetTypeInfo().Assembly.GetName().Name;
                 }
 
-                return testAssemblyName;
+                return startupAssemblyName;
             }
         }
 
@@ -165,7 +172,8 @@
 
         internal static string ApplicationName =>
             TestConfiguration.General.ApplicationName
-                ?? TestAssemblyName
+                ?? TestAssembly?.GetName().Name
+                ?? StartupAssemblyName
                 ?? PlatformServices.Default.Application.ApplicationName;
 
         public static void TryInitialize()
@@ -187,72 +195,86 @@
             }
         }
 
-        internal static void LoadPlugins()
+        internal static DependencyContext LoadDependencyContext()
+            => TestAssembly != null 
+            ? DependencyContext.Load(TestAssembly)
+            ?? DependencyContext.Default
+            : DependencyContext.Default;
+
+        internal static void LoadPlugins(DependencyContext dependencyContext)
         {
-            DependencyContext
-                .Default
-                .GetDefaultAssemblyNames()
+            var plugins = dependencyContext
+                .GetRuntimeAssemblyNames(RuntimeEnvironment.GetRuntimeIdentifier())
                 .Where(l => l.Name.StartsWith(TestFrameworkName))
                 .Select(l => Assembly.Load(new AssemblyName(l.Name)).GetType($"{TestFrameworkName}.Plugins.{l.Name.Replace(TestFrameworkName, string.Empty).Trim('.')}TestPlugin"))
-                .Where(p => p != null)
-                .ForEach(t =>
+                .Where(p => p != null);
+
+            if (!plugins.Any())
+            {
+                throw new InvalidOperationException("Test plugins could not be loaded. Depending on your project's configuration you may need to set the 'preserveCompilationContext' property under 'buildOptions' to 'true' in the test assembly's 'project.json' file and/or may need to call '.StartsFrom<TStartup>().WithTestAssembly(this)'.");
+            }
+                
+            plugins.ForEach(t =>
+            {
+                var plugin = Activator.CreateInstance(t);
+
+                var defaultRegistrationPlugin = plugin as IDefaultRegistrationPlugin;
+                if (defaultRegistrationPlugin != null)
                 {
-                    var plugin = Activator.CreateInstance(t);
+                    DefaultRegistrationPlugins.Add(defaultRegistrationPlugin);
+                }
 
-                    var defaultRegistrationPlugin = plugin as IDefaultRegistrationPlugin;
-                    if (defaultRegistrationPlugin != null)
-                    {
-                        DefaultRegistrationPlugins.Add(defaultRegistrationPlugin);
-                    }
+                var servicePlugin = plugin as IServiceRegistrationPlugin;
+                if (servicePlugin != null)
+                {
+                    ServiceRegistrationPlugins.Add(servicePlugin);
+                }
 
-                    var servicePlugin = plugin as IServiceRegistrationPlugin;
-                    if (servicePlugin != null)
-                    {
-                        ServiceRegistrationPlugins.Add(servicePlugin);
-                    }
+                var routingServicePlugin = plugin as IRoutingServiceRegistrationPlugin;
+                if (routingServicePlugin != null)
+                {
+                    RoutingServiceRegistrationPlugins.Add(routingServicePlugin);
+                }
 
-                    var routingServicePlugin = plugin as IRoutingServiceRegistrationPlugin;
-                    if (routingServicePlugin != null)
-                    {
-                        RoutingServiceRegistrationPlugins.Add(routingServicePlugin);
-                    }
+                var initializationPlugin = plugin as IInitializationPlugin;
+                if (initializationPlugin != null)
+                {
+                    InitializationPlugins.Add(initializationPlugin);
+                }
 
-                    var initializationPlugin = plugin as IInitializationPlugin;
-                    if (initializationPlugin != null)
-                    {
-                        InitializationPlugins.Add(initializationPlugin);
-                    }
+                var httpFeatureRegistrationPlugin = plugin as IHttpFeatureRegistrationPlugin;
+                if (httpFeatureRegistrationPlugin != null)
+                {
+                    TestHelper.HttpFeatureRegistrationPlugins.Add(httpFeatureRegistrationPlugin);
+                }
 
-                    var httpFeatureRegistrationPlugin = plugin as IHttpFeatureRegistrationPlugin;
-                    if (httpFeatureRegistrationPlugin != null)
-                    {
-                        TestHelper.HttpFeatureRegistrationPlugins.Add(httpFeatureRegistrationPlugin);
-                    }
-
-                    var shouldPassForPlugin = plugin as IShouldPassForPlugin;
-                    if (shouldPassForPlugin != null)
-                    {
-                        TestHelper.ShouldPassForPlugins.Add(shouldPassForPlugin);
-                    }
-                });
+                var shouldPassForPlugin = plugin as IShouldPassForPlugin;
+                if (shouldPassForPlugin != null)
+                {
+                    TestHelper.ShouldPassForPlugins.Add(shouldPassForPlugin);
+                }
+            });
         }
 
         internal static Type TryFindDefaultStartupType()
         {
-            var applicationAssembly = Assembly.Load(new AssemblyName(testAssemblyName));
+            var applicationAssembly = TestAssembly ?? Assembly.Load(new AssemblyName(testAssemblyName));
 
-            var startupType = TestConfiguration.General.StartupType ?? $"{Environment.EnvironmentName}Startup";
+            var defaultStartupType = TestConfiguration.General.StartupType ?? $"{Environment.EnvironmentName}Startup";
 
             // check root of the test project
             var startup =
-                applicationAssembly.GetType(startupType) ??
-                applicationAssembly.GetType($"{testAssemblyName}.{startupType}");
+                applicationAssembly.GetType(defaultStartupType) ??
+                applicationAssembly.GetType($"{testAssemblyName}.{defaultStartupType}");
 
             return startup;
         }
 
         private static void Initialize()
         {
+            var dependencyContext = LoadDependencyContext();
+            LoadPlugins(dependencyContext);
+
             var serviceCollection = GetInitialServiceCollection();
             var startupMethods = PrepareStartup(serviceCollection);
 
@@ -275,11 +297,13 @@
 
         private static void FindTestAssemblyName()
         {
-            testAssemblyName = TestConfiguration.General.TestAssemblyName ?? DependencyContext
-                .Default
-                .GetDefaultAssemblyNames()
-                .First()
-                .Name;
+            testAssemblyName = TestConfiguration.General.TestAssemblyName 
+                ?? TestAssembly?.GetName().Name
+                ?? DependencyContext
+                    .Default
+                    .GetDefaultAssemblyNames()
+                    .First()
+                    .Name;
         }
 
         private static void PrepareLicensing()
@@ -287,7 +311,7 @@
             TestCounter.SetLicenseData(
                 TestConfiguration.Licenses,
                 DateTime.ParseExact(ReleaseDate, "yyyy-MM-dd", CultureInfo.InvariantCulture),
-                TestAssemblyName);
+                TestAssembly?.GetName().Name ?? StartupAssemblyName);
         }
 
         private static IHostingEnvironment PrepareEnvironment()
@@ -374,6 +398,23 @@
 
             TryReplaceKnownServices(serviceCollection);
             PrepareRoutingServices(serviceCollection);
+
+#if NET451
+            var baseStartupType = StartupType;
+            while(baseStartupType?.BaseType != typeof(object))
+            {
+                baseStartupType = baseStartupType.BaseType;
+            }
+
+            var applicationPartManager = (ApplicationPartManager)serviceCollection
+                .FirstOrDefault(t => t.ServiceType == typeof(ApplicationPartManager))
+                ?.ImplementationInstance;
+
+            if (applicationPartManager != null && baseStartupType != null)
+            {
+                applicationPartManager.ApplicationParts.Add(new AssemblyPart(baseStartupType.GetTypeInfo().Assembly));
+            }
+#endif
 
             serviceProvider = serviceCollection.BuildServiceProvider();
 
@@ -473,8 +514,32 @@
             AdditionalServices = null;
             AdditionalApplicationConfiguration = null;
             AdditionalRouting = null;
+            TestAssembly = null;
             TestServiceProvider.Current = null;
             TestServiceProvider.ClearServiceLifetimes();
         }
+
+#if NET451
+        private static void FindTestAssembly()
+        {
+            var executingAssembly = Assembly.GetExecutingAssembly();
+
+            var stackTrace = new StackTrace(false);
+
+            foreach (var frame in stackTrace.GetFrames())
+            {
+                var method = frame.GetMethod();
+                var methodAssembly = method?.DeclaringType?.Assembly;
+
+                if (methodAssembly != null
+                    && methodAssembly != executingAssembly
+                    && !methodAssembly.FullName.StartsWith(TestFrameworkName))
+                {
+                    TestAssembly = methodAssembly;
+                    return;
+                }
+            }
+        }
+#endif
     }
 }

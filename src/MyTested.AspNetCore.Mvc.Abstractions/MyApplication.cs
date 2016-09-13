@@ -1,9 +1,9 @@
 ﻿namespace MyTested.AspNetCore.Mvc
 {
+    using System;
     using Builders.Application;
     using Builders.Contracts.Application;
     using Internal.Application;
-    using System;
 
     public class MyApplication : ApplicationConfigurationBuilder
     {
@@ -21,7 +21,7 @@
             : base(startupType)
         {
         }
-        
+
         public static IApplicationConfigurationBuilder IsUsingDefaultConfiguration()
         {
             return new MyApplication();

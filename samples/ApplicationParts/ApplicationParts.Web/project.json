@@ -2,10 +2,6 @@
   "userSecretsId": "aspnet-ApplicationParts.Web-c273a372-79ef-490d-b0e1-a7fb8f2dacc7",
 
   "dependencies": {
-    "Microsoft.NETCore.App": {
-      "version": "1.0.0-*",
-      "type": "platform"
-    },
     "Microsoft.AspNetCore.Authentication.Cookies": "1.0.0-*",
     "Microsoft.AspNetCore.Diagnostics": "1.0.0-*",
     "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "1.0.0-*",
@@ -63,7 +59,15 @@
   },
 
   "frameworks": {
-    "netcoreapp1.0": {}
+    "netcoreapp1.0": {
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "version": "1.0.0-*",
+          "type": "platform"
+        }
+      }
+    },
+    "net451": {}
   },
 
   "buildOptions": {

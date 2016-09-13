@@ -1,7 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ControllersTests
 {
     using System;
-    using System.Linq;
     using Builders.Contracts.Actions;
     using Builders.Contracts.Base;
     using Exceptions;
