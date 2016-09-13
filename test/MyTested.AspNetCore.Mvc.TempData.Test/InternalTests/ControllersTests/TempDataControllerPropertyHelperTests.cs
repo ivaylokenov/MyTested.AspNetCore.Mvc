@@ -5,6 +5,7 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection.Extensions;
+    using Setups;
     using Setups.Controllers;
     using Xunit;
 
@@ -13,7 +14,7 @@
         [Fact]
         public void GetPropertiesShouldNotThrowExceptionForNormalController()
         {
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
 
             var helper = TempDataPropertyHelper.GetTempDataProperties<MvcController>();
 
@@ -39,7 +40,7 @@
         public void GetPropertiesShouldNotThrowExceptionForPocoController()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -58,13 +59,13 @@
             Assert.NotNull(gotTempData);
             Assert.Same(gotTempData, controller.CustomTempData);
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void GetPropertiesShouldNotThrowExceptionForPrivateProperties()
         {
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
 
             var helper = TempDataPropertyHelper.GetTempDataProperties<PrivatePocoController>();
 

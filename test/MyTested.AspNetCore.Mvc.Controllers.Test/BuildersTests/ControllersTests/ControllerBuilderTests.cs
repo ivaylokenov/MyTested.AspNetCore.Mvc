@@ -190,7 +190,7 @@
         public void CallingShouldWorkCorrectlyWithFromServices()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -202,7 +202,7 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]

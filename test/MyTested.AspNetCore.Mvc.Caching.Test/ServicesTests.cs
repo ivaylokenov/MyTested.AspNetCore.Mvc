@@ -12,6 +12,7 @@
     using Setups.Startups;
     using Xunit;
     using Setups.ViewComponents;
+    using Setups;
 
     public class ServicesTests
     {
@@ -19,19 +20,19 @@
         public void MockMemoryCacheShouldBeRegistedWithAddedCaching()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services => services.AddMemoryCache());
 
             Assert.IsAssignableFrom<MemoryCacheMock>(TestServiceProvider.GetService<IMemoryCache>());
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void MockMemoryCacheShouldBeDifferentForEveryCallSynchronously()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services => services.AddMemoryCache());
 
             // second call should not have cache entries
@@ -48,14 +49,14 @@
                 .ShouldReturn()
                 .BadRequest();
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
         
         [Fact]
         public void MockMemoryCacheShouldBeDifferentForEveryViewComponentCallSynchronously()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services => services.AddMemoryCache());
 
             // second call should not have cache entries
@@ -72,14 +73,14 @@
                 .ShouldReturn()
                 .Content("No cache");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void MockMemoryCacheShouldBeDifferentForEveryCallSynchronouslyWithCachedControllerBuilder()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services => services.AddMemoryCache());
 
             var controller = new MyController<MvcController>();
@@ -96,14 +97,14 @@
                 .ShouldReturn()
                 .BadRequest();
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void DefaultConfigurationShouldSetMockMemoryCache()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services => services.AddMemoryCache());
 
             var memoryCache = TestServiceProvider.GetService<IMemoryCache>();
@@ -111,7 +112,7 @@
             Assert.NotNull(memoryCache);
             Assert.IsAssignableFrom<MemoryCacheMock>(memoryCache);
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -124,7 +125,7 @@
             Assert.NotNull(memoryCache);
             Assert.IsAssignableFrom<CustomMemoryCache>(memoryCache);
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -142,7 +143,7 @@
             Assert.NotNull(memoryCache);
             Assert.IsAssignableFrom<MemoryCacheMock>(memoryCache);
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -152,7 +153,7 @@
                 .Run(async () =>
                 {
                     MyApplication
-                        .IsUsingDefaultConfiguration()
+                        .StartsFrom<DefaultStartup>()
                         .WithServices(services => services.AddMemoryCache());
 
                     TestHelper.GlobalTestCleanup += () => TestServiceProvider.GetService<IMemoryCache>()?.Dispose();
@@ -211,7 +212,7 @@
                     Assert.Equal("fourth", fourthValue);
                     Assert.Equal("fifth", fifthValue);
 
-                    MyApplication.IsUsingDefaultConfiguration();
+                    MyApplication.StartsFrom<DefaultStartup>();
                 })
                 .ConfigureAwait(false)
                 .GetAwaiter()

@@ -14,6 +14,9 @@
     using Microsoft.AspNetCore.Hosting.Builder;
     using Microsoft.AspNetCore.Hosting.Internal;
     using Microsoft.AspNetCore.Http;
+#if NET451
+    using Microsoft.AspNetCore.Mvc.ApplicationParts;
+#endif
     using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.AspNetCore.Routing;
     using Microsoft.DotNet.InternalAbstractions;
@@ -72,7 +75,6 @@
 
             PrepareTestConfiguration();
             FindTestAssemblyName();
-            PrepareLicensing();
         }
 
         public static IServiceProvider Services
@@ -196,7 +198,7 @@
         }
 
         internal static DependencyContext LoadDependencyContext()
-            => TestAssembly != null 
+            => TestAssembly != null
             ? DependencyContext.Load(TestAssembly)
             ?? DependencyContext.Default
             : DependencyContext.Default;
@@ -213,7 +215,7 @@
             {
                 throw new InvalidOperationException("Test plugins could not be loaded. Depending on your project's configuration you may need to set the 'preserveCompilationContext' property under 'buildOptions' to 'true' in the test assembly's 'project.json' file and/or may need to call '.StartsFrom<TStartup>().WithTestAssembly(this)'.");
             }
-                
+
             plugins.ForEach(t =>
             {
                 var plugin = Activator.CreateInstance(t);
@@ -265,13 +267,15 @@
             // check root of the test project
             var startup =
                 applicationAssembly.GetType(defaultStartupType) ??
-                applicationAssembly.GetType($"{testAssemblyName}.{defaultStartupType}");
+                applicationAssembly.GetType($"{applicationAssembly.GetName().Name}.{defaultStartupType}");
 
             return startup;
         }
 
         private static void Initialize()
         {
+            PrepareLicensing();
+
             var dependencyContext = LoadDependencyContext();
             LoadPlugins(dependencyContext);
 
@@ -297,7 +301,7 @@
 
         private static void FindTestAssemblyName()
         {
-            testAssemblyName = TestConfiguration.General.TestAssemblyName 
+            testAssemblyName = TestConfiguration.General.TestAssemblyName
                 ?? TestAssembly?.GetName().Name
                 ?? DependencyContext
                     .Default
@@ -401,7 +405,7 @@
 
 #if NET451
             var baseStartupType = StartupType;
-            while(baseStartupType?.BaseType != typeof(object))
+            while (baseStartupType?.BaseType != typeof(object))
             {
                 baseStartupType = baseStartupType.BaseType;
             }
@@ -517,29 +521,34 @@
             TestAssembly = null;
             TestServiceProvider.Current = null;
             TestServiceProvider.ClearServiceLifetimes();
-        }
+            DefaultRegistrationPlugins.Clear();
+            ServiceRegistrationPlugins.Clear();
+            RoutingServiceRegistrationPlugins.Clear();
+            InitializationPlugins.Clear();
+            LicenseValidator.ClearLicenseDetails();
+    }
 
 #if NET451
-        private static void FindTestAssembly()
+    private static void FindTestAssembly()
+    {
+        var executingAssembly = Assembly.GetExecutingAssembly();
+
+        var stackTrace = new StackTrace(false);
+
+        foreach (var frame in stackTrace.GetFrames())
         {
-            var executingAssembly = Assembly.GetExecutingAssembly();
+            var method = frame.GetMethod();
+            var methodAssembly = method?.DeclaringType?.Assembly;
 
-            var stackTrace = new StackTrace(false);
-
-            foreach (var frame in stackTrace.GetFrames())
+            if (methodAssembly != null
+                && methodAssembly != executingAssembly
+                && !methodAssembly.FullName.StartsWith(TestFrameworkName))
             {
-                var method = frame.GetMethod();
-                var methodAssembly = method?.DeclaringType?.Assembly;
-
-                if (methodAssembly != null
-                    && methodAssembly != executingAssembly
-                    && !methodAssembly.FullName.StartsWith(TestFrameworkName))
-                {
-                    TestAssembly = methodAssembly;
-                    return;
-                }
+                TestAssembly = methodAssembly;
+                return;
             }
         }
-#endif
     }
+#endif
+}
 }

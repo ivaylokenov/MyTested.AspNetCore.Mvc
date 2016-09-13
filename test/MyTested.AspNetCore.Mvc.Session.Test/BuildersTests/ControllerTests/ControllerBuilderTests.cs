@@ -12,7 +12,7 @@
         public void WithSessionShouldPopulateSessionCorrectly()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -30,7 +30,7 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -56,7 +56,7 @@
         public void WithSessionShouldPopulateSessionCorrectlyForPocoController()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -74,7 +74,7 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]

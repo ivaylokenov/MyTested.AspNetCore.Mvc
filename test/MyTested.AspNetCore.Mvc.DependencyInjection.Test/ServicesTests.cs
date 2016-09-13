@@ -1,6 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test
 {
     using Microsoft.Extensions.DependencyInjection.Extensions;
+    using Setups;
     using Setups.Controllers;
     using Setups.Services;
     using Xunit;
@@ -11,7 +12,7 @@
         public void ScopedServicesShouldRemainThroughTheTestCase()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.TryAddScoped<IScopedService, ScopedService>();
@@ -47,7 +48,7 @@
                 .ResultOfType<string>()
                 .Passing(r => r == "Constructor");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }

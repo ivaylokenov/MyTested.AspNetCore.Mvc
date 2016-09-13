@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Http.Test
+﻿namespace MyTested.AspNetCore.Mvc.Universe.Test
 {
     using Microsoft.Extensions.DependencyInjection;
     using Mvc.Test.Setups;

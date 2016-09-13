@@ -10,13 +10,14 @@
     using Microsoft.Extensions.DependencyInjection.Extensions;
     using Setups.Common;
     using Xunit;
+    using Setups;
 
     public class ServicesTests
     {
         [Fact]
         public void WithoutAdditionalServicesTheDefaultActionInvokersShouldBeSet()
         {
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
 
             var services = TestApplication.Services;
             var actionInvokerProviders = services.GetServices<IActionInvokerProvider>();
@@ -39,14 +40,14 @@
             Assert.NotNull(routeModelBindingActionInvokerFactory);
             Assert.IsAssignableFrom<ModelBindingActionInvokerFactory>(routeModelBindingActionInvokerFactory);
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithCustomImplementationsForTheRouteTestingTheCorrectServicesShouldBeSet()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(customServices =>
                 {
                     customServices.TryAddEnumerable(
@@ -76,7 +77,7 @@
             Assert.NotNull(routeModelBindingActionInvokerFactory);
             Assert.IsAssignableFrom<CustomModelBindingActionInvokerFactory>(routeModelBindingActionInvokerFactory);
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }

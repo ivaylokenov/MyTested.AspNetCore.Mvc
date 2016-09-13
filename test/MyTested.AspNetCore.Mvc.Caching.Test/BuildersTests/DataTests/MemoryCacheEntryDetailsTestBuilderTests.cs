@@ -13,7 +13,7 @@
         public MemoryCacheEntryDetailsTestBuilderTests()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services => services.AddMemoryCache());
         }
 
@@ -116,7 +116,7 @@
 
         public void Dispose()
         {
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }

@@ -511,7 +511,7 @@
                 .Created()
                 .At<NoAttributesController>(c => c.WithParameter(1));
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -531,7 +531,7 @@
                 },
                 "When calling CreatedAtRouteAction action in MvcController expected created result to have resolved location to '/api/test', but in fact received '/api/Redirect/WithParameter?id=1'.");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -546,7 +546,7 @@
                 .Created()
                 .At<NoAttributesController>(c => c.VoidAction());
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]

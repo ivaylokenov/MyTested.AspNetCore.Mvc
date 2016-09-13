@@ -14,6 +14,7 @@
     using System;
     using System.Linq;
     using System.Reflection;
+    using ViewComponents.Test;
     using Xunit;
 
     public class ViewComponentBuilderTests
@@ -212,7 +213,6 @@
                     Assert.NotNull(viewComponent.ViewContext);
                     Assert.IsAssignableFrom<ViewContextMock>(viewComponent.ViewContext);
                     Assert.NotNull(viewComponent.ViewEngine);
-                    Assert.Empty(viewComponent.ViewEngine.ViewEngines);
                     Assert.NotNull(viewComponent.ViewComponentContext.Arguments);
                     Assert.Empty(viewComponent.ViewComponentContext.Arguments);
                     Assert.NotNull(viewComponent.ViewComponentContext.HtmlEncoder);

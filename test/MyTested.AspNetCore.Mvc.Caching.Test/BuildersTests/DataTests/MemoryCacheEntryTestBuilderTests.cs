@@ -14,7 +14,7 @@
         public MemoryCacheEntryTestBuilderTests()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services => services.AddMemoryCache());
         }
 
@@ -207,10 +207,10 @@
         public void WithNoMockMemoryCacheSomeMethodsShouldThrowException()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
-                    services.AddTransient<IMemoryCache, CustomMemoryCache>();
+                    services.Replace<IMemoryCache, CustomMemoryCache>(ServiceLifetime.Transient);
                 });
 
             Test.AssertException<InvalidOperationException>(
@@ -230,12 +230,12 @@
                 },
                 "This test requires the registered IMemoryCache service to implement IMemoryCacheMock.");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         public void Dispose()
         {
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }

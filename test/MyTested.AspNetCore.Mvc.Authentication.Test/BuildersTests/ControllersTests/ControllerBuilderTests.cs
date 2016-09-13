@@ -4,6 +4,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Setups.Controllers;
     using Xunit;
+    using Setups;
 
     public class ControllerBuilderTests
     {
@@ -67,7 +68,7 @@
         public void WithAuthenticatedUserShouldPopulateUserPropertyWithDefaultValuesForPocoController()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddHttpContextAccessor();
@@ -90,14 +91,14 @@
                     Assert.Equal(true, controllerUser.Identity.IsAuthenticated);
                 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithAuthenticatedUserShouldPopulateProperUserWhenUserWithUserBuilderForPocoController()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddHttpContextAccessor();
@@ -134,7 +135,7 @@
                     Assert.Equal(false, controllerUser.IsInRole("AnotherRole"));
                 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }

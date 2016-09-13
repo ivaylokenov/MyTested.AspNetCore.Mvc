@@ -233,7 +233,7 @@
                 .ShouldMap("/Test")
                 .ToDataToken("random");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -251,7 +251,7 @@
                 },
                 "Expected route '/Test' to contain data token with 'name' key but such was not found.");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -264,7 +264,7 @@
                 .ShouldMap("/Test")
                 .ToDataToken("random", "value");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -282,7 +282,7 @@
                 },
                 "Expected route '/Test' to contain data token with 'random' key and the provided value but the value was different.");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -295,7 +295,7 @@
                 .ShouldMap("/Test")
                 .ToDataTokens(new { random = "value", another = "token" });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -312,7 +312,7 @@
                     ["another"] = "token"
                 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -330,7 +330,7 @@
                 },
                 "Expected route '/Test' to contain data token with 'another' key and the provided value but the value was different.");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -348,7 +348,7 @@
                 },
                 "Expected route '/Test' to contain 1 data token but in fact found 2.");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -366,7 +366,7 @@
                 },
                 "Expected route '/Test' to contain 4 data tokens but in fact found 2.");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -561,7 +561,7 @@
                 .ShouldMap("/Files")
                 .To<DefaultController>(c => c.Test("None"));
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -574,7 +574,7 @@
                 .ShouldMap("/Files/Default/Download/Test")
                 .To<DefaultController>(c => c.Download("Test"));
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -587,7 +587,7 @@
                 .ShouldMap("/CustomRoute")
                 .To<NormalController>(c => c.FromRouteAction(new RequestModel { Integer = 1, String = "test" }));
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
         
         [Fact]
@@ -689,7 +689,7 @@
                     String = "test"
                 }));
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]

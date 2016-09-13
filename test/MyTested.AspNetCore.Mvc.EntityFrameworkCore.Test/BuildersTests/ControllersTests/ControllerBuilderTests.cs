@@ -5,6 +5,8 @@
     using Setups.Controllers;
     using Setups.Common;
     using Xunit;
+    using Setups;
+    using EntityFrameworkCore.Test;
 
     public class ControllerBuilderTests
     {
@@ -12,7 +14,7 @@
         public void WithEntitesShouldSetupDbContext()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<TestStartup>()
                 .WithServices(services =>
                 {
                     services.AddDbContext<CustomDbContext>(options =>
@@ -66,14 +68,14 @@
                 .ShouldReturn()
                 .NotFound();
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithSetShouldSetupDbContext()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<TestStartup>()
                 .WithServices(services =>
                 {
                     services.AddDbContext<CustomDbContext>(options =>
@@ -114,7 +116,7 @@
                 .ShouldReturn()
                 .NotFound();
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }

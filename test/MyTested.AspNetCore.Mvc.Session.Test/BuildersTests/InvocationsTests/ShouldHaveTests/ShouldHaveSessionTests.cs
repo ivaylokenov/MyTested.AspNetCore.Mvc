@@ -12,7 +12,7 @@
         public void NoSessionShouldNotThrowExceptionWithNoEntries()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -29,14 +29,14 @@
                 .ShouldReturn()
                 .Content();
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void NoSessionShouldThrowExceptionWithEntries()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -58,14 +58,14 @@
                 },
                 "When invoking AddSessionComponent expected to have session with no entries, but in fact it had some.");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void SessionWithNoNumberShouldNotThrowExceptionWithAnyEntries()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -82,14 +82,14 @@
                 .ShouldReturn()
                 .View();
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void SessionWithNoNumberShouldThrowExceptionWithNoEntries()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -111,14 +111,14 @@
                 },
                 "When invoking NormalComponent expected to have session entries, but none were found.");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void SessionWithNumberShouldNotThrowExceptionWithCorrectEntries()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -135,14 +135,14 @@
                 .ShouldReturn()
                 .View();
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void SessionWithNumberShouldThrowExceptionWithInvalidEntries()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -164,14 +164,14 @@
                 },
                 "When invoking NormalComponent expected to have session with 1 entry, but in fact contained 0.");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void SessionWithNumberShouldThrowExceptionWithInvalidManyEntries()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -193,14 +193,14 @@
                 },
                 "When invoking AddSessionComponent expected to have session with 4 entries, but in fact contained 3.");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void SessionWithBuilderShouldWorkCorrectly()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -218,7 +218,7 @@
                 .ShouldReturn()
                 .View();
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }

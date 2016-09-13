@@ -7,13 +7,14 @@
     using Setups.Controllers;
     using Xunit;
     using Microsoft.Extensions.DependencyInjection.Extensions;
+    using Setups;
 
     public class ViewDataPropertyHelperTests
     {
         [Fact]
         public void GetPropertiesShouldNotThrowExceptionForNormalController()
         {
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
 
             var helper = ViewDataPropertyHelper.GetViewDataProperties<MvcController>();
 
@@ -36,7 +37,7 @@
         public void GetPropertiesShouldNotThrowExceptionForPocoController()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -55,7 +56,7 @@
             Assert.NotNull(gotViewData);
             Assert.Same(gotViewData, controller.CustomViewData);
             
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }

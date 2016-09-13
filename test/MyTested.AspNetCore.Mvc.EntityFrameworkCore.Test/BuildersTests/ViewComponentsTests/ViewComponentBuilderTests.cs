@@ -2,6 +2,7 @@
 {
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
+    using Setups;
     using Setups.Common;
     using Setups.ViewComponents;
     using Xunit;
@@ -12,7 +13,7 @@
         public void WithEntitesShouldSetupDbContext()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddDbContext<CustomDbContext>(options =>
@@ -67,14 +68,14 @@
                 .ShouldReturn()
                 .Content("Invalid");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithSetShouldSetupDbContext()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddDbContext<CustomDbContext>(options =>
@@ -115,7 +116,7 @@
                 .ShouldReturn()
                 .Content("Invalid");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }

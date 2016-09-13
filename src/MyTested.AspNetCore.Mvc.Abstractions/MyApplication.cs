@@ -21,12 +21,7 @@
             : base(startupType)
         {
         }
-
-        public static IApplicationConfigurationBuilder IsUsingDefaultConfiguration()
-        {
-            return new MyApplication();
-        }
-
+        
         public static IApplicationConfigurationBuilder StartsFrom<TStartup>()
             where TStartup : class
         {

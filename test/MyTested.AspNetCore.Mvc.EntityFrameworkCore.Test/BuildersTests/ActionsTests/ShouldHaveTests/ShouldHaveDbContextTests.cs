@@ -7,6 +7,7 @@
     using Setups.Common;
     using Setups.Controllers;
     using Xunit;
+    using EntityFrameworkCore.Test;
 
     public class ShouldHaveDbContextTests
     {
@@ -14,7 +15,7 @@
         public void DbContextShouldNotThrowExceptionWithCorrectAssertions()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<TestStartup>()
                 .WithServices(services =>
                 {
                     services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase());
@@ -33,14 +34,14 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
         
         [Fact]
         public void DbContextShouldNotThrowExceptionWithCorrectPredicate()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<TestStartup>()
                 .WithServices(services =>
                 {
                     services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase());
@@ -56,14 +57,14 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void DbContextShouldThrowExceptionWithIncorrectPredicate()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<TestStartup>()
                 .WithServices(services =>
                 {
                     services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase());
@@ -93,14 +94,14 @@
             },
             "When calling Create action in DbContextController expected the CustomDbContext entities to pass the given predicate, but it failed.");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void DbContextWithSetShouldNotThrowExceptionWithCorrectAssertions()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<TestStartup>()
                 .WithServices(services =>
                 {
                     services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase());
@@ -119,14 +120,14 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void DbContextWithSetShouldNotThrowExceptionWithCorrectPredicate()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<TestStartup>()
                 .WithServices(services =>
                 {
                     services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase());
@@ -142,14 +143,14 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void DbContextWithSetShouldThrowExceptionWithIncorrectPredicate()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<TestStartup>()
                 .WithServices(services =>
                 {
                     services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase());
@@ -179,7 +180,7 @@
             },
             "When calling Create action in DbContextController expected the CustomDbContext set of CustomModel to pass the given predicate, but it failed.");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }

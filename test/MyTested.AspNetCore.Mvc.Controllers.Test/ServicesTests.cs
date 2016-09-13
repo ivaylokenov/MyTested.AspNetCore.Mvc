@@ -17,7 +17,7 @@
         [Fact]
         public void ControllerWithoutConstructorFunctionShouldPopulateCorrectNewInstanceOfControllerType()
         {
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
 
             MyController<MvcController>
                 .Instance()
@@ -61,7 +61,7 @@
         public void ControllerWithNoParameterlessConstructorAndWithRegisteredServicesShouldPopulateCorrectInstanceOfControllerType()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddTransient<IInjectedService, InjectedService>();
@@ -79,13 +79,13 @@
                     Assert.IsAssignableFrom<AnotherInjectedService>(controller.AnotherInjectedService);
                 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void ControllerWithNoParameterlessConstructorAndNoServicesShouldThrowProperException()
         {
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
 
             Test.AssertException<UnresolvedServicesException>(
                 () =>
@@ -98,14 +98,14 @@
                 },
                 "NoParameterlessConstructorController could not be instantiated because it contains no constructor taking no parameters.");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void IActionContextAccessorShouldWorkCorrectlySynchronously()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddActionContextAccessor();
@@ -134,14 +134,14 @@
             Assert.IsAssignableFrom<ControllerContextMock>(secondContext);
             Assert.NotSame(firstContext, secondContext);
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void IActionContextAccessorShouldWorkCorrectlyAsynchronously()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddActionContextAccessor();
@@ -228,14 +228,14 @@
                 .GetAwaiter()
                 .GetResult();
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithCustomActionContextShouldSetItToAccessor()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddActionContextAccessor();
@@ -254,14 +254,14 @@
                     Assert.Equal("Test", controller.Context.ActionDescriptor.DisplayName);
                 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithCustomActionContextFuncShouldSetItToAccessor()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddActionContextAccessor();
@@ -282,14 +282,14 @@
                     Assert.Equal("Test", controller.Context.ActionDescriptor.DisplayName);
                 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithCustomControllerContextShouldSetItToAccessor()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddActionContextAccessor();
@@ -308,14 +308,14 @@
                     Assert.Equal("Test", controller.Context.ActionDescriptor.DisplayName);
                 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
         
         [Fact]
         public void WithControllerContextFuncShouldSetItToAccessor()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddActionContextAccessor();
@@ -336,7 +336,7 @@
                     Assert.Equal("Test", controller.Context.ActionDescriptor.DisplayName);
                 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }

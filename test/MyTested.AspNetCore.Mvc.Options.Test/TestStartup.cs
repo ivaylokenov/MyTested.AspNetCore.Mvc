@@ -1,8 +1,8 @@
-﻿namespace MyTested.AspNetCore.Mvc.Http.Test
+﻿namespace MyTested.AspNetCore.Mvc.Options.Test
 {
+    using System.Reflection;
     using Microsoft.Extensions.DependencyInjection;
     using Mvc.Test.Setups;
-    using System.Reflection;
 
     public class TestStartup : DefaultStartup
     {

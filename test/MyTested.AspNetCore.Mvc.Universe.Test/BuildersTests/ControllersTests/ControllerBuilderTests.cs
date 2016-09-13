@@ -3,7 +3,9 @@
     using Internal.Http;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;
+    using Setups;
     using Setups.Controllers;
+    using Universe.Test;
     using Xunit;
 
     public class ControllerBuilderTests
@@ -12,7 +14,7 @@
         public void WithHttpContextShouldPopulateCustomHttpContextForPocoController()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<TestStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -65,14 +67,14 @@
                     Assert.Same(httpContext.User, controller.CustomHttpContext.User);
                 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithHttpContextShouldPopulateCustomHttpContext()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<TestStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -121,7 +123,7 @@
                     Assert.Same(httpContext.User, setHttpContext.User);
                 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }

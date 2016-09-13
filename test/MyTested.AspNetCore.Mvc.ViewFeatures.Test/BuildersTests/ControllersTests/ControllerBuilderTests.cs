@@ -10,19 +10,19 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Controllers;
-    using Microsoft.Extensions.DependencyInjection.Extensions;
     using Microsoft.Extensions.Primitives;
     using Setups;
     using Setups.Controllers;
     using Xunit;
     using Builders.Base;
+    using ViewFeatures.Test;
 
     public class ControllerBuilderTests
     {
         [Fact]
         public void RouteDataShouldBePopulatedWhenRequestAndPathAreProvided()
         {
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<TestStartup>();
 
             MyController<MvcController>
                 .Instance()
@@ -36,7 +36,7 @@
         public void RouteDataShouldBePopulatedWhenRequestAndPathAreProvidedForPocoController()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<TestStartup>()
                 .WithServices(services =>
                 {
                     services.AddHttpContextAccessor();
@@ -49,14 +49,14 @@
                 .ShouldReturn()
                 .View();
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void CallingShouldPopulateCorrectActionDescriptorForPocoController()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddHttpContextAccessor();
@@ -73,14 +73,14 @@
                     Assert.Equal("OkResultAction", (controller as FullPocoController).CustomControllerContext.ActionDescriptor.ActionName);
                 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithoutValidationShouldNotValidateTheRequestModelForPocoController()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddHttpContextAccessor();
@@ -93,14 +93,14 @@
                 .ShouldHave()
                 .ValidModelState();
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void CallingShouldHaveValidModelStateWhenThereAreNoModelErrorsForPocoController()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddHttpContextAccessor();
@@ -122,14 +122,14 @@
                     Assert.Equal(0, modelState.Keys.Count());
                 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void NormalIndexOutOfRangeExceptionShouldShowNormalMessageForPocoController()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddHttpContextAccessor();
@@ -145,14 +145,14 @@
                         .Ok();
                 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void CallingShouldPopulateCorrectActionNameAndActionResultWithAsyncActionCallForPocoController()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddHttpContextAccessor();
@@ -164,14 +164,14 @@
 
             this.CheckActionResultTestBuilder(actionResultTestBuilder, "AsyncOkResultAction");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void CallingShouldPopulateCorrectActionNameAndActionResultWithNormalActionCallForPocoController()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddHttpContextAccessor();
@@ -183,14 +183,14 @@
 
             this.CheckActionResultTestBuilder(actionResultTestBuilder, "OkResultAction");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void CallingShouldPopulateCorrectActionNameWithNormalVoidActionCallForPocoController()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddHttpContextAccessor();
@@ -202,14 +202,14 @@
 
             this.CheckActionName(voidActionResultTestBuilder, "EmptyAction");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void CallingShouldPopulateCorrectActionNameWithTaskActionCallForPocoController()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddHttpContextAccessor();
@@ -221,14 +221,14 @@
 
             this.CheckActionName(voidActionResultTestBuilder, "EmptyActionAsync");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void CallingShouldPopulateModelStateWhenThereAreModelErrorsForPocoController()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddHttpContextAccessor();
@@ -252,14 +252,14 @@
 
                 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithAuthenticatedNotCalledShouldNotHaveAuthorizedUserForPocoController()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddHttpContextAccessor();
@@ -280,14 +280,14 @@
                     Assert.Equal(false, controllerUser.Identity.IsAuthenticated);
                 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void PrepareControllerShouldSetCorrectPropertiesWithCustomSetupForPocoController()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddHttpContextAccessor();
@@ -305,14 +305,14 @@
                     Assert.NotNull(controller.PublicProperty);
                 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithHttpContextSessionShouldThrowExceptionIfSessionIsNotRegisteredForPocoController()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddHttpContextAccessor();
@@ -333,7 +333,7 @@
         public void WithHttpContextShouldPopulateCustomHttpContextForPocoController()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddHttpContextAccessor();
@@ -381,14 +381,14 @@
                     Assert.Same(httpContext.User, controller.CustomHttpContext.User);
                 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithHttpContextSetupShouldPopulateContextPropertiesForPocoController()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddHttpContextAccessor();
@@ -405,14 +405,14 @@
                     Assert.Equal(ContentType.ApplicationOctetStream, controller.CustomHttpContext.Request.ContentType);
                 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithRequestShouldNotWorkWithDefaultRequestActionForPocoController()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddHttpContextAccessor();
@@ -424,14 +424,14 @@
                 .ShouldReturn()
                 .BadRequest();
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithRequestShouldWorkWithSetRequestActionForPocoController()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddHttpContextAccessor();
@@ -444,14 +444,14 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithRequestAsObjectShouldWorkWithSetRequestActionForPocoController()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddHttpContextAccessor();
@@ -467,14 +467,14 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void UsingUrlHelperInsideControllerShouldWorkCorrectlyForPocoController()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddHttpContextAccessor();
@@ -488,14 +488,14 @@
                 .Ok()
                 .WithModel("/FullPoco/UrlAction");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void UnresolvedRouteValuesShouldHaveFriendlyExceptionForPocoController()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddHttpContextAccessor();
@@ -513,14 +513,14 @@
                 },
                 "Route values are not present in the method call but are needed for successful pass of this test case. Consider calling 'WithRouteData' on the component builder to resolve them from the provided lambda expression or set the HTTP request path by using 'WithHttpRequest'.");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void PrepareControllerShouldSetCorrectPropertiesWithDefaultServicesForPocoController()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddHttpContextAccessor();
@@ -557,7 +557,7 @@
                     Assert.Empty(controller.CustomControllerContext.ActionDescriptor.RouteValues);
                 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -605,7 +605,7 @@
         public void WithControllerContextShouldSetControllerContextForPocoController()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddHttpContextAccessor();
@@ -629,14 +629,14 @@
                     Assert.Equal("Test", controller.CustomControllerContext.ActionDescriptor.ActionName);
                 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithControllerContextSetupShouldSetCorrectControllerContextForPocoController()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddHttpContextAccessor();
@@ -655,7 +655,7 @@
                     Assert.True(controller.CustomControllerContext.RouteData.Values.ContainsKey("testkey"));
                 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         private void CheckActionResultTestBuilder<TActionResult>(

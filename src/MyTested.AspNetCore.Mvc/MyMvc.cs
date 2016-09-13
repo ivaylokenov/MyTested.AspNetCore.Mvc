@@ -16,16 +16,7 @@
         {
             TestApplication.TryInitialize();
         }
-
-        /// <summary>
-        /// Sets default configuration on the tested application. Calls 'AddMvc' on the services collection and 'UseMvcWithDefaultRoute' on the application builder.
-        /// </summary>
-        /// <returns>Builder of <see cref="IApplicationConfigurationBuilder"/> type.</returns>
-        public static IApplicationConfigurationBuilder IsUsingDefaultConfiguration()
-        {
-            return new MyApplication();
-        }
-
+        
         /// <summary>
         /// Configures the tested application with the provided startup class.
         /// </summary>
