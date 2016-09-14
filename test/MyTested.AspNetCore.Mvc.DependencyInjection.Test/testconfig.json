@@ -1,6 +1,5 @@
 ﻿{
   "General": {
-    "AsynchronousTests": false,
-    "AutomaticStartup": false
+    "AsynchronousTests": false
   }
 }

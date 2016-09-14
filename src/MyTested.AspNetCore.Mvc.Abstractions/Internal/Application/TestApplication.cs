@@ -115,9 +115,14 @@
 
             set
             {
+                if (value != null && Configuration().General().NoStartup())
+                {
+                    throw new InvalidOperationException($"The test configuration ('testconfig.json' file by default) contained 'true' value for the 'General.NoStartup' option but {value.GetName()} class was set through the 'StartsFrom<TStartup>()' method. Either do not set the class or change the option to 'false'.");
+                }
+
                 if (startupType != null && Configuration().General().AsynchronousTests())
                 {
-                    throw new InvalidOperationException("Multiple Startup types per test project while running asynchronous tests is not supported. Either set 'General.AsynchronousTests' in the 'testconfig.json' file to 'false' or separate your tests into different test projects. The latter is recommended. If you choose the first option, you may need to disable asynchronous testing in your preferred test runner too.");
+                    throw new InvalidOperationException("Multiple Startup types per test project while running asynchronous tests is not supported. Either set 'General.AsynchronousTests' in the test configuration ('testconfig.json' file by default) to 'false' or separate your tests into different test projects. The latter is recommended. If you choose the first option, you may need to disable asynchronous testing in your preferred test runner too.");
                 }
 
                 if (initialiazed)
@@ -163,8 +168,8 @@
             }
         }
 
-        internal static string ApplicationName =>
-            Configuration().General().ApplicationName()
+        internal static string ApplicationName
+            => Configuration().General().ApplicationName()
                 ?? TestAssembly?.GetName().Name
                 ?? StartupAssemblyName
                 ?? PlatformServices.Default.Application.ApplicationName;
@@ -192,6 +197,11 @@
 
         public static void TryInitialize()
         {
+            if (Configuration().General().NoStartup())
+            {
+                return;
+            }
+
             lock (Sync)
             {
                 if (!initialiazed && Configuration().General().AutomaticStartup())
@@ -200,7 +210,11 @@
 
                     if (defaultStartupType == null)
                     {
-                        throw new InvalidOperationException($"{Environment.EnvironmentName}Startup class could not be found at the root of the test project. Either add it or set 'General.AutomaticStartup' in the 'testconfig.json' file to 'false'.");
+                        throw new InvalidOperationException($"{Environment.EnvironmentName}Startup class could not be found at the root of the test project. Either add it or set 'General.AutomaticStartup' in the test configuration ('testconfig.json' file by default) to 'false'.");
+                    }
+                    else if (Configuration().General().NoStartup())
+                    {
+                        throw new InvalidOperationException($"The test configuration ('testconfig.json' file by default) contained 'true' value for the 'General.NoStartup' option but {Environment.EnvironmentName}Startup class was located at the root of the project. Either remove the class or change the option to 'false'.");
                     }
 
                     startupType = defaultStartupType;
@@ -210,10 +224,20 @@
         }
 
         internal static DependencyContext LoadDependencyContext()
-            => TestAssembly != null
-            ? DependencyContext.Load(TestAssembly)
-            ?? DependencyContext.Default
-            : DependencyContext.Default;
+        {
+            DependencyContext dependencyContext = null;
+            if (TestAssembly != null)
+            {
+                dependencyContext = DependencyContext.Load(TestAssembly);
+            }
+
+            if (dependencyContext == null)
+            {
+                dependencyContext = DependencyContext.Default;
+            }
+
+            return dependencyContext;
+        }
 
         internal static void LoadPlugins(DependencyContext dependencyContext)
         {
@@ -286,6 +310,11 @@
 
         private static void Initialize()
         {
+            if (StartupType == null && !Configuration().General().NoStartup())
+            {
+                throw new InvalidOperationException($"The test configuration ('testconfig.json' file by default) contained 'false' value for the 'General.NoStartup' option but a Startup class was not provided. Either add {Environment.EnvironmentName}Startup class to the root of the test project or set it by calling 'StartsFrom<TStartup>(). Additionally, if you do not want to use a global test application for all test cases in this project, you may change the test configuration option to 'true'.");
+            }
+
             PrepareLicensing();
 
             var dependencyContext = LoadDependencyContext();
@@ -316,18 +345,20 @@
             TestCounter.SetLicenseData(
                 Configuration().Licenses(),
                 DateTime.ParseExact(ReleaseDate, "yyyy-MM-dd", CultureInfo.InvariantCulture),
-                TestAssembly?.GetName().Name ?? StartupAssemblyName);
+                TestAssembly?.GetName().Name ?? StartupAssemblyName ?? DependencyContext
+                    .Default
+                    .GetDefaultAssemblyNames()
+                    .First()
+                    .Name);
         }
 
         private static IHostingEnvironment PrepareEnvironment()
-        {
-            return new HostingEnvironment
+            => new HostingEnvironment
             {
                 ApplicationName = ApplicationName,
                 EnvironmentName = Configuration().General().EnvironmentName(),
                 ContentRootPath = PlatformServices.Default.Application.ApplicationBasePath
             };
-        }
 
         private static IServiceCollection GetInitialServiceCollection()
         {
@@ -530,7 +561,7 @@
             InitializationPlugins.Clear();
             LicenseValidator.ClearLicenseDetails();
         }
-
+        
 #if NET451
         private static void FindTestAssembly()
         {

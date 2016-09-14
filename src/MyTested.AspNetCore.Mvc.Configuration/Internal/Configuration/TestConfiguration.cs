@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.Concurrent;
     using Microsoft.Extensions.Configuration;
 
     public class TestConfiguration : BaseConfiguration
@@ -9,17 +10,14 @@
         private const string LicenseConfigKey = "License";
         private const string LicensesConfigKey = "Licenses";
 
-        private readonly IDictionary<Type, BaseConfiguration> configurationTypes;
+        private readonly ConcurrentDictionary<Type, BaseConfiguration> configurationTypes;
 
         private TestConfiguration(IConfiguration configuration)
             : base(configuration)
         {
-            this.configurationTypes = new Dictionary<Type, BaseConfiguration>();
+            this.configurationTypes = new ConcurrentDictionary<Type, BaseConfiguration>();
         }
 
-        public GeneralTestConfiguration General()
-            => this.GetConfiguration(() => new GeneralTestConfiguration(this.Configuration));
-        
         public IEnumerable<string> Licenses()
         {
             var license = this.Configuration[LicenseConfigKey];
@@ -35,15 +33,8 @@
 
         public TConfiguration GetConfiguration<TConfiguration>(Func<TConfiguration> configurationFactory)
             where TConfiguration : BaseConfiguration
-        {
-            var typeOfConfiguration = typeof(TConfiguration);
-            if (!this.configurationTypes.ContainsKey(typeOfConfiguration))
-            {
-                this.configurationTypes[typeOfConfiguration] = configurationFactory();
-            }
-
-            return (TConfiguration)this.configurationTypes[typeOfConfiguration];
-        }
+            => (TConfiguration)this.configurationTypes
+                .GetOrAdd(typeof(TConfiguration), _ => configurationFactory());
 
         public static TestConfiguration With(IConfiguration configuration)
         {

@@ -32,6 +32,10 @@
 
   "frameworks": {
     "net451": {},
-    "netstandard1.6": {}
+    "netstandard1.6": {
+      "dependencies": {
+        "System.Collections.Concurrent": "4.0.12"
+      }
+    }
   }
 }
