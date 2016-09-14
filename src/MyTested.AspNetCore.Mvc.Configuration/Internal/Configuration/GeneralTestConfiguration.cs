@@ -4,6 +4,7 @@
 
     public class GeneralTestConfiguration : BaseConfiguration
     {
+        private const string AsynchronousTestsConfigKey = "AsynchronousTests";
         private const string WebAssemblyNameConfigKey = "WebAssemblyName";
         private const string TestAssemblyNameConfigKey = "TestAssemblyName";
         private const string AutomaticStartupConfigKey = "AutomaticStartup";
@@ -16,6 +17,8 @@
         {
             this.Prefix = "General";
         }
+
+        public bool AsynchronousTests => this.GetValue(AsynchronousTestsConfigKey, true);
 
         public string WebAssemblyName => this.GetValue(WebAssemblyNameConfigKey);
         

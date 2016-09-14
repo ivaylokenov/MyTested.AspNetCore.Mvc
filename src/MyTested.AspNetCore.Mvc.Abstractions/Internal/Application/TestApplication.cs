@@ -115,6 +115,11 @@
 
             set
             {
+                if (startupType != null && TestConfiguration.General.AsynchronousTests)
+                {
+                    throw new InvalidOperationException("Multiple Startup types per test project while running asynchronous tests is not supported. Either set 'General.AsynchronousTests' in the 'testconfig.json' file to 'false' or separate your tests into different test projects. The latter is recommended. If you choose the first option, you may need to disable asynchronous testing in your preferred test runner too.");
+                }
+
                 if (initialiazed)
                 {
                     Reset();
