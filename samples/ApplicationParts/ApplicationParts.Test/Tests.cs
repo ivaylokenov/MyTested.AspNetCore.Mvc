@@ -9,7 +9,7 @@
     public class Tests
     {
         [OneTimeSetUp]
-        public void Init() => MyApplication.StartsFrom<Startup>();
+        public void Init() => MyApplication.StartsFrom<Startup>().WithTestAssembly(this);
 
         [Test]
         public void CustomRouteShouldMatchCorrectController()
