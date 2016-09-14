@@ -48,7 +48,8 @@
         private static bool initialiazed;
 
         private static string testAssemblyName;
-        private static TestConfiguration testConfiguration;
+        private static IConfigurationBuilder configurationBuilder;
+        private static TestConfiguration configuration;
 
         private static IHostingEnvironment environment;
 
@@ -72,8 +73,7 @@
 #if NET451
             FindTestAssembly();
 #endif
-
-            PrepareTestConfiguration();
+            
             FindTestAssemblyName();
         }
 
@@ -115,7 +115,7 @@
 
             set
             {
-                if (startupType != null && TestConfiguration.General.AsynchronousTests)
+                if (startupType != null && Configuration().General().AsynchronousTests())
                 {
                     throw new InvalidOperationException("Multiple Startup types per test project while running asynchronous tests is not supported. Either set 'General.AsynchronousTests' in the 'testconfig.json' file to 'false' or separate your tests into different test projects. The latter is recommended. If you choose the first option, you may need to disable asynchronous testing in your preferred test runner too.");
                 }
@@ -163,31 +163,38 @@
             }
         }
 
-        public static TestConfiguration TestConfiguration
-        {
-            get
-            {
-                if (testConfiguration == null || AdditionalConfiguration != null)
-                {
-                    testConfiguration = TestConfiguration.With(PrepareTestConfiguration());
-                    PrepareLicensing();
-                }
-
-                return testConfiguration;
-            }
-        }
-
         internal static string ApplicationName =>
-            TestConfiguration.General.ApplicationName
+            Configuration().General().ApplicationName()
                 ?? TestAssembly?.GetName().Name
                 ?? StartupAssemblyName
                 ?? PlatformServices.Default.Application.ApplicationName;
+        
+        public static TestConfiguration Configuration()
+        {
+            if (configuration == null || AdditionalConfiguration != null)
+            {
+                if (configurationBuilder == null)
+                {
+                    configurationBuilder = new ConfigurationBuilder()
+                        .AddJsonFile("testconfig.json", optional: true);
+                }
+
+                AdditionalConfiguration?.Invoke(configurationBuilder);
+                AdditionalConfiguration = null;
+
+                configuration = TestConfiguration.With(configurationBuilder.Build());
+
+                PrepareLicensing();
+            }
+
+            return configuration;
+        }
 
         public static void TryInitialize()
         {
             lock (Sync)
             {
-                if (!initialiazed && TestConfiguration.General.AutomaticStartup)
+                if (!initialiazed && Configuration().General().AutomaticStartup())
                 {
                     var defaultStartupType = TryFindDefaultStartupType();
 
@@ -267,7 +274,7 @@
         {
             var applicationAssembly = TestAssembly ?? Assembly.Load(new AssemblyName(testAssemblyName));
 
-            var defaultStartupType = TestConfiguration.General.StartupType ?? $"{Environment.EnvironmentName}Startup";
+            var defaultStartupType = Configuration().General().StartupType() ?? $"{Environment.EnvironmentName}Startup";
 
             // check root of the test project
             var startup =
@@ -292,21 +299,10 @@
 
             initialiazed = true;
         }
-
-        private static IConfiguration PrepareTestConfiguration()
-        {
-            var configurationBuilder = new ConfigurationBuilder()
-                .AddJsonFile("testconfig.json", optional: true);
-
-            AdditionalConfiguration?.Invoke(configurationBuilder);
-            AdditionalConfiguration = null;
-
-            return configurationBuilder.Build();
-        }
-
+        
         private static void FindTestAssemblyName()
         {
-            testAssemblyName = TestConfiguration.General.TestAssemblyName
+            testAssemblyName = Configuration().General().TestAssemblyName()
                 ?? TestAssembly?.GetName().Name
                 ?? DependencyContext
                     .Default
@@ -318,7 +314,7 @@
         private static void PrepareLicensing()
         {
             TestCounter.SetLicenseData(
-                TestConfiguration.Licenses,
+                Configuration().Licenses(),
                 DateTime.ParseExact(ReleaseDate, "yyyy-MM-dd", CultureInfo.InvariantCulture),
                 TestAssembly?.GetName().Name ?? StartupAssemblyName);
         }
@@ -328,7 +324,7 @@
             return new HostingEnvironment
             {
                 ApplicationName = ApplicationName,
-                EnvironmentName = TestConfiguration.General.EnvironmentName,
+                EnvironmentName = Configuration().General().EnvironmentName(),
                 ContentRootPath = PlatformServices.Default.Application.ApplicationBasePath
             };
         }
@@ -515,6 +511,8 @@
         private static void Reset()
         {
             initialiazed = false;
+            configurationBuilder = null;
+            configuration = null;
             environment = null;
             startupType = null;
             serviceProvider = null;
@@ -531,29 +529,29 @@
             RoutingServiceRegistrationPlugins.Clear();
             InitializationPlugins.Clear();
             LicenseValidator.ClearLicenseDetails();
-    }
+        }
 
 #if NET451
-    private static void FindTestAssembly()
-    {
-        var executingAssembly = Assembly.GetExecutingAssembly();
-
-        var stackTrace = new StackTrace(false);
-
-        foreach (var frame in stackTrace.GetFrames())
+        private static void FindTestAssembly()
         {
-            var method = frame.GetMethod();
-            var methodAssembly = method?.DeclaringType?.Assembly;
+            var executingAssembly = Assembly.GetExecutingAssembly();
 
-            if (methodAssembly != null
-                && methodAssembly != executingAssembly
-                && !methodAssembly.FullName.StartsWith(TestFrameworkName))
+            var stackTrace = new StackTrace(false);
+
+            foreach (var frame in stackTrace.GetFrames())
             {
-                TestAssembly = methodAssembly;
-                return;
+                var method = frame.GetMethod();
+                var methodAssembly = method?.DeclaringType?.Assembly;
+
+                if (methodAssembly != null
+                    && methodAssembly != executingAssembly
+                    && !methodAssembly.FullName.StartsWith(TestFrameworkName))
+                {
+                    TestAssembly = methodAssembly;
+                    return;
+                }
             }
         }
-    }
 #endif
-}
+    }
 }

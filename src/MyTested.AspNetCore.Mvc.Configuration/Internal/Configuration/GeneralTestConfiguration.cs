@@ -18,18 +18,18 @@
             this.Prefix = "General";
         }
 
-        public bool AsynchronousTests => this.GetValue(AsynchronousTestsConfigKey, true);
+        public bool AsynchronousTests() => this.GetValue(AsynchronousTestsConfigKey, true);
 
-        public string WebAssemblyName => this.GetValue(WebAssemblyNameConfigKey);
+        public string WebAssemblyName() => this.GetValue(WebAssemblyNameConfigKey);
         
-        public string TestAssemblyName => this.GetValue(TestAssemblyNameConfigKey);
+        public string TestAssemblyName() => this.GetValue(TestAssemblyNameConfigKey);
 
-        public bool AutomaticStartup => this.GetValue(AutomaticStartupConfigKey, true);
+        public bool AutomaticStartup() => this.GetValue(AutomaticStartupConfigKey, true);
 
-        public string StartupType => this.GetValue(StartupTypeConfigKey);
+        public string StartupType() => this.GetValue(StartupTypeConfigKey);
 
-        public string ApplicationName => this.GetValue(ApplicationNameConfigKey);
+        public string ApplicationName() => this.GetValue(ApplicationNameConfigKey);
 
-        public string EnvironmentName => this.GetValue(EnvironmentNameConfigKey, "Test");
+        public string EnvironmentName() => this.GetValue(EnvironmentNameConfigKey, "Test");
     }
 }

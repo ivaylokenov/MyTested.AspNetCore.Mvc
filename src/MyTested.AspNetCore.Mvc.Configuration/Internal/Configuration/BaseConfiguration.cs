@@ -12,7 +12,7 @@
             this.Configuration = configuration;
         }
 
-        protected IConfiguration Configuration
+        public IConfiguration Configuration
         {
             get
             {
