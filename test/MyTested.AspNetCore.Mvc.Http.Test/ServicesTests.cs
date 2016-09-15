@@ -13,6 +13,7 @@
     using Setups.Common;
     using Setups.Controllers;
     using Xunit;
+    using Setups;
 
     public class ServicesTests
     {
@@ -20,7 +21,7 @@
         public void CustomConfigureOptionsShouldNotOverrideTheDefaultTestOnes()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.Configure<MvcOptions>(options =>
@@ -35,7 +36,7 @@
             Assert.Contains(typeof(StringInputFormatter), builtOptions.Value.InputFormatters.Select(f => f.GetType()));
             Assert.Equal(1, builtOptions.Value.Conventions.Count);
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
 
@@ -43,7 +44,7 @@
         public void IHttpContextAccessorShouldWorkCorrectlySynchronously()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.ReplaceTransient<IHttpContextFactory, CustomHttpContextFactory>();
@@ -75,14 +76,14 @@
             Assert.Equal(ContentType.AudioVorbis, firstContext.Request.ContentType);
             Assert.Equal(ContentType.AudioVorbis, secondContext.Request.ContentType);
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void IHttpContextAccessorShouldWorkCorrectlyAsynchronously()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddHttpContextAccessor();
@@ -169,14 +170,14 @@
                 .GetAwaiter()
                 .GetResult();
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithCustomHttpContextShouldSetItToAccessor()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddHttpContextAccessor();
@@ -197,7 +198,7 @@
                     Assert.Equal(ContentType.AudioVorbis, controller.Context.Request.ContentType);
                 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }

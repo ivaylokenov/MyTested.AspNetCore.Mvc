@@ -15,7 +15,7 @@
         [Fact]
         public void GetPropertiesShouldNotThrowExceptionForNormalController()
         {
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
 
             var helper = ControllerPropertyHelper.GetProperties<MvcController>();
 
@@ -50,7 +50,7 @@
         public void GetPropertiesShouldNotThrowExceptionForPocoController()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -84,7 +84,7 @@
             Assert.NotNull(gotActionContext);
             Assert.Same(gotActionContext, controller.CustomActionContext);
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }

@@ -14,8 +14,12 @@
     using Microsoft.AspNetCore.Hosting.Builder;
     using Microsoft.AspNetCore.Hosting.Internal;
     using Microsoft.AspNetCore.Http;
+#if NET451
+    using Microsoft.AspNetCore.Mvc.ApplicationParts;
+#endif
     using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.AspNetCore.Routing;
+    using Microsoft.DotNet.InternalAbstractions;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -30,7 +34,9 @@
     public static class TestApplication
     {
         private const string TestFrameworkName = "MyTested.AspNetCore.Mvc";
-        private const string ReleaseDate = "2016-09-01";
+        private const string ReleaseDate = "2016-10-01";
+
+        private static readonly object Sync;
 
         private static readonly RequestDelegate NullHandler;
 
@@ -39,12 +45,11 @@
         private static readonly ISet<IRoutingServiceRegistrationPlugin> RoutingServiceRegistrationPlugins;
         private static readonly ISet<IInitializationPlugin> InitializationPlugins;
 
-        private static readonly object Sync;
-
         private static bool initialiazed;
 
-        private static TestConfiguration testConfiguration;
-        private static string testAssemblyName;
+        private static IConfigurationBuilder configurationBuilder;
+        private static TestConfiguration configuration;
+        private static GeneralTestConfiguration generalConfiguration;
 
         private static IHostingEnvironment environment;
 
@@ -56,18 +61,16 @@
 
         static TestApplication()
         {
-            NullHandler = c => TaskCache.CompletedTask;
             Sync = new object();
+
+            NullHandler = c => TaskCache.CompletedTask;
 
             DefaultRegistrationPlugins = new HashSet<IDefaultRegistrationPlugin>();
             ServiceRegistrationPlugins = new HashSet<IServiceRegistrationPlugin>();
             RoutingServiceRegistrationPlugins = new HashSet<IRoutingServiceRegistrationPlugin>();
             InitializationPlugins = new HashSet<IInitializationPlugin>();
 
-            LoadPlugins();
-            PrepareTestConfiguration();
-            FindTestAssemblyName();
-            PrepareLicensing();
+            FindTestAssembly();
         }
 
         public static IServiceProvider Services
@@ -97,6 +100,8 @@
             }
         }
 
+        internal static Assembly TestAssembly { get; set; }
+
         internal static Type StartupType
         {
             get
@@ -106,7 +111,21 @@
 
             set
             {
-                Reset();
+                if (value != null && GeneralConfiguration().NoStartup())
+                {
+                    throw new InvalidOperationException($"The test configuration ('testconfig.json' file by default) contained 'true' value for the 'General.NoStartup' option but {value.GetName()} class was set through the 'StartsFrom<TStartup>()' method. Either do not set the class or change the option to 'false'.");
+                }
+
+                if (startupType != null && GeneralConfiguration().AsynchronousTests())
+                {
+                    throw new InvalidOperationException("Multiple Startup types per test project while running asynchronous tests is not supported. Either set 'General.AsynchronousTests' in the test configuration ('testconfig.json' file by default) to 'false' or separate your tests into different test projects. The latter is recommended. If you choose the first option, you may need to disable asynchronous testing in your preferred test runner too.");
+                }
+
+                if (initialiazed)
+                {
+                    Reset();
+                }
+
                 startupType = value;
             }
         }
@@ -118,23 +137,6 @@
         internal static Action<IApplicationBuilder> AdditionalApplicationConfiguration { get; set; }
 
         internal static Action<IRouteBuilder> AdditionalRouting { get; set; }
-
-        internal static string TestAssemblyName
-        {
-            get
-            {
-                if (string.IsNullOrWhiteSpace(testAssemblyName))
-                {
-                    var startUpAssemblyFullName = StartupType?.GetTypeInfo().Assembly.FullName;
-                    if (startUpAssemblyFullName != null)
-                    {
-                        testAssemblyName = new AssemblyName(testAssemblyName).Name;
-                    }
-                }
-
-                return testAssemblyName;
-            }
-        }
 
         internal static IHostingEnvironment Environment
         {
@@ -149,36 +151,52 @@
             }
         }
 
-        public static TestConfiguration TestConfiguration
+        internal static string ApplicationName
+            => GeneralConfiguration().ApplicationName()
+                ?? TestAssembly.GetName().Name;
+
+        public static TestConfiguration Configuration()
         {
-            get
+            if (configuration == null || AdditionalConfiguration != null)
             {
-                if (testConfiguration == null || AdditionalConfiguration != null)
+                if (configurationBuilder == null)
                 {
-                    testConfiguration = TestConfiguration.With(PrepareTestConfiguration());
-                    PrepareLicensing();
+                    configurationBuilder = new ConfigurationBuilder()
+                        .AddJsonFile("testconfig.json", optional: true);
                 }
 
-                return testConfiguration;
-            }
-        }
+                AdditionalConfiguration?.Invoke(configurationBuilder);
+                AdditionalConfiguration = null;
 
-        internal static string ApplicationName =>
-            TestConfiguration.General.ApplicationName
-                ?? TestAssemblyName
-                ?? PlatformServices.Default.Application.ApplicationName;
+                configuration = TestConfiguration.With(configurationBuilder.Build());
+                generalConfiguration = null;
+
+                PrepareLicensing();
+            }
+
+            return configuration;
+        }
 
         public static void TryInitialize()
         {
             lock (Sync)
             {
-                if (!initialiazed && TestConfiguration.General.AutomaticStartup)
+                var configuration = GeneralConfiguration();
+
+                if (!initialiazed
+                    && StartupType == null
+                    && !configuration.NoStartup()
+                    && configuration.AutomaticStartup())
                 {
                     var defaultStartupType = TryFindDefaultStartupType();
 
                     if (defaultStartupType == null)
                     {
-                        throw new InvalidOperationException($"{Environment.EnvironmentName}Startup class could not be found at the root of the test project. Either add it or set 'General.AutomaticStartup' in the 'testconfig.json' file to 'false'.");
+                        throw new InvalidOperationException($"{Environment.EnvironmentName}Startup class could not be found at the root of the test project. Either add it or set 'General.AutomaticStartup' in the test configuration ('testconfig.json' file by default) to 'false'.");
+                    }
+                    else if (GeneralConfiguration().NoStartup())
+                    {
+                        throw new InvalidOperationException($"The test configuration ('testconfig.json' file by default) contained 'true' value for the 'General.NoStartup' option but {Environment.EnvironmentName}Startup class was located at the root of the project. Either remove the class or change the option to 'false'.");
                     }
 
                     startupType = defaultStartupType;
@@ -187,72 +205,102 @@
             }
         }
 
-        internal static void LoadPlugins()
+        internal static GeneralTestConfiguration GeneralConfiguration()
         {
-            DependencyContext
-                .Default
-                .GetDefaultAssemblyNames()
+            if (generalConfiguration == null)
+            {
+                generalConfiguration = Configuration().General();
+            }
+
+            return generalConfiguration;
+        }
+
+        internal static DependencyContext LoadDependencyContext()
+            => DependencyContext.Load(TestAssembly) ?? DependencyContext.Default;
+
+        internal static void LoadPlugins(DependencyContext dependencyContext)
+        {
+            var plugins = dependencyContext
+                .GetRuntimeAssemblyNames(RuntimeEnvironment.GetRuntimeIdentifier())
                 .Where(l => l.Name.StartsWith(TestFrameworkName))
                 .Select(l => Assembly.Load(new AssemblyName(l.Name)).GetType($"{TestFrameworkName}.Plugins.{l.Name.Replace(TestFrameworkName, string.Empty).Trim('.')}TestPlugin"))
-                .Where(p => p != null)
-                .ForEach(t =>
+                .Where(p => p != null);
+
+            if (!plugins.Any())
+            {
+                throw new InvalidOperationException("Test plugins could not be loaded. Depending on your project's configuration you may need to set the 'preserveCompilationContext' property under 'buildOptions' to 'true' in the test assembly's 'project.json' file and/or may need to call '.StartsFrom<TStartup>().WithTestAssembly(this)'.");
+            }
+
+            plugins.ForEach(t =>
+            {
+                var plugin = Activator.CreateInstance(t);
+
+                var defaultRegistrationPlugin = plugin as IDefaultRegistrationPlugin;
+                if (defaultRegistrationPlugin != null)
                 {
-                    var plugin = Activator.CreateInstance(t);
+                    DefaultRegistrationPlugins.Add(defaultRegistrationPlugin);
+                }
 
-                    var defaultRegistrationPlugin = plugin as IDefaultRegistrationPlugin;
-                    if (defaultRegistrationPlugin != null)
-                    {
-                        DefaultRegistrationPlugins.Add(defaultRegistrationPlugin);
-                    }
+                var servicePlugin = plugin as IServiceRegistrationPlugin;
+                if (servicePlugin != null)
+                {
+                    ServiceRegistrationPlugins.Add(servicePlugin);
+                }
 
-                    var servicePlugin = plugin as IServiceRegistrationPlugin;
-                    if (servicePlugin != null)
-                    {
-                        ServiceRegistrationPlugins.Add(servicePlugin);
-                    }
+                var routingServicePlugin = plugin as IRoutingServiceRegistrationPlugin;
+                if (routingServicePlugin != null)
+                {
+                    RoutingServiceRegistrationPlugins.Add(routingServicePlugin);
+                }
 
-                    var routingServicePlugin = plugin as IRoutingServiceRegistrationPlugin;
-                    if (routingServicePlugin != null)
-                    {
-                        RoutingServiceRegistrationPlugins.Add(routingServicePlugin);
-                    }
+                var initializationPlugin = plugin as IInitializationPlugin;
+                if (initializationPlugin != null)
+                {
+                    InitializationPlugins.Add(initializationPlugin);
+                }
 
-                    var initializationPlugin = plugin as IInitializationPlugin;
-                    if (initializationPlugin != null)
-                    {
-                        InitializationPlugins.Add(initializationPlugin);
-                    }
+                var httpFeatureRegistrationPlugin = plugin as IHttpFeatureRegistrationPlugin;
+                if (httpFeatureRegistrationPlugin != null)
+                {
+                    TestHelper.HttpFeatureRegistrationPlugins.Add(httpFeatureRegistrationPlugin);
+                }
 
-                    var httpFeatureRegistrationPlugin = plugin as IHttpFeatureRegistrationPlugin;
-                    if (httpFeatureRegistrationPlugin != null)
-                    {
-                        TestHelper.HttpFeatureRegistrationPlugins.Add(httpFeatureRegistrationPlugin);
-                    }
-
-                    var shouldPassForPlugin = plugin as IShouldPassForPlugin;
-                    if (shouldPassForPlugin != null)
-                    {
-                        TestHelper.ShouldPassForPlugins.Add(shouldPassForPlugin);
-                    }
-                });
+                var shouldPassForPlugin = plugin as IShouldPassForPlugin;
+                if (shouldPassForPlugin != null)
+                {
+                    TestHelper.ShouldPassForPlugins.Add(shouldPassForPlugin);
+                }
+            });
         }
 
         internal static Type TryFindDefaultStartupType()
         {
-            var applicationAssembly = Assembly.Load(new AssemblyName(testAssemblyName));
+            EnsureTestAssembly();
 
-            var startupType = TestConfiguration.General.StartupType ?? $"{Environment.EnvironmentName}Startup";
+            var defaultStartupType = GeneralConfiguration().StartupType() ?? $"{Environment.EnvironmentName}Startup";
 
             // check root of the test project
             var startup =
-                applicationAssembly.GetType(startupType) ??
-                applicationAssembly.GetType($"{testAssemblyName}.{startupType}");
+                TestAssembly.GetType(defaultStartupType) ??
+                TestAssembly.GetType($"{TestAssembly.GetName().Name}.{defaultStartupType}");
 
             return startup;
         }
 
         private static void Initialize()
         {
+            EnsureTestAssembly();
+
+            if (StartupType == null && !GeneralConfiguration().NoStartup())
+            {
+                throw new InvalidOperationException($"The test configuration ('testconfig.json' file by default) contained 'false' value for the 'General.NoStartup' option but a Startup class was not provided. Either add {Environment.EnvironmentName}Startup class to the root of the test project or set it by calling 'StartsFrom<TStartup>()'. Additionally, if you do not want to use a global test application for all test cases in this project, you may change the test configuration option to 'true'.");
+            }
+
+            PrepareLicensing();
+
+            var dependencyContext = LoadDependencyContext();
+            LoadPlugins(dependencyContext);
+
             var serviceCollection = GetInitialServiceCollection();
             var startupMethods = PrepareStartup(serviceCollection);
 
@@ -262,43 +310,24 @@
             initialiazed = true;
         }
 
-        private static IConfiguration PrepareTestConfiguration()
-        {
-            var configurationBuilder = new ConfigurationBuilder()
-                .AddJsonFile("testconfig.json", optional: true);
-
-            AdditionalConfiguration?.Invoke(configurationBuilder);
-            AdditionalConfiguration = null;
-
-            return configurationBuilder.Build();
-        }
-
-        private static void FindTestAssemblyName()
-        {
-            testAssemblyName = TestConfiguration.General.TestAssemblyName ?? DependencyContext
-                .Default
-                .GetDefaultAssemblyNames()
-                .First()
-                .Name;
-        }
-
         private static void PrepareLicensing()
         {
-            TestCounter.SetLicenseData(
-                TestConfiguration.Licenses,
-                DateTime.ParseExact(ReleaseDate, "yyyy-MM-dd", CultureInfo.InvariantCulture),
-                TestAssemblyName);
+            if (TestAssembly != null)
+            {
+                TestCounter.SetLicenseData(
+                    Configuration().Licenses(),
+                    DateTime.ParseExact(ReleaseDate, "yyyy-MM-dd", CultureInfo.InvariantCulture),
+                    TestAssembly.GetName().Name);
+            }
         }
 
         private static IHostingEnvironment PrepareEnvironment()
-        {
-            return new HostingEnvironment
+            => new HostingEnvironment
             {
                 ApplicationName = ApplicationName,
-                EnvironmentName = TestConfiguration.General.EnvironmentName,
+                EnvironmentName = GeneralConfiguration().EnvironmentName(),
                 ContentRootPath = PlatformServices.Default.Application.ApplicationBasePath
             };
-        }
 
         private static IServiceCollection GetInitialServiceCollection()
         {
@@ -374,6 +403,23 @@
 
             TryReplaceKnownServices(serviceCollection);
             PrepareRoutingServices(serviceCollection);
+
+#if NET451
+            var baseStartupType = StartupType;
+            while (baseStartupType != null && baseStartupType?.BaseType != typeof(object))
+            {
+                baseStartupType = baseStartupType.BaseType;
+            }
+
+            var applicationPartManager = (ApplicationPartManager)serviceCollection
+                .FirstOrDefault(t => t.ServiceType == typeof(ApplicationPartManager))
+                ?.ImplementationInstance;
+
+            if (applicationPartManager != null && baseStartupType != null)
+            {
+                applicationPartManager.ApplicationParts.Add(new AssemblyPart(baseStartupType.GetTypeInfo().Assembly));
+            }
+#endif
 
             serviceProvider = serviceCollection.BuildServiceProvider();
 
@@ -465,6 +511,8 @@
         private static void Reset()
         {
             initialiazed = false;
+            configurationBuilder = null;
+            configuration = null;
             environment = null;
             startupType = null;
             serviceProvider = null;
@@ -473,8 +521,66 @@
             AdditionalServices = null;
             AdditionalApplicationConfiguration = null;
             AdditionalRouting = null;
+            TestAssembly = null;
             TestServiceProvider.Current = null;
             TestServiceProvider.ClearServiceLifetimes();
+            DefaultRegistrationPlugins.Clear();
+            ServiceRegistrationPlugins.Clear();
+            RoutingServiceRegistrationPlugins.Clear();
+            InitializationPlugins.Clear();
+            LicenseValidator.ClearLicenseDetails();
+        }
+
+        private static void FindTestAssembly()
+        {
+            var testAssemblyName = GeneralConfiguration().TestAssemblyName();
+            if (testAssemblyName != null)
+            {
+                TestAssembly = Assembly.Load(new AssemblyName(testAssemblyName));
+            }
+            else
+            {
+#if NET451
+                var executingAssembly = Assembly.GetExecutingAssembly();
+
+                var stackTrace = new StackTrace(false);
+
+                foreach (var frame in stackTrace.GetFrames())
+                {
+                    var method = frame.GetMethod();
+                    var methodAssembly = method?.DeclaringType?.Assembly;
+
+                    if (methodAssembly != null
+                        && methodAssembly != executingAssembly
+                        && !methodAssembly.FullName.StartsWith(TestFrameworkName))
+                    {
+                        TestAssembly = methodAssembly;
+                        break;
+                    }
+                }
+#endif
+#if NETSTANDARD1_6
+                var assemblyName = DependencyContext
+                    .Default
+                    .GetDefaultAssemblyNames()
+                    .First();
+
+                TestAssembly = Assembly.Load(assemblyName);
+#endif
+            }
+        }
+
+        private static void EnsureTestAssembly()
+        {
+            if (TestAssembly == null)
+            {
+                FindTestAssembly();
+            }
+
+            if (TestAssembly == null)
+            {
+                throw new InvalidOperationException("Test assembly could not be loaded. You can specify it explicitly in the test configuration ('testconfig.json' file by default) by providing a value for the 'General.TestAssemblyName' option or set it by calling '.StartsFrom<TStartup>().WithTestAssembly(this)'.");
+            }
         }
     }
 }

@@ -255,7 +255,7 @@
                 },
                 "When calling LocalRedirectActionWithCustomUrlHelper action in MvcController expected local redirect result to have resolved location to '/api/Redirect/WithParameter?id=1', but in fact received '/api/test'.");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
         
         [Fact]
@@ -270,7 +270,7 @@
                 .LocalRedirect()
                 .To<MvcController>(c => c.AsyncOkResultAction());
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]

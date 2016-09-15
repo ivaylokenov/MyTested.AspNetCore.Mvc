@@ -25,10 +25,8 @@
         {
             this.TestContext = testContext;
             this.TestContext.ComponentBuildDelegate += this.BuildComponentIfNotExists;
-
-#if NETSTANDARD1_6
+            
             this.ValidateComponentType();
-#endif
         }
 
         public new TTestContext TestContext

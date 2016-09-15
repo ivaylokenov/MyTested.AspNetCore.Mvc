@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection.Extensions;
+    using Setups;
     using Setups.ViewComponents;
     using Xunit;
 
@@ -38,7 +39,7 @@
         public void WithTempDataShouldPopulateTempDataForPocoController()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -56,7 +57,7 @@
                     Assert.Equal(1, viewComponent.Context.ViewContext.TempData.Count);
                 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }

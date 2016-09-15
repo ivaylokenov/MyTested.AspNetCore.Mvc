@@ -13,7 +13,7 @@
         public void NoMemoryCacheShouldNotThrowExceptionWithNoCacheEntries()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services => services.AddMemoryCache());
 
             MyController<MvcController>
@@ -25,14 +25,14 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void NoMemoryCacheShouldThrowExceptionWithCacheEntries()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services => services.AddMemoryCache());
 
             Test.AssertException<DataProviderAssertionException>(
@@ -49,14 +49,14 @@
                 },
                 "When calling AddMemoryCacheAction action in MvcController expected to have memory cache with no entries, but in fact it had some.");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void MemoryCacheWithNoNumberShouldNotThrowExceptionWithAnyCacheEntries()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services => services.AddMemoryCache());
 
             MyController<MvcController>
@@ -68,14 +68,14 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void MemoryCacheWithNoNumberShouldThrowExceptionWithNoCacheEntries()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services => services.AddMemoryCache());
 
             Test.AssertException<DataProviderAssertionException>(
@@ -92,14 +92,14 @@
                 },
                 "When calling Ok action in MvcController expected to have memory cache entries, but none were found.");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void MemoryCacheWithNumberShouldNotThrowExceptionWithCorrectCacheEntries()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services => services.AddMemoryCache());
 
             MyController<MvcController>
@@ -111,14 +111,14 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void AsyncMemoryCacheActionShouldNotThrowExceptionWithCorrectCacheEntries()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services => services.AddMemoryCache());
 
             MyController<MvcController>
@@ -130,14 +130,14 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void MemoryCacheWithNumberShouldThrowExceptionWithInvalidCacheEntries()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services => services.AddMemoryCache());
 
             Test.AssertException<DataProviderAssertionException>(
@@ -154,14 +154,14 @@
                 },
                 "When calling Ok action in MvcController expected to have memory cache with 1 entry, but in fact contained 0.");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void MemoryCacheWithNumberShouldThrowExceptionWithInvalidManyCacheEntries()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services => services.AddMemoryCache());
 
             Test.AssertException<DataProviderAssertionException>(
@@ -178,14 +178,14 @@
                 },
                 "When calling AddMemoryCacheAction action in MvcController expected to have memory cache with 3 entries, but in fact contained 2.");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void MemoryCacheWithBuilderShouldWorkCorrectly()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services => services.AddMemoryCache());
 
             MyController<MvcController>
@@ -198,7 +198,7 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }

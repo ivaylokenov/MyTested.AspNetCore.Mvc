@@ -186,7 +186,7 @@
                     Assert.Null(controller.InjectedRequestModel);
                 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -205,7 +205,7 @@
                     Assert.Null(controller.InjectedRequestModel);
                 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -225,7 +225,7 @@
                     Assert.NotNull(controller.InjectedRequestModel);
                 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -379,7 +379,7 @@
         public void WithServiceSetupForShouldSetupScopedServiceCorrectly()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddScoped<IScopedService, ScopedService>();
@@ -405,14 +405,14 @@
                 .ResultOfType<string>()
                 .Passing(r => r == "SecondCustom");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithServiceSetupForShouldSetupScopedServiceCorrectlyWithConstructorInjection()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddScoped<IScopedService, ScopedService>();
@@ -427,14 +427,14 @@
                 .Ok()
                 .WithModel("TestValue");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithServiceSetupForShouldThrowExceptionWithNoScopedService()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddSingleton<IScopedService, ScopedService>();
@@ -454,7 +454,7 @@
                 },
                 "The 'WithSetupFor' method can be used only for services with scoped lifetime.");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }

@@ -9,6 +9,7 @@
     using Microsoft.AspNetCore.Routing;
     using Setups.Routing;
     using Xunit;
+    using Setups;
 
     public class MvcRouteResolverTests
     {
@@ -42,7 +43,7 @@
         private RouteContext GetRouteContext(string url, string method = "GET", string queryString = null,
             string body = null, string contentType = null)
         {
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
 
             var httpContext = new HttpContextMock();
             httpContext.Request.Path = new PathString(url);

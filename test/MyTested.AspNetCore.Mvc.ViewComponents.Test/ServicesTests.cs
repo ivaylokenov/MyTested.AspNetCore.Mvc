@@ -20,7 +20,7 @@
         [Fact]
         public void ViewComponentWithoutConstructorFunctionShouldPopulateCorrectNewInstanceOfViewComponentType()
         {
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
 
             MyViewComponent<NormalComponent>
                 .Instance()
@@ -64,7 +64,7 @@
         public void ViewComponentWithNoParameterlessConstructorAndWithRegisteredServicesShouldPopulateCorrectInstanceOfViewComponentType()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddTransient<IInjectedService, InjectedService>();
@@ -79,7 +79,7 @@
                     Assert.IsAssignableFrom<InjectedService>(viewComponent.Service);
                 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -101,7 +101,7 @@
         public void IActionContextAccessorShouldWorkCorrectlySynchronously()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
@@ -130,14 +130,14 @@
             Assert.IsAssignableFrom<ViewContextMock>(secondContext);
             Assert.NotSame(firstContext, secondContext);
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void IActionContextAccessorShouldWorkCorrectlyAsynchronously()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
@@ -224,14 +224,14 @@
                 .GetAwaiter()
                 .GetResult();
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithCustomActionContextShouldSetItToAccessor()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
@@ -250,14 +250,14 @@
                     Assert.Equal("Test", viewComponent.ActionContext.ActionDescriptor.DisplayName);
                 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithCustomActionContextFuncShouldSetItToAccessor()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
@@ -278,14 +278,14 @@
                     Assert.Equal("Test", viewComponent.ActionContext.ActionDescriptor.DisplayName);
                 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithCustomViewComponentContextShouldSetItToAccessor()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
@@ -304,14 +304,14 @@
                     Assert.Equal("Test", viewComponent.ActionContext.ActionDescriptor.DisplayName);
                 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
         
         [Fact]
         public void WithViewComponentContextFuncShouldSetItToAccessor()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
@@ -332,14 +332,14 @@
                     Assert.Equal("Test", viewComponent.ActionContext.ActionDescriptor.DisplayName);
                 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
         
         [Fact]
         public void WithCustomViewContextShouldSetItToAccessor()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
@@ -358,14 +358,14 @@
                     Assert.Equal("Test", viewComponent.ActionContext.ActionDescriptor.DisplayName);
                 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithViewContextFuncShouldSetItToAccessor()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
@@ -386,7 +386,7 @@
                     Assert.Equal("Test", viewComponent.ActionContext.ActionDescriptor.DisplayName);
                 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }

@@ -12,6 +12,6 @@
             this.Prefix = "Controllers";
         }
 
-        public bool ModelStateValidation => this.GetValue(ModelStateValidationConfigKey, true);
+        public bool ModelStateValidation() => this.GetValue(ModelStateValidationConfigKey, true);
     }
 }

@@ -7,6 +7,7 @@
     using Setups.Common;
     using Setups.Startups;
     using Xunit;
+    using Setups;
 
     public class ServicesTests
     {
@@ -14,7 +15,7 @@
         public void DefaultConfigurationWithSessionShouldSetMockSession()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -27,7 +28,7 @@
             Assert.NotNull(session);
             Assert.IsAssignableFrom<SessionStoreMock>(session);
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
         
         [Fact]
@@ -45,13 +46,13 @@
             Assert.NotNull(session);
             Assert.IsAssignableFrom<SessionStoreMock>(session);
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void DefaultConfigurationShouldNotSetMockSession()
         {
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
 
             var session = TestServiceProvider.GetService<ISessionStore>();
 
@@ -68,7 +69,7 @@
             Assert.NotNull(session);
             Assert.IsAssignableFrom<CustomSessionStore>(session);
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }

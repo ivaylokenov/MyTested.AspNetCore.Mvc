@@ -3,6 +3,7 @@
     using Internal;
     using Internal.Services;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
+    using Setups;
     using Setups.Startups;
     using Xunit;
 
@@ -11,7 +12,7 @@
         [Fact]
         public void DefaultConfigurationShouldSetMockTempDataProvider()
         {
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
 
             var tempDataProvider = TestServiceProvider.GetService<ITempDataProvider>();
 
@@ -34,7 +35,7 @@
             Assert.NotNull(tempDataProvider);
             Assert.IsAssignableFrom<TempDataProviderMock>(tempDataProvider);
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }

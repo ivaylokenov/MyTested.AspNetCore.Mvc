@@ -1,18 +1,14 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Http.Test
 {
-    using Microsoft.AspNetCore.Builder;
     using Microsoft.Extensions.DependencyInjection;
+    using Mvc.Test.Setups;
+    using System.Reflection;
 
-    public class TestStartup
+    public class TestStartup : DefaultStartup
     {
-        public void ConfigureTestServices(IServiceCollection services)
+        public override void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
-        }
-
-        public void ConfigureTest(IApplicationBuilder app)
-        {
-            app.UseMvcWithDefaultRoute();
+            services.AddMvc().AddApplicationPart(typeof(TestStartup).GetTypeInfo().Assembly);
         }
     }
 }

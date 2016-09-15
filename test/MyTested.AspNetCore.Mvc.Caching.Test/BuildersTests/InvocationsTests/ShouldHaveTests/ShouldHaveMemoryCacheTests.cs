@@ -12,7 +12,7 @@
         public void NoMemoryCacheShouldNotThrowExceptionWithViewComponentNoCacheEntries()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services => services.AddMemoryCache());
 
             MyViewComponent<NormalComponent>
@@ -24,14 +24,14 @@
                 .ShouldReturn()
                 .Content();
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void NoMemoryCacheShouldThrowExceptionWithViewComponentCacheEntries()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services => services.AddMemoryCache());
 
             Test.AssertException<DataProviderAssertionException>(
@@ -48,14 +48,14 @@
                 },
                 "When invoking MemoryCacheValuesComponent expected to have memory cache with no entries, but in fact it had some.");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void MemoryCacheWithNoNumberShouldNotThrowExceptionWithViewComponentAnyCacheEntries()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services => services.AddMemoryCache());
 
             MyViewComponent<MemoryCacheValuesComponent>
@@ -67,7 +67,7 @@
                 .ShouldReturn()
                 .View();
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }

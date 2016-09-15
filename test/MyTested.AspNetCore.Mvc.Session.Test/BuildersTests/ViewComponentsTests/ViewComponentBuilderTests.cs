@@ -12,7 +12,7 @@
         public void WithSessionShouldPopulateSessionCorrectly()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -30,7 +30,7 @@
                 .ShouldReturn()
                 .View();
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]

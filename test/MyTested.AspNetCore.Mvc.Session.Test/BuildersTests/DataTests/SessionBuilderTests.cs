@@ -18,7 +18,7 @@
         public void WithIdShouldSetIdCorrectly()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -37,14 +37,14 @@
                 .Ok()
                 .WithModel("TestId");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithoutIdShouldSetRandomId()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -71,7 +71,7 @@
                     Assert.NotNull(modelAsString);
                     Assert.NotEmpty(modelAsString);
 
-                    MyApplication.IsUsingDefaultConfiguration();
+                    MyApplication.StartsFrom<DefaultStartup>();
                 });
         }
 
@@ -79,7 +79,7 @@
         public void WithIdAndAnotherSessionShouldThrowException()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddTransient<ISessionStore, CustomSessionStore>();
@@ -100,14 +100,14 @@
                 },
                 "Setting session Id requires the registered ISession service to implement ISessionMock.");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithEntryShouldSetCorrectEntry()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -124,14 +124,14 @@
                 .Ok()
                 .WithModel(new byte[] { 1, 2, 3 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithIntegerEntryShouldSetCorrectEntry()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -148,14 +148,14 @@
                 .Ok()
                 .WithModel(1);
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithEntriesAsObjectShouldWorkCorrectly()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -182,14 +182,14 @@
                     Byte = new byte[] { 1, 2, 3 }
                 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithEntriesAsByteDictionaryShouldWorkCorrectly()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -206,14 +206,14 @@
                 .Ok()
                 .WithModel(new byte[] { 1, 2, 3 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithEntriesAsStringDictionaryShouldWorkCorrectly()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -230,14 +230,14 @@
                 .Ok()
                 .WithModel("stringTest");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithEntriesAsIntDictionaryShouldWorkCorrectly()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -254,14 +254,14 @@
                 .Ok()
                 .WithModel(1);
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
         
         [Fact]
         public void WithIdShouldSetIdCorrectlyInViewComponent()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -279,14 +279,14 @@
                 .ShouldReturn()
                 .Content("TestId");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
         
         [Fact]
         public void WithEntryShouldSetCorrectEntryInViewComponent()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -303,7 +303,7 @@
                 .View()
                 .WithModel(new byte[] { 1, 2, 3 });
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }

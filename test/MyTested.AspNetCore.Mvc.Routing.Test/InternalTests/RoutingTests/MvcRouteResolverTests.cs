@@ -9,6 +9,7 @@
     using Microsoft.AspNetCore.Routing;
     using Setups.Routing;
     using Xunit;
+    using Setups;
 
     public class MvcRouteResolverTests
     {
@@ -311,7 +312,7 @@
 
             Assert.False(routeInfo.IsResolved);
             Assert.Equal(
-                "exception was thrown when trying to select an action: 'Multiple actions matched. The following actions matched route data and had all constraints satisfied:\r\n\r\nMyTested.AspNetCore.Mvc.Test.Setups.Routing.NormalController.ActionWithOverloads (MyTested.AspNetCore.Mvc.Test.Setups)\r\nMyTested.AspNetCore.Mvc.Test.Setups.Routing.NormalController.ActionWithOverloads (MyTested.AspNetCore.Mvc.Test.Setups)'",
+                "exception was thrown when trying to resolve route data: 'Multiple actions matched. The following actions matched route data and had all constraints satisfied:\r\n\r\nMyTested.AspNetCore.Mvc.Test.Setups.Routing.NormalController.ActionWithOverloads (MyTested.AspNetCore.Mvc.Test.Setups)\r\nMyTested.AspNetCore.Mvc.Test.Setups.Routing.NormalController.ActionWithOverloads (MyTested.AspNetCore.Mvc.Test.Setups)'",
                 routeInfo.UnresolvedError);
             Assert.Null(routeInfo.ControllerType);
             Assert.Null(routeInfo.ControllerName);
@@ -333,7 +334,7 @@
 
         private RouteContext GetRouteContext(string url, string method = "GET", string queryString = null, string body = null, string contentType = null)
         {
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
 
             var httpContext = new HttpContextMock();
             httpContext.Request.Path = new PathString(url);

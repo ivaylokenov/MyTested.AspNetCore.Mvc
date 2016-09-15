@@ -33,7 +33,7 @@
         [Fact]
         public void UsesDefaultServicesShouldPopulateDefaultServices()
         {
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
 
             var markerService = TestServiceProvider.GetService<MvcMarkerService>();
 
@@ -44,7 +44,7 @@
         public void IsUsingShouldAddServices()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(TestObjectFactory.GetCustomServicesRegistrationAction());
 
             var injectedService = TestServiceProvider.GetService<IInjectedService>();
@@ -53,17 +53,17 @@
             Assert.NotNull(injectedService);
             Assert.NotNull(anotherInjectedService);
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void IsUsingShouldAddServicesWithOptions()
         {
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
 
             var initialSetOptions = TestServiceProvider.GetServices<IConfigureOptions<MvcOptions>>();
 
-            MyApplication.IsUsingDefaultConfiguration()
+            MyApplication.StartsFrom<DefaultStartup>()
                 .WithServices(TestObjectFactory.GetCustomServicesWithOptionsRegistrationAction());
 
             var injectedService = TestServiceProvider.GetService<IInjectedService>();
@@ -77,7 +77,7 @@
             Assert.NotNull(setOptions);
             Assert.Equal(initialSetOptions.Count() + 1, setOptions.Count());
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -90,7 +90,7 @@
             Assert.NotNull(injectedService);
             Assert.IsAssignableFrom(typeof(ReplaceableInjectedService), injectedService);
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -103,7 +103,7 @@
             Assert.NotNull(injectedService);
             Assert.IsAssignableFrom(typeof(ReplaceableInjectedService), injectedService);
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -121,7 +121,7 @@
             Assert.NotNull(injectedServices);
             Assert.IsAssignableFrom(typeof(InjectedService), injectedServices);
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -139,14 +139,14 @@
         [Fact]
         public void IsUsingShouldRecreateServicesEverytimeItIsInvoked()
         {
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
 
             var markerService = TestServiceProvider.GetService<MvcMarkerService>();
 
             Assert.NotNull(markerService);
 
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(TestObjectFactory.GetCustomServicesRegistrationAction());
 
             var injectedService = TestServiceProvider.GetService<IInjectedService>();
@@ -155,7 +155,7 @@
             Assert.NotNull(injectedService);
             Assert.NotNull(anotherInjectedService);
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
 
             Test.AssertException<NullReferenceException>(
                 () =>
@@ -164,7 +164,7 @@
                 },
                 "IInjectedService could not be resolved from the services provider. Before running this test case, the service should be registered in the 'StartsFrom' method and cannot be null.");
 
-            MyApplication.IsUsingDefaultConfiguration()
+            MyApplication.StartsFrom<DefaultStartup>()
                 .WithServices(TestObjectFactory.GetCustomServicesRegistrationAction());
 
             injectedService = TestServiceProvider.GetService<IInjectedService>();
@@ -173,13 +173,13 @@
             Assert.NotNull(injectedService);
             Assert.NotNull(anotherInjectedService);
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void DefaultConfigShouldSetMvc()
         {
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
 
             var service = TestServiceProvider.GetRequiredService<MvcMarkerService>();
 
@@ -189,7 +189,7 @@
         [Fact]
         public void DefaultConfigShouldSetDefaultRoutes()
         {
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
 
             var routes = TestApplication.Router as RouteCollection;
 
@@ -201,7 +201,7 @@
         public void DefaultConfigAndAdditionalServicesShouldWorkCorrectly()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMvc();
@@ -211,7 +211,7 @@
 
             Assert.NotNull(service);
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -220,7 +220,7 @@
             var set = false;
 
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithApplication(app =>
                 {
                     set = true;
@@ -234,7 +234,7 @@
         public void DefaultConfigAndAdditionalRoutesShouldSetOnlyThem()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithRoutes(routes =>
                 {
                     routes.MapRoute(
@@ -262,7 +262,7 @@
             Assert.NotNull(routes);
             Assert.Equal(2, routes.Count);
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -283,7 +283,7 @@
             Assert.NotNull(routes);
             Assert.Equal(2, routes.Count);
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -308,7 +308,7 @@
             Assert.NotNull(routes);
             Assert.Equal(2, routes.Count);
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -331,13 +331,13 @@
             Assert.NotNull(routesCollection);
             Assert.Equal(3, routesCollection.Count);
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithoutHttpContextFactoryTheDefaultMockHttpContextShouldBeProvided()
         {
-            MyApplication.IsUsingDefaultConfiguration()
+            MyApplication.StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.RemoveTransient<IHttpContextFactory>();
@@ -352,13 +352,13 @@
             Assert.NotNull(httpContext);
             Assert.Equal(ContentType.FormUrlEncoded, httpContext.Request.ContentType);
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithHttpContextFactoryShouldReturnMockHttpContextBasedOnTheFactoryCreatedHttpContext()
         {
-            MyApplication.IsUsingDefaultConfiguration()
+            MyApplication.StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.ReplaceTransient<IHttpContextFactory, CustomHttpContextFactory>();
@@ -373,19 +373,19 @@
             Assert.NotNull(httpContext);
             Assert.Equal(ContentType.AudioVorbis, httpContext.Request.ContentType);
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
         
         [Fact]
         public void MockMemoryCacheShouldNotBeRegisteredIfNoCacheIsAdded()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services => services.RemoveSingleton<IMemoryCache>());
 
             Assert.Null(TestServiceProvider.GetService<IMemoryCache>());
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
         
         [Fact]
@@ -398,14 +398,14 @@
             Assert.NotNull(tempDataProvider);
             Assert.IsAssignableFrom<CustomTempDataProvider>(tempDataProvider);
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void ServiceLifeTimesShouldBeSavedCorrectly()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddScoped<IScopedService, ScopedService>();
@@ -429,7 +429,7 @@
             var transientServiceLifetime = TestServiceProvider.GetServiceLifetime<IAnotherInjectedService>();
             Assert.Equal(ServiceLifetime.Transient, transientServiceLifetime);
             
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }

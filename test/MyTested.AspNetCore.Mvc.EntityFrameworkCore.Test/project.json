@@ -2,11 +2,9 @@
   "buildOptions": {
     "warningsAsErrors": true,
     "keyFile": "../../tools/Key.snk",
-    "copyToOutput": {
-      "include": [
-        "testconfig.json"
-      ]
-    }
+    "copyToOutput": [
+      "testconfig.json"
+    ]
   },
 
   "testRunner": "xunit",

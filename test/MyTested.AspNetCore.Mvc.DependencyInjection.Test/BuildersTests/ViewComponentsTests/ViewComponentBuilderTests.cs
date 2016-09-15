@@ -1,6 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ViewComponentsTests
 {
     using Microsoft.Extensions.DependencyInjection;
+    using Setups;
     using Setups.Services;
     using Setups.ViewComponents;
     using Xunit;
@@ -69,7 +70,7 @@
         public void WithServiceSetupForShouldSetupScopedServiceCorrectlyWithConstructorInjection()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddScoped<IScopedService, ScopedService>();
@@ -83,7 +84,7 @@
                 .ShouldReturn()
                 .View("TestValue");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }

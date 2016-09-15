@@ -3,6 +3,7 @@
     using Components;
     using Contracts.Controllers;
     using Internal.Application;
+    using Internal.Configuration;
     using Internal.Contracts;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc.Controllers;
@@ -24,7 +25,10 @@
         public ControllerBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
-            this.EnabledModelStateValidation = TestApplication.TestConfiguration.Controllers.ModelStateValidation;
+            this.EnabledModelStateValidation = TestApplication
+                .Configuration()
+                .Controllers()
+                .ModelStateValidation();
         }
         
         public bool EnabledModelStateValidation { get; set; }

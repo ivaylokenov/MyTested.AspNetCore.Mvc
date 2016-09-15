@@ -533,7 +533,7 @@
                 .Redirect()
                 .To<NoAttributesController>(c => c.WithParameter(1));
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -548,7 +548,7 @@
                 .Redirect()
                 .To<NoAttributesController>(c => c.WithParameter(With.Any<int>()));
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -563,7 +563,7 @@
                 .Redirect()
                 .To<NoAttributesController>(c => c.VoidAction());
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -583,7 +583,7 @@
                 },
                 "When calling RedirectToRouteAction action in MvcController expected redirect result to have resolved location to '/api/test', but in fact received '/api/Redirect/WithParameter?id=1'.");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]

@@ -7,6 +7,7 @@
     using Microsoft.Extensions.Options;
     using Setups.Common;
     using Xunit;
+    using Setups;
 
     public class ServicesTests
     {
@@ -14,7 +15,7 @@
         public void OptionsLifetimesShouldBeReplacedWithScoped()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     var configuration = new ConfigurationBuilder()
@@ -33,7 +34,7 @@
 
             Assert.Equal(ServiceLifetime.Scoped, TestServiceProvider.GetServiceLifetime(typeof(IOptions<>)));
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }

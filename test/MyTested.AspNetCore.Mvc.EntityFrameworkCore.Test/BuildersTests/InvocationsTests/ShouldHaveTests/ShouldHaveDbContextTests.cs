@@ -14,7 +14,7 @@
         public void DbContextShouldNotThrowExceptionWithCorrectAssertions()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase());
@@ -33,14 +33,14 @@
                 .ShouldReturn()
                 .View();
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void DbContextShouldNotThrowExceptionWithCorrectPredicate()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase());
@@ -56,14 +56,14 @@
                 .ShouldReturn()
                 .View();
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void DbContextShouldThrowExceptionWithIncorrectPredicate()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase());
@@ -93,7 +93,7 @@
             },
             "When invoking CreateDataComponent expected the CustomDbContext entities to pass the given predicate, but it failed.");
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }

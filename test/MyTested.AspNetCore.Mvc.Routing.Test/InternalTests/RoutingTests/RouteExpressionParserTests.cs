@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.InternalTests.RoutingTests
 {
+    using Internal.Application;
     using Internal.Routing;
     using Setups.Routing;
     using System;
@@ -9,6 +10,11 @@
 
     public class RouteExpressionParserTests
     {
+        public RouteExpressionParserTests()
+        {
+            TestApplication.TryInitialize();
+        }
+
         [Theory]
         [MemberData(nameof(NormalActionsWithNoParametersData))]
         public void ParseControllerAndActionWithoutParametersControllerAndActionNameAreParsed(
@@ -95,25 +101,7 @@
             Assert.True(result.ActionArguments.ContainsKey("area"));
             Assert.Equal("MyArea", result.ActionArguments["area"].Value);
         }
-
-        // MVC has bug - uncomment when resolved
-        //[Fact]
-        //public void ParseActionWithCustomRouteConstraintsRouteConstraintsAreParsed()
-        //{
-        //    Expression<Action<RouteConstraintController>> expr = c => c.Action(1, 2);
-        //    var result = RouteExpressionParser.Parse(expr);
-
-        //    Assert.Equal("CustomController", result.ControllerName);
-        //    Assert.Equal("CustomAction", result.Action);
-        //    Assert.Equal(3, result.ActionArguments.Count);
-        //    Assert.True(result.ActionArguments.ContainsKey("id"));
-        //    Assert.Equal("5", result.ActionArguments["id"].Value);
-        //    Assert.True(result.ActionArguments.ContainsKey("key"));
-        //    Assert.Equal("value", result.ActionArguments["key"].Value);
-        //    Assert.True(result.ActionArguments.ContainsKey("anotherId"));
-        //    Assert.Equal(2, result.ActionArguments["anotherId"].Value);
-        //}
-
+        
         [Fact]
         public void ParseCustomConventionsCustomConventionsAreParsed()
         {

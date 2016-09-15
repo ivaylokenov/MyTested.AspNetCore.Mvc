@@ -2,6 +2,8 @@
 {
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Options.Test;
+    using Setups;
     using Setups.Common;
     using Setups.Controllers;
     using Xunit;
@@ -12,7 +14,7 @@
         public void WithOptionsShouldSetCorrectOptions()
         {
             MyApplication
-                .IsUsingDefaultConfiguration()
+                .StartsFrom<TestStartup>()
                 .WithServices(services =>
                 {
                     var configuration = new ConfigurationBuilder()
@@ -44,7 +46,7 @@
                 .ShouldReturn()
                 .BadRequest();
 
-            MyApplication.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }
