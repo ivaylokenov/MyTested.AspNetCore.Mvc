@@ -197,14 +197,14 @@
 
         public static void TryInitialize()
         {
-            if (Configuration().General().NoStartup())
-            {
-                return;
-            }
-
             lock (Sync)
             {
-                if (!initialiazed && Configuration().General().AutomaticStartup())
+                var configuration = Configuration().General();
+
+                if (!initialiazed
+                    && StartupType == null
+                    && !configuration.NoStartup()
+                    && configuration.AutomaticStartup())
                 {
                     var defaultStartupType = TryFindDefaultStartupType();
 
