@@ -3,14 +3,10 @@
     using Controllers;
     using MyTested.AspNetCore.Mvc;
     using NUnit.Framework;
-    using Web;
 
     [TestFixture]
     public class Tests
     {
-        [OneTimeSetUp]
-        public void Init() => MyApplication.StartsFrom<Startup>().WithTestAssembly(this);
-
         [Test]
         public void CustomRouteShouldMatchCorrectController()
             => MyRouting

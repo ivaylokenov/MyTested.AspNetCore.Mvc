@@ -7,7 +7,7 @@ MyTested.AspNetCore.Mvc is a unit testing library (currently in preview version)
 
 ## Getting started
 
-It is strongly advised to start with the [tutorial](http://docs.mytestedasp.net/tutorial/intro.html) (coming soon) in order to get familiar with MyTested.AspNetCore.Mvc. Additionally, you may see the [testing guide](http://docs.mytestedasp.net/guide/intro.html) (coming soon) or the [API reference](http://docs.mytestedasp.net/api/index.html) for full list of available features. MyTested.AspNetCore.Mvc is 100% covered by [more than 1500 unit tests](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/tree/master/test/) and should work correctly. Almost all items in the [issues page](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/issues) are expected future features and enhancements.
+It is strongly advised to start with the [tutorial](http://docs.mytestedasp.net/tutorial/intro.html) (coming soon) in order to get familiar with MyTested.AspNetCore.Mvc. Additionally, you may see the [testing guide](http://docs.mytestedasp.net/guide/intro.html) (coming soon) or the [API reference](http://docs.mytestedasp.net/api/index.html) for full list of available features. MyTested.AspNetCore.Mvc is 100% covered by [more than 1800 unit tests](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/tree/master/test/) and should work correctly. Almost all items in the [issues page](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/issues) are expected future features and enhancements.
 
 ## Installation
 
@@ -52,7 +52,7 @@ Make sure to check out the [tutorial](http://docs.mytestedasp.net/tutorial/intro
 
 You can also check out the [provided samples](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/tree/master/samples) for real-life ASP.NET Core MVC application testing.
 
-First we need to create a `TestStartup` class in the root of the test project in order to register the dependency injection services. The easiest way is to inherit from the web project's `Startup` class and replace some of the services with mocked ones by using the provided extension methods.
+The easiest way to start with MyTested.AspNetCore.Mvc is to create a `TestStartup` class at the root of the test project in order to register the dependency injection services which will be used by all test cases in the assembly. A fast solution is to inherit from the web project's `Startup` class and replace some of the services with mocked ones by using the provided extension methods.
 
 ```c#
 namespace MyApp.Tests
@@ -98,8 +98,7 @@ namespace MyApp.Tests.Controllers
 }
 ```
 
-The example uses [xUnit](http://xunit.github.io/) but you can use whatever testing framework you want.
-Basically, MyTested.AspNetCore.Mvc throws an unhandled exception with a friendly error message if the assertion does not pass and the test fails.
+Basically, MyTested.AspNetCore.Mvc throws an unhandled exception with a friendly error message if the assertion does not pass and the test fails. The example uses [xUnit](http://xunit.github.io/) but you can use any other framework you like. See the [samples](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/tree/master/samples) for other types of test runners and `Startup` class configurations.
 
 ## Examples
 

@@ -36,6 +36,8 @@
         private const string TestFrameworkName = "MyTested.AspNetCore.Mvc";
         private const string ReleaseDate = "2016-10-01";
 
+        private static readonly object Sync;
+
         private static readonly RequestDelegate NullHandler;
 
         private static readonly ISet<IDefaultRegistrationPlugin> DefaultRegistrationPlugins;
@@ -43,12 +45,11 @@
         private static readonly ISet<IRoutingServiceRegistrationPlugin> RoutingServiceRegistrationPlugins;
         private static readonly ISet<IInitializationPlugin> InitializationPlugins;
 
-        private static readonly object Sync;
-
         private static bool initialiazed;
 
         private static IConfigurationBuilder configurationBuilder;
         private static TestConfiguration configuration;
+        private static GeneralTestConfiguration generalConfiguration;
 
         private static IHostingEnvironment environment;
 
@@ -60,8 +61,9 @@
 
         static TestApplication()
         {
-            NullHandler = c => TaskCache.CompletedTask;
             Sync = new object();
+
+            NullHandler = c => TaskCache.CompletedTask;
 
             DefaultRegistrationPlugins = new HashSet<IDefaultRegistrationPlugin>();
             ServiceRegistrationPlugins = new HashSet<IServiceRegistrationPlugin>();
@@ -109,12 +111,12 @@
 
             set
             {
-                if (value != null && Configuration().General().NoStartup())
+                if (value != null && GeneralConfiguration().NoStartup())
                 {
                     throw new InvalidOperationException($"The test configuration ('testconfig.json' file by default) contained 'true' value for the 'General.NoStartup' option but {value.GetName()} class was set through the 'StartsFrom<TStartup>()' method. Either do not set the class or change the option to 'false'.");
                 }
 
-                if (startupType != null && Configuration().General().AsynchronousTests())
+                if (startupType != null && GeneralConfiguration().AsynchronousTests())
                 {
                     throw new InvalidOperationException("Multiple Startup types per test project while running asynchronous tests is not supported. Either set 'General.AsynchronousTests' in the test configuration ('testconfig.json' file by default) to 'false' or separate your tests into different test projects. The latter is recommended. If you choose the first option, you may need to disable asynchronous testing in your preferred test runner too.");
                 }
@@ -150,7 +152,7 @@
         }
 
         internal static string ApplicationName
-            => Configuration().General().ApplicationName()
+            => GeneralConfiguration().ApplicationName()
                 ?? TestAssembly.GetName().Name;
 
         public static TestConfiguration Configuration()
@@ -167,6 +169,7 @@
                 AdditionalConfiguration = null;
 
                 configuration = TestConfiguration.With(configurationBuilder.Build());
+                generalConfiguration = null;
 
                 PrepareLicensing();
             }
@@ -178,7 +181,7 @@
         {
             lock (Sync)
             {
-                var configuration = Configuration().General();
+                var configuration = GeneralConfiguration();
 
                 if (!initialiazed
                     && StartupType == null
@@ -191,7 +194,7 @@
                     {
                         throw new InvalidOperationException($"{Environment.EnvironmentName}Startup class could not be found at the root of the test project. Either add it or set 'General.AutomaticStartup' in the test configuration ('testconfig.json' file by default) to 'false'.");
                     }
-                    else if (Configuration().General().NoStartup())
+                    else if (GeneralConfiguration().NoStartup())
                     {
                         throw new InvalidOperationException($"The test configuration ('testconfig.json' file by default) contained 'true' value for the 'General.NoStartup' option but {Environment.EnvironmentName}Startup class was located at the root of the project. Either remove the class or change the option to 'false'.");
                     }
@@ -200,6 +203,16 @@
                     Initialize();
                 }
             }
+        }
+
+        internal static GeneralTestConfiguration GeneralConfiguration()
+        {
+            if (generalConfiguration == null)
+            {
+                generalConfiguration = Configuration().General();
+            }
+
+            return generalConfiguration;
         }
 
         internal static DependencyContext LoadDependencyContext()
@@ -264,7 +277,7 @@
         {
             EnsureTestAssembly();
 
-            var defaultStartupType = Configuration().General().StartupType() ?? $"{Environment.EnvironmentName}Startup";
+            var defaultStartupType = GeneralConfiguration().StartupType() ?? $"{Environment.EnvironmentName}Startup";
 
             // check root of the test project
             var startup =
@@ -278,7 +291,7 @@
         {
             EnsureTestAssembly();
 
-            if (StartupType == null && !Configuration().General().NoStartup())
+            if (StartupType == null && !GeneralConfiguration().NoStartup())
             {
                 throw new InvalidOperationException($"The test configuration ('testconfig.json' file by default) contained 'false' value for the 'General.NoStartup' option but a Startup class was not provided. Either add {Environment.EnvironmentName}Startup class to the root of the test project or set it by calling 'StartsFrom<TStartup>()'. Additionally, if you do not want to use a global test application for all test cases in this project, you may change the test configuration option to 'true'.");
             }
@@ -312,7 +325,7 @@
             => new HostingEnvironment
             {
                 ApplicationName = ApplicationName,
-                EnvironmentName = Configuration().General().EnvironmentName(),
+                EnvironmentName = GeneralConfiguration().EnvironmentName(),
                 ContentRootPath = PlatformServices.Default.Application.ApplicationBasePath
             };
 
@@ -393,7 +406,7 @@
 
 #if NET451
             var baseStartupType = StartupType;
-            while (baseStartupType?.BaseType != typeof(object))
+            while (baseStartupType != null && baseStartupType?.BaseType != typeof(object))
             {
                 baseStartupType = baseStartupType.BaseType;
             }
@@ -520,7 +533,7 @@
 
         private static void FindTestAssembly()
         {
-            var testAssemblyName = Configuration().General().TestAssemblyName();
+            var testAssemblyName = GeneralConfiguration().TestAssemblyName();
             if (testAssemblyName != null)
             {
                 TestAssembly = Assembly.Load(new AssemblyName(testAssemblyName));

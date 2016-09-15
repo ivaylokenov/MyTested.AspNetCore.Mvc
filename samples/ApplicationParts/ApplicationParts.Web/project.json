@@ -26,7 +26,7 @@
     "Microsoft.Extensions.Logging.Console": "1.0.0-*",
     "Microsoft.Extensions.Logging.Debug": "1.0.0-*",
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-rc2-final",
-    "ApplicationParts.Controllers": "1.0.0-*"
+    "ApplicationParts.Controllers": "*"
   },
 
   "tools": {
