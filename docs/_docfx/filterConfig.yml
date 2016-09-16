@@ -1,0 +1,27 @@
+apiRules:
+- include:
+    uidRegex: ^MyTested.AspNetCore.Mvc.AuthenticationScheme
+- include:
+    uidRegex: ^MyTested.AspNetCore.Mvc.ContentType
+- include:
+    uidRegex: ^MyTested.AspNetCore.Mvc.HttpHeader
+- include:
+    uidRegex: ^MyTested.AspNetCore.Mvc.HttpMethod
+- include:
+    uidRegex: ^MyTested.AspNetCore.Mvc.HttpScheme
+- include:
+    uidRegex: ^MyTested.AspNetCore.Mvc.HttpStatusCode
+- include:
+    uidRegex: ^MyTested.AspNetCore.Mvc.With
+- include:
+    uidRegex: ^MyTested.AspNetCore.Mvc.My
+- include:
+    uidRegex: Extensions$
+- exclude:
+    type: Class
+- exclude:
+    uidRegex: IAnd
+- exclude:
+    uidRegex: ^MyTested.AspNetCore.Mvc.Internal
+- include:
+    type: Interface

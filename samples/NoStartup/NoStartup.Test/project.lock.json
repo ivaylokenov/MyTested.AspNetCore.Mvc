@@ -5085,7 +5085,7 @@
   },
   "libraries": {
     "dotnet-test-mstest/1.0.1-preview": {
-      "sha512": "KYdjmot4YALxSulxPLOUWmJdrUKCIkTwDxIk3D1k9R5OOELMc7tzji74wz0plq+NvXPH7fltmFZXh0Adj1FJyg==",
+      "sha512": "LeddRDb0SiJ1cEjOCNtD7vpBnL4+UxqAFhft+ou4j3pS4tT9U+yt7AZsjg6w8ejMDD/JLaeTFV1ZcKWNgnc5TQ==",
       "type": "package",
       "path": "dotnet-test-mstest/1.0.1-preview",
       "files": [
@@ -6108,7 +6108,7 @@
       ]
     },
     "MSTest.TestFramework/1.0.1-preview": {
-      "sha512": "Q12/6dVOdJqqBxeFnP9OjKf33xEUr2ITCIi1x6DgvlgMiN5AEwpjlCemPBf0K8rUe7aVQMON3XAB8VWN33vP2A==",
+      "sha512": "mm97lXENm5weBwpTFjFVECQbqH2O7HJ3h1xy3vzqCSfN6vnk2TQPfEGHE13bE1f5x4iUlob/lZXnuP1HQKc3yQ==",
       "type": "package",
       "path": "MSTest.TestFramework/1.0.1-preview",
       "files": [

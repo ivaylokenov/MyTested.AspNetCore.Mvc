@@ -14,7 +14,7 @@
     /// <summary>
     /// Provides useful <see cref="IServiceCollection"/> extensions for testing purposes.
     /// </summary>
-    public static class ServiceCollectionExtensions
+    public static class ServiceCollectionAbstractionsExtensions
     {
         public static IServiceCollection AddCoreTesting(this IServiceCollection serviceCollection)
         {

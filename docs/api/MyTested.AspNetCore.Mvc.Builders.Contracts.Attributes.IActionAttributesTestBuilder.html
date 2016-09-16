@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface IActionAttributesTestBuilder
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface IActionAttributesTestBuilder
+   ">
+    <meta name="generator" content="docfx 2.5.0.0">
+    {% seo %}
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../index.html">
+                MY TESTED ASP.NET CORE MVC DOCS
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content">
+              
+              
+              <h1 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder">Interface IActionAttributesTestBuilder
+              </h1>
+              <div class="markdown level0 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Used for testing action attributes.</p>
+</div>
+              <div class="markdown level0 conceptual"></div>
+              <h6><strong>Namespace</strong>:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes</h6>
+              <h6><strong>Assembly</strong>:MyTested.AspNetCore.Mvc.Controllers.dll</h6>
+              <h5 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_syntax">Syntax</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">public interface IActionAttributesTestBuilder : IBaseAttributesTestBuilder&lt;IAndActionAttributesTestBuilder&gt;</code></pre>
+              </div>
+              <h3 id="methods">Methods
+              </h3>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/development/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_AllowingAnonymousRequests.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.AllowingAnonymousRequests%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/development/src/MyTested.AspNetCore.Mvc.Controllers/Builders/Contracts/Attributes/IActionAttributesTestBuilder.cs/#L37">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_AllowingAnonymousRequests" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.AllowingAnonymousRequests">AllowingAnonymousRequests()</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Tests whether the action attributes contain <span class="xref">Microsoft.AspNetCore.Authorization.AllowAnonymousAttribute</span>.</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IAndActionAttributesTestBuilder AllowingAnonymousRequests()</code></pre>
+              </div>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IAndActionAttributesTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IAndActionAttributesTestBuilder</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/development/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_ChangingActionNameTo_System_String_.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.ChangingActionNameTo(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/development/src/MyTested.AspNetCore.Mvc.Controllers/Builders/Contracts/Attributes/IActionAttributesTestBuilder.cs/#L19">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_ChangingActionNameTo_System_String_" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.ChangingActionNameTo(System.String)">ChangingActionNameTo(String)</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Tests whether the action attributes contain <span class="xref">Microsoft.AspNetCore.Mvc.ActionNameAttribute</span>.</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IAndActionAttributesTestBuilder ChangingActionNameTo(string actionName)</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.String</span></td>
+                    <td><em>actionName</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Expected overridden name of the action.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IAndActionAttributesTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IAndActionAttributesTestBuilder</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/development/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_ChangingRouteTo_System_String_System_String_System_Nullable_System_Int32__.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.ChangingRouteTo(System.String%2CSystem.String%2CSystem.Nullable%7BSystem.Int32%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/development/src/MyTested.AspNetCore.Mvc.Controllers/Builders/Contracts/Attributes/IActionAttributesTestBuilder.cs/#L28">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_ChangingRouteTo_System_String_System_String_System_Nullable_System_Int32__" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.ChangingRouteTo(System.String,System.String,System.Nullable{System.Int32})">ChangingRouteTo(String, String, Nullable&lt;Int32&gt;)</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Tests whether the action attributes contain <span class="xref">Microsoft.AspNetCore.Mvc.RouteAttribute</span>.</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IAndActionAttributesTestBuilder ChangingRouteTo(string template, string withName = null, int ? withOrder = null)</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.String</span></td>
+                    <td><em>template</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Expected overridden route template of the action.</p>
+</td>
+                  </tr>
+                  <tr>
+                    <td><span class="xref">System.String</span></td>
+                    <td><em>withName</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Optional expected route name.</p>
+</td>
+                  </tr>
+                  <tr>
+                    <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+                    <td><em>withOrder</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Optional expected route order.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IAndActionAttributesTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IAndActionAttributesTestBuilder</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/development/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_DisablingActionCall.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.DisablingActionCall%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/development/src/MyTested.AspNetCore.Mvc.Controllers/Builders/Contracts/Attributes/IActionAttributesTestBuilder.cs/#L50">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_DisablingActionCall" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.DisablingActionCall">DisablingActionCall()</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Tests whether the action attributes contain <span class="xref">Microsoft.AspNetCore.Mvc.NonActionAttribute</span>.</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IAndActionAttributesTestBuilder DisablingActionCall()</code></pre>
+              </div>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IAndActionAttributesTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IAndActionAttributesTestBuilder</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/development/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_RestrictingForAuthorizedRequests_System_String_.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.RestrictingForAuthorizedRequests(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/development/src/MyTested.AspNetCore.Mvc.Controllers/Builders/Contracts/Attributes/IActionAttributesTestBuilder.cs/#L44">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_RestrictingForAuthorizedRequests_System_String_" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.RestrictingForAuthorizedRequests(System.String)">RestrictingForAuthorizedRequests(String)</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Tests whether the action attributes contain <span class="xref">Microsoft.AspNetCore.Authorization.AuthorizeAttribute</span>.</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IAndActionAttributesTestBuilder RestrictingForAuthorizedRequests(string withAllowedRoles = null)</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.String</span></td>
+                    <td><em>withAllowedRoles</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Optional expected authorized roles.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IAndActionAttributesTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IAndActionAttributesTestBuilder</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/development/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_RestrictingForHttpMethod_System_Net_Http_HttpMethod_.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.RestrictingForHttpMethod(System.Net.Http.HttpMethod)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/development/src/MyTested.AspNetCore.Mvc.Controllers/Builders/Contracts/Attributes/IActionAttributesTestBuilder.cs/#L72">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_RestrictingForHttpMethod_System_Net_Http_HttpMethod_" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.RestrictingForHttpMethod(System.Net.Http.HttpMethod)">RestrictingForHttpMethod(HttpMethod)</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Tests whether the action attributes restrict the request to a specific HTTP method (<span class="xref">Microsoft.AspNetCore.Mvc.AcceptVerbsAttribute</span> or the specific <span class="xref">Microsoft.AspNetCore.Mvc.HttpGetAttribute</span>, <span class="xref">Microsoft.AspNetCore.Mvc.HttpPostAttribute</span>, etc.).</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IAndActionAttributesTestBuilder RestrictingForHttpMethod(HttpMethod httpMethod)</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.Net.Http.HttpMethod</span></td>
+                    <td><em>httpMethod</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">HTTP method provided as <span class="xref">HttpMethod</span> class.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IAndActionAttributesTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IAndActionAttributesTestBuilder</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/development/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_RestrictingForHttpMethod_System_String_.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.RestrictingForHttpMethod(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/development/src/MyTested.AspNetCore.Mvc.Controllers/Builders/Contracts/Attributes/IActionAttributesTestBuilder.cs/#L65">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_RestrictingForHttpMethod_System_String_" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.RestrictingForHttpMethod(System.String)">RestrictingForHttpMethod(String)</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Tests whether the action attributes restrict the request to a specific HTTP method (<span class="xref">Microsoft.AspNetCore.Mvc.AcceptVerbsAttribute</span> or the specific <span class="xref">Microsoft.AspNetCore.Mvc.HttpGetAttribute</span>, <span class="xref">Microsoft.AspNetCore.Mvc.HttpPostAttribute</span>, etc.).</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IAndActionAttributesTestBuilder RestrictingForHttpMethod(string httpMethod)</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.String</span></td>
+                    <td><em>httpMethod</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">HTTP method provided as string.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IAndActionAttributesTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IAndActionAttributesTestBuilder</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/development/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_RestrictingForHttpMethod__1.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.RestrictingForHttpMethod%60%601%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/development/src/MyTested.AspNetCore.Mvc.Controllers/Builders/Contracts/Attributes/IActionAttributesTestBuilder.cs/#L57">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_RestrictingForHttpMethod__1" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.RestrictingForHttpMethod``1">RestrictingForHttpMethod&lt;THttpMethod&gt;()</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Tests whether the action attributes restrict the request to a specific HTTP method (<span class="xref">Microsoft.AspNetCore.Mvc.AcceptVerbsAttribute</span> or the specific <span class="xref">Microsoft.AspNetCore.Mvc.HttpGetAttribute</span>, <span class="xref">Microsoft.AspNetCore.Mvc.HttpPostAttribute</span>, etc.).</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IAndActionAttributesTestBuilder RestrictingForHttpMethod&lt;THttpMethod&gt;()where THttpMethod : Attribute, IActionHttpMethodProvider, new ()</code></pre>
+              </div>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IAndActionAttributesTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IAndActionAttributesTestBuilder</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="typeParameters">Type Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><em>THttpMethod</em></td>
+                    <td>Attribute of type <span class="xref">Microsoft.AspNetCore.Mvc.Routing.IActionHttpMethodProvider</span>.</td>
+                  </tr>
+                </tbody>
+              </table>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/development/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_RestrictingForHttpMethods_System_Collections_Generic_IEnumerable_System_Net_Http_HttpMethod__.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.RestrictingForHttpMethods(System.Collections.Generic.IEnumerable%7BSystem.Net.Http.HttpMethod%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/development/src/MyTested.AspNetCore.Mvc.Controllers/Builders/Contracts/Attributes/IActionAttributesTestBuilder.cs/#L93">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_RestrictingForHttpMethods_System_Collections_Generic_IEnumerable_System_Net_Http_HttpMethod__" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.RestrictingForHttpMethods(System.Collections.Generic.IEnumerable{System.Net.Http.HttpMethod})">RestrictingForHttpMethods(IEnumerable&lt;HttpMethod&gt;)</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Tests whether the action attributes restrict the request to a specific HTTP methods (<span class="xref">Microsoft.AspNetCore.Mvc.AcceptVerbsAttribute</span> or the specific <span class="xref">Microsoft.AspNetCore.Mvc.HttpGetAttribute</span>, <span class="xref">Microsoft.AspNetCore.Mvc.HttpPostAttribute</span>, etc.).</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IAndActionAttributesTestBuilder RestrictingForHttpMethods(IEnumerable&lt;HttpMethod&gt; httpMethods)</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<span class="xref">System.Net.Http.HttpMethod</span>&gt;</td>
+                    <td><em>httpMethods</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">HTTP methods provided as collection of <span class="xref">HttpMethod</span> classes.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IAndActionAttributesTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IAndActionAttributesTestBuilder</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/development/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_RestrictingForHttpMethods_System_Collections_Generic_IEnumerable_System_String__.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.RestrictingForHttpMethods(System.Collections.Generic.IEnumerable%7BSystem.String%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/development/src/MyTested.AspNetCore.Mvc.Controllers/Builders/Contracts/Attributes/IActionAttributesTestBuilder.cs/#L79">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_RestrictingForHttpMethods_System_Collections_Generic_IEnumerable_System_String__" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.RestrictingForHttpMethods(System.Collections.Generic.IEnumerable{System.String})">RestrictingForHttpMethods(IEnumerable&lt;String&gt;)</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Tests whether the action attributes restrict the request to a specific HTTP methods (<span class="xref">Microsoft.AspNetCore.Mvc.AcceptVerbsAttribute</span> or the specific <span class="xref">Microsoft.AspNetCore.Mvc.HttpGetAttribute</span>, <span class="xref">Microsoft.AspNetCore.Mvc.HttpPostAttribute</span>, etc.).</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IAndActionAttributesTestBuilder RestrictingForHttpMethods(IEnumerable&lt;string&gt; httpMethods)</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<span class="xref">System.String</span>&gt;</td>
+                    <td><em>httpMethods</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">HTTP methods provided as collection of strings.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IAndActionAttributesTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IAndActionAttributesTestBuilder</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/development/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_RestrictingForHttpMethods_System_Net_Http_HttpMethod___.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.RestrictingForHttpMethods(System.Net.Http.HttpMethod%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/development/src/MyTested.AspNetCore.Mvc.Controllers/Builders/Contracts/Attributes/IActionAttributesTestBuilder.cs/#L100">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_RestrictingForHttpMethods_System_Net_Http_HttpMethod___" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.RestrictingForHttpMethods(System.Net.Http.HttpMethod[])">RestrictingForHttpMethods(HttpMethod[])</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Tests whether the action attributes restrict the request to a specific HTTP methods (<span class="xref">Microsoft.AspNetCore.Mvc.AcceptVerbsAttribute</span> or the specific <span class="xref">Microsoft.AspNetCore.Mvc.HttpGetAttribute</span>, <span class="xref">Microsoft.AspNetCore.Mvc.HttpPostAttribute</span>, etc.).</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IAndActionAttributesTestBuilder RestrictingForHttpMethods(params HttpMethod[] httpMethods)</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.Net.Http.HttpMethod</span>[]</td>
+                    <td><em>httpMethods</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">HTTP methods provided as parameters of <span class="xref">HttpMethod</span> class.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IAndActionAttributesTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IAndActionAttributesTestBuilder</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/development/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_RestrictingForHttpMethods_System_String___.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.RestrictingForHttpMethods(System.String%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/development/src/MyTested.AspNetCore.Mvc.Controllers/Builders/Contracts/Attributes/IActionAttributesTestBuilder.cs/#L86">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_RestrictingForHttpMethods_System_String___" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.RestrictingForHttpMethods(System.String[])">RestrictingForHttpMethods(String[])</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Tests whether the action attributes restrict the request to a specific HTTP methods (<span class="xref">Microsoft.AspNetCore.Mvc.AcceptVerbsAttribute</span> or the specific <span class="xref">Microsoft.AspNetCore.Mvc.HttpGetAttribute</span>, <span class="xref">Microsoft.AspNetCore.Mvc.HttpPostAttribute</span>, etc.).</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IAndActionAttributesTestBuilder RestrictingForHttpMethods(params string[] httpMethods)</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.String</span>[]</td>
+                    <td><em>httpMethods</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">HTTP methods provided as string parameters.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IAndActionAttributesTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IAndActionAttributesTestBuilder</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h3 id="extensionmethods">Extension Methods</h3>
+              <div>
+                  <a class="xref" href="MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_ObjectExtensions_TryCastTo__1_System_Object_">ObjectExtensions.TryCastTo&lt;T&gt;()</a>
+              </div>
+              <div>
+                  <a class="xref" href="MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_ObjectExtensions_AsDynamic_System_Object_">ObjectExtensions.AsDynamic()</a>
+              </div>
+              <div>
+                  <a class="xref" href="MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_ObjectExtensions_GetName_System_Object_">ObjectExtensions.GetName()</a>
+              </div>
+              <div>
+                  <a class="xref" href="MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_ObjectExtensions_GetErrorMessageName_System_Object_System_Boolean_System_String_">ObjectExtensions.GetErrorMessageName(Boolean, String)</a>
+              </div>
+              <div>
+                  <a class="xref" href="MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_ObjectExtensions_ToStringValueDictionary_System_Object_">ObjectExtensions.ToStringValueDictionary()</a>
+              </div>
+              <div>
+                  <a class="xref" href="MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_ObjectExtensions_ToObjectValueDictionary_System_Object_">ObjectExtensions.ToObjectValueDictionary()</a>
+              </div>
+              <div>
+                  <a class="xref" href="MyTested.AspNetCore.Mvc.ActionAttributesTestBuilderViewFeaturesExtensions.html#MyTested_AspNetCore_Mvc_ActionAttributesTestBuilderViewFeaturesExtensions_ValidatingAntiForgeryToken_MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_">ActionAttributesTestBuilderViewFeaturesExtensions.ValidatingAntiForgeryToken()</a>
+              </div>
+            </article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/development/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/development/src/MyTested.AspNetCore.Mvc.Controllers/Builders/Contracts/Attributes/IActionAttributesTestBuilder.cs/#L12" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © 2015-2016 <strong><a href="http://mytestedasp.net">MyTestedASP.NET</a></strong>. All Rights Reserved. Generated by <strong><a href="http://dotnet.github.io/docfx/">DocFX</a></strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

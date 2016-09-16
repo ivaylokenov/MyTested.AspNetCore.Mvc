@@ -7735,7 +7735,7 @@
       ]
     },
     "Microsoft.VisualStudio.Web.BrowserLink.Loader/14.0.0-rc2-final": {
-      "sha512": "NM/mukki+sxjRIg6yve48iD0/Y+bb89vGpAVvFNt8+jUpoVz5JBm03q5T3t+vKFiZNjJUWmwsP8vYATIpbk10Q==",
+      "sha512": "PDkK41WGH5hl4gAQuzVhv39avSFQBi8N++DN79gUCcrH4dLP0PLQETBLRmYCIPCcGGnyg/0R44V41kXqz6KXhg==",
       "type": "package",
       "path": "Microsoft.VisualStudio.Web.BrowserLink.Loader/14.0.0-rc2-final",
       "files": [
