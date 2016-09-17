@@ -144,7 +144,7 @@ MyMvc
     .AndAlso()
     .ShouldReturn()
     .View()
-    .WithModel<ResponseModel>()
+    .WithModelOfType<ResponseModel>()
     .Passing(m =>
     {
         Assert.AreEqual(1, m.Id);
