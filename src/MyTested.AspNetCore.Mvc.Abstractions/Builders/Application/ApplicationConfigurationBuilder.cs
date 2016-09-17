@@ -38,7 +38,7 @@
         }
 
         /// <inheritdoc />
-        public IApplicationConfigurationBuilder WithApplication(Action<IApplicationBuilder> app)
+        public IApplicationConfigurationBuilder WithConfiguration(Action<IApplicationBuilder> app)
         {
             TestApplication.AdditionalApplicationConfiguration += app;
             return this;

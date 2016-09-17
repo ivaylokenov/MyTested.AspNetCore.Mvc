@@ -14,7 +14,11 @@ apiRules:
 - include:
     uidRegex: ^MyTested.AspNetCore.Mvc.With
 - include:
+    uidRegex: ^MyTested.AspNetCore.Mvc.From
+- include:
     uidRegex: ^MyTested.AspNetCore.Mvc.My
+- exclude:
+    uidRegex: ^MyTested.AspNetCore.Mvc.Utilities.Extensions
 - include:
     uidRegex: Extensions$
 - exclude:
@@ -23,5 +27,7 @@ apiRules:
     uidRegex: IAnd
 - exclude:
     uidRegex: ^MyTested.AspNetCore.Mvc.Internal
+- exclude:
+    uidRegex: ^MyTested.AspNetCore.Mvc.Plugins
 - include:
     type: Interface

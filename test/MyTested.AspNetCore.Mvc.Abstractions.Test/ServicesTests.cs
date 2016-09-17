@@ -221,7 +221,7 @@
 
             MyApplication
                 .StartsFrom<DefaultStartup>()
-                .WithApplication(app =>
+                .WithConfiguration(app =>
                 {
                     set = true;
                 });
@@ -292,7 +292,7 @@
             var set = false;
 
             MyApplication.StartsFrom<CustomStartup>()
-                .WithApplication(app =>
+                .WithConfiguration(app =>
                 {
                     set = true;
                 });

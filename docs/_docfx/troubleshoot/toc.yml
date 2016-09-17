@@ -1,3 +1,5 @@
 
 - name: Introduction
   href: intro.md
+- name: Type Initializer Exception
+  href: typeinitexception.md

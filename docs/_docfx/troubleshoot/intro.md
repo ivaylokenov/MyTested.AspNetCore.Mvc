@@ -1,9 +1,7 @@
 # Welcome to the Troubleshoot
 
-Here you will find My Tested ASP.NET Core MVC solutions for frequently asked questions and common problems.
+Here you will find [My Tested ASP.NET Core MVC](https://mytestedasp.net/Core/Mvc) solutions for frequently asked questions and common problems.
 
-<strong class="article-contents">The troubleshoot section is still work in progress...</strong>
+<strong class="article-contents">Table of contents</strong>
 
-<span>Sorry for the inconvenience caused! :(</span>
-
-<img src="/images/catsorry.jpg" />
+- [When I run a test, I receive a type initializer exception without any descriptive message](/troubleshoot/typeinitexception.html)

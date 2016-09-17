@@ -6,7 +6,7 @@
     /// <summary>
     /// Contains extension methods for <see cref="IServiceCollection"/>.
     /// </summary>
-    public static class UniverseServiceCollectionExtensions
+    public static class ServiceCollectionUniverseExtensions
     {
         /// <summary>
         /// Adds all testing services available in the testing framework.

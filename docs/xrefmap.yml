@@ -1759,13 +1759,13 @@ references:
   href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Application.IApplicationConfigurationBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Application_IApplicationConfigurationBuilder
   commentId: T:MyTested.AspNetCore.Mvc.Builders.Contracts.Application.IApplicationConfigurationBuilder
   fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Application.IApplicationConfigurationBuilder
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Application.IApplicationConfigurationBuilder.WithApplication(System.Action{Microsoft.AspNetCore.Builder.IApplicationBuilder})
-  name: WithApplication(Action<IApplicationBuilder>)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Application.IApplicationConfigurationBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Application_IApplicationConfigurationBuilder_WithApplication_System_Action_Microsoft_AspNetCore_Builder_IApplicationBuilder__
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Application.IApplicationConfigurationBuilder.WithApplication(System.Action{Microsoft.AspNetCore.Builder.IApplicationBuilder})
-  name.vb: WithApplication(Action(Of IApplicationBuilder))
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Application.IApplicationConfigurationBuilder.WithApplication(System.Action<Microsoft.AspNetCore.Builder.IApplicationBuilder>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Application.IApplicationConfigurationBuilder.WithApplication(System.Action(Of Microsoft.AspNetCore.Builder.IApplicationBuilder))
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Application.IApplicationConfigurationBuilder.WithConfiguration(System.Action{Microsoft.AspNetCore.Builder.IApplicationBuilder})
+  name: WithConfiguration(Action<IApplicationBuilder>)
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Application.IApplicationConfigurationBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Application_IApplicationConfigurationBuilder_WithConfiguration_System_Action_Microsoft_AspNetCore_Builder_IApplicationBuilder__
+  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Application.IApplicationConfigurationBuilder.WithConfiguration(System.Action{Microsoft.AspNetCore.Builder.IApplicationBuilder})
+  name.vb: WithConfiguration(Action(Of IApplicationBuilder))
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Application.IApplicationConfigurationBuilder.WithConfiguration(System.Action<Microsoft.AspNetCore.Builder.IApplicationBuilder>)
+  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Application.IApplicationConfigurationBuilder.WithConfiguration(System.Action(Of Microsoft.AspNetCore.Builder.IApplicationBuilder))
 - uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Application.IApplicationConfigurationBuilder.WithRoutes(System.Action{Microsoft.AspNetCore.Routing.IRouteBuilder})
   name: WithRoutes(Action<IRouteBuilder>)
   href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Application.IApplicationConfigurationBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Application_IApplicationConfigurationBuilder_WithRoutes_System_Action_Microsoft_AspNetCore_Routing_IRouteBuilder__
@@ -5329,6 +5329,18 @@ references:
   name.vb: WithTempData(Of TController)(IControllerBuilder(Of TController), Action(Of ITempDataBuilder))
   fullName: MyTested.AspNetCore.Mvc.ControllerBuilderViewFeaturesExtensions.WithTempData<TController>(MyTested.AspNetCore.Mvc.Builders.Contracts.Controllers.IControllerBuilder<TController>, System.Action<MyTested.AspNetCore.Mvc.Builders.Contracts.Data.ITempDataBuilder>)
   fullName.vb: MyTested.AspNetCore.Mvc.ControllerBuilderViewFeaturesExtensions.WithTempData(Of TController)(MyTested.AspNetCore.Mvc.Builders.Contracts.Controllers.IControllerBuilder(Of TController), System.Action(Of MyTested.AspNetCore.Mvc.Builders.Contracts.Data.ITempDataBuilder))
+- uid: MyTested.AspNetCore.Mvc.From
+  name: From
+  href: api/MyTested.AspNetCore.Mvc.From.html#MyTested_AspNetCore_Mvc_From
+  commentId: T:MyTested.AspNetCore.Mvc.From
+  fullName: MyTested.AspNetCore.Mvc.From
+- uid: MyTested.AspNetCore.Mvc.From.Services``1
+  name: Services<TService>()
+  href: api/MyTested.AspNetCore.Mvc.From.html#MyTested_AspNetCore_Mvc_From_Services__1
+  commentId: M:MyTested.AspNetCore.Mvc.From.Services``1
+  name.vb: Services(Of TService)()
+  fullName: MyTested.AspNetCore.Mvc.From.Services<TService>()
+  fullName.vb: MyTested.AspNetCore.Mvc.From.Services(Of TService)()
 - uid: MyTested.AspNetCore.Mvc.HttpHeader
   name: HttpHeader
   href: api/MyTested.AspNetCore.Mvc.HttpHeader.html#MyTested_AspNetCore_Mvc_HttpHeader
@@ -6617,6 +6629,16 @@ references:
   href: api/MyTested.AspNetCore.Mvc.ServiceCollectionTempDataExtensions.html#MyTested_AspNetCore_Mvc_ServiceCollectionTempDataExtensions_ReplaceTempDataProvider_Microsoft_Extensions_DependencyInjection_IServiceCollection_
   commentId: M:MyTested.AspNetCore.Mvc.ServiceCollectionTempDataExtensions.ReplaceTempDataProvider(Microsoft.Extensions.DependencyInjection.IServiceCollection)
   fullName: MyTested.AspNetCore.Mvc.ServiceCollectionTempDataExtensions.ReplaceTempDataProvider(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+- uid: MyTested.AspNetCore.Mvc.ServiceCollectionUniverseExtensions
+  name: ServiceCollectionUniverseExtensions
+  href: api/MyTested.AspNetCore.Mvc.ServiceCollectionUniverseExtensions.html#MyTested_AspNetCore_Mvc_ServiceCollectionUniverseExtensions
+  commentId: T:MyTested.AspNetCore.Mvc.ServiceCollectionUniverseExtensions
+  fullName: MyTested.AspNetCore.Mvc.ServiceCollectionUniverseExtensions
+- uid: MyTested.AspNetCore.Mvc.ServiceCollectionUniverseExtensions.AddMvcUniverseTesting(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  name: AddMvcUniverseTesting(IServiceCollection)
+  href: api/MyTested.AspNetCore.Mvc.ServiceCollectionUniverseExtensions.html#MyTested_AspNetCore_Mvc_ServiceCollectionUniverseExtensions_AddMvcUniverseTesting_Microsoft_Extensions_DependencyInjection_IServiceCollection_
+  commentId: M:MyTested.AspNetCore.Mvc.ServiceCollectionUniverseExtensions.AddMvcUniverseTesting(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  fullName: MyTested.AspNetCore.Mvc.ServiceCollectionUniverseExtensions.AddMvcUniverseTesting(Microsoft.Extensions.DependencyInjection.IServiceCollection)
 - uid: MyTested.AspNetCore.Mvc.ServiceCollectionViewComponentsExtensions
   name: ServiceCollectionViewComponentsExtensions
   href: api/MyTested.AspNetCore.Mvc.ServiceCollectionViewComponentsExtensions.html#MyTested_AspNetCore_Mvc_ServiceCollectionViewComponentsExtensions

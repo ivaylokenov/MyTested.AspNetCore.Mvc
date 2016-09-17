@@ -7,7 +7,7 @@ $(function() {
 			
 			elements.each(function (i, el) {
 			  $(el).text($(el).text().replace('MyTested.AspNetCore.Mvc.Builders.Contracts.', ''));
-			  $(el).text($(el).text().replace('MyTested.AspNetCore.Mvc', 'Common'));
+			  $(el).text($(el).text().replace('MyTested.AspNetCore.Mvc', 'Common Classes & Extensions'));
 			});
 			
 			$('#toc.toc').show();
