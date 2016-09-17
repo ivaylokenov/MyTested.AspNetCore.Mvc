@@ -11,8 +11,8 @@
         [Fact]
         public void NoSessionShouldNotThrowExceptionWithNoEntries()
         {
-            MyMvc
-                .IsUsingDefaultConfiguration()
+            MyApplication
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -20,8 +20,8 @@
                     services.AddSession();
                 });
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.Ok())
                 .ShouldHave()
                 .NoSession()
@@ -29,14 +29,14 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void NoSessionShouldThrowExceptionWithEntries()
         {
-            MyMvc
-                .IsUsingDefaultConfiguration()
+            MyApplication
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -47,8 +47,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                       .Controller<MvcController>()
+                    MyController<MvcController>
+                       .Instance()
                        .Calling(c => c.AddSessionAction())
                        .ShouldHave()
                        .NoSession()
@@ -58,14 +58,14 @@
                 },
                 "When calling AddSessionAction action in MvcController expected to have session with no entries, but in fact it had some.");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void SessionWithNoNumberShouldNotThrowExceptionWithAnyEntries()
         {
-            MyMvc
-                .IsUsingDefaultConfiguration()
+            MyApplication
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -73,8 +73,8 @@
                     services.AddSession();
                 });
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddSessionAction())
                 .ShouldHave()
                 .Session()
@@ -82,14 +82,14 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void SessionWithNoNumberShouldThrowExceptionWithNoEntries()
         {
-            MyMvc
-                .IsUsingDefaultConfiguration()
+            MyApplication
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -100,8 +100,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.Ok())
                         .ShouldHave()
                         .Session()
@@ -111,14 +111,14 @@
                 },
                 "When calling Ok action in MvcController expected to have session entries, but none were found.");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void SessionWithNumberShouldNotThrowExceptionWithCorrectEntries()
         {
-            MyMvc
-                .IsUsingDefaultConfiguration()
+            MyApplication
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -126,8 +126,8 @@
                     services.AddSession();
                 });
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddSessionAction())
                 .ShouldHave()
                 .Session(withNumberOfEntries: 3)
@@ -135,14 +135,14 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void SessionWithNumberShouldThrowExceptionWithInvalidEntries()
         {
-            MyMvc
-                .IsUsingDefaultConfiguration()
+            MyApplication
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -153,8 +153,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.Ok())
                         .ShouldHave()
                         .Session(1)
@@ -164,14 +164,14 @@
                 },
                 "When calling Ok action in MvcController expected to have session with 1 entry, but in fact contained 0.");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void SessionWithNumberShouldThrowExceptionWithInvalidManyEntries()
         {
-            MyMvc
-                .IsUsingDefaultConfiguration()
+            MyApplication
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -182,8 +182,8 @@
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
                         .Session(4)
@@ -193,14 +193,14 @@
                 },
                 "When calling AddSessionAction action in MvcController expected to have session with 4 entries, but in fact contained 3.");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void SessionWithBuilderShouldWorkCorrectly()
         {
-            MyMvc
-                .IsUsingDefaultConfiguration()
+            MyApplication
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -208,8 +208,8 @@
                     services.AddSession();
                 });
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AddSessionAction())
                 .ShouldHave()
                 .Session(session => session
@@ -218,7 +218,7 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }

@@ -15,15 +15,12 @@
     "dotnet-test-xunit": "2.2.0-*",
     "xunit": "2.2.0-*",
     "MyTested.AspNetCore.Mvc.ViewFeatures": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.Test": "1.0.0-*"
+    "MyTested.AspNetCore.Mvc.Test.Setups": "1.0.0-*"
   },
 
   "frameworks": {
     "netcoreapp1.0": {
-      "imports": [
-        "dnxcore50",
-        "portable-net451+win8"
-      ],
+      "imports": "dotnet5.4",
       "dependencies": {
         "Microsoft.NETCore.App": {
           "version": "1.0.0-*",

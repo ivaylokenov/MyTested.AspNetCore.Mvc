@@ -11,8 +11,8 @@
         [Fact]
         public void WithoutValidationShouldNotValidateTheRequestModel()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithoutValidation()
                 .Calling(c => c.ModelStateCheck(TestObjectFactory.GetRequestModelWithErrors()))
                 .ShouldHave()
@@ -20,17 +20,36 @@
         }
 
         [Fact]
+        public void CallingShouldHaveValidModelStateWhenThereAreNoModelErrors()
+        {
+            var requestModel = TestObjectFactory.GetValidRequestModel();
+
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.OkResultActionWithRequestBody(1, requestModel))
+                .ShouldReturn()
+                .Ok()
+                .ShouldPassForThe<MvcController>(controller =>
+                {
+                    var modelState = controller.ModelState;
+
+                    Assert.True(modelState.IsValid);
+                    Assert.Equal(0, modelState.Values.Count());
+                    Assert.Equal(0, modelState.Keys.Count());
+                });
+        }
+
+        [Fact]
         public void CallingShouldPopulateModelStateWhenThereAreModelErrors()
         {
             var requestModel = TestObjectFactory.GetRequestModelWithErrors();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.OkResultActionWithRequestBody(1, requestModel))
                 .ShouldReturn()
                 .Ok()
-                .ShouldPassFor()
-                .TheController(controller =>
+                .ShouldPassForThe<MvcController>(controller =>
                 {
                     var modelState = (controller as Controller).ModelState;
 
@@ -44,8 +63,8 @@
         [Fact]
         public void UsingTryValidateModelInsideControllerShouldWorkCorrectly()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.TryValidateModelAction())
                 .ShouldReturn()
                 .BadRequest();

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>HTTP Request </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="HTTP Request ">
+    <meta name="generator" content="docfx 2.5.0.0">
+    {% seo %}
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../index.html">
+                MY TESTED ASP.NET CORE MVC DOCS
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+              <h1 id="http-request" sourcefile="guide/httprequest.md" sourcestartlinenumber="1" sourceendlinenumber="1">HTTP Request</h1>
+              
+<hr>
+<p sourcefile="guide/httprequest.md" sourcestartlinenumber="4" sourceendlinenumber="4">On various test cases HTTP request may need to be configured.</p>
+<p sourcefile="guide/httprequest.md" sourcestartlinenumber="6" sourceendlinenumber="6">For example controller tests:</p>
+<pre sourcefile="guide/httprequest.md" sourcestartlinenumber="8" sourceendlinenumber="16"><code class="lang-c#">MyMvc
+    .Controller&lt;MyController&gt;()
+    .WithHttpRequest(request =&gt; request
+        .WithHeader(&quot;MyHeader&quot;, &quot;MyHeaderValue&quot;))
+    .Calling(c =&gt; c.MyAction())
+    .ShouldReturn()
+    .View();
+</code></pre><p sourcefile="guide/httprequest.md" sourcestartlinenumber="18" sourceendlinenumber="18">Or route tests:</p>
+<pre sourcefile="guide/httprequest.md" sourcestartlinenumber="20" sourceendlinenumber="32"><code class="lang-c#">MyMvc
+    .Routes()
+    .ShouldMap(request =&gt; request
+        .WithLocation(&quot;/My/Action/1&quot;)
+        .WithMethod(HttpMethod.Post)
+        .WithJsonBody(@&quot;{&quot;&quot;First&quot;&quot;:2,&quot;&quot;Second&quot;&quot;:&quot;&quot;MyValue&quot;&quot;}&quot;))
+    .To&lt;MyController&gt;(c =&gt; c.Action(1, new RequestModel
+    {
+        First = 2,
+        Second = &quot;MyValue&quot;
+    }));
+</code></pre><h2 id="providing-httprequest" sourcefile="guide/httprequest.md" sourcestartlinenumber="34" sourceendlinenumber="34">Providing HttpRequest</h2>
+<hr>
+<p sourcefile="guide/httprequest.md" sourcestartlinenumber="37" sourceendlinenumber="37">You can provide HttpRequest object directly:</p>
+<pre sourcefile="guide/httprequest.md" sourcestartlinenumber="39" sourceendlinenumber="46"><code class="lang-c#">MyMvc
+    .Controller&lt;MyController&gt;()
+    .WithHttpRequest(myHttpRequestObject) // object of HttpRequest type
+    .Calling(c =&gt; c.MyAction())
+    .ShouldReturn()
+    .View();
+</code></pre><h2 id="setting-body" sourcefile="guide/httprequest.md" sourcestartlinenumber="48" sourceendlinenumber="48">Setting Body</h2>
+<hr>
+<h3 id="body-as-stream" sourcefile="guide/httprequest.md" sourcestartlinenumber="51" sourceendlinenumber="51">Body As Stream</h3>
+<pre sourcefile="guide/httprequest.md" sourcestartlinenumber="53" sourceendlinenumber="61"><code class="lang-c#">MyMvc
+    .Controller&lt;MyController&gt;()
+    .WithHttpRequest(request =&gt; request
+        .WithBody(myStream))
+    .Calling(c =&gt; c.MyAction())
+    .ShouldReturn()
+    .View();
+</code></pre><h3 id="body-as-object-with-content-type" sourcefile="guide/httprequest.md" sourcestartlinenumber="63" sourceendlinenumber="63">Body As Object With Content Type</h3>
+<p sourcefile="guide/httprequest.md" sourcestartlinenumber="65" sourceendlinenumber="65">Uses registered MVC formatters to convert the provided object as stream with the provided content type. Default encoding is UTF8.</p>
+<pre sourcefile="guide/httprequest.md" sourcestartlinenumber="67" sourceendlinenumber="75"><code class="lang-c#">MyMvc
+    .Controller&lt;MyController&gt;()
+    .WithHttpRequest(request =&gt; request
+        .WithBody(myBodyObject, &quot;application/json&quot;))
+    .Calling(c =&gt; c.MyAction())
+    .ShouldReturn()
+    .View();
+</code></pre><blockquote sourcefile="guide/httprequest.md" sourcestartlinenumber="77" sourceendlinenumber="77"><p sourcefile="guide/httprequest.md" sourcestartlinenumber="77" sourceendlinenumber="77">NOTE</p>
+<p sourcefile="guide/httprequest.md" sourcestartlinenumber="79" sourceendlinenumber="79">Instead of &quot;application/json&quot; string you may use <a href="/api/MyTested.Mvc.ContentType.html#MyTested_Mvc_ContentType" sourcefile="guide/httprequest.md" sourcestartlinenumber="79" sourceendlinenumber="79">ContentType.ApplicationJson</a></p>
+</blockquote>
+<h3 id="body-as-object-with-content-type-and-encoding" sourcefile="guide/httprequest.md" sourcestartlinenumber="81" sourceendlinenumber="81">Body As Object With Content Type And Encoding</h3>
+<p sourcefile="guide/httprequest.md" sourcestartlinenumber="83" sourceendlinenumber="83">Uses registered MVC formatters to convert the provided object to stream with the provided content type and encoding.</p>
+<pre sourcefile="guide/httprequest.md" sourcestartlinenumber="85" sourceendlinenumber="93"><code class="lang-c#">MyMvc
+    .Controller&lt;MyController&gt;()
+    .WithHttpRequest(request =&gt; request
+        .WithBody(myBodyObject, ContentType.ApplicationJson, Encoding.ASCII))
+    .Calling(c =&gt; c.MyAction())
+    .ShouldReturn()
+    .View();
+</code></pre><h3 id="body-as-string" sourcefile="guide/httprequest.md" sourcestartlinenumber="95" sourceendlinenumber="95">Body As String</h3>
+<p sourcefile="guide/httprequest.md" sourcestartlinenumber="97" sourceendlinenumber="97">Sets the body as string. If no content type is set on the request, &quot;text/plain&quot; will be used. Default encoding is UTF8.</p>
+<p sourcefile="guide/httprequest.md" sourcestartlinenumber="99" sourceendlinenumber="99">Default content type:</p>
+<pre sourcefile="guide/httprequest.md" sourcestartlinenumber="101" sourceendlinenumber="109"><code class="lang-c#">MyMvc
+    .Controller&lt;MyController&gt;()
+    .WithHttpRequest(request =&gt; request
+        .WithStringBody(&quot;My Body&quot;)) // uses &quot;text/plain&quot; content type
+    .Calling(c =&gt; c.MyAction())
+    .ShouldReturn()
+    .View();
+</code></pre><p sourcefile="guide/httprequest.md" sourcestartlinenumber="111" sourceendlinenumber="111">Custom content type:</p>
+<pre sourcefile="guide/httprequest.md" sourcestartlinenumber="113" sourceendlinenumber="122"><code class="lang-c#">MyMvc
+    .Controller&lt;MyController&gt;()
+    .WithHttpRequest(request =&gt; request
+        .WithContentType(&quot;text/css&quot;)
+        .WithStringBody(&quot;My Body&quot;)) // uses &quot;text/css&quot; content type
+    .Calling(c =&gt; c.MyAction())
+    .ShouldReturn()
+    .View();
+</code></pre><h3 id="body-as-string-with-encoding" sourcefile="guide/httprequest.md" sourcestartlinenumber="124" sourceendlinenumber="124">Body As String With Encoding</h3>
+<p sourcefile="guide/httprequest.md" sourcestartlinenumber="126" sourceendlinenumber="126">Sets the body as string with the provided encoding. If no content type is set on the request, &quot;text/plain&quot; will be used.</p>
+<p sourcefile="guide/httprequest.md" sourcestartlinenumber="128" sourceendlinenumber="128">Default content type:</p>
+<pre sourcefile="guide/httprequest.md" sourcestartlinenumber="130" sourceendlinenumber="138"><code class="lang-c#">MyMvc
+    .Controller&lt;MyController&gt;()
+    .WithHttpRequest(request =&gt; request
+        .WithStringBody(&quot;My Body&quot;, Encoding.ASCII)) // uses &quot;text/plain&quot; content type
+    .Calling(c =&gt; c.MyAction())
+    .ShouldReturn()
+    .View();
+</code></pre><p sourcefile="guide/httprequest.md" sourcestartlinenumber="140" sourceendlinenumber="140">Custom content type:</p>
+<pre sourcefile="guide/httprequest.md" sourcestartlinenumber="142" sourceendlinenumber="151"><code class="lang-c#">MyMvc
+    .Controller&lt;MyController&gt;()
+    .WithHttpRequest(request =&gt; request
+        .WithContentType(&quot;text/css&quot;)
+        .WithStringBody(&quot;My Body&quot;, Encoding.ASCII)) // uses &quot;text/css&quot; content type
+    .Calling(c =&gt; c.MyAction())
+    .ShouldReturn()
+    .View();
+</code></pre><h3 id="body-as-json-string" sourcefile="guide/httprequest.md" sourcestartlinenumber="153" sourceendlinenumber="153">Body As JSON String</h3>
+<p sourcefile="guide/httprequest.md" sourcestartlinenumber="155" sourceendlinenumber="155">Sets the body as JSON string. Sets the content type to &quot;application/json&quot;. Uses default encoding UTF8.</p>
+<pre sourcefile="guide/httprequest.md" sourcestartlinenumber="157" sourceendlinenumber="165"><code class="lang-c#">MyMvc
+    .Controller&lt;MyController&gt;()
+    .WithHttpRequest(request =&gt; request
+        .WithJsonBody(@&quot;{&quot;&quot;First&quot;&quot;:2,&quot;&quot;Second&quot;&quot;:&quot;&quot;MyValue&quot;&quot;}&quot;))
+    .Calling(c =&gt; c.MyAction())
+    .ShouldReturn()
+    .View();
+</code></pre><h3 id="body-as-json-string-with-encoding" sourcefile="guide/httprequest.md" sourcestartlinenumber="167" sourceendlinenumber="167">Body As JSON String With Encoding</h3>
+<p sourcefile="guide/httprequest.md" sourcestartlinenumber="169" sourceendlinenumber="169">Sets the body as JSON string with the provided encoding. Sets the content type to &quot;application/json&quot;.</p>
+<pre sourcefile="guide/httprequest.md" sourcestartlinenumber="171" sourceendlinenumber="179"><code class="lang-c#">MyMvc
+    .Controller&lt;MyController&gt;()
+    .WithHttpRequest(request =&gt; request
+        .WithJsonBody(@&quot;{&quot;&quot;First&quot;&quot;:2,&quot;&quot;Second&quot;&quot;:&quot;&quot;MyValue&quot;&quot;}&quot;, Encoding.ASCII))
+    .Calling(c =&gt; c.MyAction())
+    .ShouldReturn()
+    .View();
+</code></pre><h3 id="body-as-json-object" sourcefile="guide/httprequest.md" sourcestartlinenumber="181" sourceendlinenumber="181">Body As JSON Object</h3>
+<p sourcefile="guide/httprequest.md" sourcestartlinenumber="183" sourceendlinenumber="183">Sets the body as JSON object and uses MVC formatters to convert it to stream. Sets the content type to &quot;application/json&quot;. Uses default encoding UTF8.</p>
+<pre sourcefile="guide/httprequest.md" sourcestartlinenumber="185" sourceendlinenumber="193"><code class="lang-c#">MyMvc
+    .Controller&lt;MyController&gt;()
+    .WithHttpRequest(request =&gt; request
+        .WithJsonBody(new { First = 1, Second = &quot;MyValue&quot; }))
+    .Calling(c =&gt; c.MyAction())
+    .ShouldReturn()
+    .View();
+</code></pre><h3 id="body-as-json-object-with-encoding" sourcefile="guide/httprequest.md" sourcestartlinenumber="195" sourceendlinenumber="195">Body As JSON Object With Encoding</h3>
+<p sourcefile="guide/httprequest.md" sourcestartlinenumber="197" sourceendlinenumber="197">Sets the body as JSON object and uses MVC formatters to convert it to stream with the provided encoding. Sets the content type to &quot;application/json&quot;.</p>
+<pre sourcefile="guide/httprequest.md" sourcestartlinenumber="199" sourceendlinenumber="207"><code class="lang-c#">MyMvc
+    .Controller&lt;MyController&gt;()
+    .WithHttpRequest(request =&gt; request
+        .WithJsonBody(new { First = 1, Second = &quot;MyValue&quot; }, Encoding.ASCII))
+    .Calling(c =&gt; c.MyAction())
+    .ShouldReturn()
+    .View();
+</code></pre><h2 id="setting-content-length" sourcefile="guide/httprequest.md" sourcestartlinenumber="209" sourceendlinenumber="209">Setting Content Length</h2>
+<hr>
+<p sourcefile="guide/httprequest.md" sourcestartlinenumber="212" sourceendlinenumber="212">Sets the content length of the HTTP request.</p>
+<pre sourcefile="guide/httprequest.md" sourcestartlinenumber="214" sourceendlinenumber="222"><code class="lang-c#">MyMvc
+    .Controller&lt;MyController&gt;()
+    .WithHttpRequest(request =&gt; request
+        .WithContentLength(100))
+    .Calling(c =&gt; c.MyAction())
+    .ShouldReturn()
+    .View();
+</code></pre><h2 id="setting-content-type" sourcefile="guide/httprequest.md" sourcestartlinenumber="224" sourceendlinenumber="224">Setting Content Type</h2>
+<hr>
+<p sourcefile="guide/httprequest.md" sourcestartlinenumber="227" sourceendlinenumber="227">Sets the content type of the HTTP request.</p>
+<pre sourcefile="guide/httprequest.md" sourcestartlinenumber="229" sourceendlinenumber="237"><code class="lang-c#">MyMvc
+    .Controller&lt;MyController&gt;()
+    .WithHttpRequest(request =&gt; request
+        .WithContentType(&quot;application/xml&quot;))
+    .Calling(c =&gt; c.MyAction())
+    .ShouldReturn()
+    .View();
+</code></pre><blockquote sourcefile="guide/httprequest.md" sourcestartlinenumber="239" sourceendlinenumber="239"><p sourcefile="guide/httprequest.md" sourcestartlinenumber="239" sourceendlinenumber="239">NOTE</p>
+<p sourcefile="guide/httprequest.md" sourcestartlinenumber="241" sourceendlinenumber="241">Instead of setting the content type as string you may use the <a href="/api/MyTested.Mvc.ContentType.html" sourcefile="guide/httprequest.md" sourcestartlinenumber="241" sourceendlinenumber="241">ContentType</a> class</p>
+</blockquote>
+<h2 id="setting-cookies" sourcefile="guide/httprequest.md" sourcestartlinenumber="243" sourceendlinenumber="243">Setting Cookies</h2>
+<hr>
+<h3 id="setting-single-cookie" sourcefile="guide/httprequest.md" sourcestartlinenumber="246" sourceendlinenumber="246">Setting Single Cookie</h3>
+<p sourcefile="guide/httprequest.md" sourcestartlinenumber="248" sourceendlinenumber="248">Setting single cookie by name and value</p>
+<pre sourcefile="guide/httprequest.md" sourcestartlinenumber="250" sourceendlinenumber="258"><code class="lang-c#">MyMvc
+    .Controller&lt;MyController&gt;()
+    .WithHttpRequest(request =&gt; request
+        .WithCookie(&quot;MyCookieName&quot;, &quot;MyCookieValue&quot;))
+    .Calling(c =&gt; c.MyAction())
+    .ShouldReturn()
+    .View();
+</code></pre><p sourcefile="guide/httprequest.md" sourcestartlinenumber="260" sourceendlinenumber="260">Or setting multiple cookies with more than one call</p>
+<pre sourcefile="guide/httprequest.md" sourcestartlinenumber="262" sourceendlinenumber="272"><code class="lang-c#">MyMvc
+    .Controller&lt;MyController&gt;()
+    .WithHttpRequest(request =&gt; request
+        .WithCookie(&quot;MyCookieName&quot;, &quot;MyCookieValue&quot;)
+        .WithCookie(&quot;AnotherCookieName&quot;, &quot;AnotherCookieValue&quot;)
+        .WithCookie(&quot;ThirdCookieName&quot;, &quot;ThirdCookieValue&quot;))
+    .Calling(c =&gt; c.MyAction())
+    .ShouldReturn()
+    .View();
+</code></pre><h3 id="setting-multiple-cookies-with-dictionary" sourcefile="guide/httprequest.md" sourcestartlinenumber="274" sourceendlinenumber="274">Setting Multiple Cookies With Dictionary</h3>
+<pre sourcefile="guide/httprequest.md" sourcestartlinenumber="276" sourceendlinenumber="288"><code class="lang-c#">MyMvc
+    .Controller&lt;MyController&gt;()
+    .WithHttpRequest(request =&gt; request
+        .WithCookies(new Dictionary&lt;string, string&gt;
+        {
+            [&quot;MyCookieName&quot;] = &quot;MyCookieValue&quot;,
+            [&quot;AnotherCookieName&quot;] = &quot;AnotherCookieValue&quot;
+        }))
+    .Calling(c =&gt; c.MyAction())
+    .ShouldReturn()
+    .View();
+</code></pre><h3 id="setting-multiple-cookies-with-anonymous-object" sourcefile="guide/httprequest.md" sourcestartlinenumber="290" sourceendlinenumber="290">Setting Multiple Cookies With Anonymous Object</h3>
+<p sourcefile="guide/httprequest.md" sourcestartlinenumber="292" sourceendlinenumber="292">Underscores (_) in property names will be replaced with dashes (-).</p>
+<pre sourcefile="guide/httprequest.md" sourcestartlinenumber="294" sourceendlinenumber="306"><code class="lang-c#">MyMvc
+    .Controller&lt;MyController&gt;()
+    .WithHttpRequest(request =&gt; request
+        .WithCookies(new 
+        {
+            My_Cookie_Name = &quot;MyCookieValue&quot;, // &quot;My-Cookie-Name&quot;
+            Another_Cookie_Name = &quot;AnotherCookieValue&quot; // &quot;Another-Cookie-Name&quot;
+        }))
+    .Calling(c =&gt; c.MyAction())
+    .ShouldReturn()
+    .View();
+</code></pre><h3 id="setting-multiple-cookies-with-irequestcookiecollection" sourcefile="guide/httprequest.md" sourcestartlinenumber="308" sourceendlinenumber="308">Setting Multiple Cookies With IRequestCookieCollection</h3>
+<pre sourcefile="guide/httprequest.md" sourcestartlinenumber="310" sourceendlinenumber="318"><code class="lang-c#">MyMvc
+    .Controller&lt;MyController&gt;()
+    .WithHttpRequest(request =&gt; request
+        .WithCookies(myRequestCookieCollection)) // object of IRequestCookieCollection type
+    .Calling(c =&gt; c.MyAction())
+    .ShouldReturn()
+    .View();
+</code></pre><h2 id="setting-form-values" sourcefile="guide/httprequest.md" sourcestartlinenumber="320" sourceendlinenumber="320">Setting Form Values</h2>
+<hr>
+<h3 id="setting-form-value" sourcefile="guide/httprequest.md" sourcestartlinenumber="323" sourceendlinenumber="323">Setting Form Value</h3>
+<pre sourcefile="guide/httprequest.md" sourcestartlinenumber="325" sourceendlinenumber="333"><code class="lang-c#">MyMvc
+    .Controller&lt;MyController&gt;()
+    .WithHttpRequest(request =&gt; request
+        .WithFormField(&quot;MyFormFieldName&quot;, &quot;MyFormFieldValue&quot;))
+    .Calling(c =&gt; c.MyAction())
+    .ShouldReturn()
+    .View();
+</code></pre><h3 id="setting-multiple-values-to-a-single-field" sourcefile="guide/httprequest.md" sourcestartlinenumber="335" sourceendlinenumber="335">Setting Multiple Values To A Single Field</h3>
+<p sourcefile="guide/httprequest.md" sourcestartlinenumber="337" sourceendlinenumber="337">By IEnumerable&lt;string&gt;:</p>
+<pre sourcefile="guide/httprequest.md" sourcestartlinenumber="339" sourceendlinenumber="349"><code class="lang-c#">MyMvc
+    .Controller&lt;MyController&gt;()
+    .WithHttpRequest(request =&gt; request
+        .WithFormField(
+            &quot;MyFormFieldName&quot;,
+            new[] { &quot;MyFormFieldValue&quot;, &quot;AnotherFormFieldValue&quot; }))
+    .Calling(c =&gt; c.MyAction())
+    .ShouldReturn()
+    .View();
+</code></pre><p sourcefile="guide/httprequest.md" sourcestartlinenumber="351" sourceendlinenumber="351">By string parameters:</p>
+<pre sourcefile="guide/httprequest.md" sourcestartlinenumber="353" sourceendlinenumber="361"><code class="lang-c#">MyMvc
+    .Controller&lt;MyController&gt;()
+    .WithHttpRequest(request =&gt; request
+        .WithFormField(&quot;MyFormFieldName&quot;, &quot;MyFormFieldValue&quot;, &quot;AnotherFormFieldValue&quot;))
+    .Calling(c =&gt; c.MyAction())
+    .ShouldReturn()
+    .View();
+</code></pre><p sourcefile="guide/httprequest.md" sourcestartlinenumber="363" sourceendlinenumber="363">By StringValues collection:</p>
+<pre sourcefile="guide/httprequest.md" sourcestartlinenumber="365" sourceendlinenumber="375"><code class="lang-c#">MyMvc
+    .Controller&lt;MyController&gt;()
+    .WithHttpRequest(request =&gt; request
+        .WithFormField(
+            &quot;MyFormFieldName&quot;, 
+            new StringValues(&quot;MyFormFieldValue&quot;, &quot;AnotherFormFieldValue&quot;)))
+    .Calling(c =&gt; c.MyAction())
+    .ShouldReturn()
+    .View();
+</code></pre><h3 id="setting-multiple-fields-with-dictionary" sourcefile="guide/httprequest.md" sourcestartlinenumber="377" sourceendlinenumber="377">Setting Multiple Fields With Dictionary</h3>
+<p sourcefile="guide/httprequest.md" sourcestartlinenumber="379" sourceendlinenumber="379">By IDictionary&lt;string, string&gt;:</p>
+<pre sourcefile="guide/httprequest.md" sourcestartlinenumber="381" sourceendlinenumber="393"><code class="lang-c#">MyMvc
+    .Controller&lt;MyController&gt;()
+    .WithHttpRequest(request =&gt; request
+        .WithFormFields(new IDictionary&lt;string, string&gt;
+        {
+            [&quot;MyFormFieldName&quot;] = &quot;MyFormFieldValue&quot;,
+            [&quot;AnotherFormFieldName&quot;] = &quot;AnotherFormFieldValue&quot;
+        }))
+    .Calling(c =&gt; c.MyAction())
+    .ShouldReturn()
+    .View();
+</code></pre><p sourcefile="guide/httprequest.md" sourcestartlinenumber="395" sourceendlinenumber="395">By IDictionary&lt;string, IEnumerable&lt;string&gt;&gt;:</p>
+<pre sourcefile="guide/httprequest.md" sourcestartlinenumber="397" sourceendlinenumber="409"><code class="lang-c#">MyMvc
+    .Controller&lt;MyController&gt;()
+    .WithHttpRequest(request =&gt; request
+        .WithFormFields(new IDictionary&lt;string, IEnumerable&lt;string&gt;&gt;
+        {
+            [&quot;MyFormFieldName&quot;] = new[] { &quot;MyFormFieldValue&quot;, &quot;SecondFormFieldValue&quot; },
+            [&quot;AnotherFormFieldName&quot;] = new[] { &quot;AnotherFormFieldValue&quot; }
+        }))
+    .Calling(c =&gt; c.MyAction())
+    .ShouldReturn()
+    .View();
+</code></pre><p sourcefile="guide/httprequest.md" sourcestartlinenumber="411" sourceendlinenumber="411">By IDictionary&lt;string, StringValues&gt;:</p>
+<pre sourcefile="guide/httprequest.md" sourcestartlinenumber="413" sourceendlinenumber="427"><code class="lang-c#">MyMvc
+    .Controller&lt;MyController&gt;()
+    .WithHttpRequest(request =&gt; request
+        .WithFormFields(new IDictionary&lt;string, StringValues&gt;
+        {
+            [&quot;MyFormFieldName&quot;] = 
+                new StringValues(&quot;MyFormFieldValue&quot;, &quot;SecondFormFieldValue&quot;),
+            [&quot;AnotherFormFieldName&quot;] = 
+                new StringValues(&quot;AnotherFormFieldValue&quot;)
+        }))
+    .Calling(c =&gt; c.MyAction())
+    .ShouldReturn()
+    .View();
+</code></pre><h3 id="setting-multiple-fields-with-anonymous-object" sourcefile="guide/httprequest.md" sourcestartlinenumber="429" sourceendlinenumber="429">Setting Multiple Fields With Anonymous Object</h3>
+<p sourcefile="guide/httprequest.md" sourcestartlinenumber="431" sourceendlinenumber="431">Underscores (_) in property names will be replaced with dashes (-).</p>
+<pre sourcefile="guide/httprequest.md" sourcestartlinenumber="433" sourceendlinenumber="445"><code class="lang-c#">MyMvc
+    .Controller&lt;MyController&gt;()
+    .WithHttpRequest(request =&gt; request
+        .WithFormFields(new 
+        {
+            My_FormField_Name = &quot;MyFormFieldValue&quot;, // &quot;My-FormField-Name&quot;
+            Another_FormField_Name = &quot;AnotherFormFieldValue&quot; // &quot;Another-FormField-Name&quot;
+        }))
+    .Calling(c =&gt; c.MyAction())
+    .ShouldReturn()
+    .View();
+</code></pre><h3 id="setting-form-file-with-iformfile" sourcefile="guide/httprequest.md" sourcestartlinenumber="447" sourceendlinenumber="447">Setting Form File With IFormFile</h3>
+<pre sourcefile="guide/httprequest.md" sourcestartlinenumber="449" sourceendlinenumber="457"><code class="lang-c#">MyMvc
+    .Controller&lt;MyController&gt;()
+    .WithHttpRequest(request =&gt; request
+        .WithFormFile(myFormFile)) // object of IFormFile type
+    .Calling(c =&gt; c.MyAction())
+    .ShouldReturn()
+    .View();
+</code></pre><h3 id="setting-multiple-form-files" sourcefile="guide/httprequest.md" sourcestartlinenumber="459" sourceendlinenumber="459">Setting Multiple Form Files</h3>
+<p sourcefile="guide/httprequest.md" sourcestartlinenumber="461" sourceendlinenumber="461">By IEnumerable&lt;IFormFile&gt;:</p>
+<pre sourcefile="guide/httprequest.md" sourcestartlinenumber="463" sourceendlinenumber="471"><code class="lang-c#">MyMvc
+    .Controller&lt;MyController&gt;()
+    .WithHttpRequest(request =&gt; request
+        .WithFormFiles(myFormFiles)) // IEnumerable of IFormFile
+    .Calling(c =&gt; c.MyAction())
+    .ShouldReturn()
+    .View();
+</code></pre><p sourcefile="guide/httprequest.md" sourcestartlinenumber="473" sourceendlinenumber="473">By IFormFile parameters:</p>
+<pre sourcefile="guide/httprequest.md" sourcestartlinenumber="475" sourceendlinenumber="483"><code class="lang-c#">MyMvc
+    .Controller&lt;MyController&gt;()
+    .WithHttpRequest(request =&gt; request
+        .WithFormFiles(myFormFile, anotherFormFile)) // Objects of IFormFile type
+    .Calling(c =&gt; c.MyAction())
+    .ShouldReturn()
+    .View();
+</code></pre><h3 id="setting-form-by-iformcollection" sourcefile="guide/httprequest.md" sourcestartlinenumber="485" sourceendlinenumber="485">Setting Form By IFormCollection</h3>
+<pre sourcefile="guide/httprequest.md" sourcestartlinenumber="487" sourceendlinenumber="495"><code class="lang-c#">MyMvc
+    .Controller&lt;MyController&gt;()
+    .WithHttpRequest(request =&gt; request
+        .WithForm(myForm)) // Objects of IFormCollection type
+    .Calling(c =&gt; c.MyAction())
+    .ShouldReturn()
+    .View();
+</code></pre><h2 id="setting-headers" sourcefile="guide/httprequest.md" sourcestartlinenumber="497" sourceendlinenumber="497">Setting Headers</h2>
+<hr>
+
+            </article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/documentation/docs/_docfx/guide/httprequest.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © 2015-2016 <strong><a href="http://mytestedasp.net">MyTestedASP.NET</a></strong>. All Rights Reserved. Generated by <strong><a href="http://dotnet.github.io/docfx/">DocFX</a></strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

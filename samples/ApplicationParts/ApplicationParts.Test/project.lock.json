@@ -3,18 +3,19 @@
   "version": 2,
   "targets": {
     ".NETCoreApp,Version=v1.0": {
-      "dotnet-test-xunit/2.2.0-preview2-build1029": {
+      "dotnet-test-nunit/3.4.0-beta-2": {
         "type": "package",
         "dependencies": {
+          "Microsoft.Extensions.DependencyModel": "1.0.0",
           "Microsoft.Extensions.Testing.Abstractions": "1.0.0-preview2-003121",
           "Microsoft.NETCore.App": "1.0.0",
-          "xunit.runner.reporters": "2.2.0-beta2-build3300"
+          "NUnit.Portable.Agent": "3.4.0-beta-2"
         },
         "compile": {
-          "lib/netcoreapp1.0/dotnet-test-xunit.dll": {}
+          "lib/netcoreapp1.0/dotnet-test-nunit.dll": {}
         },
         "runtime": {
-          "lib/netcoreapp1.0/dotnet-test-xunit.dll": {}
+          "lib/netcoreapp1.0/dotnet-test-nunit.dll": {}
         }
       },
       "Libuv/1.9.0": {
@@ -795,23 +796,6 @@
         },
         "runtime": {
           "lib/netstandard1.3/Microsoft.AspNetCore.Server.Kestrel.dll": {}
-        }
-      },
-      "Microsoft.AspNetCore.Session/1.0.0": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.AspNetCore.DataProtection": "1.0.0",
-          "Microsoft.AspNetCore.Http.Abstractions": "1.0.0",
-          "Microsoft.Extensions.Caching.Abstractions": "1.0.0",
-          "Microsoft.Extensions.Logging.Abstractions": "1.0.0",
-          "Microsoft.Extensions.Options": "1.0.0",
-          "System.Security.Cryptography.Algorithms": "4.2.0"
-        },
-        "compile": {
-          "lib/netstandard1.3/Microsoft.AspNetCore.Session.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard1.3/Microsoft.AspNetCore.Session.dll": {}
         }
       },
       "Microsoft.AspNetCore.StaticFiles/1.0.0": {
@@ -1945,6 +1929,39 @@
         },
         "runtime": {
           "lib/netstandard1.0/NuGet.Versioning.dll": {}
+        }
+      },
+      "NUnit/3.4.1": {
+        "type": "package",
+        "compile": {
+          "lib/portable-net45+win8+wp8+wpa81+Xamarin.Mac+MonoAndroid10+MonoTouch10+Xamarin.iOS10/nunit.framework.dll": {}
+        },
+        "runtime": {
+          "lib/portable-net45+win8+wp8+wpa81+Xamarin.Mac+MonoAndroid10+MonoTouch10+Xamarin.iOS10/nunit.framework.dll": {}
+        }
+      },
+      "NUnit.Portable.Agent/3.4.0-beta-2": {
+        "type": "package",
+        "dependencies": {
+          "System.Globalization": "4.0.11",
+          "System.IO.FileSystem": "4.0.1",
+          "System.Linq": "4.1.0",
+          "System.ObjectModel": "4.0.12",
+          "System.Reflection": "4.1.0",
+          "System.Reflection.Extensions": "4.0.1",
+          "System.Reflection.TypeExtensions": "4.1.0",
+          "System.Runtime": "4.1.0",
+          "System.Runtime.Extensions": "4.1.0",
+          "System.Runtime.Serialization.Primitives": "4.1.1",
+          "System.Text.RegularExpressions": "4.1.0",
+          "System.Threading": "4.0.11",
+          "System.Xml.XDocument": "4.0.11"
+        },
+        "compile": {
+          "lib/netstandard1.3/NUnit.Portable.Agent.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/NUnit.Portable.Agent.dll": {}
         }
       },
       "Remotion.Linq/2.1.1": {
@@ -4066,100 +4083,6 @@
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
         }
       },
-      "xunit/2.2.0-beta2-build3300": {
-        "type": "package",
-        "dependencies": {
-          "xunit.assert": "[2.2.0-beta2-build3300]",
-          "xunit.core": "[2.2.0-beta2-build3300]"
-        }
-      },
-      "xunit.abstractions/2.0.1-rc2": {
-        "type": "package",
-        "dependencies": {
-          "System.Collections": "4.0.11-rc2-24027",
-          "System.Diagnostics.Tools": "4.0.1-rc2-24027",
-          "System.Reflection": "4.1.0-rc2-24027",
-          "System.Runtime": "4.1.0-rc2-24027"
-        },
-        "compile": {
-          "lib/netstandard1.0/xunit.abstractions.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard1.0/xunit.abstractions.dll": {}
-        }
-      },
-      "xunit.assert/2.2.0-beta2-build3300": {
-        "type": "package",
-        "dependencies": {
-          "NETStandard.Library": "1.6.0"
-        },
-        "compile": {
-          "lib/netstandard1.0/xunit.assert.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard1.0/xunit.assert.dll": {}
-        }
-      },
-      "xunit.core/2.2.0-beta2-build3300": {
-        "type": "package",
-        "dependencies": {
-          "xunit.extensibility.core": "[2.2.0-beta2-build3300]",
-          "xunit.extensibility.execution": "[2.2.0-beta2-build3300]"
-        }
-      },
-      "xunit.extensibility.core/2.2.0-beta2-build3300": {
-        "type": "package",
-        "dependencies": {
-          "NETStandard.Library": "1.6.0",
-          "xunit.abstractions": "2.0.1-rc2"
-        },
-        "compile": {
-          "lib/netstandard1.0/xunit.core.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard1.0/xunit.core.dll": {}
-        }
-      },
-      "xunit.extensibility.execution/2.2.0-beta2-build3300": {
-        "type": "package",
-        "dependencies": {
-          "NETStandard.Library": "1.6.0",
-          "xunit.extensibility.core": "[2.2.0-beta2-build3300]"
-        },
-        "compile": {
-          "lib/netstandard1.0/xunit.execution.dotnet.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard1.0/xunit.execution.dotnet.dll": {}
-        }
-      },
-      "xunit.runner.reporters/2.2.0-beta2-build3300": {
-        "type": "package",
-        "dependencies": {
-          "NETStandard.Library": "1.6.0",
-          "Newtonsoft.Json": "9.0.1",
-          "xunit.runner.utility": "[2.2.0-beta2-build3300]"
-        },
-        "compile": {
-          "lib/netstandard1.1/xunit.runner.reporters.dotnet.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard1.1/xunit.runner.reporters.dotnet.dll": {}
-        }
-      },
-      "xunit.runner.utility/2.2.0-beta2-build3300": {
-        "type": "package",
-        "dependencies": {
-          "NETStandard.Library": "1.6.0",
-          "xunit.abstractions": "2.0.1-rc2"
-        },
-        "compile": {
-          "lib/netstandard1.1/xunit.runner.utility.dotnet.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard1.1/xunit.runner.utility.dotnet.dll": {}
-        }
-      },
       "ApplicationParts.Controllers/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.6",
@@ -4235,83 +4158,62 @@
           "netcoreapp1.0/ApplicationParts.Web.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc/1.0.0-preview-final": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v1.6",
-        "dependencies": {
-          "Microsoft.AspNetCore.Mvc": "1.0.0",
-          "MyTested.AspNetCore.Mvc.Caching": "1.0.0",
-          "MyTested.AspNetCore.Mvc.Core": "1.0.0",
-          "MyTested.AspNetCore.Mvc.EntityFrameworkCore": "1.0.0",
-          "MyTested.AspNetCore.Mvc.Options": "1.0.0",
-          "MyTested.AspNetCore.Mvc.Session": "1.0.0",
-          "MyTested.AspNetCore.Mvc.ViewFeatures": "1.0.0"
-        },
-        "compile": {
-          "netstandard1.6/MyTested.AspNetCore.Mvc.dll": {}
-        },
-        "runtime": {
-          "netstandard1.6/MyTested.AspNetCore.Mvc.dll": {}
-        }
-      },
-      "MyTested.AspNetCore.Mvc.Caching/1.0.0-preview-final": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v1.6",
-        "dependencies": {
-          "Microsoft.Extensions.Caching.Memory": "1.0.0",
-          "MyTested.AspNetCore.Mvc.Core": "1.0.0"
-        },
-        "compile": {
-          "netstandard1.6/MyTested.AspNetCore.Mvc.Caching.dll": {}
-        },
-        "runtime": {
-          "netstandard1.6/MyTested.AspNetCore.Mvc.Caching.dll": {}
-        }
-      },
-      "MyTested.AspNetCore.Mvc.Core/1.0.0-preview-final": {
+      "MyTested.AspNetCore.Mvc.Abstractions/1.0.0-preview-final": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.6",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc.Core": "1.0.0",
-          "Microsoft.AspNetCore.Mvc.Formatters.Json": "1.0.0",
           "Microsoft.AspNetCore.TestHost": "1.0.0",
-          "Microsoft.Extensions.Configuration.Binder": "1.0.0",
           "Microsoft.Extensions.Configuration.Json": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Configuration": "1.0.0",
           "MyTested.AspNetCore.Mvc.Licensing": "1.0.0"
         },
         "compile": {
-          "netstandard1.6/MyTested.AspNetCore.Mvc.Core.dll": {}
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Abstractions.dll": {}
         },
         "runtime": {
-          "netstandard1.6/MyTested.AspNetCore.Mvc.Core.dll": {}
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Abstractions.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.DataAnnotations/1.0.0-preview-final": {
+      "MyTested.AspNetCore.Mvc.Configuration/1.0.0-preview-final": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.6",
         "dependencies": {
-          "Microsoft.AspNetCore.Mvc.DataAnnotations": "1.0.0",
-          "MyTested.AspNetCore.Mvc.Core": "1.0.0"
+          "Microsoft.Extensions.Configuration.Binder": "1.0.0",
+          "System.Collections.Concurrent": "4.0.12"
         },
         "compile": {
-          "netstandard1.6/MyTested.AspNetCore.Mvc.DataAnnotations.dll": {}
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Configuration.dll": {}
         },
         "runtime": {
-          "netstandard1.6/MyTested.AspNetCore.Mvc.DataAnnotations.dll": {}
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Configuration.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.EntityFrameworkCore/1.0.0-preview-final": {
+      "MyTested.AspNetCore.Mvc.Controllers/1.0.0-preview-final": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.6",
         "dependencies": {
-          "Microsoft.EntityFrameworkCore.InMemory": "1.0.0",
-          "MyTested.AspNetCore.Mvc.Core": "1.0.0"
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0"
         },
         "compile": {
-          "netstandard1.6/MyTested.AspNetCore.Mvc.EntityFrameworkCore.dll": {}
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Controllers.dll": {}
         },
         "runtime": {
-          "netstandard1.6/MyTested.AspNetCore.Mvc.EntityFrameworkCore.dll": {}
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Controllers.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.Http/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.6",
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc.Formatters.Json": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0"
+        },
+        "compile": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Http.dll": {}
+        },
+        "runtime": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Http.dll": {}
         }
       },
       "MyTested.AspNetCore.Mvc.Licensing/1.0.0-preview-final": {
@@ -4328,64 +4230,2293 @@
           "netstandard1.4/MyTested.AspNetCore.Mvc.Licensing.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.Options/1.0.0-preview-final": {
+      "MyTested.AspNetCore.Mvc.Routing/1.0.0-preview-final": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.6",
         "dependencies": {
-          "Microsoft.Extensions.Options": "1.0.0",
-          "MyTested.AspNetCore.Mvc.Core": "1.0.0"
+          "MyTested.AspNetCore.Mvc.Http": "1.0.0"
         },
         "compile": {
-          "netstandard1.6/MyTested.AspNetCore.Mvc.Options.dll": {}
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Routing.dll": {}
         },
         "runtime": {
-          "netstandard1.6/MyTested.AspNetCore.Mvc.Options.dll": {}
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Routing.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.Session/1.0.0-preview-final": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v1.6",
-        "dependencies": {
-          "Microsoft.AspNetCore.Session": "1.0.0",
-          "MyTested.AspNetCore.Mvc.Core": "1.0.0"
-        },
-        "compile": {
-          "netstandard1.6/MyTested.AspNetCore.Mvc.Session.dll": {}
-        },
-        "runtime": {
-          "netstandard1.6/MyTested.AspNetCore.Mvc.Session.dll": {}
-        }
-      },
-      "MyTested.AspNetCore.Mvc.ViewFeatures/1.0.0-preview-final": {
+      "MyTested.AspNetCore.Mvc.ViewActionResults/1.0.0-preview-final": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.6",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.0.0",
-          "MyTested.AspNetCore.Mvc.DataAnnotations": "1.0.0"
+          "MyTested.AspNetCore.Mvc.Controllers": "1.0.0"
         },
         "compile": {
-          "netstandard1.6/MyTested.AspNetCore.Mvc.ViewFeatures.dll": {}
+          "netstandard1.6/MyTested.AspNetCore.Mvc.ViewActionResults.dll": {}
         },
         "runtime": {
-          "netstandard1.6/MyTested.AspNetCore.Mvc.ViewFeatures.dll": {}
+          "netstandard1.6/MyTested.AspNetCore.Mvc.ViewActionResults.dll": {}
+        }
+      }
+    },
+    ".NETFramework,Version=v4.5.1": {
+      "dotnet-test-nunit/3.4.0-beta-2": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.DependencyModel": "1.0.0",
+          "Microsoft.Extensions.Testing.Abstractions": "1.0.0-preview2-003121",
+          "Microsoft.NETCore.Platforms": "1.0.1",
+          "NUnit.Portable.Agent": "3.4.0-beta-2"
+        },
+        "compile": {
+          "lib/net451/dotnet-test-nunit.exe": {}
+        },
+        "runtime": {
+          "lib/net451/dotnet-test-nunit.exe": {}
+        }
+      },
+      "Libuv/1.9.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "1.0.1"
+        },
+        "runtimeTargets": {
+          "runtimes/debian-x64/native/libuv.so": {
+            "assetType": "native",
+            "rid": "debian-x64"
+          },
+          "runtimes/fedora-x64/native/libuv.so": {
+            "assetType": "native",
+            "rid": "fedora-x64"
+          },
+          "runtimes/opensuse-x64/native/libuv.so": {
+            "assetType": "native",
+            "rid": "opensuse-x64"
+          },
+          "runtimes/osx/native/libuv.dylib": {
+            "assetType": "native",
+            "rid": "osx"
+          },
+          "runtimes/rhel-x64/native/libuv.so": {
+            "assetType": "native",
+            "rid": "rhel-x64"
+          },
+          "runtimes/win7-arm/native/libuv.dll": {
+            "assetType": "native",
+            "rid": "win7-arm"
+          },
+          "runtimes/win7-x64/native/libuv.dll": {
+            "assetType": "native",
+            "rid": "win7-x64"
+          },
+          "runtimes/win7-x86/native/libuv.dll": {
+            "assetType": "native",
+            "rid": "win7-x86"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.Antiforgery/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.DataProtection": "1.0.0",
+          "Microsoft.AspNetCore.Http.Abstractions": "1.0.0",
+          "Microsoft.AspNetCore.WebUtilities": "1.0.0",
+          "Microsoft.Extensions.ObjectPool": "1.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Antiforgery.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Antiforgery.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Authentication/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.DataProtection": "1.0.0",
+          "Microsoft.AspNetCore.Http": "1.0.0",
+          "Microsoft.AspNetCore.Http.Extensions": "1.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0",
+          "Microsoft.Extensions.Options": "1.0.0",
+          "Microsoft.Extensions.WebEncoders": "1.0.0"
+        },
+        "frameworkAssemblies": [
+          "System.Net.Http"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Authentication.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Authentication.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Authentication.Cookies/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Authentication": "1.0.0",
+          "Microsoft.Extensions.Options": "1.0.0",
+          "Microsoft.Extensions.WebEncoders": "1.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Authentication.Cookies.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Authentication.Cookies.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Authorization/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0",
+          "Microsoft.Extensions.Options": "1.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Authorization.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Authorization.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Cors/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Http.Extensions": "1.0.0",
+          "Microsoft.Extensions.Configuration.Abstractions": "1.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0",
+          "Microsoft.Extensions.Options": "1.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Cors.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Cors.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Cryptography.Internal/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Cryptography.Internal.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Cryptography.Internal.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Cryptography.KeyDerivation/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Cryptography.Internal": "1.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.DataProtection/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Cryptography.Internal": "1.0.0",
+          "Microsoft.AspNetCore.DataProtection.Abstractions": "1.0.0",
+          "Microsoft.AspNetCore.Hosting.Abstractions": "1.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0",
+          "Microsoft.Extensions.Options": "1.0.0"
+        },
+        "frameworkAssemblies": [
+          "System.Security",
+          "System.Xml",
+          "System.Xml.Linq"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.DataProtection.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.DataProtection.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.DataProtection.Abstractions/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.DataProtection.Abstractions.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.DataProtection.Abstractions.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Diagnostics/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Diagnostics.Abstractions": "1.0.0",
+          "Microsoft.AspNetCore.Hosting.Abstractions": "1.0.0",
+          "Microsoft.AspNetCore.Http.Extensions": "1.0.0",
+          "Microsoft.AspNetCore.WebUtilities": "1.0.0",
+          "Microsoft.Extensions.FileProviders.Physical": "1.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0",
+          "Microsoft.Extensions.Options": "1.0.0",
+          "System.Diagnostics.DiagnosticSource": "4.0.0",
+          "System.Reflection.Metadata": "1.3.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Diagnostics.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Diagnostics.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Diagnostics.Abstractions/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Resources.ResourceManager": "4.0.1"
+        },
+        "compile": {
+          "lib/netstandard1.0/Microsoft.AspNetCore.Diagnostics.Abstractions.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.0/Microsoft.AspNetCore.Diagnostics.Abstractions.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Http.Abstractions": "1.0.0",
+          "Microsoft.EntityFrameworkCore.Relational": "1.0.0"
+        },
+        "frameworkAssemblies": [
+          "System.Configuration",
+          "System.IO"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Hosting/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Hosting.Abstractions": "1.0.0",
+          "Microsoft.AspNetCore.Hosting.Server.Abstractions": "1.0.0",
+          "Microsoft.AspNetCore.Http": "1.0.0",
+          "Microsoft.AspNetCore.Http.Extensions": "1.0.0",
+          "Microsoft.Extensions.Configuration": "1.0.0",
+          "Microsoft.Extensions.Configuration.EnvironmentVariables": "1.0.0",
+          "Microsoft.Extensions.DependencyInjection": "1.0.0",
+          "Microsoft.Extensions.FileProviders.Physical": "1.0.0",
+          "Microsoft.Extensions.Logging": "1.0.0",
+          "Microsoft.Extensions.Options": "1.0.0",
+          "Microsoft.Extensions.PlatformAbstractions": "1.0.0",
+          "System.Diagnostics.DiagnosticSource": "4.0.0",
+          "System.Reflection.Metadata": "1.3.0",
+          "System.Runtime.InteropServices.RuntimeInformation": "4.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Hosting.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Hosting.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Hosting.Abstractions/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Hosting.Server.Abstractions": "1.0.0",
+          "Microsoft.AspNetCore.Http.Abstractions": "1.0.0",
+          "Microsoft.Extensions.Configuration.Abstractions": "1.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0",
+          "Microsoft.Extensions.FileProviders.Abstractions": "1.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Hosting.Abstractions.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Hosting.Abstractions.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Hosting.Server.Abstractions/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Http.Features": "1.0.0",
+          "Microsoft.Extensions.Configuration.Abstractions": "1.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Hosting.Server.Abstractions.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Hosting.Server.Abstractions.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Html.Abstractions/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections": "4.0.11",
+          "System.Resources.ResourceManager": "4.0.1",
+          "System.Text.Encodings.Web": "4.0.0"
+        },
+        "compile": {
+          "lib/netstandard1.0/Microsoft.AspNetCore.Html.Abstractions.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.0/Microsoft.AspNetCore.Html.Abstractions.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Http/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Http.Abstractions": "1.0.0",
+          "Microsoft.AspNetCore.WebUtilities": "1.0.0",
+          "Microsoft.Extensions.ObjectPool": "1.0.0",
+          "Microsoft.Extensions.Options": "1.0.0",
+          "Microsoft.Net.Http.Headers": "1.0.0",
+          "System.Buffers": "4.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Http.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Http.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Http.Abstractions/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Http.Features": "1.0.0",
+          "System.Text.Encodings.Web": "4.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Http.Abstractions.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Http.Abstractions.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Http.Extensions/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Http.Abstractions": "1.0.0",
+          "Microsoft.Extensions.FileProviders.Abstractions": "1.0.0",
+          "Microsoft.Net.Http.Headers": "1.0.0",
+          "System.Buffers": "4.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Http.Extensions.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Http.Extensions.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Http.Features/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Primitives": "1.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Http.Features.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Http.Features.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.HttpOverrides/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Http.Extensions": "1.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0",
+          "Microsoft.Extensions.Options": "1.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.HttpOverrides.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.HttpOverrides.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Identity/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Authentication.Cookies": "1.0.0",
+          "Microsoft.AspNetCore.Cryptography.KeyDerivation": "1.0.0",
+          "Microsoft.AspNetCore.Hosting.Abstractions": "1.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Identity.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Identity.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Identity.EntityFrameworkCore/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Identity": "1.0.0",
+          "Microsoft.EntityFrameworkCore.Relational": "1.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.JsonPatch/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CSharp": "4.0.1",
+          "Newtonsoft.Json": "9.0.1",
+          "System.Collections.Concurrent": "4.0.12",
+          "System.ComponentModel.TypeConverter": "4.1.0",
+          "System.Diagnostics.Debug": "4.0.11",
+          "System.Globalization": "4.0.11",
+          "System.Linq": "4.1.0",
+          "System.Reflection.Extensions": "4.0.1",
+          "System.Resources.ResourceManager": "4.0.1",
+          "System.Runtime.Extensions": "4.1.0",
+          "System.Runtime.Serialization.Primitives": "4.1.1",
+          "System.Text.Encoding.Extensions": "4.0.11"
+        },
+        "compile": {
+          "lib/netstandard1.1/Microsoft.AspNetCore.JsonPatch.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.1/Microsoft.AspNetCore.JsonPatch.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Localization/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Http.Extensions": "1.0.0",
+          "Microsoft.Extensions.Globalization.CultureInfoCache": "1.0.0",
+          "Microsoft.Extensions.Localization.Abstractions": "1.0.0",
+          "Microsoft.Extensions.Options": "1.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Localization.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Localization.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Mvc/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc.ApiExplorer": "1.0.0",
+          "Microsoft.AspNetCore.Mvc.Cors": "1.0.0",
+          "Microsoft.AspNetCore.Mvc.DataAnnotations": "1.0.0",
+          "Microsoft.AspNetCore.Mvc.Formatters.Json": "1.0.0",
+          "Microsoft.AspNetCore.Mvc.Localization": "1.0.0",
+          "Microsoft.AspNetCore.Mvc.Razor": "1.0.0",
+          "Microsoft.AspNetCore.Mvc.TagHelpers": "1.0.0",
+          "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.0.0",
+          "Microsoft.Extensions.Caching.Memory": "1.0.0",
+          "Microsoft.Extensions.DependencyInjection": "1.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Mvc.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Mvc.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Mvc.Abstractions/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Routing.Abstractions": "1.0.0",
+          "Microsoft.Net.Http.Headers": "1.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Mvc.Abstractions.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Mvc.Abstractions.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Mvc.ApiExplorer/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc.Core": "1.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Mvc.ApiExplorer.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Mvc.ApiExplorer.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Mvc.Core/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Authorization": "1.0.0",
+          "Microsoft.AspNetCore.Hosting.Abstractions": "1.0.0",
+          "Microsoft.AspNetCore.Http": "1.0.0",
+          "Microsoft.AspNetCore.Mvc.Abstractions": "1.0.0",
+          "Microsoft.AspNetCore.Routing": "1.0.0",
+          "Microsoft.Extensions.DependencyModel": "1.0.0",
+          "Microsoft.Extensions.FileProviders.Abstractions": "1.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0",
+          "Microsoft.Extensions.PlatformAbstractions": "1.0.0",
+          "System.Buffers": "4.0.0",
+          "System.Diagnostics.DiagnosticSource": "4.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Mvc.Core.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Mvc.Core.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Mvc.Cors/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Cors": "1.0.0",
+          "Microsoft.AspNetCore.Mvc.Core": "1.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Mvc.Cors.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Mvc.Cors.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Mvc.DataAnnotations/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc.Core": "1.0.0",
+          "Microsoft.Extensions.Localization": "1.0.0"
+        },
+        "frameworkAssemblies": [
+          "System.ComponentModel.DataAnnotations"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Mvc.DataAnnotations.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Mvc.DataAnnotations.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Mvc.Formatters.Json/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.JsonPatch": "1.0.0",
+          "Microsoft.AspNetCore.Mvc.Core": "1.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Mvc.Formatters.Json.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Mvc.Formatters.Json.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Mvc.Localization/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Localization": "1.0.0",
+          "Microsoft.AspNetCore.Mvc.Razor": "1.0.0",
+          "Microsoft.Extensions.DependencyInjection": "1.0.0",
+          "Microsoft.Extensions.Localization": "1.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Mvc.Localization.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Mvc.Localization.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Mvc.Razor/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc.Razor.Host": "1.0.0",
+          "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.0.0",
+          "Microsoft.CodeAnalysis.CSharp": "1.3.0",
+          "Microsoft.Extensions.FileProviders.Composite": "1.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Mvc.Razor.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Mvc.Razor.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Mvc.Razor.Host/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Razor.Runtime": "1.0.0",
+          "Microsoft.Extensions.Caching.Memory": "1.0.0",
+          "Microsoft.Extensions.FileProviders.Physical": "1.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Mvc.Razor.Host.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Mvc.Razor.Host.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Mvc.TagHelpers/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc.Razor": "1.0.0",
+          "Microsoft.Extensions.Caching.Memory": "1.0.0",
+          "Microsoft.Extensions.FileSystemGlobbing": "1.0.0",
+          "Microsoft.Extensions.Primitives": "1.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Mvc.TagHelpers.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Mvc.TagHelpers.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Mvc.ViewFeatures/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Antiforgery": "1.0.0",
+          "Microsoft.AspNetCore.Diagnostics.Abstractions": "1.0.0",
+          "Microsoft.AspNetCore.Html.Abstractions": "1.0.0",
+          "Microsoft.AspNetCore.Mvc.Core": "1.0.0",
+          "Microsoft.AspNetCore.Mvc.DataAnnotations": "1.0.0",
+          "Microsoft.AspNetCore.Mvc.Formatters.Json": "1.0.0",
+          "Microsoft.Extensions.WebEncoders": "1.0.0",
+          "Newtonsoft.Json": "9.0.1",
+          "System.Buffers": "4.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Mvc.ViewFeatures.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Mvc.ViewFeatures.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Razor/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Razor.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Razor.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Razor.Runtime/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Html.Abstractions": "1.0.0",
+          "Microsoft.AspNetCore.Razor": "1.0.0"
+        },
+        "frameworkAssemblies": [
+          "System.Xml",
+          "System.Xml.Linq"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Razor.Runtime.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Razor.Runtime.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Routing/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Http.Extensions": "1.0.0",
+          "Microsoft.AspNetCore.Routing.Abstractions": "1.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0",
+          "Microsoft.Extensions.ObjectPool": "1.0.0",
+          "Microsoft.Extensions.Options": "1.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Routing.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Routing.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Routing.Abstractions/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Http.Abstractions": "1.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Routing.Abstractions.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Routing.Abstractions.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Server.IISIntegration/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Hosting.Abstractions": "1.0.0",
+          "Microsoft.AspNetCore.Http": "1.0.0",
+          "Microsoft.AspNetCore.Http.Extensions": "1.0.0",
+          "Microsoft.AspNetCore.HttpOverrides": "1.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0",
+          "Microsoft.Extensions.Options": "1.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Server.IISIntegration.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Server.IISIntegration.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Server.Kestrel/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Libuv": "1.9.0",
+          "Microsoft.AspNetCore.Hosting": "1.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0",
+          "System.Buffers": "4.0.0",
+          "System.Numerics.Vectors": "4.1.1",
+          "System.Runtime.InteropServices.RuntimeInformation": "4.0.0",
+          "System.Threading.Tasks.Extensions": "4.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.Server.Kestrel.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.Server.Kestrel.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.StaticFiles/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Hosting.Abstractions": "1.0.0",
+          "Microsoft.AspNetCore.Http.Extensions": "1.0.0",
+          "Microsoft.Extensions.FileProviders.Abstractions": "1.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0",
+          "Microsoft.Extensions.WebEncoders": "1.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.StaticFiles.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.StaticFiles.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.TestHost/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Hosting": "1.0.0"
+        },
+        "frameworkAssemblies": [
+          "System.Net.Http"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.TestHost.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.TestHost.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.WebUtilities/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Primitives": "1.0.0",
+          "System.Buffers": "4.0.0",
+          "System.Text.Encodings.Web": "4.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.AspNetCore.WebUtilities.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNetCore.WebUtilities.dll": {}
+        }
+      },
+      "Microsoft.CodeAnalysis.Analyzers/1.1.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System"
+        ]
+      },
+      "Microsoft.CodeAnalysis.Common/1.3.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CodeAnalysis.Analyzers": "1.1.0",
+          "System.Collections.Immutable": "1.1.37",
+          "System.Reflection.Metadata": "1.2.0"
+        },
+        "compile": {
+          "lib/net45/Microsoft.CodeAnalysis.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Microsoft.CodeAnalysis.dll": {}
+        }
+      },
+      "Microsoft.CodeAnalysis.CSharp/1.3.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CodeAnalysis.Common": "[1.3.0]"
+        },
+        "compile": {
+          "lib/net45/Microsoft.CodeAnalysis.CSharp.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Microsoft.CodeAnalysis.CSharp.dll": {}
+        }
+      },
+      "Microsoft.CSharp/4.0.1": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "Microsoft.CSharp"
+        ],
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "Microsoft.DiaSymReader/1.0.8": {
+        "type": "package",
+        "dependencies": {
+          "System.Diagnostics.Debug": "4.0.11",
+          "System.Runtime": "4.1.0",
+          "System.Runtime.InteropServices": "4.1.0"
+        },
+        "compile": {
+          "lib/net20/Microsoft.DiaSymReader.dll": {}
+        },
+        "runtime": {
+          "lib/net20/Microsoft.DiaSymReader.dll": {}
+        }
+      },
+      "Microsoft.DiaSymReader.Native/1.4.0-rc2": {
+        "type": "package",
+        "runtimeTargets": {
+          "runtimes/win-x64/native/Microsoft.DiaSymReader.Native.amd64.dll": {
+            "assetType": "native",
+            "rid": "win-x64"
+          },
+          "runtimes/win-x86/native/Microsoft.DiaSymReader.Native.x86.dll": {
+            "assetType": "native",
+            "rid": "win-x86"
+          },
+          "runtimes/win/native/Microsoft.DiaSymReader.Native.amd64.dll": {
+            "assetType": "native",
+            "rid": "win"
+          },
+          "runtimes/win/native/Microsoft.DiaSymReader.Native.arm.dll": {
+            "assetType": "native",
+            "rid": "win"
+          },
+          "runtimes/win/native/Microsoft.DiaSymReader.Native.x86.dll": {
+            "assetType": "native",
+            "rid": "win"
+          },
+          "runtimes/win8-arm/native/Microsoft.DiaSymReader.Native.arm.dll": {
+            "assetType": "native",
+            "rid": "win8-arm"
+          }
+        }
+      },
+      "Microsoft.DotNet.InternalAbstractions/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net451/Microsoft.DotNet.InternalAbstractions.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.DotNet.InternalAbstractions.dll": {}
+        }
+      },
+      "Microsoft.DotNet.ProjectModel/1.0.0-rc3-003121": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.DependencyModel": "1.0.0",
+          "Newtonsoft.Json": "9.0.1",
+          "NuGet.Packaging": "3.5.0-beta2-1484",
+          "NuGet.RuntimeModel": "3.5.0-beta2-1484",
+          "System.Reflection.Metadata": "1.3.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.DotNet.ProjectModel.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.DotNet.ProjectModel.dll": {}
+        }
+      },
+      "Microsoft.EntityFrameworkCore/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Caching.Memory": "1.0.0",
+          "Microsoft.Extensions.DependencyInjection": "1.0.0",
+          "Microsoft.Extensions.Logging": "1.0.0",
+          "Remotion.Linq": "2.1.1",
+          "System.Collections.Immutable": "1.2.0",
+          "System.Interactive.Async": "3.0.0"
+        },
+        "frameworkAssemblies": [
+          "System.ComponentModel.DataAnnotations"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.EntityFrameworkCore.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.EntityFrameworkCore.dll": {}
+        }
+      },
+      "Microsoft.EntityFrameworkCore.InMemory/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "1.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.EntityFrameworkCore.InMemory.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.EntityFrameworkCore.InMemory.dll": {}
+        }
+      },
+      "Microsoft.EntityFrameworkCore.Relational/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "1.0.0",
+          "System.Diagnostics.DiagnosticSource": "4.0.0"
+        },
+        "frameworkAssemblies": [
+          "System.Data",
+          "System.Transactions"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.EntityFrameworkCore.Relational.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.EntityFrameworkCore.Relational.dll": {}
+        }
+      },
+      "Microsoft.EntityFrameworkCore.SqlServer/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Relational": "1.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.EntityFrameworkCore.SqlServer.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.EntityFrameworkCore.SqlServer.dll": {}
+        }
+      },
+      "Microsoft.Extensions.Caching.Abstractions/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Primitives": "1.0.0",
+          "System.Collections": "4.0.11",
+          "System.Threading": "4.0.11",
+          "System.Threading.Tasks": "4.0.11"
+        },
+        "compile": {
+          "lib/netstandard1.0/Microsoft.Extensions.Caching.Abstractions.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.0/Microsoft.Extensions.Caching.Abstractions.dll": {}
+        }
+      },
+      "Microsoft.Extensions.Caching.Memory/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Caching.Abstractions": "1.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0",
+          "Microsoft.Extensions.Options": "1.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.Extensions.Caching.Memory.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.Extensions.Caching.Memory.dll": {}
+        }
+      },
+      "Microsoft.Extensions.Configuration/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Configuration.Abstractions": "1.0.0",
+          "System.Collections": "4.0.11",
+          "System.Diagnostics.Debug": "4.0.11",
+          "System.IO": "4.1.0",
+          "System.Resources.ResourceManager": "4.0.1",
+          "System.Runtime.Extensions": "4.1.0",
+          "System.Runtime.InteropServices": "4.1.0",
+          "System.Threading": "4.0.11"
+        },
+        "compile": {
+          "lib/netstandard1.1/Microsoft.Extensions.Configuration.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.1/Microsoft.Extensions.Configuration.dll": {}
+        }
+      },
+      "Microsoft.Extensions.Configuration.Abstractions/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Primitives": "1.0.0",
+          "System.Linq": "4.1.0"
+        },
+        "compile": {
+          "lib/netstandard1.0/Microsoft.Extensions.Configuration.Abstractions.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.0/Microsoft.Extensions.Configuration.Abstractions.dll": {}
+        }
+      },
+      "Microsoft.Extensions.Configuration.Binder/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Configuration": "1.0.0",
+          "System.ComponentModel.TypeConverter": "4.1.0"
+        },
+        "compile": {
+          "lib/netstandard1.1/Microsoft.Extensions.Configuration.Binder.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.1/Microsoft.Extensions.Configuration.Binder.dll": {}
+        }
+      },
+      "Microsoft.Extensions.Configuration.EnvironmentVariables/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Configuration": "1.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.Extensions.Configuration.EnvironmentVariables.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.Extensions.Configuration.EnvironmentVariables.dll": {}
+        }
+      },
+      "Microsoft.Extensions.Configuration.FileExtensions/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Configuration": "1.0.0",
+          "Microsoft.Extensions.FileProviders.Physical": "1.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.Extensions.Configuration.FileExtensions.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.Extensions.Configuration.FileExtensions.dll": {}
+        }
+      },
+      "Microsoft.Extensions.Configuration.Json/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Configuration": "1.0.0",
+          "Microsoft.Extensions.Configuration.FileExtensions": "1.0.0",
+          "Newtonsoft.Json": "9.0.1"
+        },
+        "compile": {
+          "lib/net451/Microsoft.Extensions.Configuration.Json.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.Extensions.Configuration.Json.dll": {}
+        }
+      },
+      "Microsoft.Extensions.Configuration.UserSecrets/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Configuration.Json": "1.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.Extensions.Configuration.UserSecrets.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.Extensions.Configuration.UserSecrets.dll": {}
+        }
+      },
+      "Microsoft.Extensions.DependencyInjection/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0",
+          "System.Collections": "4.0.11",
+          "System.Collections.Concurrent": "4.0.12",
+          "System.Runtime.Extensions": "4.1.0",
+          "System.Threading": "4.0.11",
+          "System.Threading.Tasks": "4.0.11"
+        },
+        "compile": {
+          "lib/netstandard1.1/Microsoft.Extensions.DependencyInjection.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.1/Microsoft.Extensions.DependencyInjection.dll": {}
+        }
+      },
+      "Microsoft.Extensions.DependencyInjection.Abstractions/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.ComponentModel": "4.0.1",
+          "System.Diagnostics.Debug": "4.0.11",
+          "System.Globalization": "4.0.11",
+          "System.Linq": "4.1.0",
+          "System.Linq.Expressions": "4.1.0",
+          "System.Reflection": "4.1.0",
+          "System.Resources.ResourceManager": "4.0.1"
+        },
+        "compile": {
+          "lib/netstandard1.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {}
+        }
+      },
+      "Microsoft.Extensions.DependencyModel/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.DotNet.InternalAbstractions": "1.0.0",
+          "Newtonsoft.Json": "9.0.1"
+        },
+        "compile": {
+          "lib/net451/Microsoft.Extensions.DependencyModel.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.Extensions.DependencyModel.dll": {}
+        }
+      },
+      "Microsoft.Extensions.FileProviders.Abstractions/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Primitives": "1.0.0",
+          "System.IO": "4.1.0",
+          "System.Resources.ResourceManager": "4.0.1"
+        },
+        "compile": {
+          "lib/netstandard1.0/Microsoft.Extensions.FileProviders.Abstractions.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.0/Microsoft.Extensions.FileProviders.Abstractions.dll": {}
+        }
+      },
+      "Microsoft.Extensions.FileProviders.Composite/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.FileProviders.Abstractions": "1.0.0"
+        },
+        "compile": {
+          "lib/netstandard1.0/Microsoft.Extensions.FileProviders.Composite.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.0/Microsoft.Extensions.FileProviders.Composite.dll": {}
+        }
+      },
+      "Microsoft.Extensions.FileProviders.Physical/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.FileProviders.Abstractions": "1.0.0",
+          "Microsoft.Extensions.FileSystemGlobbing": "1.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.Extensions.FileProviders.Physical.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.Extensions.FileProviders.Physical.dll": {}
+        }
+      },
+      "Microsoft.Extensions.FileSystemGlobbing/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net451/Microsoft.Extensions.FileSystemGlobbing.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.Extensions.FileSystemGlobbing.dll": {}
+        }
+      },
+      "Microsoft.Extensions.Globalization.CultureInfoCache/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections.Concurrent": "4.0.12",
+          "System.Linq": "4.1.0",
+          "System.Resources.ResourceManager": "4.0.1"
+        },
+        "compile": {
+          "lib/netstandard1.1/Microsoft.Extensions.Globalization.CultureInfoCache.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.1/Microsoft.Extensions.Globalization.CultureInfoCache.dll": {}
+        }
+      },
+      "Microsoft.Extensions.Localization/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Hosting.Abstractions": "1.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0",
+          "Microsoft.Extensions.Localization.Abstractions": "1.0.0",
+          "Microsoft.Extensions.Options": "1.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.Extensions.Localization.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.Extensions.Localization.dll": {}
+        }
+      },
+      "Microsoft.Extensions.Localization.Abstractions/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CSharp": "4.0.1",
+          "System.Globalization": "4.0.11",
+          "System.Resources.ResourceManager": "4.0.1"
+        },
+        "compile": {
+          "lib/netstandard1.0/Microsoft.Extensions.Localization.Abstractions.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.0/Microsoft.Extensions.Localization.Abstractions.dll": {}
+        }
+      },
+      "Microsoft.Extensions.Logging/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0",
+          "System.Threading": "4.0.11"
+        },
+        "compile": {
+          "lib/netstandard1.1/Microsoft.Extensions.Logging.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.1/Microsoft.Extensions.Logging.dll": {}
+        }
+      },
+      "Microsoft.Extensions.Logging.Abstractions/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections": "4.0.11",
+          "System.Collections.Concurrent": "4.0.12",
+          "System.Diagnostics.Debug": "4.0.11",
+          "System.Globalization": "4.0.11",
+          "System.Linq": "4.1.0",
+          "System.Reflection": "4.1.0",
+          "System.Resources.ResourceManager": "4.0.1",
+          "System.Runtime.Extensions": "4.1.0",
+          "System.Runtime.InteropServices": "4.1.0"
+        },
+        "compile": {
+          "lib/netstandard1.1/Microsoft.Extensions.Logging.Abstractions.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.1/Microsoft.Extensions.Logging.Abstractions.dll": {}
+        }
+      },
+      "Microsoft.Extensions.Logging.Console/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Configuration.Abstractions": "1.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0",
+          "System.Runtime.InteropServices.RuntimeInformation": "4.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.Extensions.Logging.Console.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.Extensions.Logging.Console.dll": {}
+        }
+      },
+      "Microsoft.Extensions.Logging.Debug/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0"
+        },
+        "compile": {
+          "lib/net451/Microsoft.Extensions.Logging.Debug.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.Extensions.Logging.Debug.dll": {}
+        }
+      },
+      "Microsoft.Extensions.ObjectPool/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net451/Microsoft.Extensions.ObjectPool.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.Extensions.ObjectPool.dll": {}
+        }
+      },
+      "Microsoft.Extensions.Options/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0",
+          "Microsoft.Extensions.Primitives": "1.0.0",
+          "System.ComponentModel": "4.0.1",
+          "System.Diagnostics.Debug": "4.0.11",
+          "System.Globalization": "4.0.11",
+          "System.Linq": "4.1.0",
+          "System.Linq.Expressions": "4.1.0",
+          "System.Reflection": "4.1.0",
+          "System.Resources.ResourceManager": "4.0.1",
+          "System.Runtime.Extensions": "4.1.0",
+          "System.Threading": "4.0.11"
+        },
+        "compile": {
+          "lib/netstandard1.0/Microsoft.Extensions.Options.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.0/Microsoft.Extensions.Options.dll": {}
+        }
+      },
+      "Microsoft.Extensions.PlatformAbstractions/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net451/Microsoft.Extensions.PlatformAbstractions.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.Extensions.PlatformAbstractions.dll": {}
+        }
+      },
+      "Microsoft.Extensions.Primitives/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Resources.ResourceManager": "4.0.1",
+          "System.Runtime": "4.1.0"
+        },
+        "compile": {
+          "lib/netstandard1.0/Microsoft.Extensions.Primitives.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.0/Microsoft.Extensions.Primitives.dll": {}
+        }
+      },
+      "Microsoft.Extensions.Testing.Abstractions/1.0.0-preview2-003121": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.DiaSymReader": "1.0.8",
+          "Microsoft.DiaSymReader.Native": "1.4.0-rc2",
+          "Microsoft.DotNet.ProjectModel": "1.0.0-rc3-003121",
+          "Newtonsoft.Json": "9.0.1"
+        },
+        "compile": {
+          "lib/net451/Microsoft.Extensions.Testing.Abstractions.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.Extensions.Testing.Abstractions.dll": {}
+        }
+      },
+      "Microsoft.Extensions.WebEncoders/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0",
+          "Microsoft.Extensions.Options": "1.0.0",
+          "System.Text.Encodings.Web": "4.0.0"
+        },
+        "compile": {
+          "lib/netstandard1.0/Microsoft.Extensions.WebEncoders.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.0/Microsoft.Extensions.WebEncoders.dll": {}
+        }
+      },
+      "Microsoft.Net.Http.Headers/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Buffers": "4.0.0",
+          "System.Collections": "4.0.11",
+          "System.Diagnostics.Contracts": "4.0.1",
+          "System.Globalization": "4.0.11",
+          "System.Linq": "4.1.0",
+          "System.Resources.ResourceManager": "4.0.1",
+          "System.Runtime.Extensions": "4.1.0",
+          "System.Text.Encoding": "4.0.11"
+        },
+        "compile": {
+          "lib/netstandard1.1/Microsoft.Net.Http.Headers.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.1/Microsoft.Net.Http.Headers.dll": {}
+        }
+      },
+      "Microsoft.NETCore.Platforms/1.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard1.0/_._": {}
+        },
+        "runtime": {
+          "lib/netstandard1.0/_._": {}
+        }
+      },
+      "Microsoft.VisualStudio.Web.BrowserLink.Loader/14.0.0-rc2-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Http.Abstractions": "1.0.0-rc2-final",
+          "Microsoft.Extensions.FileProviders.Physical": "1.0.0-rc2-final",
+          "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc2-final",
+          "Microsoft.NETCore.Platforms": "1.0.1-rc2-24027"
+        },
+        "compile": {
+          "lib/net451/Microsoft.VisualStudio.Web.BrowserLink.Loader.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.VisualStudio.Web.BrowserLink.Loader.dll": {}
+        }
+      },
+      "NETStandard.Library/1.6.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "1.0.1",
+          "System.Collections": "4.0.11",
+          "System.Collections.Concurrent": "4.0.12",
+          "System.Diagnostics.Debug": "4.0.11",
+          "System.Diagnostics.Tools": "4.0.1",
+          "System.Diagnostics.Tracing": "4.1.0",
+          "System.Globalization": "4.0.11",
+          "System.IO": "4.1.0",
+          "System.IO.Compression": "4.1.0",
+          "System.Linq": "4.1.0",
+          "System.Linq.Expressions": "4.1.0",
+          "System.Net.Http": "4.1.0",
+          "System.Net.Primitives": "4.0.11",
+          "System.ObjectModel": "4.0.12",
+          "System.Reflection": "4.1.0",
+          "System.Reflection.Extensions": "4.0.1",
+          "System.Reflection.Primitives": "4.0.1",
+          "System.Resources.ResourceManager": "4.0.1",
+          "System.Runtime": "4.1.0",
+          "System.Runtime.Extensions": "4.1.0",
+          "System.Runtime.InteropServices": "4.1.0",
+          "System.Runtime.InteropServices.RuntimeInformation": "4.0.0",
+          "System.Runtime.Numerics": "4.0.1",
+          "System.Text.Encoding": "4.0.11",
+          "System.Text.Encoding.Extensions": "4.0.11",
+          "System.Text.RegularExpressions": "4.1.0",
+          "System.Threading": "4.0.11",
+          "System.Threading.Tasks": "4.0.11",
+          "System.Threading.Timer": "4.0.1",
+          "System.Xml.ReaderWriter": "4.0.11",
+          "System.Xml.XDocument": "4.0.11"
+        }
+      },
+      "Newtonsoft.Json/9.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        }
+      },
+      "NuGet.Common/3.5.0-beta2-1484": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "System",
+          "System.Core",
+          "System.IO.Compression"
+        ],
+        "compile": {
+          "lib/net45/NuGet.Common.dll": {}
+        },
+        "runtime": {
+          "lib/net45/NuGet.Common.dll": {}
+        }
+      },
+      "NuGet.Frameworks/3.5.0-beta2-1484": {
+        "type": "package",
+        "compile": {
+          "lib/net45/NuGet.Frameworks.dll": {}
+        },
+        "runtime": {
+          "lib/net45/NuGet.Frameworks.dll": {}
+        }
+      },
+      "NuGet.Packaging/3.5.0-beta2-1484": {
+        "type": "package",
+        "dependencies": {
+          "NuGet.Common": "3.5.0-beta2-1484",
+          "NuGet.Packaging.Core": "3.5.0-beta2-1484"
+        },
+        "frameworkAssemblies": [
+          "System.IO.Compression",
+          "System.Xml",
+          "System.Xml.Linq"
+        ],
+        "compile": {
+          "lib/net45/NuGet.Packaging.dll": {}
+        },
+        "runtime": {
+          "lib/net45/NuGet.Packaging.dll": {}
+        }
+      },
+      "NuGet.Packaging.Core/3.5.0-beta2-1484": {
+        "type": "package",
+        "dependencies": {
+          "NuGet.Common": "3.5.0-beta2-1484",
+          "NuGet.Packaging.Core.Types": "3.5.0-beta2-1484"
+        },
+        "frameworkAssemblies": [
+          "System.IO.Compression",
+          "System.Xml",
+          "System.Xml.Linq"
+        ],
+        "compile": {
+          "lib/net45/NuGet.Packaging.Core.dll": {}
+        },
+        "runtime": {
+          "lib/net45/NuGet.Packaging.Core.dll": {}
+        }
+      },
+      "NuGet.Packaging.Core.Types/3.5.0-beta2-1484": {
+        "type": "package",
+        "dependencies": {
+          "NuGet.Frameworks": "3.5.0-beta2-1484",
+          "NuGet.Versioning": "3.5.0-beta2-1484"
+        },
+        "compile": {
+          "lib/net45/NuGet.Packaging.Core.Types.dll": {}
+        },
+        "runtime": {
+          "lib/net45/NuGet.Packaging.Core.Types.dll": {}
+        }
+      },
+      "NuGet.RuntimeModel/3.5.0-beta2-1484": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "6.0.4",
+          "NuGet.Frameworks": "3.5.0-beta2-1484",
+          "NuGet.Versioning": "3.5.0-beta2-1484"
+        },
+        "compile": {
+          "lib/net45/NuGet.RuntimeModel.dll": {}
+        },
+        "runtime": {
+          "lib/net45/NuGet.RuntimeModel.dll": {}
+        }
+      },
+      "NuGet.Versioning/3.5.0-beta2-1484": {
+        "type": "package",
+        "compile": {
+          "lib/net45/NuGet.Versioning.dll": {}
+        },
+        "runtime": {
+          "lib/net45/NuGet.Versioning.dll": {}
+        }
+      },
+      "NUnit/3.4.1": {
+        "type": "package",
+        "compile": {
+          "lib/net45/nunit.framework.dll": {}
+        },
+        "runtime": {
+          "lib/net45/nunit.framework.dll": {}
+        }
+      },
+      "NUnit.Portable.Agent/3.4.0-beta-2": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System.Globalization",
+          "System.Linq",
+          "System.ObjectModel",
+          "System.Reflection",
+          "System.Reflection.Extensions",
+          "System.Runtime",
+          "System.Runtime.Extensions",
+          "System.Runtime.Serialization.Primitives",
+          "System.Text.RegularExpressions",
+          "System.Threading",
+          "System.Xml",
+          "System.Xml.Linq",
+          "System.Xml.XDocument"
+        ],
+        "compile": {
+          "lib/net45/NUnit.Portable.Agent.dll": {}
+        },
+        "runtime": {
+          "lib/net45/NUnit.Portable.Agent.dll": {}
+        }
+      },
+      "Remotion.Linq/2.1.1": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections": "4.0.11",
+          "System.Diagnostics.Debug": "4.0.11",
+          "System.Linq": "4.1.0",
+          "System.Linq.Expressions": "4.1.0",
+          "System.Linq.Queryable": "4.0.1",
+          "System.ObjectModel": "4.0.12",
+          "System.Reflection": "4.1.0",
+          "System.Reflection.Extensions": "4.0.1",
+          "System.Runtime": "4.1.0",
+          "System.Runtime.Extensions": "4.1.0",
+          "System.Threading": "4.0.11"
+        },
+        "compile": {
+          "lib/net45/Remotion.Linq.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Remotion.Linq.dll": {}
+        }
+      },
+      "System.Buffers/4.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard1.1/System.Buffers.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.1/System.Buffers.dll": {}
+        }
+      },
+      "System.Collections/4.0.11": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Collections.Concurrent/4.0.12": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System"
+        ],
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Collections.Immutable/1.2.0": {
+        "type": "package",
+        "compile": {
+          "lib/portable-net45+win8+wp8+wpa81/System.Collections.Immutable.dll": {}
+        },
+        "runtime": {
+          "lib/portable-net45+win8+wp8+wpa81/System.Collections.Immutable.dll": {}
+        }
+      },
+      "System.ComponentModel/4.0.1": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System"
+        ],
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.ComponentModel.Primitives/4.1.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net45/System.ComponentModel.Primitives.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.ComponentModel.Primitives.dll": {}
+        }
+      },
+      "System.ComponentModel.TypeConverter/4.1.0": {
+        "type": "package",
+        "dependencies": {
+          "System.ComponentModel.Primitives": "4.1.0"
+        },
+        "frameworkAssemblies": [
+          "System",
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net45/System.ComponentModel.TypeConverter.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.ComponentModel.TypeConverter.dll": {}
+        }
+      },
+      "System.Diagnostics.Contracts/4.0.1": {
+        "type": "package",
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Diagnostics.Debug/4.0.11": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System"
+        ],
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Diagnostics.DiagnosticSource/4.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/portable-net45+win8+wpa81/System.Diagnostics.DiagnosticSource.dll": {}
+        },
+        "runtime": {
+          "lib/portable-net45+win8+wpa81/System.Diagnostics.DiagnosticSource.dll": {}
+        }
+      },
+      "System.Diagnostics.Tools/4.0.1": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System"
+        ],
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Diagnostics.Tracing/4.1.0": {
+        "type": "package",
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Globalization/4.0.11": {
+        "type": "package",
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Interactive.Async/3.0.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net45/System.Interactive.Async.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Interactive.Async.dll": {}
+        }
+      },
+      "System.IO/4.1.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System"
+        ],
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.IO.Compression/4.1.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System.IO.Compression"
+        ],
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Linq/4.1.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System.Core"
+        ],
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Linq.Expressions/4.1.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System.Core"
+        ],
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Linq.Queryable/4.0.1": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System.Core"
+        ],
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Net.Http/4.1.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System.Net.Http"
+        ],
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Net.Primitives/4.0.11": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System"
+        ],
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Numerics.Vectors/4.1.1": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard1.0/System.Numerics.Vectors.dll": {}
+        },
+        "runtime": {
+          "lib/portable-net45+win8+wp8+wpa81/System.Numerics.Vectors.dll": {}
+        }
+      },
+      "System.ObjectModel/4.0.12": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System"
+        ],
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Reflection/4.1.0": {
+        "type": "package",
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Reflection.Extensions/4.0.1": {
+        "type": "package",
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Reflection.Metadata/1.3.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections.Immutable": "1.2.0"
+        },
+        "compile": {
+          "lib/portable-net45+win8/System.Reflection.Metadata.dll": {}
+        },
+        "runtime": {
+          "lib/portable-net45+win8/System.Reflection.Metadata.dll": {}
+        }
+      },
+      "System.Reflection.Primitives/4.0.1": {
+        "type": "package",
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Resources.ResourceManager/4.0.1": {
+        "type": "package",
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Runtime/4.1.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "System.ComponentModel.Composition",
+          "System.Core"
+        ],
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Runtime.Extensions/4.1.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System"
+        ],
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Runtime.InteropServices/4.1.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Runtime.InteropServices.RuntimeInformation/4.0.0": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard1.1/System.Runtime.InteropServices.RuntimeInformation.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Runtime.InteropServices.RuntimeInformation.dll": {}
+        },
+        "runtimeTargets": {
+          "runtimes/unix/lib/netstandard1.1/System.Runtime.InteropServices.RuntimeInformation.dll": {
+            "assetType": "runtime",
+            "rid": "unix"
+          },
+          "runtimes/win/lib/net45/System.Runtime.InteropServices.RuntimeInformation.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          }
+        }
+      },
+      "System.Runtime.Numerics/4.0.1": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System.Numerics"
+        ],
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Runtime.Serialization.Primitives/4.1.1": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System.Runtime.Serialization"
+        ],
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Text.Encoding/4.0.11": {
+        "type": "package",
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Text.Encoding.Extensions/4.0.11": {
+        "type": "package",
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Text.Encodings.Web/4.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard1.0/System.Text.Encodings.Web.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.0/System.Text.Encodings.Web.dll": {}
+        }
+      },
+      "System.Text.RegularExpressions/4.1.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System"
+        ],
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Threading/4.0.11": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Threading.Tasks/4.0.11": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System.Core"
+        ],
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Threading.Tasks.Extensions/4.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/portable-net45+win8+wp8+wpa81/System.Threading.Tasks.Extensions.dll": {}
+        },
+        "runtime": {
+          "lib/portable-net45+win8+wp8+wpa81/System.Threading.Tasks.Extensions.dll": {}
+        }
+      },
+      "System.Threading.Timer/4.0.1": {
+        "type": "package",
+        "compile": {
+          "ref/net451/_._": {}
+        },
+        "runtime": {
+          "lib/net451/_._": {}
+        }
+      },
+      "System.Xml.ReaderWriter/4.0.11": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System.Xml"
+        ],
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Xml.XDocument/4.0.11": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System.Xml.Linq"
+        ],
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "ApplicationParts.Controllers/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "ApplicationParts.Models": "1.0.0",
+          "ApplicationParts.Services": "1.0.0",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.0.0",
+          "Microsoft.AspNetCore.Mvc": "1.0.0",
+          "NETStandard.Library": "1.6.0"
+        },
+        "compile": {
+          "net451/ApplicationParts.Controllers.dll": {}
+        },
+        "runtime": {
+          "net451/ApplicationParts.Controllers.dll": {}
+        }
+      },
+      "ApplicationParts.Models/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.0.0",
+          "Microsoft.AspNetCore.Mvc": "1.0.0",
+          "NETStandard.Library": "1.6.0"
+        },
+        "compile": {
+          "net451/ApplicationParts.Models.dll": {}
+        },
+        "runtime": {
+          "net451/ApplicationParts.Models.dll": {}
+        }
+      },
+      "ApplicationParts.Services/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "NETStandard.Library": "1.6.0"
+        },
+        "compile": {
+          "net451/ApplicationParts.Services.dll": {}
+        },
+        "runtime": {
+          "net451/ApplicationParts.Services.dll": {}
+        }
+      },
+      "ApplicationParts.Web/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "ApplicationParts.Controllers": "1.0.0",
+          "Microsoft.AspNetCore.Authentication.Cookies": "1.0.0",
+          "Microsoft.AspNetCore.Diagnostics": "1.0.0",
+          "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "1.0.0",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.0.0",
+          "Microsoft.AspNetCore.Mvc": "1.0.0",
+          "Microsoft.AspNetCore.Server.IISIntegration": "1.0.0",
+          "Microsoft.AspNetCore.Server.Kestrel": "1.0.0",
+          "Microsoft.AspNetCore.StaticFiles": "1.0.0",
+          "Microsoft.EntityFrameworkCore.SqlServer": "1.0.0",
+          "Microsoft.Extensions.Configuration.EnvironmentVariables": "1.0.0",
+          "Microsoft.Extensions.Configuration.Json": "1.0.0",
+          "Microsoft.Extensions.Configuration.UserSecrets": "1.0.0",
+          "Microsoft.Extensions.Logging": "1.0.0",
+          "Microsoft.Extensions.Logging.Console": "1.0.0",
+          "Microsoft.Extensions.Logging.Debug": "1.0.0",
+          "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-rc2-final"
+        },
+        "compile": {
+          "net451/ApplicationParts.Web.dll": {}
+        },
+        "runtime": {
+          "net451/ApplicationParts.Web.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.Abstractions/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc.Core": "1.0.0",
+          "Microsoft.AspNetCore.TestHost": "1.0.0",
+          "Microsoft.Extensions.Configuration.Json": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Configuration": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Licensing": "1.0.0"
+        },
+        "compile": {
+          "net451/MyTested.AspNetCore.Mvc.Abstractions.dll": {}
+        },
+        "runtime": {
+          "net451/MyTested.AspNetCore.Mvc.Abstractions.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.Configuration/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "Microsoft.Extensions.Configuration.Binder": "1.0.0"
+        },
+        "compile": {
+          "net451/MyTested.AspNetCore.Mvc.Configuration.dll": {}
+        },
+        "runtime": {
+          "net451/MyTested.AspNetCore.Mvc.Configuration.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.Controllers/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0"
+        },
+        "compile": {
+          "net451/MyTested.AspNetCore.Mvc.Controllers.dll": {}
+        },
+        "runtime": {
+          "net451/MyTested.AspNetCore.Mvc.Controllers.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.Http/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc.Formatters.Json": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0"
+        },
+        "compile": {
+          "net451/MyTested.AspNetCore.Mvc.Http.dll": {}
+        },
+        "runtime": {
+          "net451/MyTested.AspNetCore.Mvc.Http.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.Licensing/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "compile": {
+          "net451/MyTested.AspNetCore.Mvc.Licensing.dll": {}
+        },
+        "runtime": {
+          "net451/MyTested.AspNetCore.Mvc.Licensing.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.Routing/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "MyTested.AspNetCore.Mvc.Http": "1.0.0"
+        },
+        "compile": {
+          "net451/MyTested.AspNetCore.Mvc.Routing.dll": {}
+        },
+        "runtime": {
+          "net451/MyTested.AspNetCore.Mvc.Routing.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.ViewActionResults/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Controllers": "1.0.0"
+        },
+        "compile": {
+          "net451/MyTested.AspNetCore.Mvc.ViewActionResults.dll": {}
+        },
+        "runtime": {
+          "net451/MyTested.AspNetCore.Mvc.ViewActionResults.dll": {}
         }
       }
     }
   },
   "libraries": {
-    "dotnet-test-xunit/2.2.0-preview2-build1029": {
-      "sha512": "mPl4HHGcXsE4ljw3sHCOUvlyhXHDpfFO6qz0HbTQrhrFT8Tgm/HFLfz6TpMXUfch7rRL23kR8i0yjQPYdsl6EQ==",
+    "dotnet-test-nunit/3.4.0-beta-2": {
+      "sha512": "ImRqxsZMFzn+bM33emu5ZMzIUe8GOHPxdA2NkUIsawWd4YjvcFzdIo5iNuejlY0lw1M+RMwRbpd/cKkhKft52g==",
       "type": "package",
-      "path": "dotnet-test-xunit/2.2.0-preview2-build1029",
+      "path": "dotnet-test-nunit/3.4.0-beta-2",
       "files": [
-        "dotnet-test-xunit.2.2.0-preview2-build1029.nupkg.sha512",
-        "dotnet-test-xunit.nuspec",
-        "lib/net451/dotnet-test-xunit.exe",
-        "lib/netcoreapp1.0/dotnet-test-xunit.dll",
-        "lib/netcoreapp1.0/dotnet-test-xunit.runtimeconfig.json",
-        "runtimes/unix-x64/lib/net451/dotnet-test-xunit.exe",
-        "runtimes/win7-x64/lib/net451/dotnet-test-xunit.exe",
-        "runtimes/win7-x86/lib/net451/dotnet-test-xunit.exe"
+        "dotnet-test-nunit.3.4.0-beta-2.nupkg.sha512",
+        "dotnet-test-nunit.nuspec",
+        "lib/net451/dotnet-test-nunit.exe",
+        "lib/netcoreapp1.0/dotnet-test-nunit.dll",
+        "lib/netcoreapp1.0/dotnet-test-nunit.runtimeconfig.json"
       ]
     },
     "Libuv/1.9.0": {
@@ -4957,19 +7088,6 @@
         "lib/net451/Microsoft.AspNetCore.Server.Kestrel.xml",
         "lib/netstandard1.3/Microsoft.AspNetCore.Server.Kestrel.dll",
         "lib/netstandard1.3/Microsoft.AspNetCore.Server.Kestrel.xml"
-      ]
-    },
-    "Microsoft.AspNetCore.Session/1.0.0": {
-      "sha512": "RPoUeyNC0OXCcelURzsf5PZnrFC97HNUhQJMMEhBjmDNSAhFpKxgLJydKC3J/G7FxPkO4ciXu37zafPlA8AZqw==",
-      "type": "package",
-      "path": "Microsoft.AspNetCore.Session/1.0.0",
-      "files": [
-        "Microsoft.AspNetCore.Session.1.0.0.nupkg.sha512",
-        "Microsoft.AspNetCore.Session.nuspec",
-        "lib/net451/Microsoft.AspNetCore.Session.dll",
-        "lib/net451/Microsoft.AspNetCore.Session.xml",
-        "lib/netstandard1.3/Microsoft.AspNetCore.Session.dll",
-        "lib/netstandard1.3/Microsoft.AspNetCore.Session.xml"
       ]
     },
     "Microsoft.AspNetCore.StaticFiles/1.0.0": {
@@ -5745,7 +7863,7 @@
       ]
     },
     "Microsoft.VisualStudio.Web.BrowserLink.Loader/14.0.0-rc2-final": {
-      "sha512": "NM/mukki+sxjRIg6yve48iD0/Y+bb89vGpAVvFNt8+jUpoVz5JBm03q5T3t+vKFiZNjJUWmwsP8vYATIpbk10Q==",
+      "sha512": "PDkK41WGH5hl4gAQuzVhv39avSFQBi8N++DN79gUCcrH4dLP0PLQETBLRmYCIPCcGGnyg/0R44V41kXqz6KXhg==",
       "type": "package",
       "path": "Microsoft.VisualStudio.Web.BrowserLink.Loader/14.0.0-rc2-final",
       "files": [
@@ -5945,6 +8063,42 @@
         "lib/net45/NuGet.Versioning.xml",
         "lib/netstandard1.0/NuGet.Versioning.dll",
         "lib/netstandard1.0/NuGet.Versioning.xml"
+      ]
+    },
+    "NUnit/3.4.1": {
+      "sha512": "G/9h/ENn8+GvT5DvBqVNrUhIWuxtAr0/oVGN2ljKVUw50EAZYBzeWSy9s6nqMswaQACpQzljql1sWQ/peE2eJg==",
+      "type": "package",
+      "path": "NUnit/3.4.1",
+      "files": [
+        "CHANGES.txt",
+        "LICENSE.txt",
+        "NOTICES.txt",
+        "NUnit.3.4.1.nupkg.sha512",
+        "NUnit.nuspec",
+        "lib/dotnet/nunit.framework.dll",
+        "lib/dotnet/nunit.framework.xml",
+        "lib/net20/NUnit.System.Linq.dll",
+        "lib/net20/nunit.framework.dll",
+        "lib/net20/nunit.framework.xml",
+        "lib/net35/nunit.framework.dll",
+        "lib/net35/nunit.framework.xml",
+        "lib/net40/nunit.framework.dll",
+        "lib/net40/nunit.framework.xml",
+        "lib/net45/nunit.framework.dll",
+        "lib/net45/nunit.framework.xml",
+        "lib/portable-net45+win8+wp8+wpa81+Xamarin.Mac+MonoAndroid10+MonoTouch10+Xamarin.iOS10/nunit.framework.dll",
+        "lib/portable-net45+win8+wp8+wpa81+Xamarin.Mac+MonoAndroid10+MonoTouch10+Xamarin.iOS10/nunit.framework.xml"
+      ]
+    },
+    "NUnit.Portable.Agent/3.4.0-beta-2": {
+      "sha512": "91XarG692I/gCwDi3d1k5tRc1J4mPo6l6nHrYRKWSgc9M2a0SX1YNS/uJwth3bXQEn+499mdZ02NTuvJstRq1A==",
+      "type": "package",
+      "path": "NUnit.Portable.Agent/3.4.0-beta-2",
+      "files": [
+        "NUnit.Portable.Agent.3.4.0-beta-2.nupkg.sha512",
+        "NUnit.Portable.Agent.nuspec",
+        "lib/net45/NUnit.Portable.Agent.dll",
+        "lib/netstandard1.3/NUnit.Portable.Agent.dll"
       ]
     },
     "Remotion.Linq/2.1.1": {
@@ -10709,116 +12863,6 @@
         "ref/xamarinwatchos10/_._"
       ]
     },
-    "xunit/2.2.0-beta2-build3300": {
-      "sha512": "jUMf+Hrw8+XZN56TfO+JjoibR5L806/kgDIkwCg9OXLlfnA4li4JTmH342ifYj1QMR10is8hfYYFTyjHq0+aQg==",
-      "type": "package",
-      "path": "xunit/2.2.0-beta2-build3300",
-      "files": [
-        "xunit.2.2.0-beta2-build3300.nupkg.sha512",
-        "xunit.nuspec"
-      ]
-    },
-    "xunit.abstractions/2.0.1-rc2": {
-      "sha512": "iUHMlyMDaXJ8N8qozg19tRlW0QiZPJ47ZJyV1fnpppGWdmukyq89/pg4HqpxQ52Co3Leo8NmiiYkB/gN48pZ+A==",
-      "type": "package",
-      "path": "xunit.abstractions/2.0.1-rc2",
-      "files": [
-        "lib/net35/xunit.abstractions.dll",
-        "lib/net35/xunit.abstractions.xml",
-        "lib/netstandard1.0/xunit.abstractions.dll",
-        "lib/netstandard1.0/xunit.abstractions.xml",
-        "xunit.abstractions.2.0.1-rc2.nupkg.sha512",
-        "xunit.abstractions.nuspec"
-      ]
-    },
-    "xunit.assert/2.2.0-beta2-build3300": {
-      "sha512": "5zsV2UhRQV5Ldme1N/NDhIBvQQTYdxmK87FXWWou1x3z7qpsZwe1YOjb0CY4F+1oXag8i9uTh/nZwv8jM66onA==",
-      "type": "package",
-      "path": "xunit.assert/2.2.0-beta2-build3300",
-      "files": [
-        "lib/netstandard1.0/xunit.assert.dll",
-        "lib/netstandard1.0/xunit.assert.pdb",
-        "lib/netstandard1.0/xunit.assert.xml",
-        "xunit.assert.2.2.0-beta2-build3300.nupkg.sha512",
-        "xunit.assert.nuspec"
-      ]
-    },
-    "xunit.core/2.2.0-beta2-build3300": {
-      "sha512": "HgKP6+FUKcIcVFMDgoTCANRKOgGeEDvg2a2AL3mOyBHE//grWL1EO0KybxUw26S8fnNJrhmI5LBWyVUIsPxI5Q==",
-      "type": "package",
-      "path": "xunit.core/2.2.0-beta2-build3300",
-      "files": [
-        "build/_desktop/xunit.execution.desktop.dll",
-        "build/netstandard1.0/_._",
-        "build/uap10.0/xunit.core.props",
-        "build/win81/xunit.core.props",
-        "build/wpa81/xunit.core.props",
-        "xunit.core.2.2.0-beta2-build3300.nupkg.sha512",
-        "xunit.core.nuspec"
-      ]
-    },
-    "xunit.extensibility.core/2.2.0-beta2-build3300": {
-      "sha512": "d+UCqIL8Je3tSdhF7w6NZdzH2jYzNh2LhsMp0gUVAD3NgVEo2oK/3Xr7ZlYZM40Y6fJWoO46UntzrpNlix75mg==",
-      "type": "package",
-      "path": "xunit.extensibility.core/2.2.0-beta2-build3300",
-      "files": [
-        "lib/net45/xunit.core.dll",
-        "lib/net45/xunit.core.dll.tdnet",
-        "lib/net45/xunit.core.pdb",
-        "lib/net45/xunit.core.xml",
-        "lib/net45/xunit.runner.tdnet.dll",
-        "lib/net45/xunit.runner.utility.desktop.dll",
-        "lib/netstandard1.0/xunit.core.dll",
-        "lib/netstandard1.0/xunit.core.pdb",
-        "lib/netstandard1.0/xunit.core.xml",
-        "xunit.extensibility.core.2.2.0-beta2-build3300.nupkg.sha512",
-        "xunit.extensibility.core.nuspec"
-      ]
-    },
-    "xunit.extensibility.execution/2.2.0-beta2-build3300": {
-      "sha512": "z0DgzvWxQtXaj2qebFkW5f69ZItvY/YRWEbKwL0yIbvhiCViiuHlP+qvvloVlrlsOuo+Y/vfjQb/3Cz+ok/+5A==",
-      "type": "package",
-      "path": "xunit.extensibility.execution/2.2.0-beta2-build3300",
-      "files": [
-        "lib/net45/xunit.execution.desktop.dll",
-        "lib/net45/xunit.execution.desktop.pdb",
-        "lib/net45/xunit.execution.desktop.xml",
-        "lib/netstandard1.0/xunit.execution.dotnet.dll",
-        "lib/netstandard1.0/xunit.execution.dotnet.pdb",
-        "lib/netstandard1.0/xunit.execution.dotnet.xml",
-        "xunit.extensibility.execution.2.2.0-beta2-build3300.nupkg.sha512",
-        "xunit.extensibility.execution.nuspec"
-      ]
-    },
-    "xunit.runner.reporters/2.2.0-beta2-build3300": {
-      "sha512": "1NqeT2IWfqk9/zBkHbf6SS1bokwu0Mvt70lQp8bJZpvQgi+SDAzuhEwWTcsjMblY2FK8BHDbjauu+IO2GhbhAA==",
-      "type": "package",
-      "path": "xunit.runner.reporters/2.2.0-beta2-build3300",
-      "files": [
-        "lib/net45/xunit.runner.reporters.desktop.dll",
-        "lib/netstandard1.1/xunit.runner.reporters.dotnet.dll",
-        "xunit.runner.reporters.2.2.0-beta2-build3300.nupkg.sha512",
-        "xunit.runner.reporters.nuspec"
-      ]
-    },
-    "xunit.runner.utility/2.2.0-beta2-build3300": {
-      "sha512": "lotqjLPg8NnjZHlRpj0Yj5TI3z/7hzK7+tb6R7qRAREDoH9P88EDCWJyy2xJh/R6PfbS9KYTaT/Z2ob9gx6PgQ==",
-      "type": "package",
-      "path": "xunit.runner.utility/2.2.0-beta2-build3300",
-      "files": [
-        "lib/net35/xunit.runner.utility.desktop.dll",
-        "lib/net35/xunit.runner.utility.desktop.pdb",
-        "lib/net35/xunit.runner.utility.desktop.xml",
-        "lib/net45/xunit.runner.utility.desktop.dll",
-        "lib/net45/xunit.runner.utility.desktop.pdb",
-        "lib/net45/xunit.runner.utility.desktop.xml",
-        "lib/netstandard1.1/xunit.runner.utility.dotnet.dll",
-        "lib/netstandard1.1/xunit.runner.utility.dotnet.pdb",
-        "lib/netstandard1.1/xunit.runner.utility.dotnet.xml",
-        "xunit.runner.utility.2.2.0-beta2-build3300.nupkg.sha512",
-        "xunit.runner.utility.nuspec"
-      ]
-    },
     "ApplicationParts.Controllers/1.0.0": {
       "type": "project",
       "path": "../ApplicationParts.Controllers/project.json",
@@ -10839,64 +12883,57 @@
       "path": "../ApplicationParts.Web/project.json",
       "msbuildProject": "../ApplicationParts.Web/ApplicationParts.Web.xproj"
     },
-    "MyTested.AspNetCore.Mvc/1.0.0-preview-final": {
+    "MyTested.AspNetCore.Mvc.Abstractions/1.0.0-preview-final": {
       "type": "project",
-      "path": "../../../src/MyTested.AspNetCore.Mvc/project.json",
-      "msbuildProject": "../../../src/MyTested.AspNetCore.Mvc/MyTested.AspNetCore.Mvc.xproj"
+      "path": "../../../src/MyTested.AspNetCore.Mvc.Abstractions/project.json",
+      "msbuildProject": "../../../src/MyTested.AspNetCore.Mvc.Abstractions/MyTested.AspNetCore.Mvc.Abstractions.xproj"
     },
-    "MyTested.AspNetCore.Mvc.Caching/1.0.0-preview-final": {
+    "MyTested.AspNetCore.Mvc.Configuration/1.0.0-preview-final": {
       "type": "project",
-      "path": "../../../src/MyTested.AspNetCore.Mvc.Caching/project.json",
-      "msbuildProject": "../../../src/MyTested.AspNetCore.Mvc.Caching/MyTested.AspNetCore.Mvc.Caching.xproj"
+      "path": "../../../src/MyTested.AspNetCore.Mvc.Configuration/project.json",
+      "msbuildProject": "../../../src/MyTested.AspNetCore.Mvc.Configuration/MyTested.AspNetCore.Mvc.Configuration.xproj"
     },
-    "MyTested.AspNetCore.Mvc.Core/1.0.0-preview-final": {
+    "MyTested.AspNetCore.Mvc.Controllers/1.0.0-preview-final": {
       "type": "project",
-      "path": "../../../src/MyTested.AspNetCore.Mvc.Core/project.json",
-      "msbuildProject": "../../../src/MyTested.AspNetCore.Mvc.Core/MyTested.AspNetCore.Mvc.Core.xproj"
+      "path": "../../../src/MyTested.AspNetCore.Mvc.Controllers/project.json",
+      "msbuildProject": "../../../src/MyTested.AspNetCore.Mvc.Controllers/MyTested.AspNetCore.Mvc.Controllers.xproj"
     },
-    "MyTested.AspNetCore.Mvc.DataAnnotations/1.0.0-preview-final": {
+    "MyTested.AspNetCore.Mvc.Http/1.0.0-preview-final": {
       "type": "project",
-      "path": "../../../src/MyTested.AspNetCore.Mvc.DataAnnotations/project.json",
-      "msbuildProject": "../../../src/MyTested.AspNetCore.Mvc.DataAnnotations/MyTested.AspNetCore.Mvc.DataAnnotations.xproj"
-    },
-    "MyTested.AspNetCore.Mvc.EntityFrameworkCore/1.0.0-preview-final": {
-      "type": "project",
-      "path": "../../../src/MyTested.AspNetCore.Mvc.EntityFrameworkCore/project.json",
-      "msbuildProject": "../../../src/MyTested.AspNetCore.Mvc.EntityFrameworkCore/MyTested.AspNetCore.Mvc.EntityFrameworkCore.xproj"
+      "path": "../../../src/MyTested.AspNetCore.Mvc.Http/project.json",
+      "msbuildProject": "../../../src/MyTested.AspNetCore.Mvc.Http/MyTested.AspNetCore.Mvc.Http.xproj"
     },
     "MyTested.AspNetCore.Mvc.Licensing/1.0.0-preview-final": {
       "type": "project",
       "path": "../../../src/MyTested.AspNetCore.Mvc.Licensing/project.json",
       "msbuildProject": "../../../src/MyTested.AspNetCore.Mvc.Licensing/MyTested.AspNetCore.Mvc.Licensing.xproj"
     },
-    "MyTested.AspNetCore.Mvc.Options/1.0.0-preview-final": {
+    "MyTested.AspNetCore.Mvc.Routing/1.0.0-preview-final": {
       "type": "project",
-      "path": "../../../src/MyTested.AspNetCore.Mvc.Options/project.json",
-      "msbuildProject": "../../../src/MyTested.AspNetCore.Mvc.Options/MyTested.AspNetCore.Mvc.Options.xproj"
+      "path": "../../../src/MyTested.AspNetCore.Mvc.Routing/project.json",
+      "msbuildProject": "../../../src/MyTested.AspNetCore.Mvc.Routing/MyTested.AspNetCore.Mvc.Routing.xproj"
     },
-    "MyTested.AspNetCore.Mvc.Session/1.0.0-preview-final": {
+    "MyTested.AspNetCore.Mvc.ViewActionResults/1.0.0-preview-final": {
       "type": "project",
-      "path": "../../../src/MyTested.AspNetCore.Mvc.Session/project.json",
-      "msbuildProject": "../../../src/MyTested.AspNetCore.Mvc.Session/MyTested.AspNetCore.Mvc.Session.xproj"
-    },
-    "MyTested.AspNetCore.Mvc.ViewFeatures/1.0.0-preview-final": {
-      "type": "project",
-      "path": "../../../src/MyTested.AspNetCore.Mvc.ViewFeatures/project.json",
-      "msbuildProject": "../../../src/MyTested.AspNetCore.Mvc.ViewFeatures/MyTested.AspNetCore.Mvc.ViewFeatures.xproj"
+      "path": "../../../src/MyTested.AspNetCore.Mvc.ViewActionResults/project.json",
+      "msbuildProject": "../../../src/MyTested.AspNetCore.Mvc.ViewActionResults/MyTested.AspNetCore.Mvc.ViewActionResults.xproj"
     }
   },
   "projectFileDependencyGroups": {
     "": [
-      "ApplicationParts.Controllers >= 1.0.0-*",
-      "ApplicationParts.Web >= 1.0.0-*",
+      "ApplicationParts.Controllers",
+      "ApplicationParts.Web",
       "Microsoft.EntityFrameworkCore.InMemory >= 1.0.0-*",
-      "MyTested.AspNetCore.Mvc >= 1.0.0-*",
-      "dotnet-test-xunit >= 2.2.0-*",
-      "xunit >= 2.2.0-*"
+      "MyTested.AspNetCore.Mvc.Controllers >= 1.0.0-*",
+      "MyTested.AspNetCore.Mvc.Routing >= 1.0.0-*",
+      "MyTested.AspNetCore.Mvc.ViewActionResults >= 1.0.0-*",
+      "NUnit >= 3.4.1",
+      "dotnet-test-nunit >= 3.4.0-beta-2"
     ],
     ".NETCoreApp,Version=v1.0": [
       "Microsoft.NETCore.App >= 1.0.0-*"
-    ]
+    ],
+    ".NETFramework,Version=v4.5.1": []
   },
   "tools": {},
   "projectFileToolGroups": {}

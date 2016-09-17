@@ -28,12 +28,10 @@
 
   "dependencies": {
     "Microsoft.AspNetCore.Mvc": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.Caching": "1.0.0-*",
     "MyTested.AspNetCore.Mvc.Core": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.Session": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.ViewFeatures": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.EntityFrameworkCore": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.Options": "1.0.0-*"
+    "MyTested.AspNetCore.Mvc.DependencyInjection": "1.0.0-*",
+    "MyTested.AspNetCore.Mvc.Options": "1.0.0-*",
+    "MyTested.AspNetCore.Mvc.ViewFeatures": "1.0.0-*"
   },
 
   "frameworks": {

@@ -1,0 +1,19 @@
+{{!include(/^styles/.*/)}}
+{{!include(/^fonts/.*/)}}
+{{!include(favicon.ico)}}
+{{!include(logo.svg)}}
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  {{>partials/head}}
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        {{>partials/navbar}}
+      </header>
+      {{{conceptual}}}
+      {{>partials/footer}}
+    </div>
+    {{>partials/scripts}}
+  </body>
+</html>

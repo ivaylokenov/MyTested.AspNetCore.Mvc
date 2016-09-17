@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading;
 
     internal static class TestCounter
@@ -45,7 +46,7 @@
                         }
                         catch (InvalidLicenseException ex)
                         {
-                            invalidLicenseMessage = $"{(licenses == null ? string.Empty : $"You have invalid license: '{ex.Message}'. ")}The free-quota limit of {MaximumAllowedAssertions} assertions per test project has been reached. Please visit https://mytestedasp.net/products/mvc#pricing to request a free license or upgrade to a commercial one.";
+                            invalidLicenseMessage = $"{(licenses == null || !licenses.Any() ? string.Empty : $"You have invalid license: '{ex.Message}'. ")}The free-quota limit of {MaximumAllowedAssertions} assertions per test project has been reached. Please visit https://mytestedasp.net/core/mvc#pricing to request a free license or upgrade to a commercial one.";
                         }
 
                         if (!LicenseValidator.HasValidLicense)

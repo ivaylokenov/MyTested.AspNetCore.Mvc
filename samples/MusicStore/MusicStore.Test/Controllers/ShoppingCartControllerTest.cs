@@ -7,6 +7,7 @@
     using MyTested.AspNetCore.Mvc;
     using ViewModels;
     using Xunit;
+    using Microsoft.AspNetCore.Http;
 
     public class ShoppingCartControllerTest
     {
@@ -52,7 +53,7 @@
                 .Controller<ShoppingCartController>()
                 .WithSession(session => session.WithEntry("Session", cartId))
                 .WithDbContext(db => db
-                    .WithEntities<MusicStoreContext>(entities => 
+                    .WithEntities(entities => 
                     {
                         var cartItems = CreateTestCartItems(
                             cartId,
@@ -82,15 +83,14 @@
                 .Controller<ShoppingCartController>()
                 .WithSession(session => session.WithEntry("Session", "CartId_A"))
                 .WithDbContext(db => db
-                    .WithEntities<MusicStoreContext>(entities => entities
+                    .WithEntities(entities => entities
                         .AddRange(CreateTestAlbums(itemPrice: 10))))
                 .Calling(c => c.AddToCart(albumId))
                 .ShouldReturn()
                 .Redirect()
                 .To<ShoppingCartController>(c => c.Index())
                 .AndAlso()
-                .ShouldPassFor()
-                .TheHttpContext(async httpContext =>
+                .ShouldPassForThe<HttpContext>(async httpContext =>
                 {
                     var cart = ShoppingCart.GetCart(From.Services<MusicStoreContext>(), httpContext);
                     Assert.Equal(1, (await cart.GetCartItems()).Count);
@@ -110,7 +110,7 @@
                 .Controller<ShoppingCartController>()
                 .WithSession(session => session.WithEntry("Session", cartId))
                 .WithDbContext(db => db
-                    .WithEntities<MusicStoreContext>(entities =>
+                    .WithEntities(entities =>
                     {
                         var cartItems = CreateTestCartItems(cartId, unitPrice, numberOfItem);
                         entities.AddRange(cartItems.Select(n => n.Album).Distinct());
@@ -119,7 +119,7 @@
                 .Calling(c => c.RemoveFromCart(cartItemId, CancellationToken.None))
                 .ShouldReturn()
                 .Json()
-                .WithResponseModelOfType<ShoppingCartRemoveViewModel>()
+                .WithModelOfType<ShoppingCartRemoveViewModel>()
                 .Passing(model =>
                 {
                     Assert.Equal(numberOfItem - 1, model.CartCount);
@@ -127,8 +127,7 @@
                     Assert.Equal(" has been removed from your shopping cart.", model.Message);
                 })
                 .AndAlso()
-                .ShouldPassFor()
-                .TheHttpContext(async httpContext =>
+                .ShouldPassForThe<HttpContext>(async httpContext =>
                 {
                     var cart = ShoppingCart.GetCart(From.Services<MusicStoreContext>(), httpContext);
                     Assert.False((await cart.GetCartItems()).Any(c => c.CartItemId == cartItemId));

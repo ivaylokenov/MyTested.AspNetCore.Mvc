@@ -10,14 +10,15 @@
     using Setups.Controllers;
     using Setups.Models;
     using Xunit;
+    using Setups.ViewComponents;
 
     public class SessionBuilderTests
     {
         [Fact]
         public void WithIdShouldSetIdCorrectly()
         {
-            MyMvc
-                .IsUsingDefaultConfiguration()
+            MyApplication
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -25,8 +26,8 @@
                     services.AddSession();
                 });
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithSession(session => session
                     .WithId("TestId")
                     .AndAlso()
@@ -34,16 +35,16 @@
                 .Calling(c => c.FullSessionAction())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel("TestId");
+                .WithModel("TestId");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
-        
+
         [Fact]
         public void WithoutIdShouldSetRandomId()
         {
-            MyMvc
-                .IsUsingDefaultConfiguration()
+            MyApplication
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -51,15 +52,14 @@
                     services.AddSession();
                 });
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithSession(session => session
                     .WithEntry("HasId", "HasIdValue"))
                 .Calling(c => c.FullSessionAction())
                 .ShouldReturn()
                 .Ok()
-                .ShouldPassFor()
-                .TheActionResult(actionResult =>
+                .ShouldPassForThe<OkObjectResult>(actionResult =>
                 {
                     var okObjectResult = actionResult as OkObjectResult;
 
@@ -71,15 +71,15 @@
                     Assert.NotNull(modelAsString);
                     Assert.NotEmpty(modelAsString);
 
-                    MyMvc.IsUsingDefaultConfiguration();
+                    MyApplication.StartsFrom<DefaultStartup>();
                 });
         }
 
         [Fact]
         public void WithIdAndAnotherSessionShouldThrowException()
         {
-            MyMvc
-                .IsUsingDefaultConfiguration()
+            MyApplication
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddTransient<ISessionStore, CustomSessionStore>();
@@ -88,26 +88,26 @@
             Test.AssertException<InvalidOperationException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
-                        .WithSession((Action<Builders.Contracts.Data.ISessionBuilder>)(session => session
+                    MyController<MvcController>
+                        .Instance()
+                        .WithSession(session => session
                             .WithId("TestId")
-                            .WithEntry("HasId", "HasIdValue")))
+                            .WithEntry("HasId", "HasIdValue"))
                         .Calling(c => c.FullSessionAction())
                         .ShouldReturn()
                         .Ok()
-                        .WithResponseModel("TestId");
+                        .WithModel("TestId");
                 },
-                "Setting session Id requires the registered ISession service to implement IMockedSession.");
+                "Setting session Id requires the registered ISession service to implement ISessionMock.");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithEntryShouldSetCorrectEntry()
         {
-            MyMvc
-                .IsUsingDefaultConfiguration()
+            MyApplication
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -115,23 +115,23 @@
                     services.AddSession();
                 });
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithSession(session => session
                     .WithEntry("ByteEntry", new byte[] { 1, 2, 3 }))
                 .Calling(c => c.FullSessionAction())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel(new byte[] { 1, 2, 3 });
+                .WithModel(new byte[] { 1, 2, 3 });
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
-        
+
         [Fact]
         public void WithIntegerEntryShouldSetCorrectEntry()
         {
-            MyMvc
-                .IsUsingDefaultConfiguration()
+            MyApplication
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -139,23 +139,23 @@
                     services.AddSession();
                 });
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithSession(session => session
                     .WithEntry("IntEntry", 1))
                 .Calling(c => c.FullSessionAction())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel(1);
+                .WithModel(1);
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithEntriesAsObjectShouldWorkCorrectly()
         {
-            MyMvc
-                .IsUsingDefaultConfiguration()
+            MyApplication
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -163,8 +163,8 @@
                     services.AddSession();
                 });
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithSession(session => session
                     .WithEntries(new
                     {
@@ -175,21 +175,21 @@
                 .Calling(c => c.MultipleSessionValuesAction())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel(new SessionResponseModel
+                .WithModel(new SessionResponseModel
                 {
                     String = "test",
                     Integer = 1,
                     Byte = new byte[] { 1, 2, 3 }
                 });
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
-        
+
         [Fact]
         public void WithEntriesAsByteDictionaryShouldWorkCorrectly()
         {
-            MyMvc
-                .IsUsingDefaultConfiguration()
+            MyApplication
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -197,23 +197,23 @@
                     services.AddSession();
                 });
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithSession(session => session
                     .WithEntries(new Dictionary<string, byte[]> { ["ByteEntry"] = new byte[] { 1, 2, 3 }, ["Test"] = null }))
                 .Calling(c => c.FullSessionAction())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel(new byte[] { 1, 2, 3 });
+                .WithModel(new byte[] { 1, 2, 3 });
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithEntriesAsStringDictionaryShouldWorkCorrectly()
         {
-            MyMvc
-                .IsUsingDefaultConfiguration()
+            MyApplication
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -221,23 +221,23 @@
                     services.AddSession();
                 });
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithSession(session => session
                     .WithEntries(new Dictionary<string, string> { ["StringEntry"] = "stringTest" }))
                 .Calling(c => c.FullSessionAction())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel("stringTest");
+                .WithModel("stringTest");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
-        
+
         [Fact]
         public void WithEntriesAsIntDictionaryShouldWorkCorrectly()
         {
-            MyMvc
-                .IsUsingDefaultConfiguration()
+            MyApplication
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.AddMemoryCache();
@@ -245,16 +245,65 @@
                     services.AddSession();
                 });
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithSession(session => session
                     .WithEntries(new Dictionary<string, int> { ["IntEntry"] = 1 }))
                 .Calling(c => c.FullSessionAction())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel(1);
+                .WithModel(1);
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+        
+        [Fact]
+        public void WithIdShouldSetIdCorrectlyInViewComponent()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
+                    services.AddSession();
+                });
+
+            MyViewComponent<FullSessionComponent>
+                .Instance()
+                .WithSession(session => session
+                    .WithId("TestId")
+                    .AndAlso()
+                    .WithEntry("HasId", "HasIdValue"))
+                .InvokedWith(c => c.Invoke())
+                .ShouldReturn()
+                .Content("TestId");
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+        
+        [Fact]
+        public void WithEntryShouldSetCorrectEntryInViewComponent()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
+                    services.AddSession();
+                });
+
+            MyViewComponent<FullSessionComponent>
+                .Instance()
+                .WithSession(session => session
+                    .WithEntry("ByteEntry", new byte[] { 1, 2, 3 }))
+                .InvokedWith(c => c.Invoke())
+                .ShouldReturn()
+                .View()
+                .WithModel(new byte[] { 1, 2, 3 });
+
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }

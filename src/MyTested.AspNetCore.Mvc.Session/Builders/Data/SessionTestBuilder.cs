@@ -19,8 +19,8 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="SessionTestBuilder"/> class.
         /// </summary>
-        /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
-        public SessionTestBuilder(ControllerTestContext testContext)
+        /// <param name="testContext"><see cref="ComponentTestContext"/> containing data about the currently executed assertion chain.</param>
+        public SessionTestBuilder(ComponentTestContext testContext)
             : base(testContext, SessionName)
         {
         }

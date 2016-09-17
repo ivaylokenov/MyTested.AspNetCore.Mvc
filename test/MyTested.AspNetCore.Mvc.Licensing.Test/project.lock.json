@@ -1713,9 +1713,6 @@
         },
         "compile": {
           "ref/netstandard1.3/System.Collections.dll": {}
-        },
-        "runtime": {
-          "lib/portable-net45+win8+wp8+wpa81/_._": {}
         }
       },
       "System.Collections.Concurrent/4.0.12": {
@@ -1901,9 +1898,6 @@
         },
         "compile": {
           "ref/netstandard1.3/System.Diagnostics.Debug.dll": {}
-        },
-        "runtime": {
-          "lib/portable-net45+win8+wp8+wpa81/_._": {}
         }
       },
       "System.Diagnostics.DiagnosticSource/4.0.0": {
@@ -2018,9 +2012,6 @@
         },
         "compile": {
           "ref/netstandard1.0/System.Diagnostics.Tools.dll": {}
-        },
-        "runtime": {
-          "lib/portable-net45+win8+wp8+wpa81/_._": {}
         }
       },
       "System.Diagnostics.Tracing/4.1.0": {
@@ -2032,9 +2023,6 @@
         },
         "compile": {
           "ref/netstandard1.5/System.Diagnostics.Tracing.dll": {}
-        },
-        "runtime": {
-          "lib/portable-net45+win8+wpa81/_._": {}
         }
       },
       "System.Dynamic.Runtime/4.0.11": {
@@ -2072,9 +2060,6 @@
         },
         "compile": {
           "ref/netstandard1.3/System.Globalization.dll": {}
-        },
-        "runtime": {
-          "lib/portable-net45+win8+wp8+wpa81/_._": {}
         }
       },
       "System.Globalization.Calendars/4.0.1": {
@@ -2124,9 +2109,6 @@
         },
         "compile": {
           "ref/netstandard1.5/System.IO.dll": {}
-        },
-        "runtime": {
-          "lib/portable-net45+win8+wp8+wpa81/_._": {}
         }
       },
       "System.IO.Compression/4.1.0": {
@@ -2149,9 +2131,6 @@
         },
         "compile": {
           "ref/netstandard1.3/System.IO.Compression.dll": {}
-        },
-        "runtime": {
-          "lib/portable-net45+win8+wpa81/_._": {}
         },
         "runtimeTargets": {
           "runtimes/unix/lib/netstandard1.3/System.IO.Compression.dll": {
@@ -2416,9 +2395,6 @@
         "compile": {
           "ref/netstandard1.3/System.Net.Http.dll": {}
         },
-        "runtime": {
-          "lib/portable-net45+win8+wpa81/_._": {}
-        },
         "runtimeTargets": {
           "runtimes/unix/lib/netstandard1.6/System.Net.Http.dll": {
             "assetType": "runtime",
@@ -2472,9 +2448,6 @@
         },
         "compile": {
           "ref/netstandard1.3/System.Net.Primitives.dll": {}
-        },
-        "runtime": {
-          "lib/portable-net45+win8+wp8+wpa81/_._": {}
         }
       },
       "System.Net.Requests/4.0.11": {
@@ -2496,9 +2469,6 @@
         },
         "compile": {
           "ref/netstandard1.3/System.Net.Requests.dll": {}
-        },
-        "runtime": {
-          "lib/portable-net45+win8+wp8+wpa81/_._": {}
         },
         "runtimeTargets": {
           "runtimes/unix/lib/netstandard1.3/System.Net.Requests.dll": {
@@ -2643,9 +2613,6 @@
         },
         "compile": {
           "ref/netstandard1.5/System.Reflection.dll": {}
-        },
-        "runtime": {
-          "lib/portable-net45+win8+wp8+wpa81/_._": {}
         }
       },
       "System.Reflection.DispatchProxy/4.0.1": {
@@ -2724,9 +2691,6 @@
         },
         "compile": {
           "ref/netstandard1.0/System.Reflection.Extensions.dll": {}
-        },
-        "runtime": {
-          "lib/portable-net45+win8+wp8+wpa81/_._": {}
         }
       },
       "System.Reflection.Metadata/1.3.0": {
@@ -2764,9 +2728,6 @@
         },
         "compile": {
           "ref/netstandard1.0/System.Reflection.Primitives.dll": {}
-        },
-        "runtime": {
-          "lib/portable-net45+win8+wp8+wpa81/_._": {}
         }
       },
       "System.Reflection.TypeExtensions/4.1.0": {
@@ -2809,9 +2770,6 @@
         },
         "compile": {
           "ref/netstandard1.0/System.Resources.ResourceManager.dll": {}
-        },
-        "runtime": {
-          "lib/portable-net45+win8+wp8+wpa81/_._": {}
         }
       },
       "System.Runtime/4.1.0": {
@@ -2822,9 +2780,6 @@
         },
         "compile": {
           "ref/netstandard1.5/System.Runtime.dll": {}
-        },
-        "runtime": {
-          "lib/portable-net45+win8+wp80+wpa81/_._": {}
         }
       },
       "System.Runtime.Extensions/4.1.0": {
@@ -2836,9 +2791,6 @@
         },
         "compile": {
           "ref/netstandard1.5/System.Runtime.Extensions.dll": {}
-        },
-        "runtime": {
-          "lib/portable-net45+win8+wp8+wpa81/_._": {}
         }
       },
       "System.Runtime.Handles/4.0.1": {
@@ -2864,9 +2816,6 @@
         },
         "compile": {
           "ref/netstandard1.5/System.Runtime.InteropServices.dll": {}
-        },
-        "runtime": {
-          "lib/portable-net45+win8+wpa81/_._": {}
         }
       },
       "System.Runtime.InteropServices.RuntimeInformation/4.0.0": {
@@ -3219,9 +3168,6 @@
         },
         "compile": {
           "ref/netstandard1.3/System.Text.Encoding.dll": {}
-        },
-        "runtime": {
-          "lib/portable-net45+win8+wp8+wpa81/_._": {}
         }
       },
       "System.Text.Encoding.CodePages/4.0.1": {
@@ -3264,9 +3210,6 @@
         },
         "compile": {
           "ref/netstandard1.3/System.Text.Encoding.Extensions.dll": {}
-        },
-        "runtime": {
-          "lib/portable-net45+win8+wp8+wpa81/_._": {}
         }
       },
       "System.Text.Encodings.Web/4.0.0": {
@@ -3348,9 +3291,6 @@
         },
         "compile": {
           "ref/netstandard1.3/System.Threading.Tasks.dll": {}
-        },
-        "runtime": {
-          "lib/portable-net45+win8+wp8+wpa81/_._": {}
         }
       },
       "System.Threading.Tasks.Dataflow/4.6.0": {
@@ -3648,22 +3588,48 @@
           "lib/netstandard1.1/xunit.runner.utility.dotnet.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.Core/1.0.0-preview-final": {
+      "MyTested.AspNetCore.Mvc.Abstractions/1.0.0-preview-final": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.6",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc.Core": "1.0.0",
-          "Microsoft.AspNetCore.Mvc.Formatters.Json": "1.0.0",
           "Microsoft.AspNetCore.TestHost": "1.0.0",
-          "Microsoft.Extensions.Configuration.Binder": "1.0.0",
           "Microsoft.Extensions.Configuration.Json": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Configuration": "1.0.0",
           "MyTested.AspNetCore.Mvc.Licensing": "1.0.0"
         },
         "compile": {
-          "netstandard1.6/MyTested.AspNetCore.Mvc.Core.dll": {}
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Abstractions.dll": {}
         },
         "runtime": {
-          "netstandard1.6/MyTested.AspNetCore.Mvc.Core.dll": {}
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Abstractions.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.Configuration/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.6",
+        "dependencies": {
+          "Microsoft.Extensions.Configuration.Binder": "1.0.0",
+          "System.Collections.Concurrent": "4.0.12"
+        },
+        "compile": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Configuration.dll": {}
+        },
+        "runtime": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Configuration.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.Controllers/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.6",
+        "dependencies": {
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0"
+        },
+        "compile": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Controllers.dll": {}
+        },
+        "runtime": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Controllers.dll": {}
         }
       },
       "MyTested.AspNetCore.Mvc.Licensing/1.0.0-preview-final": {
@@ -3680,20 +3646,20 @@
           "netstandard1.4/MyTested.AspNetCore.Mvc.Licensing.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.Test/1.0.0": {
+      "MyTested.AspNetCore.Mvc.Test.Setups/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v1.0",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc": "1.0.0",
           "Microsoft.NETCore.App": "1.0.0",
-          "MyTested.AspNetCore.Mvc.Core": "1.0.0",
-          "xunit": "2.1.0"
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0",
+          "xunit": "2.2.0"
         },
         "compile": {
-          "netcoreapp1.0/MyTested.AspNetCore.Mvc.Test.dll": {}
+          "netcoreapp1.0/MyTested.AspNetCore.Mvc.Test.Setups.dll": {}
         },
         "runtime": {
-          "netcoreapp1.0/MyTested.AspNetCore.Mvc.Test.dll": {}
+          "netcoreapp1.0/MyTested.AspNetCore.Mvc.Test.Setups.dll": {}
         }
       }
     },
@@ -5273,22 +5239,47 @@
           "lib/net45/xunit.runner.utility.desktop.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.Core/1.0.0-preview-final": {
+      "MyTested.AspNetCore.Mvc.Abstractions/1.0.0-preview-final": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc.Core": "1.0.0",
-          "Microsoft.AspNetCore.Mvc.Formatters.Json": "1.0.0",
           "Microsoft.AspNetCore.TestHost": "1.0.0",
-          "Microsoft.Extensions.Configuration.Binder": "1.0.0",
           "Microsoft.Extensions.Configuration.Json": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Configuration": "1.0.0",
           "MyTested.AspNetCore.Mvc.Licensing": "1.0.0"
         },
         "compile": {
-          "net451/MyTested.AspNetCore.Mvc.Core.dll": {}
+          "net451/MyTested.AspNetCore.Mvc.Abstractions.dll": {}
         },
         "runtime": {
-          "net451/MyTested.AspNetCore.Mvc.Core.dll": {}
+          "net451/MyTested.AspNetCore.Mvc.Abstractions.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.Configuration/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "Microsoft.Extensions.Configuration.Binder": "1.0.0"
+        },
+        "compile": {
+          "net451/MyTested.AspNetCore.Mvc.Configuration.dll": {}
+        },
+        "runtime": {
+          "net451/MyTested.AspNetCore.Mvc.Configuration.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.Controllers/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0"
+        },
+        "compile": {
+          "net451/MyTested.AspNetCore.Mvc.Controllers.dll": {}
+        },
+        "runtime": {
+          "net451/MyTested.AspNetCore.Mvc.Controllers.dll": {}
         }
       },
       "MyTested.AspNetCore.Mvc.Licensing/1.0.0-preview-final": {
@@ -5301,19 +5292,19 @@
           "net451/MyTested.AspNetCore.Mvc.Licensing.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.Test/1.0.0": {
+      "MyTested.AspNetCore.Mvc.Test.Setups/1.0.0": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc": "1.0.0",
-          "MyTested.AspNetCore.Mvc.Core": "1.0.0",
-          "xunit": "2.1.0"
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0",
+          "xunit": "2.2.0"
         },
         "compile": {
-          "net451/MyTested.AspNetCore.Mvc.Test.dll": {}
+          "net451/MyTested.AspNetCore.Mvc.Test.Setups.dll": {}
         },
         "runtime": {
-          "net451/MyTested.AspNetCore.Mvc.Test.dll": {}
+          "net451/MyTested.AspNetCore.Mvc.Test.Setups.dll": {}
         }
       }
     }
@@ -11310,27 +11301,36 @@
         "xunit.runner.utility.nuspec"
       ]
     },
-    "MyTested.AspNetCore.Mvc.Core/1.0.0-preview-final": {
+    "MyTested.AspNetCore.Mvc.Abstractions/1.0.0-preview-final": {
       "type": "project",
-      "path": "../../src/MyTested.AspNetCore.Mvc.Core/project.json",
-      "msbuildProject": "../../src/MyTested.AspNetCore.Mvc.Core/MyTested.AspNetCore.Mvc.Core.xproj"
+      "path": "../../src/MyTested.AspNetCore.Mvc.Abstractions/project.json",
+      "msbuildProject": "../../src/MyTested.AspNetCore.Mvc.Abstractions/MyTested.AspNetCore.Mvc.Abstractions.xproj"
+    },
+    "MyTested.AspNetCore.Mvc.Configuration/1.0.0-preview-final": {
+      "type": "project",
+      "path": "../../src/MyTested.AspNetCore.Mvc.Configuration/project.json",
+      "msbuildProject": "../../src/MyTested.AspNetCore.Mvc.Configuration/MyTested.AspNetCore.Mvc.Configuration.xproj"
+    },
+    "MyTested.AspNetCore.Mvc.Controllers/1.0.0-preview-final": {
+      "type": "project",
+      "path": "../../src/MyTested.AspNetCore.Mvc.Controllers/project.json",
+      "msbuildProject": "../../src/MyTested.AspNetCore.Mvc.Controllers/MyTested.AspNetCore.Mvc.Controllers.xproj"
     },
     "MyTested.AspNetCore.Mvc.Licensing/1.0.0-preview-final": {
       "type": "project",
       "path": "../../src/MyTested.AspNetCore.Mvc.Licensing/project.json",
       "msbuildProject": "../../src/MyTested.AspNetCore.Mvc.Licensing/MyTested.AspNetCore.Mvc.Licensing.xproj"
     },
-    "MyTested.AspNetCore.Mvc.Test/1.0.0": {
+    "MyTested.AspNetCore.Mvc.Test.Setups/1.0.0": {
       "type": "project",
-      "path": "../MyTested.AspNetCore.Mvc.Test/project.json",
-      "msbuildProject": "../MyTested.AspNetCore.Mvc.Test/MyTested.AspNetCore.Mvc.Test.xproj"
+      "path": "../MyTested.AspNetCore.Mvc.Test.Setups/project.json",
+      "msbuildProject": "../MyTested.AspNetCore.Mvc.Test.Setups/MyTested.AspNetCore.Mvc.Test.Setups.xproj"
     }
   },
   "projectFileDependencyGroups": {
     "": [
-      "MyTested.AspNetCore.Mvc.Core >= 1.0.0-*",
-      "MyTested.AspNetCore.Mvc.Licensing >= 1.0.0-*",
-      "MyTested.AspNetCore.Mvc.Test >= 1.0.0-*",
+      "MyTested.AspNetCore.Mvc.Controllers >= 1.0.0-*",
+      "MyTested.AspNetCore.Mvc.Test.Setups >= 1.0.0-*",
       "dotnet-test-xunit >= 2.2.0-*",
       "xunit >= 2.2.0-*"
     ],

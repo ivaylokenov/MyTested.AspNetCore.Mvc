@@ -1,0 +1,34 @@
+{
+  "buildOptions": {
+    "warningsAsErrors": true,
+    "keyFile": "../../tools/Key.snk",
+    "copyToOutput": {
+      "include": [
+        "testconfig.json"
+      ]
+    }
+  },
+
+  "testRunner": "xunit",
+
+  "dependencies": {
+    "dotnet-test-xunit": "2.2.0-*",
+    "xunit": "2.2.0-*",
+    "Microsoft.AspNetCore.Mvc": "1.0.0-*",
+    "MyTested.AspNetCore.Mvc.Controllers": "1.0.0-*",
+    "MyTested.AspNetCore.Mvc.Test.Setups": "1.0.0-*"
+  },
+
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": "dotnet5.4",
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "version": "1.0.0-*",
+          "type": "platform"
+        }
+      }
+    },
+    "net451": {}
+  }
+}

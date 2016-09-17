@@ -13,16 +13,16 @@
     {
         public MemoryCacheBuilderTests()
         {
-            MyMvc
-                .IsUsingDefaultConfiguration()
+            MyApplication
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services => services.AddMemoryCache());
         }
 
         [Fact]
         public void WithEntryShouldSetCorrectValues()
         {
-            MyMvc
-                .Controller<MemoryCacheController>()
+            MyController<MemoryCacheController>
+                .Instance()
                 .WithMemoryCache(memoryCache => memoryCache
                     .WithEntry("Normal", "NormalValid")
                     .AndAlso()
@@ -30,14 +30,14 @@
                 .Calling(c => c.FullMemoryCacheAction(From.Services<IMemoryCache>()))
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel("Normal");
+                .WithModel("Normal");
         }
 
         [Fact]
         public void WithCacheOptionsShouldSetCorrectValues()
         {
-            MyMvc
-                .Controller<MemoryCacheController>()
+            MyController<MemoryCacheController>
+                .Instance()
                 .WithMemoryCache(memoryCache => memoryCache
                     .WithEntry("FullEntry", "FullEntryValid", new MemoryCacheEntryOptions
                     {
@@ -49,7 +49,7 @@
                 .Calling(c => c.FullMemoryCacheAction(From.Services<IMemoryCache>()))
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel(new MockedCacheEntry("FullEntry")
+                .WithModel(new CacheEntryMock("FullEntry")
                 {
                     Value = "FullEntryValid",
                     AbsoluteExpiration = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
@@ -62,8 +62,8 @@
         [Fact]
         public void WithCacheBuilderShouldSetCorrectValues()
         {
-            MyMvc
-                .Controller<MemoryCacheController>()
+            MyController<MemoryCacheController>
+                .Instance()
                 .WithMemoryCache(memoryCache => memoryCache
                     .WithEntry(entry => entry
                         .WithKey("FullEntry")
@@ -80,7 +80,7 @@
                 .Calling(c => c.FullMemoryCacheAction(From.Services<IMemoryCache>()))
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel(new MockedCacheEntry("FullEntry")
+                .WithModel(new CacheEntryMock("FullEntry")
                 {
                     Value = "FullEntryValid",
                     AbsoluteExpiration = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
@@ -95,22 +95,22 @@
         {
             Test.AssertException<InvalidOperationException>(() =>
             {
-                MyMvc
-                    .Controller<MemoryCacheController>()
+                MyController<MemoryCacheController>
+                    .Instance()
                     .WithMemoryCache(memoryCache => memoryCache
-                        .WithEntry(entry => entry.WithValue("WithoutKey")))
+                        .WithEntry(entry => entry.WithKey(null)))
                     .Calling(c => c.FullMemoryCacheAction(From.Services<IMemoryCache>()))
                     .ShouldReturn()
                     .Ok();
             },
-            "Cache entry key must be provided. 'WithKey' method must be called on the memory cache entry builder in order to run this test case successfully.");
+            "Cache entry key must be provided. 'WithKey' method must be called with а non-null value.");
         }
 
         [Fact]
         public void WithCacheEntriesShouldSetCorrectValues()
         {
-            MyMvc
-                .Controller<MemoryCacheController>()
+            MyController<MemoryCacheController>
+                .Instance()
                 .WithMemoryCache(memoryCache => memoryCache
                     .WithEntries(new Dictionary<object, object>
                     {
@@ -121,7 +121,7 @@
                 .Calling(c => c.FullMemoryCacheAction(From.Services<IMemoryCache>()))
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel(new Dictionary<object, object>
+                .WithModel(new Dictionary<object, object>
                 {
                     ["first"] = "firstValue",
                     ["second"] = "secondValue",
@@ -131,7 +131,7 @@
 
         public void Dispose()
         {
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }

@@ -925,22 +925,75 @@
           "lib/net45/_._": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.Core/1.0.0-preview-final": {
+      "MyTested.AspNetCore.Mvc.Abstractions/1.0.0-preview-final": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc.Core": "1.0.0",
-          "Microsoft.AspNetCore.Mvc.Formatters.Json": "1.0.0",
           "Microsoft.AspNetCore.TestHost": "1.0.0",
-          "Microsoft.Extensions.Configuration.Binder": "1.0.0",
           "Microsoft.Extensions.Configuration.Json": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Configuration": "1.0.0",
           "MyTested.AspNetCore.Mvc.Licensing": "1.0.0"
+        },
+        "compile": {
+          "net451/MyTested.AspNetCore.Mvc.Abstractions.dll": {}
+        },
+        "runtime": {
+          "net451/MyTested.AspNetCore.Mvc.Abstractions.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.Configuration/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "Microsoft.Extensions.Configuration.Binder": "1.0.0"
+        },
+        "compile": {
+          "net451/MyTested.AspNetCore.Mvc.Configuration.dll": {}
+        },
+        "runtime": {
+          "net451/MyTested.AspNetCore.Mvc.Configuration.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.Controllers/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0"
+        },
+        "compile": {
+          "net451/MyTested.AspNetCore.Mvc.Controllers.dll": {}
+        },
+        "runtime": {
+          "net451/MyTested.AspNetCore.Mvc.Controllers.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.Core/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "MyTested.AspNetCore.Mvc.Controllers": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Routing": "1.0.0"
         },
         "compile": {
           "net451/MyTested.AspNetCore.Mvc.Core.dll": {}
         },
         "runtime": {
           "net451/MyTested.AspNetCore.Mvc.Core.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.Http/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc.Formatters.Json": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0"
+        },
+        "compile": {
+          "net451/MyTested.AspNetCore.Mvc.Http.dll": {}
+        },
+        "runtime": {
+          "net451/MyTested.AspNetCore.Mvc.Http.dll": {}
         }
       },
       "MyTested.AspNetCore.Mvc.Licensing/1.0.0-preview-final": {
@@ -951,6 +1004,33 @@
         },
         "runtime": {
           "net451/MyTested.AspNetCore.Mvc.Licensing.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.ModelState/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc.DataAnnotations": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0"
+        },
+        "compile": {
+          "net451/MyTested.AspNetCore.Mvc.ModelState.dll": {}
+        },
+        "runtime": {
+          "net451/MyTested.AspNetCore.Mvc.ModelState.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.Routing/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "MyTested.AspNetCore.Mvc.Http": "1.0.0"
+        },
+        "compile": {
+          "net451/MyTested.AspNetCore.Mvc.Routing.dll": {}
+        },
+        "runtime": {
+          "net451/MyTested.AspNetCore.Mvc.Routing.dll": {}
         }
       }
     },
@@ -3108,22 +3188,76 @@
           "lib/netstandard1.3/System.Xml.XDocument.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.Core/1.0.0-preview-final": {
+      "MyTested.AspNetCore.Mvc.Abstractions/1.0.0-preview-final": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.6",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc.Core": "1.0.0",
-          "Microsoft.AspNetCore.Mvc.Formatters.Json": "1.0.0",
           "Microsoft.AspNetCore.TestHost": "1.0.0",
-          "Microsoft.Extensions.Configuration.Binder": "1.0.0",
           "Microsoft.Extensions.Configuration.Json": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Configuration": "1.0.0",
           "MyTested.AspNetCore.Mvc.Licensing": "1.0.0"
+        },
+        "compile": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Abstractions.dll": {}
+        },
+        "runtime": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Abstractions.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.Configuration/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.6",
+        "dependencies": {
+          "Microsoft.Extensions.Configuration.Binder": "1.0.0",
+          "System.Collections.Concurrent": "4.0.12"
+        },
+        "compile": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Configuration.dll": {}
+        },
+        "runtime": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Configuration.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.Controllers/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.6",
+        "dependencies": {
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0"
+        },
+        "compile": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Controllers.dll": {}
+        },
+        "runtime": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Controllers.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.Core/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.6",
+        "dependencies": {
+          "MyTested.AspNetCore.Mvc.Controllers": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Routing": "1.0.0"
         },
         "compile": {
           "netstandard1.6/MyTested.AspNetCore.Mvc.Core.dll": {}
         },
         "runtime": {
           "netstandard1.6/MyTested.AspNetCore.Mvc.Core.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.Http/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.6",
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc.Formatters.Json": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0"
+        },
+        "compile": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Http.dll": {}
+        },
+        "runtime": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Http.dll": {}
         }
       },
       "MyTested.AspNetCore.Mvc.Licensing/1.0.0-preview-final": {
@@ -3138,6 +3272,33 @@
         },
         "runtime": {
           "netstandard1.4/MyTested.AspNetCore.Mvc.Licensing.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.ModelState/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.6",
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc.DataAnnotations": "1.0.0",
+          "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0"
+        },
+        "compile": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.ModelState.dll": {}
+        },
+        "runtime": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.ModelState.dll": {}
+        }
+      },
+      "MyTested.AspNetCore.Mvc.Routing/1.0.0-preview-final": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.6",
+        "dependencies": {
+          "MyTested.AspNetCore.Mvc.Http": "1.0.0"
+        },
+        "compile": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Routing.dll": {}
+        },
+        "runtime": {
+          "netstandard1.6/MyTested.AspNetCore.Mvc.Routing.dll": {}
         }
       }
     }
@@ -7469,21 +7630,52 @@
         "ref/xamarinwatchos10/_._"
       ]
     },
+    "MyTested.AspNetCore.Mvc.Abstractions/1.0.0-preview-final": {
+      "type": "project",
+      "path": "../MyTested.AspNetCore.Mvc.Abstractions/project.json",
+      "msbuildProject": "../MyTested.AspNetCore.Mvc.Abstractions/MyTested.AspNetCore.Mvc.Abstractions.xproj"
+    },
+    "MyTested.AspNetCore.Mvc.Configuration/1.0.0-preview-final": {
+      "type": "project",
+      "path": "../MyTested.AspNetCore.Mvc.Configuration/project.json",
+      "msbuildProject": "../MyTested.AspNetCore.Mvc.Configuration/MyTested.AspNetCore.Mvc.Configuration.xproj"
+    },
+    "MyTested.AspNetCore.Mvc.Controllers/1.0.0-preview-final": {
+      "type": "project",
+      "path": "../MyTested.AspNetCore.Mvc.Controllers/project.json",
+      "msbuildProject": "../MyTested.AspNetCore.Mvc.Controllers/MyTested.AspNetCore.Mvc.Controllers.xproj"
+    },
     "MyTested.AspNetCore.Mvc.Core/1.0.0-preview-final": {
       "type": "project",
       "path": "../MyTested.AspNetCore.Mvc.Core/project.json",
       "msbuildProject": "../MyTested.AspNetCore.Mvc.Core/MyTested.AspNetCore.Mvc.Core.xproj"
     },
+    "MyTested.AspNetCore.Mvc.Http/1.0.0-preview-final": {
+      "type": "project",
+      "path": "../MyTested.AspNetCore.Mvc.Http/project.json",
+      "msbuildProject": "../MyTested.AspNetCore.Mvc.Http/MyTested.AspNetCore.Mvc.Http.xproj"
+    },
     "MyTested.AspNetCore.Mvc.Licensing/1.0.0-preview-final": {
       "type": "project",
       "path": "../MyTested.AspNetCore.Mvc.Licensing/project.json",
       "msbuildProject": "../MyTested.AspNetCore.Mvc.Licensing/MyTested.AspNetCore.Mvc.Licensing.xproj"
+    },
+    "MyTested.AspNetCore.Mvc.ModelState/1.0.0-preview-final": {
+      "type": "project",
+      "path": "../MyTested.AspNetCore.Mvc.ModelState/project.json",
+      "msbuildProject": "../MyTested.AspNetCore.Mvc.ModelState/MyTested.AspNetCore.Mvc.ModelState.xproj"
+    },
+    "MyTested.AspNetCore.Mvc.Routing/1.0.0-preview-final": {
+      "type": "project",
+      "path": "../MyTested.AspNetCore.Mvc.Routing/project.json",
+      "msbuildProject": "../MyTested.AspNetCore.Mvc.Routing/MyTested.AspNetCore.Mvc.Routing.xproj"
     }
   },
   "projectFileDependencyGroups": {
     "": [
       "Microsoft.AspNetCore.Mvc.DataAnnotations >= 1.0.0-*",
-      "MyTested.AspNetCore.Mvc.Core >= 1.0.0-*"
+      "MyTested.AspNetCore.Mvc.Core >= 1.0.0-*",
+      "MyTested.AspNetCore.Mvc.ModelState >= 1.0.0-*"
     ],
     ".NETFramework,Version=v4.5.1": [],
     ".NETStandard,Version=v1.6": []

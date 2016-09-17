@@ -10,8 +10,8 @@
         [Fact]
         public void ValidatingAntiForgeryTokenShouldNotThrowExceptionWithTheAttribute()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.AntiForgeryToken())
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes.ValidatingAntiForgeryToken());
@@ -23,8 +23,8 @@
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.NormalActionWithAttributes())
                         .ShouldHave()
                         .ActionAttributes(attributes => attributes.ValidatingAntiForgeryToken());

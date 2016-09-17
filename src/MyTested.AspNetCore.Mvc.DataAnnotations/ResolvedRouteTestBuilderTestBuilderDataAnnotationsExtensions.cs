@@ -1,8 +1,8 @@
 ﻿namespace MyTested.AspNetCore.Mvc
 {
     using System.Linq;
-    using Builders.Contracts.Routes;
-    using Builders.Routes;
+    using Builders.Contracts.Routing;
+    using Builders.Routing;
 
     /// <summary>
     /// Contains <see cref="Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary"/> extension methods for <see cref="IResolvedRouteTestBuilder"/>.

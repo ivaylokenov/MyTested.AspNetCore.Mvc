@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Internal;
-    using Internal.Application;
+    using Internal.Services;
     using Internal.Caching;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Caching.Memory;
@@ -11,53 +11,79 @@
     using Setups.Controllers;
     using Setups.Startups;
     using Xunit;
+    using Setups.ViewComponents;
+    using Setups;
 
     public class ServicesTests
     {
         [Fact]
-        public void MockedMemoryCacheShouldBeRegistedWithAddedCaching()
+        public void MockMemoryCacheShouldBeRegistedWithAddedCaching()
         {
-            MyMvc
-                .IsUsingDefaultConfiguration()
+            MyApplication
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services => services.AddMemoryCache());
 
-            Assert.IsAssignableFrom<MockedMemoryCache>(TestServiceProvider.GetService<IMemoryCache>());
+            Assert.IsAssignableFrom<MemoryCacheMock>(TestServiceProvider.GetService<IMemoryCache>());
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
-        public void MockedMemoryCacheShouldBeDifferentForEveryCallSynchronously()
+        public void MockMemoryCacheShouldBeDifferentForEveryCallSynchronously()
         {
-            MyMvc
-                .IsUsingDefaultConfiguration()
+            MyApplication
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services => services.AddMemoryCache());
 
             // second call should not have cache entries
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .WithMemoryCache(cache => cache.WithEntry("test", "value"))
                 .Calling(c => c.MemoryCacheAction())
                 .ShouldReturn()
                 .Ok();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.MemoryCacheAction())
                 .ShouldReturn()
                 .BadRequest();
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+        
+        [Fact]
+        public void MockMemoryCacheShouldBeDifferentForEveryViewComponentCallSynchronously()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services => services.AddMemoryCache());
+
+            // second call should not have cache entries
+            MyViewComponent<MemoryCacheComponent>
+                .Instance()
+                .WithMemoryCache(cache => cache.WithEntry("test", "value"))
+                .InvokedWith(c => c.Invoke())
+                .ShouldReturn()
+                .View();
+
+            MyViewComponent<MemoryCacheComponent>
+                .Instance()
+                .InvokedWith(c => c.Invoke())
+                .ShouldReturn()
+                .Content("No cache");
+
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
-        public void MockedMemoryCacheShouldBeDifferentForEveryCallSynchronouslyWithCachedControllerBuilder()
+        public void MockMemoryCacheShouldBeDifferentForEveryCallSynchronouslyWithCachedControllerBuilder()
         {
-            MyMvc
-                .IsUsingDefaultConfiguration()
+            MyApplication
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services => services.AddMemoryCache());
 
-            var controller = MyMvc.Controller<MvcController>();
+            var controller = new MyController<MvcController>();
 
             // second call should not have cache entries
             controller
@@ -71,41 +97,41 @@
                 .ShouldReturn()
                 .BadRequest();
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
-        public void DefaultConfigurationShouldSetMockedMemoryCache()
+        public void DefaultConfigurationShouldSetMockMemoryCache()
         {
-            MyMvc
-                .IsUsingDefaultConfiguration()
+            MyApplication
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services => services.AddMemoryCache());
 
             var memoryCache = TestServiceProvider.GetService<IMemoryCache>();
 
             Assert.NotNull(memoryCache);
-            Assert.IsAssignableFrom<MockedMemoryCache>(memoryCache);
+            Assert.IsAssignableFrom<MemoryCacheMock>(memoryCache);
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
-        public void CustomMemoryCacheShouldOverrideTheMockedOne()
+        public void CustomMemoryCacheShouldOverrideTheMockOne()
         {
-            MyMvc.StartsFrom<CachingDataStartup>();
+            MyApplication.StartsFrom<CachingDataStartup>();
 
             var memoryCache = TestServiceProvider.GetService<IMemoryCache>();
 
             Assert.NotNull(memoryCache);
             Assert.IsAssignableFrom<CustomMemoryCache>(memoryCache);
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
-        public void ExplicitMockedMemoryCacheShouldOverrideIt()
+        public void ExplicitMockMemoryCacheShouldOverrideIt()
         {
-            MyMvc
+            MyApplication
                 .StartsFrom<DataStartup>()
                 .WithServices(services =>
                 {
@@ -115,19 +141,19 @@
             var memoryCache = TestServiceProvider.GetService<IMemoryCache>();
 
             Assert.NotNull(memoryCache);
-            Assert.IsAssignableFrom<MockedMemoryCache>(memoryCache);
+            Assert.IsAssignableFrom<MemoryCacheMock>(memoryCache);
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
-        public void MockedMemoryCacheShouldBeDifferentForEveryCallAsynchronously()
+        public void MockMemoryCacheShouldBeDifferentForEveryCallAsynchronously()
         {
             Task
                 .Run(async () =>
                 {
-                    MyMvc
-                        .IsUsingDefaultConfiguration()
+                    MyApplication
+                        .StartsFrom<DefaultStartup>()
                         .WithServices(services => services.AddMemoryCache());
 
                     TestHelper.GlobalTestCleanup += () => TestServiceProvider.GetService<IMemoryCache>()?.Dispose();
@@ -186,8 +212,9 @@
                     Assert.Equal("fourth", fourthValue);
                     Assert.Equal("fifth", fifthValue);
 
-                    MyMvc.IsUsingDefaultConfiguration();
+                    MyApplication.StartsFrom<DefaultStartup>();
                 })
+                .ConfigureAwait(false)
                 .GetAwaiter()
                 .GetResult();
         }

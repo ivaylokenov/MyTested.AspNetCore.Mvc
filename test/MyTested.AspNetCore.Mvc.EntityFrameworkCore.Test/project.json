@@ -1,7 +1,10 @@
 ﻿{
   "buildOptions": {
     "warningsAsErrors": true,
-    "keyFile": "../../tools/Key.snk"
+    "keyFile": "../../tools/Key.snk",
+    "copyToOutput": [
+      "testconfig.json"
+    ]
   },
 
   "testRunner": "xunit",
@@ -11,16 +14,15 @@
     "xunit": "2.2.0-*",
     "Microsoft.AspNetCore.Mvc": "1.0.0-*",
     "Microsoft.EntityFrameworkCore.SqlServer": "1.0.0-*",
+    "MyTested.AspNetCore.Mvc.Controllers": "1.0.0-*",
     "MyTested.AspNetCore.Mvc.EntityFrameworkCore": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.Test": "1.0.0-*"
+    "MyTested.AspNetCore.Mvc.ViewComponents": "1.0.0-*",
+    "MyTested.AspNetCore.Mvc.Test.Setups": "1.0.0-*"
   },
 
   "frameworks": {
     "netcoreapp1.0": {
-      "imports": [
-        "dnxcore50",
-        "portable-net451+win8"
-      ],
+      "imports": "dotnet5.4",
       "dependencies": {
         "Microsoft.NETCore.App": {
           "version": "1.0.0-*",

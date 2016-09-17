@@ -13,41 +13,68 @@
     /// <summary>
     /// Used for building mocked <see cref="IMemoryCache"/> entry.
     /// </summary>
-    public class MemoryCacheEntryTestBuilder : MemoryCacheEntryBuilder, IAndMemoryCacheEntryTestBuilder
+    public class MemoryCacheEntryTestBuilder : MemoryCacheEntryBuilder, IMemoryCacheEntryKeyTestBuilder, IAndMemoryCacheEntryTestBuilder
     {
-        private readonly ControllerTestContext testContext;
         private readonly ICollection<Action<ICacheEntry, ICacheEntry>> validations;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MemoryCacheEntryTestBuilder"/> class.
         /// </summary>
-        /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
-        public MemoryCacheEntryTestBuilder(ControllerTestContext testContext)
+        /// <param name="testContext"><see cref="ComponentTestContext"/> containing data about the currently executed assertion chain.</param>
+        public MemoryCacheEntryTestBuilder(ComponentTestContext testContext)
         {
-            CommonValidator.CheckForNullReference(testContext, nameof(testContext));
+            CommonValidator.CheckForNullReference(testContext, nameof(ComponentTestContext));
 
-            this.testContext = testContext;
             this.validations = new List<Action<ICacheEntry, ICacheEntry>>();
+            this.TestContext = testContext;
+        }
+
+        internal ComponentTestContext TestContext { get; private set; }
+
+        public new IAndMemoryCacheEntryTestBuilder WithKey(object key)
+        {
+            base.WithKey(key);
+            return this;
         }
 
         /// <inheritdoc />
-        public override IAndMemoryCacheEntryTestBuilder WithValue(object value)
+        public new IAndMemoryCacheEntryTestBuilder WithValue(object value)
         {
             this.validations.Add((expected, actual) =>
             {
                 if (Reflection.AreNotDeeplyEqual(expected.Value, actual.Value))
                 {
                     this.ThrowNewDataProviderAssertionException(
-                        "to have entry with the given value",
+                        $"to have entry with '{this.MemoryCacheEntry.Key}' key and the given value",
                         "in fact it was different");
                 }
             });
 
-            return base.WithValue(value);
+            base.WithValue(value);
+            return this;
+        }
+        
+        /// <inheritdoc />
+        public IMemoryCacheEntryDetailsTestBuilder<TValue> WithValueOfType<TValue>()
+        {
+            this.validations.Add((expected, actual) =>
+            {
+                var expectedType = typeof(TValue);
+                var actualType = actual.Value.GetType();
+
+                if (Reflection.AreDifferentTypes(expectedType, actualType))
+                {
+                    this.ThrowNewDataProviderAssertionException(
+                        $"to have entry with '{this.MemoryCacheEntry.Key}' key and value of {expectedType.ToFriendlyTypeName()} type",
+                        $"in fact found {actualType.ToFriendlyTypeName()}");
+                }
+            });
+
+            return new MemoryCacheEntryDetailsTestBuilder<TValue>(this);
         }
 
         /// <inheritdoc />
-        public override IAndMemoryCacheEntryTestBuilder WithAbsoluteExpiration(DateTimeOffset? absoluteExpiration)
+        public new IAndMemoryCacheEntryTestBuilder WithAbsoluteExpiration(DateTimeOffset? absoluteExpiration)
         {
             this.validations.Add((expected, actual) =>
             {
@@ -57,16 +84,17 @@
                 if (expectedExpiration != actualExpiration)
                 {
                     this.ThrowNewDataProviderAssertionException(
-                        $"to have entry with {expectedExpiration.GetErrorMessageName()} absolute expiration",
+                        $"to have entry with '{this.MemoryCacheEntry.Key}' key and {expectedExpiration.GetErrorMessageName()} absolute expiration",
                         $"in fact found {actualExpiration.GetErrorMessageName()}");
                 }
             });
 
-            return base.WithAbsoluteExpiration(absoluteExpiration);
+            base.WithAbsoluteExpiration(absoluteExpiration);
+            return this;
         }
 
         /// <inheritdoc />
-        public override IAndMemoryCacheEntryTestBuilder WithAbsoluteExpirationRelativeToNow(TimeSpan? absoluteExpirationRelativeToNow)
+        public new IAndMemoryCacheEntryTestBuilder WithAbsoluteExpirationRelativeToNow(TimeSpan? absoluteExpirationRelativeToNow)
         {
             this.validations.Add((expected, actual) =>
             {
@@ -76,16 +104,17 @@
                 if (expectedRelativeExpiration != actualRelativeExpiration)
                 {
                     this.ThrowNewDataProviderAssertionException(
-                        $"to have entry with {expectedRelativeExpiration.GetErrorMessageName()} absolute expiration relative to now",
+                        $"to have entry with '{this.MemoryCacheEntry.Key}' key and {expectedRelativeExpiration.GetErrorMessageName()} absolute expiration relative to now",
                         $"in fact found {actualRelativeExpiration.GetErrorMessageName()}");
                 }
             });
 
-            return base.WithAbsoluteExpirationRelativeToNow(absoluteExpirationRelativeToNow);
+            base.WithAbsoluteExpirationRelativeToNow(absoluteExpirationRelativeToNow);
+            return this;
         }
 
         /// <inheritdoc />
-        public override IAndMemoryCacheEntryTestBuilder WithPriority(CacheItemPriority priority)
+        public new IAndMemoryCacheEntryTestBuilder WithPriority(CacheItemPriority priority)
         {
             this.validations.Add((expected, actual) =>
             {
@@ -95,16 +124,17 @@
                 if (expected.Priority != actual.Priority)
                 {
                     this.ThrowNewDataProviderAssertionException(
-                        $"to have entry with {expectedPriority.GetErrorMessageName(includeQuotes: false)} priority",
+                        $"to have entry with '{this.MemoryCacheEntry.Key}' key and {expectedPriority.GetErrorMessageName(includeQuotes: false)} priority",
                         $"in fact found {actualPriority.GetErrorMessageName(includeQuotes: false)}");
                 }
             });
 
-            return base.WithPriority(priority);
+            base.WithPriority(priority);
+            return this;
         }
 
         /// <inheritdoc />
-        public override IAndMemoryCacheEntryTestBuilder WithSlidingExpiration(TimeSpan? slidingExpiration)
+        public new IAndMemoryCacheEntryTestBuilder WithSlidingExpiration(TimeSpan? slidingExpiration)
         {
             this.validations.Add((expected, actual) =>
             {
@@ -114,23 +144,26 @@
                 if (expectedSlidingExpiration != actualSlidingExpiration)
                 {
                     this.ThrowNewDataProviderAssertionException(
-                        $"to have entry with {expectedSlidingExpiration.GetErrorMessageName()} sliding expiration",
+                        $"to have entry with '{this.MemoryCacheEntry.Key}' key and {expectedSlidingExpiration.GetErrorMessageName()} sliding expiration",
                         $"in fact found {actualSlidingExpiration.GetErrorMessageName()}");
                 }
             });
 
-            return base.WithSlidingExpiration(slidingExpiration);
+            base.WithSlidingExpiration(slidingExpiration);
+            return this;
         }
 
-        internal ICollection<Action<ICacheEntry, ICacheEntry>> GetMockedMemoryCacheEntryValidations()
+        /// <inheritdoc />
+        public new IMemoryCacheEntryTestBuilder AndAlso() => this;
+
+        internal ICollection<Action<ICacheEntry, ICacheEntry>> GetMemoryCacheEntryMockValidations()
             => this.validations;
 
-        private void ThrowNewDataProviderAssertionException(string expectedValue, string actualValue)
+        internal void ThrowNewDataProviderAssertionException(string expectedValue, string actualValue)
         {
             throw new DataProviderAssertionException(string.Format(
-                "When calling {0} action in {1} expected memory cache {2}, but {3}.",
-                this.testContext.ActionName,
-                this.testContext.Controller.GetName(),
+                "{0} memory cache {1}, but {2}.",
+                this.TestContext.ExceptionMessagePrefix,
                 expectedValue,
                 actualValue));
         }

@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface IResponseCookieTestBuilder
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface IResponseCookieTestBuilder
+   ">
+    <meta name="generator" content="docfx 2.5.0.0">
+    {% seo %}
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../index.html">
+                MY TESTED ASP.NET CORE MVC DOCS
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content">
+              
+              
+              <h1 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Http_IResponseCookieTestBuilder" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder">Interface IResponseCookieTestBuilder
+              </h1>
+              <div class="markdown level0 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Used for testing <span class="xref">Microsoft.AspNetCore.Http.HttpResponse</span> cookie.</p>
+</div>
+              <div class="markdown level0 conceptual"></div>
+              <h6><strong>Namespace</strong>:MyTested.AspNetCore.Mvc.Builders.Contracts.Http</h6>
+              <h6><strong>Assembly</strong>:MyTested.AspNetCore.Mvc.Http.dll</h6>
+              <h5 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Http_IResponseCookieTestBuilder_syntax">Syntax</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">public interface IResponseCookieTestBuilder</code></pre>
+              </div>
+              <h3 id="methods">Methods
+              </h3>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/documentation/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Http_IResponseCookieTestBuilder_WithDomain_System_String_.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.WithDomain(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/documentation/src/MyTested.AspNetCore.Mvc.Http/Builders/Contracts/Http/IResponseCookieTestBuilder.cs/#L43">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Http_IResponseCookieTestBuilder_WithDomain_System_String_" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.WithDomain(System.String)">WithDomain(String)</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Tests whether the <span class="xref">Microsoft.Net.Http.Headers.SetCookieHeaderValue.Domain</span> property is the same as provided one.</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IAndResponseCookieTestBuilder WithDomain(string domain)</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.String</span></td>
+                    <td><em>domain</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Expected domain of the cookie.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IAndResponseCookieTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IAndHttpResponseTestBuilder</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/documentation/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Http_IResponseCookieTestBuilder_WithExpired_System_Nullable_System_DateTimeOffset__.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.WithExpired(System.Nullable%7BSystem.DateTimeOffset%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/documentation/src/MyTested.AspNetCore.Mvc.Http/Builders/Contracts/Http/IResponseCookieTestBuilder.cs/#L50">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Http_IResponseCookieTestBuilder_WithExpired_System_Nullable_System_DateTimeOffset__" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.WithExpired(System.Nullable{System.DateTimeOffset})">WithExpired(Nullable&lt;DateTimeOffset&gt;)</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Tests whether the <span class="xref">Microsoft.Net.Http.Headers.SetCookieHeaderValue.Expires</span> property is the same as provided one.</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IAndResponseCookieTestBuilder WithExpired(DateTimeOffset? expires)</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.DateTimeOffset</span>&gt;</td>
+                    <td><em>expires</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Expected expiration date time offset of the cookie.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IAndResponseCookieTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IAndHttpResponseTestBuilder</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/documentation/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Http_IResponseCookieTestBuilder_WithHttpOnly_System_Boolean_.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.WithHttpOnly(System.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/documentation/src/MyTested.AspNetCore.Mvc.Http/Builders/Contracts/Http/IResponseCookieTestBuilder.cs/#L57">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Http_IResponseCookieTestBuilder_WithHttpOnly_System_Boolean_" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.WithHttpOnly(System.Boolean)">WithHttpOnly(Boolean)</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Tests whether the <span class="xref">Microsoft.Net.Http.Headers.SetCookieHeaderValue.HttpOnly</span> property is the same as provided one.</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IAndResponseCookieTestBuilder WithHttpOnly(bool httpOnly)</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.Boolean</span></td>
+                    <td><em>httpOnly</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Expected <span class="xref">Microsoft.Net.Http.Headers.SetCookieHeaderValue.HttpOnly</span> property of the cookie.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IAndResponseCookieTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IAndHttpResponseTestBuilder</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/documentation/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Http_IResponseCookieTestBuilder_WithMaxAge_System_Nullable_System_TimeSpan__.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.WithMaxAge(System.Nullable%7BSystem.TimeSpan%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/documentation/src/MyTested.AspNetCore.Mvc.Http/Builders/Contracts/Http/IResponseCookieTestBuilder.cs/#L64">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Http_IResponseCookieTestBuilder_WithMaxAge_System_Nullable_System_TimeSpan__" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.WithMaxAge(System.Nullable{System.TimeSpan})">WithMaxAge(Nullable&lt;TimeSpan&gt;)</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Tests whether the <span class="xref">Microsoft.Net.Http.Headers.SetCookieHeaderValue.MaxAge</span> property is the same as provided one.</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IAndResponseCookieTestBuilder WithMaxAge(TimeSpan? maxAge)</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.TimeSpan</span>&gt;</td>
+                    <td><em>maxAge</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Expected <span class="xref">Microsoft.Net.Http.Headers.SetCookieHeaderValue.MaxAge</span> property of the cookie.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IAndResponseCookieTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IAndHttpResponseTestBuilder</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/documentation/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Http_IResponseCookieTestBuilder_WithName_System_String_.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.WithName(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/documentation/src/MyTested.AspNetCore.Mvc.Http/Builders/Contracts/Http/IResponseCookieTestBuilder.cs/#L15">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Http_IResponseCookieTestBuilder_WithName_System_String_" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.WithName(System.String)">WithName(String)</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Sets the expected <span class="xref">Microsoft.Net.Http.Headers.SetCookieHeaderValue.Name</span> of the tested cookie.</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IAndResponseCookieTestBuilder WithName(string name)</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.String</span></td>
+                    <td><em>name</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Name to set on the cookie.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IAndResponseCookieTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IAndHttpResponseTestBuilder</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/documentation/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Http_IResponseCookieTestBuilder_WithPath_System_String_.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.WithPath(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/documentation/src/MyTested.AspNetCore.Mvc.Http/Builders/Contracts/Http/IResponseCookieTestBuilder.cs/#L71">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Http_IResponseCookieTestBuilder_WithPath_System_String_" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.WithPath(System.String)">WithPath(String)</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Tests whether the <span class="xref">Microsoft.Net.Http.Headers.SetCookieHeaderValue.Path</span> property is the same as provided one.</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IAndResponseCookieTestBuilder WithPath(string path)</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.String</span></td>
+                    <td><em>path</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Expected <span class="xref">Microsoft.Net.Http.Headers.SetCookieHeaderValue.Path</span> property of the cookie.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IAndResponseCookieTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IAndHttpResponseTestBuilder</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/documentation/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Http_IResponseCookieTestBuilder_WithSecure_System_Boolean_.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.WithSecure(System.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/documentation/src/MyTested.AspNetCore.Mvc.Http/Builders/Contracts/Http/IResponseCookieTestBuilder.cs/#L78">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Http_IResponseCookieTestBuilder_WithSecure_System_Boolean_" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.WithSecure(System.Boolean)">WithSecure(Boolean)</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Tests whether the <span class="xref">Microsoft.Net.Http.Headers.SetCookieHeaderValue.Secure</span> property is the same as provided one.</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IAndResponseCookieTestBuilder WithSecure(bool secure)</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.Boolean</span></td>
+                    <td><em>secure</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Expected <span class="xref">Microsoft.Net.Http.Headers.SetCookieHeaderValue.Secure</span> property of the cookie.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IAndResponseCookieTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IAndHttpResponseTestBuilder</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/documentation/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Http_IResponseCookieTestBuilder_WithValue_System_Action_System_String__.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.WithValue(System.Action%7BSystem.String%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/documentation/src/MyTested.AspNetCore.Mvc.Http/Builders/Contracts/Http/IResponseCookieTestBuilder.cs/#L29">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Http_IResponseCookieTestBuilder_WithValue_System_Action_System_String__" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.WithValue(System.Action{System.String})">WithValue(Action&lt;String&gt;)</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Tests whether the <span class="xref">Microsoft.Net.Http.Headers.SetCookieHeaderValue.Value</span> passes the provided assertions.</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IAndResponseCookieTestBuilder WithValue(Action&lt;string&gt; assertions)</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.Action</span>&lt;<span class="xref">System.String</span>&gt;</td>
+                    <td><em>assertions</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Action containing assertions on the cookie value.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IAndResponseCookieTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IAndHttpResponseTestBuilder</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/documentation/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Http_IResponseCookieTestBuilder_WithValue_System_Func_System_String_System_Boolean__.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.WithValue(System.Func%7BSystem.String%2CSystem.Boolean%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/documentation/src/MyTested.AspNetCore.Mvc.Http/Builders/Contracts/Http/IResponseCookieTestBuilder.cs/#L36">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Http_IResponseCookieTestBuilder_WithValue_System_Func_System_String_System_Boolean__" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.WithValue(System.Func{System.String,System.Boolean})">WithValue(Func&lt;String, Boolean&gt;)</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Tests whether the <span class="xref">Microsoft.Net.Http.Headers.SetCookieHeaderValue.Value</span> passes the provided predicate.</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IAndResponseCookieTestBuilder WithValue(Func&lt;string, bool&gt; predicate)</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.Func</span>&lt;<span class="xref">System.String</span>, <span class="xref">System.Boolean</span>&gt;</td>
+                    <td><em>predicate</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Predicate testing the cookie value.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IAndResponseCookieTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IAndHttpResponseTestBuilder</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/documentation/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Http_IResponseCookieTestBuilder_WithValue_System_String_.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.WithValue(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/documentation/src/MyTested.AspNetCore.Mvc.Http/Builders/Contracts/Http/IResponseCookieTestBuilder.cs/#L22">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Http_IResponseCookieTestBuilder_WithValue_System_String_" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.WithValue(System.String)">WithValue(String)</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Tests whether the <span class="xref">Microsoft.Net.Http.Headers.SetCookieHeaderValue.Value</span> property is the same as the provided one.</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IAndResponseCookieTestBuilder WithValue(string value)</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.String</span></td>
+                    <td><em>value</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Expected value of the cookie.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IAndResponseCookieTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IAndHttpResponseTestBuilder</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+            </article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/documentation/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Http_IResponseCookieTestBuilder.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IResponseCookieTestBuilder%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/documentation/src/MyTested.AspNetCore.Mvc.Http/Builders/Contracts/Http/IResponseCookieTestBuilder.cs/#L8" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © 2015-2016 <strong><a href="http://mytestedasp.net">MyTestedASP.NET</a></strong>. All Rights Reserved. Generated by <strong><a href="http://dotnet.github.io/docfx/">DocFX</a></strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

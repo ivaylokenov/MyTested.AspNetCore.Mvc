@@ -18,7 +18,7 @@
                 .WithOptions(options => options
                     .For<AppSettings>(settings => settings.CacheDbResults = true))
                 .WithDbContext(dbContext => dbContext
-                    .WithSet<MusicStoreContext, Album>(albums => albums
+                    .WithSet<Album>(albums => albums
                         .AddRange(TestAlbumDataProvider.GetAlbums())))
                 .Calling(c => c.Index(
                     From.Services<MusicStoreContext>(),
@@ -30,10 +30,7 @@
                 .ShouldReturn()
                 .View()
                 .WithModelOfType<List<Album>>()
-                .Passing(albums =>
-                {
-                    Assert.Equal(6, albums.Count);
-                });
+                .Passing(albums => Assert.Equal(6, albums.Count));
         }
         
         [Fact]

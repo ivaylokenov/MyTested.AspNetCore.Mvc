@@ -1,8 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc
 {
-    using Internal;
-    using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.Extensions.DependencyInjection;
+    using Utilities.Validators;
 
     /// <summary>
     /// Contains view features extension methods for <see cref="IServiceCollection"/>.
@@ -10,13 +9,19 @@
     public static class ServiceCollectionViewFeaturesExtensions
     {
         /// <summary>
-        /// Replaces the default <see cref="ITempDataProvider"/> with a mocked implementation.
+        /// Adds view features testing services.
         /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <returns>The same <see cref="IServiceCollection"/>.</returns>
-        public static IServiceCollection ReplaceTempDataProvider(this IServiceCollection serviceCollection)
+        public static IServiceCollection AddViewFeaturesTesting(this IServiceCollection serviceCollection)
         {
-            return serviceCollection.ReplaceSingleton<ITempDataProvider, MockedTempDataProvider>();
+            CommonValidator.CheckForNullReference(serviceCollection, nameof(serviceCollection));
+
+            serviceCollection
+                .AddViewComponentsTesting()
+                .ReplaceTempDataProvider();
+
+            return serviceCollection;
         }
     }
 }

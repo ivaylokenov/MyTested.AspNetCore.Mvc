@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using MusicStore.Components;
 using MusicStore.Models;
+using System.Threading.Tasks;
 
 namespace MusicStore
 {
@@ -151,7 +152,7 @@ namespace MusicStore
             });
 
             //Populates the MusicStore sample data
-            SampleData.InitializeMusicStoreDatabaseAsync(app.ApplicationServices).Wait();
+            SampleData.InitializeMusicStoreDatabase(app.ApplicationServices, false);
         }
     }
 }

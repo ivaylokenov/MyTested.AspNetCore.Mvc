@@ -1,0 +1,74 @@
+{
+  "metadata": [
+    {
+      "src": [
+        {
+          "files": [
+            "**/**project.json"
+          ],
+          "exclude": [
+            "**/obj/**",
+            "**/bin/**",
+            "./**"
+          ],
+		  "src": "../../src"
+        }
+      ],
+      "dest": "api",
+	  "filter": "filterConfig.yml"
+    }
+  ],
+  "build": {
+    "content": [
+      {
+        "files": [
+          "api/**.yml",
+          "api/index.md"
+        ]
+      },
+      {
+        "files": [
+          "tutorial/**.md",
+          "tutorial/**/toc.yml",
+          "guide/**.md",
+          "guide/**/toc.yml",
+          "troubleshoot/**.md",
+          "troubleshoot/**/toc.yml",
+          "toc.yml",
+          "*.md"
+        ],
+        "exclude": [
+          "obj/**",
+          "./**"
+        ]
+      }
+    ],
+    "resource": [
+      {
+        "files": [
+          "images/**"
+        ],
+        "exclude": [
+          "obj/**",
+          "./**"
+        ]
+      }
+    ],
+    "overwrite": [
+      {
+        "files": [
+          "apidoc/**.md"
+        ],
+        "exclude": [
+          "obj/**",
+          "./**"
+        ]
+      }
+    ],
+    "dest": "..",
+    "template": [
+      "default",
+	  "custom"
+    ]
+  }
+}

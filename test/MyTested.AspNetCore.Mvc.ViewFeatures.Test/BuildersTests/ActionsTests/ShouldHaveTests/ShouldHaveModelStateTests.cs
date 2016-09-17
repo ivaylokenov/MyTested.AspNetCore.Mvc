@@ -13,8 +13,8 @@
         {
             var requestModelWithErrors = TestObjectFactory.GetRequestModelWithErrors();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ModelStateCheck(requestModelWithErrors))
                 .ShouldHave()
                 .ModelState(modelState => modelState.For<RequestModel>()
@@ -31,18 +31,18 @@
             Test.AssertException<InvalidOperationException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ModelStateCheck(requestModelWithErrors))
                         .ShouldHave()
                         .ModelState(modelState => modelState.For<RequestModel>()
                             .ContainingNoErrorFor(r => r.NonRequiredString)
                             .ContainingErrorFor(r => r.Integer)
-                            .ContainingErrorFor(r => r.RequiredString)
-                            .ShouldPassFor()
-                            .TheModel(model => model != null));
+                            .ContainingErrorFor(r => r.RequiredString))
+                        .AndAlso()
+                        .ShouldPassForThe<ResponseModel>(model => model != null);
                 },
-                "AndProvideTheModel can be used when there is response model from the action.");
+                "ResponseModel could not be resolved for the 'ShouldPassForThe<TComponent>' method call.");
         }
     }
 }

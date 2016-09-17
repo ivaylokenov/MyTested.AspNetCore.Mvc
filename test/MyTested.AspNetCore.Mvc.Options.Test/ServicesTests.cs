@@ -1,19 +1,21 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test
 {
     using Internal.Application;
+    using Internal.Services;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Options;
     using Setups.Common;
     using Xunit;
+    using Setups;
 
     public class ServicesTests
     {
         [Fact]
         public void OptionsLifetimesShouldBeReplacedWithScoped()
         {
-            MyMvc
-                .IsUsingDefaultConfiguration()
+            MyApplication
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     var configuration = new ConfigurationBuilder()
@@ -32,7 +34,7 @@
 
             Assert.Equal(ServiceLifetime.Scoped, TestServiceProvider.GetServiceLifetime(typeof(IOptions<>)));
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }

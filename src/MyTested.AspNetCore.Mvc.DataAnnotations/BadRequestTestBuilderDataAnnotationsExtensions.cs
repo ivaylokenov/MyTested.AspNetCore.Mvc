@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Builders.ActionResults.BadRequest;
@@ -53,11 +54,10 @@
             if (expectedKeysCount != actualKeysCount)
             {
                 throw new BadRequestResultAssertionException(string.Format(
-                        "When calling {0} action in {1} expected bad request model state dictionary to contain {2} keys, but found {3}.",
-                        actualBadRequestTestBuilder.ActionName,
-                        actualBadRequestTestBuilder.Controller.GetName(),
-                        expectedKeysCount,
-                        actualKeysCount));
+                    "{0} bad request model state dictionary to contain {1} keys, but found {2}.",
+                    actualBadRequestTestBuilder.TestContext.ExceptionMessagePrefix,
+                    expectedKeysCount,
+                    actualKeysCount));
             }
 
             var expectedModelStateSortedKeys = modelStateKeys.OrderBy(k => k).ToList();
@@ -67,9 +67,8 @@
                 if (!actualModelState.ContainsKey(expectedKey))
                 {
                     throw new BadRequestResultAssertionException(string.Format(
-                        "When calling {0} action in {1} expected bad request model state dictionary to contain {2} key, but none found.",
-                        actualBadRequestTestBuilder.ActionName,
-                        actualBadRequestTestBuilder.Controller.GetName(),
+                        "{0} bad request model state dictionary to contain {1} key, but none found.",
+                        actualBadRequestTestBuilder.TestContext.ExceptionMessagePrefix,
                         expectedKey));
                 }
 
@@ -79,9 +78,8 @@
                 if (expectedSortedErrors.Count != actualSortedErrors.Count)
                 {
                     throw new BadRequestResultAssertionException(string.Format(
-                        "When calling {0} action in {1} expected bad request model state dictionary to contain {2} errors for {3} key, but found {4}.",
-                        actualBadRequestTestBuilder.ActionName,
-                        actualBadRequestTestBuilder.Controller.GetName(),
+                        "{0} bad request model state dictionary to contain {1} errors for {2} key, but found {3}.",
+                        actualBadRequestTestBuilder.TestContext.ExceptionMessagePrefix,
                         expectedSortedErrors.Count,
                         expectedKey,
                         actualSortedErrors.Count));
@@ -101,18 +99,24 @@
         /// <summary>
         /// Tests whether <see cref="BadRequestObjectResult"/> contains specific model state errors using test builder.
         /// </summary>
-        /// <typeparam name="TRequestModel">Type of model for which the model state errors will be tested.</typeparam>
         /// <param name="badRequestTestBuilder">Instance of <see cref="IBadRequestTestBuilder"/> type.</param>
+        /// <param name="modelStateTestBuilder">Model state errors test builder.</param>
         /// <returns>The same <see cref="IAndBadRequestTestBuilder"/>.</returns>
-        public static IModelErrorTestBuilder<TRequestModel> WithModelStateErrorFor<TRequestModel>(this IBadRequestTestBuilder badRequestTestBuilder)
+        public static IAndBadRequestTestBuilder WithModelStateError(
+            this IBadRequestTestBuilder badRequestTestBuilder,
+            Action<IModelStateTestBuilder> modelStateTestBuilder)
         {
             var actualBadRequestTestBuilder = GetBadRequestTestBuilder(badRequestTestBuilder);
 
             actualBadRequestTestBuilder.TestContext.Model = actualBadRequestTestBuilder.GetBadRequestObjectResultValue();
 
-            return new ModelErrorTestBuilder<TRequestModel>(
+            var newModelStateTestBuilder = new ModelStateTestBuilder(
                 actualBadRequestTestBuilder.TestContext,
                 modelState: actualBadRequestTestBuilder.GetModelStateFromSerializableError(actualBadRequestTestBuilder.TestContext.Model));
+
+            modelStateTestBuilder(newModelStateTestBuilder);
+
+            return actualBadRequestTestBuilder;
         }
 
         private static BadRequestTestBuilder<BadRequestObjectResult> GetBadRequestTestBuilder(IBadRequestTestBuilder badRequestTestBuilder)
@@ -124,9 +128,8 @@
                 var badRequestTestBuilderBase = (BaseTestBuilderWithInvokedAction)badRequestTestBuilder;
 
                 throw new BadRequestResultAssertionException(string.Format(
-                    "When calling {0} action in {1} expected bad request result to contain error object, but it could not be found.",
-                    badRequestTestBuilderBase.ActionName,
-                    badRequestTestBuilderBase.Controller.GetName()));
+                    "{0} bad request result to contain error object, but it could not be found.",
+                    badRequestTestBuilderBase.TestContext.ExceptionMessagePrefix));
             }
 
             return actualBadRequestTestBuilder;

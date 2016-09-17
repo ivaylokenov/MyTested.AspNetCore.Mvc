@@ -9,8 +9,8 @@
         [Fact]
         public void ToValidModelStateShouldNotThrowExceptionWithValidModelState()
         {
-            MyMvc
-                .Routes()
+            MyRouting
+                .Configuration()
                 .ShouldMap(request => request
                     .WithPath("/Normal/ActionWithModel/5")
                     .WithMethod(HttpMethod.Post)
@@ -24,8 +24,8 @@
             Test.AssertException<RouteAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Routes()
+                    MyRouting
+                        .Configuration()
                         .ShouldMap(request => request
                             .WithPath("/Normal/Invalid/5")
                             .WithMethod(HttpMethod.Post)
@@ -41,8 +41,8 @@
             Test.AssertException<RouteAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Routes()
+                    MyRouting
+                        .Configuration()
                         .ShouldMap(request => request
                             .WithPath("/Normal/ActionWithModel/5")
                             .WithMethod(HttpMethod.Post)
@@ -55,8 +55,8 @@
         [Fact]
         public void ToInvalidModelStateShouldNotThrowExceptionWithInvalidModelState()
         {
-            MyMvc
-                .Routes()
+            MyRouting
+                .Configuration()
                 .ShouldMap(request => request
                     .WithPath("/Normal/ActionWithModel/5")
                     .WithMethod(HttpMethod.Post)
@@ -67,8 +67,8 @@
         [Fact]
         public void ToInvalidModelStateShouldNotThrowExceptionWithInvalidModelStateAndCorrectNumberOfErrors()
         {
-            MyMvc
-                .Routes()
+            MyRouting
+                .Configuration()
                 .ShouldMap(request => request
                     .WithPath("/Normal/ActionWithModel/5")
                     .WithMethod(HttpMethod.Post)
@@ -82,8 +82,8 @@
             Test.AssertException<RouteAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Routes()
+                    MyRouting
+                        .Configuration()
                         .ShouldMap(request => request
                             .WithPath("/Normal/ActionWithModel/5")
                             .WithMethod(HttpMethod.Post)
@@ -99,8 +99,8 @@
             Test.AssertException<RouteAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Routes()
+                    MyRouting
+                        .Configuration()
                         .ShouldMap(request => request
                             .WithPath("/Normal/ActionWithModel/5")
                             .WithMethod(HttpMethod.Post)
@@ -116,8 +116,8 @@
             Test.AssertException<RouteAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Routes()
+                    MyRouting
+                        .Configuration()
                         .ShouldMap(request => request
                             .WithPath("/Normal/ActionWithModel/5")
                             .WithMethod(HttpMethod.Post)
@@ -133,8 +133,8 @@
             Test.AssertException<RouteAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Routes()
+                    MyRouting
+                        .Configuration()
                         .ShouldMap(request => request
                             .WithPath("/Normal/Invalid/5")
                             .WithMethod(HttpMethod.Post)

@@ -4,8 +4,9 @@
     using Setups;
     using Setups.Controllers;
     using Setups.Models;
+    using Setups.ViewComponents;
     using Xunit;
-    
+
     public class ModelErrorDetailsTestBuilderTests
     {
         [Fact]
@@ -13,8 +14,8 @@
         {
             var requestModelWithErrors = TestObjectFactory.GetRequestModelWithErrors();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ModelStateCheck(requestModelWithErrors))
                 .ShouldHave()
                 .ModelState(modelState => modelState.For<RequestModel>()
@@ -40,8 +41,8 @@
             Test.AssertException<ModelErrorAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ModelStateCheck(requestModelWithErrors))
                         .ShouldHave()
                         .ModelState(modelState => modelState.For<RequestModel>()
@@ -58,8 +59,8 @@
         {
             var requestModelWithErrors = TestObjectFactory.GetRequestModelWithErrors();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ModelStateCheck(requestModelWithErrors))
                 .ShouldHave()
                 .ModelState(modelState => modelState.For<RequestModel>()
@@ -76,8 +77,8 @@
             Test.AssertException<ModelErrorAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ModelStateCheck(requestModelWithErrors))
                         .ShouldHave()
                         .ModelState(modelState => modelState.For<RequestModel>()
@@ -93,8 +94,8 @@
         {
             var requestModelWithErrors = TestObjectFactory.GetRequestModelWithErrors();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ModelStateCheck(requestModelWithErrors))
                 .ShouldHave()
                 .ModelState(modelState => modelState.For<RequestModel>()
@@ -111,8 +112,8 @@
             Test.AssertException<ModelErrorAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ModelStateCheck(requestModelWithErrors))
                         .ShouldHave()
                         .ModelState(modelState => modelState.For<RequestModel>()
@@ -128,8 +129,8 @@
         {
             var requestModelWithErrors = TestObjectFactory.GetRequestModelWithErrors();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ModelStateCheck(requestModelWithErrors))
                 .ShouldHave()
                 .ModelState(modelState => modelState.For<RequestModel>()
@@ -146,8 +147,8 @@
             Test.AssertException<ModelErrorAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ModelStateCheck(requestModelWithErrors))
                         .ShouldHave()
                         .ModelState(modelState => modelState.For<RequestModel>()
@@ -161,13 +162,40 @@
         [Fact]
         public void NestedModelsShouldBeResolvedCorrectlyWithModelStateFor()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ModelStateWithNestedError())
                 .ShouldHave()
                 .ModelState(modelState => modelState.For<NestedModel>()
                     .ContainingErrorFor(m => m.Nested.Integer)
                     .ContainingErrorFor(m => m.Nested.String));
+        }
+
+        [Fact]
+        public void ThatEqualsShouldNotThrowExceptionWhenProvidedMessageIsValidInViewComponent()
+        {
+            MyViewComponent<NormalComponent>
+                .Instance()
+                .WithSetup(vc =>
+                {
+                    vc.ModelState.AddModelError("RequiredString", "The RequiredString field is required.");
+                    vc.ModelState.AddModelError("Integer", $"The field Integer must be between {1} and {int.MaxValue}.");
+                })
+                .InvokedWith(c => c.Invoke())
+                .ShouldHave()
+                .ModelState(modelState => modelState.For<RequestModel>()
+                    .ContainingNoErrorFor(m => m.NonRequiredString)
+                    .ContainingErrorFor(m => m.RequiredString).ThatEquals("The RequiredString field is required.")
+                    .AndAlso()
+                    .ContainingErrorFor(m => m.RequiredString)
+                    .AndAlso()
+                    .ContainingNoErrorFor(m => m.NotValidateInteger)
+                    .AndAlso()
+                    .ContainingError("RequiredString")
+                    .ContainingErrorFor(m => m.Integer).ThatEquals($"The field Integer must be between {1} and {int.MaxValue}.")
+                    .ContainingError("RequiredString")
+                    .ContainingError("Integer")
+                    .ContainingNoErrorFor(m => m.NotValidateInteger));
         }
     }
 }

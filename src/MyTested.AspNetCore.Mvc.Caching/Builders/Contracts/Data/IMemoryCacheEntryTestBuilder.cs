@@ -4,24 +4,24 @@
     using Microsoft.Extensions.Caching.Memory;
 
     /// <summary>
-    /// Used for building and testing mocked <see cref="IMemoryCache"/> entry.
+    /// Used for testing <see cref="IMemoryCache"/> entry.
     /// </summary>
     public interface IMemoryCacheEntryTestBuilder
     {
-        /// <summary>
-        /// Sets the key of the built <see cref="IMemoryCache"/> entry.
-        /// </summary>
-        /// <param name="key">Cache entry key to set.</param>
-        /// <returns>The same <see cref="IAndMemoryCacheEntryTestBuilder"/>.</returns>
-        IAndMemoryCacheEntryTestBuilder WithKey(object key);
-
         /// <summary>
         /// Sets the value of the built <see cref="IMemoryCache"/> entry.
         /// </summary>
         /// <param name="value">Cache entry value to set.</param>
         /// <returns>The same <see cref="IAndMemoryCacheEntryTestBuilder"/>.</returns>
         IAndMemoryCacheEntryTestBuilder WithValue(object value);
-        
+
+        /// <summary>
+        /// Tests whether the built <see cref="IMemoryCache"/> entry has value of the provided type.
+        /// </summary>
+        /// <typeparam name="TValue">Type of cache entry value.</typeparam>
+        /// <returns>Test builder of <see cref="IMemoryCacheEntryDetailsTestBuilder{TValue}"/> type.</returns>
+        IMemoryCacheEntryDetailsTestBuilder<TValue> WithValueOfType<TValue>();
+
         /// <summary>
         /// Sets the <see cref="MemoryCacheEntryOptions.AbsoluteExpiration"/> value to the built <see cref="IMemoryCache"/> entry.
         /// </summary>

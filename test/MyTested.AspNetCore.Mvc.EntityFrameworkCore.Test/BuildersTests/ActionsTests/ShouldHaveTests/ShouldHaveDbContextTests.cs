@@ -5,22 +5,24 @@
     using Microsoft.EntityFrameworkCore;
     using Setups;
     using Setups.Common;
+    using Setups.Controllers;
     using Xunit;
+    using EntityFrameworkCore.Test;
 
     public class ShouldHaveDbContextTests
     {
         [Fact]
         public void DbContextShouldNotThrowExceptionWithCorrectAssertions()
         {
-            MyMvc
-                .IsUsingDefaultConfiguration()
+            MyApplication
+                .StartsFrom<TestStartup>()
                 .WithServices(services =>
                 {
                     services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase());
                 });
 
-            MyMvc
-                .Controller<DbContextController>()
+            MyController<DbContextController>
+                .Instance()
                 .Calling(c => c.Create(new CustomModel { Id = 1, Name = "Test" }))
                 .ShouldHave()
                 .DbContext(dbContext => dbContext
@@ -32,21 +34,21 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
         
         [Fact]
         public void DbContextShouldNotThrowExceptionWithCorrectPredicate()
         {
-            MyMvc
-                .IsUsingDefaultConfiguration()
+            MyApplication
+                .StartsFrom<TestStartup>()
                 .WithServices(services =>
                 {
                     services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase());
                 });
 
-            MyMvc
-                .Controller<DbContextController>()
+            MyController<DbContextController>
+                .Instance()
                 .Calling(c => c.Create(new CustomModel { Id = 1, Name = "Test" }))
                 .ShouldHave()
                 .DbContext(dbContext => dbContext
@@ -55,21 +57,21 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void DbContextShouldThrowExceptionWithIncorrectPredicate()
         {
-            MyMvc
-                .IsUsingDefaultConfiguration()
+            MyApplication
+                .StartsFrom<TestStartup>()
                 .WithServices(services =>
                 {
                     services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase());
                 });
 
-            MyMvc
-                .Controller<DbContextController>()
+            MyController<DbContextController>
+                .Instance()
                 .Calling(c => c.Create(new CustomModel { Id = 1, Name = "Test" }))
                 .ShouldHave()
                 .DbContext(dbContext => dbContext
@@ -80,8 +82,8 @@
             
             Test.AssertException<DataProviderAssertionException>(() =>
             {
-                MyMvc
-                    .Controller<DbContextController>()
+                MyController<DbContextController>
+                    .Instance()
                     .Calling(c => c.Create(new CustomModel { Id = 2, Name = "Test" }))
                     .ShouldHave()
                     .DbContext(dbContext => dbContext
@@ -92,21 +94,21 @@
             },
             "When calling Create action in DbContextController expected the CustomDbContext entities to pass the given predicate, but it failed.");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void DbContextWithSetShouldNotThrowExceptionWithCorrectAssertions()
         {
-            MyMvc
-                .IsUsingDefaultConfiguration()
+            MyApplication
+                .StartsFrom<TestStartup>()
                 .WithServices(services =>
                 {
                     services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase());
                 });
 
-            MyMvc
-                .Controller<DbContextController>()
+            MyController<DbContextController>
+                .Instance()
                 .Calling(c => c.Create(new CustomModel { Id = 1, Name = "Test" }))
                 .ShouldHave()
                 .DbContext(dbContext => dbContext
@@ -118,21 +120,21 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void DbContextWithSetShouldNotThrowExceptionWithCorrectPredicate()
         {
-            MyMvc
-                .IsUsingDefaultConfiguration()
+            MyApplication
+                .StartsFrom<TestStartup>()
                 .WithServices(services =>
                 {
                     services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase());
                 });
 
-            MyMvc
-                .Controller<DbContextController>()
+            MyController<DbContextController>
+                .Instance()
                 .Calling(c => c.Create(new CustomModel { Id = 1, Name = "Test" }))
                 .ShouldHave()
                 .DbContext(dbContext => dbContext
@@ -141,21 +143,21 @@
                 .ShouldReturn()
                 .Ok();
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void DbContextWithSetShouldThrowExceptionWithIncorrectPredicate()
         {
-            MyMvc
-                .IsUsingDefaultConfiguration()
+            MyApplication
+                .StartsFrom<TestStartup>()
                 .WithServices(services =>
                 {
                     services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase());
                 });
 
-            MyMvc
-                .Controller<DbContextController>()
+            MyController<DbContextController>
+                .Instance()
                 .Calling(c => c.Create(new CustomModel { Id = 1, Name = "Test" }))
                 .ShouldHave()
                 .DbContext(dbContext => dbContext
@@ -166,8 +168,8 @@
 
             Test.AssertException<DataProviderAssertionException>(() =>
             {
-                MyMvc
-                    .Controller<DbContextController>()
+                MyController<DbContextController>
+                    .Instance()
                     .Calling(c => c.Create(new CustomModel { Id = 2, Name = "Test" }))
                     .ShouldHave()
                     .DbContext(dbContext => dbContext
@@ -178,7 +180,7 @@
             },
             "When calling Create action in DbContextController expected the CustomDbContext set of CustomModel to pass the given predicate, but it failed.");
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }

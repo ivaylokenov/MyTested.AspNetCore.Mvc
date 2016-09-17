@@ -18,7 +18,6 @@
     <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.targets" Condition="'$(VSToolsPath)' != ''" />
-  
   <Target Name="AfterBuild">
     <Exec Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'" Command="dotnet pack --configuration Release --output ../../artifacts --no-build"/>
   </Target>

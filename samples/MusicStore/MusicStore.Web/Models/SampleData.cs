@@ -17,34 +17,33 @@ namespace MusicStore.Models
         const string defaultAdminUserName = "DefaultAdminUserName";
         const string defaultAdminPassword = "DefaultAdminPassword";
 
-        public static async Task InitializeMusicStoreDatabaseAsync(IServiceProvider serviceProvider, bool createUsers = true)
+        public static void InitializeMusicStoreDatabase(IServiceProvider serviceProvider, bool createUsers = true)
         {
             using (var serviceScope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var db = serviceScope.ServiceProvider.GetService<MusicStoreContext>();
 
-                if (await db.Database.EnsureCreatedAsync())
+                if (db.Database.EnsureCreated())
                 {
-                    await InsertTestData(serviceProvider);
+                    InsertTestData(serviceProvider);
                     if (createUsers)
                     {
-                        await CreateAdminUser(serviceProvider);
+                        CreateAdminUser(serviceProvider);
                     }
                 }
             }
         }
 
-        private static async Task InsertTestData(IServiceProvider serviceProvider)
+        private static void InsertTestData(IServiceProvider serviceProvider)
         {
             var albums = GetAlbums(imgUrl, Genres, Artists);
 
-            await AddOrUpdateAsync(serviceProvider, g => g.GenreId, Genres.Select(genre => genre.Value));
-            await AddOrUpdateAsync(serviceProvider, a => a.ArtistId, Artists.Select(artist => artist.Value));
-            await AddOrUpdateAsync(serviceProvider, a => a.AlbumId, albums);
+            AddOrUpdate(serviceProvider, g => g.GenreId, Genres.Select(genre => genre.Value));
+            AddOrUpdate(serviceProvider, a => a.ArtistId, Artists.Select(artist => artist.Value));
+            AddOrUpdate(serviceProvider, a => a.AlbumId, albums);
         }
-
-        // TODO [EF] This may be replaced by a first class mechanism in EF
-        private static async Task AddOrUpdateAsync<TEntity>(
+        
+        private static void AddOrUpdate<TEntity>(
             IServiceProvider serviceProvider,
             Func<TEntity, object> propertyToMatch, IEnumerable<TEntity> entities)
             where TEntity : class
@@ -67,7 +66,7 @@ namespace MusicStore.Models
                         : EntityState.Added;
                 }
 
-                await db.SaveChangesAsync();
+                db.SaveChanges();
             }
         }
 
@@ -76,7 +75,7 @@ namespace MusicStore.Models
         /// </summary>
         /// <param name="serviceProvider"></param>
         /// <returns></returns>
-        private static async Task CreateAdminUser(IServiceProvider serviceProvider)
+        private static void CreateAdminUser(IServiceProvider serviceProvider)
         {
             var env = serviceProvider.GetService<IHostingEnvironment>();
 
@@ -96,13 +95,13 @@ namespace MusicStore.Models
             //    await roleManager.CreateAsync(new IdentityRole(adminRole));
             //}
 
-            var user = await userManager.FindByNameAsync(configuration[defaultAdminUserName]);
+            var user = userManager.FindByNameAsync(configuration[defaultAdminUserName]).ConfigureAwait(false).GetAwaiter().GetResult();
             if (user == null)
             {
                 user = new ApplicationUser { UserName = configuration[defaultAdminUserName] };
-                await userManager.CreateAsync(user, configuration[defaultAdminPassword]);
+                userManager.CreateAsync(user, configuration[defaultAdminPassword]).ConfigureAwait(false).GetAwaiter().GetResult();
                 //await userManager.AddToRoleAsync(user, adminRole);
-                await userManager.AddClaimAsync(user, new Claim("ManageStore", "Allowed"));
+                userManager.AddClaimAsync(user, new Claim("ManageStore", "Allowed")).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
 #if TESTING
@@ -112,10 +111,10 @@ namespace MusicStore.Models
                 for (int i = 0; i < 100; ++i)
                 {
                     var email = string.Format("User{0:D3}@example.com", i);
-                    var normalUser = await userManager.FindByEmailAsync(email);
+                    var normalUser = userManager.FindByEmailAsync(email).ConfigureAwait(false).GetAwaiter().GetResult();
                     if (normalUser == null)
                     {
-                        await userManager.CreateAsync(new ApplicationUser { UserName = email, Email = email }, "Password~!1");
+                        userManager.CreateAsync(new ApplicationUser { UserName = email, Email = email }, "Password~!1").ConfigureAwait(false).GetAwaiter().GetResult();
                     }
                 }
             }

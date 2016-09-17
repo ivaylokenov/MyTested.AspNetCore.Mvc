@@ -2,25 +2,27 @@
 {
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
-    using Setups;
+    using Setups.Controllers;
     using Setups.Common;
     using Xunit;
+    using Setups;
+    using EntityFrameworkCore.Test;
 
     public class ControllerBuilderTests
     {
         [Fact]
         public void WithEntitesShouldSetupDbContext()
         {
-            MyMvc
-                .IsUsingDefaultConfiguration()
+            MyApplication
+                .StartsFrom<TestStartup>()
                 .WithServices(services =>
                 {
                     services.AddDbContext<CustomDbContext>(options =>
                         options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=TestDb;Trusted_Connection=True;MultipleActiveResultSets=true;Connect Timeout=30;"));
                 });
 
-            MyMvc
-                .Controller<DbContextController>()
+            MyController<DbContextController>
+                .Instance()
                 .WithDbContext(dbContext => dbContext
                     .WithEntities<CustomDbContext>(db => db
                         .Models.Add(new CustomModel
@@ -30,11 +32,11 @@
                 .Calling(c => c.Find(1))
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModelOfType<CustomModel>()
+                .WithModelOfType<CustomModel>()
                 .Passing(m => m.Name == "Test");
 
-            MyMvc
-                .Controller<DbContextController>()
+            MyController<DbContextController>
+                .Instance()
                 .WithDbContext(dbContext => dbContext
                     .WithEntities(db => db.Add(new CustomModel
                         {
@@ -44,11 +46,11 @@
                 .Calling(c => c.Find(1))
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModelOfType<CustomModel>()
+                .WithModelOfType<CustomModel>()
                 .Passing(m => m.Name == "Test");
 
-            MyMvc
-                .Controller<DbContextController>()
+            MyController<DbContextController>
+                .Instance()
                 .WithDbContext(dbContext => dbContext
                     .WithEntities<CustomDbContext>(db => db
                         .Models.Add(new CustomModel
@@ -60,28 +62,28 @@
                 .ShouldReturn()
                 .NotFound();
 
-            MyMvc
-                .Controller<DbContextController>()
+            MyController<DbContextController>
+                .Instance()
                 .Calling(c => c.Find(1))
                 .ShouldReturn()
                 .NotFound();
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
         public void WithSetShouldSetupDbContext()
         {
-            MyMvc
-                .IsUsingDefaultConfiguration()
+            MyApplication
+                .StartsFrom<TestStartup>()
                 .WithServices(services =>
                 {
                     services.AddDbContext<CustomDbContext>(options =>
                         options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=TestDb;Trusted_Connection=True;MultipleActiveResultSets=true;Connect Timeout=30;"));
                 });
 
-            MyMvc
-                .Controller<DbContextController>()
+            MyController<DbContextController>
+                .Instance()
                 .WithDbContext(dbContext => dbContext
                     .WithSet<CustomDbContext, CustomModel>(set => set
                         .Add(new CustomModel
@@ -92,11 +94,11 @@
                 .Calling(c => c.Find(1))
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModelOfType<CustomModel>()
+                .WithModelOfType<CustomModel>()
                 .Passing(m => m.Name == "Test");
 
-            MyMvc
-                .Controller<DbContextController>()
+            MyController<DbContextController>
+                .Instance()
                 .WithDbContext(dbContext => dbContext
                     .WithSet<CustomDbContext, CustomModel>(set => set
                         .Add(new CustomModel
@@ -108,13 +110,13 @@
                 .ShouldReturn()
                 .NotFound();
 
-            MyMvc
-                .Controller<DbContextController>()
+            MyController<DbContextController>
+                .Instance()
                 .Calling(c => c.Find(1))
                 .ShouldReturn()
                 .NotFound();
 
-            MyMvc.IsUsingDefaultConfiguration();
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }

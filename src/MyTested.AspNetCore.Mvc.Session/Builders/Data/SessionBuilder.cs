@@ -31,10 +31,10 @@
         /// <inheritdoc />
         public IAndSessionBuilder WithId(string sessionId)
         {
-            var mockedSession = this.Session as IMockedSession;
+            var mockedSession = this.Session as ISessionMock;
             if (mockedSession == null)
             {
-                throw new InvalidOperationException("Setting session Id requires the registered ISession service to implement IMockedSession.");
+                throw new InvalidOperationException("Setting session Id requires the registered ISession service to implement ISessionMock.");
             }
 
             mockedSession.Id = sessionId;

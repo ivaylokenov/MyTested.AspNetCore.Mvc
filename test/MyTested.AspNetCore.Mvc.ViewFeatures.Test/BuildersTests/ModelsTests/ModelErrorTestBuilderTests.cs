@@ -14,12 +14,12 @@
         {
             var requestBodyWithErrors = TestObjectFactory.GetRequestModelWithErrors();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ModelStateCheck(requestBodyWithErrors))
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel(requestBodyWithErrors)
+                .WithModel(requestBodyWithErrors)
                 .ContainingErrorFor(r => r.RequiredString);
         }
 
@@ -31,12 +31,12 @@
             Test.AssertException<ModelErrorAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ModelStateCheck(requestBody))
                         .ShouldReturn()
                         .Ok()
-                        .WithResponseModel(requestBody)
+                        .WithModel(requestBody)
                         .ContainingErrorFor(r => r.RequiredString);
                 },
                 "When calling ModelStateCheck action in MvcController expected to have a model error against key RequiredString, but none found.");
@@ -47,12 +47,12 @@
         {
             var requestBody = TestObjectFactory.GetValidRequestModel();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ModelStateCheck(requestBody))
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel(requestBody)
+                .WithModel(requestBody)
                 .ContainingNoErrorFor(r => r.RequiredString);
         }
 
@@ -64,12 +64,12 @@
             Test.AssertException<ModelErrorAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ModelStateCheck(requestBodyWithErrors))
                         .ShouldReturn()
                         .Ok()
-                        .WithResponseModel(requestBodyWithErrors)
+                        .WithModel(requestBodyWithErrors)
                         .ContainingNoErrorFor(r => r.RequiredString);
                 },
                 "When calling ModelStateCheck action in MvcController expected to have no model errors against key RequiredString, but found some.");
@@ -80,12 +80,12 @@
         {
             var requestBody = TestObjectFactory.GetValidRequestModel();
 
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.ModelStateCheck(requestBody))
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModel(requestBody)
+                .WithModel(requestBody)
                 .ContainingNoErrorFor(r => r.Integer)
                 .ContainingNoErrorFor(r => r.RequiredString);
         }
@@ -98,12 +98,12 @@
             Test.AssertException<ModelErrorAssertionException>(
                 () =>
                 {
-                    MyMvc
-                        .Controller<MvcController>()
+                    MyController<MvcController>
+                        .Instance()
                         .Calling(c => c.ModelStateCheck(requestBodyWithErrors))
                         .ShouldReturn()
                         .Ok()
-                        .WithResponseModel(requestBodyWithErrors)
+                        .WithModel(requestBodyWithErrors)
                         .ContainingNoErrorFor(r => r.Integer)
                         .ContainingNoErrorFor(r => r.RequiredString);
                 },
@@ -113,16 +113,15 @@
         [Fact]
         public void AndProvideTheModelShouldReturnProperModelWhenThereIsResponseModelWithModelStateCheck()
         {
-            MyMvc
-                .Controller<MvcController>()
+            MyController<MvcController>
+                .Instance()
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
                 .Ok()
-                .WithResponseModelOfType<List<ResponseModel>>()
+                .WithModelOfType<List<ResponseModel>>()
                 .ContainingNoErrorFor(m => m.Count)
                 .AndAlso()
-                .ShouldPassFor()
-                .TheModel(responseModel =>
+                .ShouldPassForThe<List<ResponseModel>>(responseModel =>
                 {
                     Assert.NotNull(responseModel);
                     Assert.IsAssignableFrom<List<ResponseModel>>(responseModel);
