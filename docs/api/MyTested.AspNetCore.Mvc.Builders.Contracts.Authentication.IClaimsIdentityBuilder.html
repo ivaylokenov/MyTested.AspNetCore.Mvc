@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface IClaimsIdentityBuilder
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface IClaimsIdentityBuilder
+   ">
+    <meta name="generator" content="docfx 2.5.0.0">
+    {% seo %}
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../index.html">
+                MY TESTED ASP.NET CORE MVC DOCS
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content">
+              
+              
+              <h1 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Authentication_IClaimsIdentityBuilder" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder">Interface IClaimsIdentityBuilder
+              </h1>
+              <div class="markdown level0 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Used for building mocked <span class="xref">System.Security.Claims.ClaimsIdentity</span>.</p>
+</div>
+              <div class="markdown level0 conceptual"></div>
+              <h6><strong>Namespace</strong>:MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication</h6>
+              <h6><strong>Assembly</strong>:MyTested.AspNetCore.Mvc.Authentication.dll</h6>
+              <h5 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Authentication_IClaimsIdentityBuilder_syntax">Syntax</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">public interface IClaimsIdentityBuilder</code></pre>
+              </div>
+              <h3 id="methods">Methods
+              </h3>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/documentation/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Authentication_IClaimsIdentityBuilder_InRole_System_String_.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.InRole(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/documentation/src/MyTested.AspNetCore.Mvc.Authentication/Builders/Contracts/Authentication/IClaimsIdentityBuilder.cs/#L80">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Authentication_IClaimsIdentityBuilder_InRole_System_String_" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.InRole(System.String)">InRole(String)</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Adds role to the built <span class="xref">System.Security.Claims.ClaimsIdentity</span>.</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IAndClaimsIdentityBuilder InRole(string role)</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.String</span></td>
+                    <td><em>role</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Value of the role claim. Default claim type is <span class="xref">System.Security.Claims.ClaimTypes.Role</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IAndClaimsIdentityBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IAndClaimsIdentityBuilder</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/documentation/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Authentication_IClaimsIdentityBuilder_InRoles_System_Collections_Generic_IEnumerable_System_String__.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.InRoles(System.Collections.Generic.IEnumerable%7BSystem.String%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/documentation/src/MyTested.AspNetCore.Mvc.Authentication/Builders/Contracts/Authentication/IClaimsIdentityBuilder.cs/#L87">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Authentication_IClaimsIdentityBuilder_InRoles_System_Collections_Generic_IEnumerable_System_String__" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.InRoles(System.Collections.Generic.IEnumerable{System.String})">InRoles(IEnumerable&lt;String&gt;)</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Adds roles to the built <span class="xref">System.Security.Claims.ClaimsIdentity</span>.</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IAndClaimsIdentityBuilder InRoles(IEnumerable&lt;string&gt; roles)</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<span class="xref">System.String</span>&gt;</td>
+                    <td><em>roles</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Collection of role names to add.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IAndClaimsIdentityBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IAndClaimsIdentityBuilder</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/documentation/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Authentication_IClaimsIdentityBuilder_InRoles_System_String___.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.InRoles(System.String%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/documentation/src/MyTested.AspNetCore.Mvc.Authentication/Builders/Contracts/Authentication/IClaimsIdentityBuilder.cs/#L94">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Authentication_IClaimsIdentityBuilder_InRoles_System_String___" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.InRoles(System.String[])">InRoles(String[])</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Adds roles to the built <span class="xref">System.Security.Claims.ClaimsIdentity</span>.</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IAndClaimsIdentityBuilder InRoles(params string[] roles)</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.String</span>[]</td>
+                    <td><em>roles</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Role name parameters to add.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IAndClaimsIdentityBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IAndClaimsIdentityBuilder</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/documentation/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Authentication_IClaimsIdentityBuilder_WithAuthenticationType_System_String_.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.WithAuthenticationType(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/documentation/src/MyTested.AspNetCore.Mvc.Authentication/Builders/Contracts/Authentication/IClaimsIdentityBuilder.cs/#L73">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Authentication_IClaimsIdentityBuilder_WithAuthenticationType_System_String_" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.WithAuthenticationType(System.String)">WithAuthenticationType(String)</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Adds authentication type to the built <span class="xref">System.Security.Claims.ClaimsIdentity</span>. If such is not provided, &quot;Passport&quot; is used by default.</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IAndClaimsIdentityBuilder WithAuthenticationType(string authenticationType)</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.String</span></td>
+                    <td><em>authenticationType</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Authentication type to add.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IAndClaimsIdentityBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IAndClaimsIdentityBuilder</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/documentation/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Authentication_IClaimsIdentityBuilder_WithClaim_System_Security_Claims_Claim_.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.WithClaim(System.Security.Claims.Claim)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/documentation/src/MyTested.AspNetCore.Mvc.Authentication/Builders/Contracts/Authentication/IClaimsIdentityBuilder.cs/#L52">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Authentication_IClaimsIdentityBuilder_WithClaim_System_Security_Claims_Claim_" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.WithClaim(System.Security.Claims.Claim)">WithClaim(Claim)</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Adds claim to the built <span class="xref">System.Security.Claims.ClaimsIdentity</span>.</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IAndClaimsIdentityBuilder WithClaim(Claim claim)</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.Security.Claims.Claim</span></td>
+                    <td><em>claim</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The <span class="xref">Claim</span> to add.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IAndClaimsIdentityBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IAndClaimsIdentityBuilder</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/documentation/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Authentication_IClaimsIdentityBuilder_WithClaim_System_String_System_String_.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.WithClaim(System.String%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/documentation/src/MyTested.AspNetCore.Mvc.Authentication/Builders/Contracts/Authentication/IClaimsIdentityBuilder.cs/#L45">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Authentication_IClaimsIdentityBuilder_WithClaim_System_String_System_String_" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.WithClaim(System.String,System.String)">WithClaim(String, String)</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Adds claim to the built <span class="xref">System.Security.Claims.ClaimsIdentity</span>.</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IAndClaimsIdentityBuilder WithClaim(string type, string value)</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.String</span></td>
+                    <td><em>type</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Type of the <span class="xref">Claim</span> to add.</p>
+</td>
+                  </tr>
+                  <tr>
+                    <td><span class="xref">System.String</span></td>
+                    <td><em>value</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Value of the <span class="xref">Claim</span> to add.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IAndClaimsIdentityBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IAndClaimsIdentityBuilder</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/documentation/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Authentication_IClaimsIdentityBuilder_WithClaims_System_Collections_Generic_IEnumerable_System_Security_Claims_Claim__.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.WithClaims(System.Collections.Generic.IEnumerable%7BSystem.Security.Claims.Claim%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/documentation/src/MyTested.AspNetCore.Mvc.Authentication/Builders/Contracts/Authentication/IClaimsIdentityBuilder.cs/#L59">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Authentication_IClaimsIdentityBuilder_WithClaims_System_Collections_Generic_IEnumerable_System_Security_Claims_Claim__" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.WithClaims(System.Collections.Generic.IEnumerable{System.Security.Claims.Claim})">WithClaims(IEnumerable&lt;Claim&gt;)</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Adds claims to the built <span class="xref">System.Security.Claims.ClaimsIdentity</span>.</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IAndClaimsIdentityBuilder WithClaims(IEnumerable&lt;Claim&gt; claims)</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<span class="xref">System.Security.Claims.Claim</span>&gt;</td>
+                    <td><em>claims</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Collection of <span class="xref">Claim</span> to add.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IAndClaimsIdentityBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IAndClaimsIdentityBuilder</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/documentation/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Authentication_IClaimsIdentityBuilder_WithClaims_System_Security_Claims_Claim___.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.WithClaims(System.Security.Claims.Claim%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/documentation/src/MyTested.AspNetCore.Mvc.Authentication/Builders/Contracts/Authentication/IClaimsIdentityBuilder.cs/#L66">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Authentication_IClaimsIdentityBuilder_WithClaims_System_Security_Claims_Claim___" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.WithClaims(System.Security.Claims.Claim[])">WithClaims(Claim[])</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Adds claims to the built <span class="xref">System.Security.Claims.ClaimsIdentity</span>.</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IAndClaimsIdentityBuilder WithClaims(params Claim[] claims)</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.Security.Claims.Claim</span>[]</td>
+                    <td><em>claims</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1"><span class="xref">Claim</span> parameters to add.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IAndClaimsIdentityBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IAndClaimsIdentityBuilder</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/documentation/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Authentication_IClaimsIdentityBuilder_WithIdentifier_System_String_.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.WithIdentifier(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/documentation/src/MyTested.AspNetCore.Mvc.Authentication/Builders/Contracts/Authentication/IClaimsIdentityBuilder.cs/#L30">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Authentication_IClaimsIdentityBuilder_WithIdentifier_System_String_" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.WithIdentifier(System.String)">WithIdentifier(String)</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Sets identifier claim to the built <span class="xref">System.Security.Claims.ClaimsIdentity</span>. If such is not provided, &quot;TestId&quot; is used by default.</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IAndClaimsIdentityBuilder WithIdentifier(string identifier)</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.String</span></td>
+                    <td><em>identifier</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Value of the identifier claim - <span class="xref">System.Security.Claims.ClaimTypes.NameIdentifier</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IAndClaimsIdentityBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IAndClaimsIdentityBuilder</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/documentation/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Authentication_IClaimsIdentityBuilder_WithNameType_System_String_.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.WithNameType(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/documentation/src/MyTested.AspNetCore.Mvc.Authentication/Builders/Contracts/Authentication/IClaimsIdentityBuilder.cs/#L16">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Authentication_IClaimsIdentityBuilder_WithNameType_System_String_" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.WithNameType(System.String)">WithNameType(String)</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Sets type of the username claim. Default is <span class="xref">System.Security.Claims.ClaimTypes.Name</span>.</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IAndClaimsIdentityBuilder WithNameType(string nameType)</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.String</span></td>
+                    <td><em>nameType</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Type to set on the username claim.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IAndClaimsIdentityBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IAndClaimsIdentityBuilder</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/documentation/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Authentication_IClaimsIdentityBuilder_WithRoleType_System_String_.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.WithRoleType(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/documentation/src/MyTested.AspNetCore.Mvc.Authentication/Builders/Contracts/Authentication/IClaimsIdentityBuilder.cs/#L23">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Authentication_IClaimsIdentityBuilder_WithRoleType_System_String_" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.WithRoleType(System.String)">WithRoleType(String)</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Sets type of the role claim. Default is <span class="xref">System.Security.Claims.ClaimTypes.Role</span>.</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IAndClaimsIdentityBuilder WithRoleType(string roleType)</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.String</span></td>
+                    <td><em>roleType</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Type to set on the role claim.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IAndClaimsIdentityBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IAndClaimsIdentityBuilder</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/documentation/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Authentication_IClaimsIdentityBuilder_WithUsername_System_String_.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.WithUsername(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/documentation/src/MyTested.AspNetCore.Mvc.Authentication/Builders/Contracts/Authentication/IClaimsIdentityBuilder.cs/#L37">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Authentication_IClaimsIdentityBuilder_WithUsername_System_String_" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.WithUsername(System.String)">WithUsername(String)</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Sets username claims to the built <span class="xref">System.Security.Claims.ClaimsIdentity</span>. If such is not provided, &quot;TestUser&quot; is used by default.</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IAndClaimsIdentityBuilder WithUsername(string username)</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.String</span></td>
+                    <td><em>username</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Value of the username claim. Default claim type is <span class="xref">System.Security.Claims.ClaimTypes.Name</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IAndClaimsIdentityBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IAndClaimsIdentityBuilder</span>.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+            </article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/documentation/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Authentication_IClaimsIdentityBuilder.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.IClaimsIdentityBuilder%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/documentation/src/MyTested.AspNetCore.Mvc.Authentication/Builders/Contracts/Authentication/IClaimsIdentityBuilder.cs/#L9" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © 2015-2016 <strong><a href="http://mytestedasp.net">MyTestedASP.NET</a></strong>. All Rights Reserved. Generated by <strong><a href="http://dotnet.github.io/docfx/">DocFX</a></strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

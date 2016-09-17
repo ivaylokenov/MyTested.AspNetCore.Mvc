@@ -6508,7 +6508,7 @@
   },
   "libraries": {
     "dotnet-test-nunit/3.4.0-beta-2": {
-      "sha512": "za5Bip/Ollig+8pwQi/Lrvi0oVaoBYf2oMrha8+vjfyBWGAa0kSFMCVgrGTt2JyzrYtk9SKzwG3OLHQKuXcwlg==",
+      "sha512": "ImRqxsZMFzn+bM33emu5ZMzIUe8GOHPxdA2NkUIsawWd4YjvcFzdIo5iNuejlY0lw1M+RMwRbpd/cKkhKft52g==",
       "type": "package",
       "path": "dotnet-test-nunit/3.4.0-beta-2",
       "files": [
@@ -7863,7 +7863,7 @@
       ]
     },
     "Microsoft.VisualStudio.Web.BrowserLink.Loader/14.0.0-rc2-final": {
-      "sha512": "NM/mukki+sxjRIg6yve48iD0/Y+bb89vGpAVvFNt8+jUpoVz5JBm03q5T3t+vKFiZNjJUWmwsP8vYATIpbk10Q==",
+      "sha512": "PDkK41WGH5hl4gAQuzVhv39avSFQBi8N++DN79gUCcrH4dLP0PLQETBLRmYCIPCcGGnyg/0R44V41kXqz6KXhg==",
       "type": "package",
       "path": "Microsoft.VisualStudio.Web.BrowserLink.Loader/14.0.0-rc2-final",
       "files": [
@@ -8091,7 +8091,7 @@
       ]
     },
     "NUnit.Portable.Agent/3.4.0-beta-2": {
-      "sha512": "ybpAVygz7TMj5FKvR/xnYncDOwwZ7omHFbwVRBVMHee5N8AIP2gebNVWPY4DoHFoJwtE2eZ/oBQBtf3/hiLx5w==",
+      "sha512": "91XarG692I/gCwDi3d1k5tRc1J4mPo6l6nHrYRKWSgc9M2a0SX1YNS/uJwth3bXQEn+499mdZ02NTuvJstRq1A==",
       "type": "package",
       "path": "NUnit.Portable.Agent/3.4.0-beta-2",
       "files": [

@@ -31,7 +31,7 @@
         /// </summary>
         /// <param name="app">Action for middleware registration.</param>
         /// <returns>The same <see cref="IApplicationConfigurationBuilder"/>.</returns>
-        IApplicationConfigurationBuilder WithApplication(Action<IApplicationBuilder> app);
+        IApplicationConfigurationBuilder WithConfiguration(Action<IApplicationBuilder> app);
 
         /// <summary>
         /// Adds additional routes to the tested application builder.

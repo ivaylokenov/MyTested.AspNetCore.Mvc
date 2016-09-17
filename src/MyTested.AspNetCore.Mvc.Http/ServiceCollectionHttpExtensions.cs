@@ -8,6 +8,9 @@
     using Utilities.Validators;
     using Internal.Formatters;
 
+    /// <summary>
+    /// Contains HTTP extension methods for <see cref="IServiceCollection"/>.
+    /// </summary>
     public static class ServiceCollectionHttpExtensions
     {
         /// <summary>
@@ -21,6 +24,11 @@
             return serviceCollection.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
+        /// <summary>
+        /// Adds an <see cref="IInputFormatter"/> which can process "text/plain" media type. Useful for testing with HTTP request body.
+        /// </summary>
+        /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection AddStringInputFormatter(this IServiceCollection serviceCollection)
         {
             CommonValidator.CheckForNullReference(serviceCollection, nameof(IServiceCollection));

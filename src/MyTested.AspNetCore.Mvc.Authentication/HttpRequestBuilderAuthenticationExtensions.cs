@@ -6,6 +6,9 @@
     using Builders.Http;
     using System;
 
+    /// <summary>
+    /// Contains authentication extension methods for <see cref="IHttpRequestBuilder"/>.
+    /// </summary>
     public static class HttpRequestBuilderAuthenticationExtensions
     {
         /// <summary>

@@ -8,7 +8,7 @@
     using Internal.Application;
 
     /// <summary>
-    /// Starting point of the ASP.NET Core MVC testing framework. Provides methods to specify a test case.
+    /// Provides methods to specify an ASP.NET Core MVC test case.
     /// </summary>
     public static class MyMvc
     {
@@ -52,7 +52,7 @@
         /// Starts a controller test.
         /// </summary>
         /// <typeparam name="TController">Class representing ASP.NET Core MVC controller.</typeparam>
-        /// <param name="controller">Instance of the ASP.NET Core MVC controller to use.</param>
+        /// <param name="controller">Instance of the ASP.NET Core MVC controller to test.</param>
         /// <returns>Test builder of <see cref="IControllerBuilder{TController}"/> type.</returns>
         public static IControllerBuilder<TController> Controller<TController>(TController controller)
             where TController : class

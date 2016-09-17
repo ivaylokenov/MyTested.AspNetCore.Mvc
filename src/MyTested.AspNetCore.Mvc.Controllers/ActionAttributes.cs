@@ -4,6 +4,9 @@
     using System.Collections.Generic;
     using Utilities.Validators;
 
+    /// <summary>
+    /// Class used for specifying additional assertions on the action attributes.
+    /// </summary>
     public class ActionAttributes : IEnumerable<object>
     {
         private readonly IEnumerable<object> attributes;

@@ -14,8 +14,13 @@
     /// <summary>
     /// Provides useful <see cref="IServiceCollection"/> extensions for testing purposes.
     /// </summary>
-    public static class ServiceCollectionExtensions
+    public static class ServiceCollectionAbstractionsExtensions
     {
+        /// <summary>
+        /// Adds core MVC testing services.
+        /// </summary>
+        /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection AddCoreTesting(this IServiceCollection serviceCollection)
         {
             CommonValidator.CheckForNullReference(serviceCollection, nameof(serviceCollection));
