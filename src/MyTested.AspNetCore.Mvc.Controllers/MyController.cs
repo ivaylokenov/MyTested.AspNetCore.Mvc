@@ -6,6 +6,10 @@
     using Internal.Application;
     using Internal.TestContexts;
 
+    /// <summary>
+    /// Provides methods to specify an ASP.NET Core MVC controller test case.
+    /// </summary>
+    /// <typeparam name="TController">Type of ASP.NET Core MVC controller to test.</typeparam>
     public class MyController<TController> : ControllerBuilder<TController>
         where TController : class
     {
@@ -14,31 +18,56 @@
             TestApplication.TryInitialize();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MyController{TController}"/> class.
+        /// </summary>
         public MyController()
             : this((TController)null)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MyController{TController}"/> class.
+        /// </summary>
+        /// <param name="controller">Instance of the ASP.NET Core MVC controller to test.</param>
         public MyController(TController controller)
             : this(() => controller)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MyController{TController}"/> class.
+        /// </summary>
+        /// <param name="construction">Construction function returning the instantiated controller.</param>
         public MyController(Func<TController> construction)
             : base(new ControllerTestContext { ComponentConstructionDelegate = construction })
         {
         }
 
+        /// <summary>
+        /// Starts a controller test.
+        /// </summary>
+        /// <returns>Test builder of <see cref="IControllerBuilder{TController}"/> type.</returns>
         public static IControllerBuilder<TController> Instance()
         {
             return Instance((TController)null);
         }
 
+        /// <summary>
+        /// Starts a controller test.
+        /// </summary>
+        /// <param name="controller">Instance of the ASP.NET Core MVC controller to test.</param>
+        /// <returns>Test builder of <see cref="IControllerBuilder{TController}"/> type.</returns>
         public static IControllerBuilder<TController> Instance(TController controller)
         {
             return Instance(() => controller);
         }
 
+        /// <summary>
+        /// Starts a controller test.
+        /// </summary>
+        /// <param name="construction">Construction function returning the instantiated controller.</param>
+        /// <returns>Test builder of <see cref="IControllerBuilder{TController}"/> type.</returns>
         public static IControllerBuilder<TController> Instance(Func<TController> construction)
         {
             return new MyController<TController>(construction);

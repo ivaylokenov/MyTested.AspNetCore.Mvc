@@ -24,6 +24,11 @@
             return serviceCollection.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
         }
 
+        /// <summary>
+        /// Adds controller testing services.
+        /// </summary>
+        /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
+        /// <returns>The same <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection AddControllersTesting(this IServiceCollection serviceCollection)
         {
             CommonValidator.CheckForNullReference(serviceCollection, nameof(serviceCollection));
