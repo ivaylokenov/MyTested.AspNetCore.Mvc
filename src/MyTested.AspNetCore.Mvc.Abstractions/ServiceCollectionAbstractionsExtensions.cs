@@ -58,27 +58,27 @@
         /// <summary>
         /// Removes a service from the <see cref="IServiceCollection"/>.
         /// </summary>
-        /// <typeparam name="TServive">Type of the service which will be removed.</typeparam>
+        /// <typeparam name="TService">Type of the service which will be removed.</typeparam>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <returns>The same <see cref="IServiceCollection"/>.</returns>
-        public static IServiceCollection Remove<TServive>(this IServiceCollection serviceCollection)
-            where TServive : class
+        public static IServiceCollection Remove<TService>(this IServiceCollection serviceCollection)
+            where TService : class
         {
-            return serviceCollection.Remove(typeof(TServive));
+            return serviceCollection.Remove(typeof(TService));
         }
 
         /// <summary>
         /// Removes a service from the <see cref="IServiceCollection"/>.
         /// </summary>
-        /// <typeparam name="TServive">Type of the service which will be removed.</typeparam>
+        /// <typeparam name="TService">Type of the service which will be removed.</typeparam>
         /// <typeparam name="TImplementation">Service implementation type which will be removed.</typeparam>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <returns>The same <see cref="IServiceCollection"/>.</returns>
-        public static IServiceCollection Remove<TServive, TImplementation>(this IServiceCollection serviceCollection)
-            where TServive : class
-            where TImplementation : class, TServive
+        public static IServiceCollection Remove<TService, TImplementation>(this IServiceCollection serviceCollection)
+            where TService : class
+            where TImplementation : class, TService
         {
-            return serviceCollection.Remove(typeof(TServive), typeof(TImplementation));
+            return serviceCollection.Remove(typeof(TService), typeof(TImplementation));
         }
 
         /// <summary>
@@ -112,27 +112,27 @@
         /// <summary>
         /// Removes a transient service from the <see cref="IServiceCollection"/>.
         /// </summary>
-        /// <typeparam name="TServive">Type of the service which will be removed.</typeparam>
+        /// <typeparam name="TService">Type of the service which will be removed.</typeparam>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <returns>The same <see cref="IServiceCollection"/>.</returns>
-        public static IServiceCollection RemoveTransient<TServive>(this IServiceCollection serviceCollection)
-            where TServive : class
+        public static IServiceCollection RemoveTransient<TService>(this IServiceCollection serviceCollection)
+            where TService : class
         {
-            return serviceCollection.RemoveTransient(typeof(TServive));
+            return serviceCollection.RemoveTransient(typeof(TService));
         }
 
         /// <summary>
         /// Removes a transient service from the <see cref="IServiceCollection"/>.
         /// </summary>
-        /// <typeparam name="TServive">Type of the service which will be removed.</typeparam>
+        /// <typeparam name="TService">Type of the service which will be removed.</typeparam>
         /// <typeparam name="TImplementation">Service implementation type which will be removed.</typeparam>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <returns>The same <see cref="IServiceCollection"/>.</returns>
-        public static IServiceCollection RemoveTransient<TServive, TImplementation>(this IServiceCollection serviceCollection)
-            where TServive : class
-            where TImplementation : class, TServive
+        public static IServiceCollection RemoveTransient<TService, TImplementation>(this IServiceCollection serviceCollection)
+            where TService : class
+            where TImplementation : class, TService
         {
-            return serviceCollection.RemoveTransient(typeof(TServive), typeof(TImplementation));
+            return serviceCollection.RemoveTransient(typeof(TService), typeof(TImplementation));
         }
 
         /// <summary>
@@ -166,27 +166,27 @@
         /// <summary>
         /// Removes a singleton service from the <see cref="IServiceCollection"/>.
         /// </summary>
-        /// <typeparam name="TServive">Type of the service which will be removed.</typeparam>
+        /// <typeparam name="TService">Type of the service which will be removed.</typeparam>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <returns>The same <see cref="IServiceCollection"/>.</returns>
-        public static IServiceCollection RemoveSingleton<TServive>(this IServiceCollection serviceCollection)
-            where TServive : class
+        public static IServiceCollection RemoveSingleton<TService>(this IServiceCollection serviceCollection)
+            where TService : class
         {
-            return serviceCollection.RemoveSingleton(typeof(TServive));
+            return serviceCollection.RemoveSingleton(typeof(TService));
         }
 
         /// <summary>
         /// Removes a singleton service from the <see cref="IServiceCollection"/>.
         /// </summary>
-        /// <typeparam name="TServive">Type of the service which will be removed.</typeparam>
+        /// <typeparam name="TService">Type of the service which will be removed.</typeparam>
         /// <typeparam name="TImplementation">Service implementation type which will be removed.</typeparam>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <returns>The same <see cref="IServiceCollection"/>.</returns>
-        public static IServiceCollection RemoveSingleton<TServive, TImplementation>(this IServiceCollection serviceCollection)
-            where TServive : class
-            where TImplementation : class, TServive
+        public static IServiceCollection RemoveSingleton<TService, TImplementation>(this IServiceCollection serviceCollection)
+            where TService : class
+            where TImplementation : class, TService
         {
-            return serviceCollection.RemoveSingleton(typeof(TServive), typeof(TImplementation));
+            return serviceCollection.RemoveSingleton(typeof(TService), typeof(TImplementation));
         }
 
         /// <summary>
@@ -220,13 +220,13 @@
         /// <summary>
         /// Removes a scoped service from the <see cref="IServiceCollection"/>.
         /// </summary>
-        /// <typeparam name="TServive">Type of the service which will be removed.</typeparam>
+        /// <typeparam name="TService">Type of the service which will be removed.</typeparam>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <returns>The same <see cref="IServiceCollection"/>.</returns>
-        public static IServiceCollection RemoveScoped<TServive>(this IServiceCollection serviceCollection)
-            where TServive : class
+        public static IServiceCollection RemoveScoped<TService>(this IServiceCollection serviceCollection)
+            where TService : class
         {
-            return serviceCollection.RemoveScoped(typeof(TServive));
+            return serviceCollection.RemoveScoped(typeof(TService));
         }
 
         /// <summary>
