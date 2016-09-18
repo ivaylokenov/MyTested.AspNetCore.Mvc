@@ -5,14 +5,13 @@
     using System.IO;
     using System.Net;
     using System.Text;
-    using Base;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Primitives;
 
     /// <summary>
     /// Used for testing <see cref="HttpResponse"/>.
     /// </summary>
-    public interface IHttpResponseTestBuilder : IBaseTestBuilderWithComponent
+    public interface IHttpResponseTestBuilder
     {
         /// <summary>
         /// Tests whether <see cref="HttpResponse.Body"/> has the same contents as the provided <see cref="Stream"/>.

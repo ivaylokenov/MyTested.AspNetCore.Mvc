@@ -17,8 +17,8 @@
         /// </summary>
         /// <typeparam name="TActionResult">Type of action result type.</typeparam>
         /// <param name="shouldReturnTestBuilder">Instance of <see cref="IShouldReturnTestBuilder{TActionResult}"/> type.</param>
-        /// <returns>Test builder of <see cref="IJsonTestBuilder"/> type.</returns>
-        public static IJsonTestBuilder Json<TActionResult>(this IShouldReturnTestBuilder<TActionResult> shouldReturnTestBuilder)
+        /// <returns>Test builder of <see cref="IAndJsonTestBuilder"/> type.</returns>
+        public static IAndJsonTestBuilder Json<TActionResult>(this IShouldReturnTestBuilder<TActionResult> shouldReturnTestBuilder)
         {
             var actualShouldReturnTestBuilder = (ShouldReturnTestBuilder<TActionResult>)shouldReturnTestBuilder;
 

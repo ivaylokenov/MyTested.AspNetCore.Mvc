@@ -11,7 +11,7 @@
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <inheritdoc />
-        public IRedirectTestBuilder Redirect()
+        public IAndRedirectTestBuilder Redirect()
         {
             if (this.ActionResult is RedirectToRouteResult)
             {
@@ -26,7 +26,7 @@
             return this.ReturnRedirectTestBuilder<RedirectResult>();
         }
 
-        private IRedirectTestBuilder ReturnRedirectTestBuilder<TRedirectResult>()
+        private IAndRedirectTestBuilder ReturnRedirectTestBuilder<TRedirectResult>()
             where TRedirectResult : ActionResult
         {
             InvocationResultValidator.ValidateInvocationResultType<TRedirectResult>(this.TestContext);

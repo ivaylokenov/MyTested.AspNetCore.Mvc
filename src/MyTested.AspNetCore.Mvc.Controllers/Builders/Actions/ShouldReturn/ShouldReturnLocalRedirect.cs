@@ -11,7 +11,7 @@
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <inheritdoc />
-        public ILocalRedirectTestBuilder LocalRedirect()
+        public IAndLocalRedirectTestBuilder LocalRedirect()
         {
             InvocationResultValidator.ValidateInvocationResultType<LocalRedirectResult>(this.TestContext);
             return new LocalRedirectTestBuilder(this.TestContext);

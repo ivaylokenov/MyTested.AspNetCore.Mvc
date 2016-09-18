@@ -20,8 +20,8 @@
         /// </summary>
         /// <typeparam name="TActionResult">Type of action result type.</typeparam>
         /// <param name="shouldReturnTestBuilder">Instance of <see cref="IShouldReturnTestBuilder{TActionResult}"/> type.</param>
-        /// <returns>Test builder of <see cref="IViewComponentTestBuilder"/> type.</returns>
-        public static IViewComponentTestBuilder ViewComponent<TActionResult>(this IShouldReturnTestBuilder<TActionResult> shouldReturnTestBuilder)
+        /// <returns>Test builder of <see cref="IAndViewComponentTestBuilder"/> type.</returns>
+        public static IAndViewComponentTestBuilder ViewComponent<TActionResult>(this IShouldReturnTestBuilder<TActionResult> shouldReturnTestBuilder)
         {
             var actualShouldReturnTestBuilder = (ShouldReturnTestBuilder<TActionResult>)shouldReturnTestBuilder;
             
@@ -36,8 +36,8 @@
         /// <typeparam name="TActionResult">Type of action result type.</typeparam>
         /// <param name="shouldReturnTestBuilder">Instance of <see cref="IShouldReturnTestBuilder{TActionResult}"/> type.</param>
         /// <param name="viewComponentName">Expected view component name.</param>
-        /// <returns>Test builder of <see cref="IViewComponentTestBuilder"/> type.</returns>
-        public static IViewComponentTestBuilder ViewComponent<TActionResult>(
+        /// <returns>Test builder of <see cref="IAndViewComponentTestBuilder"/> type.</returns>
+        public static IAndViewComponentTestBuilder ViewComponent<TActionResult>(
             this IShouldReturnTestBuilder<TActionResult> shouldReturnTestBuilder,
             string viewComponentName)
         {
@@ -66,8 +66,8 @@
         /// <typeparam name="TActionResult">Type of action result type.</typeparam>
         /// <param name="shouldReturnTestBuilder">Instance of <see cref="IShouldReturnTestBuilder{TActionResult}"/> type.</param>
         /// <param name="viewComponentType">Expected view component type.</param>
-        /// <returns>Test builder of <see cref="IViewComponentTestBuilder"/> type.</returns>
-        public static IViewComponentTestBuilder ViewComponent<TActionResult>(
+        /// <returns>Test builder of <see cref="IAndViewComponentTestBuilder"/> type.</returns>
+        public static IAndViewComponentTestBuilder ViewComponent<TActionResult>(
             this IShouldReturnTestBuilder<TActionResult> shouldReturnTestBuilder,
             Type viewComponentType)
         {
