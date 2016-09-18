@@ -13,8 +13,5 @@
             : base(testContext)
         {
         }
-
-        private IBaseTestBuilderWithViewComponentResult<TInvocationResult> NewAndTestBuilderWithViewComponentResult()
-            => new AndTestBuilderWithViewComponentResult<TInvocationResult>(this.TestContext);
     }
 }

@@ -72,32 +72,11 @@
               <div class="markdown level0 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Invocations.IViewComponentShouldReturnTestBuilder-1.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Used for testing returned view component result.</p>
 </div>
               <div class="markdown level0 conceptual"></div>
-              <div class="inheritedMembers">
-                <h5>Inherited Members</h5>
-                <div>
-                  <a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.Invocations.IBaseShouldReturnTestBuilder-2.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Invocations_IBaseShouldReturnTestBuilder_2_DefaultValue">IBaseShouldReturnTestBuilder&lt;TInvocationResult, IBaseTestBuilderWithViewComponentResult&lt;TInvocationResult&gt;&gt;.DefaultValue()</a>
-                </div>
-                <div>
-                  <a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.Invocations.IBaseShouldReturnTestBuilder-2.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Invocations_IBaseShouldReturnTestBuilder_2_Null">IBaseShouldReturnTestBuilder&lt;TInvocationResult, IBaseTestBuilderWithViewComponentResult&lt;TInvocationResult&gt;&gt;.Null()</a>
-                </div>
-                <div>
-                  <a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.Invocations.IBaseShouldReturnTestBuilder-2.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Invocations_IBaseShouldReturnTestBuilder_2_NotNull">IBaseShouldReturnTestBuilder&lt;TInvocationResult, IBaseTestBuilderWithViewComponentResult&lt;TInvocationResult&gt;&gt;.NotNull()</a>
-                </div>
-                <div>
-                  <a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.Invocations.IBaseShouldReturnTestBuilder-2.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Invocations_IBaseShouldReturnTestBuilder_2_ResultOfType__1">IBaseShouldReturnTestBuilder&lt;TInvocationResult, IBaseTestBuilderWithViewComponentResult&lt;TInvocationResult&gt;&gt;.ResultOfType&lt;TResult&gt;()</a>
-                </div>
-                <div>
-                  <a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.Invocations.IBaseShouldReturnTestBuilder-2.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Invocations_IBaseShouldReturnTestBuilder_2_ResultOfType_System_Type_">IBaseShouldReturnTestBuilder&lt;TInvocationResult, IBaseTestBuilderWithViewComponentResult&lt;TInvocationResult&gt;&gt;.ResultOfType(Type)</a>
-                </div>
-                <div>
-                  <a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.Invocations.IBaseShouldReturnTestBuilder-2.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Invocations_IBaseShouldReturnTestBuilder_2_Result__1___0_">IBaseShouldReturnTestBuilder&lt;TInvocationResult, IBaseTestBuilderWithViewComponentResult&lt;TInvocationResult&gt;&gt;.Result&lt;TResult&gt;(TResult)</a>
-                </div>
-              </div>
               <h6><strong>Namespace</strong>:MyTested.AspNetCore.Mvc.Builders.Contracts.Invocations</h6>
               <h6><strong>Assembly</strong>:MyTested.AspNetCore.Mvc.ViewComponents.dll</h6>
               <h5 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Invocations_IViewComponentShouldReturnTestBuilder_1_syntax">Syntax</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public interface IViewComponentShouldReturnTestBuilder&lt;TInvocationResult&gt; : IBaseShouldReturnTestBuilder&lt;TInvocationResult, IBaseTestBuilderWithViewComponentResult&lt;TInvocationResult&gt;&gt;</code></pre>
+                <pre><code class="lang-csharp hljs">public interface IViewComponentShouldReturnTestBuilder&lt;TInvocationResult&gt; : IBaseShouldReturnTestBuilder&lt;TInvocationResult, IAndTestBuilder&gt;</code></pre>
               </div>
               <h5 class="typeParameters">Type Parameters</h5>
               <table class="table table-bordered table-striped table-condensed">
@@ -129,7 +108,7 @@
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">IBaseTestBuilderWithViewComponentResult&lt;TInvocationResult&gt; Content()</code></pre>
+                <pre><code class="lang-csharp hljs">IAndTestBuilder Content()</code></pre>
               </div>
               <h5 class="returns">Returns</h5>
               <table class="table table-bordered table-striped table-condensed">
@@ -141,8 +120,8 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td><a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithViewComponentResult-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Base_IBaseTestBuilderWithViewComponentResult_1">IBaseTestBuilderWithViewComponentResult</a>&lt;TInvocationResult&gt;</td>
-                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Invocations.IViewComponentShouldReturnTestBuilder-1.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Test builder of <a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithViewComponentResult-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Base_IBaseTestBuilderWithViewComponentResult_1">IBaseTestBuilderWithViewComponentResult&lt;TInvocationResult&gt;</a> type.</p>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.And.IAndTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Invocations.IViewComponentShouldReturnTestBuilder-1.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Test builder of <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.And.IAndTestBuilder</span> type.</p>
 </td>
                   </tr>
                 </tbody>
@@ -160,7 +139,7 @@
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">IBaseTestBuilderWithViewComponentResult&lt;TInvocationResult&gt; Content(Action&lt;string&gt; assertions)</code></pre>
+                <pre><code class="lang-csharp hljs">IAndTestBuilder Content(Action&lt;string&gt; assertions)</code></pre>
               </div>
               <h5 class="parameters">Parameters</h5>
               <table class="table table-bordered table-striped table-condensed">
@@ -190,8 +169,8 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td><a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithViewComponentResult-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Base_IBaseTestBuilderWithViewComponentResult_1">IBaseTestBuilderWithViewComponentResult</a>&lt;TInvocationResult&gt;</td>
-                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Invocations.IViewComponentShouldReturnTestBuilder-1.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Test builder of <a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithViewComponentResult-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Base_IBaseTestBuilderWithViewComponentResult_1">IBaseTestBuilderWithViewComponentResult&lt;TInvocationResult&gt;</a> type.</p>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.And.IAndTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Invocations.IViewComponentShouldReturnTestBuilder-1.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Test builder of <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.And.IAndTestBuilder</span> type.</p>
 </td>
                   </tr>
                 </tbody>
@@ -209,7 +188,7 @@
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">IBaseTestBuilderWithViewComponentResult&lt;TInvocationResult&gt; Content(Func&lt;string, bool&gt; predicate)</code></pre>
+                <pre><code class="lang-csharp hljs">IAndTestBuilder Content(Func&lt;string, bool&gt; predicate)</code></pre>
               </div>
               <h5 class="parameters">Parameters</h5>
               <table class="table table-bordered table-striped table-condensed">
@@ -239,8 +218,8 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td><a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithViewComponentResult-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Base_IBaseTestBuilderWithViewComponentResult_1">IBaseTestBuilderWithViewComponentResult</a>&lt;TInvocationResult&gt;</td>
-                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Invocations.IViewComponentShouldReturnTestBuilder-1.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Test builder of <a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithViewComponentResult-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Base_IBaseTestBuilderWithViewComponentResult_1">IBaseTestBuilderWithViewComponentResult&lt;TInvocationResult&gt;</a> type.</p>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.And.IAndTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Invocations.IViewComponentShouldReturnTestBuilder-1.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Test builder of <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.And.IAndTestBuilder</span> type.</p>
 </td>
                   </tr>
                 </tbody>
@@ -258,7 +237,7 @@
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">IBaseTestBuilderWithViewComponentResult&lt;TInvocationResult&gt; Content(string content)</code></pre>
+                <pre><code class="lang-csharp hljs">IAndTestBuilder Content(string content)</code></pre>
               </div>
               <h5 class="parameters">Parameters</h5>
               <table class="table table-bordered table-striped table-condensed">
@@ -288,8 +267,8 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td><a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithViewComponentResult-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Base_IBaseTestBuilderWithViewComponentResult_1">IBaseTestBuilderWithViewComponentResult</a>&lt;TInvocationResult&gt;</td>
-                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Invocations.IViewComponentShouldReturnTestBuilder-1.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Test builder of <a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithViewComponentResult-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Base_IBaseTestBuilderWithViewComponentResult_1">IBaseTestBuilderWithViewComponentResult&lt;TInvocationResult&gt;</a> type.</p>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.And.IAndTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Invocations.IViewComponentShouldReturnTestBuilder-1.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Test builder of <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.And.IAndTestBuilder</span> type.</p>
 </td>
                   </tr>
                 </tbody>
@@ -307,7 +286,7 @@
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">IBaseTestBuilderWithViewComponentResult&lt;TInvocationResult&gt; HtmlContent()</code></pre>
+                <pre><code class="lang-csharp hljs">IAndTestBuilder HtmlContent()</code></pre>
               </div>
               <h5 class="returns">Returns</h5>
               <table class="table table-bordered table-striped table-condensed">
@@ -319,8 +298,8 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td><a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithViewComponentResult-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Base_IBaseTestBuilderWithViewComponentResult_1">IBaseTestBuilderWithViewComponentResult</a>&lt;TInvocationResult&gt;</td>
-                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Invocations.IViewComponentShouldReturnTestBuilder-1.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Test builder of <a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithViewComponentResult-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Base_IBaseTestBuilderWithViewComponentResult_1">IBaseTestBuilderWithViewComponentResult&lt;TInvocationResult&gt;</a> type.</p>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.And.IAndTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Invocations.IViewComponentShouldReturnTestBuilder-1.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Test builder of <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.And.IAndTestBuilder</span> type.</p>
 </td>
                   </tr>
                 </tbody>
@@ -338,7 +317,7 @@
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">IBaseTestBuilderWithViewComponentResult&lt;TInvocationResult&gt; HtmlContent(Action&lt;string&gt; assertions)</code></pre>
+                <pre><code class="lang-csharp hljs">IAndTestBuilder HtmlContent(Action&lt;string&gt; assertions)</code></pre>
               </div>
               <h5 class="parameters">Parameters</h5>
               <table class="table table-bordered table-striped table-condensed">
@@ -368,8 +347,8 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td><a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithViewComponentResult-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Base_IBaseTestBuilderWithViewComponentResult_1">IBaseTestBuilderWithViewComponentResult</a>&lt;TInvocationResult&gt;</td>
-                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Invocations.IViewComponentShouldReturnTestBuilder-1.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Test builder of <a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithViewComponentResult-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Base_IBaseTestBuilderWithViewComponentResult_1">IBaseTestBuilderWithViewComponentResult&lt;TInvocationResult&gt;</a> type.</p>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.And.IAndTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Invocations.IViewComponentShouldReturnTestBuilder-1.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Test builder of <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.And.IAndTestBuilder</span> type.</p>
 </td>
                   </tr>
                 </tbody>
@@ -387,7 +366,7 @@
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">IBaseTestBuilderWithViewComponentResult&lt;TInvocationResult&gt; HtmlContent(Func&lt;string, bool&gt; predicate)</code></pre>
+                <pre><code class="lang-csharp hljs">IAndTestBuilder HtmlContent(Func&lt;string, bool&gt; predicate)</code></pre>
               </div>
               <h5 class="parameters">Parameters</h5>
               <table class="table table-bordered table-striped table-condensed">
@@ -417,8 +396,8 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td><a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithViewComponentResult-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Base_IBaseTestBuilderWithViewComponentResult_1">IBaseTestBuilderWithViewComponentResult</a>&lt;TInvocationResult&gt;</td>
-                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Invocations.IViewComponentShouldReturnTestBuilder-1.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Test builder of <a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithViewComponentResult-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Base_IBaseTestBuilderWithViewComponentResult_1">IBaseTestBuilderWithViewComponentResult&lt;TInvocationResult&gt;</a> type.</p>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.And.IAndTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Invocations.IViewComponentShouldReturnTestBuilder-1.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Test builder of <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.And.IAndTestBuilder</span> type.</p>
 </td>
                   </tr>
                 </tbody>
@@ -436,7 +415,7 @@
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">IBaseTestBuilderWithViewComponentResult&lt;TInvocationResult&gt; HtmlContent(string htmlContent)</code></pre>
+                <pre><code class="lang-csharp hljs">IAndTestBuilder HtmlContent(string htmlContent)</code></pre>
               </div>
               <h5 class="parameters">Parameters</h5>
               <table class="table table-bordered table-striped table-condensed">
@@ -466,8 +445,8 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td><a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithViewComponentResult-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Base_IBaseTestBuilderWithViewComponentResult_1">IBaseTestBuilderWithViewComponentResult</a>&lt;TInvocationResult&gt;</td>
-                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Invocations.IViewComponentShouldReturnTestBuilder-1.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Test builder of <a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithViewComponentResult-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Base_IBaseTestBuilderWithViewComponentResult_1">IBaseTestBuilderWithViewComponentResult&lt;TInvocationResult&gt;</a> type.</p>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.And.IAndTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Invocations.IViewComponentShouldReturnTestBuilder-1.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Test builder of <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.And.IAndTestBuilder</span> type.</p>
 </td>
                   </tr>
                 </tbody>
@@ -485,7 +464,7 @@
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">IViewTestBuilder View()</code></pre>
+                <pre><code class="lang-csharp hljs">IAndViewTestBuilder View()</code></pre>
               </div>
               <h5 class="returns">Returns</h5>
               <table class="table table-bordered table-striped table-condensed">
@@ -497,8 +476,8 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td><a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.ViewComponentResults.IViewTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ViewComponentResults_IViewTestBuilder">IViewTestBuilder</a></td>
-                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Invocations.IViewComponentShouldReturnTestBuilder-1.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Test builder of <a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.ViewComponentResults.IViewTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ViewComponentResults_IViewTestBuilder">IViewTestBuilder</a> type.</p>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.ViewComponentResults.IAndViewTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Invocations.IViewComponentShouldReturnTestBuilder-1.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Test builder of <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.ViewComponentResults.IAndViewTestBuilder</span> type.</p>
 </td>
                   </tr>
                 </tbody>
@@ -516,7 +495,7 @@
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">IViewTestBuilder View(string viewName)</code></pre>
+                <pre><code class="lang-csharp hljs">IAndViewTestBuilder View(string viewName)</code></pre>
               </div>
               <h5 class="parameters">Parameters</h5>
               <table class="table table-bordered table-striped table-condensed">
@@ -546,8 +525,8 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td><a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.ViewComponentResults.IViewTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ViewComponentResults_IViewTestBuilder">IViewTestBuilder</a></td>
-                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Invocations.IViewComponentShouldReturnTestBuilder-1.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Test builder of <a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.ViewComponentResults.IViewTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ViewComponentResults_IViewTestBuilder">IViewTestBuilder</a> type.</p>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.ViewComponentResults.IAndViewTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Invocations.IViewComponentShouldReturnTestBuilder-1.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Test builder of <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.ViewComponentResults.IAndViewTestBuilder</span> type.</p>
 </td>
                   </tr>
                 </tbody>
@@ -565,7 +544,7 @@
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">IViewTestBuilder View&lt;TModel&gt;(TModel model)</code></pre>
+                <pre><code class="lang-csharp hljs">IAndViewTestBuilder View&lt;TModel&gt;(TModel model)</code></pre>
               </div>
               <h5 class="parameters">Parameters</h5>
               <table class="table table-bordered table-striped table-condensed">
@@ -595,8 +574,8 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td><a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.ViewComponentResults.IViewTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ViewComponentResults_IViewTestBuilder">IViewTestBuilder</a></td>
-                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Invocations.IViewComponentShouldReturnTestBuilder-1.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Test builder of <a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.ViewComponentResults.IViewTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ViewComponentResults_IViewTestBuilder">IViewTestBuilder</a> type.</p>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.ViewComponentResults.IAndViewTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Invocations.IViewComponentShouldReturnTestBuilder-1.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Test builder of <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.ViewComponentResults.IAndViewTestBuilder</span> type.</p>
 </td>
                   </tr>
                 </tbody>
@@ -629,7 +608,7 @@
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">IViewTestBuilder View&lt;TModel&gt;(string viewName, TModel model)</code></pre>
+                <pre><code class="lang-csharp hljs">IAndViewTestBuilder View&lt;TModel&gt;(string viewName, TModel model)</code></pre>
               </div>
               <h5 class="parameters">Parameters</h5>
               <table class="table table-bordered table-striped table-condensed">
@@ -665,8 +644,8 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td><a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.ViewComponentResults.IViewTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ViewComponentResults_IViewTestBuilder">IViewTestBuilder</a></td>
-                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Invocations.IViewComponentShouldReturnTestBuilder-1.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Test builder of <a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.ViewComponentResults.IViewTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ViewComponentResults_IViewTestBuilder">IViewTestBuilder</a> type.</p>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.ViewComponentResults.IAndViewTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Invocations.IViewComponentShouldReturnTestBuilder-1.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Test builder of <span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.ViewComponentResults.IAndViewTestBuilder</span> type.</p>
 </td>
                   </tr>
                 </tbody>
