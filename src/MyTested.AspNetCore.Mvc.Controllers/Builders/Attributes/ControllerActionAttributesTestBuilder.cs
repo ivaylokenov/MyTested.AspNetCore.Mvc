@@ -5,42 +5,37 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Utilities.Extensions;
+    using Contracts.Attributes;
 
     /// <summary>
     /// Base class for controller action test builders.
     /// </summary>
-    public abstract class ControllerActionAttributesTestBuilder : BaseAttributesTestBuilder
+    public abstract class ControllerActionAttributesTestBuilder<TAttributesTestBuilder> : BaseAttributesTestBuilder<TAttributesTestBuilder>
+        where TAttributesTestBuilder : IBaseAttributesTestBuilder<TAttributesTestBuilder>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ControllerActionAttributesTestBuilder"/> class.
+        /// Initializes a new instance of the <see cref="ControllerActionAttributesTestBuilder{TBuilder}"/> class.
         /// </summary>
         /// <param name="testContext"><see cref="ComponentTestContext"/> containing data about the currently executed assertion chain.</param>
-        public ControllerActionAttributesTestBuilder(ComponentTestContext testContext)
+        protected ControllerActionAttributesTestBuilder(ComponentTestContext testContext)
             : base(testContext)
         {
         }
 
-        /// <summary>
-        /// Tests whether the action attributes contain <see cref="RouteAttribute"/>.
-        /// </summary>
-        /// <param name="template">Expected overridden route template of the action.</param>
-        /// <param name="failedValidationAction">Action to execute, if the validation fails.</param>
-        /// <param name="withName">Optional expected route name.</param>
-        /// <param name="withOrder">Optional expected route order.</param>
-        protected void ChangingRouteTo(
+        /// <inheritdoc />
+        public TAttributesTestBuilder ChangingRouteTo(
             string template,
-            Action<string, string> failedValidationAction,
             string withName = null,
             int? withOrder = null)
         {
-            this.ContainingAttributeOfType<RouteAttribute>(failedValidationAction);
+            this.ContainingAttributeOfType<RouteAttribute>();
             this.Validations.Add(attrs =>
             {
                 var routeAttribute = this.TryGetAttributeOfType<RouteAttribute>(attrs);
                 var actualTemplate = routeAttribute.Template;
                 if (!string.Equals(template, actualTemplate, StringComparison.OrdinalIgnoreCase))
                 {
-                    failedValidationAction(
+                    this.ThrowNewAttributeAssertionException(
                         $"{routeAttribute.GetName()} with '{template}' template",
                         $"in fact found '{actualTemplate}'");
                 }
@@ -48,7 +43,7 @@
                 var actualName = routeAttribute.Name;
                 if (!string.IsNullOrEmpty(withName) && withName != actualName)
                 {
-                    failedValidationAction(
+                    this.ThrowNewAttributeAssertionException(
                         $"{routeAttribute.GetName()} with '{withName}' name",
                         $"in fact found '{actualName}'");
                 }
@@ -56,23 +51,38 @@
                 var actualOrder = routeAttribute.Order;
                 if (withOrder.HasValue && withOrder != actualOrder)
                 {
-                    failedValidationAction(
+                    this.ThrowNewAttributeAssertionException(
                         $"{routeAttribute.GetName()} with order of {withOrder}",
                         $"in fact found {actualOrder}");
                 }
             });
+
+            return this.AttributesBuilder;
         }
 
-        /// <summary>
-        /// Tests whether the action attributes contain <see cref="AuthorizeAttribute"/>.
-        /// </summary>
-        /// <param name="failedValidationAction">Action to execute, if the validation fails.</param>
-        /// <param name="withAllowedRoles">Optional expected authorized roles.</param>
-        protected void RestrictingForAuthorizedRequests(
-            Action<string, string> failedValidationAction,
-            string withAllowedRoles = null)
+        /// <inheritdoc />
+        public TAttributesTestBuilder SpecifyingArea(string areaName)
         {
-            this.ContainingAttributeOfType<AuthorizeAttribute>(failedValidationAction);
+            this.ContainingAttributeOfType<AreaAttribute>();
+            this.Validations.Add(attrs =>
+            {
+                var areaAttribute = this.GetAttributeOfType<AreaAttribute>(attrs);
+                var actualAreaName = areaAttribute.RouteValue;
+                if (areaName != actualAreaName)
+                {
+                    this.ThrowNewAttributeAssertionException(
+                        $"'{areaName}' area",
+                        $"in fact found '{actualAreaName}'");
+                }
+            });
+
+            return this.AttributesBuilder;
+        }
+
+        /// <inheritdoc />
+        public TAttributesTestBuilder RestrictingForAuthorizedRequests(string withAllowedRoles = null)
+        {
+            this.ContainingAttributeOfType<AuthorizeAttribute>();
             var testAllowedRoles = !string.IsNullOrEmpty(withAllowedRoles);
             if (testAllowedRoles)
             {
@@ -82,13 +92,18 @@
                     var actualRoles = authorizeAttribute.Roles;
                     if (withAllowedRoles != actualRoles)
                     {
-                        failedValidationAction(
+                        this.ThrowNewAttributeAssertionException(
                             $"{authorizeAttribute.GetName()} with allowed '{withAllowedRoles}' roles",
                             $"in fact found '{actualRoles}'");
                     }
                 });
             }
+
+            return this.AttributesBuilder;
         }
 
+        /// <inheritdoc />
+        public TAttributesTestBuilder AllowingAnonymousRequests()
+            => this.ContainingAttributeOfType<AllowAnonymousAttribute>();
     }
 }

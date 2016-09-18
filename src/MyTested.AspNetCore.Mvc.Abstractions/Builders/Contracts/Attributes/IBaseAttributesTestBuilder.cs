@@ -2,6 +2,10 @@
 {
     using System;
 
+    /// <summary>
+    /// Base interface for all attribute test builders.
+    /// </summary>
+    /// <typeparam name="TAttributesTestBuilder">Type of attributes test builder to use as a return type for common methods.</typeparam>
     public interface IBaseAttributesTestBuilder<TAttributesTestBuilder>
     {
         /// <summary>

@@ -27,7 +27,7 @@
                         .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.ContainingAttributeOfType<AllowAnonymousAttribute>());
-                }, 
+                },
                 "When testing MvcController was expected to have AllowAnonymousAttribute, but in fact such was not found.");
         }
 
@@ -59,7 +59,7 @@
                         .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.ChangingRouteTo("api/another"));
-                }, 
+                },
                 "When testing AttributesController was expected to have RouteAttribute with 'api/another' template, but in fact found 'api/test'.");
         }
 
@@ -82,7 +82,7 @@
                         .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.ChangingRouteTo("api/test", withName: "AnotherRoute"));
-                }, 
+                },
                 "When testing AttributesController was expected to have RouteAttribute with 'AnotherRoute' name, but in fact found 'TestRouteAttributes'.");
         }
 
@@ -122,7 +122,44 @@
                 },
                 "When testing AreaController was expected to have RouteAttribute, but in fact such was not found.");
         }
-        
+
+        [Fact]
+        public void SpecifyingAreaShouldNotThrowExceptionWithActionWithTheAttribute()
+        {
+            MyController<AreaController>
+                .Instance()
+                .ShouldHave()
+                .Attributes(attributes => attributes.SpecifyingArea("CustomArea"));
+        }
+
+        [Fact]
+        public void SpecifyingAreaShouldThrowExceptionWithActionWithTheAttributeAndWrongName()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<AreaController>
+                        .Instance()
+                        .ShouldHave()
+                        .Attributes(attributes => attributes.SpecifyingArea("AnotherArea"));
+                },
+                "When testing MvcController was expected to have 'AnotherArea' area, but in fact found 'InArea'.");
+        }
+
+        [Fact]
+        public void SpecifyingAreaToShouldThrowExceptionWithActionWithoutTheAttribute()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .ShouldHave()
+                        .Attributes(attributes => attributes.SpecifyingArea("CustomArea"));
+                },
+                "When testing MvcController was expected to have AreaAttribute, but in fact such was not found.");
+        }
+
         [Fact]
         public void AllowingAnonymousRequestsShouldNotThrowExceptionWithTheAttribute()
         {
@@ -188,10 +225,10 @@
                         .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.RestrictingForAuthorizedRequests(withAllowedRoles: "Admin"));
-                }, 
+                },
                 "When testing MvcController was expected to have AuthorizeAttribute with allowed 'Admin' roles, but in fact found 'Admin,Moderator'.");
         }
-        
+
         [Fact]
         public void AndAlsoShouldWorkCorrectly()
         {

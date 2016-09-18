@@ -299,6 +299,12 @@
             return this.Ok();
         }
 
+        [Area("Admin")]
+        public IActionResult OtherAttributes()
+        {
+            return this.Ok();
+        }
+
         [ValidateAntiForgeryToken]
         public IActionResult AntiForgeryToken()
         {

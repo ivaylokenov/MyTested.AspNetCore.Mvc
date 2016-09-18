@@ -1,14 +1,13 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Attributes
 {
-    using System;
     using Contracts.Attributes;
     using Internal.TestContexts;
-    using Microsoft.AspNetCore.Authorization;
 
     /// <summary>
     /// Used for testing controller attributes.
     /// </summary>
-    public class ControllerAttributesTestBuilder : ControllerActionAttributesTestBuilder, IAndControllerAttributesTestBuilder
+    public class ControllerAttributesTestBuilder : ControllerActionAttributesTestBuilder<IAndControllerAttributesTestBuilder>,
+        IAndControllerAttributesTestBuilder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ControllerAttributesTestBuilder"/> class.
@@ -20,49 +19,8 @@
         }
 
         /// <inheritdoc />
-        public IAndControllerAttributesTestBuilder ContainingAttributeOfType<TAttribute>()
-            where TAttribute : Attribute
-        {
-            this.ContainingAttributeOfType<TAttribute>(this.ThrowNewAttributeAssertionException);
-            return this;
-        }
+        public IControllerAttributesTestBuilder AndAlso() => this;
 
-        /// <inheritdoc />
-        public IAndControllerAttributesTestBuilder ChangingRouteTo(
-            string template,
-            string withName = null,
-            int? withOrder = null)
-        {
-            this.ChangingRouteTo(
-                template,
-                this.ThrowNewAttributeAssertionException,
-                withName,
-                withOrder);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndControllerAttributesTestBuilder AllowingAnonymousRequests()
-        {
-            return this.ContainingAttributeOfType<AllowAnonymousAttribute>();
-        }
-
-        /// <inheritdoc />
-        public IAndControllerAttributesTestBuilder RestrictingForAuthorizedRequests(
-            string withAllowedRoles = null)
-        {
-            this.RestrictingForAuthorizedRequests(
-                this.ThrowNewAttributeAssertionException,
-                withAllowedRoles);
-            
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IControllerAttributesTestBuilder AndAlso()
-        {
-            return this;
-        }
+        protected override IAndControllerAttributesTestBuilder GetAttributesTestBuilder() => this;
     }
 }

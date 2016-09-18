@@ -176,6 +176,46 @@
         }
 
         [Fact]
+        public void SpecifyingAreaShouldNotThrowExceptionWithActionWithTheAttribute()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.OtherAttributes())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes.SpecifyingArea("InArea"));
+        }
+
+        [Fact]
+        public void SpecifyingAreaShouldThrowExceptionWithActionWithTheAttributeAndWrongName()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.OtherAttributes())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes.ChangingActionNameTo("AnotherArea"));
+                },
+                "When calling OtherAttributes action in MvcController expected action to have 'AnotherArea' area, but in fact found 'InArea'.");
+        }
+
+        [Fact]
+        public void SpecifyingAreaToShouldThrowExceptionWithActionWithoutTheAttribute()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.NormalActionWithAttributes())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes.SpecifyingArea("InArea"));
+                },
+                "When calling NormalActionWithAttributes action in MvcController expected action to have AreaAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
         public void AllowingAnonymousRequestsShouldNotThrowExceptionWithTheAttribute()
         {
             MyController<MvcController>
