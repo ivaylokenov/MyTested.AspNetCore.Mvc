@@ -8,6 +8,7 @@
     using Setups.Controllers;
     using Setups.Models;
     using Xunit;
+    using System;
 
     public class ActionAttributesTestBuilderTests
     {
@@ -195,7 +196,7 @@
                         .Instance()
                         .Calling(c => c.OtherAttributes())
                         .ShouldHave()
-                        .ActionAttributes(attributes => attributes.ChangingActionNameTo("AnotherArea"));
+                        .ActionAttributes(attributes => attributes.SpecifyingArea("AnotherArea"));
                 },
                 "When calling OtherAttributes action in MvcController expected action to have 'AnotherArea' area, but in fact found 'InArea'.");
         }
@@ -421,6 +422,101 @@
         }
 
         [Fact]
+        public void PassingForShouldNotThrowExceptionWithCorrectAssertions()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.VariousAttributesAction())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .PassingFor<RouteAttribute>(route => Assert.Equal("/api/test", route.Template)));
+        }
+
+        [Fact]
+        public void PassingForShouldThrowExceptionWithIncorrectAssertions()
+        {
+            Assert.ThrowsAny<Exception>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.VariousAttributesAction())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .PassingFor<RouteAttribute>(route => Assert.Equal("/invalid", route.Template)));
+                });
+        }
+
+        [Fact]
+        public void PassingForShouldThrowExceptionWithIncorrectAttribute()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.OtherAttributes())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .PassingFor<ActionNameAttribute>(authorize => Assert.Equal("Admin", authorize.Name)));
+                },
+                "When calling OtherAttributes action in MvcController expected action to have ActionNameAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void PassingForShouldNotThrowExceptionWithCorrectPredicate()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.VariousAttributesAction())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .PassingFor<RouteAttribute>(route => route.Template == "/api/test"));
+        }
+
+        [Fact]
+        public void PassingForShouldThrowExceptionWithIncorrectPredicate()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.VariousAttributesAction())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .PassingFor<RouteAttribute>(route => route.Template == "/invalid"));
+                },
+                "When calling VariousAttributesAction action in MvcController expected action to have RouteAttribute passing the given predicate, but it failed.");
+        }
+
+        [Fact]
+        public void PassingForShouldThrowExceptionWithIncorrectAttributeWithPredicate()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.OtherAttributes())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .PassingFor<ActionNameAttribute>(authorize => authorize.Name == "Admin"));
+                },
+                "When calling OtherAttributes action in MvcController expected action to have ActionNameAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void WithNoShouldWorkCorrectly()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.EmptyActionWithParameters(With.No<int>(), With.No<RequestModel>()))
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes.ChangingActionNameTo("Test"));
+        }
+
+        [Fact]
         public void AndAlsoShouldWorkCorrectly()
         {
             MyController<MvcController>
@@ -433,16 +529,6 @@
                         .AndAlso()
                         .DisablingActionCall()
                         .ChangingActionNameTo("NormalAction"));
-        }
-
-        [Fact]
-        public void WithNoShouldWorkCorrectly()
-        {
-            MyController<MvcController>
-                .Instance()
-                .Calling(c => c.EmptyActionWithParameters(With.No<int>(), With.No<RequestModel>()))
-                .ShouldHave()
-                .ActionAttributes(attributes => attributes.ChangingActionNameTo("Test"));
         }
     }
 }

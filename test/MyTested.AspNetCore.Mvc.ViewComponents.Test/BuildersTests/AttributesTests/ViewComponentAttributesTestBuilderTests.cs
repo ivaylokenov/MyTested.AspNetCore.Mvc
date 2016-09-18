@@ -5,6 +5,7 @@
     using Setups;
     using Setups.Common;
     using Setups.ViewComponents;
+    using System;
     using Xunit;
 
     public class ViewComponentAttributesTestBuilderTests
@@ -71,6 +72,85 @@
                         .Attributes(attributes => attributes.ChangingViewComponentNameTo("Normal"));
                 },
                 "When testing NormalComponent was expected to have at least 1 attribute, but in fact none was found.");
+        }
+        
+        [Fact]
+        public void PassingForShouldNotThrowExceptionWithCorrectAssertions()
+        {
+            MyViewComponent<AttributesComponent>
+                .Instance()
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .PassingFor<ViewComponentAttribute>(vc => Assert.Equal("Test", vc.Name)));
+        }
+
+        [Fact]
+        public void PassingForShouldThrowExceptionWithIncorrectAssertions()
+        {
+            Assert.ThrowsAny<Exception>(
+                () =>
+                {
+                    MyViewComponent<AttributesComponent>
+                        .Instance()
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .PassingFor<ViewComponentAttribute>(route => Assert.Equal("Invalid", route.Name)));
+                });
+        }
+
+        [Fact]
+        public void PassingForShouldThrowExceptionWithIncorrectAttribute()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyViewComponent<AttributesComponent>
+                        .Instance()
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .PassingFor<ActionNameAttribute>(authorize => Assert.Equal("Admin", authorize.Name)));
+                },
+                "When testing AttributesComponent was expected to have ActionNameAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void PassingForShouldNotThrowExceptionWithCorrectPredicate()
+        {
+            MyViewComponent<AttributesComponent>
+                .Instance()
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .PassingFor<ViewComponentAttribute>(route => route.Name == "Test"));
+        }
+
+        [Fact]
+        public void PassingForShouldThrowExceptionWithIncorrectPredicate()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyViewComponent<AttributesComponent>
+                        .Instance()
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .PassingFor<ViewComponentAttribute>(route => route.Name == "Invalid"));
+                },
+                "When testing AttributesComponent was expected to have ViewComponentAttribute passing the given predicate, but it failed.");
+        }
+
+        [Fact]
+        public void PassingForShouldThrowExceptionWithIncorrectAttributeWithPredicate()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyViewComponent<AttributesComponent>
+                        .Instance()
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .PassingFor<ActionNameAttribute>(authorize => authorize.Name == "Admin"));
+                },
+                "When testing AttributesComponent was expected to have ActionNameAttribute, but in fact such was not found.");
         }
     }
 }

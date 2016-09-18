@@ -9,11 +9,29 @@
     public interface IBaseAttributesTestBuilder<TAttributesTestBuilder>
     {
         /// <summary>
-        /// Checks whether the collected attributes contain the provided attribute type.
+        /// Tests whether the collected attributes contain the provided attribute type.
         /// </summary>
         /// <typeparam name="TAttribute">Type of expected attribute.</typeparam>
         /// <returns>The same attributes test builder.</returns>
         TAttributesTestBuilder ContainingAttributeOfType<TAttribute>()
+            where TAttribute : Attribute;
+
+        /// <summary>
+        /// Tests whether the collected attributes contain the provided attribute type passing the given assertions.
+        /// </summary>
+        /// <typeparam name="TAttribute">Type of expected attribute.</typeparam>
+        /// <param name="assertions">Action containing assertions on the provided attribute.</param>
+        /// <returns>The same attributes test builder.</returns>
+        TAttributesTestBuilder PassingFor<TAttribute>(Action<TAttribute> assertions)
+            where TAttribute : Attribute;
+
+        /// <summary>
+        /// Tests whether the collected attributes contain the provided attribute type passing the given predicate.
+        /// </summary>
+        /// <typeparam name="TAttribute">Type of expected attribute.</typeparam>
+        /// <param name="predicate">Predicate testing the provided attribute.</param>
+        /// <returns>The same attributes test builder.</returns>
+        TAttributesTestBuilder PassingFor<TAttribute>(Func<TAttribute, bool> predicate)
             where TAttribute : Attribute;
     }
 }

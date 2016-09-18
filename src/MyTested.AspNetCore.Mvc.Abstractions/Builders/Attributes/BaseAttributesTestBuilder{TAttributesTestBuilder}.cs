@@ -31,11 +31,7 @@
 
         protected abstract TAttributesTestBuilder GetAttributesTestBuilder();
 
-        /// <summary>
-        /// Tests whether the attributes contain the provided attribute type.
-        /// </summary>
-        /// <typeparam name="TAttribute">Type of expected attribute.</typeparam>
-        /// <returns>The same test builder of <see cref="BaseAttributesTestBuilder{TAttributesBuilder}"/> type.</returns>
+        /// <inheritdoc />
         public TAttributesTestBuilder ContainingAttributeOfType<TAttribute>()
             where TAttribute : Attribute
         {
@@ -47,6 +43,34 @@
                     this.ThrowNewAttributeAssertionException(
                         expectedAttributeType.ToFriendlyTypeName(),
                         "in fact such was not found");
+                }
+            });
+
+            return this.AttributesBuilder;
+        }
+
+        /// <inheritdoc />
+        public TAttributesTestBuilder PassingFor<TAttribute>(Action<TAttribute> assertions)
+            where TAttribute : Attribute
+        {
+            this.ContainingAttributeOfType<TAttribute>();
+            this.Validations.Add(attrs => assertions(this.GetAttributeOfType<TAttribute>(attrs)));
+            return this.AttributesBuilder;
+        }
+
+        /// <inheritdoc />
+        public TAttributesTestBuilder PassingFor<TAttribute>(Func<TAttribute, bool> predicate)
+            where TAttribute : Attribute
+        {
+            this.ContainingAttributeOfType<TAttribute>();
+            this.Validations.Add(attrs =>
+            {
+                var attribute = this.GetAttributeOfType<TAttribute>(attrs);
+                if (!predicate(attribute))
+                {
+                    this.ThrowNewAttributeAssertionException(
+                        $"{attribute.GetName()} passing the given predicate",
+                        "it failed");
                 }
             });
 

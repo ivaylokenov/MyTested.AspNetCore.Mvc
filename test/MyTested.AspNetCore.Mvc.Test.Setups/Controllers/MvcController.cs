@@ -299,7 +299,7 @@
             return this.Ok();
         }
 
-        [Area("Admin")]
+        [Area("InArea")]
         public IActionResult OtherAttributes()
         {
             return this.Ok();
