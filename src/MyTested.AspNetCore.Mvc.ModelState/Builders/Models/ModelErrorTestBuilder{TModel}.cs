@@ -1,17 +1,16 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Models
 {
     using Contracts.Models;
-    using Exceptions;
+    using Base;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
-    using Utilities.Extensions;
 
     /// <summary>
     /// Used for testing the <see cref="ModelStateDictionary"/> errors.
     /// </summary>
     /// <typeparam name="TModel">Model from invoked method in ASP.NET Core MVC.</typeparam>
-    public class ModelErrorTestBuilder<TModel> : ModelErrorTestBuilder, IAndModelErrorTestBuilder<TModel>
+    public class ModelErrorTestBuilder<TModel> : BaseTestBuilderWithModelError, IAndModelErrorTestBuilder<TModel>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelErrorTestBuilder{TModel}"/> class.
@@ -25,21 +24,26 @@
         {
         }
 
-        /// <summary>
-        /// Gets model from invoked method in ASP.NET Core MVC.
-        /// </summary>
-        /// <value>Model from invoked method.</value>
-        protected TModel Model => this.TestContext.ModelAs<TModel>();
+        /// <inheritdoc />
+        public IModelErrorDetailsTestBuilder<TModel> ContainingError(string errorKey)
+        {
+            this.ValidateContainingError(errorKey);
+
+            return new ModelErrorDetailsTestBuilder<TModel>(
+                this.TestContext,
+                this,
+                errorKey,
+                this.ModelState[errorKey].Errors);
+        }
+
+        /// <inheritdoc />
+        public IAndModelErrorTestBuilder<TModel> ContainingNoError(string errorKey)
+        {
+            this.ValidateContainingNoError(errorKey);
+            return this;
+        }
 
         /// <inheritdoc />
         public IModelErrorTestBuilder<TModel> AndAlso() => this;
-        
-        public void ThrowNewModelErrorAssertionException(string messageFormat, string errorKey)
-        {
-            throw new ModelErrorAssertionException(string.Format(
-                    messageFormat,
-                    this.TestContext.ExceptionMessagePrefix,
-                    errorKey));
-        }
     }
 }

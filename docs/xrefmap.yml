@@ -2223,6 +2223,16 @@ references:
   name.vb: IBaseTestBuilderWithModel(Of TModel)
   fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithModel<TModel>
   fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithModel(Of TModel)
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithModelError
+  name: IBaseTestBuilderWithModelError
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithModelError.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Base_IBaseTestBuilderWithModelError
+  commentId: T:MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithModelError
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithModelError
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithModelError.ContainingNoErrors
+  name: ContainingNoErrors()
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithModelError.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Base_IBaseTestBuilderWithModelError_ContainingNoErrors
+  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithModelError.ContainingNoErrors
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithModelError.ContainingNoErrors()
 - uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithResponseModel
   name: IBaseTestBuilderWithResponseModel
   href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithResponseModel.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Base_IBaseTestBuilderWithResponseModel
@@ -4022,6 +4032,41 @@ references:
   name.vb: Passing(Func(Of TModel, Boolean))
   fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelDetailsTestBuilder<TModel>.Passing(System.Func<TModel, System.Boolean>)
   fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelDetailsTestBuilder(Of TModel).Passing(System.Func(Of TModel, System.Boolean))
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder
+  name: IModelErrorDetailsTestBuilder
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorDetailsTestBuilder
+  commentId: T:MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.AndAlso
+  name: AndAlso()
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorDetailsTestBuilder_AndAlso
+  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.AndAlso
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.AndAlso()
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.BeginningWith(System.String)
+  name: BeginningWith(String)
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorDetailsTestBuilder_BeginningWith_System_String_
+  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.BeginningWith(System.String)
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.BeginningWith(System.String)
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.Containing(System.String)
+  name: Containing(String)
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorDetailsTestBuilder_Containing_System_String_
+  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.Containing(System.String)
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.Containing(System.String)
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.ContainingError(System.String)
+  name: ContainingError(String)
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorDetailsTestBuilder_ContainingError_System_String_
+  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.ContainingError(System.String)
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.ContainingError(System.String)
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.EndingWith(System.String)
+  name: EndingWith(String)
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorDetailsTestBuilder_EndingWith_System_String_
+  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.EndingWith(System.String)
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.EndingWith(System.String)
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.ThatEquals(System.String)
+  name: ThatEquals(String)
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorDetailsTestBuilder_ThatEquals_System_String_
+  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.ThatEquals(System.String)
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.ThatEquals(System.String)
 - uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder`1
   name: IModelErrorDetailsTestBuilder<TModel>
   href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorDetailsTestBuilder_1
@@ -6294,19 +6339,19 @@ references:
   commentId: M:MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.Remove(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Type,System.Type)
   fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.Remove(Microsoft.Extensions.DependencyInjection.IServiceCollection, System.Type, System.Type)
 - uid: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.Remove``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  name: Remove<TServive>(IServiceCollection)
+  name: Remove<TService>(IServiceCollection)
   href: api/MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.html#MyTested_AspNetCore_Mvc_ServiceCollectionAbstractionsExtensions_Remove__1_Microsoft_Extensions_DependencyInjection_IServiceCollection_
   commentId: M:MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.Remove``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  name.vb: Remove(Of TServive)(IServiceCollection)
-  fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.Remove<TServive>(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  fullName.vb: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.Remove(Of TServive)(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  name.vb: Remove(Of TService)(IServiceCollection)
+  fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.Remove<TService>(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  fullName.vb: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.Remove(Of TService)(Microsoft.Extensions.DependencyInjection.IServiceCollection)
 - uid: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.Remove``2(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  name: Remove<TServive, TImplementation>(IServiceCollection)
+  name: Remove<TService, TImplementation>(IServiceCollection)
   href: api/MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.html#MyTested_AspNetCore_Mvc_ServiceCollectionAbstractionsExtensions_Remove__2_Microsoft_Extensions_DependencyInjection_IServiceCollection_
   commentId: M:MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.Remove``2(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  name.vb: Remove(Of TServive, TImplementation)(IServiceCollection)
-  fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.Remove<TServive, TImplementation>(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  fullName.vb: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.Remove(Of TServive, TImplementation)(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  name.vb: Remove(Of TService, TImplementation)(IServiceCollection)
+  fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.Remove<TService, TImplementation>(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  fullName.vb: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.Remove(Of TService, TImplementation)(Microsoft.Extensions.DependencyInjection.IServiceCollection)
 - uid: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveScoped(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Type)
   name: RemoveScoped(IServiceCollection, Type)
   href: api/MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.html#MyTested_AspNetCore_Mvc_ServiceCollectionAbstractionsExtensions_RemoveScoped_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Type_
@@ -6318,12 +6363,12 @@ references:
   commentId: M:MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveScoped(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Type,System.Type)
   fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveScoped(Microsoft.Extensions.DependencyInjection.IServiceCollection, System.Type, System.Type)
 - uid: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveScoped``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  name: RemoveScoped<TServive>(IServiceCollection)
+  name: RemoveScoped<TService>(IServiceCollection)
   href: api/MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.html#MyTested_AspNetCore_Mvc_ServiceCollectionAbstractionsExtensions_RemoveScoped__1_Microsoft_Extensions_DependencyInjection_IServiceCollection_
   commentId: M:MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveScoped``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  name.vb: RemoveScoped(Of TServive)(IServiceCollection)
-  fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveScoped<TServive>(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  fullName.vb: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveScoped(Of TServive)(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  name.vb: RemoveScoped(Of TService)(IServiceCollection)
+  fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveScoped<TService>(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  fullName.vb: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveScoped(Of TService)(Microsoft.Extensions.DependencyInjection.IServiceCollection)
 - uid: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveScoped``2(Microsoft.Extensions.DependencyInjection.IServiceCollection)
   name: RemoveScoped<TService, TImplementation>(IServiceCollection)
   href: api/MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.html#MyTested_AspNetCore_Mvc_ServiceCollectionAbstractionsExtensions_RemoveScoped__2_Microsoft_Extensions_DependencyInjection_IServiceCollection_
@@ -6342,19 +6387,19 @@ references:
   commentId: M:MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveSingleton(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Type,System.Type)
   fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveSingleton(Microsoft.Extensions.DependencyInjection.IServiceCollection, System.Type, System.Type)
 - uid: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveSingleton``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  name: RemoveSingleton<TServive>(IServiceCollection)
+  name: RemoveSingleton<TService>(IServiceCollection)
   href: api/MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.html#MyTested_AspNetCore_Mvc_ServiceCollectionAbstractionsExtensions_RemoveSingleton__1_Microsoft_Extensions_DependencyInjection_IServiceCollection_
   commentId: M:MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveSingleton``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  name.vb: RemoveSingleton(Of TServive)(IServiceCollection)
-  fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveSingleton<TServive>(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  fullName.vb: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveSingleton(Of TServive)(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  name.vb: RemoveSingleton(Of TService)(IServiceCollection)
+  fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveSingleton<TService>(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  fullName.vb: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveSingleton(Of TService)(Microsoft.Extensions.DependencyInjection.IServiceCollection)
 - uid: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveSingleton``2(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  name: RemoveSingleton<TServive, TImplementation>(IServiceCollection)
+  name: RemoveSingleton<TService, TImplementation>(IServiceCollection)
   href: api/MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.html#MyTested_AspNetCore_Mvc_ServiceCollectionAbstractionsExtensions_RemoveSingleton__2_Microsoft_Extensions_DependencyInjection_IServiceCollection_
   commentId: M:MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveSingleton``2(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  name.vb: RemoveSingleton(Of TServive, TImplementation)(IServiceCollection)
-  fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveSingleton<TServive, TImplementation>(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  fullName.vb: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveSingleton(Of TServive, TImplementation)(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  name.vb: RemoveSingleton(Of TService, TImplementation)(IServiceCollection)
+  fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveSingleton<TService, TImplementation>(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  fullName.vb: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveSingleton(Of TService, TImplementation)(Microsoft.Extensions.DependencyInjection.IServiceCollection)
 - uid: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveTransient(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Type)
   name: RemoveTransient(IServiceCollection, Type)
   href: api/MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.html#MyTested_AspNetCore_Mvc_ServiceCollectionAbstractionsExtensions_RemoveTransient_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Type_
@@ -6366,19 +6411,19 @@ references:
   commentId: M:MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveTransient(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Type,System.Type)
   fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveTransient(Microsoft.Extensions.DependencyInjection.IServiceCollection, System.Type, System.Type)
 - uid: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveTransient``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  name: RemoveTransient<TServive>(IServiceCollection)
+  name: RemoveTransient<TService>(IServiceCollection)
   href: api/MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.html#MyTested_AspNetCore_Mvc_ServiceCollectionAbstractionsExtensions_RemoveTransient__1_Microsoft_Extensions_DependencyInjection_IServiceCollection_
   commentId: M:MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveTransient``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  name.vb: RemoveTransient(Of TServive)(IServiceCollection)
-  fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveTransient<TServive>(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  fullName.vb: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveTransient(Of TServive)(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  name.vb: RemoveTransient(Of TService)(IServiceCollection)
+  fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveTransient<TService>(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  fullName.vb: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveTransient(Of TService)(Microsoft.Extensions.DependencyInjection.IServiceCollection)
 - uid: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveTransient``2(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  name: RemoveTransient<TServive, TImplementation>(IServiceCollection)
+  name: RemoveTransient<TService, TImplementation>(IServiceCollection)
   href: api/MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.html#MyTested_AspNetCore_Mvc_ServiceCollectionAbstractionsExtensions_RemoveTransient__2_Microsoft_Extensions_DependencyInjection_IServiceCollection_
   commentId: M:MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveTransient``2(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  name.vb: RemoveTransient(Of TServive, TImplementation)(IServiceCollection)
-  fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveTransient<TServive, TImplementation>(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  fullName.vb: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveTransient(Of TServive, TImplementation)(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  name.vb: RemoveTransient(Of TService, TImplementation)(IServiceCollection)
+  fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveTransient<TService, TImplementation>(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  fullName.vb: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveTransient(Of TService, TImplementation)(Microsoft.Extensions.DependencyInjection.IServiceCollection)
 - uid: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.Replace(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Type,System.Func{System.IServiceProvider,System.Object},Microsoft.Extensions.DependencyInjection.ServiceLifetime)
   name: Replace(IServiceCollection, Type, Func<IServiceProvider, Object>, ServiceLifetime)
   href: api/MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.html#MyTested_AspNetCore_Mvc_ServiceCollectionAbstractionsExtensions_Replace_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Type_System_Func_System_IServiceProvider_System_Object__Microsoft_Extensions_DependencyInjection_ServiceLifetime_

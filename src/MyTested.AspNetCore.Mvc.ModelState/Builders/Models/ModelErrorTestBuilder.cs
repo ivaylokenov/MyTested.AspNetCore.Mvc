@@ -8,7 +8,7 @@
     /// <summary>
     /// Used for testing the <see cref="ModelStateDictionary"/> errors.
     /// </summary>
-    public class ModelErrorTestBuilder : BaseTestBuilderWithActionContext, IModelErrorTestBuilder
+    public class ModelErrorTestBuilder : BaseTestBuilderWithModelError, IAndModelErrorTestBuilder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelErrorTestBuilder"/> class.
@@ -18,15 +18,30 @@
         public ModelErrorTestBuilder(
             ActionTestContext testContext,
             ModelStateDictionary modelState = null)
-            : base(testContext)
+            : base(testContext, modelState)
         {
-            this.ModelState = modelState ?? testContext.ModelState;
         }
 
-        /// <summary>
-        /// Gets validated <see cref="ModelStateDictionary"/>.
-        /// </summary>
-        /// <value><see cref="ModelStateDictionary"/> containing all validation errors.</value>
-        public ModelStateDictionary ModelState { get; private set; }
+        /// <inheritdoc />
+        public IModelErrorDetailsTestBuilder ContainingError(string errorKey)
+        {
+            this.ValidateContainingError(errorKey);
+
+            return new ModelErrorDetailsTestBuilder(
+                this.TestContext,
+                this,
+                errorKey,
+                this.ModelState[errorKey].Errors);
+        }
+
+        /// <inheritdoc />
+        public IAndModelErrorTestBuilder ContainingNoError(string errorKey)
+        {
+            this.ValidateContainingNoError(errorKey);
+            return this;
+        }
+
+        /// <inheritdoc />
+        public IModelErrorTestBuilder AndAlso() => this;
     }
 }

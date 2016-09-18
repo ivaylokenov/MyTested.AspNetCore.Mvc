@@ -2,19 +2,19 @@
 {
     using System;
     using And;
+    using Base;
     using Contracts.And;
     using Contracts.Models;
     using Exceptions;
     using Internal.TestContexts;
     using Utilities;
-    using Utilities.Extensions;
 
     /// <summary>
     /// Used for testing the model members.
     /// </summary>
     /// <typeparam name="TModel">Model from invoked method in ASP.NET Core MVC.</typeparam>
     public class ModelDetailsTestBuilder<TModel>
-        : ModelErrorTestBuilder<TModel>, IAndModelDetailsTestBuilder<TModel>
+        : BaseTestBuilderWithActionContext, IAndModelDetailsTestBuilder<TModel>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelDetailsTestBuilder{TResponseModel}"/> class.
@@ -28,14 +28,14 @@
         /// <inheritdoc />
         public IAndTestBuilder Passing(Action<TModel> assertions)
         {
-            assertions(this.Model);
+            assertions(this.TestContext.ModelAs<TModel>());
             return new AndTestBuilder(this.TestContext);
         }
 
         /// <inheritdoc />
         public IAndTestBuilder Passing(Func<TModel, bool> predicate)
         {
-            if (!predicate(this.Model))
+            if (!predicate(this.TestContext.ModelAs<TModel>()))
             {
                 throw new ResponseModelAssertionException(string.Format(
                     "{0} response model {1} to pass the given predicate, but it failed.",
@@ -47,6 +47,6 @@
         }
 
         /// <inheritdoc />
-        public new IModelDetailsTestBuilder<TModel> AndAlso() => this;
+        public IModelDetailsTestBuilder<TModel> AndAlso() => this;
     }
 }
