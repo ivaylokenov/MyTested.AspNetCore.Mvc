@@ -12,7 +12,11 @@
             : base(testContext)
         {
         }
-        
+
+        /// <inheritdoc />
+        public IAndViewComponentAttributesTestBuilder IndicatingViewComponentExplicitly()
+            => this.ContainingAttributeOfType<ViewComponentAttribute>();
+
         /// <inheritdoc />
         public IAndViewComponentAttributesTestBuilder ChangingViewComponentNameTo(string viewComponentName)
         {

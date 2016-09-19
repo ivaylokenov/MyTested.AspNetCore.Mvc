@@ -2,6 +2,7 @@
 {
     using Contracts.Attributes;
     using Internal.TestContexts;
+    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
     /// Used for testing controller attributes.
@@ -17,6 +18,10 @@
             : base(testContext)
         {
         }
+
+        /// <inheritdoc />
+        public IAndControllerAttributesTestBuilder IndicatingControllerExplicitly()
+            => this.ContainingAttributeOfType<ControllerAttribute>();
 
         /// <inheritdoc />
         public IControllerAttributesTestBuilder AndAlso() => this;

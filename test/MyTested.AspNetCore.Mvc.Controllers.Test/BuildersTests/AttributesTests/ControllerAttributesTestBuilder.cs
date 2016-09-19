@@ -232,6 +232,29 @@
         }
 
         [Fact]
+        public void IndicatingControllerShouldNotThrowExceptionWithTheAttribute()
+        {
+            MyController<AreaController>
+                .Instance()
+                .ShouldHave()
+                .Attributes(attributes => attributes.IndicatingControllerExplicitly());
+        }
+
+        [Fact]
+        public void DisablingActionCallShouldThrowExceptionWithActionWithoutTheAttribute()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .ShouldHave()
+                        .Attributes(attributes => attributes.IndicatingControllerExplicitly());
+                },
+                "When testing MvcController was expected to have ControllerAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
         public void PassingForShouldNotThrowExceptionWithCorrectAssertions()
         {
             MyController<MvcController>

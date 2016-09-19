@@ -1795,33 +1795,16 @@ references:
   href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder
   commentId: T:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder
   fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.AllowingAnonymousRequests
-  name: AllowingAnonymousRequests()
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_AllowingAnonymousRequests
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.AllowingAnonymousRequests
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.AllowingAnonymousRequests()
 - uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.ChangingActionNameTo(System.String)
   name: ChangingActionNameTo(String)
   href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_ChangingActionNameTo_System_String_
   commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.ChangingActionNameTo(System.String)
   fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.ChangingActionNameTo(System.String)
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.ChangingRouteTo(System.String,System.String,System.Nullable{System.Int32})
-  name: ChangingRouteTo(String, String, Nullable<Int32>)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_ChangingRouteTo_System_String_System_String_System_Nullable_System_Int32__
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.ChangingRouteTo(System.String,System.String,System.Nullable{System.Int32})
-  name.vb: ChangingRouteTo(String, String, Nullable(Of Int32))
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.ChangingRouteTo(System.String, System.String, System.Nullable<System.Int32>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.ChangingRouteTo(System.String, System.String, System.Nullable(Of System.Int32))
 - uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.DisablingActionCall
   name: DisablingActionCall()
   href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_DisablingActionCall
   commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.DisablingActionCall
   fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.DisablingActionCall()
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.RestrictingForAuthorizedRequests(System.String)
-  name: RestrictingForAuthorizedRequests(String)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_RestrictingForAuthorizedRequests_System_String_
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.RestrictingForAuthorizedRequests(System.String)
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.RestrictingForAuthorizedRequests(System.String)
 - uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.RestrictingForHttpMethod(System.Net.Http.HttpMethod)
   name: RestrictingForHttpMethod(HttpMethod)
   href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_RestrictingForHttpMethod_System_Net_Http_HttpMethod_
@@ -1881,28 +1864,62 @@ references:
   name.vb: ContainingAttributeOfType(Of TAttribute)()
   fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder<TAttributesTestBuilder>.ContainingAttributeOfType<TAttribute>()
   fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder(Of TAttributesTestBuilder).ContainingAttributeOfType(Of TAttribute)()
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder`1.PassingFor``1(System.Action{``0})
+  name: PassingFor<TAttribute>(Action<TAttribute>)
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IBaseAttributesTestBuilder_1_PassingFor__1_System_Action___0__
+  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder`1.PassingFor``1(System.Action{``0})
+  name.vb: PassingFor(Of TAttribute)(Action(Of TAttribute))
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder<TAttributesTestBuilder>.PassingFor<TAttribute>(System.Action<TAttribute>)
+  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder(Of TAttributesTestBuilder).PassingFor(Of TAttribute)(System.Action(Of TAttribute))
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder`1.PassingFor``1(System.Func{``0,System.Boolean})
+  name: PassingFor<TAttribute>(Func<TAttribute, Boolean>)
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IBaseAttributesTestBuilder_1_PassingFor__1_System_Func___0_System_Boolean__
+  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder`1.PassingFor``1(System.Func{``0,System.Boolean})
+  name.vb: PassingFor(Of TAttribute)(Func(Of TAttribute, Boolean))
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder<TAttributesTestBuilder>.PassingFor<TAttribute>(System.Func<TAttribute, System.Boolean>)
+  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder(Of TAttributesTestBuilder).PassingFor(Of TAttribute)(System.Func(Of TAttribute, System.Boolean))
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder`1
+  name: IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IControllerActionAttributesTestBuilder_1
+  commentId: T:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder`1
+  name.vb: IControllerActionAttributesTestBuilder(Of TAttributesTestBuilder)
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
+  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder(Of TAttributesTestBuilder)
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder`1.AllowingAnonymousRequests
+  name: AllowingAnonymousRequests()
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IControllerActionAttributesTestBuilder_1_AllowingAnonymousRequests
+  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder`1.AllowingAnonymousRequests
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder<TAttributesTestBuilder>.AllowingAnonymousRequests()
+  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder(Of TAttributesTestBuilder).AllowingAnonymousRequests()
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder`1.ChangingRouteTo(System.String,System.String,System.Nullable{System.Int32})
+  name: ChangingRouteTo(String, String, Nullable<Int32>)
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IControllerActionAttributesTestBuilder_1_ChangingRouteTo_System_String_System_String_System_Nullable_System_Int32__
+  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder`1.ChangingRouteTo(System.String,System.String,System.Nullable{System.Int32})
+  name.vb: ChangingRouteTo(String, String, Nullable(Of Int32))
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder<TAttributesTestBuilder>.ChangingRouteTo(System.String, System.String, System.Nullable<System.Int32>)
+  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder(Of TAttributesTestBuilder).ChangingRouteTo(System.String, System.String, System.Nullable(Of System.Int32))
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder`1.RestrictingForAuthorizedRequests(System.String)
+  name: RestrictingForAuthorizedRequests(String)
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IControllerActionAttributesTestBuilder_1_RestrictingForAuthorizedRequests_System_String_
+  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder`1.RestrictingForAuthorizedRequests(System.String)
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder<TAttributesTestBuilder>.RestrictingForAuthorizedRequests(System.String)
+  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder(Of TAttributesTestBuilder).RestrictingForAuthorizedRequests(System.String)
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder`1.SpecifyingArea(System.String)
+  name: SpecifyingArea(String)
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IControllerActionAttributesTestBuilder_1_SpecifyingArea_System_String_
+  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder`1.SpecifyingArea(System.String)
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder<TAttributesTestBuilder>.SpecifyingArea(System.String)
+  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder(Of TAttributesTestBuilder).SpecifyingArea(System.String)
 - uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder
   name: IControllerAttributesTestBuilder
   href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IControllerAttributesTestBuilder
   commentId: T:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder
   fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.AllowingAnonymousRequests
-  name: AllowingAnonymousRequests()
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IControllerAttributesTestBuilder_AllowingAnonymousRequests
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.AllowingAnonymousRequests
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.AllowingAnonymousRequests()
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.ChangingRouteTo(System.String,System.String,System.Nullable{System.Int32})
-  name: ChangingRouteTo(String, String, Nullable<Int32>)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IControllerAttributesTestBuilder_ChangingRouteTo_System_String_System_String_System_Nullable_System_Int32__
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.ChangingRouteTo(System.String,System.String,System.Nullable{System.Int32})
-  name.vb: ChangingRouteTo(String, String, Nullable(Of Int32))
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.ChangingRouteTo(System.String, System.String, System.Nullable<System.Int32>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.ChangingRouteTo(System.String, System.String, System.Nullable(Of System.Int32))
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.RestrictingForAuthorizedRequests(System.String)
-  name: RestrictingForAuthorizedRequests(String)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IControllerAttributesTestBuilder_RestrictingForAuthorizedRequests_System_String_
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.RestrictingForAuthorizedRequests(System.String)
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.RestrictingForAuthorizedRequests(System.String)
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.IndicatingControllerExplicitly
+  name: IndicatingControllerExplicitly()
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IControllerAttributesTestBuilder_IndicatingControllerExplicitly
+  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.IndicatingControllerExplicitly
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.IndicatingControllerExplicitly()
 - uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IViewComponentAttributesTestBuilder
   name: IViewComponentAttributesTestBuilder
   href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IViewComponentAttributesTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IViewComponentAttributesTestBuilder
@@ -1913,6 +1930,11 @@ references:
   href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IViewComponentAttributesTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IViewComponentAttributesTestBuilder_ChangingViewComponentNameTo_System_String_
   commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IViewComponentAttributesTestBuilder.ChangingViewComponentNameTo(System.String)
   fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IViewComponentAttributesTestBuilder.ChangingViewComponentNameTo(System.String)
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IViewComponentAttributesTestBuilder.IndicatingViewComponentExplicitly
+  name: IndicatingViewComponentExplicitly()
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IViewComponentAttributesTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IViewComponentAttributesTestBuilder_IndicatingViewComponentExplicitly
+  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IViewComponentAttributesTestBuilder.IndicatingViewComponentExplicitly
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IViewComponentAttributesTestBuilder.IndicatingViewComponentExplicitly()
 - uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication
   name: MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication
   href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Authentication

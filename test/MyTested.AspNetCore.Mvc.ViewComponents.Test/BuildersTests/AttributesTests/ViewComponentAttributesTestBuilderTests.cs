@@ -73,7 +73,32 @@
                 },
                 "When testing NormalComponent was expected to have at least 1 attribute, but in fact none was found.");
         }
-        
+
+        [Fact]
+        public void IndicatingControllerShouldNotThrowExceptionWithTheAttribute()
+        {
+            MyViewComponent<AttributesComponent>
+                .Instance()
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .IndicatingViewComponentExplicitly());
+        }
+
+        [Fact]
+        public void DisablingActionCallShouldThrowExceptionWithActionWithoutTheAttribute()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyViewComponent<ComponentWithCustomAttribute>
+                        .Instance()
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .IndicatingViewComponentExplicitly());
+                },
+                "When testing ComponentWithCustomAttribute was expected to have ViewComponentAttribute, but in fact such was not found.");
+        }
+
         [Fact]
         public void PassingForShouldNotThrowExceptionWithCorrectAssertions()
         {
