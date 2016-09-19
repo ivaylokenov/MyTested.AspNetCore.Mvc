@@ -16,11 +16,11 @@
         /// Tests whether the action result is <see cref="JsonResult"/>.
         /// </summary>
         /// <typeparam name="TActionResult">Type of action result type.</typeparam>
-        /// <param name="shouldReturnTestBuilder">Instance of <see cref="IShouldReturnTestBuilder{TActionResult}"/> type.</param>
+        /// <param name="builder">Instance of <see cref="IShouldReturnTestBuilder{TActionResult}"/> type.</param>
         /// <returns>Test builder of <see cref="IAndJsonTestBuilder"/> type.</returns>
-        public static IAndJsonTestBuilder Json<TActionResult>(this IShouldReturnTestBuilder<TActionResult> shouldReturnTestBuilder)
+        public static IAndJsonTestBuilder Json<TActionResult>(this IShouldReturnTestBuilder<TActionResult> builder)
         {
-            var actualShouldReturnTestBuilder = (ShouldReturnTestBuilder<TActionResult>)shouldReturnTestBuilder;
+            var actualShouldReturnTestBuilder = (ShouldReturnTestBuilder<TActionResult>)builder;
 
             InvocationResultValidator.ValidateInvocationResultType<JsonResult>(actualShouldReturnTestBuilder.TestContext);
 

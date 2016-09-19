@@ -31,19 +31,5 @@
 
             return new ViewTestBuilder(this.TestContext);
         }
-
-        /// <inheritdoc />
-        public IAndViewTestBuilder View<TModel>(TModel model)
-        {
-            return this.View(null, model);
-        }
-
-        /// <inheritdoc />
-        public IAndViewTestBuilder View<TModel>(string viewName, TModel model)
-        {
-            var viewTestBuilder = this.View(viewName);
-            viewTestBuilder.WithModel(model);
-            return viewTestBuilder;
-        }
     }
 }

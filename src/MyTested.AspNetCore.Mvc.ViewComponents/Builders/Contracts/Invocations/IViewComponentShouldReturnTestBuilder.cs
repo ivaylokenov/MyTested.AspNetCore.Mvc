@@ -77,22 +77,5 @@
         /// <param name="viewName">Expected view name.</param>
         /// <returns>Test builder of <see cref="IAndViewTestBuilder"/> type.</returns>
         IAndViewTestBuilder View(string viewName);
-
-        /// <summary>
-        /// Tests whether the view component result is <see cref="Microsoft.AspNetCore.Mvc.ViewComponents.ViewViewComponentResult"/> with the provided deeply equal model object.
-        /// </summary>
-        /// <typeparam name="TModel">Expected model type.</typeparam>
-        /// <param name="model">Expected model object.</param>
-        /// <returns>Test builder of <see cref="IAndViewTestBuilder"/> type.</returns>
-        IAndViewTestBuilder View<TModel>(TModel model);
-
-        /// <summary>
-        /// Tests whether the view component result is <see cref="Microsoft.AspNetCore.Mvc.ViewComponents.ViewViewComponentResult"/> with the provided view name and deeply equal model object.
-        /// </summary>
-        /// <typeparam name="TModel">Expected model type.</typeparam>
-        /// <param name="viewName">Expected view name.</param>
-        /// <param name="model">Expected model object.</param>
-        /// <returns>Test builder of <see cref="IAndViewTestBuilder"/> type.</returns>
-        IAndViewTestBuilder View<TModel>(string viewName, TModel model);
     }
 }

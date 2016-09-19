@@ -9,7 +9,6 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.Net.Http.Headers;
-    using Utilities;
     using Utilities.Validators;
 
     /// <summary>
@@ -187,12 +186,12 @@
             return objectResult;
         }
 
-        protected override object GetActualModel()
+        public override object GetActualModel()
         {
             return (this.TestContext.MethodResult as ObjectResult)?.Value;
         }
 
-        protected override Type GetReturnType()
+        public override Type GetReturnType()
         {
             if (this.TestContext.MethodResult is ObjectResult)
             {

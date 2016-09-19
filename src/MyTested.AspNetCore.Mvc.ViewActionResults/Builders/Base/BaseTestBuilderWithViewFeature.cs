@@ -9,7 +9,7 @@
     /// </summary>
     /// <typeparam name="TViewResult">Type of view result - <see cref="ViewResult"/>, <see cref="PartialViewResult"/> or <see cref="ViewComponentResult"/>.</typeparam>
     public abstract class BaseTestBuilderWithViewFeature<TViewResult>
-        : BaseTestBuilderWithResponseModel<TViewResult>, IBaseTestBuilderWithViewFeature
+        : BaseTestBuilderWithResponseModel<TViewResult>, IBaseTestBuilderWithResponseModel
         where TViewResult : ActionResult
     {
         /// <summary>
@@ -21,7 +21,7 @@
         {
         }
         
-        protected override object GetActualModel()
+        public override object GetActualModel()
         {
             if (this.ActionResult is ViewResult)
             {

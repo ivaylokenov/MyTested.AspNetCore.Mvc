@@ -1,7 +1,5 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Base
 {
-    using And;
-    using Contracts.And;
     using Contracts.Base;
     using Internal.TestContexts;
 

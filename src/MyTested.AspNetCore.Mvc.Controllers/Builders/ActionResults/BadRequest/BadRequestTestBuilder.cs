@@ -5,7 +5,6 @@
     using System.Net;
     using Base;
     using Contracts.ActionResults.BadRequest;
-    using Contracts.Models;
     using Exceptions;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
@@ -34,18 +33,6 @@
         {
             this.ErrorMessageFormat = ErrorMessage;
             this.OfTypeErrorMessageFormat = OfTypeErrorMessage;
-        }
-
-        /// <inheritdoc />
-        public IAndModelDetailsTestBuilder<TError> WithError<TError>(TError error)
-        {
-            return this.WithModel(error);
-        }
-
-        /// <inheritdoc />
-        public IAndModelDetailsTestBuilder<TError> WithErrorOfType<TError>()
-        {
-            return this.WithModelOfType<TError>();
         }
 
         /// <inheritdoc />

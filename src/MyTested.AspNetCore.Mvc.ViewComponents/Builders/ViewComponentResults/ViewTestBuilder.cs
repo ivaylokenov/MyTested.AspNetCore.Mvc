@@ -57,9 +57,9 @@
         /// <inheritdoc />
         public IViewTestBuilder AndAlso() => this;
 
-        protected override object GetActualModel()
+        public override object GetActualModel()
             => this.TestContext.MethodResultAs<ViewViewComponentResult>()?.ViewData?.Model;
 
-        protected override Type GetReturnType() => this.GetActualModel()?.GetType();
+        public override Type GetReturnType() => this.GetActualModel()?.GetType();
     }
 }
