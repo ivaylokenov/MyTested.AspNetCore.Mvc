@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.InvocationsTests.ShouldHave
+﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.InvocationsTests.ShouldHaveTests
 {
     using Exceptions;
     using Setups;

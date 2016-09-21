@@ -21,7 +21,7 @@
                 .Calling(c => c.HttpNotFoundAction())
                 .ShouldReturn()
                 .NotFound()
-                .WithNoResponseModel();
+                .WithNoModel();
         }
 
         [Fact]
@@ -35,9 +35,9 @@
                         .Calling(c => c.HttpNotFoundWithObjectAction())
                         .ShouldReturn()
                         .NotFound()
-                        .WithNoResponseModel();
+                        .WithNoModel();
                 },
-                "When calling HttpNotFoundWithObjectAction action in MvcController expected to not have response model but in fact response model was found.");
+                "When calling HttpNotFoundWithObjectAction action in MvcController expected to not have response model but in fact such was found.");
         }
         
         [Fact]

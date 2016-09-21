@@ -15,17 +15,6 @@
     public class ObjectTestBuilderTests
     {
         [Fact]
-        public void WithResponseModelShouldWorkCorrectly()
-        {
-            MyController<MvcController>
-                .Instance()
-                .Calling(c => c.ObjectResultWithResponse())
-                .ShouldReturn()
-                .Object()
-                .WithModelOfType<List<ResponseModel>>();
-        }
-
-        [Fact]
         public void WithStatusCodeShouldNotThrowExceptionWithCorrectStatusCode()
         {
             MyController<MvcController>
@@ -34,6 +23,17 @@
                 .ShouldReturn()
                 .Object()
                 .WithStatusCode(201);
+        }
+
+        [Fact]
+        public void WithResponseModelShouldWorkCorrectly()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ObjectResultWithResponse())
+                .ShouldReturn()
+                .Object()
+                .WithModelOfType<List<ResponseModel>>();
         }
 
         [Fact]

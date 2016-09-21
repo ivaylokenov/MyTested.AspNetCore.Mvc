@@ -16,17 +16,17 @@
         /// Tests whether the result is of the provided type.
         /// </summary>
         /// <param name="builder">Instance of <see cref="IBaseShouldReturnTestBuilder{TInvocationResult}"/> type.</param>
-        /// <param name="returnType">Expected return type.</param>
+        /// <param name="resultType">Expected return type.</param>
         /// <returns>Test builder of <see cref="IModelDetailsTestBuilder{TInvocationResult}"/> type.</returns>
         public static IAndModelDetailsTestBuilder<TInvocationResult> ResultOfType<TInvocationResult>(
             this IBaseShouldReturnTestBuilder<TInvocationResult> builder,
-            Type returnType)
+            Type resultType)
         {
             var actualBuilder = (BaseTestBuilderWithActionContext)builder;
 
             InvocationResultValidator.ValidateInvocationResultType(
                 actualBuilder.TestContext,
-                returnType,
+                resultType,
                 canBeAssignable: true,
                 allowDifferentGenericTypeDefinitions: true);
 

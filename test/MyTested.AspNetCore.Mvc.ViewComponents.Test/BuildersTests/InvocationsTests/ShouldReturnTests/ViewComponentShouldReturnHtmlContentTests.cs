@@ -1,30 +1,30 @@
-﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.InvocationsTests.ShouldReturn
+﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.InvocationsTests.ShouldReturnTests
 {
     using Exceptions;
     using Setups;
     using Setups.ViewComponents;
     using Xunit;
 
-    public class ViewComponentShouldReturnContentTests
+    public class ViewComponentShouldReturnHtmlContentTests
     {
         [Fact]
         public void ShouldReturnContentShouldNotThrowExceptionWithContentResult()
         {
-            MyViewComponent<NormalComponent>
+            MyViewComponent<HtmlContentComponent>
                 .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
-                .Content();
+                .HtmlContent();
         }
 
         [Fact]
         public void ShouldReturnContentShouldNotThrowExceptionWithContentResultAndValue()
         {
-            MyViewComponent<NormalComponent>
+            MyViewComponent<HtmlContentComponent>
                 .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
-                .Content("Test");
+                .HtmlContent("<input type='button' />");
         }
 
         [Fact]
@@ -33,13 +33,13 @@
             Test.AssertException<ContentViewComponentResultAssertionException>(
                 () =>
                 {
-                    MyViewComponent<NormalComponent>
+                    MyViewComponent<HtmlContentComponent>
                         .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldReturn()
-                        .Content("incorrect");
+                        .HtmlContent("incorrect");
                 },
-                "When invoking NormalComponent expected content result to contain 'incorrect', but instead received 'Test'.");
+                "When invoking HtmlContentComponent expected content result to contain 'incorrect', but instead received '<input type='button' />'.");
         }
 
         [Fact]
@@ -48,23 +48,23 @@
             Test.AssertException<InvocationResultAssertionException>(
                 () =>
                 {
-                    MyViewComponent<AsyncComponent>
+                    MyViewComponent<NormalComponent>
                         .Instance()
-                        .InvokedWith(c => c.InvokeAsync())
+                        .InvokedWith(c => c.Invoke())
                         .ShouldReturn()
-                        .Content("content");
+                        .HtmlContent("content");
                 },
-                "When invoking AsyncComponent expected result to be ContentViewComponentResult, but instead received ViewViewComponentResult.");
+                "When invoking NormalComponent expected result to be IHtmlContent, but instead received ContentViewComponentResult.");
         }
 
         [Fact]
         public void ShouldReturnContentWithPredicateShouldNotThrowExceptionWithValidPredicate()
         {
-            MyViewComponent<NormalComponent>
+            MyViewComponent<HtmlContentComponent>
                 .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
-                .Content(content => content.StartsWith("Te"));
+                .HtmlContent(content => content.StartsWith("<input "));
         }
 
         [Fact]
@@ -73,25 +73,25 @@
             Test.AssertException<ContentViewComponentResultAssertionException>(
                 () =>
                 {
-                    MyViewComponent<NormalComponent>
+                    MyViewComponent<HtmlContentComponent>
                         .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldReturn()
-                        .Content(content => content.StartsWith("invalid"));
+                        .HtmlContent(content => content.StartsWith("invalid"));
                 },
-                "When invoking NormalComponent expected content result ('Test') to pass the given predicate, but it failed.");
+                "When invoking HtmlContentComponent expected content result ('<input type='button' />') to pass the given predicate, but it failed.");
         }
 
         [Fact]
         public void ShouldReturnContentWithAssertionsShouldNotThrowExceptionWithValidPredicate()
         {
-            MyViewComponent<NormalComponent>
+            MyViewComponent<HtmlContentComponent>
                 .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
-                .Content(content =>
+                .HtmlContent(content =>
                 {
-                    Assert.True(content.StartsWith("Te"));
+                    Assert.True(content.StartsWith("<input "));
                 });
         }
     }

@@ -21,7 +21,7 @@
                 .Calling(c => c.StatusCodeAction())
                 .ShouldReturn()
                 .StatusCode()
-                .WithNoResponseModel();
+                .WithNoModel();
         }
 
         [Fact]
@@ -35,9 +35,22 @@
                         .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
                         .StatusCode()
-                        .WithNoResponseModel();
+                        .WithNoModel();
                 },
-                "When calling FullObjectResultAction action in MvcController expected to not have response model but in fact response model was found.");
+                "When calling FullObjectResultAction action in MvcController expected to not have response model but in fact such was found.");
+        }
+
+        [Fact]
+        public void AndAlsoShouldWorkCorrectly()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.FullObjectResultAction())
+                .ShouldReturn()
+                .StatusCode()
+                .ContainingOutputFormatters(TestObjectFactory.GetOutputFormatter(), new CustomOutputFormatter())
+                .AndAlso()
+                .WithModelOfType<IList<ResponseModel>>();
         }
 
         [Fact]
@@ -50,7 +63,7 @@
                 .StatusCode()
                 .WithModelOfType<List<ResponseModel>>();
         }
-        
+
         [Fact]
         public void ContainingContentTypeShouldNotThrowExceptionWithCorrectValue()
         {
@@ -403,19 +416,6 @@
                         });
                 },
                 "When calling FullObjectResultAction action in MvcController expected status code result output formatters to have 3 items, but instead found 2.");
-        }
-
-        [Fact]
-        public void AndAlsoShouldWorkCorrectly()
-        {
-            MyController<MvcController>
-                .Instance()
-                .Calling(c => c.FullObjectResultAction())
-                .ShouldReturn()
-                .StatusCode()
-                .ContainingOutputFormatters(TestObjectFactory.GetOutputFormatter(), new CustomOutputFormatter())
-                .AndAlso()
-                .WithModelOfType<IList<ResponseModel>>();
         }
 
         [Fact]

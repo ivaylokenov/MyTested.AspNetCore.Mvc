@@ -1,8 +1,10 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Base
 {
+    using System;
     using Contracts.Base;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
+    using Exceptions;
 
     /// <summary>
     /// Base class for all test builders with view features.
@@ -29,6 +31,16 @@
             }
 
             return (this.ActionResult as PartialViewResult)?.ViewData?.Model;
+        }
+
+        public override void ValidateNoModel()
+        {
+            if (this.GetActualModel() != null)
+            {
+                throw new ResponseModelAssertionException(string.Format(
+                    "{0} to not have a view model but in fact such was found.",
+                    this.TestContext.ExceptionMessagePrefix));
+            }
         }
     }
 }

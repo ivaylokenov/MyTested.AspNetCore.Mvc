@@ -39,6 +39,8 @@
             Test.AssertException<InvalidOperationException>(
                 () =>
                 {
+                    MyApplication.StartsFrom<DefaultStartup>();
+
                     MyViewComponent<SessionComponent>
                        .Instance()
                        .WithSession(session =>

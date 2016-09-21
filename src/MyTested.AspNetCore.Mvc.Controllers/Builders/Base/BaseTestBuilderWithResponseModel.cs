@@ -28,16 +28,41 @@
         }
 
         protected TActionResult ActionResult => this.TestContext.MethodResultAs<TActionResult>();
+        
+        public override object GetActualModel()
+        {
+            return (this.TestContext.MethodResult as ObjectResult)?.Value;
+        }
 
-        protected void WithNoResponseModel<TExpectedActionResult>()
+        public override Type GetModelReturnType()
+        {
+            if (this.TestContext.MethodResult is ObjectResult)
+            {
+                var declaredType = (this.TestContext.MethodResult as ObjectResult).DeclaredType;
+                if (declaredType != null)
+                {
+                    return declaredType;
+                }
+            }
+
+            return this.GetActualModel()?.GetType();
+        }
+
+        public override void ValidateNoModel()
+        {
+            if (this.GetActualModel() != null)
+            {
+                this.ThrowNewResponseModelAssertionException();
+            }
+        }
+
+        protected void WithNoModel<TExpectedActionResult>()
             where TExpectedActionResult : ActionResult
         {
             var actualResult = this.TestContext.MethodResult as TExpectedActionResult;
-            if (actualResult == null)
+            if (actualResult == null || this.GetActualModel() != null)
             {
-                throw new ResponseModelAssertionException(string.Format(
-                    "{0} to not have response model but in fact response model was found.",
-                    this.TestContext.ExceptionMessagePrefix));
+                this.ThrowNewResponseModelAssertionException();
             }
         }
 
@@ -186,23 +211,11 @@
             return objectResult;
         }
 
-        public override object GetActualModel()
+        private void ThrowNewResponseModelAssertionException()
         {
-            return (this.TestContext.MethodResult as ObjectResult)?.Value;
-        }
-
-        public override Type GetReturnType()
-        {
-            if (this.TestContext.MethodResult is ObjectResult)
-            {
-                var declaredType = (this.TestContext.MethodResult as ObjectResult).DeclaredType;
-                if (declaredType != null)
-                {
-                    return declaredType;
-                }
-            }
-
-            return this.GetActualModel()?.GetType();
+            throw new ResponseModelAssertionException(string.Format(
+                "{0} to not have a response model but in fact such was found.",
+                this.TestContext.ExceptionMessagePrefix));
         }
     }
 }

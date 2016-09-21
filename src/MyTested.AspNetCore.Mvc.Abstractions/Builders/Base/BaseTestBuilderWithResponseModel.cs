@@ -43,6 +43,8 @@
 
         public abstract object GetActualModel();
 
-        public abstract Type GetReturnType();
+        public abstract Type GetModelReturnType();
+
+        public abstract void ValidateNoModel();
     }
 }

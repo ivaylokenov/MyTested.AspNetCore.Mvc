@@ -14,12 +14,6 @@
         IBaseTestBuilderWithActionResult<ActionResult>
     {
         /// <summary>
-        /// Tests whether no response model is returned from the invoked action.
-        /// </summary>
-        /// <returns>The same <see cref="IAndOkTestBuilder"/>.</returns>
-        IAndOkTestBuilder WithNoResponseModel();
-
-        /// <summary>
         /// Tests whether <see cref="OkObjectResult"/> has the same status code as the provided one.
         /// </summary>
         /// <param name="statusCode">Status code as integer.</param>

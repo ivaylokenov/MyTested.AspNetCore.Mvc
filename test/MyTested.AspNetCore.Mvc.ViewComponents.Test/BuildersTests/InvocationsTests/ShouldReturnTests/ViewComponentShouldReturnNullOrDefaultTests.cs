@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.InvocationsTests.ShouldReturn
+﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.InvocationsTests.ShouldReturnTests
 {
     using System;
     using Setups;

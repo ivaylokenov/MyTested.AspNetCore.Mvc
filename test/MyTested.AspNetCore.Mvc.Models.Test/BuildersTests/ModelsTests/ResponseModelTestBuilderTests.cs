@@ -146,7 +146,7 @@
                 .Calling(c => c.OkResultAction())
                 .ShouldReturn()
                 .Ok()
-                .WithNoResponseModel();
+                .WithNoModel();
         }
 
         [Fact]
@@ -160,9 +160,9 @@
                         .Calling(c => c.OkResultWithResponse())
                         .ShouldReturn()
                         .Ok()
-                        .WithNoResponseModel();
+                        .WithNoModel();
                 }, 
-                "When calling OkResultWithResponse action in MvcController expected to not have response model but in fact response model was found.");
+                "When calling OkResultWithResponse action in MvcController expected to not have response model but in fact such was found.");
         }
     }
 }

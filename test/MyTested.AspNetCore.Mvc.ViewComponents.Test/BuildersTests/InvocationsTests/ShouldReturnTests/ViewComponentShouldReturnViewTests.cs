@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.InvocationsTests.ShouldReturn
+﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.InvocationsTests.ShouldReturnTests
 {
     using Exceptions;
     using Setups;
@@ -56,26 +56,6 @@
                         .View("Incorrect");
                 },
                 "When invoking ViewResultComponent expected view result to be 'Incorrect', but instead received 'Custom'.");
-        }
-
-        [Fact]
-        public void ShouldReturnViewWithNameShouldNotThrowExceptionWithCorrectModel()
-        {
-            MyViewComponent<ViewResultComponent>
-                .Instance()
-                .InvokedWith(c => c.Invoke("model"))
-                .ShouldReturn()
-                .View(new ResponseModel { StringValue = "TestValue" });
-        }
-
-        [Fact]
-        public void ShouldReturnViewWithNameShouldNotThrowExceptionWithCorrectNameAndModel()
-        {
-            MyViewComponent<ViewResultComponent>
-                .Instance()
-                .InvokedWith(c => c.Invoke("All"))
-                .ShouldReturn()
-                .View("SomeView", new ResponseModel { IntegerValue = 10 });
         }
     }
 }

@@ -1,17 +1,58 @@
 ﻿namespace MyTested.AspNetCore.Mvc
 {
+    using Builders.And;
     using Builders.Base;
+    using Builders.Contracts.And;
     using Builders.Contracts.Base;
     using Builders.Contracts.Models;
     using Builders.Models;
     using Exceptions;
+    using System;
     using Utilities;
+    using Utilities.Validators;
 
     /// <summary>
     /// Contains model extension methods for <see cref="IBaseTestBuilderWithResponseModel"/>.
     /// </summary>
     public static class BaseTestBuilderWithResponseModelExtensions
     {
+        /// <summary>
+        /// Tests whether no model is returned from the invoked action.
+        /// </summary>
+        /// <param name="builder">Instance of <see cref="IBaseTestBuilderWithResponseModel"/> type.</param>
+        /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
+        public static IAndTestBuilder WithNoModel(this IBaseTestBuilderWithResponseModel builder)
+        {
+            var actualBuilder = (BaseTestBuilderWithResponseModel)builder;
+
+            actualBuilder.ValidateNoModel();
+
+            return new AndTestBuilder(actualBuilder.TestContext);
+        }
+
+        /// <summary>
+        /// Tests whether model of the given type is returned from the invoked method.
+        /// </summary>
+        /// <param name="builder">Instance of <see cref="IBaseTestBuilderWithResponseModel"/> type.</param>
+        /// <param name="modelType">Expected model type.</param>
+        /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
+        public static IAndTestBuilder WithModelOfType(
+            this IBaseTestBuilderWithResponseModel builder,
+            Type modelType)
+        {
+            var actualBuilder = (BaseTestBuilderWithResponseModel)builder;
+            
+            InvocationResultValidator.ValidateInvocationResultType(
+                actualBuilder.TestContext,
+                modelType,
+                canBeAssignable: true,
+                allowDifferentGenericTypeDefinitions: true,
+                typeOfActualReturnValue: actualBuilder.GetModelReturnType());
+
+            actualBuilder.TestContext.Model = actualBuilder.GetActualModel();
+            return new AndTestBuilder(actualBuilder.TestContext);
+        }
+
         /// <summary>
         /// Tests whether model of the given type is returned from the invoked method.
         /// </summary>
@@ -23,20 +64,20 @@
         {
             var actualBuilder = (BaseTestBuilderWithResponseModel)builder;
             
-            var actualResponseDataType = actualBuilder.GetReturnType();
-            var expectedResponseDataType = typeof(TModel);
+            var actualModelType = actualBuilder.GetModelReturnType();
+            var expectedModelType = typeof(TModel);
 
-            var responseDataTypeIsAssignable = Reflection.AreAssignable(
-                    expectedResponseDataType,
-                    actualResponseDataType);
+            var modelIsAssignable = Reflection.AreAssignable(
+                    expectedModelType,
+                    actualModelType);
 
-            if (!responseDataTypeIsAssignable)
+            if (!modelIsAssignable)
             {
                 throw new ResponseModelAssertionException(string.Format(
                     actualBuilder.OfTypeErrorMessageFormat,
                     actualBuilder.TestContext.ExceptionMessagePrefix,
                     typeof(TModel).ToFriendlyTypeName(),
-                    actualResponseDataType.ToFriendlyTypeName()));
+                    actualModelType.ToFriendlyTypeName()));
             }
 
             actualBuilder.TestContext.Model = actualBuilder.GetActualModel<TModel>();
