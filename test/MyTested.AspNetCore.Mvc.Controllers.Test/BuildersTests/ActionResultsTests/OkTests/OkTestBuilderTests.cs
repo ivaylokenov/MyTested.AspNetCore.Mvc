@@ -38,7 +38,7 @@
                         .Ok()
                         .WithNoModel();
                 },
-                "When calling OkResultWithResponse action in MvcController expected to not have response model but in fact such was found.");
+                "When calling OkResultWithResponse action in MvcController expected to not have a response model but in fact such was found.");
         }
 
         [Fact]

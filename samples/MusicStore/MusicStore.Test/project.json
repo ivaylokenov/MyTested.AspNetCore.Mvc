@@ -4,7 +4,8 @@
     "preserveCompilationContext": true,
     "copyToOutput": {
       "include": [
-        "config.json"
+        "config.json",
+        "testconfig.json"
       ]
     }
   },

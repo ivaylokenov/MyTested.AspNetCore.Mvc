@@ -37,7 +37,7 @@
                         .StatusCode()
                         .WithNoModel();
                 },
-                "When calling FullObjectResultAction action in MvcController expected to not have response model but in fact such was found.");
+                "When calling FullObjectResultAction action in MvcController expected to not have a response model but in fact such was found.");
         }
 
         [Fact]

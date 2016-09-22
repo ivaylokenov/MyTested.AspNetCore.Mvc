@@ -37,7 +37,7 @@
                         .NotFound()
                         .WithNoModel();
                 },
-                "When calling HttpNotFoundWithObjectAction action in MvcController expected to not have response model but in fact such was found.");
+                "When calling HttpNotFoundWithObjectAction action in MvcController expected to not have a response model but in fact such was found.");
         }
         
         [Fact]

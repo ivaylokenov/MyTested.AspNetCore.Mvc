@@ -43,7 +43,7 @@
 
             Assert.NotNull(caughtException);
             Assert.IsAssignableFrom<InvalidLicenseException>(caughtException);
-            Assert.Equal("The free-quota limit of 500 assertions per test project has been reached. Please visit https://mytestedasp.net/core/mvc#pricing to request a free license or upgrade to a commercial one.", caughtException.Message);
+            Assert.Equal("The free-quota limit of 100 assertions per test project has been reached. Please visit https://mytestedasp.net/core/mvc#pricing to request a free license or upgrade to a commercial one.", caughtException.Message);
         }
 
         [Fact]
@@ -81,7 +81,7 @@
 
             Assert.NotNull(caughtException);
             Assert.IsAssignableFrom<InvalidLicenseException>(caughtException);
-            Assert.Equal("The free-quota limit of 500 assertions per test project has been reached. Please visit https://mytestedasp.net/core/mvc#pricing to request a free license or upgrade to a commercial one.", caughtException.Message);
+            Assert.Equal("The free-quota limit of 100 assertions per test project has been reached. Please visit https://mytestedasp.net/core/mvc#pricing to request a free license or upgrade to a commercial one.", caughtException.Message);
         }
 
         [Fact]
@@ -94,7 +94,7 @@
                 var license = "1-0WUoGNBmCpgJ+ktp3BObsUjsaX5XKc4Ed4LoeJBUPgTacqG2wUw9iKAMG4jdDIaiU+AnoTvrXwwLuvfvn57oukhw6HwTqp8hJ2I0vmNZFisQGyD4sjTDlKCBaOXJwXzifCIty2UuGUeo3KNqKoM+5MF1D0i/kEg/LKztnAN312gxOjIwMTctMTAtMTU6YWRtaW5AbXl0ZXN0ZWRhc3AubmV0Ok15VGVzdGVkLk12YyBUZXN0czpGdWxsOk15VGVzdGVkLk12Yy4=";
 
                 LicenseValidator.ClearLicenseDetails();
-                TestCounter.SetLicenseData(new []{ license }, new DateTime(2018, 10, 10), "MyTested.AspNetCore.Mvc.Tests");
+                TestCounter.SetLicenseData(new[] { license }, new DateTime(2018, 10, 10), "MyTested.AspNetCore.Mvc.Tests");
 
                 var tasks = new List<Task>();
 
@@ -121,7 +121,7 @@
 
             Assert.NotNull(caughtException);
             Assert.IsAssignableFrom<InvalidLicenseException>(caughtException);
-            Assert.Equal("You have invalid license: 'License is not valid for this version of My Tested ASP.NET Core MVC. License expired on 2017-10-15. This version of My Tested ASP.NET Core MVC was released on 2018-10-10'. The free-quota limit of 500 assertions per test project has been reached. Please visit https://mytestedasp.net/core/mvc#pricing to request a free license or upgrade to a commercial one.", caughtException.Message);
+            Assert.Equal("You have invalid license: 'License is not valid for this version of My Tested ASP.NET Core MVC. License expired on 2017-10-15. This version of My Tested ASP.NET Core MVC was released on 2018-10-10'. The free-quota limit of 100 assertions per test project has been reached. Please visit https://mytestedasp.net/core/mvc#pricing to request a free license or upgrade to a commercial one.", caughtException.Message);
         }
 
         [Fact]
@@ -131,14 +131,14 @@
 
             Task.Run(async () =>
             {
-                var license = "1-0WUoGNBmCpgJ+ktp3BObsUjsaX5XKc4Ed4LoeJBUPgTacqG2wUw9iKAMG4jdDIaiU+AnoTvrXwwLuvfvn57oukhw6HwTqp8hJ2I0vmNZFisQGyD4sjTDlKCBaOXJwXzifCIty2UuGUeo3KNqKoM+5MF1D0i/kEg/LKztnAN312gxOjIwMTctMTAtMTU6YWRtaW5AbXl0ZXN0ZWRhc3AubmV0Ok15VGVzdGVkLk12YyBUZXN0czpGdWxsOk15VGVzdGVkLk12Yy4=";
+                var license = "1-rXDHzH/rR8IN83Qmtpyf8vsAd4cPfSd/roXjngSxf12fuEY5+nk/evBTOD3xcOQSrEQLte3BcpH/RxIxDaSmZU11zV4jafnJ4N0u+yfNmTvRhVAtGuVCPj1UgYva64QK5fsPbOXBXq1c9+ccfWoWuB7nuRPaJvUlv/dcHQAy3cUxOjIwMTctMTAtMTU6YWRtaW5AbXl0ZXN0ZWRhc3AubmV0Ok15VGVzdGVkLkFzcE5ldENvcmUuTXZjIFRlc3RzOkRldmVsb3BlcjpNeVRlc3RlZC5Bc3BOZXRDb3JlLk12Yy4=";
 
                 LicenseValidator.ClearLicenseDetails();
-                TestCounter.SetLicenseData(new []{ license }, new DateTime(2016, 10, 10), "MyTested.AspNetCore.Mvc.Tests");
+                TestCounter.SetLicenseData(new[] { license }, new DateTime(2016, 10, 10), "MyTested.AspNetCore.Mvc.Tests");
 
                 var tasks = new List<Task>();
 
-                for (int i = 0; i < 500; i++)
+                for (int i = 0; i < 200; i++)
                 {
                     tasks.Add(Task.Run(() =>
                     {
