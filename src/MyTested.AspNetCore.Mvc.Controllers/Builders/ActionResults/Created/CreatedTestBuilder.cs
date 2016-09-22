@@ -2,9 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq.Expressions;
     using System.Net;
-    using System.Threading.Tasks;
     using Base;
     using Contracts.ActionResults.Created;
     using Contracts.Uri;
@@ -30,9 +28,7 @@
         private const string RouteName = "route name";
         private const string RouteValues = "route values";
         private const string UrlHelper = "URL helper";
-
-        private LambdaExpression createdAtExpression;
-
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="CreatedTestBuilder{TCreatedResult}"/> class.
         /// </summary>
@@ -43,6 +39,8 @@
             CommonValidator.CheckForNullReference(testContext, nameof(ControllerTestContext));
             this.controllerTestContext = testContext;
         }
+
+        public bool IncludeCountCheck { get; set; } = true;
 
         /// <inheritdoc />
         public IAndCreatedTestBuilder WithStatusCode(int statusCode)
@@ -283,12 +281,10 @@
         /// <inheritdoc />
         public IAndCreatedTestBuilder ContainingRouteValues(IDictionary<string, object> routeValues)
         {
-            var includeCountCheck = this.createdAtExpression == null;
-
             RouteActionResultValidator.ValidateRouteValues(
                 this.TestContext.MethodResult,
                 routeValues,
-                includeCountCheck,
+                this.IncludeCountCheck,
                 this.ThrowNewCreatedResultAssertionException);
 
             return this;
@@ -314,20 +310,6 @@
                 this.ThrowNewCreatedResultAssertionException);
 
             return this;
-        }
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder At<TController>(Expression<Action<TController>> actionCall)
-            where TController : class
-        {
-            return this.ProcessRouteLambdaExpression<TController>(actionCall);
-        }
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder At<TController>(Expression<Func<TController, Task>> actionCall)
-            where TController : class
-        {
-            return this.ProcessRouteLambdaExpression<TController>(actionCall);
         }
 
         /// <inheritdoc />
@@ -357,20 +339,7 @@
             return actualRedirectResult;
         }
 
-        private IAndCreatedTestBuilder ProcessRouteLambdaExpression<TController>(LambdaExpression actionCall)
-        {
-            this.createdAtExpression = actionCall;
-
-            RouteActionResultValidator.ValidateExpressionLink(
-                this.controllerTestContext,
-                LinkGenerationTestContext.FromCreatedResult(this.TestContext.MethodResult as IActionResult),
-                actionCall,
-                this.ThrowNewCreatedResultAssertionException);
-
-            return this;
-        }
-
-        private void ThrowNewCreatedResultAssertionException(string propertyName, string expectedValue, string actualValue)
+        public void ThrowNewCreatedResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new CreatedResultAssertionException(string.Format(
                 "{0} created result {1} {2}, but {3}.",

@@ -1,8 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.LocalRedirect
 {
     using System;
-    using System.Linq.Expressions;
-    using System.Threading.Tasks;
     using Base;
     using Contracts.ActionResults.LocalRedirect;
     using Contracts.Uri;
@@ -118,34 +116,9 @@
         }
 
         /// <inheritdoc />
-        public IAndLocalRedirectTestBuilder To<TController>(Expression<Action<TController>> actionCall)
-            where TController : class
-        {
-            return this.ProcessRouteLambdaExpression<TController>(actionCall);
-        }
-
-        /// <inheritdoc />
-        public IAndLocalRedirectTestBuilder To<TController>(Expression<Func<TController, Task>> actionCall)
-            where TController : class
-        {
-            return this.ProcessRouteLambdaExpression<TController>(actionCall);
-        }
-
-        /// <inheritdoc />
         public ILocalRedirectTestBuilder AndAlso() => this;
         
-        private IAndLocalRedirectTestBuilder ProcessRouteLambdaExpression<TController>(LambdaExpression actionCall)
-        {
-            RouteActionResultValidator.ValidateExpressionLink(
-                this.TestContext,
-                LinkGenerationTestContext.FromLocalRedirectResult(this.ActionResult),
-                actionCall,
-                this.ThrowNewRedirectResultAssertionException);
-
-            return this;
-        }
-
-        private void ThrowNewRedirectResultAssertionException(string propertyName, string expectedValue, string actualValue)
+        public void ThrowNewRedirectResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new RedirectResultAssertionException(string.Format(
                 "When calling {0} action in {1} expected local redirect result {2} {3}, but {4}.",
