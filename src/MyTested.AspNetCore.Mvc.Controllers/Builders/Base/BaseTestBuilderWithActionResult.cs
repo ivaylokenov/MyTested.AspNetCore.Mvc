@@ -1,9 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Base
 {
-    using And;
     using Contracts.Base;
     using Internal.TestContexts;
-    using Utilities;
 
     /// <summary>
     /// Base class for all test builders with action result.
@@ -26,12 +24,5 @@
         /// </summary>
         /// <value>Action result to be tested.</value>
         public TActionResult ActionResult => this.TestContext.MethodResultAs<TActionResult>();
-        
-        /// <summary>
-        /// Creates new <see cref="AndTestBuilderWithActionResult{TActionResult}"/>.
-        /// </summary>
-        /// <returns>Base test builder of type <see cref="IBaseTestBuilderWithActionResult{TActionResult}"/>.</returns>
-        public IBaseTestBuilderWithActionResult<TActionResult> NewAndTestBuilderWithActionResult()
-            => new AndTestBuilderWithActionResult<TActionResult>(this.TestContext);
     }
 }

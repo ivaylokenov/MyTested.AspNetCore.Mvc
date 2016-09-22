@@ -2,17 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Linq.Expressions;
     using Extensions;
-    using Internal.Application;
-    using Internal.Services;
-    using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Routing;
 
     /// <summary>
-    /// Validator class containing validation logic action results with route specific information.
+    /// Validator class containing validation logic for action results with route specific information.
     /// </summary>
     public static class RouteActionResultValidator
     {
@@ -261,41 +255,6 @@
                         $"instead received {actualUrlHelper.GetName()}");
                 }
             });
-        }
-
-        public static void ValidateExpressionLink(
-            ControllerTestContext controllerTestContext,
-            LinkGenerationTestContext linkGenerationTestContext,
-            LambdaExpression expectedRouteValuesAsLambdaExpression,
-            Action<string, string, string> failedValidationAction)
-        {
-            var actionContext = controllerTestContext.ComponentContext;
-            if (!actionContext.RouteData.Routers.Any())
-            {
-                actionContext.RouteData.Routers.Add(TestApplication.Router);
-            }
-
-            var urlHelper = linkGenerationTestContext.UrlHelper ?? TestServiceProvider
-                .GetRequiredService<IUrlHelperFactory>()
-                .GetUrlHelper(actionContext);
-
-            ICollection<string> ignoredRouteKeys;
-            var expectedUri = urlHelper.ExpressionLink(
-                expectedRouteValuesAsLambdaExpression,
-                out ignoredRouteKeys);
-            
-            var actualUri = urlHelper.GenerateLink(
-                linkGenerationTestContext,
-                controllerTestContext,
-                ignoredRouteKeys);
-
-            if (!string.Equals(expectedUri, actualUri, StringComparison.OrdinalIgnoreCase))
-            {
-                failedValidationAction(
-                    "to have resolved location to",
-                    $"{expectedUri.GetErrorMessageName()}",
-                    $"in fact received {actualUri.GetErrorMessageName()}");
-            }
         }
     }
 }

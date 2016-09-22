@@ -11,7 +11,7 @@
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <inheritdoc />
-        public INotFoundTestBuilder NotFound()
+        public IAndNotFoundTestBuilder NotFound()
         {
             if (this.ActionResult is NotFoundObjectResult)
             {
@@ -21,7 +21,7 @@
             return this.ReturnNotFoundTestBuilder<NotFoundResult>();
         }
 
-        private INotFoundTestBuilder ReturnNotFoundTestBuilder<TNotFoundResult>()
+        private IAndNotFoundTestBuilder ReturnNotFoundTestBuilder<TNotFoundResult>()
             where TNotFoundResult : ActionResult
         {
             InvocationResultValidator.ValidateInvocationResultType<TNotFoundResult>(this.TestContext);

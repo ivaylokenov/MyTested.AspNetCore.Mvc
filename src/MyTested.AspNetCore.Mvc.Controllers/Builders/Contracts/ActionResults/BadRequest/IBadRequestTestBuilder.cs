@@ -5,30 +5,13 @@
     using Base;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
-    using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.Net.Http.Headers;
-    using Models;
 
     /// <summary>
     /// Used for testing <see cref="BadRequestResult"/> and <see cref="BadRequestObjectResult"/>.
     /// </summary>
     public interface IBadRequestTestBuilder : IBaseTestBuilderWithActionResult<ActionResult>
     {
-        /// <summary>
-        /// Tests whether <see cref="BadRequestObjectResult"/> contains deeply equal error value as the provided error object.
-        /// </summary>
-        /// <typeparam name="TError">Type of error object.</typeparam>
-        /// <param name="error">Error object.</param>
-        /// <returns>Test builder of type <see cref="IModelDetailsTestBuilder{TError}"/>.</returns>
-        IAndModelDetailsTestBuilder<TError> WithError<TError>(TError error);
-
-        /// <summary>
-        /// Tests whether <see cref="BadRequestObjectResult"/> contains error object of the provided type.
-        /// </summary>
-        /// <typeparam name="TError">Type of error object.</typeparam>
-        /// <returns>Test builder of type <see cref="IModelDetailsTestBuilder{TError}"/>.</returns>
-        IAndModelDetailsTestBuilder<TError> WithErrorOfType<TError>();
-
         /// <summary>
         /// Tests whether no specific error is returned from the <see cref="BadRequestObjectResult"/>.
         /// </summary>

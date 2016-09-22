@@ -57,9 +57,19 @@
         /// <inheritdoc />
         public IViewTestBuilder AndAlso() => this;
 
-        protected override object GetActualModel()
+        public override object GetActualModel()
             => this.TestContext.MethodResultAs<ViewViewComponentResult>()?.ViewData?.Model;
 
-        protected override Type GetReturnType() => this.GetActualModel()?.GetType();
+        public override Type GetModelReturnType() => this.GetActualModel()?.GetType();
+
+        public override void ValidateNoModel()
+        {
+            if (this.GetActualModel() != null)
+            {
+                throw new ResponseModelAssertionException(string.Format(
+                    "{0} to not have a view model but in fact such was found.",
+                    this.TestContext.ExceptionMessagePrefix));
+            }
+        }
     }
 }

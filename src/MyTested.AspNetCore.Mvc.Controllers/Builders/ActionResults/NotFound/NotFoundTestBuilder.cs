@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.HttpNotFound
 {
+    using System;
     using System.Collections.Generic;
     using System.Net;
     using Base;
@@ -26,14 +27,7 @@
             : base(testContext)
         {
         }
-
-        /// <inheritdoc />
-        public IAndNotFoundTestBuilder WithNoResponseModel()
-        {
-            this.WithNoResponseModel<NotFoundResult>();
-            return this;
-        }
-
+        
         /// <inheritdoc />
         public IAndNotFoundTestBuilder WithStatusCode(int statusCode)
         {
@@ -121,7 +115,9 @@
 
         /// <inheritdoc />
         public IAndNotFoundTestBuilder AndAlso() => this;
-        
+
+        public override void ValidateNoModel() => this.WithNoModel<NotFoundResult>();
+
         /// <summary>
         /// Throws new HTTP not found result assertion exception for the provided property name, expected value and actual value.
         /// </summary>

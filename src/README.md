@@ -1,25 +1,29 @@
 MyTested.AspNetCore.Mvc Packages
 ====================================
 
- - `MyTested.AspNetCore.Mvc.Configuration` - contains test configuration classes
- - `MyTested.AspNetCore.Mvc.Abstractions` - contains commonly used interfaces and classes
- - `MyTested.AspNetCore.Mvc.Licensing` - contains license verification classes
- - `MyTested.AspNetCore.Mvc.Controllers` - contains setup and assertion methods for controllers
- - `MyTested.AspNetCore.Mvc.Routing` - contains setup and assertion methods for routes
- - `MyTested.AspNetCore.Mvc.Core` - contains setup and assertion methods for MVC core features
- - `MyTested.AspNetCore.Mvc.TempData` - contains setup and assertion methods for `ITempDataDictionary`
- - `MyTested.AspNetCore.Mvc.ViewData` - contains assertion methods for `ViewDataDictionary` and dynamic `ViewBag`
- - `MyTested.AspNetCore.Mvc.ViewActionResults` - contains setup and assertion methods for view action results
- - `MyTested.AspNetCore.Mvc.ViewComponents` - contains setup and assertion methods for view components
- - `MyTested.AspNetCore.Mvc.ViewFeatures` - contains setup and assertion methods for MVC view features
- - `MyTested.AspNetCore.Mvc.Http` - contains setup and assertion methods for HTTP context, request and response
- - `MyTested.AspNetCore.Mvc.Authentication` - contains setup methods for `ClaimsPrincipal`
- - `MyTested.AspNetCore.Mvc.ModelState` - contains setup and assertion methods for `ModelStateDictionary` validations
- - `MyTested.AspNetCore.Mvc.DataAnnotations` - contains setup and assertion methods for data annotation validations
- - `MyTested.AspNetCore.Mvc.EntityFrameworkCore` - contains setup and assertion methods for `DbContext`
- - `MyTested.AspNetCore.Mvc.DependencyInjection` - contains setup methods for dependency injection services
- - `MyTested.AspNetCore.Mvc.Caching` - contains setup and assertion methods for `IMemoryCache`
- - `MyTested.AspNetCore.Mvc.Session` - contains setup and assertion methods for `ISession`
- - `MyTested.AspNetCore.Mvc.Options` - contains setup and assertion methods for `IOptions`
- - `MyTested.AspNetCore.Mvc` - contains MVC related assertion methods
- - `MyTested.AspNetCore.Mvc.Universe` - combines all packages listed above
+ - `MyTested.AspNetCore.Mvc.Configuration` - Contains test configuration classes
+ - `MyTested.AspNetCore.Mvc.Abstractions` - Contains commonly used interfaces and classes
+ - `MyTested.AspNetCore.Mvc.Licensing` - Contains license verification classes
+ - `MyTested.AspNetCore.Mvc.Controllers` - Contains setup and assertion methods for controllers
+ - `MyTested.AspNetCore.Mvc.Models` - Contains setup and assertion methods for response and view models
+ - `MyTested.AspNetCore.Mvc.Routing` - Contains setup and assertion methods for routes
+ - `MyTested.AspNetCore.Mvc.Core` - Contains setup and assertion methods for MVC core features
+ - `MyTested.AspNetCore.Mvc.TempData` - Contains setup and assertion methods for `ITempDataDictionary`
+ - `MyTested.AspNetCore.Mvc.ViewData` - Contains assertion methods for `ViewDataDictionary` and dynamic `ViewBag`
+ - `MyTested.AspNetCore.Mvc.ViewActionResults` - Contains setup and assertion methods for view action results
+ - `MyTested.AspNetCore.Mvc.ViewComponents` - Contains setup and assertion methods for view components
+ - `MyTested.AspNetCore.Mvc.ViewFeatures` - Contains setup and assertion methods for MVC view features
+ - `MyTested.AspNetCore.Mvc.Http` - Contains setup and assertion methods for HTTP context, request and response
+ - `MyTested.AspNetCore.Mvc.Authentication` - Contains setup methods for `ClaimsPrincipal`
+ - `MyTested.AspNetCore.Mvc.ModelState` - Contains setup and assertion methods for `ModelStateDictionary` validations
+ - `MyTested.AspNetCore.Mvc.DataAnnotations` - Contains setup and assertion methods for data annotation validations
+ - `MyTested.AspNetCore.Mvc.EntityFrameworkCore` - Contains setup and assertion methods for `DbContext`
+ - `MyTested.AspNetCore.Mvc.DependencyInjection` - Contains setup methods for dependency injection services
+ - `MyTested.AspNetCore.Mvc.Caching` - Contains setup and assertion methods for `IMemoryCache`
+ - `MyTested.AspNetCore.Mvc.Session` - Contains setup and assertion methods for `ISession`
+ - `MyTested.AspNetCore.Mvc.Options` - Contains setup and assertion methods for `IOptions`
+ - `MyTested.AspNetCore.Mvc.Helpers` - Contains additional helper methods for easier assertions
+ - `MyTested.AspNetCore.Mvc` - Contains MVC related assertion methods
+ - `MyTested.AspNetCore.Mvc.Universe` - Combines all packages listed above
+ 
+ - `MyTested.AspNetCore.Mvc.Lite` - Completely **FREE** and **UNLIMITED** version of the library. It should not be used in combination with any other package. Includes `Controllers`, `ViewActionResults` and `ViewComponents`.

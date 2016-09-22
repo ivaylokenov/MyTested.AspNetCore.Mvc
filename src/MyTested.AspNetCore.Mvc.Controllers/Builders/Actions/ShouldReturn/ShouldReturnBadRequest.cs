@@ -11,7 +11,7 @@
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <inheritdoc />
-        public IBadRequestTestBuilder BadRequest()
+        public IAndBadRequestTestBuilder BadRequest()
         {
             if (this.ActionResult is BadRequestObjectResult)
             {
@@ -21,7 +21,7 @@
             return this.ReturnBadRequestTestBuilder<BadRequestResult>();
         }
 
-        private IBadRequestTestBuilder ReturnBadRequestTestBuilder<TBadRequestResult>()
+        private IAndBadRequestTestBuilder ReturnBadRequestTestBuilder<TBadRequestResult>()
             where TBadRequestResult : ActionResult
         {
             InvocationResultValidator.ValidateInvocationResultType<TBadRequestResult>(this.TestContext);

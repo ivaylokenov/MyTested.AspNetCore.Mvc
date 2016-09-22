@@ -1,7 +1,8 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Invocations.ShouldReturn
 {
     using System;
-    using Contracts.Base;
+    using And;
+    using Contracts.And;
     using Exceptions;
     using Utilities.Validators;
     using Microsoft.AspNetCore.Html;
@@ -11,16 +12,16 @@
     public partial class ViewComponentShouldReturnTestBuilder<TInvocationResult>
     {
         /// <inheritdoc />
-        public IBaseTestBuilderWithViewComponentResult<TInvocationResult> HtmlContent()
+        public IAndTestBuilder HtmlContent()
         {
             InvocationResultValidator
                 .ValidateInvocationResultType<IHtmlContent>(this.TestContext, canBeAssignable: true);
 
-            return this.NewAndTestBuilderWithViewComponentResult();
+            return new AndTestBuilder(this.TestContext);
         }
 
         /// <inheritdoc />
-        public IBaseTestBuilderWithViewComponentResult<TInvocationResult> HtmlContent(string htmlContent)
+        public IAndTestBuilder HtmlContent(string htmlContent)
         {
             var actualContent = this.GetHtmlContentAsString();
 
@@ -32,21 +33,21 @@
                     actualContent);
             }
 
-            return this.NewAndTestBuilderWithViewComponentResult();
+            return new AndTestBuilder(this.TestContext);
         }
 
         /// <inheritdoc />
-        public IBaseTestBuilderWithViewComponentResult<TInvocationResult> HtmlContent(Action<string> assertions)
+        public IAndTestBuilder HtmlContent(Action<string> assertions)
         {
             var actualContent = this.GetHtmlContentAsString();
 
             assertions(actualContent);
 
-            return this.NewAndTestBuilderWithViewComponentResult();
+            return new AndTestBuilder(this.TestContext);
         }
 
         /// <inheritdoc />
-        public IBaseTestBuilderWithViewComponentResult<TInvocationResult> HtmlContent(Func<string, bool> predicate)
+        public IAndTestBuilder HtmlContent(Func<string, bool> predicate)
         {
             var actualContent = this.GetHtmlContentAsString();
 
@@ -57,7 +58,7 @@
                     actualContent);
             }
 
-            return this.NewAndTestBuilderWithViewComponentResult();
+            return new AndTestBuilder(this.TestContext);
         }
 
         private string GetHtmlContentAsString()

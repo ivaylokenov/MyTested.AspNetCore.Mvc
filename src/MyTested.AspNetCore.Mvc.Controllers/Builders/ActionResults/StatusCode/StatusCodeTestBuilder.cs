@@ -27,13 +27,6 @@
         }
         
         /// <inheritdoc />
-        public IAndStatusCodeTestBuilder WithNoResponseModel()
-        {
-            this.WithNoResponseModel<StatusCodeResult>();
-            return this;
-        }
-        
-        /// <inheritdoc />
         public IAndStatusCodeTestBuilder ContainingContentType(string contentType)
         {
             this.ValidateObjectResult();
@@ -116,6 +109,8 @@
 
         /// <inheritdoc />
         public IStatusCodeTestBuilder AndAlso() => this;
+
+        public override void ValidateNoModel() => this.WithNoModel<StatusCodeResult>();
 
         /// <summary>
         /// Throws new status code result assertion exception for the provided property name, expected value and actual value.

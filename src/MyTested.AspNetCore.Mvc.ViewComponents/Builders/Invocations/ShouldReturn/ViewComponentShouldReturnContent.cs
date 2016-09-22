@@ -1,7 +1,8 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Invocations.ShouldReturn
 {
     using System;
-    using Contracts.Base;
+    using And;
+    using Contracts.And;
     using Microsoft.AspNetCore.Mvc.ViewComponents;
     using Utilities.Validators;
     using Exceptions;
@@ -9,14 +10,14 @@
     public partial class ViewComponentShouldReturnTestBuilder<TInvocationResult>
     {
         /// <inheritdoc />
-        public IBaseTestBuilderWithViewComponentResult<TInvocationResult> Content()
+        public IAndTestBuilder Content()
         {
             InvocationResultValidator.ValidateInvocationResultType<ContentViewComponentResult>(this.TestContext);
-            return this.NewAndTestBuilderWithViewComponentResult();
+            return new AndTestBuilder(this.TestContext);
         }
 
         /// <inheritdoc />
-        public IBaseTestBuilderWithViewComponentResult<TInvocationResult> Content(string content)
+        public IAndTestBuilder Content(string content)
         {
             var actualContent = this.GetActualContent();
 
@@ -28,21 +29,21 @@
                     actualContent);
             }
 
-            return this.NewAndTestBuilderWithViewComponentResult();
+            return new AndTestBuilder(this.TestContext);
         }
 
         /// <inheritdoc />
-        public IBaseTestBuilderWithViewComponentResult<TInvocationResult> Content(Action<string> assertions)
+        public IAndTestBuilder Content(Action<string> assertions)
         {
             var actualContent = this.GetActualContent();
 
             assertions(actualContent);
 
-            return this.NewAndTestBuilderWithViewComponentResult();
+            return new AndTestBuilder(this.TestContext);
         }
 
         /// <inheritdoc />
-        public IBaseTestBuilderWithViewComponentResult<TInvocationResult> Content(Func<string, bool> predicate)
+        public IAndTestBuilder Content(Func<string, bool> predicate)
         {
             var actualContent = this.GetActualContent();
 
@@ -53,7 +54,7 @@
                     actualContent);
             }
 
-            return this.NewAndTestBuilderWithViewComponentResult();
+            return new AndTestBuilder(this.TestContext);
         }
 
         private string GetActualContent()

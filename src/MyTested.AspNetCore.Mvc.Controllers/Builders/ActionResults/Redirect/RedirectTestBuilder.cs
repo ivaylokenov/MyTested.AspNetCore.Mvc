@@ -2,11 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq.Expressions;
-    using System.Threading.Tasks;
     using Base;
     using Contracts.ActionResults.Redirect;
-    using Contracts.Base;
     using Contracts.Uri;
     using Exceptions;
     using Internal.TestContexts;
@@ -25,9 +22,7 @@
     {
         private const string Location = "location";
         private const string RouteName = "route name";
-
-        private LambdaExpression redirectToExpression;
-
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="RedirectTestBuilder{TRedirectResult}"/> class.
         /// </summary>
@@ -36,6 +31,8 @@
             : base(testContext)
         {
         }
+
+        public bool IncludeCountCheck { get; set; } = true;
 
         /// <inheritdoc />
         public IAndRedirectTestBuilder Permanent()
@@ -208,12 +205,10 @@
         /// <inheritdoc />
         public IAndRedirectTestBuilder ContainingRouteValues(IDictionary<string, object> routeValues)
         {
-            var includeCountCheck = this.redirectToExpression == null;
-
             RouteActionResultValidator.ValidateRouteValues(
                 this.ActionResult,
                 routeValues,
-                includeCountCheck,
+                this.IncludeCountCheck,
                 this.ThrowNewRedirectResultAssertionException);
 
             return this;
@@ -242,20 +237,6 @@
         }
 
         /// <inheritdoc />
-        public IAndRedirectTestBuilder To<TController>(Expression<Action<TController>> actionCall)
-            where TController : class
-        {
-            return this.ProcessRouteLambdaExpression<TController>(actionCall);
-        }
-
-        /// <inheritdoc />
-        public IAndRedirectTestBuilder To<TController>(Expression<Func<TController, Task>> actionCall)
-            where TController : class
-        {
-            return this.ProcessRouteLambdaExpression<TController>(actionCall);
-        }
-
-        /// <inheritdoc />
         public IRedirectTestBuilder AndAlso() => this;
         
         private TExpectedRedirectResult GetRedirectResult<TExpectedRedirectResult>(string containment)
@@ -273,20 +254,7 @@
             return actualRedirectResult;
         }
 
-        private IAndRedirectTestBuilder ProcessRouteLambdaExpression<TController>(LambdaExpression actionCall)
-        {
-            this.redirectToExpression = actionCall;
-
-            RouteActionResultValidator.ValidateExpressionLink(
-                this.TestContext,
-                LinkGenerationTestContext.FromRedirectResult(this.ActionResult),
-                actionCall,
-                this.ThrowNewRedirectResultAssertionException);
-
-            return this;
-        }
-
-        private void ThrowNewRedirectResultAssertionException(string propertyName, string expectedValue, string actualValue)
+        public void ThrowNewRedirectResultAssertionException(string propertyName, string expectedValue, string actualValue)
         {
             throw new RedirectResultAssertionException(string.Format(
                 "When calling {0} action in {1} expected redirect result {2} {3}, but {4}.",

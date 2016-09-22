@@ -10,6 +10,11 @@
 
     public class FormattersHelperTests
     {
+        public FormattersHelperTests()
+        {
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
         [Fact]
         public void ReadFromStreamShouldWorkCorrectly()
         {

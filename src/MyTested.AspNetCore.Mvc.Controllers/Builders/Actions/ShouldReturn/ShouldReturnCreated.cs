@@ -11,7 +11,7 @@
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <inheritdoc />
-        public ICreatedTestBuilder Created()
+        public IAndCreatedTestBuilder Created()
         {
             if (this.ActionResult is CreatedAtActionResult)
             {
@@ -26,7 +26,7 @@
             return this.ReturnCreatedTestBuilder<CreatedResult>();
         }
 
-        private ICreatedTestBuilder ReturnCreatedTestBuilder<TCreatedResult>()
+        private IAndCreatedTestBuilder ReturnCreatedTestBuilder<TCreatedResult>()
             where TCreatedResult : ObjectResult
         {
             InvocationResultValidator.ValidateInvocationResultType<TCreatedResult>(this.TestContext);

@@ -11,7 +11,7 @@
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <inheritdoc />
-        public IChallengeTestBuilder Challenge()
+        public IAndChallengeTestBuilder Challenge()
         {
             InvocationResultValidator.ValidateInvocationResultType<ChallengeResult>(this.TestContext);
             return new ChallengeTestBuilder(this.TestContext);

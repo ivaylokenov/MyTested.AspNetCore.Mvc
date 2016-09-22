@@ -6,7 +6,6 @@
     using Contracts.Attributes;
     using Exceptions;
     using Internal.TestContexts;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Routing;
     using Utilities.Extensions;
@@ -16,7 +15,8 @@
     /// <summary>
     /// Used for testing action attributes.
     /// </summary>
-    public class ActionAttributesTestBuilder : ControllerActionAttributesTestBuilder, IAndActionAttributesTestBuilder
+    public class ActionAttributesTestBuilder : ControllerActionAttributesTestBuilder<IAndActionAttributesTestBuilder>,
+        IAndActionAttributesTestBuilder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ActionAttributesTestBuilder"/> class.
@@ -27,14 +27,6 @@
         {
         }
         
-        /// <inheritdoc />
-        public IAndActionAttributesTestBuilder ContainingAttributeOfType<TAttribute>()
-            where TAttribute : Attribute
-        {
-            this.ContainingAttributeOfType<TAttribute>(this.ThrowNewAttributeAssertionException);
-            return this;
-        }
-
         /// <inheritdoc />
         public IAndActionAttributesTestBuilder ChangingActionNameTo(string actionName)
         {
@@ -53,75 +45,31 @@
 
             return this;
         }
-
-        /// <inheritdoc />
-        public IAndActionAttributesTestBuilder ChangingRouteTo(
-            string template,
-            string withName = null,
-            int? withOrder = null)
-        {
-            this.ChangingRouteTo(
-                template,
-                this.ThrowNewAttributeAssertionException,
-                withName,
-                withOrder);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndActionAttributesTestBuilder AllowingAnonymousRequests()
-        {
-            return this.ContainingAttributeOfType<AllowAnonymousAttribute>();
-        }
-
-        /// <inheritdoc />
-        public IAndActionAttributesTestBuilder RestrictingForAuthorizedRequests(
-            string withAllowedRoles = null)
-        {
-            this.RestrictingForAuthorizedRequests(
-                this.ThrowNewAttributeAssertionException,
-                withAllowedRoles);
-
-            return this;
-        }
-
+        
         /// <inheritdoc />
         public IAndActionAttributesTestBuilder DisablingActionCall()
-        {
-            return this.ContainingAttributeOfType<NonActionAttribute>();
-        }
+            => this.ContainingAttributeOfType<NonActionAttribute>();
         
         /// <inheritdoc />
         public IAndActionAttributesTestBuilder RestrictingForHttpMethod<THttpMethod>()
             where THttpMethod : Attribute, IActionHttpMethodProvider, new()
-        {
-            return this.RestrictingForHttpMethods(new THttpMethod().HttpMethods);
-        }
+            => this.RestrictingForHttpMethods(new THttpMethod().HttpMethods);
 
         /// <inheritdoc />
         public IAndActionAttributesTestBuilder RestrictingForHttpMethod(string httpMethod)
-        {
-            return this.RestrictingForHttpMethod(new HttpMethod(httpMethod));
-        }
+            => this.RestrictingForHttpMethod(new HttpMethod(httpMethod));
 
         /// <inheritdoc />
         public IAndActionAttributesTestBuilder RestrictingForHttpMethod(HttpMethod httpMethod)
-        {
-            return this.RestrictingForHttpMethods(new List<HttpMethod> { httpMethod });
-        }
+            => this.RestrictingForHttpMethods(new List<HttpMethod> { httpMethod });
 
         /// <inheritdoc />
         public IAndActionAttributesTestBuilder RestrictingForHttpMethods(IEnumerable<string> httpMethods)
-        {
-            return this.RestrictingForHttpMethods(httpMethods.Select(m => new HttpMethod(m)));
-        }
+            => this.RestrictingForHttpMethods(httpMethods.Select(m => new HttpMethod(m)));
 
         /// <inheritdoc />
         public IAndActionAttributesTestBuilder RestrictingForHttpMethods(params string[] httpMethods)
-        {
-            return this.RestrictingForHttpMethods(httpMethods.AsEnumerable());
-        }
+            => this.RestrictingForHttpMethods(httpMethods.AsEnumerable());
 
         /// <inheritdoc />
         public IAndActionAttributesTestBuilder RestrictingForHttpMethods(IEnumerable<HttpMethod> httpMethods)
@@ -148,15 +96,12 @@
 
         /// <inheritdoc />
         public IAndActionAttributesTestBuilder RestrictingForHttpMethods(params HttpMethod[] httpMethods)
-        {
-            return this.RestrictingForHttpMethods(httpMethods.AsEnumerable());
-        }
+            => this.RestrictingForHttpMethods(httpMethods.AsEnumerable());
 
         /// <inheritdoc />
-        public IActionAttributesTestBuilder AndAlso()
-        {
-            return this;
-        }
+        public IActionAttributesTestBuilder AndAlso() => this;
+
+        protected override IAndActionAttributesTestBuilder GetAttributesTestBuilder() => this;
 
         protected override void ThrowNewAttributeAssertionException(string expectedValue, string actualValue)
         {

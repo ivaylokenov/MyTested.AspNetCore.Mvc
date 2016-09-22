@@ -91,7 +91,7 @@
         /// <inheritdoc />
         public IJsonTestBuilder AndAlso() => this;
 
-        protected override object GetActualModel()
+        public override object GetActualModel()
         {
             return this.GetJsonResult()?.Value;
         }

@@ -16,6 +16,8 @@
         [Fact]
         public void ResolveShouldResolveCorrectlyWithPartialJsonContentBody()
         {
+            MyApplication.StartsFrom<DefaultStartup>();
+
             var routeInfo = MvcRouteResolver.Resolve(
                 TestApplication.RoutingServices,
                 TestApplication.Router,
@@ -43,8 +45,6 @@
         private RouteContext GetRouteContext(string url, string method = "GET", string queryString = null,
             string body = null, string contentType = null)
         {
-            MyApplication.StartsFrom<DefaultStartup>();
-
             var httpContext = new HttpContextMock();
             httpContext.Request.Path = new PathString(url);
             httpContext.Request.QueryString = new QueryString(queryString);

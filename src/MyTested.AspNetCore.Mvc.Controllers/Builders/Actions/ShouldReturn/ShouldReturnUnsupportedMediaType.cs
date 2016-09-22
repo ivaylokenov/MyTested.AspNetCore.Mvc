@@ -1,6 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Actions.ShouldReturn
 {
-    using Contracts.Base;
+    using And;
+    using Contracts.And;
     using Microsoft.AspNetCore.Mvc;
     using Utilities.Validators;
 
@@ -10,10 +11,10 @@
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <inheritdoc />
-        public IBaseTestBuilderWithActionResult<TActionResult> UnsupportedMediaType()
+        public IAndTestBuilder UnsupportedMediaType()
         {
             InvocationResultValidator.ValidateInvocationResultType<UnsupportedMediaTypeResult>(this.TestContext);
-            return this.NewAndTestBuilderWithActionResult();
+            return new AndTestBuilder(this.TestContext);
         }
     }
 }

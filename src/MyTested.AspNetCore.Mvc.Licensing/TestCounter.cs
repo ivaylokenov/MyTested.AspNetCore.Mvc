@@ -7,7 +7,7 @@
 
     internal static class TestCounter
     {
-        private const int MaximumAllowedAssertions = 500;
+        private const int MaximumAllowedAssertions = 100;
 
         private static readonly object Sync;
 
@@ -26,7 +26,7 @@
 
         public static void IncrementAndValidate()
         {
-            if (LicenseValidator.HasValidLicense)
+            if (SkipValidation || LicenseValidator.HasValidLicense)
             {
                 return;
             }
@@ -66,5 +66,7 @@
             licensesValidated = false;
             totalAssertions = 0;
         }
+
+        public static bool SkipValidation { get; set; }
     }
 }

@@ -6,6 +6,12 @@
     public interface IViewComponentAttributesTestBuilder : IBaseAttributesTestBuilder<IAndViewComponentAttributesTestBuilder>
     {
         /// <summary>
+        /// Tests whether the controller attributes contain <see cref="Microsoft.AspNetCore.Mvc.ViewComponentAttribute"/>.
+        /// </summary>
+        /// <returns>The same <see cref="IAndViewComponentAttributesTestBuilder"/>.</returns>
+        IAndViewComponentAttributesTestBuilder IndicatingViewComponentExplicitly();
+
+        /// <summary>
         /// Tests whether the view component attributes contain <see cref="Microsoft.AspNetCore.Mvc.ViewComponentAttribute"/>.
         /// </summary>
         /// <param name="viewComponentName">Expected overridden name of the view component.</param>

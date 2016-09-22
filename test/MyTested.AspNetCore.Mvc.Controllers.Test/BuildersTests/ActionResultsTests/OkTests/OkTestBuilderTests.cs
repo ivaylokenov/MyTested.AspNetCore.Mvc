@@ -22,7 +22,7 @@
                 .Calling(c => c.OkResultAction())
                 .ShouldReturn()
                 .Ok()
-                .WithNoResponseModel();
+                .WithNoModel();
         }
 
         [Fact]
@@ -36,9 +36,9 @@
                         .Calling(c => c.OkResultWithResponse())
                         .ShouldReturn()
                         .Ok()
-                        .WithNoResponseModel();
+                        .WithNoModel();
                 },
-                "When calling OkResultWithResponse action in MvcController expected to not have response model but in fact response model was found.");
+                "When calling OkResultWithResponse action in MvcController expected to not have a response model but in fact such was found.");
         }
 
         [Fact]
@@ -54,7 +54,23 @@
                 .Ok()
                 .WithModelOfType<List<ResponseModel>>();
         }
-        
+
+        [Fact]
+        public void WithResponseModelOfTypeShouldWorkCorrectly()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.OkResultWithResponse())
+                .ShouldHave()
+                .NoActionAttributes()
+                .AndAlso()
+                .ShouldReturn()
+                .Ok()
+                .WithModelOfType(typeof(IList<>))
+                .AndAlso()
+                .ShouldPassForThe<ICollection<ResponseModel>>(m => m != null);
+        }
+
         [Fact]
         public void WithStatusCodeShouldNotThrowExceptionWithCorrectStatusCode()
         {

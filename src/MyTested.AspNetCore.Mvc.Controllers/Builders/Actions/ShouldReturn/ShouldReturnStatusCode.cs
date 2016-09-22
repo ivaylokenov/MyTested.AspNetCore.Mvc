@@ -14,19 +14,19 @@
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <inheritdoc />
-        public IStatusCodeTestBuilder StatusCode()
+        public IAndStatusCodeTestBuilder StatusCode()
         {
             return this.GetStatusCodeTestBuilder();
         }
 
         /// <inheritdoc />
-        public IStatusCodeTestBuilder StatusCode(int statusCode)
+        public IAndStatusCodeTestBuilder StatusCode(int statusCode)
         {
             return this.StatusCode((HttpStatusCode)statusCode);
         }
 
         /// <inheritdoc />
-        public IStatusCodeTestBuilder StatusCode(HttpStatusCode statusCode)
+        public IAndStatusCodeTestBuilder StatusCode(HttpStatusCode statusCode)
         {
             HttpStatusCodeValidator.ValidateHttpStatusCode(
                 this.ActionResult,
@@ -36,7 +36,7 @@
             return this.GetStatusCodeTestBuilder();
         }
 
-        private IStatusCodeTestBuilder GetStatusCodeTestBuilder()
+        private IAndStatusCodeTestBuilder GetStatusCodeTestBuilder()
         {
             if (this.ActionResult is StatusCodeResult)
             {

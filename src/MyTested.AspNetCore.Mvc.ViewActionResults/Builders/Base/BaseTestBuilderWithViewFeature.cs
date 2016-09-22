@@ -1,15 +1,17 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Base
 {
+    using System;
     using Contracts.Base;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
+    using Exceptions;
 
     /// <summary>
     /// Base class for all test builders with view features.
     /// </summary>
     /// <typeparam name="TViewResult">Type of view result - <see cref="ViewResult"/>, <see cref="PartialViewResult"/> or <see cref="ViewComponentResult"/>.</typeparam>
     public abstract class BaseTestBuilderWithViewFeature<TViewResult>
-        : BaseTestBuilderWithResponseModel<TViewResult>, IBaseTestBuilderWithViewFeature
+        : BaseTestBuilderWithResponseModel<TViewResult>, IBaseTestBuilderWithResponseModel
         where TViewResult : ActionResult
     {
         /// <summary>
@@ -21,7 +23,7 @@
         {
         }
         
-        protected override object GetActualModel()
+        public override object GetActualModel()
         {
             if (this.ActionResult is ViewResult)
             {
@@ -29,6 +31,16 @@
             }
 
             return (this.ActionResult as PartialViewResult)?.ViewData?.Model;
+        }
+
+        public override void ValidateNoModel()
+        {
+            if (this.GetActualModel() != null)
+            {
+                throw new ResponseModelAssertionException(string.Format(
+                    "{0} to not have a view model but in fact such was found.",
+                    this.TestContext.ExceptionMessagePrefix));
+            }
         }
     }
 }

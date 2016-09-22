@@ -9,7 +9,7 @@
     /// <summary>
     /// Used for testing <see cref="Microsoft.AspNetCore.Mvc.ViewComponentResult"/>.
     /// </summary>
-    public interface IViewComponentTestBuilder : IBaseTestBuilderWithViewFeature
+    public interface IViewComponentTestBuilder : IBaseTestBuilderWithResponseModel
     {
         /// <summary>
         /// Tests whether <see cref="Microsoft.AspNetCore.Mvc.ViewComponentResult"/> has the same status code as the provided one.

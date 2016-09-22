@@ -1,6 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Actions.ShouldReturn
 {
-    using Contracts.Base;
+    using And;
+    using Contracts.And;
     using Exceptions;
     using Utilities;
     using Utilities.Extensions;
@@ -12,7 +13,7 @@
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <inheritdoc />
-        public IBaseTestBuilderWithActionResult<TActionResult> DefaultValue()
+        public IAndTestBuilder DefaultValue()
         {
             if (!this.CheckValidDefaultValue())
             {
@@ -21,11 +22,11 @@
                     typeof(TActionResult).ToFriendlyTypeName()));
             }
             
-            return this.NewAndTestBuilderWithActionResult();
+            return new AndTestBuilder(this.TestContext);
         }
 
         /// <inheritdoc />
-        public IBaseTestBuilderWithActionResult<TActionResult> Null()
+        public IAndTestBuilder Null()
         {
             CommonValidator.CheckIfTypeCanBeNull(typeof(TActionResult));
             if (!this.CheckValidDefaultValue())
@@ -35,11 +36,11 @@
                     typeof(TActionResult).ToFriendlyTypeName()));
             }
 
-            return this.NewAndTestBuilderWithActionResult();
+            return new AndTestBuilder(this.TestContext);
         }
 
         /// <inheritdoc />
-        public IBaseTestBuilderWithActionResult<TActionResult> NotNull()
+        public IAndTestBuilder NotNull()
         {
             CommonValidator.CheckIfTypeCanBeNull(typeof(TActionResult));
             if (this.CheckValidDefaultValue())
@@ -49,7 +50,7 @@
                     typeof(TActionResult).ToFriendlyTypeName()));
             }
 
-            return this.NewAndTestBuilderWithActionResult();
+            return new AndTestBuilder(this.TestContext);
         }
 
         private bool CheckValidDefaultValue()

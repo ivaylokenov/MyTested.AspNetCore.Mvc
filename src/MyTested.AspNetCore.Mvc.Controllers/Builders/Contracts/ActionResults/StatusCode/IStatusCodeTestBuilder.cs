@@ -13,12 +13,6 @@
         IBaseTestBuilderWithActionResult<ActionResult>
     {
         /// <summary>
-        /// Tests whether no response model is returned from the invoked action.
-        /// </summary>
-        /// <returns>The same <see cref="IAndStatusCodeTestBuilder"/>.</returns>
-        IAndStatusCodeTestBuilder WithNoResponseModel();
-        
-        /// <summary>
         /// Tests whether the action result contains the content type provided as string.
         /// </summary>
         /// <param name="contentType">Content type as string.</param>

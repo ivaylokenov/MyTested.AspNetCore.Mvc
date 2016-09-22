@@ -2,9 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq.Expressions;
     using System.Net;
-    using System.Threading.Tasks;
     using Base;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
@@ -139,25 +137,7 @@
         /// <returns>The same <see cref="IAndCreatedTestBuilder"/>.</returns>
         IAndCreatedTestBuilder WithUrlHelperOfType<TUrlHelper>()
             where TUrlHelper : IUrlHelper;
-
-        /// <summary>
-        /// Tests whether <see cref="CreatedAtActionResult"/> or <see cref="CreatedAtRouteResult"/> returns created at specific action.
-        /// </summary>
-        /// <typeparam name="TController">Type of expected controller.</typeparam>
-        /// <param name="actionCall">Method call expression indicating the expected action.</param>
-        /// <returns>The same <see cref="IAndCreatedTestBuilder"/>.</returns>
-        IAndCreatedTestBuilder At<TController>(Expression<Action<TController>> actionCall)
-            where TController : class;
-
-        /// <summary>
-        /// Tests whether <see cref="CreatedAtActionResult"/> or <see cref="CreatedAtRouteResult"/> returns created at specific asynchronous action.
-        /// </summary>
-        /// <typeparam name="TController">Type of expected controller.</typeparam>
-        /// <param name="actionCall">Method call expression indicating the expected asynchronous created action.</param>
-        /// <returns>The same <see cref="IAndCreatedTestBuilder"/>.</returns>
-        IAndCreatedTestBuilder At<TController>(Expression<Func<TController, Task>> actionCall)
-            where TController : class;
-
+        
         /// <summary>
         /// Tests whether <see cref="CreatedResult"/>, <see cref="CreatedAtActionResult"/> or <see cref="CreatedAtRouteResult"/> has the same status code as the provided one.
         /// </summary>

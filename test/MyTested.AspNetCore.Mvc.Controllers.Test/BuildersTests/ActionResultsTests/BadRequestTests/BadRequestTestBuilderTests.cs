@@ -12,30 +12,8 @@
     using Setups.Models;
     using Xunit;
 
-    public class HttpBadRequestTestBuilderTests
+    public class BadRequestTestBuilderTests
     {
-        [Fact]
-        public void WithErrorShouldNotThrowExceptionWithCorrectErrorObject()
-        {
-            MyController<MvcController>
-                .Instance()
-                .Calling(c => c.BadRequestWithCustomError())
-                .ShouldReturn()
-                .BadRequest()
-                .WithError(TestObjectFactory.GetListOfResponseModels());
-        }
-
-        [Fact]
-        public void WithErrorOfTypeShouldNotThrowExceptionWithCorrectErrorObject()
-        {
-            MyController<MvcController>
-                .Instance()
-                .Calling(c => c.BadRequestWithCustomError())
-                .ShouldReturn()
-                .BadRequest()
-                .WithErrorOfType<List<ResponseModel>>();
-        }
-
         [Fact]
         public void WithNoErrorShouldNotThrowExceptionWithNoError()
         {

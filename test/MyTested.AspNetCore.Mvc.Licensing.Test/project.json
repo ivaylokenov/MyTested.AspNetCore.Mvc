@@ -1,6 +1,7 @@
 ﻿{
   "buildOptions": {
     "warningsAsErrors": true,
+    "preserveCompilationContext": true,
     "keyFile": "../../tools/Key.snk",
     "copyToOutput": [
       "testconfig.json",

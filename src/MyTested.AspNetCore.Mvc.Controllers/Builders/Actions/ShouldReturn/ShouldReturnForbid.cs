@@ -11,7 +11,7 @@
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <inheritdoc />
-        public IForbidTestBuilder Forbid()
+        public IAndForbidTestBuilder Forbid()
         {
             InvocationResultValidator.ValidateInvocationResultType<ForbidResult>(this.TestContext);
             return new ForbidTestBuilder(this.TestContext);

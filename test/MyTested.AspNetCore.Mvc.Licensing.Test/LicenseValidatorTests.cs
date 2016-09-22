@@ -216,14 +216,14 @@
             var licenseDetails = new LicenseDetails
             {
                 Id = 1,
-                Type = LicenseType.Full,
+                Type = LicenseType.Developer,
                 User = "admin@mytestedasp.net",
                 InformationDetails = "MyTested.AspNetCore.Mvc Tests",
                 ExpiryDate = new DateTime(2017, 10, 15),
                 NamespacePrefix = "MyTested.AspNetCore.Mvc."
             };
 
-            var license = "1-mKwoA4cwRkRKioJ70fh6WcL5Ty+K2Kn32oftC2KFqw5kimAMYrTeKwOX25e55GcTMy/cB8Ssa/SJmFFq6OUSXpgc7TsG6vNA7jE8lYbpzQcaIumX9tu0Kr2655zUne0GcPP0 + Y6OqLnRnOiq5keErGSyohcfZmzkRXoHAEEXR68xOjIwMTctMTAtMTU6YWRtaW5AbXl0ZXN0ZWRhc3AubmV0Ok15VGVzdGVkLkFzcE5ldENvcmUuTXZjIFRlc3RzOkZ1bGw6TXlUZXN0ZWQuQXNwTmV0Q29yZS5NdmMu";
+            var license = "1-rXDHzH/rR8IN83Qmtpyf8vsAd4cPfSd/roXjngSxf12fuEY5+nk/evBTOD3xcOQSrEQLte3BcpH/RxIxDaSmZU11zV4jafnJ4N0u+yfNmTvRhVAtGuVCPj1UgYva64QK5fsPbOXBXq1c9+ccfWoWuB7nuRPaJvUlv/dcHQAy3cUxOjIwMTctMTAtMTU6YWRtaW5AbXl0ZXN0ZWRhc3AubmV0Ok15VGVzdGVkLkFzcE5ldENvcmUuTXZjIFRlc3RzOkRldmVsb3BlcjpNeVRlc3RlZC5Bc3BOZXRDb3JlLk12Yy4=";
 
             LicenseValidator.ClearLicenseDetails();
             LicenseValidator.Validate(new []{ license }, new DateTime(2016, 10, 10), "MyTested.AspNetCore.Mvc.Tests");
@@ -257,15 +257,14 @@
 
             Assert.False(LicenseValidator.HasValidLicense);
         }
-
-
+        
         [Fact]
         public void ValidateShouldSetValidLicenses()
         {
             var firstLicenseDetails = new LicenseDetails
             {
                 Id = 1,
-                Type = LicenseType.Full,
+                Type = LicenseType.Developer,
                 User = "admin@mytestedasp.net",
                 InformationDetails = "MyTested.AspNetCore.Mvc Tests",
                 ExpiryDate = new DateTime(2017, 10, 15),
@@ -275,15 +274,15 @@
             var secondLicenseDetails = new LicenseDetails
             {
                 Id = 2,
-                Type = LicenseType.Full,
+                Type = LicenseType.Developer,
                 User = "admin@mytestedasp.net",
                 InformationDetails = "MyTested.AspNetCore.Mvc Tests",
                 ExpiryDate = new DateTime(2017, 10, 15),
                 NamespacePrefix = "MyTested.AspNetCore.Mvc."
             };
 
-            var firstLicense = "1-mKwoA4cwRkRKioJ70fh6WcL5Ty+K2Kn32oftC2KFqw5kimAMYrTeKwOX25e55GcTMy/cB8Ssa/SJmFFq6OUSXpgc7TsG6vNA7jE8lYbpzQcaIumX9tu0Kr2655zUne0GcPP0 + Y6OqLnRnOiq5keErGSyohcfZmzkRXoHAEEXR68xOjIwMTctMTAtMTU6YWRtaW5AbXl0ZXN0ZWRhc3AubmV0Ok15VGVzdGVkLkFzcE5ldENvcmUuTXZjIFRlc3RzOkZ1bGw6TXlUZXN0ZWQuQXNwTmV0Q29yZS5NdmMu";
-            var secondLicense = "2-dO7yyeqUFb2FRmtqqZbB+fYAThKkGftht8Ky7PB0Gi1GxW2ZlROg1a+fZjJnzBxEgBSup0rSxt4n73zKmcTv4SYrR9r0DtnWxX8DN8BLDk9hX1 + whB5UMYiQmf / uxDizUWn9pxdbMRrq9JXfxyRhOS4vxVhGIEPgH03vZsCWLOwyOjIwMTctMTAtMTU6YWRtaW5AbXl0ZXN0ZWRhc3AubmV0Ok15VGVzdGVkLkFzcE5ldENvcmUuTXZjIFRlc3RzOkZ1bGw6TXlUZXN0ZWQuQXNwTmV0Q29yZS5NdmMu";
+            var firstLicense = "1-rXDHzH/rR8IN83Qmtpyf8vsAd4cPfSd/roXjngSxf12fuEY5+nk/evBTOD3xcOQSrEQLte3BcpH/RxIxDaSmZU11zV4jafnJ4N0u+yfNmTvRhVAtGuVCPj1UgYva64QK5fsPbOXBXq1c9+ccfWoWuB7nuRPaJvUlv/dcHQAy3cUxOjIwMTctMTAtMTU6YWRtaW5AbXl0ZXN0ZWRhc3AubmV0Ok15VGVzdGVkLkFzcE5ldENvcmUuTXZjIFRlc3RzOkRldmVsb3BlcjpNeVRlc3RlZC5Bc3BOZXRDb3JlLk12Yy4=";
+            var secondLicense = "2-3Fok2mhB7/S/wX7fpMi0PlwWUzaxWKbfy+EGlDE16wZJPOystX0e5xG3JYkVLuUT5uNw6+D+WhTJNjuHAXilFR/rr9lkOdei/9AVhnH5OeARQ1Ekr0ZM+sPjy/SwCpBEU48GLdSWH7V1MBK290XZHGa0c51YDZMjbA6IeBVRPlAyOjIwMTctMTAtMTU6YWRtaW5AbXl0ZXN0ZWRhc3AubmV0Ok15VGVzdGVkLkFzcE5ldENvcmUuTXZjIFRlc3RzOkRldmVsb3BlcjpNeVRlc3RlZC5Bc3BOZXRDb3JlLk12Yy4=";
 
             LicenseValidator.ClearLicenseDetails();
             LicenseValidator.Validate(new[] { firstLicense, secondLicense }, new DateTime(2016, 10, 10), "MyTested.AspNetCore.Mvc.Tests");
@@ -316,7 +315,7 @@
             var licenseDetails = new LicenseDetails
             {
                 Id = 1,
-                Type = LicenseType.Full,
+                Type = LicenseType.Developer,
                 User = "admin@mytestedasp.net",
                 InformationDetails = "MyTested.AspNetCore.Mvc Tests",
                 ExpiryDate = new DateTime(2017, 10, 15),
