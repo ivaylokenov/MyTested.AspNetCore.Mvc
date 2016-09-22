@@ -220,9 +220,17 @@
 
         internal static void LoadPlugins(DependencyContext dependencyContext)
         {
-            var plugins = dependencyContext
+            var testFrameworkAssemblies = dependencyContext
                 .GetRuntimeAssemblyNames(RuntimeEnvironment.GetRuntimeIdentifier())
                 .Where(l => l.Name.StartsWith(TestFrameworkName))
+                .ToArray();
+
+            if (testFrameworkAssemblies.Length == 7 && testFrameworkAssemblies.Any(t => t.Name == $"{TestFrameworkName}.Lite"))
+            {
+                TestCounter.SkipValidation = true;
+            }
+
+            var plugins = testFrameworkAssemblies
                 .Select(l => Assembly.Load(new AssemblyName(l.Name)).GetType($"{TestFrameworkName}.Plugins.{l.Name.Replace(TestFrameworkName, string.Empty).Trim('.')}TestPlugin"))
                 .Where(p => p != null)
                 .ToArray();
@@ -230,11 +238,6 @@
             if (!plugins.Any())
             {
                 throw new InvalidOperationException("Test plugins could not be loaded. Depending on your project's configuration you may need to set the 'preserveCompilationContext' property under 'buildOptions' to 'true' in the test assembly's 'project.json' file and/or may need to call '.StartsFrom<TStartup>().WithTestAssembly(this)'.");
-            }
-
-            if (plugins.Length == 6 && plugins.Any(t => t.Name.StartsWith("Lite")))
-            {
-                TestCounter.SkipValidation = true;
             }
 
             plugins.ForEach(t =>

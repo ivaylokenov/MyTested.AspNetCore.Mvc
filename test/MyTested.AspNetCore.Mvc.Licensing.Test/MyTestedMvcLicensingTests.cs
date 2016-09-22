@@ -32,7 +32,7 @@
             {
                 var tasks = new List<Task>();
 
-                for (int i = 0; i < 500; i++)
+                for (int i = 0; i < 200; i++)
                 {
                     tasks.Add(Task.Run(() =>
                     {
@@ -72,7 +72,7 @@
             {
                 var tasks = new List<Task>();
 
-                for (int i = 0; i < 500; i++)
+                for (int i = 0; i < 200; i++)
                 {
                     tasks.Add(Task.Run(() =>
                     {
@@ -111,7 +111,7 @@
             {
                 var tasks = new List<Task>();
 
-                for (int i = 0; i < 500; i++)
+                for (int i = 0; i < 200; i++)
                 {
                     tasks.Add(Task.Run(() =>
                     {

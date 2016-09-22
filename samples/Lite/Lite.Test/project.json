@@ -1,0 +1,29 @@
+﻿{
+  "buildOptions": {
+    "warningsAsErrors": true,
+    "preserveCompilationContext": true
+  },
+
+  "dependencies": {
+    "dotnet-test-xunit": "2.2.0-*",
+    "xunit": "2.2.0-*",
+    "MyTested.AspNetCore.Mvc.Lite": "1.0.0-*",
+    "Moq": "4.6.38-alpha",
+    "Lite.Web": "*"
+  },
+
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": "dotnet5.4",
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "version": "1.0.0-*",
+          "type": "platform"
+        }
+      }
+    },
+    "net451": {}
+  },
+
+  "testRunner": "xunit"
+}
