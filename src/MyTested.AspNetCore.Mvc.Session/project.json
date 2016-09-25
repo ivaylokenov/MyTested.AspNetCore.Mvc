@@ -1,8 +1,9 @@
 ﻿{
   "title": "MyTested.AspNetCore.Mvc.Session",
   "description": "My Tested ASP.NET Core MVC session middleware components.",
-  "version": "1.0.0-preview-final",
+  "version": "1.0.0",
   "authors": [ "Ivaylo Kenov" ],
+  "copyright": "2015-2016 Ivaylo Kenov",
   "packOptions": {
     "projectUrl": "https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc",
     "licenseUrl": "https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/master/LICENSE",
@@ -27,8 +28,8 @@
   },
 
   "dependencies": {
-    "Microsoft.AspNetCore.Session": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0-*"
+    "Microsoft.AspNetCore.Session": "1.0.0",
+    "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0"
   },
 
   "frameworks": {

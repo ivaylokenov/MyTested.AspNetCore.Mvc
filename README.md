@@ -1,7 +1,7 @@
 <h1><img src="https://raw.githubusercontent.com/ivaylokenov/MyTested.AspNetCore.Mvc/master/tools/logo.png" align="left" alt="MyTested.AspNetCore.Mvc" width="100">&nbsp; MyTested.AspNetCore.Mvc - Fluent testing<br />&nbsp; framework for ASP.NET Core MVC</h1>
 ====================================
 
-MyTested.AspNetCore.Mvc is a unit testing library (currently in preview version) providing easy fluent interface to test the [ASP.NET Core MVC](https://github.com/aspnet/Mvc) framework. It is testing framework agnostic, so you can combine it with a test runner of your choice (e.g. xUnit, NUnit, etc.).
+MyTested.AspNetCore.Mvc is a unit testing library providing easy fluent interface to test the [ASP.NET Core MVC](https://github.com/aspnet/Mvc) framework. It is testing framework agnostic, so you can combine it with a test runner of your choice (e.g. xUnit, NUnit, etc.).
 
 [![Build status](https://ci.appveyor.com/api/projects/status/3xlag3a7f87bg4on?svg=true)](https://ci.appveyor.com/project/ivaylokenov/mytested-aspnetcore-mvc) [![NuGet Version](http://img.shields.io/nuget/v/MyTested.AspNetCore.Mvc.svg?style=flat)](https://www.nuget.org/packages/MyTested.AspNetCore.Mvc/) 
 
@@ -11,7 +11,7 @@ It is strongly advised to start with the [tutorial](http://docs.mytestedasp.net/
 
 ## Installation
 
-You can install this library using NuGet into your test project (or reference it directly in your `project.json` file). Currently `MyTested.AspNetCore.Mvc` works with ASP.NET Core MVC 1.0.0.
+You can install this library using NuGet into your test project (or reference it directly in your `project.json` file). Currently MyTested.AspNetCore.Mvc works with ASP.NET Core MVC 1.0.1.
 
     Install-Package MyTested.AspNetCore.Mvc.Universe
 
@@ -36,7 +36,6 @@ This package will include all available assertion methods in your test project, 
  - `MyTested.AspNetCore.Mvc.Session` - Contains setup and assertion methods for `ISession`
  - `MyTested.AspNetCore.Mvc.Options` - Contains setup and assertion methods for `IOptions`
  - `MyTested.AspNetCore.Mvc.Helpers` - Contains additional helper methods for easier assertions
-
  - `MyTested.AspNetCore.Mvc.Lite` - Completely **FREE** and **UNLIMITED** version of the library. It should not be used in combination with any other package. Includes `Controllers`, `ViewActionResults` and `ViewComponents`.
  
 After the downloading is complete, just add `using MyTested.AspNetCore.Mvc;` to your source code and you are ready to test in the most elegant and developer friendly way.
@@ -241,15 +240,19 @@ MyMvc
 
 ## License
 
-Code by Ivaylo Kenov. Copyright 2015 Ivaylo Kenov ([http://mytestedasp.net](http://mytestedasp.net))
+Code by Ivaylo Kenov. Copyright 2015-2016 Ivaylo Kenov ([http://mytestedasp.net](http://mytestedasp.net))
 
-**Currently MyTested.AspNetCore.Mvc is in preview and it is not advised to use it in production environments. The testing framework is fully tested and working correctly but the fluent APIs may change in the final production-ready build.**
+MyTested.AspNetCore.Mvc.Lite (the **FREE** and **UNLIMITED** version of the library) is dual-licensed under either the Apache License, Version 2.0, or the Microsoft Public License (Ms-PL).
 
-MyTested.AspNetCore.Mvc source code is available under GNU Affero General Public License/FOSS License Exception. The free version of the library allows up to 500 assertions (around 100 test cases) per test project. Additionally, **full-featured licenses can be requested for free by individuals, open-source projects, startups and educational institutions**. Commercial licensing with private support will also be available with the final release.
+MyTested.AspNetCore.Mvc source code is available under GNU Affero General Public License/FOSS License Exception. 
+
+Without a license code the library allows up to 100 assertions (around 25 test cases) per test project.
+
+**Full-featured licenses can be requested for free by individuals, open-source projects, startups and educational institutions** . See [https://mytestedasp.net/Core/Mvc#free-usage-modal](https://mytestedasp.net/Core/Mvc#free-usage-modal) for more information.
+
+Commercial licensing with private support is also available at [https://mytestedasp.net/Core/Mvc#pricing](https://mytestedasp.net/Core/Mvc#pricing).
 
 See the [LICENSE](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/master/LICENSE) for detailed information.
-
-If you want an early-bird license key for free, send a contact message through [http://mytestedasp.net](http://mytestedasp.net).
 
 ## Any questions, comments or additions?
 

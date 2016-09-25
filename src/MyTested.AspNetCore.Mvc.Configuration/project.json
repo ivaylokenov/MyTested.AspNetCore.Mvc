@@ -1,8 +1,9 @@
 ﻿{
   "title": "MyTested.AspNetCore.Mvc.Configuration",
   "description": "My Tested ASP.NET Core MVC configuration components.",
-  "version": "1.0.0-preview-final",
+  "version": "1.0.0",
   "authors": [ "Ivaylo Kenov" ],
+  "copyright": "2015-2016 Ivaylo Kenov",
   "packOptions": {
     "projectUrl": "https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc",
     "licenseUrl": "https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/master/LICENSE",
@@ -27,7 +28,7 @@
   },
 
   "dependencies": {
-    "Microsoft.Extensions.Configuration.Binder": "1.0.0-*"
+    "Microsoft.Extensions.Configuration.Binder": "1.0.0"
   },
 
   "frameworks": {
