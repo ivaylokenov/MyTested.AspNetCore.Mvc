@@ -3534,8 +3534,8 @@
     "": [],
     ".NETFramework,Version=v4.5.1": [],
     ".NETStandard,Version=v1.4": [
-      "NETStandard.Library >= 1.6.0-*",
-      "System.Security.Cryptography.Csp >= 4.0.0-*"
+      "NETStandard.Library >= 1.6.0",
+      "System.Security.Cryptography.Csp >= 4.0.0"
     ]
   },
   "tools": {},

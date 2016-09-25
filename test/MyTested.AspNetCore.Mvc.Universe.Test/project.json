@@ -14,8 +14,8 @@
   "dependencies": {
     "dotnet-test-xunit": "2.2.0-*",
     "xunit": "2.2.0-*",
-    "MyTested.AspNetCore.Mvc.Universe": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.Test.Setups": "1.0.0-*"
+    "MyTested.AspNetCore.Mvc.Universe": "1.0.0",
+    "MyTested.AspNetCore.Mvc.Test.Setups": "*"
   },
 
   "frameworks": {
@@ -23,7 +23,7 @@
       "imports": "dotnet5.4",
       "dependencies": {
         "Microsoft.NETCore.App": {
-          "version": "1.0.0-*",
+          "version": "1.0.1",
           "type": "platform"
         }
       }

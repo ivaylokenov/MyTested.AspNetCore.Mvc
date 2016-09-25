@@ -1,11 +1,12 @@
 ﻿{
   "title": "MyTested.AspNetCore.Mvc.Lite",
   "description": "My Tested ASP.NET Core MVC is a powerful unit testing library providing easy fluent interface to test the ASP.NET Core MVC framework.",
-  "version": "1.0.0-preview-final",
+  "version": "1.0.0",
   "authors": [ "Ivaylo Kenov" ],
+  "copyright": "2015-2016 Ivaylo Kenov",
   "packOptions": {
     "projectUrl": "https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc",
-    "licenseUrl": "https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/master/LICENSE",
+    "licenseUrl": "https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/master/src/MyTested.AspNetCore.Mvc.Lite/LICENSE",
     "iconUrl": "https://raw.githubusercontent.com/ivaylokenov/MyTested.AspNetCore.Mvc/master/tools/nuget-logo.png",
     "owners": [ "Ivaylo Kenov" ],
     "tags": [ "aspnetcore", "aspnetcoremvc", "testing", "unit", "tests", "fluent", "testing", "framework", "asp", "net", "core", "mvc", "test", "mymvc", "mytested" ],
@@ -27,10 +28,10 @@
   },
 
   "dependencies": {
-    "Microsoft.AspNetCore.Mvc": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.Controllers": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.ViewActionResults": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.ViewComponents": "1.0.0-*"
+    "Microsoft.AspNetCore.Mvc": "1.0.1",
+    "MyTested.AspNetCore.Mvc.Controllers": "1.0.0",
+    "MyTested.AspNetCore.Mvc.ViewActionResults": "1.0.0",
+    "MyTested.AspNetCore.Mvc.ViewComponents": "1.0.0"
   },
 
   "frameworks": {

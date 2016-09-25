@@ -1,5 +1,5 @@
 MyTested.AspNetCore.Mvc
-Code by Ivaylo Kenov. Copyright (c) 2015 Ivaylo Kenov.
+Code by Ivaylo Kenov. Copyright (c) 2015-2016 Ivaylo Kenov.
 ===============================================================================
 
 This program is free software: you can redistribute it and/or modify it 
@@ -10,6 +10,20 @@ http://www.gnu.org/licenses/agpl-3.0.html.
 This program is distributed in the hope that it will be useful, but WITHOUT 
 ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
 FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
+
+
+Lite Package License Exception
+===============================================================================
+
+This Exception applies to applications built with only MyTested.AspNetCore.Mvc.Lite
+and no other MyTested.AspNetCore.Mvc extensions. MyTested.AspNetCore.Mvc.Lite is intended
+to be used in both open-source and commercial environments. To allow its use 
+in as many situations as possible, MyTested.AspNetCore.Mvc.Lite is dual-licensed. 
+You may choose to use MyTested.AspNetCore.Mvc.Lite under either the Apache License, Version 2.0, 
+or the Microsoft Public License (Ms-PL). These licenses are essentially identical, 
+but you are encouraged to evaluate both to determine which best fits your intended use.
+See https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/master/src/MyTested.AspNetCore.Mvc.Lite/LICENSE
+for more details.
 
 
 FOSS License Exception
@@ -65,4 +79,4 @@ Zlib/libpng License                                      -
 
 Commercial License
 ===========================================================================
-In addition to this license, MyTested.AspNetCore.Mvc will be offered under free or paid commercial licenses after the final release.
+In addition to this license, MyTested.AspNetCore.Mvc is offered under free or paid commercial licenses. See https://mytestedasp.net/Core/Mvc#pricing for more details.

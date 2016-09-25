@@ -1,8 +1,9 @@
 ﻿{
   "title": "MyTested.AspNetCore.Mvc.ViewFeatures",
   "description": "My Tested ASP.NET Core MVC view features components.",
-  "version": "1.0.0-preview-final",
+  "version": "1.0.0",
   "authors": [ "Ivaylo Kenov" ],
+  "copyright": "2015-2016 Ivaylo Kenov",
   "packOptions": {
     "projectUrl": "https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc",
     "licenseUrl": "https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/master/LICENSE",
@@ -27,13 +28,13 @@
   },
 
   "dependencies": {
-    "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.DataAnnotations": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.Helpers": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.TempData": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.ViewData": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.ViewActionResults": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.ViewComponents": "1.0.0-*"
+    "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.0.1",
+    "MyTested.AspNetCore.Mvc.DataAnnotations": "1.0.0",
+    "MyTested.AspNetCore.Mvc.Helpers": "1.0.0",
+    "MyTested.AspNetCore.Mvc.TempData": "1.0.0",
+    "MyTested.AspNetCore.Mvc.ViewData": "1.0.0",
+    "MyTested.AspNetCore.Mvc.ViewActionResults": "1.0.0",
+    "MyTested.AspNetCore.Mvc.ViewComponents": "1.0.0"
   },
 
   "frameworks": {

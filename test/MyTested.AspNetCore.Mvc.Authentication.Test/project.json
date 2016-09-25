@@ -14,11 +14,11 @@
   "dependencies": {
     "dotnet-test-xunit": "2.2.0-*",
     "xunit": "2.2.0-*",
-    "Microsoft.AspNetCore.Mvc": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.Authentication": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.Controllers": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.ViewComponents": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.Test.Setups": "1.0.0-*"
+    "Microsoft.AspNetCore.Mvc": "1.0.1",
+    "MyTested.AspNetCore.Mvc.Authentication": "1.0.0",
+    "MyTested.AspNetCore.Mvc.Controllers": "1.0.0",
+    "MyTested.AspNetCore.Mvc.ViewComponents": "1.0.0",
+    "MyTested.AspNetCore.Mvc.Test.Setups": "*"
   },
 
   "frameworks": {
@@ -26,7 +26,7 @@
       "imports": "dotnet5.4",
       "dependencies": {
         "Microsoft.NETCore.App": {
-          "version": "1.0.0-*",
+          "version": "1.0.1",
           "type": "platform"
         }
       }

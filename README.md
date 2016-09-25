@@ -36,7 +36,6 @@ This package will include all available assertion methods in your test project, 
  - `MyTested.AspNetCore.Mvc.Session` - Contains setup and assertion methods for `ISession`
  - `MyTested.AspNetCore.Mvc.Options` - Contains setup and assertion methods for `IOptions`
  - `MyTested.AspNetCore.Mvc.Helpers` - Contains additional helper methods for easier assertions
-
  - `MyTested.AspNetCore.Mvc.Lite` - Completely **FREE** and **UNLIMITED** version of the library. It should not be used in combination with any other package. Includes `Controllers`, `ViewActionResults` and `ViewComponents`.
  
 After the downloading is complete, just add `using MyTested.AspNetCore.Mvc;` to your source code and you are ready to test in the most elegant and developer friendly way.
