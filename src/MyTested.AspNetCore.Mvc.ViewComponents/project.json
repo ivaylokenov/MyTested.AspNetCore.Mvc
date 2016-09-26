@@ -1,5 +1,5 @@
 ﻿{
-  "title": "MyTested.AspNetCore.Mvc.Session",
+  "title": "MyTested.AspNetCore.Mvc.ViewComponents",
   "description": "My Tested ASP.NET Core MVC view components assertion methods.",
   "version": "1.0.0",
   "authors": [ "Ivaylo Kenov" ],
