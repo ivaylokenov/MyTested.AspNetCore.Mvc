@@ -1,8 +1,9 @@
 ﻿{
   "title": "MyTested.AspNetCore.Mvc.ModelState",
   "description": "My Tested ASP.NET Core MVC model state components.",
-  "version": "1.0.0-preview-final",
+  "version": "1.0.0",
   "authors": [ "Ivaylo Kenov" ],
+  "copyright": "2015-2016 Ivaylo Kenov",
   "packOptions": {
     "projectUrl": "https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc",
     "licenseUrl": "https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/master/LICENSE",
@@ -27,8 +28,8 @@
   },
 
   "dependencies": {
-    "Microsoft.AspNetCore.Mvc.DataAnnotations": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0-*"
+    "Microsoft.AspNetCore.Mvc.DataAnnotations": "1.0.1",
+    "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0"
   },
 
   "frameworks": {

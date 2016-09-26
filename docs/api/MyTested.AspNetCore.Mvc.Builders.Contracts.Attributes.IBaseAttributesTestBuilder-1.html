@@ -69,7 +69,8 @@
               
               <h1 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IBaseAttributesTestBuilder_1" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder`1">Interface IBaseAttributesTestBuilder&lt;TAttributesTestBuilder&gt;
               </h1>
-              <div class="markdown level0 summary"></div>
+              <div class="markdown level0 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder-1.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Base interface for all attribute test builders.</p>
+</div>
               <div class="markdown level0 conceptual"></div>
               <h6><strong>Namespace</strong>:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes</h6>
               <h6><strong>Assembly</strong>:MyTested.AspNetCore.Mvc.Abstractions.dll</h6>
@@ -88,7 +89,7 @@
                 <tbody>
                   <tr>
                     <td><em>TAttributesTestBuilder</em></td>
-                    <td></td>
+                    <td>Type of attributes test builder to use as a return type for common methods.</td>
                   </tr>
                 </tbody>
               </table>
@@ -96,19 +97,147 @@
               </h3>
               <span class="small pull-right mobile-hide">
                 <span class="divider">|</span>
-                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/documentation/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IBaseAttributesTestBuilder_1_ContainingAttributeOfType__1.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder%601.ContainingAttributeOfType%60%601%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/lite-package/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IBaseAttributesTestBuilder_1_ContainingAttributeOfType__1.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder%601.ContainingAttributeOfType%60%601%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
               </span>
               <span class="small pull-right mobile-hide">
-                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/documentation/src/MyTested.AspNetCore.Mvc.Abstractions/Builders/Contracts/Attributes/IBaseAttributesTestBuilder.cs/#L12">View Source</a>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/lite-package/src/MyTested.AspNetCore.Mvc.Abstractions/Builders/Contracts/Attributes/IBaseAttributesTestBuilder.cs/#L16">View Source</a>
               </span>
               <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IBaseAttributesTestBuilder_1_ContainingAttributeOfType__1" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder`1.ContainingAttributeOfType``1">ContainingAttributeOfType&lt;TAttribute&gt;()</h4>
-              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder-1.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Checks whether the collected attributes contain the provided attribute type.</p>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder-1.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Tests whether the collected attributes contain the provided attribute type.</p>
 </div>
               <div class="markdown level1 conceptual"></div>
               <h5 class="decalaration">Declaration</h5>
               <div class="codewrapper">
                 <pre><code class="lang-csharp hljs">TAttributesTestBuilder ContainingAttributeOfType&lt;TAttribute&gt;()where TAttribute : Attribute</code></pre>
               </div>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">TAttributesTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder-1.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same attributes test builder.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="typeParameters">Type Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><em>TAttribute</em></td>
+                    <td>Type of expected attribute.</td>
+                  </tr>
+                </tbody>
+              </table>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/lite-package/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IBaseAttributesTestBuilder_1_PassingFor__1_System_Action___0__.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder%601.PassingFor%60%601(System.Action%7B%60%600%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/lite-package/src/MyTested.AspNetCore.Mvc.Abstractions/Builders/Contracts/Attributes/IBaseAttributesTestBuilder.cs/#L25">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IBaseAttributesTestBuilder_1_PassingFor__1_System_Action___0__" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder`1.PassingFor``1(System.Action{``0})">PassingFor&lt;TAttribute&gt;(Action&lt;TAttribute&gt;)</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder-1.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Tests whether the collected attributes contain the provided attribute type passing the given assertions.</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">TAttributesTestBuilder PassingFor&lt;TAttribute&gt;(Action&lt;TAttribute&gt; assertions)where TAttribute : Attribute</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.Action</span>&lt;TAttribute&gt;</td>
+                    <td><em>assertions</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder-1.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Action containing assertions on the provided attribute.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">TAttributesTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder-1.yml" sourcestartlinenumber="1" sourceendlinenumber="1">The same attributes test builder.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="typeParameters">Type Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><em>TAttribute</em></td>
+                    <td>Type of expected attribute.</td>
+                  </tr>
+                </tbody>
+              </table>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/lite-package/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IBaseAttributesTestBuilder_1_PassingFor__1_System_Func___0_System_Boolean__.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder%601.PassingFor%60%601(System.Func%7B%60%600%2CSystem.Boolean%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/lite-package/src/MyTested.AspNetCore.Mvc.Abstractions/Builders/Contracts/Attributes/IBaseAttributesTestBuilder.cs/#L34">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IBaseAttributesTestBuilder_1_PassingFor__1_System_Func___0_System_Boolean__" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder`1.PassingFor``1(System.Func{``0,System.Boolean})">PassingFor&lt;TAttribute&gt;(Func&lt;TAttribute, Boolean&gt;)</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder-1.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Tests whether the collected attributes contain the provided attribute type passing the given predicate.</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">TAttributesTestBuilder PassingFor&lt;TAttribute&gt;(Func&lt;TAttribute, bool&gt; predicate)where TAttribute : Attribute</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.Func</span>&lt;TAttribute, <span class="xref">System.Boolean</span>&gt;</td>
+                    <td><em>predicate</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder-1.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Predicate testing the provided attribute.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
               <h5 class="returns">Returns</h5>
               <table class="table table-bordered table-striped table-condensed">
                 <thead>
@@ -148,10 +277,10 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/documentation/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IBaseAttributesTestBuilder_1.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder%601%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/lite-package/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IBaseAttributesTestBuilder_1.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder%601%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/documentation/src/MyTested.AspNetCore.Mvc.Abstractions/Builders/Contracts/Attributes/IBaseAttributesTestBuilder.cs/#L5" class="contribution-link">View Source</a>
+                    <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/lite-package/src/MyTested.AspNetCore.Mvc.Abstractions/Builders/Contracts/Attributes/IBaseAttributesTestBuilder.cs/#L9" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

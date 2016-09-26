@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.Ok
 {
+    using System;
     using System.Collections.Generic;
     using System.Net;
     using Base;
@@ -26,14 +27,7 @@
             : base(testContext)
         {
         }
-
-        /// <inheritdoc />
-        public IAndOkTestBuilder WithNoResponseModel()
-        {
-            this.WithNoResponseModel<OkResult>();
-            return this;
-        }
-
+        
         /// <inheritdoc />
         public IAndOkTestBuilder WithStatusCode(int statusCode)
         {
@@ -121,7 +115,9 @@
 
         /// <inheritdoc />
         public IOkTestBuilder AndAlso() => this;
-        
+
+        public override void ValidateNoModel() => this.WithNoModel<OkResult>();
+
         /// <summary>
         /// Throws new OK result assertion exception for the provided property name, expected value and actual value.
         /// </summary>

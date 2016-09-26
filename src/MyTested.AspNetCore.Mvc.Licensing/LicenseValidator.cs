@@ -161,7 +161,7 @@
                 throw new InvalidLicenseException($"License is not valid for this version of My Tested ASP.NET Core MVC. License expired on {licenseDetails.ExpiryDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)}. This version of My Tested ASP.NET Core MVC was released on {releaseDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)}");
             }
 
-            if (licenseDetails.NamespacePrefix != "." && !projectNamespace.StartsWith(licenseDetails.NamespacePrefix))
+            if (licenseDetails.Type != LicenseType.Enterprise && licenseDetails.NamespacePrefix != "." && !projectNamespace.StartsWith(licenseDetails.NamespacePrefix))
             {
                 throw new InvalidLicenseException($"License is not valid for '{projectNamespace}' test project");
             }

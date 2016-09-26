@@ -299,6 +299,12 @@
             return this.Ok();
         }
 
+        [Area("InArea")]
+        public IActionResult OtherAttributes()
+        {
+            return this.Ok();
+        }
+
         [ValidateAntiForgeryToken]
         public IActionResult AntiForgeryToken()
         {

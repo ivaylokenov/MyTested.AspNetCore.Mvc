@@ -5,6 +5,7 @@
     using Setups;
     using Setups.Controllers;
     using Xunit;
+    using System;
 
     public class ShouldPassForTestBuilderWithControllerTests
     {
@@ -20,6 +21,23 @@
                 {
                     Assert.NotNull(controller);
                 });
+        }
+
+        [Fact]
+        public void ControllerAssertionsShouldWorkCorrectlyAndThrowExceptionIfIncorrect()
+        {
+            Assert.ThrowsAny<Exception>(() =>
+            {
+                MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.FullOkAction())
+                    .ShouldReturn()
+                    .Ok()
+                    .ShouldPassForThe<MvcController>(controller =>
+                    {
+                        Assert.Null(controller);
+                    });
+            });
         }
 
         [Fact]

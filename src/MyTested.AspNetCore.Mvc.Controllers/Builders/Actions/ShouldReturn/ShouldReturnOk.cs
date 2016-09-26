@@ -11,7 +11,7 @@
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <inheritdoc />
-        public IOkTestBuilder Ok()
+        public IAndOkTestBuilder Ok()
         {
             if (this.ActionResult is OkObjectResult)
             {
@@ -21,7 +21,7 @@
             return this.ReturnOkTestBuilder<OkResult>();
         }
 
-        private IOkTestBuilder ReturnOkTestBuilder<THttpOkResult>()
+        private IAndOkTestBuilder ReturnOkTestBuilder<THttpOkResult>()
             where THttpOkResult : ActionResult
         {
             InvocationResultValidator.ValidateInvocationResultType<THttpOkResult>(this.TestContext);

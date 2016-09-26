@@ -19,11 +19,11 @@
         /// Tests whether the action result is <see cref="ViewComponentResult"/>.
         /// </summary>
         /// <typeparam name="TActionResult">Type of action result type.</typeparam>
-        /// <param name="shouldReturnTestBuilder">Instance of <see cref="IShouldReturnTestBuilder{TActionResult}"/> type.</param>
-        /// <returns>Test builder of <see cref="IViewComponentTestBuilder"/> type.</returns>
-        public static IViewComponentTestBuilder ViewComponent<TActionResult>(this IShouldReturnTestBuilder<TActionResult> shouldReturnTestBuilder)
+        /// <param name="builder">Instance of <see cref="IShouldReturnTestBuilder{TActionResult}"/> type.</param>
+        /// <returns>Test builder of <see cref="IAndViewComponentTestBuilder"/> type.</returns>
+        public static IAndViewComponentTestBuilder ViewComponent<TActionResult>(this IShouldReturnTestBuilder<TActionResult> builder)
         {
-            var actualShouldReturnTestBuilder = (ShouldReturnTestBuilder<TActionResult>)shouldReturnTestBuilder;
+            var actualShouldReturnTestBuilder = (ShouldReturnTestBuilder<TActionResult>)builder;
             
             InvocationResultValidator.ValidateInvocationResultType<ViewComponentResult>(actualShouldReturnTestBuilder.TestContext);
 
@@ -34,14 +34,14 @@
         /// Tests whether the action result is <see cref="ViewComponentResult"/> with the provided view component name.
         /// </summary>
         /// <typeparam name="TActionResult">Type of action result type.</typeparam>
-        /// <param name="shouldReturnTestBuilder">Instance of <see cref="IShouldReturnTestBuilder{TActionResult}"/> type.</param>
+        /// <param name="builder">Instance of <see cref="IShouldReturnTestBuilder{TActionResult}"/> type.</param>
         /// <param name="viewComponentName">Expected view component name.</param>
-        /// <returns>Test builder of <see cref="IViewComponentTestBuilder"/> type.</returns>
-        public static IViewComponentTestBuilder ViewComponent<TActionResult>(
-            this IShouldReturnTestBuilder<TActionResult> shouldReturnTestBuilder,
+        /// <returns>Test builder of <see cref="IAndViewComponentTestBuilder"/> type.</returns>
+        public static IAndViewComponentTestBuilder ViewComponent<TActionResult>(
+            this IShouldReturnTestBuilder<TActionResult> builder,
             string viewComponentName)
         {
-            var actualShouldReturnTestBuilder = (ShouldReturnTestBuilder<TActionResult>)shouldReturnTestBuilder;
+            var actualShouldReturnTestBuilder = (ShouldReturnTestBuilder<TActionResult>)builder;
 
             var viewComponentResult = InvocationResultValidator
                 .GetInvocationResult<ViewComponentResult>(actualShouldReturnTestBuilder.TestContext);
@@ -64,14 +64,14 @@
         /// Tests whether the action result is <see cref="ViewComponentResult"/> with the provided view component type.
         /// </summary>
         /// <typeparam name="TActionResult">Type of action result type.</typeparam>
-        /// <param name="shouldReturnTestBuilder">Instance of <see cref="IShouldReturnTestBuilder{TActionResult}"/> type.</param>
+        /// <param name="builder">Instance of <see cref="IShouldReturnTestBuilder{TActionResult}"/> type.</param>
         /// <param name="viewComponentType">Expected view component type.</param>
-        /// <returns>Test builder of <see cref="IViewComponentTestBuilder"/> type.</returns>
-        public static IViewComponentTestBuilder ViewComponent<TActionResult>(
-            this IShouldReturnTestBuilder<TActionResult> shouldReturnTestBuilder,
+        /// <returns>Test builder of <see cref="IAndViewComponentTestBuilder"/> type.</returns>
+        public static IAndViewComponentTestBuilder ViewComponent<TActionResult>(
+            this IShouldReturnTestBuilder<TActionResult> builder,
             Type viewComponentType)
         {
-            var actualShouldReturnTestBuilder = (ShouldReturnTestBuilder<TActionResult>)shouldReturnTestBuilder;
+            var actualShouldReturnTestBuilder = (ShouldReturnTestBuilder<TActionResult>)builder;
 
             var viewComponentResult = InvocationResultValidator
                 .GetInvocationResult<ViewComponentResult>(actualShouldReturnTestBuilder.TestContext);

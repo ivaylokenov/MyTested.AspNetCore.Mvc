@@ -75,22 +75,115 @@
               <div class="inheritedMembers">
                 <h5>Inherited Members</h5>
                 <div>
-                  <a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithComponent.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Base_IBaseTestBuilderWithComponent_ShouldPassForThe__1_System_Action___0__">IBaseTestBuilderWithComponent.ShouldPassForThe&lt;TComponent&gt;(Action&lt;TComponent&gt;)</a>
-                </div>
-                <div>
-                  <a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithComponent.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Base_IBaseTestBuilderWithComponent_ShouldPassForThe__1_System_Func___0_System_Boolean__">IBaseTestBuilderWithComponent.ShouldPassForThe&lt;TComponent&gt;(Func&lt;TComponent, Boolean&gt;)</a>
+                  <a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithModelError.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Base_IBaseTestBuilderWithModelError_ContainingNoErrors">IBaseTestBuilderWithModelError.ContainingNoErrors()</a>
                 </div>
               </div>
               <h6><strong>Namespace</strong>:MyTested.AspNetCore.Mvc.Builders.Contracts.Models</h6>
-              <h6><strong>Assembly</strong>:MyTested.AspNetCore.Mvc.Abstractions.dll</h6>
+              <h6><strong>Assembly</strong>:MyTested.AspNetCore.Mvc.ModelState.dll</h6>
               <h5 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorTestBuilder_syntax">Syntax</h5>
               <div class="codewrapper">
-                <pre><code class="lang-csharp hljs">public interface IModelErrorTestBuilder : IBaseTestBuilderWithComponent, IBaseTestBuilder</code></pre>
+                <pre><code class="lang-csharp hljs">public interface IModelErrorTestBuilder : IBaseTestBuilderWithModelError</code></pre>
               </div>
-              <h3 id="extensionmethods">Extension Methods</h3>
-              <div>
-                  <a class="xref" href="MyTested.AspNetCore.Mvc.ModelErrorTestBuilderModelStateExtensions.html#MyTested_AspNetCore_Mvc_ModelErrorTestBuilderModelStateExtensions_ContainingNoErrors_MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorTestBuilder_">ModelErrorTestBuilderModelStateExtensions.ContainingNoErrors()</a>
+              <h3 id="methods">Methods
+              </h3>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/lite-package/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorTestBuilder_ContainingError_System_String_.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder.ContainingError(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/lite-package/src/MyTested.AspNetCore.Mvc.ModelState/Builders/Contracts/Models/IModelErrorTestBuilder.cs/#L15">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorTestBuilder_ContainingError_System_String_" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder.ContainingError(System.String)">ContainingError(String)</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Tests whether the tested <span class="xref">ModelStateDictionary</span> contains error by key.</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IModelErrorDetailsTestBuilder ContainingError(string errorKey)</code></pre>
               </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.String</span></td>
+                    <td><em>errorKey</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Error key to search for.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorDetailsTestBuilder">IModelErrorDetailsTestBuilder</a></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Test builder of <a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorDetailsTestBuilder">IModelErrorDetailsTestBuilder</a> type.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <span class="small pull-right mobile-hide">
+                <span class="divider">|</span>
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/lite-package/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorTestBuilder_ContainingNoError_System_String_.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder.ContainingNoError(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+              </span>
+              <span class="small pull-right mobile-hide">
+                <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/lite-package/src/MyTested.AspNetCore.Mvc.ModelState/Builders/Contracts/Models/IModelErrorTestBuilder.cs/#L22">View Source</a>
+              </span>
+              <h4 id="MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorTestBuilder_ContainingNoError_System_String_" data-uid="MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder.ContainingNoError(System.String)">ContainingNoError(String)</h4>
+              <div class="markdown level1 summary"><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder.yml" sourcestartlinenumber="2" sourceendlinenumber="2">Tests whether the tested <span class="xref">ModelStateDictionary</span> does not contain error by key.</p>
+</div>
+              <div class="markdown level1 conceptual"></div>
+              <h5 class="decalaration">Declaration</h5>
+              <div class="codewrapper">
+                <pre><code class="lang-csharp hljs">IAndModelErrorTestBuilder ContainingNoError(string errorKey)</code></pre>
+              </div>
+              <h5 class="parameters">Parameters</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">System.String</span></td>
+                    <td><em>errorKey</em></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Error key to search for.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h5 class="returns">Returns</h5>
+              <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="xref">MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IAndModelErrorTestBuilder</span></td>
+                    <td><p sourcefile="api/MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder.yml" sourcestartlinenumber="1" sourceendlinenumber="1">Test builder of <a class="xref" href="MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorDetailsTestBuilder_1">IModelErrorDetailsTestBuilder&lt;TModel&gt;</a> type.</p>
+</td>
+                  </tr>
+                </tbody>
+              </table>
             </article>
           </div>
           
@@ -99,10 +192,10 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/documentation/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorTestBuilder.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/new/lite-package/docs/_docfx/apispec/new?filename=MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorTestBuilder.md&amp;value=---%0Auid%3A%20MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/documentation/src/MyTested.AspNetCore.Mvc.Abstractions/Builders/Contracts/Models/IModelErrorTestBuilder.cs/#L8" class="contribution-link">View Source</a>
+                    <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/lite-package/src/MyTested.AspNetCore.Mvc.ModelState/Builders/Contracts/Models/IModelErrorTestBuilder.cs/#L8" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

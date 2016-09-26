@@ -9,12 +9,13 @@
     }
   },
   "dependencies": {
-    "MSTest.TestFramework": "1.0.1-*",
+    "MSTest.TestFramework": "1.0.3-*",
     "dotnet-test-mstest": "1.1.1-*",
-    "MyTested.AspNetCore.Mvc.Controllers": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.DependencyInjection": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.Routing": "1.0.0-*",
-    "MyTested.AspNetCore.Mvc.ViewComponents": "1.0.0-*",
+    "MyTested.AspNetCore.Mvc.Controllers": "1.0.0",
+    "MyTested.AspNetCore.Mvc.DependencyInjection": "1.0.0",
+    "MyTested.AspNetCore.Mvc.Models": "1.0.0",
+    "MyTested.AspNetCore.Mvc.Routing": "1.0.0",
+    "MyTested.AspNetCore.Mvc.ViewComponents": "1.0.0",
     "NoStartup.Controllers": "*",
     "NoStartup.Components": "*",
     "NoStartup.Services": "*"
@@ -27,7 +28,7 @@
       ],
       "dependencies": {
         "Microsoft.NETCore.App": {
-          "version": "1.0.0-*",
+          "version": "1.0.1",
           "type": "platform"
         }
       }

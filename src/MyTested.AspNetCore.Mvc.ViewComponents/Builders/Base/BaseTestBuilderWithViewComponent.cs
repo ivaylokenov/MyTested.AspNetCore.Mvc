@@ -8,7 +8,7 @@
     /// <summary>
     /// Base class for all test builders with view component.
     /// </summary>
-    public abstract class BaseTestBuilderWithViewComponent : BaseTestBuilderWithComponent, IBaseTestBuilderWithViewComponent
+    public abstract class BaseTestBuilderWithViewComponent : BaseTestBuilderWithActionContext, IBaseTestBuilderWithViewComponent
     {
         private ViewComponentTestContext testContext;
 

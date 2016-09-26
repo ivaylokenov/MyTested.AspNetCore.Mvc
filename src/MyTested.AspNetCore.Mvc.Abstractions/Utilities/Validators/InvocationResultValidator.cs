@@ -11,14 +11,15 @@
             ComponentTestContext testContext,
             Type typeOfExpectedReturnValue,
             bool canBeAssignable = false,
-            bool allowDifferentGenericTypeDefinitions = false)
+            bool allowDifferentGenericTypeDefinitions = false,
+            Type typeOfActualReturnValue = null)
         {
             InvocationValidator.CheckForException(testContext.CaughtException, testContext.ExceptionMessagePrefix);
 
             var typeInfoOfExpectedReturnValue = typeOfExpectedReturnValue.GetTypeInfo();
 
-            var typeOfActionResult = testContext.MethodResult?.GetType();
-            if (typeOfActionResult == null)
+            var typeOfResult = typeOfActualReturnValue ?? testContext.MethodResult?.GetType();
+            if (typeOfResult == null)
             {
                 ThrowNewInvocationResultAssertionException(
                     testContext,
@@ -26,40 +27,40 @@
                     "null");
             }
 
-            var typeInfoOfActionResult = typeOfActionResult.GetTypeInfo();
+            var typeInfoOfResult = typeOfResult.GetTypeInfo();
 
-            var isAssignableCheck = canBeAssignable && Reflection.AreNotAssignable(typeOfExpectedReturnValue, typeOfActionResult);
+            var isAssignableCheck = canBeAssignable && Reflection.AreNotAssignable(typeOfExpectedReturnValue, typeOfResult);
             if (isAssignableCheck && allowDifferentGenericTypeDefinitions
                 && Reflection.IsGeneric(typeOfExpectedReturnValue) && Reflection.IsGenericTypeDefinition(typeOfExpectedReturnValue))
             {
-                isAssignableCheck = Reflection.AreAssignableByGeneric(typeOfExpectedReturnValue, typeOfActionResult);
+                isAssignableCheck = Reflection.AreAssignableByGeneric(typeOfExpectedReturnValue, typeOfResult);
 
-                if (!isAssignableCheck && !typeInfoOfActionResult.IsGenericType)
+                if (!isAssignableCheck && !typeInfoOfResult.IsGenericType)
                 {
                     isAssignableCheck = true;
                 }
                 else
                 {
                     isAssignableCheck =
-                        !Reflection.ContainsGenericTypeDefinitionInterface(typeOfExpectedReturnValue, typeOfActionResult);
+                        !Reflection.ContainsGenericTypeDefinitionInterface(typeOfExpectedReturnValue, typeOfResult);
                 }
             }
 
-            var strictlyEqualCheck = !canBeAssignable && Reflection.AreDifferentTypes(typeOfExpectedReturnValue, typeOfActionResult);
+            var strictlyEqualCheck = !canBeAssignable && Reflection.AreDifferentTypes(typeOfExpectedReturnValue, typeOfResult);
 
             var invalid = isAssignableCheck || strictlyEqualCheck;
-            if (invalid && typeInfoOfExpectedReturnValue.IsGenericTypeDefinition && typeInfoOfActionResult.IsGenericType)
+            if (invalid && typeInfoOfExpectedReturnValue.IsGenericTypeDefinition && typeInfoOfResult.IsGenericType)
             {
-                var actionResultGenericDefinition = typeInfoOfActionResult.GetGenericTypeDefinition();
+                var actionResultGenericDefinition = typeInfoOfResult.GetGenericTypeDefinition();
                 if (actionResultGenericDefinition == typeOfExpectedReturnValue)
                 {
                     invalid = false;
                 }
             }
 
-            if (invalid && typeInfoOfExpectedReturnValue.IsGenericType && typeInfoOfActionResult.IsGenericType)
+            if (invalid && typeInfoOfExpectedReturnValue.IsGenericType && typeInfoOfResult.IsGenericType)
             {
-                invalid = !Reflection.AreAssignableByGeneric(typeOfExpectedReturnValue, typeOfActionResult);
+                invalid = !Reflection.AreAssignableByGeneric(typeOfExpectedReturnValue, typeOfResult);
             }
 
             if (invalid)
@@ -67,7 +68,7 @@
                 ThrowNewInvocationResultAssertionException(
                     testContext,
                     typeOfExpectedReturnValue.ToFriendlyTypeName(),
-                    typeOfActionResult.ToFriendlyTypeName());
+                    typeOfResult.ToFriendlyTypeName());
             }
         }
 

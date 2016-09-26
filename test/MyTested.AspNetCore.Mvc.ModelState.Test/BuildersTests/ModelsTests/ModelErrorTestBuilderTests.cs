@@ -17,10 +17,13 @@
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.OkResultActionWithRequestBody(1, requestBody))
+                .ShouldHave()
+                .ModelState(modelState => modelState
+                    .ContainingNoErrors())
+                .AndAlso()
                 .ShouldReturn()
                 .Ok()
-                .WithModelOfType<ICollection<ResponseModel>>()
-                .ContainingNoErrors();
+                .WithModelOfType<ICollection<ResponseModel>>();
         }
 
         [Fact]
@@ -34,10 +37,13 @@
                     MyController<MvcController>
                         .Instance()
                         .Calling(c => c.OkResultActionWithRequestBody(1, requestBodyWithErrors))
+                        .ShouldHave()
+                        .ModelState(modelState => modelState
+                            .ContainingNoErrors())
+                        .AndAlso()
                         .ShouldReturn()
                         .Ok()
-                        .WithModelOfType<ICollection<ResponseModel>>()
-                        .ContainingNoErrors();
+                        .WithModelOfType<ICollection<ResponseModel>>();
                 },
                 "When calling OkResultActionWithRequestBody action in MvcController expected to have valid model state with no errors, but it had some.");
         }
@@ -50,10 +56,37 @@
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.ModelStateCheck(requestBodyWithErrors))
+                .ShouldHave()
+                .ModelState(modelState => modelState
+                    .ContainingError("RequiredString")
+                    .AndAlso()
+                    .ContainingNoError("MissingError"))
+                .AndAlso()
                 .ShouldReturn()
                 .Ok()
-                .WithModel(requestBodyWithErrors)
-                .ContainingError("RequiredString");
+                .WithModel(requestBodyWithErrors);
+        }
+
+        [Fact]
+        public void AndModelStateErrorShouldThrowExceptionWhenTheProvidedModelStateErrorDoesNotExists()
+        {
+            Test.AssertException<ModelErrorAssertionException>(
+                () =>
+                {
+                    var requestBodyWithErrors = TestObjectFactory.GetRequestModelWithErrors();
+
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.ModelStateCheck(requestBodyWithErrors))
+                        .ShouldHave()
+                        .ModelState(modelState => modelState
+                            .ContainingNoError("RequiredString"))
+                        .AndAlso()
+                        .ShouldReturn()
+                        .Ok()
+                        .WithModel(requestBodyWithErrors);
+                },
+                "When calling ModelStateCheck action in MvcController expected to not have a model error against key 'RequiredString', but in fact such was found.");
         }
 
         [Fact]
@@ -67,12 +100,15 @@
                     MyController<MvcController>
                         .Instance()
                         .Calling(c => c.ModelStateCheck(requestBody))
+                        .ShouldHave()
+                        .ModelState(modelState => modelState
+                            .ContainingError("Name"))
+                        .AndAlso()
                         .ShouldReturn()
                         .Ok()
-                        .WithModel(requestBody)
-                        .ContainingError("Name");
+                        .WithModel(requestBody);
                 },
-                "When calling ModelStateCheck action in MvcController expected to have a model error against key Name, but none found.");
+                "When calling ModelStateCheck action in MvcController expected to have a model error against key 'Name', but in fact none was found.");
         }
 
         [Fact]
@@ -116,10 +152,13 @@
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.CustomModelStateError())
+                .ShouldHave()
+                .ModelState(modelState => modelState
+                    .ContainingError("Test"))
+                .AndAlso()
                 .ShouldReturn()
                 .Ok()
                 .WithModelOfType<ICollection<ResponseModel>>()
-                .ContainingError("Test")
                 .ShouldPassForThe<ICollection<ResponseModel>>(responseModel =>
                 {
                     Assert.NotNull(responseModel);
@@ -134,10 +173,13 @@
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.CustomModelStateError())
+                .ShouldHave()
+                .ModelState(modelState => modelState
+                    .ContainingError("Test").ThatEquals("Test error"))
+                .AndAlso()
                 .ShouldReturn()
                 .Ok()
                 .WithModelOfType<ICollection<ResponseModel>>()
-                .ContainingError("Test").ThatEquals("Test error")
                 .ShouldPassForThe<ICollection<ResponseModel>>(responseModel =>
                 {
                     Assert.NotNull(responseModel);

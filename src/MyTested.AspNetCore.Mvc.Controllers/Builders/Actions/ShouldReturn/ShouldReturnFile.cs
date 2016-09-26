@@ -11,7 +11,7 @@
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <inheritdoc />
-        public IFileTestBuilder File()
+        public IAndFileTestBuilder File()
         {
             if (this.ActionResult is VirtualFileResult)
             {
@@ -27,13 +27,13 @@
         }
 
         /// <inheritdoc />
-        public IPhysicalFileTestBuilder PhysicalFile()
+        public IAndPhysicalFileTestBuilder PhysicalFile()
         {
             InvocationResultValidator.ValidateInvocationResultType<PhysicalFileResult>(this.TestContext);
             return new PhysicalFileTestBuilder(this.TestContext);
         }
 
-        private IFileTestBuilder ReturnFileTestBuilder<TFileResult>()
+        private IAndFileTestBuilder ReturnFileTestBuilder<TFileResult>()
             where TFileResult : FileResult
         {
             InvocationResultValidator.ValidateInvocationResultType<TFileResult>(this.TestContext);

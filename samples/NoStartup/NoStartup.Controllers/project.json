@@ -7,7 +7,7 @@
   },
 
   "dependencies": {
-    "Microsoft.AspNetCore.Mvc.Core": "1.0.0-*",
+    "Microsoft.AspNetCore.Mvc.Core": "1.0.1",
     "NoStartup.Services": "*"
   },
 

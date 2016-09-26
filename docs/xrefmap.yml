@@ -1712,23 +1712,6 @@ references:
   commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldReturnTestBuilder`1.UnsupportedMediaType
   fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldReturnTestBuilder<TActionResult>.UnsupportedMediaType()
   fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldReturnTestBuilder(Of TActionResult).UnsupportedMediaType()
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldThrowTestBuilder
-  name: IShouldThrowTestBuilder
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldThrowTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Actions_IShouldThrowTestBuilder
-  commentId: T:MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldThrowTestBuilder
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldThrowTestBuilder
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldThrowTestBuilder.AggregateException(System.Nullable{System.Int32})
-  name: AggregateException(Nullable<Int32>)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldThrowTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Actions_IShouldThrowTestBuilder_AggregateException_System_Nullable_System_Int32__
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldThrowTestBuilder.AggregateException(System.Nullable{System.Int32})
-  name.vb: AggregateException(Nullable(Of Int32))
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldThrowTestBuilder.AggregateException(System.Nullable<System.Int32>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldThrowTestBuilder.AggregateException(System.Nullable(Of System.Int32))
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldThrowTestBuilder.Exception
-  name: Exception()
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldThrowTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Actions_IShouldThrowTestBuilder_Exception
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldThrowTestBuilder.Exception
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldThrowTestBuilder.Exception()
 - uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IVoidActionResultTestBuilder
   name: IVoidActionResultTestBuilder
   href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IVoidActionResultTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Actions_IVoidActionResultTestBuilder
@@ -1812,33 +1795,16 @@ references:
   href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder
   commentId: T:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder
   fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.AllowingAnonymousRequests
-  name: AllowingAnonymousRequests()
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_AllowingAnonymousRequests
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.AllowingAnonymousRequests
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.AllowingAnonymousRequests()
 - uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.ChangingActionNameTo(System.String)
   name: ChangingActionNameTo(String)
   href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_ChangingActionNameTo_System_String_
   commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.ChangingActionNameTo(System.String)
   fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.ChangingActionNameTo(System.String)
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.ChangingRouteTo(System.String,System.String,System.Nullable{System.Int32})
-  name: ChangingRouteTo(String, String, Nullable<Int32>)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_ChangingRouteTo_System_String_System_String_System_Nullable_System_Int32__
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.ChangingRouteTo(System.String,System.String,System.Nullable{System.Int32})
-  name.vb: ChangingRouteTo(String, String, Nullable(Of Int32))
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.ChangingRouteTo(System.String, System.String, System.Nullable<System.Int32>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.ChangingRouteTo(System.String, System.String, System.Nullable(Of System.Int32))
 - uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.DisablingActionCall
   name: DisablingActionCall()
   href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_DisablingActionCall
   commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.DisablingActionCall
   fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.DisablingActionCall()
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.RestrictingForAuthorizedRequests(System.String)
-  name: RestrictingForAuthorizedRequests(String)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_RestrictingForAuthorizedRequests_System_String_
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.RestrictingForAuthorizedRequests(System.String)
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.RestrictingForAuthorizedRequests(System.String)
 - uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.RestrictingForHttpMethod(System.Net.Http.HttpMethod)
   name: RestrictingForHttpMethod(HttpMethod)
   href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IActionAttributesTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IActionAttributesTestBuilder_RestrictingForHttpMethod_System_Net_Http_HttpMethod_
@@ -1898,28 +1864,62 @@ references:
   name.vb: ContainingAttributeOfType(Of TAttribute)()
   fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder<TAttributesTestBuilder>.ContainingAttributeOfType<TAttribute>()
   fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder(Of TAttributesTestBuilder).ContainingAttributeOfType(Of TAttribute)()
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder`1.PassingFor``1(System.Action{``0})
+  name: PassingFor<TAttribute>(Action<TAttribute>)
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IBaseAttributesTestBuilder_1_PassingFor__1_System_Action___0__
+  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder`1.PassingFor``1(System.Action{``0})
+  name.vb: PassingFor(Of TAttribute)(Action(Of TAttribute))
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder<TAttributesTestBuilder>.PassingFor<TAttribute>(System.Action<TAttribute>)
+  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder(Of TAttributesTestBuilder).PassingFor(Of TAttribute)(System.Action(Of TAttribute))
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder`1.PassingFor``1(System.Func{``0,System.Boolean})
+  name: PassingFor<TAttribute>(Func<TAttribute, Boolean>)
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IBaseAttributesTestBuilder_1_PassingFor__1_System_Func___0_System_Boolean__
+  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder`1.PassingFor``1(System.Func{``0,System.Boolean})
+  name.vb: PassingFor(Of TAttribute)(Func(Of TAttribute, Boolean))
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder<TAttributesTestBuilder>.PassingFor<TAttribute>(System.Func<TAttribute, System.Boolean>)
+  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IBaseAttributesTestBuilder(Of TAttributesTestBuilder).PassingFor(Of TAttribute)(System.Func(Of TAttribute, System.Boolean))
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder`1
+  name: IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IControllerActionAttributesTestBuilder_1
+  commentId: T:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder`1
+  name.vb: IControllerActionAttributesTestBuilder(Of TAttributesTestBuilder)
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
+  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder(Of TAttributesTestBuilder)
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder`1.AllowingAnonymousRequests
+  name: AllowingAnonymousRequests()
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IControllerActionAttributesTestBuilder_1_AllowingAnonymousRequests
+  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder`1.AllowingAnonymousRequests
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder<TAttributesTestBuilder>.AllowingAnonymousRequests()
+  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder(Of TAttributesTestBuilder).AllowingAnonymousRequests()
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder`1.ChangingRouteTo(System.String,System.String,System.Nullable{System.Int32})
+  name: ChangingRouteTo(String, String, Nullable<Int32>)
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IControllerActionAttributesTestBuilder_1_ChangingRouteTo_System_String_System_String_System_Nullable_System_Int32__
+  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder`1.ChangingRouteTo(System.String,System.String,System.Nullable{System.Int32})
+  name.vb: ChangingRouteTo(String, String, Nullable(Of Int32))
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder<TAttributesTestBuilder>.ChangingRouteTo(System.String, System.String, System.Nullable<System.Int32>)
+  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder(Of TAttributesTestBuilder).ChangingRouteTo(System.String, System.String, System.Nullable(Of System.Int32))
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder`1.RestrictingForAuthorizedRequests(System.String)
+  name: RestrictingForAuthorizedRequests(String)
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IControllerActionAttributesTestBuilder_1_RestrictingForAuthorizedRequests_System_String_
+  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder`1.RestrictingForAuthorizedRequests(System.String)
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder<TAttributesTestBuilder>.RestrictingForAuthorizedRequests(System.String)
+  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder(Of TAttributesTestBuilder).RestrictingForAuthorizedRequests(System.String)
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder`1.SpecifyingArea(System.String)
+  name: SpecifyingArea(String)
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IControllerActionAttributesTestBuilder_1_SpecifyingArea_System_String_
+  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder`1.SpecifyingArea(System.String)
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder<TAttributesTestBuilder>.SpecifyingArea(System.String)
+  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerActionAttributesTestBuilder(Of TAttributesTestBuilder).SpecifyingArea(System.String)
 - uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder
   name: IControllerAttributesTestBuilder
   href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IControllerAttributesTestBuilder
   commentId: T:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder
   fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.AllowingAnonymousRequests
-  name: AllowingAnonymousRequests()
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IControllerAttributesTestBuilder_AllowingAnonymousRequests
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.AllowingAnonymousRequests
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.AllowingAnonymousRequests()
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.ChangingRouteTo(System.String,System.String,System.Nullable{System.Int32})
-  name: ChangingRouteTo(String, String, Nullable<Int32>)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IControllerAttributesTestBuilder_ChangingRouteTo_System_String_System_String_System_Nullable_System_Int32__
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.ChangingRouteTo(System.String,System.String,System.Nullable{System.Int32})
-  name.vb: ChangingRouteTo(String, String, Nullable(Of Int32))
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.ChangingRouteTo(System.String, System.String, System.Nullable<System.Int32>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.ChangingRouteTo(System.String, System.String, System.Nullable(Of System.Int32))
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.RestrictingForAuthorizedRequests(System.String)
-  name: RestrictingForAuthorizedRequests(String)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IControllerAttributesTestBuilder_RestrictingForAuthorizedRequests_System_String_
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.RestrictingForAuthorizedRequests(System.String)
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.RestrictingForAuthorizedRequests(System.String)
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.IndicatingControllerExplicitly
+  name: IndicatingControllerExplicitly()
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IControllerAttributesTestBuilder_IndicatingControllerExplicitly
+  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.IndicatingControllerExplicitly
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IControllerAttributesTestBuilder.IndicatingControllerExplicitly()
 - uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IViewComponentAttributesTestBuilder
   name: IViewComponentAttributesTestBuilder
   href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IViewComponentAttributesTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IViewComponentAttributesTestBuilder
@@ -1930,6 +1930,11 @@ references:
   href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IViewComponentAttributesTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IViewComponentAttributesTestBuilder_ChangingViewComponentNameTo_System_String_
   commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IViewComponentAttributesTestBuilder.ChangingViewComponentNameTo(System.String)
   fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IViewComponentAttributesTestBuilder.ChangingViewComponentNameTo(System.String)
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IViewComponentAttributesTestBuilder.IndicatingViewComponentExplicitly
+  name: IndicatingViewComponentExplicitly()
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IViewComponentAttributesTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Attributes_IViewComponentAttributesTestBuilder_IndicatingViewComponentExplicitly
+  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IViewComponentAttributesTestBuilder.IndicatingViewComponentExplicitly
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes.IViewComponentAttributesTestBuilder.IndicatingViewComponentExplicitly()
 - uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication
   name: MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication
   href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Authentication.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Authentication
@@ -2223,6 +2228,16 @@ references:
   name.vb: IBaseTestBuilderWithModel(Of TModel)
   fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithModel<TModel>
   fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithModel(Of TModel)
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithModelError
+  name: IBaseTestBuilderWithModelError
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithModelError.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Base_IBaseTestBuilderWithModelError
+  commentId: T:MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithModelError
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithModelError
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithModelError.ContainingNoErrors
+  name: ContainingNoErrors()
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithModelError.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Base_IBaseTestBuilderWithModelError_ContainingNoErrors
+  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithModelError.ContainingNoErrors
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithModelError.ContainingNoErrors()
 - uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithResponseModel
   name: IBaseTestBuilderWithResponseModel
   href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Base.IBaseTestBuilderWithResponseModel.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Base_IBaseTestBuilderWithResponseModel
@@ -3135,75 +3150,6 @@ references:
   name.vb: ContainingEntryWithValue(Of TValue)(TValue)
   fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Data.IViewDataTestBuilder.ContainingEntryWithValue<TValue>(TValue)
   fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Data.IViewDataTestBuilder.ContainingEntryWithValue(Of TValue)(TValue)
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors
-  name: MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ExceptionErrors
-  commentId: N:MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IAggregateExceptionTestBuilder
-  name: IAggregateExceptionTestBuilder
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IAggregateExceptionTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ExceptionErrors_IAggregateExceptionTestBuilder
-  commentId: T:MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IAggregateExceptionTestBuilder
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IAggregateExceptionTestBuilder
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IAggregateExceptionTestBuilder.ContainingInnerExceptionOfType``1
-  name: ContainingInnerExceptionOfType<TInnerException>()
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IAggregateExceptionTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ExceptionErrors_IAggregateExceptionTestBuilder_ContainingInnerExceptionOfType__1
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IAggregateExceptionTestBuilder.ContainingInnerExceptionOfType``1
-  name.vb: ContainingInnerExceptionOfType(Of TInnerException)()
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IAggregateExceptionTestBuilder.ContainingInnerExceptionOfType<TInnerException>()
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IAggregateExceptionTestBuilder.ContainingInnerExceptionOfType(Of TInnerException)()
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IBaseExceptionTestBuilder
-  name: IBaseExceptionTestBuilder
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IBaseExceptionTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ExceptionErrors_IBaseExceptionTestBuilder
-  commentId: T:MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IBaseExceptionTestBuilder
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IBaseExceptionTestBuilder
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IBaseExceptionTestBuilder.WithMessage
-  name: WithMessage()
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IBaseExceptionTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ExceptionErrors_IBaseExceptionTestBuilder_WithMessage
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IBaseExceptionTestBuilder.WithMessage
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IBaseExceptionTestBuilder.WithMessage()
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IBaseExceptionTestBuilder.WithMessage(System.String)
-  name: WithMessage(String)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IBaseExceptionTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ExceptionErrors_IBaseExceptionTestBuilder_WithMessage_System_String_
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IBaseExceptionTestBuilder.WithMessage(System.String)
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IBaseExceptionTestBuilder.WithMessage(System.String)
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IExceptionMessageTestBuilder
-  name: IExceptionMessageTestBuilder
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IExceptionMessageTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ExceptionErrors_IExceptionMessageTestBuilder
-  commentId: T:MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IExceptionMessageTestBuilder
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IExceptionMessageTestBuilder
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IExceptionMessageTestBuilder.BeginningWith(System.String)
-  name: BeginningWith(String)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IExceptionMessageTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ExceptionErrors_IExceptionMessageTestBuilder_BeginningWith_System_String_
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IExceptionMessageTestBuilder.BeginningWith(System.String)
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IExceptionMessageTestBuilder.BeginningWith(System.String)
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IExceptionMessageTestBuilder.Containing(System.String)
-  name: Containing(String)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IExceptionMessageTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ExceptionErrors_IExceptionMessageTestBuilder_Containing_System_String_
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IExceptionMessageTestBuilder.Containing(System.String)
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IExceptionMessageTestBuilder.Containing(System.String)
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IExceptionMessageTestBuilder.EndingWith(System.String)
-  name: EndingWith(String)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IExceptionMessageTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ExceptionErrors_IExceptionMessageTestBuilder_EndingWith_System_String_
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IExceptionMessageTestBuilder.EndingWith(System.String)
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IExceptionMessageTestBuilder.EndingWith(System.String)
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IExceptionMessageTestBuilder.ThatEquals(System.String)
-  name: ThatEquals(String)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IExceptionMessageTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ExceptionErrors_IExceptionMessageTestBuilder_ThatEquals_System_String_
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IExceptionMessageTestBuilder.ThatEquals(System.String)
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IExceptionMessageTestBuilder.ThatEquals(System.String)
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IExceptionTestBuilder
-  name: IExceptionTestBuilder
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IExceptionTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ExceptionErrors_IExceptionTestBuilder
-  commentId: T:MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IExceptionTestBuilder
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IExceptionTestBuilder
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IExceptionTestBuilder.OfType``1
-  name: OfType<TException>()
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IExceptionTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ExceptionErrors_IExceptionTestBuilder_OfType__1
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IExceptionTestBuilder.OfType``1
-  name.vb: OfType(Of TException)()
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IExceptionTestBuilder.OfType<TException>()
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.ExceptionErrors.IExceptionTestBuilder.OfType(Of TException)()
 - uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Http
   name: MyTested.AspNetCore.Mvc.Builders.Contracts.Http
   href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Http.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Http
@@ -4022,6 +3968,41 @@ references:
   name.vb: Passing(Func(Of TModel, Boolean))
   fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelDetailsTestBuilder<TModel>.Passing(System.Func<TModel, System.Boolean>)
   fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelDetailsTestBuilder(Of TModel).Passing(System.Func(Of TModel, System.Boolean))
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder
+  name: IModelErrorDetailsTestBuilder
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorDetailsTestBuilder
+  commentId: T:MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.AndAlso
+  name: AndAlso()
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorDetailsTestBuilder_AndAlso
+  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.AndAlso
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.AndAlso()
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.BeginningWith(System.String)
+  name: BeginningWith(String)
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorDetailsTestBuilder_BeginningWith_System_String_
+  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.BeginningWith(System.String)
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.BeginningWith(System.String)
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.Containing(System.String)
+  name: Containing(String)
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorDetailsTestBuilder_Containing_System_String_
+  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.Containing(System.String)
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.Containing(System.String)
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.ContainingError(System.String)
+  name: ContainingError(String)
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorDetailsTestBuilder_ContainingError_System_String_
+  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.ContainingError(System.String)
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.ContainingError(System.String)
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.EndingWith(System.String)
+  name: EndingWith(String)
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorDetailsTestBuilder_EndingWith_System_String_
+  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.EndingWith(System.String)
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.EndingWith(System.String)
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.ThatEquals(System.String)
+  name: ThatEquals(String)
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorDetailsTestBuilder_ThatEquals_System_String_
+  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.ThatEquals(System.String)
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder.ThatEquals(System.String)
 - uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder`1
   name: IModelErrorDetailsTestBuilder<TModel>
   href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorDetailsTestBuilder_1
@@ -4070,6 +4051,16 @@ references:
   href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorTestBuilder
   commentId: T:MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder
   fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder.ContainingError(System.String)
+  name: ContainingError(String)
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorTestBuilder_ContainingError_System_String_
+  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder.ContainingError(System.String)
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder.ContainingError(System.String)
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder.ContainingNoError(System.String)
+  name: ContainingNoError(String)
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorTestBuilder_ContainingNoError_System_String_
+  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder.ContainingNoError(System.String)
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder.ContainingNoError(System.String)
 - uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder`1
   name: IModelErrorTestBuilder<TModel>
   href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorTestBuilder_1
@@ -4077,6 +4068,18 @@ references:
   name.vb: IModelErrorTestBuilder(Of TModel)
   fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder<TModel>
   fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder(Of TModel)
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder`1.ContainingError(System.String)
+  name: ContainingError(String)
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorTestBuilder_1_ContainingError_System_String_
+  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder`1.ContainingError(System.String)
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder<TModel>.ContainingError(System.String)
+  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder(Of TModel).ContainingError(System.String)
+- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder`1.ContainingNoError(System.String)
+  name: ContainingNoError(String)
+  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorTestBuilder_1_ContainingNoError_System_String_
+  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder`1.ContainingNoError(System.String)
+  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder<TModel>.ContainingNoError(System.String)
+  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder(Of TModel).ContainingNoError(System.String)
 - uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelStateTestBuilder
   name: IModelStateTestBuilder
   href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelStateTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelStateTestBuilder
@@ -4106,133 +4109,6 @@ references:
   name.vb: For(Of TOptions)(Action(Of TOptions))
   fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Options.IOptionsBuilder.For<TOptions>(System.Action<TOptions>)
   fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Options.IOptionsBuilder.For(Of TOptions)(System.Action(Of TOptions))
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes
-  name: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Routes
-  commentId: N:MyTested.AspNetCore.Mvc.Builders.Contracts.Routes
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder
-  name: IResolvedRouteTestBuilder
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Routes_IResolvedRouteTestBuilder
-  commentId: T:MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder.ToDataToken(System.String)
-  name: ToDataToken(String)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Routes_IResolvedRouteTestBuilder_ToDataToken_System_String_
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder.ToDataToken(System.String)
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder.ToDataToken(System.String)
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder.ToDataToken(System.String,System.Object)
-  name: ToDataToken(String, Object)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Routes_IResolvedRouteTestBuilder_ToDataToken_System_String_System_Object_
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder.ToDataToken(System.String,System.Object)
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder.ToDataToken(System.String, System.Object)
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder.ToDataTokens(System.Collections.Generic.IDictionary{System.String,System.Object})
-  name: ToDataTokens(IDictionary<String, Object>)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Routes_IResolvedRouteTestBuilder_ToDataTokens_System_Collections_Generic_IDictionary_System_String_System_Object__
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder.ToDataTokens(System.Collections.Generic.IDictionary{System.String,System.Object})
-  name.vb: ToDataTokens(IDictionary(Of String, Object))
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder.ToDataTokens(System.Collections.Generic.IDictionary<System.String, System.Object>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder.ToDataTokens(System.Collections.Generic.IDictionary(Of System.String, System.Object))
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder.ToDataTokens(System.Object)
-  name: ToDataTokens(Object)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Routes_IResolvedRouteTestBuilder_ToDataTokens_System_Object_
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder.ToDataTokens(System.Object)
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder.ToDataTokens(System.Object)
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder.ToRouteValue(System.String)
-  name: ToRouteValue(String)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Routes_IResolvedRouteTestBuilder_ToRouteValue_System_String_
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder.ToRouteValue(System.String)
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder.ToRouteValue(System.String)
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder.ToRouteValue(System.String,System.Object)
-  name: ToRouteValue(String, Object)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Routes_IResolvedRouteTestBuilder_ToRouteValue_System_String_System_Object_
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder.ToRouteValue(System.String,System.Object)
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder.ToRouteValue(System.String, System.Object)
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder.ToRouteValues(System.Collections.Generic.IDictionary{System.String,System.Object})
-  name: ToRouteValues(IDictionary<String, Object>)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Routes_IResolvedRouteTestBuilder_ToRouteValues_System_Collections_Generic_IDictionary_System_String_System_Object__
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder.ToRouteValues(System.Collections.Generic.IDictionary{System.String,System.Object})
-  name.vb: ToRouteValues(IDictionary(Of String, Object))
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder.ToRouteValues(System.Collections.Generic.IDictionary<System.String, System.Object>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder.ToRouteValues(System.Collections.Generic.IDictionary(Of System.String, System.Object))
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder.ToRouteValues(System.Object)
-  name: ToRouteValues(Object)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Routes_IResolvedRouteTestBuilder_ToRouteValues_System_Object_
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder.ToRouteValues(System.Object)
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IResolvedRouteTestBuilder.ToRouteValues(System.Object)
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IRouteTestBuilder
-  name: IRouteTestBuilder
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IRouteTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Routes_IRouteTestBuilder
-  commentId: T:MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IRouteTestBuilder
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IRouteTestBuilder
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IRouteTestBuilder.ShouldMap(Microsoft.AspNetCore.Http.HttpRequest)
-  name: ShouldMap(HttpRequest)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IRouteTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Routes_IRouteTestBuilder_ShouldMap_Microsoft_AspNetCore_Http_HttpRequest_
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IRouteTestBuilder.ShouldMap(Microsoft.AspNetCore.Http.HttpRequest)
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IRouteTestBuilder.ShouldMap(Microsoft.AspNetCore.Http.HttpRequest)
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IRouteTestBuilder.ShouldMap(System.Action{MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IHttpRequestBuilder})
-  name: ShouldMap(Action<IHttpRequestBuilder>)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IRouteTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Routes_IRouteTestBuilder_ShouldMap_System_Action_MyTested_AspNetCore_Mvc_Builders_Contracts_Http_IHttpRequestBuilder__
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IRouteTestBuilder.ShouldMap(System.Action{MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IHttpRequestBuilder})
-  name.vb: ShouldMap(Action(Of IHttpRequestBuilder))
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IRouteTestBuilder.ShouldMap(System.Action<MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IHttpRequestBuilder>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IRouteTestBuilder.ShouldMap(System.Action(Of MyTested.AspNetCore.Mvc.Builders.Contracts.Http.IHttpRequestBuilder))
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IRouteTestBuilder.ShouldMap(System.String)
-  name: ShouldMap(String)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IRouteTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Routes_IRouteTestBuilder_ShouldMap_System_String_
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IRouteTestBuilder.ShouldMap(System.String)
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IRouteTestBuilder.ShouldMap(System.String)
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IRouteTestBuilder.ShouldMap(System.Uri)
-  name: ShouldMap(Uri)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IRouteTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Routes_IRouteTestBuilder_ShouldMap_System_Uri_
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IRouteTestBuilder.ShouldMap(System.Uri)
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IRouteTestBuilder.ShouldMap(System.Uri)
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IShouldMapTestBuilder
-  name: IShouldMapTestBuilder
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IShouldMapTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Routes_IShouldMapTestBuilder
-  commentId: T:MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IShouldMapTestBuilder
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IShouldMapTestBuilder
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IShouldMapTestBuilder.To(System.String,System.String)
-  name: To(String, String)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IShouldMapTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Routes_IShouldMapTestBuilder_To_System_String_System_String_
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IShouldMapTestBuilder.To(System.String,System.String)
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IShouldMapTestBuilder.To(System.String, System.String)
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IShouldMapTestBuilder.To``1
-  name: To<TController>()
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IShouldMapTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Routes_IShouldMapTestBuilder_To__1
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IShouldMapTestBuilder.To``1
-  name.vb: To(Of TController)()
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IShouldMapTestBuilder.To<TController>()
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IShouldMapTestBuilder.To(Of TController)()
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IShouldMapTestBuilder.To``1(System.Linq.Expressions.Expression{System.Action{``0}})
-  name: To<TController>(Expression<Action<TController>>)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IShouldMapTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Routes_IShouldMapTestBuilder_To__1_System_Linq_Expressions_Expression_System_Action___0___
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IShouldMapTestBuilder.To``1(System.Linq.Expressions.Expression{System.Action{``0}})
-  name.vb: To(Of TController)(Expression(Of Action(Of TController)))
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IShouldMapTestBuilder.To<TController>(System.Linq.Expressions.Expression<System.Action<TController>>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IShouldMapTestBuilder.To(Of TController)(System.Linq.Expressions.Expression(Of System.Action(Of TController)))
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IShouldMapTestBuilder.To``1(System.Linq.Expressions.Expression{System.Func{``0,System.Threading.Tasks.Task}})
-  name: To<TController>(Expression<Func<TController, Task>>)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IShouldMapTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Routes_IShouldMapTestBuilder_To__1_System_Linq_Expressions_Expression_System_Func___0_System_Threading_Tasks_Task___
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IShouldMapTestBuilder.To``1(System.Linq.Expressions.Expression{System.Func{``0,System.Threading.Tasks.Task}})
-  name.vb: To(Of TController)(Expression(Of Func(Of TController, Task)))
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IShouldMapTestBuilder.To<TController>(System.Linq.Expressions.Expression<System.Func<TController, System.Threading.Tasks.Task>>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IShouldMapTestBuilder.To(Of TController)(System.Linq.Expressions.Expression(Of System.Func(Of TController, System.Threading.Tasks.Task)))
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IShouldMapTestBuilder.ToAction(System.String)
-  name: ToAction(String)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IShouldMapTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Routes_IShouldMapTestBuilder_ToAction_System_String_
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IShouldMapTestBuilder.ToAction(System.String)
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IShouldMapTestBuilder.ToAction(System.String)
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IShouldMapTestBuilder.ToController(System.String)
-  name: ToController(String)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IShouldMapTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Routes_IShouldMapTestBuilder_ToController_System_String_
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IShouldMapTestBuilder.ToController(System.String)
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IShouldMapTestBuilder.ToController(System.String)
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IShouldMapTestBuilder.ToNonExistingRoute
-  name: ToNonExistingRoute()
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IShouldMapTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Routes_IShouldMapTestBuilder_ToNonExistingRoute
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IShouldMapTestBuilder.ToNonExistingRoute
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Routes.IShouldMapTestBuilder.ToNonExistingRoute()
 - uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Routing
   name: MyTested.AspNetCore.Mvc.Builders.Contracts.Routing
   href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Routing.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Routing
@@ -4391,187 +4267,6 @@ references:
   name.vb: WithSetupFor(Of TService)(Action(Of TService))
   fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Services.IServicesBuilder.WithSetupFor<TService>(System.Action<TService>)
   fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.Services.IServicesBuilder.WithSetupFor(Of TService)(System.Action(Of TService))
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor
-  name: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ShouldPassFor
-  commentId: N:MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilder
-  name: IShouldPassForTestBuilder
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ShouldPassFor_IShouldPassForTestBuilder
-  commentId: T:MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilder
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilder
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilder.TheHttpContext(System.Action{Microsoft.AspNetCore.Http.HttpContext})
-  name: TheHttpContext(Action<HttpContext>)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ShouldPassFor_IShouldPassForTestBuilder_TheHttpContext_System_Action_Microsoft_AspNetCore_Http_HttpContext__
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilder.TheHttpContext(System.Action{Microsoft.AspNetCore.Http.HttpContext})
-  name.vb: TheHttpContext(Action(Of HttpContext))
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilder.TheHttpContext(System.Action<Microsoft.AspNetCore.Http.HttpContext>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilder.TheHttpContext(System.Action(Of Microsoft.AspNetCore.Http.HttpContext))
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilder.TheHttpContext(System.Func{Microsoft.AspNetCore.Http.HttpContext,System.Boolean})
-  name: TheHttpContext(Func<HttpContext, Boolean>)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ShouldPassFor_IShouldPassForTestBuilder_TheHttpContext_System_Func_Microsoft_AspNetCore_Http_HttpContext_System_Boolean__
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilder.TheHttpContext(System.Func{Microsoft.AspNetCore.Http.HttpContext,System.Boolean})
-  name.vb: TheHttpContext(Func(Of HttpContext, Boolean))
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilder.TheHttpContext(System.Func<Microsoft.AspNetCore.Http.HttpContext, System.Boolean>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilder.TheHttpContext(System.Func(Of Microsoft.AspNetCore.Http.HttpContext, System.Boolean))
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilder.TheHttpRequest(System.Action{Microsoft.AspNetCore.Http.HttpRequest})
-  name: TheHttpRequest(Action<HttpRequest>)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ShouldPassFor_IShouldPassForTestBuilder_TheHttpRequest_System_Action_Microsoft_AspNetCore_Http_HttpRequest__
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilder.TheHttpRequest(System.Action{Microsoft.AspNetCore.Http.HttpRequest})
-  name.vb: TheHttpRequest(Action(Of HttpRequest))
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilder.TheHttpRequest(System.Action<Microsoft.AspNetCore.Http.HttpRequest>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilder.TheHttpRequest(System.Action(Of Microsoft.AspNetCore.Http.HttpRequest))
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilder.TheHttpRequest(System.Func{Microsoft.AspNetCore.Http.HttpRequest,System.Boolean})
-  name: TheHttpRequest(Func<HttpRequest, Boolean>)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ShouldPassFor_IShouldPassForTestBuilder_TheHttpRequest_System_Func_Microsoft_AspNetCore_Http_HttpRequest_System_Boolean__
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilder.TheHttpRequest(System.Func{Microsoft.AspNetCore.Http.HttpRequest,System.Boolean})
-  name.vb: TheHttpRequest(Func(Of HttpRequest, Boolean))
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilder.TheHttpRequest(System.Func<Microsoft.AspNetCore.Http.HttpRequest, System.Boolean>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilder.TheHttpRequest(System.Func(Of Microsoft.AspNetCore.Http.HttpRequest, System.Boolean))
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithAction
-  name: IShouldPassForTestBuilderWithAction
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithAction.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ShouldPassFor_IShouldPassForTestBuilderWithAction
-  commentId: T:MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithAction
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithAction
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithAction.TheAction(System.Action{System.String})
-  name: TheAction(Action<String>)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithAction.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ShouldPassFor_IShouldPassForTestBuilderWithAction_TheAction_System_Action_System_String__
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithAction.TheAction(System.Action{System.String})
-  name.vb: TheAction(Action(Of String))
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithAction.TheAction(System.Action<System.String>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithAction.TheAction(System.Action(Of System.String))
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithAction.TheAction(System.Func{System.String,System.Boolean})
-  name: TheAction(Func<String, Boolean>)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithAction.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ShouldPassFor_IShouldPassForTestBuilderWithAction_TheAction_System_Func_System_String_System_Boolean__
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithAction.TheAction(System.Func{System.String,System.Boolean})
-  name.vb: TheAction(Func(Of String, Boolean))
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithAction.TheAction(System.Func<System.String, System.Boolean>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithAction.TheAction(System.Func(Of System.String, System.Boolean))
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithAction.TheActionAttributes(System.Action{System.Collections.Generic.IEnumerable{System.Object}})
-  name: TheActionAttributes(Action<IEnumerable<Object>>)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithAction.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ShouldPassFor_IShouldPassForTestBuilderWithAction_TheActionAttributes_System_Action_System_Collections_Generic_IEnumerable_System_Object___
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithAction.TheActionAttributes(System.Action{System.Collections.Generic.IEnumerable{System.Object}})
-  name.vb: TheActionAttributes(Action(Of IEnumerable(Of Object)))
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithAction.TheActionAttributes(System.Action<System.Collections.Generic.IEnumerable<System.Object>>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithAction.TheActionAttributes(System.Action(Of System.Collections.Generic.IEnumerable(Of System.Object)))
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithAction.TheActionAttributes(System.Func{System.Collections.Generic.IEnumerable{System.Object},System.Boolean})
-  name: TheActionAttributes(Func<IEnumerable<Object>, Boolean>)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithAction.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ShouldPassFor_IShouldPassForTestBuilderWithAction_TheActionAttributes_System_Func_System_Collections_Generic_IEnumerable_System_Object__System_Boolean__
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithAction.TheActionAttributes(System.Func{System.Collections.Generic.IEnumerable{System.Object},System.Boolean})
-  name.vb: TheActionAttributes(Func(Of IEnumerable(Of Object), Boolean))
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithAction.TheActionAttributes(System.Func<System.Collections.Generic.IEnumerable<System.Object>, System.Boolean>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithAction.TheActionAttributes(System.Func(Of System.Collections.Generic.IEnumerable(Of System.Object), System.Boolean))
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithActionResult`1
-  name: IShouldPassForTestBuilderWithActionResult<TActionResult>
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithActionResult-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ShouldPassFor_IShouldPassForTestBuilderWithActionResult_1
-  commentId: T:MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithActionResult`1
-  name.vb: IShouldPassForTestBuilderWithActionResult(Of TActionResult)
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithActionResult<TActionResult>
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithActionResult(Of TActionResult)
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithActionResult`1.TheActionResult(System.Action{`0})
-  name: TheActionResult(Action<TActionResult>)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithActionResult-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ShouldPassFor_IShouldPassForTestBuilderWithActionResult_1_TheActionResult_System_Action__0__
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithActionResult`1.TheActionResult(System.Action{`0})
-  name.vb: TheActionResult(Action(Of TActionResult))
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithActionResult<TActionResult>.TheActionResult(System.Action<TActionResult>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithActionResult(Of TActionResult).TheActionResult(System.Action(Of TActionResult))
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithActionResult`1.TheActionResult(System.Func{`0,System.Boolean})
-  name: TheActionResult(Func<TActionResult, Boolean>)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithActionResult-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ShouldPassFor_IShouldPassForTestBuilderWithActionResult_1_TheActionResult_System_Func__0_System_Boolean__
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithActionResult`1.TheActionResult(System.Func{`0,System.Boolean})
-  name.vb: TheActionResult(Func(Of TActionResult, Boolean))
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithActionResult<TActionResult>.TheActionResult(System.Func<TActionResult, System.Boolean>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithActionResult(Of TActionResult).TheActionResult(System.Func(Of TActionResult, System.Boolean))
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithController`1
-  name: IShouldPassForTestBuilderWithController<TController>
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithController-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ShouldPassFor_IShouldPassForTestBuilderWithController_1
-  commentId: T:MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithController`1
-  name.vb: IShouldPassForTestBuilderWithController(Of TController)
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithController<TController>
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithController(Of TController)
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithController`1.TheController(System.Action{`0})
-  name: TheController(Action<TController>)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithController-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ShouldPassFor_IShouldPassForTestBuilderWithController_1_TheController_System_Action__0__
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithController`1.TheController(System.Action{`0})
-  name.vb: TheController(Action(Of TController))
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithController<TController>.TheController(System.Action<TController>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithController(Of TController).TheController(System.Action(Of TController))
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithController`1.TheController(System.Func{`0,System.Boolean})
-  name: TheController(Func<TController, Boolean>)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithController-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ShouldPassFor_IShouldPassForTestBuilderWithController_1_TheController_System_Func__0_System_Boolean__
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithController`1.TheController(System.Func{`0,System.Boolean})
-  name.vb: TheController(Func(Of TController, Boolean))
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithController<TController>.TheController(System.Func<TController, System.Boolean>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithController(Of TController).TheController(System.Func(Of TController, System.Boolean))
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithController`1.TheControllerAttributes(System.Action{System.Collections.Generic.IEnumerable{System.Object}})
-  name: TheControllerAttributes(Action<IEnumerable<Object>>)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithController-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ShouldPassFor_IShouldPassForTestBuilderWithController_1_TheControllerAttributes_System_Action_System_Collections_Generic_IEnumerable_System_Object___
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithController`1.TheControllerAttributes(System.Action{System.Collections.Generic.IEnumerable{System.Object}})
-  name.vb: TheControllerAttributes(Action(Of IEnumerable(Of Object)))
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithController<TController>.TheControllerAttributes(System.Action<System.Collections.Generic.IEnumerable<System.Object>>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithController(Of TController).TheControllerAttributes(System.Action(Of System.Collections.Generic.IEnumerable(Of System.Object)))
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithController`1.TheControllerAttributes(System.Func{System.Collections.Generic.IEnumerable{System.Object},System.Boolean})
-  name: TheControllerAttributes(Func<IEnumerable<Object>, Boolean>)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithController-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ShouldPassFor_IShouldPassForTestBuilderWithController_1_TheControllerAttributes_System_Func_System_Collections_Generic_IEnumerable_System_Object__System_Boolean__
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithController`1.TheControllerAttributes(System.Func{System.Collections.Generic.IEnumerable{System.Object},System.Boolean})
-  name.vb: TheControllerAttributes(Func(Of IEnumerable(Of Object), Boolean))
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithController<TController>.TheControllerAttributes(System.Func<System.Collections.Generic.IEnumerable<System.Object>, System.Boolean>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithController(Of TController).TheControllerAttributes(System.Func(Of System.Collections.Generic.IEnumerable(Of System.Object), System.Boolean))
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithInvokedAction
-  name: IShouldPassForTestBuilderWithInvokedAction
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithInvokedAction.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ShouldPassFor_IShouldPassForTestBuilderWithInvokedAction
-  commentId: T:MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithInvokedAction
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithInvokedAction
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithInvokedAction.TheCaughtException(System.Action{System.Exception})
-  name: TheCaughtException(Action<Exception>)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithInvokedAction.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ShouldPassFor_IShouldPassForTestBuilderWithInvokedAction_TheCaughtException_System_Action_System_Exception__
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithInvokedAction.TheCaughtException(System.Action{System.Exception})
-  name.vb: TheCaughtException(Action(Of Exception))
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithInvokedAction.TheCaughtException(System.Action<System.Exception>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithInvokedAction.TheCaughtException(System.Action(Of System.Exception))
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithInvokedAction.TheCaughtException(System.Func{System.Exception,System.Boolean})
-  name: TheCaughtException(Func<Exception, Boolean>)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithInvokedAction.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ShouldPassFor_IShouldPassForTestBuilderWithInvokedAction_TheCaughtException_System_Func_System_Exception_System_Boolean__
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithInvokedAction.TheCaughtException(System.Func{System.Exception,System.Boolean})
-  name.vb: TheCaughtException(Func(Of Exception, Boolean))
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithInvokedAction.TheCaughtException(System.Func<System.Exception, System.Boolean>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithInvokedAction.TheCaughtException(System.Func(Of System.Exception, System.Boolean))
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithInvokedAction.TheHttpResponse(System.Action{Microsoft.AspNetCore.Http.HttpResponse})
-  name: TheHttpResponse(Action<HttpResponse>)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithInvokedAction.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ShouldPassFor_IShouldPassForTestBuilderWithInvokedAction_TheHttpResponse_System_Action_Microsoft_AspNetCore_Http_HttpResponse__
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithInvokedAction.TheHttpResponse(System.Action{Microsoft.AspNetCore.Http.HttpResponse})
-  name.vb: TheHttpResponse(Action(Of HttpResponse))
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithInvokedAction.TheHttpResponse(System.Action<Microsoft.AspNetCore.Http.HttpResponse>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithInvokedAction.TheHttpResponse(System.Action(Of Microsoft.AspNetCore.Http.HttpResponse))
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithInvokedAction.TheHttpResponse(System.Func{Microsoft.AspNetCore.Http.HttpResponse,System.Boolean})
-  name: TheHttpResponse(Func<HttpResponse, Boolean>)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithInvokedAction.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ShouldPassFor_IShouldPassForTestBuilderWithInvokedAction_TheHttpResponse_System_Func_Microsoft_AspNetCore_Http_HttpResponse_System_Boolean__
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithInvokedAction.TheHttpResponse(System.Func{Microsoft.AspNetCore.Http.HttpResponse,System.Boolean})
-  name.vb: TheHttpResponse(Func(Of HttpResponse, Boolean))
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithInvokedAction.TheHttpResponse(System.Func<Microsoft.AspNetCore.Http.HttpResponse, System.Boolean>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithInvokedAction.TheHttpResponse(System.Func(Of Microsoft.AspNetCore.Http.HttpResponse, System.Boolean))
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithModel`1
-  name: IShouldPassForTestBuilderWithModel<TModel>
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithModel-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ShouldPassFor_IShouldPassForTestBuilderWithModel_1
-  commentId: T:MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithModel`1
-  name.vb: IShouldPassForTestBuilderWithModel(Of TModel)
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithModel<TModel>
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithModel(Of TModel)
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithModel`1.TheModel(System.Action{`0})
-  name: TheModel(Action<TModel>)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithModel-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ShouldPassFor_IShouldPassForTestBuilderWithModel_1_TheModel_System_Action__0__
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithModel`1.TheModel(System.Action{`0})
-  name.vb: TheModel(Action(Of TModel))
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithModel<TModel>.TheModel(System.Action<TModel>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithModel(Of TModel).TheModel(System.Action(Of TModel))
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithModel`1.TheModel(System.Func{`0,System.Boolean})
-  name: TheModel(Func<TModel, Boolean>)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithModel-1.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ShouldPassFor_IShouldPassForTestBuilderWithModel_1_TheModel_System_Func__0_System_Boolean__
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithModel`1.TheModel(System.Func{`0,System.Boolean})
-  name.vb: TheModel(Func(Of TModel, Boolean))
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithModel<TModel>.TheModel(System.Func<TModel, System.Boolean>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Builders.Contracts.ShouldPassFor.IShouldPassForTestBuilderWithModel(Of TModel).TheModel(System.Func(Of TModel, System.Boolean))
 - uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Uri
   name: MyTested.AspNetCore.Mvc.Builders.Contracts.Uri
   href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Uri.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Uri
@@ -4661,46 +4356,6 @@ references:
   href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Uri.IUriTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Uri_IUriTestBuilder_WithScheme_System_String_
   commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Uri.IUriTestBuilder.WithScheme(System.String)
   fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Uri.IUriTestBuilder.WithScheme(System.String)
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Uris
-  name: MyTested.AspNetCore.Mvc.Builders.Contracts.Uris
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Uris.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Uris
-  commentId: N:MyTested.AspNetCore.Mvc.Builders.Contracts.Uris
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Uris
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Uris.IUriTestBuilder
-  name: IUriTestBuilder
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Uris.IUriTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Uris_IUriTestBuilder
-  commentId: T:MyTested.AspNetCore.Mvc.Builders.Contracts.Uris.IUriTestBuilder
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Uris.IUriTestBuilder
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Uris.IUriTestBuilder.WithAbsolutePath(System.String)
-  name: WithAbsolutePath(String)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Uris.IUriTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Uris_IUriTestBuilder_WithAbsolutePath_System_String_
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Uris.IUriTestBuilder.WithAbsolutePath(System.String)
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Uris.IUriTestBuilder.WithAbsolutePath(System.String)
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Uris.IUriTestBuilder.WithFragment(System.String)
-  name: WithFragment(String)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Uris.IUriTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Uris_IUriTestBuilder_WithFragment_System_String_
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Uris.IUriTestBuilder.WithFragment(System.String)
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Uris.IUriTestBuilder.WithFragment(System.String)
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Uris.IUriTestBuilder.WithHost(System.String)
-  name: WithHost(String)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Uris.IUriTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Uris_IUriTestBuilder_WithHost_System_String_
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Uris.IUriTestBuilder.WithHost(System.String)
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Uris.IUriTestBuilder.WithHost(System.String)
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Uris.IUriTestBuilder.WithPort(System.Int32)
-  name: WithPort(Int32)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Uris.IUriTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Uris_IUriTestBuilder_WithPort_System_Int32_
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Uris.IUriTestBuilder.WithPort(System.Int32)
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Uris.IUriTestBuilder.WithPort(System.Int32)
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Uris.IUriTestBuilder.WithQuery(System.String)
-  name: WithQuery(String)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Uris.IUriTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Uris_IUriTestBuilder_WithQuery_System_String_
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Uris.IUriTestBuilder.WithQuery(System.String)
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Uris.IUriTestBuilder.WithQuery(System.String)
-- uid: MyTested.AspNetCore.Mvc.Builders.Contracts.Uris.IUriTestBuilder.WithScheme(System.String)
-  name: WithScheme(String)
-  href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.Uris.IUriTestBuilder.html#MyTested_AspNetCore_Mvc_Builders_Contracts_Uris_IUriTestBuilder_WithScheme_System_String_
-  commentId: M:MyTested.AspNetCore.Mvc.Builders.Contracts.Uris.IUriTestBuilder.WithScheme(System.String)
-  fullName: MyTested.AspNetCore.Mvc.Builders.Contracts.Uris.IUriTestBuilder.WithScheme(System.String)
 - uid: MyTested.AspNetCore.Mvc.Builders.Contracts.ViewComponentResults
   name: MyTested.AspNetCore.Mvc.Builders.Contracts.ViewComponentResults
   href: api/MyTested.AspNetCore.Mvc.Builders.Contracts.ViewComponentResults.html#MyTested_AspNetCore_Mvc_Builders_Contracts_ViewComponentResults
@@ -5257,18 +4912,6 @@ references:
   href: api/MyTested.AspNetCore.Mvc.ContentType.html#MyTested_AspNetCore_Mvc_ContentType_VideoQuicktime
   commentId: F:MyTested.AspNetCore.Mvc.ContentType.VideoQuicktime
   fullName: MyTested.AspNetCore.Mvc.ContentType.VideoQuicktime
-- uid: MyTested.AspNetCore.Mvc.ControllerBuilderCachingExtensions
-  name: ControllerBuilderCachingExtensions
-  href: api/MyTested.AspNetCore.Mvc.ControllerBuilderCachingExtensions.html#MyTested_AspNetCore_Mvc_ControllerBuilderCachingExtensions
-  commentId: T:MyTested.AspNetCore.Mvc.ControllerBuilderCachingExtensions
-  fullName: MyTested.AspNetCore.Mvc.ControllerBuilderCachingExtensions
-- uid: MyTested.AspNetCore.Mvc.ControllerBuilderCachingExtensions.WithMemoryCache``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Controllers.IControllerBuilder{``0},System.Action{MyTested.AspNetCore.Mvc.Builders.Contracts.Data.IMemoryCacheBuilder})
-  name: WithMemoryCache<TController>(IControllerBuilder<TController>, Action<IMemoryCacheBuilder>)
-  href: api/MyTested.AspNetCore.Mvc.ControllerBuilderCachingExtensions.html#MyTested_AspNetCore_Mvc_ControllerBuilderCachingExtensions_WithMemoryCache__1_MyTested_AspNetCore_Mvc_Builders_Contracts_Controllers_IControllerBuilder___0__System_Action_MyTested_AspNetCore_Mvc_Builders_Contracts_Data_IMemoryCacheBuilder__
-  commentId: M:MyTested.AspNetCore.Mvc.ControllerBuilderCachingExtensions.WithMemoryCache``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Controllers.IControllerBuilder{``0},System.Action{MyTested.AspNetCore.Mvc.Builders.Contracts.Data.IMemoryCacheBuilder})
-  name.vb: WithMemoryCache(Of TController)(IControllerBuilder(Of TController), Action(Of IMemoryCacheBuilder))
-  fullName: MyTested.AspNetCore.Mvc.ControllerBuilderCachingExtensions.WithMemoryCache<TController>(MyTested.AspNetCore.Mvc.Builders.Contracts.Controllers.IControllerBuilder<TController>, System.Action<MyTested.AspNetCore.Mvc.Builders.Contracts.Data.IMemoryCacheBuilder>)
-  fullName.vb: MyTested.AspNetCore.Mvc.ControllerBuilderCachingExtensions.WithMemoryCache(Of TController)(MyTested.AspNetCore.Mvc.Builders.Contracts.Controllers.IControllerBuilder(Of TController), System.Action(Of MyTested.AspNetCore.Mvc.Builders.Contracts.Data.IMemoryCacheBuilder))
 - uid: MyTested.AspNetCore.Mvc.ControllerBuilderDataAnnotationsExtensions
   name: ControllerBuilderDataAnnotationsExtensions
   href: api/MyTested.AspNetCore.Mvc.ControllerBuilderDataAnnotationsExtensions.html#MyTested_AspNetCore_Mvc_ControllerBuilderDataAnnotationsExtensions
@@ -5281,54 +4924,6 @@ references:
   name.vb: WithoutValidation(Of TController)(IControllerBuilder(Of TController))
   fullName: MyTested.AspNetCore.Mvc.ControllerBuilderDataAnnotationsExtensions.WithoutValidation<TController>(MyTested.AspNetCore.Mvc.Builders.Contracts.Controllers.IControllerBuilder<TController>)
   fullName.vb: MyTested.AspNetCore.Mvc.ControllerBuilderDataAnnotationsExtensions.WithoutValidation(Of TController)(MyTested.AspNetCore.Mvc.Builders.Contracts.Controllers.IControllerBuilder(Of TController))
-- uid: MyTested.AspNetCore.Mvc.ControllerBuilderEntityFrameworkCoreExtensions
-  name: ControllerBuilderEntityFrameworkCoreExtensions
-  href: api/MyTested.AspNetCore.Mvc.ControllerBuilderEntityFrameworkCoreExtensions.html#MyTested_AspNetCore_Mvc_ControllerBuilderEntityFrameworkCoreExtensions
-  commentId: T:MyTested.AspNetCore.Mvc.ControllerBuilderEntityFrameworkCoreExtensions
-  fullName: MyTested.AspNetCore.Mvc.ControllerBuilderEntityFrameworkCoreExtensions
-- uid: MyTested.AspNetCore.Mvc.ControllerBuilderEntityFrameworkCoreExtensions.WithDbContext``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Controllers.IControllerBuilder{``0},System.Action{MyTested.AspNetCore.Mvc.Builders.Contracts.Data.IDbContextBuilder})
-  name: WithDbContext<TController>(IControllerBuilder<TController>, Action<IDbContextBuilder>)
-  href: api/MyTested.AspNetCore.Mvc.ControllerBuilderEntityFrameworkCoreExtensions.html#MyTested_AspNetCore_Mvc_ControllerBuilderEntityFrameworkCoreExtensions_WithDbContext__1_MyTested_AspNetCore_Mvc_Builders_Contracts_Controllers_IControllerBuilder___0__System_Action_MyTested_AspNetCore_Mvc_Builders_Contracts_Data_IDbContextBuilder__
-  commentId: M:MyTested.AspNetCore.Mvc.ControllerBuilderEntityFrameworkCoreExtensions.WithDbContext``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Controllers.IControllerBuilder{``0},System.Action{MyTested.AspNetCore.Mvc.Builders.Contracts.Data.IDbContextBuilder})
-  name.vb: WithDbContext(Of TController)(IControllerBuilder(Of TController), Action(Of IDbContextBuilder))
-  fullName: MyTested.AspNetCore.Mvc.ControllerBuilderEntityFrameworkCoreExtensions.WithDbContext<TController>(MyTested.AspNetCore.Mvc.Builders.Contracts.Controllers.IControllerBuilder<TController>, System.Action<MyTested.AspNetCore.Mvc.Builders.Contracts.Data.IDbContextBuilder>)
-  fullName.vb: MyTested.AspNetCore.Mvc.ControllerBuilderEntityFrameworkCoreExtensions.WithDbContext(Of TController)(MyTested.AspNetCore.Mvc.Builders.Contracts.Controllers.IControllerBuilder(Of TController), System.Action(Of MyTested.AspNetCore.Mvc.Builders.Contracts.Data.IDbContextBuilder))
-- uid: MyTested.AspNetCore.Mvc.ControllerBuilderOptionsExtensions
-  name: ControllerBuilderOptionsExtensions
-  href: api/MyTested.AspNetCore.Mvc.ControllerBuilderOptionsExtensions.html#MyTested_AspNetCore_Mvc_ControllerBuilderOptionsExtensions
-  commentId: T:MyTested.AspNetCore.Mvc.ControllerBuilderOptionsExtensions
-  fullName: MyTested.AspNetCore.Mvc.ControllerBuilderOptionsExtensions
-- uid: MyTested.AspNetCore.Mvc.ControllerBuilderOptionsExtensions.WithOptions``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Controllers.IControllerBuilder{``0},System.Action{IOptionsBuilder})
-  name: WithOptions<TController>(IControllerBuilder<TController>, Action<IOptionsBuilder>)
-  href: api/MyTested.AspNetCore.Mvc.ControllerBuilderOptionsExtensions.html#MyTested_AspNetCore_Mvc_ControllerBuilderOptionsExtensions_WithOptions__1_MyTested_AspNetCore_Mvc_Builders_Contracts_Controllers_IControllerBuilder___0__System_Action_IOptionsBuilder__
-  commentId: M:MyTested.AspNetCore.Mvc.ControllerBuilderOptionsExtensions.WithOptions``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Controllers.IControllerBuilder{``0},System.Action{IOptionsBuilder})
-  name.vb: WithOptions(Of TController)(IControllerBuilder(Of TController), Action(Of IOptionsBuilder))
-  fullName: MyTested.AspNetCore.Mvc.ControllerBuilderOptionsExtensions.WithOptions<TController>(MyTested.AspNetCore.Mvc.Builders.Contracts.Controllers.IControllerBuilder<TController>, System.Action<IOptionsBuilder>)
-  fullName.vb: MyTested.AspNetCore.Mvc.ControllerBuilderOptionsExtensions.WithOptions(Of TController)(MyTested.AspNetCore.Mvc.Builders.Contracts.Controllers.IControllerBuilder(Of TController), System.Action(Of IOptionsBuilder))
-- uid: MyTested.AspNetCore.Mvc.ControllerBuilderSessionExtensions
-  name: ControllerBuilderSessionExtensions
-  href: api/MyTested.AspNetCore.Mvc.ControllerBuilderSessionExtensions.html#MyTested_AspNetCore_Mvc_ControllerBuilderSessionExtensions
-  commentId: T:MyTested.AspNetCore.Mvc.ControllerBuilderSessionExtensions
-  fullName: MyTested.AspNetCore.Mvc.ControllerBuilderSessionExtensions
-- uid: MyTested.AspNetCore.Mvc.ControllerBuilderSessionExtensions.WithSession``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Controllers.IControllerBuilder{``0},System.Action{MyTested.AspNetCore.Mvc.Builders.Contracts.Data.ISessionBuilder})
-  name: WithSession<TController>(IControllerBuilder<TController>, Action<ISessionBuilder>)
-  href: api/MyTested.AspNetCore.Mvc.ControllerBuilderSessionExtensions.html#MyTested_AspNetCore_Mvc_ControllerBuilderSessionExtensions_WithSession__1_MyTested_AspNetCore_Mvc_Builders_Contracts_Controllers_IControllerBuilder___0__System_Action_MyTested_AspNetCore_Mvc_Builders_Contracts_Data_ISessionBuilder__
-  commentId: M:MyTested.AspNetCore.Mvc.ControllerBuilderSessionExtensions.WithSession``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Controllers.IControllerBuilder{``0},System.Action{MyTested.AspNetCore.Mvc.Builders.Contracts.Data.ISessionBuilder})
-  name.vb: WithSession(Of TController)(IControllerBuilder(Of TController), Action(Of ISessionBuilder))
-  fullName: MyTested.AspNetCore.Mvc.ControllerBuilderSessionExtensions.WithSession<TController>(MyTested.AspNetCore.Mvc.Builders.Contracts.Controllers.IControllerBuilder<TController>, System.Action<MyTested.AspNetCore.Mvc.Builders.Contracts.Data.ISessionBuilder>)
-  fullName.vb: MyTested.AspNetCore.Mvc.ControllerBuilderSessionExtensions.WithSession(Of TController)(MyTested.AspNetCore.Mvc.Builders.Contracts.Controllers.IControllerBuilder(Of TController), System.Action(Of MyTested.AspNetCore.Mvc.Builders.Contracts.Data.ISessionBuilder))
-- uid: MyTested.AspNetCore.Mvc.ControllerBuilderViewFeaturesExtensions
-  name: ControllerBuilderViewFeaturesExtensions
-  href: api/MyTested.AspNetCore.Mvc.ControllerBuilderViewFeaturesExtensions.html#MyTested_AspNetCore_Mvc_ControllerBuilderViewFeaturesExtensions
-  commentId: T:MyTested.AspNetCore.Mvc.ControllerBuilderViewFeaturesExtensions
-  fullName: MyTested.AspNetCore.Mvc.ControllerBuilderViewFeaturesExtensions
-- uid: MyTested.AspNetCore.Mvc.ControllerBuilderViewFeaturesExtensions.WithTempData``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Controllers.IControllerBuilder{``0},System.Action{MyTested.AspNetCore.Mvc.Builders.Contracts.Data.ITempDataBuilder})
-  name: WithTempData<TController>(IControllerBuilder<TController>, Action<ITempDataBuilder>)
-  href: api/MyTested.AspNetCore.Mvc.ControllerBuilderViewFeaturesExtensions.html#MyTested_AspNetCore_Mvc_ControllerBuilderViewFeaturesExtensions_WithTempData__1_MyTested_AspNetCore_Mvc_Builders_Contracts_Controllers_IControllerBuilder___0__System_Action_MyTested_AspNetCore_Mvc_Builders_Contracts_Data_ITempDataBuilder__
-  commentId: M:MyTested.AspNetCore.Mvc.ControllerBuilderViewFeaturesExtensions.WithTempData``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Controllers.IControllerBuilder{``0},System.Action{MyTested.AspNetCore.Mvc.Builders.Contracts.Data.ITempDataBuilder})
-  name.vb: WithTempData(Of TController)(IControllerBuilder(Of TController), Action(Of ITempDataBuilder))
-  fullName: MyTested.AspNetCore.Mvc.ControllerBuilderViewFeaturesExtensions.WithTempData<TController>(MyTested.AspNetCore.Mvc.Builders.Contracts.Controllers.IControllerBuilder<TController>, System.Action<MyTested.AspNetCore.Mvc.Builders.Contracts.Data.ITempDataBuilder>)
-  fullName.vb: MyTested.AspNetCore.Mvc.ControllerBuilderViewFeaturesExtensions.WithTempData(Of TController)(MyTested.AspNetCore.Mvc.Builders.Contracts.Controllers.IControllerBuilder(Of TController), System.Action(Of MyTested.AspNetCore.Mvc.Builders.Contracts.Data.ITempDataBuilder))
 - uid: MyTested.AspNetCore.Mvc.From
   name: From
   href: api/MyTested.AspNetCore.Mvc.From.html#MyTested_AspNetCore_Mvc_From
@@ -5903,16 +5498,6 @@ references:
   href: api/MyTested.AspNetCore.Mvc.HttpStatusCode.html#MyTested_AspNetCore_Mvc_HttpStatusCode_VariantAlsoNegotiates
   commentId: F:MyTested.AspNetCore.Mvc.HttpStatusCode.VariantAlsoNegotiates
   fullName: MyTested.AspNetCore.Mvc.HttpStatusCode.VariantAlsoNegotiates
-- uid: MyTested.AspNetCore.Mvc.HttpTestContextCachingExtensions
-  name: HttpTestContextCachingExtensions
-  href: api/MyTested.AspNetCore.Mvc.HttpTestContextCachingExtensions.html#MyTested_AspNetCore_Mvc_HttpTestContextCachingExtensions
-  commentId: T:MyTested.AspNetCore.Mvc.HttpTestContextCachingExtensions
-  fullName: MyTested.AspNetCore.Mvc.HttpTestContextCachingExtensions
-- uid: MyTested.AspNetCore.Mvc.HttpTestContextCachingExtensions.GetMemoryCache(MyTested.AspNetCore.Mvc.Internal.TestContexts.HttpTestContext)
-  name: GetMemoryCache(HttpTestContext)
-  href: api/MyTested.AspNetCore.Mvc.HttpTestContextCachingExtensions.html#MyTested_AspNetCore_Mvc_HttpTestContextCachingExtensions_GetMemoryCache_MyTested_AspNetCore_Mvc_Internal_TestContexts_HttpTestContext_
-  commentId: M:MyTested.AspNetCore.Mvc.HttpTestContextCachingExtensions.GetMemoryCache(MyTested.AspNetCore.Mvc.Internal.TestContexts.HttpTestContext)
-  fullName: MyTested.AspNetCore.Mvc.HttpTestContextCachingExtensions.GetMemoryCache(MyTested.AspNetCore.Mvc.Internal.TestContexts.HttpTestContext)
 - uid: MyTested.AspNetCore.Mvc.ModelErrorDetailsTestBuilderViewFeaturesExtensions
   name: ModelErrorDetailsTestBuilderViewFeaturesExtensions
   href: api/MyTested.AspNetCore.Mvc.ModelErrorDetailsTestBuilderViewFeaturesExtensions.html#MyTested_AspNetCore_Mvc_ModelErrorDetailsTestBuilderViewFeaturesExtensions
@@ -5932,26 +5517,6 @@ references:
   name.vb: ContainingNoErrorFor(Of TModel, TMember)(IModelErrorDetailsTestBuilder(Of TModel), Expression(Of Func(Of TModel, TMember)))
   fullName: MyTested.AspNetCore.Mvc.ModelErrorDetailsTestBuilderViewFeaturesExtensions.ContainingNoErrorFor<TModel, TMember>(MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder<TModel>, System.Linq.Expressions.Expression<System.Func<TModel, TMember>>)
   fullName.vb: MyTested.AspNetCore.Mvc.ModelErrorDetailsTestBuilderViewFeaturesExtensions.ContainingNoErrorFor(Of TModel, TMember)(MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorDetailsTestBuilder(Of TModel), System.Linq.Expressions.Expression(Of System.Func(Of TModel, TMember)))
-- uid: MyTested.AspNetCore.Mvc.ModelErrorTestBuilderDataAnnotationsExtensions
-  name: ModelErrorTestBuilderDataAnnotationsExtensions
-  href: api/MyTested.AspNetCore.Mvc.ModelErrorTestBuilderDataAnnotationsExtensions.html#MyTested_AspNetCore_Mvc_ModelErrorTestBuilderDataAnnotationsExtensions
-  commentId: T:MyTested.AspNetCore.Mvc.ModelErrorTestBuilderDataAnnotationsExtensions
-  fullName: MyTested.AspNetCore.Mvc.ModelErrorTestBuilderDataAnnotationsExtensions
-- uid: MyTested.AspNetCore.Mvc.ModelErrorTestBuilderDataAnnotationsExtensions.ContainingNoErrors(MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder)
-  name: ContainingNoErrors(IModelErrorTestBuilder)
-  href: api/MyTested.AspNetCore.Mvc.ModelErrorTestBuilderDataAnnotationsExtensions.html#MyTested_AspNetCore_Mvc_ModelErrorTestBuilderDataAnnotationsExtensions_ContainingNoErrors_MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorTestBuilder_
-  commentId: M:MyTested.AspNetCore.Mvc.ModelErrorTestBuilderDataAnnotationsExtensions.ContainingNoErrors(MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder)
-  fullName: MyTested.AspNetCore.Mvc.ModelErrorTestBuilderDataAnnotationsExtensions.ContainingNoErrors(MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder)
-- uid: MyTested.AspNetCore.Mvc.ModelErrorTestBuilderModelStateExtensions
-  name: ModelErrorTestBuilderModelStateExtensions
-  href: api/MyTested.AspNetCore.Mvc.ModelErrorTestBuilderModelStateExtensions.html#MyTested_AspNetCore_Mvc_ModelErrorTestBuilderModelStateExtensions
-  commentId: T:MyTested.AspNetCore.Mvc.ModelErrorTestBuilderModelStateExtensions
-  fullName: MyTested.AspNetCore.Mvc.ModelErrorTestBuilderModelStateExtensions
-- uid: MyTested.AspNetCore.Mvc.ModelErrorTestBuilderModelStateExtensions.ContainingNoErrors(MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder)
-  name: ContainingNoErrors(IModelErrorTestBuilder)
-  href: api/MyTested.AspNetCore.Mvc.ModelErrorTestBuilderModelStateExtensions.html#MyTested_AspNetCore_Mvc_ModelErrorTestBuilderModelStateExtensions_ContainingNoErrors_MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorTestBuilder_
-  commentId: M:MyTested.AspNetCore.Mvc.ModelErrorTestBuilderModelStateExtensions.ContainingNoErrors(MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder)
-  fullName: MyTested.AspNetCore.Mvc.ModelErrorTestBuilderModelStateExtensions.ContainingNoErrors(MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder)
 - uid: MyTested.AspNetCore.Mvc.ModelErrorTestBuilderViewFeaturesExtensions
   name: ModelErrorTestBuilderViewFeaturesExtensions
   href: api/MyTested.AspNetCore.Mvc.ModelErrorTestBuilderViewFeaturesExtensions.html#MyTested_AspNetCore_Mvc_ModelErrorTestBuilderViewFeaturesExtensions
@@ -5971,30 +5536,6 @@ references:
   name.vb: ContainingNoErrorFor(Of TModel, TMember)(IModelErrorTestBuilder(Of TModel), Expression(Of Func(Of TModel, TMember)))
   fullName: MyTested.AspNetCore.Mvc.ModelErrorTestBuilderViewFeaturesExtensions.ContainingNoErrorFor<TModel, TMember>(MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder<TModel>, System.Linq.Expressions.Expression<System.Func<TModel, TMember>>)
   fullName.vb: MyTested.AspNetCore.Mvc.ModelErrorTestBuilderViewFeaturesExtensions.ContainingNoErrorFor(Of TModel, TMember)(MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder(Of TModel), System.Linq.Expressions.Expression(Of System.Func(Of TModel, TMember)))
-- uid: MyTested.AspNetCore.Mvc.ModelErrorTestBuilderWithModelDataAnnotationsExtensions
-  name: ModelErrorTestBuilderWithModelDataAnnotationsExtensions
-  href: api/MyTested.AspNetCore.Mvc.ModelErrorTestBuilderWithModelDataAnnotationsExtensions.html#MyTested_AspNetCore_Mvc_ModelErrorTestBuilderWithModelDataAnnotationsExtensions
-  commentId: T:MyTested.AspNetCore.Mvc.ModelErrorTestBuilderWithModelDataAnnotationsExtensions
-  fullName: MyTested.AspNetCore.Mvc.ModelErrorTestBuilderWithModelDataAnnotationsExtensions
-- uid: MyTested.AspNetCore.Mvc.ModelErrorTestBuilderWithModelDataAnnotationsExtensions.ContainingError``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder{``0},System.String)
-  name: ContainingError<TModel>(IModelErrorTestBuilder<TModel>, String)
-  href: api/MyTested.AspNetCore.Mvc.ModelErrorTestBuilderWithModelDataAnnotationsExtensions.html#MyTested_AspNetCore_Mvc_ModelErrorTestBuilderWithModelDataAnnotationsExtensions_ContainingError__1_MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorTestBuilder___0__System_String_
-  commentId: M:MyTested.AspNetCore.Mvc.ModelErrorTestBuilderWithModelDataAnnotationsExtensions.ContainingError``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder{``0},System.String)
-  name.vb: ContainingError(Of TModel)(IModelErrorTestBuilder(Of TModel), String)
-  fullName: MyTested.AspNetCore.Mvc.ModelErrorTestBuilderWithModelDataAnnotationsExtensions.ContainingError<TModel>(MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder<TModel>, System.String)
-  fullName.vb: MyTested.AspNetCore.Mvc.ModelErrorTestBuilderWithModelDataAnnotationsExtensions.ContainingError(Of TModel)(MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder(Of TModel), System.String)
-- uid: MyTested.AspNetCore.Mvc.ModelErrorTestBuilderWithModelModelStateExtensions
-  name: ModelErrorTestBuilderWithModelModelStateExtensions
-  href: api/MyTested.AspNetCore.Mvc.ModelErrorTestBuilderWithModelModelStateExtensions.html#MyTested_AspNetCore_Mvc_ModelErrorTestBuilderWithModelModelStateExtensions
-  commentId: T:MyTested.AspNetCore.Mvc.ModelErrorTestBuilderWithModelModelStateExtensions
-  fullName: MyTested.AspNetCore.Mvc.ModelErrorTestBuilderWithModelModelStateExtensions
-- uid: MyTested.AspNetCore.Mvc.ModelErrorTestBuilderWithModelModelStateExtensions.ContainingError``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder{``0},System.String)
-  name: ContainingError<TModel>(IModelErrorTestBuilder<TModel>, String)
-  href: api/MyTested.AspNetCore.Mvc.ModelErrorTestBuilderWithModelModelStateExtensions.html#MyTested_AspNetCore_Mvc_ModelErrorTestBuilderWithModelModelStateExtensions_ContainingError__1_MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelErrorTestBuilder___0__System_String_
-  commentId: M:MyTested.AspNetCore.Mvc.ModelErrorTestBuilderWithModelModelStateExtensions.ContainingError``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder{``0},System.String)
-  name.vb: ContainingError(Of TModel)(IModelErrorTestBuilder(Of TModel), String)
-  fullName: MyTested.AspNetCore.Mvc.ModelErrorTestBuilderWithModelModelStateExtensions.ContainingError<TModel>(MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder<TModel>, System.String)
-  fullName.vb: MyTested.AspNetCore.Mvc.ModelErrorTestBuilderWithModelModelStateExtensions.ContainingError(Of TModel)(MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelErrorTestBuilder(Of TModel), System.String)
 - uid: MyTested.AspNetCore.Mvc.MyApplication
   name: MyApplication
   href: api/MyTested.AspNetCore.Mvc.MyApplication.html#MyTested_AspNetCore_Mvc_MyApplication
@@ -6181,81 +5722,6 @@ references:
   name.vb: Instance(Func(Of TViewComponent))
   fullName: MyTested.AspNetCore.Mvc.MyViewComponent<TViewComponent>.Instance(System.Func<TViewComponent>)
   fullName.vb: MyTested.AspNetCore.Mvc.MyViewComponent(Of TViewComponent).Instance(System.Func(Of TViewComponent))
-- uid: MyTested.AspNetCore.Mvc.Plugins
-  name: MyTested.AspNetCore.Mvc.Plugins
-  href: api/MyTested.AspNetCore.Mvc.Plugins.html#MyTested_AspNetCore_Mvc_Plugins
-  commentId: N:MyTested.AspNetCore.Mvc.Plugins
-  fullName: MyTested.AspNetCore.Mvc.Plugins
-- uid: MyTested.AspNetCore.Mvc.Plugins.IDefaultRegistrationPlugin
-  name: IDefaultRegistrationPlugin
-  href: api/MyTested.AspNetCore.Mvc.Plugins.IDefaultRegistrationPlugin.html#MyTested_AspNetCore_Mvc_Plugins_IDefaultRegistrationPlugin
-  commentId: T:MyTested.AspNetCore.Mvc.Plugins.IDefaultRegistrationPlugin
-  fullName: MyTested.AspNetCore.Mvc.Plugins.IDefaultRegistrationPlugin
-- uid: MyTested.AspNetCore.Mvc.Plugins.IDefaultRegistrationPlugin.DefaultServiceRegistrationDelegate
-  name: DefaultServiceRegistrationDelegate
-  href: api/MyTested.AspNetCore.Mvc.Plugins.IDefaultRegistrationPlugin.html#MyTested_AspNetCore_Mvc_Plugins_IDefaultRegistrationPlugin_DefaultServiceRegistrationDelegate
-  commentId: P:MyTested.AspNetCore.Mvc.Plugins.IDefaultRegistrationPlugin.DefaultServiceRegistrationDelegate
-  fullName: MyTested.AspNetCore.Mvc.Plugins.IDefaultRegistrationPlugin.DefaultServiceRegistrationDelegate
-- uid: MyTested.AspNetCore.Mvc.Plugins.IDefaultRegistrationPlugin.Priority
-  name: Priority
-  href: api/MyTested.AspNetCore.Mvc.Plugins.IDefaultRegistrationPlugin.html#MyTested_AspNetCore_Mvc_Plugins_IDefaultRegistrationPlugin_Priority
-  commentId: P:MyTested.AspNetCore.Mvc.Plugins.IDefaultRegistrationPlugin.Priority
-  fullName: MyTested.AspNetCore.Mvc.Plugins.IDefaultRegistrationPlugin.Priority
-- uid: MyTested.AspNetCore.Mvc.Plugins.IHttpFeatureRegistrationPlugin
-  name: IHttpFeatureRegistrationPlugin
-  href: api/MyTested.AspNetCore.Mvc.Plugins.IHttpFeatureRegistrationPlugin.html#MyTested_AspNetCore_Mvc_Plugins_IHttpFeatureRegistrationPlugin
-  commentId: T:MyTested.AspNetCore.Mvc.Plugins.IHttpFeatureRegistrationPlugin
-  fullName: MyTested.AspNetCore.Mvc.Plugins.IHttpFeatureRegistrationPlugin
-- uid: MyTested.AspNetCore.Mvc.Plugins.IHttpFeatureRegistrationPlugin.HttpFeatureRegistrationDelegate
-  name: HttpFeatureRegistrationDelegate
-  href: api/MyTested.AspNetCore.Mvc.Plugins.IHttpFeatureRegistrationPlugin.html#MyTested_AspNetCore_Mvc_Plugins_IHttpFeatureRegistrationPlugin_HttpFeatureRegistrationDelegate
-  commentId: P:MyTested.AspNetCore.Mvc.Plugins.IHttpFeatureRegistrationPlugin.HttpFeatureRegistrationDelegate
-  fullName: MyTested.AspNetCore.Mvc.Plugins.IHttpFeatureRegistrationPlugin.HttpFeatureRegistrationDelegate
-- uid: MyTested.AspNetCore.Mvc.Plugins.IInitializationPlugin
-  name: IInitializationPlugin
-  href: api/MyTested.AspNetCore.Mvc.Plugins.IInitializationPlugin.html#MyTested_AspNetCore_Mvc_Plugins_IInitializationPlugin
-  commentId: T:MyTested.AspNetCore.Mvc.Plugins.IInitializationPlugin
-  fullName: MyTested.AspNetCore.Mvc.Plugins.IInitializationPlugin
-- uid: MyTested.AspNetCore.Mvc.Plugins.IInitializationPlugin.InitializationDelegate
-  name: InitializationDelegate
-  href: api/MyTested.AspNetCore.Mvc.Plugins.IInitializationPlugin.html#MyTested_AspNetCore_Mvc_Plugins_IInitializationPlugin_InitializationDelegate
-  commentId: P:MyTested.AspNetCore.Mvc.Plugins.IInitializationPlugin.InitializationDelegate
-  fullName: MyTested.AspNetCore.Mvc.Plugins.IInitializationPlugin.InitializationDelegate
-- uid: MyTested.AspNetCore.Mvc.Plugins.IRoutingServiceRegistrationPlugin
-  name: IRoutingServiceRegistrationPlugin
-  href: api/MyTested.AspNetCore.Mvc.Plugins.IRoutingServiceRegistrationPlugin.html#MyTested_AspNetCore_Mvc_Plugins_IRoutingServiceRegistrationPlugin
-  commentId: T:MyTested.AspNetCore.Mvc.Plugins.IRoutingServiceRegistrationPlugin
-  fullName: MyTested.AspNetCore.Mvc.Plugins.IRoutingServiceRegistrationPlugin
-- uid: MyTested.AspNetCore.Mvc.Plugins.IRoutingServiceRegistrationPlugin.RoutingServiceRegistrationDelegate
-  name: RoutingServiceRegistrationDelegate
-  href: api/MyTested.AspNetCore.Mvc.Plugins.IRoutingServiceRegistrationPlugin.html#MyTested_AspNetCore_Mvc_Plugins_IRoutingServiceRegistrationPlugin_RoutingServiceRegistrationDelegate
-  commentId: P:MyTested.AspNetCore.Mvc.Plugins.IRoutingServiceRegistrationPlugin.RoutingServiceRegistrationDelegate
-  fullName: MyTested.AspNetCore.Mvc.Plugins.IRoutingServiceRegistrationPlugin.RoutingServiceRegistrationDelegate
-- uid: MyTested.AspNetCore.Mvc.Plugins.IServiceRegistrationPlugin
-  name: IServiceRegistrationPlugin
-  href: api/MyTested.AspNetCore.Mvc.Plugins.IServiceRegistrationPlugin.html#MyTested_AspNetCore_Mvc_Plugins_IServiceRegistrationPlugin
-  commentId: T:MyTested.AspNetCore.Mvc.Plugins.IServiceRegistrationPlugin
-  fullName: MyTested.AspNetCore.Mvc.Plugins.IServiceRegistrationPlugin
-- uid: MyTested.AspNetCore.Mvc.Plugins.IServiceRegistrationPlugin.ServiceRegistrationDelegate
-  name: ServiceRegistrationDelegate
-  href: api/MyTested.AspNetCore.Mvc.Plugins.IServiceRegistrationPlugin.html#MyTested_AspNetCore_Mvc_Plugins_IServiceRegistrationPlugin_ServiceRegistrationDelegate
-  commentId: P:MyTested.AspNetCore.Mvc.Plugins.IServiceRegistrationPlugin.ServiceRegistrationDelegate
-  fullName: MyTested.AspNetCore.Mvc.Plugins.IServiceRegistrationPlugin.ServiceRegistrationDelegate
-- uid: MyTested.AspNetCore.Mvc.Plugins.IServiceRegistrationPlugin.ServiceSelectorPredicate
-  name: ServiceSelectorPredicate
-  href: api/MyTested.AspNetCore.Mvc.Plugins.IServiceRegistrationPlugin.html#MyTested_AspNetCore_Mvc_Plugins_IServiceRegistrationPlugin_ServiceSelectorPredicate
-  commentId: P:MyTested.AspNetCore.Mvc.Plugins.IServiceRegistrationPlugin.ServiceSelectorPredicate
-  fullName: MyTested.AspNetCore.Mvc.Plugins.IServiceRegistrationPlugin.ServiceSelectorPredicate
-- uid: MyTested.AspNetCore.Mvc.Plugins.IShouldPassForPlugin
-  name: IShouldPassForPlugin
-  href: api/MyTested.AspNetCore.Mvc.Plugins.IShouldPassForPlugin.html#MyTested_AspNetCore_Mvc_Plugins_IShouldPassForPlugin
-  commentId: T:MyTested.AspNetCore.Mvc.Plugins.IShouldPassForPlugin
-  fullName: MyTested.AspNetCore.Mvc.Plugins.IShouldPassForPlugin
-- uid: MyTested.AspNetCore.Mvc.Plugins.IShouldPassForPlugin.TryGetValue(System.Type,MyTested.AspNetCore.Mvc.Internal.TestContexts.ComponentTestContext)
-  name: TryGetValue(Type, ComponentTestContext)
-  href: api/MyTested.AspNetCore.Mvc.Plugins.IShouldPassForPlugin.html#MyTested_AspNetCore_Mvc_Plugins_IShouldPassForPlugin_TryGetValue_System_Type_MyTested_AspNetCore_Mvc_Internal_TestContexts_ComponentTestContext_
-  commentId: M:MyTested.AspNetCore.Mvc.Plugins.IShouldPassForPlugin.TryGetValue(System.Type,MyTested.AspNetCore.Mvc.Internal.TestContexts.ComponentTestContext)
-  fullName: MyTested.AspNetCore.Mvc.Plugins.IShouldPassForPlugin.TryGetValue(System.Type, MyTested.AspNetCore.Mvc.Internal.TestContexts.ComponentTestContext)
 - uid: MyTested.AspNetCore.Mvc.ResolvedRouteTestBuilderDataAnnotationsExtensions
   name: ResolvedRouteTestBuilderDataAnnotationsExtensions
   href: api/MyTested.AspNetCore.Mvc.ResolvedRouteTestBuilderDataAnnotationsExtensions.html#MyTested_AspNetCore_Mvc_ResolvedRouteTestBuilderDataAnnotationsExtensions
@@ -6294,19 +5760,19 @@ references:
   commentId: M:MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.Remove(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Type,System.Type)
   fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.Remove(Microsoft.Extensions.DependencyInjection.IServiceCollection, System.Type, System.Type)
 - uid: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.Remove``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  name: Remove<TServive>(IServiceCollection)
+  name: Remove<TService>(IServiceCollection)
   href: api/MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.html#MyTested_AspNetCore_Mvc_ServiceCollectionAbstractionsExtensions_Remove__1_Microsoft_Extensions_DependencyInjection_IServiceCollection_
   commentId: M:MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.Remove``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  name.vb: Remove(Of TServive)(IServiceCollection)
-  fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.Remove<TServive>(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  fullName.vb: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.Remove(Of TServive)(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  name.vb: Remove(Of TService)(IServiceCollection)
+  fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.Remove<TService>(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  fullName.vb: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.Remove(Of TService)(Microsoft.Extensions.DependencyInjection.IServiceCollection)
 - uid: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.Remove``2(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  name: Remove<TServive, TImplementation>(IServiceCollection)
+  name: Remove<TService, TImplementation>(IServiceCollection)
   href: api/MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.html#MyTested_AspNetCore_Mvc_ServiceCollectionAbstractionsExtensions_Remove__2_Microsoft_Extensions_DependencyInjection_IServiceCollection_
   commentId: M:MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.Remove``2(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  name.vb: Remove(Of TServive, TImplementation)(IServiceCollection)
-  fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.Remove<TServive, TImplementation>(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  fullName.vb: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.Remove(Of TServive, TImplementation)(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  name.vb: Remove(Of TService, TImplementation)(IServiceCollection)
+  fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.Remove<TService, TImplementation>(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  fullName.vb: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.Remove(Of TService, TImplementation)(Microsoft.Extensions.DependencyInjection.IServiceCollection)
 - uid: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveScoped(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Type)
   name: RemoveScoped(IServiceCollection, Type)
   href: api/MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.html#MyTested_AspNetCore_Mvc_ServiceCollectionAbstractionsExtensions_RemoveScoped_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Type_
@@ -6318,12 +5784,12 @@ references:
   commentId: M:MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveScoped(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Type,System.Type)
   fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveScoped(Microsoft.Extensions.DependencyInjection.IServiceCollection, System.Type, System.Type)
 - uid: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveScoped``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  name: RemoveScoped<TServive>(IServiceCollection)
+  name: RemoveScoped<TService>(IServiceCollection)
   href: api/MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.html#MyTested_AspNetCore_Mvc_ServiceCollectionAbstractionsExtensions_RemoveScoped__1_Microsoft_Extensions_DependencyInjection_IServiceCollection_
   commentId: M:MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveScoped``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  name.vb: RemoveScoped(Of TServive)(IServiceCollection)
-  fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveScoped<TServive>(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  fullName.vb: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveScoped(Of TServive)(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  name.vb: RemoveScoped(Of TService)(IServiceCollection)
+  fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveScoped<TService>(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  fullName.vb: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveScoped(Of TService)(Microsoft.Extensions.DependencyInjection.IServiceCollection)
 - uid: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveScoped``2(Microsoft.Extensions.DependencyInjection.IServiceCollection)
   name: RemoveScoped<TService, TImplementation>(IServiceCollection)
   href: api/MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.html#MyTested_AspNetCore_Mvc_ServiceCollectionAbstractionsExtensions_RemoveScoped__2_Microsoft_Extensions_DependencyInjection_IServiceCollection_
@@ -6342,19 +5808,19 @@ references:
   commentId: M:MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveSingleton(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Type,System.Type)
   fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveSingleton(Microsoft.Extensions.DependencyInjection.IServiceCollection, System.Type, System.Type)
 - uid: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveSingleton``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  name: RemoveSingleton<TServive>(IServiceCollection)
+  name: RemoveSingleton<TService>(IServiceCollection)
   href: api/MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.html#MyTested_AspNetCore_Mvc_ServiceCollectionAbstractionsExtensions_RemoveSingleton__1_Microsoft_Extensions_DependencyInjection_IServiceCollection_
   commentId: M:MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveSingleton``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  name.vb: RemoveSingleton(Of TServive)(IServiceCollection)
-  fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveSingleton<TServive>(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  fullName.vb: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveSingleton(Of TServive)(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  name.vb: RemoveSingleton(Of TService)(IServiceCollection)
+  fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveSingleton<TService>(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  fullName.vb: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveSingleton(Of TService)(Microsoft.Extensions.DependencyInjection.IServiceCollection)
 - uid: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveSingleton``2(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  name: RemoveSingleton<TServive, TImplementation>(IServiceCollection)
+  name: RemoveSingleton<TService, TImplementation>(IServiceCollection)
   href: api/MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.html#MyTested_AspNetCore_Mvc_ServiceCollectionAbstractionsExtensions_RemoveSingleton__2_Microsoft_Extensions_DependencyInjection_IServiceCollection_
   commentId: M:MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveSingleton``2(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  name.vb: RemoveSingleton(Of TServive, TImplementation)(IServiceCollection)
-  fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveSingleton<TServive, TImplementation>(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  fullName.vb: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveSingleton(Of TServive, TImplementation)(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  name.vb: RemoveSingleton(Of TService, TImplementation)(IServiceCollection)
+  fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveSingleton<TService, TImplementation>(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  fullName.vb: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveSingleton(Of TService, TImplementation)(Microsoft.Extensions.DependencyInjection.IServiceCollection)
 - uid: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveTransient(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Type)
   name: RemoveTransient(IServiceCollection, Type)
   href: api/MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.html#MyTested_AspNetCore_Mvc_ServiceCollectionAbstractionsExtensions_RemoveTransient_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Type_
@@ -6366,19 +5832,19 @@ references:
   commentId: M:MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveTransient(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Type,System.Type)
   fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveTransient(Microsoft.Extensions.DependencyInjection.IServiceCollection, System.Type, System.Type)
 - uid: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveTransient``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  name: RemoveTransient<TServive>(IServiceCollection)
+  name: RemoveTransient<TService>(IServiceCollection)
   href: api/MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.html#MyTested_AspNetCore_Mvc_ServiceCollectionAbstractionsExtensions_RemoveTransient__1_Microsoft_Extensions_DependencyInjection_IServiceCollection_
   commentId: M:MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveTransient``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  name.vb: RemoveTransient(Of TServive)(IServiceCollection)
-  fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveTransient<TServive>(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  fullName.vb: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveTransient(Of TServive)(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  name.vb: RemoveTransient(Of TService)(IServiceCollection)
+  fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveTransient<TService>(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  fullName.vb: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveTransient(Of TService)(Microsoft.Extensions.DependencyInjection.IServiceCollection)
 - uid: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveTransient``2(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  name: RemoveTransient<TServive, TImplementation>(IServiceCollection)
+  name: RemoveTransient<TService, TImplementation>(IServiceCollection)
   href: api/MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.html#MyTested_AspNetCore_Mvc_ServiceCollectionAbstractionsExtensions_RemoveTransient__2_Microsoft_Extensions_DependencyInjection_IServiceCollection_
   commentId: M:MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveTransient``2(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  name.vb: RemoveTransient(Of TServive, TImplementation)(IServiceCollection)
-  fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveTransient<TServive, TImplementation>(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  fullName.vb: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveTransient(Of TServive, TImplementation)(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  name.vb: RemoveTransient(Of TService, TImplementation)(IServiceCollection)
+  fullName: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveTransient<TService, TImplementation>(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  fullName.vb: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.RemoveTransient(Of TService, TImplementation)(Microsoft.Extensions.DependencyInjection.IServiceCollection)
 - uid: MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.Replace(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Type,System.Func{System.IServiceProvider,System.Object},Microsoft.Extensions.DependencyInjection.ServiceLifetime)
   name: Replace(IServiceCollection, Type, Func<IServiceProvider, Object>, ServiceLifetime)
   href: api/MyTested.AspNetCore.Mvc.ServiceCollectionAbstractionsExtensions.html#MyTested_AspNetCore_Mvc_ServiceCollectionAbstractionsExtensions_Replace_Microsoft_Extensions_DependencyInjection_IServiceCollection_System_Type_System_Func_System_IServiceProvider_System_Object__Microsoft_Extensions_DependencyInjection_ServiceLifetime_
@@ -6659,174 +6125,6 @@ references:
   href: api/MyTested.AspNetCore.Mvc.ServiceCollectionViewFeaturesExtensions.html#MyTested_AspNetCore_Mvc_ServiceCollectionViewFeaturesExtensions_AddViewFeaturesTesting_Microsoft_Extensions_DependencyInjection_IServiceCollection_
   commentId: M:MyTested.AspNetCore.Mvc.ServiceCollectionViewFeaturesExtensions.AddViewFeaturesTesting(Microsoft.Extensions.DependencyInjection.IServiceCollection)
   fullName: MyTested.AspNetCore.Mvc.ServiceCollectionViewFeaturesExtensions.AddViewFeaturesTesting(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-- uid: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderCachingExtensions
-  name: ShouldHaveTestBuilderCachingExtensions
-  href: api/MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderCachingExtensions.html#MyTested_AspNetCore_Mvc_ShouldHaveTestBuilderCachingExtensions
-  commentId: T:MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderCachingExtensions
-  fullName: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderCachingExtensions
-- uid: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderCachingExtensions.MemoryCache``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0},System.Action{MyTested.AspNetCore.Mvc.Builders.Contracts.Data.IMemoryCacheTestBuilder})
-  name: MemoryCache<TActionResult>(IShouldHaveTestBuilder<TActionResult>, Action<IMemoryCacheTestBuilder>)
-  href: api/MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderCachingExtensions.html#MyTested_AspNetCore_Mvc_ShouldHaveTestBuilderCachingExtensions_MemoryCache__1_MyTested_AspNetCore_Mvc_Builders_Contracts_Actions_IShouldHaveTestBuilder___0__System_Action_MyTested_AspNetCore_Mvc_Builders_Contracts_Data_IMemoryCacheTestBuilder__
-  commentId: M:MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderCachingExtensions.MemoryCache``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0},System.Action{MyTested.AspNetCore.Mvc.Builders.Contracts.Data.IMemoryCacheTestBuilder})
-  name.vb: MemoryCache(Of TActionResult)(IShouldHaveTestBuilder(Of TActionResult), Action(Of IMemoryCacheTestBuilder))
-  fullName: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderCachingExtensions.MemoryCache<TActionResult>(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder<TActionResult>, System.Action<MyTested.AspNetCore.Mvc.Builders.Contracts.Data.IMemoryCacheTestBuilder>)
-  fullName.vb: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderCachingExtensions.MemoryCache(Of TActionResult)(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder(Of TActionResult), System.Action(Of MyTested.AspNetCore.Mvc.Builders.Contracts.Data.IMemoryCacheTestBuilder))
-- uid: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderCachingExtensions.MemoryCache``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0},System.Nullable{System.Int32})
-  name: MemoryCache<TActionResult>(IShouldHaveTestBuilder<TActionResult>, Nullable<Int32>)
-  href: api/MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderCachingExtensions.html#MyTested_AspNetCore_Mvc_ShouldHaveTestBuilderCachingExtensions_MemoryCache__1_MyTested_AspNetCore_Mvc_Builders_Contracts_Actions_IShouldHaveTestBuilder___0__System_Nullable_System_Int32__
-  commentId: M:MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderCachingExtensions.MemoryCache``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0},System.Nullable{System.Int32})
-  name.vb: MemoryCache(Of TActionResult)(IShouldHaveTestBuilder(Of TActionResult), Nullable(Of Int32))
-  fullName: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderCachingExtensions.MemoryCache<TActionResult>(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder<TActionResult>, System.Nullable<System.Int32>)
-  fullName.vb: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderCachingExtensions.MemoryCache(Of TActionResult)(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder(Of TActionResult), System.Nullable(Of System.Int32))
-- uid: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderCachingExtensions.NoMemoryCache``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0})
-  name: NoMemoryCache<TActionResult>(IShouldHaveTestBuilder<TActionResult>)
-  href: api/MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderCachingExtensions.html#MyTested_AspNetCore_Mvc_ShouldHaveTestBuilderCachingExtensions_NoMemoryCache__1_MyTested_AspNetCore_Mvc_Builders_Contracts_Actions_IShouldHaveTestBuilder___0__
-  commentId: M:MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderCachingExtensions.NoMemoryCache``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0})
-  name.vb: NoMemoryCache(Of TActionResult)(IShouldHaveTestBuilder(Of TActionResult))
-  fullName: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderCachingExtensions.NoMemoryCache<TActionResult>(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder<TActionResult>)
-  fullName.vb: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderCachingExtensions.NoMemoryCache(Of TActionResult)(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder(Of TActionResult))
-- uid: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderDataAnnotationsExtensions
-  name: ShouldHaveTestBuilderDataAnnotationsExtensions
-  href: api/MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderDataAnnotationsExtensions.html#MyTested_AspNetCore_Mvc_ShouldHaveTestBuilderDataAnnotationsExtensions
-  commentId: T:MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderDataAnnotationsExtensions
-  fullName: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderDataAnnotationsExtensions
-- uid: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderDataAnnotationsExtensions.InvalidModelState``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0},System.Nullable{System.Int32})
-  name: InvalidModelState<TActionResult>(IShouldHaveTestBuilder<TActionResult>, Nullable<Int32>)
-  href: api/MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderDataAnnotationsExtensions.html#MyTested_AspNetCore_Mvc_ShouldHaveTestBuilderDataAnnotationsExtensions_InvalidModelState__1_MyTested_AspNetCore_Mvc_Builders_Contracts_Actions_IShouldHaveTestBuilder___0__System_Nullable_System_Int32__
-  commentId: M:MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderDataAnnotationsExtensions.InvalidModelState``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0},System.Nullable{System.Int32})
-  name.vb: InvalidModelState(Of TActionResult)(IShouldHaveTestBuilder(Of TActionResult), Nullable(Of Int32))
-  fullName: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderDataAnnotationsExtensions.InvalidModelState<TActionResult>(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder<TActionResult>, System.Nullable<System.Int32>)
-  fullName.vb: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderDataAnnotationsExtensions.InvalidModelState(Of TActionResult)(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder(Of TActionResult), System.Nullable(Of System.Int32))
-- uid: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderDataAnnotationsExtensions.ModelState``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0},System.Action{MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelStateTestBuilder})
-  name: ModelState<TActionResult>(IShouldHaveTestBuilder<TActionResult>, Action<IModelStateTestBuilder>)
-  href: api/MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderDataAnnotationsExtensions.html#MyTested_AspNetCore_Mvc_ShouldHaveTestBuilderDataAnnotationsExtensions_ModelState__1_MyTested_AspNetCore_Mvc_Builders_Contracts_Actions_IShouldHaveTestBuilder___0__System_Action_MyTested_AspNetCore_Mvc_Builders_Contracts_Models_IModelStateTestBuilder__
-  commentId: M:MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderDataAnnotationsExtensions.ModelState``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0},System.Action{MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelStateTestBuilder})
-  name.vb: ModelState(Of TActionResult)(IShouldHaveTestBuilder(Of TActionResult), Action(Of IModelStateTestBuilder))
-  fullName: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderDataAnnotationsExtensions.ModelState<TActionResult>(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder<TActionResult>, System.Action<MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelStateTestBuilder>)
-  fullName.vb: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderDataAnnotationsExtensions.ModelState(Of TActionResult)(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder(Of TActionResult), System.Action(Of MyTested.AspNetCore.Mvc.Builders.Contracts.Models.IModelStateTestBuilder))
-- uid: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderDataAnnotationsExtensions.ValidModelState``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0})
-  name: ValidModelState<TActionResult>(IShouldHaveTestBuilder<TActionResult>)
-  href: api/MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderDataAnnotationsExtensions.html#MyTested_AspNetCore_Mvc_ShouldHaveTestBuilderDataAnnotationsExtensions_ValidModelState__1_MyTested_AspNetCore_Mvc_Builders_Contracts_Actions_IShouldHaveTestBuilder___0__
-  commentId: M:MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderDataAnnotationsExtensions.ValidModelState``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0})
-  name.vb: ValidModelState(Of TActionResult)(IShouldHaveTestBuilder(Of TActionResult))
-  fullName: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderDataAnnotationsExtensions.ValidModelState<TActionResult>(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder<TActionResult>)
-  fullName.vb: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderDataAnnotationsExtensions.ValidModelState(Of TActionResult)(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder(Of TActionResult))
-- uid: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderEntityFrameworkCoreExtensions
-  name: ShouldHaveTestBuilderEntityFrameworkCoreExtensions
-  href: api/MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderEntityFrameworkCoreExtensions.html#MyTested_AspNetCore_Mvc_ShouldHaveTestBuilderEntityFrameworkCoreExtensions
-  commentId: T:MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderEntityFrameworkCoreExtensions
-  fullName: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderEntityFrameworkCoreExtensions
-- uid: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderEntityFrameworkCoreExtensions.DbContext``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0},System.Action{MyTested.AspNetCore.Mvc.Builders.Contracts.Data.IDbContextTestBuilder})
-  name: DbContext<TActionResult>(IShouldHaveTestBuilder<TActionResult>, Action<IDbContextTestBuilder>)
-  href: api/MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderEntityFrameworkCoreExtensions.html#MyTested_AspNetCore_Mvc_ShouldHaveTestBuilderEntityFrameworkCoreExtensions_DbContext__1_MyTested_AspNetCore_Mvc_Builders_Contracts_Actions_IShouldHaveTestBuilder___0__System_Action_MyTested_AspNetCore_Mvc_Builders_Contracts_Data_IDbContextTestBuilder__
-  commentId: M:MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderEntityFrameworkCoreExtensions.DbContext``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0},System.Action{MyTested.AspNetCore.Mvc.Builders.Contracts.Data.IDbContextTestBuilder})
-  name.vb: DbContext(Of TActionResult)(IShouldHaveTestBuilder(Of TActionResult), Action(Of IDbContextTestBuilder))
-  fullName: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderEntityFrameworkCoreExtensions.DbContext<TActionResult>(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder<TActionResult>, System.Action<MyTested.AspNetCore.Mvc.Builders.Contracts.Data.IDbContextTestBuilder>)
-  fullName.vb: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderEntityFrameworkCoreExtensions.DbContext(Of TActionResult)(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder(Of TActionResult), System.Action(Of MyTested.AspNetCore.Mvc.Builders.Contracts.Data.IDbContextTestBuilder))
-- uid: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderSessionExtensions
-  name: ShouldHaveTestBuilderSessionExtensions
-  href: api/MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderSessionExtensions.html#MyTested_AspNetCore_Mvc_ShouldHaveTestBuilderSessionExtensions
-  commentId: T:MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderSessionExtensions
-  fullName: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderSessionExtensions
-- uid: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderSessionExtensions.NoSession``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0})
-  name: NoSession<TActionResult>(IShouldHaveTestBuilder<TActionResult>)
-  href: api/MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderSessionExtensions.html#MyTested_AspNetCore_Mvc_ShouldHaveTestBuilderSessionExtensions_NoSession__1_MyTested_AspNetCore_Mvc_Builders_Contracts_Actions_IShouldHaveTestBuilder___0__
-  commentId: M:MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderSessionExtensions.NoSession``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0})
-  name.vb: NoSession(Of TActionResult)(IShouldHaveTestBuilder(Of TActionResult))
-  fullName: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderSessionExtensions.NoSession<TActionResult>(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder<TActionResult>)
-  fullName.vb: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderSessionExtensions.NoSession(Of TActionResult)(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder(Of TActionResult))
-- uid: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderSessionExtensions.Session``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0},System.Action{MyTested.AspNetCore.Mvc.Builders.Contracts.Data.ISessionTestBuilder})
-  name: Session<TActionResult>(IShouldHaveTestBuilder<TActionResult>, Action<ISessionTestBuilder>)
-  href: api/MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderSessionExtensions.html#MyTested_AspNetCore_Mvc_ShouldHaveTestBuilderSessionExtensions_Session__1_MyTested_AspNetCore_Mvc_Builders_Contracts_Actions_IShouldHaveTestBuilder___0__System_Action_MyTested_AspNetCore_Mvc_Builders_Contracts_Data_ISessionTestBuilder__
-  commentId: M:MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderSessionExtensions.Session``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0},System.Action{MyTested.AspNetCore.Mvc.Builders.Contracts.Data.ISessionTestBuilder})
-  name.vb: Session(Of TActionResult)(IShouldHaveTestBuilder(Of TActionResult), Action(Of ISessionTestBuilder))
-  fullName: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderSessionExtensions.Session<TActionResult>(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder<TActionResult>, System.Action<MyTested.AspNetCore.Mvc.Builders.Contracts.Data.ISessionTestBuilder>)
-  fullName.vb: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderSessionExtensions.Session(Of TActionResult)(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder(Of TActionResult), System.Action(Of MyTested.AspNetCore.Mvc.Builders.Contracts.Data.ISessionTestBuilder))
-- uid: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderSessionExtensions.Session``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0},System.Nullable{System.Int32})
-  name: Session<TActionResult>(IShouldHaveTestBuilder<TActionResult>, Nullable<Int32>)
-  href: api/MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderSessionExtensions.html#MyTested_AspNetCore_Mvc_ShouldHaveTestBuilderSessionExtensions_Session__1_MyTested_AspNetCore_Mvc_Builders_Contracts_Actions_IShouldHaveTestBuilder___0__System_Nullable_System_Int32__
-  commentId: M:MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderSessionExtensions.Session``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0},System.Nullable{System.Int32})
-  name.vb: Session(Of TActionResult)(IShouldHaveTestBuilder(Of TActionResult), Nullable(Of Int32))
-  fullName: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderSessionExtensions.Session<TActionResult>(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder<TActionResult>, System.Nullable<System.Int32>)
-  fullName.vb: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderSessionExtensions.Session(Of TActionResult)(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder(Of TActionResult), System.Nullable(Of System.Int32))
-- uid: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderTempDataExtensions
-  name: ShouldHaveTestBuilderTempDataExtensions
-  href: api/MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderTempDataExtensions.html#MyTested_AspNetCore_Mvc_ShouldHaveTestBuilderTempDataExtensions
-  commentId: T:MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderTempDataExtensions
-  fullName: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderTempDataExtensions
-- uid: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderTempDataExtensions.NoTempData``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0})
-  name: NoTempData<TActionResult>(IShouldHaveTestBuilder<TActionResult>)
-  href: api/MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderTempDataExtensions.html#MyTested_AspNetCore_Mvc_ShouldHaveTestBuilderTempDataExtensions_NoTempData__1_MyTested_AspNetCore_Mvc_Builders_Contracts_Actions_IShouldHaveTestBuilder___0__
-  commentId: M:MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderTempDataExtensions.NoTempData``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0})
-  name.vb: NoTempData(Of TActionResult)(IShouldHaveTestBuilder(Of TActionResult))
-  fullName: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderTempDataExtensions.NoTempData<TActionResult>(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder<TActionResult>)
-  fullName.vb: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderTempDataExtensions.NoTempData(Of TActionResult)(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder(Of TActionResult))
-- uid: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderTempDataExtensions.TempData``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0},System.Action{MyTested.AspNetCore.Mvc.Builders.Contracts.Data.ITempDataTestBuilder})
-  name: TempData<TActionResult>(IShouldHaveTestBuilder<TActionResult>, Action<ITempDataTestBuilder>)
-  href: api/MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderTempDataExtensions.html#MyTested_AspNetCore_Mvc_ShouldHaveTestBuilderTempDataExtensions_TempData__1_MyTested_AspNetCore_Mvc_Builders_Contracts_Actions_IShouldHaveTestBuilder___0__System_Action_MyTested_AspNetCore_Mvc_Builders_Contracts_Data_ITempDataTestBuilder__
-  commentId: M:MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderTempDataExtensions.TempData``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0},System.Action{MyTested.AspNetCore.Mvc.Builders.Contracts.Data.ITempDataTestBuilder})
-  name.vb: TempData(Of TActionResult)(IShouldHaveTestBuilder(Of TActionResult), Action(Of ITempDataTestBuilder))
-  fullName: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderTempDataExtensions.TempData<TActionResult>(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder<TActionResult>, System.Action<MyTested.AspNetCore.Mvc.Builders.Contracts.Data.ITempDataTestBuilder>)
-  fullName.vb: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderTempDataExtensions.TempData(Of TActionResult)(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder(Of TActionResult), System.Action(Of MyTested.AspNetCore.Mvc.Builders.Contracts.Data.ITempDataTestBuilder))
-- uid: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderTempDataExtensions.TempData``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0},System.Nullable{System.Int32})
-  name: TempData<TActionResult>(IShouldHaveTestBuilder<TActionResult>, Nullable<Int32>)
-  href: api/MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderTempDataExtensions.html#MyTested_AspNetCore_Mvc_ShouldHaveTestBuilderTempDataExtensions_TempData__1_MyTested_AspNetCore_Mvc_Builders_Contracts_Actions_IShouldHaveTestBuilder___0__System_Nullable_System_Int32__
-  commentId: M:MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderTempDataExtensions.TempData``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0},System.Nullable{System.Int32})
-  name.vb: TempData(Of TActionResult)(IShouldHaveTestBuilder(Of TActionResult), Nullable(Of Int32))
-  fullName: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderTempDataExtensions.TempData<TActionResult>(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder<TActionResult>, System.Nullable<System.Int32>)
-  fullName.vb: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderTempDataExtensions.TempData(Of TActionResult)(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder(Of TActionResult), System.Nullable(Of System.Int32))
-- uid: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewBagExtensions
-  name: ShouldHaveTestBuilderViewBagExtensions
-  href: api/MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewBagExtensions.html#MyTested_AspNetCore_Mvc_ShouldHaveTestBuilderViewBagExtensions
-  commentId: T:MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewBagExtensions
-  fullName: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewBagExtensions
-- uid: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewBagExtensions.NoViewBag``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0})
-  name: NoViewBag<TActionResult>(IShouldHaveTestBuilder<TActionResult>)
-  href: api/MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewBagExtensions.html#MyTested_AspNetCore_Mvc_ShouldHaveTestBuilderViewBagExtensions_NoViewBag__1_MyTested_AspNetCore_Mvc_Builders_Contracts_Actions_IShouldHaveTestBuilder___0__
-  commentId: M:MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewBagExtensions.NoViewBag``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0})
-  name.vb: NoViewBag(Of TActionResult)(IShouldHaveTestBuilder(Of TActionResult))
-  fullName: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewBagExtensions.NoViewBag<TActionResult>(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder<TActionResult>)
-  fullName.vb: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewBagExtensions.NoViewBag(Of TActionResult)(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder(Of TActionResult))
-- uid: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewBagExtensions.ViewBag``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0},System.Action{MyTested.AspNetCore.Mvc.Builders.Contracts.Data.IViewBagTestBuilder})
-  name: ViewBag<TActionResult>(IShouldHaveTestBuilder<TActionResult>, Action<IViewBagTestBuilder>)
-  href: api/MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewBagExtensions.html#MyTested_AspNetCore_Mvc_ShouldHaveTestBuilderViewBagExtensions_ViewBag__1_MyTested_AspNetCore_Mvc_Builders_Contracts_Actions_IShouldHaveTestBuilder___0__System_Action_MyTested_AspNetCore_Mvc_Builders_Contracts_Data_IViewBagTestBuilder__
-  commentId: M:MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewBagExtensions.ViewBag``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0},System.Action{MyTested.AspNetCore.Mvc.Builders.Contracts.Data.IViewBagTestBuilder})
-  name.vb: ViewBag(Of TActionResult)(IShouldHaveTestBuilder(Of TActionResult), Action(Of IViewBagTestBuilder))
-  fullName: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewBagExtensions.ViewBag<TActionResult>(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder<TActionResult>, System.Action<MyTested.AspNetCore.Mvc.Builders.Contracts.Data.IViewBagTestBuilder>)
-  fullName.vb: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewBagExtensions.ViewBag(Of TActionResult)(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder(Of TActionResult), System.Action(Of MyTested.AspNetCore.Mvc.Builders.Contracts.Data.IViewBagTestBuilder))
-- uid: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewBagExtensions.ViewBag``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0},System.Nullable{System.Int32})
-  name: ViewBag<TActionResult>(IShouldHaveTestBuilder<TActionResult>, Nullable<Int32>)
-  href: api/MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewBagExtensions.html#MyTested_AspNetCore_Mvc_ShouldHaveTestBuilderViewBagExtensions_ViewBag__1_MyTested_AspNetCore_Mvc_Builders_Contracts_Actions_IShouldHaveTestBuilder___0__System_Nullable_System_Int32__
-  commentId: M:MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewBagExtensions.ViewBag``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0},System.Nullable{System.Int32})
-  name.vb: ViewBag(Of TActionResult)(IShouldHaveTestBuilder(Of TActionResult), Nullable(Of Int32))
-  fullName: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewBagExtensions.ViewBag<TActionResult>(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder<TActionResult>, System.Nullable<System.Int32>)
-  fullName.vb: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewBagExtensions.ViewBag(Of TActionResult)(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder(Of TActionResult), System.Nullable(Of System.Int32))
-- uid: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewDataExtensions
-  name: ShouldHaveTestBuilderViewDataExtensions
-  href: api/MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewDataExtensions.html#MyTested_AspNetCore_Mvc_ShouldHaveTestBuilderViewDataExtensions
-  commentId: T:MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewDataExtensions
-  fullName: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewDataExtensions
-- uid: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewDataExtensions.NoViewData``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0})
-  name: NoViewData<TActionResult>(IShouldHaveTestBuilder<TActionResult>)
-  href: api/MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewDataExtensions.html#MyTested_AspNetCore_Mvc_ShouldHaveTestBuilderViewDataExtensions_NoViewData__1_MyTested_AspNetCore_Mvc_Builders_Contracts_Actions_IShouldHaveTestBuilder___0__
-  commentId: M:MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewDataExtensions.NoViewData``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0})
-  name.vb: NoViewData(Of TActionResult)(IShouldHaveTestBuilder(Of TActionResult))
-  fullName: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewDataExtensions.NoViewData<TActionResult>(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder<TActionResult>)
-  fullName.vb: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewDataExtensions.NoViewData(Of TActionResult)(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder(Of TActionResult))
-- uid: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewDataExtensions.ViewData``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0},System.Action{MyTested.AspNetCore.Mvc.Builders.Contracts.Data.IViewDataTestBuilder})
-  name: ViewData<TActionResult>(IShouldHaveTestBuilder<TActionResult>, Action<IViewDataTestBuilder>)
-  href: api/MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewDataExtensions.html#MyTested_AspNetCore_Mvc_ShouldHaveTestBuilderViewDataExtensions_ViewData__1_MyTested_AspNetCore_Mvc_Builders_Contracts_Actions_IShouldHaveTestBuilder___0__System_Action_MyTested_AspNetCore_Mvc_Builders_Contracts_Data_IViewDataTestBuilder__
-  commentId: M:MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewDataExtensions.ViewData``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0},System.Action{MyTested.AspNetCore.Mvc.Builders.Contracts.Data.IViewDataTestBuilder})
-  name.vb: ViewData(Of TActionResult)(IShouldHaveTestBuilder(Of TActionResult), Action(Of IViewDataTestBuilder))
-  fullName: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewDataExtensions.ViewData<TActionResult>(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder<TActionResult>, System.Action<MyTested.AspNetCore.Mvc.Builders.Contracts.Data.IViewDataTestBuilder>)
-  fullName.vb: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewDataExtensions.ViewData(Of TActionResult)(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder(Of TActionResult), System.Action(Of MyTested.AspNetCore.Mvc.Builders.Contracts.Data.IViewDataTestBuilder))
-- uid: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewDataExtensions.ViewData``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0},System.Nullable{System.Int32})
-  name: ViewData<TActionResult>(IShouldHaveTestBuilder<TActionResult>, Nullable<Int32>)
-  href: api/MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewDataExtensions.html#MyTested_AspNetCore_Mvc_ShouldHaveTestBuilderViewDataExtensions_ViewData__1_MyTested_AspNetCore_Mvc_Builders_Contracts_Actions_IShouldHaveTestBuilder___0__System_Nullable_System_Int32__
-  commentId: M:MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewDataExtensions.ViewData``1(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder{``0},System.Nullable{System.Int32})
-  name.vb: ViewData(Of TActionResult)(IShouldHaveTestBuilder(Of TActionResult), Nullable(Of Int32))
-  fullName: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewDataExtensions.ViewData<TActionResult>(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder<TActionResult>, System.Nullable<System.Int32>)
-  fullName.vb: MyTested.AspNetCore.Mvc.ShouldHaveTestBuilderViewDataExtensions.ViewData(Of TActionResult)(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldHaveTestBuilder(Of TActionResult), System.Nullable(Of System.Int32))
 - uid: MyTested.AspNetCore.Mvc.ShouldReturnTestBuilderJsonResultExtensions
   name: ShouldReturnTestBuilderJsonResultExtensions
   href: api/MyTested.AspNetCore.Mvc.ShouldReturnTestBuilderJsonResultExtensions.html#MyTested_AspNetCore_Mvc_ShouldReturnTestBuilderJsonResultExtensions
@@ -6931,190 +6229,6 @@ references:
   name.vb: View(Of TActionResult, TModel)(IShouldReturnTestBuilder(Of TActionResult), String, TModel)
   fullName: MyTested.AspNetCore.Mvc.ShouldReturnTestBuilderViewResultExtensions.View<TActionResult, TModel>(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldReturnTestBuilder<TActionResult>, System.String, TModel)
   fullName.vb: MyTested.AspNetCore.Mvc.ShouldReturnTestBuilderViewResultExtensions.View(Of TActionResult, TModel)(MyTested.AspNetCore.Mvc.Builders.Contracts.Actions.IShouldReturnTestBuilder(Of TActionResult), System.String, TModel)
-- uid: MyTested.AspNetCore.Mvc.UniverseServiceCollectionExtensions
-  name: UniverseServiceCollectionExtensions
-  href: api/MyTested.AspNetCore.Mvc.UniverseServiceCollectionExtensions.html#MyTested_AspNetCore_Mvc_UniverseServiceCollectionExtensions
-  commentId: T:MyTested.AspNetCore.Mvc.UniverseServiceCollectionExtensions
-  fullName: MyTested.AspNetCore.Mvc.UniverseServiceCollectionExtensions
-- uid: MyTested.AspNetCore.Mvc.UniverseServiceCollectionExtensions.AddMvcUniverseTesting(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  name: AddMvcUniverseTesting(IServiceCollection)
-  href: api/MyTested.AspNetCore.Mvc.UniverseServiceCollectionExtensions.html#MyTested_AspNetCore_Mvc_UniverseServiceCollectionExtensions_AddMvcUniverseTesting_Microsoft_Extensions_DependencyInjection_IServiceCollection_
-  commentId: M:MyTested.AspNetCore.Mvc.UniverseServiceCollectionExtensions.AddMvcUniverseTesting(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  fullName: MyTested.AspNetCore.Mvc.UniverseServiceCollectionExtensions.AddMvcUniverseTesting(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-- uid: MyTested.AspNetCore.Mvc.Utilities.Extensions
-  name: MyTested.AspNetCore.Mvc.Utilities.Extensions
-  href: api/MyTested.AspNetCore.Mvc.Utilities.Extensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions
-  commentId: N:MyTested.AspNetCore.Mvc.Utilities.Extensions
-  fullName: MyTested.AspNetCore.Mvc.Utilities.Extensions
-- uid: MyTested.AspNetCore.Mvc.Utilities.Extensions.DictionaryExtensions
-  name: DictionaryExtensions
-  href: api/MyTested.AspNetCore.Mvc.Utilities.Extensions.DictionaryExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_DictionaryExtensions
-  commentId: T:MyTested.AspNetCore.Mvc.Utilities.Extensions.DictionaryExtensions
-  fullName: MyTested.AspNetCore.Mvc.Utilities.Extensions.DictionaryExtensions
-- uid: MyTested.AspNetCore.Mvc.Utilities.Extensions.DictionaryExtensions.ToDetailedValues(System.Collections.Generic.IDictionary{System.String,System.Object})
-  name: ToDetailedValues(IDictionary<String, Object>)
-  href: api/MyTested.AspNetCore.Mvc.Utilities.Extensions.DictionaryExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_DictionaryExtensions_ToDetailedValues_System_Collections_Generic_IDictionary_System_String_System_Object__
-  commentId: M:MyTested.AspNetCore.Mvc.Utilities.Extensions.DictionaryExtensions.ToDetailedValues(System.Collections.Generic.IDictionary{System.String,System.Object})
-  name.vb: ToDetailedValues(IDictionary(Of String, Object))
-  fullName: MyTested.AspNetCore.Mvc.Utilities.Extensions.DictionaryExtensions.ToDetailedValues(System.Collections.Generic.IDictionary<System.String, System.Object>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Utilities.Extensions.DictionaryExtensions.ToDetailedValues(System.Collections.Generic.IDictionary(Of System.String, System.Object))
-- uid: MyTested.AspNetCore.Mvc.Utilities.Extensions.DictionaryExtensions.ToRouteValues(System.Collections.Generic.IDictionary{System.String,MyTested.AspNetCore.Mvc.Internal.TestContexts.MethodArgumentTestContext},System.Func{System.Collections.Generic.KeyValuePair{System.String,MyTested.AspNetCore.Mvc.Internal.TestContexts.MethodArgumentTestContext},System.Boolean})
-  name: ToRouteValues(IDictionary<String, MethodArgumentTestContext>, Func<KeyValuePair<String, MethodArgumentTestContext>, Boolean>)
-  href: api/MyTested.AspNetCore.Mvc.Utilities.Extensions.DictionaryExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_DictionaryExtensions_ToRouteValues_System_Collections_Generic_IDictionary_System_String_MyTested_AspNetCore_Mvc_Internal_TestContexts_MethodArgumentTestContext__System_Func_System_Collections_Generic_KeyValuePair_System_String_MyTested_AspNetCore_Mvc_Internal_TestContexts_MethodArgumentTestContext__System_Boolean__
-  commentId: M:MyTested.AspNetCore.Mvc.Utilities.Extensions.DictionaryExtensions.ToRouteValues(System.Collections.Generic.IDictionary{System.String,MyTested.AspNetCore.Mvc.Internal.TestContexts.MethodArgumentTestContext},System.Func{System.Collections.Generic.KeyValuePair{System.String,MyTested.AspNetCore.Mvc.Internal.TestContexts.MethodArgumentTestContext},System.Boolean})
-  name.vb: ToRouteValues(IDictionary(Of String, MethodArgumentTestContext), Func(Of KeyValuePair(Of String, MethodArgumentTestContext), Boolean))
-  fullName: MyTested.AspNetCore.Mvc.Utilities.Extensions.DictionaryExtensions.ToRouteValues(System.Collections.Generic.IDictionary<System.String, MyTested.AspNetCore.Mvc.Internal.TestContexts.MethodArgumentTestContext>, System.Func<System.Collections.Generic.KeyValuePair<System.String, MyTested.AspNetCore.Mvc.Internal.TestContexts.MethodArgumentTestContext>, System.Boolean>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Utilities.Extensions.DictionaryExtensions.ToRouteValues(System.Collections.Generic.IDictionary(Of System.String, MyTested.AspNetCore.Mvc.Internal.TestContexts.MethodArgumentTestContext), System.Func(Of System.Collections.Generic.KeyValuePair(Of System.String, MyTested.AspNetCore.Mvc.Internal.TestContexts.MethodArgumentTestContext), System.Boolean))
-- uid: MyTested.AspNetCore.Mvc.Utilities.Extensions.DictionaryExtensions.ToSortedRouteValues(System.Collections.Generic.IDictionary{System.String,MyTested.AspNetCore.Mvc.Internal.TestContexts.MethodArgumentTestContext},System.Func{System.Collections.Generic.KeyValuePair{System.String,MyTested.AspNetCore.Mvc.Internal.TestContexts.MethodArgumentTestContext},System.Boolean})
-  name: ToSortedRouteValues(IDictionary<String, MethodArgumentTestContext>, Func<KeyValuePair<String, MethodArgumentTestContext>, Boolean>)
-  href: api/MyTested.AspNetCore.Mvc.Utilities.Extensions.DictionaryExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_DictionaryExtensions_ToSortedRouteValues_System_Collections_Generic_IDictionary_System_String_MyTested_AspNetCore_Mvc_Internal_TestContexts_MethodArgumentTestContext__System_Func_System_Collections_Generic_KeyValuePair_System_String_MyTested_AspNetCore_Mvc_Internal_TestContexts_MethodArgumentTestContext__System_Boolean__
-  commentId: M:MyTested.AspNetCore.Mvc.Utilities.Extensions.DictionaryExtensions.ToSortedRouteValues(System.Collections.Generic.IDictionary{System.String,MyTested.AspNetCore.Mvc.Internal.TestContexts.MethodArgumentTestContext},System.Func{System.Collections.Generic.KeyValuePair{System.String,MyTested.AspNetCore.Mvc.Internal.TestContexts.MethodArgumentTestContext},System.Boolean})
-  name.vb: ToSortedRouteValues(IDictionary(Of String, MethodArgumentTestContext), Func(Of KeyValuePair(Of String, MethodArgumentTestContext), Boolean))
-  fullName: MyTested.AspNetCore.Mvc.Utilities.Extensions.DictionaryExtensions.ToSortedRouteValues(System.Collections.Generic.IDictionary<System.String, MyTested.AspNetCore.Mvc.Internal.TestContexts.MethodArgumentTestContext>, System.Func<System.Collections.Generic.KeyValuePair<System.String, MyTested.AspNetCore.Mvc.Internal.TestContexts.MethodArgumentTestContext>, System.Boolean>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Utilities.Extensions.DictionaryExtensions.ToSortedRouteValues(System.Collections.Generic.IDictionary(Of System.String, MyTested.AspNetCore.Mvc.Internal.TestContexts.MethodArgumentTestContext), System.Func(Of System.Collections.Generic.KeyValuePair(Of System.String, MyTested.AspNetCore.Mvc.Internal.TestContexts.MethodArgumentTestContext), System.Boolean))
-- uid: MyTested.AspNetCore.Mvc.Utilities.Extensions.EncodingExtensions
-  name: EncodingExtensions
-  href: api/MyTested.AspNetCore.Mvc.Utilities.Extensions.EncodingExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_EncodingExtensions
-  commentId: T:MyTested.AspNetCore.Mvc.Utilities.Extensions.EncodingExtensions
-  fullName: MyTested.AspNetCore.Mvc.Utilities.Extensions.EncodingExtensions
-- uid: MyTested.AspNetCore.Mvc.Utilities.Extensions.EncodingExtensions.GetName(System.Text.Encoding)
-  name: GetName(Encoding)
-  href: api/MyTested.AspNetCore.Mvc.Utilities.Extensions.EncodingExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_EncodingExtensions_GetName_System_Text_Encoding_
-  commentId: M:MyTested.AspNetCore.Mvc.Utilities.Extensions.EncodingExtensions.GetName(System.Text.Encoding)
-  fullName: MyTested.AspNetCore.Mvc.Utilities.Extensions.EncodingExtensions.GetName(System.Text.Encoding)
-- uid: MyTested.AspNetCore.Mvc.Utilities.Extensions.EnumerableExtensions
-  name: EnumerableExtensions
-  href: api/MyTested.AspNetCore.Mvc.Utilities.Extensions.EnumerableExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_EnumerableExtensions
-  commentId: T:MyTested.AspNetCore.Mvc.Utilities.Extensions.EnumerableExtensions
-  fullName: MyTested.AspNetCore.Mvc.Utilities.Extensions.EnumerableExtensions
-- uid: MyTested.AspNetCore.Mvc.Utilities.Extensions.EnumerableExtensions.ForEach``1(System.Collections.Generic.IEnumerable{``0},System.Action{``0})
-  name: ForEach<T>(IEnumerable<T>, Action<T>)
-  href: api/MyTested.AspNetCore.Mvc.Utilities.Extensions.EnumerableExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_EnumerableExtensions_ForEach__1_System_Collections_Generic_IEnumerable___0__System_Action___0__
-  commentId: M:MyTested.AspNetCore.Mvc.Utilities.Extensions.EnumerableExtensions.ForEach``1(System.Collections.Generic.IEnumerable{``0},System.Action{``0})
-  name.vb: ForEach(Of T)(IEnumerable(Of T), Action(Of T))
-  fullName: MyTested.AspNetCore.Mvc.Utilities.Extensions.EnumerableExtensions.ForEach<T>(System.Collections.Generic.IEnumerable<T>, System.Action<T>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Utilities.Extensions.EnumerableExtensions.ForEach(Of T)(System.Collections.Generic.IEnumerable(Of T), System.Action(Of T))
-- uid: MyTested.AspNetCore.Mvc.Utilities.Extensions.ExceptionExtensions
-  name: ExceptionExtensions
-  href: api/MyTested.AspNetCore.Mvc.Utilities.Extensions.ExceptionExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_ExceptionExtensions
-  commentId: T:MyTested.AspNetCore.Mvc.Utilities.Extensions.ExceptionExtensions
-  fullName: MyTested.AspNetCore.Mvc.Utilities.Extensions.ExceptionExtensions
-- uid: MyTested.AspNetCore.Mvc.Utilities.Extensions.ExceptionExtensions.Unwrap(System.Exception)
-  name: Unwrap(Exception)
-  href: api/MyTested.AspNetCore.Mvc.Utilities.Extensions.ExceptionExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_ExceptionExtensions_Unwrap_System_Exception_
-  commentId: M:MyTested.AspNetCore.Mvc.Utilities.Extensions.ExceptionExtensions.Unwrap(System.Exception)
-  fullName: MyTested.AspNetCore.Mvc.Utilities.Extensions.ExceptionExtensions.Unwrap(System.Exception)
-- uid: MyTested.AspNetCore.Mvc.Utilities.Extensions.HttpContextExtensions
-  name: HttpContextExtensions
-  href: api/MyTested.AspNetCore.Mvc.Utilities.Extensions.HttpContextExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_HttpContextExtensions
-  commentId: T:MyTested.AspNetCore.Mvc.Utilities.Extensions.HttpContextExtensions
-  fullName: MyTested.AspNetCore.Mvc.Utilities.Extensions.HttpContextExtensions
-- uid: MyTested.AspNetCore.Mvc.Utilities.Extensions.HttpContextExtensions.SetRouteData(Microsoft.AspNetCore.Http.HttpContext,Microsoft.AspNetCore.Routing.RouteData)
-  name: SetRouteData(HttpContext, RouteData)
-  href: api/MyTested.AspNetCore.Mvc.Utilities.Extensions.HttpContextExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_HttpContextExtensions_SetRouteData_Microsoft_AspNetCore_Http_HttpContext_Microsoft_AspNetCore_Routing_RouteData_
-  commentId: M:MyTested.AspNetCore.Mvc.Utilities.Extensions.HttpContextExtensions.SetRouteData(Microsoft.AspNetCore.Http.HttpContext,Microsoft.AspNetCore.Routing.RouteData)
-  fullName: MyTested.AspNetCore.Mvc.Utilities.Extensions.HttpContextExtensions.SetRouteData(Microsoft.AspNetCore.Http.HttpContext, Microsoft.AspNetCore.Routing.RouteData)
-- uid: MyTested.AspNetCore.Mvc.Utilities.Extensions.MemoryCacheExtensions
-  name: MemoryCacheExtensions
-  href: api/MyTested.AspNetCore.Mvc.Utilities.Extensions.MemoryCacheExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_MemoryCacheExtensions
-  commentId: T:MyTested.AspNetCore.Mvc.Utilities.Extensions.MemoryCacheExtensions
-  fullName: MyTested.AspNetCore.Mvc.Utilities.Extensions.MemoryCacheExtensions
-- uid: MyTested.AspNetCore.Mvc.Utilities.Extensions.MemoryCacheExtensions.AsMemoryCacheMock(Microsoft.Extensions.Caching.Memory.IMemoryCache)
-  name: AsMemoryCacheMock(IMemoryCache)
-  href: api/MyTested.AspNetCore.Mvc.Utilities.Extensions.MemoryCacheExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_MemoryCacheExtensions_AsMemoryCacheMock_Microsoft_Extensions_Caching_Memory_IMemoryCache_
-  commentId: M:MyTested.AspNetCore.Mvc.Utilities.Extensions.MemoryCacheExtensions.AsMemoryCacheMock(Microsoft.Extensions.Caching.Memory.IMemoryCache)
-  fullName: MyTested.AspNetCore.Mvc.Utilities.Extensions.MemoryCacheExtensions.AsMemoryCacheMock(Microsoft.Extensions.Caching.Memory.IMemoryCache)
-- uid: MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectExtensions
-  name: ObjectExtensions
-  href: api/MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_ObjectExtensions
-  commentId: T:MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectExtensions
-  fullName: MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectExtensions
-- uid: MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectExtensions.AsDynamic(System.Object)
-  name: AsDynamic(Object)
-  href: api/MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_ObjectExtensions_AsDynamic_System_Object_
-  commentId: M:MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectExtensions.AsDynamic(System.Object)
-  fullName: MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectExtensions.AsDynamic(System.Object)
-- uid: MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectExtensions.GetErrorMessageName(System.Object,System.Boolean,System.String)
-  name: GetErrorMessageName(Object, Boolean, String)
-  href: api/MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_ObjectExtensions_GetErrorMessageName_System_Object_System_Boolean_System_String_
-  commentId: M:MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectExtensions.GetErrorMessageName(System.Object,System.Boolean,System.String)
-  fullName: MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectExtensions.GetErrorMessageName(System.Object, System.Boolean, System.String)
-- uid: MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectExtensions.GetName(System.Object)
-  name: GetName(Object)
-  href: api/MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_ObjectExtensions_GetName_System_Object_
-  commentId: M:MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectExtensions.GetName(System.Object)
-  fullName: MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectExtensions.GetName(System.Object)
-- uid: MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectExtensions.ToObjectValueDictionary(System.Object)
-  name: ToObjectValueDictionary(Object)
-  href: api/MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_ObjectExtensions_ToObjectValueDictionary_System_Object_
-  commentId: M:MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectExtensions.ToObjectValueDictionary(System.Object)
-  fullName: MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectExtensions.ToObjectValueDictionary(System.Object)
-- uid: MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectExtensions.ToStringValueDictionary(System.Object)
-  name: ToStringValueDictionary(Object)
-  href: api/MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_ObjectExtensions_ToStringValueDictionary_System_Object_
-  commentId: M:MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectExtensions.ToStringValueDictionary(System.Object)
-  fullName: MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectExtensions.ToStringValueDictionary(System.Object)
-- uid: MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectExtensions.TryCastTo``1(System.Object)
-  name: TryCastTo<T>(Object)
-  href: api/MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_ObjectExtensions_TryCastTo__1_System_Object_
-  commentId: M:MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectExtensions.TryCastTo``1(System.Object)
-  name.vb: TryCastTo(Of T)(Object)
-  fullName: MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectExtensions.TryCastTo<T>(System.Object)
-  fullName.vb: MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectExtensions.TryCastTo(Of T)(System.Object)
-- uid: MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectModelValidatorExtensions
-  name: ObjectModelValidatorExtensions
-  href: api/MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectModelValidatorExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_ObjectModelValidatorExtensions
-  commentId: T:MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectModelValidatorExtensions
-  fullName: MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectModelValidatorExtensions
-- uid: MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectModelValidatorExtensions.Validate(Microsoft.AspNetCore.Mvc.ModelBinding.Validation.IObjectModelValidator,Microsoft.AspNetCore.Mvc.ControllerContext,System.Object)
-  name: Validate(IObjectModelValidator, ControllerContext, Object)
-  href: api/MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectModelValidatorExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_ObjectModelValidatorExtensions_Validate_Microsoft_AspNetCore_Mvc_ModelBinding_Validation_IObjectModelValidator_Microsoft_AspNetCore_Mvc_ControllerContext_System_Object_
-  commentId: M:MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectModelValidatorExtensions.Validate(Microsoft.AspNetCore.Mvc.ModelBinding.Validation.IObjectModelValidator,Microsoft.AspNetCore.Mvc.ControllerContext,System.Object)
-  fullName: MyTested.AspNetCore.Mvc.Utilities.Extensions.ObjectModelValidatorExtensions.Validate(Microsoft.AspNetCore.Mvc.ModelBinding.Validation.IObjectModelValidator, Microsoft.AspNetCore.Mvc.ControllerContext, System.Object)
-- uid: MyTested.AspNetCore.Mvc.Utilities.Extensions.RouteValueDictionaryExtensions
-  name: RouteValueDictionaryExtensions
-  href: api/MyTested.AspNetCore.Mvc.Utilities.Extensions.RouteValueDictionaryExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_RouteValueDictionaryExtensions
-  commentId: T:MyTested.AspNetCore.Mvc.Utilities.Extensions.RouteValueDictionaryExtensions
-  fullName: MyTested.AspNetCore.Mvc.Utilities.Extensions.RouteValueDictionaryExtensions
-- uid: MyTested.AspNetCore.Mvc.Utilities.Extensions.RouteValueDictionaryExtensions.Add(Microsoft.AspNetCore.Routing.RouteValueDictionary,System.Object)
-  name: Add(RouteValueDictionary, Object)
-  href: api/MyTested.AspNetCore.Mvc.Utilities.Extensions.RouteValueDictionaryExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_RouteValueDictionaryExtensions_Add_Microsoft_AspNetCore_Routing_RouteValueDictionary_System_Object_
-  commentId: M:MyTested.AspNetCore.Mvc.Utilities.Extensions.RouteValueDictionaryExtensions.Add(Microsoft.AspNetCore.Routing.RouteValueDictionary,System.Object)
-  fullName: MyTested.AspNetCore.Mvc.Utilities.Extensions.RouteValueDictionaryExtensions.Add(Microsoft.AspNetCore.Routing.RouteValueDictionary, System.Object)
-- uid: MyTested.AspNetCore.Mvc.Utilities.Extensions.StreamExtensions
-  name: StreamExtensions
-  href: api/MyTested.AspNetCore.Mvc.Utilities.Extensions.StreamExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_StreamExtensions
-  commentId: T:MyTested.AspNetCore.Mvc.Utilities.Extensions.StreamExtensions
-  fullName: MyTested.AspNetCore.Mvc.Utilities.Extensions.StreamExtensions
-- uid: MyTested.AspNetCore.Mvc.Utilities.Extensions.StreamExtensions.Restart(System.IO.Stream)
-  name: Restart(Stream)
-  href: api/MyTested.AspNetCore.Mvc.Utilities.Extensions.StreamExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_StreamExtensions_Restart_System_IO_Stream_
-  commentId: M:MyTested.AspNetCore.Mvc.Utilities.Extensions.StreamExtensions.Restart(System.IO.Stream)
-  fullName: MyTested.AspNetCore.Mvc.Utilities.Extensions.StreamExtensions.Restart(System.IO.Stream)
-- uid: MyTested.AspNetCore.Mvc.Utilities.Extensions.StreamExtensions.ToByteArray(System.IO.Stream)
-  name: ToByteArray(Stream)
-  href: api/MyTested.AspNetCore.Mvc.Utilities.Extensions.StreamExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_StreamExtensions_ToByteArray_System_IO_Stream_
-  commentId: M:MyTested.AspNetCore.Mvc.Utilities.Extensions.StreamExtensions.ToByteArray(System.IO.Stream)
-  fullName: MyTested.AspNetCore.Mvc.Utilities.Extensions.StreamExtensions.ToByteArray(System.IO.Stream)
-- uid: MyTested.AspNetCore.Mvc.Utilities.Extensions.UrlHelperExtensions
-  name: UrlHelperExtensions
-  href: api/MyTested.AspNetCore.Mvc.Utilities.Extensions.UrlHelperExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_UrlHelperExtensions
-  commentId: T:MyTested.AspNetCore.Mvc.Utilities.Extensions.UrlHelperExtensions
-  fullName: MyTested.AspNetCore.Mvc.Utilities.Extensions.UrlHelperExtensions
-- uid: MyTested.AspNetCore.Mvc.Utilities.Extensions.UrlHelperExtensions.ExpressionLink(Microsoft.AspNetCore.Mvc.IUrlHelper,System.Linq.Expressions.LambdaExpression,System.Collections.Generic.ICollection{System.String}@)
-  name: ExpressionLink(IUrlHelper, LambdaExpression, out ICollection<String>)
-  href: api/MyTested.AspNetCore.Mvc.Utilities.Extensions.UrlHelperExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_UrlHelperExtensions_ExpressionLink_Microsoft_AspNetCore_Mvc_IUrlHelper_System_Linq_Expressions_LambdaExpression_System_Collections_Generic_ICollection_System_String___
-  commentId: M:MyTested.AspNetCore.Mvc.Utilities.Extensions.UrlHelperExtensions.ExpressionLink(Microsoft.AspNetCore.Mvc.IUrlHelper,System.Linq.Expressions.LambdaExpression,System.Collections.Generic.ICollection{System.String}@)
-  name.vb: ExpressionLink(IUrlHelper, LambdaExpression, ByRef ICollection(Of String))
-  fullName: MyTested.AspNetCore.Mvc.Utilities.Extensions.UrlHelperExtensions.ExpressionLink(Microsoft.AspNetCore.Mvc.IUrlHelper, System.Linq.Expressions.LambdaExpression, out System.Collections.Generic.ICollection<System.String>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Utilities.Extensions.UrlHelperExtensions.ExpressionLink(Microsoft.AspNetCore.Mvc.IUrlHelper, System.Linq.Expressions.LambdaExpression, ByRef System.Collections.Generic.ICollection(Of System.String))
-- uid: MyTested.AspNetCore.Mvc.Utilities.Extensions.UrlHelperExtensions.GenerateLink(Microsoft.AspNetCore.Mvc.IUrlHelper,MyTested.AspNetCore.Mvc.Internal.TestContexts.LinkGenerationTestContext,MyTested.AspNetCore.Mvc.Internal.TestContexts.ControllerTestContext,System.Collections.Generic.ICollection{System.String})
-  name: GenerateLink(IUrlHelper, LinkGenerationTestContext, ControllerTestContext, ICollection<String>)
-  href: api/MyTested.AspNetCore.Mvc.Utilities.Extensions.UrlHelperExtensions.html#MyTested_AspNetCore_Mvc_Utilities_Extensions_UrlHelperExtensions_GenerateLink_Microsoft_AspNetCore_Mvc_IUrlHelper_MyTested_AspNetCore_Mvc_Internal_TestContexts_LinkGenerationTestContext_MyTested_AspNetCore_Mvc_Internal_TestContexts_ControllerTestContext_System_Collections_Generic_ICollection_System_String__
-  commentId: M:MyTested.AspNetCore.Mvc.Utilities.Extensions.UrlHelperExtensions.GenerateLink(Microsoft.AspNetCore.Mvc.IUrlHelper,MyTested.AspNetCore.Mvc.Internal.TestContexts.LinkGenerationTestContext,MyTested.AspNetCore.Mvc.Internal.TestContexts.ControllerTestContext,System.Collections.Generic.ICollection{System.String})
-  name.vb: GenerateLink(IUrlHelper, LinkGenerationTestContext, ControllerTestContext, ICollection(Of String))
-  fullName: MyTested.AspNetCore.Mvc.Utilities.Extensions.UrlHelperExtensions.GenerateLink(Microsoft.AspNetCore.Mvc.IUrlHelper, MyTested.AspNetCore.Mvc.Internal.TestContexts.LinkGenerationTestContext, MyTested.AspNetCore.Mvc.Internal.TestContexts.ControllerTestContext, System.Collections.Generic.ICollection<System.String>)
-  fullName.vb: MyTested.AspNetCore.Mvc.Utilities.Extensions.UrlHelperExtensions.GenerateLink(Microsoft.AspNetCore.Mvc.IUrlHelper, MyTested.AspNetCore.Mvc.Internal.TestContexts.LinkGenerationTestContext, MyTested.AspNetCore.Mvc.Internal.TestContexts.ControllerTestContext, System.Collections.Generic.ICollection(Of System.String))
 - uid: MyTested.AspNetCore.Mvc.With
   name: With
   href: api/MyTested.AspNetCore.Mvc.With.html#MyTested_AspNetCore_Mvc_With

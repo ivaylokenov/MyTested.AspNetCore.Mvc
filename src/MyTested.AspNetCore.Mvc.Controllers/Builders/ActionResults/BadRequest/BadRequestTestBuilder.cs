@@ -5,7 +5,6 @@
     using System.Net;
     using Base;
     using Contracts.ActionResults.BadRequest;
-    using Contracts.Models;
     using Exceptions;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
@@ -34,32 +33,6 @@
         {
             this.ErrorMessageFormat = ErrorMessage;
             this.OfTypeErrorMessageFormat = OfTypeErrorMessage;
-        }
-
-        /// <inheritdoc />
-        public IAndModelDetailsTestBuilder<TError> WithError<TError>(TError error)
-        {
-            return this.WithModel(error);
-        }
-
-        /// <inheritdoc />
-        public IAndModelDetailsTestBuilder<TError> WithErrorOfType<TError>()
-        {
-            return this.WithModelOfType<TError>();
-        }
-
-        /// <inheritdoc />
-        public IAndBadRequestTestBuilder WithNoError()
-        {
-            var actualResult = this.TestContext.MethodResult as BadRequestResult;
-            if (actualResult == null)
-            {
-                throw new ResponseModelAssertionException(string.Format(
-                    "{0} bad request result to not have error message, but in fact such was found.",
-                    this.TestContext.ExceptionMessagePrefix));
-            }
-
-            return this;
         }
 
         /// <inheritdoc />
@@ -185,6 +158,20 @@
                     "{0} bad request error message ('{2}') to pass the given predicate, but it failed.",
                     this.TestContext.ExceptionMessagePrefix,
                     actualErrorMessage));
+            }
+
+            return this;
+        }
+
+        /// <inheritdoc />
+        public IAndBadRequestTestBuilder WithNoError()
+        {
+            var actualResult = this.TestContext.MethodResult as BadRequestResult;
+            if (actualResult == null)
+            {
+                throw new ResponseModelAssertionException(string.Format(
+                    "{0} bad request result to not have error message, but in fact such was found.",
+                    this.TestContext.ExceptionMessagePrefix));
             }
 
             return this;

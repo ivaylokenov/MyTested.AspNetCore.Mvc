@@ -67,23 +67,5 @@
         /// <returns>The same <see cref="IAndLocalRedirectTestBuilder"/>.</returns>
         IAndLocalRedirectTestBuilder WithUrlHelperOfType<TUrlHelper>()
             where TUrlHelper : IUrlHelper;
-
-        /// <summary>
-        /// Tests whether <see cref="LocalRedirectResult"/> redirects to specific action.
-        /// </summary>
-        /// <typeparam name="TController">Type of expected redirect controller.</typeparam>
-        /// <param name="actionCall">Method call expression indicating the expected redirect action.</param>
-        /// <returns>The same <see cref="IAndLocalRedirectTestBuilder"/>.</returns>
-        IAndLocalRedirectTestBuilder To<TController>(Expression<Action<TController>> actionCall)
-            where TController : class;
-
-        /// <summary>
-        /// Tests whether <see cref="LocalRedirectResult"/> redirects to specific asynchronous action.
-        /// </summary>
-        /// <typeparam name="TController">Type of expected redirect controller.</typeparam>
-        /// <param name="actionCall">Method call expression indicating the expected asynchronous action.</param>
-        /// <returns>The same <see cref="IAndLocalRedirectTestBuilder"/>.</returns>
-        IAndLocalRedirectTestBuilder To<TController>(Expression<Func<TController, Task>> actionCall)
-            where TController : class;
     }
 }

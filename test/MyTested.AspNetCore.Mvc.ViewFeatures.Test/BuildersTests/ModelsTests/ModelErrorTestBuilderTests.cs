@@ -17,10 +17,14 @@
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.ModelStateCheck(requestBodyWithErrors))
+                .ShouldHave()
+                .ModelState(modelState => modelState
+                    .For<RequestModel>()
+                    .ContainingErrorFor(r => r.RequiredString))
+                .AndAlso()
                 .ShouldReturn()
                 .Ok()
-                .WithModel(requestBodyWithErrors)
-                .ContainingErrorFor(r => r.RequiredString);
+                .WithModel(requestBodyWithErrors);
         }
 
         [Fact]
@@ -34,12 +38,16 @@
                     MyController<MvcController>
                         .Instance()
                         .Calling(c => c.ModelStateCheck(requestBody))
+                        .ShouldHave()
+                        .ModelState(modelState => modelState
+                            .For<RequestModel>()
+                            .ContainingErrorFor(r => r.RequiredString))
+                        .AndAlso()
                         .ShouldReturn()
                         .Ok()
-                        .WithModel(requestBody)
-                        .ContainingErrorFor(r => r.RequiredString);
+                        .WithModel(requestBody);
                 },
-                "When calling ModelStateCheck action in MvcController expected to have a model error against key RequiredString, but none found.");
+                "When calling ModelStateCheck action in MvcController expected to have a model error against key 'RequiredString', but in fact none was found.");
         }
 
         [Fact]
@@ -50,10 +58,14 @@
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.ModelStateCheck(requestBody))
+                .ShouldHave()
+                .ModelState(modelState => modelState
+                    .For<RequestModel>()
+                    .ContainingNoErrorFor(r => r.RequiredString))
+                .AndAlso()
                 .ShouldReturn()
                 .Ok()
-                .WithModel(requestBody)
-                .ContainingNoErrorFor(r => r.RequiredString);
+                .WithModel(requestBody);
         }
 
         [Fact]
@@ -67,10 +79,14 @@
                     MyController<MvcController>
                         .Instance()
                         .Calling(c => c.ModelStateCheck(requestBodyWithErrors))
+                        .ShouldHave()
+                        .ModelState(modelState => modelState
+                            .For<RequestModel>()
+                            .ContainingNoErrorFor(r => r.RequiredString))
+                        .AndAlso()
                         .ShouldReturn()
                         .Ok()
-                        .WithModel(requestBodyWithErrors)
-                        .ContainingNoErrorFor(r => r.RequiredString);
+                        .WithModel(requestBodyWithErrors);
                 },
                 "When calling ModelStateCheck action in MvcController expected to have no model errors against key RequiredString, but found some.");
         }
@@ -83,11 +99,15 @@
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.ModelStateCheck(requestBody))
+                .ShouldHave()
+                .ModelState(modelState => modelState
+                    .For<RequestModel>()
+                    .ContainingNoErrorFor(r => r.Integer)
+                    .ContainingNoErrorFor(r => r.RequiredString))
+                .AndAlso()
                 .ShouldReturn()
                 .Ok()
-                .WithModel(requestBody)
-                .ContainingNoErrorFor(r => r.Integer)
-                .ContainingNoErrorFor(r => r.RequiredString);
+                .WithModel(requestBody);
         }
 
         [Fact]
@@ -101,11 +121,15 @@
                     MyController<MvcController>
                         .Instance()
                         .Calling(c => c.ModelStateCheck(requestBodyWithErrors))
+                        .ShouldHave()
+                        .ModelState(modelState => modelState
+                            .For<RequestModel>()
+                            .ContainingNoErrorFor(r => r.Integer)
+                            .ContainingNoErrorFor(r => r.RequiredString))
+                        .AndAlso()
                         .ShouldReturn()
                         .Ok()
-                        .WithModel(requestBodyWithErrors)
-                        .ContainingNoErrorFor(r => r.Integer)
-                        .ContainingNoErrorFor(r => r.RequiredString);
+                        .WithModel(requestBodyWithErrors);
                 },
                 "When calling ModelStateCheck action in MvcController expected to have no model errors against key Integer, but found some.");
         }
@@ -116,10 +140,14 @@
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.OkResultWithResponse())
+                .ShouldHave()
+                .ModelState(modelState => modelState
+                    .For<List<ResponseModel>>()
+                    .ContainingNoErrorFor(m => m.Count))
+                .AndAlso()
                 .ShouldReturn()
                 .Ok()
                 .WithModelOfType<List<ResponseModel>>()
-                .ContainingNoErrorFor(m => m.Count)
                 .AndAlso()
                 .ShouldPassForThe<List<ResponseModel>>(responseModel =>
                 {

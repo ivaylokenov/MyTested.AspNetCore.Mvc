@@ -9,13 +9,13 @@
     public partial class ViewComponentShouldReturnTestBuilder<TInvocationResult>
     {
         /// <inheritdoc />
-        public IViewTestBuilder View()
+        public IAndViewTestBuilder View()
         {
             return this.View(null);
         }
 
         /// <inheritdoc />
-        public IViewTestBuilder View(string viewName)
+        public IAndViewTestBuilder View(string viewName)
         {
             var viewResult = InvocationResultValidator
                 .GetInvocationResult<ViewViewComponentResult>(this.TestContext);
@@ -30,20 +30,6 @@
             }
 
             return new ViewTestBuilder(this.TestContext);
-        }
-
-        /// <inheritdoc />
-        public IViewTestBuilder View<TModel>(TModel model)
-        {
-            return this.View(null, model);
-        }
-
-        /// <inheritdoc />
-        public IViewTestBuilder View<TModel>(string viewName, TModel model)
-        {
-            var viewTestBuilder = this.View(viewName);
-            viewTestBuilder.WithModel(model);
-            return viewTestBuilder;
         }
     }
 }

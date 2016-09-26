@@ -1,7 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Invocations.ShouldReturn
 {
     using And;
-    using Contracts.Base;
+    using Contracts.And;
     using Exceptions;
     using Utilities;
     using Utilities.Validators;
@@ -9,7 +9,7 @@
     public partial class ViewComponentShouldReturnTestBuilder<TInvocationResult>
     {
         /// <inheritdoc />
-        public IBaseTestBuilderWithViewComponentResult<TInvocationResult> DefaultValue()
+        public IAndTestBuilder DefaultValue()
         {
             if (!this.CheckValidDefaultValue())
             {
@@ -18,11 +18,11 @@
                     typeof(TInvocationResult).ToFriendlyTypeName()));
             }
             
-            return this.NewAndTestBuilderWithViewComponentResult();
+            return new AndTestBuilder(this.TestContext);
         }
 
         /// <inheritdoc />
-        public IBaseTestBuilderWithViewComponentResult<TInvocationResult> Null()
+        public IAndTestBuilder Null()
         {
             CommonValidator.CheckIfTypeCanBeNull(typeof(TInvocationResult));
             if (!this.CheckValidDefaultValue())
@@ -32,11 +32,11 @@
                     typeof(TInvocationResult).ToFriendlyTypeName()));
             }
 
-            return this.NewAndTestBuilderWithViewComponentResult();
+            return new AndTestBuilder(this.TestContext);
         }
 
         /// <inheritdoc />
-        public IBaseTestBuilderWithViewComponentResult<TInvocationResult> NotNull()
+        public IAndTestBuilder NotNull()
         {
             CommonValidator.CheckIfTypeCanBeNull(typeof(TInvocationResult));
             if (this.CheckValidDefaultValue())
@@ -46,7 +46,7 @@
                     typeof(TInvocationResult).ToFriendlyTypeName()));
             }
 
-            return this.NewAndTestBuilderWithViewComponentResult();
+            return new AndTestBuilder(this.TestContext);
         }
 
         private bool CheckValidDefaultValue()

@@ -1,8 +1,9 @@
 ﻿{
   "title": "MyTested.AspNetCore.Mvc.Licensing",
   "description": "My Tested ASP.NET Core MVC licensing components.",
-  "version": "1.0.0-preview-final",
+  "version": "1.0.0",
   "authors": [ "Ivaylo Kenov" ],
+  "copyright": "2015-2016 Ivaylo Kenov",
   "packOptions": {
     "projectUrl": "https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc",
     "licenseUrl": "https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/master/LICENSE",
@@ -27,11 +28,11 @@
   },
 
   "frameworks": {
-    "net451": { },
+    "net451": {},
     "netstandard1.4": {
       "dependencies": {
-        "NETStandard.Library": "1.6.0-*",
-        "System.Security.Cryptography.Csp": "4.0.0-*"
+        "NETStandard.Library": "1.6.0",
+        "System.Security.Cryptography.Csp": "4.0.0"
       }
     }
   }

@@ -13,14 +13,14 @@
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <inheritdoc />
-        public IContentTestBuilder Content()
+        public IAndContentTestBuilder Content()
         {
             InvocationResultValidator.ValidateInvocationResultType<ContentResult>(this.TestContext);
             return new ContentTestBuilder(this.TestContext);
         }
 
         /// <inheritdoc />
-        public IContentTestBuilder Content(string content)
+        public IAndContentTestBuilder Content(string content)
         {
             var contentResult = InvocationResultValidator.GetInvocationResult<ContentResult>(this.TestContext);
             var actualContent = contentResult.Content;
@@ -37,7 +37,7 @@
         }
 
         /// <inheritdoc />
-        public IContentTestBuilder Content(Action<string> assertions)
+        public IAndContentTestBuilder Content(Action<string> assertions)
         {
             var contentResult = InvocationResultValidator.GetInvocationResult<ContentResult>(this.TestContext);
             var actualContent = contentResult.Content;
@@ -48,7 +48,7 @@
         }
 
         /// <inheritdoc />
-        public IContentTestBuilder Content(Func<string, bool> predicate)
+        public IAndContentTestBuilder Content(Func<string, bool> predicate)
         {
             var contentResult = InvocationResultValidator.GetInvocationResult<ContentResult>(this.TestContext);
             var actualContent = contentResult.Content;

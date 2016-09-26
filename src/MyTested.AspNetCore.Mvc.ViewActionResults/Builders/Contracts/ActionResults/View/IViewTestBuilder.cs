@@ -8,7 +8,7 @@
     /// <summary>
     /// Used for testing <see cref="Microsoft.AspNetCore.Mvc.ViewResult"/> or <see cref="Microsoft.AspNetCore.Mvc.PartialViewResult"/>.
     /// </summary>
-    public interface IViewTestBuilder : IBaseTestBuilderWithViewFeature
+    public interface IViewTestBuilder : IBaseTestBuilderWithResponseModel
     {
         /// <summary>
         /// Tests whether <see cref="Microsoft.AspNetCore.Mvc.ViewResult"/> or <see cref="Microsoft.AspNetCore.Mvc.PartialViewResult"/>

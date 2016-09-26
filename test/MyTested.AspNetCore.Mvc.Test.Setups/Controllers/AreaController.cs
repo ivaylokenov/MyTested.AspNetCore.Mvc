@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Mvc;
 
+    [Controller]
     [Area("CustomArea")]
     public class AreaController : Controller
     {
