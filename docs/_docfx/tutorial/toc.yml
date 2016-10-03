@@ -3,3 +3,5 @@
   href: intro.md
 - name: Getting Started
   href: gettingstarted.md
+- name: Controllers
+  href: controllers.md
