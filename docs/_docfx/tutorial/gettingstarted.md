@@ -192,4 +192,24 @@ The JSON file is not optional and since we inherit from the original web **"Star
 
 **Third**, as we noticed Visual Studio does not run the discovered tests for all specified frameworks. This is why we went to the console and tried running there. Unfortunately, the test failed for the **"net451"** framework. The reason is simple. The full framework did not save and store our project references and dependencies. This is why all the required test plugin classes could not be loaded when using "net451". By setting the **"preserveCompilationContext"** option to **"true"** the compiler will store the dependencies information into a file from where later during runtime it can be read successfully.
 
-Well, all is well that ends well! While the **"Getting Started"** section of this tutorial may feel a bit "kaboom"-ish, it covers all the common failures and problems you may encounter while using My Tested ASP.NET Core MVC. From now on it is all unicorns and rainbows. Go to the [Testing Controllers](/tutorial/controllers.html) section and see for yourself! :)
+To finish this section let's make the test fail because of an invalid assertion just to see what happens. Instead of testing for **"View"**, make it assert for any other action result, for example **"BadRequest"**:
+
+```c#
+[Fact]
+public void AddressAndPayment_ShouldReturn_DefaultView()
+    => MyController<CheckoutController>
+        .Instance()
+        .Calling(c => c.AddressAndPayment())
+        .ShouldReturn()
+        .BadRequest();
+```
+
+Run the test and you will see a nice descriptive error message from My Tested ASP.NET Core MVC:
+
+```
+When calling AddressAndPayment action in CheckoutController expected result to be BadRequestResult, but instead received ViewResult.
+```
+
+Of course, you should undo the change and return the **"View"** call (unless you want a failing test during the whole tutorial but that's up to you again). :)
+
+Well, all is well that ends well! While the **"Getting Started"** section of this tutorial may feel a bit "kaboom"-ish, it covers all the common failures and problems you may encounter while starting to use My Tested ASP.NET Core MVC. From now on it is all unicorns and rainbows. Go to the [Packages](/tutorial/packages.html) section and see for yourself! :)
