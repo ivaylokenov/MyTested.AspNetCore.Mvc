@@ -4,9 +4,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title> </title>
+    <title>Controllers </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content=" ">
+    <meta name="title" content="Controllers ">
     <meta name="generator" content="docfx 2.5.0.0">
     {% seo %}
     
@@ -63,8 +63,114 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
+              <h1 id="controllers" sourcefile="tutorial/controllers.md" sourcestartlinenumber="1" sourceendlinenumber="1">Controllers</h1>
               
-              
+<p sourcefile="tutorial/controllers.md" sourcestartlinenumber="3" sourceendlinenumber="3">In this section we will dive a bit deeper into controller testing. By understanding it, you will get familiar with the fundamentals of My Tested ASP.NET Core MVC and see how a lot of other components from a typical MVC web application are asserted in a similar manner. Of course we will use the classical AAA (Arrange, Act, Assert) approach.</p>
+<h2 id="arrange" sourcefile="tutorial/controllers.md" sourcestartlinenumber="5" sourceendlinenumber="5">Arrange</h2>
+<p sourcefile="tutorial/controllers.md" sourcestartlinenumber="7" sourceendlinenumber="7">Go to the <strong>&quot;ManageController&quot;</strong> again and analyse the <strong>&quot;ChangePassword&quot;</strong> action. You will notice that with invalid model state this action returns view result with the same model provided as a request parameter. Particularly, we want to test these lines of code:</p>
+<pre sourcefile="tutorial/controllers.md" sourcestartlinenumber="9" sourceendlinenumber="14"><code class="lang-c#">if (!ModelState.IsValid)
+{
+    return View(model);
+}
+</code></pre><p sourcefile="tutorial/controllers.md" sourcestartlinenumber="16" sourceendlinenumber="16">My Tested ASP.NET Core MVC provides a very easy way to arrange the model state, but we will ignore it for now. What we want is to add a model error to the action call manually. Go to the <strong>&quot;ManageControllerTest&quot;</strong> class, add the new test and start with the typical selection of a controller to test:</p>
+<pre sourcefile="tutorial/controllers.md" sourcestartlinenumber="18" sourceendlinenumber="25"><code class="lang-c#">[Fact]
+public void ChangePassword_ShouldReturn_ViewWithSameModel_WithInvalidModelState()
+{
+    MyController&lt;ManageController&gt;
+        .Instance()
+}
+</code></pre><p sourcefile="tutorial/controllers.md" sourcestartlinenumber="27" sourceendlinenumber="27">We will now examine three different ways to arrange the model state on the tested <strong>&quot;&quot;ManageController&quot;</strong>. Since the model state is part of the controller (action) context (see <a href="https://github.com/aspnet/Mvc/blob/dev/src/Microsoft.AspNetCore.Mvc.Core/ControllerBase.cs#L83" sourcefile="tutorial/controllers.md" sourcestartlinenumber="27" sourceendlinenumber="27">HERE</a>), you may instantiate one (after adding the <strong>&quot;Microsoft.AspNetCore.Mvc&quot;</strong> using) and provide it by using the <strong>&quot;WithControllerContext&quot;</strong> (<strong>&quot;WithActionContext&quot;</strong>) method:</p>
+<pre sourcefile="tutorial/controllers.md" sourcestartlinenumber="29" sourceendlinenumber="36"><code class="lang-c#">var controllerContext = new ControllerContext();
+controllerContext.ModelState.AddModelError(&quot;TestError&quot;, &quot;TestErrorMessage&quot;);
+
+MyController&lt;ManageController&gt;
+    .Instance()
+    .WithControllerContext(controllerContext)
+</code></pre><p sourcefile="tutorial/controllers.md" sourcestartlinenumber="38" sourceendlinenumber="38">Since the testing framework prepares for you everything it can before running the actual test case, you may skip the instantiation and use the other overload of the method using an action delegate:</p>
+<pre sourcefile="tutorial/controllers.md" sourcestartlinenumber="40" sourceendlinenumber="45"><code class="lang-c#">MyController&lt;ManageController&gt;
+    .Instance()
+    .WithControllerContext(context =&gt; context.ModelState
+        .AddModelError(&quot;TestError&quot;, &quot;TestErrorMessage&quot;))
+</code></pre><p sourcefile="tutorial/controllers.md" sourcestartlinenumber="47" sourceendlinenumber="47">These are fine but the model state dictionary can be accessed directly from the controller itself, so we can just skip the whole <strong>&quot;ControllerContext&quot;</strong> class by using the <strong>&quot;WithSetup&quot;</strong> method:</p>
+<pre sourcefile="tutorial/controllers.md" sourcestartlinenumber="49" sourceendlinenumber="54"><code class="lang-c#">MyController&lt;ManageController&gt;
+    .Instance()
+    .WithSetup(controller =&gt; controller.ModelState
+        .AddModelError(&quot;TestError&quot;, &quot;TestErrorMessage&quot;))
+</code></pre><p sourcefile="tutorial/controllers.md" sourcestartlinenumber="56" sourceendlinenumber="56">As you can see the <strong>&quot;WithSetup&quot;</strong> method will come in handy wherever the fluent API does not provide a specific arrange method. As a side note - My Tested ASP.NET Core MVC provides an easy way to set up the model state dictionary, but we will cover it later in this tutorial.</p>
+<p sourcefile="tutorial/controllers.md" sourcestartlinenumber="58" sourceendlinenumber="58">Each one of these three ways for arranging the controller is fine but stick with the third option for now.</p>
+<h2 id="act" sourcefile="tutorial/controllers.md" sourcestartlinenumber="60" sourceendlinenumber="60">Act</h2>
+<p sourcefile="tutorial/controllers.md" sourcestartlinenumber="62" sourceendlinenumber="62">We need to act! In other words we need to call the action method. We do not need an actual request model to test the desired logic, so let&#39;s pass a null value as a parameter. Add this line to the test:</p>
+<pre sourcefile="tutorial/controllers.md" sourcestartlinenumber="64" sourceendlinenumber="66"><code class="lang-c#">.Calling(c =&gt; c.ChangePassword(null))
+</code></pre><p sourcefile="tutorial/controllers.md" sourcestartlinenumber="68" sourceendlinenumber="68">You should be familiar with the <strong>&quot;Calling&quot;</strong> method from the previous sections. Again, if you prefer to be more expressive, you may use the <strong>&quot;With&quot;</strong> class:</p>
+<pre sourcefile="tutorial/controllers.md" sourcestartlinenumber="70" sourceendlinenumber="72"><code class="lang-c#">.Calling(c =&gt; c.ChangePassword(With.No&lt;ChangePasswordViewModel&gt;()))
+</code></pre><p sourcefile="tutorial/controllers.md" sourcestartlinenumber="74" sourceendlinenumber="74">Well, this was easy! :)</p>
+<h2 id="assert" sourcefile="tutorial/controllers.md" sourcestartlinenumber="76" sourceendlinenumber="76">Assert</h2>
+<p sourcefile="tutorial/controllers.md" sourcestartlinenumber="78" sourceendlinenumber="78">The final part of our test is asserting the action result. You should know how to assert a view result too, so add these to the test:</p>
+<pre sourcefile="tutorial/controllers.md" sourcestartlinenumber="80" sourceendlinenumber="83"><code class="lang-c#">.ShouldReturn()
+.View();
+</code></pre><p sourcefile="tutorial/controllers.md" sourcestartlinenumber="85" sourceendlinenumber="85">We now need to test the returned model. It should be the same as the one provided through the action parameter. If you look through the intellisense after the <strong>&quot;View&quot;</strong> call, you will not find anything related to models. The reason simple - model testing is available in a separate package which we will install in the next section.</p>
+<p sourcefile="tutorial/controllers.md" sourcestartlinenumber="87" sourceendlinenumber="87">For now we will use the tools we already have imported in our test project. Introducing the magical <strong>&quot;ShouldPassForThe<twhateveryoulike>&quot;</twhateveryoulike></strong> method! I know developers do not like magic code but this one is cool, I promise! :)</p>
+<p sourcefile="tutorial/controllers.md" sourcestartlinenumber="89" sourceendlinenumber="89">Add the following lines to the test:</p>
+<pre sourcefile="tutorial/controllers.md" sourcestartlinenumber="91" sourceendlinenumber="94"><code class="lang-c#">.AndAlso()
+.ShouldPassForThe&lt;ViewResult&gt;(viewResult =&gt; Assert.Null(viewResult.Model));
+</code></pre><p sourcefile="tutorial/controllers.md" sourcestartlinenumber="96" sourceendlinenumber="96">Now run the test and we are ready! :)</p>
+<p sourcefile="tutorial/controllers.md" sourcestartlinenumber="98" sourceendlinenumber="98">But before moving on with our lives, let&#39;s explain these two lines.</p>
+<p sourcefile="tutorial/controllers.md" sourcestartlinenumber="100" sourceendlinenumber="100">First - the <strong>&quot;AndAlso&quot;</strong> method. It is just there for better readability and expressiveness. It is available on various places in the fluent API but it actually does nothing most of the time. You may remove it from your code now, then recompile it and run the test again and it will still pass. Of course, it is up to you whether or not to use the <strong>&quot;AndAlso&quot;</strong> method but admit it - it is a nice little addition to the test! :)</p>
+<p sourcefile="tutorial/controllers.md" sourcestartlinenumber="102" sourceendlinenumber="102">Second - the magical <strong>&quot;ShouldPassForThe<viewresult>&quot;</viewresult></strong> call. To make sure it works correctly, let&#39;s change the <strong>&quot;Assert.Null&quot;</strong> to <strong>&quot;Assert.NotNull&quot;</strong> and run the test. It should fail loud and clear with the original <strong>&quot;xUnit&quot;</strong> message:</p>
+<pre sourcefile="tutorial/controllers.md" sourcestartlinenumber="104" sourceendlinenumber="106"><code>Assert.NotNull() Failure
+</code></pre><p sourcefile="tutorial/controllers.md" sourcestartlinenumber="108" sourceendlinenumber="108">Return back the <strong>&quot;Null&quot;</strong> call so that the test passes again. The <strong>&quot;ShouldPassForThe<tcomponent>&quot;</tcomponent></strong> method obviously works. What is interesting here is that the generic parameter <strong>&quot;TComponent&quot;</strong> can be anything you like, as long it is recognised by My Tested ASP.NET Core MVC. Seriously, add the following to the test and run the test:</p>
+<pre sourcefile="tutorial/controllers.md" sourcestartlinenumber="110" sourceendlinenumber="121"><code class="lang-c#">.ShouldReturn()
+.View()
+.AndAlso()
+.ShouldPassForThe&lt;Controller&gt;(controller =&gt;
+{
+    Assert.NotNull(controller);
+    Assert.True(controller.ModelState.ContainsKey(&quot;TestError&quot;));
+})
+.AndAlso()
+.ShouldPassForThe&lt;ViewResult&gt;(viewResult =&gt; Assert.Null(viewResult.Model));
+</code></pre><p sourcefile="tutorial/controllers.md" sourcestartlinenumber="123" sourceendlinenumber="123">Of course the first <strong>&quot;ShouldPassForThe&quot;</strong> call does not make any sense at all but it proves that everything related to the test can be asserted by using the method. You may even put a break point into the action delegate and debug it, if you like.</p>
+<p sourcefile="tutorial/controllers.md" sourcestartlinenumber="125" sourceendlinenumber="125">I guess that you already know it, but if you put an invalid and unrecognisable type for the generic parameter, for example <strong>&quot;ShouldPassForThe<xunitprojectassembly>&quot;</xunitprojectassembly></strong>, you will receive an exception:</p>
+<pre sourcefile="tutorial/controllers.md" sourcestartlinenumber="127" sourceendlinenumber="129"><code>XunitProjectAssembly could not be resolved for the &#39;ShouldPassForThe&lt;TComponent&gt;&#39; method call.
+</code></pre><p sourcefile="tutorial/controllers.md" sourcestartlinenumber="131" sourceendlinenumber="131">To continue, let&#39;s bring back the test to its last passing state:</p>
+<pre sourcefile="tutorial/controllers.md" sourcestartlinenumber="133" sourceendlinenumber="147"><code class="lang-c#">[Fact]
+public void ChangePassword_ShouldReturn_ViewWithSameModel_WithInvalidModelState()
+{
+    MyController&lt;ManageController&gt;
+        .Instance()
+        .WithSetup(controller =&gt; controller.ModelState
+            .AddModelError(&quot;TestError&quot;, &quot;TestErrorMessage&quot;))
+        .Calling(c =&gt; c.ChangePassword(With.No&lt;ChangePasswordViewModel&gt;()))
+        .ShouldReturn()
+        .View()
+        .AndAlso()
+        .ShouldPassForThe&lt;ViewResult&gt;(viewResult =&gt; Assert.Null(viewResult.Model));
+}
+</code></pre><p sourcefile="tutorial/controllers.md" sourcestartlinenumber="149" sourceendlinenumber="149">We are still not asserting whether the view model is the same object as the provided method parameter. Let&#39;s change that by instantiating a <strong>&quot;ChangePasswordViewModel&quot;</strong> and test the action with it:</p>
+<pre sourcefile="tutorial/controllers.md" sourcestartlinenumber="151" sourceendlinenumber="172"><code class="lang-c#">[Fact]
+public void ChangePassword_ShouldReturn_ViewWithSameModel_WithInvalidModelState()
+{
+    var model = new ChangePasswordViewModel
+    {
+        OldPassword = &quot;OldPass&quot;,
+        NewPassword = &quot;NewPass&quot;,
+        ConfirmPassword = &quot;NewPass&quot;
+    };
+
+    MyController&lt;ManageController&gt;
+        .Instance()
+        .WithSetup(controller =&gt; controller.ModelState
+            .AddModelError(&quot;TestError&quot;, &quot;TestErrorMessage&quot;))
+        .Calling(c =&gt; c.ChangePassword(model))
+        .ShouldReturn()
+        .View()
+        .AndAlso()
+        .ShouldPassForThe&lt;ViewResult&gt;(viewResult =&gt; Assert.Same(model, viewResult.Model));
+}
+</code></pre><p sourcefile="tutorial/controllers.md" sourcestartlinenumber="174" sourceendlinenumber="174">Our work here is done (for now)! :)</p>
+<h2 id="section-summary" sourcefile="tutorial/controllers.md" sourcestartlinenumber="176" sourceendlinenumber="176">Section summary</h2>
+<p sourcefile="tutorial/controllers.md" sourcestartlinenumber="178" sourceendlinenumber="178">In this section we saw the AAA approach collaborating gracefully with My Tested ASP.NET Core MVC. However, I know you remember reading earlier about an easier way of arranging the model state and more fluent testing options for the view result models. You can learn about them in the <a href="/tutorial/models.html" sourcefile="tutorial/controllers.md" sourcestartlinenumber="178" sourceendlinenumber="178">Models</a> section!</p>
+
             </article>
           </div>
           

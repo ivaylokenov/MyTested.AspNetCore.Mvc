@@ -1,8 +1,10 @@
 # Packages
 
-In this section we will learn the most important parts of arranging and asserting our web application components. Of course, as a main building block of the ASP.NET Core MVC framework, we will start with controllers.
+In this section we will learn the most important parts of arranging and asserting our web application components.
 
-Before we begin, let's make a step backwards. Remember the **"project.json"** and the referenced **"MyTested.AspNetCore.Mvc"** dependency? Good! The My Tested ASP.NET Core MVC framework consists of many packages. Here are the most important ones:
+## The building blocks of the testing framework
+
+Of course, as a main building block of the ASP.NET Core MVC framework, we will start with controllers. Before we begin, let's make a step backwards. Remember the **"project.json"** and the referenced **"MyTested.AspNetCore.Mvc"** dependency? Good! The My Tested ASP.NET Core MVC framework consists of many packages. Here are the most important ones:
 
  - **"MyTested.AspNetCore.Mvc.Core"** - Contains setup and assertion methods for MVC core features - controllers, models and routes
  - **"MyTested.AspNetCore.Mvc.DataAnnotations"** - Contains setup and assertion methods for data annotation validations and model state
@@ -19,6 +21,8 @@ Additionally, these two packages are also available:
  - **"MyTested.AspNetCore.Mvc.Lite"** - Completely **FREE** and **UNLIMITED** version of the library. It should not be used in combination with any other package. Includes ""*Controllers"**, `ViewActionResults"** and `ViewComponents"**.
 
 Full list and descriptions of all available packages can be found [HERE](/guide/packages.html). All of them except the **"Lite"** one require a license code in order to be used without limitations. If a license code is not provided, a maximum of 100 assertions per test project is allowed. More information about the licensing can be found [HERE](/guide/licensing.html).
+
+## Breaking down the MVC package
 
 Now, let's get back to the testing. Go to the **"project.json"** file and replace the **"MyTested.AspNetCore.Mvc"** dependency with **"MyTested.AspNetCore.Mvc.Controllers"**. We will start using the small and specific packages for now and then we will switch to the **"Universe"** one later in the tutorial.
 
@@ -54,6 +58,8 @@ Unfortunately, it still does not compile because the **"Controllers"** package c
 You can see this by examining the intellisense of the test result:
 
 <img src="/images/tutorial/coreintellisense.jpg" alt="Controllers package intellisense" />
+
+## Asserting core controllers
 
 We will now try the core action results before returning back to the view features. Comment the first test for now (so that the project will compile with the currently added dependencies) and add a new class named **"ManageControllerTest"** in the **"Controllers"** folder. We will test the asynchronous **"RemoveLogin"** action in the **"ManageController"**. If you examine it, you will notice that it returns **"RedirectToAction"**, if no user is authenticated.
 
@@ -93,6 +99,8 @@ public void RemoveLogin_ShouldReturn_RedirectToAction_WithNoUser()
 
 Now we can sleep peacefully! :)
 
+## Adding view action results
+
 OK, back to that commented test. We cannot test views with our current dependencies. Go to the **"project.json"** and add **"MyTested.AspNetCore.Mvc.ViewActionResults"** ас а dependency:
 
 ```json
@@ -106,5 +114,7 @@ OK, back to that commented test. We cannot test views with our current dependenc
 ``` 
 
 This package adds all action results from the [Controller](https://github.com/aspnet/Mvc/blob/dev/src/Microsoft.AspNetCore.Mvc.ViewFeatures/Controller.cs) class from the [ViewFeatures](https://github.com/aspnet/Mvc/tree/dev/src/Microsoft.AspNetCore.Mvc.ViewFeatures) MVC package. Go back to the **"CheckoutControllerTest"** class and uncomment the view test. It should compile and pass successfully now.
+
+## Section summary
 
 In this section we learned how we can use only these parts from My Tested ASP.NET Core MVC that we actually need in our testing project. As you can see each small package dependency adds additional extension methods to the fluent API. We will add more and more packages in the next sections so that you can get familiar with them. Next - [Debugging Failed Tests](/tutorial/debugging.html)!

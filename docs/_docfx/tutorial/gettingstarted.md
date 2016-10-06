@@ -1,5 +1,9 @@
 # Getting Started
 
+In this section we will learn how to configure My Tested ASP.NET Core MVC and get familiar with all the small issues we may encounter in the process.
+
+## Prepare test assembly
+
 First things first - we need a test assembly! Open the [Music Store solution](https://raw.githubusercontent.com/ivaylokenov/MyTested.AspNetCore.Mvc/development/docs/_docfx/tutorial/MusicStore-Tutorial.zip), add **"test"** folder and create a new .NET Core class library called **"MusicStore.Test"** in it.
 
 <img src="/images/tutorial/createtestproject.jpg" alt="Create .NET Core test assembly" />
@@ -41,7 +45,9 @@ Your **"project.json"** file should look like this:
 
 You may need to change/update the versions of the listed packages with more recent ones.
 
-Now let's write our first unit test. We will test the **"AddressAndPayment"** action in the **"CheckoutController"**. It is one of the most simplest actions possible - returns a default view no matter the HTTP request.
+## Our first test
+
+Now let's write our first unit test. We will test the **"AddressAndPayment"** action in the **"CheckoutController"**. It is one of the simplest actions possible - returns a default view no matter the HTTP request.
 
 <img src="/images/tutorial/addressandpaymentactions.jpg" alt="Simple controller action returning default view" />
 
@@ -73,11 +79,13 @@ This should be your unit test now:
 
 <img src="/images/tutorial/firstunittest.jpg" alt="First unit test returning simple view" />
 
+## "TestStartup" class
+
 Let's build the solution and run the test.
 
 <img src="/images/tutorial/nostartuperror.jpg" alt="First unit test fails because of missing TestStartup class" />
 
-Surpise! The simplest test fails. This testing framework is a waste of time! :(
+Surprise! The simplest test fails. This testing framework is a waste of time! :(
 
 Joke! Don't leave yet! By default My Tested ASP.NET Core MVC requires a **"TestStartup"** file at the root of the test assembly so let's add one. Write the following code in it:
 
@@ -95,6 +103,10 @@ namespace MusicStore.Test
     }
 }
 ```
+
+You may have noticed the constructor of the **"CheckoutController"**. It is not an empty one. My Tested ASP.NET Core MVC uses the registered services from the **"TestStartup"** class to resolve all dependencies and instantiate the controller. We will get in more details about the test service provider later in this tutorial.
+
+## Web configuration
 
 Now run the test again.
 
@@ -140,6 +152,8 @@ Your **"config.json"** file should look like this:
 
 Now run the test again in Visual Studio and... oh, miracle, it passes! :)
 
+## Multiple frameworks
+
 Don't be too happy yet as there is a (not-so) small problem here. Visual Studio runs the discovered tests only for the first targeted framework, which in our case is **"netcoreapp1.0"**. But how to test for the other one - **"net451"**?
 
 Go to the **"MusicStore.Test"** project folder and open a console terminal there. The easiest way is pressing "SHIFT + Right Mouse Button" somewhere in the window and then clicking "Open command window here".
@@ -171,6 +185,8 @@ Go back to the console terminal and run **"dotnet test"** again.
 
 Oh, miracles! The test passes correctly without any loud and ugly errors! Oh, yeah, do you feel the happiness? This library is really DA BOMB!!! :) 
 
+## Understanding the details
+
 OK, back to that promise - the detailed explanation of all the fails. **Basically three things happened.**
 
 **First**, My Tested ASP.NET Core MVC needs to resolve the services required by the different components in your web application - controllers, view components, etc. By default the test configuration needs a **"TestStartup"** class at the root of the test project from where it configures the global service provider. This is why we got an exception telling us we forgot to add it. Remember:
@@ -192,6 +208,8 @@ The JSON file is not optional and since we inherit from the original web **"Star
 
 **Third**, as we noticed Visual Studio does not run the discovered tests for all specified frameworks. This is why we went to the console and tried running there. Unfortunately, the test failed for the **"net451"** framework. The reason is simple. The full framework did not save and store our project references and dependencies. This is why all the required test plugin classes could not be loaded when using "net451". By setting the **"preserveCompilationContext"** option to **"true"** the compiler will store the dependencies information into a file from where later during runtime it can be read successfully.
 
+## Error messages
+
 To finish this section let's make the test fail because of an invalid assertion just to see what happens. Instead of testing for **"View"**, make it assert for any other action result, for example **"BadRequest"**:
 
 ```c#
@@ -211,5 +229,7 @@ When calling AddressAndPayment action in CheckoutController expected result to b
 ```
 
 Of course, you should undo the change and return the **"View"** call (unless you want a failing test during the whole tutorial but that's up to you again). :)
+
+## Section summary
 
 Well, all is well that ends well! While the **"Getting Started"** section of this tutorial may feel a bit "kaboom"-ish, it covers all the common failures and problems you may encounter while starting to use My Tested ASP.NET Core MVC. From now on it is all unicorns and rainbows. Go to the [Packages](/tutorial/packages.html) section and see for yourself! :)
