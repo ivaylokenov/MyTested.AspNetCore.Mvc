@@ -35,7 +35,7 @@ MyController<ManageController>
     .WithControllerContext(controllerContext)
 ```
 
-Since the testing framework prepares for you everything it can before running the actual test case, you may skip the instantiation and use the other overload of the method using an action delegate:
+Since the testing framework prepares for you everything it can before running the actual test case by using the test service provider, you may skip the instantiation and use the other overload of the method using an action delegate:
 
 ```c#
 MyController<ManageController>

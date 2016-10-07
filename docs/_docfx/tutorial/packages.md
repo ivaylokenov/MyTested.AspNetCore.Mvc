@@ -101,14 +101,14 @@ Now we can sleep peacefully! :)
 
 ## Adding view action results
 
-OK, back to that commented test. We cannot test views with our current dependencies. Go to the **"project.json"** and add **"MyTested.AspNetCore.Mvc.ViewActionResults"** ас а dependency:
+OK, back to that commented test. We cannot test views with our current dependencies. Go to the **"project.json"** and add **"MyTested.AspNetCore.Mvc.ViewActionResults"** as a dependency:
 
 ```json
 "dependencies": {
   "dotnet-test-xunit": "2.2.0-*",
   "xunit": "2.2.0-*",
   "MyTested.AspNetCore.Mvc.Controllers": "1.0.0",
-  "MyTested.AspNetCore.Mvc.ViewActionResults": "1.0.0",
+  "MyTested.AspNetCore.Mvc.ViewActionResults": "1.0.0", // <---
   "MusicStore": "*"
 },
 ``` 

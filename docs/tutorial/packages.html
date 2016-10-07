@@ -130,12 +130,12 @@ public void RemoveLogin_ShouldReturn_RedirectToAction_WithNoUser()
         .ContainingRouteValues(new { Message = ManageController.ManageMessageId.Error });
 </code></pre><p sourcefile="tutorial/packages.md" sourcestartlinenumber="100" sourceendlinenumber="100">Now we can sleep peacefully! :)</p>
 <h2 id="adding-view-action-results" sourcefile="tutorial/packages.md" sourcestartlinenumber="102" sourceendlinenumber="102">Adding view action results</h2>
-<p sourcefile="tutorial/packages.md" sourcestartlinenumber="104" sourceendlinenumber="104">OK, back to that commented test. We cannot test views with our current dependencies. Go to the <strong>&quot;project.json&quot;</strong> and add <strong>&quot;MyTested.AspNetCore.Mvc.ViewActionResults&quot;</strong> ас а dependency:</p>
+<p sourcefile="tutorial/packages.md" sourcestartlinenumber="104" sourceendlinenumber="104">OK, back to that commented test. We cannot test views with our current dependencies. Go to the <strong>&quot;project.json&quot;</strong> and add <strong>&quot;MyTested.AspNetCore.Mvc.ViewActionResults&quot;</strong> as a dependency:</p>
 <pre sourcefile="tutorial/packages.md" sourcestartlinenumber="106" sourceendlinenumber="114"><code class="lang-json">&quot;dependencies&quot;: {
   &quot;dotnet-test-xunit&quot;: &quot;2.2.0-*&quot;,
   &quot;xunit&quot;: &quot;2.2.0-*&quot;,
   &quot;MyTested.AspNetCore.Mvc.Controllers&quot;: &quot;1.0.0&quot;,
-  &quot;MyTested.AspNetCore.Mvc.ViewActionResults&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.ViewActionResults&quot;: &quot;1.0.0&quot;, // &lt;---
   &quot;MusicStore&quot;: &quot;*&quot;
 },
 </code></pre><p sourcefile="tutorial/packages.md" sourcestartlinenumber="116" sourceendlinenumber="116">This package adds all action results from the <a href="https://github.com/aspnet/Mvc/blob/dev/src/Microsoft.AspNetCore.Mvc.ViewFeatures/Controller.cs" sourcefile="tutorial/packages.md" sourcestartlinenumber="116" sourceendlinenumber="116">Controller</a> class from the <a href="https://github.com/aspnet/Mvc/tree/dev/src/Microsoft.AspNetCore.Mvc.ViewFeatures" sourcefile="tutorial/packages.md" sourcestartlinenumber="116" sourceendlinenumber="116">ViewFeatures</a> MVC package. Go back to the <strong>&quot;CheckoutControllerTest&quot;</strong> class and uncomment the view test. It should compile and pass successfully now.</p>
