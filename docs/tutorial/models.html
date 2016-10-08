@@ -139,14 +139,14 @@ MyController&lt;ManageController&gt;
 <h2 id="action-result-models" sourcefile="tutorial/models.md" sourcestartlinenumber="110" sourceendlinenumber="110">Action result models</h2>
 <p sourcefile="tutorial/models.md" sourcestartlinenumber="112" sourceendlinenumber="112">To test action result models, you need to add <strong>&quot;MyTested.AspNetCore.Mvc.Models&quot;</strong> as a dependency of the test assembly:</p>
 <pre sourcefile="tutorial/models.md" sourcestartlinenumber="114" sourceendlinenumber="124"><code class="lang-json">&quot;dependencies&quot;: {
-    &quot;dotnet-test-xunit&quot;: &quot;2.2.0-*&quot;,
-    &quot;xunit&quot;: &quot;2.2.0-*&quot;,
-    &quot;MyTested.AspNetCore.Mvc.Controllers&quot;: &quot;1.0.0&quot;,
-    &quot;MyTested.AspNetCore.Mvc.ModelState&quot;: &quot;1.0.0&quot;,
-    &quot;MyTested.AspNetCore.Mvc.Models&quot;: &quot;1.0.0&quot;, // &lt;---
-    &quot;MyTested.AspNetCore.Mvc.ViewActionResults&quot;: &quot;1.0.0&quot;,
-    &quot;MusicStore&quot;: &quot;*&quot;
-  },
+  &quot;dotnet-test-xunit&quot;: &quot;2.2.0-*&quot;,
+  &quot;xunit&quot;: &quot;2.2.0-*&quot;,
+  &quot;MyTested.AspNetCore.Mvc.Controllers&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.ModelState&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.Models&quot;: &quot;1.0.0&quot;, // &lt;---
+  &quot;MyTested.AspNetCore.Mvc.ViewActionResults&quot;: &quot;1.0.0&quot;,
+  &quot;MusicStore&quot;: &quot;*&quot;
+},
 </code></pre><p sourcefile="tutorial/models.md" sourcestartlinenumber="126" sourceendlinenumber="126">By adding the above package, you will add another set of useful extension methods for all action results returning a model object. First, remove this line from the <strong>&quot;ChangePassword&quot;</strong> test:</p>
 <pre sourcefile="tutorial/models.md" sourcestartlinenumber="128" sourceendlinenumber="130"><code class="lang-c#">.ShouldPassForThe&lt;ViewResult&gt;(viewResult =&gt; Assert.Same(model, viewResult.Model));
 </code></pre><p sourcefile="tutorial/models.md" sourcestartlinenumber="132" sourceendlinenumber="132">Good! Now back to those extension methods - the first one is <strong>&quot;WithNoModel&quot;</strong>, which asserts for exactly what it says (as every other method in the library, of course) - whether the action result returns a null model. Add the method after the <strong>&quot;View&quot;</strong> call and run the test to see what happens:</p>
@@ -203,7 +203,7 @@ MyController&lt;ManageController&gt;
     .ShouldReturn()
     .View()
     .WithModelOfType&lt;ChangePasswordViewModel&gt;()
-    .Passing(m =&gt; m == model);
+    .Passing(viewModel =&gt; viewModel == model);
 </code></pre><p sourcefile="tutorial/models.md" sourcestartlinenumber="215" sourceendlinenumber="215">Aaaand... our work here is done (this time for real)! :)</p>
 <h2 id="section-summary" sourcefile="tutorial/models.md" sourcestartlinenumber="217" sourceendlinenumber="217">Section summary</h2>
 <p sourcefile="tutorial/models.md" sourcestartlinenumber="219" sourceendlinenumber="219">This section covered an important part of the testing framework. Almost all actions in ASP.NET Core MVC use some kind of request or response models. You will see more examples for model assertions in the tutorial but for now let&#39;s move to one of biggest components of the typical web application - the <a href="/tutorial/database.html" sourcefile="tutorial/models.md" sourcestartlinenumber="219" sourceendlinenumber="219">Database</a>!</p>

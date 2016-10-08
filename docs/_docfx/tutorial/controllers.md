@@ -122,7 +122,7 @@ Return back the **"Null"** call so that the test passes again. The **"ShouldPass
 
 Of course the first **"ShouldPassForThe"** call does not make any sense at all but it proves that everything related to the test can be asserted by using the method. You may even put a break point into the action delegate and debug it, if you like.
 
-I guess that you already know it, but if you put an invalid and unrecognisable type for the generic parameter, for example **"ShouldPassForThe<XunitProjectAssembly>"**, you will receive an exception:
+I guess that you already know it, but if you put an invalid and unrecognisable type for the generic parameter, for example **"XunitProjectAssembly"**, you will receive an exception:
 
 ```
 XunitProjectAssembly could not be resolved for the 'ShouldPassForThe<TComponent>' method call.

@@ -8,6 +8,7 @@ We will use:
  - Visual Studio Community - the best ASP.NET Core IDE - available [HERE](https://www.visualstudio.com/vs/community/)
  - .NET Core CLI - the command line tools for .NET Core - get them from [HERE](https://www.microsoft.com/net/core)
  - xUnit - asynchronous C# test runner - more information [HERE](http://xunit.github.io/)
+ - Moq - mocking framework for .NET - more information [HERE](https://github.com/moq/moq4)
  - My Tested ASP.NET Core MVC - fluent assertion framework - more information [HERE](https://mytestedasp.net/Core/Mvc)
 
 The Music Store project is perfectly suitable for the tutorial because it contains commonly used components of a typical ASP.NET Core MVC web application - Entity Framework Core database, authenticated users, session, caching, services and more.

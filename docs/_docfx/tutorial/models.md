@@ -113,14 +113,14 @@ To test action result models, you need to add **"MyTested.AspNetCore.Mvc.Models"
 
 ```json
 "dependencies": {
-    "dotnet-test-xunit": "2.2.0-*",
-    "xunit": "2.2.0-*",
-    "MyTested.AspNetCore.Mvc.Controllers": "1.0.0",
-    "MyTested.AspNetCore.Mvc.ModelState": "1.0.0",
-    "MyTested.AspNetCore.Mvc.Models": "1.0.0", // <---
-    "MyTested.AspNetCore.Mvc.ViewActionResults": "1.0.0",
-    "MusicStore": "*"
-  },
+  "dotnet-test-xunit": "2.2.0-*",
+  "xunit": "2.2.0-*",
+  "MyTested.AspNetCore.Mvc.Controllers": "1.0.0",
+  "MyTested.AspNetCore.Mvc.ModelState": "1.0.0",
+  "MyTested.AspNetCore.Mvc.Models": "1.0.0", // <---
+  "MyTested.AspNetCore.Mvc.ViewActionResults": "1.0.0",
+  "MusicStore": "*"
+},
 ```
 
 By adding the above package, you will add another set of useful extension methods for all action results returning a model object. First, remove this line from the **"ChangePassword"** test:
@@ -209,7 +209,7 @@ MyController<ManageController>
     .ShouldReturn()
     .View()
     .WithModelOfType<ChangePasswordViewModel>()
-    .Passing(m => m == model);
+    .Passing(viewModel => viewModel == model);
 ```
 
 Aaaand... our work here is done (this time for real)! :)

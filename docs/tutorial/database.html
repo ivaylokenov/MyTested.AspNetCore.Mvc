@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Database </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Database ">
+    <meta name="generator" content="docfx 2.5.0.0">
+    {% seo %}
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../index.html">
+                MY TESTED ASP.NET CORE MVC DOCS
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+              <h1 id="database" sourcefile="tutorial/database.md" sourcestartlinenumber="1" sourceendlinenumber="1">Database</h1>
+              
+<p sourcefile="tutorial/database.md" sourcestartlinenumber="3" sourceendlinenumber="3">In this section you will get familiar with how helpful the fluent testing library is with an Entity Framework Core database. Despite the data storage abstraction you use (repository pattern, unit of work, etc.), <strong>&quot;DbContext&quot;</strong> testing has never been easier. And you don&#39;t even need a mocking framework! How cool is that? :)</p>
+<h2 id="the-scoped-in-memory-database" sourcefile="tutorial/database.md" sourcestartlinenumber="5" sourceendlinenumber="5">The scoped in memory database</h2>
+<p sourcefile="tutorial/database.md" sourcestartlinenumber="7" sourceendlinenumber="7">Let&#39;s try to test an action using the <strong>&quot;DbContext&quot;</strong>. An easy one is <strong>&quot;Index&quot;</strong> in <strong>&quot;StoreController&quot;</strong>. Create a <strong>&quot;StoreControllerTest&quot;</strong> class, add the necessary usings and try to test the action:</p>
+<pre sourcefile="tutorial/database.md" sourcestartlinenumber="9" sourceendlinenumber="18"><code class="lang-c#">[Fact]
+public void Index_ShouldReturn_ViewWithGenres()
+    =&gt; MyController&lt;StoreController&gt;
+        .Instance()
+        .Calling(c =&gt; c.Index())
+        .ShouldReturn()
+        .View()
+        .WithModelOfType&lt;List&lt;Genre&gt;&gt;();
+</code></pre><p sourcefile="tutorial/database.md" sourcestartlinenumber="20" sourceendlinenumber="20">A nice little test. With a big &quot;KABOOM&quot;!</p>
+<pre sourcefile="tutorial/database.md" sourcestartlinenumber="22" sourceendlinenumber="24"><code>When calling Index action in StoreController expected no exception but AggregateException (containing ArgumentException with &#39;Format of the initialization string does not conform to specification starting at index 0.&#39; message) was thrown without being caught.
+</code></pre><p sourcefile="tutorial/database.md" sourcestartlinenumber="26" sourceendlinenumber="26">Not cool for sure! The exception occurs because our <strong>&quot;config.json&quot;</strong> file contains a dummy (and invalid) connection string:</p>
+<pre sourcefile="tutorial/database.md" sourcestartlinenumber="28" sourceendlinenumber="34"><code class="lang-c#">&quot;Data&quot;: {
+  &quot;DefaultConnection&quot;: {
+    &quot;ConnectionString&quot;: &quot;Test Connection&quot;
+  }
+}
+</code></pre><p sourcefile="tutorial/database.md" sourcestartlinenumber="36" sourceendlinenumber="36">And we should be happy about it! The last thing we want is our tests knowing where the application database is.</p>
+<p sourcefile="tutorial/database.md" sourcestartlinenumber="38" sourceendlinenumber="38">But we still need to write a test against the <strong>&quot;DbContext&quot;</strong>! Fear no more - go to the <strong>&quot;project.json&quot;</strong> file and add &quot;&quot;<em>MyTested.AspNetCore.Mvc.EntityFrameworkCore</em>&quot;&quot; as a dependency:</p>
+<pre sourcefile="tutorial/database.md" sourcestartlinenumber="40" sourceendlinenumber="51"><code class="lang-json">&quot;dependencies&quot;: {
+  &quot;dotnet-test-xunit&quot;: &quot;2.2.0-*&quot;,
+  &quot;xunit&quot;: &quot;2.2.0-*&quot;,
+  &quot;MyTested.AspNetCore.Mvc.Controllers&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.EntityFrameworkCore&quot;: &quot;1.0.0&quot;, // &lt;---
+  &quot;MyTested.AspNetCore.Mvc.ModelState&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.Models&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.ViewActionResults&quot;: &quot;1.0.0&quot;,
+  &quot;MusicStore&quot;: &quot;*&quot;
+},
+</code></pre><p sourcefile="tutorial/database.md" sourcestartlinenumber="53" sourceendlinenumber="53">Now run the test again and see the magic! :)</p>
+<p sourcefile="tutorial/database.md" sourcestartlinenumber="55" sourceendlinenumber="55">Wuuut! I can&#39;t believe it! It passes! And we didn&#39;t even touch the code! There must be some voodoo involved around here!</p>
+<p sourcefile="tutorial/database.md" sourcestartlinenumber="57" sourceendlinenumber="57">As we mentioned earlier - no developer should love magic so here it is the trick revealed. The <strong>&quot;EntityFrameworkCore&quot;</strong> package contains a test plugin, which recognises the <strong>&quot;DbContext&quot;</strong> related services and replaces them with scoped in memory ones. More information about the test plugins can be found <a href="/guide/plugins.html" sourcefile="tutorial/database.md" sourcestartlinenumber="57" sourceendlinenumber="57">HERE</a>.</p>
+<p sourcefile="tutorial/database.md" sourcestartlinenumber="59" sourceendlinenumber="59">Our test passes but it will be better if we assert the action with actual data. Change the test to:</p>
+<pre sourcefile="tutorial/database.md" sourcestartlinenumber="61" sourceendlinenumber="73"><code class="lang-c#">MyController&lt;StoreController&gt;
+    .Instance()
+    .WithDbContext(dbContext =&gt; dbContext
+        .WithEntities(entities =&gt; entities.AddRange(
+            new Genre { Name = &quot;FirstGenre&quot; },
+            new Genre { Name = &quot;SecondGenre&quot; })))
+    .Calling(c =&gt; c.Index())
+    .ShouldReturn()
+    .View()
+    .WithModelOfType&lt;List&lt;Genre&gt;&gt;()
+    .Passing(model =&gt; model.Count == 2);
+</code></pre><p sourcefile="tutorial/database.md" sourcestartlinenumber="75" sourceendlinenumber="75">The good part of this test is the fact that these data objects live only in memory and are not stored anywhere.</p>
+<p sourcefile="tutorial/database.md" sourcestartlinenumber="77" sourceendlinenumber="77">The best part of the test is the fact that these data objects live in scoped per test lifetime. We will dive deeper into scoped services in the next tutorial section. For now, write those two tests and run them:</p>
+<pre sourcefile="tutorial/database.md" sourcestartlinenumber="79" sourceendlinenumber="106"><code class="lang-c#">[Fact]
+public void Index_ShouldReturn_ViewWithGenres()
+    =&gt; MyController&lt;StoreController&gt;
+        .Instance()
+        .WithDbContext(dbContext =&gt; dbContext
+            .WithEntities(entities =&gt; entities.AddRange(
+                new Genre { Name = &quot;FirstGenre&quot; },
+                new Genre { Name = &quot;SecondGenre&quot; })))
+        .Calling(c =&gt; c.Index())
+        .ShouldReturn()
+        .View()
+        .WithModelOfType&lt;List&lt;Genre&gt;&gt;()
+        .Passing(model =&gt; model.Count == 2);
+
+[Fact]
+public void I_Will_Show_Scoped_Database_Services()
+    =&gt; MyController&lt;StoreController&gt;
+        .Instance()
+        .WithDbContext(dbContext =&gt; dbContext
+            .WithEntities(entities =&gt; entities.AddRange(
+                new Genre { Name = &quot;ThirdGenre&quot; })))
+        .Calling(c =&gt; c.Index())
+        .ShouldReturn()
+        .View()
+        .WithModelOfType&lt;List&lt;Genre&gt;&gt;()
+        .Passing(model =&gt; model.Count == 1 &amp;&amp; model.All(g =&gt; g.Name == &quot;ThirdGenre&quot;));
+</code></pre><p sourcefile="tutorial/database.md" sourcestartlinenumber="108" sourceendlinenumber="108">Both tests pass successfully. They are almost the same but you can notice the difference in the database objects. The first test adds two entities and passes the predicate expecting two objects in the returned list, the second test adds another entity and passes the expectation of having a single genre with a specific name. It is obvious the database is fresh, clean and empty while running each test. This is the power of scoped test services - they allow each test to be run in isolation and in asynchronous environment. </p>
+<h2 id="asserting-saved-database-changes" sourcefile="tutorial/database.md" sourcestartlinenumber="110" sourceendlinenumber="110">Asserting saved database changes</h2>
+<p sourcefile="tutorial/database.md" sourcestartlinenumber="112" sourceendlinenumber="112">Remove the second test as it is not needed. We will now examine how we can assert saved database objects. For this purpose we are going to use the <strong>&quot;Create&quot;</strong> action (the HTTP POST one) in the <strong>&quot;StoreManagerController&quot;</strong> (located in the <strong>&quot;Admin&quot;</strong> area). The action expects an <strong>&quot;IMemoryCache&quot;</strong> service and since we will cover caching later in this tutorial, we will need a cache mock. Add <strong>&quot;Moq&quot;</strong> to the <strong>&quot;project.json&quot;</strong> dependencies:</p>
+<pre sourcefile="tutorial/database.md" sourcestartlinenumber="114" sourceendlinenumber="126"><code class="lang-json">&quot;dependencies&quot;: {
+  &quot;dotnet-test-xunit&quot;: &quot;2.2.0-*&quot;,
+  &quot;xunit&quot;: &quot;2.2.0-*&quot;,
+  &quot;Moq&quot;: &quot;4.6.38-*&quot;, // &lt;---
+  &quot;MyTested.AspNetCore.Mvc.Controllers&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.EntityFrameworkCore&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.ModelState&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.Models&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.ViewActionResults&quot;: &quot;1.0.0&quot;,
+  &quot;MusicStore&quot;: &quot;*&quot;
+},
+</code></pre><p sourcefile="tutorial/database.md" sourcestartlinenumber="128" sourceendlinenumber="128">Create a <strong>&quot;StoreManagerControllerTest&quot;</strong>, add the necessary usings and write the following test:</p>
+<pre sourcefile="tutorial/database.md" sourcestartlinenumber="130" sourceendlinenumber="159"><code class="lang-c#">[Fact]
+public void Create_ShouldSaveAlbum_WithValidModelState_And_Redirect()
+{
+    var album = new Album
+    {
+        AlbumId = 1,
+        Title = &quot;TestAlbum&quot;,
+        Price = 50
+    };
+
+    MyController&lt;StoreManagerController&gt;
+        .Instance()
+        .Calling(c =&gt; c.Create(
+            album,
+            Mock.Of&lt;IMemoryCache&gt;(),
+            With.Default&lt;CancellationToken&gt;()))
+        .ShouldHave()
+        .ValidModelState()
+        .AndAlso()
+        .ShouldHave()
+        .DbContext(db =&gt; db
+            .WithSet&lt;Album&gt;(albums =&gt; albums
+                .Any(a =&gt; a.AlbumId == album.AlbumId)))
+        .AndAlso()
+        .ShouldReturn()
+        .Redirect()
+        .ToAction(nameof(StoreManagerController.Index));
+}
+</code></pre><p sourcefile="tutorial/database.md" sourcestartlinenumber="161" sourceendlinenumber="161">The actual database assertion is in the following lines:</p>
+<pre sourcefile="tutorial/database.md" sourcestartlinenumber="163" sourceendlinenumber="168"><code class="lang-c#">.ShouldHave()
+.DbContext(db =&gt; db
+    .WithSet&lt;Album&gt;(albums =&gt; albums
+        .Any(a =&gt; a.AlbumId == album.AlbumId)))
+</code></pre><p sourcefile="tutorial/database.md" sourcestartlinenumber="170" sourceendlinenumber="170">My Tested ASP.NET Core MVC validates that the database set of albums should have the saved album with the correct <strong>&quot;AlbumdId&quot;</strong>. As with the previous example, the in memory database will be empty before the test runs. You may notice the <strong>&quot;With.Default&quot;</strong> call. It is just a more expressive way to write <strong>&quot;new CancellationToken()&quot;</strong>. Providing <strong>&quot;CancellationToken.None&quot;</strong> is also an option.</p>
+<h2 id="repository-pattern" sourcefile="tutorial/database.md" sourcestartlinenumber="172" sourceendlinenumber="172">Repository pattern</h2>
+<p sourcefile="tutorial/database.md" sourcestartlinenumber="174" sourceendlinenumber="174">We will take a look at the repository pattern as a small deviation from the Music Store web application. As long as you use the Entity Framework Core <strong>&quot;DbContext&quot;</strong> class in your web application, the scoped in memory database will work correctly no matter the data abstractions layer. Imagine we had the following repository registered as a service in our web application:</p>
+<pre sourcefile="tutorial/database.md" sourcestartlinenumber="176" sourceendlinenumber="189"><code class="lang-c#">public class Repository&lt;T&gt; : IRepository&lt;T&gt;
+    where T : class
+{
+    private readonly MyDbContext db;
+
+    public Repository(MyDbContext db)
+    {
+        this.db = db;
+    }
+
+    public IQueryable&lt;T&gt; All() =&gt; this.db.Set&lt;T&gt;();
+}
+</code></pre><p sourcefile="tutorial/database.md" sourcestartlinenumber="191" sourceendlinenumber="191">And a controller using it:</p>
+<pre sourcefile="tutorial/database.md" sourcestartlinenumber="193" sourceendlinenumber="214"><code class="lang-c#">public class HomeController : Controller
+{
+    private IRepository&lt;Album&gt; albums;
+
+    public HomeController(IRepository&lt;Album&gt; albums)
+    {
+        this.albums = albums;
+    }
+
+    public IActionResult Index()
+    {
+        var latestAlbums = this.albums
+            .All()
+            .OrderByDescending(a =&gt; a.AlbumId)
+            .Take(10)
+            .ToList();
+
+        return this.Ok(latestAlbums);
+    }
+}
+</code></pre><p sourcefile="tutorial/database.md" sourcestartlinenumber="216" sourceendlinenumber="216">Testing the <strong>&quot;Index&quot;</strong> action does not require anything more than adding lots of albums to the <strong>&quot;DbContext&quot;</strong> and test whether the result list contains exactly 10 elements (you may test the sorting too):</p>
+<pre sourcefile="tutorial/database.md" sourcestartlinenumber="218" sourceendlinenumber="228"><code class="lang-c#">MyController&lt;HomeController&gt;
+    .Instance()
+    .WithDbContext(db =&gt; db
+        .WithSet&lt;Album&gt;(set =&gt; AddAlbums(set)))
+    .Calling(c =&gt; c.Index())
+    .ShouldReturn()
+    .Ok()
+    .WithModelOfType&lt;List&lt;Album&gt;&gt;()
+    .Passing(model =&gt; model.Count == 10);
+</code></pre><p sourcefile="tutorial/database.md" sourcestartlinenumber="230" sourceendlinenumber="230">Piece of cake! :)</p>
+<h2 id="section-summary" sourcefile="tutorial/database.md" sourcestartlinenumber="232" sourceendlinenumber="232">Section summary</h2>
+<p sourcefile="tutorial/database.md" sourcestartlinenumber="234" sourceendlinenumber="234">This section showed you one of the many useful built-in services suitable for writing fast and asynchronous tests for the ASP.NET Core Framework. A lot of web applications use a database layer so it is a crucial point to have a nice and easy way to assert it without having to lose a lot of development time in writing mocks or stubs. Now, head over to the next important part of our journey - the test <a href="/tutorial/services.html" sourcefile="tutorial/database.md" sourcestartlinenumber="234" sourceendlinenumber="234">Services</a>!</p>
+
+            </article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/tutorial/docs/_docfx/tutorial/database.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © 2015-2016 <strong><a href="http://mytestedasp.net">MyTestedASP.NET</a></strong>. All Rights Reserved. Generated by <strong><a href="http://dotnet.github.io/docfx/">DocFX</a></strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

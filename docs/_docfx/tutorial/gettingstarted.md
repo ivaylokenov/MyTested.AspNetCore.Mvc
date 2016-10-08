@@ -166,7 +166,7 @@ Type **"dotnet test"** and hit **"Enter**".
 
 Oh, well... This does not look good... Fail again! Why are you even doing this tutorial, you may wonder? :(
 
-If you still decide to stick around - .NET Core runs our test fine but the full .NET framework fails because it cannot load correctly all the plugin dependencies My Tested ASP.NET Core MVC needs (more information available [HERE](/guide/plugins.html). 
+If you still decide to stick around - .NET Core runs our test fine but the full .NET framework fails because it cannot load correctly all the plugin dependencies My Tested ASP.NET Core MVC needs (more information available [HERE](/guide/plugins.html)). 
 
 Do not worry, this one is easy. Go to the test assembly's **"project.json"** file and set the **"preserveCompilationContext"** option under **"buildOptions"** to **"true"**:
 
@@ -232,4 +232,4 @@ Of course, you should undo the change and return the **"View"** call (unless you
 
 ## Section summary
 
-Well, all is well that ends well! While the **"Getting Started"** section of this tutorial may feel a bit "kaboom"-ish, it covers all the common failures and problems you may encounter while starting to use My Tested ASP.NET Core MVC. From now on it is all unicorns and rainbows. Go to the [Packages](/tutorial/packages.html) section and see for yourself! :)
+Well, all is well that ends well! While the **"Getting Started"** section of this tutorial may feel a bit "KABOOM"-ish, it covers all the common failures and problems you may encounter while starting to use My Tested ASP.NET Core MVC. From now on it is all unicorns and rainbows. Go to the [Packages](/tutorial/packages.html) section and see for yourself! :)
