@@ -69,7 +69,7 @@
 <h2 id="the-scoped-in-memory-database" sourcefile="tutorial/database.md" sourcestartlinenumber="5" sourceendlinenumber="5">The scoped in memory database</h2>
 <p sourcefile="tutorial/database.md" sourcestartlinenumber="7" sourceendlinenumber="7">Let&#39;s try to test an action using the <strong>&quot;DbContext&quot;</strong>. An easy one is <strong>&quot;Index&quot;</strong> in <strong>&quot;StoreController&quot;</strong>. Create a <strong>&quot;StoreControllerTest&quot;</strong> class, add the necessary usings and try to test the action:</p>
 <pre sourcefile="tutorial/database.md" sourcestartlinenumber="9" sourceendlinenumber="18"><code class="lang-c#">[Fact]
-public void Index_ShouldReturn_ViewWithGenres()
+public void IndexShouldReturnViewWithGenres()
     =&gt; MyController&lt;StoreController&gt;
         .Instance()
         .Calling(c =&gt; c.Index())
@@ -114,7 +114,7 @@ public void Index_ShouldReturn_ViewWithGenres()
 </code></pre><p sourcefile="tutorial/database.md" sourcestartlinenumber="75" sourceendlinenumber="75">The good part of this test is the fact that these data objects live only in memory and are not stored anywhere.</p>
 <p sourcefile="tutorial/database.md" sourcestartlinenumber="77" sourceendlinenumber="77">The best part of the test is the fact that these data objects live in scoped per test lifetime. We will dive deeper into scoped services in the next tutorial section. For now, write those two tests and run them:</p>
 <pre sourcefile="tutorial/database.md" sourcestartlinenumber="79" sourceendlinenumber="106"><code class="lang-c#">[Fact]
-public void Index_ShouldReturn_ViewWithGenres()
+public void IndexShouldReturnViewWithGenres()
     =&gt; MyController&lt;StoreController&gt;
         .Instance()
         .WithDbContext(dbContext =&gt; dbContext
@@ -128,7 +128,7 @@ public void Index_ShouldReturn_ViewWithGenres()
         .Passing(model =&gt; model.Count == 2);
 
 [Fact]
-public void I_Will_Show_Scoped_Database_Services()
+public void IWillShowScopedDatabaseServices()
     =&gt; MyController&lt;StoreController&gt;
         .Instance()
         .WithDbContext(dbContext =&gt; dbContext
@@ -155,7 +155,7 @@ public void I_Will_Show_Scoped_Database_Services()
 },
 </code></pre><p sourcefile="tutorial/database.md" sourcestartlinenumber="128" sourceendlinenumber="128">Create a <strong>&quot;StoreManagerControllerTest&quot;</strong>, add the necessary usings and write the following test:</p>
 <pre sourcefile="tutorial/database.md" sourcestartlinenumber="130" sourceendlinenumber="159"><code class="lang-c#">[Fact]
-public void Create_ShouldSaveAlbum_WithValidModelState_And_Redirect()
+public void CreateShouldSaveAlbumWithValidModelStateAndRedirect()
 {
     var album = new Album
     {

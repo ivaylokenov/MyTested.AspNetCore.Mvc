@@ -95,7 +95,7 @@
 <p sourcefile="tutorial/packages.md" sourcestartlinenumber="42" sourceendlinenumber="42"><img src="/images/tutorial/mymvcdoesnotexist.jpg" alt="MyMvc no longer exists"></p>
 <p sourcefile="tutorial/packages.md" sourcestartlinenumber="44" sourceendlinenumber="44">The <strong>&quot;MyMvc&quot;</strong> class is only available in the <strong>&quot;MyTested.AspNetCore.Mvc&quot;</strong> package and combines all the different test types into a single starting point. To fix our test, we have to use the <strong>&quot;MyController&quot;</strong> class:</p>
 <pre sourcefile="tutorial/packages.md" sourcestartlinenumber="46" sourceendlinenumber="54"><code class="lang-c#">[Fact]
-public void AddressAndPayment_ShouldReturn_DefaultView()
+public void AddressAndPaymentShouldReturnDefaultView()
     =&gt; MyController&lt;CheckoutController&gt;
         .Instance()
         .Calling(c =&gt; c.AddressAndPayment())
@@ -108,7 +108,7 @@ public void AddressAndPayment_ShouldReturn_DefaultView()
 <p sourcefile="tutorial/packages.md" sourcestartlinenumber="64" sourceendlinenumber="64">We will now try the core action results before returning back to the view features. Comment the first test for now (so that the project will compile with the currently added dependencies) and add a new class named <strong>&quot;ManageControllerTest&quot;</strong> in the <strong>&quot;Controllers&quot;</strong> folder. We will test the asynchronous <strong>&quot;RemoveLogin&quot;</strong> action in the <strong>&quot;ManageController&quot;</strong>. If you examine it, you will notice that it returns <strong>&quot;RedirectToAction&quot;</strong>, if no user is authenticated.</p>
 <p sourcefile="tutorial/packages.md" sourcestartlinenumber="66" sourceendlinenumber="66">Add the necessary usings and write the following test into the <strong>&quot;ManageControllerTest&quot;</strong> class:</p>
 <pre sourcefile="tutorial/packages.md" sourcestartlinenumber="68" sourceendlinenumber="76"><code class="lang-c#">[Fact]
-public void RemoveLogin_ShouldReturn_RedirectToAction_WithNoUser()
+public void RemoveLoginShouldReturnRedirectToActionWithNoUser()
     =&gt; MyController&lt;ManageController&gt;
         .Instance()
         .Calling(c =&gt; c.RemoveLogin(null, null))
@@ -118,7 +118,7 @@ public void RemoveLogin_ShouldReturn_RedirectToAction_WithNoUser()
 <pre sourcefile="tutorial/packages.md" sourcestartlinenumber="80" sourceendlinenumber="82"><code class="lang-c#">.Calling(c =&gt; c.RemoveLogin(With.No&lt;string&gt;(), With.No&lt;string&gt;()))
 </code></pre><p sourcefile="tutorial/packages.md" sourcestartlinenumber="84" sourceendlinenumber="84">As a bonus, let&#39;s assert some details of the redirect action result. We can see it redirects to the <strong>&quot;ManageLogins&quot;</strong> action with some <strong>&quot;ManageMessageId&quot;</strong> route value so we better test them:</p>
 <pre sourcefile="tutorial/packages.md" sourcestartlinenumber="86" sourceendlinenumber="98"><code class="lang-c#">[Fact]
-public void RemoveLogin_ShouldReturn_RedirectToAction_WithNoUser()
+public void RemoveLoginShouldReturnRedirectToActionWithNoUser()
     =&gt; MyController&lt;ManageController&gt;
         .Instance()
         .Calling(c =&gt; c.RemoveLogin(

@@ -8,7 +8,7 @@ Let's try to test an action using the **"DbContext"**. An easy one is **"Index"*
 
 ```c#
 [Fact]
-public void Index_ShouldReturn_ViewWithGenres()
+public void IndexShouldReturnViewWithGenres()
     => MyController<StoreController>
         .Instance()
         .Calling(c => c.Index())
@@ -78,7 +78,7 @@ The best part of the test is the fact that these data objects live in scoped per
 
 ```c#
 [Fact]
-public void Index_ShouldReturn_ViewWithGenres()
+public void IndexShouldReturnViewWithGenres()
     => MyController<StoreController>
         .Instance()
         .WithDbContext(dbContext => dbContext
@@ -92,7 +92,7 @@ public void Index_ShouldReturn_ViewWithGenres()
         .Passing(model => model.Count == 2);
         
 [Fact]
-public void I_Will_Show_Scoped_Database_Services()
+public void IWillShowScopedDatabaseServices()
     => MyController<StoreController>
         .Instance()
         .WithDbContext(dbContext => dbContext
@@ -129,7 +129,7 @@ Create a **"StoreManagerControllerTest"**, add the necessary usings and write th
 
 ```c#
 [Fact]
-public void Create_ShouldSaveAlbum_WithValidModelState_And_Redirect()
+public void CreateShouldSaveAlbumWithValidModelStateAndRedirect()
 {
     var album = new Album
     {

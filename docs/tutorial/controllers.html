@@ -74,7 +74,7 @@
 }
 </code></pre><p sourcefile="tutorial/controllers.md" sourcestartlinenumber="16" sourceendlinenumber="16">My Tested ASP.NET Core MVC provides a very easy way to arrange the model state, but we will ignore it for now. What we want is to add a model error to the action call manually. Go to the <strong>&quot;ManageControllerTest&quot;</strong> class, add the new test and start with the typical selection of a controller to test:</p>
 <pre sourcefile="tutorial/controllers.md" sourcestartlinenumber="18" sourceendlinenumber="25"><code class="lang-c#">[Fact]
-public void ChangePassword_ShouldReturn_ViewWithSameModel_WithInvalidModelState()
+public void ChangePasswordShouldReturnViewWithSameModelWithInvalidModelState()
 {
     MyController&lt;ManageController&gt;
         .Instance()
@@ -130,11 +130,11 @@ MyController&lt;ManageController&gt;
 .AndAlso()
 .ShouldPassForThe&lt;ViewResult&gt;(viewResult =&gt; Assert.Null(viewResult.Model));
 </code></pre><p sourcefile="tutorial/controllers.md" sourcestartlinenumber="123" sourceendlinenumber="123">Of course the first <strong>&quot;ShouldPassForThe&quot;</strong> call does not make any sense at all but it proves that everything related to the test can be asserted by using the method. You may even put a break point into the action delegate and debug it, if you like.</p>
-<p sourcefile="tutorial/controllers.md" sourcestartlinenumber="125" sourceendlinenumber="125">I guess that you already know it, but if you put an invalid and unrecognisable type for the generic parameter, for example <strong>&quot;ShouldPassForThe<xunitprojectassembly>&quot;</xunitprojectassembly></strong>, you will receive an exception:</p>
+<p sourcefile="tutorial/controllers.md" sourcestartlinenumber="125" sourceendlinenumber="125">I guess that you already know it, but if you put an invalid and unrecognisable type for the generic parameter, for example <strong>&quot;XunitProjectAssembly&quot;</strong>, you will receive an exception:</p>
 <pre sourcefile="tutorial/controllers.md" sourcestartlinenumber="127" sourceendlinenumber="129"><code>XunitProjectAssembly could not be resolved for the &#39;ShouldPassForThe&lt;TComponent&gt;&#39; method call.
 </code></pre><p sourcefile="tutorial/controllers.md" sourcestartlinenumber="131" sourceendlinenumber="131">To continue, let&#39;s bring back the test to its last passing state:</p>
 <pre sourcefile="tutorial/controllers.md" sourcestartlinenumber="133" sourceendlinenumber="147"><code class="lang-c#">[Fact]
-public void ChangePassword_ShouldReturn_ViewWithSameModel_WithInvalidModelState()
+public void ChangePasswordShouldReturnViewWithSameModelWithInvalidModelState()
 {
     MyController&lt;ManageController&gt;
         .Instance()
@@ -148,7 +148,7 @@ public void ChangePassword_ShouldReturn_ViewWithSameModel_WithInvalidModelState(
 }
 </code></pre><p sourcefile="tutorial/controllers.md" sourcestartlinenumber="149" sourceendlinenumber="149">We are still not asserting whether the view model is the same object as the provided method parameter. Let&#39;s change that by instantiating a <strong>&quot;ChangePasswordViewModel&quot;</strong> and test the action with it:</p>
 <pre sourcefile="tutorial/controllers.md" sourcestartlinenumber="151" sourceendlinenumber="172"><code class="lang-c#">[Fact]
-public void ChangePassword_ShouldReturn_ViewWithSameModel_WithInvalidModelState()
+public void ChangePasswordShouldReturnViewWithSameModelWithInvalidModelState()
 {
     var model = new ChangePasswordViewModel
     {

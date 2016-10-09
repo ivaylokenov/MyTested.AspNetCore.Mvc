@@ -63,7 +63,7 @@ The only thing we need to assert in the tested action is whether it returns a vi
 
 ```c#
 [Fact]
-public void AddressAndPayment_ShouldReturn_DefaultView()
+public void AddressAndPaymentShouldReturnDefaultView()
     => MyMvc
         .Controller<CheckoutController>()
         .Calling(c => c.AddressAndPayment())
@@ -214,7 +214,7 @@ To finish this section let's make the test fail because of an invalid assertion 
 
 ```c#
 [Fact]
-public void AddressAndPayment_ShouldReturn_DefaultView()
+public void AddressAndPaymentShouldReturnDefaultView()
     => MyController<CheckoutController>
         .Instance()
         .Calling(c => c.AddressAndPayment())

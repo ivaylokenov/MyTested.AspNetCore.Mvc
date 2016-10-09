@@ -13,3 +13,7 @@
   href: models.md
 - name: Database
   href: database.md
+- name: Services
+  href: services.md
+- name: HTTP & Authentication
+  href: httpauthentication.md

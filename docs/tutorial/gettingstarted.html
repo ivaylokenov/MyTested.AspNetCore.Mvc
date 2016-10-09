@@ -110,7 +110,7 @@ using MyTested.AspNetCore.Mvc;
 using Xunit;
 </code></pre><p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="62" sourceendlinenumber="62">The only thing we need to assert in the tested action is whether it returns a view, so let&#39;s write it:</p>
 <pre sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="64" sourceendlinenumber="72"><code class="lang-c#">[Fact]
-public void AddressAndPayment_ShouldReturn_DefaultView()
+public void AddressAndPaymentShouldReturnDefaultView()
     =&gt; MyMvc
         .Controller&lt;CheckoutController&gt;()
         .Calling(c =&gt; c.AddressAndPayment())
@@ -202,7 +202,7 @@ public void AddressAndPayment_ShouldReturn_DefaultView()
 <h2 id="error-messages" sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="211" sourceendlinenumber="211">Error messages</h2>
 <p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="213" sourceendlinenumber="213">To finish this section let&#39;s make the test fail because of an invalid assertion just to see what happens. Instead of testing for <strong>&quot;View&quot;</strong>, make it assert for any other action result, for example <strong>&quot;BadRequest&quot;</strong>:</p>
 <pre sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="215" sourceendlinenumber="223"><code class="lang-c#">[Fact]
-public void AddressAndPayment_ShouldReturn_DefaultView()
+public void AddressAndPaymentShouldReturnDefaultView()
     =&gt; MyController&lt;CheckoutController&gt;
         .Instance()
         .Calling(c =&gt; c.AddressAndPayment())

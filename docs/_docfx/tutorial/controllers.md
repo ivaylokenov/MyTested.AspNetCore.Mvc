@@ -17,7 +17,7 @@ My Tested ASP.NET Core MVC provides a very easy way to arrange the model state, 
 
 ```c#
 [Fact]
-public void ChangePassword_ShouldReturn_ViewWithSameModel_WithInvalidModelState()
+public void ChangePasswordShouldReturnViewWithSameModelWithInvalidModelState()
 {
     MyController<ManageController>
         .Instance()
@@ -132,7 +132,7 @@ To continue, let's bring back the test to its last passing state:
 
 ```c#
 [Fact]
-public void ChangePassword_ShouldReturn_ViewWithSameModel_WithInvalidModelState()
+public void ChangePasswordShouldReturnViewWithSameModelWithInvalidModelState()
 {
 	MyController<ManageController>
 		.Instance()
@@ -150,7 +150,7 @@ We are still not asserting whether the view model is the same object as the prov
 
 ```c#
 [Fact]
-public void ChangePassword_ShouldReturn_ViewWithSameModel_WithInvalidModelState()
+public void ChangePasswordShouldReturnViewWithSameModelWithInvalidModelState()
 {
     var model = new ChangePasswordViewModel
     {

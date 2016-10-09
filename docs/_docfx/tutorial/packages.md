@@ -45,7 +45,7 @@ The **"MyMvc"** class is only available in the **"MyTested.AspNetCore.Mvc"** pac
 
 ```c#
 [Fact]
-public void AddressAndPayment_ShouldReturn_DefaultView()
+public void AddressAndPaymentShouldReturnDefaultView()
     => MyController<CheckoutController>
         .Instance()
         .Calling(c => c.AddressAndPayment())
@@ -67,7 +67,7 @@ Add the necessary usings and write the following test into the **"ManageControll
 
 ```c#
 [Fact]
-public void RemoveLogin_ShouldReturn_RedirectToAction_WithNoUser()
+public void RemoveLoginShouldReturnRedirectToActionWithNoUser()
     => MyController<ManageController>
         .Instance()
         .Calling(c => c.RemoveLogin(null, null))
@@ -85,7 +85,7 @@ As a bonus, let's assert some details of the redirect action result. We can see 
 
 ```c#
 [Fact]
-public void RemoveLogin_ShouldReturn_RedirectToAction_WithNoUser()
+public void RemoveLoginShouldReturnRedirectToActionWithNoUser()
     => MyController<ManageController>
         .Instance()
         .Calling(c => c.RemoveLogin(
