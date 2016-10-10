@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>HTTP &amp; Authentication </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="HTTP &amp; Authentication ">
+    <meta name="generator" content="docfx 2.5.0.0">
+    {% seo %}
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../index.html">
+                MY TESTED ASP.NET CORE MVC DOCS
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+              <h1 id="http--authentication" sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="1" sourceendlinenumber="1">HTTP &amp; Authentication</h1>
+              
+<p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="3" sourceendlinenumber="3">This section will cover HTTP related testing and user identity authentication.</p>
+<h2 id="http-request" sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="5" sourceendlinenumber="5">HTTP request</h2>
+<p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="7" sourceendlinenumber="7">Sometimes we need to process the HTTP request in the controller action. Take a look at the HTTP Post overload of the <strong>&quot;AddressAndPayment&quot;</strong> action in the <strong>&quot;CheckoutController&quot;</strong>:</p>
+<pre sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="9" sourceendlinenumber="23"><code class="lang-c#">// action code skipped for brevity
+
+var formCollection = await HttpContext.Request.ReadFormAsync();
+
+try
+{
+    if (string.Equals(formCollection[&quot;PromoCode&quot;].FirstOrDefault(), PromoCode,
+        StringComparison.OrdinalIgnoreCase) == false)
+    {
+        return View(order);
+    }
+
+// action code skipped for brevity
+</code></pre><p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="25" sourceendlinenumber="25">The action reads the form and checks for an input named <strong>&quot;PromoCode&quot;</strong>. If it does not equals <strong>&quot;FREE&quot;</strong>, the action return its view with the same order provided from the form. Let&#39;s test this logic!</p>
+<p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="27" sourceendlinenumber="27">Go to the <strong>&quot;project.json&quot;</strong> file and add <strong>&quot;MyTested.AspNetCore.Mvc.Http&quot;</strong> as a dependency:</p>
+<pre sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="29" sourceendlinenumber="43"><code class="lang-json">&quot;dependencies&quot;: {
+  &quot;dotnet-test-xunit&quot;: &quot;2.2.0-*&quot;,
+  &quot;xunit&quot;: &quot;2.2.0-*&quot;,
+  &quot;Moq&quot;: &quot;4.6.38-*&quot;,
+  &quot;MyTested.AspNetCore.Mvc.Controllers&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.DependencyInjection&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.EntityFrameworkCore&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.Http&quot;: &quot;1.0.0&quot;, // &lt;---
+  &quot;MyTested.AspNetCore.Mvc.ModelState&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.Models&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.ViewActionResults&quot;: &quot;1.0.0&quot;,
+  &quot;MusicStore&quot;: &quot;*&quot;
+},
+</code></pre><p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="45" sourceendlinenumber="45">This package will provide you with additional methods - two of them are <strong>&quot;WithHttpContext&quot;</strong> and <strong>&quot;WithHttpRequest&quot;</strong>. We will use the second one - it provides a fast way to set up every single part of the HTTP request. </p>
+<p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="47" sourceendlinenumber="47">Go to the <strong>&quot;CheckoutControllerTest&quot;</strong> and add the following test:</p>
+<pre sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="49" sourceendlinenumber="66"><code class="lang-c#">[Fact]
+public void AddressAndPaymentShouldRerurnViewWithInvalidPostedPromoCode()
+    =&gt; MyController&lt;CheckoutController&gt;
+        .Instance()
+        .WithHttpRequest(request =&gt; request // &lt;---
+            .WithFormField(&quot;PromoCode&quot;, &quot;Invalid&quot;))
+        .Calling(c =&gt; c.AddressAndPayment(
+            From.Services&lt;MusicStoreContext&gt;(),
+            With.Default&lt;Order&gt;(),
+            CancellationToken.None))
+        .ShouldHave()
+        .ValidModelState()
+        .AndAlso()
+        .ShouldReturn()
+        .View()
+        .WithModel(With.Default&lt;Order&gt;());
+</code></pre><p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="68" sourceendlinenumber="68">We have successfully tested that with an invalid promo code in the request form, our action should return the same view with the proper model. The <strong>&quot;WithHttpRequest&quot;</strong> method allows you to add form fields, files, headers, body, cookies and more. We will see more of it when we cover route testing.</p>
+<h2 id="authentication" sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="70" sourceendlinenumber="70">Authentication</h2>
+<p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="72" sourceendlinenumber="72">Now let&#39;s take a look at the <strong>&quot;Complete&quot;</strong> action in the same controller:</p>
+<pre sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="74" sourceendlinenumber="93"><code class="lang-c#">// action code skipped for brevity
+
+var userName = HttpContext.User.Identity.Name;
+
+bool isValid = await dbContext.Orders.AnyAsync(
+    o =&gt; o.OrderId == id &amp;&amp;
+    o.Username == userName);
+
+if (isValid)
+{
+    return View(id);
+}
+else
+{
+    return View(&quot;Error&quot;);
+}
+
+// action code skipped for brevity
+</code></pre><p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="95" sourceendlinenumber="95">By default tests do not have an authenticated user identity. Write this test in the <strong>&quot;CheckoutControllerTest&quot;</strong>, run it and see for yourself:</p>
+<pre sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="97" sourceendlinenumber="112"><code class="lang-c#">[Fact]
+public void CompleteShouldReturnViewWithCorrectIdWithFoundOrderForTheUser()
+    =&gt; MyController&lt;CheckoutController&gt;
+        .Instance()
+        .WithDbContext(db =&gt; db
+            .WithEntities(entities =&gt; entities.Add(new Order
+            {
+                OrderId = 1,
+                Username = &quot;TestUser&quot;
+            })))
+        .Calling(c =&gt; c.Complete(From.Services&lt;MusicStoreContext&gt;(), 1))
+        .ShouldReturn()
+        .View()
+        .WithModel(1);
+</code></pre><p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="114" sourceendlinenumber="114">It fails. Obviously, we need an authenticated user to test this action. We can attach it to the <strong>&quot;HttpContext&quot;</strong> but let&#39;s make it easier. Head over to the <strong>&quot;project.json&quot;</strong> file again and add <strong>&quot;MyTested.AspNetCore.Mvc.Authentication&quot;</strong>:</p>
+<p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="116" sourceendlinenumber="129">&quot;dependencies&quot;: {
+  &quot;dotnet-test-xunit&quot;: &quot;2.2.0-<em>&quot;,
+  &quot;xunit&quot;: &quot;2.2.0-</em>&quot;,
+  &quot;Moq&quot;: &quot;4.6.38-<em>&quot;,
+  &quot;MyTested.AspNetCore.Mvc.Authentication&quot;: &quot;1.0.0&quot;, // &lt;---
+  &quot;MyTested.AspNetCore.Mvc.Controllers&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.DependencyInjection&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.EntityFrameworkCore&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.Http&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.ModelState&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.Models&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.ViewActionResults&quot;: &quot;1.0.0&quot;,
+  &quot;MusicStore&quot;: &quot;</em>&quot;
+},</p>
+<p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="131" sourceendlinenumber="131"><strong>&quot;WithAuthenticatedUser&quot;</strong> method will be added to the fluent API. You can use it to set identifier, username, roles, claims and identities. But for now call it empty like this:</p>
+<pre sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="133" sourceendlinenumber="149"><code class="lang-c#">[Fact]
+public void CompleteShouldReturnViewWithCorrectIdWithFoundOrderForTheUser()
+    =&gt; MyController&lt;CheckoutController&gt;
+        .Instance()
+        .WithAuthenticatedUser() // &lt;---
+        .WithDbContext(db =&gt; db
+            .WithEntities(entities =&gt; entities.Add(new Order
+            {
+                OrderId = 1,
+                Username = &quot;TestUser&quot;
+            })))
+        .Calling(c =&gt; c.Complete(From.Services&lt;MusicStoreContext&gt;(), 1))
+        .ShouldReturn()
+        .View()
+        .WithModel(1);
+</code></pre><p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="151" sourceendlinenumber="151">You will receive a passing test because the default authenticated user has <strong>&quot;TestId&quot;</strong> identifier and <strong>&quot;TestUser&quot;</strong> username. Change the order <strong>&quot;Username&quot;</strong> property to <strong>&quot;MyTestUser&quot;</strong> and you will need to provide the username of the identity in order to make the test pass again:</p>
+<pre sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="153" sourceendlinenumber="170"><code class="lang-c#">[Fact]
+public void CompleteShouldReturnViewWithCorrectIdWithFoundOrderForTheUser()
+    =&gt; MyController&lt;CheckoutController&gt;
+        .Instance()
+        .WithAuthenticatedUser(user =&gt; user // &lt;---
+            .WithUsername(&quot;MyTestUser&quot;))
+        .WithDbContext(db =&gt; db
+            .WithEntities(entities =&gt; entities.Add(new Order
+            {
+                OrderId = 1,
+                Username = &quot;MyTestUser&quot;
+            })))
+        .Calling(c =&gt; c.Complete(From.Services&lt;MusicStoreContext&gt;(), 1))
+        .ShouldReturn()
+        .View()
+        .WithModel(1);
+</code></pre><p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="172" sourceendlinenumber="172">Of course, we need to also test the result when the order is not for the currently authenticated user. In this case we need to return the <strong>&quot;Error&quot;</strong> view:</p>
+<pre sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="174" sourceendlinenumber="190"><code class="lang-c#">[Fact]
+public void CompleteShouldReturnErrorViewWithInvalidOrderForTheUser()
+    =&gt; MyController&lt;CheckoutController&gt;
+        .Instance()
+        .WithAuthenticatedUser(user =&gt; user
+            .WithUsername(&quot;InvalidUser&quot;))
+        .WithDbContext(db =&gt; db
+            .WithEntities(entities =&gt; entities.Add(new Order
+            {
+                OrderId = 1,
+                Username = &quot;MyTestUser&quot;
+            })))
+        .Calling(c =&gt; c.Complete(From.Services&lt;MusicStoreContext&gt;(), 1))
+        .ShouldReturn()
+        .View(&quot;Error&quot;);
+</code></pre><h2 id="http-response" sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="192" sourceendlinenumber="192">HTTP Response</h2>
+<p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="194" sourceendlinenumber="194">Sometimes we may manipulate the HTTP response directly in the controller action - for example to add a custom header. The Music Store web application does not have such logic but we can take any action and validate whether it returns 200 (OK) status code just for the sake of seeing the syntax.</p>
+<p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="196" sourceendlinenumber="196">Create a <strong>&quot;HomeControllerTest&quot;</strong> class and add the following test:</p>
+<pre sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="198" sourceendlinenumber="210"><code class="lang-c#">[Fact]
+public void AccessDeniedShouldReturnOkStatusCodeAndProperView()
+    =&gt; MyController&lt;HomeController&gt;
+        .Instance()
+        .Calling(c =&gt; c.AccessDenied())
+        .ShouldHave()
+        .HttpResponse(response =&gt; response // &lt;---
+            .WithStatusCode(HttpStatusCode.OK))
+        .AndAlso()
+        .ShouldReturn()
+        .View(&quot;~/Views/Shared/AccessDenied.cshtml&quot;);
+</code></pre><p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="212" sourceendlinenumber="212">The <strong>&quot;HttpResponse&quot;</strong> method allows assertions of every part of the HTTP response - body, headers, cookies, etc. For example if you add this line:</p>
+<pre sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="214" sourceendlinenumber="216"><code class="lang-c#">.ContainingHeader(&quot;InvalidHeader&quot;)
+</code></pre><p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="218" sourceendlinenumber="218">You will receive a nice little error message (as always):</p>
+<pre sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="220" sourceendlinenumber="222"><code>When calling AccessDenied action in HomeController expected HTTP response headers to contain header with &#39;InvalidHeader&#39; name, but such was not found.
+</code></pre><p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="224" sourceendlinenumber="224">Cool! :)</p>
+<h2 id="section-summary" sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="226" sourceendlinenumber="226">Section summary</h2>
+<p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="228" sourceendlinenumber="228">Well, these were easier than the last section&#39;s test services. While the request testing is more suitable on other components, authentication plays big role in the actions&#39; logic.</p>
+<p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="230" sourceendlinenumber="230">If you followed the tutorial strictly, you should have reached the free trial version limitations of My Tested ASP.NET Core MVC. Let&#39;s take a break from the code and learn more about the <a href="/tutorial/licensing.html" sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="230" sourceendlinenumber="230">Licensing</a> of the testing framework.</p>
+
+            </article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/tutorial/docs/_docfx/tutorial/httpauthentication.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © 2015-2016 <strong><a href="http://mytestedasp.net">MyTestedASP.NET</a></strong>. All Rights Reserved. Generated by <strong><a href="http://dotnet.github.io/docfx/">DocFX</a></strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
