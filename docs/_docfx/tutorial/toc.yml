@@ -17,3 +17,5 @@
   href: services.md
 - name: HTTP & Authentication
   href: httpauthentication.md
+- name: Licensing
+  href: licensing.md
