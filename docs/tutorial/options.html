@@ -65,6 +65,50 @@
             <article class="content wrap" id="_content" data-uid="">
               <h1 id="options" sourcefile="tutorial/options.md" sourcestartlinenumber="1" sourceendlinenumber="1">Options</h1>
               
+<p sourcefile="tutorial/options.md" sourcestartlinenumber="3" sourceendlinenumber="3">Remember this code?</p>
+<pre sourcefile="tutorial/options.md" sourcestartlinenumber="5" sourceendlinenumber="9"><code class="lang-c#">.WithServices(services =&gt; services
+    .WithSetupFor&lt;IOptions&lt;AppSettings&gt;&gt;(settings =&gt; settings
+        .Value.CacheDbResults = false))
+</code></pre><p sourcefile="tutorial/options.md" sourcestartlinenumber="11" sourceendlinenumber="11">In this section we are going to improve it with the built-in options setup methods.</p>
+<h2 id="options-configuration-setup" sourcefile="tutorial/options.md" sourcestartlinenumber="13" sourceendlinenumber="13">Options configuration setup</h2>
+<p sourcefile="tutorial/options.md" sourcestartlinenumber="15" sourceendlinenumber="15">Go to the <strong>&quot;project.json&quot;</strong> file and add <strong>&quot;MyTested.AspNetCore.Mvc.Options&quot;</strong> as a dependency of the test project:</p>
+<pre sourcefile="tutorial/options.md" sourcestartlinenumber="17" sourceendlinenumber="33"><code class="lang-json">&quot;dependencies&quot;: {
+  &quot;dotnet-test-xunit&quot;: &quot;2.2.0-*&quot;,
+  &quot;xunit&quot;: &quot;2.2.0-*&quot;,
+  &quot;Moq&quot;: &quot;4.6.38-*&quot;,
+  &quot;MyTested.AspNetCore.Mvc.Authentication&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.Controllers&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.DependencyInjection&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.EntityFrameworkCore&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.Http&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.ModelState&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.Models&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.Options&quot;: &quot;1.0.0&quot;, // &lt;---
+  &quot;MyTested.AspNetCore.Mvc.ViewActionResults&quot;: &quot;1.0.0&quot;,
+  &quot;MusicStore&quot;: &quot;*&quot;
+},
+</code></pre><p sourcefile="tutorial/options.md" sourcestartlinenumber="35" sourceendlinenumber="35">Go to the unit test asserting the <strong>&quot;Details&quot;</strong> action in the <strong>&quot;StoreManagerControllerTest&quot;</strong> controller and change the following code:</p>
+<pre sourcefile="tutorial/options.md" sourcestartlinenumber="37" sourceendlinenumber="41"><code class="lang-c#">.WithServices(services =&gt; services
+    .WithSetupFor&lt;IOptions&lt;AppSettings&gt;&gt;(settings =&gt; settings
+        .Value.CacheDbResults = false))
+</code></pre><p sourcefile="tutorial/options.md" sourcestartlinenumber="43" sourceendlinenumber="43">With this one:</p>
+<pre sourcefile="tutorial/options.md" sourcestartlinenumber="45" sourceendlinenumber="48"><code class="lang-c#">.WithOptions(options =&gt; options
+    .For&lt;AppSettings&gt;(settings =&gt; settings.CacheDbResults = false))
+</code></pre><p sourcefile="tutorial/options.md" sourcestartlinenumber="50" sourceendlinenumber="50">Much more readable! :)</p>
+<p sourcefile="tutorial/options.md" sourcestartlinenumber="52" sourceendlinenumber="52">Additionally, the <strong>&quot;TestStartup&quot;</strong> class no longer needs this call:</p>
+<pre sourcefile="tutorial/options.md" sourcestartlinenumber="54" sourceendlinenumber="56"><code class="lang-c#">services.AddScoped&lt;IOptions&lt;AppSettings&gt;, OptionsManager&lt;AppSettings&gt;&gt;();
+</code></pre><p sourcefile="tutorial/options.md" sourcestartlinenumber="58" sourceendlinenumber="58">Our <strong>&quot;ConfigureTestServices&quot;</strong> should now contain the following:</p>
+<pre sourcefile="tutorial/options.md" sourcestartlinenumber="60" sourceendlinenumber="70"><code class="lang-c#">public void ConfigureTestServices(IServiceCollection services)
+{
+    base.ConfigureServices(services);
+
+    services.ReplaceLifetime&lt;IMemoryCache&gt;(ServiceLifetime.Scoped);
+
+    services.ReplaceSingleton&lt;SignInManager&lt;ApplicationUser&gt;&gt;(sp =&gt; 
+        MockProvider.SignInManager(sp.GetRequiredService&lt;UserManager&lt;ApplicationUser&gt;&gt;()));
+}
+</code></pre><h2 id="section-summary" sourcefile="tutorial/options.md" sourcestartlinenumber="72" sourceendlinenumber="72">Section summary</h2>
+<p sourcefile="tutorial/options.md" sourcestartlinenumber="74" sourceendlinenumber="74">Well, this was easy. In fact, it it is the easiest part of this tutorial. Let&#39;s move to <a href="/tutorial/sessioncache.html" sourcefile="tutorial/options.md" sourcestartlinenumber="74" sourceendlinenumber="74">Session &amp; Cache</a> where we will use the options setup one more time.</p>
 
             </article>
           </div>

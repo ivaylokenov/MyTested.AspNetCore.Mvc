@@ -19,3 +19,9 @@
   href: httpauthentication.md
 - name: Licensing
   href: licensing.md
+- name: Attributes
+  href: attributes.md
+- name: Options
+  href: options.md
+- name: Session & Cache
+  href: sessioncache.md

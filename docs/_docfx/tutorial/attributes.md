@@ -12,7 +12,7 @@ public void CheckoutControllerShouldHaveAuthorizeAttribute()
     => MyController<CheckoutController>
         .Instance()
         .ShouldHave()
-        .Attributes(attributes => attributes
+        .Attributes(attributes => attributes // <---
             .RestrictingForAuthorizedRequests());
 ```
 
@@ -60,7 +60,7 @@ public void RemoveAlbumConfirmedShouldHaveCorrectAttributes()
         With.No<int>(),
         With.No<CancellationToken>()))
     .ShouldHave()
-    .ActionAttributes(attributes => attributes
+    .ActionAttributes(attributes => attributes // <---
         .RestrictingForHttpMethod(HttpMethod.Post)
         .ChangingActionNameTo("RemoveAlbum"));
 ```
@@ -85,7 +85,7 @@ public void LoginShouldHaveCorrectAttributes()
         .ActionAttributes(attributes => attributes
             .RestrictingForHttpMethod(HttpMethod.Post)
             .AllowingAnonymousRequests()
-            .ContainingAttributeOfType<ValidateAntiForgeryTokenAttribute>());
+            .ContainingAttributeOfType<ValidateAntiForgeryTokenAttribute>()); // <---
 ```
 
 The action is still invoked in this test so we need to provide a non-null value for the **"LoginViewModel"** parameter. A better approach on testing action attributes (without having to specify the parameters) will be available in the next major release of the library. :)
@@ -100,7 +100,7 @@ public void StoreManagerControllerShouldHaveCorrectAttributes()
         .ShouldHave()
         .Attributes(attributes => attributes
             .SpecifyingArea("Admin")
-            .PassingFor<AuthorizeAttribute>(authorize => authorize.Policy == "ManageStore"));
+            .PassingFor<AuthorizeAttribute>(authorize => authorize.Policy == "ManageStore")); // <---
 ```
 
 ## Section summary

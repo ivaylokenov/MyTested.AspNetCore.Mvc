@@ -73,7 +73,7 @@ public void CheckoutControllerShouldHaveAuthorizeAttribute()
     =&gt; MyController&lt;CheckoutController&gt;
         .Instance()
         .ShouldHave()
-        .Attributes(attributes =&gt; attributes
+        .Attributes(attributes =&gt; attributes // &lt;---
             .RestrictingForAuthorizedRequests());
 </code></pre><p sourcefile="tutorial/attributes.md" sourcestartlinenumber="19" sourceendlinenumber="19">Simple as that. Additionally, in the the <strong>&quot;HomeControllerTest&quot;</strong> class, we can add:</p>
 <pre sourcefile="tutorial/attributes.md" sourcestartlinenumber="21" sourceendlinenumber="28"><code class="lang-c#">[Fact]
@@ -104,7 +104,7 @@ public void RemoveAlbumConfirmedShouldHaveCorrectAttributes()
         With.No&lt;int&gt;(),
         With.No&lt;CancellationToken&gt;()))
     .ShouldHave()
-    .ActionAttributes(attributes =&gt; attributes
+    .ActionAttributes(attributes =&gt; attributes // &lt;---
         .RestrictingForHttpMethod(HttpMethod.Post)
         .ChangingActionNameTo(&quot;RemoveAlbum&quot;));
 </code></pre><p sourcefile="tutorial/attributes.md" sourcestartlinenumber="68" sourceendlinenumber="68">Working like a charm! :)</p>
@@ -122,7 +122,7 @@ public void LoginShouldHaveCorrectAttributes()
         .ActionAttributes(attributes =&gt; attributes
             .RestrictingForHttpMethod(HttpMethod.Post)
             .AllowingAnonymousRequests()
-            .ContainingAttributeOfType&lt;ValidateAntiForgeryTokenAttribute&gt;());
+            .ContainingAttributeOfType&lt;ValidateAntiForgeryTokenAttribute&gt;()); // &lt;---
 </code></pre><p sourcefile="tutorial/attributes.md" sourcestartlinenumber="91" sourceendlinenumber="91">The action is still invoked in this test so we need to provide a non-null value for the <strong>&quot;LoginViewModel&quot;</strong> parameter. A better approach on testing action attributes (without having to specify the parameters) will be available in the next major release of the library. :)</p>
 <p sourcefile="tutorial/attributes.md" sourcestartlinenumber="93" sourceendlinenumber="93">Sometimes you may want to test specific property values of the attribute. You can use the <strong>&quot;PassingFor&quot;</strong> method:</p>
 <pre sourcefile="tutorial/attributes.md" sourcestartlinenumber="95" sourceendlinenumber="104"><code class="lang-c#">[Fact]
@@ -132,7 +132,7 @@ public void StoreManagerControllerShouldHaveCorrectAttributes()
         .ShouldHave()
         .Attributes(attributes =&gt; attributes
             .SpecifyingArea(&quot;Admin&quot;)
-            .PassingFor&lt;AuthorizeAttribute&gt;(authorize =&gt; authorize.Policy == &quot;ManageStore&quot;));
+            .PassingFor&lt;AuthorizeAttribute&gt;(authorize =&gt; authorize.Policy == &quot;ManageStore&quot;)); // &lt;---
 </code></pre><h2 id="section-summary" sourcefile="tutorial/attributes.md" sourcestartlinenumber="106" sourceendlinenumber="106">Section summary</h2>
 <p sourcefile="tutorial/attributes.md" sourcestartlinenumber="108" sourceendlinenumber="108">We saw how easy it is to assert and validate all kinds of controller and action attributes. Now let&#39;s revisit our <a href="/tutorial/options.html" sourcefile="tutorial/attributes.md" sourcestartlinenumber="108" sourceendlinenumber="108">Options</a> testing!</p>
 
