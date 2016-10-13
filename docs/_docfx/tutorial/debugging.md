@@ -45,4 +45,4 @@ You know the drill from here on! :)
 
 ## Section summary
 
-In this section we learned how helpful and developer-friendly is My Tested ASP.NET Core MVC with failed tests. But enough about failures and errors. Let's dive into the [Controllers](/tutorial/controllers.html) testing!
+In this section we learned how helpful and developer-friendly is My Tested ASP.NET Core MVC with failed tests. Later in the tutorial we will also see how easy it is to debug with the **"ShouldPassFor"** method. But enough about failures and errors. Let's dive into the [Controllers](/tutorial/controllers.html) testing!

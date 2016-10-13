@@ -32,6 +32,8 @@ Go to the **"project.json"** file and add **"MyTested.AspNetCore.Mvc.Options"** 
 },
 ```
 
+Adding this package will automatically make all the options related services scoped.
+
 Go to the unit test asserting the **"Details"** action in the **"StoreManagerControllerTest"** controller and change the following code:
 
 ```c#

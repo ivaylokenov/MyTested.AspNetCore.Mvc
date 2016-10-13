@@ -105,4 +105,4 @@ public void StoreManagerControllerShouldHaveCorrectAttributes()
 
 ## Section summary
 
-We saw how easy it is to assert and validate all kinds of controller and action attributes. Now let's revisit our [Options](/tutorial/options.html) testing!
+We saw how easy it is to assert and validate all kinds of controller and action attributes. But enough about them - in the next section we will cover thrown [Exceptions](/tutorial/exceptions.html).
