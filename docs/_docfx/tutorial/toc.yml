@@ -29,3 +29,5 @@
   href: sessioncache.md
 - name: ViewBag, ViewData & TempData
   href: viewbagviewdatatempdata.md
+- name: View Components
+  href: viewcomponents.md
