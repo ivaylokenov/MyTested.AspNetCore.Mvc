@@ -83,6 +83,8 @@ public void AddToCartShouldSaveTheAlbumsIntoDatabaseAndSession()
         .ToAction(nameof(ShoppingCartController.Index));
 ```
 
+Of course, you can extract the magic strings... :)
+
 ## Cache
 
 For the caching assertions, we will need **"MyTested.AspNetCore.Mvc.Caching"** as a dependency. Go and add it to the **"project.json"**:

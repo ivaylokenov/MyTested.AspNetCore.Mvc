@@ -122,9 +122,13 @@ The **"ContainingEntries"** call is equivalent to this one:
 }))
 ``` 
 
-Both methods will validate whether the total number of entries in the **"ViewBag"** is equal to the total number you provide to the test.
+Both methods will validate whether the total number of entries in the **"ViewBag"** is equal to the total number you provide to the test. For validation - remove the **"ArtistId"** property from anonymous object and run the test again:
 
-If you do not want the total number validation, just use:
+```
+When calling Create action in StoreManagerController expected view bag to have 1 entry, but in fact found 2.
+```
+
+If you do not want the total number of entries validation, just use:
 
 ```c#
 .ViewBag(viewBag => viewBag // <---

@@ -113,6 +113,7 @@ public void CompleteShouldReturnViewWithCorrectIdWithFoundOrderForTheUser()
 
 It fails. Obviously, we need an authenticated user to test this action. We can attach it to the **"HttpContext"** but let's make it easier. Head over to the **"project.json"** file again and add **"MyTested.AspNetCore.Mvc.Authentication"**:
 
+```json
 "dependencies": {
   "dotnet-test-xunit": "2.2.0-*",
   "xunit": "2.2.0-*",
@@ -127,6 +128,7 @@ It fails. Obviously, we need an authenticated user to test this action. We can a
   "MyTested.AspNetCore.Mvc.ViewActionResults": "1.0.0",
   "MusicStore": "*"
 },
+```
 
 **"WithAuthenticatedUser"** method will be added to the fluent API. You can use it to set identifier, username, roles, claims and identities. But for now call it empty like this:
 

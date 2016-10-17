@@ -31,3 +31,7 @@
   href: viewbagviewdatatempdata.md
 - name: View Components
   href: viewcomponents.md
+- name: Routing
+  href: routing.md
+- name: Various Helpers
+  href: helpers.md

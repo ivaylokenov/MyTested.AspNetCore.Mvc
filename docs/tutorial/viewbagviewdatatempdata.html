@@ -159,14 +159,15 @@ public void CreateShouldHaveValidEntriesInViewBag()
     [&quot;GenreId&quot;] = new SelectList(From.Services&lt;MusicStoreContext&gt;().Genres, &quot;GenreId&quot;, &quot;Name&quot;),
     [&quot;ArtistId&quot;] = new SelectList(From.Services&lt;MusicStoreContext&gt;().Artists, &quot;ArtistId&quot;, &quot;Name&quot;)
 }))
-</code></pre><p sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="125" sourceendlinenumber="125">Both methods will validate whether the total number of entries in the <strong>&quot;ViewBag&quot;</strong> is equal to the total number you provide to the test.</p>
-<p sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="127" sourceendlinenumber="127">If you do not want the total number validation, just use:</p>
-<pre sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="129" sourceendlinenumber="133"><code class="lang-c#">.ViewBag(viewBag =&gt; viewBag // &lt;---
+</code></pre><p sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="125" sourceendlinenumber="125">Both methods will validate whether the total number of entries in the <strong>&quot;ViewBag&quot;</strong> is equal to the total number you provide to the test. For validation - remove the <strong>&quot;ArtistId&quot;</strong> property from anonymous object and run the test again:</p>
+<pre sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="127" sourceendlinenumber="129"><code>When calling Create action in StoreManagerController expected view bag to have 1 entry, but in fact found 2.
+</code></pre><p sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="131" sourceendlinenumber="131">If you do not want the total number of entries validation, just use:</p>
+<pre sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="133" sourceendlinenumber="137"><code class="lang-c#">.ViewBag(viewBag =&gt; viewBag // &lt;---
     .ContainingEntry(&quot;GenreId&quot;, new SelectList(From.Services&lt;MusicStoreContext&gt;().Genres, &quot;GenreId&quot;, &quot;Name&quot;))
     .ContainingEntry(&quot;ArtistId&quot;, new SelectList(From.Services&lt;MusicStoreContext&gt;().Artists, &quot;ArtistId&quot;, &quot;Name&quot;)))
-</code></pre><h2 id="viewdata-and-tempdata" sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="135" sourceendlinenumber="135">ViewData and TempData</h2>
-<p sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="137" sourceendlinenumber="137"><strong>&quot;ViewData&quot;</strong> have the same API:</p>
-<pre sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="139" sourceendlinenumber="149"><code class="lang-c#">MyController&lt;SomeController&gt;
+</code></pre><h2 id="viewdata-and-tempdata" sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="139" sourceendlinenumber="139">ViewData and TempData</h2>
+<p sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="141" sourceendlinenumber="141"><strong>&quot;ViewData&quot;</strong> have the same API:</p>
+<pre sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="143" sourceendlinenumber="153"><code class="lang-c#">MyController&lt;SomeController&gt;
     .Instance()
     .Calling(c =&gt; c.SomeAction())
     .ShouldHave()
@@ -175,8 +176,8 @@ public void CreateShouldHaveValidEntriesInViewBag()
     .AndAlso()
     .ShouldReturn()
     .View();
-</code></pre><p sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="151" sourceendlinenumber="151"><strong>&quot;TempData&quot;</strong> too but you will need the <strong>&quot;MyTested.AspNetCore.Mvc.TempData&quot;</strong> package:</p>
-<pre sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="153" sourceendlinenumber="163"><code class="lang-c#">MyController&lt;SomeController&gt;
+</code></pre><p sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="155" sourceendlinenumber="155"><strong>&quot;TempData&quot;</strong> too but you will need the <strong>&quot;MyTested.AspNetCore.Mvc.TempData&quot;</strong> package:</p>
+<pre sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="157" sourceendlinenumber="167"><code class="lang-c#">MyController&lt;SomeController&gt;
     .Instance()
     .Calling(c =&gt; c.SomeAction())
     .ShouldHave()
@@ -185,16 +186,16 @@ public void CreateShouldHaveValidEntriesInViewBag()
     .AndAlso()
     .ShouldReturn()
     .View();
-</code></pre><p sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="165" sourceendlinenumber="165">Additionally, you can populate the <strong>&quot;TempData&quot;</strong> dictionary before the action call:</p>
-<pre sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="167" sourceendlinenumber="175"><code class="lang-c#">MyController&lt;SomeController&gt;
+</code></pre><p sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="169" sourceendlinenumber="169">Additionally, you can populate the <strong>&quot;TempData&quot;</strong> dictionary before the action call:</p>
+<pre sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="171" sourceendlinenumber="179"><code class="lang-c#">MyController&lt;SomeController&gt;
     .Instance()
     .WithTempData(tempData =&gt; tempData
         .WithEntry(&quot;SomeKey&quot;, someValue))
     .Calling(c =&gt; c.SomeAction())
     .ShouldReturn()
     .View();
-</code></pre><h2 id="section-summary" sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="177" sourceendlinenumber="177">Section summary</h2>
-<p sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="179" sourceendlinenumber="179">We saw how easy it is to test with <strong>&quot;ViewBag&quot;</strong>, <strong>&quot;ViewData&quot;</strong> and <strong>&quot;TempData&quot;</strong>. Their fluent assertion API is very similar to the <strong>&quot;Session&quot;</strong> and <strong>&quot;Cache&quot;</strong> ones. But enough about controllers, let&#39;s move on to <a href="/tutorial/viewcomponents.html" sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="179" sourceendlinenumber="179">View Components</a>!</p>
+</code></pre><h2 id="section-summary" sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="181" sourceendlinenumber="181">Section summary</h2>
+<p sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="183" sourceendlinenumber="183">We saw how easy it is to test with <strong>&quot;ViewBag&quot;</strong>, <strong>&quot;ViewData&quot;</strong> and <strong>&quot;TempData&quot;</strong>. Their fluent assertion API is very similar to the <strong>&quot;Session&quot;</strong> and <strong>&quot;Cache&quot;</strong> ones. But enough about controllers, let&#39;s move on to <a href="/tutorial/viewcomponents.html" sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="183" sourceendlinenumber="183">View Components</a>!</p>
 
             </article>
           </div>

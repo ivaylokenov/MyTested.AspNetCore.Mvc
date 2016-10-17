@@ -65,6 +65,113 @@
             <article class="content wrap" id="_content" data-uid="">
               <h1 id="view-components" sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="1" sourceendlinenumber="1">View Components</h1>
               
+<p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="3" sourceendlinenumber="3">In this section we are going to stop asserting controllers (finally) and concentrate on <strong>&quot;View Components&quot;</strong>. Typical MVC application written with separation of concerns in mind should have plenty of view components. Before we begin, we need the <strong>&quot;MyTested.AspNetCore.Mvc.ViewComponents&quot;</strong> package:</p>
+<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="5" sourceendlinenumber="25"><code class="lang-json">&quot;dependencies&quot;: {
+  &quot;dotnet-test-xunit&quot;: &quot;2.2.0-*&quot;,
+  &quot;xunit&quot;: &quot;2.2.0-*&quot;,
+  &quot;Moq&quot;: &quot;4.6.38-*&quot;,
+  &quot;MyTested.AspNetCore.Mvc.Authentication&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.Caching&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.Controllers&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.DependencyInjection&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.EntityFrameworkCore&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.Http&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.ModelState&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.Models&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.Options&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.Session&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.ViewActionResults&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.ViewComponents&quot;: &quot;1.0.0&quot;, // &lt;---
+  &quot;MyTested.AspNetCore.Mvc.ViewData&quot;: &quot;1.0.0&quot;,
+  &quot;MusicStore&quot;: &quot;*&quot;
+},
+</code></pre><p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="27" sourceendlinenumber="27">Then we need to create a <strong>&quot;ViewComponents&quot;</strong> folder at the root of our test project and add <strong>&quot;CartSummaryComponentTest&quot;</strong> class in it. We are going to assert the <strong>&quot;CartSummaryComponent&quot;</strong> component.</p>
+<h2 id="arrange" sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="29" sourceendlinenumber="29">Arrange</h2>
+<p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="31" sourceendlinenumber="31">Arranging the test is done in the same manner as it is with controllers. This is the code we want to test:</p>
+<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="33" sourceendlinenumber="47"><code class="lang-c#">private MusicStoreContext DbContext { get; }
+
+public async Task&lt;IViewComponentResult&gt; InvokeAsync()
+{
+    var cart = ShoppingCart.GetCart(DbContext, HttpContext);
+
+    var cartItems = await cart.GetCartAlbumTitles();
+
+    ViewBag.CartCount = cartItems.Count;
+    ViewBag.CartSummary = string.Join(&quot;\n&quot;, cartItems.Distinct());
+
+    return View();
+}
+</code></pre><p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="49" sourceendlinenumber="49">We need session cart ID and items in the database for the shopping cart. Let&#39;s create a helper method for generating the entities:</p>
+<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="51" sourceendlinenumber="66"><code class="lang-c#">private static IEnumerable&lt;CartItem&gt; GetCartItems(string cartId, string albumTitle)
+{
+    var album = new Album { AlbumId = 1, Title = albumTitle };
+
+    return Enumerable
+        .Range(1, 10)
+        .Select(n =&gt; new CartItem
+        {
+            AlbumId = 1,
+            Album = album,
+            Count = 1,
+            CartId = cartId,
+        });
+}
+</code></pre><p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="68" sourceendlinenumber="68">Starting the test is done from the <strong>&quot;MyViewComponent&quot;</strong> test:</p>
+<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="70" sourceendlinenumber="75"><code class="lang-c#">[Fact]
+public void InvokingTheComponentShouldReturnCorrectCartItems()
+    =&gt; MyViewComponent&lt;CartSummaryComponent&gt;
+        .Instance()
+</code></pre><p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="77" sourceendlinenumber="77">We need to add a cart ID in the session state:</p>
+<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="79" sourceendlinenumber="87"><code class="lang-c#">MyViewComponent&lt;CartSummaryComponent&gt;
+    .Instance()
+    .WithSession(session =&gt; session // &lt;---
+        .WithEntry(&quot;Session&quot;, &quot;TestCart&quot;))
+    .WithDbContext(db =&gt; db
+        .WithEntities(entities =&gt; entities
+            .AddRange(GetCartItems(&quot;TestCart&quot;, &quot;TestAlbum&quot;))))
+</code></pre><p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="89" sourceendlinenumber="89">And database entities:</p>
+<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="91" sourceendlinenumber="99"><code class="lang-c#">MyViewComponent&lt;CartSummaryComponent&gt;
+    .Instance()
+    .WithSession(session =&gt; session
+        .WithEntry(&quot;Session&quot;, &quot;TestCart&quot;))
+    .WithDbContext(db =&gt; db // &lt;---
+        .WithEntities(entities =&gt; entities
+            .AddRange(GetCartItems(&quot;TestCart&quot;, &quot;TestAlbum&quot;))))
+</code></pre><h2 id="act" sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="101" sourceendlinenumber="101">Act</h2>
+<p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="103" sourceendlinenumber="103">After arranging all objects we need for the view component, we need to invoke it by using the <strong>&quot;InvokedWith&quot;</strong> method:</p>
+<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="105" sourceendlinenumber="114"><code class="lang-c#">MyViewComponent&lt;CartSummaryComponent&gt;
+    .Instance()
+    .WithSession(session =&gt; session
+        .WithEntry(&quot;Session&quot;, &quot;TestCart&quot;))
+    .WithDbContext(db =&gt; db
+        .WithEntities(entities =&gt; entities
+            .AddRange(GetCartItems(&quot;TestCart&quot;, &quot;TestAlbum&quot;))))
+    .InvokedWith(vc =&gt; vc.InvokeAsync()) // &lt;---
+</code></pre><h2 id="assert" sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="116" sourceendlinenumber="116">Assert</h2>
+<p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="118" sourceendlinenumber="118">Finally, we need to assert the <strong>&quot;ViewBag&quot;</strong> and the execution result. You already now how to do it:</p>
+<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="120" sourceendlinenumber="139"><code class="lang-c#">MyViewComponent&lt;CartSummaryComponent&gt;
+    .Instance()
+    .WithSession(session =&gt; session
+        .WithEntry(&quot;Session&quot;, &quot;TestCart&quot;))
+    .WithDbContext(db =&gt; db
+        .WithEntities(entities =&gt; entities
+            .AddRange(GetCartItems(&quot;TestCart&quot;, &quot;TestAlbum&quot;))))
+    .InvokedWith(vc =&gt; vc.InvokeAsync())
+    .ShouldHave() // &lt;---
+    .ViewBag(viewBag =&gt; viewBag
+        .ContainingEntries(new
+        {
+            CartCount = 10,
+            CartSummary = &quot;TestAlbum&quot;
+        }))
+    .AndAlso()
+    .ShouldReturn() // &lt;---
+    .View();
+</code></pre><p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="141" sourceendlinenumber="141">Run the test and see it pass! :)</p>
+<p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="143" sourceendlinenumber="143">As with all tests with My Tested ASP.NET Core MVC, if you have and invalid value, you will receive a friendly error message. Change <strong>&quot;Session&quot;</strong> to <strong>&quot;Cache&quot;</strong> and see for yourself:</p>
+<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="145" sourceendlinenumber="147"><code>When invoking CartSummaryComponent expected view bag to have entry with &#39;CartCount&#39; key and the provided value, but the value was different.
+</code></pre><h2 id="section-summary" sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="149" sourceendlinenumber="149">Section Summary</h2>
+<p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="151" sourceendlinenumber="151">View component testing allows the same methods as the controller one as long as they are applicable. You should be seeing the big picture of the library now. The next one is interesting - the good old <a href="/tutorial/routing.html" sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="151" sourceendlinenumber="151">Routing</a> testing!</p>
 
             </article>
           </div>
