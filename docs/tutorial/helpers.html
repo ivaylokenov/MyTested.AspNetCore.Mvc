@@ -4,9 +4,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title> </title>
+    <title>Various Helpers </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content=" ">
+    <meta name="title" content="Various Helpers ">
     <meta name="generator" content="docfx 2.5.0.0">
     {% seo %}
     
@@ -63,8 +63,184 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
+              <h1 id="various-helpers" sourcefile="tutorial/helpers.md" sourcestartlinenumber="1" sourceendlinenumber="1">Various Helpers</h1>
               
-              
+<p sourcefile="tutorial/helpers.md" sourcestartlinenumber="3" sourceendlinenumber="3">This section will cover various test helpers which make writing tests faster and easier! :)</p>
+<h2 id="the-helpers-package" sourcefile="tutorial/helpers.md" sourcestartlinenumber="5" sourceendlinenumber="5">The Helpers package</h2>
+<p sourcefile="tutorial/helpers.md" sourcestartlinenumber="7" sourceendlinenumber="7">You may add the <strong>&quot;MyTested.AspNetCore.Mvc.Helpers&quot;</strong> package which adds extension methods to the fluent API. But let&#39;s do something else. I believe you got tired of all these packages so we will delete them and add only the one that rules them all:</p>
+<pre sourcefile="tutorial/helpers.md" sourcestartlinenumber="9" sourceendlinenumber="17"><code class="lang-json">&quot;dependencies&quot;: {
+  &quot;dotnet-test-xunit&quot;: &quot;2.2.0-*&quot;,
+  &quot;xunit&quot;: &quot;2.2.0-*&quot;,
+  &quot;Moq&quot;: &quot;4.6.38-*&quot;,
+  &quot;MyTested.AspNetCore.Mvc.Universe&quot;: &quot;1.0.0&quot;, // &lt;---
+  &quot;MusicStore&quot;: &quot;*&quot;
+},
+</code></pre><p sourcefile="tutorial/helpers.md" sourcestartlinenumber="19" sourceendlinenumber="19">The <strong>&quot;Universe&quot;</strong> package combines all other packages.</p>
+<p sourcefile="tutorial/helpers.md" sourcestartlinenumber="21" sourceendlinenumber="21">One of the helpers is allowing us to assert controller action results with a single method call instead of multiple ones. For example we may have these lines of code:</p>
+<pre sourcefile="tutorial/helpers.md" sourcestartlinenumber="23" sourceendlinenumber="27"><code class="lang-c#">.ShouldReturn()
+.View()
+.WithModel(model);
+</code></pre><p sourcefile="tutorial/helpers.md" sourcestartlinenumber="29" sourceendlinenumber="29">They can be written like this:</p>
+<pre sourcefile="tutorial/helpers.md" sourcestartlinenumber="31" sourceendlinenumber="34"><code class="lang-c#">.ShouldReturn()
+.View(model)
+</code></pre><p sourcefile="tutorial/helpers.md" sourcestartlinenumber="36" sourceendlinenumber="36">We have such test in <strong>&quot;AccountControllerTest&quot;</strong>:</p>
+<pre sourcefile="tutorial/helpers.md" sourcestartlinenumber="38" sourceendlinenumber="61"><code class="lang-c#">[Fact]
+public void LoginShouldReturnViewWithSameModelWithInvalidLoginViewModel()
+{
+    var model = new LoginViewModel
+    {
+        Email = &quot;invalid@invalid.com&quot;,
+        Password = &quot;invalid&quot;
+    };
+
+    var redirectUrl = &quot;/Test/Url&quot;;
+
+    MyController&lt;AccountController&gt;
+        .Instance()
+        .Calling(c =&gt; c.Login(model, redirectUrl))
+        .ShouldHave()
+        .ModelState(modelState =&gt; modelState
+            .ContainingError(string.Empty)
+            .ThatEquals(&quot;Invalid login attempt.&quot;))
+        .AndAlso()
+        .ShouldReturn()
+        .View(model); // &lt;---
+}
+</code></pre><h2 id="global-mymvc-class" sourcefile="tutorial/helpers.md" sourcestartlinenumber="63" sourceendlinenumber="63">Global MyMvc class</h2>
+<p sourcefile="tutorial/helpers.md" sourcestartlinenumber="65" sourceendlinenumber="65">The <strong>&quot;MyTested.AspNetCore.Mvc&quot;</strong> package introduced another static class named <strong>&quot;MyMvc&quot;</strong>. Instead of these:</p>
+<pre sourcefile="tutorial/helpers.md" sourcestartlinenumber="67" sourceendlinenumber="71"><code class="lang-c#">MyController&lt;TestController&gt;.Instance()
+MyViewComponent&lt;TestViewComponent&gt;.Instance()
+MyRouting.Configuration()
+</code></pre><p sourcefile="tutorial/helpers.md" sourcestartlinenumber="73" sourceendlinenumber="73">You can use:</p>
+<pre sourcefile="tutorial/helpers.md" sourcestartlinenumber="75" sourceendlinenumber="79"><code class="lang-c#">MyMvc.Controller&lt;TestController&gt;()
+MyMvc.ViewComponent&lt;TestViewComponent&gt;()
+MyMvc.Routing()
+</code></pre><p sourcefile="tutorial/helpers.md" sourcestartlinenumber="81" sourceendlinenumber="81">It is up to you!</p>
+<h2 id="model-state-expression-based-assertions" sourcefile="tutorial/helpers.md" sourcestartlinenumber="83" sourceendlinenumber="83">Model state expression-based assertions</h2>
+<p sourcefile="tutorial/helpers.md" sourcestartlinenumber="85" sourceendlinenumber="85">Instead of string-based model state assertions line in the <strong>&quot;ManageControllerTest&quot;</strong>:</p>
+<pre sourcefile="tutorial/helpers.md" sourcestartlinenumber="87" sourceendlinenumber="97"><code class="lang-c#">.ShouldHave()
+.ModelState(modelState =&gt; modelState
+    .ContainingError(nameof(ChangePasswordViewModel.OldPassword))
+    .ThatEquals(&quot;The Current password field is required.&quot;)
+    .AndAlso()
+    .ContainingError(nameof(ChangePasswordViewModel.NewPassword))
+    .ThatEquals(&quot;The New password field is required.&quot;)
+    .AndAlso()
+    .ContainingNoError(nameof(ChangePasswordViewModel.ConfirmPassword)))
+</code></pre><p sourcefile="tutorial/helpers.md" sourcestartlinenumber="99" sourceendlinenumber="99">You may use expression-based ones:</p>
+<pre sourcefile="tutorial/helpers.md" sourcestartlinenumber="101" sourceendlinenumber="112"><code class="lang-c#">.ShouldHave()
+.ModelState(modelState =&gt; modelState
+    .For&lt;ChangePasswordViewModel&gt;()
+    .ContainingErrorFor(m =&gt; m.OldPassword)
+    .ThatEquals(&quot;The Current password field is required.&quot;)
+    .AndAlso()
+    .ContainingErrorFor(m =&gt; m.NewPassword)
+    .ThatEquals(&quot;The New password field is required.&quot;)
+    .AndAlso()
+    .ContainingNoErrorFor(m =&gt; m.ConfirmPassword))
+</code></pre><h2 id="expression-based-route-values" sourcefile="tutorial/helpers.md" sourcestartlinenumber="114" sourceendlinenumber="114">Expression-based route values</h2>
+<p sourcefile="tutorial/helpers.md" sourcestartlinenumber="116" sourceendlinenumber="116">Instead of testing for redirects by using multiple method calls like in the <strong>&quot;ManageControllerTest&quot;</strong>:</p>
+<pre sourcefile="tutorial/helpers.md" sourcestartlinenumber="118" sourceendlinenumber="123"><code class="lang-c#">.ShouldReturn()
+.Redirect()
+.ToAction(nameof(ManageController.ManageLogins))
+.ContainingRouteValues(new { Message = ManageController.ManageMessageId.Error });
+</code></pre><p sourcefile="tutorial/helpers.md" sourcestartlinenumber="125" sourceendlinenumber="125">You may use a single expression-based assertion call:</p>
+<pre sourcefile="tutorial/helpers.md" sourcestartlinenumber="127" sourceendlinenumber="131"><code class="lang-c#">.ShouldReturn()
+.Redirect()
+.To&lt;ManageController&gt;(c =&gt; c.ManageLogins(ManageController.ManageMessageId.Error))
+</code></pre><h2 id="resolving-route-data" sourcefile="tutorial/helpers.md" sourcestartlinenumber="133" sourceendlinenumber="133">Resolving route data</h2>
+<p sourcefile="tutorial/helpers.md" sourcestartlinenumber="135" sourceendlinenumber="135">Let&#39;s test the <strong>&quot;AddressAndPayment&quot;</strong> action in the <strong>&quot;AccountController&quot;</strong>. We will validate for correct redirection:</p>
+<pre sourcefile="tutorial/helpers.md" sourcestartlinenumber="137" sourceendlinenumber="171"><code class="lang-c#">[Fact]
+public void AddressAndPaymentShouldRerurnRedirectWithValidData()
+    =&gt; MyController&lt;CheckoutController&gt;
+        .Instance()
+        .WithHttpRequest(request =&gt; request
+            .WithFormField(&quot;PromoCode&quot;, &quot;FREE&quot;))
+        .WithSession(session =&gt; session
+            .WithEntry(&quot;Session&quot;, &quot;TestCart&quot;))
+        .WithAuthenticatedUser()
+        .WithDbContext(db =&gt; db
+            .WithEntities(entities =&gt;
+            {
+                var album = new Album { AlbumId = 1, Price = 10 };
+
+                var cartItem = new CartItem
+                {
+                    Count = 1,
+                    CartId = &quot;TestCart&quot;,
+                    AlbumId = 1,
+                    Album = album
+                };
+
+                entities.Add(album);
+                entities.Add(cartItem);
+            }))
+        .WithoutValidation()
+        .Calling(c =&gt; c.AddressAndPayment(
+            From.Services&lt;MusicStoreContext&gt;(),
+            new Order { OrderId = 1 },
+            With.No&lt;CancellationToken&gt;()))
+        .ShouldReturn()
+        .Redirect()
+        .To&lt;CheckoutController&gt;(c =&gt; c.Complete(With.Any&lt;MusicStoreContext&gt;(), 1));
+</code></pre><p sourcefile="tutorial/helpers.md" sourcestartlinenumber="173" sourceendlinenumber="173">Running this test will give us the following strange error message:</p>
+<pre sourcefile="tutorial/helpers.md" sourcestartlinenumber="175" sourceendlinenumber="177"><code>When calling AddressAndPayment action in CheckoutController expected redirect result to have resolved location to &#39;/Checkout/Complete/1&#39;, but in fact received &#39;/Home/Complete/1&#39;.
+</code></pre><p sourcefile="tutorial/helpers.md" sourcestartlinenumber="179" sourceendlinenumber="179">The problem is that the request path is empty which results to the action route data being invalid. For that reason we are receiving wrong redirection location. The fix is easy - just call <strong>&quot;WithRouteData&quot;</strong>:</p>
+<pre sourcefile="tutorial/helpers.md" sourcestartlinenumber="181" sourceendlinenumber="216"><code class="lang-c#">[Fact]
+public void AddressAndPaymentShouldRerurnRedirectWithValidData()
+    =&gt; MyController&lt;CheckoutController&gt;
+        .Instance()
+        .WithHttpRequest(request =&gt; request
+            .WithFormField(&quot;PromoCode&quot;, &quot;FREE&quot;))
+        .WithSession(session =&gt; session
+            .WithEntry(&quot;Session&quot;, &quot;TestCart&quot;))
+        .WithAuthenticatedUser()
+        .WithRouteData() // &lt;---
+        .WithDbContext(db =&gt; db
+            .WithEntities(entities =&gt;
+            {
+                var album = new Album { AlbumId = 1, Price = 10 };
+
+                var cartItem = new CartItem
+                {
+                    Count = 1,
+                    CartId = &quot;TestCart&quot;,
+                    AlbumId = 1,
+                    Album = album
+                };
+
+                entities.Add(album);
+                entities.Add(cartItem);
+            }))
+        .WithoutValidation()
+        .Calling(c =&gt; c.AddressAndPayment(
+            From.Services&lt;MusicStoreContext&gt;(),
+            new Order { OrderId = 1 },
+            With.No&lt;CancellationToken&gt;()))
+        .ShouldReturn()
+        .Redirect()
+        .To&lt;CheckoutController&gt;(c =&gt; c.Complete(With.Any&lt;MusicStoreContext&gt;(), 1));
+</code></pre><p sourcefile="tutorial/helpers.md" sourcestartlinenumber="218" sourceendlinenumber="218">The method call will resolve all the route values for you. The reason it is not done by default is because of performance considerations. You may manually provide route data values, if you need:</p>
+<pre sourcefile="tutorial/helpers.md" sourcestartlinenumber="220" sourceendlinenumber="222"><code class="lang-c#">.WithRouteData(new { controller = &quot;Checkout&quot; })
+</code></pre><p sourcefile="tutorial/helpers.md" sourcestartlinenumber="224" sourceendlinenumber="224">The above issue may show when testing for the <strong>&quot;Created&quot;</strong> and <strong>&quot;Redirect&quot;</strong> action results. In some cases, the testing framework may catch the error and suggest you the following error:</p>
+<pre sourcefile="tutorial/helpers.md" sourcestartlinenumber="226" sourceendlinenumber="228"><code>Route values are not present in the method call but are needed for successful pass of this test case. Consider calling &#39;WithRouteData&#39; on the component builder to resolve them from the provided lambda expression or set the HTTP request path by using &#39;WithHttpRequest&#39;.
+</code></pre><p sourcefile="tutorial/helpers.md" sourcestartlinenumber="230" sourceendlinenumber="230">For example the test bellow with show the above message, if <strong>&quot;WithRouteData&quot;</strong> is not called because the <strong>&quot;ExternalLogin&quot;</strong> action uses <strong>&quot;IUrlHelper&quot;</strong>.</p>
+<pre sourcefile="tutorial/helpers.md" sourcestartlinenumber="232" sourceendlinenumber="241"><code class="lang-c#">[Fact]
+public void ExternalLoginShouldReturnCorrectResult()
+    =&gt; MyController&lt;AccountController&gt;
+        .Instance()
+        .WithRouteData()
+        .Calling(c =&gt; c.ExternalLogin(&quot;TestProvider&quot;, &quot;TestReturnUrl&quot;))
+        .ShouldReturn()
+        .Challenge();
+</code></pre><h2 id="additional-attribute-validations" sourcefile="tutorial/helpers.md" sourcestartlinenumber="243" sourceendlinenumber="243">Additional attribute validations</h2>
+<p sourcefile="tutorial/helpers.md" sourcestartlinenumber="245" sourceendlinenumber="245">Some packages expose additional attribute validations. For example adding the <strong>&quot;Microsoft.AspNetCore.Mvc.ViewFeatures&quot;</strong>, will add the option to test the <strong>&quot;AntiForgeryTokenAttribute&quot;</strong>. Instead of:</p>
+<pre sourcefile="tutorial/helpers.md" sourcestartlinenumber="247" sourceendlinenumber="249"><code class="lang-c#">.ContainingAttributeOfType&lt;ValidateAntiForgeryTokenAttribute&gt;()
+</code></pre><p sourcefile="tutorial/helpers.md" sourcestartlinenumber="251" sourceendlinenumber="251">You can use:</p>
+<pre sourcefile="tutorial/helpers.md" sourcestartlinenumber="253" sourceendlinenumber="255"><code class="lang-c#">.ValidatingAntiForgeryToken()
+</code></pre><h2 id="section-summary" sourcefile="tutorial/helpers.md" sourcestartlinenumber="257" sourceendlinenumber="257">Section summary</h2>
+<p sourcefile="tutorial/helpers.md" sourcestartlinenumber="259" sourceendlinenumber="259">With this section we finished with the most important parts of the fluent assertion API. Few non-syntax related topics left and you are free to go. Go to the <a href="/tutorial/organizingtests.html" sourcefile="tutorial/helpers.md" sourcestartlinenumber="259" sourceendlinenumber="259">Organizing Tests</a> section to see the various different ways you can write your tests!</p>
+
             </article>
           </div>
           

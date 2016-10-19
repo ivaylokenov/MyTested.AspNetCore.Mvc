@@ -151,10 +151,10 @@ public void CompleteShouldReturnViewWithCorrectIdWithFoundOrderForTheUser()
         .View()
         .WithModel(1);
 </code></pre><p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="114" sourceendlinenumber="114">It fails. Obviously, we need an authenticated user to test this action. We can attach it to the <strong>&quot;HttpContext&quot;</strong> but let&#39;s make it easier. Head over to the <strong>&quot;project.json&quot;</strong> file again and add <strong>&quot;MyTested.AspNetCore.Mvc.Authentication&quot;</strong>:</p>
-<p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="116" sourceendlinenumber="129">&quot;dependencies&quot;: {
-  &quot;dotnet-test-xunit&quot;: &quot;2.2.0-<em>&quot;,
-  &quot;xunit&quot;: &quot;2.2.0-</em>&quot;,
-  &quot;Moq&quot;: &quot;4.6.38-<em>&quot;,
+<pre sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="116" sourceendlinenumber="131"><code class="lang-json">&quot;dependencies&quot;: {
+  &quot;dotnet-test-xunit&quot;: &quot;2.2.0-*&quot;,
+  &quot;xunit&quot;: &quot;2.2.0-*&quot;,
+  &quot;Moq&quot;: &quot;4.6.38-*&quot;,
   &quot;MyTested.AspNetCore.Mvc.Authentication&quot;: &quot;1.0.0&quot;, // &lt;---
   &quot;MyTested.AspNetCore.Mvc.Controllers&quot;: &quot;1.0.0&quot;,
   &quot;MyTested.AspNetCore.Mvc.DependencyInjection&quot;: &quot;1.0.0&quot;,
@@ -163,10 +163,10 @@ public void CompleteShouldReturnViewWithCorrectIdWithFoundOrderForTheUser()
   &quot;MyTested.AspNetCore.Mvc.ModelState&quot;: &quot;1.0.0&quot;,
   &quot;MyTested.AspNetCore.Mvc.Models&quot;: &quot;1.0.0&quot;,
   &quot;MyTested.AspNetCore.Mvc.ViewActionResults&quot;: &quot;1.0.0&quot;,
-  &quot;MusicStore&quot;: &quot;</em>&quot;
-},</p>
-<p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="131" sourceendlinenumber="131"><strong>&quot;WithAuthenticatedUser&quot;</strong> method will be added to the fluent API. You can use it to set identifier, username, roles, claims and identities. But for now call it empty like this:</p>
-<pre sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="133" sourceendlinenumber="149"><code class="lang-c#">[Fact]
+  &quot;MusicStore&quot;: &quot;*&quot;
+},
+</code></pre><p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="133" sourceendlinenumber="133"><strong>&quot;WithAuthenticatedUser&quot;</strong> method will be added to the fluent API. You can use it to set identifier, username, roles, claims and identities. But for now call it empty like this:</p>
+<pre sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="135" sourceendlinenumber="151"><code class="lang-c#">[Fact]
 public void CompleteShouldReturnViewWithCorrectIdWithFoundOrderForTheUser()
     =&gt; MyController&lt;CheckoutController&gt;
         .Instance()
@@ -181,8 +181,8 @@ public void CompleteShouldReturnViewWithCorrectIdWithFoundOrderForTheUser()
         .ShouldReturn()
         .View()
         .WithModel(1);
-</code></pre><p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="151" sourceendlinenumber="151">You will receive a passing test because the default authenticated user has <strong>&quot;TestId&quot;</strong> identifier and <strong>&quot;TestUser&quot;</strong> username. Change the order <strong>&quot;Username&quot;</strong> property to <strong>&quot;MyTestUser&quot;</strong> and you will need to provide the username of the identity in order to make the test pass again:</p>
-<pre sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="153" sourceendlinenumber="170"><code class="lang-c#">[Fact]
+</code></pre><p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="153" sourceendlinenumber="153">You will receive a passing test because the default authenticated user has <strong>&quot;TestId&quot;</strong> identifier and <strong>&quot;TestUser&quot;</strong> username. Change the order <strong>&quot;Username&quot;</strong> property to <strong>&quot;MyTestUser&quot;</strong> and you will need to provide the username of the identity in order to make the test pass again:</p>
+<pre sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="155" sourceendlinenumber="172"><code class="lang-c#">[Fact]
 public void CompleteShouldReturnViewWithCorrectIdWithFoundOrderForTheUser()
     =&gt; MyController&lt;CheckoutController&gt;
         .Instance()
@@ -198,8 +198,8 @@ public void CompleteShouldReturnViewWithCorrectIdWithFoundOrderForTheUser()
         .ShouldReturn()
         .View()
         .WithModel(1);
-</code></pre><p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="172" sourceendlinenumber="172">Of course, we need to also test the result when the order is not for the currently authenticated user. In this case we need to return the <strong>&quot;Error&quot;</strong> view:</p>
-<pre sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="174" sourceendlinenumber="190"><code class="lang-c#">[Fact]
+</code></pre><p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="174" sourceendlinenumber="174">Of course, we need to also test the result when the order is not for the currently authenticated user. In this case we need to return the <strong>&quot;Error&quot;</strong> view:</p>
+<pre sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="176" sourceendlinenumber="192"><code class="lang-c#">[Fact]
 public void CompleteShouldReturnErrorViewWithInvalidOrderForTheUser()
     =&gt; MyController&lt;CheckoutController&gt;
         .Instance()
@@ -214,10 +214,10 @@ public void CompleteShouldReturnErrorViewWithInvalidOrderForTheUser()
         .Calling(c =&gt; c.Complete(From.Services&lt;MusicStoreContext&gt;(), 1))
         .ShouldReturn()
         .View(&quot;Error&quot;);
-</code></pre><h2 id="http-response" sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="192" sourceendlinenumber="192">HTTP Response</h2>
-<p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="194" sourceendlinenumber="194">Sometimes we may manipulate the HTTP response directly in the controller action - for example to add a custom header. The Music Store web application does not have such logic but we can take any action and validate whether it returns 200 (OK) status code just for the sake of seeing the syntax.</p>
-<p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="196" sourceendlinenumber="196">Create a <strong>&quot;HomeControllerTest&quot;</strong> class and add the following test:</p>
-<pre sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="198" sourceendlinenumber="210"><code class="lang-c#">[Fact]
+</code></pre><h2 id="http-response" sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="194" sourceendlinenumber="194">HTTP Response</h2>
+<p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="196" sourceendlinenumber="196">Sometimes we may manipulate the HTTP response directly in the controller action - for example to add a custom header. The Music Store web application does not have such logic but we can take any action and validate whether it returns 200 (OK) status code just for the sake of seeing the syntax.</p>
+<p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="198" sourceendlinenumber="198">Create a <strong>&quot;HomeControllerTest&quot;</strong> class and add the following test:</p>
+<pre sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="200" sourceendlinenumber="212"><code class="lang-c#">[Fact]
 public void AccessDeniedShouldReturnOkStatusCodeAndProperView()
     =&gt; MyController&lt;HomeController&gt;
         .Instance()
@@ -228,14 +228,14 @@ public void AccessDeniedShouldReturnOkStatusCodeAndProperView()
         .AndAlso()
         .ShouldReturn()
         .View(&quot;~/Views/Shared/AccessDenied.cshtml&quot;);
-</code></pre><p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="212" sourceendlinenumber="212">The <strong>&quot;HttpResponse&quot;</strong> method allows assertions of every part of the HTTP response - body, headers, cookies, etc. For example if you add this line:</p>
-<pre sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="214" sourceendlinenumber="216"><code class="lang-c#">.ContainingHeader(&quot;InvalidHeader&quot;)
-</code></pre><p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="218" sourceendlinenumber="218">You will receive a nice little error message (as always):</p>
-<pre sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="220" sourceendlinenumber="222"><code>When calling AccessDenied action in HomeController expected HTTP response headers to contain header with &#39;InvalidHeader&#39; name, but such was not found.
-</code></pre><p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="224" sourceendlinenumber="224">Cool! :)</p>
-<h2 id="section-summary" sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="226" sourceendlinenumber="226">Section summary</h2>
-<p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="228" sourceendlinenumber="228">Well, these were easier than the last section&#39;s test services. While the request testing is more suitable on other components, authentication plays big role in the actions&#39; logic.</p>
-<p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="230" sourceendlinenumber="230">If you followed the tutorial strictly, you should have reached the free trial version limitations of My Tested ASP.NET Core MVC. Let&#39;s take a break from the code and learn more about the <a href="/tutorial/licensing.html" sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="230" sourceendlinenumber="230">Licensing</a> of the testing framework.</p>
+</code></pre><p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="214" sourceendlinenumber="214">The <strong>&quot;HttpResponse&quot;</strong> method allows assertions of every part of the HTTP response - body, headers, cookies, etc. For example if you add this line:</p>
+<pre sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="216" sourceendlinenumber="218"><code class="lang-c#">.ContainingHeader(&quot;InvalidHeader&quot;)
+</code></pre><p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="220" sourceendlinenumber="220">You will receive a nice little error message (as always):</p>
+<pre sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="222" sourceendlinenumber="224"><code>When calling AccessDenied action in HomeController expected HTTP response headers to contain header with &#39;InvalidHeader&#39; name, but such was not found.
+</code></pre><p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="226" sourceendlinenumber="226">Cool! :)</p>
+<h2 id="section-summary" sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="228" sourceendlinenumber="228">Section summary</h2>
+<p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="230" sourceendlinenumber="230">Well, these were easier than the last section&#39;s test services. While the request testing is more suitable on other components, authentication plays big role in the actions&#39; logic.</p>
+<p sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="232" sourceendlinenumber="232">If you followed the tutorial strictly, you should have reached the free trial version limitations of My Tested ASP.NET Core MVC. Let&#39;s take a break from the code and learn more about the <a href="/tutorial/licensing.html" sourcefile="tutorial/httpauthentication.md" sourcestartlinenumber="232" sourceendlinenumber="232">Licensing</a> of the testing framework.</p>
 
             </article>
           </div>

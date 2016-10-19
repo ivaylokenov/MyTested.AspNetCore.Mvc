@@ -35,3 +35,5 @@
   href: routing.md
 - name: Various Helpers
   href: helpers.md
+- name: Organizing Tests
+  href: organizingtests.md
