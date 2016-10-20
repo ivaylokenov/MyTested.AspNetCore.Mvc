@@ -28,6 +28,25 @@ public void AddToCartShouldThrowExceptionWithInvalidId()
 
 Since we do not add any entries to the scoped in memory database, the test should pass without any problem. With it we are validating that the action throws **"AggregateException"** with message containing **"Sequence contains no elements"** and inner **"InvalidOperationException"**. Next to the **"AggregateException"**, there is the normal **"Exception"** call, which asserts non-asynchronous errors.
 
+Unfortunately, if we run the above test with .NET CLI by using **"dotnet test"**, we will receive a huge fail on **"net451"** because the **"AggregateException"** exception message is just "One or more errors occurred.". Possible fixes include removing the **"WithMessage"** call or just adding a compiler directive for the different frameworks like so:
+
+```c#
+[Fact]
+public void AddToCartShouldThrowExceptionWithInvalidId()
+    => MyController<ShoppingCartController>
+        .Instance()
+        .Calling(c => c.AddToCart(1))
+        .ShouldThrow()
+        .AggregateException()
+        .ContainingInnerExceptionOfType<InvalidOperationException>()
+        .WithMessage()
+#if NETCOREAPP1_0
+        .Containing("Sequence contains no elements");
+#else
+        .Containing("One or more errors occurred");
+#endif
+```
+
 ## Uncaught exceptions
 
 Let's see what happens if the action throws an exception and we try to validate a normal action result, for example:

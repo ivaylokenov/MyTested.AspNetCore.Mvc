@@ -37,3 +37,7 @@
   href: helpers.md
 - name: Organizing Tests
   href: organizingtests.md
+- name: Test Configuration
+  href: testconfig.md
+- name: Extension Methods
+  href: extensionmethods.md
