@@ -1,10 +1,10 @@
-# Welcome to the Tutorial
+# <img style="margin-right: 20px" src="https://raw.githubusercontent.com/ivaylokenov/MyTested.AspNetCore.Mvc/master/tools/nuget-logo.png" align="left" alt="MyTested.AspNetCore.Mvc" width="100"> Welcome to the Tutorial
 
-Here you will find а [My Tested ASP.NET Core MVC](https://mytestedasp.net/Core/Mvc) tutorial, in which you will learn the most important parts of the testing framework. In less than 15 minutes you will be able to write fast, asynchronous and high-quality tests against the famous Microsoft web framework. 
+Here you will find а [My Tested ASP.NET Core MVC](https://mytestedasp.net/Core/Mvc) tutorial, in which you will learn the most important parts of the testing framework. In less than 15 minutes you will be able to write fast, asynchronous and high-quality tests against the popular Microsoft web framework. 
 
 We will use:
 
- - [Music Store](https://github.com/aspnet/MusicStore) - the official ASP.NET Core MVC sample - download it from [HERE](https://raw.githubusercontent.com/ivaylokenov/MyTested.AspNetCore.Mvc/development/docs/_docfx/tutorial/MusicStore-Tutorial.zip)
+ - [Music Store](https://github.com/aspnet/MusicStore) - the official ASP.NET Core MVC sample - download it from [HERE](https://raw.githubusercontent.com/ivaylokenov/MyTested.AspNetCore.Mvc/master/docs/files/MusicStore-Tutorial.zip)
  - Visual Studio Community - the best ASP.NET Core IDE - available [HERE](https://www.visualstudio.com/vs/community/)
  - .NET Core CLI - the command line tools for .NET Core - get them from [HERE](https://www.microsoft.com/net/core)
  - xUnit - asynchronous C# test runner - more information [HERE](http://xunit.github.io/)

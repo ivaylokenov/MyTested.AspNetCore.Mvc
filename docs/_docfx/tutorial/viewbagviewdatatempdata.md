@@ -1,6 +1,6 @@
 # ViewBag, ViewData & TempData
 
-The **"Music Store"** web application does uses only the **"ViewBag"** so we will write some tests for it. The **"ViewData**" and the **"TempData"** use similar syntax.
+The **"Music Store"** web application does use only the **"ViewBag"** so we will write some tests for it. The **"ViewData**" and the **"TempData"** use similar syntax.
 
 ## Testing with ViewBag entry
 
@@ -103,8 +103,11 @@ public void CreateShouldHaveValidEntriesInViewBag()
         .ViewBag(viewBag => viewBag // <---
             .ContainingEntries(new
             {
-                GenreId = new SelectList(From.Services<MusicStoreContext>().Genres, "GenreId", "Name"),
-                ArtistId = new SelectList(From.Services<MusicStoreContext>().Artists, "ArtistId", "Name")
+                GenreId = new SelectList(
+					From.Services<MusicStoreContext>().Genres, "GenreId", "Name"),
+					
+                ArtistId = new SelectList(
+					From.Services<MusicStoreContext>().Artists, "ArtistId", "Name")
             }))
         .AndAlso()
         .ShouldReturn()
@@ -117,14 +120,17 @@ The **"ContainingEntries"** call is equivalent to this one:
 ```c#
 .ContainingEntries(new Dictionary<string, object>
 {
-	["GenreId"] = new SelectList(From.Services<MusicStoreContext>().Genres, "GenreId", "Name"),
-	["ArtistId"] = new SelectList(From.Services<MusicStoreContext>().Artists, "ArtistId", "Name")
+	["GenreId"] = new SelectList(
+		From.Services<MusicStoreContext>().Genres, "GenreId", "Name"),
+		
+	["ArtistId"] = new SelectList(
+		From.Services<MusicStoreContext>().Artists, "ArtistId", "Name")
 }))
 ``` 
 
-Both methods will validate whether the total number of entries in the **"ViewBag"** is equal to the total number you provide to the test. For validation - remove the **"ArtistId"** property from anonymous object and run the test again:
+Both methods will validate whether the total number of entries in the **"ViewBag"** is equal to the total number you provide in the test. For a sanity check - remove the **"ArtistId"** property from anonymous object and run the test again:
 
-```
+```text
 When calling Create action in StoreManagerController expected view bag to have 1 entry, but in fact found 2.
 ```
 
@@ -132,8 +138,10 @@ If you do not want the total number of entries validation, just use:
 
 ```c#
 .ViewBag(viewBag => viewBag // <---
-	.ContainingEntry("GenreId", new SelectList(From.Services<MusicStoreContext>().Genres, "GenreId", "Name"))
-	.ContainingEntry("ArtistId", new SelectList(From.Services<MusicStoreContext>().Artists, "ArtistId", "Name")))
+	.ContainingEntry("GenreId", new SelectList(
+		From.Services<MusicStoreContext>().Genres, "GenreId", "Name"))
+	.ContainingEntry("ArtistId", new SelectList(
+		From.Services<MusicStoreContext>().Artists, "ArtistId", "Name")))
 ```
 
 ## ViewData and TempData
@@ -152,7 +160,7 @@ MyController<SomeController>
 	.View();
 ```
 
-**"TempData"** too but you will need the **"MyTested.AspNetCore.Mvc.TempData"** package:
+**"TempData"** too, but you will need the **"MyTested.AspNetCore.Mvc.TempData"** package:
 
 ```c#
 MyController<SomeController>
@@ -166,7 +174,7 @@ MyController<SomeController>
 	.View();
 ```
 
-Additionally, you can populate the **"TempData"** dictionary before the action call:
+Additionally, you can populate the **"TempData"** dictionary before the actual action call:
 
 ```c#
 MyController<SomeController>
@@ -180,4 +188,4 @@ MyController<SomeController>
 
 ## Section summary
 
-We saw how easy it is to test with **"ViewBag"**, **"ViewData"** and **"TempData"**. Their fluent assertion API is very similar to the **"Session"** and **"Cache"** ones. But enough about controllers, let's move on to [View Components](/tutorial/viewcomponents.html)!
+We saw how easy it is to test with **"ViewBag"**, **"ViewData"** and **"TempData"**. Their fluent assertion APIs are very similar to the **"Session"** and **"Cache"** ones. But enough about controllers, let's finally move on to [View Components](/tutorial/viewcomponents.html)!

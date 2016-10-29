@@ -99,7 +99,7 @@ if (cartId == null)
 return cartId;
 
 // code skipped for brevity
-</code></pre><p sourcefile="tutorial/sessioncache.md" sourcestartlinenumber="48" sourceendlinenumber="48">Let&#39;s assert that if the session is initially empty, an entry with <strong>&quot;Session&quot;</strong> key should be added after the action invocation. Go to the <strong>&quot;ShoppingCartControllerTest&quot;</strong> class and add the following test:</p>
+</code></pre><p sourcefile="tutorial/sessioncache.md" sourcestartlinenumber="48" sourceendlinenumber="48">Let&#39;s assert that if the session is initially empty, an entry with <strong>&quot;Session&quot;</strong> key should be added after the action invocation. Go to the <strong>&quot;ShoppingCartControllerTest&quot;</strong> class and insert the following test:</p>
 <pre sourcefile="tutorial/sessioncache.md" sourcestartlinenumber="50" sourceendlinenumber="62"><code class="lang-c#">[Fact]
 public void AddToCartShouldPopulateSessionCartIfMissing()
     =&gt; MyController&lt;ShoppingCartController&gt;
@@ -222,8 +222,8 @@ public void IndexShouldNotUseCacheIfOptionsDisableIt()
         .ShouldHave()
         .NoMemoryCache(); // &lt;---
 </code></pre><p sourcefile="tutorial/sessioncache.md" sourcestartlinenumber="202" sourceendlinenumber="202">Unfortunately, the <strong>&quot;NoMemoryCache&quot;</strong> call will not work:</p>
-<pre sourcefile="tutorial/sessioncache.md" sourcestartlinenumber="204" sourceendlinenumber="206"><code class="lang-c#">When calling Index action in HomeController expected to have memory cache with no entries, but in fact it had some.
-</code></pre><p sourcefile="tutorial/sessioncache.md" sourcestartlinenumber="208" sourceendlinenumber="208">Unfortunately with straightforward action debugging we may not see what exactly is going on because the <strong>&quot;CacheDbResults&quot;</strong> is indeed <strong>&quot;false&quot;</strong>. The reason of the error lies in <a href="https://github.com/aspnet/EntityFramework/blob/f9adcb64fdf668163377beb14251e67d17f60fa0/src/Microsoft.EntityFrameworkCore/EntityFrameworkServiceCollectionExtensions.cs#L150" sourcefile="tutorial/sessioncache.md" sourcestartlinenumber="208" sourceendlinenumber="208">Entity Framework Core&#39;s code</a>. It uses the same memory cache service as the web application and guess what! It caches the database query call. But how to debug such issues?</p>
+<pre sourcefile="tutorial/sessioncache.md" sourcestartlinenumber="204" sourceendlinenumber="206"><code class="lang-text">When calling Index action in HomeController expected to have memory cache with no entries, but in fact it had some.
+</code></pre><p sourcefile="tutorial/sessioncache.md" sourcestartlinenumber="208" sourceendlinenumber="208">With straightforward action debugging we may not see what exactly is going on because the <strong>&quot;CacheDbResults&quot;</strong> is indeed <strong>&quot;false&quot;</strong>. The reason of the error lies in <a href="https://github.com/aspnet/EntityFramework/blob/f9adcb64fdf668163377beb14251e67d17f60fa0/src/Microsoft.EntityFrameworkCore/EntityFrameworkServiceCollectionExtensions.cs#L150" sourcefile="tutorial/sessioncache.md" sourcestartlinenumber="208" sourceendlinenumber="208">Entity Framework Core&#39;s code</a>. It uses the same memory cache service as the web application and guess what! It caches the database query call. But how to debug such issues?</p>
 <p sourcefile="tutorial/sessioncache.md" sourcestartlinenumber="210" sourceendlinenumber="210">Easy! Add these lines:</p>
 <pre sourcefile="tutorial/sessioncache.md" sourcestartlinenumber="212" sourceendlinenumber="222"><code class="lang-c#">.WithDbContext(db =&gt; db
     .WithEntities(entities =&gt; entities.AddRange(Albums)))
@@ -235,14 +235,14 @@ public void IndexShouldNotUseCacheIfOptionsDisableIt()
     var memoryCache = services.GetService&lt;IMemoryCache&gt;();
 }); // &lt;--- and put a breakpoint here
 </code></pre><p sourcefile="tutorial/sessioncache.md" sourcestartlinenumber="224" sourceendlinenumber="224">Running the debugger will allow you to examine the actual values in the cache.</p>
-<p sourcefile="tutorial/sessioncache.md" sourcestartlinenumber="226" sourceendlinenumber="226"><img src="/images/tutorial/nomemorycachedebug.jpn" alt="Debugging memory cache"></p>
+<p sourcefile="tutorial/sessioncache.md" sourcestartlinenumber="226" sourceendlinenumber="226"><img src="/images/tutorial/nomemorycachedebug.jpg" alt="Debugging memory cache"></p>
 <p sourcefile="tutorial/sessioncache.md" sourcestartlinenumber="228" sourceendlinenumber="228">One of the possible fixes is:</p>
 <pre sourcefile="tutorial/sessioncache.md" sourcestartlinenumber="230" sourceendlinenumber="236"><code class="lang-c#">.Calling(c =&gt; c.Index(
     From.Services&lt;MusicStoreContext&gt;(),
     From.Services&lt;IMemoryCache&gt;()))
 .ShouldPassForThe&lt;IServiceProvider&gt;(services =&gt; Assert.Null(services // &lt;---
     .GetRequiredService&lt;IMemoryCache&gt;().Get(&quot;topselling&quot;)));
-</code></pre><p sourcefile="tutorial/sessioncache.md" sourcestartlinenumber="238" sourceendlinenumber="238">You may use custom mocks too but it is not necessary.</p>
+</code></pre><p sourcefile="tutorial/sessioncache.md" sourcestartlinenumber="238" sourceendlinenumber="238">You may use custom mocks too, but it is not necessary.</p>
 <p sourcefile="tutorial/sessioncache.md" sourcestartlinenumber="240" sourceendlinenumber="240">Next, we should assert that with the <strong>&quot;CacheDbResults&quot;</strong> set to <strong>&quot;true&quot;</strong>, we should have saved cache entries from the database query:</p>
 <pre sourcefile="tutorial/sessioncache.md" sourcestartlinenumber="242" sourceendlinenumber="267"><code class="lang-c#">[Fact]
 public void IndexShouldSaveCorrectCacheEntriesIfOptionsEnableIt()
@@ -284,9 +284,9 @@ public void IndexShouldGetAlbumsFromCacheIfEntryExists()
         .View()
         .WithModelOfType&lt;List&lt;Album&gt;&gt;()
         .Passing(albums =&gt; albums.Count == 6);
-</code></pre><p sourcefile="tutorial/sessioncache.md" sourcestartlinenumber="289" sourceendlinenumber="289">This way we validate entries are retrieved from cache and from the actual database (which is empty for this particular test).</p>
+</code></pre><p sourcefile="tutorial/sessioncache.md" sourcestartlinenumber="289" sourceendlinenumber="289">This way we validate that the entries are retrieved from the cache and not from the actual database (which is empty for this particular test).</p>
 <h2 id="section-summary" sourcefile="tutorial/sessioncache.md" sourcestartlinenumber="291" sourceendlinenumber="291">Section summary</h2>
-<p sourcefile="tutorial/sessioncache.md" sourcestartlinenumber="293" sourceendlinenumber="293">Session and cache are fun. By using the <strong>&quot;WithSession&quot;</strong> and <strong>&quot;WithMemoryCache&quot;</strong> methods, you prepare the values to be available during the action call. On the other side, the <strong>&quot;ShouldHave().MemoryCache()&quot;</strong> and <strong>&quot;ShouldHave().Session()&quot;</strong> extensions allows you to assert their values after the action call. The same principle applies to the <a href="/tutorial/viewbagviewdatatempdata.html" sourcefile="tutorial/sessioncache.md" sourcestartlinenumber="293" sourceendlinenumber="293">ViewBag, ViewData &amp; TempData</a>.</p>
+<p sourcefile="tutorial/sessioncache.md" sourcestartlinenumber="293" sourceendlinenumber="293">Session and cache are fun. By using the <strong>&quot;WithSession&quot;</strong> and <strong>&quot;WithMemoryCache&quot;</strong> methods, you prepare the values to be available during the action call. On the other side, the <strong>&quot;ShouldHave().MemoryCache()&quot;</strong> and <strong>&quot;ShouldHave().Session()&quot;</strong> extensions allows you to assert their values after the invocation. The same principle applies to the <a href="/tutorial/viewbagviewdatatempdata.html" sourcefile="tutorial/sessioncache.md" sourcestartlinenumber="293" sourceendlinenumber="293">ViewBag, ViewData &amp; TempData</a>.</p>
 
             </article>
           </div>

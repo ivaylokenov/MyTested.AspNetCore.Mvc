@@ -65,6 +65,202 @@
             <article class="content wrap" id="_content" data-uid="">
               <h1 id="organizing-tests" sourcefile="tutorial/organizingtests.md" sourcestartlinenumber="1" sourceendlinenumber="1">Organizing Tests</h1>
               
+<p sourcefile="tutorial/organizingtests.md" sourcestartlinenumber="3" sourceendlinenumber="3">This section will cover the various ways we can organize our tests in a single class.</p>
+<h2 id="the-fluent-style" sourcefile="tutorial/organizingtests.md" sourcestartlinenumber="5" sourceendlinenumber="5">The fluent style</h2>
+<p sourcefile="tutorial/organizingtests.md" sourcestartlinenumber="7" sourceendlinenumber="7">This is the test style we used so far in the tutorial. For example, let&#39;s take a look at our <strong>&quot;StoreControllerTest&quot;</strong> class:</p>
+<pre sourcefile="tutorial/organizingtests.md" sourcestartlinenumber="9" sourceendlinenumber="61"><code class="lang-c#">namespace MusicStore.Test.Controllers
+{
+    using Microsoft.Extensions.Options;
+    using Mocks;
+    using Models;
+    using Moq;
+    using MusicStore.Controllers;
+    using MyTested.AspNetCore.Mvc;
+    using System.Collections.Generic;
+    using Xunit;
+
+    public class StoreControllerTest
+    {
+        [Fact]
+        public void IndexShouldReturnViewWithGenres()
+            =&gt; MyController&lt;StoreController&gt;
+                .Instance()
+                .WithDbContext(dbContext =&gt; dbContext
+                    .WithEntities(entities =&gt; entities.AddRange(
+                        new Genre { Name = &quot;FirstGenre&quot; },
+                        new Genre { Name = &quot;SecondGenre&quot; })))
+                .Calling(c =&gt; c.Index())
+                .ShouldReturn()
+                .View()
+                .WithModelOfType&lt;List&lt;Genre&gt;&gt;()
+                .Passing(model =&gt; model.Count == 2);
+
+        [Fact]
+        public void BrowseShouldReturnNotFoundWithInvalidGenre()
+            =&gt; MyController&lt;StoreController&gt;
+                .Instance(new StoreController(
+                    MockProvider.MusicStoreContext,
+                    Mock.Of&lt;IOptions&lt;AppSettings&gt;&gt;()))
+                .Calling(c =&gt; c.Browse(&quot;Invalid&quot;))
+                .ShouldReturn()
+                .NotFound();
+
+        [Fact]
+        public void BrowseShouldReturnCorrectViewModelWithValidGenre()
+            =&gt; MyController&lt;StoreController&gt;
+                .Instance()
+                .WithServices(
+                    MockProvider.MusicStoreContext,
+                    Mock.Of&lt;IOptions&lt;AppSettings&gt;&gt;())
+                .Calling(c =&gt; c.Browse(&quot;Rap&quot;))
+                .ShouldReturn()
+                .View()
+                .WithModelOfType&lt;Genre&gt;()
+                .Passing(model =&gt; model.GenreId == 2);
+    }
+}
+</code></pre><h2 id="the-classic-aaa-style" sourcefile="tutorial/organizingtests.md" sourcestartlinenumber="63" sourceendlinenumber="63">The classic AAA style</h2>
+<p sourcefile="tutorial/organizingtests.md" sourcestartlinenumber="65" sourceendlinenumber="65">You can split the fluent API in the classic Arrange-Act-Assert style:</p>
+<pre sourcefile="tutorial/organizingtests.md" sourcestartlinenumber="67" sourceendlinenumber="89"><code class="lang-c#">[Fact]
+public void IndexShouldReturnViewWithGenres()
+{
+    // Arrange
+    var controller = MyController&lt;StoreController&gt;
+        .Instance()
+        .WithDbContext(dbContext =&gt; dbContext
+            .WithEntities(entities =&gt; entities.AddRange(
+                new Genre { Name = &quot;FirstGenre&quot; },
+                new Genre { Name = &quot;SecondGenre&quot; })));
+
+    // Act
+    var execution = controller.Calling(c =&gt; c.Index());
+
+    // Assert
+    execution
+        .ShouldReturn()
+        .View()
+        .WithModelOfType&lt;List&lt;Genre&gt;&gt;()
+        .Passing(model =&gt; model.Count == 2);
+}
+</code></pre><h2 id="the-fluent-aaa-style" sourcefile="tutorial/organizingtests.md" sourcestartlinenumber="91" sourceendlinenumber="91">The fluent AAA style</h2>
+<p sourcefile="tutorial/organizingtests.md" sourcestartlinenumber="93" sourceendlinenumber="93">Or just mark the fluent API with comments:</p>
+<pre sourcefile="tutorial/organizingtests.md" sourcestartlinenumber="95" sourceendlinenumber="112"><code class="lang-c#">[Fact]
+public void IndexShouldReturnViewWithGenres()
+    =&gt; MyController&lt;StoreController&gt;
+        // Arrange
+        .Instance()
+        .WithDbContext(dbContext =&gt; dbContext
+            .WithEntities(entities =&gt; entities.AddRange(
+                new Genre { Name = &quot;FirstGenre&quot; },
+                new Genre { Name = &quot;SecondGenre&quot; })))
+        // Act
+        .Calling(c =&gt; c.Index())
+        // Assert
+        .ShouldReturn()
+        .View()
+        .WithModelOfType&lt;List&lt;Genre&gt;&gt;()
+        .Passing(model =&gt; model.Count == 2);
+</code></pre><h2 id="the-inheriting-style" sourcefile="tutorial/organizingtests.md" sourcestartlinenumber="114" sourceendlinenumber="114">The inheriting style</h2>
+<p sourcefile="tutorial/organizingtests.md" sourcestartlinenumber="116" sourceendlinenumber="116">You may inherit the <strong>&quot;MyController&quot;</strong> class to skip writing it in every single test:</p>
+<pre sourcefile="tutorial/organizingtests.md" sourcestartlinenumber="118" sourceendlinenumber="167"><code class="lang-c#">namespace MusicStore.Test.Controllers
+{
+    using Microsoft.Extensions.Options;
+    using Mocks;
+    using Models;
+    using Moq;
+    using MusicStore.Controllers;
+    using MyTested.AspNetCore.Mvc;
+    using System.Collections.Generic;
+    using Xunit;
+
+    public class StoreControllerTest : MyController&lt;StoreController&gt; // &lt;---
+    {
+        [Fact]
+        public void IndexShouldReturnViewWithGenres()
+            =&gt; this
+                .WithDbContext(dbContext =&gt; dbContext
+                    .WithEntities(entities =&gt; entities.AddRange(
+                        new Genre { Name = &quot;FirstGenre&quot; },
+                        new Genre { Name = &quot;SecondGenre&quot; })))
+                .Calling(c =&gt; c.Index())
+                .ShouldReturn()
+                .View()
+                .WithModelOfType&lt;List&lt;Genre&gt;&gt;()
+                .Passing(model =&gt; model.Count == 2);
+
+        [Fact]
+        public void BrowseShouldReturnNotFoundWithInvalidGenre()
+            =&gt; Instance(new StoreController(
+                    MockProvider.MusicStoreContext,
+                    Mock.Of&lt;IOptions&lt;AppSettings&gt;&gt;()))
+                .Calling(c =&gt; c.Browse(&quot;Invalid&quot;))
+                .ShouldReturn()
+                .NotFound();
+
+        [Fact]
+        public void BrowseShouldReturnCorrectViewModelWithValidGenre()
+            =&gt; this
+                .WithServices(
+                    MockProvider.MusicStoreContext,
+                    Mock.Of&lt;IOptions&lt;AppSettings&gt;&gt;())
+                .Calling(c =&gt; c.Browse(&quot;Rap&quot;))
+                .ShouldReturn()
+                .View()
+                .WithModelOfType&lt;Genre&gt;()
+                .Passing(model =&gt; model.GenreId == 2);
+    }
+}
+</code></pre><p sourcefile="tutorial/organizingtests.md" sourcestartlinenumber="169" sourceendlinenumber="169"><strong>NOTE:</strong> To run the above tests asynchronously, the test runner should instantiate the <strong>&quot;StoreControllerTest&quot;</strong> class for every single test. This is the default behavior of <strong>&quot;xUnit&quot;</strong> so you shouldn&#39;t experience any issues if you do not alter its collection parallelism. You can also avoid a race condition if you replace the <strong>&quot;this&quot;</strong> keyword with <strong>&quot;Instance&quot;</strong>:</p>
+<pre sourcefile="tutorial/organizingtests.md" sourcestartlinenumber="171" sourceendlinenumber="220"><code class="lang-c#">namespace MusicStore.Test.Controllers
+{
+    using Microsoft.Extensions.Options;
+    using Mocks;
+    using Models;
+    using Moq;
+    using MusicStore.Controllers;
+    using MyTested.AspNetCore.Mvc;
+    using System.Collections.Generic;
+    using Xunit;
+
+    public class StoreControllerTest : MyController&lt;StoreController&gt;
+    {
+        [Fact]
+        public void IndexShouldReturnViewWithGenres()
+            =&gt; Instance() // &lt;---
+                .WithDbContext(dbContext =&gt; dbContext
+                    .WithEntities(entities =&gt; entities.AddRange(
+                        new Genre { Name = &quot;FirstGenre&quot; },
+                        new Genre { Name = &quot;SecondGenre&quot; })))
+                .Calling(c =&gt; c.Index())
+                .ShouldReturn()
+                .View()
+                .WithModelOfType&lt;List&lt;Genre&gt;&gt;()
+                .Passing(model =&gt; model.Count == 2);
+
+        [Fact]
+        public void BrowseShouldReturnNotFoundWithInvalidGenre()
+            =&gt; Instance(new StoreController(
+                    MockProvider.MusicStoreContext,
+                    Mock.Of&lt;IOptions&lt;AppSettings&gt;&gt;()))
+                .Calling(c =&gt; c.Browse(&quot;Invalid&quot;))
+                .ShouldReturn()
+                .NotFound();
+
+        [Fact]
+        public void BrowseShouldReturnCorrectViewModelWithValidGenre()
+            =&gt; Instance() // &lt;---
+                .WithServices(
+                    MockProvider.MusicStoreContext,
+                    Mock.Of&lt;IOptions&lt;AppSettings&gt;&gt;())
+                .Calling(c =&gt; c.Browse(&quot;Rap&quot;))
+                .ShouldReturn()
+                .View()
+                .WithModelOfType&lt;Genre&gt;()
+                .Passing(model =&gt; model.GenreId == 2);
+    }
+}
+</code></pre><h2 id="section-summary" sourcefile="tutorial/organizingtests.md" sourcestartlinenumber="222" sourceendlinenumber="222">Section summary</h2>
+<p sourcefile="tutorial/organizingtests.md" sourcestartlinenumber="224" sourceendlinenumber="224">Of course, you can always combine two or more of the above styles as long as your code is consistent. Now, let&#39;s take a look at the framework&#39;s <a href="/tutorial/testconfig.html" sourcefile="tutorial/organizingtests.md" sourcestartlinenumber="224" sourceendlinenumber="224">Test Configuration</a>!</p>
 
             </article>
           </div>

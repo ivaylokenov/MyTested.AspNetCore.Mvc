@@ -10,9 +10,9 @@ Let's see how nice and friendly error message My Tested ASP.NET Core MVC provide
 .ToAction(nameof(ManageController.LinkLogin))
 ```
 
-Run the test and you will be provided with a detailed error message showing exactly what has failed:
+Run the test, and you will see a detailed error message showing exactly what has failed:
 
-```
+```text
 When calling RemoveLogin action in ManageController expected redirect result to have 'LinkLogin' action name, but instead received 'ManageLogins'.
 ```
 
@@ -23,9 +23,9 @@ We can see in the above message that the redirect action is actually **"ManageLo
 .ContainingRouteValues(new { Error = ManageController.ManageMessageId.Error });
 ```
 
-Run the test again and you should see:
+Run the test again, and you should see:
 
-```
+```text
 When calling RemoveLogin action in ManageController expected redirect result route values to have entry with 'Error' key and the provided value, but such was not found.
 ```
 
@@ -33,7 +33,7 @@ The library tells us that there is no **"Error"** key in the redirect route valu
 
 ## Debugging the failing action
 
-If the provided error messages are not enough to diagnose why the test fails, you can always use the good old C# debugger. Put a break point on the action method:
+If the provided error messages are not enough to diagnose why the test fails, you can always use the good old C# debugger. Put a breakpoint in the action method:
 
 <img src="/images/tutorial/actiondebugging.jpg" alt="Debugging actions" />
 

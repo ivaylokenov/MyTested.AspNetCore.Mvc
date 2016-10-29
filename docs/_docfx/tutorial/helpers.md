@@ -18,7 +18,7 @@ You may add the **"MyTested.AspNetCore.Mvc.Helpers"** package which adds extensi
 
 The **"Universe"** package combines all other packages.
 
-One of the helpers is allowing us to assert controller action results with a single method call instead of multiple ones. For example we may have these lines of code:
+One of the helpers is allowing us to assert controller action results with a single method call instead of multiple ones. For example, we may have these lines of code:
 
 ```c#
 .ShouldReturn()
@@ -70,7 +70,7 @@ MyViewComponent<TestViewComponent>.Instance()
 MyRouting.Configuration()
 ```
 
-You can use:
+You can use these:
 
 ```c#
 MyMvc.Controller<TestController>()
@@ -85,6 +85,7 @@ It is up to you!
 Instead of string-based model state assertions line in the **"ManageControllerTest"**:
 
 ```c#
+.Calling(c => c.ChangePassword(model))
 .ShouldHave()
 .ModelState(modelState => modelState
     .ContainingError(nameof(ChangePasswordViewModel.OldPassword))
@@ -94,11 +95,14 @@ Instead of string-based model state assertions line in the **"ManageControllerTe
     .ThatEquals("The New password field is required.")
     .AndAlso()
     .ContainingNoError(nameof(ChangePasswordViewModel.ConfirmPassword)))
+	
+// or .InvalidModelState(withNumberOfErrors: 2)
 ```
 
 You may use expression-based ones:
 
 ```c#
+.Calling(c => c.ChangePassword(model))
 .ShouldHave()
 .ModelState(modelState => modelState
 	.For<ChangePasswordViewModel>()
@@ -132,7 +136,7 @@ You may use a single expression-based assertion call:
 
 ## Resolving route data
 
-Let's test the **"AddressAndPayment"** action in the **"AccountController"**. We will validate for correct redirection:
+Let's test the **"AddressAndPayment"** action in the **"CheckoutController"**. We will validate for correct redirection:
 
 ```c#
 [Fact]
@@ -176,7 +180,7 @@ Running this test will give us the following strange error message:
 When calling AddressAndPayment action in CheckoutController expected redirect result to have resolved location to '/Checkout/Complete/1', but in fact received '/Home/Complete/1'.
 ```
 
-The problem is that the request path is empty which results to the action route data being invalid. For that reason we are receiving wrong redirection location. The fix is easy - just call **"WithRouteData"**:
+The problem is that the request path is empty which makes the action route data being invalid. For that reason, we are receiving wrong redirection location. The fix is easy - just call **"WithRouteData"**:
 
 ```c#
 [Fact]
@@ -215,19 +219,19 @@ public void AddressAndPaymentShouldRerurnRedirectWithValidData()
 		.To<CheckoutController>(c => c.Complete(With.Any<MusicStoreContext>(), 1));
 ```
 
-The method call will resolve all the route values for you. The reason it is not done by default is because of performance considerations. You may manually provide route data values, if you need:
+The method call will resolve all the route values for you. The reason it is not done by default is because of performance considerations. You may manually provide route data values if you need:
 
 ```c#
 .WithRouteData(new { controller = "Checkout" })
 ```
 
-The above issue may show when testing for the **"Created"** and **"Redirect"** action results. In some cases, the testing framework may catch the error and suggest you the following error:
+The above issue may show when testing for the **"Created"** and **"Redirect"** action results. In some cases, the testing framework may catch the error and suggest you a fix:
 
 ```
 Route values are not present in the method call but are needed for successful pass of this test case. Consider calling 'WithRouteData' on the component builder to resolve them from the provided lambda expression or set the HTTP request path by using 'WithHttpRequest'.
 ```
 
-For example the test bellow with show the above message, if **"WithRouteData"** is not called because the **"ExternalLogin"** action uses **"IUrlHelper"**.
+For example, the test bellow will show the above message, if **"WithRouteData"** is not called because the **"ExternalLogin"** action uses **"IUrlHelper"**.
 
 ```c#
 [Fact]
@@ -242,7 +246,7 @@ public void ExternalLoginShouldReturnCorrectResult()
 
 ## Additional attribute validations
 
-Some packages expose additional attribute validations. For example adding the **"Microsoft.AspNetCore.Mvc.ViewFeatures"**, will add the option to test the **"AntiForgeryTokenAttribute"**. Instead of:
+Some packages expose additional attribute validations. For example, adding the **"Microsoft.AspNetCore.Mvc.ViewFeatures"**, will add the option to test the **"AntiForgeryTokenAttribute"**. Instead of:
 
 ```c#
 .ContainingAttributeOfType<ValidateAntiForgeryTokenAttribute>()
@@ -256,4 +260,4 @@ You can use:
 
 ## Section summary
 
-With this section we finished with the most important parts of the fluent assertion API. Few non-syntax related topics left and you are free to go. Go to the [Organizing Tests](/tutorial/organizingtests.html) section to see the various different ways you can write your tests!
+With this section, we finished with the most important parts of the fluent assertion API. Few non-syntax related topics to read and you are free to go. Go to the [Organizing Tests](/tutorial/organizingtests.html) section to see the various ways you can write your tests!

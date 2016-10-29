@@ -65,7 +65,7 @@
             <article class="content wrap" id="_content" data-uid="">
               <h1 id="viewbag-viewdata--tempdata" sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="1" sourceendlinenumber="1">ViewBag, ViewData &amp; TempData</h1>
               
-<p sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="3" sourceendlinenumber="3">The <strong>&quot;Music Store&quot;</strong> web application does uses only the <strong>&quot;ViewBag&quot;</strong> so we will write some tests for it. The <strong>&quot;ViewData</strong>&quot; and the <strong>&quot;TempData&quot;</strong> use similar syntax.</p>
+<p sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="3" sourceendlinenumber="3">The <strong>&quot;Music Store&quot;</strong> web application does use only the <strong>&quot;ViewBag&quot;</strong> so we will write some tests for it. The <strong>&quot;ViewData</strong>&quot; and the <strong>&quot;TempData&quot;</strong> use similar syntax.</p>
 <h2 id="testing-with-viewbag-entry" sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="5" sourceendlinenumber="5">Testing with ViewBag entry</h2>
 <p sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="7" sourceendlinenumber="7">Let&#39;s test something simple - the HTTP Get overload of the <strong>&quot;Login&quot;</strong> action in the <strong>&quot;AccountController&quot;</strong>:</p>
 <pre sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="9" sourceendlinenumber="15"><code class="lang-c#">public IActionResult Login(string returnUrl = null)
@@ -118,7 +118,7 @@ public void LoginShouldHaveReturnUrlInTheViewBag()
     return View();
 }
 </code></pre><p sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="75" sourceendlinenumber="75">And our test:</p>
-<pre sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="77" sourceendlinenumber="113"><code class="lang-c#">[Fact]
+<pre sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="77" sourceendlinenumber="116"><code class="lang-c#">[Fact]
 public void CreateShouldHaveValidEntriesInViewBag()
 {
     var genres = new[]
@@ -146,28 +146,36 @@ public void CreateShouldHaveValidEntriesInViewBag()
         .ViewBag(viewBag =&gt; viewBag // &lt;---
             .ContainingEntries(new
             {
-                GenreId = new SelectList(From.Services&lt;MusicStoreContext&gt;().Genres, &quot;GenreId&quot;, &quot;Name&quot;),
-                ArtistId = new SelectList(From.Services&lt;MusicStoreContext&gt;().Artists, &quot;ArtistId&quot;, &quot;Name&quot;)
+                GenreId = new SelectList(
+                    From.Services&lt;MusicStoreContext&gt;().Genres, &quot;GenreId&quot;, &quot;Name&quot;),
+
+                ArtistId = new SelectList(
+                    From.Services&lt;MusicStoreContext&gt;().Artists, &quot;ArtistId&quot;, &quot;Name&quot;)
             }))
         .AndAlso()
         .ShouldReturn()
         .View();
 }
-</code></pre><p sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="115" sourceendlinenumber="115">The <strong>&quot;ContainingEntries&quot;</strong> call is equivalent to this one:</p>
-<pre sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="117" sourceendlinenumber="123"><code class="lang-c#">.ContainingEntries(new Dictionary&lt;string, object&gt;
+</code></pre><p sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="118" sourceendlinenumber="118">The <strong>&quot;ContainingEntries&quot;</strong> call is equivalent to this one:</p>
+<pre sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="120" sourceendlinenumber="129"><code class="lang-c#">.ContainingEntries(new Dictionary&lt;string, object&gt;
 {
-    [&quot;GenreId&quot;] = new SelectList(From.Services&lt;MusicStoreContext&gt;().Genres, &quot;GenreId&quot;, &quot;Name&quot;),
-    [&quot;ArtistId&quot;] = new SelectList(From.Services&lt;MusicStoreContext&gt;().Artists, &quot;ArtistId&quot;, &quot;Name&quot;)
+    [&quot;GenreId&quot;] = new SelectList(
+        From.Services&lt;MusicStoreContext&gt;().Genres, &quot;GenreId&quot;, &quot;Name&quot;),
+
+    [&quot;ArtistId&quot;] = new SelectList(
+        From.Services&lt;MusicStoreContext&gt;().Artists, &quot;ArtistId&quot;, &quot;Name&quot;)
 }))
-</code></pre><p sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="125" sourceendlinenumber="125">Both methods will validate whether the total number of entries in the <strong>&quot;ViewBag&quot;</strong> is equal to the total number you provide to the test. For validation - remove the <strong>&quot;ArtistId&quot;</strong> property from anonymous object and run the test again:</p>
-<pre sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="127" sourceendlinenumber="129"><code>When calling Create action in StoreManagerController expected view bag to have 1 entry, but in fact found 2.
-</code></pre><p sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="131" sourceendlinenumber="131">If you do not want the total number of entries validation, just use:</p>
-<pre sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="133" sourceendlinenumber="137"><code class="lang-c#">.ViewBag(viewBag =&gt; viewBag // &lt;---
-    .ContainingEntry(&quot;GenreId&quot;, new SelectList(From.Services&lt;MusicStoreContext&gt;().Genres, &quot;GenreId&quot;, &quot;Name&quot;))
-    .ContainingEntry(&quot;ArtistId&quot;, new SelectList(From.Services&lt;MusicStoreContext&gt;().Artists, &quot;ArtistId&quot;, &quot;Name&quot;)))
-</code></pre><h2 id="viewdata-and-tempdata" sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="139" sourceendlinenumber="139">ViewData and TempData</h2>
-<p sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="141" sourceendlinenumber="141"><strong>&quot;ViewData&quot;</strong> have the same API:</p>
-<pre sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="143" sourceendlinenumber="153"><code class="lang-c#">MyController&lt;SomeController&gt;
+</code></pre><p sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="131" sourceendlinenumber="131">Both methods will validate whether the total number of entries in the <strong>&quot;ViewBag&quot;</strong> is equal to the total number you provide in the test. For a sanity check - remove the <strong>&quot;ArtistId&quot;</strong> property from anonymous object and run the test again:</p>
+<pre sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="133" sourceendlinenumber="135"><code class="lang-text">When calling Create action in StoreManagerController expected view bag to have 1 entry, but in fact found 2.
+</code></pre><p sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="137" sourceendlinenumber="137">If you do not want the total number of entries validation, just use:</p>
+<pre sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="139" sourceendlinenumber="145"><code class="lang-c#">.ViewBag(viewBag =&gt; viewBag // &lt;---
+    .ContainingEntry(&quot;GenreId&quot;, new SelectList(
+        From.Services&lt;MusicStoreContext&gt;().Genres, &quot;GenreId&quot;, &quot;Name&quot;))
+    .ContainingEntry(&quot;ArtistId&quot;, new SelectList(
+        From.Services&lt;MusicStoreContext&gt;().Artists, &quot;ArtistId&quot;, &quot;Name&quot;)))
+</code></pre><h2 id="viewdata-and-tempdata" sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="147" sourceendlinenumber="147">ViewData and TempData</h2>
+<p sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="149" sourceendlinenumber="149"><strong>&quot;ViewData&quot;</strong> have the same API:</p>
+<pre sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="151" sourceendlinenumber="161"><code class="lang-c#">MyController&lt;SomeController&gt;
     .Instance()
     .Calling(c =&gt; c.SomeAction())
     .ShouldHave()
@@ -176,8 +184,8 @@ public void CreateShouldHaveValidEntriesInViewBag()
     .AndAlso()
     .ShouldReturn()
     .View();
-</code></pre><p sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="155" sourceendlinenumber="155"><strong>&quot;TempData&quot;</strong> too but you will need the <strong>&quot;MyTested.AspNetCore.Mvc.TempData&quot;</strong> package:</p>
-<pre sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="157" sourceendlinenumber="167"><code class="lang-c#">MyController&lt;SomeController&gt;
+</code></pre><p sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="163" sourceendlinenumber="163"><strong>&quot;TempData&quot;</strong> too, but you will need the <strong>&quot;MyTested.AspNetCore.Mvc.TempData&quot;</strong> package:</p>
+<pre sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="165" sourceendlinenumber="175"><code class="lang-c#">MyController&lt;SomeController&gt;
     .Instance()
     .Calling(c =&gt; c.SomeAction())
     .ShouldHave()
@@ -186,16 +194,16 @@ public void CreateShouldHaveValidEntriesInViewBag()
     .AndAlso()
     .ShouldReturn()
     .View();
-</code></pre><p sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="169" sourceendlinenumber="169">Additionally, you can populate the <strong>&quot;TempData&quot;</strong> dictionary before the action call:</p>
-<pre sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="171" sourceendlinenumber="179"><code class="lang-c#">MyController&lt;SomeController&gt;
+</code></pre><p sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="177" sourceendlinenumber="177">Additionally, you can populate the <strong>&quot;TempData&quot;</strong> dictionary before the actual action call:</p>
+<pre sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="179" sourceendlinenumber="187"><code class="lang-c#">MyController&lt;SomeController&gt;
     .Instance()
     .WithTempData(tempData =&gt; tempData
         .WithEntry(&quot;SomeKey&quot;, someValue))
     .Calling(c =&gt; c.SomeAction())
     .ShouldReturn()
     .View();
-</code></pre><h2 id="section-summary" sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="181" sourceendlinenumber="181">Section summary</h2>
-<p sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="183" sourceendlinenumber="183">We saw how easy it is to test with <strong>&quot;ViewBag&quot;</strong>, <strong>&quot;ViewData&quot;</strong> and <strong>&quot;TempData&quot;</strong>. Their fluent assertion API is very similar to the <strong>&quot;Session&quot;</strong> and <strong>&quot;Cache&quot;</strong> ones. But enough about controllers, let&#39;s move on to <a href="/tutorial/viewcomponents.html" sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="183" sourceendlinenumber="183">View Components</a>!</p>
+</code></pre><h2 id="section-summary" sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="189" sourceendlinenumber="189">Section summary</h2>
+<p sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="191" sourceendlinenumber="191">We saw how easy it is to test with <strong>&quot;ViewBag&quot;</strong>, <strong>&quot;ViewData&quot;</strong> and <strong>&quot;TempData&quot;</strong>. Their fluent assertion APIs are very similar to the <strong>&quot;Session&quot;</strong> and <strong>&quot;Cache&quot;</strong> ones. But enough about controllers, let&#39;s finally move on to <a href="/tutorial/viewcomponents.html" sourcefile="tutorial/viewbagviewdatatempdata.md" sourcestartlinenumber="191" sourceendlinenumber="191">View Components</a>!</p>
 
             </article>
           </div>

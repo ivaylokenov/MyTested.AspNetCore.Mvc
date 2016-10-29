@@ -1,6 +1,6 @@
 # Services
 
-In this section we will understand the test services concept and how My Tested ASP.NET Core MVC reduces the need to mock the world.
+In this section we will examine the test services concept and how My Tested ASP.NET Core MVC reduces the need to mock the world.
 
 ## Global test services
 
@@ -20,7 +20,7 @@ public class HomeController : Controller
 }
 ``` 
 
-But we never specify any type of dependency in our tests explicitly. We do not provide a mock for the **"IOptions"** interface anywhere in our test project. So how the testing framework decides which services to use?
+But we never specify any dependency in our tests explicitly. We do not provide a mock for the **"IOptions"** interface anywhere in our test project. So how the testing framework decides which services to use?
 
 Remember the **"TestStartup"** class?
 
@@ -34,17 +34,17 @@ public class TestStartup : Startup
 }
 ```
 
-By inheriting from the web **Startup** class, we provide our tests all available services from the web application automatically. For example take this configuration call:
+By inheriting from the web **Startup** class, we provide our tests all available services from the web application automatically. For example take a look at this configuration call:
 
 ```c#
 services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 ```
 
-It registers the **"IOptions"** interface, which the testing framework uses to successfully instantiate our **"HomeController"**.
+It registers the **"IOptions"** interface, which the testing framework uses to instantiate our **"HomeController"** successfully.
 
 ## Replacing inherited services
 
-Like in every normal test scenario, some of the inherited services need to be replaced with mocks. As you saw in the previous section My Tested ASP.NET Core MVC have built-in ones for the most common services like the **"DbContext"**. However, custom services have to be replaced by the developer so let's replace one. Go to the HTTP Post overload of the **"Login"** action in the **"AccountController"**. We want to test a successful sign in. These are the actual lines of code we are interested in:
+Like in a typical test scenario, some of the inherited services need to be replaced with mocks. As you saw in the previous section, My Tested ASP.NET Core MVC have built-in ones for the most commonly used services like the **"DbContext"**. However, custom services have to be replaced by the developer so let's replace one. Go to the HTTP Post overload of the **"Login"** action in the **"AccountController"**. We want to test a successful sign in. These are the actual lines of code we are interested in:
 
 ```c#
 public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
@@ -62,7 +62,7 @@ public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = 
 }
 ```
 
-The **"SignInManager"** class does all the work for us and it is passed as a dependency to the **"AccountController"**:
+The **"SignInManager"** class does all the work for us, and it is passed as a dependency to the **"AccountController"**:
 
 ```c#
 public class AccountController : Controller
@@ -116,7 +116,7 @@ public void ConfigureTestServices(IServiceCollection services)
 
 Now all tests should pass again.
 
-Before replacing the **"SignInManager"**, we need a mock. Let's create a manual minimalistic mock for it. Add **"Mocks"** folder in your test project and create the following class in it:
+Before replacing the **"SignInManager"**, we need a mock. Let's create a minimalistic manual mock for it. Add **"Mocks"** folder in your test project and create the following class in it:
 
 ```c#
 using Microsoft.AspNetCore.Builder;
@@ -151,7 +151,7 @@ public class SignInManagerMock : SignInManager<ApplicationUser>
 }
 ```
 
-We have created a **"SignInManager"** mock which returns successful sign in result, if provided with specific username and password. Otherwise returns failed result.
+We have created a **"SignInManager"** mock which returns successful sign in result, if specific username and password are provided. Otherwise, returns failed result.
 
 Now we need to tell the testing framework to use our mock instead of the actual implementation.
 
@@ -172,12 +172,12 @@ public void ConfigureTestServices(IServiceCollection services)
 }
 ```
 
-From now on, during testing all injectable constructors will receive the mock instead of the original sign in manager service.
+From now on, during testing, all injectable constructors will receive the mock instead of the original sign in manager service.
 
-The **"ReplaceSingleton"** method will find a singleton implementation of the service and replace it with the type. Other commonly used methods are:
+The **"ReplaceSingleton"** method will find a singleton implementation of the service and replace it with the type we want. Other commonly used methods are:
 
 - **"ReplaceTransient"**, **"ReplaceScoped"**, **"ReplaceSingleton"** - these replace the service without changing its lifetime
-- **"ReplaceLifetime"** - replacing the lifetime of the service without changing its implementation 
+- **"ReplaceLifetime"** - replaces the lifetime of the service without changing its implementation 
 - **"Replace"** - allows replacing both the service implementation and its lifetime
 - **"RemoveTransient"**, **"RemoveScoped"**, **"RemoveSingleton"** - these remove the service with the corresponding lifetime
 - **"Remove"** - removes the service no matter its lifetime
@@ -238,7 +238,7 @@ public void LoginShouldReturnViewWithSameModelWithInvalidLoginViewModel()
 }
 ```
 
-You may extract the magic strings, if you like (you little perfectionist)... :)
+You may extract the magic strings if you like (you little perfectionist)... :)
 
 Sometimes you cannot specify the mock directly as a generic parameter so you may need to use an implementation factory.
 
@@ -300,7 +300,7 @@ services.Configure<AppSettings>(setting => setting.SiteTitle = "Test Site");
 
 ## TestStartup without inherited services
 
-Of course, in some scenarios you may be a bit scared to directly inherit all services from the web application. So don't to it and take full control, if you like:
+Of course, in some scenarios you may be a bit scared to inherit all services from the web application directly. So don't to it and take full control, if you like:
 
 ```c#
 public class TestStartup
@@ -321,7 +321,7 @@ public class TestStartup
 }
 ```
 
-This approach is safer but you need to manually keep in sync the services used by the web application and the ones used in the test project.
+This approach is safer than using inheritance, but you will need to manually keep in sync the services in the web application and the ones in the test project.
 
 ## Scoped services
 
@@ -329,7 +329,48 @@ All scoped services live only for a single test and then their state is reset. I
 
 Now, we are going to see how we can use scoped services for more custom purposes.
 
-Let's examine the **"Details"** action in the **"StoreManagerController"**. We want to test that with disabled global caching in the **"AppSettings"** options, we dot not try to cache the database result.
+Let's examine the **"Details"** action in the **"StoreManagerController"**:
+
+```c#
+public async Task<IActionResult> Details(
+	[FromServices] IMemoryCache cache,
+	int id)
+{
+	var cacheKey = GetCacheKey(id);
+
+	Album album;
+	if (!cache.TryGetValue(cacheKey, out album))
+	{
+		album = await DbContext.Albums
+				.Where(a => a.AlbumId == id)
+				.Include(a => a.Artist)
+				.Include(a => a.Genre)
+				.FirstOrDefaultAsync();
+
+		if (album != null)
+		{
+			if (_appSettings.CacheDbResults)
+			{
+				//Remove it from cache if not retrieved in last 10 minutes.
+				cache.Set(
+					cacheKey,
+					album,
+					new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(10)));
+			}
+		}
+	}
+
+	if (album == null)
+	{
+		cache.Remove(cacheKey);
+		return NotFound();
+	}
+
+	return View(album);
+}
+```
+
+We want to test that with disabled global caching in the **"AppSettings"** options, we dot not try to cache the database result.
 
 First, we need to prepare the **"IMemoryCache"** mock to throw an exception when setting an entry with specific key. Go to the **"MockProvider"** class (or create it, if you haven't already) and add the following:
 
@@ -377,7 +418,7 @@ This package will add service related extension methods to the fluent API. Let's
 
 ```c#
 [Fact]
-public void Details_ShouldNotSaveCacheEntry_WithDisabledGlobalCache()
+public void DetailsShouldNotSaveCacheEntryWithDisabledGlobalCache()
 	=> MyController<StoreManagerController>
 		.Instance()
 		.WithDbContext(db => db
@@ -392,9 +433,9 @@ public void Details_ShouldNotSaveCacheEntry_WithDisabledGlobalCache()
 		.Passing(m => m.AlbumId == int.MaxValue);
 ```
 
-As you can see, we are adding an album with an ID equal to the maximum integer value. Additionally in the **"Calling"** method we are providing explicitly the memory cache mock which throws invalid operation exception. Running this test will produce an error as expected:
+As you can see, we are adding an album with an ID equal to the maximum integer value. Additionally, in the **"Calling"** method we are providing explicitly the memory cache mock which throws invalid operation exception. Running this test will produce an error as expected:
 
-```
+```text
 When calling Details action in StoreManagerController expected no exception but AggregateException (containing InvalidOperationException with 'Caching is not available for this test.' message) was thrown without being caught.
 ```
 
@@ -408,7 +449,7 @@ Let's disable the caching only for this test. Add the following lines of code ri
 
 This call will set up the options service to have the **"CacheDbResults"** property set to **"false"** only for this test. Run it only to see it failing again:
 
-```
+```text
 The 'WithSetupFor' method can be used only for services with scoped lifetime.
 ```
 
@@ -420,13 +461,30 @@ services.AddScoped<IOptions<AppSettings>, OptionsManager<AppSettings>>();
 
 Run the test again and be happy! :)
 
-I will not tell you there is a better way to assert with the options services and that we will cover it later in this tutorial! You should know that already... :)
+I will not tell you there is a better way to assert with options services and that we will cover it later in this tutorial! You should know that already... :)
 
 ## Per test services
 
-Sometimes you do not want to have the global services injected into the controller's constructor. You have the option to provide test specific service implementations wherever you need them. Let's test the **"Browse"** action in the **"StoreController"** but without using any of the globally configured services.
+Sometimes you do not want to have the global services injected into the controller's constructor. You have the option to provide test specific service implementations wherever you need them. Let's assert the **"Browse"** action in the **"StoreController"** but without using any of the globally configured services:
 
-First, we obviously need mocks for **"MusicStoreContext"** and **"IOptions"**. Go to the "MockProvider" class and add these lines:
+```c#
+public async Task<IActionResult> Browse(string genre)
+{
+	var genreModel = await DbContext.Genres
+		.Include(g => g.Albums)
+		.Where(g => g.Name == genre)
+		.FirstOrDefaultAsync();
+
+	if (genreModel == null)
+	{
+		return NotFound();
+	}
+
+	return View(genreModel);
+}
+```
+
+First, we obviously need mocks for **"MusicStoreContext"** and **"IOptions"**. Go to the **"MockProvider"** class and add these lines:
 
 ```c#
 public static MusicStoreContext MusicStoreContext
@@ -523,7 +581,7 @@ public async Task<IActionResult> Create(
 }
 ```
 
-Go to the **"StoreManagerControllerTest"** and take a look at the unit test:
+Go to the **"StoreManagerControllerTest"** class and take a look at the unit test:
 
 ```c#
 // test code skipped for brevity
@@ -536,7 +594,7 @@ Go to the **"StoreManagerControllerTest"** and take a look at the unit test:
 // test code skipped for brevity
 ```
 
-We use a mock of the cache but it is local to that specific unit test. While we write more and more unit tests, we may see that we need the same mock object over and over again in various controllers and actions. For example imagine our cache mock had the following functionality and we wanted it in more than one test:
+We use a mock of the cache but it's local to that specific unit test. While we write more and more unit tests, we may see that we need the same mock object over and over again in various controllers and actions. For example imagine our cache mock had the following functionality and we wanted it in more than one test:
 
 ```c#
 var cacheEntryMock = new Mock<ICacheEntry>();
@@ -549,7 +607,7 @@ cacheMock.Setup(c => c.Get(It.Is<string>(k => k == "MyKey"))).Returns(cacheMock)
 var cache = cacheMock.Object;
 ```
 
-It would be the perfect candidate for a globally registered test service. There is a built-in mock for the **"IMemoryCache"** in My Tested ASP.NET Core MVC already but we will cover it later in the tutorial.
+It would be the perfect candidate for a globally registered test service. There is a built-in mock for the **"IMemoryCache"** in My Tested ASP.NET Core MVC already, but we will cover it later in the tutorial.
 
 Go to the **"TestStartup"** class and add a replacement for the **"IMemoryCache"** service:
 

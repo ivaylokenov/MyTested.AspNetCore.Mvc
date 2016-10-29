@@ -4,7 +4,7 @@ In this section we will learn how to configure My Tested ASP.NET Core MVC and ge
 
 ## Prepare test assembly
 
-First things first - we need a test assembly! Open the [Music Store solution](https://raw.githubusercontent.com/ivaylokenov/MyTested.AspNetCore.Mvc/development/docs/_docfx/tutorial/MusicStore-Tutorial.zip), add **"test"** folder and create a new .NET Core class library called **"MusicStore.Test"** in it.
+First things first - we need a test assembly! Open the [Music Store solution](https://raw.githubusercontent.com/ivaylokenov/MyTested.AspNetCore.Mvc/master/docs/files/MusicStore-Tutorial.zip), add **"test"** folder and create a new .NET Core class library called **"MusicStore.Test"** in it.
 
 <img src="/images/tutorial/createtestproject.jpg" alt="Create .NET Core test assembly" />
 
@@ -47,9 +47,18 @@ You may need to change/update the versions of the listed packages with more rece
 
 ## Our first test
 
-Now let's write our first unit test. We will test the **"AddressAndPayment"** action in the **"CheckoutController"**. It is one of the simplest actions possible - returns a default view no matter the HTTP request.
+Now let's write our first unit test. We will validate the **"AddressAndPayment"** action in the **"CheckoutController"**. It is one of the simplest actions possible - returns a default view no matter the HTTP request.
 
-<img src="/images/tutorial/addressandpaymentactions.jpg" alt="Simple controller action returning default view" />
+```c#
+// controller code skipped for brevity
+
+public IActionResult AddressAndPayment()
+{
+	return View();
+}
+
+// controller code skipped for brevity
+```
 
 Add a **"Controllers"** folder in the test assembly and create a **"CheckoutControllerTest"** class in it. Add these usings:
 
@@ -71,13 +80,9 @@ public void AddressAndPaymentShouldReturnDefaultView()
         .View();
 ```
 
-Note the static **"MyMvc"** class. It is the starting point of the fluent interface but that depends on the installed packages in the test assembly. More details will be provided later in the tutorial.
+Note the static **"MyMvc"** class. It is the starting point of the fluent interface, but that depends on the installed packages in the test assembly. More details will be provided later in the tutorial.
 
-Since My Tested ASP.NET Core MVC provides a fluent API, tests can be written with only a single statement thus we can use expression-bodied functions (available since C# 6.0). Of course, if you prefer, you can always use the normal curly brackets, nobody is going to stop you from doing it (for now)! :)
-
-This should be your unit test now:
-
-<img src="/images/tutorial/firstunittest.jpg" alt="First unit test returning simple view" />
+Since My Tested ASP.NET Core MVC provides a fluent API, tests can be written with only a single statement. Therefore we can use expression-bodied functions (available in C# 6.0). Of course, if you prefer, you can always use the regular curly brackets, nobody is going to stop you from doing it (for now)! :)
 
 ## "TestStartup" class
 
@@ -87,7 +92,7 @@ Let's build the solution and run the test.
 
 Surprise! The simplest test fails. This testing framework is a waste of time! :(
 
-Joke! Don't leave yet! By default My Tested ASP.NET Core MVC requires a **"TestStartup"** file at the root of the test assembly so let's add one. Write the following code in it:
+Joke! Don't leave yet! By default, My Tested ASP.NET Core MVC requires a **"TestStartup"** file at the root of the test assembly so let's add one. Write the following code in it:
 
 ```c#
 namespace MusicStore.Test
@@ -104,7 +109,7 @@ namespace MusicStore.Test
 }
 ```
 
-You may have noticed the constructor of the **"CheckoutController"**. It is not an empty one. My Tested ASP.NET Core MVC uses the registered services from the **"TestStartup"** class to resolve all dependencies and instantiate the controller. We will get in more details about the test service provider later in this tutorial.
+You may have noticed the constructor of the **"CheckoutController"**. It is not an empty one. My Tested ASP.NET Core MVC uses the registered services from the **"TestStartup"** class to resolve all dependencies and instantiate the controller. We will get into more details about the test service provider later in this tutorial.
 
 ## Web configuration
 
@@ -112,9 +117,9 @@ Now run the test again.
 
 <img src="/images/tutorial/configjsonerror.jpg" alt="First unit test fails because of missing config.json" />
 
-You expected that, right? You should not be surprised after the first fail at all... :(
+You were expecting that, right? You should not be surprised after the first fail at all... :(
 
-You still here? Good! Now repeat after me and then everything will be explained to you (it's a promise)!
+Still here? Good! Now repeat after me and then everything will be explained to you (it's a promise)!
 
 Go to the **"MusicStore"** project root, copy the **"config.json"** file and paste it at the root of the test project. 
 
@@ -130,7 +135,7 @@ Go to the **"project.json"** file at the test project and add the copied **"conf
 
 <img src="/images/tutorial/configjson.jpg" alt="Copied config.json from the web project" />
 
-You may be a bit worried about the connection string in the **"config.json"** file. I would be, if I did not know it was not needed at all. You can change it to whatever you like so let's make it "Test Connection". If you want to feel even safer, you may change all the other options too. It's up to you.
+You may be a bit worried about the connection string in the **"config.json"** file. I would be if I didn't know it was not needed at all. You may change its value to whatever you like so let's make it "Test Connection". If you want to feel even safer, you may change all the other options too. It's up to you.
 
 Your **"config.json"** file should look like this:
 
@@ -183,18 +188,20 @@ Go back to the console terminal and run **"dotnet test"** again.
 
 <img src="/images/tutorial/firsttestpass.jpg" alt="First test passes" />
 
-Oh, miracles! The test passes correctly without any loud and ugly errors! Oh, yeah, do you feel the happiness? This library is really DA BOMB!!! :) 
+Oh, miracles! The test passes correctly without any big and ugly errors! Oh, yeah, do you feel the happiness? This library is DA BOMB!!! :) 
 
 ## Understanding the details
 
-OK, back to that promise - the detailed explanation of all the fails. **Basically three things happened.**
+OK, back to that promise - the detailed explanation for all the different fails.
 
-**First**, My Tested ASP.NET Core MVC needs to resolve the services required by the different components in your web application - controllers, view components, etc. By default the test configuration needs a **"TestStartup"** class at the root of the test project from where it configures the global service provider. This is why we got an exception telling us we forgot to add it. Remember:
+**Basically three things happened.**
 
- - Each test project needs separate **"Startup"** class and bootstraps a separate test application and service provider. You may run different configurations in different test assemblies. 
- - Each test is run in a scoped service lifetime - during a test all scoped services will be resolved by using the same instance and for the next test, another instance will be provided. My Tested ASP.NET Core MVC uses this nice little feature to allow for easy and autonomous testing of storage providers like the **"DbContext"**, **"IMemoryCache"**, **"ViewDataDictionary"** and many more but more on that later in the tutorial.
+**First**, My Tested ASP.NET Core MVC needs to resolve the services required by the different components in your web application - controllers, view components, etc. By default, the testing framework is configured to need a **"TestStartup"** class at the root of the test project from where it prepares the global service provider. For this reason, we got an exception telling us we need to add the **"TestStartup"** class. Remember:
+
+ - Each test project requires separate **"Startup"** class and bootstraps a separate test application and service provider. You may run different configurations in different test assemblies. 
+ - Each test runs in a scoped service lifetime - during a test all scoped services will be resolved by using the same instances and for the next test, other instances will be provided. My Tested ASP.NET Core MVC uses this nice little feature to run smooth and autonomous tests for storage providers like the **"DbContext"**, **"IMemoryCache"**, **"ViewDataDictionary"** and many others but more on that later in the tutorial.
  
-Besides the default **"TestStartup"** configuration there are two other options the developer can use - fluent manual configuration and per test setup without any globally registered services. More information can be found [HERE](/guide/startuptypes.html).
+Besides the default **"TestStartup"** configuration there are two other options the developer can use - manual fluent configuration and per test setup without any globally registered services. More information can be found [HERE](/guide/startuptypes.html).
 
 **Second**, the test failed because we did not have the required **"config.json"** file. If you take a look at the **"Startup"** file in the web project, you may see that the constructor of the class has the following lines of code:
 
@@ -204,13 +211,13 @@ var builder = new ConfigurationBuilder()
 	.AddJsonFile("config.json")
 ```
 
-The JSON file is not optional and since we inherit from the original web **"Startup"**, our **"TestStartup"** class runs the same code thus requiring the **"config.json"** file to be present. (Un)fortunately the base project directory will be the output directory of the test project and the test runner will search for the file there. While we may make the **"config.json"** optional, it may lead to unexpected behaviour and exceptions so our best option here is to copy the same file into the test project and change all important values with dummy ones. Copy-pasting is not a good practice but letting the tests touch and read the original application configuration values like database connection strings, security passwords and potentially others is even worse. Additionally, only copying the file is not enough for it to end up in the output directory so we need to add it explicitly in the test assembly's **"project.json"** configuration.
+The JSON file is not optional, and since we inherit from the original web **"Startup"**, our **"TestStartup"** class runs the same code thus requiring the **"config.json"** file to be present. (Un)fortunately, the base project directory will be the output directory of the test project, and the test runner will search for the file there. We may make the **"config.json"** optional, but it may lead to unexpected behavior and exceptions in our web application, so our best option here is to copy the same file into the test project and change all important values with dummy ones. Copy-pasting is not a good practice but letting the tests touch and read the original application configuration values like database connection strings, security passwords, and potentially others is even worse. Additionally, only copying the file is not enough for it to end up in the output directory, so we need to add it explicitly in the test assembly's **"project.json"** configuration.
 
-**Third**, as we noticed Visual Studio does not run the discovered tests for all specified frameworks. This is why we went to the console and tried running there. Unfortunately, the test failed for the **"net451"** framework. The reason is simple. The full framework did not save and store our project references and dependencies. This is why all the required test plugin classes could not be loaded when using "net451". By setting the **"preserveCompilationContext"** option to **"true"** the compiler will store the dependencies information into a file from where later during runtime it can be read successfully.
+**Third**, we noticed Visual Studio does not run the discovered tests for all specified frameworks, so we went to the console and tried running them there. Unfortunately, the test failed for the **"net451"** framework. The reason is simple. The full framework does not save and store our project references and dependencies, so all the required test plugin classes could not be loaded. By setting the **"preserveCompilationContext"** option to **"true"** the compiler will store the dependencies information into a JSON file from where later during runtime it can be read successfully.
 
 ## Error messages
 
-To finish this section let's make the test fail because of an invalid assertion just to see what happens. Instead of testing for **"View"**, make it assert for any other action result, for example **"BadRequest"**:
+To finish this section let's make the test fail because of an invalid assertion just to see what happens. Instead of testing for **"View"**, make it assert for any other action result. **"BadRequest"**, for example:
 
 ```c#
 [Fact]
@@ -222,9 +229,9 @@ public void AddressAndPaymentShouldReturnDefaultView()
         .BadRequest();
 ```
 
-Run the test and you will see a nice descriptive error message from My Tested ASP.NET Core MVC:
+Run the test, and you will see a nice descriptive error message from My Tested ASP.NET Core MVC:
 
-```
+```text
 When calling AddressAndPayment action in CheckoutController expected result to be BadRequestResult, but instead received ViewResult.
 ```
 

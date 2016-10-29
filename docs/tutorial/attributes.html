@@ -83,7 +83,7 @@ public void HomeControllerShouldHaveNoAttributes()
         .ShouldHave()
         .NoAttributes();
 </code></pre><p sourcefile="tutorial/attributes.md" sourcestartlinenumber="30" sourceendlinenumber="30">Of course, if you change <strong>&quot;NoAttributes&quot;</strong> to <strong>&quot;Attributes&quot;</strong>, you will receive an error:</p>
-<pre sourcefile="tutorial/attributes.md" sourcestartlinenumber="32" sourceendlinenumber="34"><code>When testing HomeController was expected to have at least 1 attribute, but in fact none was found.
+<pre sourcefile="tutorial/attributes.md" sourcestartlinenumber="32" sourceendlinenumber="34"><code class="lang-text">When testing HomeController was expected to have at least 1 attribute, but in fact none was found.
 </code></pre><h2 id="action-attributes" sourcefile="tutorial/attributes.md" sourcestartlinenumber="36" sourceendlinenumber="36">Action attributes</h2>
 <p sourcefile="tutorial/attributes.md" sourcestartlinenumber="38" sourceendlinenumber="38">Action attributes are not different. Let&#39;s test the <strong>&quot;RemoveAlbumConfirmed&quot;</strong> action in the <strong>&quot;StoreManagerController&quot;</strong>:</p>
 <pre sourcefile="tutorial/attributes.md" sourcestartlinenumber="40" sourceendlinenumber="49"><code class="lang-c#">[HttpPost, ActionName(&quot;RemoveAlbum&quot;)]
@@ -109,7 +109,7 @@ public void RemoveAlbumConfirmedShouldHaveCorrectAttributes()
         .ChangingActionNameTo(&quot;RemoveAlbum&quot;));
 </code></pre><p sourcefile="tutorial/attributes.md" sourcestartlinenumber="68" sourceendlinenumber="68">Working like a charm! :)</p>
 <h2 id="custom-attributes" sourcefile="tutorial/attributes.md" sourcestartlinenumber="70" sourceendlinenumber="70">Custom attributes</h2>
-<p sourcefile="tutorial/attributes.md" sourcestartlinenumber="72" sourceendlinenumber="72">Sometimes you will have custom attributes which are not available in the fluent testing API. For example, you may have noticed that there is no method to test the <strong>&quot;ValidateAntiForgeryTokenAttribute&quot;</strong>&quot;. Actually it is in the <strong>&quot;ViewFeatures&quot;</strong> package but you don&#39;t know that! :)</p>
+<p sourcefile="tutorial/attributes.md" sourcestartlinenumber="72" sourceendlinenumber="72">Sometimes you will have custom attributes which are not available in the fluent testing API. For example, you may have noticed that there is no method to test the <strong>&quot;ValidateAntiForgeryTokenAttribute&quot;</strong>&quot;. Actually, it&#39;s in the <strong>&quot;ViewFeatures&quot;</strong> package, but you don&#39;t know that! :)</p>
 <p sourcefile="tutorial/attributes.md" sourcestartlinenumber="74" sourceendlinenumber="74">Let&#39;s see an example and test the HTTP Post <strong>&quot;Login&quot;</strong> action in the <strong>&quot;AccountController&quot;</strong>. It has these three attributes - <strong>&quot;HttpPost&quot;</strong>, <strong>&quot;AllowAnonymous&quot;</strong>, <strong>&quot;ValidateAntiForgeryToken&quot;</strong>. For the latter you can use the <strong>&quot;ContainingAttributeOfType&quot;</strong> method:</p>
 <pre sourcefile="tutorial/attributes.md" sourcestartlinenumber="76" sourceendlinenumber="89"><code class="lang-c#">[Fact]
 public void LoginShouldHaveCorrectAttributes()
@@ -123,7 +123,7 @@ public void LoginShouldHaveCorrectAttributes()
             .RestrictingForHttpMethod(HttpMethod.Post)
             .AllowingAnonymousRequests()
             .ContainingAttributeOfType&lt;ValidateAntiForgeryTokenAttribute&gt;()); // &lt;---
-</code></pre><p sourcefile="tutorial/attributes.md" sourcestartlinenumber="91" sourceendlinenumber="91">The action is still invoked in this test so we need to provide a non-null value for the <strong>&quot;LoginViewModel&quot;</strong> parameter. A better approach on testing action attributes (without having to specify the parameters) will be available in the next major release of the library. :)</p>
+</code></pre><p sourcefile="tutorial/attributes.md" sourcestartlinenumber="91" sourceendlinenumber="91">The action is still invoked in this test, so we need to provide a non-null value for the <strong>&quot;LoginViewModel&quot;</strong> parameter. A better approach for testing action attributes (without having to specify the parameters) will be available in the next major release of the library. :)</p>
 <p sourcefile="tutorial/attributes.md" sourcestartlinenumber="93" sourceendlinenumber="93">Sometimes you may want to test specific property values of the attribute. You can use the <strong>&quot;PassingFor&quot;</strong> method:</p>
 <pre sourcefile="tutorial/attributes.md" sourcestartlinenumber="95" sourceendlinenumber="104"><code class="lang-c#">[Fact]
 public void StoreManagerControllerShouldHaveCorrectAttributes()

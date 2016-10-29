@@ -29,7 +29,7 @@ public void HomeControllerShouldHaveNoAttributes()
 
 Of course, if you change **"NoAttributes"** to **"Attributes"**, you will receive an error:
 
-```
+```text
 When testing HomeController was expected to have at least 1 attribute, but in fact none was found.
 ```
 
@@ -69,7 +69,7 @@ Working like a charm! :)
 
 ## Custom attributes
 
-Sometimes you will have custom attributes which are not available in the fluent testing API. For example, you may have noticed that there is no method to test the **"ValidateAntiForgeryTokenAttribute"**". Actually it is in the **"ViewFeatures"** package but you don't know that! :)
+Sometimes you will have custom attributes which are not available in the fluent testing API. For example, you may have noticed that there is no method to test the **"ValidateAntiForgeryTokenAttribute"**". Actually, it's in the **"ViewFeatures"** package, but you don't know that! :)
 
 Let's see an example and test the HTTP Post **"Login"** action in the **"AccountController"**. It has these three attributes - **"HttpPost"**, **"AllowAnonymous"**, **"ValidateAntiForgeryToken"**. For the latter you can use the **"ContainingAttributeOfType"** method:
 
@@ -88,7 +88,7 @@ public void LoginShouldHaveCorrectAttributes()
             .ContainingAttributeOfType<ValidateAntiForgeryTokenAttribute>()); // <---
 ```
 
-The action is still invoked in this test so we need to provide a non-null value for the **"LoginViewModel"** parameter. A better approach on testing action attributes (without having to specify the parameters) will be available in the next major release of the library. :)
+The action is still invoked in this test, so we need to provide a non-null value for the **"LoginViewModel"** parameter. A better approach for testing action attributes (without having to specify the parameters) will be available in the next major release of the library. :)
 
 Sometimes you may want to test specific property values of the attribute. You can use the **"PassingFor"** method:
 

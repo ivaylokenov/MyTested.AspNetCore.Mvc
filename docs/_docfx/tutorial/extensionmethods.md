@@ -37,24 +37,32 @@ using System.Collections.Generic;
 public static class ResponseModelExtensions
 {
     public static IBaseTestBuilderWithComponent WithCollectionModelOfType<TModel>(
-        this IBaseTestBuilderWithResponseModel builder, // base test builder we are extending
-        Func<ICollection<TModel>, bool> predicate = null) // optional predicate the model should pass
+		// base test builder we are extending
+        this IBaseTestBuilderWithResponseModel builder,
+		// optional predicate the model should pass
+        Func<ICollection<TModel>, bool> predicate = null)
     {
-        var actualBuilder = (BaseTestBuilderWithResponseModel)builder; // cast to the actual class behind the interface
-        var modelCollection = actualBuilder.GetActualModel<ICollection<TModel>>(); // helper method validating the model type
+		// cast to the actual class behind the interface
+        var actualBuilder = (BaseTestBuilderWithResponseModel)builder; 
+		// helper method validating the model type
+        var modelCollection = actualBuilder.GetActualModel<ICollection<TModel>>(); 
             
-        if (predicate != null && !predicate(modelCollection)) // execute the predicate if exists
+		// execute the predicate if exists
+        if (predicate != null && !predicate(modelCollection)) 
         {
-            var testContext = actualBuilder.TestContext; // get the current test context
+			// get the current test context
+            var testContext = actualBuilder.TestContext; 
 
-            throw new ResponseModelAssertionException(string.Format( // throw exception for invalid predicate
+			// throw exception for invalid predicate
+            throw new ResponseModelAssertionException(string.Format(
                 "When calling {0} in {1} expected response model collection of {2} to pass the given predicate, but it failed.",
                 testContext.MethodName,
                 testContext.Component.GetName(),
                 typeof(TModel).ToFriendlyTypeName()));
         }
 
-        return actualBuilder; // return the same test builder
+		// return the same test builder
+        return actualBuilder; 
     }
 }
 ```
@@ -62,8 +70,8 @@ public static class ResponseModelExtensions
 Let's break it down and explain the most important parts of this extension method:
 
  - **"IBaseTestBuilderWithComponent"** is a base interface containing **"ShouldPassFor"** methods allowing you to continue the fluent API.
- - **"actualBuilder"** is a variable holding the actual class behind the **"IBaseTestBuilderWithResponseModel"** interface. The class' name is the same as the interface but without the 'I' in front of it. After the casting you will receive more functionality you can use - methods like the **"GetActualModel"** used above. Their purpose is to help you execute the test but should not be part of the actual fluent API.
- - The **"TestContext"** is part of every single test builder class. It contains information about the currently executed test. For example in the scope of a controller test, the **"Component"** property will contain the controller instance and the **"MethodName"** property will contain name of the tested action.
+ - **"actualBuilder"** is a variable holding the actual class behind the **"IBaseTestBuilderWithResponseModel"** interface. The class' name is the same as the interface but without the 'I' in front of it. After the casting you will receive more functionality you can use - methods like the **"GetActualModel"** used above. Their purpose is to help you execute the test but not to be part of the actual fluent API.
+ - The **"TestContext"** is part of every single test builder class. It contains information about the currently executed test. For example in the scope of a controller test, the **"Component"** property will contain the controller instance and the **"MethodName"** property will contain the name of the tested action. More information available [HERE](/guide/testcontext.html).
  - The **"GetName"** and **"ToFriendlyTypeName"** extension methods can be used to format various display names.
  
 ## Using existing methods
@@ -100,8 +108,8 @@ public static class ControllerActionAttributeExtensions
 
 ## Final words
 
-We this section we conclude the tutorial successfully! The final source code with all tests is available [HERE](https://raw.githubusercontent.com/ivaylokenov/MyTested.AspNetCore.Mvc/development/docs/_docfx/tutorial/MusicStore-Tutorial-Final.zip). But before we say goodbye let's rebuild and rerun all tests again just for the sake of it. Do the same with the CLI by running **"dotnet test"**. Everything passes? Good!
+With this section we conclude the tutorial successfully! The final source code with all tests is available [HERE](https://raw.githubusercontent.com/ivaylokenov/MyTested.AspNetCore.Mvc/master/docs/files/MusicStore-Tutorial-Final.zip). But before we say goodbye let's rebuild and rerun all tests again just for the sake of it. Do the same with the CLI by running **"dotnet test"**. Everything passes? Good!
 
-Hopefully you fell in love with My Tested ASP.NET Core MVC and if not - ideas and suggestions are [always welcome](https://mytestedasp.net/#contact)!
+Hopefully, you fell in love with My Tested ASP.NET Core MVC and if not - ideas and suggestions are [always welcome](https://mytestedasp.net/#contact)!
 
 Thank you for reading the whole tutorial and have fun testing your web applications! :)

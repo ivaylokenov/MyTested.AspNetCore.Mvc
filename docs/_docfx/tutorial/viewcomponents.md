@@ -1,6 +1,6 @@
 # View Components
 
-In this section we are going to stop asserting controllers (finally) and concentrate on **"View Components"**. Typical MVC application written with separation of concerns in mind should have plenty of view components. Before we begin, we need the **"MyTested.AspNetCore.Mvc.ViewComponents"** package:
+In this section we are going to stop asserting controllers (finally) and concentrate on **"View Components"**. Typical MVC application written with separation of concerns in mind should have plenty of them. Before we begin, we need the **"MyTested.AspNetCore.Mvc.ViewComponents"** package:
 
 ```json
 "dependencies": {
@@ -81,9 +81,6 @@ MyViewComponent<CartSummaryComponent>
 	.Instance()
 	.WithSession(session => session // <---
 		.WithEntry("Session", "TestCart"))
-	.WithDbContext(db => db
-		.WithEntities(entities => entities
-			.AddRange(GetCartItems("TestCart", "TestAlbum"))))
 ```
 
 And database entities:
@@ -100,7 +97,7 @@ MyViewComponent<CartSummaryComponent>
 
 ## Act
 
-After arranging all objects we need for the view component, we need to invoke it by using the **"InvokedWith"** method:
+After arranging all objects we need for the view component, we have to invoke it by using the **"InvokedWith"** method:
 
 ```c#
 MyViewComponent<CartSummaryComponent>
@@ -138,14 +135,14 @@ MyViewComponent<CartSummaryComponent>
 	.View();
 ```
 
-Run the test and see it pass! :)
+Rebuild the project and run the test to see it pass! :)
 
 As with all tests with My Tested ASP.NET Core MVC, if you have and invalid value, you will receive a friendly error message. Change **"Session"** to **"Cache"** and see for yourself:
 
-```
+```text
 When invoking CartSummaryComponent expected view bag to have entry with 'CartCount' key and the provided value, but the value was different.
 ```
 
 ## Section Summary
 
-View component testing allows the same methods as the controller one as long as they are applicable. You should be seeing the big picture of the library now. The next one is interesting - the good old [Routing](/tutorial/routing.html) testing!
+View component testing provides the same API methods as the controller one as long as they are applicable. You should be seeing the big picture of the library now. The next section is interesting - the good old [Routing](/tutorial/routing.html) testing!

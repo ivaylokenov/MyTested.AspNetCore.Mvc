@@ -11,20 +11,22 @@ Of course, as a main building block of the ASP.NET Core MVC framework, we will s
  - **"MyTested.AspNetCore.Mvc.ViewFeatures"** - Contains setup and assertion methods for view action results, view data, view components and more
  - **"MyTested.AspNetCore.Mvc"** - Contains assertion methods for the full MVC framework 
  
-The packages above reflect the features in the ASP.NET Core packages - "**Microsoft.AspNetCore.Mvc.Core"**, "**Microsoft.AspNetCore.Mvc.DataAnnotations"**, "**Microsoft.AspNetCore.Mvc.ViewFeatures"** and "**Microsoft.AspNetCore.Mvc"**.
+From now on the "MyTested.AspNetCore.Mvc." package name prefix will be skipped for brevity.
+ 
+The packages above reflect the features in the ASP.NET Core packages - "Microsoft.AspNetCore.Mvc.Core", "Microsoft.AspNetCore.Mvc.DataAnnotations", "Microsoft.AspNetCore.Mvc.ViewFeatures" and "Microsoft.AspNetCore.Mvc".
 
-These so called "main" packages can be separated further to **"MyTested.AspNetCore.Mvc.Controllers"**, **"MyTested.AspNetCore.Mvc.Routing"**, **"MyTested.AspNetCore.Mvc.ViewActionResults"**, **"MyTested.AspNetCore.Mvc.ViewComponents"** and more. Helper packages for testing non-MVC related features like **"MyTested.AspNetCore.Mvc.EntityFrameworkCore"** and **"MyTested.AspNetCore.Mvc.Authentication"** are also available.
+These so called "main" packages can be separated further to **"Controllers"**, **"Routing"**, **"ViewActionResults"**, **"ViewComponents"** and more. Helper packages for testing non-MVC related features like **"EntityFrameworkCore"** and **"Authentication"** are also available.
 
 Additionally, these two packages are also available:
 
  - **"MyTested.AspNetCore.Mvc.Universe"** - Combines all available binaries and the whole fluent API into one single package. Use it, if you do not want to include specific smaller packages and want to have every feature available.
  - **"MyTested.AspNetCore.Mvc.Lite"** - Completely **FREE** and **UNLIMITED** version of the library. It should not be used in combination with any other package. Includes ""*Controllers"**, `ViewActionResults"** and `ViewComponents"**.
 
-Full list and descriptions of all available packages can be found [HERE](/guide/packages.html). All of them except the **"Lite"** one require a license code in order to be used without limitations. If a license code is not provided, a maximum of 100 assertions per test project is allowed. More information about the licensing can be found [HERE](/guide/licensing.html).
+The full list and descriptions of all available packages can be found [HERE](/guide/packages.html). All of them except the **"Lite"** one require a license code in order to be used without limitations. If a license code is not provided, a maximum of 100 assertions per test project is allowed. More information about the licensing can be found [HERE](/guide/licensing.html).
 
 ## Breaking down the MVC package
 
-Now, let's get back to the testing. Go to the **"project.json"** file and replace the **"MyTested.AspNetCore.Mvc"** dependency with **"MyTested.AspNetCore.Mvc.Controllers"**. We will start using the small and specific packages for now and then we will switch to the **"Universe"** one later in the tutorial.
+Now, let's get back to the testing. Go to the **"project.json"** file and replace the **"MyTested.AspNetCore.Mvc"** dependency with **"MyTested.AspNetCore.Mvc.Controllers"**. We will start using the small and specific packages for now, and then we will switch to the **"Universe"** one later in the tutorial.
 
 Your **"project.json"** dependencies should look like this:
 
@@ -41,7 +43,7 @@ If you try to build the solution, you will receive an error stating that **"MyMv
 
 <img src="/images/tutorial/mymvcdoesnotexist.jpg" alt="MyMvc no longer exists" />
 
-The **"MyMvc"** class is only available in the **"MyTested.AspNetCore.Mvc"** package and combines all the different test types into a single starting point. To fix our test, we have to use the **"MyController"** class:
+The **"MyMvc"** class is only available in the **"MyTested.AspNetCore.Mvc"** package and combines all the different test types into a single starting point. To fix our test, we have to use the **"MyController"**:
 
 ```c#
 [Fact]
@@ -53,15 +55,28 @@ public void AddressAndPaymentShouldReturnDefaultView()
         .View();
 ```
 
-Unfortunately, it still does not compile because the **"Controllers"** package contains assertions methods for the [ControllerBase](https://github.com/aspnet/Mvc/blob/dev/src/Microsoft.AspNetCore.Mvc.Core/ControllerBase.cs) class which does not include view features and action results.
+Unfortunately, it still does not compile because the **"Controllers"** package contains assertions methods only for the [ControllerBase](https://github.com/aspnet/Mvc/blob/dev/src/Microsoft.AspNetCore.Mvc.Core/ControllerBase.cs) class which does not include view features and action results.
 
-You can see this by examining the intellisense of the test result:
+You can see this by examining the IntelliSense of the test:
 
-<img src="/images/tutorial/coreintellisense.jpg" alt="Controllers package intellisense" />
+<img src="/images/tutorial/coreintellisense.jpg" alt="Controllers package IntelliSense" />
 
 ## Asserting core controllers
 
-We will now try the core action results before returning back to the view features. Comment the first test for now (so that the project will compile with the currently added dependencies) and add a new class named **"ManageControllerTest"** in the **"Controllers"** folder. We will test the asynchronous **"RemoveLogin"** action in the **"ManageController"**. If you examine it, you will notice that it returns **"RedirectToAction"**, if no user is authenticated.
+We will try the core action results before returning to the view features. Comment the first test for now (so that the project will compile with the currently added dependencies) and add a new class named **"ManageControllerTest"** in the **"Controllers"** folder. We will test the asynchronous **"RemoveLogin"** action in the **"ManageController"**. If you examine it, you will notice that it returns **"RedirectToAction"**, if no user is authenticated:
+
+```c#
+public async Task<IActionResult> RemoveLogin(string loginProvider, string providerKey)
+{
+	ManageMessageId? message = ManageMessageId.Error;
+	var user = await GetCurrentUserAsync();
+	if (user != null)
+	{
+		// action code skipped for brevity
+	}
+	return RedirectToAction("ManageLogins", new { Message = message });
+}
+```
 
 Add the necessary usings and write the following test into the **"ManageControllerTest"** class:
 
@@ -75,7 +90,7 @@ public void RemoveLoginShouldReturnRedirectToActionWithNoUser()
         .Redirect();
 ```
 
-Run the test and it should pass correctly. As you can see My Tested ASP.NET Core MVC tests asynchronous actions flawlessly. If you do not like the null values, you may use the built-in helper class **"With"** to specify that there are no action arguments in this test:
+Run the test, and it should pass correctly. As you can see, My Tested ASP.NET Core MVC tests asynchronous actions flawlessly. If you do not like the null value literals, you may use the built-in helper class **"With"** to specify that there are no action arguments in this test:
 
 ```c#
 .Calling(c => c.RemoveLogin(With.No<string>(), With.No<string>()))
@@ -117,4 +132,4 @@ This package adds all action results from the [Controller](https://github.com/as
 
 ## Section summary
 
-In this section we learned how we can use only these parts from My Tested ASP.NET Core MVC that we actually need in our testing project. As you can see each small package dependency adds additional extension methods to the fluent API. We will add more and more packages in the next sections so that you can get familiar with them. Next - [Debugging Failed Tests](/tutorial/debugging.html)!
+In this section we learned how we can use only these parts from My Tested ASP.NET Core MVC that we actually need in our testing project. Each small package dependency adds additional extension methods to the fluent API. We will add more and more packages in the next sections so that you can get familiar with them. Next - [Debugging Failed Tests](/tutorial/debugging.html)!

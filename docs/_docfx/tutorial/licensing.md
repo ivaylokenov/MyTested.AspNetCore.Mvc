@@ -8,7 +8,7 @@ The testing library has four different editions available for you to explore:
 
 ### Lite
 
-The **"Lite"** edition of the library provides only a small subset of the available setups and assertions but they are more than sufficient for controller and view component testing.
+The **"Lite"** edition of the library provides only a small subset of the available setups and assertions, but they are more than sufficient for controller and view component testing.
 
 - Perfect for small MVC applications
 - Completely free and unlimited
@@ -20,14 +20,14 @@ The **"Lite"** edition of the library provides only a small subset of the availa
 
 ### Community
 
-The **"Community*"" edition of the library is fully unlocked and the whole fluent testing API can be used for free. This edition is exclusively available only for individuals, open-source projects, startups and educational institutions.
+The **"Community"** edition of the library is fully unlocked, and the whole fluent testing API can be used for free. This version is exclusively available only for individuals, open-source projects, startups and educational institutions.
 
 - Perfect for every MVC application complying with the special terms
 - Completely free and unlimited
 - Developers can include [any package they prefer](/guide/packages.html)
 - Available only for individuals and special types of businesses and organizations
 - Fully featured edition
-- License code can be requested from [HERE](https://mytestedasp.net/Core/Mvc#free-usage-modal) for free
+- License codes can be requested from [HERE](https://mytestedasp.net/Core/Mvc#free-usage-modal) for free
 
 ### Trial
 
@@ -43,7 +43,7 @@ The **"Trial"** edition of the library is fully featured but allows up to 100 as
 
 ### Commercial
 
-The **"Commercial"** edition of the library is fully unlocked and unlimited. Requires a paid license code.
+The **"Commercial"** edition of the library is fully unlocked and unlimited. This version requires a paid license code.
 
 - Perfect for every MVC application
 - No limitations
@@ -51,15 +51,15 @@ The **"Commercial"** edition of the library is fully unlocked and unlimited. Req
 - Developers can include [any package they prefer](/guide/packages.html)
 - Fully featured edition
 - Can be used by everyone
-- License code can be purchased from [HERE](https://mytestedasp.net/Core/Mvc#pricing)
+- License codes can be purchased from [HERE](https://mytestedasp.net/Core/Mvc#pricing)
 
 Choose wisely! :)
 
 ## Registering a license code
 
-If you followed the tutorial strictly, you should have reached the free trial version limitations of My Tested ASP.NET Core MVC. When you run a single test (no matter which one), it should pass. But if we try to run them all at once, you should receive the following exception:
+If you followed the tutorial strictly, you should have reached the free trial version limitations of My Tested ASP.NET Core MVC. When you run a single test (no matter which one), it should pass. But if you try to run them all at once, you should receive the following exception:
 
-```
+```text
 The free-quota limit of 100 assertions per test project has been reached. Please visit https://mytestedasp.net/core/mvc#pricing to request a free license or upgrade to a commercial one.
 ```
 
@@ -87,7 +87,7 @@ This license is tied to the **"MusicStore.Test"** project. To unlock the testing
 },
 ```
 
-From now on the **"testconfig.json"** file will be copied to the build output directory and My Tested ASP.NET Core MVC will be able to read it successfully. More information about the test configuration can be found [HERE](/guide/testconfig.html).
+From now on the **"testconfig.json"** file will be copied to the build output directory, and My Tested ASP.NET Core MVC will be able to read it successfully. More information about the test configuration can be found [HERE](/guide/testconfig.html).
 
 Rebuild the solution and run the tests again. All of them should pass. We have unlocked the full version of the library! :)
 
@@ -95,4 +95,4 @@ Additional details about the licensing of the testing framework can be found [HE
 
 ## Section summary
 
-Since now we have used the **"Trial"** edition of My Tested ASP.NET Core MVC. It was working fine but we have reached its limitations while still having a lot of tests to write for our web application. After providing a license code in the test project, we are now able to successfully assert with the fully-featured and unlimited **"Community"** edition. Now let's get back to the code and test some [Attributes](/tutorial/attributes/html)!
+Since now we have used the **"Trial"** edition of My Tested ASP.NET Core MVC. It was working fine, but we have reached its limitations while still having a lot of tests to write for our web application. After providing a license code in the test project, we are now able to successfully assert with the fully-featured and unlimited **"Community"** edition. Now let's get back to the code and test some [Attributes](/tutorial/attributes.html)!

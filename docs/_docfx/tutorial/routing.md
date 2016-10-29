@@ -1,12 +1,12 @@
 # Routing
 
-If you have a single route mapping (for example the default one), it will be not hard for you to validate and assert whether than all controllers and action resolve correctly. However, when your application gets bigger and bigger and you start to map different kinds of routes and introduce various changes to them, it can be quite difficult and messy to guarantee their integrity. This is where route testing comes in handy.
+If you have a single route mapping (for example the default one), it will be not hard for you to validate and assert whether all controllers and actions resolve correctly. However, when your application gets bigger and bigger, and you start to map different kinds of routes and introduce various changes to them, it can be quite challenging and messy to guarantee their integrity. Here route testing comes in handy.
 
 ## Validating controllers and actions
 
 Go to the **"project.json"** file and add the **"MyTested.AspNetCore.Mvc.Routing"** dependency:
 
-```c#
+```json
 "dependencies": {
   "dotnet-test-xunit": "2.2.0-*",
   "xunit": "2.2.0-*",
@@ -29,7 +29,7 @@ Go to the **"project.json"** file and add the **"MyTested.AspNetCore.Mvc.Routing
 },
 ```
 
-Create a **"Routing"** folder at the root of the test project and add **"HomeRouteTest"** class in it. We will start with something easy and validate the **"Error"** action in **"HomeController"**:
+Create **"Routing"** folder at the root of the test project and add **"HomeRouteTest"** class in it. We will start with something easy and validate the **"Error"** action in **"HomeController"**:
 
 ```c#
 public IActionResult Error()
@@ -93,9 +93,9 @@ public void GetBrowseActionShouldBeRoutedSuccessfuly()
 		.To<StoreController>(c => c.Browse("HipHop"));
 ```
 
-And if you change **"HipHop"** with **"Rock"** for example you will see the following error message:
+And if you change **"HipHop"** with **"Rock"**, for example, you will see the following error message:
 
-```
+```text
 Expected route '/Store/Browse' to contain route value with 'genre' key and the provided value but the value was different.
 ```
 
@@ -125,9 +125,9 @@ public void GetIndexActionShouldBeRoutedSuccessfuly()
 			With.Any<IMemoryCache>())); // <---
 ```
 
-**"With.Any"** can be used on any action parameter used in a route test.
+**"With.Any"** can be used on any action parameter expected in a route test.
 
-## More specific request
+## More specific requests
 
 All of the above examples are using HTTP Get method and the provided path as request data to test with. However, without adding more specific information, some actions cannot be routed correctly. For example **"RemoveFromCart"** in **"ShoppingCartController"**:
 
@@ -154,7 +154,7 @@ public void PostRemoveFromCartActionShouldBeRoutedSuccessfuly()
             With.Any<CancellationToken>()));
 ```
 
-We are testing with HTTP Get request while the action is restricted only for HTTP Post ones. Let's fix the issue:
+We are testing with HTTP Get request while the action is restricted only to HTTP Post one. Let's fix the issue:
 
 ```c#
 [Fact]
@@ -183,7 +183,7 @@ public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = 
 }
 ```
 
-The login view model should come from the request from so we may decide to ignore it by using **"With.Any"** or provide it like so:
+The login view model should come form the request from so we may decide to ignore it by using **"With.Any"** or provide it like so:
 
 ```c#
 [Fact]
@@ -209,7 +209,7 @@ public void PostLoginShouldBeRoutedSuccessfuly()
             "Test"));
 ```
 
-Note that the **"RememberMe"** property value is provided as string. This way is correct since in the normal HTTP requests every form field is a simple text. If you by mistake provide as a C# boolean value, you will receive an error.
+Note that the **"RememberMe"** property value is provided as a string. This is the correct way because in HTTP requests hold form fields in a simple text format. If you by mistake provide it as a C# boolean value, you will receive an error.
 
 The **"WithFormFields"** method call does some magic behind the scenes and it's just a shorter way to write:
 
@@ -221,7 +221,7 @@ The **"WithFormFields"** method call does some magic behind the scenes and it's 
 
 ## JSON body
 
-The **"Music Store"** web application does not have any JSON-based model binding but it is not hard to test with one:
+The **"Music Store"** web application does not have any JSON-based model binding, but it is not hard to test with one:
 
 ```c#
 MyRouting
@@ -259,7 +259,7 @@ MyRouting
 		}));
 ```
 
-It may seems a bit strange at first but My Tested ASP.NET Core MVC serializes the anonymous object to JSON string, attach it to the HTTP request body as a stream and pass it to the routing system.
+It may seem a bit strange at first, but My Tested ASP.NET Core MVC serializes the anonymous object to JSON string, attach it to the HTTP request body as a stream and pass it to the routing system.
 
 Of course, you can always ignore model binding and just assert controllers and actions:
 
@@ -274,6 +274,6 @@ MyRouting
 
 ## Section summary
 
-Still not convinced about route testing and its capabilities? Check this [ultimate crazy model binding test](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/development/test/MyTested.AspNetCore.Mvc.Routing.Test/BuildersTests/RoutingTests/RouteTestBuilderTests.cs#L766) which asserts JSON body, route values, query string parameters, form fields and headers at the same time. I hope no one writes such actions though...
+Still not convinced about route testing and its capabilities? Check this [ultimate crazy model binding test](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/development/test/MyTested.AspNetCore.Mvc.Routing.Test/BuildersTests/RoutingTests/RouteTestBuilderTests.cs#L766) which asserts JSON body, route values, query string parameters, form fields and headers at the same time. I hope no one writes such actions, though...
 
-We are almost at the finish line. Next section will cover various test [Helpers](/tutorial/helpers.html) which do not fall within a particular tutorial section!
+We are almost at the finish line. Next section will cover various test [Helpers](/tutorial/helpers.html) which do not fall within a particular tutorial section.

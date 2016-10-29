@@ -65,10 +65,10 @@
             <article class="content wrap" id="_content" data-uid="">
               <h1 id="routing" sourcefile="tutorial/routing.md" sourcestartlinenumber="1" sourceendlinenumber="1">Routing</h1>
               
-<p sourcefile="tutorial/routing.md" sourcestartlinenumber="3" sourceendlinenumber="3">If you have a single route mapping (for example the default one), it will be not hard for you to validate and assert whether than all controllers and action resolve correctly. However, when your application gets bigger and bigger and you start to map different kinds of routes and introduce various changes to them, it can be quite difficult and messy to guarantee their integrity. This is where route testing comes in handy.</p>
+<p sourcefile="tutorial/routing.md" sourcestartlinenumber="3" sourceendlinenumber="3">If you have a single route mapping (for example the default one), it will be not hard for you to validate and assert whether all controllers and actions resolve correctly. However, when your application gets bigger and bigger, and you start to map different kinds of routes and introduce various changes to them, it can be quite challenging and messy to guarantee their integrity. Here route testing comes in handy.</p>
 <h2 id="validating-controllers-and-actions" sourcefile="tutorial/routing.md" sourcestartlinenumber="5" sourceendlinenumber="5">Validating controllers and actions</h2>
 <p sourcefile="tutorial/routing.md" sourcestartlinenumber="7" sourceendlinenumber="7">Go to the <strong>&quot;project.json&quot;</strong> file and add the <strong>&quot;MyTested.AspNetCore.Mvc.Routing&quot;</strong> dependency:</p>
-<pre sourcefile="tutorial/routing.md" sourcestartlinenumber="9" sourceendlinenumber="30"><code class="lang-c#">&quot;dependencies&quot;: {
+<pre sourcefile="tutorial/routing.md" sourcestartlinenumber="9" sourceendlinenumber="30"><code class="lang-json">&quot;dependencies&quot;: {
   &quot;dotnet-test-xunit&quot;: &quot;2.2.0-*&quot;,
   &quot;xunit&quot;: &quot;2.2.0-*&quot;,
   &quot;Moq&quot;: &quot;4.6.38-*&quot;,
@@ -88,7 +88,7 @@
   &quot;MyTested.AspNetCore.Mvc.ViewData&quot;: &quot;1.0.0&quot;,
   &quot;MusicStore&quot;: &quot;*&quot;
 },
-</code></pre><p sourcefile="tutorial/routing.md" sourcestartlinenumber="32" sourceendlinenumber="32">Create a <strong>&quot;Routing&quot;</strong> folder at the root of the test project and add <strong>&quot;HomeRouteTest&quot;</strong> class in it. We will start with something easy and validate the <strong>&quot;Error&quot;</strong> action in <strong>&quot;HomeController&quot;</strong>:</p>
+</code></pre><p sourcefile="tutorial/routing.md" sourcestartlinenumber="32" sourceendlinenumber="32">Create <strong>&quot;Routing&quot;</strong> folder at the root of the test project and add <strong>&quot;HomeRouteTest&quot;</strong> class in it. We will start with something easy and validate the <strong>&quot;Error&quot;</strong> action in <strong>&quot;HomeController&quot;</strong>:</p>
 <pre sourcefile="tutorial/routing.md" sourcestartlinenumber="34" sourceendlinenumber="39"><code class="lang-c#">public IActionResult Error()
 {
     // action code skipped for brevity
@@ -126,8 +126,8 @@ public void GetBrowseActionShouldBeRoutedSuccessfuly()
         .Configuration()
         .ShouldMap(&quot;/Store/Browse?genre=HipHop&quot;)
         .To&lt;StoreController&gt;(c =&gt; c.Browse(&quot;HipHop&quot;));
-</code></pre><p sourcefile="tutorial/routing.md" sourcestartlinenumber="96" sourceendlinenumber="96">And if you change <strong>&quot;HipHop&quot;</strong> with <strong>&quot;Rock&quot;</strong> for example you will see the following error message:</p>
-<pre sourcefile="tutorial/routing.md" sourcestartlinenumber="98" sourceendlinenumber="100"><code>Expected route &#39;/Store/Browse&#39; to contain route value with &#39;genre&#39; key and the provided value but the value was different.
+</code></pre><p sourcefile="tutorial/routing.md" sourcestartlinenumber="96" sourceendlinenumber="96">And if you change <strong>&quot;HipHop&quot;</strong> with <strong>&quot;Rock&quot;</strong>, for example, you will see the following error message:</p>
+<pre sourcefile="tutorial/routing.md" sourcestartlinenumber="98" sourceendlinenumber="100"><code class="lang-text">Expected route &#39;/Store/Browse&#39; to contain route value with &#39;genre&#39; key and the provided value but the value was different.
 </code></pre><h2 id="ignoring-route-values" sourcefile="tutorial/routing.md" sourcestartlinenumber="102" sourceendlinenumber="102">Ignoring route values</h2>
 <p sourcefile="tutorial/routing.md" sourcestartlinenumber="104" sourceendlinenumber="104">Some action parameters do not have to be tested. They come from the service provider, not the MVC routers. Let&#39;s take a look at the <strong>&quot;Index&quot;</strong> action in the <strong>&quot;HomeController&quot;</strong>:</p>
 <pre sourcefile="tutorial/routing.md" sourcestartlinenumber="106" sourceendlinenumber="113"><code class="lang-c#">public async Task&lt;IActionResult&gt; Index(
@@ -145,8 +145,8 @@ public void GetIndexActionShouldBeRoutedSuccessfuly()
         .To&lt;HomeController&gt;(c =&gt; c.Index(
             With.Any&lt;MusicStoreContext&gt;(), // &lt;---
             With.Any&lt;IMemoryCache&gt;())); // &lt;---
-</code></pre><p sourcefile="tutorial/routing.md" sourcestartlinenumber="128" sourceendlinenumber="128"><strong>&quot;With.Any&quot;</strong> can be used on any action parameter used in a route test.</p>
-<h2 id="more-specific-request" sourcefile="tutorial/routing.md" sourcestartlinenumber="130" sourceendlinenumber="130">More specific request</h2>
+</code></pre><p sourcefile="tutorial/routing.md" sourcestartlinenumber="128" sourceendlinenumber="128"><strong>&quot;With.Any&quot;</strong> can be used on any action parameter expected in a route test.</p>
+<h2 id="more-specific-requests" sourcefile="tutorial/routing.md" sourcestartlinenumber="130" sourceendlinenumber="130">More specific requests</h2>
 <p sourcefile="tutorial/routing.md" sourcestartlinenumber="132" sourceendlinenumber="132">All of the above examples are using HTTP Get method and the provided path as request data to test with. However, without adding more specific information, some actions cannot be routed correctly. For example <strong>&quot;RemoveFromCart&quot;</strong> in <strong>&quot;ShoppingCartController&quot;</strong>:</p>
 <pre sourcefile="tutorial/routing.md" sourcestartlinenumber="134" sourceendlinenumber="142"><code class="lang-c#">[HttpPost]
 public async Task&lt;IActionResult&gt; RemoveFromCart(
@@ -164,7 +164,7 @@ public void PostRemoveFromCartActionShouldBeRoutedSuccessfuly()
         .To&lt;ShoppingCartController&gt;(c =&gt; c.RemoveFromCart(
             1,
             With.Any&lt;CancellationToken&gt;()));
-</code></pre><p sourcefile="tutorial/routing.md" sourcestartlinenumber="157" sourceendlinenumber="157">We are testing with HTTP Get request while the action is restricted only for HTTP Post ones. Let&#39;s fix the issue:</p>
+</code></pre><p sourcefile="tutorial/routing.md" sourcestartlinenumber="157" sourceendlinenumber="157">We are testing with HTTP Get request while the action is restricted only to HTTP Post one. Let&#39;s fix the issue:</p>
 <pre sourcefile="tutorial/routing.md" sourcestartlinenumber="159" sourceendlinenumber="170"><code class="lang-c#">[Fact]
 public void PostRemoveFromCartActionShouldBeRoutedSuccessfuly()
     =&gt; MyRouting
@@ -183,7 +183,7 @@ public async Task&lt;IActionResult&gt; Login(LoginViewModel model, string return
 {
     // action code skipped for brevity
 }
-</code></pre><p sourcefile="tutorial/routing.md" sourcestartlinenumber="186" sourceendlinenumber="186">The login view model should come from the request from so we may decide to ignore it by using <strong>&quot;With.Any&quot;</strong> or provide it like so:</p>
+</code></pre><p sourcefile="tutorial/routing.md" sourcestartlinenumber="186" sourceendlinenumber="186">The login view model should come form the request from so we may decide to ignore it by using <strong>&quot;With.Any&quot;</strong> or provide it like so:</p>
 <pre sourcefile="tutorial/routing.md" sourcestartlinenumber="188" sourceendlinenumber="210"><code class="lang-c#">[Fact]
 public void PostLoginShouldBeRoutedSuccessfuly()
     =&gt; MyRouting
@@ -205,13 +205,13 @@ public void PostLoginShouldBeRoutedSuccessfuly()
                 RememberMe = true
             },
             &quot;Test&quot;));
-</code></pre><p sourcefile="tutorial/routing.md" sourcestartlinenumber="212" sourceendlinenumber="212">Note that the <strong>&quot;RememberMe&quot;</strong> property value is provided as string. This way is correct since in the normal HTTP requests every form field is a simple text. If you by mistake provide as a C# boolean value, you will receive an error.</p>
+</code></pre><p sourcefile="tutorial/routing.md" sourcestartlinenumber="212" sourceendlinenumber="212">Note that the <strong>&quot;RememberMe&quot;</strong> property value is provided as a string. This is the correct way because in HTTP requests hold form fields in a simple text format. If you by mistake provide it as a C# boolean value, you will receive an error.</p>
 <p sourcefile="tutorial/routing.md" sourcestartlinenumber="214" sourceendlinenumber="214">The <strong>&quot;WithFormFields&quot;</strong> method call does some magic behind the scenes and it&#39;s just a shorter way to write:</p>
 <pre sourcefile="tutorial/routing.md" sourcestartlinenumber="216" sourceendlinenumber="220"><code class="lang-c#">.WithFormField(&quot;Email&quot;, &quot;test@test.com&quot;)
 .WithFormField(&quot;Password&quot;, &quot;123456&quot;)
 .WithFormField(&quot;RememberMe&quot;, &quot;true&quot;))
 </code></pre><h2 id="json-body" sourcefile="tutorial/routing.md" sourcestartlinenumber="222" sourceendlinenumber="222">JSON body</h2>
-<p sourcefile="tutorial/routing.md" sourcestartlinenumber="224" sourceendlinenumber="224">The <strong>&quot;Music Store&quot;</strong> web application does not have any JSON-based model binding but it is not hard to test with one:</p>
+<p sourcefile="tutorial/routing.md" sourcestartlinenumber="224" sourceendlinenumber="224">The <strong>&quot;Music Store&quot;</strong> web application does not have any JSON-based model binding, but it is not hard to test with one:</p>
 <pre sourcefile="tutorial/routing.md" sourcestartlinenumber="226" sourceendlinenumber="239"><code class="lang-c#">MyRouting
     .Configuration()
     .ShouldMap(request =&gt; request
@@ -241,7 +241,7 @@ public void PostLoginShouldBeRoutedSuccessfuly()
             MyNumber = 1,
             MyString = &quot;MyText&quot;
         }));
-</code></pre><p sourcefile="tutorial/routing.md" sourcestartlinenumber="262" sourceendlinenumber="262">It may seems a bit strange at first but My Tested ASP.NET Core MVC serializes the anonymous object to JSON string, attach it to the HTTP request body as a stream and pass it to the routing system.</p>
+</code></pre><p sourcefile="tutorial/routing.md" sourcestartlinenumber="262" sourceendlinenumber="262">It may seem a bit strange at first, but My Tested ASP.NET Core MVC serializes the anonymous object to JSON string, attach it to the HTTP request body as a stream and pass it to the routing system.</p>
 <p sourcefile="tutorial/routing.md" sourcestartlinenumber="264" sourceendlinenumber="264">Of course, you can always ignore model binding and just assert controllers and actions:</p>
 <pre sourcefile="tutorial/routing.md" sourcestartlinenumber="266" sourceendlinenumber="273"><code class="lang-c#">MyRouting
     .Configuration()
@@ -250,8 +250,8 @@ public void PostLoginShouldBeRoutedSuccessfuly()
         .WithLocation(&quot;/My/Action&quot;))
     .To&lt;MyController&gt;(c =&gt; c.Action(With.Any&lt;MyModel&gt;()));
 </code></pre><h2 id="section-summary" sourcefile="tutorial/routing.md" sourcestartlinenumber="275" sourceendlinenumber="275">Section summary</h2>
-<p sourcefile="tutorial/routing.md" sourcestartlinenumber="277" sourceendlinenumber="277">Still not convinced about route testing and its capabilities? Check this <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/development/test/MyTested.AspNetCore.Mvc.Routing.Test/BuildersTests/RoutingTests/RouteTestBuilderTests.cs#L766" sourcefile="tutorial/routing.md" sourcestartlinenumber="277" sourceendlinenumber="277">ultimate crazy model binding test</a> which asserts JSON body, route values, query string parameters, form fields and headers at the same time. I hope no one writes such actions though...</p>
-<p sourcefile="tutorial/routing.md" sourcestartlinenumber="279" sourceendlinenumber="279">We are almost at the finish line. Next section will cover various test <a href="/tutorial/helpers.html" sourcefile="tutorial/routing.md" sourcestartlinenumber="279" sourceendlinenumber="279">Helpers</a> which do not fall within a particular tutorial section!</p>
+<p sourcefile="tutorial/routing.md" sourcestartlinenumber="277" sourceendlinenumber="277">Still not convinced about route testing and its capabilities? Check this <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/development/test/MyTested.AspNetCore.Mvc.Routing.Test/BuildersTests/RoutingTests/RouteTestBuilderTests.cs#L766" sourcefile="tutorial/routing.md" sourcestartlinenumber="277" sourceendlinenumber="277">ultimate crazy model binding test</a> which asserts JSON body, route values, query string parameters, form fields and headers at the same time. I hope no one writes such actions, though...</p>
+<p sourcefile="tutorial/routing.md" sourcestartlinenumber="279" sourceendlinenumber="279">We are almost at the finish line. Next section will cover various test <a href="/tutorial/helpers.html" sourcefile="tutorial/routing.md" sourcestartlinenumber="279" sourceendlinenumber="279">Helpers</a> which do not fall within a particular tutorial section.</p>
 
             </article>
           </div>

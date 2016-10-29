@@ -65,7 +65,7 @@
             <article class="content wrap" id="_content" data-uid="">
               <h1 id="view-components" sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="1" sourceendlinenumber="1">View Components</h1>
               
-<p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="3" sourceendlinenumber="3">In this section we are going to stop asserting controllers (finally) and concentrate on <strong>&quot;View Components&quot;</strong>. Typical MVC application written with separation of concerns in mind should have plenty of view components. Before we begin, we need the <strong>&quot;MyTested.AspNetCore.Mvc.ViewComponents&quot;</strong> package:</p>
+<p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="3" sourceendlinenumber="3">In this section we are going to stop asserting controllers (finally) and concentrate on <strong>&quot;View Components&quot;</strong>. Typical MVC application written with separation of concerns in mind should have plenty of them. Before we begin, we need the <strong>&quot;MyTested.AspNetCore.Mvc.ViewComponents&quot;</strong> package:</p>
 <pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="5" sourceendlinenumber="25"><code class="lang-json">&quot;dependencies&quot;: {
   &quot;dotnet-test-xunit&quot;: &quot;2.2.0-*&quot;,
   &quot;xunit&quot;: &quot;2.2.0-*&quot;,
@@ -122,24 +122,21 @@ public void InvokingTheComponentShouldReturnCorrectCartItems()
     =&gt; MyViewComponent&lt;CartSummaryComponent&gt;
         .Instance()
 </code></pre><p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="77" sourceendlinenumber="77">We need to add a cart ID in the session state:</p>
-<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="79" sourceendlinenumber="87"><code class="lang-c#">MyViewComponent&lt;CartSummaryComponent&gt;
+<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="79" sourceendlinenumber="84"><code class="lang-c#">MyViewComponent&lt;CartSummaryComponent&gt;
     .Instance()
     .WithSession(session =&gt; session // &lt;---
         .WithEntry(&quot;Session&quot;, &quot;TestCart&quot;))
-    .WithDbContext(db =&gt; db
-        .WithEntities(entities =&gt; entities
-            .AddRange(GetCartItems(&quot;TestCart&quot;, &quot;TestAlbum&quot;))))
-</code></pre><p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="89" sourceendlinenumber="89">And database entities:</p>
-<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="91" sourceendlinenumber="99"><code class="lang-c#">MyViewComponent&lt;CartSummaryComponent&gt;
+</code></pre><p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="86" sourceendlinenumber="86">And database entities:</p>
+<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="88" sourceendlinenumber="96"><code class="lang-c#">MyViewComponent&lt;CartSummaryComponent&gt;
     .Instance()
     .WithSession(session =&gt; session
         .WithEntry(&quot;Session&quot;, &quot;TestCart&quot;))
     .WithDbContext(db =&gt; db // &lt;---
         .WithEntities(entities =&gt; entities
             .AddRange(GetCartItems(&quot;TestCart&quot;, &quot;TestAlbum&quot;))))
-</code></pre><h2 id="act" sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="101" sourceendlinenumber="101">Act</h2>
-<p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="103" sourceendlinenumber="103">After arranging all objects we need for the view component, we need to invoke it by using the <strong>&quot;InvokedWith&quot;</strong> method:</p>
-<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="105" sourceendlinenumber="114"><code class="lang-c#">MyViewComponent&lt;CartSummaryComponent&gt;
+</code></pre><h2 id="act" sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="98" sourceendlinenumber="98">Act</h2>
+<p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="100" sourceendlinenumber="100">After arranging all objects we need for the view component, we have to invoke it by using the <strong>&quot;InvokedWith&quot;</strong> method:</p>
+<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="102" sourceendlinenumber="111"><code class="lang-c#">MyViewComponent&lt;CartSummaryComponent&gt;
     .Instance()
     .WithSession(session =&gt; session
         .WithEntry(&quot;Session&quot;, &quot;TestCart&quot;))
@@ -147,9 +144,9 @@ public void InvokingTheComponentShouldReturnCorrectCartItems()
         .WithEntities(entities =&gt; entities
             .AddRange(GetCartItems(&quot;TestCart&quot;, &quot;TestAlbum&quot;))))
     .InvokedWith(vc =&gt; vc.InvokeAsync()) // &lt;---
-</code></pre><h2 id="assert" sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="116" sourceendlinenumber="116">Assert</h2>
-<p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="118" sourceendlinenumber="118">Finally, we need to assert the <strong>&quot;ViewBag&quot;</strong> and the execution result. You already now how to do it:</p>
-<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="120" sourceendlinenumber="139"><code class="lang-c#">MyViewComponent&lt;CartSummaryComponent&gt;
+</code></pre><h2 id="assert" sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="113" sourceendlinenumber="113">Assert</h2>
+<p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="115" sourceendlinenumber="115">Finally, we need to assert the <strong>&quot;ViewBag&quot;</strong> and the execution result. You already now how to do it:</p>
+<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="117" sourceendlinenumber="136"><code class="lang-c#">MyViewComponent&lt;CartSummaryComponent&gt;
     .Instance()
     .WithSession(session =&gt; session
         .WithEntry(&quot;Session&quot;, &quot;TestCart&quot;))
@@ -167,11 +164,11 @@ public void InvokingTheComponentShouldReturnCorrectCartItems()
     .AndAlso()
     .ShouldReturn() // &lt;---
     .View();
-</code></pre><p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="141" sourceendlinenumber="141">Run the test and see it pass! :)</p>
-<p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="143" sourceendlinenumber="143">As with all tests with My Tested ASP.NET Core MVC, if you have and invalid value, you will receive a friendly error message. Change <strong>&quot;Session&quot;</strong> to <strong>&quot;Cache&quot;</strong> and see for yourself:</p>
-<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="145" sourceendlinenumber="147"><code>When invoking CartSummaryComponent expected view bag to have entry with &#39;CartCount&#39; key and the provided value, but the value was different.
-</code></pre><h2 id="section-summary" sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="149" sourceendlinenumber="149">Section Summary</h2>
-<p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="151" sourceendlinenumber="151">View component testing allows the same methods as the controller one as long as they are applicable. You should be seeing the big picture of the library now. The next one is interesting - the good old <a href="/tutorial/routing.html" sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="151" sourceendlinenumber="151">Routing</a> testing!</p>
+</code></pre><p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="138" sourceendlinenumber="138">Rebuild the project and run the test to see it pass! :)</p>
+<p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="140" sourceendlinenumber="140">As with all tests with My Tested ASP.NET Core MVC, if you have and invalid value, you will receive a friendly error message. Change <strong>&quot;Session&quot;</strong> to <strong>&quot;Cache&quot;</strong> and see for yourself:</p>
+<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="142" sourceendlinenumber="144"><code class="lang-text">When invoking CartSummaryComponent expected view bag to have entry with &#39;CartCount&#39; key and the provided value, but the value was different.
+</code></pre><h2 id="section-summary" sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="146" sourceendlinenumber="146">Section Summary</h2>
+<p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="148" sourceendlinenumber="148">View component testing provides the same API methods as the controller one as long as they are applicable. You should be seeing the big picture of the library now. The next section is interesting - the good old <a href="/tutorial/routing.html" sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="148" sourceendlinenumber="148">Routing</a> testing!</p>
 
             </article>
           </div>

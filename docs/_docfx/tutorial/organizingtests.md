@@ -1,10 +1,10 @@
 # Organizing Tests
 
-This section will cover the various ways we can organize our tests in a class.
+This section will cover the various ways we can organize our tests in a single class.
 
 ## The fluent style
 
-This is the test style we used so far. For example let's take a look at our **"StoreControllerTest"** class:
+This is the test style we used so far in the tutorial. For example, let's take a look at our **"StoreControllerTest"** class:
 
 ```c#
 namespace MusicStore.Test.Controllers
@@ -166,7 +166,7 @@ namespace MusicStore.Test.Controllers
 }
 ```
 
-**NOTE:** To run the above tests asynchronously, the test runner should instantiate the **"StoreControllerTest"** class for every single test. This is the default behaviour of xUnit so you should not experience any issues, if you do not alter its collection parallelism. You can also avoid a race condition if you replace the **"this"** keyword with **"Instance"**:
+**NOTE:** To run the above tests asynchronously, the test runner should instantiate the **"StoreControllerTest"** class for every single test. This is the default behavior of **"xUnit"** so you shouldn't experience any issues if you do not alter its collection parallelism. You can also avoid a race condition if you replace the **"this"** keyword with **"Instance"**:
 
 ```c#
 namespace MusicStore.Test.Controllers
@@ -221,4 +221,4 @@ namespace MusicStore.Test.Controllers
 
 ## Section summary
 
-Of course, you can always combine two or more of the above style as long as your code is consistent. Now, let's take a look at the framework's [Test Configuration](/tutorial/testconfig.html)!
+Of course, you can always combine two or more of the above styles as long as your code is consistent. Now, let's take a look at the framework's [Test Configuration](/tutorial/testconfig.html)!

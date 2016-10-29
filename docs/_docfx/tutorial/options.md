@@ -73,4 +73,4 @@ public void ConfigureTestServices(IServiceCollection services)
 
 ## Section summary
 
-Well, this was easy. In fact, it it is the easiest part of this tutorial. Let's move to [Session & Cache](/tutorial/sessioncache.html) where we will use the options setup one more time.
+Well, this was easy. In fact, it's the easiest part of this tutorial. Let's move to [Session & Cache](/tutorial/sessioncache.html) where we will use the options setup one more time.

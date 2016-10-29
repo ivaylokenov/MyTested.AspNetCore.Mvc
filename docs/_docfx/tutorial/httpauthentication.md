@@ -2,7 +2,7 @@
 
 This section will cover HTTP related testing and user identity authentication.
 
-## HTTP request
+## HTTP requests
 
 Sometimes we need to process the HTTP request in the controller action. Take a look at the HTTP Post overload of the **"AddressAndPayment"** action in the **"CheckoutController"**:
 
@@ -22,7 +22,7 @@ try
 // action code skipped for brevity
 ```
 
-The action reads the form and checks for an input named **"PromoCode"**. If it does not equals **"FREE"**, the action return its view with the same order provided from the form. Let's test this logic!
+The action reads the form and checks for an input named **"PromoCode"**. If it does not equal **"FREE"**, the action returns its view with the same order provided by the form. Let's test this logic!
 
 Go to the **"project.json"** file and add **"MyTested.AspNetCore.Mvc.Http"** as a dependency:
 
@@ -92,7 +92,7 @@ else
 // action code skipped for brevity
 ```
 
-By default tests do not have an authenticated user identity. Write this test in the **"CheckoutControllerTest"**, run it and see for yourself:
+By default tests do not have an authenticated user identity. Write this one in the **"CheckoutControllerTest"**, run it and see for yourself:
 
 ```c#
 [Fact]
@@ -130,7 +130,7 @@ It fails. Obviously, we need an authenticated user to test this action. We can a
 },
 ```
 
-**"WithAuthenticatedUser"** method will be added to the fluent API. You can use it to set identifier, username, roles, claims and identities. But for now call it empty like this:
+**"WithAuthenticatedUser"** method will be added to the fluent API. You can use it to set identifier, username, roles, claims, and identities. But for now call it empty like this:
 
 ```c#
 [Fact]
@@ -171,7 +171,7 @@ public void CompleteShouldReturnViewWithCorrectIdWithFoundOrderForTheUser()
         .WithModel(1);
 ```
 
-Of course, we need to also test the result when the order is not for the currently authenticated user. In this case we need to return the **"Error"** view:
+Of course, we also need to test the result when the order is not for the currently authenticated user. In this case, we need to return the **"Error"** view:
 
 ```c#
 [Fact]
@@ -193,7 +193,7 @@ public void CompleteShouldReturnErrorViewWithInvalidOrderForTheUser()
 
 ## HTTP Response
 
-Sometimes we may manipulate the HTTP response directly in the controller action - for example to add a custom header. The Music Store web application does not have such logic but we can take any action and validate whether it returns 200 (OK) status code just for the sake of seeing the syntax.
+Sometimes we may manipulate the HTTP response directly in the controller action. For example, to add a custom header. The Music Store web application does not have such logic, but we can take any action and validate whether it returns 200 (OK) status code just for the sake of seeing the syntax.
 
 Create a **"HomeControllerTest"** class and add the following test:
 
@@ -211,7 +211,7 @@ public void AccessDeniedShouldReturnOkStatusCodeAndProperView()
         .View("~/Views/Shared/AccessDenied.cshtml");
 ```
 
-The **"HttpResponse"** method allows assertions of every part of the HTTP response - body, headers, cookies, etc. For example if you add this line:
+The **"HttpResponse"** method allows assertions of every part of the HTTP response - body, headers, cookies, etc. For example, if you add this line:
 
 ```c#
 .ContainingHeader("InvalidHeader")
@@ -219,7 +219,7 @@ The **"HttpResponse"** method allows assertions of every part of the HTTP respon
 
 You will receive a nice little error message (as always):
 
-```
+```text
 When calling AccessDenied action in HomeController expected HTTP response headers to contain header with 'InvalidHeader' name, but such was not found.
 ```
 
@@ -227,6 +227,6 @@ Cool! :)
 
 ## Section summary
 
-Well, these were easier than the last section's test services. While the request testing is more suitable on other components, authentication plays big role in the actions' logic.
+Well, these were easier than the last section's test services. While the request testing is more suitable for other components, authentication plays a significant role in the actions' logic.
 
 If you followed the tutorial strictly, you should have reached the free trial version limitations of My Tested ASP.NET Core MVC. Let's take a break from the code and learn more about the [Licensing](/tutorial/licensing.html) of the testing framework.

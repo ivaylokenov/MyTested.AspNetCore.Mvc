@@ -1,15 +1,20 @@
 # Controllers
 
-In this section we will dive a bit deeper into controller testing. By understanding it, you will get familiar with the fundamentals of My Tested ASP.NET Core MVC and see how a lot of other components from a typical MVC web application are asserted in a similar manner. Of course we will use the classical AAA (Arrange, Act, Assert) approach.
+In this section we will dive a bit deeper into controller testing. By understanding it, you will get familiar with the fundamentals of My Tested ASP.NET Core MVC and see how other components from a typical MVC web application can be asserted in a similar manner. Of course, we will use the classical AAA (Arrange, Act, Assert) approach.
 
 ## Arrange
 
-Go to the **"ManageController"** again and analyse the **"ChangePassword"** action. You will notice that with invalid model state this action returns view result with the same model provided as a request parameter. Particularly, we want to test these lines of code:
+Go to the **"ManageController"** again and analyse the **"ChangePassword"** action. You will notice that with invalid model state this action returns view result with the same model provided as a request parameter:
 
 ```c#
-if (!ModelState.IsValid)
+public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
 {
-	return View(model);
+    if (!ModelState.IsValid)
+    {
+        return View(model);
+    }
+	
+	// action code skipped for brevity
 }
 ``` 
 
@@ -35,7 +40,7 @@ MyController<ManageController>
     .WithControllerContext(controllerContext)
 ```
 
-Since the testing framework prepares for you everything it can before running the actual test case by using the test service provider, you may skip the instantiation and use the other overload of the method using an action delegate:
+The testing framework prepares for you every detail of the tested component before running the actual test case by using the test service provider. Therefore, you may skip the instantiation and use the other overload of the method using an action delegate:
 
 ```c#
 MyController<ManageController>
@@ -53,13 +58,13 @@ MyController<ManageController>
         .AddModelError("TestError", "TestErrorMessage"))
 ```
 
-As you can see the **"WithSetup"** method will come in handy wherever the fluent API does not provide a specific arrange method. As a side note - My Tested ASP.NET Core MVC provides an easy way to set up the model state dictionary, but we will cover it later in this tutorial.
+The **"WithSetup"** method will come in handy wherever the fluent API does not provide a specific arrange method. As a side note - My Tested ASP.NET Core MVC provides an easy way to set up the model state dictionary, but we will cover it later in this tutorial.
 
-Each one of these three ways for arranging the controller is fine but stick with the third option for now.
+Each one of these three ways for arranging the controller is fine, but we will stick with the third option.
 
 ## Act
 
-We need to act! In other words we need to call the action method. We do not need an actual request model to test the desired logic, so let's pass a null value as a parameter. Add this line to the test:
+We need to act! In other words, we need to call the action method. We do not need an actual request model to test the desired logic, so let's pass a null value as a parameter. Add this line to the test:
 
 ```c#
 .Calling(c => c.ChangePassword(null))
@@ -82,9 +87,9 @@ The final part of our test is asserting the action result. You should know how t
 .View();
 ```
 
-We now need to test the returned model. It should be the same as the one provided through the action parameter. If you look through the intellisense after the **"View"** call, you will not find anything related to models. The reason simple - model testing is available in a separate package which we will install in the next section.
+We now need to test the returned model. It should be the same as the one provided through the action parameter. If you look through the IntelliSense after the **"View"** call, you will not find anything related to models. The reason simple - model testing is available in a separate package which we will install in the next section.
 
-For now we will use the tools we already have imported in our test project. Introducing the magical **"ShouldPassForThe<TWhateverYouLike>"** method! I know developers do not like magic code but this one is cool, I promise! :)
+For now, let's use the tools we have already imported in our test project. Introducing the magical **"ShouldPassForThe<TWhateverYouLike>"** method! I know developers do not like magic code but this one is cool, I promise! :)
 
 Add the following lines to the test:
 
@@ -93,11 +98,11 @@ Add the following lines to the test:
 .ShouldPassForThe<ViewResult>(viewResult => Assert.Null(viewResult.Model));
 ```
 
-Now run the test and we are ready! :)
+Now rebuild the project, then run the test, and our work here is done - a successful pass! :)
 
 But before moving on with our lives, let's explain these two lines.
 
-First - the **"AndAlso"** method. It is just there for better readability and expressiveness. It is available on various places in the fluent API but it actually does nothing most of the time. You may remove it from your code now, then recompile it and run the test again and it will still pass. Of course, it is up to you whether or not to use the **"AndAlso"** method but admit it - it is a nice little addition to the test! :)
+First - the **"AndAlso"** method. It's there just for better readability and expressiveness. It is available on various places in the fluent API but it actually does nothing most of the time. You may remove it from your code now, then recompile it and run the test again and it will still pass. Of course, it is up to you whether or not to use the **"AndAlso"** method but admit it - it's a nice little addition to the test! :)
 
 Second - the magical **"ShouldPassForThe<ViewResult>"** call. To make sure it works correctly, let's change the **"Assert.Null"** to **"Assert.NotNull"** and run the test. It should fail loud and clear with the original **"xUnit"** message:
 
@@ -105,7 +110,7 @@ Second - the magical **"ShouldPassForThe<ViewResult>"** call. To make sure it wo
 Assert.NotNull() Failure
 ```
 
-Return back the **"Null"** call so that the test passes again. The **"ShouldPassForThe<TComponent>"** method obviously works. What is interesting here is that the generic parameter **"TComponent"** can be anything you like, as long it is recognised by My Tested ASP.NET Core MVC. Seriously, add the following to the test and run the test:
+Return the **"Null"** assertion call so that the test passes again. The **"ShouldPassForThe<TComponent>"** method obviously works. What is interesting here is that the generic parameter **"TComponent"** can be anything you like, as long it is recognized by My Tested ASP.NET Core MVC. Seriously, add the following to the test and run the test:
 
 ```c#
 .ShouldReturn()
@@ -120,11 +125,11 @@ Return back the **"Null"** call so that the test passes again. The **"ShouldPass
 .ShouldPassForThe<ViewResult>(viewResult => Assert.Null(viewResult.Model));
 ```
 
-Of course the first **"ShouldPassForThe"** call does not make any sense at all but it proves that everything related to the test can be asserted by using the method. You may even put a break point into the action delegate and debug it, if you like.
+Of course, the first **"ShouldPassForThe"** call does not make any sense at all but it proves that everything related to the test can be asserted by using the method. You may even put a break point into the action delegate and debug it if you like.
 
-I guess that you already know it, but if you put an invalid and unrecognisable type for the generic parameter, for example **"XunitProjectAssembly"**, you will receive an exception:
+I guess you already know it, but if you put an invalid and unrecognizable type for the generic parameter. For example, using **"XunitProjectAssembly"** will throw an exception:
 
-```
+```text
 XunitProjectAssembly could not be resolved for the 'ShouldPassForThe<TComponent>' method call.
 ```
 
@@ -175,4 +180,4 @@ Our work here is done (for now)! :)
 
 ## Section summary
 
-In this section we saw the AAA approach collaborating gracefully with My Tested ASP.NET Core MVC. However, I know you remember reading earlier about an easier way of arranging the model state and more fluent testing options for the view result models. You can learn about them in the [Models](/tutorial/models.html) section!
+In this section we saw the AAA approach collaborating gracefully with My Tested ASP.NET Core MVC. However, I know you remember reading earlier about an easier way of arranging the model state and additional fluent testing options for the view result models. You can learn about them in the [Models](/tutorial/models.html) section!

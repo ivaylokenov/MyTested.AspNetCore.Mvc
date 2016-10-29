@@ -45,7 +45,7 @@ return cartId;
 // code skipped for brevity
 ```
 
-Let's assert that if the session is initially empty, an entry with **"Session"** key should be added after the action invocation. Go to the **"ShoppingCartControllerTest"** class and add the following test:
+Let's assert that if the session is initially empty, an entry with **"Session"** key should be added after the action invocation. Go to the **"ShoppingCartControllerTest"** class and insert the following test:
 
 ```c#
 [Fact]
@@ -201,11 +201,11 @@ public void IndexShouldNotUseCacheIfOptionsDisableIt()
 
 Unfortunately, the **"NoMemoryCache"** call will not work:
 
-```c#
+```text
 When calling Index action in HomeController expected to have memory cache with no entries, but in fact it had some.
 ```
 
-Unfortunately with straightforward action debugging we may not see what exactly is going on because the **"CacheDbResults"** is indeed **"false"**. The reason of the error lies in [Entity Framework Core's code](https://github.com/aspnet/EntityFramework/blob/f9adcb64fdf668163377beb14251e67d17f60fa0/src/Microsoft.EntityFrameworkCore/EntityFrameworkServiceCollectionExtensions.cs#L150). It uses the same memory cache service as the web application and guess what! It caches the database query call. But how to debug such issues?
+With straightforward action debugging we may not see what exactly is going on because the **"CacheDbResults"** is indeed **"false"**. The reason of the error lies in [Entity Framework Core's code](https://github.com/aspnet/EntityFramework/blob/f9adcb64fdf668163377beb14251e67d17f60fa0/src/Microsoft.EntityFrameworkCore/EntityFrameworkServiceCollectionExtensions.cs#L150). It uses the same memory cache service as the web application and guess what! It caches the database query call. But how to debug such issues?
 
 Easy! Add these lines:
 
@@ -223,7 +223,7 @@ Easy! Add these lines:
 
 Running the debugger will allow you to examine the actual values in the cache.
 
-<img src="/images/tutorial/nomemorycachedebug.jpn" alt="Debugging memory cache" />
+<img src="/images/tutorial/nomemorycachedebug.jpg" alt="Debugging memory cache" />
 
 One of the possible fixes is:
 
@@ -235,7 +235,7 @@ One of the possible fixes is:
 	.GetRequiredService<IMemoryCache>().Get("topselling")));
 ```
 
-You may use custom mocks too but it is not necessary.
+You may use custom mocks too, but it is not necessary.
 
 Next, we should assert that with the **"CacheDbResults"** set to **"true"**, we should have saved cache entries from the database query:
 
@@ -286,8 +286,8 @@ public void IndexShouldGetAlbumsFromCacheIfEntryExists()
         .Passing(albums => albums.Count == 6);
 ```
 
-This way we validate entries are retrieved from cache and from the actual database (which is empty for this particular test).
+This way we validate that the entries are retrieved from the cache and not from the actual database (which is empty for this particular test).
 
 ## Section summary
 
-Session and cache are fun. By using the **"WithSession"** and **"WithMemoryCache"** methods, you prepare the values to be available during the action call. On the other side, the **"ShouldHave().MemoryCache()"** and **"ShouldHave().Session()"** extensions allows you to assert their values after the action call. The same principle applies to the [ViewBag, ViewData & TempData](/tutorial/viewbagviewdatatempdata.html).
+Session and cache are fun. By using the **"WithSession"** and **"WithMemoryCache"** methods, you prepare the values to be available during the action call. On the other side, the **"ShouldHave().MemoryCache()"** and **"ShouldHave().Session()"** extensions allows you to assert their values after the invocation. The same principle applies to the [ViewBag, ViewData & TempData](/tutorial/viewbagviewdatatempdata.html).
