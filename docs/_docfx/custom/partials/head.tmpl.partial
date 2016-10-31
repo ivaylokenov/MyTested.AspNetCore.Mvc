@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width">
   <meta name="title" content="{{#title}}{{title}}{{/title}}{{^title}}{{>partials/title}}{{/title}} {{#_appTitle}}| {{_appTitle}} {{/_appTitle}}">
   <meta name="generator" content="docfx {{_docfxVersion}}">
-  {% seo %}
   {{#_description}}<meta name="description" content="{{_description}}">{{/_description}}
   <link rel="shortcut icon" href="{{_rel}}favicon.ico">
   <link rel="stylesheet" href="{{_rel}}styles/docfx.vendor.css">
@@ -13,5 +12,18 @@
   <link rel="stylesheet" href="{{_rel}}styles/main.css">
   <meta property="docfx:navrel" content="{{_navRel}}">
   <meta property="docfx:tocrel" content="{{_tocRel}}">
-  {{#_enableSearch}}<meta property="docfx:rel" content="{{_rel}}">{{/_enableSearch}}
+  <meta property="docfx:rel" content="{{_rel}}">
+  <meta property="og:title" content="{{#metaTitle}}{{metaTitle}}{{/metaTitle}}{{^metaTitle}}Flexible and asynchronous testing framework for ASP.NET Core MVC{{/metaTitle}}">
+  <meta property="og:site_name" content="My Tested ASP.NET Core MVC Docs">
+  <meta property="og:url" content="http://docs.mytestedasp.net/">
+  <meta property="og:description" content="A fluent unit testing library for ASP.NET Core MVC">
+  <meta property="og:image" content="https://mytestedasp.net/Content/Images/logosocial.jpg">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
+  <meta property="twitter:card" content="summary">
+  <meta property="twitter:title" content="{{#metaTitle}}{{metaTitle}}{{/metaTitle}}{{^metaTitle}}Flexible and asynchronous testing framework for ASP.NET Core MVC{{/metaTitle}}">
+  <meta property="twitter:description" content="A fluent unit testing library for ASP.NET Core MVC">
+  <meta property="twitter:creator" content="@MyTestedASPNET">
+  <meta property="twitter:url" content="https://mytestedasp.net/">
+  <meta property="twitter:image" content="https://mytestedasp.net/Content/Images/logosocial.jpg">
 </head>

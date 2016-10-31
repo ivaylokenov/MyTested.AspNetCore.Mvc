@@ -13,4 +13,8 @@ $(function() {
 			$('#toc.toc').show();
 		}
 	}, 200);
+	
+	if ($(window).width() < 780) {
+		$('a.navbar-brand').text('MY TESTED MVC DOCS');
+	}
 })

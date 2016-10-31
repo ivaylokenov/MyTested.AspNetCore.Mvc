@@ -19,10 +19,6 @@
 	font-size: 1.6em;
 }
 
-.content.wrap > h1 {
-	margin-top: -175px;
-}
-
 .navbar-brand:hover {
 	color: #eee !important;
 }
@@ -127,13 +123,35 @@ footer a:hover {
 	display: none;
 }
 
+.content.wrap > h1 {
+	margin-top: -100px;
+}
+
 @media only screen and (max-width: 768px) {
-  .hero {
-    height: 500px;
-    margin-top: 0px;
-  }
-  .hero .button {
-    display: block;
-    margin: 12px;
-  }
+	.hero {
+		height: 500px;
+		margin-top: 0px;
+	}
+	.hero .button {
+		display: block;
+		margin: 12px;
+	}
+	.hero .text {
+		font-size: 36px;
+	}
+	.breadcrumb {
+		text-align: center;
+	}
+}
+
+@media only screen and (max-width: 800px) {
+	.nav.level1.navbar-nav {
+		float: none !important;
+	}
+}
+
+@media only screen and (min-width: 769px) {
+	.content.wrap > h1 {
+		margin-top: -160px;
+	}
 }

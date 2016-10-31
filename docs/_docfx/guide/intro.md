@@ -1,6 +1,4 @@
-# Welcome to the Testing Guide
-
-Here you will find My Tested ASP.NET Core MVC user-friendly descriptions and examples for all available assertion APIs.
+# Testing Guide
 
 <strong class="article-contents">The testing guide is still work in progress...</strong>
 

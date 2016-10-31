@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>View Components </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="View Components ">
+    <meta name="generator" content="docfx 2.6.3.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    <meta property="docfx:rel" content="../">
+    <meta property="og:title" content="Flexible and asynchronous testing framework for ASP.NET Core MVC">
+    <meta property="og:site_name" content="My Tested ASP.NET Core MVC Docs">
+    <meta property="og:url" content="http://docs.mytestedasp.net/">
+    <meta property="og:description" content="A fluent unit testing library for ASP.NET Core MVC">
+    <meta property="og:image" content="https://mytestedasp.net/Content/Images/logosocial.jpg">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_US">
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:title" content="Flexible and asynchronous testing framework for ASP.NET Core MVC">
+    <meta property="twitter:description" content="A fluent unit testing library for ASP.NET Core MVC">
+    <meta property="twitter:creator" content="@MyTestedASPNET">
+    <meta property="twitter:url" content="https://mytestedasp.net/">
+    <meta property="twitter:image" content="https://mytestedasp.net/Content/Images/logosocial.jpg">
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../index.html">
+                MY TESTED ASP.NET CORE MVC DOCS
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+              <h1 id="view-components" sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="1" sourceendlinenumber="1">View Components</h1>
+              
+<p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="3" sourceendlinenumber="3">In this section we are going to stop asserting controllers (finally) and concentrate on <strong>&quot;View Components&quot;</strong>. Typical MVC application written with separation of concerns in mind should have plenty of them. Before we begin, we need the <strong>&quot;MyTested.AspNetCore.Mvc.ViewComponents&quot;</strong> package:</p>
+<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="5" sourceendlinenumber="25"><code class="lang-json">&quot;dependencies&quot;: {
+  &quot;dotnet-test-xunit&quot;: &quot;2.2.0-*&quot;,
+  &quot;xunit&quot;: &quot;2.2.0-*&quot;,
+  &quot;Moq&quot;: &quot;4.6.38-*&quot;,
+  &quot;MyTested.AspNetCore.Mvc.Authentication&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.Caching&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.Controllers&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.DependencyInjection&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.EntityFrameworkCore&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.Http&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.ModelState&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.Models&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.Options&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.Session&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.ViewActionResults&quot;: &quot;1.0.0&quot;,
+  &quot;MyTested.AspNetCore.Mvc.ViewComponents&quot;: &quot;1.0.0&quot;, // &lt;---
+  &quot;MyTested.AspNetCore.Mvc.ViewData&quot;: &quot;1.0.0&quot;,
+  &quot;MusicStore&quot;: &quot;*&quot;
+},
+</code></pre><p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="27" sourceendlinenumber="27">Then we need to create a <strong>&quot;ViewComponents&quot;</strong> folder at the root of our test project and add <strong>&quot;CartSummaryComponentTest&quot;</strong> class in it. We are going to assert the <strong>&quot;CartSummaryComponent&quot;</strong> component.</p>
+<h2 id="arrange" sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="29" sourceendlinenumber="29">Arrange</h2>
+<p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="31" sourceendlinenumber="31">Arranging the test is done in the same manner as it is with controllers. This is the code we want to test:</p>
+<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="33" sourceendlinenumber="47"><code class="lang-c#">private MusicStoreContext DbContext { get; }
+
+public async Task&lt;IViewComponentResult&gt; InvokeAsync()
+{
+    var cart = ShoppingCart.GetCart(DbContext, HttpContext);
+
+    var cartItems = await cart.GetCartAlbumTitles();
+
+    ViewBag.CartCount = cartItems.Count;
+    ViewBag.CartSummary = string.Join(&quot;\n&quot;, cartItems.Distinct());
+
+    return View();
+}
+</code></pre><p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="49" sourceendlinenumber="49">We need session cart ID and items in the database for the shopping cart. Let&#39;s create a helper method for generating the entities:</p>
+<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="51" sourceendlinenumber="66"><code class="lang-c#">private static IEnumerable&lt;CartItem&gt; GetCartItems(string cartId, string albumTitle)
+{
+    var album = new Album { AlbumId = 1, Title = albumTitle };
+
+    return Enumerable
+        .Range(1, 10)
+        .Select(n =&gt; new CartItem
+        {
+            AlbumId = 1,
+            Album = album,
+            Count = 1,
+            CartId = cartId,
+        });
+}
+</code></pre><p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="68" sourceendlinenumber="68">Starting the test is done from the <strong>&quot;MyViewComponent&quot;</strong> test:</p>
+<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="70" sourceendlinenumber="75"><code class="lang-c#">[Fact]
+public void InvokingTheComponentShouldReturnCorrectCartItems()
+    =&gt; MyViewComponent&lt;CartSummaryComponent&gt;
+        .Instance()
+</code></pre><p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="77" sourceendlinenumber="77">We need to add a cart ID in the session state:</p>
+<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="79" sourceendlinenumber="84"><code class="lang-c#">MyViewComponent&lt;CartSummaryComponent&gt;
+    .Instance()
+    .WithSession(session =&gt; session // &lt;---
+        .WithEntry(&quot;Session&quot;, &quot;TestCart&quot;))
+</code></pre><p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="86" sourceendlinenumber="86">And database entities:</p>
+<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="88" sourceendlinenumber="96"><code class="lang-c#">MyViewComponent&lt;CartSummaryComponent&gt;
+    .Instance()
+    .WithSession(session =&gt; session
+        .WithEntry(&quot;Session&quot;, &quot;TestCart&quot;))
+    .WithDbContext(db =&gt; db // &lt;---
+        .WithEntities(entities =&gt; entities
+            .AddRange(GetCartItems(&quot;TestCart&quot;, &quot;TestAlbum&quot;))))
+</code></pre><h2 id="act" sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="98" sourceendlinenumber="98">Act</h2>
+<p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="100" sourceendlinenumber="100">After arranging all objects we need for the view component, we have to invoke it by using the <strong>&quot;InvokedWith&quot;</strong> method:</p>
+<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="102" sourceendlinenumber="111"><code class="lang-c#">MyViewComponent&lt;CartSummaryComponent&gt;
+    .Instance()
+    .WithSession(session =&gt; session
+        .WithEntry(&quot;Session&quot;, &quot;TestCart&quot;))
+    .WithDbContext(db =&gt; db
+        .WithEntities(entities =&gt; entities
+            .AddRange(GetCartItems(&quot;TestCart&quot;, &quot;TestAlbum&quot;))))
+    .InvokedWith(vc =&gt; vc.InvokeAsync()) // &lt;---
+</code></pre><h2 id="assert" sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="113" sourceendlinenumber="113">Assert</h2>
+<p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="115" sourceendlinenumber="115">Finally, we need to assert the <strong>&quot;ViewBag&quot;</strong> and the execution result. You already now how to do it:</p>
+<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="117" sourceendlinenumber="136"><code class="lang-c#">MyViewComponent&lt;CartSummaryComponent&gt;
+    .Instance()
+    .WithSession(session =&gt; session
+        .WithEntry(&quot;Session&quot;, &quot;TestCart&quot;))
+    .WithDbContext(db =&gt; db
+        .WithEntities(entities =&gt; entities
+            .AddRange(GetCartItems(&quot;TestCart&quot;, &quot;TestAlbum&quot;))))
+    .InvokedWith(vc =&gt; vc.InvokeAsync())
+    .ShouldHave() // &lt;---
+    .ViewBag(viewBag =&gt; viewBag
+        .ContainingEntries(new
+        {
+            CartCount = 10,
+            CartSummary = &quot;TestAlbum&quot;
+        }))
+    .AndAlso()
+    .ShouldReturn() // &lt;---
+    .View();
+</code></pre><p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="138" sourceendlinenumber="138">Rebuild the project and run the test to see it pass! :)</p>
+<p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="140" sourceendlinenumber="140">As with all tests with My Tested ASP.NET Core MVC, if you have and invalid value, you will receive a friendly error message. Change <strong>&quot;Session&quot;</strong> to <strong>&quot;Cache&quot;</strong> and see for yourself:</p>
+<pre sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="142" sourceendlinenumber="144"><code class="lang-text">When invoking CartSummaryComponent expected view bag to have entry with &#39;CartCount&#39; key and the provided value, but the value was different.
+</code></pre><h2 id="section-summary" sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="146" sourceendlinenumber="146">Section Summary</h2>
+<p sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="148" sourceendlinenumber="148">View component testing provides the same API methods as the controller one as long as they are applicable. You should be seeing the big picture of the library now. The next section is interesting - the good old <a href="/tutorial/routing.html" sourcefile="tutorial/viewcomponents.md" sourcestartlinenumber="148" sourceendlinenumber="148">Routing</a> testing!</p>
+
+            </article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/tutorial/docs/_docfx/tutorial/viewcomponents.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © 2015-2016 <strong><a href="http://mytestedasp.net">MyTestedASP.NET</a></strong>. All Rights Reserved. Generated by <strong><a href="http://dotnet.github.io/docfx/">DocFX</a></strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-51720358-4', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '884740311601716');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=884740311601716&ev=PageView&noscript=1"></noscript>  </body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Debugging Failed Tests </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Debugging Failed Tests ">
+    <meta name="generator" content="docfx 2.6.3.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    <meta property="docfx:rel" content="../">
+    <meta property="og:title" content="Flexible and asynchronous testing framework for ASP.NET Core MVC">
+    <meta property="og:site_name" content="My Tested ASP.NET Core MVC Docs">
+    <meta property="og:url" content="http://docs.mytestedasp.net/">
+    <meta property="og:description" content="A fluent unit testing library for ASP.NET Core MVC">
+    <meta property="og:image" content="https://mytestedasp.net/Content/Images/logosocial.jpg">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_US">
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:title" content="Flexible and asynchronous testing framework for ASP.NET Core MVC">
+    <meta property="twitter:description" content="A fluent unit testing library for ASP.NET Core MVC">
+    <meta property="twitter:creator" content="@MyTestedASPNET">
+    <meta property="twitter:url" content="https://mytestedasp.net/">
+    <meta property="twitter:image" content="https://mytestedasp.net/Content/Images/logosocial.jpg">
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../index.html">
+                MY TESTED ASP.NET CORE MVC DOCS
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+              <h1 id="debugging-failed-tests" sourcefile="tutorial/debugging.md" sourcestartlinenumber="1" sourceendlinenumber="1">Debugging Failed Tests</h1>
+              
+<p sourcefile="tutorial/debugging.md" sourcestartlinenumber="3" sourceendlinenumber="3">In this section we will learn how easy is to debug failing tests.</p>
+<h2 id="friendly-error-messages" sourcefile="tutorial/debugging.md" sourcestartlinenumber="5" sourceendlinenumber="5">Friendly error messages</h2>
+<p sourcefile="tutorial/debugging.md" sourcestartlinenumber="7" sourceendlinenumber="7">Let&#39;s see how nice and friendly error message My Tested ASP.NET Core MVC provides on a failed test. Go to the <strong>&quot;ManageControllerTest&quot;</strong> and change the redirect action:</p>
+<pre sourcefile="tutorial/debugging.md" sourcestartlinenumber="9" sourceendlinenumber="11"><code class="lang-c#">.ToAction(nameof(ManageController.LinkLogin))
+</code></pre><p sourcefile="tutorial/debugging.md" sourcestartlinenumber="13" sourceendlinenumber="13">Run the test, and you will see a detailed error message showing exactly what has failed:</p>
+<pre sourcefile="tutorial/debugging.md" sourcestartlinenumber="15" sourceendlinenumber="17"><code class="lang-text">When calling RemoveLogin action in ManageController expected redirect result to have &#39;LinkLogin&#39; action name, but instead received &#39;ManageLogins&#39;.
+</code></pre><p sourcefile="tutorial/debugging.md" sourcestartlinenumber="19" sourceendlinenumber="19">We can see in the above message that the redirect action is actually <strong>&quot;ManageLogins&quot;</strong> so let&#39;s return that value and try something else. Change the <strong>&quot;Message&quot;</strong> route value property to <strong>&quot;Error&quot;</strong>:</p>
+<pre sourcefile="tutorial/debugging.md" sourcestartlinenumber="21" sourceendlinenumber="24"><code class="lang-c#">.ToAction(nameof(ManageController.ManageLogins))
+.ContainingRouteValues(new { Error = ManageController.ManageMessageId.Error });
+</code></pre><p sourcefile="tutorial/debugging.md" sourcestartlinenumber="26" sourceendlinenumber="26">Run the test again, and you should see:</p>
+<pre sourcefile="tutorial/debugging.md" sourcestartlinenumber="28" sourceendlinenumber="30"><code class="lang-text">When calling RemoveLogin action in ManageController expected redirect result route values to have entry with &#39;Error&#39; key and the provided value, but such was not found.
+</code></pre><p sourcefile="tutorial/debugging.md" sourcestartlinenumber="32" sourceendlinenumber="32">The library tells us that there is no <strong>&quot;Error&quot;</strong> key in the redirect route value dictionary. Now bring back the <strong>&quot;Message&quot;</strong> key to make the test pass again.</p>
+<h2 id="debugging-the-failing-action" sourcefile="tutorial/debugging.md" sourcestartlinenumber="34" sourceendlinenumber="34">Debugging the failing action</h2>
+<p sourcefile="tutorial/debugging.md" sourcestartlinenumber="36" sourceendlinenumber="36">If the provided error messages are not enough to diagnose why the test fails, you can always use the good old C# debugger. Put a breakpoint in the action method:</p>
+<p sourcefile="tutorial/debugging.md" sourcestartlinenumber="38" sourceendlinenumber="38"><img src="/images/tutorial/actiondebugging.jpg" alt="Debugging actions"></p>
+<p sourcefile="tutorial/debugging.md" sourcestartlinenumber="40" sourceendlinenumber="40">Then click with the right mouse button on the failing test and select <strong>&quot;Debug Selected Tests&quot;</strong>:</p>
+<p sourcefile="tutorial/debugging.md" sourcestartlinenumber="42" sourceendlinenumber="42"><img src="/images/tutorial/debugselectedtests.jpg" alt="Debug through the test explorer"></p>
+<p sourcefile="tutorial/debugging.md" sourcestartlinenumber="44" sourceendlinenumber="44">You know the drill from here on! :)</p>
+<h2 id="section-summary" sourcefile="tutorial/debugging.md" sourcestartlinenumber="46" sourceendlinenumber="46">Section summary</h2>
+<p sourcefile="tutorial/debugging.md" sourcestartlinenumber="48" sourceendlinenumber="48">In this section we learned how helpful and developer-friendly is My Tested ASP.NET Core MVC with failed tests. Later in the tutorial we will also see how easy it is to debug with the <strong>&quot;ShouldPassFor&quot;</strong> method. But enough about failures and errors. Let&#39;s dive into the <a href="/tutorial/controllers.html" sourcefile="tutorial/debugging.md" sourcestartlinenumber="48" sourceendlinenumber="48">Controllers</a> testing!</p>
+
+            </article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/tutorial/docs/_docfx/tutorial/debugging.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © 2015-2016 <strong><a href="http://mytestedasp.net">MyTestedASP.NET</a></strong>. All Rights Reserved. Generated by <strong><a href="http://dotnet.github.io/docfx/">DocFX</a></strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-51720358-4', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '884740311601716');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=884740311601716&ev=PageView&noscript=1"></noscript>  </body>
+</html>

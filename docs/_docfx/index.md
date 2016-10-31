@@ -24,7 +24,7 @@ footer{
       <div class="col-md-6 text-center">
         <section>
           <h2>TUTORIAL</h2>
-          <p class="lead">Start from here to learn how to setup a your test project by using My Tested ASP.NET Core MVC</p>
+          <p class="lead">Start from here to learn how to setup a test project by using My Tested ASP.NET Core MVC</p>
         </section>
       </div>
       <div class="col-md-6 text-center">
