@@ -100,7 +100,7 @@ public void StoreManagerControllerShouldHaveCorrectAttributes()
         .ShouldHave()
         .Attributes(attributes => attributes
             .SpecifyingArea("Admin")
-            .PassingFor<AuthorizeAttribute>(authorize => authorize.Policy == "ManageStore")); // <---
+            .PassingFor<AuthorizeAttribute>(authorize => authorize.Policy == "ManageStore"));
 ```
 
 ## Section summary
