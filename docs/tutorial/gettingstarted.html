@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Getting Started </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Getting Started ">
+    <meta name="generator" content="docfx 2.6.3.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    <meta property="docfx:rel" content="../">
+    <meta property="og:title" content="Flexible and asynchronous testing framework for ASP.NET Core MVC">
+    <meta property="og:site_name" content="My Tested ASP.NET Core MVC Docs">
+    <meta property="og:url" content="http://docs.mytestedasp.net/">
+    <meta property="og:description" content="A fluent unit testing library for ASP.NET Core MVC">
+    <meta property="og:image" content="https://mytestedasp.net/Content/Images/logosocial.jpg">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_US">
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:title" content="Flexible and asynchronous testing framework for ASP.NET Core MVC">
+    <meta property="twitter:description" content="A fluent unit testing library for ASP.NET Core MVC">
+    <meta property="twitter:creator" content="@MyTestedASPNET">
+    <meta property="twitter:url" content="https://mytestedasp.net/">
+    <meta property="twitter:image" content="https://mytestedasp.net/Content/Images/logosocial.jpg">
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="../index.html">
+                MY TESTED ASP.NET CORE MVC DOCS
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+              <h1 id="getting-started" sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="1" sourceendlinenumber="1">Getting Started</h1>
+              
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="3" sourceendlinenumber="3">In this section we will learn how to configure My Tested ASP.NET Core MVC and get familiar with all the small issues we may encounter in the process.</p>
+<h2 id="prepare-test-assembly" sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="5" sourceendlinenumber="5">Prepare test assembly</h2>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="7" sourceendlinenumber="7">First things first - we need a test assembly! Open the <a href="https://raw.githubusercontent.com/ivaylokenov/MyTested.AspNetCore.Mvc/master/docs/files/MusicStore-Tutorial.zip" sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="7" sourceendlinenumber="7">Music Store solution</a>, add <strong>&quot;test&quot;</strong> folder and create a new .NET Core class library called <strong>&quot;MusicStore.Test&quot;</strong> in it.</p>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="9" sourceendlinenumber="9"><img src="/images/tutorial/createtestproject.jpg" alt="Create .NET Core test assembly"></p>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="11" sourceendlinenumber="11">Delete the auto-generated <strong>&quot;Class1.cs&quot;</strong> file and open the <strong>&quot;project.json&quot;</strong> to configure the test runner:</p>
+<ul sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="13" sourceendlinenumber="16">
+<li sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="13" sourceendlinenumber="13">Remove the version of the project. Test assemblies do not need it</li>
+<li sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="14" sourceendlinenumber="14">Add <strong>&quot;netcoreapp1.0&quot;</strong> and <strong>&quot;net451&quot;</strong> to the supported frameworks and remove the <strong>&quot;netstandard1.6&quot;</strong> one. We want to run our tests for both the full .NET Framework and the .NET Core</li>
+<li sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="15" sourceendlinenumber="15">Add <strong>&quot;dotnet-test-xunit&quot;</strong>, <strong>&quot;xunit&quot;</strong>, <strong>&quot;MyTested.AspNetCore.Mvc&quot;</strong> and <strong>&quot;MusicStore&quot;</strong> as dependencies</li>
+<li sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="16" sourceendlinenumber="16">Set <strong>&quot;xunit&quot;</strong> to be the <strong>&quot;testRunner&quot;</strong> of the project</li>
+</ul>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="18" sourceendlinenumber="18">Your <strong>&quot;project.json&quot;</strong> file should look like this:</p>
+<pre sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="20" sourceendlinenumber="44"><code class="lang-json">{
+  &quot;dependencies&quot;: {
+    &quot;dotnet-test-xunit&quot;: &quot;2.2.0-*&quot;,
+    &quot;xunit&quot;: &quot;2.2.0-*&quot;,
+    &quot;MyTested.AspNetCore.Mvc&quot;: &quot;1.0.0&quot;,
+    &quot;MusicStore&quot;: &quot;*&quot;
+  },
+
+  &quot;frameworks&quot;: {
+    &quot;netcoreapp1.0&quot;: {
+      &quot;imports&quot;: &quot;dotnet5.4&quot;,
+      &quot;dependencies&quot;: {
+        &quot;Microsoft.NETCore.App&quot;: {
+          &quot;version&quot;: &quot;1.0.1&quot;,
+          &quot;type&quot;: &quot;platform&quot;
+        }
+      }
+    },
+    &quot;net451&quot;: {}
+  },
+
+  &quot;testRunner&quot;: &quot;xunit&quot;
+}
+</code></pre><p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="46" sourceendlinenumber="46">You may need to change/update the versions of the listed packages with more recent ones.</p>
+<h2 id="our-first-test" sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="48" sourceendlinenumber="48">Our first test</h2>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="50" sourceendlinenumber="50">Now let&#39;s write our first unit test. We will validate the <strong>&quot;AddressAndPayment&quot;</strong> action in the <strong>&quot;CheckoutController&quot;</strong>. It is one of the simplest actions possible - returns a default view no matter the HTTP request.</p>
+<pre sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="52" sourceendlinenumber="61"><code class="lang-c#">// controller code skipped for brevity
+
+public IActionResult AddressAndPayment()
+{
+    return View();
+}
+
+// controller code skipped for brevity
+</code></pre><p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="63" sourceendlinenumber="63">Add a <strong>&quot;Controllers&quot;</strong> folder in the test assembly and create a <strong>&quot;CheckoutControllerTest&quot;</strong> class in it. Add these usings:</p>
+<pre sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="65" sourceendlinenumber="69"><code class="lang-c#">using MusicStore.Controllers;
+using MyTested.AspNetCore.Mvc;
+using Xunit;
+</code></pre><p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="71" sourceendlinenumber="71">The only thing we need to assert in the tested action is whether it returns a view, so let&#39;s write it:</p>
+<pre sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="73" sourceendlinenumber="81"><code class="lang-c#">[Fact]
+public void AddressAndPaymentShouldReturnDefaultView()
+    =&gt; MyMvc
+        .Controller&lt;CheckoutController&gt;()
+        .Calling(c =&gt; c.AddressAndPayment())
+        .ShouldReturn()
+        .View();
+</code></pre><p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="83" sourceendlinenumber="83">Note the static <strong>&quot;MyMvc&quot;</strong> class. It is the starting point of the fluent interface, but that depends on the installed packages in the test assembly. More details will be provided later in the tutorial.</p>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="85" sourceendlinenumber="85">Since My Tested ASP.NET Core MVC provides a fluent API, tests can be written with only a single statement. Therefore we can use expression-bodied functions (available in C# 6.0). Of course, if you prefer, you can always use the regular curly brackets, nobody is going to stop you from doing it (for now)! :)</p>
+<h2 id="teststartup-class" sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="87" sourceendlinenumber="87">&quot;TestStartup&quot; class</h2>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="89" sourceendlinenumber="89">Let&#39;s build the solution and run the test.</p>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="91" sourceendlinenumber="91"><img src="/images/tutorial/nostartuperror.jpg" alt="First unit test fails because of missing TestStartup class"></p>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="93" sourceendlinenumber="93">Surprise! The simplest test fails. This testing framework is a waste of time! :(</p>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="95" sourceendlinenumber="95">Joke! Don&#39;t leave yet! By default, My Tested ASP.NET Core MVC requires a <strong>&quot;TestStartup&quot;</strong> file at the root of the test assembly so let&#39;s add one. Write the following code in it:</p>
+<pre sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="97" sourceendlinenumber="110"><code class="lang-c#">namespace MusicStore.Test
+{
+    using Microsoft.AspNetCore.Hosting;
+
+    public class TestStartup : Startup
+    {
+        public TestStartup(IHostingEnvironment hostingEnvironment)
+            : base(hostingEnvironment)
+        {
+        }
+    }
+}
+</code></pre><p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="112" sourceendlinenumber="112">You may have noticed the constructor of the <strong>&quot;CheckoutController&quot;</strong>. It is not an empty one. My Tested ASP.NET Core MVC uses the registered services from the <strong>&quot;TestStartup&quot;</strong> class to resolve all dependencies and instantiate the controller. We will get into more details about the test service provider later in this tutorial.</p>
+<h2 id="web-configuration" sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="114" sourceendlinenumber="114">Web configuration</h2>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="116" sourceendlinenumber="116">Now run the test again.</p>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="118" sourceendlinenumber="118"><img src="/images/tutorial/configjsonerror.jpg" alt="First unit test fails because of missing config.json"></p>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="120" sourceendlinenumber="120">You were expecting that, right? You should not be surprised after the first fail at all... :(</p>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="122" sourceendlinenumber="122">Still here? Good! Now repeat after me and then everything will be explained to you (it&#39;s a promise)!</p>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="124" sourceendlinenumber="124">Go to the <strong>&quot;MusicStore&quot;</strong> project root, copy the <strong>&quot;config.json&quot;</strong> file and paste it at the root of the test project. </p>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="126" sourceendlinenumber="126">Go to the <strong>&quot;project.json&quot;</strong> file at the test project and add the copied <strong>&quot;config.json&quot;</strong> file to the build output:</p>
+<pre sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="128" sourceendlinenumber="134"><code class="lang-json">&quot;buildOptions&quot;: {
+  &quot;copyToOutput&quot;: [
+    &quot;config.json&quot;
+  ]
+},
+</code></pre><p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="136" sourceendlinenumber="136"><img src="/images/tutorial/configjson.jpg" alt="Copied config.json from the web project"></p>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="138" sourceendlinenumber="138">You may be a bit worried about the connection string in the <strong>&quot;config.json&quot;</strong> file. I would be if I didn&#39;t know it was not needed at all. You may change its value to whatever you like so let&#39;s make it &quot;Test Connection&quot;. If you want to feel even safer, you may change all the other options too. It&#39;s up to you.</p>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="140" sourceendlinenumber="140">Your <strong>&quot;config.json&quot;</strong> file should look like this:</p>
+<pre sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="142" sourceendlinenumber="156"><code class="lang-json">{
+  &quot;AppSettings&quot;: {
+    &quot;SiteTitle&quot;: &quot;ASP.NET MVC Music Store&quot;,
+    &quot;CacheDbResults&quot;: true
+  },
+  &quot;DefaultAdminUsername&quot;: &quot;Administrator@test.com&quot;,
+  &quot;DefaultAdminPassword&quot;: &quot;YouShouldChangeThisPassword1!&quot;,
+  &quot;Data&quot;: {
+    &quot;DefaultConnection&quot;: {
+      &quot;ConnectionString&quot;: &quot;Test Connection&quot;
+    }
+  }
+}
+</code></pre><p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="158" sourceendlinenumber="158">Now run the test again in Visual Studio and... oh, miracle, it passes! :)</p>
+<h2 id="multiple-frameworks" sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="160" sourceendlinenumber="160">Multiple frameworks</h2>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="162" sourceendlinenumber="162">Don&#39;t be too happy yet as there is a (not-so) small problem here. Visual Studio runs the discovered tests only for the first targeted framework, which in our case is <strong>&quot;netcoreapp1.0&quot;</strong>. But how to test for the other one - <strong>&quot;net451&quot;</strong>?</p>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="164" sourceendlinenumber="164">Go to the <strong>&quot;MusicStore.Test&quot;</strong> project folder and open a console terminal there. The easiest way is pressing &quot;SHIFT + Right Mouse Button&quot; somewhere in the window and then clicking &quot;Open command window here&quot;.</p>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="166" sourceendlinenumber="166"><img src="/images/tutorial/terminal.jpg" alt="Console terminal at the root of the test project"></p>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="168" sourceendlinenumber="168">Type <strong>&quot;dotnet test&quot;</strong> and hit <strong>&quot;Enter</strong>&quot;.</p>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="170" sourceendlinenumber="170"><img src="/images/tutorial/net451fail.jpg" alt=".NET Framework test fails"></p>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="172" sourceendlinenumber="172">Oh, well... This does not look good... Fail again! Why are you even doing this tutorial, you may wonder? :(</p>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="174" sourceendlinenumber="174">If you still decide to stick around - .NET Core runs our test fine but the full .NET framework fails because it cannot load correctly all the plugin dependencies My Tested ASP.NET Core MVC needs (more information available <a href="/guide/plugins.html" sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="174" sourceendlinenumber="174">HERE</a>). </p>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="176" sourceendlinenumber="176">Do not worry, this one is easy. Go to the test assembly&#39;s <strong>&quot;project.json&quot;</strong> file and set the <strong>&quot;preserveCompilationContext&quot;</strong> option under <strong>&quot;buildOptions&quot;</strong> to <strong>&quot;true&quot;</strong>:</p>
+<pre sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="178" sourceendlinenumber="185"><code class="lang-json">&quot;buildOptions&quot;: {
+  &quot;preserveCompilationContext&quot;: true,
+  &quot;copyToOutput&quot;: [
+    &quot;config.json&quot;
+  ]
+},
+</code></pre><p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="187" sourceendlinenumber="187">Go back to the console terminal and run <strong>&quot;dotnet test&quot;</strong> again.</p>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="189" sourceendlinenumber="189"><img src="/images/tutorial/firsttestpass.jpg" alt="First test passes"></p>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="191" sourceendlinenumber="191">Oh, miracles! The test passes correctly without any big and ugly errors! Oh, yeah, do you feel the happiness? This library is DA BOMB!!! :) </p>
+<h2 id="understanding-the-details" sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="193" sourceendlinenumber="193">Understanding the details</h2>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="195" sourceendlinenumber="195">OK, back to that promise - the detailed explanation for all the different fails.</p>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="197" sourceendlinenumber="197"><strong>Basically three things happened.</strong></p>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="199" sourceendlinenumber="199"><strong>First</strong>, My Tested ASP.NET Core MVC needs to resolve the services required by the different components in your web application - controllers, view components, etc. By default, the testing framework is configured to need a <strong>&quot;TestStartup&quot;</strong> class at the root of the test project from where it prepares the global service provider. For this reason, we got an exception telling us we need to add the <strong>&quot;TestStartup&quot;</strong> class. Remember:</p>
+<ul sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="201" sourceendlinenumber="202">
+<li sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="201" sourceendlinenumber="201">Each test project requires separate <strong>&quot;Startup&quot;</strong> class and bootstraps a separate test application and service provider. You may run different configurations in different test assemblies. </li>
+<li sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="202" sourceendlinenumber="202">Each test runs in a scoped service lifetime - during a test all scoped services will be resolved by using the same instances and for the next test, other instances will be provided. My Tested ASP.NET Core MVC uses this nice little feature to run smooth and autonomous tests for storage providers like the <strong>&quot;DbContext&quot;</strong>, <strong>&quot;IMemoryCache&quot;</strong>, <strong>&quot;ViewDataDictionary&quot;</strong> and many others but more on that later in the tutorial.</li>
+</ul>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="204" sourceendlinenumber="204">Besides the default <strong>&quot;TestStartup&quot;</strong> configuration there are two other options the developer can use - manual fluent configuration and per test setup without any globally registered services. More information can be found <a href="/guide/startuptypes.html" sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="204" sourceendlinenumber="204">HERE</a>.</p>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="206" sourceendlinenumber="206"><strong>Second</strong>, the test failed because we did not have the required <strong>&quot;config.json&quot;</strong> file. If you take a look at the <strong>&quot;Startup&quot;</strong> file in the web project, you may see that the constructor of the class has the following lines of code:</p>
+<pre sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="208" sourceendlinenumber="212"><code class="lang-c#">var builder = new ConfigurationBuilder()
+    .SetBasePath(hostingEnvironment.ContentRootPath)
+    .AddJsonFile(&quot;config.json&quot;)
+</code></pre><p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="214" sourceendlinenumber="214">The JSON file is not optional, and since we inherit from the original web <strong>&quot;Startup&quot;</strong>, our <strong>&quot;TestStartup&quot;</strong> class runs the same code thus requiring the <strong>&quot;config.json&quot;</strong> file to be present. (Un)fortunately, the base project directory will be the output directory of the test project, and the test runner will search for the file there. We may make the <strong>&quot;config.json&quot;</strong> optional, but it may lead to unexpected behavior and exceptions in our web application, so our best option here is to copy the same file into the test project and change all important values with dummy ones. Copy-pasting is not a good practice but letting the tests touch and read the original application configuration values like database connection strings, security passwords, and potentially others is even worse. Additionally, only copying the file is not enough for it to end up in the output directory, so we need to add it explicitly in the test assembly&#39;s <strong>&quot;project.json&quot;</strong> configuration.</p>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="216" sourceendlinenumber="216"><strong>Third</strong>, we noticed Visual Studio does not run the discovered tests for all specified frameworks, so we went to the console and tried running them there. Unfortunately, the test failed for the <strong>&quot;net451&quot;</strong> framework. The reason is simple. The full framework does not save and store our project references and dependencies, so all the required test plugin classes could not be loaded. By setting the <strong>&quot;preserveCompilationContext&quot;</strong> option to <strong>&quot;true&quot;</strong> the compiler will store the dependencies information into a JSON file from where later during runtime it can be read successfully.</p>
+<h2 id="error-messages" sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="218" sourceendlinenumber="218">Error messages</h2>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="220" sourceendlinenumber="220">To finish this section let&#39;s make the test fail because of an invalid assertion just to see what happens. Instead of testing for <strong>&quot;View&quot;</strong>, make it assert for any other action result. <strong>&quot;BadRequest&quot;</strong>, for example:</p>
+<pre sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="222" sourceendlinenumber="230"><code class="lang-c#">[Fact]
+public void AddressAndPaymentShouldReturnDefaultView()
+    =&gt; MyController&lt;CheckoutController&gt;
+        .Instance()
+        .Calling(c =&gt; c.AddressAndPayment())
+        .ShouldReturn()
+        .BadRequest();
+</code></pre><p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="232" sourceendlinenumber="232">Run the test, and you will see a nice descriptive error message from My Tested ASP.NET Core MVC:</p>
+<pre sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="234" sourceendlinenumber="236"><code class="lang-text">When calling AddressAndPayment action in CheckoutController expected result to be BadRequestResult, but instead received ViewResult.
+</code></pre><p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="238" sourceendlinenumber="238">Of course, you should undo the change and return the <strong>&quot;View&quot;</strong> call (unless you want a failing test during the whole tutorial but that&#39;s up to you again). :)</p>
+<h2 id="section-summary" sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="240" sourceendlinenumber="240">Section summary</h2>
+<p sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="242" sourceendlinenumber="242">Well, all is well that ends well! While the <strong>&quot;Getting Started&quot;</strong> section of this tutorial may feel a bit &quot;KABOOM&quot;-ish, it covers all the common failures and problems you may encounter while starting to use My Tested ASP.NET Core MVC. From now on it is all unicorns and rainbows. Go to the <a href="/tutorial/packages.html" sourcefile="tutorial/gettingstarted.md" sourcestartlinenumber="242" sourceendlinenumber="242">Packages</a> section and see for yourself! :)</p>
+
+            </article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/tutorial/docs/_docfx/tutorial/gettingstarted.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © 2015-2016 <strong><a href="http://mytestedasp.net">MyTestedASP.NET</a></strong>. All Rights Reserved. Generated by <strong><a href="http://dotnet.github.io/docfx/">DocFX</a></strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-51720358-4', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '884740311601716');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=884740311601716&ev=PageView&noscript=1"></noscript>  </body>
+</html>

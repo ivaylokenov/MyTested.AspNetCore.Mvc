@@ -4,4 +4,4 @@
 
 In order to see more details about the problem, run the test in `Debug` mode and analyse the message of the `InnerException`.
 
-<img src="/images/troubleshoot/typeinitexception.jpg" />
+<img src="/images/troubleshoot/typeinitexception.jpg" alt="Debugging Type Initializer Exception" />

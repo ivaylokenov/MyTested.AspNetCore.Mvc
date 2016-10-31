@@ -7,6 +7,7 @@
             "**/**project.json"
           ],
           "exclude": [
+			"**/MyTested.AspNetCore.Mvc.Lite/**",
             "**/obj/**",
             "**/bin/**",
             "./**"
