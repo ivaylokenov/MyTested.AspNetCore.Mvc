@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.ActionResults.View
 {
+    using System;
     using System.Collections.Generic;
     using System.Net;
     using Base;
@@ -44,6 +45,7 @@
         /// </summary>
         /// <param name="viewEngine">View engine of type <see cref="IViewEngine"/>.</param>
         /// <returns>The same <see cref="IAndViewComponentTestBuilder"/>.</returns>
+        [Obsolete("The ViewEngine property is unused and will be removed in the next major version of ASP.NET Core MVC.")]
         IAndViewComponentTestBuilder WithViewEngine(IViewEngine viewEngine);
 
         /// <summary>
@@ -51,6 +53,7 @@
         /// </summary>
         /// <typeparam name="TViewEngine">View engine of type <see cref="IViewEngine"/>.</typeparam>
         /// <returns>The same <see cref="IAndViewComponentTestBuilder"/>.</returns>
+        [Obsolete("The ViewEngine property is unused and will be removed in the next major version of ASP.NET Core MVC.")]
         IAndViewComponentTestBuilder WithViewEngineOfType<TViewEngine>()
             where TViewEngine : IViewEngine;
 

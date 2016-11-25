@@ -85,7 +85,7 @@
                 .WithDbContext(db => db
                     .WithEntities(entities => entities
                         .AddRange(CreateTestAlbums(itemPrice: 10))))
-                .Calling(c => c.AddToCart(albumId))
+                .Calling(c => c.AddToCart(albumId, CancellationToken.None))
                 .ShouldReturn()
                 .Redirect()
                 .To<ShoppingCartController>(c => c.Index())

@@ -1,7 +1,7 @@
 ﻿{
   "title": "MyTested.AspNetCore.Mvc.Abstractions",
   "description": "My Tested ASP.NET Core MVC common abstractions and interfaces.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "authors": [ "Ivaylo Kenov" ],
   "copyright": "2015-2016 Ivaylo Kenov",
   "packOptions": {
@@ -28,11 +28,11 @@
   },
 
   "dependencies": {
-    "Microsoft.Extensions.Configuration.Json": "1.0.0",
-    "Microsoft.AspNetCore.Mvc.Core": "1.0.1",
-    "Microsoft.AspNetCore.TestHost": "1.0.0",
-    "MyTested.AspNetCore.Mvc.Configuration": "1.0.0",
-    "MyTested.AspNetCore.Mvc.Licensing": "1.0.0"
+    "Microsoft.Extensions.Configuration.Json": "1.1.0",
+    "Microsoft.AspNetCore.Mvc.Core": "1.1.0",
+    "Microsoft.AspNetCore.TestHost": "1.1.0",
+    "MyTested.AspNetCore.Mvc.Configuration": "1.1.0",
+    "MyTested.AspNetCore.Mvc.Licensing": "1.1.0"
   },
 
   "frameworks": {

@@ -19,7 +19,6 @@
 #endif
     using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.AspNetCore.Routing;
-    using Microsoft.DotNet.InternalAbstractions;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -30,6 +29,7 @@
     using Plugins;
     using Services;
     using Utilities.Extensions;
+    using Microsoft.DotNet.PlatformAbstractions;
 
     public static class TestApplication
     {
@@ -342,21 +342,24 @@
         {
             var serviceCollection = new ServiceCollection();
             var diagnosticSource = new DiagnosticListener(TestFrameworkName);
+            var applicationLifetime = new ApplicationLifetime();
 
             // default server services
-            serviceCollection.TryAddSingleton(Environment);
+            serviceCollection.AddSingleton(Environment);
+            serviceCollection.AddSingleton<IApplicationLifetime>(applicationLifetime);
 
-            serviceCollection.TryAddSingleton<ILoggerFactory>(LoggerFactoryMock.Create());
+            serviceCollection.AddSingleton<ILoggerFactory>(LoggerFactoryMock.Create());
             serviceCollection.AddLogging();
 
             serviceCollection.AddTransient<IApplicationBuilderFactory, ApplicationBuilderFactory>();
-            serviceCollection.TryAddTransient<IHttpContextFactory, HttpContextFactory>();
+            serviceCollection.AddTransient<IHttpContextFactory, HttpContextFactory>();
             serviceCollection.AddOptions();
 
-            serviceCollection.TryAddSingleton<DiagnosticSource>(diagnosticSource);
-            serviceCollection.TryAddSingleton(diagnosticSource);
+            serviceCollection.AddSingleton<DiagnosticSource>(diagnosticSource);
+            serviceCollection.AddSingleton(diagnosticSource);
 
             serviceCollection.AddTransient<IStartupFilter, AutoRequestServicesStartupFilter>();
+            serviceCollection.AddTransient<IServiceProviderFactory<IServiceCollection>, DefaultServiceProviderFactory>();
 
             serviceCollection.AddSingleton<ObjectPoolProvider, DefaultObjectPoolProvider>();
 

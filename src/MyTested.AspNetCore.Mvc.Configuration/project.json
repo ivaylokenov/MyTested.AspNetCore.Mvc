@@ -1,7 +1,7 @@
 ﻿{
   "title": "MyTested.AspNetCore.Mvc.Configuration",
   "description": "My Tested ASP.NET Core MVC configuration components.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "authors": [ "Ivaylo Kenov" ],
   "copyright": "2015-2016 Ivaylo Kenov",
   "packOptions": {
@@ -28,14 +28,14 @@
   },
 
   "dependencies": {
-    "Microsoft.Extensions.Configuration.Binder": "1.0.0"
+    "Microsoft.Extensions.Configuration.Binder": "1.1.0"
   },
 
   "frameworks": {
     "net451": {},
     "netstandard1.6": {
       "dependencies": {
-        "System.Collections.Concurrent": "4.0.12"
+        "System.Collections.Concurrent": "4.3.0"
       }
     }
   }

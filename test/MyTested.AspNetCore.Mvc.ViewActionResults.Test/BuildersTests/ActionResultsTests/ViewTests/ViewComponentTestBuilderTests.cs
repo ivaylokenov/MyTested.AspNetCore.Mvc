@@ -403,11 +403,11 @@
                     (() =>
                     {
                         MyController<MvcController>
-                         .Instance()
-                         .Calling(c => c.ViewComponentResultByName())
-                         .ShouldReturn()
-                         .ViewComponent()
-                         .ContainingArguments(new { id = 1, test = "incorrect" });
+                             .Instance()
+                             .Calling(c => c.ViewComponentResultByName())
+                             .ShouldReturn()
+                             .ViewComponent()
+                             .ContainingArguments(new { id = 1, test = "incorrect" });
                     }),
                    "When calling ViewComponentResultByName action in MvcController expected view component result arguments to have entry with 'test' key and the provided value, but the value was different.");
         }

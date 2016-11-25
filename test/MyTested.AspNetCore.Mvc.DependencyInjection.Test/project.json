@@ -12,21 +12,22 @@
   "testRunner": "xunit",
 
   "dependencies": {
+    "Microsoft.DotNet.InternalAbstractions": "1.0.0", // remove when not needed
     "dotnet-test-xunit": "2.2.0-*",
     "xunit": "2.2.0-*",
-    "MyTested.AspNetCore.Mvc.Controllers": "1.0.0",
-    "MyTested.AspNetCore.Mvc.DependencyInjection": "1.0.0",
-    "MyTested.AspNetCore.Mvc.Models": "1.0.0",
-    "MyTested.AspNetCore.Mvc.ViewComponents": "1.0.0",
+    "MyTested.AspNetCore.Mvc.Controllers": "1.1.0",
+    "MyTested.AspNetCore.Mvc.DependencyInjection": "1.1.0",
+    "MyTested.AspNetCore.Mvc.Models": "1.1.0",
+    "MyTested.AspNetCore.Mvc.ViewComponents": "1.1.0",
     "MyTested.AspNetCore.Mvc.Test.Setups": "*"
   },
 
   "frameworks": {
-    "netcoreapp1.0": {
+    "netcoreapp1.1": {
       "imports": "dotnet5.4",
       "dependencies": {
         "Microsoft.NETCore.App": {
-          "version": "1.0.1",
+          "version": "1.1.0",
           "type": "platform"
         }
       }

@@ -36,7 +36,7 @@ namespace MusicStore
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
             // Add EF services to the services container
-            if (!_platform.UseInMemoryStore)
+            if (_platform.UseInMemoryStore)
             {
                 services.AddDbContext<MusicStoreContext>(options =>
                     options.UseInMemoryDatabase());
@@ -208,7 +208,7 @@ namespace MusicStore
             });
 
             //Populates the MusicStore sample data
-            SampleData.InitializeMusicStoreDatabase(app.ApplicationServices, false);
+            SampleData.InitializeMusicStoreDatabaseAsync(app.ApplicationServices).Wait();
         }
     }
 }
