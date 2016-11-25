@@ -1,5 +1,6 @@
 using System;
 using System.Security.Claims;
+using System.Security.Principal;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -9,7 +10,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MusicStore.Components;
 using MusicStore.Models;
-using System.Threading.Tasks;
 
 namespace MusicStore
 {
@@ -110,8 +110,7 @@ namespace MusicStore
                 // administrator. But this can be changed to suit the needs.
                 var identity = (ClaimsIdentity)context.User.Identity;
 
-                if (context.User.Identity.Name == Environment.GetEnvironmentVariable("USERDOMAIN") + "\\"
-                    + Environment.GetEnvironmentVariable("USERNAME"))
+                if (context.User.Identity.Name == WindowsIdentity.GetCurrent().Name)
                 {
                     identity.AddClaim(new Claim("ManageStore", "Allowed"));
                 }
@@ -144,7 +143,7 @@ namespace MusicStore
             });
 
             //Populates the MusicStore sample data
-            SampleData.InitializeMusicStoreDatabase(app.ApplicationServices, false);
+            SampleData.InitializeMusicStoreDatabaseAsync(app.ApplicationServices, false).Wait();
         }
     }
 }

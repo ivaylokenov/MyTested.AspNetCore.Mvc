@@ -19,7 +19,6 @@
 #endif
     using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.AspNetCore.Routing;
-    using Microsoft.DotNet.InternalAbstractions;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -30,6 +29,7 @@
     using Plugins;
     using Services;
     using Utilities.Extensions;
+    using Microsoft.DotNet.PlatformAbstractions;
 
     public static class TestApplication
     {

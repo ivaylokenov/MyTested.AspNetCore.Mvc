@@ -1,7 +1,7 @@
 ﻿{
   "title": "MyTested.AspNetCore.Mvc.Session",
   "description": "My Tested ASP.NET Core MVC session middleware components.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "authors": [ "Ivaylo Kenov" ],
   "copyright": "2015-2016 Ivaylo Kenov",
   "packOptions": {
@@ -28,8 +28,8 @@
   },
 
   "dependencies": {
-    "Microsoft.AspNetCore.Session": "1.0.0",
-    "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0"
+    "Microsoft.AspNetCore.Session": "1.1.0",
+    "MyTested.AspNetCore.Mvc.Abstractions": "1.1.0"
   },
 
   "frameworks": {

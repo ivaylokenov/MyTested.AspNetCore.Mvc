@@ -1,7 +1,7 @@
 {
   "title": "MyTested.AspNetCore.Mvc.Core",
   "description": "My Tested ASP.NET Core MVC core components.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "authors": [ "Ivaylo Kenov" ],
   "copyright": "2015-2016 Ivaylo Kenov",
   "packOptions": {
@@ -28,9 +28,9 @@
   },
 
   "dependencies": {
-    "MyTested.AspNetCore.Mvc.Controllers": "1.0.0",
-    "MyTested.AspNetCore.Mvc.Models": "1.0.0",
-    "MyTested.AspNetCore.Mvc.Routing": "1.0.0"
+    "MyTested.AspNetCore.Mvc.Controllers": "1.1.0",
+    "MyTested.AspNetCore.Mvc.Models": "1.1.0",
+    "MyTested.AspNetCore.Mvc.Routing": "1.1.0"
   },
 
   "frameworks": {
