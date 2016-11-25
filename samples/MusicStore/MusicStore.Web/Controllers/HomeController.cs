@@ -18,7 +18,6 @@ namespace MusicStore.Controllers
         {
             _appSettings = options.Value;
         }
-
         //
         // GET: /Home/
         public async Task<IActionResult> Index(

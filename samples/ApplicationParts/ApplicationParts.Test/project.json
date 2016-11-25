@@ -11,19 +11,20 @@
   "dependencies": {
     "NUnit": "3.4.1",
     "dotnet-test-nunit": "3.4.0-*",
-    "MyTested.AspNetCore.Mvc.Controllers": "1.0.0",
-    "MyTested.AspNetCore.Mvc.ViewActionResults": "1.0.0",
-    "MyTested.AspNetCore.Mvc.Routing": "1.0.0",
-    "Microsoft.EntityFrameworkCore.InMemory": "1.0.1",
+    "MyTested.AspNetCore.Mvc.Controllers": "1.1.0",
+    "MyTested.AspNetCore.Mvc.ViewActionResults": "1.1.0",
+    "MyTested.AspNetCore.Mvc.Routing": "1.1.0",
+    "Microsoft.DotNet.InternalAbstractions": "1.0.0", // remove when not needed
+    "Microsoft.EntityFrameworkCore.InMemory": "1.1.0",
     "ApplicationParts.Web": "*",
     "ApplicationParts.Controllers": "*"
   },
   "frameworks": {
-    "netcoreapp1.0": {
+    "netcoreapp1.1": {
       "imports": "portable-net45+win8",
       "dependencies": {
         "Microsoft.NETCore.App": {
-          "version": "1.0.1",
+          "version": "1.1.0",
           "type": "platform"
         }
       }

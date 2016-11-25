@@ -1,7 +1,7 @@
 ﻿{
   "title": "MyTested.AspNetCore.Mvc.ViewData",
   "description": "My Tested ASP.NET Core MVC view data components.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "authors": [ "Ivaylo Kenov" ],
   "copyright": "2015-2016 Ivaylo Kenov",
   "packOptions": {
@@ -28,8 +28,8 @@
   },
 
   "dependencies": {
-    "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.0.1",
-    "MyTested.AspNetCore.Mvc.Abstractions": "1.0.0"
+    "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.1.0",
+    "MyTested.AspNetCore.Mvc.Abstractions": "1.1.0"
   },
 
   "frameworks": {

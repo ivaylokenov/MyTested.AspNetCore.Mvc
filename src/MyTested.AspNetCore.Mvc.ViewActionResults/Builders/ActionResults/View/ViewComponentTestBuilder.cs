@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.View
 {
+    using System;
     using System.Collections.Generic;
     using System.Net;
     using Contracts.ActionResults.View;
@@ -54,6 +55,7 @@
             => this.WithContentType(contentType?.MediaType);
 
         /// <inheritdoc />
+        [Obsolete("The ViewEngine property is unused and will be removed in the next major version of ASP.NET Core MVC.")]
         public new IAndViewComponentTestBuilder WithViewEngine(IViewEngine viewEngine)
         {
             base.WithViewEngine(viewEngine);
@@ -61,6 +63,7 @@
         }
 
         /// <inheritdoc />
+        [Obsolete("The ViewEngine property is unused and will be removed in the next major version of ASP.NET Core MVC.")]
         public new IAndViewComponentTestBuilder WithViewEngineOfType<TViewEngine>()
             where TViewEngine : IViewEngine
         {
