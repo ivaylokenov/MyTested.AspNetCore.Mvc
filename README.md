@@ -254,7 +254,7 @@ The source code of MyTested.AspNetCore.Mvc and its extensions (the full version 
 
 Without a license code, the full version of the library allows up to 100 assertions (around 25 test cases) per test project.
 
-**Full-featured license codes can be requested for free by individuals, open-source projects, startups and educational institutions**. See [https://mytestedasp.net/Core/Mvc#free-usage-modal](https://mytestedasp.net/Core/Mvc#free-usage) for more information.
+**Full-featured license codes can be requested for free by individuals, open-source projects, startups and educational institutions**. See [https://mytestedasp.net/Core/Mvc#free-usage](https://mytestedasp.net/Core/Mvc#free-usage) for more information.
 
 Commercial licensing with premium support options is also available at [https://mytestedasp.net/Core/Mvc#pricing](https://mytestedasp.net/Core/Mvc#pricing).
 
