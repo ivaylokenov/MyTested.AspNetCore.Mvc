@@ -3,7 +3,7 @@
 
 MyTested.AspNetCore.Mvc is a unit testing library providing an easy fluent interface to test the [ASP.NET Core MVC](https://github.com/aspnet/Mvc) framework. It is testing framework agnostic so that you can combine it with a test runner of your choice (e.g. xUnit, NUnit, etc.).
 
-[![Build status](https://ci.appveyor.com/api/projects/status/3xlag3a7f87bg4on?svg=true)](https://ci.appveyor.com/project/ivaylokenov/mytested-aspnetcore-mvc) [![NuGet Version](http://img.shields.io/nuget/v/MyTested.AspNetCore.Mvc.svg?style=flat)](https://www.nuget.org/packages/MyTested.AspNetCore.Mvc/) [![NuGet Badge](https://buildstats.info/nuget/MyTested.AspNetCore.Mvc)](https://www.nuget.org/packages/MyTested.AspNetCore.Mvc/)
+[![Build status](https://ci.appveyor.com/api/projects/status/3xlag3a7f87bg4on?svg=true)](https://ci.appveyor.com/project/ivaylokenov/mytested-aspnetcore-mvc) [![NuGet Badge](https://buildstats.info/nuget/MyTested.AspNetCore.Mvc)](https://www.nuget.org/packages/MyTested.AspNetCore.Mvc/)
 
 ## Getting started
 
@@ -254,9 +254,9 @@ The source code of MyTested.AspNetCore.Mvc and its extensions (the full version 
 
 Without a license code, the full version of the library allows up to 100 assertions (around 25 test cases) per test project.
 
-**Full-featured license codes can be requested for free by individuals, open-source projects, startups and educational institutions**. See [https://mytestedasp.net/Core/Mvc#free-usage-modal](https://mytestedasp.net/Core/Mvc#free-usage-modal) for more information.
+**Full-featured license codes can be requested for free by individuals, open-source projects, startups and educational institutions**. See [https://mytestedasp.net/Core/Mvc#free-usage-modal](https://mytestedasp.net/Core/Mvc#free-usage) for more information.
 
-Commercial licensing with private support is also available at [https://mytestedasp.net/Core/Mvc#pricing](https://mytestedasp.net/Core/Mvc#pricing).
+Commercial licensing with premium support options is also available at [https://mytestedasp.net/Core/Mvc#pricing](https://mytestedasp.net/Core/Mvc#pricing).
 
 See the [LICENSE](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/master/LICENSE) for detailed information.
 
