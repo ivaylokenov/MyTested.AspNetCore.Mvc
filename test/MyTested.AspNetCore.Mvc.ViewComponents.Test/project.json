@@ -15,8 +15,8 @@
     "Microsoft.DotNet.InternalAbstractions": "1.0.0", // remove when not needed
     "dotnet-test-xunit": "2.2.0-*",
     "xunit": "2.2.0-*",
-    "MyTested.AspNetCore.Mvc.ViewComponents": "1.1.0",
-    "MyTested.AspNetCore.Mvc.Models": "1.1.0",
+    "MyTested.AspNetCore.Mvc.ViewComponents": "1.1.1",
+    "MyTested.AspNetCore.Mvc.Models": "1.1.1",
     "MyTested.AspNetCore.Mvc.Test.Setups": "*"
   },
 

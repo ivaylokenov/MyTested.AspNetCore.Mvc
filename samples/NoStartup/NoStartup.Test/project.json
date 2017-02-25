@@ -11,11 +11,11 @@
   "dependencies": {
     "MSTest.TestFramework": "1.0.3-*",
     "dotnet-test-mstest": "1.1.1-*",
-    "MyTested.AspNetCore.Mvc.Controllers": "1.1.0",
-    "MyTested.AspNetCore.Mvc.DependencyInjection": "1.1.0",
-    "MyTested.AspNetCore.Mvc.Models": "1.1.0",
-    "MyTested.AspNetCore.Mvc.Routing": "1.1.0",
-    "MyTested.AspNetCore.Mvc.ViewComponents": "1.1.0",
+    "MyTested.AspNetCore.Mvc.Controllers": "1.1.1",
+    "MyTested.AspNetCore.Mvc.DependencyInjection": "1.1.1",
+    "MyTested.AspNetCore.Mvc.Models": "1.1.1",
+    "MyTested.AspNetCore.Mvc.Routing": "1.1.1",
+    "MyTested.AspNetCore.Mvc.ViewComponents": "1.1.1",
     "NoStartup.Controllers": "*",
     "NoStartup.Components": "*",
     "NoStartup.Services": "*"

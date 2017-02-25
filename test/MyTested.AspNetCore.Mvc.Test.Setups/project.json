@@ -6,8 +6,8 @@
 
   "dependencies": {
     "xunit": "2.2.0-*",
-    "Microsoft.AspNetCore.Mvc": "1.1.0",
-    "MyTested.AspNetCore.Mvc.Abstractions": "1.1.0"
+    "Microsoft.AspNetCore.Mvc": "1.1.1",
+    "MyTested.AspNetCore.Mvc.Abstractions": "1.1.1"
   },
 
   "frameworks": {

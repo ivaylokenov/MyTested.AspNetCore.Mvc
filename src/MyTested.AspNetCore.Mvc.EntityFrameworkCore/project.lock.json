@@ -136,7 +136,7 @@
           "lib/net451/Microsoft.AspNetCore.Http.Features.dll": {}
         }
       },
-      "Microsoft.AspNetCore.Mvc.Abstractions/1.1.0": {
+      "Microsoft.AspNetCore.Mvc.Abstractions/1.1.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.AspNetCore.Routing.Abstractions": "1.1.0",
@@ -150,13 +150,13 @@
           "lib/net451/Microsoft.AspNetCore.Mvc.Abstractions.dll": {}
         }
       },
-      "Microsoft.AspNetCore.Mvc.Core/1.1.0": {
+      "Microsoft.AspNetCore.Mvc.Core/1.1.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.AspNetCore.Authorization": "1.1.0",
           "Microsoft.AspNetCore.Hosting.Abstractions": "1.1.0",
           "Microsoft.AspNetCore.Http": "1.1.0",
-          "Microsoft.AspNetCore.Mvc.Abstractions": "1.1.0",
+          "Microsoft.AspNetCore.Mvc.Abstractions": "1.1.1",
           "Microsoft.AspNetCore.ResponseCaching.Abstractions": "1.1.0",
           "Microsoft.AspNetCore.Routing": "1.1.0",
           "Microsoft.Extensions.DependencyModel": "1.1.0",
@@ -1125,15 +1125,15 @@
           "lib/net45/_._": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.Abstractions/1.1.0": {
+      "MyTested.AspNetCore.Mvc.Abstractions/1.1.1": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
-          "Microsoft.AspNetCore.Mvc.Core": "1.1.0",
+          "Microsoft.AspNetCore.Mvc.Core": "1.1.1",
           "Microsoft.AspNetCore.TestHost": "1.1.0",
           "Microsoft.Extensions.Configuration.Json": "1.1.0",
-          "MyTested.AspNetCore.Mvc.Configuration": "1.1.0",
-          "MyTested.AspNetCore.Mvc.Licensing": "1.1.0"
+          "MyTested.AspNetCore.Mvc.Configuration": "1.1.1",
+          "MyTested.AspNetCore.Mvc.Licensing": "1.1.1"
         },
         "compile": {
           "net451/MyTested.AspNetCore.Mvc.Abstractions.dll": {}
@@ -1142,7 +1142,7 @@
           "net451/MyTested.AspNetCore.Mvc.Abstractions.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.Configuration/1.1.0": {
+      "MyTested.AspNetCore.Mvc.Configuration/1.1.1": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
@@ -1155,7 +1155,7 @@
           "net451/MyTested.AspNetCore.Mvc.Configuration.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.Licensing/1.1.0": {
+      "MyTested.AspNetCore.Mvc.Licensing/1.1.1": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "compile": {
@@ -1309,7 +1309,7 @@
           "lib/netstandard1.3/Microsoft.AspNetCore.Http.Features.dll": {}
         }
       },
-      "Microsoft.AspNetCore.Mvc.Abstractions/1.1.0": {
+      "Microsoft.AspNetCore.Mvc.Abstractions/1.1.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.AspNetCore.Routing.Abstractions": "1.1.0",
@@ -1325,13 +1325,13 @@
           "lib/netstandard1.3/Microsoft.AspNetCore.Mvc.Abstractions.dll": {}
         }
       },
-      "Microsoft.AspNetCore.Mvc.Core/1.1.0": {
+      "Microsoft.AspNetCore.Mvc.Core/1.1.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.AspNetCore.Authorization": "1.1.0",
           "Microsoft.AspNetCore.Hosting.Abstractions": "1.1.0",
           "Microsoft.AspNetCore.Http": "1.1.0",
-          "Microsoft.AspNetCore.Mvc.Abstractions": "1.1.0",
+          "Microsoft.AspNetCore.Mvc.Abstractions": "1.1.1",
           "Microsoft.AspNetCore.ResponseCaching.Abstractions": "1.1.0",
           "Microsoft.AspNetCore.Routing": "1.1.0",
           "Microsoft.Extensions.DependencyModel": "1.1.0",
@@ -3457,15 +3457,15 @@
           "lib/netstandard1.3/System.Xml.XDocument.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.Abstractions/1.1.0": {
+      "MyTested.AspNetCore.Mvc.Abstractions/1.1.1": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.6",
         "dependencies": {
-          "Microsoft.AspNetCore.Mvc.Core": "1.1.0",
+          "Microsoft.AspNetCore.Mvc.Core": "1.1.1",
           "Microsoft.AspNetCore.TestHost": "1.1.0",
           "Microsoft.Extensions.Configuration.Json": "1.1.0",
-          "MyTested.AspNetCore.Mvc.Configuration": "1.1.0",
-          "MyTested.AspNetCore.Mvc.Licensing": "1.1.0"
+          "MyTested.AspNetCore.Mvc.Configuration": "1.1.1",
+          "MyTested.AspNetCore.Mvc.Licensing": "1.1.1"
         },
         "compile": {
           "netstandard1.6/MyTested.AspNetCore.Mvc.Abstractions.dll": {}
@@ -3474,7 +3474,7 @@
           "netstandard1.6/MyTested.AspNetCore.Mvc.Abstractions.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.Configuration/1.1.0": {
+      "MyTested.AspNetCore.Mvc.Configuration/1.1.1": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.6",
         "dependencies": {
@@ -3488,7 +3488,7 @@
           "netstandard1.6/MyTested.AspNetCore.Mvc.Configuration.dll": {}
         }
       },
-      "MyTested.AspNetCore.Mvc.Licensing/1.1.0": {
+      "MyTested.AspNetCore.Mvc.Licensing/1.1.1": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.4",
         "dependencies": {
@@ -3611,12 +3611,12 @@
         "lib/netstandard1.3/Microsoft.AspNetCore.Http.Features.xml"
       ]
     },
-    "Microsoft.AspNetCore.Mvc.Abstractions/1.1.0": {
-      "sha512": "r0OA3N1Onua8AcTtFYpK03K3WdwJBL3iFW4XzfMA49ZmAKGf1ARAlrt6Q8WCdBI7nFDJCc1/bdMJ0ozWaq9rhA==",
+    "Microsoft.AspNetCore.Mvc.Abstractions/1.1.1": {
+      "sha512": "oXYnarlPEcpGA0hwaqsUIqNuoOntWl/jS0QT489ypL+WWYa2QsH1aDP+qnLWoybArZLCpYswrLTKia5hWpViog==",
       "type": "package",
-      "path": "Microsoft.AspNetCore.Mvc.Abstractions/1.1.0",
+      "path": "Microsoft.AspNetCore.Mvc.Abstractions/1.1.1",
       "files": [
-        "Microsoft.AspNetCore.Mvc.Abstractions.1.1.0.nupkg.sha512",
+        "Microsoft.AspNetCore.Mvc.Abstractions.1.1.1.nupkg.sha512",
         "Microsoft.AspNetCore.Mvc.Abstractions.nuspec",
         "lib/net451/Microsoft.AspNetCore.Mvc.Abstractions.dll",
         "lib/net451/Microsoft.AspNetCore.Mvc.Abstractions.xml",
@@ -3624,12 +3624,12 @@
         "lib/netstandard1.3/Microsoft.AspNetCore.Mvc.Abstractions.xml"
       ]
     },
-    "Microsoft.AspNetCore.Mvc.Core/1.1.0": {
-      "sha512": "6Gxoe6MJPbc9yVx7IEkDlzfNRzQ+JSvlVmFvugoNbpWAefU2F8d76aj7oiGewucXVI8c7oZ1Q0+rx7059j7/fA==",
+    "Microsoft.AspNetCore.Mvc.Core/1.1.1": {
+      "sha512": "iderNqoLhYGWiSmdkw0qXZp6gxWxIcOJJCYXNVjM4xBYzFdeQ4QQUStoUZSAEpC1a760jU5VR8bbP8mZe9KJXA==",
       "type": "package",
-      "path": "Microsoft.AspNetCore.Mvc.Core/1.1.0",
+      "path": "Microsoft.AspNetCore.Mvc.Core/1.1.1",
       "files": [
-        "Microsoft.AspNetCore.Mvc.Core.1.1.0.nupkg.sha512",
+        "Microsoft.AspNetCore.Mvc.Core.1.1.1.nupkg.sha512",
         "Microsoft.AspNetCore.Mvc.Core.nuspec",
         "lib/net451/Microsoft.AspNetCore.Mvc.Core.dll",
         "lib/net451/Microsoft.AspNetCore.Mvc.Core.xml",
@@ -8193,17 +8193,17 @@
         "ref/xamarinwatchos10/_._"
       ]
     },
-    "MyTested.AspNetCore.Mvc.Abstractions/1.1.0": {
+    "MyTested.AspNetCore.Mvc.Abstractions/1.1.1": {
       "type": "project",
       "path": "../MyTested.AspNetCore.Mvc.Abstractions/project.json",
       "msbuildProject": "../MyTested.AspNetCore.Mvc.Abstractions/MyTested.AspNetCore.Mvc.Abstractions.xproj"
     },
-    "MyTested.AspNetCore.Mvc.Configuration/1.1.0": {
+    "MyTested.AspNetCore.Mvc.Configuration/1.1.1": {
       "type": "project",
       "path": "../MyTested.AspNetCore.Mvc.Configuration/project.json",
       "msbuildProject": "../MyTested.AspNetCore.Mvc.Configuration/MyTested.AspNetCore.Mvc.Configuration.xproj"
     },
-    "MyTested.AspNetCore.Mvc.Licensing/1.1.0": {
+    "MyTested.AspNetCore.Mvc.Licensing/1.1.1": {
       "type": "project",
       "path": "../MyTested.AspNetCore.Mvc.Licensing/project.json",
       "msbuildProject": "../MyTested.AspNetCore.Mvc.Licensing/MyTested.AspNetCore.Mvc.Licensing.xproj"
@@ -8212,7 +8212,7 @@
   "projectFileDependencyGroups": {
     "": [
       "Microsoft.EntityFrameworkCore.InMemory >= 1.1.0",
-      "MyTested.AspNetCore.Mvc.Abstractions >= 1.1.0"
+      "MyTested.AspNetCore.Mvc.Abstractions >= 1.1.1"
     ],
     ".NETFramework,Version=v4.5.1": [],
     ".NETStandard,Version=v1.6": []
