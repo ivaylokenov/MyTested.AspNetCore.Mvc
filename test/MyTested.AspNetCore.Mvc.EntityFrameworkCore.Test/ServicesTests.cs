@@ -1,7 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test
 {
     using System.Linq;
-    using Internal;
+    using Internal.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Internal;
     using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
@@ -16,8 +16,7 @@
         {
             var services = new ServiceCollection();
 
-            services.AddDbContext<CustomDbContext>(options =>
-                options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=TestDb;Trusted_Connection=True;MultipleActiveResultSets=true;Connect Timeout=30;"));
+            this.AddDbContextWithSqlServer(services);
 
             services.ReplaceDbContext();
 
@@ -46,6 +45,26 @@
             var serviceProvider = services.BuildServiceProvider();
 
             Assert.Null(serviceProvider.GetService<DbContext>());
+        }
+
+        [Fact]
+        public void CallingMigrateShouldNotThrowExceptionWithInMemoryDatabase()
+        {
+            var services = new ServiceCollection();
+
+            this.AddDbContextWithSqlServer(services);
+
+            services.ReplaceDbContext();
+
+            var serviceProvider = services.BuildServiceProvider();
+
+            services.BuildServiceProvider().GetRequiredService<CustomDbContext>().Database.Migrate();
+        }
+
+        private void AddDbContextWithSqlServer(IServiceCollection services)
+        {
+            services.AddDbContext<CustomDbContext>(options =>
+                options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=TestDb;Trusted_Connection=True;MultipleActiveResultSets=true;Connect Timeout=30;"));
         }
 
         private void AssertCorrectDbContextAndOptions(IServiceCollection services)
