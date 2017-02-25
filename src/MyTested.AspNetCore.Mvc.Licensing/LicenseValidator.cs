@@ -40,7 +40,7 @@
 
             return true;
         }
-        
+
         public static IEnumerable<LicenseDetails> GetLicenseDetails()
         {
             if (registeredLicenses == null || !registeredLicenses.Any())
@@ -135,7 +135,19 @@
             };
 
             var parsedSigningData = licenseDetails.GetSignificateData();
+
+            var signingData = new byte[SigningDataLength];
+            Array.Copy(licenseAsBytes, signingData, SigningDataLength);
             
+#if NETSTANDARD1_4
+            var cryptoProvider = RSA.Create();
+            cryptoProvider.KeySize = 1024;
+
+            var parameters = CryptographyHelpers.ToRSAParameters(Convert.FromBase64String(PublicKey), false);
+            cryptoProvider.ImportParameters(parameters);
+
+            var dataVerified = cryptoProvider.VerifyData(parsedSigningData, signingData, HashAlgorithmName.SHA1, RSASignaturePadding.Pkcs1);
+#else
             var cryptoProvider = new RSACryptoServiceProvider(1024)
             {
                 PersistKeyInCsp = false
@@ -143,10 +155,9 @@
 
             cryptoProvider.ImportCspBlob(Convert.FromBase64String(PublicKey));
 
-            var signingData = new byte[SigningDataLength];
-            Array.Copy(licenseAsBytes, signingData, SigningDataLength);
-
-            if (!cryptoProvider.VerifyData(parsedSigningData, SHA1.Create(), signingData))
+            var dataVerified = cryptoProvider.VerifyData(parsedSigningData, SHA1.Create(), signingData);
+#endif
+            if (!dataVerified)
             {
                 throw new InvalidLicenseException("License text does not match signature");
             }
