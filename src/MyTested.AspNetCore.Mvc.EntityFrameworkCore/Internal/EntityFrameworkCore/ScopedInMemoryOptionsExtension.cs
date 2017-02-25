@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Internal
+﻿namespace MyTested.AspNetCore.Mvc.Internal.EntityFrameworkCore
 {
     using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
     using Microsoft.EntityFrameworkCore.Storage.Internal;

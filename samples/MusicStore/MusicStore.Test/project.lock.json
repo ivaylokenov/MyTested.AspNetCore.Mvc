@@ -4544,6 +4544,7 @@
         "framework": ".NETStandard,Version=v1.6",
         "dependencies": {
           "Microsoft.EntityFrameworkCore.InMemory": "1.1.0",
+          "Microsoft.EntityFrameworkCore.Relational": "1.1.0",
           "MyTested.AspNetCore.Mvc.Abstractions": "1.1.1"
         },
         "compile": {
@@ -7307,6 +7308,7 @@
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
           "Microsoft.EntityFrameworkCore.InMemory": "1.1.0",
+          "Microsoft.EntityFrameworkCore.Relational": "1.1.0",
           "MyTested.AspNetCore.Mvc.Abstractions": "1.1.1"
         },
         "compile": {

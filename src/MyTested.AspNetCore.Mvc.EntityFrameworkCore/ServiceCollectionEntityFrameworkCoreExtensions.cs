@@ -3,7 +3,7 @@
     using System;
     using System.Linq;
     using System.Reflection;
-    using Internal;
+    using Internal.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Infrastructure;
     using Microsoft.Extensions.DependencyInjection;
