@@ -24,5 +24,7 @@ branches:
   only:
     - master
     - development
+before_install:
+ - chmod +x gradlew
 script:
   - ./build.sh --quiet verify
