@@ -24,7 +24,9 @@ branches:
   only:
     - master
     - development
-before_install:
- - chmod +x gradlew
+install:
+  - export DOTNET_INSTALL_DIR="$PWD/.dotnetcli"
+  - export PATH="$DOTNET_INSTALL_DIR:$PATH"
+  - dotnet --info
 script:
   - ./build.sh --quiet verify

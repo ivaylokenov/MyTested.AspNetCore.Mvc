@@ -135,7 +135,7 @@
             };
 
             var parsedSigningData = licenseDetails.GetSignificateData();
-
+            
             var cryptoProvider = new RSACryptoServiceProvider(1024)
             {
                 PersistKeyInCsp = false
