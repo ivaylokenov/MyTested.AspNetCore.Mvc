@@ -139,7 +139,7 @@
             var signingData = new byte[SigningDataLength];
             Array.Copy(licenseAsBytes, signingData, SigningDataLength);
             
-#if NETSTANDARD1_4
+#if NETSTANDARD1_4 || NETSTANDARD1_5 || NETSTANDARD1_6
             var cryptoProvider = RSA.Create();
             cryptoProvider.KeySize = 1024;
 
