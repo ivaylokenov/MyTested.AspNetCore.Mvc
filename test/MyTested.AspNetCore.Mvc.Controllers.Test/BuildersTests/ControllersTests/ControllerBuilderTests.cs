@@ -68,10 +68,10 @@
                 {
                     var controllerUser = controller.User;
 
-                    Assert.Equal(false, controllerUser.IsInRole("Any"));
-                    Assert.Equal(null, controllerUser.Identity.Name);
-                    Assert.Equal(null, controllerUser.Identity.AuthenticationType);
-                    Assert.Equal(false, controllerUser.Identity.IsAuthenticated);
+                    Assert.False(controllerUser.IsInRole("Any"));
+                    Assert.Null(controllerUser.Identity.Name);
+                    Assert.Null(controllerUser.Identity.AuthenticationType);
+                    Assert.False(controllerUser.Identity.IsAuthenticated);
                 });
         }
 

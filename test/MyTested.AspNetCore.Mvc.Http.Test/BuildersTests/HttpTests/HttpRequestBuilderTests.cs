@@ -709,7 +709,7 @@
                 .WithHttpRequest(request => request.WithLocation("/Home/Index"))
                 .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
-                    Assert.Equal(null, builtRequest.Host.Value);
+                    Assert.Null(builtRequest.Host.Value);
                     Assert.Equal("/Home/Index", builtRequest.PathBase);
                     Assert.Equal("http", builtRequest.Scheme);
                     Assert.Equal("/Home/Index", builtRequest.Path);
@@ -725,7 +725,7 @@
                 .WithHttpRequest(request => request.WithLocation("/Home/Index?test=text"))
                 .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
-                    Assert.Equal(null, builtRequest.Host.Value);
+                    Assert.Null(builtRequest.Host.Value);
                     Assert.Equal("/Home/Index", builtRequest.PathBase);
                     Assert.Equal("http", builtRequest.Scheme);
                     Assert.Equal("/Home/Index", builtRequest.Path);

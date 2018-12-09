@@ -28,7 +28,7 @@
                     .ContainingEntry(entry => entry
                         .WithKey("test")
                         .WithValueOfType<string>()
-                        .Passing(v => Assert.True(v.StartsWith("val")))))
+                        .Passing(v => Assert.StartsWith("val", v))))
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();

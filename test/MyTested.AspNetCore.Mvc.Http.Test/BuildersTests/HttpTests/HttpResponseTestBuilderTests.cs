@@ -153,7 +153,7 @@
                         .AndAlso()
                         .WithValue(value =>
                         {
-                            Assert.True(value.StartsWith("TestCookie"));
+                            Assert.StartsWith("TestCookie", value);
                         })));
         }
 

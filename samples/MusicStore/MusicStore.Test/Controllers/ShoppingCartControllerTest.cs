@@ -3,11 +3,11 @@
     using System.Linq;
     using System.Threading;
     using Models;
+    using Microsoft.AspNetCore.Http;
     using MusicStore.Controllers;
     using MyTested.AspNetCore.Mvc;
     using ViewModels;
     using Xunit;
-    using Microsoft.AspNetCore.Http;
 
     public class ShoppingCartControllerTest
     {
@@ -22,7 +22,7 @@
                 .WithModelOfType<ShoppingCartViewModel>()
                 .Passing(model =>
                 {
-                    Assert.Equal(0, model.CartItems.Count);
+                    Assert.Empty(model.CartItems);
                     Assert.Equal(0, model.CartTotal);
                 });
         }
@@ -39,7 +39,7 @@
                 .WithModelOfType<ShoppingCartViewModel>()
                 .Passing(model =>
                 {
-                    Assert.Equal(0, model.CartItems.Count);
+                    Assert.Empty(model.CartItems);
                     Assert.Equal(0, model.CartTotal);
                 });
         }
@@ -93,7 +93,7 @@
                 .ShouldPassForThe<HttpContext>(async httpContext =>
                 {
                     var cart = ShoppingCart.GetCart(From.Services<MusicStoreContext>(), httpContext);
-                    Assert.Equal(1, (await cart.GetCartItems()).Count);
+                    Assert.Single(await cart.GetCartItems());
                     Assert.Equal(albumId, (await cart.GetCartItems()).Single().AlbumId);
                 });
         }
@@ -130,7 +130,7 @@
                 .ShouldPassForThe<HttpContext>(async httpContext =>
                 {
                     var cart = ShoppingCart.GetCart(From.Services<MusicStoreContext>(), httpContext);
-                    Assert.False((await cart.GetCartItems()).Any(c => c.CartItemId == cartItemId));
+                    Assert.DoesNotContain(await cart.GetCartItems(), c => c.CartItemId == cartItemId);
                 });
         }
 
@@ -139,7 +139,7 @@
             var albums = CreateTestAlbums(itemPrice);
 
             var cartItems = Enumerable.Range(1, numberOfItem).Select(n =>
-                new CartItem()
+                new CartItem
                 {
                     Count = 1,
                     CartId = cartId,
@@ -153,7 +153,7 @@
         private static Album[] CreateTestAlbums(decimal itemPrice)
         {
             return Enumerable.Range(1, 10).Select(n =>
-                new Album()
+                new Album
                 {
                     AlbumId = n,
                     Price = itemPrice,

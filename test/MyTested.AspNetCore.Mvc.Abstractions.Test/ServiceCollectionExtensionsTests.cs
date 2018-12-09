@@ -523,7 +523,7 @@
 
             serviceCollection.ReplaceLifetime<IInjectedService>(ServiceLifetime.Scoped);
             
-            Assert.Equal(1, serviceCollection.Count);
+            Assert.Single(serviceCollection);
             Assert.Equal(ServiceLifetime.Scoped, serviceCollection.FirstOrDefault(s => s.ServiceType == typeof(IInjectedService))?.Lifetime);
         }
         
@@ -537,7 +537,7 @@
 
             serviceCollection.ReplaceLifetime<IInjectedService>(ServiceLifetime.Scoped);
 
-            Assert.Equal(1, serviceCollection.Count);
+            Assert.Single(serviceCollection);
             Assert.Equal(ServiceLifetime.Scoped, serviceCollection.FirstOrDefault(s => s.ServiceType == typeof(IInjectedService))?.Lifetime);
         }
     }

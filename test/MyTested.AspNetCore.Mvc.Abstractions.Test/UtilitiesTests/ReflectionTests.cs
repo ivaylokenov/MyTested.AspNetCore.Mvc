@@ -295,15 +295,15 @@
         public void ToFriendlyTypeNameShouldReturnProperNameWhenTypeIsAnonymous()
         {
             var name = new { }.GetType().ToFriendlyTypeName();
-            Assert.True(name.StartsWith("AnonymousType"));
+            Assert.StartsWith("AnonymousType", name);
         }
 
         [Fact]
         public void ToFriendlyTypeNameShouldReturnProperNameWhenTypeIsAnonymousWithGeneric()
         {
             var name = new { Int = 1, String = "Test" }.GetType().ToFriendlyTypeName();
-            Assert.True(name.StartsWith("AnonymousType"));
-            Assert.True(name.EndsWith("<Int32, String>"));
+            Assert.StartsWith("AnonymousType", name);
+            Assert.EndsWith("<Int32, String>", name);
         }
 
         [Fact]
@@ -417,9 +417,9 @@
             var attributeTypes = attributes.Select(a => a.GetType()).ToList();
 
             Assert.NotNull(attributes);
-            Assert.Equal(2, attributes.Count());
-            Assert.True(attributeTypes.Contains(typeof(AuthorizeAttribute)));
-            Assert.True(attributeTypes.Contains(typeof(RouteAttribute)));
+            Assert.Equal(2, attributes.Count);
+            Assert.Contains(typeof(AuthorizeAttribute), attributeTypes);
+            Assert.Contains(typeof(RouteAttribute), attributeTypes);
         }
 
         [Fact]

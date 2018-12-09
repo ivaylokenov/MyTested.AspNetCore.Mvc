@@ -6,7 +6,7 @@
     using Builders.Authentication;
     using Builders.Contracts.Authentication;
     using Internal.TestContexts;
-    using Microsoft.AspNetCore.Http.Authentication;
+    using Microsoft.AspNetCore.Authentication;
     using Utilities.Extensions;
 
     /// <summary>

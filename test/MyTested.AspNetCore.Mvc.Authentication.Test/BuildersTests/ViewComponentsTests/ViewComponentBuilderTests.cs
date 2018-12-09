@@ -20,11 +20,11 @@
                     var user = viewComponent.User as ClaimsPrincipal;
 
                     Assert.NotNull(user);
-                    Assert.Equal(false, user.IsInRole("Any"));
+                    Assert.False(user.IsInRole("Any"));
                     Assert.Equal("TestUser", user.Identity.Name);
                     Assert.True(user.HasClaim(ClaimTypes.Name, "TestUser"));
                     Assert.Equal("Passport", user.Identity.AuthenticationType);
-                    Assert.Equal(true, user.Identity.IsAuthenticated);
+                    Assert.True(user.Identity.IsAuthenticated);
                 });
         }
 
@@ -53,13 +53,13 @@
 
                     Assert.Equal("NewUserName", user.Identity.Name);
                     Assert.Equal("Custom", user.Identity.AuthenticationType);
-                    Assert.Equal(true, user.Identity.IsAuthenticated);
-                    Assert.Equal(true, user.IsInRole("NormalUser"));
-                    Assert.Equal(true, user.IsInRole("Moderator"));
-                    Assert.Equal(true, user.IsInRole("Administrator"));
-                    Assert.Equal(true, user.IsInRole("SuperUser"));
-                    Assert.Equal(true, user.IsInRole("MegaUser"));
-                    Assert.Equal(false, user.IsInRole("AnotherRole"));
+                    Assert.True(user.Identity.IsAuthenticated);
+                    Assert.True(user.IsInRole("NormalUser"));
+                    Assert.True(user.IsInRole("Moderator"));
+                    Assert.True(user.IsInRole("Administrator"));
+                    Assert.True(user.IsInRole("SuperUser"));
+                    Assert.True(user.IsInRole("MegaUser"));
+                    Assert.False(user.IsInRole("AnotherRole"));
                 });
         }
         

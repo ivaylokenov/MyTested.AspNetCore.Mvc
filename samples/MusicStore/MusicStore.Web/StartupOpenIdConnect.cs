@@ -1,13 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using MusicStore.Components;
 using MusicStore.Models;
+using System.Globalization;
 
 namespace MusicStore
 {
@@ -57,7 +58,7 @@ namespace MusicStore
             if (_platform.UseInMemoryStore)
             {
                 services.AddDbContext<MusicStoreContext>(options =>
-                            options.UseInMemoryDatabase());
+                            options.UseInMemoryDatabase("Scratch"));
             }
             else
             {
@@ -101,11 +102,27 @@ namespace MusicStore
                         authBuilder.RequireClaim("ManageStore", "Allowed");
                     });
             });
+
+            // Create an Azure Active directory application and copy paste the following
+            services.AddAuthentication().AddOpenIdConnect(options =>
+            {
+                options.Authority = "https://login.windows.net/[tenantName].onmicrosoft.com";
+                options.ClientId = "[ClientId]";
+                options.ResponseType = OpenIdConnectResponseType.CodeIdToken;
+            });
         }
 
-        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app)
         {
-            loggerFactory.AddConsole(minLevel: LogLevel.Warning);
+            // force the en-US culture, so that the app behaves the same even on machines with different default culture
+            var supportedCultures = new[] { new CultureInfo("en-US") };
+
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("en-US"),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            });
 
             app.UseStatusCodePagesWithRedirects("~/Home/StatusCodePage");
 
@@ -120,17 +137,6 @@ namespace MusicStore
 
             // Add static files to the request pipeline
             app.UseStaticFiles();
-
-            // Add cookie-based authentication to the request pipeline
-            app.UseIdentity();
-
-            // Create an Azure Active directory application and copy paste the following
-            app.UseOpenIdConnectAuthentication(new OpenIdConnectOptions
-            {
-                Authority = "https://login.windows.net/[tenantName].onmicrosoft.com",
-                ClientId = "[ClientId]",
-                ResponseType = OpenIdConnectResponseType.CodeIdToken,
-            });
 
             // Add MVC to the request pipeline
             app.UseMvc(routes =>

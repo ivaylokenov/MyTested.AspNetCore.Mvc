@@ -18,7 +18,7 @@
 
             var ignoredKeys = routeValues
                 .ActionArguments
-                .Where(a => a.Value.Value.ToString() == ExpressionParser.IgnoredExpressionArgument)
+                .Where(a => ExpressionParser.IsIgnoredArgument(a.Value.Value))
                 .Select(a => a.Key)
                 .ToList();
             

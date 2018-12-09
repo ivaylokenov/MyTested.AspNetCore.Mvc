@@ -118,7 +118,7 @@
                 .Redirect()
                 .ToUrlPassing(url =>
                 {
-                    Assert.True(url.StartsWith("http://somehost.com/"));
+                    Assert.StartsWith("http://somehost.com/", url);
                 });
         }
         

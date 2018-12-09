@@ -18,7 +18,7 @@
                 .StartsFrom<TestStartup>()
                 .WithServices(services =>
                 {
-                    services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase());
+                    services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase(TestObjectFactory.TestDatabaseName));
                 });
 
             MyController<DbContextController>
@@ -44,7 +44,7 @@
                 .StartsFrom<TestStartup>()
                 .WithServices(services =>
                 {
-                    services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase());
+                    services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase(TestObjectFactory.TestDatabaseName));
                 });
 
             MyController<DbContextController>
@@ -67,7 +67,7 @@
                 .StartsFrom<TestStartup>()
                 .WithServices(services =>
                 {
-                    services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase());
+                    services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase(TestObjectFactory.TestDatabaseName));
                 });
 
             MyController<DbContextController>
@@ -104,7 +104,7 @@
                 .StartsFrom<TestStartup>()
                 .WithServices(services =>
                 {
-                    services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase());
+                    services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase(TestObjectFactory.TestDatabaseName));
                 });
 
             MyController<DbContextController>
@@ -130,7 +130,7 @@
                 .StartsFrom<TestStartup>()
                 .WithServices(services =>
                 {
-                    services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase());
+                    services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase(TestObjectFactory.TestDatabaseName));
                 });
 
             MyController<DbContextController>
@@ -153,7 +153,7 @@
                 .StartsFrom<TestStartup>()
                 .WithServices(services =>
                 {
-                    services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase());
+                    services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase(TestObjectFactory.TestDatabaseName));
                 });
 
             MyController<DbContextController>

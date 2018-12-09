@@ -17,7 +17,7 @@
                 .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
-                    services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase());
+                    services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase(TestObjectFactory.TestDatabaseName));
                 });
 
             MyViewComponent<CreateDataComponent>
@@ -43,7 +43,7 @@
                 .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
-                    services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase());
+                    services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase(TestObjectFactory.TestDatabaseName));
                 });
 
             MyViewComponent<CreateDataComponent>
@@ -66,7 +66,7 @@
                 .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
-                    services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase());
+                    services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase(TestObjectFactory.TestDatabaseName));
                 });
 
             MyViewComponent<CreateDataComponent>

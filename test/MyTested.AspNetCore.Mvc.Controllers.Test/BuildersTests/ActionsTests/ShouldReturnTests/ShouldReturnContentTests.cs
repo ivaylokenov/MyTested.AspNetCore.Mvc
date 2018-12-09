@@ -91,7 +91,7 @@
                 .ShouldReturn()
                 .Content(content =>
                 {
-                    Assert.True(content.StartsWith("con"));
+                    Assert.StartsWith("con", content);
                 });
         }
     }

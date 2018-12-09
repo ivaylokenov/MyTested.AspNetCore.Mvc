@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using Authentication;
     using Base;
-    using Microsoft.AspNetCore.Http.Authentication;
+    using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Mvc;
 
     /// <summary>

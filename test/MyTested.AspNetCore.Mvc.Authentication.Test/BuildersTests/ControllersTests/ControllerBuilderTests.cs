@@ -21,11 +21,11 @@
                 {
                     var controllerUser = controller.User;
 
-                    Assert.Equal(false, controllerUser.IsInRole("Any"));
+                    Assert.False(controllerUser.IsInRole("Any"));
                     Assert.Equal("TestUser", controllerUser.Identity.Name);
                     Assert.True(controllerUser.HasClaim(ClaimTypes.Name, "TestUser"));
                     Assert.Equal("Passport", controllerUser.Identity.AuthenticationType);
-                    Assert.Equal(true, controllerUser.Identity.IsAuthenticated);
+                    Assert.True(controllerUser.Identity.IsAuthenticated);
                 });
         }
 
@@ -54,13 +54,13 @@
 
                     Assert.Equal("NewUserName", controllerUser.Identity.Name);
                     Assert.Equal("Custom", controllerUser.Identity.AuthenticationType);
-                    Assert.Equal(true, controllerUser.Identity.IsAuthenticated);
-                    Assert.Equal(true, controllerUser.IsInRole("NormalUser"));
-                    Assert.Equal(true, controllerUser.IsInRole("Moderator"));
-                    Assert.Equal(true, controllerUser.IsInRole("Administrator"));
-                    Assert.Equal(true, controllerUser.IsInRole("SuperUser"));
-                    Assert.Equal(true, controllerUser.IsInRole("MegaUser"));
-                    Assert.Equal(false, controllerUser.IsInRole("AnotherRole"));
+                    Assert.True(controllerUser.Identity.IsAuthenticated);
+                    Assert.True(controllerUser.IsInRole("NormalUser"));
+                    Assert.True(controllerUser.IsInRole("Moderator"));
+                    Assert.True(controllerUser.IsInRole("Administrator"));
+                    Assert.True(controllerUser.IsInRole("SuperUser"));
+                    Assert.True(controllerUser.IsInRole("MegaUser"));
+                    Assert.False(controllerUser.IsInRole("AnotherRole"));
                 });
         }
         
@@ -84,11 +84,11 @@
                 {
                     var controllerUser = controller.CustomHttpContext.User;
 
-                    Assert.Equal(false, controllerUser.IsInRole("Any"));
+                    Assert.False(controllerUser.IsInRole("Any"));
                     Assert.Equal("TestUser", controllerUser.Identity.Name);
                     Assert.True(controllerUser.HasClaim(ClaimTypes.Name, "TestUser"));
                     Assert.Equal("Passport", controllerUser.Identity.AuthenticationType);
-                    Assert.Equal(true, controllerUser.Identity.IsAuthenticated);
+                    Assert.True(controllerUser.Identity.IsAuthenticated);
                 });
 
             MyApplication.StartsFrom<DefaultStartup>();
@@ -126,13 +126,13 @@
 
                     Assert.Equal("NewUserName", controllerUser.Identity.Name);
                     Assert.Equal("Custom", controllerUser.Identity.AuthenticationType);
-                    Assert.Equal(true, controllerUser.Identity.IsAuthenticated);
-                    Assert.Equal(true, controllerUser.IsInRole("NormalUser"));
-                    Assert.Equal(true, controllerUser.IsInRole("Moderator"));
-                    Assert.Equal(true, controllerUser.IsInRole("Administrator"));
-                    Assert.Equal(true, controllerUser.IsInRole("SuperUser"));
-                    Assert.Equal(true, controllerUser.IsInRole("MegaUser"));
-                    Assert.Equal(false, controllerUser.IsInRole("AnotherRole"));
+                    Assert.True(controllerUser.Identity.IsAuthenticated);
+                    Assert.True(controllerUser.IsInRole("NormalUser"));
+                    Assert.True(controllerUser.IsInRole("Moderator"));
+                    Assert.True(controllerUser.IsInRole("Administrator"));
+                    Assert.True(controllerUser.IsInRole("SuperUser"));
+                    Assert.True(controllerUser.IsInRole("MegaUser"));
+                    Assert.False(controllerUser.IsInRole("AnotherRole"));
                 });
 
             MyApplication.StartsFrom<DefaultStartup>();

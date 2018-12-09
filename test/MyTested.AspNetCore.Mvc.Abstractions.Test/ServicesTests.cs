@@ -83,7 +83,7 @@
             var injectedService = TestServiceProvider.GetService<IInjectedService>();
 
             Assert.NotNull(injectedService);
-            Assert.IsAssignableFrom(typeof(ReplaceableInjectedService), injectedService);
+            Assert.IsAssignableFrom<ReplaceableInjectedService>(injectedService);
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -96,7 +96,7 @@
             var injectedService = TestServiceProvider.GetService<IInjectedService>();
 
             Assert.NotNull(injectedService);
-            Assert.IsAssignableFrom(typeof(ReplaceableInjectedService), injectedService);
+            Assert.IsAssignableFrom<ReplaceableInjectedService>(injectedService);
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -114,7 +114,7 @@
             var injectedServices = TestServiceProvider.GetService<IInjectedService>();
 
             Assert.NotNull(injectedServices);
-            Assert.IsAssignableFrom(typeof(InjectedService), injectedServices);
+            Assert.IsAssignableFrom<InjectedService>(injectedServices);
 
             MyApplication.StartsFrom<DefaultStartup>();
         }

@@ -6,7 +6,7 @@
     using Contracts.Authentication;
     using Exceptions;
     using Internal.TestContexts;
-    using Microsoft.AspNetCore.Http.Authentication;
+    using Microsoft.AspNetCore.Authentication;
     using Utilities.Extensions;
 
     /// <summary>

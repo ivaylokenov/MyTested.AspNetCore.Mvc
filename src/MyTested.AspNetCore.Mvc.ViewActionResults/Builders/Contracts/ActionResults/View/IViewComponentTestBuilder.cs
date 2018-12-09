@@ -39,24 +39,7 @@
         /// <param name="contentType">Content type as <see cref="MediaTypeHeaderValue"/>.</param>
         /// <returns>The same <see cref="IAndViewComponentTestBuilder"/>.</returns>
         IAndViewComponentTestBuilder WithContentType(MediaTypeHeaderValue contentType);
-
-        /// <summary>
-        /// Tests whether <see cref="Microsoft.AspNetCore.Mvc.ViewComponentResult"/> has the same <see cref="IViewEngine"/> as the provided one.
-        /// </summary>
-        /// <param name="viewEngine">View engine of type <see cref="IViewEngine"/>.</param>
-        /// <returns>The same <see cref="IAndViewComponentTestBuilder"/>.</returns>
-        [Obsolete("The ViewEngine property is unused and will be removed in the next major version of ASP.NET Core MVC.")]
-        IAndViewComponentTestBuilder WithViewEngine(IViewEngine viewEngine);
-
-        /// <summary>
-        /// Tests whether <see cref="Microsoft.AspNetCore.Mvc.ViewComponentResult"/> has the same <see cref="IViewEngine"/> type as the provided one.
-        /// </summary>
-        /// <typeparam name="TViewEngine">View engine of type <see cref="IViewEngine"/>.</typeparam>
-        /// <returns>The same <see cref="IAndViewComponentTestBuilder"/>.</returns>
-        [Obsolete("The ViewEngine property is unused and will be removed in the next major version of ASP.NET Core MVC.")]
-        IAndViewComponentTestBuilder WithViewEngineOfType<TViewEngine>()
-            where TViewEngine : IViewEngine;
-
+        
         /// <summary>
         /// Tests whether <see cref="Microsoft.AspNetCore.Mvc.ViewComponentResult"/> will be invoked with an argument with the same name as the provided one.
         /// </summary>

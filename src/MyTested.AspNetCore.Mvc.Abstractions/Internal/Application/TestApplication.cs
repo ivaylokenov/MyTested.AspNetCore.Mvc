@@ -175,12 +175,12 @@
         {
             lock (Sync)
             {
-                var configuration = GeneralConfiguration();
+                var initializationConfiguration = GeneralConfiguration();
 
                 if (!initialiazed
                     && StartupType == null
-                    && !configuration.NoStartup()
-                    && configuration.AutomaticStartup())
+                    && !initializationConfiguration.NoStartup()
+                    && initializationConfiguration.AutomaticStartup())
                 {
                     var defaultStartupType = TryFindDefaultStartupType();
 
@@ -322,7 +322,8 @@
             => new HostingEnvironment
             {
                 ApplicationName = ApplicationName,
-                EnvironmentName = GeneralConfiguration().EnvironmentName()
+                EnvironmentName = GeneralConfiguration().EnvironmentName(),
+                ContentRootPath = AppContext.BaseDirectory
             };
 
         private static IServiceCollection GetInitialServiceCollection()
@@ -522,33 +523,12 @@
             }
             else
             {
-#if NET451
-                var executingAssembly = Assembly.GetExecutingAssembly();
-
-                var stackTrace = new StackTrace(false);
-
-                foreach (var frame in stackTrace.GetFrames())
-                {
-                    var method = frame.GetMethod();
-                    var methodAssembly = method?.DeclaringType?.Assembly;
-
-                    if (methodAssembly != null
-                        && methodAssembly != executingAssembly
-                        && !methodAssembly.FullName.StartsWith(TestFrameworkName))
-                    {
-                        TestAssembly = methodAssembly;
-                        break;
-                    }
-                }
-#endif
-#if NETSTANDARD1_6
                 var assemblyName = DependencyContext
                     .Default
                     .GetDefaultAssemblyNames()
                     .First();
 
                 TestAssembly = Assembly.Load(assemblyName);
-#endif
             }
         }
 

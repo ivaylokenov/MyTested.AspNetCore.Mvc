@@ -4,10 +4,9 @@
     using System.Buffers;
     using System.Collections.Generic;
     using System.Globalization;
-    using System.Runtime.Serialization.Formatters;
     using Common;
+    using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Http.Authentication;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.AspNetCore.Mvc.ViewEngines;
@@ -22,6 +21,7 @@
     public static class TestObjectFactory
     {
         public const string MediaType = "application/json";
+        public const string TestDatabaseName = "TestDatabase";
 
         public static Action<IServiceCollection> GetCustomServicesRegistrationAction()
             => services =>
@@ -109,10 +109,10 @@
         public static Uri GetUri() => new Uri("http://somehost.com/someuri/1?query=Test");
 
         public static Action<string, string> GetFailingValidationActionWithTwoParameteres()
-            => (x, y) => { throw new NullReferenceException($"{x} {y}"); };
+            => (x, y) => throw new NullReferenceException($"{x} {y}");
 
         public static Action<string, string, string> GetFailingValidationAction()
-            => (x, y, z) => { throw new NullReferenceException($"{x} {y} {z}"); };
+            => (x, y, z) => throw new NullReferenceException($"{x} {y} {z}");
 
         public static RequestModel GetNullRequestModel() => null;
 
@@ -158,7 +158,7 @@
                  PreserveReferencesHandling = PreserveReferencesHandling.Arrays,
                  ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
                  StringEscapeHandling = StringEscapeHandling.EscapeHtml,
-                 TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
+                 TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
                  TypeNameHandling = TypeNameHandling.None,
                  TraceWriter = new CustomJsonTraceWriter()
              };

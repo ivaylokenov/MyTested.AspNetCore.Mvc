@@ -80,8 +80,10 @@
 
             if (expression.NodeType == ExpressionType.Call)
             {
-                // Expression of type c => c.Action(With.No<int>()) or c => c.Action(With.Any<int>()) or c => c.Action(From.Services<IService>())
-                // Value should be ignored and can be skipped.
+                // These expressions types should be ignored and can be skipped: 
+                // - c => c.Action(With.No<int>()) 
+                // - c => c.Action(With.Any<int>()) 
+                // - c => c.Action(From.Services<IService>())
                 var expressionArgumentAsMethodCall = (MethodCallExpression)expression;
                 var expressionMethodDeclaringType = expressionArgumentAsMethodCall.Method.DeclaringType;
 
@@ -138,8 +140,7 @@
         /// <returns>Member name as string.</returns>
         public static string GetPropertyName(LambdaExpression expression)
         {
-            var memberExpression = expression.Body as MemberExpression;
-            if (memberExpression == null)
+            if (!(expression.Body is MemberExpression memberExpression))
             {
                 throw new ArgumentException("Provided expression is not a valid member expression.");
             }
@@ -154,8 +155,7 @@
         /// <returns>Method call expression.</returns>
         public static MethodCallExpression GetMethodCallExpression(LambdaExpression expression)
         {
-            var methodCallExpression = expression.Body as MethodCallExpression;
-            if (methodCallExpression == null)
+            if (!(expression.Body is MethodCallExpression methodCallExpression))
             {
                 throw new InvalidOperationException("Provided expression is not valid - expected instance method call but instead received other type of expression.");
             }
@@ -168,5 +168,8 @@
 
             return methodCallExpression;
         }
+
+        public static bool IsIgnoredArgument(object value) 
+            => value == null || value.ToString() == IgnoredExpressionArgument;
     }
 }

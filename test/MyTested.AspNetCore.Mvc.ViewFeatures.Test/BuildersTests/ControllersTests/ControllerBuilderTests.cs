@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Builders.Base;
     using Builders.Contracts.Actions;
     using Builders.Contracts.Base;
     using Exceptions;
@@ -14,7 +15,6 @@
     using Setups;
     using Setups.Controllers;
     using Xunit;
-    using Builders.Base;
     using ViewFeatures.Test;
 
     public class ControllerBuilderTests
@@ -68,9 +68,9 @@
                 .ShouldPassForThe<FullPocoController>(controller =>
                 {
                     Assert.NotNull(controller);
-                    Assert.NotNull((controller as FullPocoController).CustomControllerContext);
-                    Assert.NotNull((controller as FullPocoController).CustomControllerContext.ActionDescriptor);
-                    Assert.Equal("OkResultAction", (controller as FullPocoController).CustomControllerContext.ActionDescriptor.ActionName);
+                    Assert.NotNull(controller.CustomControllerContext);
+                    Assert.NotNull(controller.CustomControllerContext.ActionDescriptor);
+                    Assert.Equal("OkResultAction", controller.CustomControllerContext.ActionDescriptor.ActionName);
                 });
 
             MyApplication.StartsFrom<DefaultStartup>();
@@ -115,11 +115,11 @@
                 .Ok()
                 .ShouldPassForThe<FullPocoController>(controller =>
                 {
-                    var modelState = (controller as FullPocoController).CustomControllerContext.ModelState;
+                    var modelState = controller.CustomControllerContext.ModelState;
 
                     Assert.True(modelState.IsValid);
-                    Assert.Equal(0, modelState.Values.Count());
-                    Assert.Equal(0, modelState.Keys.Count());
+                    Assert.Empty(modelState.Values);
+                    Assert.Empty(modelState.Keys);
                 });
 
             MyApplication.StartsFrom<DefaultStartup>();
@@ -243,7 +243,7 @@
                 .Ok()
                 .ShouldPassForThe<FullPocoController>(controller =>
                 {
-                    var modelState = (controller as FullPocoController).CustomControllerContext.ModelState;
+                    var modelState = controller.CustomControllerContext.ModelState;
 
                     Assert.False(modelState.IsValid);
                     Assert.Equal(2, modelState.Values.Count());
@@ -272,12 +272,12 @@
                 .NotFound()
                 .ShouldPassForThe<FullPocoController>(controller =>
                 {
-                    var controllerUser = (controller as FullPocoController).CustomHttpContext.User;
+                    var controllerUser = controller.CustomHttpContext.User;
 
-                    Assert.Equal(false, controllerUser.IsInRole("Any"));
-                    Assert.Equal(null, controllerUser.Identity.Name);
-                    Assert.Equal(null, controllerUser.Identity.AuthenticationType);
-                    Assert.Equal(false, controllerUser.Identity.IsAuthenticated);
+                    Assert.False(controllerUser.IsInRole("Any"));
+                    Assert.Null(controllerUser.Identity.Name);
+                    Assert.Null(controllerUser.Identity.AuthenticationType);
+                    Assert.False(controllerUser.Identity.IsAuthenticated);
                 });
 
             MyApplication.StartsFrom<DefaultStartup>();

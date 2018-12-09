@@ -1,9 +1,8 @@
-using System;
 using System.Security.Claims;
 using System.Security.Principal;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -94,8 +93,6 @@ namespace MusicStore
 
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole(minLevel: LogLevel.Warning);
-
             app.UseStatusCodePagesWithRedirects("~/Home/StatusCodePage");
 
             // Error page middleware displays a nice formatted HTML page for any unhandled exceptions in the

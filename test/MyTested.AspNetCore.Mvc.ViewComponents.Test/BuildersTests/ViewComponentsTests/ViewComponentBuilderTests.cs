@@ -52,8 +52,8 @@
                     var modelState = viewComponent.ModelState;
 
                     Assert.True(modelState.IsValid);
-                    Assert.Equal(0, modelState.Values.Count());
-                    Assert.Equal(0, modelState.Keys.Count());
+                    Assert.Empty(modelState.Values);
+                    Assert.Empty(modelState.Keys);
                 });
         }
         
@@ -69,10 +69,10 @@
                 {
                     var user = viewComponent.User;
 
-                    Assert.Equal(false, user.IsInRole("Any"));
-                    Assert.Equal(null, user.Identity.Name);
-                    Assert.Equal(null, user.Identity.AuthenticationType);
-                    Assert.Equal(false, user.Identity.IsAuthenticated);
+                    Assert.False(user.IsInRole("Any"));
+                    Assert.Null(user.Identity.Name);
+                    Assert.Null(user.Identity.AuthenticationType);
+                    Assert.False(user.Identity.IsAuthenticated);
                 });
         }
 

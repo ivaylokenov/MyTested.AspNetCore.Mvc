@@ -22,6 +22,7 @@
                 .ActionAttributes(attributes => attributes.ContainingAttributeOfType<HttpGetAttribute>());
         }
 
+        [Fact]
         public void ContainingAttributeOfTypeShouldThrowExceptionWithActionWithoutTheAttribute()
         {
             Test.AssertException<AttributeAssertionException>(

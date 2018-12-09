@@ -77,6 +77,7 @@
                         entities.AddRange(cartItems.Select(n => n.Album).Distinct());
                         entities.AddRange(cartItems);
                     }))
+                .WithoutValidation()
                 .Calling(c => c.AddressAndPayment(
                     From.Services<MusicStoreContext>(),
                     new Order { OrderId = orderId },
@@ -151,14 +152,14 @@
         private static CartItem[] CreateTestCartItems(string cartId, decimal itemPrice, int numberOfItem)
         {
             var albums = Enumerable.Range(1, 10).Select(n =>
-                new Album()
+                new Album
                 {
                     AlbumId = n,
                     Price = itemPrice,
                 }).ToArray();
 
             var cartItems = Enumerable.Range(1, numberOfItem).Select(n =>
-                new CartItem()
+                new CartItem
                 {
                     Count = 1,
                     CartId = cartId,

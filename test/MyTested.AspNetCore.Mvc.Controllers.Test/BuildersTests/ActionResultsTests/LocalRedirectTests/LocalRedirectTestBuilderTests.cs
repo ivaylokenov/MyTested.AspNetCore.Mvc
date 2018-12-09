@@ -118,7 +118,7 @@
                 .LocalRedirect()
                 .ToUrlPassing(url =>
                 {
-                    Assert.True(url.StartsWith("/local/"));
+                    Assert.StartsWith("/local/", url);
                 });
         }
 

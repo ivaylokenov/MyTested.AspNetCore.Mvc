@@ -3,9 +3,10 @@
     using System.Linq;
     using Internal.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Internal;
-    using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
+    using Microsoft.EntityFrameworkCore.Infrastructure;
+    using Microsoft.EntityFrameworkCore.InMemory.Infrastructure.Internal;
     using Microsoft.Extensions.DependencyInjection;
+    using Setups;
     using Setups.Common;
     using Xunit;
 
@@ -28,7 +29,7 @@
         {
             var services = new ServiceCollection();
 
-            services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase());
+            services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase(TestObjectFactory.TestDatabaseName));
 
             services.ReplaceDbContext();
 

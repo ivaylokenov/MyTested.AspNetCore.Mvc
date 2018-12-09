@@ -74,7 +74,7 @@
         }
 
         [Fact]
-        public void DetailsShouldAlbumDetails()
+        public void DetailsShouldReturnAlbumDetails()
         {
             Genre[] genres = null;
             var albumId = 1;
@@ -106,31 +106,36 @@
                     var genre = genres.SingleOrDefault(g => g.GenreId == model.GenreId);
                     Assert.NotNull(genre);
                     Assert.NotNull(genre.Albums.SingleOrDefault(a => a.AlbumId == albumId));
-                    Assert.Null(model.Artist);
+                    Assert.NotNull(model.Artist);
                 });
         }
 
         private static Genre[] CreateTestGenres(int numberOfGenres, int numberOfAlbums, DbContext dbContext)
         {
             var albums = Enumerable.Range(1, numberOfAlbums * numberOfGenres).Select(n =>
-                  new Album()
+                  new Album
                   {
                       AlbumId = n,
+                      Artist = new Artist
+                      {
+                          ArtistId = n,
+                          Name = "Artist " + n
+                      }
                   }).ToList();
 
-            var generes = Enumerable.Range(1, numberOfGenres).Select(n =>
-                 new Genre()
+            var genres = Enumerable.Range(1, numberOfGenres).Select(n =>
+                 new Genre
                  {
                      Albums = albums.Where(i => i.AlbumId % numberOfGenres == n - 1).ToList(),
                      GenreId = n,
-                     Name = "Genre " + n,
+                     Name = "Genre " + n
                  });
 
             dbContext.AddRange(albums);
-            dbContext.AddRange(generes);
+            dbContext.AddRange(genres);
             dbContext.SaveChanges();
 
-            return generes.ToArray();
+            return genres.ToArray();
         }
     }
 }

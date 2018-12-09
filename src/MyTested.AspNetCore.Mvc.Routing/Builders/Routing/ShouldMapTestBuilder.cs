@@ -291,12 +291,13 @@
 
             expectedRouteValues.ActionArguments.ForEach(arg =>
             {
-                if (arg.Value.Value.ToString() == ExpressionParser.IgnoredExpressionArgument)
+                var value = arg.Value.Value;
+                if (ExpressionParser.IsIgnoredArgument(value))
                 {
                     return;
                 }
 
-                this.ToRouteValue(arg.Key, arg.Value.Value);
+                this.ToRouteValue(arg.Key, value);
             });
         }
 

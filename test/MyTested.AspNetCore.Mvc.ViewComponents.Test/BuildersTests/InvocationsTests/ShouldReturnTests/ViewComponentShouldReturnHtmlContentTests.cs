@@ -91,7 +91,7 @@
                 .ShouldReturn()
                 .HtmlContent(content =>
                 {
-                    Assert.True(content.StartsWith("<input "));
+                    Assert.StartsWith("<input ", content);
                 });
         }
     }

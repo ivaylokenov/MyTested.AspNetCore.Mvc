@@ -81,7 +81,7 @@
             var result = ExpressionParser.ResolveMethodArguments(expression);
 
             Assert.NotNull(result);
-            Assert.Equal(0, result.Count());
+            Assert.Empty(result);
         }
 
         [Fact]

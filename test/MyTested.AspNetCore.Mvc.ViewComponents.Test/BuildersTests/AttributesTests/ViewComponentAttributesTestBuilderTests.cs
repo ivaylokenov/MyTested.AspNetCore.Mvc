@@ -20,6 +20,7 @@
                 .Attributes(attributes => attributes.ContainingAttributeOfType<CustomAttribute>());
         }
 
+        [Fact]
         public void ContainingAttributeOfTypeShouldThrowExceptionWithViewComponentWithoutTheAttribute()
         {
             Test.AssertException<AttributeAssertionException>(
@@ -31,7 +32,7 @@
                         .ShouldHave()
                         .Attributes(attributes => attributes.ContainingAttributeOfType<HttpPatchAttribute>());
                 },
-                "When testing AttributesComponent expected to have HttpPatchAttribute, but in fact such was not found.");
+                "When testing AttributesComponent was expected to have HttpPatchAttribute, but in fact such was not found.");
         }
 
         [Fact]

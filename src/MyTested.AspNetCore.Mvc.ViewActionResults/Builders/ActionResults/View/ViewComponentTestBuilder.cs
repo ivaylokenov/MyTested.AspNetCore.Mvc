@@ -6,7 +6,6 @@
     using Contracts.ActionResults.View;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.ViewEngines;
     using Microsoft.AspNetCore.Routing;
     using Microsoft.Net.Http.Headers;
     using Utilities.Validators;
@@ -53,23 +52,6 @@
         /// <inheritdoc />
         public new IAndViewComponentTestBuilder WithContentType(MediaTypeHeaderValue contentType)
             => this.WithContentType(contentType?.MediaType.Value);
-
-        /// <inheritdoc />
-        [Obsolete("The ViewEngine property is unused and will be removed in the next major version of ASP.NET Core MVC.")]
-        public new IAndViewComponentTestBuilder WithViewEngine(IViewEngine viewEngine)
-        {
-            base.WithViewEngine(viewEngine);
-            return this;
-        }
-
-        /// <inheritdoc />
-        [Obsolete("The ViewEngine property is unused and will be removed in the next major version of ASP.NET Core MVC.")]
-        public new IAndViewComponentTestBuilder WithViewEngineOfType<TViewEngine>()
-            where TViewEngine : IViewEngine
-        {
-            base.WithViewEngineOfType<TViewEngine>();
-            return this;
-        }
         
         /// <inheritdoc />
         public IAndViewComponentTestBuilder ContainingArgumentWithName(string name)

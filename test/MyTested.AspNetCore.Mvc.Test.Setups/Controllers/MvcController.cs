@@ -157,19 +157,10 @@
             return new ViewComponentResult
             {
                 StatusCode = 500,
-                ContentType = ContentType.ApplicationXml,
-                ViewEngine = new CustomViewEngine()
+                ContentType = ContentType.ApplicationXml
             };
         }
-
-        public IActionResult ViewComponentWithViewEngine(IViewEngine viewEngine)
-        {
-            return new ViewComponentResult
-            {
-                ViewEngine = viewEngine
-            };
-        }
-
+        
         public IActionResult IndexOutOfRangeException()
         {
             throw new IndexOutOfRangeException();

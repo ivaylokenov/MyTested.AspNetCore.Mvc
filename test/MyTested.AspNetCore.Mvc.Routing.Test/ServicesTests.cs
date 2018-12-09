@@ -23,8 +23,8 @@
             var actionInvokerProviders = services.GetServices<IActionInvokerProvider>();
             var modelBindingActionInvokerFactory = services.GetService<IModelBindingActionInvokerFactory>();
 
-            Assert.Equal(1, actionInvokerProviders.Count());
-            Assert.True(actionInvokerProviders.Any(a => a.GetType() == typeof(ControllerActionInvokerProvider)));
+            Assert.Single(actionInvokerProviders);
+            Assert.Contains(actionInvokerProviders, a => a.GetType() == typeof(ControllerActionInvokerProvider));
             Assert.Null(modelBindingActionInvokerFactory);
 
             var routeServices = TestApplication.RoutingServices;
@@ -60,8 +60,8 @@
             var modelBindingActionInvokerFactory = services.GetService<IModelBindingActionInvokerFactory>();
 
             Assert.Equal(2, actionInvokerProviders.Count());
-            Assert.True(actionInvokerProviders.Any(a => a.GetType() == typeof(ControllerActionInvokerProvider)));
-            Assert.True(actionInvokerProviders.Any(a => a.GetType() == typeof(CustomActionInvokerProvider)));
+            Assert.Contains(actionInvokerProviders, a => a.GetType() == typeof(ControllerActionInvokerProvider));
+            Assert.Contains(actionInvokerProviders, a => a.GetType() == typeof(CustomActionInvokerProvider));
             Assert.NotNull(modelBindingActionInvokerFactory);
 
             var routeServices = TestApplication.RoutingServices;

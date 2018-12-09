@@ -1272,7 +1272,7 @@
                 .ShouldReturn()
                 .Json()
                 .WithJsonSerializerSettings(s =>
-                    s.WithTypeNameAssemblyFormat(FormatterAssemblyStyle.Simple));
+                    s.WithTypeNameAssemblyFormatHandling(TypeNameAssemblyFormatHandling.Simple));
         }
 
         [Fact]
@@ -1287,9 +1287,9 @@
                         .ShouldReturn()
                         .Json()
                         .WithJsonSerializerSettings(s =>
-                            s.WithTypeNameAssemblyFormat(FormatterAssemblyStyle.Full));
+                            s.WithTypeNameAssemblyFormatHandling(TypeNameAssemblyFormatHandling.Full));
                 },
-                "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Full type name assembly format, but in fact found Simple.");
+                "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Full type name assembly format handling, but in fact found Simple.");
         }
 
         [Fact]
@@ -1297,7 +1297,7 @@
         {
             var jsonSerializerSettings = TestObjectFactory.GetJsonSerializerSettings();
             jsonSerializerSettings.MaxDepth = int.MaxValue;
-            jsonSerializerSettings.TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple;
+            jsonSerializerSettings.TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple;
 
             MyController<MvcController>
                 .Instance()
@@ -1306,7 +1306,7 @@
                 .ShouldReturn()
                 .Json()
                 .WithJsonSerializerSettings(s =>
-                    s.WithTypeNameAssemblyFormat(FormatterAssemblyStyle.Simple));
+                    s.WithTypeNameAssemblyFormatHandling(TypeNameAssemblyFormatHandling.Simple));
         }
 
         [Fact]
