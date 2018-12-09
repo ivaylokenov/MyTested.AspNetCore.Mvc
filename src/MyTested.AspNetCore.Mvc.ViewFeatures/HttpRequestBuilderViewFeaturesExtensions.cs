@@ -28,9 +28,13 @@
 
             var tokens = antiForgery.GetTokens(httpContext);
 
+#pragma warning disable 618
             if (antiForgeryOptions.CookieName != null)
+#pragma warning restore 618
             {
+#pragma warning disable 618
                 actualHttpRequestBuilder.WithCookie(antiForgeryOptions.CookieName, tokens.CookieToken);
+#pragma warning restore 618
             }
 
             if (antiForgeryOptions.HeaderName != null)

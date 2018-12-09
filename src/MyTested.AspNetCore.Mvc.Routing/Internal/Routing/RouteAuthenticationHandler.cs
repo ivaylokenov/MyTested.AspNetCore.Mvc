@@ -2,19 +2,18 @@
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http.Features.Authentication;
-    using Microsoft.AspNetCore.Mvc.Internal;
 
     public class RouteAuthenticationHandler : IAuthenticationHandler
     {
         public Task AuthenticateAsync(AuthenticateContext context)
         {
-            return TaskCache.CompletedTask;
+            return Task.CompletedTask;
         }
 
         public Task ChallengeAsync(ChallengeContext context)
         {
             context.Accept();
-            return TaskCache.CompletedTask;
+            return Task.CompletedTask;
         }
 
         public void GetDescriptions(DescribeSchemesContext context)
@@ -25,13 +24,13 @@
         public Task SignInAsync(SignInContext context)
         {
             context.Accept();
-            return TaskCache.CompletedTask;
+            return Task.CompletedTask;
         }
 
         public Task SignOutAsync(SignOutContext context)
         {
             context.Accept();
-            return TaskCache.CompletedTask;
+            return Task.CompletedTask;
         }
     }
 }

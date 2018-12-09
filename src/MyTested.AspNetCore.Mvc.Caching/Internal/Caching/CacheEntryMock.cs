@@ -7,13 +7,10 @@
 
     public class CacheEntryMock : ICacheEntry
     {
-        private readonly IList<IChangeToken> expirationTokens;
-        private readonly IList<PostEvictionCallbackRegistration> postEvictionCallbacks;
-        
         public CacheEntryMock()
         {
-            this.expirationTokens = new List<IChangeToken>();
-            this.postEvictionCallbacks = new List<PostEvictionCallbackRegistration>();
+            this.ExpirationTokens = new List<IChangeToken>();
+            this.PostEvictionCallbacks = new List<PostEvictionCallbackRegistration>();
         }
 
         public CacheEntryMock(object key)
@@ -28,11 +25,13 @@
 
         public TimeSpan? AbsoluteExpirationRelativeToNow { get; set; }
 
-        public IList<IChangeToken> ExpirationTokens => this.expirationTokens;
+        public IList<IChangeToken> ExpirationTokens { get; }
 
-        public IList<PostEvictionCallbackRegistration> PostEvictionCallbacks => this.postEvictionCallbacks;
+        public IList<PostEvictionCallbackRegistration> PostEvictionCallbacks { get; }
 
         public CacheItemPriority Priority { get; set; }
+
+        public long? Size { get; set; }
 
         public TimeSpan? SlidingExpiration { get; set; }
 

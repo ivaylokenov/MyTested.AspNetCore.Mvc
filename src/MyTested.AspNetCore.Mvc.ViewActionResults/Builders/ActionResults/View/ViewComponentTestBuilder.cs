@@ -52,7 +52,7 @@
 
         /// <inheritdoc />
         public new IAndViewComponentTestBuilder WithContentType(MediaTypeHeaderValue contentType)
-            => this.WithContentType(contentType?.MediaType);
+            => this.WithContentType(contentType?.MediaType.Value);
 
         /// <inheritdoc />
         [Obsolete("The ViewEngine property is unused and will be removed in the next major version of ASP.NET Core MVC.")]

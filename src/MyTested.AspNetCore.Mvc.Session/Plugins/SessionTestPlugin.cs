@@ -43,7 +43,12 @@
                             }
                             else
                             {
-                                mockedSession = sessionStore.Create(Guid.NewGuid().ToString(), TimeSpan.Zero, () => true, true);
+                                mockedSession = sessionStore.Create(
+                                    Guid.NewGuid().ToString(), 
+                                    TimeSpan.Zero,
+                                    TimeSpan.Zero,
+                                    () => true, 
+                                    true);
                             }
 
                             httpContext.Features.Set<ISessionFeature>(new SessionFeatureMock

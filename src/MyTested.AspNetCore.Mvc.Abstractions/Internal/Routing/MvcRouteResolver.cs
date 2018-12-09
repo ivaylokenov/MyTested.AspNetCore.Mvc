@@ -65,8 +65,7 @@
 
             var actionContext = new ActionContext(routeContext.HttpContext, routeContext.RouteData, actionDescriptor);
 
-            var controllerActionDescriptor = actionDescriptor as ControllerActionDescriptor;
-            if (controllerActionDescriptor == null)
+            if (!(actionDescriptor is ControllerActionDescriptor controllerActionDescriptor))
             {
                 throw new InvalidOperationException("Only controller actions are supported by the route testing.");
             }
@@ -74,8 +73,7 @@
             var actionInvokerFactory = services.GetRequiredService<IActionInvokerFactory>();
 
             var invoker = actionInvokerFactory.CreateInvoker(actionContext);
-            var modelBindingActionInvoker = invoker as IModelBindingActionInvoker;
-            if (modelBindingActionInvoker == null)
+            if (!(invoker is IModelBindingActionInvoker modelBindingActionInvoker))
             {
                 throw new InvalidOperationException("Route testing requires the selected IActionInvoker by the IActionInvokerFactory to implement IModelBindingActionInvoker.");
             }

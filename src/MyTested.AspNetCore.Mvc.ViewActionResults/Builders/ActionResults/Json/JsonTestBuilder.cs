@@ -60,7 +60,7 @@
 
         /// <inheritdoc />
         public IAndJsonTestBuilder WithContentType(MediaTypeHeaderValue contentType)
-            => this.WithContentType(contentType?.MediaType);
+            => this.WithContentType(contentType?.MediaType.Value);
 
         /// <inheritdoc />
         public IAndJsonTestBuilder WithDefaulJsonSerializerSettings()
@@ -133,7 +133,7 @@
                 .WithObjectCreationHandling(jsonSerializerSettings.ObjectCreationHandling)
                 .WithPreserveReferencesHandling(jsonSerializerSettings.PreserveReferencesHandling)
                 .WithReferenceLoopHandling(jsonSerializerSettings.ReferenceLoopHandling)
-                .WithTypeNameAssemblyFormat(jsonSerializerSettings.TypeNameAssemblyFormat)
+                .WithTypeNameAssemblyFormatHandling(jsonSerializerSettings.TypeNameAssemblyFormatHandling)
                 .WithTypeNameHandling(jsonSerializerSettings.TypeNameHandling);
         }
 

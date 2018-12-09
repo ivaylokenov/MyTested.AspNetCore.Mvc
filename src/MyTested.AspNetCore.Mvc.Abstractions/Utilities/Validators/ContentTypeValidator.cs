@@ -1,4 +1,6 @@
-﻿namespace MyTested.AspNetCore.Mvc.Utilities.Validators
+﻿using Microsoft.Extensions.Primitives;
+
+namespace MyTested.AspNetCore.Mvc.Utilities.Validators
 {
     using System;
     using System.Collections.Generic;
@@ -64,7 +66,7 @@
             Action<string, string, string> failedValidationAction)
         {
             var contentTypes = (MediaTypeCollection)TryGetContentTypesCollection(result);
-            if (!contentTypes.Contains(expectedContentType.MediaType))
+            if (!contentTypes.Contains(expectedContentType.MediaType.Value))
             {
                 failedValidationAction(
                     "content types",
@@ -85,7 +87,7 @@
             Action<string, string, string> failedValidationAction)
         {
             var actualContentTypes = (IList<string>)SortContentTypes(TryGetContentTypesCollection(result));
-            var expectedContentTypes = SortContentTypes(contentTypes.Select(m => m.MediaType));
+            var expectedContentTypes = SortContentTypes(contentTypes.Select(m => m.MediaType.Value));
 
             if (actualContentTypes.Count != expectedContentTypes.Count)
             {
@@ -110,11 +112,9 @@
         }
 
         private static IList<string> SortContentTypes(IEnumerable<string> contentTypes)
-        {
-            return contentTypes
+            => contentTypes
                 .OrderBy(m => m)
                 .ToList();
-        }
 
         private static IEnumerable<string> TryGetContentTypesCollection(dynamic actionResult)
         {

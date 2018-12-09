@@ -53,7 +53,7 @@
 
         /// <inheritdoc />
         public IAndContentTestBuilder WithContentType(MediaTypeHeaderValue contentType)
-            => this.WithContentType(contentType?.MediaType);
+            => this.WithContentType(contentType?.MediaType.Value);
 
         /// <inheritdoc />
         public IContentTestBuilder AndAlso() => this;

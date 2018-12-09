@@ -265,11 +265,11 @@
         IAndJsonSerializerSettingsTestBuilder WithTraceWriterOfType(Type traceWriterType);
 
         /// <summary>
-        /// Tests the <see cref="JsonSerializerSettings.TypeNameAssemblyFormat"/> property in a <see cref="JsonSerializerSettings"/> object.
+        /// Tests the <see cref="JsonSerializerSettings.TypeNameAssemblyFormatHandling"/> property in a <see cref="JsonSerializerSettings"/> object.
         /// </summary>
-        /// <param name="typeNameAssemblyFormat">Expected <see cref="FormatterAssemblyStyle"/>.</param>
+        /// <param name="typeNameAssemblyFormatHandling">Expected <see cref="TypeNameAssemblyFormatHandling"/>.</param>
         /// <returns>The same <see cref="IAndJsonSerializerSettingsTestBuilder"/>.</returns>
-        IAndJsonSerializerSettingsTestBuilder WithTypeNameAssemblyFormat(FormatterAssemblyStyle typeNameAssemblyFormat);
+        IAndJsonSerializerSettingsTestBuilder WithTypeNameAssemblyFormatHandling(TypeNameAssemblyFormatHandling typeNameAssemblyFormatHandling);
 
         /// <summary>
         /// Tests the <see cref="JsonSerializerSettings.TypeNameHandling"/> property in a <see cref="JsonSerializerSettings"/> object.

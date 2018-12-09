@@ -6,6 +6,7 @@
     using System.Globalization;
     using System.Linq;
     using System.Reflection;
+    using System.Threading.Tasks;
     using Configuration;
     using Licensing;
     using Logging;
@@ -14,9 +15,6 @@
     using Microsoft.AspNetCore.Hosting.Builder;
     using Microsoft.AspNetCore.Hosting.Internal;
     using Microsoft.AspNetCore.Http;
-#if NET451
-    using Microsoft.AspNetCore.Mvc.ApplicationParts;
-#endif
     using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.Configuration;
@@ -25,7 +23,6 @@
     using Microsoft.Extensions.DependencyModel;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.ObjectPool;
-    using Microsoft.Extensions.PlatformAbstractions;
     using Plugins;
     using Services;
     using Utilities.Extensions;
@@ -63,7 +60,7 @@
         {
             Sync = new object();
 
-            NullHandler = c => TaskCache.CompletedTask;
+            NullHandler = c => Task.CompletedTask;
 
             DefaultRegistrationPlugins = new HashSet<IDefaultRegistrationPlugin>();
             ServiceRegistrationPlugins = new HashSet<IServiceRegistrationPlugin>();
@@ -104,10 +101,7 @@
 
         internal static Type StartupType
         {
-            get
-            {
-                return startupType;
-            }
+            get => startupType;
 
             set
             {
@@ -244,38 +238,32 @@
             {
                 var plugin = Activator.CreateInstance(t);
 
-                var defaultRegistrationPlugin = plugin as IDefaultRegistrationPlugin;
-                if (defaultRegistrationPlugin != null)
+                if (plugin is IDefaultRegistrationPlugin defaultRegistrationPlugin)
                 {
                     DefaultRegistrationPlugins.Add(defaultRegistrationPlugin);
                 }
 
-                var servicePlugin = plugin as IServiceRegistrationPlugin;
-                if (servicePlugin != null)
+                if (plugin is IServiceRegistrationPlugin servicePlugin)
                 {
                     ServiceRegistrationPlugins.Add(servicePlugin);
                 }
 
-                var routingServicePlugin = plugin as IRoutingServiceRegistrationPlugin;
-                if (routingServicePlugin != null)
+                if (plugin is IRoutingServiceRegistrationPlugin routingServicePlugin)
                 {
                     RoutingServiceRegistrationPlugins.Add(routingServicePlugin);
                 }
 
-                var initializationPlugin = plugin as IInitializationPlugin;
-                if (initializationPlugin != null)
+                if (plugin is IInitializationPlugin initializationPlugin)
                 {
                     InitializationPlugins.Add(initializationPlugin);
                 }
 
-                var httpFeatureRegistrationPlugin = plugin as IHttpFeatureRegistrationPlugin;
-                if (httpFeatureRegistrationPlugin != null)
+                if (plugin is IHttpFeatureRegistrationPlugin httpFeatureRegistrationPlugin)
                 {
                     TestHelper.HttpFeatureRegistrationPlugins.Add(httpFeatureRegistrationPlugin);
                 }
 
-                var shouldPassForPlugin = plugin as IShouldPassForPlugin;
-                if (shouldPassForPlugin != null)
+                if (plugin is IShouldPassForPlugin shouldPassForPlugin)
                 {
                     TestHelper.ShouldPassForPlugins.Add(shouldPassForPlugin);
                 }
@@ -334,29 +322,28 @@
             => new HostingEnvironment
             {
                 ApplicationName = ApplicationName,
-                EnvironmentName = GeneralConfiguration().EnvironmentName(),
-                ContentRootPath = PlatformServices.Default.Application.ApplicationBasePath
+                EnvironmentName = GeneralConfiguration().EnvironmentName()
             };
 
         private static IServiceCollection GetInitialServiceCollection()
         {
             var serviceCollection = new ServiceCollection();
-            var diagnosticSource = new DiagnosticListener(TestFrameworkName);
-            var applicationLifetime = new ApplicationLifetime();
-
+            var diagnosticListener = new DiagnosticListener(TestFrameworkName);
+            
             // default server services
             serviceCollection.AddSingleton(Environment);
-            serviceCollection.AddSingleton<IApplicationLifetime>(applicationLifetime);
+            serviceCollection.AddSingleton<IApplicationLifetime, ApplicationLifetime>();
+            
+            serviceCollection.AddTransient<IApplicationBuilderFactory, ApplicationBuilderFactory>();
+            serviceCollection.AddTransient<IHttpContextFactory, HttpContextFactory>();
+            serviceCollection.AddScoped<IMiddlewareFactory, MiddlewareFactory>();
+            serviceCollection.AddOptions();
 
             serviceCollection.AddSingleton<ILoggerFactory>(LoggerFactoryMock.Create());
             serviceCollection.AddLogging();
 
-            serviceCollection.AddTransient<IApplicationBuilderFactory, ApplicationBuilderFactory>();
-            serviceCollection.AddTransient<IHttpContextFactory, HttpContextFactory>();
-            serviceCollection.AddOptions();
-
-            serviceCollection.AddSingleton<DiagnosticSource>(diagnosticSource);
-            serviceCollection.AddSingleton(diagnosticSource);
+            serviceCollection.AddSingleton(diagnosticListener);
+            serviceCollection.AddSingleton<DiagnosticSource>(diagnosticListener);
 
             serviceCollection.AddTransient<IStartupFilter, AutoRequestServicesStartupFilter>();
             serviceCollection.AddTransient<IServiceProviderFactory<IServiceCollection>, DefaultServiceProviderFactory>();
@@ -415,23 +402,6 @@
 
             TryReplaceKnownServices(serviceCollection);
             PrepareRoutingServices(serviceCollection);
-
-#if NET451
-            var baseStartupType = StartupType;
-            while (baseStartupType != null && baseStartupType?.BaseType != typeof(object))
-            {
-                baseStartupType = baseStartupType.BaseType;
-            }
-
-            var applicationPartManager = (ApplicationPartManager)serviceCollection
-                .FirstOrDefault(t => t.ServiceType == typeof(ApplicationPartManager))
-                ?.ImplementationInstance;
-
-            if (applicationPartManager != null && baseStartupType != null)
-            {
-                applicationPartManager.ApplicationParts.Add(new AssemblyPart(baseStartupType.GetTypeInfo().Assembly));
-            }
-#endif
 
             serviceProvider = serviceCollection.BuildServiceProvider();
 

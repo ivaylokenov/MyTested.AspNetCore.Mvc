@@ -583,16 +583,16 @@
         }
 
         /// <inheritdoc />
-        public IAndJsonSerializerSettingsTestBuilder WithTypeNameAssemblyFormat(FormatterAssemblyStyle typeNameAssemblyFormat)
+        public IAndJsonSerializerSettingsTestBuilder WithTypeNameAssemblyFormatHandling(TypeNameAssemblyFormatHandling typeNameAssemblyFormatHandling)
         {
-            this.jsonSerializerSettings.TypeNameAssemblyFormat = typeNameAssemblyFormat;
+            this.jsonSerializerSettings.TypeNameAssemblyFormatHandling = typeNameAssemblyFormatHandling;
             this.validations.Add((expected, actual) =>
             {
-                if (!CommonValidator.CheckEquality(expected.TypeNameAssemblyFormat, actual.TypeNameAssemblyFormat))
+                if (!CommonValidator.CheckEquality(expected.TypeNameAssemblyFormatHandling, actual.TypeNameAssemblyFormatHandling))
                 {
                     this.ThrowNewJsonResultAssertionException(
-                        $"{expected.TypeNameAssemblyFormat} type name assembly format",
-                        $"in fact found {actual.TypeNameAssemblyFormat}");
+                        $"{expected.TypeNameAssemblyFormatHandling} type name assembly format handling",
+                        $"in fact found {actual.TypeNameAssemblyFormatHandling}");
                 }
             });
 

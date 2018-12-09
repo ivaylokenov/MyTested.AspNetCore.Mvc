@@ -167,7 +167,7 @@
             cookieBuilder(newResponseCookieTestBuilder);
             var expectedCookie = newResponseCookieTestBuilder.GetResponseCookie();
 
-            var expectedCookieName = expectedCookie.Name;
+            var expectedCookieName = expectedCookie.Name.Value;
             this.ContainingCookie(expectedCookieName);
             var actualCookie = this.GetCookieByKey(expectedCookieName);
 
@@ -420,10 +420,10 @@
         private CookieOptions GetCookieOptions(SetCookieHeaderValue cookie)
             => new CookieOptions
             {
-                Domain = cookie.Domain,
+                Domain = cookie.Domain.Value,
                 Expires = cookie.Expires,
                 HttpOnly = cookie.HttpOnly,
-                Path = cookie.Path,
+                Path = cookie.Path.Value,
                 Secure = cookie.Secure
             };
 

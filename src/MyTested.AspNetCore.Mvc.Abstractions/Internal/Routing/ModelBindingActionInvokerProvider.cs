@@ -23,9 +23,7 @@
                 throw new ArgumentNullException(nameof(context));
             }
 
-            var actionDescriptor = context.ActionContext.ActionDescriptor as ControllerActionDescriptor;
-
-            if (actionDescriptor != null)
+            if (context.ActionContext.ActionDescriptor is ControllerActionDescriptor)
             {
                 context.Result = this.actionInvokerFactory.CreateModelBindingActionInvoker(context.ActionContext);
             }
@@ -33,6 +31,7 @@
         
         public void OnProvidersExecuted(ActionInvokerProviderContext context)
         {
+            // intentionally does nothing
         }
     }
 }

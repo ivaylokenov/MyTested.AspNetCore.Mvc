@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>My Tested ASP.NET Core MVC view features components.</Description>
+    <Copyright>2015-2019 Ivaylo Kenov</Copyright>
+    <AssemblyTitle>MyTested.AspNetCore.Mvc.ViewFeatures</AssemblyTitle>
+    <VersionPrefix>2.2.0</VersionPrefix>
+    <Authors>Ivaylo Kenov</Authors>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AssemblyName>MyTested.AspNetCore.Mvc.ViewFeatures</AssemblyName>
+    <AssemblyOriginatorKeyFile>../../tools/Key.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+    <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
+    <PackageId>MyTested.AspNetCore.Mvc.ViewFeatures</PackageId>
+    <PackageTags>aspnetcore;aspnetcoremvc;testing;unit;tests;fluent;testing;framework;asp;net;core;mvc;test;mymvc;mytested</PackageTags>
+    <PackageIconUrl>https://raw.githubusercontent.com/ivaylokenov/MyTested.AspNetCore.Mvc/master/tools/nuget-logo.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>git://github.com/ivaylokenov/MyTested.AspNetCore.Mvc</RepositoryUrl>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MyTested.AspNetCore.Mvc.DataAnnotations\MyTested.AspNetCore.Mvc.DataAnnotations.csproj" />
+    <ProjectReference Include="..\MyTested.AspNetCore.Mvc.Helpers\MyTested.AspNetCore.Mvc.Helpers.csproj" />
+    <ProjectReference Include="..\MyTested.AspNetCore.Mvc.TempData\MyTested.AspNetCore.Mvc.TempData.csproj" />
+    <ProjectReference Include="..\MyTested.AspNetCore.Mvc.ViewData\MyTested.AspNetCore.Mvc.ViewData.csproj" />
+    <ProjectReference Include="..\MyTested.AspNetCore.Mvc.ViewActionResults\MyTested.AspNetCore.Mvc.ViewActionResults.csproj" />
+    <ProjectReference Include="..\MyTested.AspNetCore.Mvc.ViewComponents\MyTested.AspNetCore.Mvc.ViewComponents.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
+  </ItemGroup>
+
+</Project>

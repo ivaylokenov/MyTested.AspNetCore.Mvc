@@ -62,7 +62,7 @@
             serviceCollection.Replace<DbContext>(s => s.GetRequiredService<TDbContext>(), ServiceLifetime.Scoped);
             serviceCollection.AddDbContext<TDbContext>(opts =>
             {
-                opts.UseInMemoryDatabase();
+                opts.UseInMemoryDatabase(Guid.NewGuid().ToString());
 
                 ((IDbContextOptionsBuilderInfrastructure)opts).AddOrUpdateExtension(new ScopedInMemoryOptionsExtension());
             });

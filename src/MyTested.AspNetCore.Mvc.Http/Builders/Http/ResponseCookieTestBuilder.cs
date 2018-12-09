@@ -45,7 +45,7 @@
         {
             this.validations.Add((expected, actual) =>
             {
-                assertions(actual.Value);
+                assertions(actual.Value.Value);
                 return true;
             });
 
@@ -55,7 +55,7 @@
         /// <inheritdoc />
         public IAndResponseCookieTestBuilder WithValue(Func<string, bool> predicate)
         {
-            this.validations.Add((expected, actual) => predicate(actual.Value));
+            this.validations.Add((expected, actual) => predicate(actual.Value.Value));
             return this;
         }
 

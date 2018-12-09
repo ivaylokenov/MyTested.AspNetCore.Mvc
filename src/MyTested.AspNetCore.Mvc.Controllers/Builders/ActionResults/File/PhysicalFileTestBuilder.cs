@@ -30,7 +30,7 @@
 
         /// <inheritdoc />
         public IAndPhysicalFileTestBuilder WithContentType(MediaTypeHeaderValue contentType)
-            => this.WithContentType(contentType?.MediaType);
+            => this.WithContentType(contentType?.MediaType.Value);
 
         /// <inheritdoc />
         public IAndPhysicalFileTestBuilder WithFileDownloadName(string fileDownloadName)
