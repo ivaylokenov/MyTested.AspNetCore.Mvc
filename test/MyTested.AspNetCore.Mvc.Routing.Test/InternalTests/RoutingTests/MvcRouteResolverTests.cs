@@ -136,11 +136,11 @@
             Assert.Equal(typeof(NormalController).GetTypeInfo(), routeInfo.ControllerType);
             Assert.Equal("Normal", routeInfo.ControllerName);
             Assert.Equal("ActionWithMultipleParameters", routeInfo.Action);
-            Assert.Equal(3, routeInfo.ActionArguments.Count);
+            Assert.Equal(2, routeInfo.ActionArguments.Count);
             Assert.Equal(5, routeInfo.ActionArguments["id"].Value);
             Assert.Equal("test", routeInfo.ActionArguments["text"].Value);
-            Assert.True(routeInfo.ActionArguments.ContainsKey("model"));
-            Assert.True(routeInfo.ModelState.IsValid);
+            Assert.False(routeInfo.ActionArguments.ContainsKey("model"));
+            Assert.False(routeInfo.ModelState.IsValid);
         }
 
         [Fact]
@@ -270,15 +270,10 @@
             Assert.Equal(typeof(NormalController).GetTypeInfo(), routeInfo.ControllerType);
             Assert.Equal("Normal", routeInfo.ControllerName);
             Assert.Equal("ActionWithModel", routeInfo.Action);
-            Assert.Equal(2, routeInfo.ActionArguments.Count);
+            Assert.Equal(1, routeInfo.ActionArguments.Count);
             Assert.Equal(5, routeInfo.ActionArguments["id"].Value);
-            Assert.True(routeInfo.ActionArguments.ContainsKey("model"));
-
-            var model = routeInfo.ActionArguments["model"].Value as RequestModel;
-
-            Assert.Null(model);
-
-            Assert.True(routeInfo.ModelState.IsValid);
+            Assert.False(routeInfo.ActionArguments.ContainsKey("model"));
+            Assert.False(routeInfo.ModelState.IsValid);
         }
 
         [Fact]

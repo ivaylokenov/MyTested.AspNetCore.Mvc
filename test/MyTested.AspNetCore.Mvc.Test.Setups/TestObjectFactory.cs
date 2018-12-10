@@ -88,7 +88,8 @@
                     Secure = true,
                     Domain = "testdomain.com",
                     Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)),
-                    Path = "/"
+                    Path = "/",
+                    SameSite = SameSiteMode.Strict
                 });
             response.Cookies.Append(
                 "AnotherCookie",

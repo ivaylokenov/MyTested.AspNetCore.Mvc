@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using ApplicationParts.Web.Data;
 using ApplicationParts.Models;
 using ApplicationParts.Services;
+using Microsoft.AspNetCore.Identity;
 
 namespace ApplicationParts.Web
 {
@@ -19,13 +19,7 @@ namespace ApplicationParts.Web
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
-
-            if (env.IsDevelopment())
-            {
-                // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
-                builder.AddUserSecrets();
-            }
-
+            
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
         }
@@ -53,9 +47,6 @@ namespace ApplicationParts.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -69,7 +60,7 @@ namespace ApplicationParts.Web
 
             app.UseStaticFiles();
 
-            app.UseIdentity();
+            app.UseAuthentication();
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 

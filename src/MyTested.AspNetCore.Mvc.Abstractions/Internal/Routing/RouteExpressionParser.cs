@@ -1,4 +1,6 @@
-﻿namespace MyTested.AspNetCore.Mvc.Internal.Routing
+﻿using Microsoft.AspNetCore.Mvc.Abstractions;
+
+namespace MyTested.AspNetCore.Mvc.Internal.Routing
 {
     using System;
     using System.Collections.Generic;
@@ -51,7 +53,7 @@
                     continue;
                 }
 
-                if (routeValue != string.Empty)
+                if (!string.IsNullOrEmpty(routeValue))
                 {
                     // Override the 'default' values.
                     if (string.Equals(routeKey, "controller", StringComparison.OrdinalIgnoreCase))
@@ -113,9 +115,8 @@
             if (considerParameterDescriptors)
             {
                 var parameters = controllerActionDescriptor.Parameters;
-                for (int i = 0; i < parameters.Count; i++)
+                foreach (var parameter in parameters)
                 {
-                    var parameter = parameters[i];
                     if (parameter.BindingInfo != null)
                     {
                         parameterDescriptors.Add(parameter.Name, parameter.BindingInfo.BinderModelName);

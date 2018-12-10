@@ -1,22 +1,20 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Localization;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using MusicStore.Components;
-using MusicStore.Models;
-using System.Globalization;
-using System.Runtime.InteropServices;
-
-namespace MusicStore
+﻿namespace MusicStore
 {
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Localization;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
+    using MusicStore.Components;
+    using MusicStore.Models;
+    using System.Globalization;
+    using System.Runtime.InteropServices;
+
     public class Startup
     {
-        private readonly Platform _platform;
-
         public Startup(IHostingEnvironment hostingEnvironment)
         {
             // Below code demonstrates usage of multiple configuration sources. For instance a setting say 'setting1'
@@ -29,7 +27,6 @@ namespace MusicStore
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
-            _platform = new Platform();
         }
 
         public IConfiguration Configuration { get; }
@@ -37,18 +34,9 @@ namespace MusicStore
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
-
-            // Add EF services to the services container
-            if (_platform.UseInMemoryStore)
-            {
-                services.AddDbContext<MusicStoreContext>(options =>
-                    options.UseInMemoryDatabase("MusicStore"));
-            }
-            else
-            {
-                services.AddDbContext<MusicStoreContext>(options =>
-                    options.UseSqlServer(Configuration[StoreConfig.ConnectionStringKey.Replace("__", ":")]));
-            }
+            
+            services.AddDbContext<MusicStoreContext>(options =>
+                options.UseSqlServer(Configuration[StoreConfig.ConnectionStringKey.Replace("__", ":")]));
 
             // Add Identity services to the services container
             services

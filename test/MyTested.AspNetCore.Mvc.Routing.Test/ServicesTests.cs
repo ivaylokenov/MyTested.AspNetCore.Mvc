@@ -1,4 +1,6 @@
-﻿namespace MyTested.AspNetCore.Mvc.Test
+﻿using Microsoft.AspNetCore.Mvc.RazorPages.Internal;
+
+namespace MyTested.AspNetCore.Mvc.Test
 {
     using System.Linq;
     using Internal.Application;
@@ -20,23 +22,23 @@
             MyApplication.StartsFrom<DefaultStartup>();
 
             var services = TestApplication.Services;
-            var actionInvokerProviders = services.GetServices<IActionInvokerProvider>();
+            var actionInvokerProviders = services.GetServices<IActionInvokerProvider>().ToList();
             var modelBindingActionInvokerFactory = services.GetService<IModelBindingActionInvokerFactory>();
 
-            Assert.Single(actionInvokerProviders);
+            Assert.Equal(2, actionInvokerProviders.Count);
             Assert.Contains(actionInvokerProviders, a => a.GetType() == typeof(ControllerActionInvokerProvider));
+            Assert.Contains(actionInvokerProviders, a => a.GetType() == typeof(PageActionInvokerProvider));
             Assert.Null(modelBindingActionInvokerFactory);
 
             var routeServices = TestApplication.RoutingServices;
-            var routeActionInvokerProviders = routeServices.GetServices<IActionInvokerProvider>();
+            var routeActionInvokerProviders = routeServices.GetServices<IActionInvokerProvider>().ToList();
             var routeModelBindingActionInvokerFactory = routeServices.GetService<IModelBindingActionInvokerFactory>();
 
-            Assert.Equal(2, routeActionInvokerProviders.Count());
+            Assert.Equal(3, routeActionInvokerProviders.Count);
 
             var routeActionInvokerProvidersList = routeActionInvokerProviders.OrderByDescending(r => r.Order).ToList();
 
             Assert.True(routeActionInvokerProvidersList[0].GetType() == typeof(ModelBindingActionInvokerProvider));
-            Assert.True(routeActionInvokerProvidersList[1].GetType() == typeof(ControllerActionInvokerProvider));
             Assert.NotNull(routeModelBindingActionInvokerFactory);
             Assert.IsAssignableFrom<ModelBindingActionInvokerFactory>(routeModelBindingActionInvokerFactory);
 
@@ -56,24 +58,24 @@
                 });
 
             var services = TestApplication.Services;
-            var actionInvokerProviders = services.GetServices<IActionInvokerProvider>();
+            var actionInvokerProviders = services.GetServices<IActionInvokerProvider>().ToList();
             var modelBindingActionInvokerFactory = services.GetService<IModelBindingActionInvokerFactory>();
 
-            Assert.Equal(2, actionInvokerProviders.Count());
+            Assert.Equal(3, actionInvokerProviders.Count);
             Assert.Contains(actionInvokerProviders, a => a.GetType() == typeof(ControllerActionInvokerProvider));
+            Assert.Contains(actionInvokerProviders, a => a.GetType() == typeof(PageActionInvokerProvider));
             Assert.Contains(actionInvokerProviders, a => a.GetType() == typeof(CustomActionInvokerProvider));
             Assert.NotNull(modelBindingActionInvokerFactory);
 
             var routeServices = TestApplication.RoutingServices;
-            var routeActionInvokerProviders = routeServices.GetServices<IActionInvokerProvider>();
+            var routeActionInvokerProviders = routeServices.GetServices<IActionInvokerProvider>().ToList();
             var routeModelBindingActionInvokerFactory = routeServices.GetService<IModelBindingActionInvokerFactory>();
 
-            Assert.Equal(2, routeActionInvokerProviders.Count());
+            Assert.Equal(3, routeActionInvokerProviders.Count);
 
             var routeActionInvokerProvidersList = routeActionInvokerProviders.OrderByDescending(r => r.Order).ToList();
 
             Assert.True(routeActionInvokerProvidersList[0].GetType() == typeof(CustomActionInvokerProvider));
-            Assert.True(routeActionInvokerProvidersList[1].GetType() == typeof(ControllerActionInvokerProvider));
             Assert.NotNull(routeModelBindingActionInvokerFactory);
             Assert.IsAssignableFrom<CustomModelBindingActionInvokerFactory>(routeModelBindingActionInvokerFactory);
 

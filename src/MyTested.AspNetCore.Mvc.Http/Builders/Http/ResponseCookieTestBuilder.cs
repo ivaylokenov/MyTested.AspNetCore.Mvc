@@ -68,7 +68,7 @@
         }
 
         /// <inheritdoc />
-        public IAndResponseCookieTestBuilder WithExpired(DateTimeOffset? expires)
+        public IAndResponseCookieTestBuilder WithExpires(DateTimeOffset? expires)
         {
             this.responseCookie.Expires = expires;
             this.validations.Add((expected, actual) => expected.Expires == actual.Expires);
@@ -96,6 +96,14 @@
         {
             this.responseCookie.Path = path;
             this.validations.Add((expected, actual) => expected.Path == actual.Path);
+            return this;
+        }
+
+        /// <inheritdoc />
+        public IAndResponseCookieTestBuilder WithSameSite(SameSiteMode sameSite)
+        {
+            this.responseCookie.SameSite = sameSite;
+            this.validations.Add((expected, actual) => expected.SameSite == actual.SameSite);
             return this;
         }
 

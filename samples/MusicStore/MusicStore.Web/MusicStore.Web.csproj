@@ -1,51 +1,263 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <Description>Music store application on ASP.NET Core</Description>
-    <VersionPrefix>2.2.0</VersionPrefix>
-    <Authors>Microsoft</Authors>
-    <TargetFrameworks>netcoreapp2.2</TargetFrameworks>
-    <DefineConstants>$(DefineConstants);DEMO</DefineConstants>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <PreserveCompilationContext>true</PreserveCompilationContext>
-    <AssemblyName>MusicStore.Web</AssemblyName>
-    <OutputType>Exe</OutputType>
-    <PackageId>MusicStore.Web</PackageId>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <UserSecretsId>aspnet-MusicStore.Web-E3B36831-1CB2-4CBD-8152-493A49DBC60C</UserSecretsId>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <RootNamespace>MusicStore</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Update="Areas\**\*;Views\**\*;wwwroot\**\*">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </None>
-  </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Twitter" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.TagHelpers" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Server.HttpSys" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Server.WebListener" Version="1.1.4" />
-    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.2.0" />
   </ItemGroup>
 
+
   <ItemGroup>
-    <Content Update="config.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Update="Views\Home\Index.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+    <Content Update="Views\Manage\AddPhoneNumber.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Manage\ChangePassword.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Manage\Index.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Manage\ManageLogins.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Manage\SetPassword.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Manage\VerifyPhoneNumber.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Shared\AccessDenied.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Shared\Components\Announcement\Default.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Shared\Components\CartSummary\Default.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Shared\Components\GenreMenu\Default.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Shared\DemoLinkDisplay.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Shared\Error.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Shared\Lockout.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Shared\StatusCodePage.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Shared\_Layout.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Shared\_LoginPartial.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Shared\_ValidationScriptsPartial.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\ShoppingCart\Index.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Store\Browse.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Store\Details.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Store\Index.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\_ViewImports.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\_ViewStart.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\favicon.ico">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Admin\Views\StoreManager\Create.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Areas\Admin\Views\StoreManager\Create.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Admin\Views\StoreManager\Details.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Admin\Views\StoreManager\Edit.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Admin\Views\StoreManager\Index.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Admin\Views\StoreManager\RemoveAlbum.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Admin\Views\_ViewStart.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Account\ConfirmEmail.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Account\ExternalLoginFailure.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Account\ForgotPassword.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Account\ForgotPasswordConfirmation.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Account\Login.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Account\Register.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Account\RegisterConfirmation.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Account\ResetPassword.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Account\ResetPasswordConfirmation.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Account\SendCode.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Account\VerifyCode.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Checkout\AddressAndPayment.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Checkout\Complete.cshtml" />
+    <_ContentIncludedByDefault Remove="wwwroot\Content\bootstrap.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\Content\bootstrap.min.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\Content\Site.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\fonts\glyphicons-halflings-regular.eot" />
+    <_ContentIncludedByDefault Remove="wwwroot\fonts\glyphicons-halflings-regular.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\fonts\glyphicons-halflings-regular.ttf" />
+    <_ContentIncludedByDefault Remove="wwwroot\fonts\glyphicons-halflings-regular.woff" />
+    <_ContentIncludedByDefault Remove="wwwroot\Images\home-showcase.png" />
+    <_ContentIncludedByDefault Remove="wwwroot\Images\logo.png" />
+    <_ContentIncludedByDefault Remove="wwwroot\Images\logo.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\Images\placeholder.png" />
+    <_ContentIncludedByDefault Remove="wwwroot\Images\placeholder.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\Scripts\bootstrap.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\Scripts\bootstrap.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\Scripts\jquery-2.0.3.intellisense.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\Scripts\jquery-2.0.3.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\Scripts\jquery-2.0.3.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\Scripts\jquery-2.0.3.min.map" />
+    <_ContentIncludedByDefault Remove="wwwroot\Scripts\jquery.signalR-2.0.1.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\Scripts\jquery.signalR-2.0.1.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\Scripts\jquery.validate-vsdoc.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\Scripts\jquery.validate.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\Scripts\jquery.validate.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\Scripts\jquery.validate.unobtrusive.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\Scripts\jquery.validate.unobtrusive.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\Scripts\modernizr-2.6.2.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\Scripts\respond.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\Scripts\respond.min.js" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Admin\Views\StoreManager\Details.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Admin\Views\StoreManager\Edit.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Admin\Views\StoreManager\Index.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Admin\Views\StoreManager\RemoveAlbum.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Admin\Views\_ViewStart.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Account\_ExternalLoginsListPartial.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Account\ConfirmEmail.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Account\ExternalLoginConfirmation.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Account\ExternalLoginFailure.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Account\ForgotPassword.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Account\ForgotPasswordConfirmation.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Account\Login.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Account\Register.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Account\RegisterConfirmation.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Account\ResetPassword.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Account\ResetPasswordConfirmation.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Account\SendCode.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Account\VerifyCode.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Checkout\AddressAndPayment.cshtml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Checkout\Complete.cshtml" />
   </ItemGroup>
 
 </Project>

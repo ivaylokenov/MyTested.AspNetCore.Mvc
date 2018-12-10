@@ -35,10 +35,8 @@
         /// Initializes a new instance of the <see cref="ApplicationBuilderMock"/> class.
         /// </summary>
         /// <param name="builder">Application builder to copy properties from.</param>
-        public ApplicationBuilderMock(IApplicationBuilder builder)
-        {
-            this.Properties = builder.Properties;
-        }
+        public ApplicationBuilderMock(IApplicationBuilder builder) 
+            => this.Properties = builder.Properties;
 
         /// <summary>
         /// Gets or sets the current application services.
@@ -46,15 +44,8 @@
         /// <value>Result of <see cref="IServiceProvider"/> type.</value>
         public IServiceProvider ApplicationServices
         {
-            get
-            {
-                return this.GetProperty<IServiceProvider>(ApplicationServicesPropertyName);
-            }
-
-            set
-            {
-                this.SetProperty(ApplicationServicesPropertyName, value);
-            }
+            get => this.GetProperty<IServiceProvider>(ApplicationServicesPropertyName);
+            set => this.SetProperty(ApplicationServicesPropertyName, value);
         }
 
         /// <summary>
@@ -92,10 +83,7 @@
         /// Returns new instance of <see cref="IApplicationBuilder"/>. Not used in the actual testing.
         /// </summary>
         /// <returns>Result of <see cref="IApplicationBuilder"/> type.</returns>
-        public IApplicationBuilder New()
-        {
-            return new ApplicationBuilderMock(this);
-        }
+        public IApplicationBuilder New() => new ApplicationBuilderMock(this);
 
         /// <summary>
         /// Builds the application delegate, which will process the incoming HTTP requests. Not used in the actual testing.
@@ -117,16 +105,10 @@
             return app;
         }
 
-        private T GetProperty<T>(string key)
-        {
-            object value;
-            return this.Properties.TryGetValue(key, out value) ? (T)value : default(T);
-        }
+        private T GetProperty<T>(string key) 
+            => this.Properties.TryGetValue(key, out var value) ? (T)value : default(T);
 
-        private void SetProperty<T>(string key, T value)
-        {
-            this.Properties[key] = value;
-        }
+        private void SetProperty<T>(string key, T value) => this.Properties[key] = value;
 
         private void ExtractRoutes(Func<RequestDelegate, RequestDelegate> middleware)
         {
@@ -137,8 +119,7 @@
                .DeclaredFields
                .FirstOrDefault(m => m.Name == "args");
 
-            var argumentsValues = middlewareArguments?.GetValue(middleware.Target) as object[];
-            if (argumentsValues != null)
+            if (middlewareArguments?.GetValue(middleware.Target) is object[] argumentsValues)
             {
                 foreach (var argument in argumentsValues.OfType<RouteCollection>())
                 {

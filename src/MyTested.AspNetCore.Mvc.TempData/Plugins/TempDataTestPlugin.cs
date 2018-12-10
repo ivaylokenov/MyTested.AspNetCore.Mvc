@@ -17,7 +17,7 @@
                 .AddJsonFormatters();
 
         private readonly Type defaultTempDataServiceType = typeof(ITempDataProvider);
-        private readonly Type defaultTempDataImplementationType = typeof(SessionStateTempDataProvider);
+        private readonly Type defaultTempDataImplementationType = typeof(CookieTempDataProvider);
 
         public Func<ServiceDescriptor, bool> ServiceSelectorPredicate
         {
