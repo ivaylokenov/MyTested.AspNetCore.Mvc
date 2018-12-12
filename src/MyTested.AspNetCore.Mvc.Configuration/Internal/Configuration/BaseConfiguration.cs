@@ -7,17 +7,14 @@
     {
         private IConfiguration configuration;
 
-        public BaseConfiguration(IConfiguration configuration)
+        protected BaseConfiguration(IConfiguration configuration)
         {
             this.Configuration = configuration;
         }
 
         public IConfiguration Configuration
         {
-            get
-            {
-                return this.configuration;
-            }
+            get => this.configuration;
 
             private set
             {

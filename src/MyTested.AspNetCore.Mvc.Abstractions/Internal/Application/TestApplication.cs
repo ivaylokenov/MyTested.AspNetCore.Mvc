@@ -15,6 +15,7 @@
     using Microsoft.AspNetCore.Hosting.Builder;
     using Microsoft.AspNetCore.Hosting.Internal;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc.ApplicationParts;
     using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.Configuration;
@@ -188,7 +189,8 @@
                     {
                         throw new InvalidOperationException($"{Environment.EnvironmentName}Startup class could not be found at the root of the test project. Either add it or set 'General.AutomaticStartup' in the test configuration ('testconfig.json' file by default) to 'false'.");
                     }
-                    else if (GeneralConfiguration().NoStartup())
+
+                    if (GeneralConfiguration().NoStartup())
                     {
                         throw new InvalidOperationException($"The test configuration ('testconfig.json' file by default) contained 'true' value for the 'General.NoStartup' option but {Environment.EnvironmentName}Startup class was located at the root of the project. Either remove the class or change the option to 'false'.");
                     }
@@ -330,7 +332,7 @@
         {
             var serviceCollection = new ServiceCollection();
             var diagnosticListener = new DiagnosticListener(TestFrameworkName);
-            
+
             // default server services
             serviceCollection.AddSingleton(Environment);
             serviceCollection.AddSingleton<IApplicationLifetime, ApplicationLifetime>();
@@ -342,6 +344,8 @@
 
             serviceCollection.AddSingleton<ILoggerFactory>(LoggerFactoryMock.Create());
             serviceCollection.AddLogging();
+
+            serviceCollection.AddSingleton(Configuration().Configuration);
 
             serviceCollection.AddSingleton(diagnosticListener);
             serviceCollection.AddSingleton<DiagnosticSource>(diagnosticListener);
@@ -381,32 +385,50 @@
         {
             if (startupMethods?.ConfigureServicesDelegate != null)
             {
-                startupMethods.ConfigureServicesDelegate(serviceCollection);
+                PrepareStartupServices(serviceCollection, startupMethods);
             }
             else
             {
-                var defaultRegistrationPlugin = DefaultRegistrationPlugins
-                    .OrderByDescending(p => p.Priority)
-                    .FirstOrDefault();
-
-                if (defaultRegistrationPlugin != null)
-                {
-                    defaultRegistrationPlugin.DefaultServiceRegistrationDelegate(serviceCollection);
-                }
-                else
-                {
-                    serviceCollection.AddMvcCore();
-                }
+                PrepareDefaultServices(serviceCollection);
             }
 
             AdditionalServices?.Invoke(serviceCollection);
 
             TryReplaceKnownServices(serviceCollection);
             PrepareRoutingServices(serviceCollection);
+            PrepareApplicationParts(serviceCollection);
 
             serviceProvider = serviceCollection.BuildServiceProvider();
 
             InitializationPlugins.ForEach(plugin => plugin.InitializationDelegate(serviceProvider));
+        }
+
+        private static void PrepareStartupServices(IServiceCollection serviceCollection, StartupMethods startupMethods)
+        {
+            try
+            {
+                startupMethods.ConfigureServicesDelegate(serviceCollection);
+            }
+            catch 
+            {
+                throw new InvalidOperationException("Application dependencies could not be loaded correctly. If your web project references the 'Microsoft.AspNetCore.App' package, you need to reference it in your test project too.");
+            }
+        }
+
+        private static void PrepareDefaultServices(IServiceCollection serviceCollection)
+        {
+            var defaultRegistrationPlugin = DefaultRegistrationPlugins
+                .OrderByDescending(p => p.Priority)
+                .FirstOrDefault();
+
+            if (defaultRegistrationPlugin != null)
+            {
+                defaultRegistrationPlugin.DefaultServiceRegistrationDelegate(serviceCollection);
+            }
+            else
+            {
+                serviceCollection.AddMvcCore();
+            }
         }
 
         private static void TryReplaceKnownServices(IServiceCollection serviceCollection)
@@ -442,6 +464,30 @@
             }
 
             routingServiceProvider = routingServiceCollection.BuildServiceProvider();
+        }
+        
+        private static void PrepareApplicationParts(IServiceCollection serviceCollection)
+        {
+            var baseStartupType = StartupType;
+            while (baseStartupType != null && baseStartupType.BaseType != typeof(object))
+            {
+                baseStartupType = baseStartupType.BaseType;
+            }
+
+            var applicationPartManager = (ApplicationPartManager)serviceCollection
+                .FirstOrDefault(t => t.ServiceType == typeof(ApplicationPartManager))
+                ?.ImplementationInstance;
+
+            if (applicationPartManager != null && baseStartupType != null)
+            {
+                var applicationAssembly = baseStartupType.GetTypeInfo().Assembly;
+                var applicationName = applicationAssembly.GetName().Name;
+
+                if (applicationPartManager.ApplicationParts.All(a => a.Name != applicationName))
+                {
+                    applicationPartManager.ApplicationParts.Add(new AssemblyPart(applicationAssembly));
+                }
+            }
         }
 
         private static void PrepareApplicationAndRouting(StartupMethods startupMethods)

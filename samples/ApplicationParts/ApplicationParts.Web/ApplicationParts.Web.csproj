@@ -1,11 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
-    <PreserveCompilationContext>true</PreserveCompilationContext>
+    <TargetFrameworks>netcoreapp2.2</TargetFrameworks>
     <AssemblyName>ApplicationParts.Web</AssemblyName>
-    <OutputType>Exe</OutputType>
-    <PackageId>ApplicationParts.Web</PackageId>
     <UserSecretsId>aspnet-ApplicationParts.Web-c273a372-79ef-490d-b0e1-a7fb8f2dacc7</UserSecretsId>
   </PropertyGroup>
 

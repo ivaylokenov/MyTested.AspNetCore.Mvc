@@ -26,7 +26,11 @@
         /// <param name="serviceProvider">Application service provider.</param>
         public ApplicationBuilderMock(IServiceProvider serviceProvider)
         {
-            this.Properties = new Dictionary<string, object>();
+            this.Properties = new Dictionary<string, object>
+            {
+                [ServerFeaturesPropertyName] = new FeatureCollection()
+            };
+
             this.Routes = new RouteCollection();
             this.ApplicationServices = serviceProvider;
         }

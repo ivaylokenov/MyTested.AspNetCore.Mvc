@@ -20,7 +20,7 @@
         private TTestContext testContext;
         private bool isPreparedForTesting;
 
-        public BaseComponentBuilder(TTestContext testContext)
+        protected BaseComponentBuilder(TTestContext testContext)
             : base(testContext)
         {
             this.TestContext = testContext;
@@ -31,10 +31,7 @@
 
         public new TTestContext TestContext
         {
-            get
-            {
-                return this.testContext;
-            }
+            get => this.testContext;
 
             set
             {
