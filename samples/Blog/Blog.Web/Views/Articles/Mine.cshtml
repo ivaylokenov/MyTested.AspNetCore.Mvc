@@ -1,0 +1,29 @@
+﻿@model IEnumerable<ArticleForUserListingServiceModel>
+
+@{
+    var publishedArticles = Model
+        .Where(a => a.IsPublic)
+        .OrderByDescending(a => a.PublishedOn)
+        .ToList();
+
+    var waitingForApprovalArticles = Model
+        .Where(a => !a.IsPublic)
+        .OrderByDescending(a => a.PublishedOn)
+        .ToList();
+}
+
+@if (publishedArticles.Any())
+{
+    <div class="text-center">
+        <h1 class="display-4">Published Articles</h1>
+        <partial name="_ArticleListingPartial" model="@publishedArticles" />
+    </div>
+}
+
+@if (waitingForApprovalArticles.Any())
+{
+    <div class="text-center">
+        <h1 class="display-4">Waiting For Approval</h1>
+        <partial name="_ArticleListingPartial" model="@waitingForApprovalArticles" />
+    </div>
+}

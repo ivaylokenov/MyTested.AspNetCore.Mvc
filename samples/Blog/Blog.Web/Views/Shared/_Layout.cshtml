@@ -30,11 +30,14 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Articles" asp-action="All">Articles</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Articles" asp-action="Create">Create</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -43,6 +46,12 @@
     <div class="container">
         <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">
+            @if (TempData.ContainsKey(ControllerConstants.SuccessMessage))
+            {
+                <div class="alert alert-success" role="alert">
+                    @TempData[ControllerConstants.SuccessMessage]
+                </div>
+            }
             @RenderBody()
         </main>
     </div>

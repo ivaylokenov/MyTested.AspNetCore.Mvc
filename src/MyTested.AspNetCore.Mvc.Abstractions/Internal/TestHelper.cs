@@ -118,9 +118,7 @@
         /// </summary>
         /// <param name="name">Name to format.</param>
         /// <returns>Formatted string.</returns>
-        public static string GetFriendlyName(string name)
-        {
-            return name == null ? "the default one" : $"'{name}'";
-        }
+        public static string GetFriendlyName(string name) 
+            => name == null ? "the default one" : $"'{name}'";
     }
 }

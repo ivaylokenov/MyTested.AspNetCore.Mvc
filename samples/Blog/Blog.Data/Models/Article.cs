@@ -15,7 +15,9 @@
         [Required]
         public string Content { get; set; }
 
-        public DateTime PublishedOn { get; set; }
+        public bool IsPublic { get; set; }
+
+        public DateTime? PublishedOn { get; set; }
 
         public string UserId { get; set; }
 

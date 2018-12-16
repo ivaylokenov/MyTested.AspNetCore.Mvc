@@ -22,9 +22,9 @@
             this.Properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
         }
 
-        protected Type Type { get; private set; }
+        protected Type Type { get; }
 
-        protected IEnumerable<PropertyInfo> Properties { get; private set; }
+        protected IEnumerable<PropertyInfo> Properties { get; }
         
         public static Func<object, TResult> MakeFastPropertyGetter<TResult>(PropertyInfo propertyInfo)
         {
