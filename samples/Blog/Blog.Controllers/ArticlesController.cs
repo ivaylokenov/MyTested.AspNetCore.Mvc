@@ -21,11 +21,12 @@
             this.mapper = mapper;
         }
 
-        public async Task<IActionResult> All(int page = 1) 
+        public async Task<IActionResult> All([FromQuery]int page = 1) 
             => this.View(new ArticleListingViewModel
             {
                 Articles = await this.articleService.All(page),
-                Total = await this.articleService.Total()
+                Total = await this.articleService.Total(),
+                Page = page
             });
 
         public async Task<IActionResult> Details(int id)
@@ -37,7 +38,9 @@
                 return this.NotFound();
             }
 
-            if (!article.IsPublic && article.Author != this.User.Identity.Name)
+            if (!this.User.IsAdministrator() 
+                && !article.IsPublic 
+                && article.Author != this.User.Identity.Name)
             {
                 return this.NotFound();
             }
@@ -71,7 +74,7 @@
         {
             var article = await this.articleService.Details(id);
 
-            if (article.Author != this.User.Identity.Name)
+            if (article.Author != this.User.Identity.Name && !this.User.IsAdministrator())
             {
                 return this.NotFound();
             }
@@ -85,7 +88,7 @@
         [Authorize]
         public async Task<IActionResult> Edit(int id, ArticleFormModel article)
         {
-            if (!await this.articleService.IsByUser(id, this.User.GetId()))
+            if (!await this.articleService.IsByUser(id, this.User.GetId()) && !this.User.IsAdministrator())
             {
                 return this.NotFound();
             }
@@ -105,7 +108,7 @@
         [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
-            if (!await this.articleService.IsByUser(id, this.User.GetId()))
+            if (!await this.articleService.IsByUser(id, this.User.GetId()) && !this.User.IsAdministrator())
             {
                 return this.NotFound();
             }
@@ -116,7 +119,7 @@
         [Authorize]
         public async Task<IActionResult> ConfirmDelete(int id)
         {
-            if (!await this.articleService.IsByUser(id, this.User.GetId()))
+            if (!await this.articleService.IsByUser(id, this.User.GetId()) && !this.User.IsAdministrator())
             {
                 return this.NotFound();
             }

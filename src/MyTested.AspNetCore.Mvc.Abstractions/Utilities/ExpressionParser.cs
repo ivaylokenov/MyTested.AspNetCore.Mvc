@@ -91,14 +91,14 @@
                 {
                     var expressionArgumentMethodName = expressionArgumentAsMethodCall.Method.Name;
 
-                    if (expressionMethodDeclaringType == TypeOfWith &&
-                        expressionArgumentMethodName == nameof(With.Any))
+                    if (expressionMethodDeclaringType == TypeOfWith 
+                        && expressionArgumentMethodName == nameof(With.Any))
                     {
                         return IgnoredExpressionArgument;
                     }
 
-                    if ((expressionMethodDeclaringType == TypeOfWith &&
-                         expressionArgumentMethodName != nameof(With.Default))
+                    if ((expressionMethodDeclaringType == TypeOfWith 
+                        && expressionArgumentMethodName != nameof(With.Default))
                         || expressionMethodDeclaringType == TypeOfFrom)
                     {
                         return null;

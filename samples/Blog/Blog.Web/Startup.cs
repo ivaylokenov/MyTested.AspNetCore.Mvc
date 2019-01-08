@@ -76,7 +76,7 @@
 
             app.UseAuthentication();
 
-            app.UseMvcWithDefaultRoute();
+            app.UseMvcWithAreas();
 
             app.SeedData();
         }

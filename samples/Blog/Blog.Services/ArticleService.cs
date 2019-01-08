@@ -1,14 +1,15 @@
 ﻿namespace Blog.Services
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
+    using System;
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
     using Data;
     using Data.Models;
     using Microsoft.EntityFrameworkCore;
     using Models;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
 
     public class ArticleService : IArticleService
     {
@@ -21,15 +22,32 @@
             this.mapper = mapper;
         }
 
-        public async Task<IEnumerable<ArticleListingServiceModel>> All(int page = 1, int count = 10)
-            => await this.db
-                .Articles
-                .Where(a => a.IsPublic)
+        public async Task<IEnumerable<ArticleListingServiceModel>> All(
+            int page = 1,
+            int pageSize = ServicesConstants.ArticlesPerPage,
+            bool publicOnly = true)
+            => await this.All<ArticleListingServiceModel>(page, pageSize, publicOnly);
+
+        public async Task<IEnumerable<TModel>> All<TModel>(
+            int page = 1,
+            int pageSize = ServicesConstants.ArticlesPerPage,
+            bool publicOnly = true)
+            where TModel : class
+        {
+            var query = this.db.Articles.AsQueryable();
+
+            if (publicOnly)
+            {
+                query = query.Where(a => a.IsPublic);
+            }
+
+            return await query
                 .OrderByDescending(a => a.PublishedOn)
-                .Skip((page - 1) * count)
-                .Take(count)
-                .ProjectTo<ArticleListingServiceModel>(this.mapper.ConfigurationProvider)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ProjectTo<TModel>(this.mapper.ConfigurationProvider)
                 .ToListAsync();
+        }
 
         public async Task<IEnumerable<ArticleForUserListingServiceModel>> ByUser(string userId)
             => await this.db
@@ -72,7 +90,7 @@
 
             return article.Id;
         }
-        
+
         public async Task Edit(int id, string title, string content)
         {
             var article = await this.db.Articles.FindAsync(id);
@@ -93,6 +111,19 @@
         {
             var article = await this.db.Articles.FindAsync(id);
             this.db.Articles.Remove(article);
+
+            await this.db.SaveChangesAsync();
+        }
+
+        public async Task ChangeVisibility(int id)
+        {
+            var article = await this.db.Articles.FindAsync(id);
+            article.IsPublic = !article.IsPublic;
+
+            if (article.PublishedOn == null)
+            {
+                article.PublishedOn = DateTime.UtcNow;    
+            }
 
             await this.db.SaveChangesAsync();
         }

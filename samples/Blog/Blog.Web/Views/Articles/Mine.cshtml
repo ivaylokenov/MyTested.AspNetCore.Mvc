@@ -1,6 +1,10 @@
 ﻿@model IEnumerable<ArticleForUserListingServiceModel>
 
 @{
+    ViewData.SetTitle("My Articles");
+}
+
+@{
     var publishedArticles = Model
         .Where(a => a.IsPublic)
         .OrderByDescending(a => a.PublishedOn)
@@ -10,6 +14,11 @@
         .Where(a => !a.IsPublic)
         .OrderByDescending(a => a.PublishedOn)
         .ToList();
+}
+
+@if (!publishedArticles.Any() && !waitingForApprovalArticles.Any())
+{
+    <h2 class="text-center margin-top-20">You don't have any articles yet! Create one from <a asp-controller="Articles" asp-action="Create">here</a>!</h2>
 }
 
 @if (publishedArticles.Any())

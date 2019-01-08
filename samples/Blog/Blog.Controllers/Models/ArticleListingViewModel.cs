@@ -8,5 +8,7 @@
         public IEnumerable<ArticleListingServiceModel> Articles { get; set; }
 
         public int Total { get; set; }
+
+        public int Page { get; set; }
     }
 }

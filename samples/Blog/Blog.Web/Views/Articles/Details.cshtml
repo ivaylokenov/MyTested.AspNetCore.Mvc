@@ -1,7 +1,7 @@
 ﻿@model ArticleDetailsServiceModel
 
 @{
-    ViewData["Title"] = Model.Title;
+    ViewData.SetTitle(Model.Title);
 }
 
 <h2>@Html.DisplayFor(model => model.Title) @(Model.IsPublic ? string.Empty : "(Unpublished)")</h2>
@@ -17,7 +17,7 @@
 
 <div>
     <h5>
-        @(Model.PublishedOn != null ? Model.PublishedOn.Value.ToShortDateString() : string.Empty) by @Html.DisplayFor(model => model.Author)
+        @Model.PublishedOn?.ToShortDateString() by @Html.DisplayFor(model => model.Author)
     </h5>
     <hr />
     <dl class="row">

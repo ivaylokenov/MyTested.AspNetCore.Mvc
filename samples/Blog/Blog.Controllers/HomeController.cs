@@ -13,7 +13,7 @@
 
         public async Task<IActionResult> Index()
         {
-            var articles = await this.articleService.All(count: 3);
+            var articles = await this.articleService.All(pageSize: 3);
 
             return this.View(articles);
         }

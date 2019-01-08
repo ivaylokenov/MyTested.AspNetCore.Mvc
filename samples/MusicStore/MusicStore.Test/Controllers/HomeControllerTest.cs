@@ -68,21 +68,21 @@
             public static Album[] GetAlbums()
             {
                 var generes = Enumerable.Range(1, 10).Select(n =>
-                    new Genre()
+                    new Genre
                     {
                         GenreId = n,
                         Name = "Genre Name " + n,
                     }).ToArray();
 
                 var artists = Enumerable.Range(1, 10).Select(n =>
-                    new Artist()
+                    new Artist
                     {
                         ArtistId = n + 1,
                         Name = "Artist Name " + n,
                     }).ToArray();
 
                 var albums = Enumerable.Range(1, 10).Select(n =>
-                    new Album()
+                    new Album
                     {
                         Artist = artists[n - 1],
                         ArtistId = n,

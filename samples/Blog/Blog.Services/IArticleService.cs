@@ -6,7 +6,16 @@
 
     public interface IArticleService
     {
-        Task<IEnumerable<ArticleListingServiceModel>> All(int page = 1, int count = 10);
+        Task<IEnumerable<ArticleListingServiceModel>> All(
+            int page = 1, 
+            int pageSize = ServicesConstants.ArticlesPerPage, 
+            bool publicOnly = true);
+
+        Task<IEnumerable<TModel>> All<TModel>(
+            int page = 1,
+            int pageSize = ServicesConstants.ArticlesPerPage,
+            bool publicOnly = true)
+            where TModel : class;
 
         Task<IEnumerable<ArticleForUserListingServiceModel>> ByUser(string userId);
 
@@ -21,5 +30,7 @@
         Task Edit(int id, string title, string content);
 
         Task Delete(int id);
+
+        Task ChangeVisibility(int id);
     }
 }

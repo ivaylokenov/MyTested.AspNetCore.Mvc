@@ -11,6 +11,10 @@
             this
                 .CreateMap<Article, ArticleListingServiceModel>()
                 .ForMember(a => a.Author, opt => opt.MapFrom(a => a.User.UserName));
+            
+            this
+                .CreateMap<Article, ArticleNonPublicListingServiceModel>()
+                .ForMember(a => a.Author, opt => opt.MapFrom(a => a.User.UserName));
 
             this
                 .CreateMap<Article, ArticleDetailsServiceModel>()

@@ -15,6 +15,20 @@
         public static IApplicationBuilder SeedData(this IApplicationBuilder app)
             => app.SeedDataAsync().GetAwaiter().GetResult();
 
+        public static IApplicationBuilder UseMvcWithAreas(this IApplicationBuilder app)
+            => app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}"
+                );
+
+                routes.MapRoute(
+                    name: "areas",
+                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
+            });
+
         public static async Task<IApplicationBuilder> SeedDataAsync(this IApplicationBuilder app)
         {
             using (var serviceScope = app.ApplicationServices.CreateScope())
