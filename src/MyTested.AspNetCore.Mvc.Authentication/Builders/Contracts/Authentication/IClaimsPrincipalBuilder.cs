@@ -25,7 +25,7 @@
         IAndClaimsPrincipalBuilder WithRoleType(string roleType);
 
         /// <summary>
-        /// Sets identifier claim to the built <see cref="ClaimsPrincipal"/>. If such is not provided, "TestId" is used by default.
+        /// Sets identifier (Id) claim to the built <see cref="ClaimsPrincipal"/>. If such is not provided, "TestId" is used by default.
         /// </summary>
         /// <param name="identifier">Value of the identifier claim - <see cref="ClaimTypes.NameIdentifier"/>.</param>
         /// <returns>The same <see cref="IAndClaimsPrincipalBuilder"/>.</returns>

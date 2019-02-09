@@ -2,11 +2,13 @@
 {
     using System.Threading.Tasks;
     using Blog.Controllers;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Services;
     using Services.Models;
 
     [Area(ControllerConstants.AdministratorArea)]
+    [Authorize(Roles = ControllerConstants.AdministratorRole)]
     public class ArticlesController : Controller
     {
         private readonly IArticleService articleService;
@@ -21,7 +23,7 @@
 
             return this.View(articles);
         }
-
+        
         public async Task<IActionResult> ChangeVisibility(int id)
         {
             await this.articleService.ChangeVisibility(id);

@@ -39,10 +39,8 @@
         }
 
         /// <inheritdoc />
-        public IAndClaimsIdentityBuilder WithClaim(string type, string value)
-        {
-            return this.WithClaim(new Claim(type, value));
-        }
+        public IAndClaimsIdentityBuilder WithClaim(string type, string value) 
+            => this.WithClaim(new Claim(type, value));
 
         /// <inheritdoc />
         public IAndClaimsIdentityBuilder WithClaim(Claim claim)
@@ -59,10 +57,8 @@
         }
 
         /// <inheritdoc />
-        public IAndClaimsIdentityBuilder WithClaims(params Claim[] claims)
-        {
-            return this.WithClaims(claims.AsEnumerable());
-        }
+        public IAndClaimsIdentityBuilder WithClaims(params Claim[] claims) 
+            => this.WithClaims(claims.AsEnumerable());
 
         /// <inheritdoc />
         public IAndClaimsIdentityBuilder WithAuthenticationType(string authenticationType)
@@ -86,20 +82,13 @@
         }
 
         /// <inheritdoc />
-        public IAndClaimsIdentityBuilder InRoles(params string[] roles)
-        {
-            return this.InRoles(roles.AsEnumerable());
-        }
+        public IAndClaimsIdentityBuilder InRoles(params string[] roles) 
+            => this.InRoles(roles.AsEnumerable());
 
         /// <inheritdoc />
-        public IClaimsIdentityBuilder AndAlso()
-        {
-            return this;
-        }
+        public IClaimsIdentityBuilder AndAlso() => this;
 
-        internal ClaimsIdentity GetClaimsIdentity()
-        {
-            return this.GetAuthenticatedClaimsIdentity();
-        }
+        internal ClaimsIdentity GetClaimsIdentity() 
+            => this.GetAuthenticatedClaimsIdentity();
     }
 }

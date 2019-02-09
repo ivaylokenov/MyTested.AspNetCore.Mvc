@@ -6,6 +6,7 @@
     using Internal.Routing;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Routing;
 
     public static class UrlHelperExtensions
     {
@@ -36,6 +37,20 @@
             ControllerTestContext controllerTestContext,
             ICollection<string> ignoredRouteKeys = null)
         {
+            // Add additional required route values.
+            controllerTestContext
+                .ComponentAttributes
+                .Union(controllerTestContext.MethodAttributes)
+                .OfType<RouteValueAttribute>()
+                .Select(rva => rva.RouteKey)
+                .Where(key => controllerTestContext.RouteData.Values.ContainsKey(key))
+                .Select(key => new
+                {
+                    Key = key,
+                    Value = controllerTestContext.RouteData.Values[key]
+                })
+                .ForEach(kvp => linkGenerationTestContext.RouteValues.Add(kvp.Key, kvp.Value));
+
             if (ignoredRouteKeys != null)
             {
                 linkGenerationTestContext.RouteValues = linkGenerationTestContext
@@ -44,7 +59,7 @@
                     .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             }
 
-            string uri = null;
+            string uri;
             if (!string.IsNullOrWhiteSpace(linkGenerationTestContext.Location))
             {
                 uri = linkGenerationTestContext.Location;
@@ -64,7 +79,7 @@
                 linkGenerationTestContext.Controller = linkGenerationTestContext.Controller
                     ?? controllerTestContext.RouteData.Values["controller"] as string
                     ?? controllerTestContext.ComponentContext.ActionDescriptor.ControllerName;
-
+                
                 uri = urlHelper.Action(
                     linkGenerationTestContext.Action,
                     linkGenerationTestContext.Controller,

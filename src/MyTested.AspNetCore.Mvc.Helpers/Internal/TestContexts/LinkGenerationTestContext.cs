@@ -20,8 +20,7 @@
         
         public static LinkGenerationTestContext FromCreatedResult(IActionResult actionResult)
         {
-            var createdAtRouteResult = actionResult as CreatedAtRouteResult;
-            if (createdAtRouteResult != null)
+            if (actionResult is CreatedAtRouteResult createdAtRouteResult)
             {
                 createdAtRouteResult.RouteValues = createdAtRouteResult.RouteValues ?? new RouteValueDictionary();
 
@@ -33,8 +32,7 @@
                 };
             }
 
-            var createdAtActionResult = actionResult as CreatedAtActionResult;
-            if (createdAtActionResult != null)
+            if (actionResult is CreatedAtActionResult createdAtActionResult)
             {
                 createdAtActionResult.RouteValues = createdAtActionResult.RouteValues ?? new RouteValueDictionary();
 
@@ -47,8 +45,7 @@
                 };
             }
 
-            var createdResult = actionResult as CreatedResult;
-            if (createdResult != null)
+            if (actionResult is CreatedResult createdResult)
             {
                 return new LinkGenerationTestContext
                 {
@@ -61,8 +58,7 @@
 
         public static LinkGenerationTestContext FromRedirectResult(IActionResult actionResult)
         {
-            var redirectToRouteResult = actionResult as RedirectToRouteResult;
-            if (redirectToRouteResult != null)
+            if (actionResult is RedirectToRouteResult redirectToRouteResult)
             {
                 redirectToRouteResult.RouteValues = redirectToRouteResult.RouteValues ?? new RouteValueDictionary();
 
@@ -74,8 +70,7 @@
                 };
             }
 
-            var redirectToActionResult = actionResult as RedirectToActionResult;
-            if (redirectToActionResult != null)
+            if (actionResult is RedirectToActionResult redirectToActionResult)
             {
                 redirectToActionResult.RouteValues = redirectToActionResult.RouteValues ?? new RouteValueDictionary();
 
@@ -88,8 +83,7 @@
                 };
             }
 
-            var redirectResult = actionResult as RedirectResult;
-            if (redirectResult != null)
+            if (actionResult is RedirectResult redirectResult)
             {
                 return new LinkGenerationTestContext
                 {

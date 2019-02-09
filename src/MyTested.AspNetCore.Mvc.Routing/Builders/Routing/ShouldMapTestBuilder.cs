@@ -97,7 +97,7 @@
                 routeValue = actualInfo.RouteData.Values[key];
             }
 
-            var invalid = false;
+            bool invalid;
             if (value is string || routeValue is string)
             {
                 invalid = value.ToString() != routeValue.ToString();
@@ -111,7 +111,7 @@
             {
                 this.ThrowNewRouteAssertionException(
                     $"contain route value with '{key}' key and the provided value",
-                    $"the value was different");
+                    "the value was different");
             }
 
             return this;
@@ -230,14 +230,14 @@
         public IAndResolvedRouteTestBuilder To<TController>(Expression<Action<TController>> actionCall)
             where TController : class
         {
-            return this.ProcessRouteLambdaExpression<TController>(actionCall);
+            return this.ProcessRouteLambdaExpression(actionCall);
         }
 
         /// <inheritdoc />
         public IAndResolvedRouteTestBuilder To<TController>(Expression<Func<TController, Task>> actionCall)
             where TController : class
         {
-            return this.ProcessRouteLambdaExpression<TController>(actionCall);
+            return this.ProcessRouteLambdaExpression(actionCall);
         }
 
         /// <inheritdoc />
@@ -255,14 +255,14 @@
         /// <inheritdoc />
         public IResolvedRouteTestBuilder AndAlso() => this;
 
-        private IAndResolvedRouteTestBuilder ProcessRouteLambdaExpression<TController>(LambdaExpression actionCall)
+        private IAndResolvedRouteTestBuilder ProcessRouteLambdaExpression(LambdaExpression actionCall)
         {
             this.actionCallExpression = actionCall;
-            this.ValidateRouteInformation<TController>();
+            this.ValidateRouteInformation();
             return this;
         }
 
-        private void ValidateRouteInformation<TController>()
+        private void ValidateRouteInformation()
         {
             var expectedRouteValues = this.GetExpectedRouteInfo();
             var actualRouteValues = this.GetActualRouteInfo();

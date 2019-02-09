@@ -15,11 +15,16 @@
     {
         private readonly BlogDbContext db;
         private readonly IMapper mapper;
+        private readonly IDateTimeProvider dateTimeProvider;
 
-        public ArticleService(BlogDbContext db, IMapper mapper)
+        public ArticleService(
+            BlogDbContext db, 
+            IMapper mapper, 
+            IDateTimeProvider dateTimeProvider)
         {
             this.db = db;
             this.mapper = mapper;
+            this.dateTimeProvider = dateTimeProvider;
         }
 
         public async Task<IEnumerable<ArticleListingServiceModel>> All(
@@ -118,11 +123,17 @@
         public async Task ChangeVisibility(int id)
         {
             var article = await this.db.Articles.FindAsync(id);
+
+            if (article == null)
+            {
+                return;
+            }
+
             article.IsPublic = !article.IsPublic;
 
             if (article.PublishedOn == null)
             {
-                article.PublishedOn = DateTime.UtcNow;    
+                article.PublishedOn = this.dateTimeProvider.Now();    
             }
 
             await this.db.SaveChangesAsync();

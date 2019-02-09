@@ -32,7 +32,7 @@
     public static class TestApplication
     {
         private const string TestFrameworkName = "MyTested.AspNetCore.Mvc";
-        private const string ReleaseDate = "2016-10-01";
+        private const string ReleaseDate = "2019-03-01";
 
         private static readonly object Sync;
 
@@ -492,7 +492,7 @@
 
         private static void PrepareApplicationAndRouting(StartupMethods startupMethods)
         {
-            var applicationBuilder = new ApplicationBuilderMock(serviceProvider);
+            var applicationBuilder = new ApplicationBuilderMock(routingServiceProvider);
 
             startupMethods?.ConfigureDelegate?.Invoke(applicationBuilder);
 

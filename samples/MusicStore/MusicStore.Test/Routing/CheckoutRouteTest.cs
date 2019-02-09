@@ -47,7 +47,7 @@
                         PostalCode = postalCode,
                         Country = country,
                         Phone = phone,
-                        Email = email,
+                        Email = email
                     })
                     .WithAuthenticatedUser()
                     .WithAntiForgeryToken())

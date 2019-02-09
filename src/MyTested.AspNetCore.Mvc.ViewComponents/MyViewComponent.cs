@@ -13,10 +13,7 @@
     public class MyViewComponent<TViewComponent> : ViewComponentBuilder<TViewComponent>
         where TViewComponent : class
     {
-        static MyViewComponent()
-        {
-            TestApplication.TryInitialize();
-        }
+        static MyViewComponent() => TestApplication.TryInitialize();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MyViewComponent{TViewComponent}"/> class.
@@ -48,29 +45,23 @@
         /// Starts a view component test.
         /// </summary>
         /// <returns>Test builder of <see cref="IViewComponentBuilder{TViewComponent}"/> type.</returns>
-        public static IViewComponentBuilder<TViewComponent> Instance()
-        {
-            return Instance((TViewComponent)null);
-        }
+        public static IViewComponentBuilder<TViewComponent> Instance() 
+            => Instance((TViewComponent)null);
 
         /// <summary>
         /// Starts a view component test.
         /// </summary>
         /// <param name="viewComponent">Instance of the ASP.NET Core MVC view component to test.</param>
         /// <returns>Test builder of <see cref="IViewComponentBuilder{TViewComponent}"/> type.</returns>
-        public static IViewComponentBuilder<TViewComponent> Instance(TViewComponent viewComponent)
-        {
-            return Instance(() => viewComponent);
-        }
+        public static IViewComponentBuilder<TViewComponent> Instance(TViewComponent viewComponent) 
+            => Instance(() => viewComponent);
 
         /// <summary>
         /// Starts a view component test.
         /// </summary>
         /// <param name="construction">Construction function returning the instantiated view component.</param>
         /// <returns>Test builder of <see cref="IViewComponentBuilder{TViewComponent}"/> type.</returns>
-        public static IViewComponentBuilder<TViewComponent> Instance(Func<TViewComponent> construction)
-        {
-            return new MyViewComponent<TViewComponent>(construction);
-        }
+        public static IViewComponentBuilder<TViewComponent> Instance(Func<TViewComponent> construction) 
+            => new MyViewComponent<TViewComponent>(construction);
     }
 }

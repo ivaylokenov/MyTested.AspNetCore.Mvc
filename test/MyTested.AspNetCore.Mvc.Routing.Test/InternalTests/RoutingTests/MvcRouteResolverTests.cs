@@ -333,7 +333,31 @@
             Assert.True(routeInfo.IsResolved);
         }
 
-        private RouteContext GetRouteContext(string url, string method = "GET", string queryString = null, string body = null, string contentType = null)
+        [Fact]
+        public void ResolveShouldReturnProperErrorWhenRequestFiltersArePresentAndRequestIsNotSetup()
+        {
+            var routeInfo = MvcRouteResolver.Resolve(
+                TestApplication.RoutingServices,
+                TestApplication.Router,
+                this.GetRouteContext("/Normal/FiltersAction"));
+
+            Assert.False(routeInfo.IsResolved);
+            Assert.Equal(
+                "action could not be invoked because of the declared filters. You must set the request properties so that they will pass through the pipeline",
+                routeInfo.UnresolvedError);
+            Assert.Null(routeInfo.ControllerType);
+            Assert.Null(routeInfo.ControllerName);
+            Assert.Null(routeInfo.Action);
+            Assert.Null(routeInfo.ActionArguments);
+            Assert.Null(routeInfo.ModelState);
+        }
+
+        private RouteContext GetRouteContext(
+            string url, 
+            string method = "GET", 
+            string queryString = null, 
+            string body = null, 
+            string contentType = null)
         {
             MyApplication.StartsFrom<DefaultStartup>();
 

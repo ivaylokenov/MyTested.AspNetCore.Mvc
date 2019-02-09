@@ -37,9 +37,7 @@
 
         public static IDictionary<string, object> ToSortedRouteValues(
             this IDictionary<string, MethodArgumentTestContext> dictionary,
-            Func<KeyValuePair<string, MethodArgumentTestContext>, bool> filter = null)
-        {
-            return new SortedDictionary<string, object>(dictionary.ToRouteValues(filter));
-        }
+            Func<KeyValuePair<string, MethodArgumentTestContext>, bool> filter = null) 
+            => new SortedDictionary<string, object>(dictionary.ToRouteValues(filter));
     }
 }

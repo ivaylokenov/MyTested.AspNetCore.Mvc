@@ -3,6 +3,7 @@
     using System.Linq;
     using Internal.Contracts;
     using Internal.Routing;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Abstractions;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -30,6 +31,9 @@
                     ServiceDescriptor.Transient<IActionInvokerProvider, ModelBindingActionInvokerProvider>());
                 serviceCollection.TryAddSingleton(modelBindingActionInvokerFactoryServiceType, typeof(ModelBindingActionInvokerFactory));
             }
+
+            // Disable end-point routing until it is fully supported by the test framework.
+            serviceCollection.Configure<MvcOptions>(options => options.EnableEndpointRouting = false);
 
             return serviceCollection;
         }

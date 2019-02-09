@@ -24,11 +24,12 @@
         
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
+            services
+                .Configure<CookiePolicyOptions>(options =>
+                {
+                    options.CheckConsentNeeded = context => true;
+                    options.MinimumSameSitePolicy = SameSiteMode.None;
+                });
 
             services
                 .AddDbContext<BlogDbContext>(options => options
@@ -40,21 +41,26 @@
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<BlogDbContext>();
 
-            services.Configure<IdentityOptions>(options =>
-            {
-                options.Password.RequireDigit = false;
-                options.Password.RequiredLength = 6;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
-            });
+            services
+                .Configure<IdentityOptions>(options =>
+                {
+                    options.Password.RequireDigit = false;
+                    options.Password.RequiredLength = 6;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
+                });
 
             services.AddAutoMapper();
 
             services.AddTransient<IArticleService, ArticleService>();
+            services.AddTransient<IDateTimeProvider, DateTimeProvider>();
 
             services
-                .AddMvc()
+                .AddMvc(options =>
+                {
+                    options.AddAutoValidateAntiforgeryToken();
+                })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
         

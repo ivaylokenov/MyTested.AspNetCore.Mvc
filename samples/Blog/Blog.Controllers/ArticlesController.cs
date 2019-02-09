@@ -74,7 +74,7 @@
         {
             var article = await this.articleService.Details(id);
 
-            if (article.Author != this.User.Identity.Name && !this.User.IsAdministrator())
+            if (article == null || (article.Author != this.User.Identity.Name && !this.User.IsAdministrator()))
             {
                 return this.NotFound();
             }

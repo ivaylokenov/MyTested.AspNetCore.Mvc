@@ -12,24 +12,21 @@
     /// </summary>
     public class ClaimsPrincipalBuilder : BaseUserBuilder, IAndClaimsPrincipalBuilder
     {
-        private static readonly ClaimsPrincipal DefaultAuthenticatedClaimsPrinciple = new ClaimsPrincipal(CreateAuthenticatedClaimsIdentity());
-
-        private ICollection<ClaimsIdentity> identities;
+        private readonly ICollection<ClaimsIdentity> identities;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ClaimsPrincipalBuilder"/> class.
         /// </summary>
         public ClaimsPrincipalBuilder()
-        {
-            this.identities = new List<ClaimsIdentity>();
-        }
+            => this.identities = new List<ClaimsIdentity>();
 
         /// <summary>
         /// Static constructor for creating default authenticated claims principal with "TestId" identifier and "TestUser" username.
         /// </summary>
         /// <returns>Authenticated <see cref="ClaimsPrincipal"/>.</returns>
         /// <value>Result of type <see cref="ClaimsPrincipal"/>.</value>
-        public static ClaimsPrincipal DefaultAuthenticated => DefaultAuthenticatedClaimsPrinciple;
+        public static ClaimsPrincipal DefaultAuthenticated { get; } 
+            = new ClaimsPrincipal(CreateAuthenticatedClaimsIdentity());
 
         /// <inheritdoc />
         public IAndClaimsPrincipalBuilder WithNameType(string nameType)
@@ -60,10 +57,8 @@
         }
 
         /// <inheritdoc />
-        public IAndClaimsPrincipalBuilder WithClaim(string type, string value)
-        {
-            return this.WithClaim(new Claim(type, value));
-        }
+        public IAndClaimsPrincipalBuilder WithClaim(string type, string value) 
+            => this.WithClaim(new Claim(type, value));
 
         /// <inheritdoc />
         public IAndClaimsPrincipalBuilder WithClaim(Claim claim)
@@ -80,10 +75,8 @@
         }
 
         /// <inheritdoc />
-        public IAndClaimsPrincipalBuilder WithClaims(params Claim[] claims)
-        {
-            return this.WithClaims(claims.AsEnumerable());
-        }
+        public IAndClaimsPrincipalBuilder WithClaims(params Claim[] claims) 
+            => this.WithClaims(claims.AsEnumerable());
 
         /// <inheritdoc />
         public IAndClaimsPrincipalBuilder WithAuthenticationType(string authenticationType)
@@ -107,16 +100,13 @@
         }
 
         /// <inheritdoc />
-        public IAndClaimsPrincipalBuilder InRoles(params string[] roles)
-        {
-            return this.InRoles(roles.AsEnumerable());
-        }
+        public IAndClaimsPrincipalBuilder InRoles(params string[] roles) 
+            => this.InRoles(roles.AsEnumerable());
 
         /// <inheritdoc />
         public IAndClaimsPrincipalBuilder WithIdentity(IIdentity identity)
         {
-            var claimsIdentity = identity as ClaimsIdentity;
-            if (claimsIdentity == null)
+            if (!(identity is ClaimsIdentity claimsIdentity))
             {
                 claimsIdentity = new ClaimsIdentity(identity);
             }
@@ -135,17 +125,14 @@
         }
 
         /// <inheritdoc />
-        public IClaimsPrincipalBuilder AndAlso()
-        {
-            return this;
-        }
-        
+        public IClaimsPrincipalBuilder AndAlso() => this;
+
         internal ClaimsPrincipal GetClaimsPrincipal()
         {
-            var identities = this.identities.Reverse().ToList();
-            identities.Add(this.GetAuthenticatedClaimsIdentity());
+            var claimIdentities = this.identities.Reverse().ToList();
+            claimIdentities.Add(this.GetAuthenticatedClaimsIdentity());
 
-            var claimsPrincipal = new ClaimsPrincipal(identities);
+            var claimsPrincipal = new ClaimsPrincipal(claimIdentities);
             
             return claimsPrincipal;
         }

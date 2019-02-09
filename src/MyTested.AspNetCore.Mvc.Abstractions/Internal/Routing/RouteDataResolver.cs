@@ -14,7 +14,7 @@
         public static RouteData ResolveRouteData(IRouter router, RouteContext routeContext)
         {
             var path = routeContext.HttpContext.Request?.Path;
-            if (path == null || !path.HasValue || path.Value == string.Empty)
+            if (path == null || path.Value == string.Empty)
             {
                 return null;
             }

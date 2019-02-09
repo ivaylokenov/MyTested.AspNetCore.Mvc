@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using Blog.Controllers;
-    using Blog.Data.Models;
     using Data;
     using MyTested.AspNetCore.Mvc;
     using Services.Models;
@@ -13,8 +12,8 @@
     {
         [Fact]
         public void PrivacyShouldReturnDefaultView()
-            => MyMvc
-                .Controller<HomeController>()
+            => MyController<HomeController>
+                .Instance()
                 .Calling(c => c.Privacy())
                 .ShouldReturn()
                 .View();
@@ -24,11 +23,9 @@
         [InlineData(4, true, 3)]
         [InlineData(4, false, 0)]
         public void IndexShouldReturnDefaultViewWithCorrectModel(int total, bool arePublic, int expected)
-            => MyMvc
-                .Controller<HomeController>()
-                .WithDbContext(dbContext => dbContext
-                    .WithSet<Article>(articles => articles
-                        .AddRange(ArticleTestData.GetArticles(total, arePublic))))
+            => MyController<HomeController>
+                .Instance()
+                .WithData(ArticleTestData.GetArticles(total, arePublic))
                 .Calling(c => c.Index())
                 .ShouldReturn()
                 .View()

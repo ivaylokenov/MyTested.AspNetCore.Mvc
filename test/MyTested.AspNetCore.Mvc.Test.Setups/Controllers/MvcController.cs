@@ -24,8 +24,6 @@
     [Route("/api/test")]
     public class MvcController : Controller
     {
-        private readonly ICollection<ResponseModel> responseModel;
-
         public MvcController()
             : this(new InjectedService())
         {
@@ -34,7 +32,7 @@
         public MvcController(IInjectedService injectedService)
         {
             this.InjectedService = injectedService;
-            this.responseModel = TestObjectFactory.GetListOfResponseModels();
+            this.ResponseModel = TestObjectFactory.GetListOfResponseModels();
         }
 
         public MvcController(RequestModel requestModel)
@@ -60,13 +58,13 @@
             this.InjectedRequestModel = requestModel;
         }
 
-        public ICollection<ResponseModel> ResponseModel => this.responseModel;
+        public ICollection<ResponseModel> ResponseModel { get; }
 
-        public IInjectedService InjectedService { get; private set; }
+        public IInjectedService InjectedService { get; }
 
-        public IAnotherInjectedService AnotherInjectedService { get; private set; }
+        public IAnotherInjectedService AnotherInjectedService { get; }
 
-        public RequestModel InjectedRequestModel { get; private set; }
+        public RequestModel InjectedRequestModel { get; }
 
         public IActionResult DefaultView()
         {
@@ -75,12 +73,12 @@
         
         public IActionResult DefaultViewWithModel()
         {
-            return this.View(this.responseModel);
+            return this.View(this.ResponseModel);
         }
 
         public IActionResult IndexView()
         {
-            return this.View("Index", this.responseModel);
+            return this.View("Index", this.ResponseModel);
         }
 
         public IActionResult CustomViewResult()
@@ -108,12 +106,12 @@
 
         public IActionResult DefaultPartialViewWithModel()
         {
-            return this.PartialView(this.responseModel);
+            return this.PartialView(this.ResponseModel);
         }
 
         public IActionResult IndexPartialView()
         {
-            return this.PartialView("_IndexPartial", this.responseModel);
+            return this.PartialView("_IndexPartial", this.ResponseModel);
         }
 
         public IActionResult CustomPartialViewResult()
@@ -141,14 +139,14 @@
 
         public IActionResult ViewComponentResultByType()
         {
-            return this.ViewComponent(typeof(CustomViewComponent), new { model = this.responseModel });
+            return this.ViewComponent(typeof(CustomViewComponent), new { model = this.ResponseModel });
         }
 
         public IActionResult ViewComponentWithIncorrectArguments()
         {
             return new ViewComponentResult
             {
-                Arguments = this.responseModel
+                Arguments = this.ResponseModel
             };
         }
 
@@ -219,7 +217,7 @@
 
         public IActionResult FullHttpBadRequestAction()
         {
-            return new BadRequestObjectResult(this.responseModel)
+            return new BadRequestObjectResult(this.ResponseModel)
             {
                 ContentTypes = new MediaTypeCollection { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) },
                 StatusCode = StatusCodes.Status201Created,
@@ -230,7 +228,7 @@
 
         public IActionResult HttpBadRequestActionWithFormatter(IOutputFormatter formatter)
         {
-            return new BadRequestObjectResult(this.responseModel)
+            return new BadRequestObjectResult(this.ResponseModel)
             {
                 Formatters = new FormatterCollection<IOutputFormatter> { formatter }
             };
@@ -309,7 +307,7 @@
 
         public IActionResult FullOkAction()
         {
-            return new OkObjectResult(this.responseModel)
+            return new OkObjectResult(this.ResponseModel)
             {
                 ContentTypes = new MediaTypeCollection { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) },
                 StatusCode = StatusCodes.Status201Created,
@@ -320,7 +318,7 @@
 
         public IActionResult FullObjectResultAction()
         {
-            return new ObjectResult(this.responseModel)
+            return new ObjectResult(this.ResponseModel)
             {
                 ContentTypes = new MediaTypeCollection { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) },
                 StatusCode = StatusCodes.Status201Created,
@@ -331,7 +329,7 @@
 
         public IActionResult OkActionWithFormatter(IOutputFormatter formatter)
         {
-            return new OkObjectResult(this.responseModel)
+            return new OkObjectResult(this.ResponseModel)
             {
                 Formatters = new FormatterCollection<IOutputFormatter> { formatter }
             };
@@ -339,7 +337,7 @@
 
         public IActionResult ObjectActionWithFormatter(IOutputFormatter formatter)
         {
-            return new ObjectResult(this.responseModel)
+            return new ObjectResult(this.ResponseModel)
             {
                 Formatters = new FormatterCollection<IOutputFormatter> { formatter }
             };
@@ -477,12 +475,12 @@
 
         public IActionResult CreatedAction()
         {
-            return this.Created(TestObjectFactory.GetUri().OriginalString, this.responseModel);
+            return this.Created(TestObjectFactory.GetUri().OriginalString, this.ResponseModel);
         }
 
         public IActionResult FullCreatedAction()
         {
-            return new CreatedResult(TestObjectFactory.GetUri(), this.responseModel)
+            return new CreatedResult(TestObjectFactory.GetUri(), this.ResponseModel)
             {
                 ContentTypes = new MediaTypeCollection { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) },
                 StatusCode = StatusCodes.Status201Created,
@@ -493,7 +491,7 @@
 
         public IActionResult CreatedActionWithFormatter(IOutputFormatter formatter)
         {
-            return new CreatedResult(TestObjectFactory.GetUri(), this.responseModel)
+            return new CreatedResult(TestObjectFactory.GetUri(), this.ResponseModel)
             {
                 Formatters = new FormatterCollection<IOutputFormatter> { formatter }
             };
@@ -501,12 +499,12 @@
 
         public IActionResult CreatedActionWithUri()
         {
-            return this.Created(TestObjectFactory.GetUri(), this.responseModel);
+            return this.Created(TestObjectFactory.GetUri(), this.ResponseModel);
         }
 
         public IActionResult CreatedAtActionResult()
         {
-            return this.CreatedAtAction("MyAction", "MyController", new { id = 1, text = "sometext" }, this.responseModel);
+            return this.CreatedAtAction("MyAction", "MyController", new { id = 1, text = "sometext" }, this.ResponseModel);
         }
 
         public IActionResult CreatedAtActionWithCustomHelperResult(IUrlHelper urlHelper)
@@ -519,7 +517,7 @@
                     id = 1,
                     text = "sometext"
                 },
-                this.responseModel)
+                this.ResponseModel)
             {
                 UrlHelper = urlHelper
             };
@@ -527,12 +525,12 @@
 
         public IActionResult CreatedAtRouteAction()
         {
-            return this.CreatedAtRoute("Redirect", new { action = "WithParameter", id = 1 }, this.responseModel);
+            return this.CreatedAtRoute("Redirect", new { action = "WithParameter", id = 1 }, this.ResponseModel);
         }
 
         public IActionResult CreatedAtRouteVoidAction()
         {
-            return this.CreatedAtRoute("Redirect", new { action = "VoidAction" }, this.responseModel);
+            return this.CreatedAtRoute("Redirect", new { action = "VoidAction" }, this.ResponseModel);
         }
 
         public IActionResult RedirectPermanentAction()
@@ -601,7 +599,7 @@
 
         public IActionResult OkResultActionWithRequestBody(int id, RequestModel model)
         {
-            return this.Ok(this.responseModel);
+            return this.Ok(this.ResponseModel);
         }
 
         public IActionResult WithRequest()
@@ -631,12 +629,12 @@
 
         public IActionResult OkResultWithInterfaceResponse()
         {
-            return this.Ok(this.responseModel);
+            return this.Ok(this.ResponseModel);
         }
 
         public IActionResult OkResultWithResponse()
         {
-            return this.Ok(this.responseModel.ToList());
+            return this.Ok(this.ResponseModel.ToList());
         }
 
         public async Task<OkResult> AsyncOkResultAction()
@@ -646,7 +644,7 @@
 
         public IActionResult ObjectResultWithResponse()
         {
-            return new ObjectResult(this.responseModel.ToList());
+            return new ObjectResult(this.ResponseModel.ToList());
         }
 
         public IActionResult BadRequestAction()
@@ -671,7 +669,7 @@
 
         public IActionResult BadRequestWithCustomError()
         {
-            return this.BadRequest(this.responseModel);
+            return this.BadRequest(this.ResponseModel);
         }
 
         public IActionResult ModelStateWithNestedError()
@@ -684,12 +682,12 @@
 
         public IActionResult JsonAction()
         {
-            return this.Json(this.responseModel);
+            return this.Json(this.ResponseModel);
         }
 
         public IActionResult JsonWithStatusCodeAction()
         {
-            return new JsonResult(this.responseModel)
+            return new JsonResult(this.ResponseModel)
             {
                 StatusCode = 200,
                 ContentType = ContentType.ApplicationXml
@@ -698,12 +696,12 @@
 
         public IActionResult JsonWithSettingsAction()
         {
-            return this.Json(this.responseModel, TestObjectFactory.GetJsonSerializerSettings());
+            return this.Json(this.ResponseModel, TestObjectFactory.GetJsonSerializerSettings());
         }
 
         public IActionResult JsonWithSpecificSettingsAction(JsonSerializerSettings jsonSerializerSettings)
         {
-            return this.Json(this.responseModel, jsonSerializerSettings);
+            return this.Json(this.ResponseModel, jsonSerializerSettings);
         }
 
         public IActionResult LocalRedirectAction()
@@ -727,7 +725,7 @@
         public IActionResult CustomModelStateError()
         {
             this.ModelState.AddModelError("Test", "Test error");
-            return this.Ok(this.responseModel);
+            return this.Ok(this.ResponseModel);
         }
 
         public IActionResult HttpNotFoundAction()
@@ -742,7 +740,7 @@
 
         public IActionResult FullHttpNotFoundAction()
         {
-            return new NotFoundObjectResult(this.responseModel)
+            return new NotFoundObjectResult(this.ResponseModel)
             {
                 ContentTypes = new MediaTypeCollection { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) },
                 StatusCode = StatusCodes.Status201Created,
@@ -753,7 +751,7 @@
 
         public IActionResult HttpNotFoundActionWithFormatter(IOutputFormatter formatter)
         {
-            return new NotFoundObjectResult(this.responseModel)
+            return new NotFoundObjectResult(this.ResponseModel)
             {
                 Formatters = new FormatterCollection<IOutputFormatter> { formatter }
             };
@@ -782,17 +780,17 @@
 
         public IResponseModel GenericInterfaceAction()
         {
-            return this.responseModel.FirstOrDefault();
+            return this.ResponseModel.FirstOrDefault();
         }
 
         public ResponseModel GenericAction()
         {
-            return this.responseModel.FirstOrDefault();
+            return this.ResponseModel.FirstOrDefault();
         }
 
         public ICollection<ResponseModel> GenericActionWithCollection()
         {
-            return this.responseModel;
+            return this.ResponseModel;
         }
 
         public List<ResponseModel> GenericActionWithListCollection()
@@ -825,7 +823,7 @@
         public async Task<IActionResult> TryUpdateModelAction()
         {
             var model = new RequestModel();
-            await this.TryUpdateModelAsync<RequestModel>(model);
+            await this.TryUpdateModelAsync(model);
             return this.Ok();
         }
 

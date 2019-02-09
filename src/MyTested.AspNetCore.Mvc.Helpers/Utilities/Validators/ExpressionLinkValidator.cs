@@ -31,10 +31,9 @@
                 .GetRequiredService<IUrlHelperFactory>()
                 .GetUrlHelper(actionContext);
 
-            ICollection<string> ignoredRouteKeys;
             var expectedUri = urlHelper.ExpressionLink(
                 expectedRouteValuesAsLambdaExpression,
-                out ignoredRouteKeys);
+                out var ignoredRouteKeys);
 
             var actualUri = urlHelper.GenerateLink(
                 linkGenerationTestContext,

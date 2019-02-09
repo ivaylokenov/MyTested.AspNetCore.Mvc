@@ -1,6 +1,5 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.Routing
 {
-    using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Threading.Tasks;
@@ -10,12 +9,14 @@
     using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.Extensions.Logging;
+    using Utilities.Validators;
 
     public class ModelBindingActionInvoker : ResourceInvoker, IModelBindingActionInvoker
     {
         private readonly ControllerActionInvokerCacheEntry cacheEntry;
         private readonly ControllerContext controllerContext;
-        private readonly Dictionary<string, object> arguments;
+
+        private Dictionary<string, object> arguments;
 
         public ModelBindingActionInvoker(
             ILogger logger,
@@ -26,34 +27,33 @@
             IFilterMetadata[] filters)
             : base(diagnosticListener, logger, mapper, controllerContext, filters, controllerContext.ValueProviderFactories)
         {
-            if (cacheEntry == null)
-            {
-                throw new ArgumentNullException(nameof(cacheEntry));
-            }
+            CommonValidator.CheckForNullReference(cacheEntry, nameof(cacheEntry));
 
             this.cacheEntry = cacheEntry;
             this.controllerContext = controllerContext;
-
-            this.arguments = new Dictionary<string, object>();
         }
 
         public IDictionary<string, object> BoundActionArguments => this.arguments;
         
         protected override async Task InvokeInnerFilterAsync()
         {
+            // Not initialized in the constructor because filters may
+            // short-circuit the request and tests will fail with wrong exception message.
+            this.arguments = new Dictionary<string, object>();
+
             var actionDescriptor = this.controllerContext.ActionDescriptor;
             if (actionDescriptor.BoundProperties.Count == 0 &&
                 actionDescriptor.Parameters.Count == 0)
             {
                 return;
             }
-            
+
             await this.cacheEntry.ControllerBinderDelegate(this.controllerContext, _instance, this.arguments);
         }
 
         protected override void ReleaseResources()
         {
-            // intentionally does nothing
+            // Intentionally does nothing.
         }
     }
 }

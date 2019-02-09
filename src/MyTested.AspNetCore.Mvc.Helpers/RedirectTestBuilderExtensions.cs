@@ -22,10 +22,8 @@
         public static IAndRedirectTestBuilder To<TController>(
             this IRedirectTestBuilder builder,
             Expression<Action<TController>> actionCall)
-            where TController : class
-        {
-            return ProcessRouteLambdaExpression<TController>(builder, actionCall);
-        }
+            where TController : class 
+            => ProcessRouteLambdaExpression(builder, actionCall);
 
         /// <summary>
         /// Tests whether <see cref="Microsoft.AspNetCore.Mvc.RedirectToActionResult"/> or <see cref="Microsoft.AspNetCore.Mvc.RedirectToRouteResult"/> redirects to specific asynchronous action.
@@ -37,12 +35,10 @@
         public static IAndRedirectTestBuilder To<TController>(
             this IRedirectTestBuilder builder, 
             Expression<Func<TController, Task>> actionCall)
-            where TController : class
-        {
-            return ProcessRouteLambdaExpression<TController>(builder, actionCall);
-        }
+            where TController : class 
+            => ProcessRouteLambdaExpression(builder, actionCall);
 
-        private static IAndRedirectTestBuilder ProcessRouteLambdaExpression<TController>(
+        private static IAndRedirectTestBuilder ProcessRouteLambdaExpression(
             dynamic redirectTestBuilder,
             LambdaExpression actionCall)
         {

@@ -10,11 +10,8 @@
     /// </summary>
     public class MyApplication : ApplicationConfigurationBuilder
     {
-        static MyApplication()
-        {
-            TestApplication.TryInitialize();
-        }
-        
+        static MyApplication() => TestApplication.TryInitialize();
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MyApplication"/> class.
         /// </summary>
@@ -38,9 +35,7 @@
         /// <typeparam name="TStartup">Startup class to bootstrap the test application from.</typeparam>
         /// <returns>Builder of <see cref="IApplicationConfigurationBuilder"/> type.</returns>
         public static IApplicationConfigurationBuilder StartsFrom<TStartup>()
-            where TStartup : class
-        {
-            return new MyApplication(typeof(TStartup));
-        }
+            where TStartup : class 
+            => new MyApplication(typeof(TStartup));
     }
 }

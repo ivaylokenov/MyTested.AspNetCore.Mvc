@@ -2,7 +2,6 @@
 {
     using System;
     using System.Linq;
-    using System.Threading.Tasks;
     using Contracts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Abstractions;
@@ -11,6 +10,7 @@
     using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Options;
     using Utilities.Extensions;
 
     /// <summary>

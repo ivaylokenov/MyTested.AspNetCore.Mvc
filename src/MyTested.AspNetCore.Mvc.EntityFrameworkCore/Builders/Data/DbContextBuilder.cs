@@ -1,6 +1,8 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Data
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Base;
     using Contracts.Data;
     using Internal.TestContexts;
@@ -22,10 +24,26 @@
         }
 
         /// <inheritdoc />
-        public IAndDbContextBuilder WithEntities(Action<DbContext> dbContextSetup)
-        {
-            return WithEntities<DbContext>(dbContextSetup);
-        }
+        public IAndDbContextBuilder WithEntities(IEnumerable<object> entities)
+            => this.WithEntities(dbContext => dbContext.AddRange(entities));
+
+        /// <inheritdoc />
+        public IAndDbContextBuilder WithEntities<TDbContext>(IEnumerable<object> entities) 
+            where TDbContext : DbContext
+            => this.WithEntities<TDbContext>(dbContext => dbContext.AddRange(entities));
+
+        /// <inheritdoc />
+        public IAndDbContextBuilder WithEntities(params object[] entities)
+            => this.WithEntities(entities.AsEnumerable());
+
+        /// <inheritdoc />
+        public IAndDbContextBuilder WithEntities<TDbContext>(params object[] entities)
+            where TDbContext : DbContext
+            => this.WithEntities<TDbContext>(entities.AsEnumerable());
+
+        /// <inheritdoc />
+        public IAndDbContextBuilder WithEntities(Action<DbContext> dbContextSetup) 
+            => this.WithEntities<DbContext>(dbContextSetup);
 
         /// <inheritdoc />
         public IAndDbContextBuilder WithEntities<TDbContext>(Action<TDbContext> dbContextSetup)
@@ -42,10 +60,8 @@
 
         /// <inheritdoc />
         public IAndDbContextBuilder WithSet<TEntity>(Action<DbSet<TEntity>> entitySetup)
-            where TEntity : class
-        {
-            return this.WithSet<DbContext, TEntity>(entitySetup);
-        }
+            where TEntity : class 
+            => this.WithSet<DbContext, TEntity>(entitySetup);
 
         /// <inheritdoc />
         public IAndDbContextBuilder WithSet<TDbContext, TEntity>(Action<DbSet<TEntity>> entitySetup)

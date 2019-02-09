@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Abstractions;
-
-namespace MyTested.AspNetCore.Mvc.Internal.Routing
+﻿namespace MyTested.AspNetCore.Mvc.Internal.Routing
 {
     using System;
     using System.Collections.Generic;
@@ -16,7 +14,7 @@ namespace MyTested.AspNetCore.Mvc.Internal.Routing
     public static class RouteExpressionParser
     {
         // This key should be ignored as it is used internally for route attribute matching.
-        private static readonly string RouteGroupKey = "!__route_group";
+        private const string RouteGroupKey = "!__route_group";
 
         public static ExpressionParsedRouteContext Parse(
             LambdaExpression actionCallExpression,
@@ -24,23 +22,33 @@ namespace MyTested.AspNetCore.Mvc.Internal.Routing
             bool considerParameterDescriptors = false)
         {
             var methodCallExpression = ExpressionParser.GetMethodCallExpression(actionCallExpression);
-
-            var controllerType = methodCallExpression.Object.Type;
             
             var methodInfo = methodCallExpression.Method;
+            var controllerType = methodCallExpression.Object?.Type;
+
+            if (controllerType == null)
+            {
+                throw new InvalidOperationException($"Method {methodInfo.Name} is static and it is not a valid controller action.");
+            }
 
             var controllerActionDescriptorCache = TestServiceProvider.GetRequiredService<IControllerActionDescriptorCache>();
             var controllerActionDescriptor = controllerActionDescriptorCache.GetActionDescriptor(methodInfo);
             
             if (controllerActionDescriptor == null)
             {
-                throw new InvalidOperationException($"Method {methodInfo.Name} in class {methodInfo.DeclaringType.Name} is not a valid controller action.");
+                var declaringType = methodInfo.DeclaringType;
+                var classNameMessage = declaringType != null ? $"in class {declaringType.Name} " : string.Empty;
+                throw new InvalidOperationException($"Method {methodInfo.Name} {classNameMessage}is not a valid controller action.");
             }
 
             var controllerName = controllerActionDescriptor.ControllerName;
             var actionName = controllerActionDescriptor.ActionName;
 
-            var routeValues = GetRouteValues(methodInfo, methodCallExpression, controllerActionDescriptor, considerParameterDescriptors);
+            var routeValues = GetRouteValues(
+                methodInfo, 
+                methodCallExpression, 
+                controllerActionDescriptor, 
+                considerParameterDescriptors);
 
             // If there is a required route value, add it to the result.
             foreach (var requiredRouteValue in controllerActionDescriptor.RouteValues)
