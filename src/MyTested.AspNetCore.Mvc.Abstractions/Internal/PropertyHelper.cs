@@ -84,7 +84,7 @@
             }
         }
 
-        // Called via reflection
+        // Called via reflection.
         private static TValue CallPropertyGetter<TDeclaringType, TValue>(
             Func<TDeclaringType, TValue> getter,
             object target)
@@ -92,7 +92,7 @@
             return getter((TDeclaringType)target);
         }
 
-        // Called via reflection
+        // Called via reflection.
         private static void CallPropertySetter<TDeclaringType, TValue>(
             Action<TDeclaringType, TValue> setter,
             object target,

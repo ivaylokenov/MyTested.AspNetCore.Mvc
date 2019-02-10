@@ -7,7 +7,7 @@
     using Utilities.Validators;
 
     /// <summary>
-    /// Provides global application services.
+    /// Provides global test application services.
     /// </summary>
     public class TestServiceProvider
     {
@@ -18,22 +18,16 @@
             = new Dictionary<Type, ServiceLifetime>();
 
         /// <summary>
-        /// Gets the global service provider.
+        /// Gets the global test service provider.
         /// </summary>
         /// <value>Type of IServiceProvider.</value>
         public static IServiceProvider Global => TestApplication.Services;
         
         public static IServiceProvider Current
         {
-            get
-            {
-                return CurrentServiceProvider.Value ?? Global;
-            }
+            get => CurrentServiceProvider.Value ?? Global;
 
-            internal set
-            {
-                CurrentServiceProvider.Value = value;
-            }
+            internal set => CurrentServiceProvider.Value = value;
         }
 
         /// <summary>

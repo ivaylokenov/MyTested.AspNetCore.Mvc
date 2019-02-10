@@ -122,14 +122,15 @@
             var parameterDescriptors = new Dictionary<string, string>();
             if (considerParameterDescriptors)
             {
-                var parameters = controllerActionDescriptor.Parameters;
-                foreach (var parameter in parameters)
-                {
-                    if (parameter.BindingInfo != null)
+                controllerActionDescriptor
+                    .Parameters
+                    .ForEach(parameter =>
                     {
-                        parameterDescriptors.Add(parameter.Name, parameter.BindingInfo.BinderModelName);
-                    }
-                }
+                        if (parameter.BindingInfo != null)
+                        {
+                            parameterDescriptors.Add(parameter.Name, parameter.BindingInfo.BinderModelName);
+                        }
+                    });
             }
 
             for (var i = 0; i < arguments.Count; i++)
