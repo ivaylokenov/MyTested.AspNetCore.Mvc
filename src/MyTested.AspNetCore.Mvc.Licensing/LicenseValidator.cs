@@ -66,10 +66,7 @@
             return licenses;
         }
 
-        public static void ClearLicenseDetails()
-        {
-            registeredLicenses = null;
-        }
+        public static void ClearLicenseDetails() => registeredLicenses = null;
 
         private static void Validate(string license, DateTime releaseDate, string projectNamespace)
         {

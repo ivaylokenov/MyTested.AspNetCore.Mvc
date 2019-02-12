@@ -14,21 +14,21 @@
 
         public long Priority => -9000;
 
-        public Action<IServiceCollection> DefaultServiceRegistrationDelegate =>
-            serviceCollection => serviceCollection
+        public Action<IServiceCollection> DefaultServiceRegistrationDelegate 
+            => serviceCollection => serviceCollection
                 .AddMvcCore()
                 .AddFormatterMappings()
                 .AddJsonFormatters();
 
-        public Action<IServiceCollection> ServiceRegistrationDelegate =>
-            serviceCollection => serviceCollection.AddStringInputFormatter();
+        public Action<IServiceCollection> ServiceRegistrationDelegate 
+            => serviceCollection => serviceCollection.AddStringInputFormatter();
 
         public object TryGetValue(Type type, ComponentTestContext testContext)
-            => Reflection.AreAssignable(baseHttpContextType, type) // HttpContext
+            => Reflection.AreAssignable(this.baseHttpContextType, type) // HttpContext
                 ? testContext.HttpContext
-                : Reflection.AreAssignable(baseHttpRequestType, type) // HttpRequest
+                : Reflection.AreAssignable(this.baseHttpRequestType, type) // HttpRequest
                 ? testContext.HttpRequest
-                : Reflection.AreAssignable(baseHttpResponseType, type) // HttpResponse
+                : Reflection.AreAssignable(this.baseHttpResponseType, type) // HttpResponse
                 ? (object)testContext.HttpResponse
                 : null;
     }

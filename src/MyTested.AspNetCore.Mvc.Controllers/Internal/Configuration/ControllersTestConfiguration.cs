@@ -4,14 +4,17 @@
 
     public class ControllersTestConfiguration : BaseConfiguration
     {
-        private const string ModelStateValidationConfigKey = "ModelStateValidation";
+        internal const string PrefixKey = "Controllers";
+
+        internal const string ModelStateValidationKey = "ModelStateValidation";
 
         public ControllersTestConfiguration(IConfiguration configuration)
             : base(configuration)
         {
-            this.Prefix = "Controllers";
         }
+        
+        protected override string Prefix => PrefixKey;
 
-        public bool ModelStateValidation() => this.GetValue(ModelStateValidationConfigKey, true);
+        public bool ModelStateValidation => this.GetValue(ModelStateValidationKey, true);
     }
 }

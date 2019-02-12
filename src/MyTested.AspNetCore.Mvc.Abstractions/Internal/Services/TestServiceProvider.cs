@@ -9,7 +9,7 @@
     /// <summary>
     /// Provides global test application services.
     /// </summary>
-    public class TestServiceProvider
+    public static class TestServiceProvider
     {
         private static readonly TestLocal<IServiceProvider> CurrentServiceProvider
             = new TestLocal<IServiceProvider>();

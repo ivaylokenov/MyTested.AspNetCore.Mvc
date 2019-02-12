@@ -12,15 +12,9 @@
         private readonly Type defaultCachingImplementationType = typeof(MemoryCache);
 
         public Func<ServiceDescriptor, bool> ServiceSelectorPredicate
-        {
-            get
-            {
-                return
-                    serviceDescriptor =>
-                        serviceDescriptor.ServiceType == defaultCachingServiceType &&
-                        serviceDescriptor.ImplementationType == defaultCachingImplementationType;
-            }
-        }
+            => serviceDescriptor =>
+                serviceDescriptor.ServiceType == this.defaultCachingServiceType &&
+                serviceDescriptor.ImplementationType == this.defaultCachingImplementationType;
 
         public Action<IServiceCollection> ServiceRegistrationDelegate
         {

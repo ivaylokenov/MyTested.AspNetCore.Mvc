@@ -10,14 +10,8 @@
         private readonly Type baseDbContextType = typeof(DbContext);
 
         public Func<ServiceDescriptor, bool> ServiceSelectorPredicate
-        {
-            get
-            {
-                return
-                    serviceDescriptor =>
-                        baseDbContextType.IsAssignableFrom(serviceDescriptor.ImplementationType);
-            }
-        }
+            => serviceDescriptor =>
+                this.baseDbContextType.IsAssignableFrom(serviceDescriptor.ImplementationType);
 
         public Action<IServiceCollection> ServiceRegistrationDelegate => serviceCollection => serviceCollection.ReplaceDbContext();
     }

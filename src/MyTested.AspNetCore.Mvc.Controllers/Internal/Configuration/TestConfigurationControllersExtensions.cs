@@ -2,7 +2,7 @@
 {
     public static class TestConfigurationControllersExtensions
     {
-        public static ControllersTestConfiguration Controllers(this TestConfiguration testConfiguration)
+        public static ControllersTestConfiguration GetControllersConfiguration(this TestConfiguration testConfiguration)
             => testConfiguration.GetConfiguration(() => new ControllersTestConfiguration(testConfiguration.Configuration));
     }
 }

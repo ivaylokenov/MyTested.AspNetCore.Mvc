@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Reflection;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
+    using Utilities;
 
     public class ViewDataPropertyHelper : PropertyHelper
     {

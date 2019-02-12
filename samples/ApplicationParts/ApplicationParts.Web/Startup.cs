@@ -1,16 +1,18 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using ApplicationParts.Web.Data;
-using ApplicationParts.Models;
-using ApplicationParts.Services;
-using Microsoft.AspNetCore.Identity;
-
-namespace ApplicationParts.Web
+﻿namespace ApplicationParts.Web
 {
+    using Controllers;
+    using Data;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc.ApplicationParts;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
+    using Models;
+    using Services;
+
     public class Startup
     {
         public Startup(IHostingEnvironment env)
@@ -21,7 +23,8 @@ namespace ApplicationParts.Web
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
             
             builder.AddEnvironmentVariables();
-            Configuration = builder.Build();
+
+            this.Configuration = builder.Build();
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -30,14 +33,20 @@ namespace ApplicationParts.Web
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services
+                .AddDbContext<ApplicationDbContext>(options => options
+                .UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services
+                .AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddMvc();
+            services
+                .AddMvc()
+                .PartManager
+                .ApplicationParts
+                .Add(new AssemblyPart(typeof(HomeController).Assembly));
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();

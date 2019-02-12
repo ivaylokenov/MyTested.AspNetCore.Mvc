@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Routing;
+    using Utilities;
     using Utilities.Extensions;
 
     public static class RouteDataResolver

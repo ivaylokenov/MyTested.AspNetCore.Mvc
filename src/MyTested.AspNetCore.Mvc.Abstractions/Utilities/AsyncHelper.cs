@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Internal
+﻿namespace MyTested.AspNetCore.Mvc.Utilities
 {
     using System;
     using System.Threading;
@@ -12,24 +12,20 @@
             TaskContinuationOptions.None,
             TaskScheduler.Default);
 
-        public static TResult RunSync<TResult>(Func<Task<TResult>> func)
-        {
-            return taskFactory
+        public static TResult RunSync<TResult>(Func<Task<TResult>> func) 
+            => taskFactory
                 .StartNew(func)
                 .Unwrap()
                 .ConfigureAwait(false)
                 .GetAwaiter()
                 .GetResult();
-        }
 
-        public static void RunSync(Func<Task> func)
-        {
-            taskFactory
+        public static void RunSync(Func<Task> func) 
+            => taskFactory
                 .StartNew(func)
                 .Unwrap()
                 .ConfigureAwait(false)
                 .GetAwaiter()
                 .GetResult();
-        }
     }
 }

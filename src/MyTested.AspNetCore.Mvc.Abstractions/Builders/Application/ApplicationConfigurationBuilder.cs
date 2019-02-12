@@ -18,10 +18,8 @@
         /// Initializes a new instance of the <see cref="ApplicationConfigurationBuilder"/> class.
         /// </summary>
         /// <param name="startupType">Type of startup class.</param>
-        public ApplicationConfigurationBuilder(Type startupType)
-        {
-            TestApplication.StartupType = startupType;
-        }
+        public ApplicationConfigurationBuilder(Type startupType) 
+            => TestApplication.StartupType = startupType;
 
         /// <inheritdoc />
         public IApplicationConfigurationBuilder WithTestConfiguration(Action<IConfigurationBuilder> config)
@@ -52,21 +50,32 @@
         }
 
         /// <inheritdoc />
-        public IApplicationConfigurationBuilder WithTestAssembly(object objectFromTestAssembly)
+        public IApplicationConfigurationBuilder WithTestAssembly(object objectFromTestAssembly) 
+            => this.WithTestAssembly(objectFromTestAssembly?.GetType());
+
+        /// <inheritdoc />
+        public IApplicationConfigurationBuilder WithTestAssembly(Type typeFromTestAssembly) 
+            => this.WithTestAssembly(typeFromTestAssembly.GetTypeInfo().Assembly);
+
+        /// <inheritdoc />
+        public IApplicationConfigurationBuilder WithTestAssembly(Assembly testAssembly)
         {
-            return this.WithTestAssembly(objectFromTestAssembly?.GetType());
+            TestApplication.TestAssembly = testAssembly;
+            return this;
         }
 
         /// <inheritdoc />
-        public IApplicationConfigurationBuilder WithTestAssembly(Type typeFromTestAssembly)
-        {
-            return this.WithTestAssembly(typeFromTestAssembly.GetTypeInfo().Assembly);
-        }
+        public IApplicationConfigurationBuilder WithWebAssembly(object objectFromWebAssembly)
+            => this.WithTestAssembly(objectFromWebAssembly?.GetType());
 
         /// <inheritdoc />
-        public IApplicationConfigurationBuilder WithTestAssembly(Assembly assembly)
+        public IApplicationConfigurationBuilder WithWebAssembly(Type typeFromWebAssembly)
+            => this.WithTestAssembly(typeFromWebAssembly.GetTypeInfo().Assembly);
+
+        /// <inheritdoc />
+        public IApplicationConfigurationBuilder WithWebAssembly(Assembly webAssembly)
         {
-            TestApplication.TestAssembly = assembly;
+            TestApplication.WebAssembly = webAssembly;
             return this;
         }
     }

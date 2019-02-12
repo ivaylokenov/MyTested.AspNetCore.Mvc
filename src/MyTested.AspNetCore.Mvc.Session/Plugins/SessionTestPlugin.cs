@@ -13,15 +13,9 @@
         private readonly Type defaultSessionStoreImplementationType = typeof(DistributedSessionStore);
 
         public Func<ServiceDescriptor, bool> ServiceSelectorPredicate
-        {
-            get
-            {
-                return
-                    serviceDescriptor =>
-                        serviceDescriptor.ServiceType == defaultSessionStoreServiceType &&
-                        serviceDescriptor.ImplementationType == defaultSessionStoreImplementationType;
-            }
-        }
+            => serviceDescriptor =>
+                serviceDescriptor.ServiceType == this.defaultSessionStoreServiceType &&
+                serviceDescriptor.ImplementationType == this.defaultSessionStoreImplementationType;
 
         public Action<IServiceCollection> ServiceRegistrationDelegate => serviceCollection => serviceCollection.ReplaceSession();
 

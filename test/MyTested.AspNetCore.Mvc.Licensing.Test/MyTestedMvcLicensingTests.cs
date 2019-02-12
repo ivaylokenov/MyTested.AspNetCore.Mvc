@@ -49,6 +49,8 @@
             .ConfigureAwait(false)
             .GetAwaiter()
             .GetResult();
+            
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]

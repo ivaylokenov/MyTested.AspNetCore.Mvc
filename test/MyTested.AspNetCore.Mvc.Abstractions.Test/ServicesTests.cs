@@ -1,18 +1,18 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test
 {
-    using System;
-    using System.Linq;
     using Internal;
     using Internal.Application;
     using Internal.Services;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Hosting.Builder;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.Caching.Memory;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
@@ -21,6 +21,10 @@
     using Setups.Controllers;
     using Setups.Services;
     using Setups.Startups;
+    using System;
+    using System.Diagnostics;
+    using System.Linq;
+    using Microsoft.Extensions.ObjectPool;
     using Xunit;
 
     public class ServicesTests
@@ -370,7 +374,7 @@
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
-        
+
         [Fact]
         public void MockMemoryCacheShouldNotBeRegisteredIfNoCacheIsAdded()
         {
@@ -382,7 +386,7 @@
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
-        
+
         [Fact]
         public void CustomTempDataProviderShouldOverrideTheMockOne()
         {
@@ -408,7 +412,7 @@
                     services.AddTransient<IAnotherInjectedService, AnotherInjectedService>();
                 });
 
-            // this call ensures services are loaded (uses lazy loading)
+            // This call ensures services are loaded (uses lazy loading).
             var setupServices = TestApplication.Services;
 
             Assert.NotNull(setupServices.GetService<IScopedService>());
@@ -423,15 +427,34 @@
 
             var transientServiceLifetime = TestServiceProvider.GetServiceLifetime<IAnotherInjectedService>();
             Assert.Equal(ServiceLifetime.Transient, transientServiceLifetime);
-            
+
             MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void DefaultServicesShouldBeRegisteredCorrectly()
+        {
+            MyApplication.StartsFrom<DefaultStartup>();
+
+            Assert.NotNull(TestServiceProvider.GetService<IHostingEnvironment>());
+            Assert.NotNull(TestServiceProvider.GetService<IApplicationLifetime>());
+            Assert.NotNull(TestServiceProvider.GetService<IApplicationBuilderFactory>());
+            Assert.NotNull(TestServiceProvider.GetService<IHttpContextFactory>());
+            Assert.NotNull(TestServiceProvider.GetService<IMiddlewareFactory>());
+            Assert.NotNull(TestServiceProvider.GetService<ILoggerFactory>());
+            Assert.NotNull(TestServiceProvider.GetService<IConfiguration>());
+            Assert.NotNull(TestServiceProvider.GetService<DiagnosticListener>());
+            Assert.NotNull(TestServiceProvider.GetService<DiagnosticSource>());
+            Assert.NotNull(TestServiceProvider.GetService<IStartupFilter>());
+            Assert.NotNull(TestServiceProvider.GetService<IServiceProviderFactory<IServiceCollection>>());
+            Assert.NotNull(TestServiceProvider.GetService<ObjectPoolProvider>());
         }
 
         [Fact]
         public void FullConfigureStartupShouldInjectServicesCorrectly()
         {
             MyApplication.StartsFrom<FullConfigureStartup>();
-            
+
             Assert.NotNull(TestServiceProvider.GetService<IHostingEnvironment>());
             Assert.NotNull(TestServiceProvider.GetService<ILoggerFactory>());
             Assert.NotNull(TestServiceProvider.GetService<IApplicationLifetime>());

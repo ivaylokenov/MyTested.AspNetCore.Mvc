@@ -12,16 +12,16 @@
 
         public long Priority => -10000;
 
-        public Action<IServiceCollection> DefaultServiceRegistrationDelegate => 
-            serviceCollection => serviceCollection.AddMvcCore();
+        public Action<IServiceCollection> DefaultServiceRegistrationDelegate 
+            => serviceCollection => serviceCollection.AddMvcCore();
         
-        public Action<IServiceCollection> ServiceRegistrationDelegate => 
-            serviceCollection => serviceCollection.AddControllersTesting();
+        public Action<IServiceCollection> ServiceRegistrationDelegate 
+            => serviceCollection => serviceCollection.AddControllersTesting();
 
         public object TryGetValue(Type type, ComponentTestContext testContext)
-            => Reflection.AreAssignable(controllerAttributesType, type) // ControllerAttributes
+            => Reflection.AreAssignable(this.controllerAttributesType, type) // ControllerAttributes
                 ? new ControllerAttributes(testContext.ComponentAttributes)
-                : Reflection.AreAssignable(actionAttributesType, type) // ActionAttributes
+                : Reflection.AreAssignable(this.actionAttributesType, type) // ActionAttributes
                 ? (object)new ActionAttributes(testContext.MethodAttributes)
                 : null;
     }

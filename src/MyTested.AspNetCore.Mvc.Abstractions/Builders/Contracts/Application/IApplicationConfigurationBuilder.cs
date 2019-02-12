@@ -57,8 +57,29 @@
         /// <summary>
         /// Sets the test assembly for the tested application.
         /// </summary>
-        /// <param name="assembly">The assembly to set as test assembly.</param>
+        /// <param name="testAssembly">The assembly to set as test assembly.</param>
         /// <returns>The same <see cref="IApplicationConfigurationBuilder"/>.</returns>
-        IApplicationConfigurationBuilder WithTestAssembly(Assembly assembly);
+        IApplicationConfigurationBuilder WithTestAssembly(Assembly testAssembly);
+
+        /// <summary>
+        /// Sets the web assembly for the tested application.
+        /// </summary>
+        /// <param name="objectFromWebAssembly">Instance object from the web assembly.</param>
+        /// <returns>The same <see cref="IApplicationConfigurationBuilder"/>.</returns>
+        IApplicationConfigurationBuilder WithWebAssembly(object objectFromWebAssembly);
+
+        /// <summary>
+        /// Sets the web assembly for the tested application.
+        /// </summary>
+        /// <param name="typeFromWebAssembly">Type from the web assembly.</param>
+        /// <returns>The same <see cref="IApplicationConfigurationBuilder"/>.</returns>
+        IApplicationConfigurationBuilder WithWebAssembly(Type typeFromWebAssembly);
+
+        /// <summary>
+        /// Sets the web assembly for the tested application.
+        /// </summary>
+        /// <param name="webAssembly">The assembly to set as web assembly.</param>
+        /// <returns>The same <see cref="IApplicationConfigurationBuilder"/>.</returns>
+        IApplicationConfigurationBuilder WithWebAssembly(Assembly webAssembly);
     }
 }

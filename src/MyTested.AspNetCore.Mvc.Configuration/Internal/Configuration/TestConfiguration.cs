@@ -7,28 +7,29 @@
 
     public class TestConfiguration : BaseConfiguration
     {
-        private const string LicenseConfigKey = "License";
-        private const string LicensesConfigKey = "Licenses";
+        internal const string LicenseKey = "License";
+        internal const string LicensesKey = "Licenses";
 
         private readonly ConcurrentDictionary<Type, BaseConfiguration> configurationTypes;
 
         private TestConfiguration(IConfiguration configuration)
-            : base(configuration)
-        {
-            this.configurationTypes = new ConcurrentDictionary<Type, BaseConfiguration>();
-        }
+            : base(configuration) 
+            => this.configurationTypes = new ConcurrentDictionary<Type, BaseConfiguration>();
 
-        public IEnumerable<string> Licenses()
+        public IEnumerable<string> Licenses
         {
-            var license = this.Configuration[LicenseConfigKey];
-            if (license != null)
+            get
             {
-                return new[] { license };
-            }
+                var license = this.Configuration[LicenseKey];
+                if (license != null)
+                {
+                    return new[] { license };
+                }
 
-            var licenses = new List<string>();
-            this.Configuration.GetSection(LicensesConfigKey).Bind(licenses);
-            return licenses;
+                var licenses = new List<string>();
+                this.Configuration.GetSection(LicensesKey).Bind(licenses);
+                return licenses;
+            }
         }
 
         public TConfiguration GetConfiguration<TConfiguration>(Func<TConfiguration> configurationFactory)
@@ -36,9 +37,7 @@
             => (TConfiguration)this.configurationTypes
                 .GetOrAdd(typeof(TConfiguration), _ => configurationFactory());
 
-        public static TestConfiguration With(IConfiguration configuration)
-        {
-            return new TestConfiguration(configuration);
-        }
+        public static TestConfiguration With(IConfiguration configuration) 
+            => new TestConfiguration(configuration);
     }
 }

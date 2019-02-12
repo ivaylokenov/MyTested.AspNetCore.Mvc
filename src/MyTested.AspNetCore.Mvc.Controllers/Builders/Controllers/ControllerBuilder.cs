@@ -26,9 +26,9 @@
             : base(testContext)
         {
             this.EnabledModelStateValidation = TestApplication
-                .Configuration()
-                .Controllers()
-                .ModelStateValidation();
+                .TestConfiguration
+                .GetControllersConfiguration()
+                .ModelStateValidation;
         }
         
         public bool EnabledModelStateValidation { get; set; }

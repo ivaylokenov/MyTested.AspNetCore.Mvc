@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Internal.Caching;
+    using Microsoft.AspNetCore.Mvc.ApplicationParts;
     using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.DependencyInjection;
     using Setups;
@@ -15,7 +16,16 @@
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
-                .WithServices(services => services.AddMemoryCache());
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+
+                    services
+                        .AddMvc()
+                        .PartManager
+                        .ApplicationParts
+                        .Add(new AssemblyPart(this.GetType().Assembly));
+                });
         }
 
         [Fact]

@@ -20,14 +20,14 @@
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("Test configuration cannot be null.");
+                    throw new ArgumentException("Test configuration cannot be null.");
                 }
 
                 this.configuration = value;
             }
         }
 
-        protected string Prefix { get; set; }
+        protected internal virtual string Prefix => null;
 
         protected string GetValue(string key)
             => this.GetValue<string>(key, null);

@@ -1,10 +1,9 @@
-﻿namespace MyTested.AspNetCore.Mvc.Internal
+﻿namespace MyTested.AspNetCore.Mvc.Utilities
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using Utilities;
 
     public abstract class PropertyHelper
     {
