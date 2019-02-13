@@ -12,9 +12,7 @@
     using Setups.Models;
     using Setups.ViewComponents;
     using System;
-    using System.Linq;
     using System.Reflection;
-    using ViewComponents.Test;
     using Xunit;
 
     public class ViewComponentBuilderTests

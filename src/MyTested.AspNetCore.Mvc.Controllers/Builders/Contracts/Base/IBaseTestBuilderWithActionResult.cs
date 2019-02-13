@@ -1,7 +1,5 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Base
 {
-    using And;
-
     /// <summary>
     /// Base interface for all test builders with action result.
     /// </summary>

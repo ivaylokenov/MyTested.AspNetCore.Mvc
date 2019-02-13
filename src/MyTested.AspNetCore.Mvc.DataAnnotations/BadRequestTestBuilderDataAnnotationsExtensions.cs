@@ -11,7 +11,6 @@
     using Exceptions;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
-    using Utilities.Extensions;
 
     /// <summary>
     /// Contains <see cref="ModelStateDictionary"/> extension methods for <see cref="IBadRequestTestBuilder"/>.

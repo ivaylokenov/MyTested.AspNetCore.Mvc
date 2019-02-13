@@ -1,6 +1,5 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.Ok
 {
-    using System;
     using System.Collections.Generic;
     using System.Net;
     using Base;

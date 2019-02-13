@@ -5,7 +5,6 @@
     using Exceptions;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Routing;
-    using Utilities.Extensions;
     using Utilities.Validators;
 
     /// <summary>

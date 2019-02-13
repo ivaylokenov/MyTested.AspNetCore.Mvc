@@ -1,6 +1,5 @@
 ﻿namespace Blog.Services
 {
-    using System;
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
     using Data;

@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Primitives;
-
-namespace MyTested.AspNetCore.Mvc.Utilities.Validators
+﻿namespace MyTested.AspNetCore.Mvc.Utilities.Validators
 {
     using System;
     using System.Collections.Generic;

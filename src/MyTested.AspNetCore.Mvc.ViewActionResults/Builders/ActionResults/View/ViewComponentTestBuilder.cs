@@ -1,6 +1,5 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.View
 {
-    using System;
     using System.Collections.Generic;
     using System.Net;
     using Contracts.ActionResults.View;

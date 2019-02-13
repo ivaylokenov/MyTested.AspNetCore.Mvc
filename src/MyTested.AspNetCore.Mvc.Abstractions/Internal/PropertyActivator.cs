@@ -1,9 +1,9 @@
-﻿namespace MyTested.AspNetCore.Mvc.Utilities
+﻿namespace MyTested.AspNetCore.Mvc.Internal
 {
     using System;
     using System.Linq;
     using System.Reflection;
-    using Validators;
+    using Utilities.Validators;
 
     public class PropertyActivator<TContext>
     {

@@ -5,7 +5,6 @@
     using System.Reflection;
     using Contracts;
     using Microsoft.AspNetCore.Mvc.ViewComponents;
-    using Utilities;
 
     public class ViewComponentPropertyActivator : IViewComponentPropertyActivator
     {

@@ -11,7 +11,6 @@
     using Setups.Common;
     using Setups.Controllers;
     using Setups.Models;
-    using Setups.Startups;
     using Xunit;
 
     public class CreatedTestBuilderTests

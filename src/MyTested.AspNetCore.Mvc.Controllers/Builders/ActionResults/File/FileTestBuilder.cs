@@ -3,7 +3,6 @@
     using System.IO;
     using System.Linq;
     using Contracts.ActionResults.File;
-    using Contracts.Base;
     using Exceptions;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;

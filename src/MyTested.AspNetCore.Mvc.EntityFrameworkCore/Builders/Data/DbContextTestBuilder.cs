@@ -7,7 +7,6 @@
     using Internal.TestContexts;
     using Microsoft.EntityFrameworkCore;
     using Utilities;
-    using Utilities.Extensions;
     using Utilities.Validators;
 
     /// <summary>

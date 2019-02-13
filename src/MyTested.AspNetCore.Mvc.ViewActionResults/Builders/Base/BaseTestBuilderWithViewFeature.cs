@@ -1,6 +1,5 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Base
 {
-    using System;
     using Contracts.Base;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;

@@ -1,9 +1,10 @@
-﻿namespace MyTested.AspNetCore.Mvc.Utilities
+﻿namespace MyTested.AspNetCore.Mvc.Internal
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
+    using Utilities;
 
     public abstract class PropertyHelper
     {
@@ -86,18 +87,14 @@
         // Called via reflection.
         private static TValue CallPropertyGetter<TDeclaringType, TValue>(
             Func<TDeclaringType, TValue> getter,
-            object target)
-        {
-            return getter((TDeclaringType)target);
-        }
+            object target) 
+            => getter((TDeclaringType)target);
 
         // Called via reflection.
         private static void CallPropertySetter<TDeclaringType, TValue>(
             Action<TDeclaringType, TValue> setter,
             object target,
             object value)
-        {
-            setter((TDeclaringType)target, (TValue)value);
-        }
+            => setter((TDeclaringType)target, (TValue)value);
     }
 }

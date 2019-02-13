@@ -1,10 +1,8 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.ActionResults.View
 {
-    using System;
     using System.Collections.Generic;
     using System.Net;
     using Base;
-    using Microsoft.AspNetCore.Mvc.ViewEngines;
     using Microsoft.Net.Http.Headers;
 
     /// <summary>

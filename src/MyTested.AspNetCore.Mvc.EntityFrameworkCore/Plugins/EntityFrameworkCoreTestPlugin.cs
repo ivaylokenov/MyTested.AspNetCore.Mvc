@@ -1,7 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Plugins
 {
     using System;
-    using System.Reflection;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
 

@@ -9,7 +9,6 @@
     using Setups;
     using Setups.Common;
     using Setups.Controllers;
-    using Setups.Models;
     using Xunit;
 
     public class BadRequestTestBuilderTests

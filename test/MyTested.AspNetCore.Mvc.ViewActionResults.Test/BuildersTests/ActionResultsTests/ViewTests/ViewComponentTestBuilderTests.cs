@@ -4,10 +4,8 @@
     using System.Net;
     using Exceptions;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.ViewEngines;
     using Microsoft.Net.Http.Headers;
     using Setups;
-    using Setups.Common;
     using Setups.Controllers;
     using Setups.Models;
     using Xunit;

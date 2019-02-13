@@ -1,8 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.ActionResults.LocalRedirect
 {
     using System;
-    using System.Linq.Expressions;
-    using System.Threading.Tasks;
     using Base;
     using Microsoft.AspNetCore.Mvc;
     using Uri;
