@@ -75,7 +75,7 @@
             var invoker = actionInvokerFactory.CreateInvoker(actionContext);
             if (!(invoker is IModelBindingActionInvoker modelBindingActionInvoker))
             {
-                throw new InvalidOperationException("Route testing requires the selected IActionInvoker by the IActionInvokerFactory to implement IModelBindingActionInvoker.");
+                throw new InvalidOperationException($"Route testing requires the selected {nameof(IActionInvoker)} by the {nameof(IActionInvokerFactory)} to implement {nameof(IModelBindingActionInvoker)}.");
             }
 
             try

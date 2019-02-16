@@ -15,10 +15,8 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="UriMockTestBuilder"/> class.
         /// </summary>
-        public UriMockTestBuilder()
-        {
-            this.validations = new List<Func<UriMock, Uri, bool>>();
-        }
+        public UriMockTestBuilder() 
+            => this.validations = new List<Func<UriMock, Uri, bool>>();
 
         /// <inheritdoc />
         public new IAndUriTestBuilder WithHost(string host)

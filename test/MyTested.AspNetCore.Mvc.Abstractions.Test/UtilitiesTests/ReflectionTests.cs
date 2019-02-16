@@ -954,7 +954,7 @@
         {
             Assert.Throws<ArgumentException>(() =>
             {
-                var actionDelegate = Reflection.CreateDelegateFromMethod<Action<IServiceCollection>>(
+                Reflection.CreateDelegateFromMethod<Action<IServiceCollection>>(
                 new CustomStartup(),
                 m => m.Name == "ConfigureServicesAndBuildProvider" && m.ReturnType == typeof(IServiceProvider));
             });

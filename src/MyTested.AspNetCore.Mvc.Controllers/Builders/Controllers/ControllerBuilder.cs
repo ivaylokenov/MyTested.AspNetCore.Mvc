@@ -2,7 +2,6 @@
 {
     using Components;
     using Contracts.Controllers;
-    using Internal.Application;
     using Internal.Configuration;
     using Internal.Contracts;
     using Internal.TestContexts;
@@ -25,8 +24,8 @@
         public ControllerBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
-            this.EnabledModelStateValidation = TestApplication
-                .TestConfiguration
+            this.EnabledModelStateValidation = ServerTestConfiguration
+                .Global
                 .GetControllersConfiguration()
                 .ModelStateValidation;
         }

@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Hosting.Internal;
     using Microsoft.Extensions.DependencyInjection;
+    using Server;
     using Utilities.Extensions;
 
     public static partial class TestApplication
@@ -13,6 +14,7 @@
         private const string DefaultStartupTypeName = "Startup";
 
         private static Type startupType;
+        private static StartupMethods startupMethods;
 
         internal static Type StartupType
         {
@@ -20,20 +22,19 @@
 
             set
             {
-                if (value != null && GeneralConfiguration.NoStartup)
+                var generalConfiguration = ServerTestConfiguration.General;
+
+                if (value != null && generalConfiguration.NoStartup)
                 {
-                    throw new InvalidOperationException($"The test configuration ('{DefaultConfigurationFile}' file by default) contained 'true' value for the '{GeneralTestConfiguration.PrefixKey}.{GeneralTestConfiguration.NoStartupKey}' option but {value.GetName()} class was set through the 'StartsFrom<TStartup>()' method. Either do not set the class or change the option to 'false'.");
+                    throw new InvalidOperationException($"The test configuration ('{ServerTestConfiguration.DefaultConfigurationFile}' file by default) contained 'true' value for the '{GeneralTestConfiguration.PrefixKey}.{GeneralTestConfiguration.NoStartupKey}' option but {value.GetName()} class was set through the 'StartsFrom<TStartup>()' method. Either do not set the class or change the option to 'false'.");
                 }
 
-                if (startupType != null && GeneralConfiguration.AsynchronousTests)
+                if (startupType != null && generalConfiguration.AsynchronousTests)
                 {
-                    throw new InvalidOperationException($"Multiple Startup types per test project while running asynchronous tests is not supported. Either set '{GeneralTestConfiguration.PrefixKey}.{GeneralTestConfiguration.AsynchronousTestsKey}' in the test configuration ('{DefaultConfigurationFile}' file by default) to 'false' or separate your tests into different test projects. The latter is recommended. If you choose the first option, you may need to disable asynchronous testing in your preferred test runner too.");
+                    throw new InvalidOperationException($"Multiple Startup types per test project while running asynchronous tests is not supported. Either set '{GeneralTestConfiguration.PrefixKey}.{GeneralTestConfiguration.AsynchronousTestsKey}' in the test configuration ('{ServerTestConfiguration.DefaultConfigurationFile}' file by default) to 'false' or separate your tests into different test projects. The latter is recommended. If you choose the first option, you may need to disable asynchronous testing in your preferred test runner too.");
                 }
-
-                if (initialiazed)
-                {
-                    Reset();
-                }
+                
+                Reset();
 
                 startupType = value;
             }
@@ -41,38 +42,38 @@
 
         internal static Type TryFindTestStartupType()
         {
-            EnsureTestAssembly();
+            TestWebServer.EnsureTestAssembly();
 
-            var defaultTestStartupType = GeneralConfiguration.StartupType ?? $"{Environment.EnvironmentName}{DefaultStartupTypeName}";
+            var defaultTestStartupType = ServerTestConfiguration.General.StartupType 
+                ?? $"{TestWebServer.Environment.EnvironmentName}{DefaultStartupTypeName}";
 
             // Check root of the test project.
             return
-                TestAssembly.GetType(defaultTestStartupType) ??
-                TestAssembly.GetType($"{TestAssemblyName}.{defaultTestStartupType}");
+                TestWebServer.TestAssembly.GetType(defaultTestStartupType) ??
+                TestWebServer.TestAssembly.GetType($"{TestWebServer.TestAssemblyName}.{defaultTestStartupType}");
         }
 
         internal static Type TryFindWebStartupType()
         {
-            if (WebAssembly == null)
+            if (TestWebServer.WebAssembly == null)
             {
                 return null;
             }
 
             // Check root of the test project.
             return
-                WebAssembly.GetType(DefaultStartupTypeName) ??
-                WebAssembly.GetType($"{WebAssemblyName}.{DefaultStartupTypeName}");
+                TestWebServer.WebAssembly.GetType(DefaultStartupTypeName) ??
+                TestWebServer.WebAssembly.GetType($"{TestWebServer.WebAssemblyName}.{DefaultStartupTypeName}");
         }
 
-        private static StartupMethods PrepareStartup(IServiceCollection serviceCollection)
+        private static void PrepareStartup(IServiceCollection serviceCollection)
         {
-            StartupMethods startupMethods = null;
             if (StartupType != null)
             {
                 startupMethods = StartupLoader.LoadMethods(
-                    serviceCollection.BuildServiceProvider(),
+                    serviceCollection.BuildServiceProviderFromFactory(),
                     StartupType,
-                    Environment.EnvironmentName);
+                    TestWebServer.Environment.EnvironmentName);
 
                 if (typeof(IStartup).GetTypeInfo().IsAssignableFrom(StartupType.GetTypeInfo()))
                 {
@@ -83,8 +84,34 @@
                     serviceCollection.AddSingleton(typeof(IStartup), sp => new ConventionBasedStartup(startupMethods));
                 }
             }
+        }
 
-            return startupMethods;
+        private static bool HasConfigureServicesIServiceProviderDelegate()
+        {
+            if (StartupType == null)
+            {
+                return false;
+            }
+
+            // Calling the internal StartupLoader.HasConfigureServicesIServiceProviderDelegate
+            // method to prevent copy-pasted code from the ASP.NET Core source code.
+            var findMethod = typeof(StartupLoader).GetMethod(
+                "FindMethod",
+                BindingFlags.NonPublic | BindingFlags.Static);
+
+            if (findMethod != null)
+            {
+                return null != findMethod.Invoke(null, new object[]
+                {
+                    StartupType,
+                    "Configure{0}Services",
+                    TestWebServer.Environment.EnvironmentName,
+                    typeof(IServiceProvider),
+                    false
+                });
+            }
+
+            return true;
         }
     }
 }

@@ -4,7 +4,7 @@
     using And;
 
     /// <summary>
-    /// Base class for all test builders with component.
+    /// Base interface for all test builders with component.
     /// </summary>
     public interface IBaseTestBuilderWithComponent : IBaseTestBuilder
     {

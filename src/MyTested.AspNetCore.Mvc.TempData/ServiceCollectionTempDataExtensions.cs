@@ -14,9 +14,7 @@
         /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <returns>The same <see cref="IServiceCollection"/>.</returns>
-        public static IServiceCollection ReplaceTempDataProvider(this IServiceCollection serviceCollection)
-        {
-            return serviceCollection.ReplaceSingleton<ITempDataProvider, TempDataProviderMock>();
-        }
+        public static IServiceCollection ReplaceTempDataProvider(this IServiceCollection serviceCollection) 
+            => serviceCollection.ReplaceSingleton<ITempDataProvider, TempDataProviderMock>();
     }
 }

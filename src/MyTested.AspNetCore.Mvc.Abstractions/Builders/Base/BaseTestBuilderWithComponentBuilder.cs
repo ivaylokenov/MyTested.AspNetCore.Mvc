@@ -23,7 +23,7 @@
                     this.builder = this.SetBuilder();
                 }
 
-                return builder;
+                return this.builder;
             }
         }
 

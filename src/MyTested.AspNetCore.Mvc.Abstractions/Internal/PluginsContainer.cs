@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Internal.Application
+﻿namespace MyTested.AspNetCore.Mvc.Internal
 {
     using System;
     using System.Collections.Generic;
@@ -7,24 +7,37 @@
     using Licensing;
     using Microsoft.DotNet.PlatformAbstractions;
     using Microsoft.Extensions.DependencyModel;
-    using MyTested.AspNetCore.Mvc.Utilities.Extensions;
     using Plugins;
+    using Utilities.Extensions;
 
-    public static partial class TestApplication
+    internal static class PluginsContainer
     {
-        private static readonly ISet<IDefaultRegistrationPlugin> DefaultRegistrationPlugins;
-        private static readonly ISet<IServiceRegistrationPlugin> ServiceRegistrationPlugins;
-        private static readonly ISet<IRoutingServiceRegistrationPlugin> RoutingServiceRegistrationPlugins;
-        private static readonly ISet<IInitializationPlugin> InitializationPlugins;
-        
-        internal static void LoadPlugins()
+        static PluginsContainer()
         {
-            var testFrameworkAssemblies = GetDependencyContext()
+            DefaultRegistrationPlugins = new HashSet<IDefaultRegistrationPlugin>();
+            ServiceRegistrationPlugins = new HashSet<IServiceRegistrationPlugin>();
+            RoutingServiceRegistrationPlugins = new HashSet<IRoutingServiceRegistrationPlugin>();
+            InitializationPlugins = new HashSet<IInitializationPlugin>();
+        }
+
+        public static ISet<IDefaultRegistrationPlugin> DefaultRegistrationPlugins { get; }
+
+        public static ISet<IServiceRegistrationPlugin> ServiceRegistrationPlugins { get; }
+
+        public static ISet<IRoutingServiceRegistrationPlugin> RoutingServiceRegistrationPlugins { get; }
+
+        public static ISet<IInitializationPlugin> InitializationPlugins { get; }
+
+        public static void LoadPlugins(DependencyContext dependencyContext)
+        {
+            var testFrameworkName = TestFramework.TestFrameworkName;
+
+            var testFrameworkAssemblies = dependencyContext
                 .GetRuntimeAssemblyNames(RuntimeEnvironment.GetRuntimeIdentifier())
-                .Where(l => l.Name.StartsWith(TestFrameworkName))
+                .Where(l => l.Name.StartsWith(testFrameworkName))
                 .ToArray();
 
-            if (testFrameworkAssemblies.Length == 7 && testFrameworkAssemblies.Any(t => t.Name == $"{TestFrameworkName}.Lite"))
+            if (testFrameworkAssemblies.Length == 7 && testFrameworkAssemblies.Any(t => t.Name == $"{testFrameworkName}.Lite"))
             {
                 TestCounter.SkipValidation = true;
             }
@@ -32,7 +45,7 @@
             var plugins = testFrameworkAssemblies
                 .Select(l => Assembly
                     .Load(new AssemblyName(l.Name))
-                    .GetType($"{TestFrameworkName}.Plugins.{l.Name.Replace(TestFrameworkName, string.Empty).Trim('.')}TestPlugin"))
+                    .GetType($"{testFrameworkName}.Plugins.{l.Name.Replace(testFrameworkName, string.Empty).Trim('.')}TestPlugin"))
                 .Where(p => p != null)
                 .ToArray();
 
@@ -75,6 +88,14 @@
                     TestHelper.ShouldPassForPlugins.Add(shouldPassForPlugin);
                 }
             });
+        }
+
+        internal static void Reset()
+        {
+            DefaultRegistrationPlugins.Clear();
+            ServiceRegistrationPlugins.Clear();
+            RoutingServiceRegistrationPlugins.Clear();
+            InitializationPlugins.Clear();
         }
     }
 }

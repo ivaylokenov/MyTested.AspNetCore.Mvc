@@ -5,20 +5,16 @@
     using Microsoft.Extensions.DependencyInjection;
     using Services;
 
-    public class CustomStartup
+    public class CustomStartupWithDefaultBuildProvider
     {
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
             services.AddTransient<IInjectedService, ReplaceableInjectedService>();
+            
+            return services.BuildServiceProvider();
         }
 
         public void Configure(IApplicationBuilder app) => app.UseMvcWithDefaultRoute();
-
-        public IServiceProvider ConfigureServicesAndBuildProvider(IServiceCollection services)
-        {
-            services.AddTransient<IInjectedService, ReplaceableInjectedService>();
-            return services.BuildServiceProvider();
-        }
     }
 }

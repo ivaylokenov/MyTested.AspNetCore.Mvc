@@ -1,22 +1,21 @@
-﻿namespace MyTested.AspNetCore.Mvc.Internal.Application
+﻿namespace MyTested.AspNetCore.Mvc.Internal.Configuration
 {
     using System;
-    using Configuration;
     using Microsoft.Extensions.Configuration;
 
-    public static partial class TestApplication
+    public static class ServerTestConfiguration
     {
-        private const string DefaultConfigurationFile = "testsettings.json";
-        
+        internal const string DefaultConfigurationFile = "testsettings.json";
+
         private static IConfigurationBuilder configurationBuilder;
-        private static TestConfiguration configuration;
+        private static TestConfiguration globalConfiguration;
         private static GeneralTestConfiguration generalConfiguration;
-        
-        public static TestConfiguration TestConfiguration
+
+        public static TestConfiguration Global
         {
             get
             {
-                if (configuration == null || AdditionalConfiguration != null)
+                if (globalConfiguration == null || AdditionalConfiguration != null)
                 {
                     if (configurationBuilder == null)
                     {
@@ -28,29 +27,34 @@
                     AdditionalConfiguration?.Invoke(configurationBuilder);
                     AdditionalConfiguration = null;
 
-                    configuration = TestConfiguration.With(configurationBuilder.Build());
+                    globalConfiguration = TestConfiguration.With(configurationBuilder.Build());
                     generalConfiguration = null;
-
-                    PrepareLicensing();
                 }
 
-                return configuration;
+                return globalConfiguration;
             }
         }
 
         internal static Action<IConfigurationBuilder> AdditionalConfiguration { get; set; }
 
-        internal static GeneralTestConfiguration GeneralConfiguration
+        internal static GeneralTestConfiguration General
         {
             get
             {
                 if (generalConfiguration == null)
                 {
-                    generalConfiguration = TestConfiguration.GetGeneralConfiguration();
+                    generalConfiguration = Global.GetGeneralConfiguration();
                 }
 
                 return generalConfiguration;
             }
+        }
+
+        internal static void Reset()
+        {
+            configurationBuilder = null;
+            globalConfiguration = null;
+            generalConfiguration = null;
         }
     }
 }

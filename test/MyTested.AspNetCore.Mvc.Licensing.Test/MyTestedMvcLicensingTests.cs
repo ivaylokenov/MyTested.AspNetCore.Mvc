@@ -16,7 +16,7 @@
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
-                .WithTestConfiguration(config =>
+                .WithConfiguration(config =>
                 {
                     config.AddInMemoryCollection(new[]
                     {
@@ -58,7 +58,7 @@
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
-                .WithTestConfiguration(config =>
+                .WithConfiguration(config =>
                 {
                     config.AddInMemoryCollection(new[]
                     {
@@ -100,7 +100,7 @@
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
-                .WithTestConfiguration(config =>
+                .WithConfiguration(config =>
                 {
                     config.AddJsonFile("multilicenseconfig.json");
                 })

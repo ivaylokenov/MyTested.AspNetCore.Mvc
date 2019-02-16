@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Internal.Application
+﻿namespace MyTested.AspNetCore.Mvc.Internal.Server
 {
     using System;
     using System.Collections.Generic;
@@ -7,8 +7,8 @@
     using Abstractions.Utilities.Extensions;
     using Configuration;
     using Microsoft.Extensions.DependencyModel;
-
-    public static partial class TestApplication
+    
+    public static partial class TestWebServer
     {
         private static DependencyContext dependencyContext;
         private static IEnumerable<RuntimeLibrary> projectLibraries;
@@ -22,7 +22,7 @@
 
         internal static Assembly TestAssembly
         {
-            private get
+            get
             {
                 if (testAssembly == null)
                 {
@@ -37,7 +37,7 @@
 
         internal static Assembly WebAssembly
         {
-            private get
+            get
             {
                 if (webAssembly == null)
                 {
@@ -90,7 +90,7 @@
             }
         }
 
-        private static IEnumerable<RuntimeLibrary> ProjectLibraries
+        internal static IEnumerable<RuntimeLibrary> ProjectLibraries
         {
             get
             {
@@ -104,8 +104,8 @@
                 return projectLibraries;
             }
         }
-        
-        private static DependencyContext GetDependencyContext()
+
+        internal static DependencyContext GetDependencyContext()
         {
             if (dependencyContext == null)
             {
@@ -115,14 +115,14 @@
             return dependencyContext;
         }
 
-        private static void TryFindTestAssembly()
+        internal static void TryFindTestAssembly()
         {
             if (testAssembly != null || testAssemblyScanned)
             {
                 return;
             }
 
-            var testAssemblyNameFromConfiguration = GeneralConfiguration.TestAssemblyName;
+            var testAssemblyNameFromConfiguration = ServerTestConfiguration.General.TestAssemblyName;
             if (testAssemblyNameFromConfiguration != null)
             {
                 try
@@ -157,14 +157,14 @@
             testAssemblyScanned = true;
         }
 
-        private static void TryFindWebAssembly()
+        internal static void TryFindWebAssembly()
         {
             if (webAssembly != null || webAssemblyScanned)
             {
                 return;
             }
 
-            var webAssemblyNameFromConfiguration = GeneralConfiguration.WebAssemblyName;
+            var webAssemblyNameFromConfiguration = ServerTestConfiguration.General.WebAssemblyName;
             if (webAssemblyNameFromConfiguration != null)
             {
                 try
@@ -219,12 +219,12 @@
 
             webAssemblyScanned = true;
         }
-
-        private static void EnsureTestAssembly()
+        
+        internal static void EnsureTestAssembly()
         {
             if (TestAssembly == null)
             {
-                throw new InvalidOperationException($"Test assembly could not be loaded. You can specify it explicitly in the test configuration ('{DefaultConfigurationFile}' file by default) by providing a value for the '{GeneralTestConfiguration.PrefixKey}.{GeneralTestConfiguration.TestAssemblyNameKey}' option or set it by calling '.StartsFrom<TStartup>().WithTestAssembly(this)'.");
+                throw new InvalidOperationException($"Test assembly could not be loaded. You can specify it explicitly in the test configuration ('{ServerTestConfiguration.DefaultConfigurationFile}' file by default) by providing a value for the '{GeneralTestConfiguration.PrefixKey}.{GeneralTestConfiguration.TestAssemblyNameKey}' option or set it by calling '.StartsFrom<TStartup>().WithTestAssembly(this)'.");
             }
         }
     }

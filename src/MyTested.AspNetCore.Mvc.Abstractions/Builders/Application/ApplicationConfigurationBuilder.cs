@@ -5,14 +5,14 @@
     using Internal.Application;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Routing;
-    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using System.Reflection;
+    using Base;
 
     /// <summary>
     /// Configures the tested application.
     /// </summary>
-    public class ApplicationConfigurationBuilder : IApplicationConfigurationBuilder
+    public class ApplicationConfigurationBuilder 
+        : BaseInitializationBuilder<IAndApplicationConfigurationBuilder>, IAndApplicationConfigurationBuilder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ApplicationConfigurationBuilder"/> class.
@@ -22,61 +22,30 @@
             => TestApplication.StartupType = startupType;
 
         /// <inheritdoc />
-        public IApplicationConfigurationBuilder WithTestConfiguration(Action<IConfigurationBuilder> config)
-        {
-            TestApplication.AdditionalConfiguration += config;
-            return this;
-        }
+        protected override IAndApplicationConfigurationBuilder InitializationBuilder => this;
 
         /// <inheritdoc />
-        public IApplicationConfigurationBuilder WithServices(Action<IServiceCollection> services)
+        public IAndApplicationConfigurationBuilder WithServices(Action<IServiceCollection> services)
         {
             TestApplication.AdditionalServices += services;
             return this;
         }
 
         /// <inheritdoc />
-        public IApplicationConfigurationBuilder WithConfiguration(Action<IApplicationBuilder> app)
+        public IAndApplicationConfigurationBuilder WithMiddleware(Action<IApplicationBuilder> app)
         {
             TestApplication.AdditionalApplicationConfiguration += app;
             return this;
         }
 
         /// <inheritdoc />
-        public IApplicationConfigurationBuilder WithRoutes(Action<IRouteBuilder> routes)
+        public IAndApplicationConfigurationBuilder WithRoutes(Action<IRouteBuilder> routes)
         {
             TestApplication.AdditionalRouting += routes;
             return this;
         }
-
+        
         /// <inheritdoc />
-        public IApplicationConfigurationBuilder WithTestAssembly(object objectFromTestAssembly) 
-            => this.WithTestAssembly(objectFromTestAssembly?.GetType());
-
-        /// <inheritdoc />
-        public IApplicationConfigurationBuilder WithTestAssembly(Type typeFromTestAssembly) 
-            => this.WithTestAssembly(typeFromTestAssembly.GetTypeInfo().Assembly);
-
-        /// <inheritdoc />
-        public IApplicationConfigurationBuilder WithTestAssembly(Assembly testAssembly)
-        {
-            TestApplication.TestAssembly = testAssembly;
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IApplicationConfigurationBuilder WithWebAssembly(object objectFromWebAssembly)
-            => this.WithTestAssembly(objectFromWebAssembly?.GetType());
-
-        /// <inheritdoc />
-        public IApplicationConfigurationBuilder WithWebAssembly(Type typeFromWebAssembly)
-            => this.WithTestAssembly(typeFromWebAssembly.GetTypeInfo().Assembly);
-
-        /// <inheritdoc />
-        public IApplicationConfigurationBuilder WithWebAssembly(Assembly webAssembly)
-        {
-            TestApplication.WebAssembly = webAssembly;
-            return this;
-        }
+        public IApplicationConfigurationBuilder AndAlso() => this;
     }
 }

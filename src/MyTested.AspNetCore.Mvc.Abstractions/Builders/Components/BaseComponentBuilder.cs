@@ -74,12 +74,12 @@
                 var explicitDependenciesAreSet = this.TestContext.AggregatedServices.Any();
                 if (explicitDependenciesAreSet)
                 {
-                    // custom dependencies are set, try create instance with them
+                    // Custom dependencies are set, try create instance with them.
                     component = Reflection.TryCreateInstance<TComponent>(this.TestContext.AggregatedServices);
                 }
                 else
                 {
-                    // no custom dependencies are set, try create instance with component factory
+                    // No custom dependencies are set, try create instance with component factory.
                     component = this.TryCreateComponentWithFactory();
 
                     if (component != null)
@@ -88,14 +88,14 @@
                     }
                     else
                     {
-                        // no component from the factory, try create instance with the global services
+                        // No component from the factory, try create instance with the global services.
                         component = TestHelper.TryCreateInstance<TComponent>();
                     }
                 }
 
                 if (component == null && !explicitDependenciesAreSet)
                 {
-                    // no component at this point, try to create one with default constructor
+                    // No component at this point, try to create one with default constructor.
                     component = Reflection.TryFastCreateInstance<TComponent>();
                 }
 

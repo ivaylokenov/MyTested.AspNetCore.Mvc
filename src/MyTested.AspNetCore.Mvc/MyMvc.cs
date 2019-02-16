@@ -4,7 +4,9 @@
     using Builders.Contracts.Application;
     using Builders.Contracts.Controllers;
     using Builders.Contracts.Routing;
+    using Builders.Contracts.Server;
     using Builders.Contracts.ViewComponents;
+    using Builders.Server;
     using Internal.Application;
 
     /// <summary>
@@ -15,13 +17,24 @@
         static MyMvc() => TestApplication.TryInitialize();
 
         /// <summary>
-        /// Configures the tested application with the provided startup class.
+        /// Configures the tested application with the provided Startup class. This method should be called only once per test
+        /// project. If you need to use different test configurations with more than one Startup class in your tests, you should
+        /// separate them in independent assemblies.
         /// </summary>
         /// <typeparam name="TStartup">Type of startup class.</typeparam>
         /// <returns>Builder of <see cref="IApplicationConfigurationBuilder"/> type.</returns>
         public static IApplicationConfigurationBuilder StartsFrom<TStartup>()
             where TStartup : class 
             => new MyApplication(typeof(TStartup));
+
+        /// <summary>
+        /// Configures the test server on which the ASP.NET Core MVC test application is running. This method should be called
+        /// only once per test project. If you need to use different test server configurations in your tests, you should
+        /// separate them in independent assemblies.
+        /// </summary>
+        /// <param name="testServerBuilder">Action setting the test server.</param>
+        public static void IsRunningOn(Action<ITestServerBuilder> testServerBuilder)
+            => testServerBuilder(new TestServerBuilder());
 
         /// <summary>
         /// Starts a route test.

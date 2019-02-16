@@ -18,14 +18,15 @@
 
         public static bool Validate(IEnumerable<string> licenses, DateTime releaseDate, string projectNamespace)
         {
-            if (licenses == null || !licenses.Any())
+            var licensesArray = licenses?.ToArray();
+            if (licensesArray == null || !licensesArray.Any())
             {
                 throw new InvalidLicenseException("No license provided");
             }
 
             registeredLicenses = new List<LicenseDetails>();
 
-            foreach (var license in licenses)
+            foreach (var license in licensesArray)
             {
                 try
                 {

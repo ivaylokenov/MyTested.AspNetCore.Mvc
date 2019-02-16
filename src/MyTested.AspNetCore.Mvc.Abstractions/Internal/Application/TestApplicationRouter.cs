@@ -2,7 +2,6 @@
 {
     using System;
     using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting.Internal;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.AspNetCore.Routing;
@@ -24,7 +23,7 @@
 
         internal static Action<IRouteBuilder> AdditionalRouting { get; set; }
 
-        private static void PrepareApplicationAndRouting(StartupMethods startupMethods)
+        private static void PrepareApplicationAndRouting()
         {
             var applicationBuilder = new ApplicationBuilderMock(routingServiceProvider);
 

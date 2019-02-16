@@ -17,22 +17,18 @@
         /// Initializes a new instance of the <see cref="SessionBuilder"/> class.
         /// </summary>
         /// <param name="session"><see cref="ISession"/> to built.</param>
-        public SessionBuilder(ISession session)
-        {
-            this.Session = session;
-        }
+        public SessionBuilder(ISession session) => this.Session = session;
 
         /// <summary>
         /// Gets the <see cref="ISession"/>.
         /// </summary>
         /// <value>The built <see cref="ISession"/>.</value>
-        protected ISession Session { get; private set; }
+        protected ISession Session { get; }
 
         /// <inheritdoc />
         public IAndSessionBuilder WithId(string sessionId)
         {
-            var mockedSession = this.Session as ISessionMock;
-            if (mockedSession == null)
+            if (!(this.Session is ISessionMock mockedSession))
             {
                 throw new InvalidOperationException("Setting session Id requires the registered ISession service to implement ISessionMock.");
             }

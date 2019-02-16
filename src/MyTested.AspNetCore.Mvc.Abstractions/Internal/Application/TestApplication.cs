@@ -4,24 +4,16 @@
     using Configuration;
     using Licensing;
     using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Hosting.Internal;
-    using Plugins;
     using Services;
-    using System.Collections.Generic;
     using System.Globalization;
     using System.Threading.Tasks;
+    using Server;
 
     public static partial class TestApplication
     {
-        private const string TestFrameworkName = "MyTested.AspNetCore.Mvc";
-        private const string ReleaseDate = "2019-03-01";
-
         private static readonly object Sync;
 
-        private static bool initialiazed;
-
-        private static IHostingEnvironment environment;
+        private static bool initialized;
 
         static TestApplication()
         {
@@ -29,57 +21,36 @@
 
             NullHandler = c => Task.CompletedTask;
 
-            DefaultRegistrationPlugins = new HashSet<IDefaultRegistrationPlugin>();
-            ServiceRegistrationPlugins = new HashSet<IServiceRegistrationPlugin>();
-            RoutingServiceRegistrationPlugins = new HashSet<IRoutingServiceRegistrationPlugin>();
-            InitializationPlugins = new HashSet<IInitializationPlugin>();
-
-            TryFindTestAssembly();
+            TestWebServer.TryFindTestAssembly();
         }
         
         internal static Action<IApplicationBuilder> AdditionalApplicationConfiguration { get; set; }
-
-        internal static IHostingEnvironment Environment
-        {
-            get
-            {
-                if (environment == null)
-                {
-                    environment = PrepareEnvironment();
-                }
-
-                return environment;
-            }
-        }
-
-        internal static string ApplicationName
-            => GeneralConfiguration.ApplicationName ?? WebAssemblyName ?? TestAssemblyName;
         
         public static void TryInitialize()
         {
             lock (Sync)
             {
-                if (initialiazed)
+                if (initialized)
                 {
                     return;
                 }
 
-                var initializationConfiguration = GeneralConfiguration;
+                var generalConfiguration = ServerTestConfiguration.General;
 
-                if (StartupType == null && initializationConfiguration.AutomaticStartup)
+                if (StartupType == null && generalConfiguration.AutomaticStartup)
                 {
                     var testStartupType = TryFindTestStartupType() ?? TryFindWebStartupType();
 
-                    var noStartup = initializationConfiguration.NoStartup;
+                    var noStartup = generalConfiguration.NoStartup;
 
                     if (testStartupType == null && !noStartup)
                     {
-                        throw new InvalidOperationException($"{Environment.EnvironmentName}Startup class could not be found at the root of the test project. Either add it or set '{GeneralTestConfiguration.PrefixKey}.{GeneralTestConfiguration.AutomaticStartupKey}' in the test configuration ('{DefaultConfigurationFile}' file by default) to 'false'.");
+                        throw new InvalidOperationException($"{TestWebServer.Environment.EnvironmentName}Startup class could not be found at the root of the test project. Either add it or set '{GeneralTestConfiguration.PrefixKey}.{GeneralTestConfiguration.AutomaticStartupKey}' in the test configuration ('{ServerTestConfiguration.DefaultConfigurationFile}' file by default) to 'false'.");
                     }
 
                     if (testStartupType != null && noStartup)
                     {
-                        throw new InvalidOperationException($"The test configuration ('{DefaultConfigurationFile}' file by default) contained 'true' value for the '{GeneralTestConfiguration.PrefixKey}.{GeneralTestConfiguration.NoStartupKey}' option but {Environment.EnvironmentName}Startup class was located at the root of the project. Either remove the class or change the option to 'false'.");
+                        throw new InvalidOperationException($"The test configuration ('{ServerTestConfiguration.DefaultConfigurationFile}' file by default) contained 'true' value for the '{GeneralTestConfiguration.PrefixKey}.{GeneralTestConfiguration.NoStartupKey}' option but {TestWebServer.Environment.EnvironmentName}Startup class was located at the root of the project. Either remove the class or change the option to 'false'.");
                     }
 
                     startupType = testStartupType;
@@ -90,52 +61,37 @@
         
         private static void Initialize()
         {
-            EnsureTestAssembly();
+            TestWebServer.EnsureTestAssembly();
 
-            if (StartupType == null && !GeneralConfiguration.NoStartup)
+            if (StartupType == null && !ServerTestConfiguration.General.NoStartup)
             {
-                throw new InvalidOperationException($"The test configuration ('{DefaultConfigurationFile}' file by default) contained 'false' value for the '{GeneralTestConfiguration.PrefixKey}.{GeneralTestConfiguration.NoStartupKey}' option but a Startup class was not provided. Either add {Environment.EnvironmentName}Startup class to the root of the test project or set it by calling 'StartsFrom<TStartup>()'. Additionally, if you do not want to use a global test application for all test cases in this project, you may change the test configuration option to 'true'.");
+                throw new InvalidOperationException($"The test configuration ('{ServerTestConfiguration.DefaultConfigurationFile}' file by default) contained 'false' value for the '{GeneralTestConfiguration.PrefixKey}.{GeneralTestConfiguration.NoStartupKey}' option but a Startup class was not provided. Either add {TestWebServer.Environment.EnvironmentName}Startup class to the root of the test project or set it by calling 'StartsFrom<TStartup>()'. Additionally, if you do not want to use a global test application for all test cases in this project, you may change the test configuration option to 'true'.");
             }
+            
+            TestCounter.SetLicenseData(
+                ServerTestConfiguration.Global.Licenses,
+                DateTime.ParseExact(TestFramework.ReleaseDate, "yyyy-MM-dd", CultureInfo.InvariantCulture),
+                TestWebServer.TestAssemblyName);
 
-            PrepareLicensing();
+            PluginsContainer.LoadPlugins(TestWebServer.GetDependencyContext());
 
-            LoadPlugins();
+            var serviceCollection = TestWebServer.GetInitialServiceCollection();
 
-            var serviceCollection = GetInitialServiceCollection();
-            var startupMethods = PrepareStartup(serviceCollection);
+            PrepareStartup(serviceCollection);
+            PrepareServices(serviceCollection);
+            
+            PrepareApplicationAndRouting();
 
-            PrepareServices(serviceCollection, startupMethods);
-            PrepareApplicationAndRouting(startupMethods);
-
-            initialiazed = true;
+            initialized = true;
         }
 
-        private static void PrepareLicensing()
-        {
-            if (TestAssembly != null)
-            {
-                TestCounter.SetLicenseData(
-                    TestConfiguration.Licenses,
-                    DateTime.ParseExact(ReleaseDate, "yyyy-MM-dd", CultureInfo.InvariantCulture),
-                    TestAssemblyName);
-            }
-        }
-
-        private static IHostingEnvironment PrepareEnvironment()
-            => new HostingEnvironment
-            {
-                ApplicationName = ApplicationName,
-                EnvironmentName = GeneralConfiguration.EnvironmentName,
-                ContentRootPath = AppContext.BaseDirectory
-            };
-        
         private static void TryLockedInitialization()
         {
-            if (!initialiazed)
+            if (!initialized)
             {
                 lock (Sync)
                 {
-                    if (!initialiazed)
+                    if (!initialized)
                     {
                         Initialize();
                     }
@@ -145,32 +101,19 @@
         
         private static void Reset()
         {
-            initialiazed = false;
-            dependencyContext = null;
-            projectLibraries = null;
-            configurationBuilder = null;
-            configuration = null;
-            environment = null;
+            initialized = false;
             startupType = null;
+            startupMethods = null;
             serviceProvider = null;
             routingServiceProvider = null;
             router = null;
-            testAssembly = null;
-            webAssembly = null;
-            testAssemblyScanned = false;
-            webAssemblyScanned = false;
-            testAssemblyName = null;
-            webAssemblyName = null;
             AdditionalServices = null;
             AdditionalApplicationConfiguration = null;
             AdditionalRouting = null;
-            DefaultRegistrationPlugins.Clear();
-            ServiceRegistrationPlugins.Clear();
-            RoutingServiceRegistrationPlugins.Clear();
-            InitializationPlugins.Clear();
             TestServiceProvider.Current = null;
             TestServiceProvider.ClearServiceLifetimes();
             LicenseValidator.ClearLicenseDetails();
+            PluginsContainer.Reset();
         }
     }
 }
