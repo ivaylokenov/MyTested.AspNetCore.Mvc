@@ -10,14 +10,14 @@
     {
         public static ContentViewComponentResultAssertionException ForEquality(string messagePrefix, string content, string actualContent)
             => new ContentViewComponentResultAssertionException(string.Format(
-                ExceptionMessageFormats.ContentResult,
+                ExceptionMessages.ContentResultFormat,
                 messagePrefix,
                 content,
                 actualContent));
 
         public static ContentViewComponentResultAssertionException ForPredicate(string messagePrefix, string content)
             => new ContentViewComponentResultAssertionException(string.Format(
-                ExceptionMessageFormats.ContentResultPredicate,
+                ExceptionMessages.ContentResultPredicateFormat,
                 messagePrefix,
                 content));
 

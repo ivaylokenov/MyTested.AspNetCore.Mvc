@@ -3,7 +3,6 @@
     using System;
     using System.Diagnostics;
     using Configuration;
-    using Contracts;
     using Logging;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Hosting.Builder;
@@ -12,7 +11,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.ObjectPool;
-    using Routing;
+    using Services;
 
     public static partial class TestWebServer
     {
@@ -47,12 +46,7 @@
             serviceCollection.AddSingleton<ObjectPoolProvider, DefaultObjectPoolProvider>();
 
             // Test services.
-            serviceCollection.AddSingleton<IRoutingServices>(new RoutingServices
-            {
-                ServiceCollection = serviceCollection
-            });
-
-            AdditionalServices?.Invoke(serviceCollection);
+            serviceCollection.AddRoutingServices();
 
             return serviceCollection;
         }

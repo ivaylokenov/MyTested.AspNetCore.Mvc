@@ -1,8 +1,8 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal
 {
-    internal class TestFramework
+    public class TestFramework
     {
-        internal const string TestFrameworkName = "MyTested.AspNetCore.Mvc";
-        internal const string ReleaseDate = "2019-03-01";
+        public const string TestFrameworkName = "MyTested.AspNetCore.Mvc";
+        public const string ReleaseDate = "2019-03-01";
     }
 }

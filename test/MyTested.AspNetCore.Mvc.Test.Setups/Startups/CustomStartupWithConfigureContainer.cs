@@ -7,13 +7,17 @@
 
     public class CustomStartupWithConfigureContainer
     {
-        public void ConfigureServices(IServiceCollection services) 
-            => services.AddMvc();
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddMvc();
+            
+            services.AddCoreTesting();
+        }
 
         public void ConfigureContainer(CustomContainer services)
             => services.Services.AddTransient<IInjectedService, InjectedService>();
 
-        public void Configure(IApplicationBuilder app) 
+        public void Configure(IApplicationBuilder app)
             => app.UseMvcWithDefaultRoute();
     }
 }

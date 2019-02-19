@@ -18,7 +18,7 @@
         {
             base.ConfigureServices(services);
 
-            services.ReplaceTransient<IDateTimeProvider, DateTimeProviderMock>();
+            services.ReplaceTransient<IDateTimeProvider>(_ => DateTimeProviderMock.Create);
         }
     }
 }

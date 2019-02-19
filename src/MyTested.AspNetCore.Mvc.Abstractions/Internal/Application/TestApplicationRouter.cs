@@ -41,7 +41,7 @@
                 var route = applicationBuilder.Routes[i];
                 routeBuilder.Routes.Add(route);
             }
-
+            
             AdditionalRouting?.Invoke(routeBuilder);
 
             if (StartupType == null || routeBuilder.Routes.Count == 0)

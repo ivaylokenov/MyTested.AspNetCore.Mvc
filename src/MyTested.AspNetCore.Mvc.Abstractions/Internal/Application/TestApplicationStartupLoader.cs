@@ -2,11 +2,13 @@
 {
     using System;
     using System.Reflection;
+    using System.Runtime.CompilerServices;
     using Configuration;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Hosting.Internal;
     using Microsoft.Extensions.DependencyInjection;
     using Server;
+    using Services;
     using Utilities.Extensions;
 
     public static partial class TestApplication
@@ -15,7 +17,9 @@
 
         private static Type startupType;
         private static StartupMethods startupMethods;
-
+        
+        private static MethodInfo findMethod;
+        
         internal static Type StartupType
         {
             get => startupType;
@@ -37,6 +41,23 @@
                 Reset();
 
                 startupType = value;
+            }
+        }
+
+        private static MethodInfo FindMethodDelegate
+        {
+            get
+            {
+                if (findMethod == null)
+                {
+                    // Calling the internal StartupLoader method to prevent
+                    // copy-pasted code from the ASP.NET Core source code.
+                    findMethod = typeof(StartupLoader).GetMethod(
+                        "FindMethod",
+                        BindingFlags.NonPublic | BindingFlags.Static);
+                }
+
+                return findMethod;
             }
         }
 
@@ -70,6 +91,15 @@
         {
             if (StartupType != null)
             {
+                // Startup static constructor may have server services configuration.
+                if (StartupType.TypeInitializer != null)
+                {
+                    // Guarantees the static constructor of the Startup type is called only once.
+                    RuntimeHelpers.RunClassConstructor(StartupType.TypeHandle);
+                }
+                
+                TestWebServer.AdditionalServices?.Invoke(serviceCollection);
+
                 startupMethods = StartupLoader.LoadMethods(
                     serviceCollection.BuildServiceProviderFromFactory(),
                     StartupType,
@@ -86,32 +116,21 @@
             }
         }
 
-        private static bool HasConfigureServicesIServiceProviderDelegate()
+        private static MethodInfo GetConfigureContainerMethod()
         {
-            if (StartupType == null)
+            if (startupMethods == null)
             {
-                return false;
+                return null;
             }
 
-            // Calling the internal StartupLoader.HasConfigureServicesIServiceProviderDelegate
-            // method to prevent copy-pasted code from the ASP.NET Core source code.
-            var findMethod = typeof(StartupLoader).GetMethod(
-                "FindMethod",
-                BindingFlags.NonPublic | BindingFlags.Static);
-
-            if (findMethod != null)
+            return FindMethodDelegate.Invoke(null, new object[]
             {
-                return null != findMethod.Invoke(null, new object[]
-                {
-                    StartupType,
-                    "Configure{0}Services",
-                    TestWebServer.Environment.EnvironmentName,
-                    typeof(IServiceProvider),
-                    false
-                });
-            }
-
-            return true;
-        }
+                StartupType,
+                "Configure{0}Container",
+                TestWebServer.Environment.EnvironmentName,
+                typeof(void),
+                false
+            }) as MethodInfo;
+        } 
     }
 }

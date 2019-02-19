@@ -87,7 +87,7 @@
         /// <inheritdoc />
         public IAndRedirectTestBuilder ToUrl(Uri location)
         {
-            var redirrectResult = this.GetRedirectResult<RedirectResult>(Location);
+            this.GetRedirectResult<RedirectResult>(Location);
             LocationValidator.ValidateUri(
                 this.ActionResult,
                 location.OriginalString,

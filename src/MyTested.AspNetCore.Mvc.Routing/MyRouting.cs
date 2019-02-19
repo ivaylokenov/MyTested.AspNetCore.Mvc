@@ -3,6 +3,7 @@
     using System;
     using Builders.Contracts.Routing;
     using Builders.Routing;
+    using Internal;
     using Internal.Application;
     using Internal.Configuration;
     using Internal.TestContexts;
@@ -26,7 +27,7 @@
         {
             if (ServerTestConfiguration.Global.GetGeneralConfiguration().NoStartup)
             {
-                throw new InvalidOperationException("Testing routes without a Startup class is not supported. Set the 'General.NoStartup' option in the test configuration ('testconfig.json' file by default) to 'true' and provide a Startup class.");
+                throw new InvalidOperationException(ExceptionMessages.RouteTestingUnavailable);
             }
         }
 

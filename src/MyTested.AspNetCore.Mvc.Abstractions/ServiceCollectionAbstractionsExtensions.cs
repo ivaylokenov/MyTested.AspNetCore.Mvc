@@ -539,25 +539,6 @@
             descriptors.ForEach(serviceCollection.ReplaceEnumerable);
         }
 
-        internal static IServiceCollection Clone(this IServiceCollection serviceCollection)
-            => new ServiceCollection { serviceCollection };
-
-        internal static IServiceProvider BuildServiceProviderFromFactory(this IServiceCollection serviceCollection)
-        {
-            var provider = serviceCollection.BuildServiceProvider();
-            var factory = provider.GetService<IServiceProviderFactory<IServiceCollection>>();
-
-            if (factory != null && !(factory is DefaultServiceProviderFactory))
-            {
-                using (provider)
-                {
-                    return factory.CreateServiceProvider(factory.CreateBuilder(serviceCollection));
-                }
-            }
-
-            return provider;
-        }
-
         private static void RemoveServices(IServiceCollection serviceCollection, Func<ServiceDescriptor, bool> predicate)
         {
             CommonValidator.CheckForNullReference(serviceCollection, nameof(IServiceCollection));

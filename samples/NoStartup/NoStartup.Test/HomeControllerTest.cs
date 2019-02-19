@@ -17,5 +17,16 @@
                 .ShouldReturn()
                 .Ok()
                 .WithModel(new[] { "Mock", "Test" });
+
+        [TestMethod]
+        public void RedirectToIndexShouldRedirectToIndex()
+            => MyController<HomeController>
+                .Instance()
+                .WithServices(services => services
+                    .With(ServiceMock.GetInstance()))
+                .Calling(c => c.RedirectToIndex())
+                .ShouldReturn()
+                .Redirect()
+                .To<HomeController>(c => c.Index());
     }
 }

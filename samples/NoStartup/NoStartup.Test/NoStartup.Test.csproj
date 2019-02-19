@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\MyTested.AspNetCore.Mvc.Controllers\MyTested.AspNetCore.Mvc.Controllers.csproj" />
     <ProjectReference Include="..\..\..\src\MyTested.AspNetCore.Mvc.DependencyInjection\MyTested.AspNetCore.Mvc.DependencyInjection.csproj" />
+    <ProjectReference Include="..\..\..\src\MyTested.AspNetCore.Mvc.Helpers\MyTested.AspNetCore.Mvc.Helpers.csproj" />
     <ProjectReference Include="..\..\..\src\MyTested.AspNetCore.Mvc.Models\MyTested.AspNetCore.Mvc.Models.csproj" />
     <ProjectReference Include="..\..\..\src\MyTested.AspNetCore.Mvc.Routing\MyTested.AspNetCore.Mvc.Routing.csproj" />
     <ProjectReference Include="..\..\..\src\MyTested.AspNetCore.Mvc.ViewComponents\MyTested.AspNetCore.Mvc.ViewComponents.csproj" />

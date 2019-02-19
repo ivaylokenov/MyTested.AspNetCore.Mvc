@@ -1,31 +1,28 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace ApplicationParts.Controllers
+﻿namespace ApplicationParts.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+
     public class HomeController : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        public IActionResult Index() => this.View();
+
+        public IActionResult RedirectToIndex()
+            => this.RedirectToAction(nameof(this.Index));
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
+            this.ViewData["Message"] = "Your application description page.";
 
-            return View();
+            return this.View();
         }
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
+            this.ViewData["Message"] = "Your contact page.";
 
-            return View();
+            return this.View();
         }
 
-        public IActionResult Error()
-        {
-            return View();
-        }
+        public IActionResult Error() => this.View();
     }
 }

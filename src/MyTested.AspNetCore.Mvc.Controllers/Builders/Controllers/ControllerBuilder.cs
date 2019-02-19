@@ -22,14 +22,12 @@
         /// </summary>
         /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
         public ControllerBuilder(ControllerTestContext testContext)
-            : base(testContext)
-        {
-            this.EnabledModelStateValidation = ServerTestConfiguration
+            : base(testContext) 
+            => this.EnabledModelStateValidation = ServerTestConfiguration
                 .Global
                 .GetControllersConfiguration()
                 .ModelStateValidation;
-        }
-        
+
         public bool EnabledModelStateValidation { get; set; }
 
         protected override string ComponentName => "controller";
@@ -65,11 +63,9 @@
             }
         }
 
-        protected override void ActivateComponent()
-        {
-            this.Services
+        protected override void ActivateComponent() 
+            => this.Services
                 .GetServices<IControllerPropertyActivator>()
                 ?.ForEach(a => a.Activate(this.TestContext.ComponentContext, this.TestContext.Component));
-        }
     }
 }

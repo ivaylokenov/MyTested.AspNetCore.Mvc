@@ -14,11 +14,20 @@
                 .To<HomeController>(c => c.Index());
 
         [Fact]
-        public void HomeControllerShouldReturnView()
+        public void IndexShouldReturnView()
             => MyController<HomeController>
                 .Instance()
                 .Calling(c => c.Index())
                 .ShouldReturn()
                 .View();
+
+        [Fact]
+        public void RedirectShouldRedirectToIndex()
+            => MyController<HomeController>
+                .Instance()
+                .Calling(c => c.RedirectToIndex())
+                .ShouldReturn()
+                .Redirect()
+                .To<HomeController>(c => c.Index());
     }
 }

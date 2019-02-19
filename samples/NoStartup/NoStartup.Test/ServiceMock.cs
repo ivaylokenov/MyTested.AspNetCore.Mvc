@@ -6,9 +6,6 @@
     {
         public static IService GetInstance() => new ServiceMock();
 
-        public string[] GetData()
-        {
-            return new[] { "Mock", "Test" };
-        }
+        public string[] GetData() => new[] { "Mock", "Test" };
     }
 }

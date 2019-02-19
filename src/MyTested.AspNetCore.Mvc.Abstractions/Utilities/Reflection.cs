@@ -159,7 +159,7 @@
         /// <typeparam name="TResult">Result type from casting.</typeparam>
         /// <param name="type">Type from which the casting should be done.</param>
         /// <param name="data">Object from which the casting should be done.</param>
-        /// <returns>Casted object of type TResult.</returns>
+        /// <returns>Cast object of type TResult.</returns>
         public static TResult CastTo<TResult>(this Type type, object data)
         {
             var dataParam = Expression.Parameter(typeof(object), "data");
@@ -570,10 +570,7 @@
 
         public class DeepEqualResult
         {
-            private DeepEqualResult(bool areEqual)
-            {
-                this.AreEqual = areEqual;
-            }
+            private DeepEqualResult(bool areEqual) => this.AreEqual = areEqual;
 
             public static DeepEqualResult Success { get; } = new DeepEqualResult(true);
 
@@ -585,20 +582,15 @@
 
             public object ActualValue { get; private set; }
 
-            public static DeepEqualResult Failure(string errorPath, object expected, object actual)
-            {
-                return new DeepEqualResult(false)
+            public static DeepEqualResult Failure(string errorPath, object expected, object actual) 
+                => new DeepEqualResult(false)
                 {
                     ErrorPath = errorPath,
                     ExpectedValue = expected,
                     ActualValue = actual
                 };
-            }
 
-            public static implicit operator bool(DeepEqualResult result)
-            {
-                return result.AreEqual;
-            }
+            public static implicit operator bool(DeepEqualResult result) => result.AreEqual;
         }
 
         private static class New<T>

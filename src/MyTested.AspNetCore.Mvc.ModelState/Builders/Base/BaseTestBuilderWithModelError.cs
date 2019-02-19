@@ -19,10 +19,8 @@
         protected BaseTestBuilderWithModelError(
             ActionTestContext testContext,
             ModelStateDictionary modelState = null)
-            : base(testContext)
-        {
-            this.ModelState = modelState ?? testContext.ModelState;
-        }
+            : base(testContext) 
+            => this.ModelState = modelState ?? testContext.ModelState;
 
         /// <summary>
         /// Gets validated <see cref="ModelStateDictionary"/>.
