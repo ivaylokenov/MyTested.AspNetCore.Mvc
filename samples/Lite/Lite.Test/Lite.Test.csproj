@@ -1,9 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.2</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.2;net461</TargetFrameworks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-  </PropertyGroup>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
+</PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\MyTested.AspNetCore.Mvc.Lite\MyTested.AspNetCore.Mvc.Lite.csproj" />
