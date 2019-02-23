@@ -171,13 +171,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autofac.NoContainerBuilder.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyTested.AspNetCore.Mvc.Configuration.Test", "test\MyTested.AspNetCore.Mvc.Configuration.Test\MyTested.AspNetCore.Mvc.Configuration.Test.csproj", "{FFC31FCA-7DA5-44CA-A731-780510AEF4C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FullFramework.Web", "samples\FullFramework\FullFramework.Web\FullFramework.Web.csproj", "{95956892-757D-4314-9B19-D082E05E71D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FullFramework.Web", "samples\FullFramework\FullFramework.Web\FullFramework.Web.csproj", "{95956892-757D-4314-9B19-D082E05E71D1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FullFramework", "FullFramework", "{AD86F882-B9E4-4AC4-B949-83F611BB6A92}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FullFramework.Test", "samples\FullFramework\FullFramework.Test\FullFramework.Test.csproj", "{D139944F-2FE7-46E4-B702-E9F05A5408FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FullFramework.Test", "samples\FullFramework\FullFramework.Test\FullFramework.Test.csproj", "{D139944F-2FE7-46E4-B702-E9F05A5408FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FullFramework.AssemblyInit.Test", "samples\FullFramework\FullFramework.AssemblyInit.Test\FullFramework.AssemblyInit.Test.csproj", "{9BD386E2-10BF-420D-81A4-79435149F43B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FullFramework.AssemblyInit.Test", "samples\FullFramework\FullFramework.AssemblyInit.Test\FullFramework.AssemblyInit.Test.csproj", "{9BD386E2-10BF-420D-81A4-79435149F43B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autofac.AssemblyInit.Test", "samples\Autofac\Autofac.AssemblyInit.Test\Autofac.AssemblyInit.Test.csproj", "{1306269D-D300-4BB2-BF21-CB02C6746D2D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -493,6 +495,10 @@ Global
 		{9BD386E2-10BF-420D-81A4-79435149F43B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9BD386E2-10BF-420D-81A4-79435149F43B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9BD386E2-10BF-420D-81A4-79435149F43B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1306269D-D300-4BB2-BF21-CB02C6746D2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1306269D-D300-4BB2-BF21-CB02C6746D2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1306269D-D300-4BB2-BF21-CB02C6746D2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1306269D-D300-4BB2-BF21-CB02C6746D2D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -583,6 +589,7 @@ Global
 		{AD86F882-B9E4-4AC4-B949-83F611BB6A92} = {88CC5098-E49F-4AA4-B964-1C2BF4ECA3C3}
 		{D139944F-2FE7-46E4-B702-E9F05A5408FB} = {AD86F882-B9E4-4AC4-B949-83F611BB6A92}
 		{9BD386E2-10BF-420D-81A4-79435149F43B} = {AD86F882-B9E4-4AC4-B949-83F611BB6A92}
+		{1306269D-D300-4BB2-BF21-CB02C6746D2D} = {B360A756-DCBE-48F4-9456-636172435724}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {99A2DEDD-5195-4EE6-A546-B1CA54C5539F}

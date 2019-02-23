@@ -39,13 +39,10 @@
 
                 if (StartupType == null && generalConfiguration.AutomaticStartup)
                 {
-                    var usingTestStartup = true;
-
                     var testStartupType = TryFindTestStartupType();
                     if (testStartupType == null)
                     {
                         testStartupType = TryFindWebStartupType();
-                        usingTestStartup = false;
                     }
 
                     var noStartup = generalConfiguration.NoStartup;
@@ -61,11 +58,6 @@
                     }
 
                     startupType = testStartupType;
-
-                    if (usingTestStartup)
-                    {
-                        Initialize();
-                    }
                 }
             }
         }

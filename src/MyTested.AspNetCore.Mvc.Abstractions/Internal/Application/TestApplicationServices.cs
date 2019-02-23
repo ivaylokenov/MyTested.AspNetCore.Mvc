@@ -92,7 +92,8 @@
 
         private static void PrepareDefaultServices(IServiceCollection serviceCollection)
         {
-            var defaultRegistrationPlugin = PluginsContainer.DefaultRegistrationPlugins
+            var defaultRegistrationPlugin = PluginsContainer
+                .DefaultRegistrationPlugins
                 .OrderByDescending(p => p.Priority)
                 .FirstOrDefault();
 
@@ -171,8 +172,8 @@
             {
                 foreach (var routingServiceRegistrationPlugin in PluginsContainer.RoutingServiceRegistrationPlugins)
                 {
-                    routingServiceRegistrationPlugin.RoutingServiceRegistrationDelegate(routingServices
-                        .ServiceCollection);
+                    routingServiceRegistrationPlugin
+                        .RoutingServiceRegistrationDelegate(routingServices.ServiceCollection);
                 }
             }
 
