@@ -109,7 +109,11 @@
         {
             if (dependencyContext == null)
             {
-                dependencyContext = DependencyContext.Load(TestAssembly) ?? DependencyContext.Default;
+                dependencyContext = DependencyContext.Load(TestAssembly);
+                if (dependencyContext == null)
+                {
+                    throw new InvalidOperationException("Testing infrastructure could not be loaded. Depending on your project's configuration you may need to set '<PreserveCompilationContext>true</PreserveCompilationContext>' in the test assembly's '.csproj' file.");
+                }
             }
 
             return dependencyContext;
@@ -140,13 +144,20 @@
                 try
                 {
                     // Using default dependency context since test assembly is still not loaded.
-                    var assemblyName = DependencyContext
-                        .Default
-                        .GetDefaultAssemblyNames()
-                        .First();
-
-                    testAssemblyName = assemblyName.Name;
-                    testAssembly = Assembly.Load(assemblyName);
+                    var defaultDependencyContext = DependencyContext.Default;
+                    if (defaultDependencyContext != null)
+                    {
+                        testAssemblyName = defaultDependencyContext
+                            .GetDefaultAssemblyNames()
+                            .First()
+                            .Name;
+                    }
+                    else
+                    {
+                        testAssemblyName = AppDomain.CurrentDomain.FriendlyName;
+                    }
+                    
+                    testAssembly = Assembly.Load(testAssemblyName);
                 }
                 catch
                 {

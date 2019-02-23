@@ -1,0 +1,6 @@
+﻿{
+  "General": {
+    "TestAssemblyName": "FullFramework.AssemblyInit.Test",
+    "AutomaticStartup": false 
+  } 
+}

@@ -39,7 +39,14 @@
 
                 if (StartupType == null && generalConfiguration.AutomaticStartup)
                 {
-                    var testStartupType = TryFindTestStartupType() ?? TryFindWebStartupType();
+                    var usingTestStartup = true;
+
+                    var testStartupType = TryFindTestStartupType();
+                    if (testStartupType == null)
+                    {
+                        testStartupType = TryFindWebStartupType();
+                        usingTestStartup = false;
+                    }
 
                     var noStartup = generalConfiguration.NoStartup;
 
@@ -54,7 +61,11 @@
                     }
 
                     startupType = testStartupType;
-                    Initialize();
+
+                    if (usingTestStartup)
+                    {
+                        Initialize();
+                    }
                 }
             }
         }
@@ -65,7 +76,7 @@
 
             if (StartupType == null && !ServerTestConfiguration.General.NoStartup)
             {
-                throw new InvalidOperationException($"The test configuration ('{ServerTestConfiguration.DefaultConfigurationFile}' file by default) contained 'false' value for the '{GeneralTestConfiguration.PrefixKey}.{GeneralTestConfiguration.NoStartupKey}' option but a Startup class was not provided. Either add {TestWebServer.Environment.EnvironmentName}Startup class to the root of the test project or set it by calling 'StartsFrom<TStartup>()'. Additionally, if you do not want to use a global test configuration for all test cases in this project and want to provide services explicitly for each test scenario, you may change the test configuration option to 'true'.");
+                throw new InvalidOperationException($"{TestWebServer.Environment.EnvironmentName}Startup class could not be found. The test configuration ('{ServerTestConfiguration.DefaultConfigurationFile}' file by default) contained 'false' value for the '{GeneralTestConfiguration.PrefixKey}.{GeneralTestConfiguration.NoStartupKey}' option but a Startup class was not provided. Either add {TestWebServer.Environment.EnvironmentName}Startup class to the root of the test project or set it by calling 'StartsFrom<TStartup>()'. Additionally, if you do not want to use a global test configuration for all test cases in this project and want to provide services explicitly for each test scenario, you may change the test configuration option to 'true'.");
             }
             
             TestCounter.SetLicenseData(

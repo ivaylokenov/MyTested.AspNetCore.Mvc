@@ -35,7 +35,8 @@
             }
         }
 
-        internal static Action<IConfigurationBuilder> AdditionalConfiguration { get; set; }
+        internal static Action<IConfigurationBuilder> AdditionalConfiguration { get;
+            set; }
 
         internal static GeneralTestConfiguration General
         {

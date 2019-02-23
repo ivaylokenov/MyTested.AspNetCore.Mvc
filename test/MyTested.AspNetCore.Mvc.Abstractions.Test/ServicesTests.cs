@@ -129,14 +129,32 @@
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
+        
+        [Fact]
+        public void IsUsingWithStartUpClassShouldThrowStartupExceptionWithServiceProviderWhenTestServicesAreMissing()
+        {
+            Test.AssertException<InvalidOperationException>(
+                () =>
+                {
+                    MyApplication.StartsFrom<CustomStartupWithDefaultBuildProvider>();
 
+                    TestServiceProvider.GetService<IInjectedService>();
+                },
+                "Testing services could not be resolved. If your ConfigureServices method returns an IServiceProvider, you should either change it to return 'void' or manually register the required testing services by calling one of the provided IServiceCollection extension methods in the 'MyTested.AspNetCore.Mvc' namespace. An easy way to do the second option is to add a TestStartup class at the root of your test project and invoke the extension methods there.");
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+        
         [Fact]
         public void IsUsingWithStartUpClassShouldThrowExceptionWithServiceProviderWhenTestServicesAreMissing()
         {
             Test.AssertException<InvalidOperationException>(
                 () =>
                 {
-                    MyApplication.StartsFrom<CustomStartupWithDefaultBuildProvider>();
+                    MyApplication
+                        .StartsFrom<InvalidStartup>()
+                        .WithConfiguration(configuration => configuration
+                            .Add("General:Environment", "Invalid"));
 
                     TestServiceProvider.GetService<IInjectedService>();
                 },
@@ -224,7 +242,7 @@
 
             Assert.NotNull(service);
         }
-
+        
         [Fact]
         public void DefaultConfigShouldSetDefaultRoutes()
         {
@@ -626,6 +644,25 @@
             Assert.IsAssignableFrom<InjectedService>(injectedServiceFromRouteServiceProvider);
 
             MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void ConfigureContainerServicesShouldBeRegisteredFromStaticStartup()
+        {
+            MyApplication.StartsFrom<StaticStartup>();
+
+            var injectedService = TestApplication.Services.GetService<IInjectedService>();
+            var injectedServiceFromRouteServiceProvider = TestApplication.RoutingServices.GetService<IInjectedService>();
+
+            Assert.NotNull(injectedService);
+            Assert.IsAssignableFrom<InjectedService>(injectedService);
+
+            Assert.NotNull(injectedServiceFromRouteServiceProvider);
+            Assert.IsAssignableFrom<InjectedService>(injectedServiceFromRouteServiceProvider);
+
+            MyApplication
+                .IsRunningOn(server => server
+                    .WithStartup<DefaultStartup>());
         }
 
         [Fact]

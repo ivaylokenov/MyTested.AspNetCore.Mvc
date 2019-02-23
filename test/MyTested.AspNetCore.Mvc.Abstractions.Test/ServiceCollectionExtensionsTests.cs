@@ -1,11 +1,13 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test
 {
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.DependencyInjection.Extensions;
+    using Setups;
+    using Setups.Services;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.DependencyInjection.Extensions;
-    using Setups.Services;
+    using Internal.Services;
     using Xunit;
 
     public class ServiceCollectionExtensionsTests
@@ -303,7 +305,7 @@
 
             Assert.IsAssignableFrom<ReplaceableInjectedService>(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
         }
-        
+
         [Fact]
         public void ReplaceTransientShouldReplaceServiceByTypeAndImplementationFactory()
         {
@@ -357,7 +359,7 @@
 
             Assert.IsAssignableFrom<ReplaceableInjectedService>(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
         }
-        
+
         [Fact]
         public void ReplaceSingletonShouldReplaceServiceByTypeAndImplementationFactory()
         {
@@ -426,7 +428,7 @@
 
             Assert.Same(service, serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
         }
-        
+
         [Fact]
         public void ReplaceScopedShouldReplaceServiceByType()
         {
@@ -439,7 +441,7 @@
 
             Assert.IsAssignableFrom<ReplaceableInjectedService>(serviceCollection.BuildServiceProvider().GetService<IInjectedService>());
         }
-        
+
         [Fact]
         public void ReplaceScopedShouldReplaceServiceByTypeAndImplementationFactory()
         {
@@ -522,11 +524,11 @@
             Assert.Equal(ServiceLifetime.Singleton, serviceCollection.FirstOrDefault(s => s.ServiceType == typeof(IInjectedService))?.Lifetime);
 
             serviceCollection.ReplaceLifetime<IInjectedService>(ServiceLifetime.Scoped);
-            
+
             Assert.Single(serviceCollection);
             Assert.Equal(ServiceLifetime.Scoped, serviceCollection.FirstOrDefault(s => s.ServiceType == typeof(IInjectedService))?.Lifetime);
         }
-        
+
         [Fact]
         public void ReplaceLifetimeShouldWorkCorrectlyWithImplementationFactory()
         {
@@ -539,6 +541,28 @@
 
             Assert.Single(serviceCollection);
             Assert.Equal(ServiceLifetime.Scoped, serviceCollection.FirstOrDefault(s => s.ServiceType == typeof(IInjectedService))?.Lifetime);
+        }
+
+        [Fact]
+        public void AddCoreTestingShouldAddTestMarkerService()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddMvc();
+            serviceCollection.AddCoreTesting();
+
+            Assert.NotNull(serviceCollection.FirstOrDefault(s => s.ServiceType == typeof(TestMarkerService)));
+        }
+
+        [Fact]
+        public void AddCoreTestingShouldThrowExceptionIfAddMvcIsNotCalled()
+        {
+            Test.AssertException<InvalidOperationException>(
+                () =>
+                {
+                    var serviceCollection = new ServiceCollection();
+                    serviceCollection.AddCoreTesting();
+                },
+                "Unable to find the required services. Make sure you register the 'MyTested.AspNetCore.Mvc' testing infrastructure services after the web application ones.");
         }
     }
 }

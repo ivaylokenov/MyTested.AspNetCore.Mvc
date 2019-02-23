@@ -161,9 +161,23 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStartup.Test", "samples\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Autofac", "Autofac", "{B360A756-DCBE-48F4-9456-636172435724}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autofac.Web", "samples\Autofac\Autofac.Web\Autofac.Web.csproj", "{2DFD9D93-6189-43B4-9BD0-703B34B3EE6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autofac.Web", "samples\Autofac\Autofac.Web\Autofac.Web.csproj", "{2DFD9D93-6189-43B4-9BD0-703B34B3EE6C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autofac.Test", "samples\Autofac\Autofac.Test\Autofac.Test.csproj", "{AD2854D3-8E38-4DA6-A441-C42EC6CC72CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autofac.Test", "samples\Autofac\Autofac.Test\Autofac.Test.csproj", "{AD2854D3-8E38-4DA6-A441-C42EC6CC72CE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autofac.NoContainerBuilder.Web", "samples\Autofac\Autofac.NoContainerBuilder.Web\Autofac.NoContainerBuilder.Web.csproj", "{B96ABB0F-6997-486F-AD72-4E039026F8D6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autofac.NoContainerBuilder.Test", "samples\Autofac\Autofac.NoContainerBuilder.Test\Autofac.NoContainerBuilder.Test.csproj", "{B839F29C-9F70-43F7-A128-39B2213366F4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyTested.AspNetCore.Mvc.Configuration.Test", "test\MyTested.AspNetCore.Mvc.Configuration.Test\MyTested.AspNetCore.Mvc.Configuration.Test.csproj", "{FFC31FCA-7DA5-44CA-A731-780510AEF4C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FullFramework.Web", "samples\FullFramework\FullFramework.Web\FullFramework.Web.csproj", "{95956892-757D-4314-9B19-D082E05E71D1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FullFramework", "FullFramework", "{AD86F882-B9E4-4AC4-B949-83F611BB6A92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FullFramework.Test", "samples\FullFramework\FullFramework.Test\FullFramework.Test.csproj", "{D139944F-2FE7-46E4-B702-E9F05A5408FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FullFramework.AssemblyInit.Test", "samples\FullFramework\FullFramework.AssemblyInit.Test\FullFramework.AssemblyInit.Test.csproj", "{9BD386E2-10BF-420D-81A4-79435149F43B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -455,6 +469,30 @@ Global
 		{AD2854D3-8E38-4DA6-A441-C42EC6CC72CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD2854D3-8E38-4DA6-A441-C42EC6CC72CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD2854D3-8E38-4DA6-A441-C42EC6CC72CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B96ABB0F-6997-486F-AD72-4E039026F8D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B96ABB0F-6997-486F-AD72-4E039026F8D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B96ABB0F-6997-486F-AD72-4E039026F8D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B96ABB0F-6997-486F-AD72-4E039026F8D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B839F29C-9F70-43F7-A128-39B2213366F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B839F29C-9F70-43F7-A128-39B2213366F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B839F29C-9F70-43F7-A128-39B2213366F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B839F29C-9F70-43F7-A128-39B2213366F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFC31FCA-7DA5-44CA-A731-780510AEF4C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFC31FCA-7DA5-44CA-A731-780510AEF4C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFC31FCA-7DA5-44CA-A731-780510AEF4C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFC31FCA-7DA5-44CA-A731-780510AEF4C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95956892-757D-4314-9B19-D082E05E71D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95956892-757D-4314-9B19-D082E05E71D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95956892-757D-4314-9B19-D082E05E71D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95956892-757D-4314-9B19-D082E05E71D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D139944F-2FE7-46E4-B702-E9F05A5408FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D139944F-2FE7-46E4-B702-E9F05A5408FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D139944F-2FE7-46E4-B702-E9F05A5408FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D139944F-2FE7-46E4-B702-E9F05A5408FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BD386E2-10BF-420D-81A4-79435149F43B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BD386E2-10BF-420D-81A4-79435149F43B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BD386E2-10BF-420D-81A4-79435149F43B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BD386E2-10BF-420D-81A4-79435149F43B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -538,6 +576,13 @@ Global
 		{B360A756-DCBE-48F4-9456-636172435724} = {88CC5098-E49F-4AA4-B964-1C2BF4ECA3C3}
 		{2DFD9D93-6189-43B4-9BD0-703B34B3EE6C} = {B360A756-DCBE-48F4-9456-636172435724}
 		{AD2854D3-8E38-4DA6-A441-C42EC6CC72CE} = {B360A756-DCBE-48F4-9456-636172435724}
+		{B96ABB0F-6997-486F-AD72-4E039026F8D6} = {B360A756-DCBE-48F4-9456-636172435724}
+		{B839F29C-9F70-43F7-A128-39B2213366F4} = {B360A756-DCBE-48F4-9456-636172435724}
+		{FFC31FCA-7DA5-44CA-A731-780510AEF4C0} = {D140FA14-A6C2-4279-8A41-35BC55279DA8}
+		{95956892-757D-4314-9B19-D082E05E71D1} = {AD86F882-B9E4-4AC4-B949-83F611BB6A92}
+		{AD86F882-B9E4-4AC4-B949-83F611BB6A92} = {88CC5098-E49F-4AA4-B964-1C2BF4ECA3C3}
+		{D139944F-2FE7-46E4-B702-E9F05A5408FB} = {AD86F882-B9E4-4AC4-B949-83F611BB6A92}
+		{9BD386E2-10BF-420D-81A4-79435149F43B} = {AD86F882-B9E4-4AC4-B949-83F611BB6A92}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {99A2DEDD-5195-4EE6-A546-B1CA54C5539F}

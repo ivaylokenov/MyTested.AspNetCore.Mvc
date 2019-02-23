@@ -33,7 +33,7 @@
                     throw new InvalidOperationException($"The test configuration ('{ServerTestConfiguration.DefaultConfigurationFile}' file by default) contained 'true' value for the '{GeneralTestConfiguration.PrefixKey}.{GeneralTestConfiguration.NoStartupKey}' option but {value.GetName()} class was set through the 'StartsFrom<TStartup>()' method. Either do not set the class or change the option to 'false'.");
                 }
 
-                if (startupType != null && generalConfiguration.AsynchronousTests)
+                if (startupType != null && startupType != value && generalConfiguration.AsynchronousTests)
                 {
                     throw new InvalidOperationException($"Multiple Startup types per test project while running asynchronous tests is not supported. Either set '{GeneralTestConfiguration.PrefixKey}.{GeneralTestConfiguration.AsynchronousTestsKey}' in the test configuration ('{ServerTestConfiguration.DefaultConfigurationFile}' file by default) to 'false' or separate your tests into different test projects. The latter is recommended. If you choose the first option, you may need to disable asynchronous testing in your preferred test runner too.");
                 }
@@ -67,7 +67,7 @@
 
             var defaultTestStartupType = ServerTestConfiguration.General.StartupType 
                 ?? $"{TestWebServer.Environment.EnvironmentName}{DefaultStartupTypeName}";
-
+            
             // Check root of the test project.
             return
                 TestWebServer.TestAssembly.GetType(defaultTestStartupType) ??

@@ -6,7 +6,7 @@
     using System.Threading.Tasks;
     using Xunit;
 
-    public class FreeLicenseTest
+    public class FreeLicenseTests
     {
         [Fact]
         public async Task UsingLitePackageWithOtherPluginsShouldRequireLicense()

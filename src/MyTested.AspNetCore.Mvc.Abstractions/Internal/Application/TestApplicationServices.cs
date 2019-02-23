@@ -220,8 +220,14 @@
 
             if (hasConfigureServicesIServiceProviderDelegate)
             {
+                var additionalExceptionMessageForStartupType = string.Empty;
+                if (StartupType.Name != $"{TestWebServer.Environment.EnvironmentName}Startup")
+                {
+                    additionalExceptionMessageForStartupType = $" An easy way to do the second option is to add a {TestWebServer.Environment.EnvironmentName}Startup class at the root of your test project and invoke the extension methods there.";
+                }
+
                 throw new InvalidOperationException(
-                    $"Testing services could not be resolved. If your {nameof(IStartup.ConfigureServices)} method returns an {nameof(IServiceProvider)}, you should either change it to return 'void' or manually register the required testing services by calling one of the provided {nameof(IServiceCollection)} extension methods in the '{TestFramework.TestFrameworkName}' namespace.");
+                    $"Testing services could not be resolved. If your {nameof(IStartup.ConfigureServices)} method returns an {nameof(IServiceProvider)}, you should either change it to return 'void' or manually register the required testing services by calling one of the provided {nameof(IServiceCollection)} extension methods in the '{TestFramework.TestFrameworkName}' namespace.{additionalExceptionMessageForStartupType}");
             }
         }
 
