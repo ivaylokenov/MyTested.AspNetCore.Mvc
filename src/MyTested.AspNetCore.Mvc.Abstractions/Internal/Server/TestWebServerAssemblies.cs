@@ -151,13 +151,20 @@
                             .GetDefaultAssemblyNames()
                             .First()
                             .Name;
+
+                        testAssembly = Assembly.Load(testAssemblyName);
                     }
                     else
                     {
-                        testAssemblyName = AppDomain.CurrentDomain.FriendlyName;
+                        // Dependency context could not be loaded - fallback to analyze the current application domain.
+                        testAssembly = AppDomain
+                            .CurrentDomain
+                            .GetAssemblies()
+                            .First(a => a.GetReferencedAssemblies()
+                                .Any(r => r.Name.Contains(TestFramework.TestFrameworkName)));
+
+                        testAssemblyName = testAssembly.GetName().Name;
                     }
-                    
-                    testAssembly = Assembly.Load(testAssemblyName);
                 }
                 catch
                 {

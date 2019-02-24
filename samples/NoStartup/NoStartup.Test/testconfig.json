@@ -1,6 +1,5 @@
 ﻿{
   "General": {
-    "NoStartup": true,
-    "TestAssemblyName": "NoStartup.Test"
+    "NoStartup": true
   }
 }

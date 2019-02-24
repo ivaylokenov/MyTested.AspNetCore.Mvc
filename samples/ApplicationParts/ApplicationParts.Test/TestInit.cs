@@ -10,7 +10,6 @@
         [OneTimeSetUp]
         public void Init() 
             => MyApplication
-                .StartsFrom<Startup>()
-                .WithTestAssembly(this);
+                .StartsFrom<Startup>();
     }
 }
