@@ -62,9 +62,7 @@
         public static TBuilder WithServices<TBuilder>(
             this IBaseTestBuilderWithComponentBuilder<TBuilder> builder,
             params object[] services)
-            where TBuilder : IBaseTestBuilder
-        {
-            return builder.WithServices(services.AsEnumerable());
-        }
+            where TBuilder : IBaseTestBuilder 
+            => builder.WithServices(services.AsEnumerable());
     }
 }

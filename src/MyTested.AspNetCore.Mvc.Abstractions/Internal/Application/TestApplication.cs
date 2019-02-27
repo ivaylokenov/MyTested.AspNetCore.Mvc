@@ -39,22 +39,22 @@
 
                 if (StartupType == null && generalConfiguration.AutomaticStartup)
                 {
+                    var noStartup = generalConfiguration.NoStartup;
+
                     var testStartupType = TryFindTestStartupType();
-                    if (testStartupType == null)
+                    if (testStartupType == null && !noStartup)
                     {
                         testStartupType = TryFindWebStartupType();
                     }
 
-                    var noStartup = generalConfiguration.NoStartup;
-
                     if (testStartupType == null && !noStartup)
                     {
-                        throw new InvalidOperationException($"{TestWebServer.Environment.EnvironmentName}Startup class could not be found at the root of the test project. Either add it or set '{GeneralTestConfiguration.PrefixKey}.{GeneralTestConfiguration.AutomaticStartupKey}' in the test configuration ('{ServerTestConfiguration.DefaultConfigurationFile}' file by default) to 'false'.");
+                        throw new InvalidOperationException($"{TestWebServer.Environment.EnvironmentName}Startup class could not be found at the root of the test project. Either add it or set '{GeneralTestConfiguration.PrefixKey}:{GeneralTestConfiguration.AutomaticStartupKey}' in the test configuration ('{ServerTestConfiguration.DefaultConfigurationFile}' file by default) to 'false'.");
                     }
 
                     if (testStartupType != null && noStartup)
                     {
-                        throw new InvalidOperationException($"The test configuration ('{ServerTestConfiguration.DefaultConfigurationFile}' file by default) contained 'true' value for the '{GeneralTestConfiguration.PrefixKey}.{GeneralTestConfiguration.NoStartupKey}' option but {TestWebServer.Environment.EnvironmentName}Startup class was located at the root of the project. Either remove the class or change the option to 'false'.");
+                        throw new InvalidOperationException($"The test configuration ('{ServerTestConfiguration.DefaultConfigurationFile}' file by default) contained 'true' value for the '{GeneralTestConfiguration.PrefixKey}:{GeneralTestConfiguration.NoStartupKey}' option but {TestWebServer.Environment.EnvironmentName}Startup class was located at the root of the project. Either remove the class or change the option to 'false'.");
                     }
 
                     startupType = testStartupType;
@@ -65,12 +65,9 @@
         private static void Initialize()
         {
             TestWebServer.EnsureTestAssembly();
-
-            if (StartupType == null && !ServerTestConfiguration.General.NoStartup)
-            {
-                throw new InvalidOperationException($"{TestWebServer.Environment.EnvironmentName}Startup class could not be found. The test configuration ('{ServerTestConfiguration.DefaultConfigurationFile}' file by default) contained 'false' value for the '{GeneralTestConfiguration.PrefixKey}.{GeneralTestConfiguration.NoStartupKey}' option but a Startup class was not provided. Either add {TestWebServer.Environment.EnvironmentName}Startup class to the root of the test project or set it by calling 'StartsFrom<TStartup>()'. Additionally, if you do not want to use a global test configuration for all test cases in this project and want to provide services explicitly for each test scenario, you may change the test configuration option to 'true'.");
-            }
             
+            ValidateStartup();
+
             TestCounter.SetLicenseData(
                 ServerTestConfiguration.Global.Licenses,
                 DateTime.ParseExact(TestFramework.ReleaseDate, "yyyy-MM-dd", CultureInfo.InvariantCulture),

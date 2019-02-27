@@ -19,7 +19,7 @@
                     .To<HomeController>(c => c.Index());
             });
 
-            Assert.AreEqual("Testing routes without a Startup class is not supported. Set the 'General.NoStartup' option in the test configuration ('testsettings.json' file by default) to 'true' and provide a Startup class.", exception.Message);
+            Assert.AreEqual("Testing routes without a Startup class is not supported. Set the 'General:NoStartup' option in the test configuration ('testsettings.json' file by default) to 'true' and provide a Startup class.", exception.Message);
         }
     }
 }

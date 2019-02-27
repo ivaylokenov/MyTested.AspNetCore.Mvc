@@ -136,7 +136,7 @@
                 }
                 catch
                 {
-                    throw new InvalidOperationException($"Test assembly could not be loaded. The provided '{testAssemblyName}' name in the '{GeneralTestConfiguration.PrefixKey}.{GeneralTestConfiguration.TestAssemblyNameKey}' configuration is not valid.");
+                    throw new InvalidOperationException($"Test assembly could not be loaded. The provided '{testAssemblyName}' name in the '{GeneralTestConfiguration.PrefixKey}:{GeneralTestConfiguration.TestAssemblyNameKey}' configuration is not valid.");
                 }
             }
             else
@@ -192,7 +192,7 @@
                 }
                 catch
                 {
-                    throw new InvalidOperationException($"Web assembly could not be loaded. The provided '{webAssemblyName}' name in the '{GeneralTestConfiguration.PrefixKey}.{GeneralTestConfiguration.WebAssemblyNameKey}' configuration is not valid.");
+                    throw new InvalidOperationException($"Web assembly could not be loaded. The provided '{webAssemblyName}' name in the '{GeneralTestConfiguration.PrefixKey}:{GeneralTestConfiguration.WebAssemblyNameKey}' configuration is not valid.");
                 }
             }
             else
@@ -242,7 +242,7 @@
         {
             if (TestAssembly == null)
             {
-                throw new InvalidOperationException($"Test assembly could not be loaded. You can specify it explicitly in the test configuration ('{ServerTestConfiguration.DefaultConfigurationFile}' file by default) by providing a value for the '{GeneralTestConfiguration.PrefixKey}.{GeneralTestConfiguration.TestAssemblyNameKey}' option or set it by calling '.StartsFrom<TStartup>().WithTestAssembly(this)'.");
+                throw new InvalidOperationException($"Test assembly could not be loaded. You can specify it explicitly in the test configuration ('{ServerTestConfiguration.DefaultConfigurationFile}' file by default) by providing a value for the '{GeneralTestConfiguration.PrefixKey}:{GeneralTestConfiguration.TestAssemblyNameKey}' option or set it by calling '.StartsFrom<TStartup>().WithTestAssembly(this)'.");
             }
         }
     }
