@@ -29,10 +29,8 @@
 
         protected TActionResult ActionResult => this.TestContext.MethodResultAs<TActionResult>();
         
-        public override object GetActualModel()
-        {
-            return (this.TestContext.MethodResult as ObjectResult)?.Value;
-        }
+        public override object GetActualModel() 
+            => (this.TestContext.MethodResult as ObjectResult)?.Value;
 
         public override Type GetModelReturnType()
         {
@@ -70,118 +68,96 @@
         /// Tests whether action result has the same status code as the provided one.
         /// </summary>
         /// <param name="statusCode">Status code as integer.</param>
-        protected void ValidateStatusCode(int statusCode)
-        {
-            this.ValidateStatusCode((HttpStatusCode)statusCode);
-        }
+        protected void ValidateStatusCode(int statusCode) 
+            => this.ValidateStatusCode((HttpStatusCode)statusCode);
 
         /// <summary>
         /// Tests whether action result has the same status code as the provided HttpStatusCode.
         /// </summary>
         /// <param name="statusCode"><see cref="HttpStatusCode"/> enumeration.</param>
-        protected void ValidateStatusCode(HttpStatusCode statusCode)
-        {
-            HttpStatusCodeValidator.ValidateHttpStatusCode(
+        protected void ValidateStatusCode(HttpStatusCode statusCode) 
+            => HttpStatusCodeValidator.ValidateHttpStatusCode(
                 this.TestContext.MethodResult,
                 statusCode,
                 this.ThrowNewFailedValidationException);
-        }
 
         /// <summary>
         /// Tests whether action result contains the same content type as the provided one.
         /// </summary>
         /// <param name="contentType">Expected content type as string.</param>
-        protected void ValidateContainingOfContentType(string contentType)
-        {
-            this.ValidateContainingOfContentType(new MediaTypeHeaderValue(contentType));
-        }
+        protected void ValidateContainingOfContentType(string contentType) 
+            => this.ValidateContainingOfContentType(new MediaTypeHeaderValue(contentType));
 
         /// <summary>
         /// Tests whether action result contains the same content type as the provided MediaTypeHeaderValue.
         /// </summary>
         /// <param name="contentType">Expected content type as <see cref="MediaTypeHeaderValue"/>.</param>
-        protected void ValidateContainingOfContentType(MediaTypeHeaderValue contentType)
-        {
-            ContentTypeValidator.ValidateContainingOfContentType(
+        protected void ValidateContainingOfContentType(MediaTypeHeaderValue contentType) 
+            => ContentTypeValidator.ValidateContainingOfContentType(
                 this.TestContext.MethodResult,
                 contentType,
                 this.ThrowNewFailedValidationException);
-        }
 
         /// <summary>
         /// Tests whether action result contains the same content types as the provided ones.
         /// </summary>
         /// <param name="contentTypes">Expected content types as collection of strings.</param>
-        protected void ValidateContentTypes(IEnumerable<string> contentTypes)
-        {
-            this.ValidateContentTypes(contentTypes.Select(ct => new MediaTypeHeaderValue(ct)));
-        }
+        protected void ValidateContentTypes(IEnumerable<string> contentTypes) 
+            => this.ValidateContentTypes(contentTypes.Select(ct => new MediaTypeHeaderValue(ct)));
 
         /// <summary>
         /// Tests whether action result contains the same content types as the provided ones.
         /// </summary>
         /// <param name="contentTypes">Expected content types as string parameters.</param>
-        protected void ValidateContentTypes(params string[] contentTypes)
-        {
-            this.ValidateContentTypes(contentTypes.AsEnumerable());
-        }
+        protected void ValidateContentTypes(params string[] contentTypes) 
+            => this.ValidateContentTypes(contentTypes.AsEnumerable());
 
         /// <summary>
         /// Tests whether action result contains the same content types as the provided ones.
         /// </summary>
         /// <param name="contentTypes">Expected content types as collection of <see cref="MediaTypeHeaderValue"/>.</param>
-        protected void ValidateContentTypes(IEnumerable<MediaTypeHeaderValue> contentTypes)
-        {
-            ContentTypeValidator.ValidateContentTypes(
+        protected void ValidateContentTypes(IEnumerable<MediaTypeHeaderValue> contentTypes) 
+            => ContentTypeValidator.ValidateContentTypes(
                 this.TestContext.MethodResult,
                 contentTypes,
                 this.ThrowNewFailedValidationException);
-        }
 
         /// <summary>
         /// Tests whether action result contains the same content types as the provided ones.
         /// </summary>
         /// <param name="contentTypes">Expected content types as <see cref="MediaTypeHeaderValue"/> parameters.</param>
-        protected void ValidateContentTypes(params MediaTypeHeaderValue[] contentTypes)
-        {
-            this.ValidateContentTypes(contentTypes.AsEnumerable());
-        }
+        protected void ValidateContentTypes(params MediaTypeHeaderValue[] contentTypes) 
+            => this.ValidateContentTypes(contentTypes.AsEnumerable());
 
         /// <summary>
         /// Tests whether action result contains the same output formatter as the provided one.
         /// </summary>
         /// <param name="outputFormatter">Expected instance of <see cref="IOutputFormatter"/>.</param>
-        protected void ValidateContainingOfOutputFormatter(IOutputFormatter outputFormatter)
-        {
-            OutputFormatterValidator.ValidateContainingOfOutputFormatter(
+        protected void ValidateContainingOfOutputFormatter(IOutputFormatter outputFormatter) 
+            => OutputFormatterValidator.ValidateContainingOfOutputFormatter(
                 this.GetObjectResult(),
                 outputFormatter,
                 this.ThrowNewFailedValidationException);
-        }
 
         /// <summary>
         /// Tests whether action result contains type of output formatter as the provided one.
         /// </summary>
         /// <typeparam name="TOutputFormatter">Expected type of <see cref="IOutputFormatter"/>.</typeparam>
         protected void ValidateContainingOutputFormatterOfType<TOutputFormatter>()
-            where TOutputFormatter : IOutputFormatter
-        {
-            OutputFormatterValidator.ValidateContainingOutputFormatterOfType<TOutputFormatter>(
+            where TOutputFormatter : IOutputFormatter 
+            => OutputFormatterValidator.ValidateContainingOutputFormatterOfType<TOutputFormatter>(
                 this.GetObjectResult(),
                 this.ThrowNewFailedValidationException);
-        }
 
         /// <summary>
         /// Tests whether action result contains the same output formatters as the provided ones.
         /// </summary>
         /// <param name="outputFormatters">Expected collection of <see cref="IOutputFormatter"/>.</param>
-        protected void ValidateOutputFormatters(IEnumerable<IOutputFormatter> outputFormatters)
-        {
-            OutputFormatterValidator.ValidateOutputFormatters(
+        protected void ValidateOutputFormatters(IEnumerable<IOutputFormatter> outputFormatters) 
+            => OutputFormatterValidator.ValidateOutputFormatters(
                 this.GetObjectResult(),
                 outputFormatters,
                 this.ThrowNewFailedValidationException);
-        }
 
         /// <summary>
         /// Tests whether action result contains the same output formatters as the provided ones.

@@ -10,9 +10,8 @@
     /// </summary>
     public class HttpContextMock : DefaultHttpContext
     {
-        private readonly HttpResponse httpResponse;
-
         private HttpRequest httpRequest;
+        private HttpResponse httpResponse;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HttpContextMock"/> class.
@@ -45,20 +44,7 @@
             CommonValidator.CheckForNullReference(context, nameof(HttpContext));
 
             this.PrepareFeatures();
-
-            this.httpRequest = context.Request;
-            this.httpResponse = HttpResponseMock.From(this, context.Response);
-            this.Items = context.Items;
-            this.RequestAborted = context.RequestAborted;
-            this.RequestServices = context.RequestServices;
-            this.TraceIdentifier = context.TraceIdentifier;
-            this.User = context.User;
-
-            if (this.Features.Get<ISessionFeature>() != null)
-            {
-                this.Session = context.Session;
-            }
-
+            this.PrepareData(context);
             this.PrepareDefaultValues();
         }
 
@@ -76,13 +62,11 @@
 
         public HttpRequest CustomRequest
         {
-            set { this.httpRequest = value ?? new DefaultHttpRequest(this); }
+            set => this.httpRequest = value ?? new DefaultHttpRequest(this);
         }
 
-        public static HttpContextMock From(HttpContext httpContext)
-        {
-            return new HttpContextMock(httpContext);
-        }
+        public static HttpContextMock From(HttpContext httpContext) 
+            => new HttpContextMock(httpContext);
 
         private void PrepareFeatures()
         {
@@ -102,6 +86,23 @@
             }
 
             TestHelper.ApplyHttpFeatures(this);
+        }
+
+        private void PrepareData(HttpContext context)
+        {
+            this.httpRequest = context.Request;
+            this.httpResponse = HttpResponseMock.From(this, context.Response);
+
+            this.Items = context.Items;
+            this.RequestAborted = context.RequestAborted;
+            this.RequestServices = context.RequestServices;
+            this.TraceIdentifier = context.TraceIdentifier;
+            this.User = context.User;
+
+            if (this.Features.Get<ISessionFeature>() != null)
+            {
+                this.Session = context.Session;
+            }
         }
 
         private void PrepareDefaultValues()

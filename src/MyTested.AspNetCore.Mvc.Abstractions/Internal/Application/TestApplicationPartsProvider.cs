@@ -51,7 +51,7 @@
                     baseStartupTypeAssembly = baseStartupType.GetTypeInfo().Assembly;
                 }
             }
-
+            
             var applicationPartManager = applicationServiceProvider.GetService<ApplicationPartManager>();
 
             if (applicationPartManager != null && baseStartupTypeAssembly != null)

@@ -60,10 +60,7 @@
 
         public string MethodName
         {
-            get
-            {
-                return this.methodName;
-            }
+            get => this.methodName;
 
             set
             {
@@ -87,10 +84,7 @@
 
         public LambdaExpression MethodCall
         {
-            get
-            {
-                return this.methodCall;
-            }
+            get => this.methodCall;
 
             set
             {
@@ -128,10 +122,7 @@
                 return this.model;
             }
 
-            set
-            {
-                this.model = value;
-            }
+            set => this.model = value;
         }
 
         public Func<object> ComponentConstructionDelegate { get; set; }

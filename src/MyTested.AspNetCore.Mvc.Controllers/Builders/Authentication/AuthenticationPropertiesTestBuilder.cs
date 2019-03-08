@@ -39,8 +39,8 @@
                 if (expected.AllowRefresh != actual.AllowRefresh)
                 {
                     this.ThrowNewAuthenticationPropertiesAssertionException(
-                        expected.AllowRefresh == null ? "not have allow refresh value" : $"have allow refresh value of '{expected.AllowRefresh}'",
-                        $"in fact found {(actual.AllowRefresh.GetErrorMessageName())}");
+                        expected.AllowRefresh == null ? "not have allow refresh value" : $"have allow refresh value of {expected.AllowRefresh.GetErrorMessageName()}",
+                        $"in fact found {actual.AllowRefresh.GetErrorMessageName()}");
                 }
             });
 
@@ -56,7 +56,7 @@
                 if (expected.ExpiresUtc != actual.ExpiresUtc)
                 {
                     this.ThrowNewAuthenticationPropertiesAssertionException(
-                        expected.ExpiresUtc == null ? "not have expires value" : $"have expires value of '{expected.ExpiresUtc}'",
+                        expected.ExpiresUtc == null ? "not have expires value" : $"have expires value of {expected.ExpiresUtc.GetErrorMessageName()}",
                         $"in fact found {actual.ExpiresUtc.GetErrorMessageName()}");
                 }
             });
@@ -90,7 +90,7 @@
                 if (expected.IssuedUtc != actual.IssuedUtc)
                 {
                     this.ThrowNewAuthenticationPropertiesAssertionException(
-                        expected.IssuedUtc == null ? "not have issued value" : $"have issued value of '{expected.IssuedUtc}'",
+                        expected.IssuedUtc == null ? "not have issued value" : $"have issued value of {expected.IssuedUtc.GetErrorMessageName()}",
                         $"in fact found {actual.IssuedUtc.GetErrorMessageName()}");
                 }
             });
@@ -168,7 +168,7 @@
                 if (expected.RedirectUri != actual.RedirectUri)
                 {
                     this.ThrowNewAuthenticationPropertiesAssertionException(
-                        expected.RedirectUri == null ? "not have redirect URI value" : $"have '{expected.RedirectUri}' redirect URI",
+                        expected.RedirectUri == null ? "not have redirect URI value" : $"have {expected.RedirectUri.GetErrorMessageName()} redirect URI",
                         $"in fact found {actual.RedirectUri.GetErrorMessageName()}");
                 }
             });
@@ -177,20 +177,13 @@
         }
 
         /// <inheritdoc />
-        public IAuthenticationPropertiesTestBuilder AndAlso()
-        {
-            return this;
-        }
+        public IAuthenticationPropertiesTestBuilder AndAlso() => this;
 
-        internal AuthenticationProperties GetAuthenticationProperties()
-        {
-            return this.authenticationProperties;
-        }
+        internal AuthenticationProperties GetAuthenticationProperties() 
+            => this.authenticationProperties;
 
-        internal ICollection<Action<AuthenticationProperties, AuthenticationProperties>> GetAuthenticationPropertiesValidations()
-        {
-            return this.validations;
-        }
+        internal ICollection<Action<AuthenticationProperties, AuthenticationProperties>> GetAuthenticationPropertiesValidations() 
+            => this.validations;
 
         private void ThrowNewAuthenticationPropertiesAssertionException(string expectedValue, string actualValue)
         {

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using Abstractions.Utilities.Extensions;
     using Base;
     using Contracts.Base;
     using Exceptions;
@@ -127,7 +128,7 @@
         {
             if (!this.IsValidComponent)
             {
-                throw new InvalidOperationException($"{typeof(TComponent).ToFriendlyTypeName()} is not recognized as a valid {this.ComponentName} type. Make sure the SDK is set to 'Microsoft.NET.Sdk.Web' in your test project's '.csproj' file. If your {this.ComponentName} is still not recognized, you may manually add it in the application part manager by using the 'AddMvc().PartManager.ApplicationParts.Add(applicationPart))' method.");
+                throw new InvalidOperationException($"{typeof(TComponent).ToFriendlyTypeName()} is not recognized as a valid {this.ComponentName} type. Classes decorated with 'Non{this.ComponentName.CapitalizeAndJoin()}Attribute' are not considered as passable {this.ComponentName}s. Additionally, make sure the SDK is set to 'Microsoft.NET.Sdk.Web' in your test project's '.csproj' file in order to enable proper {this.ComponentName} discovery. If your type is still not recognized, you may manually add it in the application part manager by using the 'AddMvc().PartManager.ApplicationParts.Add(applicationPart))' method.");
             }
         }
 

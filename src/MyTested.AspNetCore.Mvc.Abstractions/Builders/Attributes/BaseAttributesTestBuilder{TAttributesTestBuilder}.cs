@@ -21,10 +21,8 @@
         /// </summary>
         /// <param name="testContext"><see cref="ComponentTestContext"/> containing data about the currently executed assertion chain.</param>
         protected BaseAttributesTestBuilder(ComponentTestContext testContext)
-            : base(testContext)
-        {
-            this.AttributesBuilder = this.GetAttributesTestBuilder();
-        }
+            : base(testContext) 
+            => this.AttributesBuilder = this.GetAttributesTestBuilder();
 
         protected TAttributesTestBuilder AttributesBuilder { get; private set; }
 
@@ -83,10 +81,8 @@
         /// <param name="attributes">Collection of attributes.</param>
         /// <returns>The found attribute of the given type.</returns>
         protected TAttribute GetAttributeOfType<TAttribute>(IEnumerable<object> attributes)
-            where TAttribute : Attribute
-        {
-            return (TAttribute)attributes.First(a => a.GetType() == typeof(TAttribute));
-        }
+            where TAttribute : Attribute 
+            => (TAttribute)attributes.First(a => a.GetType() == typeof(TAttribute));
 
         /// <summary>
         /// Gets an attribute of the given type from the provided collection of objects.
@@ -95,11 +91,9 @@
         /// <param name="attributes">Collection of attributes.</param>
         /// <returns>The found attribute of the given type or null, if such attribute is not found.</returns>
         protected TAttribute TryGetAttributeOfType<TAttribute>(IEnumerable<object> attributes)
-            where TAttribute : Attribute
-        {
-            return attributes.FirstOrDefault(a => a.GetType() == typeof(TAttribute)) as TAttribute;
-        }
-        
+            where TAttribute : Attribute 
+            => attributes.FirstOrDefault(a => a.GetType() == typeof(TAttribute)) as TAttribute;
+
         protected virtual void ThrowNewAttributeAssertionException(string expectedValue, string actualValue)
         {
             throw new AttributeAssertionException(string.Format(

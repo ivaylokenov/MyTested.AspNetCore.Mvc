@@ -10,5 +10,11 @@
         /// </summary>
         /// <returns>The same <see cref="IAndControllerAttributesTestBuilder"/>.</returns>
         IAndControllerAttributesTestBuilder IndicatingControllerExplicitly();
+
+        /// <summary>
+        /// Tests whether the controller attributes contain <see cref="Microsoft.AspNetCore.Mvc.ApiControllerAttribute"/>.
+        /// </summary>
+        /// <returns>The same <see cref="IAndControllerAttributesTestBuilder"/>.</returns>
+        IAndControllerAttributesTestBuilder IndicatingApiController();
     }
 }

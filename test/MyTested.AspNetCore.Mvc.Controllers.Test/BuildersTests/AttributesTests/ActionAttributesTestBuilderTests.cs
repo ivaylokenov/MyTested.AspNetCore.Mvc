@@ -218,6 +218,363 @@
         }
 
         [Fact]
+        public void SpecifyingConsumptionShouldNotThrowExceptionWithCorrectAttributeAndContentType()
+        {
+            MyController<ApiController>
+                .Instance()
+                .Calling(c => c.Post())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SpecifyingConsumption("application/pdf"));
+        }
+
+        [Fact]
+        public void SpecifyingConsumptionShouldThrowExceptionWithMissingAttribute()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.VariousAttributesAction())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes.SpecifyingConsumption("application/xml"));
+                },
+                "When calling VariousAttributesAction action in MvcController expected action to have ConsumesAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void SpecifyingConsumptionShouldThrowExceptionWithCorrectAttributeAndWrongContentType()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .Instance()
+                        .Calling(c => c.Post())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes.SpecifyingConsumption("wrong-content-type"));
+                },
+                "When calling Post action in ApiController expected action to have ConsumesAttribute with 'wrong-content-type' content type, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void SpecifyingConsumptionShouldNotThrowExceptionWithCorrectAttributeAndContentTypes()
+        {
+            MyController<ApiController>
+                .Instance()
+                .Calling(c => c.Post())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SpecifyingConsumption("application/pdf", "application/javascript"));
+        }
+
+        [Fact]
+        public void SpecifyingConsumptionShouldThrowExceptionWithCorrectAttributeAndMoreContentTypes()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .Instance()
+                        .Calling(c => c.Post())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingConsumption("application/xml", "application/json", "application/pdf"));
+                },
+                "When calling Post action in ApiController expected action to have ConsumesAttribute with 3 content types, but in fact found 2.");
+        }
+
+        [Fact]
+        public void SpecifyingConsumptionShouldThrowExceptionWithCorrectAttributeAndOneWrongContentType()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .Instance()
+                        .Calling(c => c.Post())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingConsumption("application/pdf", "wrong-content-type"));
+                },
+                "When calling Post action in ApiController expected action to have ConsumesAttribute with 'wrong-content-type' content type, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void SpecifyingConsumptionShouldNotThrowExceptionWithCorrectAttributeAndContentTypesAsList()
+        {
+            MyController<ApiController>
+                .Instance()
+                .Calling(c => c.Post())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SpecifyingConsumption(new List<string>
+                    {
+                        "application/pdf",
+                        "application/javascript"
+                    }));
+        }
+
+        [Fact]
+        public void SpecifyingProductionShouldNotThrowExceptionWithCorrectAttributeAndContentType()
+        {
+            MyController<ApiController>
+                .Instance()
+                .Calling(c => c.Post())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SpecifyingProduction("application/pdf"));
+        }
+
+        [Fact]
+        public void SpecifyingProductionShouldThrowExceptionWithMissingAttribute()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.VariousAttributesAction())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingProduction("application/xml"));
+                },
+                "When calling VariousAttributesAction action in MvcController expected action to have ProducesAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void SpecifyingProductionShouldThrowExceptionWithCorrectAttributeAndWrongContentType()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .Instance()
+                        .Calling(c => c.Post())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingProduction("wrong-content-type"));
+                },
+                "When calling Post action in ApiController expected action to have ProducesAttribute with 'wrong-content-type' content type, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void SpecifyingProductionShouldNotThrowExceptionWithCorrectAttributeAndContentTypes()
+        {
+            MyController<ApiController>
+                .Instance()
+                .Calling(c => c.Post())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SpecifyingProduction("application/pdf", "application/javascript"));
+        }
+
+        [Fact]
+        public void SpecifyingProductionShouldThrowExceptionWithCorrectAttributeAndMoreContentTypes()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .Instance()
+                        .Calling(c => c.Post())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingProduction("application/xml", "application/json", "application/pdf"));
+                },
+                "When calling Post action in ApiController expected action to have ProducesAttribute with 3 content types, but in fact found 2.");
+        }
+
+        [Fact]
+        public void SpecifyingProductionShouldThrowExceptionWithCorrectAttributeAndOneWrongContentType()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .Instance()
+                        .Calling(c => c.Post())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingProduction("application/xml", "wrong-content-type"));
+                },
+                "When calling Post action in ApiController expected action to have ProducesAttribute with 'wrong-content-type' content type, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void SpecifyingProductionShouldNotThrowExceptionWithCorrectAttributeAndContentTypesAsList()
+        {
+            MyController<ApiController>
+                .Instance()
+                .Calling(c => c.Post())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes.SpecifyingProduction(new List<string>
+                {
+                    "application/javascript",
+                    "application/pdf"
+                }));
+        }
+
+        [Fact]
+        public void SpecifyingProductionShouldNotThrowExceptionWithCorrectAttributeAndCorrectType()
+        {
+            MyController<ApiController>
+                .Instance()
+                .Calling(c => c.Post())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SpecifyingProduction(typeof(RequestModel)));
+        }
+
+        [Fact]
+        public void SpecifyingProductionShouldThrowExceptionWithCorrectAttributeAndIncorrectType()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .Instance()
+                        .Calling(c => c.Post())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingProduction(typeof(ResponseModel)));
+                },
+                "When calling Post action in ApiController expected action to have ProducesAttribute with 'ResponseModel' type, but in fact found 'RequestModel'.");
+        }
+
+        [Fact]
+        public void SpecifyingProductionShouldThrowExceptionWithMissingAttributeWithType()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.VariousAttributesAction())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes.SpecifyingProduction(typeof(ResponseModel), "application/xml"));
+                },
+                "When calling VariousAttributesAction action in MvcController expected action to have ProducesAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void SpecifyingProductionShouldNotThrowExceptionWithCorrectAttributeTypeAndContentTypes()
+        {
+            MyController<ApiController>
+                .Instance()
+                .Calling(c => c.Post())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SpecifyingProduction(typeof(RequestModel), "application/pdf", "application/javascript"));
+        }
+
+        [Fact]
+        public void SpecifyingProductionShouldThrowExceptionWithCorrectAttributeTypeAndMoreContentTypes()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .Instance()
+                        .Calling(c => c.Post())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingProduction(typeof(RequestModel), "application/xml", "application/json", "application/pdf"));
+                },
+                "When calling Post action in ApiController expected action to have ProducesAttribute with 3 content types, but in fact found 2.");
+        }
+
+        [Fact]
+        public void SpecifyingProductionShouldThrowExceptionWithCorrectAttributeTypeAndOneWrongContentType()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .Instance()
+                        .Calling(c => c.Post())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingProduction(typeof(RequestModel), "application/pdf", "wrong-content-type"));
+                },
+                "When calling Post action in ApiController expected action to have ProducesAttribute with 'wrong-content-type' content type, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void SpecifyingProductionShouldNotThrowExceptionWithCorrectAttributeTypeAndContentTypesAsList()
+        {
+            MyController<ApiController>
+                .Instance()
+                .Calling(c => c.Post())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes.SpecifyingProduction(typeof(RequestModel), new List<string>
+                {
+                    "application/pdf",
+                    "application/javascript"
+                }));
+        }
+
+        [Fact]
+        public void SpecifyingProductionShouldNotThrowExceptionWithCorrectAttributeTypeAndUsingBuilder()
+        {
+            MyController<ApiController>
+                .Instance()
+                .Calling(c => c.Post())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SpecifyingProduction(production => production
+                        .WithType(typeof(RequestModel))
+                        .WithContentTypes("application/javascript", "application/pdf")
+                        .WithOrder(2)));
+        }
+
+        [Fact]
+        public void SpecifyingProductionShouldNotThrowExceptionWithCorrectAttributeTypeAndUsingBuilderForOrder()
+        {
+            MyController<ApiController>
+                .Instance()
+                .Calling(c => c.Post())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SpecifyingProduction(production => production
+                        .WithOrder(2)));
+        }
+
+        [Fact]
+        public void SpecifyingProductionShouldNotThrowExceptionWithCorrectAttributeTypeAndUsingBuilderWithContentTypeList()
+        {
+            MyController<ApiController>
+                .Instance()
+                .Calling(c => c.Post())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SpecifyingProduction(production => production
+                        .WithType(typeof(RequestModel))
+                        .AndAlso()
+                        .WithContentTypes(new List<string> { "application/pdf", "application/javascript" })
+                        .AndAlso()
+                        .WithOrder(2)));
+        }
+
+        [Fact]
+        public void SpecifyingProductionShouldThrowExceptionWithCorrectAttributeAndWrongOrder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .Instance()
+                        .Calling(c => c.Post())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingProduction(production => production
+                                .WithOrder(1)));
+                },
+                "When calling Post action in ApiController expected action to have ProducesAttribute with order of 1, but in fact found 2.");
+        }
+
+        [Fact]
         public void AllowingAnonymousRequestsShouldNotThrowExceptionWithTheAttribute()
         {
             MyController<MvcController>
@@ -290,6 +647,31 @@
                         .ActionAttributes(attributes => attributes.RestrictingForAuthorizedRequests(withAllowedRoles: "Admin"));
                 },
                 "When calling NormalActionWithAttributes action in MvcController expected action to have AuthorizeAttribute with allowed 'Admin' roles, but in fact found 'Admin,Moderator'.");
+        }
+        
+        [Fact]
+        public void AddingFormatShouldNotThrowExceptionWithTheAttribute()
+        {
+            MyController<ApiController>
+                .Instance()
+                .Calling(c => c.Post())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes.AddingFormat());
+        }
+
+        [Fact]
+        public void AddingFormatCallShouldThrowExceptionWithActionWithoutTheAttribute()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .Instance()
+                        .Calling(c => c.Get())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes.AddingFormat());
+                },
+                "When calling Get action in ApiController expected action to have FormatFilterAttribute, but in fact such was not found.");
         }
 
         [Fact]

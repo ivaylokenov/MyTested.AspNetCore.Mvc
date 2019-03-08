@@ -113,7 +113,7 @@
                        .NotFound()
                        .ContainingContentType(new MediaTypeHeaderValue(ContentType.ApplicationOctetStream));
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result content types to contain application/octet-stream, but such was not found.");
+                "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result content types to contain application/octet-stream, but in fact such was not found.");
         }
 
         [Fact]
@@ -159,7 +159,7 @@
                             ContentType.ApplicationXml
                         });
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result content types to contain application/octet-stream, but none was found.");
+                "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result content types to contain application/octet-stream, but in fact such was not found.");
         }
 
         [Fact]
@@ -245,7 +245,7 @@
                             new MediaTypeHeaderValue(ContentType.ApplicationXml)
                         });
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result content types to contain application/octet-stream, but none was found.");
+                "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result content types to contain application/octet-stream, but in fact such was not found.");
         }
 
         [Fact]

@@ -128,9 +128,7 @@
             return this.responseCookie;
         }
 
-        internal ICollection<Func<SetCookieHeaderValue, SetCookieHeaderValue, bool>> GetResponseCookieValidations()
-        {
-            return this.validations;
-        }
+        internal ICollection<Func<SetCookieHeaderValue, SetCookieHeaderValue, bool>> GetResponseCookieValidations() 
+            => this.validations;
     }
 }

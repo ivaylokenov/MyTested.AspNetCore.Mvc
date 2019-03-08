@@ -31,7 +31,7 @@
         }
 
         [Fact]
-        public void AttributesShouldNotThrowEceptionWithControllerContainingAttributes()
+        public void AttributesShouldNotThrowExceptionWithControllerContainingAttributes()
         {
             MyController<MvcController>
                 .Instance()
@@ -40,7 +40,7 @@
         }
 
         [Fact]
-        public void AttributesShouldThrowEceptionWithControllerContainingNoAttributes()
+        public void AttributesShouldThrowExceptionWithControllerContainingNoAttributes()
         {
             Test.AssertException<AttributeAssertionException>(
                 () =>
@@ -54,7 +54,7 @@
         }
 
         [Fact]
-        public void AttributesShouldNotThrowEceptionWithControllerContainingNumberOfAttributes()
+        public void AttributesShouldNotThrowExceptionWithControllerContainingNumberOfAttributes()
         {
             MyController<MvcController>
                 .Instance()
@@ -63,7 +63,7 @@
         }
 
         [Fact]
-        public void AttributesShouldThrowEceptionWithControllerContainingNumberOfAttributes()
+        public void AttributesShouldThrowExceptionWithControllerContainingNumberOfAttributes()
         {
             Test.AssertException<AttributeAssertionException>(
                 () =>
@@ -77,7 +77,7 @@
         }
 
         [Fact]
-        public void AttributesShouldThrowEceptionWithControllerContainingNumberOfAttributesTestingWithOne()
+        public void AttributesShouldThrowExceptionWithControllerContainingNumberOfAttributesTestingWithOne()
         {
             Test.AssertException<AttributeAssertionException>(
                 () =>

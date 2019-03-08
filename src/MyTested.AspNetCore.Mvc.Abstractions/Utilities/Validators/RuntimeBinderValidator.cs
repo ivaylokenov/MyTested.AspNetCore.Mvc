@@ -23,7 +23,7 @@
             {
                 var fullPropertyName = ex.Message.Split('\'')[3];
                 throw new InvalidCallAssertionException(string.Format(
-                    "Expected result to contain '{0}' property to test, but in fact such property was not found.",
+                    "Expected object to contain '{0}' property, but in fact such property was not found.",
                     fullPropertyName));
             }
         }

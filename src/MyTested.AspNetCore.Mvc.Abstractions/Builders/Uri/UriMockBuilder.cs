@@ -14,10 +14,8 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="UriMockBuilder"/> class.
         /// </summary>
-        public UriMockBuilder()
-        {
-            this.UriMock = new UriMock();
-        }
+        public UriMockBuilder() 
+            => this.UriMock = new UriMock();
 
         /// <summary>
         /// Gets the built <see cref="Uri"/> instance.

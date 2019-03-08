@@ -622,13 +622,11 @@
         internal ICollection<Action<JsonSerializerSettings, JsonSerializerSettings>> GetJsonSerializerSettingsValidations()
             => this.validations;
         
-        private static IList<string> SortJsonConverterNames(IEnumerable<JsonConverter> jsonConverters)
-        {
-            return jsonConverters
+        private static IList<string> SortJsonConverterNames(IEnumerable<JsonConverter> jsonConverters) 
+            => jsonConverters
                 .Select(of => of.GetType().ToFriendlyTypeName())
                 .OrderBy(oft => oft)
                 .ToList();
-        }
 
         private void ThrowNewJsonResultAssertionException(string expectedValue, string actualValue)
         {

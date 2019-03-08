@@ -21,6 +21,7 @@
     using Services;
 
     [Authorize(Roles = "Admin,Moderator")]
+    [FormatFilter]
     [Route("/api/test")]
     public class MvcController : Controller
     {
@@ -284,6 +285,13 @@
         [AcceptVerbs("Get", "Post")]
         [HttpDelete]
         public IActionResult VariousAttributesAction()
+        {
+            return this.Ok();
+        }
+
+        [Consumes("application/json", "application/xml")]
+        [Produces("application/json", Type = typeof(ResponseModel), Order = 1)]
+        public IActionResult ConsumesAction()
         {
             return this.Ok();
         }

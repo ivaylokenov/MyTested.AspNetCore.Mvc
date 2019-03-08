@@ -24,6 +24,10 @@
             => this.ContainingAttributeOfType<ControllerAttribute>();
 
         /// <inheritdoc />
+        public IAndControllerAttributesTestBuilder IndicatingApiController()
+            => this.ContainingAttributeOfType<ApiControllerAttribute>();
+        
+        /// <inheritdoc />
         public IControllerAttributesTestBuilder AndAlso() => this;
 
         protected override IAndControllerAttributesTestBuilder GetAttributesTestBuilder() => this;

@@ -205,6 +205,16 @@
         }
 
         [Fact]
+        public void ApiControllerShouldWorkCorrectly()
+        {
+            MyController<ApiController>
+                .Instance()
+                .Calling(c => c.Get())
+                .ShouldReturn()
+                .Ok();
+        }
+
+        [Fact]
         public void InvalidControllerTypeShouldThrowException()
         {
             Test.AssertException<InvalidOperationException>(
@@ -253,6 +263,17 @@
                     Assert.NotNull(controller.ControllerContext.ActionDescriptor.RouteValues);
                     Assert.Empty(controller.ControllerContext.ActionDescriptor.RouteValues);
                 });
+        }
+
+        [Fact]
+        public void NonControllerShouldThrowException()
+        {
+            Test.AssertException<InvalidOperationException>(
+                () =>
+                {
+                    MyController<NonController>.Instance();
+                },
+                "NonController is not recognized as a valid controller type. Classes decorated with 'NonControllerAttribute' are not considered as passable controllers. Additionally, make sure the SDK is set to 'Microsoft.NET.Sdk.Web' in your test project's '.csproj' file in order to enable proper controller discovery. If your type is still not recognized, you may manually add it in the application part manager by using the 'AddMvc().PartManager.ApplicationParts.Add(applicationPart))' method.");
         }
 
         private void CheckActionResultTestBuilder<TActionResult>(

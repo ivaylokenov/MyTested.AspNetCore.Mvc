@@ -13,9 +13,8 @@
         /// </summary>
         /// <param name="actionAttributesTestBuilder">Instance of <see cref="IActionAttributesTestBuilder"/> type.</param>
         /// <returns>The same <see cref="IAndActionAttributesTestBuilder"/>.</returns>
-        public static IAndActionAttributesTestBuilder ValidatingAntiForgeryToken(this IActionAttributesTestBuilder actionAttributesTestBuilder)
-        {
-            return actionAttributesTestBuilder.ContainingAttributeOfType<ValidateAntiForgeryTokenAttribute>();
-        }
+        public static IAndActionAttributesTestBuilder ValidatingAntiForgeryToken(
+            this IActionAttributesTestBuilder actionAttributesTestBuilder) 
+            => actionAttributesTestBuilder.ContainingAttributeOfType<ValidateAntiForgeryTokenAttribute>();
     }
 }

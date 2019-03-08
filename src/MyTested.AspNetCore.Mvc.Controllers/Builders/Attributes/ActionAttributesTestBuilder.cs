@@ -31,6 +31,7 @@
         public IAndActionAttributesTestBuilder ChangingActionNameTo(string actionName)
         {
             this.ContainingAttributeOfType<ActionNameAttribute>();
+
             this.Validations.Add(attrs =>
             {
                 var actionNameAttribute = this.GetAttributeOfType<ActionNameAttribute>(attrs);

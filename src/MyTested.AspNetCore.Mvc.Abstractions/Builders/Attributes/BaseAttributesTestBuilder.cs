@@ -15,10 +15,8 @@
         /// </summary>
         /// <param name="testContext"><see cref="ComponentTestContext"/> containing data about the currently executed assertion chain.</param>
         protected BaseAttributesTestBuilder(ComponentTestContext testContext)
-            : base(testContext)
-        {
-            this.Validations = new List<Action<IEnumerable<object>>>();
-        }
+            : base(testContext) 
+            => this.Validations = new List<Action<IEnumerable<object>>>();
 
         /// <summary>
         /// Gets the validation actions for the tested attributes.
