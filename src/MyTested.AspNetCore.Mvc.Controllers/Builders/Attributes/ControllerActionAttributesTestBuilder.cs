@@ -8,7 +8,6 @@
     using Microsoft.AspNetCore.Mvc;
     using Utilities.Extensions;
     using Contracts.Attributes;
-    using Mvc.Controllers.Builders.Attributes;
     using Utilities.Validators;
 
     /// <summary>
@@ -68,6 +67,7 @@
             {
                 var areaAttribute = this.GetAttributeOfType<AreaAttribute>(attrs);
                 var actualAreaName = areaAttribute.RouteValue;
+
                 if (areaName != actualAreaName)
                 {
                     this.ThrowNewAttributeAssertionException(
@@ -207,6 +207,7 @@
                 {
                     var requireHttpsAttribute = this.GetAttributeOfType<RequireHttpsAttribute>(attrs);
                     var actualPermanentValue = requireHttpsAttribute.Permanent;
+
                     if (withPermanentRedirect != actualPermanentValue)
                     {
                         this.ThrowNewAttributeAssertionException(
@@ -231,6 +232,7 @@
                 {
                     var authorizeAttribute = this.GetAttributeOfType<AuthorizeAttribute>(attrs);
                     var actualRoles = authorizeAttribute.Roles;
+
                     if (withAllowedRoles != actualRoles)
                     {
                         this.ThrowNewAttributeAssertionException(
@@ -287,5 +289,54 @@
 
             return this.AttributesTestBuilder;
         }
+        
+        /// <inheritdoc />
+        public TAttributesTestBuilder SettingRequestFormLimitsTo(
+            Action<IRequestFormLimitsAttributeTestBuilder> requestFormLimitsAttributeBuilder)
+        {
+            this.ContainingAttributeOfType<RequestFormLimitsAttribute>();
+
+            this.Validations.Add(attrs =>
+            {
+                var newRequestFormLimitsAttributeTestBuilder = new RequestFormLimitsAttributeTestBuilder(
+                    this.TestContext,
+                    this.ThrowNewAttributeAssertionException);
+
+                requestFormLimitsAttributeBuilder(newRequestFormLimitsAttributeTestBuilder);
+
+                var expectedRequestFormLimitsAttribute = newRequestFormLimitsAttributeTestBuilder.GetAttribute();
+                var actualRequestFormLimitsAttribute = this.GetAttributeOfType<RequestFormLimitsAttribute>(attrs);
+
+                var validations = newRequestFormLimitsAttributeTestBuilder.GetAttributeValidations();
+                validations.ForEach(v => v(expectedRequestFormLimitsAttribute, actualRequestFormLimitsAttribute));
+            });
+
+            return this.AttributesTestBuilder;
+        }
+
+        /// <inheritdoc />
+        public TAttributesTestBuilder SettingRequestSizeLimitTo(long bytes)
+        {
+            this.ContainingAttributeOfType<RequestSizeLimitAttribute>();
+
+            this.Validations.Add(attrs =>
+            {
+                var requestSizeLimitAttribute = this.GetAttributeOfType<RequestSizeLimitAttribute>(attrs);
+                var actualBytes = requestSizeLimitAttribute.GetFieldValue<long>($"_{nameof(bytes)}");
+
+                if (bytes != actualBytes)
+                {
+                    this.ThrowNewAttributeAssertionException(
+                        $"{requestSizeLimitAttribute.GetName()} with request size limit of {bytes} bytes",
+                        $"in fact found {actualBytes}");
+                }
+            });
+
+            return this.AttributesTestBuilder;
+        }
+
+        /// <inheritdoc />
+        public TAttributesTestBuilder DisablingRequestSizeLimit()
+            => this.ContainingAttributeOfType<DisableRequestSizeLimitAttribute>();
     }
 }

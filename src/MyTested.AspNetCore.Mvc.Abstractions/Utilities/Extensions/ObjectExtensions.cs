@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
     using Microsoft.AspNetCore.Routing;
     using Utilities;
 
@@ -28,6 +29,18 @@
         /// </summary>
         /// <returns>Object of dynamic type.</returns>
         public static dynamic AsDynamic(this object obj) => obj?.GetType().CastTo<dynamic>(obj);
+        
+        public static T GetFieldValue<T>(this object obj, string fieldName)
+        {
+            var fieldValue = obj
+                ?.GetType()
+                .GetTypeInfo()
+                .DeclaredFields
+                .FirstOrDefault(f => f.Name == fieldName)
+                ?.GetValue(obj);
+
+            return fieldValue.TryCastTo<T>();
+        }
 
         /// <summary>
         /// Gets friendly type name of object. Useful for generic types.

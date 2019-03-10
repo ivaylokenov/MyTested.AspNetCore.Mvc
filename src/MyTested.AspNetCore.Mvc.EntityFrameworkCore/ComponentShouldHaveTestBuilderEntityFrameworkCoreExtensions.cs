@@ -16,7 +16,7 @@
         /// </summary>
         /// <typeparam name="TBuilder">Class representing ASP.NET Core MVC test builder.</typeparam>
         /// <param name="builder">Instance of <see cref="IBaseTestBuilderWithComponentShouldHaveTestBuilder{TBuilder}"/> type.</param>
-        /// <param name="dbContextTestBuilder">Action containing all assertions on the <see cref="Microsoft.EntityFrameworkCore.DbContext"/> entities.</param>
+        /// <param name="dbContextTestBuilder">Action containing all assertions for the <see cref="Microsoft.EntityFrameworkCore.DbContext"/> entities.</param>
         /// <returns>The same component should have test builder.</returns>
         public static TBuilder Data<TBuilder>(
             this IBaseTestBuilderWithComponentShouldHaveTestBuilder<TBuilder> builder,
@@ -29,7 +29,7 @@
         /// </summary>
         /// <typeparam name="TBuilder">Class representing ASP.NET Core MVC test builder.</typeparam>
         /// <param name="builder">Instance of <see cref="IBaseTestBuilderWithComponentShouldHaveTestBuilder{TBuilder}"/> type.</param>
-        /// <param name="dbContextTestBuilder">Action containing all assertions on the <see cref="Microsoft.EntityFrameworkCore.DbContext"/> entities.</param>
+        /// <param name="dbContextTestBuilder">Action containing all assertions for the <see cref="Microsoft.EntityFrameworkCore.DbContext"/> entities.</param>
         /// <returns>The same component should have test builder.</returns>
         public static TBuilder DbContext<TBuilder>(
             this IBaseTestBuilderWithComponentShouldHaveTestBuilder<TBuilder> builder,

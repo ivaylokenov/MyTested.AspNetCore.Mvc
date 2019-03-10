@@ -13,7 +13,7 @@
         /// <summary>
         /// Tests whether the returned model from the invoked method passes the given assertions.
         /// </summary>
-        /// <param name="assertions">Method containing all assertions on the model.</param>
+        /// <param name="assertions">Method containing all assertions for the model.</param>
         /// <returns>Test builder of <see cref="IAndTestBuilder"/>.</returns>
         IAndTestBuilder Passing(Action<TModel> assertions);
 

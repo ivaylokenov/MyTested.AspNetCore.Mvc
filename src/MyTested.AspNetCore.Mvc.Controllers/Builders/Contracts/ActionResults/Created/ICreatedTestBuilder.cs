@@ -25,7 +25,7 @@
         /// <summary>
         /// Tests whether <see cref="CreatedResult"/> location passes the given assertions.
         /// </summary>
-        /// <param name="assertions">Action containing all assertions on the location.</param>
+        /// <param name="assertions">Action containing all assertions for the location.</param>
         /// <returns>The same <see cref="IAndCreatedTestBuilder"/>.</returns>
         IAndCreatedTestBuilder AtLocationPassing(Action<string> assertions);
 

@@ -42,6 +42,7 @@
             {
                 var actionNameAttribute = this.GetAttributeOfType<ActionNameAttribute>(attrs);
                 var actualActionName = actionNameAttribute.Name;
+
                 if (actionName != actualActionName)
                 {
                     this.ThrowNewAttributeAssertionException(

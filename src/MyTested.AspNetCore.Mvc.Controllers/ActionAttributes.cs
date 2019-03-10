@@ -5,7 +5,7 @@
     using Utilities.Validators;
 
     /// <summary>
-    /// Class used for specifying additional assertions on the action attributes.
+    /// Class used for specifying additional assertions for the action attributes.
     /// </summary>
     public class ActionAttributes : IEnumerable<object>
     {

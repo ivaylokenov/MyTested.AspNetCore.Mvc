@@ -52,7 +52,7 @@
         /// <summary>
         /// Tests whether the <see cref="Uri"/> passes the given assertions. 
         /// </summary>
-        /// <param name="assertions">Action containing all assertions on the <see cref="Uri"/>.</param>
+        /// <param name="assertions">Action containing all assertions for the <see cref="Uri"/>.</param>
         /// <returns>The same <see cref="IAndUriTestBuilder"/>.</returns>
         IAndUriTestBuilder Passing(Action<Uri> assertions);
 

@@ -1,11 +1,10 @@
-﻿namespace MyTested.AspNetCore.Mvc.Controllers.Builders.Attributes
+﻿namespace MyTested.AspNetCore.Mvc.Builders.Attributes
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
-    using Mvc.Builders.Attributes;
     using Mvc.Builders.Contracts.Attributes;
     using Utilities.Extensions;
 
@@ -180,6 +179,7 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IResponseCacheAttributeTestBuilder AndAlso() => this;
     }
 }

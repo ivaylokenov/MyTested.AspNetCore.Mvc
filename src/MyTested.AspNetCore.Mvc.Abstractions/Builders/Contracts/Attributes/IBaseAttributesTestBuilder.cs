@@ -21,7 +21,7 @@
         /// Tests whether the collected attributes contain the provided attribute type passing the given assertions.
         /// </summary>
         /// <typeparam name="TAttribute">Type of expected attribute.</typeparam>
-        /// <param name="assertions">Action containing assertions on the provided attribute.</param>
+        /// <param name="assertions">Action containing assertions for the provided attribute.</param>
         /// <returns>The same attributes test builder.</returns>
         TAttributesTestBuilder PassingFor<TAttribute>(Action<TAttribute> assertions)
             where TAttribute : Attribute;

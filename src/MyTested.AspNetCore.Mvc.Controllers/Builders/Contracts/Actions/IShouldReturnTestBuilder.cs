@@ -46,7 +46,7 @@
         /// <summary>
         /// Tests whether <see cref="Microsoft.AspNetCore.Mvc.ContentResult"/> passes the given assertions.
         /// </summary>
-        /// <param name="assertions">Action containing all assertions on the content.</param>
+        /// <param name="assertions">Action containing all assertions for the content.</param>
         /// <returns>Test builder of <see cref="IAndContentTestBuilder"/> type.</returns>
         IAndContentTestBuilder Content(Action<string> assertions);
 

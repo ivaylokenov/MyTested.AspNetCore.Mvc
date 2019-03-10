@@ -550,7 +550,7 @@
                 var expectedPropertyValue = expectedProperties[key];
                 var actualPropertyValue = actualProperties[key];
 
-                if (expectedPropertyValue is IEnumerable && expectedPropertyValue?.GetType() != typeof(string))
+                if (expectedPropertyValue is IEnumerable && expectedPropertyValue.GetType() != typeof(string))
                 {
                     if (!CollectionsAreDeeplyEqual(expectedPropertyValue, actualPropertyValue, processedElements))
                     {

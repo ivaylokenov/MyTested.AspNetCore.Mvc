@@ -11,7 +11,7 @@
         /// <summary>
         /// Tests whether the data provider entry passes the given assertions.
         /// </summary>
-        /// <param name="assertions">Action containing all assertions on the data provider entry.</param>
+        /// <param name="assertions">Action containing all assertions for the data provider entry.</param>
         /// <returns>The same <see cref="IAndDataProviderEntryDetailsTestBuilder{TValue}"/>.</returns>
         IAndDataProviderEntryDetailsTestBuilder<TValue> Passing(Action<TValue> assertions);
 

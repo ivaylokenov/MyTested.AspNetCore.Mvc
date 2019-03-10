@@ -25,7 +25,7 @@
         /// <summary>
         /// Tests whether the <see cref="Microsoft.Net.Http.Headers.SetCookieHeaderValue.Value"/> passes the provided assertions.
         /// </summary>
-        /// <param name="assertions">Action containing assertions on the cookie value.</param>
+        /// <param name="assertions">Action containing assertions for the cookie value.</param>
         /// <returns>The same <see cref="IAndResponseCookieTestBuilder"/>.</returns>
         IAndResponseCookieTestBuilder WithValue(Action<string> assertions);
 

@@ -26,7 +26,7 @@
         /// <summary>
         /// Tests whether <see cref="LocalRedirectResult"/> URL passes the given assertions.
         /// </summary>
-        /// <param name="assertions">Action containing all assertions on the URL.</param>
+        /// <param name="assertions">Action containing all assertions for the URL.</param>
         /// <returns>The same <see cref="IAndLocalRedirectTestBuilder"/>.</returns>
         IAndLocalRedirectTestBuilder ToUrlPassing(Action<string> assertions);
 

@@ -318,6 +318,35 @@
             return this.Ok();
         }
 
+        [RequestFormLimits(
+            BufferBody = false,
+            BufferBodyLengthLimit = 10,
+            KeyLengthLimit = 20,
+            MemoryBufferThreshold = 30,
+            MultipartBodyLengthLimit = 40,
+            MultipartBoundaryLengthLimit = 50,
+            MultipartHeadersCountLimit = 60,
+            MultipartHeadersLengthLimit = 70,
+            Order = 80,
+            ValueCountLimit = 90,
+            ValueLengthLimit = 100)]
+        public IActionResult RequestFormLimits()
+        {
+            return this.Ok();
+        }
+
+        [RequestSizeLimit(1024)]
+        public IActionResult RequestSizeLimit()
+        {
+            return this.Ok();
+        }
+
+        [DisableRequestSizeLimit]
+        public IActionResult DisabledRequestSizeLimit()
+        {
+            return this.Ok();
+        }
+
         [IgnoreAntiforgeryToken]
         public IActionResult IgnoreAntiForgeryToken()
         {

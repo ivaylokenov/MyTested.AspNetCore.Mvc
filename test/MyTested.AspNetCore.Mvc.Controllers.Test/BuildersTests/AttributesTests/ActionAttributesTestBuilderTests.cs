@@ -723,8 +723,7 @@
                 },
                 "When calling Get action in ApiController expected action to have FormatFilterAttribute, but in fact such was not found.");
         }
-
-
+        
         [Fact]
         public void CachingResponseShouldNotThrowExceptionWithTheAttribute()
         {
@@ -1130,6 +1129,480 @@
                                 .WithDuration(30)));
                 },
                 "When calling VariousAttributesAction action in MvcController expected action to have ResponseCacheAttribute with order of 3, but in fact found 2.");
+        }
+
+        [Fact]
+        public void SettingRequestFormLimitsToShouldThrowExceptionWithActionWithoutTheAttribute()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.VariousAttributesAction())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
+                                .WithBufferBody(true)));
+                },
+                "When calling VariousAttributesAction action in MvcController expected action to have RequestFormLimitsAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void SettingRequestFormLimitsToShouldNotThrowExceptionWithTheAttributeAndCorrectBufferBody()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.RequestFormLimits())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
+                        .WithBufferBody(false)));
+        }
+
+        [Fact]
+        public void SettingRequestFormLimitsToShouldThrowExceptionWithTheAttributeAndIncorrectBufferBody()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.RequestFormLimits())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
+                                .WithBufferBody(true)));
+                },
+                "When calling RequestFormLimits action in MvcController expected action to have RequestFormLimitsAttribute with buffer body value of 'True', but in fact found 'False'.");
+        }
+
+        [Fact]
+        public void SettingRequestFormLimitsToShouldNotThrowExceptionWithTheAttributeAndCorrectMemoryBufferThreshold()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.RequestFormLimits())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
+                        .WithMemoryBufferThreshold(30)));
+        }
+
+        [Fact]
+        public void SettingRequestFormLimitsToShouldThrowExceptionWithTheAttributeAndIncorrectMemoryBufferThreshold()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.RequestFormLimits())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
+                                .WithMemoryBufferThreshold(0)));
+                },
+                "When calling RequestFormLimits action in MvcController expected action to have RequestFormLimitsAttribute with memory buffer threshold value of 0, but in fact found 30.");
+        }
+
+        [Fact]
+        public void SettingRequestFormLimitsToShouldNotThrowExceptionWithTheAttributeAndCorrectBufferBodyLengthLimit()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.RequestFormLimits())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
+                        .WithBufferBodyLengthLimit(10)));
+        }
+
+        [Fact]
+        public void SettingRequestFormLimitsToShouldThrowExceptionWithTheAttributeAndIncorrectBufferBodyLengthLimit()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.RequestFormLimits())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
+                                .WithBufferBodyLengthLimit(0)));
+                },
+                "When calling RequestFormLimits action in MvcController expected action to have RequestFormLimitsAttribute with buffer body length limit of 0, but in fact found 10.");
+        }
+
+        [Fact]
+        public void SettingRequestFormLimitsToShouldNotThrowExceptionWithTheAttributeAndCorrectValueCountLimit()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.RequestFormLimits())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
+                        .WithValueCountLimit(90)));
+        }
+
+        [Fact]
+        public void SettingRequestFormLimitsToShouldThrowExceptionWithTheAttributeAndIncorrectValueCountLimit()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.RequestFormLimits())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
+                                .WithValueCountLimit(0)));
+                },
+                "When calling RequestFormLimits action in MvcController expected action to have RequestFormLimitsAttribute with value count limit of 0, but in fact found 90.");
+        }
+
+        [Fact]
+        public void SettingRequestFormLimitsToShouldNotThrowExceptionWithTheAttributeAndCorrectKeyLengthLimit()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.RequestFormLimits())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
+                        .WithKeyLengthLimit(20)));
+        }
+
+        [Fact]
+        public void SettingRequestFormLimitsToShouldThrowExceptionWithTheAttributeAndIncorrectKeyLengthLimit()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.RequestFormLimits())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
+                                .WithKeyLengthLimit(0)));
+                },
+                "When calling RequestFormLimits action in MvcController expected action to have RequestFormLimitsAttribute with key length limit of 0, but in fact found 20.");
+        }
+
+        [Fact]
+        public void SettingRequestFormLimitsToShouldNotThrowExceptionWithTheAttributeAndCorrectValueLengthLimit()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.RequestFormLimits())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
+                        .WithValueLengthLimit(100)));
+        }
+
+        [Fact]
+        public void SettingRequestFormLimitsToShouldThrowExceptionWithTheAttributeAndIncorrectValueLengthLimit()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.RequestFormLimits())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
+                                .WithValueLengthLimit(0)));
+                },
+                "When calling RequestFormLimits action in MvcController expected action to have RequestFormLimitsAttribute with value length limit of 0, but in fact found 100.");
+        }
+
+        [Fact]
+        public void SettingRequestFormLimitsToShouldNotThrowExceptionWithTheAttributeAndCorrectMultipartBoundaryLengthLimit()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.RequestFormLimits())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
+                        .WithMultipartBoundaryLengthLimit(50)));
+        }
+
+        [Fact]
+        public void SettingRequestFormLimitsToShouldThrowExceptionWithTheAttributeAndIncorrectMultipartBoundaryLengthLimit()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.RequestFormLimits())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
+                                .WithMultipartBoundaryLengthLimit(0)));
+                },
+                "When calling RequestFormLimits action in MvcController expected action to have RequestFormLimitsAttribute with multipart boundary length limit of 0, but in fact found 50.");
+        }
+
+        [Fact]
+        public void SettingRequestFormLimitsToShouldNotThrowExceptionWithTheAttributeAndCorrectMultipartHeadersCountLimit()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.RequestFormLimits())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
+                        .WithMultipartHeadersCountLimit(60)));
+        }
+
+        [Fact]
+        public void SettingRequestFormLimitsToShouldThrowExceptionWithTheAttributeAndIncorrectMultipartHeadersCountLimit()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.RequestFormLimits())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
+                                .WithMultipartHeadersCountLimit(0)));
+                },
+                "When calling RequestFormLimits action in MvcController expected action to have RequestFormLimitsAttribute with multipart headers count limit of 0, but in fact found 60.");
+        }
+
+        [Fact]
+        public void SettingRequestFormLimitsToShouldNotThrowExceptionWithTheAttributeAndCorrectMultipartHeadersLengthLimit()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.RequestFormLimits())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
+                        .WithMultipartHeadersLengthLimit(70)));
+        }
+
+        [Fact]
+        public void SettingRequestFormLimitsToShouldThrowExceptionWithTheAttributeAndIncorrectMultipartHeadersLengthLimit()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.RequestFormLimits())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
+                                .WithMultipartHeadersLengthLimit(0)));
+                },
+                "When calling RequestFormLimits action in MvcController expected action to have RequestFormLimitsAttribute with multipart headers length limit of 0, but in fact found 70.");
+        }
+
+        [Fact]
+        public void SettingRequestFormLimitsToShouldNotThrowExceptionWithTheAttributeAndCorrectMultipartBodyLengthLimit()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.RequestFormLimits())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
+                        .WithMultipartBodyLengthLimit(40)));
+        }
+
+        [Fact]
+        public void SettingRequestFormLimitsToShouldThrowExceptionWithTheAttributeAndIncorrectMultipartBodyLengthLimit()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.RequestFormLimits())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
+                                .WithMultipartBodyLengthLimit(0)));
+                },
+                "When calling RequestFormLimits action in MvcController expected action to have RequestFormLimitsAttribute with multipart body length limit of 0, but in fact found 40.");
+        }
+
+        [Fact]
+        public void SettingRequestFormLimitsToShouldNotThrowExceptionWithTheAttributeAndCorrectOrder()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.RequestFormLimits())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
+                        .WithOrder(80)));
+        }
+
+        [Fact]
+        public void SettingRequestFormLimitsToShouldThrowExceptionWithTheAttributeAndIncorrectOrder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.RequestFormLimits())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
+                                .WithOrder(100)));
+                },
+                "When calling RequestFormLimits action in MvcController expected action to have RequestFormLimitsAttribute with order of 100, but in fact found 80.");
+        }
+
+        [Fact]
+        public void SettingRequestFormLimitsToShouldNotThrowExceptionWithTheAttributeAndCorrectBuilder()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.RequestFormLimits())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
+                        .WithBufferBody(false)
+                        .AndAlso()
+                        .WithBufferBodyLengthLimit(10)
+                        .AndAlso()
+                        .WithKeyLengthLimit(20)
+                        .AndAlso()
+                        .WithMemoryBufferThreshold(30)
+                        .AndAlso()
+                        .WithMultipartBodyLengthLimit(40)
+                        .AndAlso()
+                        .WithMultipartBoundaryLengthLimit(50)
+                        .AndAlso()
+                        .WithMultipartHeadersCountLimit(60)
+                        .AndAlso()
+                        .WithMultipartHeadersLengthLimit(70)
+                        .AndAlso()
+                        .WithOrder(80)
+                        .AndAlso()
+                        .WithValueCountLimit(90)
+                        .AndAlso()
+                        .WithValueLengthLimit(100)
+                        .AndAlso()
+                        .WithOrder(80)));
+        }
+
+        [Fact]
+        public void SettingRequestFormLimitsToShouldThrowExceptionWithTheAttributeAndIncorrectBuilder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.RequestFormLimits())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
+                                .WithBufferBody(false)
+                                .AndAlso()
+                                .WithBufferBodyLengthLimit(10)
+                                .AndAlso()
+                                .WithKeyLengthLimit(20)
+                                .AndAlso()
+                                .WithMemoryBufferThreshold(30)
+                                .AndAlso()
+                                .WithMultipartBodyLengthLimit(40)
+                                .AndAlso()
+                                .WithMultipartBoundaryLengthLimit(50)
+                                .AndAlso()
+                                .WithMultipartHeadersCountLimit(60)
+                                .AndAlso()
+                                .WithMultipartHeadersLengthLimit(70)
+                                .AndAlso()
+                                .WithOrder(80)
+                                .AndAlso()
+                                .WithValueCountLimit(90)
+                                .AndAlso()
+                                .WithValueLengthLimit(100)
+                                .AndAlso()
+                                .WithOrder(100)));
+                },
+                "When calling RequestFormLimits action in MvcController expected action to have RequestFormLimitsAttribute with order of 100, but in fact found 80.");
+        }
+
+        [Fact]
+        public void SettingRequestSizeLimitToShouldNotThrowExceptionWithTheAttribute()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.RequestSizeLimit())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes.SettingRequestSizeLimitTo(1024));
+        }
+
+        [Fact]
+        public void SettingRequestSizeLimitToShouldThrowExceptionWithActionWithoutTheAttribute()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.AntiForgeryToken())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes.SettingRequestSizeLimitTo(1024));
+                },
+                "When calling AntiForgeryToken action in MvcController expected action to have RequestSizeLimitAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void SettingRequestSizeLimitToShouldThrowExceptionWithActionWithTheAttributeAndIncorrectBytes()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.RequestSizeLimit())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes.SettingRequestSizeLimitTo(2048));
+                },
+                "When calling RequestSizeLimit action in MvcController expected action to have RequestSizeLimitAttribute with request size limit of 2048 bytes, but in fact found 1024.");
+        }
+
+        [Fact]
+        public void DisablingRequestSizeLimitShouldNotThrowExceptionWithTheAttribute()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.DisabledRequestSizeLimit())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes.DisablingRequestSizeLimit());
+        }
+
+        [Fact]
+        public void DisablingRequestSizeLimitShouldThrowExceptionWithActionWithoutTheAttribute()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.AntiForgeryToken())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes.DisablingRequestSizeLimit());
+                },
+                "When calling AntiForgeryToken action in MvcController expected action to have DisableRequestSizeLimitAttribute, but in fact such was not found.");
         }
 
         [Fact]

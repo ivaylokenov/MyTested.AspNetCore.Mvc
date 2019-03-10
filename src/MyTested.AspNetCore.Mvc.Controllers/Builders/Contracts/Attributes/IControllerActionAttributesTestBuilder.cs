@@ -163,5 +163,26 @@
         /// <param name="responseCacheAttributeBuilder">Expected <see cref="Microsoft.AspNetCore.Mvc.ResponseCacheAttribute"/> builder.</param>
         /// <returns>The same attributes test builder.</returns>
         TAttributesTestBuilder CachingResponse(Action<IResponseCacheAttributeTestBuilder> responseCacheAttributeBuilder);
+
+        /// <summary>
+        /// Tests whether the collected attributes contain <see cref="Microsoft.AspNetCore.Mvc.RequestSizeLimitAttribute"/>.
+        /// </summary>
+        /// <param name="requestFormLimitsAttributeBuilder">Expected <see cref="Microsoft.AspNetCore.Mvc.RequestSizeLimitAttribute"/> builder.</param>
+        /// <returns>The same attributes test builder.</returns>
+        TAttributesTestBuilder SettingRequestFormLimitsTo(
+            Action<IRequestFormLimitsAttributeTestBuilder> requestFormLimitsAttributeBuilder);
+
+        /// <summary>
+        /// Tests whether the collected attributes contain <see cref="Microsoft.AspNetCore.Mvc.RequestSizeLimitAttribute"/>.
+        /// </summary>
+        /// <param name="bytes">Expected request body size limit in bytes.</param>
+        /// <returns>The same attributes test builder.</returns>
+        TAttributesTestBuilder SettingRequestSizeLimitTo(long bytes);
+
+        /// <summary>
+        /// Tests whether the collected attributes contain <see cref="Microsoft.AspNetCore.Mvc.DisableRequestSizeLimitAttribute"/>.
+        /// </summary>
+        /// <returns>The same attributes test builder.</returns>
+        TAttributesTestBuilder DisablingRequestSizeLimit();
     }
 }

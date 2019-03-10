@@ -11,7 +11,7 @@
         /// <summary>
         /// Tests whether <see cref="DbContext"/> entities pass the given assertions.
         /// </summary>
-        /// <param name="assertions">Action containing all assertions on the <see cref="DbContext"/> entities.</param>
+        /// <param name="assertions">Action containing all assertions for the <see cref="DbContext"/> entities.</param>
         /// <returns>The same <see cref="IDbContextTestBuilder"/>.</returns>
         IAndDbContextTestBuilder WithEntities(Action<DbContext> assertions);
 
@@ -26,7 +26,7 @@
         /// Tests whether <see cref="DbContext"/> entities pass the given assertions.
         /// </summary>
         /// <typeparam name="TDbContext">Type of <see cref="DbContext"/>.</typeparam>
-        /// <param name="assertions">Action containing all assertions on the <see cref="DbContext"/> entities.</param>
+        /// <param name="assertions">Action containing all assertions for the <see cref="DbContext"/> entities.</param>
         IAndDbContextTestBuilder WithEntities<TDbContext>(Action<TDbContext> assertions)
             where TDbContext : DbContext;
 
@@ -42,7 +42,7 @@
         /// Tests whether <see cref="DbContext"/> entity <see cref="DbSet{TEntity}"/> passes the given assertions.
         /// </summary>
         /// <typeparam name="TEntity">Type of entity set.</typeparam>
-        /// <param name="assertions">Action containing all assertions on the <see cref="DbContext"/> entity set.</param>
+        /// <param name="assertions">Action containing all assertions for the <see cref="DbContext"/> entity set.</param>
         IAndDbContextTestBuilder WithSet<TEntity>(Action<DbSet<TEntity>> assertions)
             where TEntity : class;
 
@@ -59,7 +59,7 @@
         /// </summary>
         /// <typeparam name="TDbContext">Type of <see cref="DbContext"/>.</typeparam>
         /// <typeparam name="TEntity">Type of entity set.</typeparam>
-        /// <param name="assertions">Action containing all assertions on the <see cref="DbContext"/> entity set.</param>
+        /// <param name="assertions">Action containing all assertions for the <see cref="DbContext"/> entity set.</param>
         IAndDbContextTestBuilder WithSet<TDbContext, TEntity>(Action<DbSet<TEntity>> assertions)
             where TDbContext : DbContext
             where TEntity : class;
