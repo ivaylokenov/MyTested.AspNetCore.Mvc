@@ -498,6 +498,52 @@
                 },
                 "When testing ApiController was expected to have ProducesAttribute with order of 2, but in fact found 1.");
         }
+        
+        [Fact]
+        public void RequiringHttpsShouldNotThrowExceptionWithTheAttribute()
+        {
+            MyController<AttributesController>
+                .Instance()
+                .ShouldHave()
+                .Attributes(attributes => attributes.RequiringHttps());
+        }
+
+        [Fact]
+        public void RequiringHttpsShouldThrowExceptionWithActionWithoutTheAttribute()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .ShouldHave()
+                        .Attributes(attributes => attributes.RequiringHttps());
+                },
+                "When testing MvcController was expected to have RequireHttpsAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void RequiringHttpsShouldNotThrowExceptionWithTheAttributeAndCorrectValue()
+        {
+            MyController<AttributesController>
+                .Instance()
+                .ShouldHave()
+                .Attributes(attributes => attributes.RequiringHttps(false));
+        }
+
+        [Fact]
+        public void RequiringHttpsShouldThrowExceptionWithActionWithoutTheAttributeAndIncorrectPermanentValue()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<AttributesController>
+                        .Instance()
+                        .ShouldHave()
+                        .Attributes(attributes => attributes.RequiringHttps(true));
+                },
+                "When testing AttributesController was expected to have RequireHttpsAttribute with permanent redirect, but in fact it was a temporary one.");
+        }
 
         [Fact]
         public void AllowingAnonymousRequestsShouldNotThrowExceptionWithTheAttribute()
@@ -589,6 +635,386 @@
                         .Attributes(attributes => attributes.AddingFormat());
                 },
                 "When testing AttributesController was expected to have FormatFilterAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void CachingResponseShouldNotThrowExceptionWithTheAttribute()
+        {
+            MyController<AttributesController>
+                .Instance()
+                .ShouldHave()
+                .Attributes(attributes => attributes.CachingResponse());
+        }
+
+        [Fact]
+        public void CachingResponseShouldThrowExceptionWithControllerWithoutTheAttribute()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .ShouldHave()
+                        .Attributes(attributes => attributes.CachingResponse());
+                },
+                "When testing MvcController was expected to have ResponseCacheAttribute, but in fact such was not found.");
+        }
+        
+        [Fact]
+        public void CachingResponseShouldNotThrowExceptionWithTheAttributeAndCorrectDuration()
+        {
+            MyController<AttributesController>
+                .Instance()
+                .ShouldHave()
+                .Attributes(attributes => attributes.CachingResponse(60));
+        }
+
+        [Fact]
+        public void CachingResponseShouldThrowExceptionWithTheAttributeAndIncorrectDuration()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<AttributesController>
+                        .Instance()
+                        .ShouldHave()
+                        .Attributes(attributes => attributes.CachingResponse(30));
+                },
+                "When testing AttributesController was expected to have ResponseCacheAttribute with duration of 30 seconds, but in fact found 60.");
+        }
+        
+        [Fact]
+        public void CachingResponseShouldNotThrowExceptionWithTheAttributeAndCorrectCacheProfileName()
+        {
+            MyController<AttributesController>
+                .Instance()
+                .ShouldHave()
+                .Attributes(attributes => attributes.CachingResponse("Test Profile Controller"));
+        }
+
+        [Fact]
+        public void CachingResponseShouldThrowExceptionWithTheAttributeAndIncorrectCacheProfileName()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<AttributesController>
+                        .Instance()
+                        .ShouldHave()
+                        .Attributes(attributes => attributes.CachingResponse("Wrong Profile"));
+                },
+                "When testing AttributesController was expected to have ResponseCacheAttribute with 'Wrong Profile' cache profile name, but in fact found 'Test Profile Controller'.");
+        }
+        
+        [Fact]
+        public void CachingResponseShouldNotThrowExceptionWithTheAttributeAndCorrectDurationWithBuilder()
+        {
+            MyController<AttributesController>
+                .Instance()
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .CachingResponse(responseCache => responseCache
+                        .WithDuration(60)));
+        }
+
+        [Fact]
+        public void CachingResponseShouldThrowExceptionWithTheAttributeAndIncorrectDurationWithBuilder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<AttributesController>
+                        .Instance()
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .CachingResponse(responseCache => responseCache
+                                .WithDuration(30)));
+                },
+                "When testing AttributesController was expected to have ResponseCacheAttribute with duration of 30 seconds, but in fact found 60.");
+        }
+        
+        [Fact]
+        public void CachingResponseShouldNotThrowExceptionWithTheAttributeAndCorrectLocationWithBuilder()
+        {
+            MyController<AttributesController>
+                .Instance()
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .CachingResponse(responseCache => responseCache
+                        .WithLocation(ResponseCacheLocation.Any)));
+        }
+
+        [Fact]
+        public void CachingResponseShouldThrowExceptionWithTheAttributeAndIncorrectLocationWithBuilder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<AttributesController>
+                        .Instance()
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .CachingResponse(responseCache => responseCache
+                                .WithLocation(ResponseCacheLocation.Client)));
+                },
+                "When testing AttributesController was expected to have ResponseCacheAttribute with 'Client' location, but in fact found 'Any'.");
+        }
+        
+        [Fact]
+        public void CachingResponseShouldNotThrowExceptionWithTheAttributeAndCorrectNoStoreWithBuilder()
+        {
+            MyController<AttributesController>
+                .Instance()
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .CachingResponse(responseCache => responseCache
+                        .WithNoStore(false)));
+        }
+
+        [Fact]
+        public void CachingResponseShouldThrowExceptionWithTheAttributeAndIncorrectNoStoreWithBuilder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<AttributesController>
+                        .Instance()
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .CachingResponse(responseCache => responseCache
+                                .WithNoStore(true)));
+                },
+                "When testing AttributesController was expected to have ResponseCacheAttribute with no store value of 'True', but in fact found 'False'.");
+        }
+        
+        [Fact]
+        public void CachingResponseShouldNotThrowExceptionWithTheAttributeAndCorrectVaryByHeaderWithBuilder()
+        {
+            MyController<AttributesController>
+                .Instance()
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .CachingResponse(responseCache => responseCache
+                        .WithVaryByHeader("Test Header Controller")));
+        }
+
+        [Fact]
+        public void CachingResponseShouldThrowExceptionWithTheAttributeAndIncorrectVaryByHeaderWithBuilder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<AttributesController>
+                        .Instance()
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .CachingResponse(responseCache => responseCache
+                                .WithVaryByHeader("Wrong Header")));
+                },
+                "When testing AttributesController was expected to have ResponseCacheAttribute with vary by header value of 'Wrong Header', but in fact found 'Test Header Controller'.");
+        }
+        
+        [Fact]
+        public void CachingResponseShouldNotThrowExceptionWithTheAttributeAndCorrectVaryByQueryKeyWithBuilder()
+        {
+            MyController<AttributesController>
+                .Instance()
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .CachingResponse(responseCache => responseCache
+                        .WithVaryByQueryKey("FirstQueryController")));
+        }
+
+        [Fact]
+        public void CachingResponseShouldThrowExceptionWithTheAttributeAndIncorrectVaryByQueryKeyWithBuilder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<AttributesController>
+                        .Instance()
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .CachingResponse(responseCache => responseCache
+                                .WithVaryByQueryKey("Wrong Query Key")));
+                },
+                "When testing AttributesController was expected to have ResponseCacheAttribute with vary by query string key value of 'Wrong Query Key', but in fact such was not found.");
+        }
+
+
+        [Fact]
+        public void CachingResponseShouldNotThrowExceptionWithCorrectAttributeAndCorrectVaryQueryKeysWithBuilder()
+        {
+            MyController<AttributesController>
+                .Instance()
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .CachingResponse(responseCache => responseCache
+                        .WithVaryByQueryKeys("FirstQueryController", "SecondQueryController")));
+        }
+
+        [Fact]
+        public void CachingResponseShouldThrowExceptionWithCorrectAttributeAndIncorrectVaryQueryKeysCountWithBuilder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<AttributesController>
+                        .Instance()
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .CachingResponse(responseCache => responseCache
+                                .WithVaryByQueryKeys("FirstQueryController", "SecondQueryController", "ThirdQueryController")));
+                },
+                "When testing AttributesController was expected to have ResponseCacheAttribute with 3 vary by query string key values, but in fact found 2.");
+        }
+        
+        [Fact]
+        public void CachingResponseShouldThrowExceptionWithCorrectAttributeAndIncorrectVaryQueryKeysSingleCountWithBuilder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<AttributesController>
+                        .Instance()
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .CachingResponse(responseCache => responseCache
+                                .WithVaryByQueryKeys("FirstQueryController")));
+                },
+                "When testing AttributesController was expected to have ResponseCacheAttribute with 1 vary by query string key value, but in fact found 2.");
+        }
+
+        [Fact]
+        public void CachingResponseShouldThrowExceptionWithCorrectAttributeAndOneIncorrectVaryQueryKeyWithBuilder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<AttributesController>
+                        .Instance()
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                        .CachingResponse(responseCache => responseCache
+                            .WithVaryByQueryKeys("FirstQueryController", "WrongQuery")));
+                },
+                "When testing AttributesController was expected to have ResponseCacheAttribute with vary by query string key value of 'WrongQuery', but in fact such was not found.");
+        }
+
+        [Fact]
+        public void CachingResponseShouldNotThrowExceptionWithCorrectAttributeAndVaryQueryKeyAsList()
+        {
+            MyController<AttributesController>
+                .Instance()
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .CachingResponse(responseCache => responseCache
+                        .WithVaryByQueryKeys(new List<string> { "FirstQueryController", "SecondQueryController" })));
+        }
+        
+        [Fact]
+        public void CachingResponseShouldNotThrowExceptionWithTheAttributeAndCorrectCacheProfileNameWithBuilder()
+        {
+            MyController<AttributesController>
+                .Instance()
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .CachingResponse(responseCache => responseCache
+                        .WithCacheProfileName("Test Profile Controller")));
+        }
+
+        [Fact]
+        public void CachingResponseShouldThrowExceptionWithTheAttributeAndIncorrectCacheProfileNameWithBuilder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<AttributesController>
+                        .Instance()
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .CachingResponse(responseCache => responseCache
+                                .WithCacheProfileName("Wrong Profile")));
+                },
+                "When testing AttributesController was expected to have ResponseCacheAttribute with 'Wrong Profile' cache profile name, but in fact found 'Test Profile Controller'.");
+        }
+        
+        [Fact]
+        public void CachingResponseShouldNotThrowExceptionWithTheAttributeAndCorrectOrderWithBuilder()
+        {
+            MyController<AttributesController>
+                .Instance()
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .CachingResponse(responseCache => responseCache
+                        .WithOrder(3)));
+        }
+
+        [Fact]
+        public void CachingResponseShouldThrowExceptionWithTheAttributeAndIncorrectOrderWithBuilder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<AttributesController>
+                        .Instance()
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .CachingResponse(responseCache => responseCache
+                                .WithOrder(1)));
+                },
+                "When testing AttributesController was expected to have ResponseCacheAttribute with order of 1, but in fact found 3.");
+        }
+        
+        [Fact]
+        public void CachingResponseShouldNotThrowExceptionWithTheAttributeAndCorrectValuesWithBuilder()
+        {
+            MyController<AttributesController>
+                .Instance()
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .CachingResponse(responseCache => responseCache
+                        .WithOrder(3)
+                        .AndAlso()
+                        .WithCacheProfileName("Test Profile Controller")
+                        .AndAlso()
+                        .WithVaryByQueryKeys("FirstQueryController", "SecondQueryController")
+                        .AndAlso()
+                        .WithVaryByHeader("Test Header Controller")
+                        .AndAlso()
+                        .WithNoStore(false)
+                        .AndAlso()
+                        .WithLocation(ResponseCacheLocation.Any)
+                        .AndAlso()
+                        .WithDuration(60)));
+        }
+
+        [Fact]
+        public void CachingResponseShouldThrowExceptionWithTheAttributeAndIncorrectValuesWithBuilder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<AttributesController>
+                        .Instance()
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .CachingResponse(responseCache => responseCache
+                                .WithCacheProfileName("Test Profile Controller")
+                                .AndAlso()
+                                .WithVaryByQueryKeys("FirstQueryController", "SecondQueryController")
+                                .AndAlso()
+                                .WithOrder(1)
+                                .AndAlso()
+                                .WithVaryByHeader("Test Header Controller")
+                                .AndAlso()
+                                .WithNoStore(false)
+                                .AndAlso()
+                                .WithLocation(ResponseCacheLocation.Any)
+                                .AndAlso()
+                                .WithDuration(60)));
+                },
+                "When testing AttributesController was expected to have ResponseCacheAttribute with order of 1, but in fact found 3.");
         }
 
         [Fact]

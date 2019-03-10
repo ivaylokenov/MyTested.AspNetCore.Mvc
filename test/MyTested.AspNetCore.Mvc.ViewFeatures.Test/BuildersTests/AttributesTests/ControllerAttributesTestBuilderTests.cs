@@ -5,16 +5,15 @@
     using Setups.Controllers;
     using Xunit;
 
-    public class ActionAttributesTestBuilderTests
+    public class ControllerAttributesTestBuilderTests
     {
         [Fact]
         public void ValidatingAntiForgeryTokenShouldNotThrowExceptionWithTheAttribute()
         {
             MyController<MvcController>
                 .Instance()
-                .Calling(c => c.AntiForgeryToken())
                 .ShouldHave()
-                .ActionAttributes(attributes => attributes.ValidatingAntiForgeryToken());
+                .Attributes(attributes => attributes.ValidatingAntiForgeryToken());
         }
 
         [Fact]
@@ -23,23 +22,21 @@
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
-                    MyController<MvcController>
+                    MyController<AttributesController>
                         .Instance()
-                        .Calling(c => c.NormalActionWithAttributes())
                         .ShouldHave()
-                        .ActionAttributes(attributes => attributes.ValidatingAntiForgeryToken());
+                        .Attributes(attributes => attributes.ValidatingAntiForgeryToken());
                 },
-                "When calling NormalActionWithAttributes action in MvcController expected action to have ValidateAntiForgeryTokenAttribute, but in fact such was not found.");
+                "When testing AttributesController was expected to have ValidateAntiForgeryTokenAttribute, but in fact such was not found.");
         }
-
+        
         [Fact]
         public void IgnoringAntiForgeryTokenShouldNotThrowExceptionWithTheAttribute()
         {
-            MyController<MvcController>
+            MyController<AttributesController>
                 .Instance()
-                .Calling(c => c.IgnoreAntiForgeryToken())
                 .ShouldHave()
-                .ActionAttributes(attributes => attributes.IgnoringAntiForgeryToken());
+                .Attributes(attributes => attributes.IgnoringAntiForgeryToken());
         }
 
         [Fact]
@@ -50,36 +47,33 @@
                 {
                     MyController<MvcController>
                         .Instance()
-                        .Calling(c => c.NormalActionWithAttributes())
                         .ShouldHave()
-                        .ActionAttributes(attributes => attributes.IgnoringAntiForgeryToken());
+                        .Attributes(attributes => attributes.IgnoringAntiForgeryToken());
                 },
-                "When calling NormalActionWithAttributes action in MvcController expected action to have IgnoreAntiforgeryTokenAttribute, but in fact such was not found.");
+                "When testing MvcController was expected to have IgnoreAntiforgeryTokenAttribute, but in fact such was not found.");
         }
         
         [Fact]
         public void SkippingStatusCodePagesShouldNotThrowExceptionWithTheAttribute()
         {
-            MyController<MvcController>
+            MyController<AttributesController>
                 .Instance()
-                .Calling(c => c.VariousAttributesAction())
                 .ShouldHave()
-                .ActionAttributes(attributes => attributes.SkippingStatusCodePages());
+                .Attributes(attributes => attributes.SkippingStatusCodePages());
         }
 
         [Fact]
-        public void SkippingStatusCodePagesShouldThrowExceptionWithActionWithoutTheAttribute()
+        public void SkippingStatusCodePagesThrowExceptionWithActionWithoutTheAttribute()
         {
             Test.AssertException<AttributeAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
                         .Instance()
-                        .Calling(c => c.NormalActionWithAttributes())
                         .ShouldHave()
-                        .ActionAttributes(attributes => attributes.SkippingStatusCodePages());
+                        .Attributes(attributes => attributes.SkippingStatusCodePages());
                 },
-                "When calling NormalActionWithAttributes action in MvcController expected action to have SkipStatusCodePagesAttribute, but in fact such was not found.");
+                "When testing MvcController was expected to have SkipStatusCodePagesAttribute, but in fact such was not found.");
         }
     }
 }

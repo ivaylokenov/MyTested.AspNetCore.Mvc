@@ -19,6 +19,12 @@
         {
         }
 
+        /// <summary>
+        /// Gets the attributes test builder.
+        /// </summary>
+        /// <value>Test builder of <see cref="IAndControllerAttributesTestBuilder"/>.</value>
+        protected override IAndControllerAttributesTestBuilder AttributesTestBuilder => this;
+
         /// <inheritdoc />
         public IAndControllerAttributesTestBuilder IndicatingControllerExplicitly()
             => this.ContainingAttributeOfType<ControllerAttribute>();
@@ -29,7 +35,5 @@
         
         /// <inheritdoc />
         public IControllerAttributesTestBuilder AndAlso() => this;
-
-        protected override IAndControllerAttributesTestBuilder GetAttributesTestBuilder() => this;
     }
 }

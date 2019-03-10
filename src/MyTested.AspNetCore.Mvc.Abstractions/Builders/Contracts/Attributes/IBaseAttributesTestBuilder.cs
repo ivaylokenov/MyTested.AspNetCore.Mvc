@@ -7,6 +7,7 @@
     /// </summary>
     /// <typeparam name="TAttributesTestBuilder">Type of attributes test builder to use as a return type for common methods.</typeparam>
     public interface IBaseAttributesTestBuilder<TAttributesTestBuilder>
+        where TAttributesTestBuilder : IBaseAttributesTestBuilder<TAttributesTestBuilder>
     {
         /// <summary>
         /// Tests whether the collected attributes contain the provided attribute type.

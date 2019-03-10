@@ -8,6 +8,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Utilities.Extensions;
     using Contracts.Attributes;
+    using Mvc.Controllers.Builders.Attributes;
     using Utilities.Validators;
 
     /// <summary>
@@ -48,14 +49,14 @@
 
                 routeAttributeBuilder(newRouteAttributeTestBuilder);
 
-                var expectedRouteAttribute = newRouteAttributeTestBuilder.GetRouteAttribute();
+                var expectedRouteAttribute = newRouteAttributeTestBuilder.GetAttribute();
                 var actualRouteAttribute = this.GetAttributeOfType<RouteAttribute>(attrs);
 
-                var validations = newRouteAttributeTestBuilder.GetRouteAttributeValidations();
+                var validations = newRouteAttributeTestBuilder.GetAttributeValidations();
                 validations.ForEach(v => v(expectedRouteAttribute, actualRouteAttribute));
             });
 
-            return this.AttributesBuilder;
+            return this.AttributesTestBuilder;
         }
 
         /// <inheritdoc />
@@ -75,7 +76,7 @@
                 }
             });
 
-            return this.AttributesBuilder;
+            return this.AttributesTestBuilder;
         }
 
         /// <inheritdoc />
@@ -93,7 +94,7 @@
                     this.ThrowNewAttributeAssertionException);
             });
 
-            return this.AttributesBuilder;
+            return this.AttributesTestBuilder;
         }
 
         /// <inheritdoc />
@@ -111,7 +112,7 @@
                     this.ThrowNewAttributeAssertionException);
             });
 
-            return this.AttributesBuilder;
+            return this.AttributesTestBuilder;
         }
 
         /// <inheritdoc />
@@ -133,7 +134,7 @@
                     this.ThrowNewAttributeAssertionException);
             });
 
-            return this.AttributesBuilder;
+            return this.AttributesTestBuilder;
         }
 
         /// <inheritdoc />
@@ -151,7 +152,7 @@
                     this.ThrowNewAttributeAssertionException);
             });
 
-            return this.AttributesBuilder;
+            return this.AttributesTestBuilder;
         }
 
         /// <inheritdoc />
@@ -185,14 +186,37 @@
 
                 producesAttributeBuilder(newProducesAttributeTestBuilder);
 
-                var expectedProducesAttribute = newProducesAttributeTestBuilder.GetProducesAttribute();
+                var expectedProducesAttribute = newProducesAttributeTestBuilder.GetAttribute();
                 var actualProducesAttribute = this.GetAttributeOfType<ProducesAttribute>(attrs);
 
-                var validations = newProducesAttributeTestBuilder.GetProducesAttributeValidations();
+                var validations = newProducesAttributeTestBuilder.GetAttributeValidations();
                 validations.ForEach(v => v(expectedProducesAttribute, actualProducesAttribute));
             });
 
-            return this.AttributesBuilder;
+            return this.AttributesTestBuilder;
+        }
+
+        /// <inheritdoc />
+        public TAttributesTestBuilder RequiringHttps(bool? withPermanentRedirect = null)
+        {
+            this.ContainingAttributeOfType<RequireHttpsAttribute>();
+
+            if (withPermanentRedirect.HasValue)
+            {
+                this.Validations.Add(attrs =>
+                {
+                    var requireHttpsAttribute = this.GetAttributeOfType<RequireHttpsAttribute>(attrs);
+                    var actualPermanentValue = requireHttpsAttribute.Permanent;
+                    if (withPermanentRedirect != actualPermanentValue)
+                    {
+                        this.ThrowNewAttributeAssertionException(
+                            $"{requireHttpsAttribute.GetName()} with {(withPermanentRedirect.Value ? "permanent" : "temporary")} redirect",
+                            $"in fact it was a {(actualPermanentValue ? "permanent" : "temporary")} one");
+                    }
+                });
+            }
+
+            return this.AttributesTestBuilder;
         }
 
         /// <inheritdoc />
@@ -216,15 +240,52 @@
                 });
             }
 
-            return this.AttributesBuilder;
+            return this.AttributesTestBuilder;
         }
 
         /// <inheritdoc />
         public TAttributesTestBuilder AllowingAnonymousRequests()
             => this.ContainingAttributeOfType<AllowAnonymousAttribute>();
-
+        
         /// <inheritdoc />
         public TAttributesTestBuilder AddingFormat()
             => this.ContainingAttributeOfType<FormatFilterAttribute>();
+
+        /// <inheritdoc />
+        public TAttributesTestBuilder CachingResponse()
+            => this.ContainingAttributeOfType<ResponseCacheAttribute>();
+
+        /// <inheritdoc />
+        public TAttributesTestBuilder CachingResponse(int withDuration)
+            => this.CachingResponse(responseCache => responseCache
+                .WithDuration(withDuration));
+
+        /// <inheritdoc />
+        public TAttributesTestBuilder CachingResponse(string withCacheProfileName)
+            => this.CachingResponse(responseCache => responseCache
+                .WithCacheProfileName(withCacheProfileName));
+
+        /// <inheritdoc />
+        public TAttributesTestBuilder CachingResponse(Action<IResponseCacheAttributeTestBuilder> responseCacheAttributeBuilder)
+        {
+            this.ContainingAttributeOfType<ResponseCacheAttribute>();
+
+            this.Validations.Add(attrs =>
+            {
+                var newResponseCacheAttributeTestBuilder = new ResponseCacheAttributeTestBuilder(
+                    this.TestContext,
+                    this.ThrowNewAttributeAssertionException);
+
+                responseCacheAttributeBuilder(newResponseCacheAttributeTestBuilder);
+
+                var expectedResponseCacheAttribute = newResponseCacheAttributeTestBuilder.GetAttribute();
+                var actualResponseCacheAttribute = this.GetAttributeOfType<ResponseCacheAttribute>(attrs);
+
+                var validations = newResponseCacheAttributeTestBuilder.GetAttributeValidations();
+                validations.ForEach(v => v(expectedResponseCacheAttribute, actualResponseCacheAttribute));
+            });
+
+            return this.AttributesTestBuilder;
+        }
     }
 }

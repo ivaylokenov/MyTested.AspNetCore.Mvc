@@ -575,6 +575,56 @@
         }
 
         [Fact]
+        public void RequiringHttpsShouldNotThrowExceptionWithTheAttribute()
+        {
+            MyController<AttributesController>
+                .Instance()
+                .Calling(c => c.WithAttributesAndParameters(With.Any<int>()))
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes.RequiringHttps());
+        }
+
+        [Fact]
+        public void RequiringHttpsShouldThrowExceptionWithActionWithoutTheAttribute()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.NormalActionWithAttributes())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes.RequiringHttps());
+                },
+                "When calling NormalActionWithAttributes action in MvcController expected action to have RequireHttpsAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void RequiringHttpsShouldNotThrowExceptionWithTheAttributeAndCorrectValue()
+        {
+            MyController<AttributesController>
+                .Instance()
+                .Calling(c => c.WithAttributesAndParameters(With.Any<int>()))
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes.RequiringHttps(true));
+        }
+
+        [Fact]
+        public void RequiringHttpsShouldThrowExceptionWithActionWithoutTheAttributeAndIncorrectPermanentValue()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<AttributesController>
+                        .Instance()
+                        .Calling(c => c.WithAttributesAndParameters(With.Any<int>()))
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes.RequiringHttps(false));
+                },
+                "When calling WithAttributesAndParameters action in AttributesController expected action to have RequireHttpsAttribute with temporary redirect, but in fact it was a permanent one.");
+        }
+
+        [Fact]
         public void AllowingAnonymousRequestsShouldNotThrowExceptionWithTheAttribute()
         {
             MyController<MvcController>
@@ -672,6 +722,414 @@
                         .ActionAttributes(attributes => attributes.AddingFormat());
                 },
                 "When calling Get action in ApiController expected action to have FormatFilterAttribute, but in fact such was not found.");
+        }
+
+
+        [Fact]
+        public void CachingResponseShouldNotThrowExceptionWithTheAttribute()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.VariousAttributesAction())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes.CachingResponse());
+        }
+
+        [Fact]
+        public void CachingResponseShouldThrowExceptionWithControllerWithoutTheAttribute()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.AntiForgeryToken())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes.CachingResponse());
+                },
+                "When calling AntiForgeryToken action in MvcController expected action to have ResponseCacheAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void CachingResponseShouldNotThrowExceptionWithTheAttributeAndCorrectDuration()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.VariousAttributesAction())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes.CachingResponse(30));
+        }
+
+        [Fact]
+        public void CachingResponseShouldThrowExceptionWithTheAttributeAndIncorrectDuration()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.VariousAttributesAction())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes.CachingResponse(60));
+                },
+                "When calling VariousAttributesAction action in MvcController expected action to have ResponseCacheAttribute with duration of 60 seconds, but in fact found 30.");
+        }
+
+        [Fact]
+        public void CachingResponseShouldNotThrowExceptionWithTheAttributeAndCorrectCacheProfileName()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.VariousAttributesAction())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes.CachingResponse("Test Profile"));
+        }
+
+        [Fact]
+        public void CachingResponseShouldThrowExceptionWithTheAttributeAndIncorrectCacheProfileName()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.VariousAttributesAction())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes.CachingResponse("Wrong Profile"));
+                },
+                "When calling VariousAttributesAction action in MvcController expected action to have ResponseCacheAttribute with 'Wrong Profile' cache profile name, but in fact found 'Test Profile'.");
+        }
+
+        [Fact]
+        public void CachingResponseShouldNotThrowExceptionWithTheAttributeAndCorrectDurationWithBuilder()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.VariousAttributesAction())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .CachingResponse(responseCache => responseCache
+                        .WithDuration(30)));
+        }
+
+        [Fact]
+        public void CachingResponseShouldThrowExceptionWithTheAttributeAndIncorrectDurationWithBuilder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.VariousAttributesAction())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .CachingResponse(responseCache => responseCache
+                                .WithDuration(60)));
+                },
+                "When calling VariousAttributesAction action in MvcController expected action to have ResponseCacheAttribute with duration of 60 seconds, but in fact found 30.");
+        }
+
+        [Fact]
+        public void CachingResponseShouldNotThrowExceptionWithTheAttributeAndCorrectLocationWithBuilder()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.VariousAttributesAction())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .CachingResponse(responseCache => responseCache
+                        .WithLocation(ResponseCacheLocation.Client)));
+        }
+
+        [Fact]
+        public void CachingResponseShouldThrowExceptionWithTheAttributeAndIncorrectLocationWithBuilder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.VariousAttributesAction())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .CachingResponse(responseCache => responseCache
+                                .WithLocation(ResponseCacheLocation.Any)));
+                },
+                "When calling VariousAttributesAction action in MvcController expected action to have ResponseCacheAttribute with 'Any' location, but in fact found 'Client'.");
+        }
+
+        [Fact]
+        public void CachingResponseShouldNotThrowExceptionWithTheAttributeAndCorrectNoStoreWithBuilder()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.VariousAttributesAction())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .CachingResponse(responseCache => responseCache
+                        .WithNoStore(true)));
+        }
+
+        [Fact]
+        public void CachingResponseShouldThrowExceptionWithTheAttributeAndIncorrectNoStoreWithBuilder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.VariousAttributesAction())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .CachingResponse(responseCache => responseCache
+                                .WithNoStore(false)));
+                },
+                "When calling VariousAttributesAction action in MvcController expected action to have ResponseCacheAttribute with no store value of 'False', but in fact found 'True'.");
+        }
+
+        [Fact]
+        public void CachingResponseShouldNotThrowExceptionWithTheAttributeAndCorrectVaryByHeaderWithBuilder()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.VariousAttributesAction())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .CachingResponse(responseCache => responseCache
+                        .WithVaryByHeader("Test Header")));
+        }
+
+        [Fact]
+        public void CachingResponseShouldThrowExceptionWithTheAttributeAndIncorrectVaryByHeaderWithBuilder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.VariousAttributesAction())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .CachingResponse(responseCache => responseCache
+                                .WithVaryByHeader("Wrong Header")));
+                },
+                "When calling VariousAttributesAction action in MvcController expected action to have ResponseCacheAttribute with vary by header value of 'Wrong Header', but in fact found 'Test Header'.");
+        }
+
+        [Fact]
+        public void CachingResponseShouldNotThrowExceptionWithTheAttributeAndCorrectVaryByQueryKeyWithBuilder()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.VariousAttributesAction())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .CachingResponse(responseCache => responseCache
+                        .WithVaryByQueryKey("FirstQuery")));
+        }
+
+        [Fact]
+        public void CachingResponseShouldThrowExceptionWithTheAttributeAndIncorrectVaryByQueryKeyWithBuilder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.VariousAttributesAction())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .CachingResponse(responseCache => responseCache
+                                .WithVaryByQueryKey("Wrong Query Key")));
+                },
+                "When calling VariousAttributesAction action in MvcController expected action to have ResponseCacheAttribute with vary by query string key value of 'Wrong Query Key', but in fact such was not found.");
+        }
+
+
+        [Fact]
+        public void CachingResponseShouldNotThrowExceptionWithCorrectAttributeAndCorrectVaryQueryKeysWithBuilder()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.VariousAttributesAction())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .CachingResponse(responseCache => responseCache
+                        .WithVaryByQueryKeys("FirstQuery", "SecondQuery")));
+        }
+
+        [Fact]
+        public void CachingResponseShouldThrowExceptionWithCorrectAttributeAndIncorrectVaryQueryKeysCountWithBuilder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.VariousAttributesAction())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .CachingResponse(responseCache => responseCache
+                                .WithVaryByQueryKeys("FirstQuery", "SecondQuery", "ThirdQuery")));
+                },
+                "When calling VariousAttributesAction action in MvcController expected action to have ResponseCacheAttribute with 3 vary by query string key values, but in fact found 2.");
+        }
+
+        [Fact]
+        public void CachingResponseShouldThrowExceptionWithCorrectAttributeAndIncorrectVaryQueryKeysSingleCountWithBuilder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.VariousAttributesAction())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .CachingResponse(responseCache => responseCache
+                                .WithVaryByQueryKeys("FirstQuery")));
+                },
+                "When calling VariousAttributesAction action in MvcController expected action to have ResponseCacheAttribute with 1 vary by query string key value, but in fact found 2.");
+        }
+
+        [Fact]
+        public void CachingResponseShouldThrowExceptionWithCorrectAttributeAndOneIncorrectVaryQueryKeyWithBuilder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.VariousAttributesAction())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                        .CachingResponse(responseCache => responseCache
+                            .WithVaryByQueryKeys("FirstQuery", "WrongQuery")));
+                },
+                "When calling VariousAttributesAction action in MvcController expected action to have ResponseCacheAttribute with vary by query string key value of 'WrongQuery', but in fact such was not found.");
+        }
+
+        [Fact]
+        public void CachingResponseShouldNotThrowExceptionWithCorrectAttributeAndVaryQueryKeyAsList()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.VariousAttributesAction())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .CachingResponse(responseCache => responseCache
+                        .WithVaryByQueryKeys(new List<string> { "FirstQuery", "SecondQuery" })));
+        }
+
+        [Fact]
+        public void CachingResponseShouldNotThrowExceptionWithTheAttributeAndCorrectCacheProfileNameWithBuilder()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.VariousAttributesAction())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .CachingResponse(responseCache => responseCache
+                        .WithCacheProfileName("Test Profile")));
+        }
+
+        [Fact]
+        public void CachingResponseShouldThrowExceptionWithTheAttributeAndIncorrectCacheProfileNameWithBuilder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.VariousAttributesAction())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .CachingResponse(responseCache => responseCache
+                                .WithCacheProfileName("Wrong Profile")));
+                },
+                "When calling VariousAttributesAction action in MvcController expected action to have ResponseCacheAttribute with 'Wrong Profile' cache profile name, but in fact found 'Test Profile'.");
+        }
+
+        [Fact]
+        public void CachingResponseShouldNotThrowExceptionWithTheAttributeAndCorrectOrderWithBuilder()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.VariousAttributesAction())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .CachingResponse(responseCache => responseCache
+                        .WithOrder(2)));
+        }
+
+        [Fact]
+        public void CachingResponseShouldThrowExceptionWithTheAttributeAndIncorrectOrderWithBuilder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.VariousAttributesAction())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .CachingResponse(responseCache => responseCache
+                                .WithOrder(1)));
+                },
+                "When calling VariousAttributesAction action in MvcController expected action to have ResponseCacheAttribute with order of 1, but in fact found 2.");
+        }
+
+        [Fact]
+        public void CachingResponseShouldNotThrowExceptionWithTheAttributeAndCorrectValuesWithBuilder()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.VariousAttributesAction())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .CachingResponse(responseCache => responseCache
+                        .WithOrder(2)
+                        .AndAlso()
+                        .WithCacheProfileName("Test Profile")
+                        .AndAlso()
+                        .WithVaryByQueryKeys("FirstQuery", "SecondQuery")
+                        .AndAlso()
+                        .WithVaryByHeader("Test Header")
+                        .AndAlso()
+                        .WithNoStore(true)
+                        .AndAlso()
+                        .WithLocation(ResponseCacheLocation.Client)
+                        .AndAlso()
+                        .WithDuration(30)));
+        }
+
+        [Fact]
+        public void CachingResponseShouldThrowExceptionWithTheAttributeAndIncorrectValuesWithBuilder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.VariousAttributesAction())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .CachingResponse(responseCache => responseCache
+                                .WithCacheProfileName("Test Profile")
+                                .AndAlso()
+                                .WithOrder(3)
+                                .AndAlso()
+                                .WithVaryByQueryKeys("FirstQuery", "SecondQuery")
+                                .AndAlso()
+                                .WithVaryByHeader("Test Header")
+                                .AndAlso()
+                                .WithNoStore(true)
+                                .AndAlso()
+                                .WithLocation(ResponseCacheLocation.Client)
+                                .AndAlso()
+                                .WithDuration(30)));
+                },
+                "When calling VariousAttributesAction action in MvcController expected action to have ResponseCacheAttribute with order of 3, but in fact found 2.");
         }
 
         [Fact]

@@ -43,7 +43,7 @@
         {
             var attributes = Reflection.GetCustomAttributes(new MvcController());
 
-            AttributesValidator.ValidateNumberOfAttributes(attributes, TestObjectFactory.GetFailingValidationActionWithTwoParameteres(), 2);
+            AttributesValidator.ValidateNumberOfAttributes(attributes, TestObjectFactory.GetFailingValidationActionWithTwoParameteres(), 4);
         }
 
         [Fact]
@@ -69,7 +69,7 @@
                 {
                     AttributesValidator.ValidateNumberOfAttributes(attributes, TestObjectFactory.GetFailingValidationActionWithTwoParameteres(), 3);
                 },
-                "have 3 attributes in fact found 2");
+                "have 3 attributes in fact found 4");
         }
     }
 }

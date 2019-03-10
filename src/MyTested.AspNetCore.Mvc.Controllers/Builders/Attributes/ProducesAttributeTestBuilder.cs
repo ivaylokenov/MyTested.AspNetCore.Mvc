@@ -2,27 +2,20 @@
 {
     using System;
     using System.Collections.Generic;
-    using Base;
     using Contracts.Attributes;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Utilities;
     using Utilities.Extensions;
-    using Utilities.Validators;
 
     /// <summary>
     /// Used for testing <see cref="ProducesAttribute"/>.
     /// </summary>
-    public class ProducesAttributeTestBuilder : BaseTestBuilderWithComponent, IAndProducesAttributeTestBuilder
+    public class ProducesAttributeTestBuilder : BaseAttributeTestBuilderWithOrder<ProducesAttribute>,
+        IAndProducesAttributeTestBuilder
     {
         private const int DefaultContentTypesCount = 1;
-
-        private readonly string exceptionMessagePrefix = $"{nameof(ProducesAttribute)} with ";
-
-        private readonly ProducesAttribute producesAttribute;
-        private readonly ICollection<Action<ProducesAttribute, ProducesAttribute>> validations;
-        private readonly Action<string, string> failedValidationAction;
-
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="ProducesAttributeTestBuilder"/> class.
         /// </summary>
@@ -31,26 +24,19 @@
         public ProducesAttributeTestBuilder(
             ComponentTestContext testContext,
             Action<string, string> failedValidationAction) 
-            : base(testContext)
-        {
-            CommonValidator.CheckForNullReference(testContext, nameof(ComponentTestContext));
-
-            this.failedValidationAction = failedValidationAction;
-
-            this.producesAttribute = new ProducesAttribute(ContentType.TextPlain);
-            this.validations = new List<Action<ProducesAttribute, ProducesAttribute>>();
-        }
+            : base(testContext, nameof(ProducesAttribute), failedValidationAction) 
+            => this.Attribute = new ProducesAttribute(ContentType.TextPlain);
 
         /// <inheritdoc />
         public IAndProducesAttributeTestBuilder WithContentType(string contentType)
         {
-            this.producesAttribute.ContentTypes.Add(contentType);
-            this.validations.Add((expected, actual) =>
+            this.Attribute.ContentTypes.Add(contentType);
+            this.Validations.Add((expected, actual) =>
             {
                 if (!actual.ContentTypes.Contains(contentType))
                 {
-                    this.failedValidationAction(
-                        $"{this.exceptionMessagePrefix}'{contentType}' content type",
+                    this.FailedValidationAction(
+                        $"{this.ExceptionMessagePrefix}'{contentType}' content type",
                         "in fact such was not found");
                 }
             });
@@ -61,15 +47,15 @@
         /// <inheritdoc />
         public IAndProducesAttributeTestBuilder WithContentTypes(IEnumerable<string> contentTypes)
         {
-            this.validations.Add((expected, actual) =>
+            this.Validations.Add((expected, actual) =>
             {
                 var expectedContentTypes = expected.ContentTypes.Count - DefaultContentTypesCount;
                 var actualContentTypes = actual.ContentTypes.Count;
 
                 if (expectedContentTypes != actualContentTypes)
                 {
-                    this.failedValidationAction(
-                        $"{this.exceptionMessagePrefix}{expectedContentTypes} {(expectedContentTypes != 1 ? "content types" : "content type")}",
+                    this.FailedValidationAction(
+                        $"{this.ExceptionMessagePrefix}{expectedContentTypes} {(expectedContentTypes != 1 ? "content types" : "content type")}",
                         $"in fact found {actualContentTypes}");
                 }
             });
@@ -86,16 +72,16 @@
         /// <inheritdoc />
         public IAndProducesAttributeTestBuilder WithType(Type type)
         {
-            this.producesAttribute.Type = type;
-            this.validations.Add((expected, actual) =>
+            this.Attribute.Type = type;
+            this.Validations.Add((expected, actual) =>
             {
                 var expectedType = expected.Type;
                 var actualType = actual.Type;
 
                 if (Reflection.AreDifferentTypes(expectedType, actualType))
                 {
-                    this.failedValidationAction(
-                        $"{this.exceptionMessagePrefix}'{expectedType.ToFriendlyTypeName()}' type",
+                    this.FailedValidationAction(
+                        $"{this.ExceptionMessagePrefix}'{expectedType.ToFriendlyTypeName()}' type",
                         $"in fact found '{actualType.ToFriendlyTypeName()}'");
                 }
             });
@@ -106,30 +92,11 @@
         /// <inheritdoc />
         public IAndProducesAttributeTestBuilder WithOrder(int order)
         {
-            this.producesAttribute.Order = order;
-            this.validations.Add((expected, actual) =>
-            {
-                var expectedOrder = expected.Order;
-                var actualOrder = actual.Order;
-
-                if (expectedOrder != actualOrder)
-                {
-                    this.failedValidationAction(
-                        $"{this.exceptionMessagePrefix}order of {expectedOrder}",
-                        $"in fact found {actualOrder}");
-                }
-            });
-
+            this.ValidateOrder(order);
             return this;
         }
 
         /// <inheritdoc />
         public IProducesAttributeTestBuilder AndAlso() => this;
-        
-        internal ProducesAttribute GetProducesAttribute()
-            => this.producesAttribute;
-
-        internal ICollection<Action<ProducesAttribute, ProducesAttribute>> GetProducesAttributeValidations()
-            => this.validations;
     }
 }

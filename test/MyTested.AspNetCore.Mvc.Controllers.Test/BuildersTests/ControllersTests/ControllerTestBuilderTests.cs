@@ -59,7 +59,7 @@
             MyController<MvcController>
                 .Instance()
                 .ShouldHave()
-                .Attributes(withTotalNumberOf: 2);
+                .Attributes(withTotalNumberOf: 4);
         }
 
         [Fact]
@@ -73,7 +73,7 @@
                         .ShouldHave()
                         .Attributes(withTotalNumberOf: 10);
                 }, 
-                "When testing MvcController was expected to have 10 attributes, but in fact found 2.");
+                "When testing MvcController was expected to have 10 attributes, but in fact found 4.");
         }
 
         [Fact]
@@ -87,7 +87,7 @@
                         .ShouldHave()
                         .Attributes(withTotalNumberOf: 1);
                 },
-                "When testing MvcController was expected to have 1 attribute, but in fact found 2.");
+                "When testing MvcController was expected to have 1 attribute, but in fact found 4.");
         }
     }
 }

@@ -417,9 +417,11 @@
             var attributeTypes = attributes.Select(a => a.GetType()).ToList();
 
             Assert.NotNull(attributes);
-            Assert.Equal(2, attributes.Count);
+            Assert.Equal(4, attributes.Count);
             Assert.Contains(typeof(AuthorizeAttribute), attributeTypes);
             Assert.Contains(typeof(RouteAttribute), attributeTypes);
+            Assert.Contains(typeof(FormatFilterAttribute), attributeTypes);
+            Assert.Contains(typeof(ValidateAntiForgeryTokenAttribute), attributeTypes);
         }
 
         [Fact]

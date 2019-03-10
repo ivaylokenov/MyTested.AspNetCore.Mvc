@@ -12,6 +12,8 @@
             : base(testContext)
         {
         }
+        
+        protected override IAndViewComponentAttributesTestBuilder AttributesTestBuilder => this;
 
         /// <inheritdoc />
         public IAndViewComponentAttributesTestBuilder IndicatingViewComponentExplicitly()
@@ -38,7 +40,5 @@
 
         /// <inheritdoc />
         public IViewComponentAttributesTestBuilder AndAlso() => this;
-
-        protected override IAndViewComponentAttributesTestBuilder GetAttributesTestBuilder() => this;
     }
 }

@@ -22,6 +22,7 @@
 
     [Authorize(Roles = "Admin,Moderator")]
     [FormatFilter]
+    [ValidateAntiForgeryToken]
     [Route("/api/test")]
     public class MvcController : Controller
     {
@@ -284,6 +285,15 @@
         [NonAction]
         [AcceptVerbs("Get", "Post")]
         [HttpDelete]
+        [SkipStatusCodePages]
+        [ResponseCache(
+            CacheProfileName = "Test Profile", 
+            Duration = 30, 
+            Location = ResponseCacheLocation.Client,
+            VaryByHeader = "Test Header",
+            VaryByQueryKeys = new [] { "FirstQuery", "SecondQuery" },
+            NoStore = true,
+            Order = 2)]
         public IActionResult VariousAttributesAction()
         {
             return this.Ok();
@@ -304,6 +314,12 @@
 
         [ValidateAntiForgeryToken]
         public IActionResult AntiForgeryToken()
+        {
+            return this.Ok();
+        }
+
+        [IgnoreAntiforgeryToken]
+        public IActionResult IgnoreAntiForgeryToken()
         {
             return this.Ok();
         }

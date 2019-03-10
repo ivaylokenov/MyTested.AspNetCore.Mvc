@@ -8,7 +8,7 @@
     using Utilities.Validators;
 
     /// <summary>
-    /// Base class for all data provider test builder.
+    /// Base class for all data provider test builders.
     /// </summary>
     public abstract class BaseDataProviderTestBuilder : BaseTestBuilderWithComponent
     {

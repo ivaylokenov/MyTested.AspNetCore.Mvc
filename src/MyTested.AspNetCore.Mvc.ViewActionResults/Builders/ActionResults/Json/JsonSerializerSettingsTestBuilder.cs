@@ -77,8 +77,8 @@
                 if (expected.ContractResolver != actual.ContractResolver)
                 {
                     this.ThrowNewJsonResultAssertionException(
-                        $"the same contract resolver as the provided one",
-                        $"in fact it was different");
+                        "the same contract resolver as the provided one",
+                        "in fact it was different");
                 }
             });
 
@@ -113,7 +113,7 @@
                 if (!actual.Converters.Contains(jsonConverter))
                 {
                     this.ThrowNewJsonResultAssertionException(
-                        $"the provided converter",
+                        "the provided converter",
                         "such was not found");
                 }
             });

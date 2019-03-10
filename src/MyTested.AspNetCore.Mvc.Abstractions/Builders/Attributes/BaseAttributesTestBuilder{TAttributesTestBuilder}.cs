@@ -21,12 +21,15 @@
         /// </summary>
         /// <param name="testContext"><see cref="ComponentTestContext"/> containing data about the currently executed assertion chain.</param>
         protected BaseAttributesTestBuilder(ComponentTestContext testContext)
-            : base(testContext) 
-            => this.AttributesBuilder = this.GetAttributesTestBuilder();
+            : base(testContext)
+        {
+        }
 
-        protected TAttributesTestBuilder AttributesBuilder { get; private set; }
-
-        protected abstract TAttributesTestBuilder GetAttributesTestBuilder();
+        /// <summary>
+        /// Gets the attributes test builder.
+        /// </summary>
+        /// <value>Test builder for the attributes.</value>
+        protected abstract TAttributesTestBuilder AttributesTestBuilder { get; }
 
         /// <inheritdoc />
         public TAttributesTestBuilder ContainingAttributeOfType<TAttribute>()
@@ -43,7 +46,7 @@
                 }
             });
 
-            return this.AttributesBuilder;
+            return this.AttributesTestBuilder;
         }
 
         /// <inheritdoc />
@@ -52,7 +55,7 @@
         {
             this.ContainingAttributeOfType<TAttribute>();
             this.Validations.Add(attrs => assertions(this.GetAttributeOfType<TAttribute>(attrs)));
-            return this.AttributesBuilder;
+            return this.AttributesTestBuilder;
         }
 
         /// <inheritdoc />
@@ -71,7 +74,7 @@
                 }
             });
 
-            return this.AttributesBuilder;
+            return this.AttributesTestBuilder;
         }
 
         /// <summary>

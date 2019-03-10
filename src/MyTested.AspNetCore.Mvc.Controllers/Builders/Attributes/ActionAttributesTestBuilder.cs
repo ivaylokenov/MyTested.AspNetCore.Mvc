@@ -26,6 +26,12 @@
             : base(testContext)
         {
         }
+
+        /// <summary>
+        /// Gets the attributes test builder.
+        /// </summary>
+        /// <value>Test builder of <see cref="IAndActionAttributesTestBuilder"/>.</value>
+        protected override IAndActionAttributesTestBuilder AttributesTestBuilder => this;
         
         /// <inheritdoc />
         public IAndActionAttributesTestBuilder ChangingActionNameTo(string actionName)
@@ -101,8 +107,6 @@
 
         /// <inheritdoc />
         public IActionAttributesTestBuilder AndAlso() => this;
-
-        protected override IAndActionAttributesTestBuilder GetAttributesTestBuilder() => this;
 
         protected override void ThrowNewAttributeAssertionException(string expectedValue, string actualValue)
         {

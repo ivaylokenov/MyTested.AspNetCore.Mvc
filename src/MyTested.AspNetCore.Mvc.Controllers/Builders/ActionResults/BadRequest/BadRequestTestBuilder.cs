@@ -155,7 +155,7 @@
             if (!predicate(actualErrorMessage))
             {
                 throw new BadRequestResultAssertionException(string.Format(
-                    "{0} bad request error message ('{2}') to pass the given predicate, but it failed.",
+                    "{0} bad request error message ('{1}') to pass the given predicate, but it failed.",
                     this.TestContext.ExceptionMessagePrefix,
                     actualErrorMessage));
             }
