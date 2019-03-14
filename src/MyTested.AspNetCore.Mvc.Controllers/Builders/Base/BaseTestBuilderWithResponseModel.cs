@@ -34,9 +34,9 @@
 
         public override Type GetModelReturnType()
         {
-            if (this.TestContext.MethodResult is ObjectResult)
+            if (this.TestContext.MethodResult is ObjectResult objectResult)
             {
-                var declaredType = (this.TestContext.MethodResult as ObjectResult).DeclaredType;
+                var declaredType = objectResult.DeclaredType;
                 if (declaredType != null)
                 {
                     return declaredType;
@@ -176,8 +176,7 @@
         
         private ObjectResult GetObjectResult()
         {
-            var objectResult = this.TestContext.MethodResult as ObjectResult;
-            if (objectResult == null)
+            if (!(this.TestContext.MethodResult is ObjectResult objectResult))
             {
                 throw new InvocationResultAssertionException(string.Format(
                     "{0} action result to inherit from ObjectResult, but it did not.",

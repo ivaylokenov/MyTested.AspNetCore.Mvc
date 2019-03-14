@@ -33,20 +33,20 @@
             => this.WithContentType(contentType?.MediaType.Value);
 
         /// <inheritdoc />
-        public IAndPhysicalFileTestBuilder WithFileDownloadName(string fileDownloadName)
+        public IAndPhysicalFileTestBuilder WithDownloadName(string fileDownloadName)
         {
             this.ValidateFileDownloadName(fileDownloadName);
             return this;
         }
 
         /// <inheritdoc />
-        public IAndPhysicalFileTestBuilder WithPhysicalPath(string physicalPath)
+        public IAndPhysicalFileTestBuilder WithPath(string physicalPath)
         {
-            var actualPhysicalPath = (this.ActionResult as PhysicalFileResult)?.FileName;
+            var actualPhysicalPath = this.ActionResult.FileName;
             if (physicalPath != actualPhysicalPath)
             {
                 this.ThrowNewFileResultAssertionException(
-                    "FileName",
+                    nameof(this.ActionResult.FileName),
                     $"to be {physicalPath.GetErrorMessageName()}",
                     $"instead received '{actualPhysicalPath}'");
             }

@@ -2,7 +2,7 @@
 {
     using System;
     using System.Net;
-    using Base;
+    using Contracts.Base;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Net.Http.Headers;
     using Newtonsoft.Json;
@@ -10,8 +10,7 @@
     /// <summary>
     /// Used for testing <see cref="JsonResult"/>.
     /// </summary>
-    public interface IJsonTestBuilder : IBaseTestBuilderWithResponseModel,
-        IBaseTestBuilderWithActionResult<JsonResult>
+    public interface IJsonTestBuilder : IBaseTestBuilderWithResponseModel, IBaseTestBuilderWithActionResult
     {
         /// <summary>
         /// Tests whether <see cref="JsonResult"/> has the same status code as the provided one.
@@ -45,7 +44,7 @@
         /// Tests whether <see cref="JsonResult"/> has the default <see cref="JsonSerializerSettings"/>.
         /// </summary>
         /// <returns>The same <see cref="IAndJsonTestBuilder"/>.</returns>
-        IAndJsonTestBuilder WithDefaulJsonSerializerSettings();
+        IAndJsonTestBuilder WithDefaultJsonSerializerSettings();
 
         /// <summary>
         /// Tests whether <see cref="JsonResult"/> has the provided <see cref="JsonSerializerSettings"/>.

@@ -2,9 +2,10 @@
 {
     using System.Collections.Generic;
     using System.Net;
-    using Base;
+    using Builders.Base;
     using Contracts.ActionResults.NotFound;
     using Exceptions;
+    using Internal;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
@@ -126,14 +127,13 @@
         protected override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)
             => this.ThrowNewHttpNotFoundResultAssertionException(propertyName, expectedValue, actualValue);
 
-        private void ThrowNewHttpNotFoundResultAssertionException(string propertyName, string expectedValue, string actualValue)
-        {
-            throw new NotFoundResultAssertionException(string.Format(
-                "{0} HTTP not found result {1} {2}, but {3}.",
+        private void ThrowNewHttpNotFoundResultAssertionException(string propertyName, string expectedValue, string actualValue) 
+            => throw new NotFoundResultAssertionException(string.Format(
+                ExceptionMessages.ActionResultFormat,
                 this.TestContext.ExceptionMessagePrefix,
+                "HTTP not found",
                 propertyName,
                 expectedValue,
                 actualValue));
-        }
     }
 }

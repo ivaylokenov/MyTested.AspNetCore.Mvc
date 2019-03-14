@@ -3,7 +3,6 @@
     using System.IO;
     using System.Linq;
     using Contracts.ActionResults.File;
-    using Exceptions;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.FileProviders;
@@ -45,7 +44,7 @@
             => this.WithContentType(contentType?.MediaType.Value);
 
         /// <inheritdoc />
-        public IAndFileTestBuilder WithFileDownloadName(string fileDownloadName)
+        public IAndFileTestBuilder WithDownloadName(string fileDownloadName)
         {
             this.ValidateFileDownloadName(fileDownloadName);
             return this;
@@ -60,7 +59,7 @@
             if (!expectedContents.SequenceEqual(actualContents))
             {
                 this.ThrowNewFileResultAssertionException(
-                    "FileStream",
+                    nameof(fileStreamResult.FileStream),
                     "to have contents as the provided one",
                     "instead received different result");
             }
@@ -69,14 +68,14 @@
         }
 
         /// <inheritdoc />
-        public IAndFileTestBuilder WithFileName(string fileName)
+        public IAndFileTestBuilder WithName(string fileName)
         {
             var virtualFileResult = this.GetFileResult<VirtualFileResult>(FileName);
             var actualFileName = virtualFileResult.FileName;
             if (fileName != virtualFileResult.FileName)
             {
                 this.ThrowNewFileResultAssertionException(
-                    "FileName",
+                    nameof(virtualFileResult.FileName),
                     $"to be '{fileName}'",
                     $"instead received '{actualFileName}'");
             }
@@ -91,7 +90,7 @@
             if (fileProvider != virtualFileResult.FileProvider)
             {
                 this.ThrowNewFileResultAssertionException(
-                    "FileProvider",
+                    nameof(virtualFileResult.FileProvider),
                     "to be the same as the provided one",
                     "instead received different result");
             }
@@ -110,7 +109,7 @@
                 Reflection.AreDifferentTypes(typeof(TFileProvider), actualFileProvider.GetType()))
             {
                 this.ThrowNewFileResultAssertionException(
-                    "FileProvider",
+                    nameof(virtualFileResult.FileProvider),
                     $"to be of {typeof(TFileProvider).Name} type",
                     $"instead received {actualFileProvider.GetName()}");
             }
@@ -125,7 +124,7 @@
             if (!fileContents.SequenceEqual(fileContentResult.FileContents))
             {
                 this.ThrowNewFileResultAssertionException(
-                   "FileContents",
+                    nameof(fileContentResult.FileContents),
                    "to have contents as the provided ones",
                    "instead received different result");
             }
@@ -142,11 +141,10 @@
             var actualFileResult = this.ActionResult as TExpectedFileResult;
             if (actualFileResult == null)
             {
-                throw new FileResultAssertionException(string.Format(
-                    "When calling {0} action in {1} expected file result to contain {2}, but it could not be found.",
-                    this.ActionName,
-                    this.Controller.GetName(),
-                    containment));
+                this.ThrowNewFileResultAssertionException(
+                    "to contain",
+                    containment,
+                    "it could not be found");
             }
 
             return actualFileResult;

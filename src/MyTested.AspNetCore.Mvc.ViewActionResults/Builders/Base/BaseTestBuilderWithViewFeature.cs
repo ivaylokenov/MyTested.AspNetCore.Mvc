@@ -9,8 +9,7 @@
     /// Base class for all test builders with view features.
     /// </summary>
     /// <typeparam name="TViewResult">Type of view result - <see cref="ViewResult"/>, <see cref="PartialViewResult"/> or <see cref="ViewComponentResult"/>.</typeparam>
-    public abstract class BaseTestBuilderWithViewFeature<TViewResult>
-        : BaseTestBuilderWithResponseModel<TViewResult>, IBaseTestBuilderWithResponseModel
+    public abstract class BaseTestBuilderWithViewFeature<TViewResult> : BaseTestBuilderWithResponseModel<TViewResult>
         where TViewResult : ActionResult
     {
         /// <summary>

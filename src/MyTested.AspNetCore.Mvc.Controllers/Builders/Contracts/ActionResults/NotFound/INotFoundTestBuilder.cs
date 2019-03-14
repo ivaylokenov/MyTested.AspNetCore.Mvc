@@ -1,8 +1,8 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.ActionResults.NotFound
 {
     using System.Collections.Generic;
-    using System.Net;
     using Base;
+    using Contracts.Base;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.Net.Http.Headers;
@@ -10,23 +10,9 @@
     /// <summary>
     /// Used for testing <see cref="NotFoundResult"/> or <see cref="NotFoundObjectResult"/>.
     /// </summary>
-    public interface INotFoundTestBuilder : IBaseTestBuilderWithResponseModel,
-        IBaseTestBuilderWithActionResult<ActionResult>
+    public interface INotFoundTestBuilder : IBaseTestBuilderWithResponseModel, 
+        IBaseTestBuilderWithStatusCodeResult<IAndNotFoundTestBuilder>
     {
-        /// <summary>
-        /// Tests whether <see cref="NotFoundObjectResult"/> has the same status code as the provided one.
-        /// </summary>
-        /// <param name="statusCode">Status code as integer.</param>
-        /// <returns>The same <see cref="IAndNotFoundTestBuilder"/>.</returns>
-        IAndNotFoundTestBuilder WithStatusCode(int statusCode);
-
-        /// <summary>
-        /// Tests whether <see cref="NotFoundObjectResult"/> has the same status code as the provided <see cref="HttpStatusCode"/>.
-        /// </summary>
-        /// <param name="statusCode"><see cref="HttpStatusCode"/> enumeration.</param>
-        /// <returns>The same <see cref="IAndNotFoundTestBuilder"/>.</returns>
-        IAndNotFoundTestBuilder WithStatusCode(HttpStatusCode statusCode);
-
         /// <summary>
         /// Tests whether <see cref="NotFoundObjectResult"/> contains the content type provided as string.
         /// </summary>

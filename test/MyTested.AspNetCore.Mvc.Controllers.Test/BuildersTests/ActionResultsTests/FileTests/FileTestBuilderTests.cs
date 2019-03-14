@@ -56,7 +56,7 @@
                 .Calling(c => c.FileWithVirtualPath())
                 .ShouldReturn()
                 .File()
-                .WithFileDownloadName("FileDownloadName");
+                .WithDownloadName("FileDownloadName");
         }
 
         [Fact]
@@ -70,7 +70,7 @@
                         .Calling(c => c.FileWithVirtualPath())
                         .ShouldReturn()
                         .File()
-                        .WithFileDownloadName("InvalidDownloadName");
+                        .WithDownloadName("InvalidDownloadName");
                 }, 
                 "When calling FileWithVirtualPath action in MvcController expected file result FileDownloadName to be 'InvalidDownloadName', but instead received 'FileDownloadName'.");
         }
@@ -86,7 +86,7 @@
                         .Calling(c => c.FileWithStream())
                         .ShouldReturn()
                         .File()
-                        .WithFileDownloadName(null);
+                        .WithDownloadName(null);
                 },
                 "When calling FileWithStream action in MvcController expected file result FileDownloadName to be null, but instead received empty string.");
         }
@@ -126,7 +126,7 @@
                 .Calling(c => c.FileWithVirtualPath())
                 .ShouldReturn()
                 .File()
-                .WithFileName("/Test");
+                .WithName("/Test");
         }
 
         [Fact]
@@ -140,7 +140,7 @@
                         .Calling(c => c.FileWithVirtualPath())
                         .ShouldReturn()
                         .File()
-                        .WithFileName("Invalid");
+                        .WithName("Invalid");
                 }, 
                 "When calling FileWithVirtualPath action in MvcController expected file result FileName to be 'Invalid', but instead received '/Test'.");
         }

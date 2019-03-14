@@ -1,7 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.ActionResults.File
 {
     using System.IO;
-    using Base;
+    using Contracts.Base;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.FileProviders;
     using Microsoft.Net.Http.Headers;
@@ -9,7 +9,7 @@
     /// <summary>
     /// Used for testing <see cref="FileResult"/>, <see cref="FileContentResult"/>, <see cref="FileStreamResult"/> or <see cref="VirtualFileResult"/>.
     /// </summary>
-    public interface IFileTestBuilder : IBaseTestBuilderWithActionResult<FileResult>
+    public interface IFileTestBuilder : IBaseTestBuilderWithActionResult
     {
         /// <summary>
         /// Tests whether <see cref="FileResult"/>, <see cref="FileContentResult"/> or <see cref="FileStreamResult"/> has the same content type as the provided one.
@@ -30,7 +30,7 @@
         /// </summary>
         /// <param name="fileDownloadName">File download name as string.</param>
         /// <returns>The same <see cref="IAndFileTestBuilder"/>.</returns>
-        IAndFileTestBuilder WithFileDownloadName(string fileDownloadName);
+        IAndFileTestBuilder WithDownloadName(string fileDownloadName);
 
         /// <summary>
         /// Tests whether <see cref="FileStreamResult"/> has the same file stream as the provided one.
@@ -44,7 +44,7 @@
         /// </summary>
         /// <param name="fileName">File name as string.</param>
         /// <returns>The same <see cref="IAndFileTestBuilder"/>.</returns>
-        IAndFileTestBuilder WithFileName(string fileName);
+        IAndFileTestBuilder WithName(string fileName);
 
         /// <summary>
         /// Tests whether <see cref="VirtualFileResult"/> has the same file provider as the provided one.

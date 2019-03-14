@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Net;
-    using Base;
+    using Contracts.Base;
     using Microsoft.Net.Http.Headers;
 
     /// <summary>

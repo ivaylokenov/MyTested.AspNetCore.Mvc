@@ -1,6 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.ActionResults.BadRequest
 {
-    using Base;
+    using Contracts.Base;
 
     /// <summary>
     /// Used for testing specific <see cref="Microsoft.AspNetCore.Mvc.BadRequestObjectResult"/> text error messages.

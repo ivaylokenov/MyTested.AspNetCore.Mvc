@@ -1,14 +1,14 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.ActionResults.LocalRedirect
 {
     using System;
-    using Base;
+    using Contracts.Base;
     using Microsoft.AspNetCore.Mvc;
     using Uri;
 
     /// <summary>
     /// Used for testing <see cref="LocalRedirectResult"/>.
     /// </summary>
-    public interface ILocalRedirectTestBuilder : IBaseTestBuilderWithActionResult<LocalRedirectResult>
+    public interface ILocalRedirectTestBuilder : IBaseTestBuilderWithActionResult
     {
         /// <summary>
         /// Tests whether <see cref="LocalRedirectResult"/> is permanent.

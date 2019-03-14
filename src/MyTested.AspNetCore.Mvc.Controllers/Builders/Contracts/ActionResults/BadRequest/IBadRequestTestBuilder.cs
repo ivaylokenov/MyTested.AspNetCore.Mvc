@@ -1,7 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.ActionResults.BadRequest
 {
     using System.Collections.Generic;
-    using System.Net;
     using Base;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
@@ -10,7 +9,7 @@
     /// <summary>
     /// Used for testing <see cref="BadRequestResult"/> and <see cref="BadRequestObjectResult"/>.
     /// </summary>
-    public interface IBadRequestTestBuilder : IBaseTestBuilderWithActionResult<ActionResult>
+    public interface IBadRequestTestBuilder : IBaseTestBuilderWithStatusCodeResult<IAndBadRequestTestBuilder>
     {
         /// <summary>
         /// Tests whether no specific error is returned from the <see cref="BadRequestObjectResult"/>.
@@ -30,20 +29,6 @@
         /// <param name="message">Expected error message.</param>
         /// <returns>The same <see cref="IAndBadRequestTestBuilder"/>.</returns>
         IAndBadRequestTestBuilder WithErrorMessage(string message);
-        
-        /// <summary>
-        /// Tests whether <see cref="BadRequestObjectResult"/> has the same status code as the provided one.
-        /// </summary>
-        /// <param name="statusCode">Status code as integer.</param>
-        /// <returns>The same <see cref="IAndBadRequestTestBuilder"/>.</returns>
-        IAndBadRequestTestBuilder WithStatusCode(int statusCode);
-
-        /// <summary>
-        /// Tests whether <see cref="BadRequestObjectResult"/> has the same status code as the provided <see cref="HttpStatusCode"/>.
-        /// </summary>
-        /// <param name="statusCode"><see cref="HttpStatusCode"/> enumeration.</param>
-        /// <returns>The same <see cref="IAndBadRequestTestBuilder"/>.</returns>
-        IAndBadRequestTestBuilder WithStatusCode(HttpStatusCode statusCode);
 
         /// <summary>
         /// Tests whether <see cref="BadRequestObjectResult"/> contains the content type provided as string.

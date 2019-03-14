@@ -2,10 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
-    using Base;
+    using Builders.Base;
     using Contracts.ActionResults.Redirect;
     using Contracts.Uri;
     using Exceptions;
+    using Internal;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Routing;
@@ -21,7 +22,6 @@
         where TRedirectResult : ActionResult
     {
         private const string Location = "location";
-        private const string RouteName = "route name";
         
         /// <summary>
         /// Initializes a new instance of the <see cref="RedirectTestBuilder{TRedirectResult}"/> class.
@@ -254,15 +254,13 @@
             return actualRedirectResult;
         }
 
-        public void ThrowNewRedirectResultAssertionException(string propertyName, string expectedValue, string actualValue)
-        {
-            throw new RedirectResultAssertionException(string.Format(
-                "When calling {0} action in {1} expected redirect result {2} {3}, but {4}.",
-                this.ActionName,
-                this.Controller.GetName(),
+        public void ThrowNewRedirectResultAssertionException(string propertyName, string expectedValue, string actualValue) 
+            => throw new RedirectResultAssertionException(string.Format(
+                ExceptionMessages.ActionResultFormat,
+                this.TestContext.ExceptionMessagePrefix,
+                "redirect",
                 propertyName,
                 expectedValue,
                 actualValue));
-        }
     }
 }

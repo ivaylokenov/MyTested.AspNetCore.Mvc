@@ -3,10 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Net;
-    using Base;
+    using Builders.Base;
     using Contracts.ActionResults.Created;
     using Contracts.Uri;
     using Exceptions;
+    using Internal;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
@@ -22,12 +23,7 @@
         : BaseTestBuilderWithResponseModel<TCreatedResult>, IAndCreatedTestBuilder
         where TCreatedResult : ObjectResult
     {
-        private readonly ControllerTestContext controllerTestContext;
-
         private const string Location = "location";
-        private const string RouteName = "route name";
-        private const string RouteValues = "route values";
-        private const string UrlHelper = "URL helper";
         
         /// <summary>
         /// Initializes a new instance of the <see cref="CreatedTestBuilder{TCreatedResult}"/> class.
@@ -36,8 +32,6 @@
         public CreatedTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
-            CommonValidator.CheckForNullReference(testContext, nameof(ControllerTestContext));
-            this.controllerTestContext = testContext;
         }
 
         public bool IncludeCountCheck { get; set; } = true;
@@ -339,14 +333,13 @@
             return actualRedirectResult;
         }
 
-        public void ThrowNewCreatedResultAssertionException(string propertyName, string expectedValue, string actualValue)
-        {
-            throw new CreatedResultAssertionException(string.Format(
-                "{0} created result {1} {2}, but {3}.",
+        public void ThrowNewCreatedResultAssertionException(string propertyName, string expectedValue, string actualValue) 
+            => throw new CreatedResultAssertionException(string.Format(
+                ExceptionMessages.ActionResultFormat,
                 this.TestContext.ExceptionMessagePrefix,
+                "created",
                 propertyName,
                 expectedValue,
                 actualValue));
-        }
     }
 }

@@ -1,7 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.ActionResults.StatusCode
 {
     using System.Collections.Generic;
-    using Base;
+    using Contracts.Base;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.Net.Http.Headers;
@@ -10,7 +10,7 @@
     /// Used for testing <see cref="StatusCodeResult"/> or <see cref="ObjectResult"/>.
     /// </summary>
     public interface IStatusCodeTestBuilder : IBaseTestBuilderWithResponseModel,
-        IBaseTestBuilderWithActionResult<ActionResult>
+        IBaseTestBuilderWithActionResult
     {
         /// <summary>
         /// Tests whether the action result contains the content type provided as string.

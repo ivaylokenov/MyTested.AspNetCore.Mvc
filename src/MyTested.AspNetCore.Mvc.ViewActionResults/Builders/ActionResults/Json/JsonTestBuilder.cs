@@ -2,9 +2,10 @@
 {
     using System;
     using System.Net;
-    using Base;
+    using Builders.Base;
     using Contracts.ActionResults.Json;
     using Exceptions;
+    using Internal;
     using Internal.Services;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
@@ -19,8 +20,6 @@
     /// </summary>
     public class JsonTestBuilder : BaseTestBuilderWithResponseModel<JsonResult>, IAndJsonTestBuilder
     {
-        private readonly ControllerTestContext controllerTestContext;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonTestBuilder"/> class.
         /// </summary>
@@ -28,8 +27,6 @@
         public JsonTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
-            CommonValidator.CheckForNullReference(testContext, nameof(ControllerTestContext));
-            this.controllerTestContext = testContext;
         }
 
         /// <inheritdoc />
@@ -63,7 +60,7 @@
             => this.WithContentType(contentType?.MediaType.Value);
 
         /// <inheritdoc />
-        public IAndJsonTestBuilder WithDefaulJsonSerializerSettings()
+        public IAndJsonTestBuilder WithDefaultJsonSerializerSettings()
             => this.WithJsonSerializerSettings(s => this.PopulateFullJsonSerializerSettingsTestBuilder(s));
 
         /// <inheritdoc />
@@ -78,7 +75,7 @@
                 ?? this.GetServiceDefaultSerializerSettings()
                 ?? new JsonSerializerSettings();
 
-            var newJsonSerializerSettingsTestBuilder = new JsonSerializerSettingsTestBuilder(this.controllerTestContext);
+            var newJsonSerializerSettingsTestBuilder = new JsonSerializerSettingsTestBuilder(this.TestContext as ControllerTestContext);
             jsonSerializerSettingsBuilder(newJsonSerializerSettingsTestBuilder);
             var expectedJsonSerializerSettings = newJsonSerializerSettingsTestBuilder.GetJsonSerializerSettings();
 
@@ -137,14 +134,13 @@
                 .WithTypeNameHandling(jsonSerializerSettings.TypeNameHandling);
         }
 
-        private void ThrowNewJsonResultAssertionException(string propertyName, string expectedValue, string actualValue)
-        {
-            throw new JsonResultAssertionException(string.Format(
-                    "{0} JSON result {1} {2}, but {3}.",
-                    this.TestContext.ExceptionMessagePrefix,
-                    propertyName,
-                    expectedValue,
-                    actualValue));
-        }
+        private void ThrowNewJsonResultAssertionException(string propertyName, string expectedValue, string actualValue) 
+            => throw new JsonResultAssertionException(string.Format(
+                ExceptionMessages.ActionResultFormat,
+                this.TestContext.ExceptionMessagePrefix,
+                "JSON",
+                propertyName,
+                expectedValue,
+                actualValue));
     }
 }

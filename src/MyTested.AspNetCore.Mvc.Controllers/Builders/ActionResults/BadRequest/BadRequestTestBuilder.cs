@@ -3,9 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Net;
-    using Base;
+    using Builders.Base;
     using Contracts.ActionResults.BadRequest;
     using Exceptions;
+    using Internal;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
@@ -228,8 +229,7 @@
             foreach (var errorKeyValuePair in serializableError)
             {
                 var errorKey = errorKeyValuePair.Key;
-                var errorValues = errorKeyValuePair.Value as string[];
-                if (errorValues != null)
+                if (errorKeyValuePair.Value is string[] errorValues)
                 {
                     errorValues.ForEach(er => result.AddModelError(errorKey, er));
                 }
@@ -238,22 +238,19 @@
             return result;
         }
 
-        private void ThrowNewHttpBadRequestResultAssertionExceptionWithMessage(string expectedMessage = null, string actualMessage = null)
-        {
-            this.ThrowNewHttpBadRequestResultAssertionException(
+        private void ThrowNewHttpBadRequestResultAssertionExceptionWithMessage(string expectedMessage = null, string actualMessage = null) 
+            => this.ThrowNewHttpBadRequestResultAssertionException(
                 "with",
                 expectedMessage == null ? "error message" : $"{expectedMessage}",
                 $"instead received {(actualMessage == null ? "non-string value" : $"{actualMessage}")}");
-        }
 
-        private void ThrowNewHttpBadRequestResultAssertionException(string propertyName, string expectedValue, string actualValue)
-        {
-            throw new BadRequestResultAssertionException(string.Format(
-                "{0} bad request result {1} {2}, but {3}.",
+        private void ThrowNewHttpBadRequestResultAssertionException(string propertyName, string expectedValue, string actualValue) 
+            => throw new BadRequestResultAssertionException(string.Format(
+                ExceptionMessages.ActionResultFormat,
                 this.TestContext.ExceptionMessagePrefix,
+                "bad request",
                 propertyName,
                 expectedValue,
                 actualValue));
-        }
     }
 }

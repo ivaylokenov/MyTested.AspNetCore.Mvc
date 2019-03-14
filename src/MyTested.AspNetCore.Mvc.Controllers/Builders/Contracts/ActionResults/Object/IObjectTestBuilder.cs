@@ -1,8 +1,8 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.ActionResults.Object
 {
     using System.Collections.Generic;
-    using System.Net;
     using Base;
+    using Contracts.Base;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.Net.Http.Headers;
@@ -11,22 +11,8 @@
     /// Used for testing <see cref="ObjectResult"/>.
     /// </summary>
     public interface IObjectTestBuilder : IBaseTestBuilderWithResponseModel,
-        IBaseTestBuilderWithActionResult<ObjectResult>
+        IBaseTestBuilderWithStatusCodeResult<IAndObjectTestBuilder>
     {
-        /// <summary>
-        /// Tests whether <see cref="ObjectResult"/> has the same status code as the provided one.
-        /// </summary>
-        /// <param name="statusCode">Status code as integer.</param>
-        /// <returns>The same <see cref="IAndObjectTestBuilder"/>.</returns>
-        IAndObjectTestBuilder WithStatusCode(int statusCode);
-
-        /// <summary>
-        /// Tests whether object has the same status code as the provided <see cref="HttpStatusCode"/>.
-        /// </summary>
-        /// <param name="statusCode"><see cref="HttpStatusCode"/> enumeration.</param>
-        /// <returns>The same <see cref="IAndObjectTestBuilder"/>.</returns>
-        IAndObjectTestBuilder WithStatusCode(HttpStatusCode statusCode);
-
         /// <summary>
         /// Tests whether <see cref="ObjectResult"/> contains the content type provided as string.
         /// </summary>

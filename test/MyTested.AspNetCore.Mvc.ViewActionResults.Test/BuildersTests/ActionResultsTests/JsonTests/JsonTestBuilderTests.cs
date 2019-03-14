@@ -30,7 +30,7 @@
                 .Calling(c => c.JsonAction())
                 .ShouldReturn()
                 .Json()
-                .WithDefaulJsonSerializerSettings();
+                .WithDefaultJsonSerializerSettings();
         }
 
         [Fact]

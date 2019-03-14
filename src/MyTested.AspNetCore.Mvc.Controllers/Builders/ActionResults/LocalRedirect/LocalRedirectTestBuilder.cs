@@ -1,13 +1,13 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.LocalRedirect
 {
     using System;
-    using Base;
+    using Builders.Base;
     using Contracts.ActionResults.LocalRedirect;
     using Contracts.Uri;
     using Exceptions;
+    using Internal;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
-    using Utilities.Extensions;
     using Utilities.Validators;
 
     /// <summary>
@@ -118,15 +118,13 @@
         /// <inheritdoc />
         public ILocalRedirectTestBuilder AndAlso() => this;
         
-        public void ThrowNewRedirectResultAssertionException(string propertyName, string expectedValue, string actualValue)
-        {
-            throw new RedirectResultAssertionException(string.Format(
-                "When calling {0} action in {1} expected local redirect result {2} {3}, but {4}.",
-                this.ActionName,
-                this.Controller.GetName(),
+        public void ThrowNewRedirectResultAssertionException(string propertyName, string expectedValue, string actualValue) 
+            => throw new RedirectResultAssertionException(string.Format(
+                ExceptionMessages.ActionResultFormat,
+                this.TestContext.ExceptionMessagePrefix,
+                "local redirect",
                 propertyName,
                 expectedValue,
                 actualValue));
-        }
     }
 }

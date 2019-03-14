@@ -1,13 +1,13 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.Content
 {
     using System.Net;
-    using Base;
+    using Builders.Base;
     using Contracts.ActionResults.Content;
     using Exceptions;
+    using Internal;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Net.Http.Headers;
-    using Utilities.Extensions;
     using Utilities.Validators;
 
     /// <summary>
@@ -58,15 +58,13 @@
         /// <inheritdoc />
         public IContentTestBuilder AndAlso() => this;
         
-        private void ThrowNewContentResultAssertionException(string propertyName, string expectedValue, string actualValue)
-        {
-            throw new ContentResultAssertionException(string.Format(
-                "When calling {0} action in {1} expected content result {2} {3}, but {4}.",
-                this.ActionName,
-                this.Controller.GetName(),
+        private void ThrowNewContentResultAssertionException(string propertyName, string expectedValue, string actualValue) 
+            => throw new ContentResultAssertionException(string.Format(
+                ExceptionMessages.ActionResultFormat,
+                this.TestContext.ExceptionMessagePrefix,
+                "content",
                 propertyName,
                 expectedValue,
                 actualValue));
-        }
     }
 }

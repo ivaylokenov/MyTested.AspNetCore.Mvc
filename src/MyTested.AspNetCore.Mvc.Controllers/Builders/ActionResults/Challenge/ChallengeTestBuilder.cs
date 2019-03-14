@@ -1,23 +1,17 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.Challenge
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Base;
     using Contracts.ActionResults.Challenge;
-    using Contracts.Authentication;
     using Exceptions;
+    using Internal;
     using Internal.TestContexts;
-    using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Mvc;
-    using Utilities.Extensions;
-    using Utilities.Validators;
 
     /// <summary>
     /// Used for testing <see cref="ChallengeResult"/>.
     /// </summary>
     public class ChallengeTestBuilder
-        : BaseTestBuilderWithActionResult<ChallengeResult>, IAndChallengeTestBuilder
+        : BaseTestBuilderWithAuthenticationResult<ChallengeResult, IAndChallengeTestBuilder>, IAndChallengeTestBuilder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ChallengeTestBuilder"/> class.
@@ -29,64 +23,18 @@
         }
 
         /// <inheritdoc />
-        public IAndChallengeTestBuilder ContainingAuthenticationScheme(string authenticationScheme)
-        {
-            AuthenticationValidator.ValidateAuthenticationScheme(
-                this.ActionResult,
-                authenticationScheme,
-                this.ThrowNewChallengeResultAssertionException);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndChallengeTestBuilder ContainingAuthenticationSchemes(IEnumerable<string> authenticationSchemes)
-        {
-            AuthenticationValidator.ValidateAuthenticationSchemes(
-                   this.ActionResult,
-                   authenticationSchemes,
-                   this.ThrowNewChallengeResultAssertionException);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndChallengeTestBuilder ContainingAuthenticationSchemes(params string[] authenticationSchemes)
-            => this.ContainingAuthenticationSchemes(authenticationSchemes.AsEnumerable());
-
-        /// <inheritdoc />
-        public IAndChallengeTestBuilder WithAuthenticationProperties(AuthenticationProperties properties)
-        {
-            AuthenticationValidator.ValidateAuthenticationProperties(
-                this.ActionResult,
-                properties,
-                this.ThrowNewChallengeResultAssertionException);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndChallengeTestBuilder WithAuthenticationProperties(Action<IAuthenticationPropertiesTestBuilder> authenticationPropertiesBuilder)
-        {
-            AuthenticationValidator.ValidateAuthenticationProperties(
-                authenticationPropertiesBuilder,
-                this.TestContext);
-
-            return this;
-        }
+        protected override IAndChallengeTestBuilder AuthenticationResultTestBuilder => this;
 
         /// <inheritdoc />
         public IChallengeTestBuilder AndAlso() => this;
 
-        private void ThrowNewChallengeResultAssertionException(string propertyName, string expectedValue, string actualValue)
-        {
-            throw new ChallengeResultAssertionException(string.Format(
-                "When calling {0} action in {1} expected challenge result {2} {3}, but {4}.",
-                this.ActionName,
-                this.Controller.GetName(),
+        protected override void ThrowNewAuthenticationResultAssertionException(string propertyName, string expectedValue, string actualValue) 
+            => throw new ChallengeResultAssertionException(string.Format(
+                ExceptionMessages.ActionResultFormat,
+                this.TestContext.ExceptionMessagePrefix,
+                "challenge",
                 propertyName,
                 expectedValue,
                 actualValue));
-        }
     }
 }

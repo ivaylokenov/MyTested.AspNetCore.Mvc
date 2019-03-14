@@ -1,7 +1,8 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.File
 {
-    using Base;
+    using Builders.Base;
     using Exceptions;
+    using Internal;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Utilities.Extensions;
@@ -19,7 +20,7 @@
         /// Initializes a new instance of the <see cref="BaseFileTestBuilder{TFileResult}"/> class.
         /// </summary>
         /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
-        public BaseFileTestBuilder(ControllerTestContext testContext)
+        protected BaseFileTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
         }
@@ -42,11 +43,11 @@
         /// <param name="fileDownloadName">File download name as string.</param>
         protected void ValidateFileDownloadName(string fileDownloadName)
         {
-            var actualFileDownloadName = (this.ActionResult as FileResult)?.FileDownloadName;
+            var actualFileDownloadName = this.ActionResult.FileDownloadName;
             if (fileDownloadName != actualFileDownloadName)
             {
                 this.ThrowNewFileResultAssertionException(
-                    "FileDownloadName",
+                    nameof(this.ActionResult.FileDownloadName),
                     $"to be {fileDownloadName.GetErrorMessageName()}",
                     $"instead received {(actualFileDownloadName != string.Empty ? $"'{actualFileDownloadName}'" : "empty string")}");
             }
@@ -59,14 +60,12 @@
         /// <param name="expectedValue">Expected property value.</param>
         /// <param name="actualValue">Actual property value.</param>
         protected void ThrowNewFileResultAssertionException(string propertyName, string expectedValue, string actualValue)
-        {
-            throw new FileResultAssertionException(string.Format(
-                    "When calling {0} action in {1} expected file result {2} {3}, but {4}.",
-                    this.ActionName,
-                    this.Controller.GetName(),
-                    propertyName,
-                    expectedValue,
-                    actualValue));
-        }
+            => throw new FileResultAssertionException(string.Format(
+                ExceptionMessages.ActionResultFormat,
+                this.TestContext.ExceptionMessagePrefix,
+                "file",
+                propertyName,
+                expectedValue,
+                actualValue));
     }
 }

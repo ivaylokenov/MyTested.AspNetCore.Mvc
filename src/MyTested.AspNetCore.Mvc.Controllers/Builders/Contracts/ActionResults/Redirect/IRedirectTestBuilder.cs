@@ -2,14 +2,14 @@
 {
     using System;
     using System.Collections.Generic;
-    using Base;
+    using Contracts.Base;
     using Microsoft.AspNetCore.Mvc;
     using Uri;
 
     /// <summary>
     /// Used for testing <see cref="RedirectResult"/>, <see cref="RedirectToActionResult"/> or <see cref="RedirectToRouteResult"/>.
     /// </summary>
-    public interface IRedirectTestBuilder : IBaseTestBuilderWithActionResult<ActionResult>
+    public interface IRedirectTestBuilder : IBaseTestBuilderWithActionResult
     {
         /// <summary>
         /// Tests whether <see cref="RedirectResult"/>, <see cref="RedirectToActionResult"/> or <see cref="RedirectToRouteResult"/> is permanent.

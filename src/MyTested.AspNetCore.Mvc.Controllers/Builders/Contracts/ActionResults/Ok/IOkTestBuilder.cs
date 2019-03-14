@@ -1,8 +1,8 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.ActionResults.Ok
 {
     using System.Collections.Generic;
-    using System.Net;
     using Base;
+    using Contracts.Base;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.Net.Http.Headers;
@@ -11,22 +11,8 @@
     /// Used for testing <see cref="OkResult"/> or <see cref="OkObjectResult"/> result.
     /// </summary>
     public interface IOkTestBuilder : IBaseTestBuilderWithResponseModel,
-        IBaseTestBuilderWithActionResult<ActionResult>
+        IBaseTestBuilderWithStatusCodeResult<IAndOkTestBuilder>
     {
-        /// <summary>
-        /// Tests whether <see cref="OkObjectResult"/> has the same status code as the provided one.
-        /// </summary>
-        /// <param name="statusCode">Status code as integer.</param>
-        /// <returns>The same <see cref="IAndOkTestBuilder"/>.</returns>
-        IAndOkTestBuilder WithStatusCode(int statusCode);
-
-        /// <summary>
-        /// Tests whether <see cref="OkObjectResult"/> has the same status code as the provided <see cref="HttpStatusCode"/>.
-        /// </summary>
-        /// <param name="statusCode"><see cref="HttpStatusCode"/> enumeration.</param>
-        /// <returns>The same <see cref="IAndOkTestBuilder"/>.</returns>
-        IAndOkTestBuilder WithStatusCode(HttpStatusCode statusCode);
-
         /// <summary>
         /// Tests whether <see cref="OkObjectResult"/> contains the content type provided as string.
         /// </summary>

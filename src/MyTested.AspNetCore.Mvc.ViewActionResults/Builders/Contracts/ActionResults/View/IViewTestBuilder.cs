@@ -1,7 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.ActionResults.View
 {
     using System.Net;
-    using Base;
+    using Contracts.Base;
     using Microsoft.AspNetCore.Mvc.ViewEngines;
     using Microsoft.Net.Http.Headers;
 

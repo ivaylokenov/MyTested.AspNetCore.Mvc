@@ -1,9 +1,10 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.StatusCode
 {
     using System.Collections.Generic;
-    using Base;
+    using Builders.Base;
     using Contracts.ActionResults.StatusCode;
     using Exceptions;
+    using Internal;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
@@ -123,21 +124,19 @@
         
         private void ValidateObjectResult()
         {
-            var objectResult = this.TestContext.MethodResult as ObjectResult;
-            if (objectResult == null)
+            if (!(this.TestContext.MethodResult is ObjectResult))
             {
                 this.ThrowNewStatusCodeResultAssertionException("to inherit", nameof(ObjectResult), "in fact it did not");
             }
         }
 
-        private void ThrowNewStatusCodeResultAssertionException(string propertyName, string expectedValue, string actualValue)
-        {
-            throw new StatusCodeResultAssertionException(string.Format(
-                "{0} status code result {1} {2}, but {3}.",
+        private void ThrowNewStatusCodeResultAssertionException(string propertyName, string expectedValue, string actualValue) 
+            => throw new StatusCodeResultAssertionException(string.Format(
+                ExceptionMessages.ActionResultFormat,
                 this.TestContext.ExceptionMessagePrefix,
+                "status code",
                 propertyName,
                 expectedValue,
                 actualValue));
-        }
     }
 }

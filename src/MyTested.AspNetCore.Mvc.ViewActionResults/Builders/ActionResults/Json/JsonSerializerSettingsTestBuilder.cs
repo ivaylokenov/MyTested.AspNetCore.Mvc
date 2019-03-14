@@ -5,7 +5,7 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
-    using Base;
+    using Builders.Base;
     using Contracts.ActionResults.Json;
     using Exceptions;
     using Internal.TestContexts;
@@ -631,11 +631,11 @@
         private void ThrowNewJsonResultAssertionException(string expectedValue, string actualValue)
         {
             throw new JsonResultAssertionException(string.Format(
-                        "When calling {0} action in {1} expected JSON result serializer settings to have {2}, but {3}.",
-                        this.ActionName,
-                        this.Controller.GetName(),
-                        expectedValue,
-                        actualValue));
+                "When calling {0} action in {1} expected JSON result serializer settings to have {2}, but {3}.",
+                this.ActionName,
+                this.Controller.GetName(),
+                expectedValue,
+                actualValue));
         }
     }
 }

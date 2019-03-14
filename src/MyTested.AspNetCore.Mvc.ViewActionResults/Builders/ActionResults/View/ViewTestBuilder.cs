@@ -1,9 +1,10 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.View
 {
     using System.Net;
-    using Base;
+    using Builders.Base;
     using Contracts.ActionResults.View;
     using Exceptions;
+    using Internal;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ViewEngines;
@@ -30,10 +31,8 @@
         public ViewTestBuilder(
             ControllerTestContext testContext,
             string viewType)
-            : base(testContext)
-        {
-            this.viewType = viewType;
-        }
+            : base(testContext) 
+            => this.viewType = viewType;
 
         /// <inheritdoc />
         public IAndViewTestBuilder WithStatusCode(int statusCode)
@@ -131,15 +130,13 @@
         /// <param name="propertyName">Failed property.</param>
         /// <param name="expectedValue">Expected property value.</param>
         /// <param name="actualValue">Actual property value.</param>
-        protected void ThrowNewViewResultAssertionException(string propertyName, string expectedValue, string actualValue)
-        {
-            throw new ViewResultAssertionException(string.Format(
-                "{0} {1} result {2} {3}, but {4}.",
+        protected void ThrowNewViewResultAssertionException(string propertyName, string expectedValue, string actualValue) 
+            => throw new ViewResultAssertionException(string.Format(
+                ExceptionMessages.ActionResultFormat,
                 this.TestContext.ExceptionMessagePrefix,
                 this.viewType,
                 propertyName,
                 expectedValue,
                 actualValue));
-        }
     }
 }

@@ -7,8 +7,8 @@
     /// Base class for all test builders with action result.
     /// </summary>
     /// <typeparam name="TActionResult">Result from invoked action in ASP.NET Core MVC controller.</typeparam>
-    public abstract class BaseTestBuilderWithActionResult<TActionResult>
-        : BaseTestBuilderWithInvokedAction, IBaseTestBuilderWithActionResult<TActionResult>
+    public abstract class BaseTestBuilderWithActionResult<TActionResult> 
+        : BaseTestBuilderWithInvokedAction, IBaseTestBuilderWithActionResult
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseTestBuilderWithActionResult{TActionResult}"/> class.

@@ -2,9 +2,10 @@
 {
     using System.Collections.Generic;
     using System.Net;
-    using Base;
+    using Builders.Base;
     using Contracts.ActionResults.Object;
     using Exceptions;
+    using Internal;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
@@ -121,14 +122,16 @@
         protected override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)
             => this.ThrowNewObjectResultAssertionException(propertyName, expectedValue, actualValue);
 
-        private void ThrowNewObjectResultAssertionException(string propertyName, string expectedValue, string actualValue)
-        {
-            throw new ObjectResultAssertionException(string.Format(
-                "{0} object result {1} {2}, but {3}.",
+        private void ThrowNewObjectResultAssertionException(
+            string propertyName, 
+            string expectedValue,
+            string actualValue)
+            => throw new ObjectResultAssertionException(string.Format(
+                ExceptionMessages.ActionResultFormat,
                 this.TestContext.ExceptionMessagePrefix,
+                "object",
                 propertyName,
                 expectedValue,
                 actualValue));
-        }
     }
 }

@@ -34,15 +34,11 @@
         }
 
         public static TempDataPropertyHelper GetTempDataProperties<TController>()
-            where TController : class
-        {
-            return GetTempDataProperties(typeof(TController));
-        }
+            where TController : class 
+            => GetTempDataProperties(typeof(TController));
 
-        public static TempDataPropertyHelper GetTempDataProperties(Type type)
-        {
-            return TempDataPropertiesCache.GetOrAdd(type, _ => new TempDataPropertyHelper(type));
-        }
+        public static TempDataPropertyHelper GetTempDataProperties(Type type) 
+            => TempDataPropertiesCache.GetOrAdd(type, _ => new TempDataPropertyHelper(type));
 
         private void TryCreateTempDataGetterDelegate()
         {

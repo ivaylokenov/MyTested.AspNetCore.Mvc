@@ -71,10 +71,8 @@
         }
 
         protected PropertyInfo FindPropertyWithAttribute<TAttribute>()
-            where TAttribute : Attribute
-        {
-            return this.Properties.FirstOrDefault(pr => pr.GetCustomAttribute(typeof(TAttribute), true) != null);
-        }
+            where TAttribute : Attribute 
+            => this.Properties.FirstOrDefault(pr => pr.GetCustomAttribute(typeof(TAttribute), true) != null);
 
         protected void ThrowNewInvalidOperationExceptionIfNull(object value, string propertyName)
         {

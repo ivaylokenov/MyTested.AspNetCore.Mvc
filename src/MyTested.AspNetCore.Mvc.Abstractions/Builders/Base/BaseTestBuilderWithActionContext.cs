@@ -3,15 +3,13 @@
     using Internal.TestContexts;
     using Utilities.Validators;
 
-    public class BaseTestBuilderWithActionContext : BaseTestBuilderWithComponent
+    public abstract class BaseTestBuilderWithActionContext : BaseTestBuilderWithComponent
     {
         private ActionTestContext testContext;
 
-        public BaseTestBuilderWithActionContext(ActionTestContext testContext) 
-            : base(testContext)
-        {
-            this.TestContext = testContext;
-        }
+        protected BaseTestBuilderWithActionContext(ActionTestContext testContext) 
+            : base(testContext) 
+            => this.TestContext = testContext;
 
         /// <summary>
         /// Gets the currently used <see cref="ActionTestContext"/>.

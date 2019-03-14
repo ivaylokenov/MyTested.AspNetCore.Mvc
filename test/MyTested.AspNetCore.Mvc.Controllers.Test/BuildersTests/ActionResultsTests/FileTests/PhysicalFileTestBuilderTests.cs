@@ -54,7 +54,7 @@
                 .Calling(c => c.PhysicalFileResult())
                 .ShouldReturn()
                 .PhysicalFile()
-                .WithFileDownloadName("FileDownloadName");
+                .WithDownloadName("FileDownloadName");
         }
 
         [Fact]
@@ -68,7 +68,7 @@
                         .Calling(c => c.PhysicalFileResult())
                         .ShouldReturn()
                         .PhysicalFile()
-                        .WithFileDownloadName("InvalidDownloadName");
+                        .WithDownloadName("InvalidDownloadName");
                 },
                 "When calling PhysicalFileResult action in MvcController expected file result FileDownloadName to be 'InvalidDownloadName', but instead received 'FileDownloadName'.");
         }
@@ -84,7 +84,7 @@
                         .Calling(c => c.PhysicalFileResult())
                         .ShouldReturn()
                         .PhysicalFile()
-                        .WithFileDownloadName(null);
+                        .WithDownloadName(null);
                 },
                 "When calling PhysicalFileResult action in MvcController expected file result FileDownloadName to be null, but instead received 'FileDownloadName'.");
         }
@@ -97,7 +97,7 @@
                 .Calling(c => c.PhysicalFileResult())
                 .ShouldReturn()
                 .PhysicalFile()
-                .WithPhysicalPath("/test/file");
+                .WithPath("/test/file");
         }
 
         [Fact]
@@ -107,11 +107,11 @@
                 () =>
                 {
                     MyController<MvcController>
-                    .Instance()
-                    .Calling(c => c.PhysicalFileResult())
-                    .ShouldReturn()
-                    .PhysicalFile()
-                    .WithPhysicalPath("/another");
+                        .Instance()
+                        .Calling(c => c.PhysicalFileResult())
+                        .ShouldReturn()
+                        .PhysicalFile()
+                        .WithPath("/another");
                 },
                 "When calling PhysicalFileResult action in MvcController expected file result FileName to be '/another', but instead received '/test/file'.");
         }
@@ -123,11 +123,11 @@
                 () =>
                 {
                     MyController<MvcController>
-                    .Instance()
-                    .Calling(c => c.PhysicalFileResult())
-                    .ShouldReturn()
-                    .PhysicalFile()
-                    .WithPhysicalPath(null);
+                        .Instance()
+                        .Calling(c => c.PhysicalFileResult())
+                        .ShouldReturn()
+                        .PhysicalFile()
+                        .WithPath(null);
                 },
                 "When calling PhysicalFileResult action in MvcController expected file result FileName to be null, but instead received '/test/file'.");
         }
@@ -140,7 +140,7 @@
                 .Calling(c => c.PhysicalFileResult())
                 .ShouldReturn()
                 .PhysicalFile()
-                .WithFileDownloadName("FileDownloadName")
+                .WithDownloadName("FileDownloadName")
                 .AndAlso()
                 .WithContentType(ContentType.ApplicationJson);
         }

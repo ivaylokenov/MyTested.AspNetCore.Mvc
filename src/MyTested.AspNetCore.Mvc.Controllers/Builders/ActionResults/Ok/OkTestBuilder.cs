@@ -2,9 +2,10 @@
 {
     using System.Collections.Generic;
     using System.Net;
-    using Base;
+    using Builders.Base;
     using Contracts.ActionResults.Ok;
     using Exceptions;
+    using Internal;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
@@ -125,15 +126,14 @@
         /// <param name="actualValue">Actual value of the tested property.</param>
         protected override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)
             => this.ThrowNewOkResultAssertionException(propertyName, expectedValue, actualValue);
-        
+
         private void ThrowNewOkResultAssertionException(string propertyName, string expectedValue, string actualValue)
-        {
-            throw new OkResultAssertionException(string.Format(
-                "{0} OK result {1} {2}, but {3}.",
+            => throw new OkResultAssertionException(string.Format(
+                ExceptionMessages.ActionResultFormat,
                 this.TestContext.ExceptionMessagePrefix,
+                "OK",
                 propertyName,
                 expectedValue,
                 actualValue));
-        }
     }
 }

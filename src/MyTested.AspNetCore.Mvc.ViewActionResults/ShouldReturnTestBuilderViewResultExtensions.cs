@@ -19,10 +19,8 @@
         /// <typeparam name="TActionResult">Type of action result type.</typeparam>
         /// <param name="builder">Instance of <see cref="IShouldReturnTestBuilder{TActionResult}"/> type.</param>
         /// <returns>Test builder of <see cref="IAndViewTestBuilder"/> type.</returns>
-        public static IAndViewTestBuilder View<TActionResult>(this IShouldReturnTestBuilder<TActionResult> builder)
-        {
-            return builder.View(null);
-        }
+        public static IAndViewTestBuilder View<TActionResult>(this IShouldReturnTestBuilder<TActionResult> builder) 
+            => builder.View(null);
 
         /// <summary>
         /// Tests whether the action result is <see cref="ViewResult"/> with the provided view name.

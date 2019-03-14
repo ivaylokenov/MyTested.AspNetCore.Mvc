@@ -2,8 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Net;
     using Base;
+    using Contracts.Base;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.Net.Http.Headers;
@@ -13,7 +13,7 @@
     /// Used for testing <see cref="CreatedResult"/>, <see cref="CreatedAtActionResult"/> or <see cref="CreatedAtRouteResult"/>.
     /// </summary>
     public interface ICreatedTestBuilder : IBaseTestBuilderWithResponseModel,
-        IBaseTestBuilderWithActionResult<ObjectResult>
+        IBaseTestBuilderWithStatusCodeResult<IAndCreatedTestBuilder>
     {
         /// <summary>
         /// Tests whether <see cref="CreatedResult"/> has specific location provided by string.
@@ -138,20 +138,6 @@
         IAndCreatedTestBuilder WithUrlHelperOfType<TUrlHelper>()
             where TUrlHelper : IUrlHelper;
         
-        /// <summary>
-        /// Tests whether <see cref="CreatedResult"/>, <see cref="CreatedAtActionResult"/> or <see cref="CreatedAtRouteResult"/> has the same status code as the provided one.
-        /// </summary>
-        /// <param name="statusCode">Status code as integer.</param>
-        /// <returns>The same <see cref="IAndCreatedTestBuilder"/>.</returns>
-        IAndCreatedTestBuilder WithStatusCode(int statusCode);
-
-        /// <summary>
-        /// Tests whether <see cref="CreatedResult"/>, <see cref="CreatedAtActionResult"/> or <see cref="CreatedAtRouteResult"/> has the same status code as the provided <see cref="HttpStatusCode"/>.
-        /// </summary>
-        /// <param name="statusCode"><see cref="HttpStatusCode"/> enumeration.</param>
-        /// <returns>The same <see cref="IAndCreatedTestBuilder"/>.</returns>
-        IAndCreatedTestBuilder WithStatusCode(HttpStatusCode statusCode);
-
         /// <summary>
         /// Tests whether <see cref="CreatedResult"/>, <see cref="CreatedAtActionResult"/> or <see cref="CreatedAtRouteResult"/> contains the content type provided as string.
         /// </summary>

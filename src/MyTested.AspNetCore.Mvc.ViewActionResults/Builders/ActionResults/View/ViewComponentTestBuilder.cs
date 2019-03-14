@@ -26,7 +26,7 @@
         public ViewComponentTestBuilder(ControllerTestContext testContext)
             : base(testContext, "view component")
         {
-            // uses internal reflection caching
+            // Uses internal reflection caching.
             this.viewComponentArguments = new RouteValueDictionary(this.ActionResult.Arguments);
         }
 

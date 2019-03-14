@@ -4,6 +4,8 @@
 
     public class ExceptionMessages
     {
+        public const string ActionResultFormat = "{0} {1} result {2} {3}, but {4}.";
+
         public const string ResponseModelFormat = "{0} response model {1} to be the given model, but in fact it was a different one.";
         public const string ResponseModelOfTypeFormat = "{0} response model to be of {1} type, but instead received {2}.";
 

@@ -19,10 +19,8 @@
         /// <typeparam name="TActionResult">Type of action result type.</typeparam>
         /// <param name="builder">Instance of <see cref="IShouldReturnTestBuilder{TActionResult}"/> type.</param>
         /// <returns>Test builder of <see cref="IAndViewTestBuilder"/> type.</returns>
-        public static IAndViewTestBuilder PartialView<TActionResult>(this IShouldReturnTestBuilder<TActionResult> builder)
-        {
-            return builder.PartialView(null);
-        }
+        public static IAndViewTestBuilder PartialView<TActionResult>(this IShouldReturnTestBuilder<TActionResult> builder) 
+            => builder.PartialView(null);
 
         /// <summary>
         /// Tests whether the action result is <see cref="PartialViewResult"/> with the provided partial view name.
