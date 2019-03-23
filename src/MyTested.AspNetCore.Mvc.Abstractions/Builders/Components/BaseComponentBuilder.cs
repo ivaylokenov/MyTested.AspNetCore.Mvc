@@ -2,7 +2,6 @@
 {
     using System;
     using System.Linq;
-    using Abstractions.Utilities.Extensions;
     using Base;
     using Contracts.Base;
     using Exceptions;
@@ -11,6 +10,7 @@
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Http;
     using Utilities;
+    using Utilities.Extensions;
     using Utilities.Validators;
 
     public abstract partial class BaseComponentBuilder<TComponent, TTestContext, TBuilder> : BaseTestBuilderWithComponentBuilder<TBuilder>

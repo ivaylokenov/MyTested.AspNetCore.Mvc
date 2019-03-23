@@ -19,10 +19,8 @@
         /// <returns>Test builder of <see cref="IAndViewTestBuilder"/> type.</returns>
         public static IAndViewTestBuilder View<TActionResult, TModel>(
             this IShouldReturnTestBuilder<TActionResult> builder,
-            TModel model)
-        {
-            return builder.View(null, model);
-        }
+            TModel model) 
+            => builder.View(null, model);
 
         /// <summary>
         /// Tests whether the action result is <see cref="ViewResult"/> with the provided view name and deeply equal model object.
@@ -53,10 +51,8 @@
         /// <returns>Test builder of <see cref="IAndViewTestBuilder"/> type.</returns>
         public static IAndViewTestBuilder PartialView<TActionResult, TModel>(
             this IShouldReturnTestBuilder<TActionResult> builder,
-            TModel model)
-        {
-            return builder.PartialView(null, model);
-        }
+            TModel model) 
+            => builder.PartialView(null, model);
 
         /// <summary>
         /// Tests whether the action result is <see cref="PartialViewResult"/> with the provided partial view name and deeply equal model object.

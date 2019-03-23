@@ -1,21 +1,18 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.StatusCode
 {
-    using System.Collections.Generic;
-    using Builders.Base;
+    using Base;
     using Contracts.ActionResults.StatusCode;
     using Exceptions;
     using Internal;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Formatters;
-    using Microsoft.Net.Http.Headers;
 
     /// <summary>
     /// Used for testing status code result.
     /// </summary>
     /// <typeparam name="TStatusCodeResult">Type of status code result - <see cref="StatusCodeResult"/> or <see cref="ObjectResult"/>.</typeparam>
     public class StatusCodeTestBuilder<TStatusCodeResult>
-        : BaseTestBuilderWithResponseModel<TStatusCodeResult>, IAndStatusCodeTestBuilder
+        : BaseTestBuilderWithOutputResult<TStatusCodeResult, IAndStatusCodeTestBuilder>, IAndStatusCodeTestBuilder
         where TStatusCodeResult : ActionResult
     {
         /// <summary>
@@ -26,87 +23,12 @@
             : base(testContext)
         {
         }
-        
-        /// <inheritdoc />
-        public IAndStatusCodeTestBuilder ContainingContentType(string contentType)
-        {
-            this.ValidateObjectResult();
-            this.ValidateContainingOfContentType(contentType);
-            return this;
-        }
 
-        /// <inheritdoc />
-        public IAndStatusCodeTestBuilder ContainingContentType(MediaTypeHeaderValue contentType)
-        {
-            this.ValidateObjectResult();
-            this.ValidateContainingOfContentType(contentType);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndStatusCodeTestBuilder ContainingContentTypes(IEnumerable<string> contentTypes)
-        {
-            this.ValidateObjectResult();
-            this.ValidateContentTypes(contentTypes);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndStatusCodeTestBuilder ContainingContentTypes(params string[] contentTypes)
-        {
-            this.ValidateObjectResult();
-            this.ValidateContentTypes(contentTypes);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndStatusCodeTestBuilder ContainingContentTypes(IEnumerable<MediaTypeHeaderValue> contentTypes)
-        {
-            this.ValidateObjectResult();
-            this.ValidateContentTypes(contentTypes);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndStatusCodeTestBuilder ContainingContentTypes(params MediaTypeHeaderValue[] contentTypes)
-        {
-            this.ValidateObjectResult();
-            this.ValidateContentTypes(contentTypes);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndStatusCodeTestBuilder ContainingOutputFormatter(IOutputFormatter outputFormatter)
-        {
-            this.ValidateObjectResult();
-            this.ValidateContainingOfOutputFormatter(outputFormatter);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndStatusCodeTestBuilder ContainingOutputFormatterOfType<TOutputFormatter>()
-            where TOutputFormatter : IOutputFormatter
-        {
-            this.ValidateObjectResult();
-            this.ValidateContainingOutputFormatterOfType<TOutputFormatter>();
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndStatusCodeTestBuilder ContainingOutputFormatters(IEnumerable<IOutputFormatter> outputFormatters)
-        {
-            this.ValidateObjectResult();
-            this.ValidateOutputFormatters(outputFormatters);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndStatusCodeTestBuilder ContainingOutputFormatters(params IOutputFormatter[] outputFormatters)
-        {
-            this.ValidateObjectResult();
-            this.ValidateOutputFormatters(outputFormatters);
-            return this;
-        }
+        /// <summary>
+        /// Gets the status code result test builder.
+        /// </summary>
+        /// <value>Test builder of <see cref="IAndStatusCodeTestBuilder"/>.</value>
+        protected override IAndStatusCodeTestBuilder ResultTestBuilder => this;
 
         /// <inheritdoc />
         public IStatusCodeTestBuilder AndAlso() => this;
@@ -121,14 +43,6 @@
         /// <param name="actualValue">Actual value of the tested property.</param>
         protected override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)
             => this.ThrowNewStatusCodeResultAssertionException(propertyName, expectedValue, actualValue);
-        
-        private void ValidateObjectResult()
-        {
-            if (!(this.TestContext.MethodResult is ObjectResult))
-            {
-                this.ThrowNewStatusCodeResultAssertionException("to inherit", nameof(ObjectResult), "in fact it did not");
-            }
-        }
 
         private void ThrowNewStatusCodeResultAssertionException(string propertyName, string expectedValue, string actualValue) 
             => throw new StatusCodeResultAssertionException(string.Format(

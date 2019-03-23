@@ -23,10 +23,8 @@
         public static IAndLocalRedirectTestBuilder To<TController>(
             this ILocalRedirectTestBuilder builder,
             Expression<Action<TController>> actionCall)
-            where TController : class
-        {
-            return ProcessRouteLambdaExpression<TController>(builder, actionCall);
-        }
+            where TController : class 
+            => ProcessRouteLambdaExpression<TController>(builder, actionCall);
 
         /// <summary>
         /// Tests whether <see cref="Microsoft.AspNetCore.Mvc.LocalRedirectResult"/> redirects to specific asynchronous action.
@@ -38,10 +36,8 @@
         public static IAndLocalRedirectTestBuilder To<TController>(
             this ILocalRedirectTestBuilder builder, 
             Expression<Func<TController, Task>> actionCall)
-            where TController : class
-        {
-            return ProcessRouteLambdaExpression<TController>(builder, actionCall);
-        }
+            where TController : class 
+            => ProcessRouteLambdaExpression<TController>(builder, actionCall);
 
         private static IAndLocalRedirectTestBuilder ProcessRouteLambdaExpression<TController>(
             ILocalRedirectTestBuilder builder,

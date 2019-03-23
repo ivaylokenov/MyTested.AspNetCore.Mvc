@@ -15,7 +15,6 @@
     using Setups;
     using Setups.Controllers;
     using Xunit;
-    using ViewFeatures.Test;
 
     public class ControllerBuilderTests
     {

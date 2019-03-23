@@ -2,7 +2,6 @@
 {
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Options.Test;
     using Setups;
     using Setups.Common;
     using Setups.Controllers;

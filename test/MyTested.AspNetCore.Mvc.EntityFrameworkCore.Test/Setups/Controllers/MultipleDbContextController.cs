@@ -1,7 +1,7 @@
-﻿namespace MyTested.AspNetCore.Mvc.EntityFrameworkCore.Test.Setups.Controllers
+﻿namespace MyTested.AspNetCore.Mvc.Test.Setups.Controllers
 {
+    using Common;
     using Microsoft.AspNetCore.Mvc;
-    using Mvc.Test.Setups.Common;
 
     public class MultipleDbContextController : Controller
     {

@@ -23,6 +23,7 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>git://github.com/ivaylokenov/MyTested.AspNetCore.Mvc</RepositoryUrl>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <RootNamespace>MyTested.AspNetCore.Mvc.Licensing</RootNamespace>
   </PropertyGroup>
 
 </Project>

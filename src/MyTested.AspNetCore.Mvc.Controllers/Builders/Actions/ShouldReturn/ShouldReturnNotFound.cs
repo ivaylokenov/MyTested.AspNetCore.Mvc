@@ -1,6 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Actions.ShouldReturn
 {
-    using ActionResults.HttpNotFound;
+    using ActionResults.NotFound;
     using Contracts.ActionResults.NotFound;
     using Microsoft.AspNetCore.Mvc;
     using Utilities.Validators;

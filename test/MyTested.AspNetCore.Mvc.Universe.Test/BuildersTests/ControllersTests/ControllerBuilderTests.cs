@@ -5,7 +5,6 @@
     using Microsoft.Extensions.DependencyInjection;
     using Setups;
     using Setups.Controllers;
-    using Universe.Test;
     using Xunit;
 
     public class ControllerBuilderTests

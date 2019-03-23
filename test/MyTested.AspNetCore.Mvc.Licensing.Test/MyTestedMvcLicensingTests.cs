@@ -1,13 +1,13 @@
-﻿namespace MyTested.AspNetCore.Mvc.Test
+﻿namespace MyTested.AspNetCore.Mvc.Licensing.Test
 {
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Licensing;
     using Microsoft.Extensions.Configuration;
-    using Setups.Controllers;
+    using Mvc.Test.Setups;
+    using Mvc.Test.Setups.Controllers;
     using Xunit;
-    using Setups;
 
     public class MyTestedMvcLicensingTests
     {

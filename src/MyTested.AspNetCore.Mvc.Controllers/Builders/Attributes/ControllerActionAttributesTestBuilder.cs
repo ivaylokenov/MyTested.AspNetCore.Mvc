@@ -14,7 +14,7 @@
     /// Base class for controller action test builders.
     /// </summary>
     public abstract class ControllerActionAttributesTestBuilder<TAttributesTestBuilder> : BaseAttributesTestBuilder<TAttributesTestBuilder>
-        where TAttributesTestBuilder : IBaseAttributesTestBuilder<TAttributesTestBuilder>
+        where TAttributesTestBuilder : IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ControllerActionAttributesTestBuilder{TBuilder}"/> class.

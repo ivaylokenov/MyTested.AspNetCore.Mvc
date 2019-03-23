@@ -9,7 +9,6 @@
     using Microsoft.AspNetCore.Routing;
     using Setups;
     using Setups.Routing;
-    using Routing.Test;
     using Xunit;
 
     public class MvcRouteResolverTests

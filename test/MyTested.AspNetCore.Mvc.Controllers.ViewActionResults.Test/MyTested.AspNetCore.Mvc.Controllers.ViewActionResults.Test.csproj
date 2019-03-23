@@ -2,14 +2,15 @@
 
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.0;net461</TargetFrameworks>
-    <AssemblyName>MyTested.AspNetCore.Mvc.ViewActionResults.Test</AssemblyName>
+    <AssemblyName>MyTested.AspNetCore.Mvc.Test</AssemblyName>
     <AssemblyOriginatorKeyFile>../../tools/Key.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
     <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
-    <PackageId>MyTested.AspNetCore.Mvc.ViewActionResults.Test</PackageId>
+    <PackageId>MyTested.AspNetCore.Mvc.Controllers.ViewActionResults.Test</PackageId>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <PreserveCompilationContext>true</PreserveCompilationContext>
+    <RootNamespace>MyTested.AspNetCore.Mvc.Test</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,9 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\MyTested.AspNetCore.Mvc.Controllers.ViewActionResults\MyTested.AspNetCore.Mvc.Controllers.ViewActionResults.csproj" />
     <ProjectReference Include="..\..\src\MyTested.AspNetCore.Mvc.DataAnnotations\MyTested.AspNetCore.Mvc.DataAnnotations.csproj" />
     <ProjectReference Include="..\..\src\MyTested.AspNetCore.Mvc.Models\MyTested.AspNetCore.Mvc.Models.csproj" />
-    <ProjectReference Include="..\..\src\MyTested.AspNetCore.Mvc.ViewActionResults\MyTested.AspNetCore.Mvc.ViewActionResults.csproj" />
     <ProjectReference Include="..\MyTested.AspNetCore.Mvc.Test.Setups\MyTested.AspNetCore.Mvc.Test.Setups.csproj" />
   </ItemGroup>
 

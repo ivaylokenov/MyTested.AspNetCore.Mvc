@@ -24,7 +24,8 @@
         where TAuthenticationResultTestBuilder : IBaseTestBuilderWithActionResult
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseTestBuilderWithAuthenticationResult{TAuthenticationResult, TAuthenticationResultTestBuilder}"/> class.
+        /// Initializes a new instance of the
+        /// <see cref="BaseTestBuilderWithAuthenticationResult{TAuthenticationResult, TAuthenticationResultTestBuilder}"/> class.
         /// </summary>
         /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
         protected BaseTestBuilderWithAuthenticationResult(ControllerTestContext testContext) 

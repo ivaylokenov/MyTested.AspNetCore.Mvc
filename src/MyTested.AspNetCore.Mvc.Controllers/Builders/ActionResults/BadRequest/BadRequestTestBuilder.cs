@@ -1,17 +1,13 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.BadRequest
 {
     using System;
-    using System.Collections.Generic;
-    using System.Net;
-    using Builders.Base;
+    using Base;
     using Contracts.ActionResults.BadRequest;
     using Exceptions;
     using Internal;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
-    using Microsoft.Net.Http.Headers;
     using Utilities.Extensions;
 
     /// <summary>
@@ -19,7 +15,7 @@
     /// </summary>
     /// <typeparam name="THttpBadRequestResult">Type of bad request result - <see cref="BadRequestResult"/> or <see cref="BadRequestObjectResult"/>.</typeparam>
     public class BadRequestTestBuilder<THttpBadRequestResult>
-        : BaseTestBuilderWithResponseModel<THttpBadRequestResult>, IAndBadRequestTestBuilder
+        : BaseTestBuilderWithOutputResult<THttpBadRequestResult, IAndBadRequestTestBuilder>, IAndBadRequestTestBuilder
         where THttpBadRequestResult : ActionResult
     {
         private const string ErrorMessage = "{0} bad request result error to be the given object, but in fact it was a different.";
@@ -36,91 +32,12 @@
             this.OfTypeErrorMessageFormat = OfTypeErrorMessage;
         }
 
-        /// <inheritdoc />
-        public IAndBadRequestTestBuilder WithStatusCode(int statusCode)
-        {
-            this.ValidateStatusCode(statusCode);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndBadRequestTestBuilder WithStatusCode(HttpStatusCode statusCode)
-        {
-            this.ValidateStatusCode(statusCode);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndBadRequestTestBuilder ContainingContentType(string contentType)
-        {
-            this.ValidateContainingOfContentType(contentType);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndBadRequestTestBuilder ContainingContentType(MediaTypeHeaderValue contentType)
-        {
-            this.ValidateContainingOfContentType(contentType);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndBadRequestTestBuilder ContainingContentTypes(IEnumerable<string> contentTypes)
-        {
-            this.ValidateContentTypes(contentTypes);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndBadRequestTestBuilder ContainingContentTypes(params string[] contentTypes)
-        {
-            this.ValidateContentTypes(contentTypes);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndBadRequestTestBuilder ContainingContentTypes(IEnumerable<MediaTypeHeaderValue> contentTypes)
-        {
-            this.ValidateContentTypes(contentTypes);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndBadRequestTestBuilder ContainingContentTypes(params MediaTypeHeaderValue[] contentTypes)
-        {
-            this.ValidateContentTypes(contentTypes);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndBadRequestTestBuilder ContainingOutputFormatter(IOutputFormatter outputFormatter)
-        {
-            this.ValidateContainingOfOutputFormatter(outputFormatter);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndBadRequestTestBuilder ContainingOutputFormatterOfType<TOutputFormatter>()
-            where TOutputFormatter : IOutputFormatter
-        {
-            this.ValidateContainingOutputFormatterOfType<TOutputFormatter>();
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndBadRequestTestBuilder ContainingOutputFormatters(IEnumerable<IOutputFormatter> outputFormatters)
-        {
-            this.ValidateOutputFormatters(outputFormatters);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndBadRequestTestBuilder ContainingOutputFormatters(params IOutputFormatter[] outputFormatters)
-        {
-            this.ValidateOutputFormatters(outputFormatters);
-            return this;
-        }
-
+        /// <summary>
+        /// Gets the bad request result test builder.
+        /// </summary>
+        /// <value>Test builder of <see cref="IAndBadRequestTestBuilder"/>.</value>
+        protected override IAndBadRequestTestBuilder ResultTestBuilder => this;
+        
         /// <inheritdoc />
         public IBadRequestErrorMessageTestBuilder WithErrorMessage()
         {

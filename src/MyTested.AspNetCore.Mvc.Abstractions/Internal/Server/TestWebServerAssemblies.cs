@@ -4,10 +4,10 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using Abstractions.Utilities.Extensions;
     using Configuration;
     using Microsoft.Extensions.DependencyModel;
-    
+    using Utilities.Extensions;
+
     public static partial class TestWebServer
     {
         private static DependencyContext dependencyContext;

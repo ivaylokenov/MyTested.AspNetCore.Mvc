@@ -528,7 +528,9 @@
                 },
                 "No service for type 'MyTested.AspNetCore.Mvc.Internal.Contracts.IRoutingServices' has been registered.");
 
-            MyApplication.StartsFrom<DefaultStartup>();
+            MyApplication
+                .IsRunningOn(server => server
+                    .WithStartup<DefaultStartup>());
         }
 
         [Fact]
@@ -556,7 +558,9 @@
             Assert.Null(defaultService);
             Assert.NotNull(routingService);
 
-            MyApplication.StartsFrom<DefaultStartup>();
+            MyApplication
+                .IsRunningOn(server => server
+                    .WithStartup<DefaultStartup>());
         }
 
         [Fact]
@@ -584,7 +588,9 @@
             Assert.Null(defaultService);
             Assert.NotNull(routingService);
 
-            MyApplication.StartsFrom<DefaultStartup>();
+            MyApplication
+                .IsRunningOn(server => server
+                    .WithStartup<DefaultStartup>());
         }
 
         [Fact]
@@ -610,7 +616,9 @@
                 },
                 "Route testing requires the registered IRoutingServices service implementation to provide test routing services by either the ServiceProvider property or the ServiceCollection one.");
 
-            MyApplication.StartsFrom<DefaultStartup>();
+            MyApplication
+                .IsRunningOn(server => server
+                    .WithStartup<DefaultStartup>());
         }
 
         [Fact]
@@ -622,7 +630,9 @@
             Assert.NotNull(TestServiceProvider.GetService<ILoggerFactory>());
             Assert.NotNull(TestServiceProvider.GetService<IApplicationLifetime>());
 
-            MyApplication.StartsFrom<DefaultStartup>();
+            MyApplication
+                .IsRunningOn(server => server
+                    .WithStartup<DefaultStartup>());
         }
 
         [Fact]
@@ -643,7 +653,9 @@
             Assert.NotNull(injectedServiceFromRouteServiceProvider);
             Assert.IsAssignableFrom<InjectedService>(injectedServiceFromRouteServiceProvider);
 
-            MyApplication.StartsFrom<DefaultStartup>();
+            MyApplication
+                .IsRunningOn(server => server
+                    .WithStartup<DefaultStartup>());
         }
 
         [Fact]

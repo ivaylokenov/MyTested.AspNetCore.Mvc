@@ -23,11 +23,12 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>git://github.com/ivaylokenov/MyTested.AspNetCore.Mvc</RepositoryUrl>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <RootNamespace>MyTested.AspNetCore.Mvc</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MyTested.AspNetCore.Mvc.Controllers.ViewActionResults\MyTested.AspNetCore.Mvc.Controllers.ViewActionResults.csproj" />
     <ProjectReference Include="..\MyTested.AspNetCore.Mvc.Controllers\MyTested.AspNetCore.Mvc.Controllers.csproj" />
-    <ProjectReference Include="..\MyTested.AspNetCore.Mvc.ViewActionResults\MyTested.AspNetCore.Mvc.ViewActionResults.csproj" />
     <ProjectReference Include="..\MyTested.AspNetCore.Mvc.ViewComponents\MyTested.AspNetCore.Mvc.ViewComponents.csproj" />
   </ItemGroup>
 

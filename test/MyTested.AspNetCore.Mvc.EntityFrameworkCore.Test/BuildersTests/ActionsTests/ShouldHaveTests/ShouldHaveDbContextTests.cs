@@ -7,8 +7,6 @@
     using Setups.Common;
     using Setups.Controllers;
     using Xunit;
-    using EntityFrameworkCore.Test;
-    using EntityFrameworkCore.Test.Setups.Controllers;
 
     public class ShouldHaveDbContextTests
     {

@@ -7,8 +7,6 @@
     using Setups.Common;
     using Xunit;
     using Setups;
-    using EntityFrameworkCore.Test;
-    using EntityFrameworkCore.Test.Setups.Controllers;
 
     public class ControllerBuilderTests
     {
@@ -40,7 +38,7 @@
         }
 
         [Fact]
-        public void WithEntitesShouldSetupDbContext()
+        public void WithEntitiesShouldSetupDbContext()
         {
             MyApplication
                 .StartsFrom<TestStartup>()
@@ -187,7 +185,7 @@
         }
         
         [Fact]
-        public void WithEntitesShouldSetupMultipleDbContext()
+        public void WithEntitiesShouldSetupMultipleDbContext()
         {
             MyApplication
                 .StartsFrom<TestStartup>()

@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Abstractions.Utilities.Extensions
+﻿namespace MyTested.AspNetCore.Mvc.Utilities.Extensions
 {
     using System.Globalization;
 

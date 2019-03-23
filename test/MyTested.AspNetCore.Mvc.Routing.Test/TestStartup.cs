@@ -1,7 +1,7 @@
-﻿namespace MyTested.AspNetCore.Mvc.Routing.Test
+﻿namespace MyTested.AspNetCore.Mvc.Test
 {
     using Microsoft.AspNetCore.Builder;
-    using Mvc.Test.Setups;
+    using Setups;
 
     public class TestStartup : DefaultStartup
     {

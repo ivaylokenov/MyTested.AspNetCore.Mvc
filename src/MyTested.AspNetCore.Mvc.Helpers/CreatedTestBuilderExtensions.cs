@@ -23,10 +23,8 @@
         public static IAndCreatedTestBuilder At<TController>(
             this ICreatedTestBuilder builder,
             Expression<Action<TController>> actionCall)
-            where TController : class
-        {
-            return ProcessRouteLambdaExpression<TController>(builder, actionCall);
-        }
+            where TController : class 
+            => ProcessRouteLambdaExpression(builder, actionCall);
 
         /// <summary>
         /// Tests whether <see cref="CreatedAtActionResult"/> or <see cref="CreatedAtRouteResult"/> returns created at specific asynchronous action.
@@ -38,12 +36,10 @@
         public static IAndCreatedTestBuilder At<TController>(
             this ICreatedTestBuilder builder, 
             Expression<Func<TController, Task>> actionCall)
-            where TController : class
-        {
-            return ProcessRouteLambdaExpression<TController>(builder, actionCall);
-        }
-        
-        private static IAndCreatedTestBuilder ProcessRouteLambdaExpression<TController>(
+            where TController : class 
+            => ProcessRouteLambdaExpression(builder, actionCall);
+
+        private static IAndCreatedTestBuilder ProcessRouteLambdaExpression(
             dynamic createdTestBuilder,
             LambdaExpression actionCall)
         {

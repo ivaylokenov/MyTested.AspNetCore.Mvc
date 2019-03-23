@@ -1,4 +1,4 @@
-namespace MyTested.AspNetCore.Mvc.Configuration.Test
+namespace MyTested.AspNetCore.Mvc.Test
 {
     using Microsoft.Extensions.Configuration;
     using Xunit;

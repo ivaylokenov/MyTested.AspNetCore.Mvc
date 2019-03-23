@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.ViewActionResults.Test
+﻿namespace MyTested.AspNetCore.Mvc.Test
 {
     using Microsoft.AspNetCore.Builder;
     using Microsoft.Extensions.DependencyInjection;

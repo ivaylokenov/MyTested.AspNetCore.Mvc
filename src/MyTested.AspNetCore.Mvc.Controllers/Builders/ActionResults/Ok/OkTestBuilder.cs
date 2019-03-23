@@ -1,22 +1,18 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.Ok
 {
-    using System.Collections.Generic;
-    using System.Net;
-    using Builders.Base;
+    using Base;
     using Contracts.ActionResults.Ok;
     using Exceptions;
     using Internal;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Formatters;
-    using Microsoft.Net.Http.Headers;
 
     /// <summary>
     /// Used for testing OK result.
     /// </summary>
     /// <typeparam name="TOkResult">Type of OK result - <see cref="OkResult"/> or <see cref="OkObjectResult"/>.</typeparam>
     public class OkTestBuilder<TOkResult>
-        : BaseTestBuilderWithResponseModel<TOkResult>, IAndOkTestBuilder
+        : BaseTestBuilderWithOutputResult<TOkResult, IAndOkTestBuilder>, IAndOkTestBuilder
         where TOkResult : ActionResult
     {
         /// <summary>
@@ -27,91 +23,12 @@
             : base(testContext)
         {
         }
-        
-        /// <inheritdoc />
-        public IAndOkTestBuilder WithStatusCode(int statusCode)
-        {
-            this.ValidateStatusCode(statusCode);
-            return this;
-        }
 
-        /// <inheritdoc />
-        public IAndOkTestBuilder WithStatusCode(HttpStatusCode statusCode)
-        {
-            this.ValidateStatusCode(statusCode);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndOkTestBuilder ContainingContentType(string contentType)
-        {
-            this.ValidateContainingOfContentType(contentType);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndOkTestBuilder ContainingContentType(MediaTypeHeaderValue contentType)
-        {
-            this.ValidateContainingOfContentType(contentType);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndOkTestBuilder ContainingContentTypes(IEnumerable<string> contentTypes)
-        {
-            this.ValidateContentTypes(contentTypes);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndOkTestBuilder ContainingContentTypes(params string[] contentTypes)
-        {
-            this.ValidateContentTypes(contentTypes);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndOkTestBuilder ContainingContentTypes(IEnumerable<MediaTypeHeaderValue> contentTypes)
-        {
-            this.ValidateContentTypes(contentTypes);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndOkTestBuilder ContainingContentTypes(params MediaTypeHeaderValue[] contentTypes)
-        {
-            this.ValidateContentTypes(contentTypes);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndOkTestBuilder ContainingOutputFormatter(IOutputFormatter outputFormatter)
-        {
-            this.ValidateContainingOfOutputFormatter(outputFormatter);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndOkTestBuilder ContainingOutputFormatterOfType<TOutputFormatter>()
-            where TOutputFormatter : IOutputFormatter
-        {
-            this.ValidateContainingOutputFormatterOfType<TOutputFormatter>();
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndOkTestBuilder ContainingOutputFormatters(IEnumerable<IOutputFormatter> outputFormatters)
-        {
-            this.ValidateOutputFormatters(outputFormatters);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndOkTestBuilder ContainingOutputFormatters(params IOutputFormatter[] outputFormatters)
-        {
-            this.ValidateOutputFormatters(outputFormatters);
-            return this;
-        }
+        /// <summary>
+        /// Gets the OK result test builder.
+        /// </summary>
+        /// <value>Test builder of <see cref="IAndOkTestBuilder"/>.</value>
+        protected override IAndOkTestBuilder ResultTestBuilder => this;
 
         /// <inheritdoc />
         public IOkTestBuilder AndAlso() => this;

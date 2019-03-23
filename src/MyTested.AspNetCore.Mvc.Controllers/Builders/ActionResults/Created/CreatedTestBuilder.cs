@@ -2,17 +2,14 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Net;
-    using Builders.Base;
+    using Base;
     using Contracts.ActionResults.Created;
     using Contracts.Uri;
     using Exceptions;
     using Internal;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.AspNetCore.Routing;
-    using Microsoft.Net.Http.Headers;
     using Utilities.Validators;
 
     /// <summary>
@@ -20,7 +17,7 @@
     /// </summary>
     /// <typeparam name="TCreatedResult">Type of created result - <see cref="CreatedResult"/>, <see cref="CreatedAtActionResult"/> or <see cref="CreatedAtRouteResult"/>.</typeparam>
     public class CreatedTestBuilder<TCreatedResult>
-        : BaseTestBuilderWithResponseModel<TCreatedResult>, IAndCreatedTestBuilder
+        : BaseTestBuilderWithOutputResult<TCreatedResult, IAndCreatedTestBuilder>, IAndCreatedTestBuilder
         where TCreatedResult : ObjectResult
     {
         private const string Location = "location";
@@ -36,90 +33,11 @@
 
         public bool IncludeCountCheck { get; set; } = true;
 
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder WithStatusCode(int statusCode)
-        {
-            this.ValidateStatusCode(statusCode);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder WithStatusCode(HttpStatusCode statusCode)
-        {
-            this.ValidateStatusCode(statusCode);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder ContainingContentType(string contentType)
-        {
-            this.ValidateContainingOfContentType(contentType);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder ContainingContentType(MediaTypeHeaderValue contentType)
-        {
-            this.ValidateContainingOfContentType(contentType);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder ContainingContentTypes(IEnumerable<string> contentTypes)
-        {
-            this.ValidateContentTypes(contentTypes);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder ContainingContentTypes(params string[] contentTypes)
-        {
-            this.ValidateContentTypes(contentTypes);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder ContainingContentTypes(IEnumerable<MediaTypeHeaderValue> contentTypes)
-        {
-            this.ValidateContentTypes(contentTypes);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder ContainingContentTypes(params MediaTypeHeaderValue[] contentTypes)
-        {
-            this.ValidateContentTypes(contentTypes);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder ContainingOutputFormatter(IOutputFormatter outputFormatter)
-        {
-            this.ValidateContainingOfOutputFormatter(outputFormatter);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder ContainingOutputFormatterOfType<TOutputFormatter>()
-            where TOutputFormatter : IOutputFormatter
-        {
-            this.ValidateContainingOutputFormatterOfType<TOutputFormatter>();
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder ContainingOutputFormatters(IEnumerable<IOutputFormatter> outputFormatters)
-        {
-            this.ValidateOutputFormatters(outputFormatters);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder ContainingOutputFormatters(params IOutputFormatter[] outputFormatters)
-        {
-            this.ValidateOutputFormatters(outputFormatters);
-            return this;
-        }
+        /// <summary>
+        /// Gets the created result test builder.
+        /// </summary>
+        /// <value>Test builder of <see cref="IAndCreatedTestBuilder"/>.</value>
+        protected override IAndCreatedTestBuilder ResultTestBuilder => this;
 
         /// <inheritdoc />
         public IAndCreatedTestBuilder AtLocation(string location)

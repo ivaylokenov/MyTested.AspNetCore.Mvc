@@ -97,13 +97,11 @@
             where TAttribute : Attribute 
             => attributes.FirstOrDefault(a => a.GetType() == typeof(TAttribute)) as TAttribute;
 
-        protected virtual void ThrowNewAttributeAssertionException(string expectedValue, string actualValue)
-        {
-            throw new AttributeAssertionException(string.Format(
+        protected virtual void ThrowNewAttributeAssertionException(string expectedValue, string actualValue) 
+            => throw new AttributeAssertionException(string.Format(
                 "When testing {0} was expected to have {1}, but {2}.",
                 this.TestContext.Component.GetName(),
                 expectedValue,
                 actualValue));
-        }
     }
 }

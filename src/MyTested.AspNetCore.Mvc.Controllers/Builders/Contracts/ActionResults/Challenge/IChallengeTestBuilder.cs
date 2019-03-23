@@ -1,10 +1,9 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.ActionResults.Challenge
 {
     using Base;
-    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
-    /// Used for testing <see cref="ChallengeResult"/>.
+    /// Used for testing <see cref="Microsoft.AspNetCore.Mvc.ChallengeResult"/>.
     /// </summary>
     public interface IChallengeTestBuilder : IBaseTestBuilderWithAuthenticationResult<IAndChallengeTestBuilder>
     {

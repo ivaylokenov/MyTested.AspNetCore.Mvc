@@ -417,6 +417,27 @@
                 },
                 "When calling FullObjectResultAction action in MvcController expected status code result output formatters to have 3 items, but instead found 2.");
         }
+        
+        [Fact]
+        public void CallingObjectResultApiWithStatusCodeShouldThrowException()
+        {
+            Test.AssertException<StatusCodeResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.StatusCodeAction())
+                        .ShouldReturn()
+                        .StatusCode()
+                        .ContainingOutputFormatters(new List<IOutputFormatter>
+                        {
+                            TestObjectFactory.GetOutputFormatter(),
+                            new CustomOutputFormatter(),
+                            TestObjectFactory.GetOutputFormatter()
+                        });
+                },
+                "When calling StatusCodeAction action in MvcController expected status code result to inherit ObjectResult, but in fact it did not.");
+        }
 
         [Fact]
         public void AndProvideTheActionResultShouldWorkCorrectly()

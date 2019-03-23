@@ -7,7 +7,8 @@
     using Builders.Http;
 
     /// <summary>
-    /// Contains <see cref="Microsoft.AspNetCore.Http.HttpResponse"/> extension methods for <see cref="IBaseTestBuilderWithComponentShouldHaveTestBuilder{TBuilder}"/>.
+    /// Contains <see cref="Microsoft.AspNetCore.Http.HttpResponse"/> extension methods for
+    /// <see cref="IBaseTestBuilderWithComponentShouldHaveTestBuilder{TBuilder}"/>.
     /// </summary>
     public static class ComponentShouldHaveTestBuilderHttpExtensions
     {

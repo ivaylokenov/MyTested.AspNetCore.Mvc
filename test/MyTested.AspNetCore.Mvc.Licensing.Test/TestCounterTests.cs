@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Test
+﻿namespace MyTested.AspNetCore.Mvc.Licensing.Test
 {
     using System;
     using System.Collections.Generic;

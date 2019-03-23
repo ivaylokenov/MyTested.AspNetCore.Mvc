@@ -26,6 +26,7 @@
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+    <RootNamespace>MyTested.AspNetCore.Mvc</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
