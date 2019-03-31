@@ -11,9 +11,9 @@
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.Net.Http.Headers;
     using Utilities.Validators;
-
+    
     /// <summary>
-    /// Base class for all test builders with output <see cref="Microsoft.AspNetCore.Mvc.ActionResult"/>.
+    /// Base class for all test builders with output <see cref="ActionResult"/>.
     /// </summary>
     /// <typeparam name="TOutputResult">Output result from invoked action in ASP.NET Core MVC controller.</typeparam>
     /// <typeparam name="TOutputResultTestBuilder">Type of output result test builder to use as a return type for common methods.</typeparam>
@@ -35,7 +35,7 @@
         /// <summary>
         /// Gets the output result test builder.
         /// </summary>
-        /// <value>Test builder for the output <see cref="Microsoft.AspNetCore.Mvc.ActionResult"/>.</value>
+        /// <value>Test builder for the output <see cref="ActionResult"/>.</value>
         protected abstract TOutputResultTestBuilder ResultTestBuilder { get; }
 
         /// <inheritdoc />

@@ -29,7 +29,7 @@
         /// Gets the attributes test builder.
         /// </summary>
         /// <value>Test builder for the attributes.</value>
-        protected abstract TAttributesTestBuilder AttributesTestBuilder { get; }
+        public abstract TAttributesTestBuilder AttributesTestBuilder { get; }
 
         /// <inheritdoc />
         public TAttributesTestBuilder ContainingAttributeOfType<TAttribute>()
@@ -83,7 +83,7 @@
         /// <typeparam name="TAttribute">Type of expected attribute.</typeparam>
         /// <param name="attributes">Collection of attributes.</param>
         /// <returns>The found attribute of the given type.</returns>
-        protected TAttribute GetAttributeOfType<TAttribute>(IEnumerable<object> attributes)
+        public TAttribute GetAttributeOfType<TAttribute>(IEnumerable<object> attributes)
             where TAttribute : Attribute 
             => (TAttribute)attributes.First(a => a.GetType() == typeof(TAttribute));
 
@@ -97,7 +97,7 @@
             where TAttribute : Attribute 
             => attributes.FirstOrDefault(a => a.GetType() == typeof(TAttribute)) as TAttribute;
 
-        protected virtual void ThrowNewAttributeAssertionException(string expectedValue, string actualValue) 
+        public virtual void ThrowNewAttributeAssertionException(string expectedValue, string actualValue) 
             => throw new AttributeAssertionException(string.Format(
                 "When testing {0} was expected to have {1}, but {2}.",
                 this.TestContext.Component.GetName(),

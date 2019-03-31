@@ -217,6 +217,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyTested.AspNetCore.Mvc.Con
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyTested.AspNetCore.Mvc.Controllers.ViewActionResults.Test", "test\MyTested.AspNetCore.Mvc.Controllers.ViewActionResults.Test\MyTested.AspNetCore.Mvc.Controllers.ViewActionResults.Test.csproj", "{CAC7BA62-946A-4088-8C18-F91CA5099BAC}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyTested.AspNetCore.Mvc.Controllers.Attributes.Test", "test\MyTested.AspNetCore.Mvc.Controllers.Attributes.Test\MyTested.AspNetCore.Mvc.Controllers.Attributes.Test.csproj", "{07518D0F-0DA0-4451-BA13-1A358ED19B89}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyTested.AspNetCore.Mvc.ViewComponents.Attributes", "src\MyTested.AspNetCore.Mvc.ViewComponents.Attributes\MyTested.AspNetCore.Mvc.ViewComponents.Attributes.csproj", "{2C707C4F-0F28-43F7-8B21-1AE202BD183E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyTested.AspNetCore.Mvc.ViewComponents.Attributes.Test", "test\MyTested.AspNetCore.Mvc.ViewComponents.Attributes.Test\MyTested.AspNetCore.Mvc.ViewComponents.Attributes.Test.csproj", "{EB913ABB-3293-4E38-9AB2-0B00F95DCC3E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -603,6 +609,18 @@ Global
 		{CAC7BA62-946A-4088-8C18-F91CA5099BAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CAC7BA62-946A-4088-8C18-F91CA5099BAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CAC7BA62-946A-4088-8C18-F91CA5099BAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07518D0F-0DA0-4451-BA13-1A358ED19B89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07518D0F-0DA0-4451-BA13-1A358ED19B89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07518D0F-0DA0-4451-BA13-1A358ED19B89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07518D0F-0DA0-4451-BA13-1A358ED19B89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C707C4F-0F28-43F7-8B21-1AE202BD183E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C707C4F-0F28-43F7-8B21-1AE202BD183E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C707C4F-0F28-43F7-8B21-1AE202BD183E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C707C4F-0F28-43F7-8B21-1AE202BD183E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB913ABB-3293-4E38-9AB2-0B00F95DCC3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB913ABB-3293-4E38-9AB2-0B00F95DCC3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB913ABB-3293-4E38-9AB2-0B00F95DCC3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB913ABB-3293-4E38-9AB2-0B00F95DCC3E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -712,6 +730,9 @@ Global
 		{3C126A40-04F5-40D7-A437-EB2646502D0A} = {09353A03-2B0C-496B-8EB1-2CB6A22D758B}
 		{E9FC579C-3CE4-4D55-AE80-D78DFCE78BA0} = {09353A03-2B0C-496B-8EB1-2CB6A22D758B}
 		{CAC7BA62-946A-4088-8C18-F91CA5099BAC} = {D140FA14-A6C2-4279-8A41-35BC55279DA8}
+		{07518D0F-0DA0-4451-BA13-1A358ED19B89} = {D140FA14-A6C2-4279-8A41-35BC55279DA8}
+		{2C707C4F-0F28-43F7-8B21-1AE202BD183E} = {09353A03-2B0C-496B-8EB1-2CB6A22D758B}
+		{EB913ABB-3293-4E38-9AB2-0B00F95DCC3E} = {D140FA14-A6C2-4279-8A41-35BC55279DA8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {99A2DEDD-5195-4EE6-A546-B1CA54C5539F}

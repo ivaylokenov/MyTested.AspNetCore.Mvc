@@ -11,7 +11,9 @@
         /// <summary>
         /// Tests whether the collected attributes contain <see cref="ValidateAntiForgeryTokenAttribute"/>.
         /// </summary>
-        /// <param name="controllerActionAttributesTestBuilder">Instance of <see cref="IControllerActionAttributesTestBuilder{TAttributesTestBuilder}"/> type.</param>
+        /// <param name="controllerActionAttributesTestBuilder">
+        /// Instance of <see cref="IControllerActionAttributesTestBuilder{TAttributesTestBuilder}"/> type.
+        /// </param>
         /// <typeparam name="TAttributesTestBuilder">Type of attributes test builder to use as a return type.</typeparam>
         /// <returns>The same attributes test builder.</returns>
         public static TAttributesTestBuilder ValidatingAntiForgeryToken<TAttributesTestBuilder>(
@@ -22,7 +24,9 @@
         /// <summary>
         /// Tests whether the collected attributes contain <see cref="IgnoreAntiforgeryTokenAttribute"/>.
         /// </summary>
-        /// <param name="controllerActionAttributesTestBuilder">Instance of <see cref="IControllerActionAttributesTestBuilder{TAttributesTestBuilder}"/> type.</param>
+        /// <param name="controllerActionAttributesTestBuilder">
+        /// Instance of <see cref="IControllerActionAttributesTestBuilder{TAttributesTestBuilder}"/> type.
+        /// </param>
         /// <typeparam name="TAttributesTestBuilder">Type of attributes test builder to use as a return type.</typeparam>
         /// <returns>The same attributes test builder.</returns>
         public static TAttributesTestBuilder IgnoringAntiForgeryToken<TAttributesTestBuilder>(
@@ -33,7 +37,9 @@
         /// <summary>
         /// Tests whether the collected attributes contain <see cref="SkipStatusCodePagesAttribute"/>.
         /// </summary>
-        /// <param name="controllerActionAttributesTestBuilder">Instance of <see cref="IControllerActionAttributesTestBuilder{TAttributesTestBuilder}"/> type.</param>
+        /// <param name="controllerActionAttributesTestBuilder">
+        /// Instance of <see cref="IControllerActionAttributesTestBuilder{TAttributesTestBuilder}"/> type.
+        /// </param>
         /// <typeparam name="TAttributesTestBuilder">Type of attributes test builder to use as a return type.</typeparam>
         /// <returns>The same attributes test builder.</returns>
         public static TAttributesTestBuilder SkippingStatusCodePages<TAttributesTestBuilder>(

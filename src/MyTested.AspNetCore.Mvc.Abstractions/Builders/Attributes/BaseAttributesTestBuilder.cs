@@ -22,7 +22,7 @@
         /// Gets the validation actions for the tested attributes.
         /// </summary>
         /// <value>Collection of validation actions for the attributes.</value>
-        protected ICollection<Action<IEnumerable<object>>> Validations { get; private set; }
+        public ICollection<Action<IEnumerable<object>>> Validations { get; private set; }
 
         internal IEnumerable<Action<IEnumerable<object>>> GetAttributeValidations() => this.Validations;
     }
