@@ -17,10 +17,8 @@
         private readonly ViewViewComponentResult viewResult;
 
         public ViewTestBuilder(ActionTestContext testContext)
-            : base(testContext)
-        {
-            this.viewResult = testContext.MethodResultAs<ViewViewComponentResult>();
-        }
+            : base(testContext) 
+            => this.viewResult = testContext.MethodResultAs<ViewViewComponentResult>();
 
         /// <inheritdoc />
         public IAndViewTestBuilder WithViewEngine(IViewEngine viewEngine)

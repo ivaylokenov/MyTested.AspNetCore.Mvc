@@ -28,13 +28,11 @@
         /// <inheritdoc />
         public IActionAttributesTestBuilder AndAlso() => this;
 
-        public override void ThrowNewAttributeAssertionException(string expectedValue, string actualValue)
-        {
-            throw new AttributeAssertionException(string.Format(
+        public override void ThrowNewAttributeAssertionException(string expectedValue, string actualValue) 
+            => throw new AttributeAssertionException(string.Format(
                 "{0} action to have {1}, but {2}.",
                 this.TestContext.ExceptionMessagePrefix,
                 expectedValue,
                 actualValue));
-        }
     }
 }

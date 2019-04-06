@@ -185,14 +185,12 @@
         internal ICollection<Action<AuthenticationProperties, AuthenticationProperties>> GetAuthenticationPropertiesValidations() 
             => this.validations;
 
-        private void ThrowNewAuthenticationPropertiesAssertionException(string expectedValue, string actualValue)
-        {
-            throw new AuthenticationPropertiesAssertionException(string.Format(
+        private void ThrowNewAuthenticationPropertiesAssertionException(string expectedValue, string actualValue) 
+            => throw new AuthenticationPropertiesAssertionException(string.Format(
                 "When calling {0} action in {1} expected authentication properties to {2}, but {3}.",
                 this.TestContext.MethodName,
                 this.TestContext.Component.GetName(),
                 expectedValue,
                 actualValue));
-        }
     }
 }

@@ -64,9 +64,9 @@
         /// <param name="propertyName">Property name on which the testing failed.</param>
         /// <param name="expectedValue">Expected value of the tested property.</param>
         /// <param name="actualValue">Actual value of the tested property.</param>
-        protected abstract void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue);
+        public abstract void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue);
         
-        protected ObjectResult GetObjectResult()
+        public ObjectResult GetObjectResult()
         {
             if (!(this.TestContext.MethodResult is ObjectResult objectResult))
             {

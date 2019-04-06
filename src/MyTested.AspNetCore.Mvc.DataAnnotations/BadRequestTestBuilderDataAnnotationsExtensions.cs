@@ -3,14 +3,14 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Builders.ActionResults.BadRequest;
-    using Builders.Base;
     using Builders.Contracts.ActionResults.BadRequest;
     using Builders.Contracts.Models;
     using Builders.Models;
     using Exceptions;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
+
+    using static BadRequestTestBuilderExtensions;
 
     /// <summary>
     /// Contains <see cref="ModelStateDictionary"/> extension methods for <see cref="IBadRequestTestBuilder"/>.
@@ -24,9 +24,8 @@
         /// <returns>The same <see cref="IAndBadRequestTestBuilder"/>.</returns>
         public static IAndBadRequestTestBuilder WithModelStateError(this IBadRequestTestBuilder badRequestTestBuilder)
         {
-            var actualBadRequestTestBuilder = GetBadRequestTestBuilder(badRequestTestBuilder);
-            return actualBadRequestTestBuilder
-                .WithModelStateError(actualBadRequestTestBuilder.TestContext.ModelState);
+            var actualBuilder = GetBadRequestTestBuilder(badRequestTestBuilder);
+            return actualBuilder.WithModelStateError(actualBuilder.TestContext.ModelState);
         }
 
         /// <summary>
@@ -39,10 +38,10 @@
             this IBadRequestTestBuilder badRequestTestBuilder,
             ModelStateDictionary modelState)
         {
-            var actualBadRequestTestBuilder = GetBadRequestTestBuilder(badRequestTestBuilder);
+            var actualBuilder = GetBadRequestTestBuilder(badRequestTestBuilder);
 
-            var badRequestObjectResultValue = actualBadRequestTestBuilder.GetBadRequestObjectResultValue();
-            var actualModelState = actualBadRequestTestBuilder.GetModelStateFromSerializableError(badRequestObjectResultValue);
+            var badRequestObjectResultValue = actualBuilder.GetBadRequestObjectResultValue();
+            var actualModelState = actualBuilder.GetModelStateFromSerializableError(badRequestObjectResultValue);
 
             var modelStateKeys = modelState.Keys.ToList();
             var actualModelStateKeys = actualModelState.Keys.ToList();
@@ -54,7 +53,7 @@
             {
                 throw new BadRequestResultAssertionException(string.Format(
                     "{0} bad request model state dictionary to contain {1} keys, but found {2}.",
-                    actualBadRequestTestBuilder.TestContext.ExceptionMessagePrefix,
+                    actualBuilder.TestContext.ExceptionMessagePrefix,
                     expectedKeysCount,
                     actualKeysCount));
             }
@@ -67,7 +66,7 @@
                 {
                     throw new BadRequestResultAssertionException(string.Format(
                         "{0} bad request model state dictionary to contain {1} key, but none found.",
-                        actualBadRequestTestBuilder.TestContext.ExceptionMessagePrefix,
+                        actualBuilder.TestContext.ExceptionMessagePrefix,
                         expectedKey));
                 }
 
@@ -78,7 +77,7 @@
                 {
                     throw new BadRequestResultAssertionException(string.Format(
                         "{0} bad request model state dictionary to contain {1} errors for {2} key, but found {3}.",
-                        actualBadRequestTestBuilder.TestContext.ExceptionMessagePrefix,
+                        actualBuilder.TestContext.ExceptionMessagePrefix,
                         expectedSortedErrors.Count,
                         expectedKey,
                         actualSortedErrors.Count));
@@ -88,11 +87,11 @@
                 {
                     var expectedError = expectedSortedErrors[i];
                     var actualError = actualSortedErrors[i];
-                    actualBadRequestTestBuilder.ValidateErrorMessage(expectedError, actualError);
+                    actualBuilder.ValidateErrorMessage(expectedError, actualError);
                 }
             }
 
-            return actualBadRequestTestBuilder;
+            return actualBuilder;
         }
 
         /// <summary>
@@ -105,41 +104,23 @@
             this IBadRequestTestBuilder badRequestTestBuilder,
             Action<IModelStateTestBuilder> modelStateTestBuilder)
         {
-            var actualBadRequestTestBuilder = GetBadRequestTestBuilder(badRequestTestBuilder);
+            var actualBuilder = GetBadRequestTestBuilder(badRequestTestBuilder);
 
-            actualBadRequestTestBuilder.TestContext.Model = actualBadRequestTestBuilder.GetBadRequestObjectResultValue();
+            actualBuilder.TestContext.Model = actualBuilder.GetBadRequestObjectResultValue();
 
             var newModelStateTestBuilder = new ModelStateTestBuilder(
-                actualBadRequestTestBuilder.TestContext,
-                modelState: actualBadRequestTestBuilder.GetModelStateFromSerializableError(actualBadRequestTestBuilder.TestContext.Model));
+                actualBuilder.TestContext,
+                modelState: actualBuilder.GetModelStateFromSerializableError(actualBuilder.TestContext.Model));
 
             modelStateTestBuilder(newModelStateTestBuilder);
 
-            return actualBadRequestTestBuilder;
+            return actualBuilder;
         }
 
-        private static BadRequestTestBuilder<BadRequestObjectResult> GetBadRequestTestBuilder(IBadRequestTestBuilder badRequestTestBuilder)
-        {
-            var actualBadRequestTestBuilder = badRequestTestBuilder as BadRequestTestBuilder<BadRequestObjectResult>;
-
-            if (actualBadRequestTestBuilder == null)
-            {
-                var badRequestTestBuilderBase = (BaseTestBuilderWithInvokedAction)badRequestTestBuilder;
-
-                throw new BadRequestResultAssertionException(string.Format(
-                    "{0} bad request result to contain error object, but it could not be found.",
-                    badRequestTestBuilderBase.TestContext.ExceptionMessagePrefix));
-            }
-
-            return actualBadRequestTestBuilder;
-        }
-
-        private static IList<string> GetSortedErrorMessagesForModelStateKey(IEnumerable<ModelError> errors)
-        {
-            return errors
+        private static IList<string> GetSortedErrorMessagesForModelStateKey(IEnumerable<ModelError> errors) 
+            => errors
                 .OrderBy(er => er.ErrorMessage)
                 .Select(er => er.ErrorMessage)
                 .ToList();
-        }
     }
 }

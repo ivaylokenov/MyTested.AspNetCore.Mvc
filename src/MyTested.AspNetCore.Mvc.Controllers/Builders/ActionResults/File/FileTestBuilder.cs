@@ -56,6 +56,7 @@
             var fileStreamResult = this.GetFileResult<FileStreamResult>(FileStream);
             var expectedContents = stream.ToByteArray();
             var actualContents = fileStreamResult.FileStream.ToByteArray();
+
             if (!expectedContents.SequenceEqual(actualContents))
             {
                 this.ThrowNewFileResultAssertionException(
@@ -72,6 +73,7 @@
         {
             var virtualFileResult = this.GetFileResult<VirtualFileResult>(FileName);
             var actualFileName = virtualFileResult.FileName;
+
             if (fileName != virtualFileResult.FileName)
             {
                 this.ThrowNewFileResultAssertionException(
@@ -87,6 +89,7 @@
         public IAndFileTestBuilder WithFileProvider(IFileProvider fileProvider)
         {
             var virtualFileResult = this.GetFileResult<VirtualFileResult>(FileProvider);
+
             if (fileProvider != virtualFileResult.FileProvider)
             {
                 this.ThrowNewFileResultAssertionException(
@@ -121,6 +124,7 @@
         public IAndFileTestBuilder WithContents(byte[] fileContents)
         {
             var fileContentResult = this.GetFileResult<FileContentResult>(FileContents);
+
             if (!fileContents.SequenceEqual(fileContentResult.FileContents))
             {
                 this.ThrowNewFileResultAssertionException(

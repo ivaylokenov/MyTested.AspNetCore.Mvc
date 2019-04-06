@@ -1,20 +1,20 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.Content
 {
-    using System.Net;
     using Builders.Base;
     using Contracts.ActionResults.Content;
     using Exceptions;
     using Internal;
+    using Internal.Contracts.ActionResults;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Net.Http.Headers;
-    using Utilities.Validators;
 
     /// <summary>
     /// Used for testing <see cref="ContentResult"/>.
     /// </summary>
     public class ContentTestBuilder
-        : BaseTestBuilderWithActionResult<ContentResult>, IAndContentTestBuilder
+        : BaseTestBuilderWithActionResult<ContentResult>, 
+        IAndContentTestBuilder,
+        IBaseTestBuilderWithContentTypeResultInternal<IAndContentTestBuilder>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ContentTestBuilder"/> class.
@@ -25,40 +25,12 @@
         {
         }
 
-        /// <inheritdoc />
-        public IAndContentTestBuilder WithStatusCode(int statusCode)
-            => this.WithStatusCode((HttpStatusCode)statusCode);
-
-        /// <inheritdoc />
-        public IAndContentTestBuilder WithStatusCode(HttpStatusCode statusCode)
-        {
-            HttpStatusCodeValidator.ValidateHttpStatusCode(
-                statusCode,
-                this.ActionResult.StatusCode,
-                this.ThrowNewContentResultAssertionException);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndContentTestBuilder WithContentType(string contentType)
-        {
-            ContentTypeValidator.ValidateContentType(
-                contentType,
-                this.ActionResult.ContentType,
-                this.ThrowNewContentResultAssertionException);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndContentTestBuilder WithContentType(MediaTypeHeaderValue contentType)
-            => this.WithContentType(contentType?.MediaType.Value);
+        public IAndContentTestBuilder ResultTestBuilder => this;
 
         /// <inheritdoc />
         public IContentTestBuilder AndAlso() => this;
         
-        private void ThrowNewContentResultAssertionException(string propertyName, string expectedValue, string actualValue) 
+        public void ThrowNewContentResultAssertionException(string propertyName, string expectedValue, string actualValue) 
             => throw new ContentResultAssertionException(string.Format(
                 ExceptionMessages.ActionResultFormat,
                 this.TestContext.ExceptionMessagePrefix,

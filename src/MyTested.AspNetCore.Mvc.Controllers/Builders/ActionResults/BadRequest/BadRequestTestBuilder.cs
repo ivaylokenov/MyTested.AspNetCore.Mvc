@@ -1,6 +1,5 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.BadRequest
 {
-    using System;
     using Base;
     using Contracts.ActionResults.BadRequest;
     using Exceptions;
@@ -9,7 +8,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Utilities.Extensions;
-
+    
     /// <summary>
     /// Used for testing bad request results.
     /// </summary>
@@ -36,69 +35,12 @@
         /// Gets the bad request result test builder.
         /// </summary>
         /// <value>Test builder of <see cref="IAndBadRequestTestBuilder"/>.</value>
-        protected override IAndBadRequestTestBuilder ResultTestBuilder => this;
+        public override IAndBadRequestTestBuilder ResultTestBuilder => this;
         
-        /// <inheritdoc />
-        public IBadRequestErrorMessageTestBuilder WithErrorMessage()
-        {
-            var actualErrorMessage = this.GetBadRequestErrorMessage();
-            return new BadRequestErrorMessageTestBuilder(
-                this.TestContext,
-                actualErrorMessage,
-                this);
-        }
-
-        /// <inheritdoc />
-        public IAndBadRequestTestBuilder WithErrorMessage(string error)
-        {
-            var actualErrorMessage = this.GetBadRequestErrorMessage();
-            this.ValidateErrorMessage(error, actualErrorMessage);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndBadRequestTestBuilder WithErrorMessage(Action<string> assertions)
-        {
-            var actualErrorMessage = this.GetBadRequestErrorMessage();
-            assertions(actualErrorMessage);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndBadRequestTestBuilder WithErrorMessage(Func<string, bool> predicate)
-        {
-            var actualErrorMessage = this.GetBadRequestErrorMessage();
-            if (!predicate(actualErrorMessage))
-            {
-                throw new BadRequestResultAssertionException(string.Format(
-                    "{0} bad request error message ('{1}') to pass the given predicate, but it failed.",
-                    this.TestContext.ExceptionMessagePrefix,
-                    actualErrorMessage));
-            }
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndBadRequestTestBuilder WithNoError()
-        {
-            var actualResult = this.TestContext.MethodResult as BadRequestResult;
-            if (actualResult == null)
-            {
-                throw new ResponseModelAssertionException(string.Format(
-                    "{0} bad request result to not have error message, but in fact such was found.",
-                    this.TestContext.ExceptionMessagePrefix));
-            }
-
-            return this;
-        }
-
         /// <inheritdoc />
         public IBadRequestTestBuilder AndAlso() => this;
 
-        protected override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)
+        public override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)
             => this.ThrowNewHttpBadRequestResultAssertionException(propertyName, expectedValue, actualValue);
 
         public object GetBadRequestObjectResultValue()

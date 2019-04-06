@@ -16,19 +16,21 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="ChallengeTestBuilder"/> class.
         /// </summary>
-        /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
+        /// <param name="testContext">
+        /// <see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.
+        /// </param>
         public ChallengeTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
         }
 
         /// <inheritdoc />
-        protected override IAndChallengeTestBuilder AuthenticationResultTestBuilder => this;
+        public override IAndChallengeTestBuilder ResultTestBuilder => this;
 
         /// <inheritdoc />
         public IChallengeTestBuilder AndAlso() => this;
 
-        protected override void ThrowNewAuthenticationResultAssertionException(string propertyName, string expectedValue, string actualValue) 
+        public override void ThrowNewAuthenticationResultAssertionException(string propertyName, string expectedValue, string actualValue) 
             => throw new ChallengeResultAssertionException(string.Format(
                 ExceptionMessages.ActionResultFormat,
                 this.TestContext.ExceptionMessagePrefix,
