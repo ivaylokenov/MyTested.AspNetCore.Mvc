@@ -27,6 +27,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MyTested.AspNetCore.Mvc.Controllers.ActionResults\MyTested.AspNetCore.Mvc.Controllers.ActionResults.csproj" />
     <ProjectReference Include="..\MyTested.AspNetCore.Mvc.Controllers.Attributes\MyTested.AspNetCore.Mvc.Controllers.Attributes.csproj" />
     <ProjectReference Include="..\MyTested.AspNetCore.Mvc.Controllers\MyTested.AspNetCore.Mvc.Controllers.csproj" />
     <ProjectReference Include="..\MyTested.AspNetCore.Mvc.Models\MyTested.AspNetCore.Mvc.Models.csproj" />

@@ -1,28 +1,24 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.Redirect
 {
-    using System;
-    using System.Collections.Generic;
-    using Builders.Base;
+    using Base;
     using Contracts.ActionResults.Redirect;
-    using Contracts.Uri;
     using Exceptions;
     using Internal;
+    using Internal.Contracts.ActionResults;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Routing;
-    using Utilities.Extensions;
-    using Utilities.Validators;
 
     /// <summary>
     /// Used for testing redirect results.
     /// </summary>
     /// <typeparam name="TRedirectResult">Type of redirect result - <see cref="RedirectResult"/>, <see cref="RedirectToActionResult"/> or <see cref="RedirectToRouteResult"/>.</typeparam>
     public class RedirectTestBuilder<TRedirectResult>
-        : BaseTestBuilderWithActionResult<TRedirectResult>, IAndRedirectTestBuilder
+        : BaseTestBuilderWithActionResult<TRedirectResult>, 
+        IAndRedirectTestBuilder,
+        IBaseTestBuilderWithRedirectResultInternal<IAndRedirectTestBuilder>,
+        IBaseTestBuilderWithRouteValuesResultInternal<IAndRedirectTestBuilder>
         where TRedirectResult : ActionResult
     {
-        private const string Location = "location";
-        
         /// <summary>
         /// Initializes a new instance of the <see cref="RedirectTestBuilder{TRedirectResult}"/> class.
         /// </summary>
@@ -32,229 +28,24 @@
         {
         }
 
+        /// <summary>
+        /// Gets the redirect result test builder.
+        /// </summary>
+        /// <value>Test builder of <see cref="IAndRedirectTestBuilder"/> type.</value>
+        public IAndRedirectTestBuilder ResultTestBuilder => this;
+
         public bool IncludeCountCheck { get; set; } = true;
-
-        /// <inheritdoc />
-        public IAndRedirectTestBuilder Permanent()
-        {
-            RuntimeBinderValidator.ValidateBinding(() =>
-            {
-                var dynamicActionResult = this.ActionResult.AsDynamic();
-                if (!dynamicActionResult.Permanent)
-                {
-                    this.ThrowNewRedirectResultAssertionException(
-                        "to",
-                        "be permanent",
-                        "in fact it was not");
-                }
-            });
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndRedirectTestBuilder ToUrl(string location)
-        {
-            var uri = LocationValidator.ValidateAndGetWellFormedUriString(location, this.ThrowNewRedirectResultAssertionException);
-            return this.ToUrl(uri);
-        }
-
-        /// <inheritdoc />
-        public IAndRedirectTestBuilder ToUrlPassing(Action<string> assertions)
-        {
-            var redirectResult = this.GetRedirectResult<RedirectResult>(Location);
-            assertions(redirectResult.Url);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndRedirectTestBuilder ToUrlPassing(Func<string, bool> predicate)
-        {
-            var redirectResult = this.GetRedirectResult<RedirectResult>(Location);
-            var url = redirectResult.Url;
-            if (!predicate(url))
-            {
-                this.ThrowNewRedirectResultAssertionException(
-                    $"location ('{url}')",
-                    "to pass the given predicate",
-                    "it failed");
-            }
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndRedirectTestBuilder ToUrl(Uri location)
-        {
-            this.GetRedirectResult<RedirectResult>(Location);
-            LocationValidator.ValidateUri(
-                this.ActionResult,
-                location.OriginalString,
-                this.ThrowNewRedirectResultAssertionException);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndRedirectTestBuilder ToUrl(Action<IUriTestBuilder> uriTestBuilder)
-        {
-            LocationValidator.ValidateLocation(
-                this.GetRedirectResult<RedirectResult>(Location),
-                uriTestBuilder,
-                this.ThrowNewRedirectResultAssertionException);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndRedirectTestBuilder ToAction(string actionName)
-        {
-            var redirectAtActionResult = this.GetRedirectResult<RedirectToActionResult>("action name");
-            RouteActionResultValidator.ValidateActionName(
-                redirectAtActionResult,
-                actionName,
-                this.ThrowNewRedirectResultAssertionException);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndRedirectTestBuilder ToController(string controllerName)
-        {
-            var redirectAtActionResult = this.GetRedirectResult<RedirectToActionResult>("controller name");
-            RouteActionResultValidator.ValidateControllerName(
-                redirectAtActionResult,
-                controllerName,
-                this.ThrowNewRedirectResultAssertionException);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndRedirectTestBuilder WithRouteName(string routeName)
-        {
-            var redirectAtRouteResult = this.GetRedirectResult<RedirectToRouteResult>("route name");
-            RouteActionResultValidator.ValidateRouteName(
-                redirectAtRouteResult,
-                routeName,
-                this.ThrowNewRedirectResultAssertionException);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndRedirectTestBuilder ContainingRouteKey(string key)
-        {
-            RouteActionResultValidator.ValidateRouteValue(
-                this.ActionResult,
-                key,
-                this.ThrowNewRedirectResultAssertionException);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndRedirectTestBuilder ContainingRouteValue(string key, object value)
-        {
-            RouteActionResultValidator.ValidateRouteValue(
-                this.ActionResult,
-                key,
-                value,
-                this.ThrowNewRedirectResultAssertionException);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndRedirectTestBuilder ContainingRouteValue<TRouteValue>(TRouteValue value)
-        {
-            RouteActionResultValidator.ValidateRouteValue(
-                this.ActionResult,
-                value,
-                this.ThrowNewRedirectResultAssertionException);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndRedirectTestBuilder ContainingRouteValueOfType<TRouteValue>()
-        {
-            RouteActionResultValidator.ValidateRouteValueOfType<TRouteValue>(
-                this.ActionResult,
-                this.ThrowNewRedirectResultAssertionException);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndRedirectTestBuilder ContainingRouteValueOfType<TRouteValue>(string key)
-        {
-            RouteActionResultValidator.ValidateRouteValueOfType<TRouteValue>(
-                this.ActionResult,
-                key,
-                this.ThrowNewRedirectResultAssertionException);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndRedirectTestBuilder ContainingRouteValues(object routeValues)
-            => this.ContainingRouteValues(new RouteValueDictionary(routeValues));
-
-        /// <inheritdoc />
-        public IAndRedirectTestBuilder ContainingRouteValues(IDictionary<string, object> routeValues)
-        {
-            RouteActionResultValidator.ValidateRouteValues(
-                this.ActionResult,
-                routeValues,
-                this.IncludeCountCheck,
-                this.ThrowNewRedirectResultAssertionException);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndRedirectTestBuilder WithUrlHelper(IUrlHelper urlHelper)
-        {
-            RouteActionResultValidator.ValidateUrlHelper(
-                this.ActionResult,
-                urlHelper,
-                this.ThrowNewRedirectResultAssertionException);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndRedirectTestBuilder WithUrlHelperOfType<TUrlHelper>()
-            where TUrlHelper : IUrlHelper
-        {
-            RouteActionResultValidator.ValidateUrlHelperOfType<TUrlHelper>(
-                this.ActionResult,
-                this.ThrowNewRedirectResultAssertionException);
-
-            return this;
-        }
-
+        
         /// <inheritdoc />
         public IRedirectTestBuilder AndAlso() => this;
-        
-        private TExpectedRedirectResult GetRedirectResult<TExpectedRedirectResult>(string containment)
-            where TExpectedRedirectResult : class
-        {
-            var actualRedirectResult = this.ActionResult as TExpectedRedirectResult;
-            if (actualRedirectResult == null)
-            {
-                this.ThrowNewRedirectResultAssertionException(
-                    "to contain",
-                    containment,
-                    "it could not be found");
-            }
 
-            return actualRedirectResult;
-        }
-
-        public void ThrowNewRedirectResultAssertionException(string propertyName, string expectedValue, string actualValue) 
+        /// <summary>
+        /// Throws new <see cref="RedirectResultAssertionException"/> for the provided property name, expected value and actual value.
+        /// </summary>
+        /// <param name="propertyName">Property name on which the testing failed.</param>
+        /// <param name="expectedValue">Expected value of the tested property.</param>
+        /// <param name="actualValue">Actual value of the tested property.</param>
+        public void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue) 
             => throw new RedirectResultAssertionException(string.Format(
                 ExceptionMessages.ActionResultFormat,
                 this.TestContext.ExceptionMessagePrefix,

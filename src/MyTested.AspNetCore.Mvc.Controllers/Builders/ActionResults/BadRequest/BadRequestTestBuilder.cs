@@ -4,6 +4,7 @@
     using Contracts.ActionResults.BadRequest;
     using Exceptions;
     using Internal;
+    using Internal.Contracts.ActionResults;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -13,8 +14,10 @@
     /// Used for testing bad request results.
     /// </summary>
     /// <typeparam name="THttpBadRequestResult">Type of bad request result - <see cref="BadRequestResult"/> or <see cref="BadRequestObjectResult"/>.</typeparam>
-    public class BadRequestTestBuilder<THttpBadRequestResult>
-        : BaseTestBuilderWithOutputResult<THttpBadRequestResult, IAndBadRequestTestBuilder>, IAndBadRequestTestBuilder
+    public class BadRequestTestBuilder<THttpBadRequestResult> 
+        : BaseTestBuilderWithResponseModel<THttpBadRequestResult>,
+        IAndBadRequestTestBuilder,
+        IBaseTestBuilderWithOutputResultInternal<IAndBadRequestTestBuilder>
         where THttpBadRequestResult : ActionResult
     {
         private const string ErrorMessage = "{0} bad request result error to be the given object, but in fact it was a different.";
@@ -34,15 +37,12 @@
         /// <summary>
         /// Gets the bad request result test builder.
         /// </summary>
-        /// <value>Test builder of <see cref="IAndBadRequestTestBuilder"/>.</value>
-        public override IAndBadRequestTestBuilder ResultTestBuilder => this;
+        /// <value>Test builder of <see cref="IAndBadRequestTestBuilder"/> type.</value>
+        public IAndBadRequestTestBuilder ResultTestBuilder => this;
         
         /// <inheritdoc />
         public IBadRequestTestBuilder AndAlso() => this;
-
-        public override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)
-            => this.ThrowNewHttpBadRequestResultAssertionException(propertyName, expectedValue, actualValue);
-
+        
         public object GetBadRequestObjectResultValue()
         {
             var actualBadRequestResult = this.TestContext.MethodResult as BadRequestObjectResult;
@@ -97,13 +97,13 @@
             return result;
         }
 
-        private void ThrowNewHttpBadRequestResultAssertionExceptionWithMessage(string expectedMessage = null, string actualMessage = null) 
-            => this.ThrowNewHttpBadRequestResultAssertionException(
-                "with",
-                expectedMessage == null ? "error message" : $"{expectedMessage}",
-                $"instead received {(actualMessage == null ? "non-string value" : $"{actualMessage}")}");
-
-        private void ThrowNewHttpBadRequestResultAssertionException(string propertyName, string expectedValue, string actualValue) 
+        /// <summary>
+        /// Throws new <see cref="BadRequestResultAssertionException"/> for the provided property name, expected value and actual value.
+        /// </summary>
+        /// <param name="propertyName">Property name on which the testing failed.</param>
+        /// <param name="expectedValue">Expected value of the tested property.</param>
+        /// <param name="actualValue">Actual value of the tested property.</param>
+        public override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)
             => throw new BadRequestResultAssertionException(string.Format(
                 ExceptionMessages.ActionResultFormat,
                 this.TestContext.ExceptionMessagePrefix,
@@ -111,5 +111,11 @@
                 propertyName,
                 expectedValue,
                 actualValue));
+
+        private void ThrowNewHttpBadRequestResultAssertionExceptionWithMessage(string expectedMessage = null, string actualMessage = null) 
+            => this.ThrowNewFailedValidationException(
+                "with",
+                expectedMessage == null ? "error message" : $"{expectedMessage}",
+                $"instead received {(actualMessage == null ? "non-string value" : $"{actualMessage}")}");
     }
 }

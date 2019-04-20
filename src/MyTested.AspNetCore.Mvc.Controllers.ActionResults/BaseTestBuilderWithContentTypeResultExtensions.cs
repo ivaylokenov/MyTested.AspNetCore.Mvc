@@ -25,13 +25,12 @@
             string contentType)
             where TContentTypeResultTestBuilder : IBaseTestBuilderWithActionResult
         {
-            var actualBuilder = 
-                (IBaseTestBuilderWithContentTypeResultInternal<TContentTypeResultTestBuilder>)baseTestBuilderWithContentTypeResult;
+            var actualBuilder = GetActualBuilder(baseTestBuilderWithContentTypeResult);
 
             ContentTypeValidator.ValidateContentType(
                 actualBuilder.TestContext.MethodResult,
                 contentType,
-                actualBuilder.ThrowNewContentResultAssertionException);
+                actualBuilder.ThrowNewFailedValidationException);
 
             return actualBuilder.ResultTestBuilder;
         }
@@ -51,5 +50,11 @@
             where TContentTypeResultTestBuilder : IBaseTestBuilderWithActionResult
             => baseTestBuilderWithContentTypeResult
                 .WithContentType(contentType?.MediaType.Value);
+
+        private static IBaseTestBuilderWithContentTypeResultInternal<TContentTypeResultTestBuilder>
+            GetActualBuilder<TContentTypeResultTestBuilder>(
+                IBaseTestBuilderWithContentTypeResult<TContentTypeResultTestBuilder> baseTestBuilderWithContentTypeResult)
+            where TContentTypeResultTestBuilder : IBaseTestBuilderWithActionResult
+            => (IBaseTestBuilderWithContentTypeResultInternal<TContentTypeResultTestBuilder>)baseTestBuilderWithContentTypeResult;
     }
 }

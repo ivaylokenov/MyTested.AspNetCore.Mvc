@@ -1,7 +1,8 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.ActionResults.Json
 {
     /// <summary>
-    /// Used for testing <see cref="Newtonsoft.Json.JsonSerializerSettings"/> in a <see cref="Microsoft.AspNetCore.Mvc.JsonResult"/> with AndAlso() method.
+    /// Used for testing <see cref="Newtonsoft.Json.JsonSerializerSettings"/>
+    /// in a <see cref="Microsoft.AspNetCore.Mvc.JsonResult"/> with AndAlso() method.
     /// </summary>
     public interface IAndJsonSerializerSettingsTestBuilder : IJsonSerializerSettingsTestBuilder
     {

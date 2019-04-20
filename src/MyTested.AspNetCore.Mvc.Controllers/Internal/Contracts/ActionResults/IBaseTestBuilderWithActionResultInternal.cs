@@ -9,5 +9,7 @@
         ComponentTestContext TestContext { get; }
 
         TResultTestBuilder ResultTestBuilder { get; }
+
+        void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue);
     }
 }

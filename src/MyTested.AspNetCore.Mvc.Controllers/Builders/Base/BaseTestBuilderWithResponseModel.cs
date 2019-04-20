@@ -21,7 +21,7 @@
         {
         }
 
-        protected TActionResult ActionResult => this.TestContext.MethodResultAs<TActionResult>();
+        public TActionResult ActionResult => this.TestContext.MethodResultAs<TActionResult>();
         
         public override object GetActualModel() 
             => (this.TestContext.MethodResult as ObjectResult)?.Value;

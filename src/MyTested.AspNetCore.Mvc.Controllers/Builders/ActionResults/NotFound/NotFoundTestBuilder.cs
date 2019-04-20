@@ -4,6 +4,7 @@
     using Contracts.ActionResults.NotFound;
     using Exceptions;
     using Internal;
+    using Internal.Contracts.ActionResults;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
 
@@ -12,7 +13,9 @@
     /// </summary>
     /// <typeparam name="THttpNotFoundResult">Type of not found result - <see cref="NotFoundResult"/> or <see cref="NotFoundObjectResult"/>.</typeparam>
     public class NotFoundTestBuilder<THttpNotFoundResult>
-        : BaseTestBuilderWithOutputResult<THttpNotFoundResult, IAndNotFoundTestBuilder>, IAndNotFoundTestBuilder
+        : BaseTestBuilderWithResponseModel<THttpNotFoundResult>,
+        IAndNotFoundTestBuilder,
+        IBaseTestBuilderWithOutputResultInternal<IAndNotFoundTestBuilder>
         where THttpNotFoundResult : ActionResult
     {
         /// <summary>
@@ -28,7 +31,7 @@
         /// Gets the HTTP not found result test builder.
         /// </summary>
         /// <value>Test builder of <see cref="IAndNotFoundTestBuilder"/>.</value>
-        protected override IAndNotFoundTestBuilder ResultTestBuilder => this;
+        public IAndNotFoundTestBuilder ResultTestBuilder => this;
 
         /// <inheritdoc />
         public IAndNotFoundTestBuilder AndAlso() => this;
@@ -36,15 +39,12 @@
         public override void ValidateNoModel() => this.WithNoModel<NotFoundResult>();
 
         /// <summary>
-        /// Throws new HTTP not found result assertion exception for the provided property name, expected value and actual value.
+        /// Throws new <see cref="NotFoundResultAssertionException"/> for the provided property name, expected value and actual value.
         /// </summary>
-        /// <param name="propertyName">Property name on which the testing failed..</param>
+        /// <param name="propertyName">Property name on which the testing failed.</param>
         /// <param name="expectedValue">Expected value of the tested property.</param>
         /// <param name="actualValue">Actual value of the tested property.</param>
-        protected override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)
-            => this.ThrowNewHttpNotFoundResultAssertionException(propertyName, expectedValue, actualValue);
-
-        private void ThrowNewHttpNotFoundResultAssertionException(string propertyName, string expectedValue, string actualValue) 
+        public override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue) 
             => throw new NotFoundResultAssertionException(string.Format(
                 ExceptionMessages.ActionResultFormat,
                 this.TestContext.ExceptionMessagePrefix,

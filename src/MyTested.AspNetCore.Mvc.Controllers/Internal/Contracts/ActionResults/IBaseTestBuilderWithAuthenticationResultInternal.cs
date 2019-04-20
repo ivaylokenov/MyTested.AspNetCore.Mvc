@@ -8,7 +8,5 @@
         where TAuthenticationResultTestBuilder : IBaseTestBuilderWithActionResult
     {
         new ControllerTestContext TestContext { get; }
-
-        void ThrowNewAuthenticationResultAssertionException(string propertyName, string expectedValue, string actualValue);
     }
 }

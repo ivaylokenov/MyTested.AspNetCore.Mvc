@@ -42,8 +42,7 @@
             SystemHttpStatusCode statusCode)
             where TStatusCodeResultTestBuilder : IBaseTestBuilderWithActionResult
         {
-            var actualBuilder = 
-                (IBaseTestBuilderWithStatusCodeResultInternal<TStatusCodeResultTestBuilder>)baseTestBuilderWithStatusCodeResult;
+            var actualBuilder = GetActualBuilder(baseTestBuilderWithStatusCodeResult); 
 
             HttpStatusCodeValidator.ValidateHttpStatusCode(
                 actualBuilder.TestContext.MethodResult,
@@ -52,5 +51,11 @@
 
             return actualBuilder.ResultTestBuilder;
         }
+
+        private static IBaseTestBuilderWithStatusCodeResultInternal<TStatusCodeResultTestBuilder>
+            GetActualBuilder<TStatusCodeResultTestBuilder>(
+                IBaseTestBuilderWithStatusCodeResult<TStatusCodeResultTestBuilder> baseTestBuilderWithStatusCodeResult)
+            where TStatusCodeResultTestBuilder : IBaseTestBuilderWithActionResult
+            => (IBaseTestBuilderWithStatusCodeResultInternal<TStatusCodeResultTestBuilder>)baseTestBuilderWithStatusCodeResult;
     }
 }

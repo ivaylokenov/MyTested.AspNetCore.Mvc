@@ -1,6 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.Content
 {
-    using Builders.Base;
+    using Base;
     using Contracts.ActionResults.Content;
     using Exceptions;
     using Internal;
@@ -25,12 +25,22 @@
         {
         }
 
+        /// <summary>
+        /// Gets the content result test builder.
+        /// </summary>
+        /// <value>Test builder of <see cref="IAndContentTestBuilder"/> type.</value>
         public IAndContentTestBuilder ResultTestBuilder => this;
 
         /// <inheritdoc />
         public IContentTestBuilder AndAlso() => this;
-        
-        public void ThrowNewContentResultAssertionException(string propertyName, string expectedValue, string actualValue) 
+
+        /// <summary>
+        /// Throws new <see cref="ContentResultAssertionException"/> for the provided property name, expected value and actual value.
+        /// </summary>
+        /// <param name="propertyName">Property name on which the testing failed.</param>
+        /// <param name="expectedValue">Expected value of the tested property.</param>
+        /// <param name="actualValue">Actual value of the tested property.</param>
+        public void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue) 
             => throw new ContentResultAssertionException(string.Format(
                 ExceptionMessages.ActionResultFormat,
                 this.TestContext.ExceptionMessagePrefix,

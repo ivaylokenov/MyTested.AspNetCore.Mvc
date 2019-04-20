@@ -29,13 +29,12 @@
             string authenticationScheme)
             where TAuthenticationResultTestBuilder : IBaseTestBuilderWithActionResult
         {
-            var actualBuilder =
-                (IBaseTestBuilderWithAuthenticationResultInternal<TAuthenticationResultTestBuilder>)baseTestBuilderWithAuthenticationResult;
+            var actualBuilder = GetActualBuilder(baseTestBuilderWithAuthenticationResult);
 
             AuthenticationValidator.ValidateAuthenticationScheme(
                 actualBuilder.TestContext.MethodResult,
                 authenticationScheme,
-                actualBuilder.ThrowNewAuthenticationResultAssertionException);
+                actualBuilder.ThrowNewFailedValidationException);
 
             return actualBuilder.ResultTestBuilder;
         }
@@ -54,13 +53,12 @@
             IEnumerable<string> authenticationSchemes)
             where TAuthenticationResultTestBuilder : IBaseTestBuilderWithActionResult
         {
-            var actualBuilder =
-                (IBaseTestBuilderWithAuthenticationResultInternal<TAuthenticationResultTestBuilder>)baseTestBuilderWithAuthenticationResult;
+            var actualBuilder = GetActualBuilder(baseTestBuilderWithAuthenticationResult);
 
             AuthenticationValidator.ValidateAuthenticationSchemes(
                 actualBuilder.TestContext.MethodResult,
                 authenticationSchemes,
-                actualBuilder.ThrowNewAuthenticationResultAssertionException);
+                actualBuilder.ThrowNewFailedValidationException);
 
             return actualBuilder.ResultTestBuilder;
         }
@@ -95,13 +93,12 @@
             AuthenticationProperties properties)
             where TAuthenticationResultTestBuilder : IBaseTestBuilderWithActionResult
         {
-            var actualBuilder =
-                (IBaseTestBuilderWithAuthenticationResultInternal<TAuthenticationResultTestBuilder>)baseTestBuilderWithAuthenticationResult;
+            var actualBuilder = GetActualBuilder(baseTestBuilderWithAuthenticationResult);
 
             AuthenticationValidator.ValidateAuthenticationProperties(
                 actualBuilder.TestContext.MethodResult,
                 properties,
-                actualBuilder.ThrowNewAuthenticationResultAssertionException);
+                actualBuilder.ThrowNewFailedValidationException);
 
             return actualBuilder.ResultTestBuilder;
         }
@@ -120,8 +117,7 @@
             Action<IAuthenticationPropertiesTestBuilder> authenticationPropertiesBuilder)
             where TAuthenticationResultTestBuilder : IBaseTestBuilderWithActionResult
         {
-            var actualBuilder =
-                (IBaseTestBuilderWithAuthenticationResultInternal<TAuthenticationResultTestBuilder>)baseTestBuilderWithAuthenticationResult;
+            var actualBuilder = GetActualBuilder(baseTestBuilderWithAuthenticationResult);
 
             AuthenticationValidator.ValidateAuthenticationProperties(
                 authenticationPropertiesBuilder,
@@ -129,5 +125,11 @@
 
             return actualBuilder.ResultTestBuilder;
         }
+
+        private static IBaseTestBuilderWithAuthenticationResultInternal<TAuthenticationResultTestBuilder>
+            GetActualBuilder<TAuthenticationResultTestBuilder>(
+                IBaseTestBuilderWithAuthenticationResult<TAuthenticationResultTestBuilder> baseTestBuilderWithAuthenticationResult)
+            where TAuthenticationResultTestBuilder : IBaseTestBuilderWithActionResult
+            => (IBaseTestBuilderWithAuthenticationResultInternal<TAuthenticationResultTestBuilder>)baseTestBuilderWithAuthenticationResult;
     }
 }

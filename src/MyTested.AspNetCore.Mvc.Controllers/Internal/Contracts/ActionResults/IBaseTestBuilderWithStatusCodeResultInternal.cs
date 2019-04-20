@@ -6,6 +6,5 @@
         : IBaseTestBuilderWithActionResultInternal<TStatusCodeResultTestBuilder>
         where TStatusCodeResultTestBuilder : IBaseTestBuilderWithActionResult
     {
-        void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue);
     }
 }

@@ -10,21 +10,5 @@
     public interface IBaseTestBuilderWithUrlHelperResult<TUrlHelperResultTestBuilder> : IBaseTestBuilderWithActionResult
         where TUrlHelperResultTestBuilder : IBaseTestBuilderWithActionResult
     {
-        /// <summary>
-        /// Tests whether the <see cref="ActionResult"/>
-        /// has the same <see cref="IUrlHelper"/> as the provided one.
-        /// </summary>
-        /// <param name="urlHelper">URL helper of type <see cref="IUrlHelper"/>.</param>
-        /// <returns>The same URL helper <see cref="ActionResult"/> test builder.</returns>
-        TUrlHelperResultTestBuilder WithUrlHelper(IUrlHelper urlHelper);
-
-        /// <summary>
-        /// Tests whether the <see cref="ActionResult"/>
-        /// has the same <see cref="IUrlHelper"/> type as the provided one.
-        /// </summary>
-        /// <typeparam name="TUrlHelper">URL helper of type <see cref="IUrlHelper"/>.</typeparam>
-        /// <returns>The same URL helper <see cref="ActionResult"/> test builder.</returns>
-        TUrlHelperResultTestBuilder WithUrlHelperOfType<TUrlHelper>()
-            where TUrlHelper : IUrlHelper;
     }
 }

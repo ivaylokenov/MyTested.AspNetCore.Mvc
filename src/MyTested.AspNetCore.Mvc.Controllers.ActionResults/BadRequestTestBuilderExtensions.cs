@@ -48,6 +48,7 @@
             var actualBuilder = GetBadRequestTestBuilder(badRequestTestBuilder);
 
             var actualErrorMessage = actualBuilder.GetBadRequestErrorMessage();
+
             return new BadRequestErrorMessageTestBuilder(
                 actualBuilder.TestContext,
                 actualErrorMessage,

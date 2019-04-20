@@ -24,7 +24,7 @@
             this ILocalRedirectTestBuilder builder,
             Expression<Action<TController>> actionCall)
             where TController : class 
-            => ProcessRouteLambdaExpression<TController>(builder, actionCall);
+            => ProcessRouteLambdaExpression(builder, actionCall);
 
         /// <summary>
         /// Tests whether <see cref="Microsoft.AspNetCore.Mvc.LocalRedirectResult"/> redirects to specific asynchronous action.
@@ -37,9 +37,9 @@
             this ILocalRedirectTestBuilder builder, 
             Expression<Func<TController, Task>> actionCall)
             where TController : class 
-            => ProcessRouteLambdaExpression<TController>(builder, actionCall);
+            => ProcessRouteLambdaExpression(builder, actionCall);
 
-        private static IAndLocalRedirectTestBuilder ProcessRouteLambdaExpression<TController>(
+        private static IAndLocalRedirectTestBuilder ProcessRouteLambdaExpression(
             ILocalRedirectTestBuilder builder,
             LambdaExpression actionCall)
         {
@@ -49,7 +49,7 @@
                 actualBuilder.TestContext,
                 LinkGenerationTestContext.FromLocalRedirectResult(actualBuilder.ActionResult),
                 actionCall,
-                actualBuilder.ThrowNewRedirectResultAssertionException);
+                actualBuilder.ThrowNewFailedValidationException);
 
             return actualBuilder;
         }

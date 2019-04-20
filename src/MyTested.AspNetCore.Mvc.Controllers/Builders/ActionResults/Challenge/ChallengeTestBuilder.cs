@@ -4,6 +4,7 @@
     using Contracts.ActionResults.Challenge;
     using Exceptions;
     using Internal;
+    using Internal.Contracts.ActionResults;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
 
@@ -11,7 +12,9 @@
     /// Used for testing <see cref="ChallengeResult"/>.
     /// </summary>
     public class ChallengeTestBuilder
-        : BaseTestBuilderWithAuthenticationResult<ChallengeResult, IAndChallengeTestBuilder>, IAndChallengeTestBuilder
+        : BaseTestBuilderWithActionResult<ChallengeResult>,
+        IAndChallengeTestBuilder,
+        IBaseTestBuilderWithAuthenticationResultInternal<IAndChallengeTestBuilder>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ChallengeTestBuilder"/> class.
@@ -24,13 +27,22 @@
         {
         }
 
-        /// <inheritdoc />
-        public override IAndChallengeTestBuilder ResultTestBuilder => this;
+        /// <summary>
+        /// Gets the challenge result test builder.
+        /// </summary>
+        /// <value>Test builder of <see cref="IAndChallengeTestBuilder"/> type.</value>
+        public IAndChallengeTestBuilder ResultTestBuilder => this;
 
         /// <inheritdoc />
         public IChallengeTestBuilder AndAlso() => this;
 
-        public override void ThrowNewAuthenticationResultAssertionException(string propertyName, string expectedValue, string actualValue) 
+        /// <summary>
+        /// Throws new <see cref="ChallengeResultAssertionException"/> for the provided property name, expected value and actual value.
+        /// </summary>
+        /// <param name="propertyName">Property name on which the testing failed.</param>
+        /// <param name="expectedValue">Expected value of the tested property.</param>
+        /// <param name="actualValue">Actual value of the tested property.</param>
+        public void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue) 
             => throw new ChallengeResultAssertionException(string.Format(
                 ExceptionMessages.ActionResultFormat,
                 this.TestContext.ExceptionMessagePrefix,

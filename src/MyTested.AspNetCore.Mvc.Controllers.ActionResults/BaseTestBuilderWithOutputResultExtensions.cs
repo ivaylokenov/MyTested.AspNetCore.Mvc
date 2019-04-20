@@ -44,7 +44,7 @@
             MediaTypeHeaderValue contentType)
             where TOutputResultTestBuilder : IBaseTestBuilderWithActionResult
         {
-            var actualBuilder = (IBaseTestBuilderWithOutputResultInternal<TOutputResultTestBuilder>)baseTestBuilderWithOutputResult;
+            var actualBuilder = GetActualBuilder(baseTestBuilderWithOutputResult);
 
             ValidateObjectResult(actualBuilder);
 
@@ -102,7 +102,7 @@
             IEnumerable<MediaTypeHeaderValue> contentTypes)
             where TOutputResultTestBuilder : IBaseTestBuilderWithActionResult
         {
-            var actualBuilder = (IBaseTestBuilderWithOutputResultInternal<TOutputResultTestBuilder>)baseTestBuilderWithOutputResult;
+            var actualBuilder = GetActualBuilder(baseTestBuilderWithOutputResult);
 
             ValidateObjectResult(actualBuilder);
 
@@ -144,7 +144,7 @@
             IOutputFormatter outputFormatter)
             where TOutputResultTestBuilder : IBaseTestBuilderWithActionResult
         {
-            var actualBuilder = (IBaseTestBuilderWithOutputResultInternal<TOutputResultTestBuilder>)baseTestBuilderWithOutputResult;
+            var actualBuilder = GetActualBuilder(baseTestBuilderWithOutputResult);
 
             ValidateObjectResult(actualBuilder);
 
@@ -170,7 +170,7 @@
             where TOutputResultTestBuilder : IBaseTestBuilderWithActionResult
             where TOutputFormatter : IOutputFormatter
         {
-            var actualBuilder = (IBaseTestBuilderWithOutputResultInternal<TOutputResultTestBuilder>)baseTestBuilderWithOutputResult;
+            var actualBuilder = GetActualBuilder(baseTestBuilderWithOutputResult);
 
             ValidateObjectResult(actualBuilder);
 
@@ -195,7 +195,7 @@
             IEnumerable<IOutputFormatter> outputFormatters)
             where TOutputResultTestBuilder : IBaseTestBuilderWithActionResult
         {
-            var actualBuilder = (IBaseTestBuilderWithOutputResultInternal<TOutputResultTestBuilder>)baseTestBuilderWithOutputResult;
+            var actualBuilder = GetActualBuilder(baseTestBuilderWithOutputResult);
 
             ValidateObjectResult(actualBuilder);
 
@@ -224,13 +224,19 @@
                 .ContainingOutputFormatters(outputFormatters.AsEnumerable());
 
         private static void ValidateObjectResult<TOutputResultTestBuilder>(
-            IBaseTestBuilderWithOutputResultInternal<TOutputResultTestBuilder> baseTestBuilderWithComponent)
+            IBaseTestBuilderWithOutputResultInternal<TOutputResultTestBuilder> baseTestBuilderWithOutputResult)
             where TOutputResultTestBuilder : IBaseTestBuilderWithActionResult
         {
-            if (!(baseTestBuilderWithComponent.TestContext.MethodResult is ObjectResult))
+            if (!(baseTestBuilderWithOutputResult.TestContext.MethodResult is ObjectResult))
             {
-                baseTestBuilderWithComponent.ThrowNewFailedValidationException("to inherit", nameof(ObjectResult), "in fact it did not");
+                baseTestBuilderWithOutputResult.ThrowNewFailedValidationException("to inherit", nameof(ObjectResult), "in fact it did not");
             }
         }
+
+        private static IBaseTestBuilderWithOutputResultInternal<TOutputResultTestBuilder>
+            GetActualBuilder<TOutputResultTestBuilder>(
+                IBaseTestBuilderWithOutputResult<TOutputResultTestBuilder> baseTestBuilderWithOutputResult)
+            where TOutputResultTestBuilder : IBaseTestBuilderWithActionResult
+            => (IBaseTestBuilderWithOutputResultInternal<TOutputResultTestBuilder>)baseTestBuilderWithOutputResult;
     }
 }
