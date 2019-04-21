@@ -5,9 +5,9 @@
     using System.Linq;
     using Builders.Authentication;
     using Builders.Contracts.Authentication;
+    using Extensions;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Authentication;
-    using Utilities.Extensions;
 
     /// <summary>
     /// Validator class containing authentication validation logic.

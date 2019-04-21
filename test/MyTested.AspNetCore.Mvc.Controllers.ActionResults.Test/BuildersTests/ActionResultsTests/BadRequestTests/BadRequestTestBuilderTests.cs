@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ActionResultsTests.HttpNotFoundTests
+﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ActionResultsTests.BadRequestTests
 {
     using System.Collections.Generic;
     using System.Net;
@@ -11,43 +11,97 @@
     using Setups.Controllers;
     using Xunit;
 
-    public class HttpNotFoundTestBuilderTests
+    public class BadRequestTestBuilderTests
     {
         [Fact]
-        public void WithNoResponseModelShouldNotThrowExceptionWithNoResponseModel()
+        public void WithNoErrorShouldNotThrowExceptionWithNoError()
         {
             MyController<MvcController>
                 .Instance()
-                .Calling(c => c.HttpNotFoundAction())
+                .Calling(c => c.BadRequestAction())
                 .ShouldReturn()
-                .NotFound()
-                .WithNoModel();
+                .BadRequest()
+                .WithNoError();
         }
 
         [Fact]
-        public void WithNoResponseModelShouldThrowExceptionWithAnyResponseModel()
+        public void WithNoErrorShouldThrowExceptionWithError()
         {
             Test.AssertException<ResponseModelAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
                         .Instance()
-                        .Calling(c => c.HttpNotFoundWithObjectAction())
+                        .Calling(c => c.BadRequestWithCustomError())
                         .ShouldReturn()
-                        .NotFound()
-                        .WithNoModel();
+                        .BadRequest()
+                        .WithNoError();
                 },
-                "When calling HttpNotFoundWithObjectAction action in MvcController expected to not have a response model but in fact such was found.");
+                "When calling BadRequestWithCustomError action in MvcController expected bad request result to not have error message, but in fact such was found.");
         }
-        
+
+        [Fact]
+        public void WithErrorMessageShouldNotThrowExceptionWhenResultHasErrorMessage()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.BadRequestWithErrorAction())
+                .ShouldReturn()
+                .BadRequest()
+                .WithErrorMessage();
+        }
+
+        [Fact]
+        public void WithErrorMessageShouldThrowExceptionWhenResultDoesNotHaveErrorMessage()
+        {
+            Test.AssertException<BadRequestResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.BadRequestAction())
+                        .ShouldReturn()
+                        .BadRequest()
+                        .WithErrorMessage();
+                }, 
+                "When calling BadRequestAction action in MvcController expected bad request result to contain error object, but it could not be found.");
+        }
+
+        [Fact]
+        public void WithErrorMessageShouldNotThrowExceptionWhenResultHasCorrentErrorMessage()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.BadRequestWithErrorAction())
+                .ShouldReturn()
+                .BadRequest()
+                .WithErrorMessage("Bad request");
+        }
+
+        [Fact]
+        public void WithErrorMessageShouldThrowExceptionWhenResultDoesNotHaveCorrentErrorMessage()
+        {
+            Test.AssertException<BadRequestResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.BadRequestWithErrorAction())
+                        .ShouldReturn()
+                        .BadRequest()
+                        .WithErrorMessage("Good request");
+                }, 
+                "When calling BadRequestWithErrorAction action in MvcController expected bad request result with message 'Good request', but instead received 'Bad request'.");
+        }
+
         [Fact]
         public void WithStatusCodeShouldNotThrowExceptionWithCorrectStatusCode()
         {
             MyController<MvcController>
                 .Instance()
-                .Calling(c => c.FullHttpNotFoundAction())
+                .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .NotFound()
+                .BadRequest()
                 .WithStatusCode(201);
         }
 
@@ -56,26 +110,26 @@
         {
             MyController<MvcController>
                 .Instance()
-                .Calling(c => c.FullHttpNotFoundAction())
+                .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .NotFound()
+                .BadRequest()
                 .WithStatusCode(HttpStatusCode.Created);
         }
 
         [Fact]
         public void WithStatusCodeAsEnumShouldThrowExceptionWithIncorrectStatusCode()
         {
-            Test.AssertException<NotFoundResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
                         .Instance()
-                        .Calling(c => c.FullHttpNotFoundAction())
+                        .Calling(c => c.FullHttpBadRequestAction())
                         .ShouldReturn()
-                        .NotFound()
+                        .BadRequest()
                         .WithStatusCode(HttpStatusCode.OK);
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result to have 200 (OK) status code, but instead received 201 (Created).");
+                "When calling FullHttpBadRequestAction action in MvcController expected bad request result to have 200 (OK) status code, but instead received 201 (Created).");
         }
 
         [Fact]
@@ -83,9 +137,9 @@
         {
             MyController<MvcController>
                 .Instance()
-                .Calling(c => c.FullHttpNotFoundAction())
+                .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .NotFound()
+                .BadRequest()
                 .ContainingContentType(ContentType.ApplicationJson);
         }
 
@@ -94,26 +148,26 @@
         {
             MyController<MvcController>
                 .Instance()
-                .Calling(c => c.FullHttpNotFoundAction())
+                .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .NotFound()
+                .BadRequest()
                 .ContainingContentType(new MediaTypeHeaderValue(ContentType.ApplicationJson));
         }
         
         [Fact]
         public void ContainingContentTypeAsMediaTypeHeaderValueShouldThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<NotFoundResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
-                       .Instance()
-                       .Calling(c => c.FullHttpNotFoundAction())
-                       .ShouldReturn()
-                       .NotFound()
-                       .ContainingContentType(new MediaTypeHeaderValue(ContentType.ApplicationOctetStream));
+                        .Instance()
+                        .Calling(c => c.FullHttpBadRequestAction())
+                        .ShouldReturn()
+                        .BadRequest()
+                        .ContainingContentType(new MediaTypeHeaderValue(ContentType.ApplicationOctetStream));
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result content types to contain application/octet-stream, but in fact such was not found.");
+                "When calling FullHttpBadRequestAction action in MvcController expected bad request result content types to contain application/octet-stream, but in fact such was not found.");
         }
 
         [Fact]
@@ -121,9 +175,9 @@
         {
             MyController<MvcController>
                 .Instance()
-                .Calling(c => c.FullHttpNotFoundAction())
+                .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .NotFound()
+                .BadRequest()
                 .ContainingContentTypes(new List<string>
                 {
                     ContentType.ApplicationJson,
@@ -136,62 +190,62 @@
         {
             MyController<MvcController>
                 .Instance()
-                .Calling(c => c.FullHttpNotFoundAction())
+                .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .NotFound()
+                .BadRequest()
                 .ContainingContentTypes(ContentType.ApplicationJson, ContentType.ApplicationXml);
         }
 
         [Fact]
         public void ContainingContentTypesStringValueShouldNotThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<NotFoundResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
                         .Instance()
-                        .Calling(c => c.FullHttpNotFoundAction())
+                        .Calling(c => c.FullHttpBadRequestAction())
                         .ShouldReturn()
-                        .NotFound()
+                        .BadRequest()
                         .ContainingContentTypes(new List<string>
                         {
                             ContentType.ApplicationOctetStream,
                             ContentType.ApplicationXml
                         });
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result content types to contain application/octet-stream, but in fact such was not found.");
+                "When calling FullHttpBadRequestAction action in MvcController expected bad request result content types to contain application/octet-stream, but in fact such was not found.");
         }
 
         [Fact]
         public void ContainingContentTypesAsStringValueShouldNotThrowExceptionWithIncorrectCount()
         {
-            Test.AssertException<NotFoundResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
                         .Instance()
-                        .Calling(c => c.FullHttpNotFoundAction())
+                        .Calling(c => c.FullHttpBadRequestAction())
                         .ShouldReturn()
-                        .NotFound()
+                        .BadRequest()
                         .ContainingContentTypes(new List<string>
                         {
                             ContentType.ApplicationXml
                         });
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result content types to have 1 item, but instead found 2.");
+                "When calling FullHttpBadRequestAction action in MvcController expected bad request result content types to have 1 item, but instead found 2.");
         }
 
         [Fact]
         public void ContainingContentTypesAsStringValueShouldNotThrowExceptionWithIncorrectCountWithMoreThanOneItem()
         {
-            Test.AssertException<NotFoundResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
                         .Instance()
-                        .Calling(c => c.FullHttpNotFoundAction())
+                        .Calling(c => c.FullHttpBadRequestAction())
                         .ShouldReturn()
-                        .NotFound()
+                        .BadRequest()
                         .ContainingContentTypes(new List<string>
                         {
                             ContentType.ApplicationXml,
@@ -199,7 +253,7 @@
                             ContentType.ApplicationZip
                         });
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result content types to have 3 items, but instead found 2.");
+                "When calling FullHttpBadRequestAction action in MvcController expected bad request result content types to have 3 items, but instead found 2.");
         }
 
         [Fact]
@@ -207,9 +261,9 @@
         {
             MyController<MvcController>
                 .Instance()
-                .Calling(c => c.FullHttpNotFoundAction())
+                .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .NotFound()
+                .BadRequest()
                 .ContainingContentTypes(new List<MediaTypeHeaderValue>
                 {
                     new MediaTypeHeaderValue(ContentType.ApplicationJson),
@@ -222,62 +276,62 @@
         {
             MyController<MvcController>
                 .Instance()
-                .Calling(c => c.FullHttpNotFoundAction())
+                .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .NotFound()
+                .BadRequest()
                 .ContainingContentTypes(new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml));
         }
 
         [Fact]
         public void ContainingContentTypesAsMediaTypeHeaderValueShouldNotThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<NotFoundResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
                         .Instance()
-                        .Calling(c => c.FullHttpNotFoundAction())
+                        .Calling(c => c.FullHttpBadRequestAction())
                         .ShouldReturn()
-                        .NotFound()
+                        .BadRequest()
                         .ContainingContentTypes(new List<MediaTypeHeaderValue>
                         {
                             new MediaTypeHeaderValue(ContentType.ApplicationOctetStream),
                             new MediaTypeHeaderValue(ContentType.ApplicationXml)
                         });
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result content types to contain application/octet-stream, but in fact such was not found.");
+                "When calling FullHttpBadRequestAction action in MvcController expected bad request result content types to contain application/octet-stream, but in fact such was not found.");
         }
 
         [Fact]
         public void ContainingContentTypesAsMediaTypeHeaderValueShouldNotThrowExceptionWithIncorrectCount()
         {
-            Test.AssertException<NotFoundResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
                         .Instance()
-                        .Calling(c => c.FullHttpNotFoundAction())
+                        .Calling(c => c.FullHttpBadRequestAction())
                         .ShouldReturn()
-                        .NotFound()
+                        .BadRequest()
                         .ContainingContentTypes(new List<MediaTypeHeaderValue>
                         {
                             new MediaTypeHeaderValue(ContentType.ApplicationXml)
                         });
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result content types to have 1 item, but instead found 2.");
+                "When calling FullHttpBadRequestAction action in MvcController expected bad request result content types to have 1 item, but instead found 2.");
         }
 
         [Fact]
         public void ContainingContentTypesAsMediaTypeHeaderValueValueShouldNotThrowExceptionWithIncorrectCountWithMoreThanOneItem()
         {
-            Test.AssertException<NotFoundResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
                         .Instance()
-                        .Calling(c => c.FullHttpNotFoundAction())
+                        .Calling(c => c.FullHttpBadRequestAction())
                         .ShouldReturn()
-                        .NotFound()
+                        .BadRequest()
                         .ContainingContentTypes(new List<MediaTypeHeaderValue>
                         {
                             new MediaTypeHeaderValue(ContentType.ApplicationXml),
@@ -285,7 +339,7 @@
                             new MediaTypeHeaderValue(ContentType.ApplicationZip)
                         });
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result content types to have 3 items, but instead found 2.");
+                "When calling FullHttpBadRequestAction action in MvcController expected bad request result content types to have 3 items, but instead found 2.");
         }
 
         [Fact]
@@ -295,28 +349,28 @@
 
             MyController<MvcController>
                 .Instance()
-                .Calling(c => c.HttpNotFoundActionWithFormatter(formatter))
+                .Calling(c => c.HttpBadRequestActionWithFormatter(formatter))
                 .ShouldReturn()
-                .NotFound()
+                .BadRequest()
                 .ContainingOutputFormatter(formatter);
         }
 
         [Fact]
         public void ContainingOutputFormatterShouldThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<NotFoundResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     var formatter = TestObjectFactory.GetOutputFormatter();
 
                     MyController<MvcController>
                         .Instance()
-                        .Calling(c => c.HttpNotFoundActionWithFormatter(formatter))
+                        .Calling(c => c.HttpBadRequestActionWithFormatter(formatter))
                         .ShouldReturn()
-                        .NotFound()
-                        .ContainingOutputFormatter(TestObjectFactory.GetOutputFormatter());
+                        .BadRequest()
+                        .ContainingOutputFormatter(new CustomOutputFormatter());
                 },
-                "When calling HttpNotFoundActionWithFormatter action in MvcController expected HTTP not found result output formatters to contain the provided formatter, but such was not found.");
+                "When calling HttpBadRequestActionWithFormatter action in MvcController expected bad request result output formatters to contain the provided formatter, but such was not found.");
         }
 
         [Fact]
@@ -324,26 +378,26 @@
         {
             MyController<MvcController>
                 .Instance()
-                .Calling(c => c.FullHttpNotFoundAction())
+                .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .NotFound()
+                .BadRequest()
                 .ContainingOutputFormatterOfType<JsonOutputFormatter>();
         }
 
         [Fact]
         public void ContainingOutputFormatterOfTypeShouldThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<NotFoundResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
                         .Instance()
-                        .Calling(c => c.FullHttpNotFoundAction())
+                        .Calling(c => c.FullHttpBadRequestAction())
                         .ShouldReturn()
-                        .NotFound()
+                        .BadRequest()
                         .ContainingOutputFormatterOfType<IOutputFormatter>();
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result output formatters to contain formatter of IOutputFormatter type, but such was not found.");
+                "When calling FullHttpBadRequestAction action in MvcController expected bad request result output formatters to contain formatter of IOutputFormatter type, but such was not found.");
         }
 
         [Fact]
@@ -351,9 +405,9 @@
         {
             MyController<MvcController>
                 .Instance()
-                .Calling(c => c.FullHttpNotFoundAction())
+                .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .NotFound()
+                .BadRequest()
                 .ContainingOutputFormatters(new List<IOutputFormatter>
                 {
                     TestObjectFactory.GetOutputFormatter(),
@@ -366,62 +420,62 @@
         {
             MyController<MvcController>
                 .Instance()
-                .Calling(c => c.FullHttpNotFoundAction())
+                .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .NotFound()
+                .BadRequest()
                 .ContainingOutputFormatters(TestObjectFactory.GetOutputFormatter(), new CustomOutputFormatter());
         }
 
         [Fact]
         public void ContainingOutputFormattersShouldThrowExceptionWithIncorrectValue()
         {
-            Test.AssertException<NotFoundResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
                         .Instance()
-                        .Calling(c => c.FullHttpNotFoundAction())
+                        .Calling(c => c.FullHttpBadRequestAction())
                         .ShouldReturn()
-                        .NotFound()
+                        .BadRequest()
                         .ContainingOutputFormatters(new List<IOutputFormatter>
                         {
-                            new StringOutputFormatter(),
-                            new CustomOutputFormatter()
+                            new CustomOutputFormatter(),
+                            new StringOutputFormatter()
                         });
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result output formatters to contain formatter of StringOutputFormatter type, but none was found.");
+                "When calling FullHttpBadRequestAction action in MvcController expected bad request result output formatters to contain formatter of StringOutputFormatter type, but none was found.");
         }
 
         [Fact]
         public void ContainingOutputFormattersShouldThrowExceptionWithIncorrectCount()
         {
-            Test.AssertException<NotFoundResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
                         .Instance()
-                        .Calling(c => c.FullHttpNotFoundAction())
+                        .Calling(c => c.FullHttpBadRequestAction())
                         .ShouldReturn()
-                        .NotFound()
+                        .BadRequest()
                         .ContainingOutputFormatters(new List<IOutputFormatter>
                         {
-                            TestObjectFactory.GetOutputFormatter()
+                            new CustomOutputFormatter()
                         });
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result output formatters to have 1 item, but instead found 2.");
+                "When calling FullHttpBadRequestAction action in MvcController expected bad request result output formatters to have 1 item, but instead found 2.");
         }
 
         [Fact]
         public void ContainingOutputFormattersShouldThrowExceptionWithIncorrectCountWithMoreThanOneItem()
         {
-            Test.AssertException<NotFoundResultAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
                         .Instance()
-                        .Calling(c => c.FullHttpNotFoundAction())
+                        .Calling(c => c.FullHttpBadRequestAction())
                         .ShouldReturn()
-                        .NotFound()
+                        .BadRequest()
                         .ContainingOutputFormatters(new List<IOutputFormatter>
                         {
                             TestObjectFactory.GetOutputFormatter(),
@@ -429,7 +483,7 @@
                             TestObjectFactory.GetOutputFormatter()
                         });
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result output formatters to have 3 items, but instead found 2.");
+                "When calling FullHttpBadRequestAction action in MvcController expected bad request result output formatters to have 3 items, but instead found 2.");
         }
 
         [Fact]
@@ -437,27 +491,12 @@
         {
             MyController<MvcController>
                 .Instance()
-                .Calling(c => c.FullHttpNotFoundAction())
+                .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .NotFound()
+                .BadRequest()
                 .WithStatusCode(201)
                 .AndAlso()
                 .ContainingOutputFormatters(TestObjectFactory.GetOutputFormatter(), new CustomOutputFormatter());
-        }
-
-        [Fact]
-        public void AndProvideTheActionResultShouldWorkCorrectly()
-        {
-            MyController<MvcController>
-                .Instance()
-                .Calling(c => c.FullHttpNotFoundAction())
-                .ShouldReturn()
-                .NotFound()
-                .ShouldPassForThe<IActionResult>(actionResult =>
-                {
-                    Assert.NotNull(actionResult);
-                    Assert.IsAssignableFrom<NotFoundObjectResult>(actionResult);
-                });
         }
     }
 }

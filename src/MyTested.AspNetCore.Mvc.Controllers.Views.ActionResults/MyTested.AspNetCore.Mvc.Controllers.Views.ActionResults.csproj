@@ -29,7 +29,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MyTested.AspNetCore.Mvc.Controllers.ViewActionResults\MyTested.AspNetCore.Mvc.Controllers.Views.csproj" />
+    <ProjectReference Include="..\MyTested.AspNetCore.Mvc.Controllers.Views\MyTested.AspNetCore.Mvc.Controllers.Views.csproj" />
   </ItemGroup>
 
 </Project>

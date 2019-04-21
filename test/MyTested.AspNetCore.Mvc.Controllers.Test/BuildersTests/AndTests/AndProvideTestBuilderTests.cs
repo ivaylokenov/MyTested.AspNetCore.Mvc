@@ -16,7 +16,7 @@
                 .Calling(c => c.BadRequestWithErrorAction())
                 .ShouldReturn()
                 .BadRequest()
-                .WithErrorMessage()
+                .AndAlso()
                 .ShouldPassForThe<MvcController>(controller =>
                 {
                     Assert.NotNull(controller);

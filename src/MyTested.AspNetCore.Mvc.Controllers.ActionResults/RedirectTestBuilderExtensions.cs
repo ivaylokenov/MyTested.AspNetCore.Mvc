@@ -61,6 +61,48 @@
             return actualBuilder;
         }
 
+        /// <summary>
+        /// Tests whether the <see cref="RedirectToActionResult"/> or <see cref="RedirectToRouteResult"/>
+        /// contains specific route value of the given type.
+        /// </summary>
+        /// <param name="redirectTestBuilder">
+        /// Instance of <see cref="IRedirectTestBuilder"/> type.
+        /// </param>
+        /// <returns>The same <see cref="IAndRedirectTestBuilder"/>.</returns>
+        public static IAndRedirectTestBuilder ContainingRouteValueOfType<TRouteValue>(
+            this IRedirectTestBuilder redirectTestBuilder)
+            => redirectTestBuilder
+                .ContainingRouteValueOfType<IAndRedirectTestBuilder, TRouteValue>();
+
+        /// <summary>
+        /// Tests whether the <see cref="RedirectToActionResult"/> or <see cref="RedirectToRouteResult"/>
+        /// contains specific route value of the given type with the provided key.
+        /// </summary>
+        /// <param name="redirectTestBuilder">
+        /// Instance of <see cref="IRedirectTestBuilder"/> type.
+        /// </param>
+        /// <param name="key">Expected route key.</param>
+        /// <returns>The same <see cref="IAndRedirectTestBuilder"/>.</returns>
+        public static IAndRedirectTestBuilder ContainingRouteValueOfType<TRouteValue>(
+            this IRedirectTestBuilder redirectTestBuilder,
+            string key)
+            => redirectTestBuilder
+                .ContainingRouteValueOfType<IAndRedirectTestBuilder, TRouteValue>(key);
+
+        /// <summary>
+        /// Tests whether the <see cref="RedirectToActionResult"/> or <see cref="RedirectToRouteResult"/>
+        /// has the same <see cref="IUrlHelper"/> type as the provided one.
+        /// </summary>
+        /// <param name="redirectTestBuilder">
+        /// Instance of <see cref="IRedirectTestBuilder"/> type.
+        /// </param>
+        /// <returns>The same <see cref="IAndRedirectTestBuilder"/>.</returns>
+        public static IAndRedirectTestBuilder WithUrlHelperOfType<TUrlHelper>(
+            this IRedirectTestBuilder redirectTestBuilder)
+            where TUrlHelper : IUrlHelper
+            => redirectTestBuilder
+                .WithUrlHelperOfType<IAndRedirectTestBuilder, TUrlHelper>();
+
         private static RedirectTestBuilder<TRedirectResult> GetRedirectTestBuilder<TRedirectResult>(
             IRedirectTestBuilder redirectTestBuilder,
             string containment)

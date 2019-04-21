@@ -7,6 +7,7 @@
     using Builders.Contracts.Uri;
     using Exceptions;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Formatters;
     using Utilities.Validators;
 
     /// <summary>
@@ -183,7 +184,63 @@
 
             return actualBuilder;
         }
-        
+
+        /// <summary>
+        /// Tests whether the created result
+        /// contains <see cref="IOutputFormatter"/> of the provided type.
+        /// </summary>
+        /// <param name="createdTestBuilder">
+        /// Instance of <see cref="ICreatedTestBuilder"/> type.
+        /// </param>
+        /// <returns>The same <see cref="IAndCreatedTestBuilder"/>.</returns>
+        public static IAndCreatedTestBuilder ContainingOutputFormatterOfType<TOutputFormatter>(
+            this ICreatedTestBuilder createdTestBuilder)
+            where TOutputFormatter : IOutputFormatter
+            => createdTestBuilder
+                .ContainingOutputFormatterOfType<IAndCreatedTestBuilder, TOutputFormatter>();
+
+        /// <summary>
+        /// Tests whether the <see cref="CreatedAtActionResult"/> or <see cref="CreatedAtRouteResult"/>
+        /// contains specific route value of the given type.
+        /// </summary>
+        /// <param name="createdTestBuilder">
+        /// Instance of <see cref="ICreatedTestBuilder"/> type.
+        /// </param>
+        /// <returns>The same <see cref="IAndCreatedTestBuilder"/>.</returns>
+        public static IAndCreatedTestBuilder ContainingRouteValueOfType<TRouteValue>(
+            this ICreatedTestBuilder createdTestBuilder)
+            => createdTestBuilder
+                .ContainingRouteValueOfType<IAndCreatedTestBuilder, TRouteValue>();
+
+        /// <summary>
+        /// Tests whether the <see cref="CreatedAtActionResult"/> or <see cref="CreatedAtRouteResult"/>
+        /// contains specific route value of the given type with the provided key.
+        /// </summary>
+        /// <param name="createdTestBuilder">
+        /// Instance of <see cref="ICreatedTestBuilder"/> type.
+        /// </param>
+        /// <param name="key">Expected route key.</param>
+        /// <returns>The same <see cref="IAndCreatedTestBuilder"/>.</returns>
+        public static IAndCreatedTestBuilder ContainingRouteValueOfType<TRouteValue>(
+            this ICreatedTestBuilder createdTestBuilder,
+            string key)
+            => createdTestBuilder
+                .ContainingRouteValueOfType<IAndCreatedTestBuilder, TRouteValue>(key);
+
+        /// <summary>
+        /// Tests whether the <see cref="CreatedAtActionResult"/> or <see cref="CreatedAtRouteResult"/>
+        /// has the same <see cref="IUrlHelper"/> type as the provided one.
+        /// </summary>
+        /// <param name="createdTestBuilder">
+        /// Instance of <see cref="ICreatedTestBuilder"/> type.
+        /// </param>
+        /// <returns>The same <see cref="IAndCreatedTestBuilder"/>.</returns>
+        public static IAndCreatedTestBuilder WithUrlHelperOfType<TUrlHelper>(
+            this ICreatedTestBuilder createdTestBuilder)
+            where TUrlHelper : IUrlHelper
+            => createdTestBuilder
+                .WithUrlHelperOfType<IAndCreatedTestBuilder, TUrlHelper>();
+
         private static CreatedTestBuilder<TCreatedResult> GetCreatedTestBuilder<TCreatedResult>(
             ICreatedTestBuilder createdTestBuilder,
             string containment)
