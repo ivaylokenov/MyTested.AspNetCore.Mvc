@@ -30,9 +30,9 @@
                 })
                 .Calling(c => c.Find(1))
                 .ShouldReturn()
-                .Ok()
-                .WithModelOfType<CustomModel>()
-                .Passing(m => m.Name == "Test");
+                .Ok(ok => ok
+                    .WithModelOfType<CustomModel>()
+                    .Passing(m => m.Name == "Test"));
             
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -58,9 +58,9 @@
                         })))
                 .Calling(c => c.Find(1))
                 .ShouldReturn()
-                .Ok()
-                .WithModelOfType<CustomModel>()
-                .Passing(m => m.Name == "Test");
+                .Ok(ok => ok
+                    .WithModelOfType<CustomModel>()
+                    .Passing(m => m.Name == "Test"));
 
             MyController<DbContextController>
                 .Instance()
@@ -72,9 +72,9 @@
                         })))
                 .Calling(c => c.Find(1))
                 .ShouldReturn()
-                .Ok()
-                .WithModelOfType<CustomModel>()
-                .Passing(m => m.Name == "Test");
+                .Ok(ok => ok
+                    .WithModelOfType<CustomModel>()
+                    .Passing(m => m.Name == "Test"));
 
             MyController<DbContextController>
                 .Instance()
@@ -92,9 +92,9 @@
                         }))
                 .Calling(c => c.Find(1))
                 .ShouldReturn()
-                .Ok()
-                .WithModelOfType<CustomModel>()
-                .Passing(m => m.Name == "Test 1");
+                .Ok(ok => ok
+                    .WithModelOfType<CustomModel>()
+                    .Passing(m => m.Name == "Test 1"));
 
             MyController<DbContextController>
                 .Instance()
@@ -158,9 +158,9 @@
                         })))
                 .Calling(c => c.Find(1))
                 .ShouldReturn()
-                .Ok()
-                .WithModelOfType<CustomModel>()
-                .Passing(m => m.Name == "Test");
+                .Ok(ok => ok
+                    .WithModelOfType<CustomModel>()
+                    .Passing(m => m.Name == "Test"));
 
             MyController<DbContextController>
                 .Instance()
@@ -218,12 +218,12 @@
                         })))
                 .Calling(c => c.Find(1))
                 .ShouldReturn()
-                .Ok()
-                .WithModel(new
-                {
-                    Model = modelName,
-                    AnotherModel = anotherModelName
-                });
+                .Ok(ok => ok
+                    .WithModel(new
+                    {
+                        Model = modelName,
+                        AnotherModel = anotherModelName
+                    }));
             
             MyController<MultipleDbContextController>
                 .Instance()
@@ -252,12 +252,12 @@
                         }))
                 .Calling(c => c.Find(1))
                 .ShouldReturn()
-                .Ok()
-                .WithModel(new
-                {
-                    Model = modelName,
-                    AnotherModel = anotherModelName
-                });
+                .Ok(ok => ok
+                    .WithModel(new
+                    {
+                        Model = modelName,
+                        AnotherModel = anotherModelName
+                    }));
 
             MyController<MultipleDbContextController>
                 .Instance()
@@ -321,12 +321,12 @@
                         })))
                 .Calling(c => c.Find(1))
                 .ShouldReturn()
-                .Ok()
-                .WithModel(new
-                {
-                    Model = modelName,
-                    AnotherModel = anotherModelName
-                });
+                .Ok(ok => ok
+                    .WithModel(new
+                    {
+                        Model = modelName,
+                        AnotherModel = anotherModelName
+                    }));
 
             MyController<MultipleDbContextController>
                 .Instance()

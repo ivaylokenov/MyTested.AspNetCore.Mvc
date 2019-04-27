@@ -1,7 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.View
 {
     using Contracts.ActionResults.View;
-    using Internal.Contracts.ActionResults;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
 
@@ -10,9 +9,8 @@
     /// </summary>
     /// <typeparam name="TViewResult">Type of view result - <see cref="ViewResult"/> or <see cref="PartialViewResult"/>.</typeparam>
     public class ViewTestBuilder<TViewResult>
-        : BaseTestBuilderWithViewFeatureResult<TViewResult>, 
-        IAndViewTestBuilder,
-        IBaseTestBuilderWithViewFeatureResultInternal<IAndViewTestBuilder>
+        : BaseTestBuilderWithViewFeatureResult<TViewResult, IAndViewTestBuilder>, 
+        IAndViewTestBuilder
         where TViewResult : ActionResult
     {
         /// <summary>
@@ -31,7 +29,7 @@
         /// Gets the view result test builder.
         /// </summary>
         /// <value>Test builder of <see cref="IAndViewTestBuilder"/> type.</value>
-        public IAndViewTestBuilder ResultTestBuilder => this;
+        public override IAndViewTestBuilder ResultTestBuilder => this;
         
         /// <inheritdoc />
         public IViewTestBuilder AndAlso() => this;

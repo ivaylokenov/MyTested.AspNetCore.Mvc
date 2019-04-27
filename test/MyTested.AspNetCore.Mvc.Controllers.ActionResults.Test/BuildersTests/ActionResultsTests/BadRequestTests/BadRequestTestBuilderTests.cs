@@ -3,7 +3,6 @@
     using System.Collections.Generic;
     using System.Net;
     using Exceptions;
-    using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.Net.Http.Headers;
     using Setups;
@@ -20,8 +19,8 @@
                 .Instance()
                 .Calling(c => c.BadRequestAction())
                 .ShouldReturn()
-                .BadRequest()
-                .WithNoError();
+                .BadRequest(badRequest => badRequest
+                    .WithNoError());
         }
 
         [Fact]
@@ -34,8 +33,8 @@
                         .Instance()
                         .Calling(c => c.BadRequestWithCustomError())
                         .ShouldReturn()
-                        .BadRequest()
-                        .WithNoError();
+                        .BadRequest(badRequest => badRequest
+                            .WithNoError());
                 },
                 "When calling BadRequestWithCustomError action in MvcController expected bad request result to not have error message, but in fact such was found.");
         }
@@ -47,8 +46,8 @@
                 .Instance()
                 .Calling(c => c.BadRequestWithErrorAction())
                 .ShouldReturn()
-                .BadRequest()
-                .WithErrorMessage();
+                .BadRequest(badRequest => badRequest
+                    .WithErrorMessage());
         }
 
         [Fact]
@@ -61,25 +60,25 @@
                         .Instance()
                         .Calling(c => c.BadRequestAction())
                         .ShouldReturn()
-                        .BadRequest()
-                        .WithErrorMessage();
+                        .BadRequest(badRequest => badRequest
+                            .WithErrorMessage());
                 }, 
-                "When calling BadRequestAction action in MvcController expected bad request result to contain error object, but it could not be found.");
+                "When calling BadRequestAction action in MvcController expected bad request result to contain error object, but such could not be found.");
         }
 
         [Fact]
-        public void WithErrorMessageShouldNotThrowExceptionWhenResultHasCorrentErrorMessage()
+        public void WithErrorMessageShouldNotThrowExceptionWhenResultHasCorrectErrorMessage()
         {
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.BadRequestWithErrorAction())
                 .ShouldReturn()
-                .BadRequest()
-                .WithErrorMessage("Bad request");
+                .BadRequest(badRequest => badRequest
+                    .WithErrorMessage("Bad request"));
         }
 
         [Fact]
-        public void WithErrorMessageShouldThrowExceptionWhenResultDoesNotHaveCorrentErrorMessage()
+        public void WithErrorMessageShouldThrowExceptionWhenResultDoesNotHaveCorrectErrorMessage()
         {
             Test.AssertException<BadRequestResultAssertionException>(
                 () =>
@@ -88,8 +87,8 @@
                         .Instance()
                         .Calling(c => c.BadRequestWithErrorAction())
                         .ShouldReturn()
-                        .BadRequest()
-                        .WithErrorMessage("Good request");
+                        .BadRequest(badRequest => badRequest
+                            .WithErrorMessage("Good request"));
                 }, 
                 "When calling BadRequestWithErrorAction action in MvcController expected bad request result with message 'Good request', but instead received 'Bad request'.");
         }
@@ -101,8 +100,8 @@
                 .Instance()
                 .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .BadRequest()
-                .WithStatusCode(201);
+                .BadRequest(badRequest => badRequest
+                    .WithStatusCode(201));
         }
 
         [Fact]
@@ -112,8 +111,8 @@
                 .Instance()
                 .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .BadRequest()
-                .WithStatusCode(HttpStatusCode.Created);
+                .BadRequest(badRequest => badRequest
+                    .WithStatusCode(HttpStatusCode.Created));
         }
 
         [Fact]
@@ -126,8 +125,8 @@
                         .Instance()
                         .Calling(c => c.FullHttpBadRequestAction())
                         .ShouldReturn()
-                        .BadRequest()
-                        .WithStatusCode(HttpStatusCode.OK);
+                        .BadRequest(badRequest => badRequest
+                            .WithStatusCode(HttpStatusCode.OK));
                 },
                 "When calling FullHttpBadRequestAction action in MvcController expected bad request result to have 200 (OK) status code, but instead received 201 (Created).");
         }
@@ -139,8 +138,8 @@
                 .Instance()
                 .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .BadRequest()
-                .ContainingContentType(ContentType.ApplicationJson);
+                .BadRequest(badRequest => badRequest
+                    .ContainingContentType(ContentType.ApplicationJson));
         }
 
         [Fact]
@@ -150,8 +149,8 @@
                 .Instance()
                 .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .BadRequest()
-                .ContainingContentType(new MediaTypeHeaderValue(ContentType.ApplicationJson));
+                .BadRequest(badRequest => badRequest
+                    .ContainingContentType(new MediaTypeHeaderValue(ContentType.ApplicationJson)));
         }
         
         [Fact]
@@ -164,8 +163,8 @@
                         .Instance()
                         .Calling(c => c.FullHttpBadRequestAction())
                         .ShouldReturn()
-                        .BadRequest()
-                        .ContainingContentType(new MediaTypeHeaderValue(ContentType.ApplicationOctetStream));
+                        .BadRequest(badRequest => badRequest
+                            .ContainingContentType(new MediaTypeHeaderValue(ContentType.ApplicationOctetStream)));
                 },
                 "When calling FullHttpBadRequestAction action in MvcController expected bad request result content types to contain application/octet-stream, but in fact such was not found.");
         }
@@ -177,12 +176,12 @@
                 .Instance()
                 .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .BadRequest()
-                .ContainingContentTypes(new List<string>
-                {
-                    ContentType.ApplicationJson,
-                    ContentType.ApplicationXml
-                });
+                .BadRequest(badRequest => badRequest
+                    .ContainingContentTypes(new List<string>
+                    {
+                        ContentType.ApplicationJson,
+                        ContentType.ApplicationXml
+                    }));
         }
 
         [Fact]
@@ -192,8 +191,10 @@
                 .Instance()
                 .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .BadRequest()
-                .ContainingContentTypes(ContentType.ApplicationJson, ContentType.ApplicationXml);
+                .BadRequest(badRequest => badRequest
+                    .ContainingContentTypes(
+                        ContentType.ApplicationJson, 
+                        ContentType.ApplicationXml));
         }
 
         [Fact]
@@ -206,12 +207,12 @@
                         .Instance()
                         .Calling(c => c.FullHttpBadRequestAction())
                         .ShouldReturn()
-                        .BadRequest()
-                        .ContainingContentTypes(new List<string>
-                        {
-                            ContentType.ApplicationOctetStream,
-                            ContentType.ApplicationXml
-                        });
+                        .BadRequest(badRequest => badRequest
+                            .ContainingContentTypes(new List<string>
+                            {
+                                ContentType.ApplicationOctetStream,
+                                ContentType.ApplicationXml
+                            }));
                 },
                 "When calling FullHttpBadRequestAction action in MvcController expected bad request result content types to contain application/octet-stream, but in fact such was not found.");
         }
@@ -226,11 +227,11 @@
                         .Instance()
                         .Calling(c => c.FullHttpBadRequestAction())
                         .ShouldReturn()
-                        .BadRequest()
-                        .ContainingContentTypes(new List<string>
-                        {
-                            ContentType.ApplicationXml
-                        });
+                        .BadRequest(badRequest => badRequest
+                            .ContainingContentTypes(new List<string>
+                            {
+                                ContentType.ApplicationXml
+                            }));
                 },
                 "When calling FullHttpBadRequestAction action in MvcController expected bad request result content types to have 1 item, but instead found 2.");
         }
@@ -245,13 +246,13 @@
                         .Instance()
                         .Calling(c => c.FullHttpBadRequestAction())
                         .ShouldReturn()
-                        .BadRequest()
-                        .ContainingContentTypes(new List<string>
-                        {
-                            ContentType.ApplicationXml,
-                            ContentType.ApplicationJson,
-                            ContentType.ApplicationZip
-                        });
+                        .BadRequest(badRequest => badRequest
+                            .ContainingContentTypes(new List<string>
+                            {
+                                ContentType.ApplicationXml,
+                                ContentType.ApplicationJson,
+                                ContentType.ApplicationZip
+                            }));
                 },
                 "When calling FullHttpBadRequestAction action in MvcController expected bad request result content types to have 3 items, but instead found 2.");
         }
@@ -263,12 +264,12 @@
                 .Instance()
                 .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .BadRequest()
-                .ContainingContentTypes(new List<MediaTypeHeaderValue>
-                {
-                    new MediaTypeHeaderValue(ContentType.ApplicationJson),
-                    new MediaTypeHeaderValue(ContentType.ApplicationXml)
-                });
+                .BadRequest(badRequest => badRequest
+                    .ContainingContentTypes(new List<MediaTypeHeaderValue>
+                    {
+                        new MediaTypeHeaderValue(ContentType.ApplicationJson),
+                        new MediaTypeHeaderValue(ContentType.ApplicationXml)
+                    }));
         }
 
         [Fact]
@@ -278,8 +279,10 @@
                 .Instance()
                 .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .BadRequest()
-                .ContainingContentTypes(new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml));
+                .BadRequest(badRequest => badRequest
+                    .ContainingContentTypes(
+                        new MediaTypeHeaderValue(ContentType.ApplicationJson), 
+                        new MediaTypeHeaderValue(ContentType.ApplicationXml)));
         }
 
         [Fact]
@@ -292,12 +295,12 @@
                         .Instance()
                         .Calling(c => c.FullHttpBadRequestAction())
                         .ShouldReturn()
-                        .BadRequest()
-                        .ContainingContentTypes(new List<MediaTypeHeaderValue>
-                        {
-                            new MediaTypeHeaderValue(ContentType.ApplicationOctetStream),
-                            new MediaTypeHeaderValue(ContentType.ApplicationXml)
-                        });
+                        .BadRequest(badRequest => badRequest
+                            .ContainingContentTypes(new List<MediaTypeHeaderValue>
+                            {
+                                new MediaTypeHeaderValue(ContentType.ApplicationOctetStream),
+                                new MediaTypeHeaderValue(ContentType.ApplicationXml)
+                            }));
                 },
                 "When calling FullHttpBadRequestAction action in MvcController expected bad request result content types to contain application/octet-stream, but in fact such was not found.");
         }
@@ -312,11 +315,11 @@
                         .Instance()
                         .Calling(c => c.FullHttpBadRequestAction())
                         .ShouldReturn()
-                        .BadRequest()
-                        .ContainingContentTypes(new List<MediaTypeHeaderValue>
-                        {
-                            new MediaTypeHeaderValue(ContentType.ApplicationXml)
-                        });
+                        .BadRequest(badRequest => badRequest
+                            .ContainingContentTypes(new List<MediaTypeHeaderValue>
+                            {
+                                new MediaTypeHeaderValue(ContentType.ApplicationXml)
+                            }));
                 },
                 "When calling FullHttpBadRequestAction action in MvcController expected bad request result content types to have 1 item, but instead found 2.");
         }
@@ -331,13 +334,13 @@
                         .Instance()
                         .Calling(c => c.FullHttpBadRequestAction())
                         .ShouldReturn()
-                        .BadRequest()
-                        .ContainingContentTypes(new List<MediaTypeHeaderValue>
-                        {
-                            new MediaTypeHeaderValue(ContentType.ApplicationXml),
-                            new MediaTypeHeaderValue(ContentType.ApplicationJson),
-                            new MediaTypeHeaderValue(ContentType.ApplicationZip)
-                        });
+                        .BadRequest(badRequest => badRequest
+                            .ContainingContentTypes(new List<MediaTypeHeaderValue>
+                            {
+                                new MediaTypeHeaderValue(ContentType.ApplicationXml),
+                                new MediaTypeHeaderValue(ContentType.ApplicationJson),
+                                new MediaTypeHeaderValue(ContentType.ApplicationZip)
+                            }));
                 },
                 "When calling FullHttpBadRequestAction action in MvcController expected bad request result content types to have 3 items, but instead found 2.");
         }
@@ -351,8 +354,8 @@
                 .Instance()
                 .Calling(c => c.HttpBadRequestActionWithFormatter(formatter))
                 .ShouldReturn()
-                .BadRequest()
-                .ContainingOutputFormatter(formatter);
+                .BadRequest(badRequest => badRequest
+                    .ContainingOutputFormatter(formatter));
         }
 
         [Fact]
@@ -367,8 +370,8 @@
                         .Instance()
                         .Calling(c => c.HttpBadRequestActionWithFormatter(formatter))
                         .ShouldReturn()
-                        .BadRequest()
-                        .ContainingOutputFormatter(new CustomOutputFormatter());
+                        .BadRequest(badRequest => badRequest
+                            .ContainingOutputFormatter(new CustomOutputFormatter()));
                 },
                 "When calling HttpBadRequestActionWithFormatter action in MvcController expected bad request result output formatters to contain the provided formatter, but such was not found.");
         }
@@ -380,8 +383,8 @@
                 .Instance()
                 .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .BadRequest()
-                .ContainingOutputFormatterOfType<JsonOutputFormatter>();
+                .BadRequest(badRequest => badRequest
+                    .ContainingOutputFormatterOfType<JsonOutputFormatter>());
         }
 
         [Fact]
@@ -394,8 +397,8 @@
                         .Instance()
                         .Calling(c => c.FullHttpBadRequestAction())
                         .ShouldReturn()
-                        .BadRequest()
-                        .ContainingOutputFormatterOfType<IOutputFormatter>();
+                        .BadRequest(badRequest => badRequest
+                            .ContainingOutputFormatterOfType<IOutputFormatter>());
                 },
                 "When calling FullHttpBadRequestAction action in MvcController expected bad request result output formatters to contain formatter of IOutputFormatter type, but such was not found.");
         }
@@ -407,12 +410,12 @@
                 .Instance()
                 .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .BadRequest()
-                .ContainingOutputFormatters(new List<IOutputFormatter>
-                {
-                    TestObjectFactory.GetOutputFormatter(),
-                    new CustomOutputFormatter()
-                });
+                .BadRequest(badRequest => badRequest
+                    .ContainingOutputFormatters(new List<IOutputFormatter>
+                    {
+                        TestObjectFactory.GetOutputFormatter(),
+                        new CustomOutputFormatter()
+                    }));
         }
 
         [Fact]
@@ -422,8 +425,10 @@
                 .Instance()
                 .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .BadRequest()
-                .ContainingOutputFormatters(TestObjectFactory.GetOutputFormatter(), new CustomOutputFormatter());
+                .BadRequest(badRequest => badRequest
+                    .ContainingOutputFormatters(
+                        TestObjectFactory.GetOutputFormatter(), 
+                        new CustomOutputFormatter()));
         }
 
         [Fact]
@@ -436,12 +441,12 @@
                         .Instance()
                         .Calling(c => c.FullHttpBadRequestAction())
                         .ShouldReturn()
-                        .BadRequest()
-                        .ContainingOutputFormatters(new List<IOutputFormatter>
-                        {
-                            new CustomOutputFormatter(),
-                            new StringOutputFormatter()
-                        });
+                        .BadRequest(badRequest => badRequest
+                            .ContainingOutputFormatters(new List<IOutputFormatter>
+                            {
+                                new CustomOutputFormatter(),
+                                new StringOutputFormatter()
+                            }));
                 },
                 "When calling FullHttpBadRequestAction action in MvcController expected bad request result output formatters to contain formatter of StringOutputFormatter type, but none was found.");
         }
@@ -456,11 +461,11 @@
                         .Instance()
                         .Calling(c => c.FullHttpBadRequestAction())
                         .ShouldReturn()
-                        .BadRequest()
-                        .ContainingOutputFormatters(new List<IOutputFormatter>
-                        {
-                            new CustomOutputFormatter()
-                        });
+                        .BadRequest(badRequest => badRequest
+                            .ContainingOutputFormatters(new List<IOutputFormatter>
+                            {
+                                new CustomOutputFormatter()
+                            }));
                 },
                 "When calling FullHttpBadRequestAction action in MvcController expected bad request result output formatters to have 1 item, but instead found 2.");
         }
@@ -475,13 +480,13 @@
                         .Instance()
                         .Calling(c => c.FullHttpBadRequestAction())
                         .ShouldReturn()
-                        .BadRequest()
-                        .ContainingOutputFormatters(new List<IOutputFormatter>
-                        {
-                            TestObjectFactory.GetOutputFormatter(),
-                            new CustomOutputFormatter(),
-                            TestObjectFactory.GetOutputFormatter()
-                        });
+                        .BadRequest(badRequest => badRequest
+                            .ContainingOutputFormatters(new List<IOutputFormatter>
+                            {
+                                TestObjectFactory.GetOutputFormatter(),
+                                new CustomOutputFormatter(),
+                                TestObjectFactory.GetOutputFormatter()
+                            }));
                 },
                 "When calling FullHttpBadRequestAction action in MvcController expected bad request result output formatters to have 3 items, but instead found 2.");
         }
@@ -493,10 +498,12 @@
                 .Instance()
                 .Calling(c => c.FullHttpBadRequestAction())
                 .ShouldReturn()
-                .BadRequest()
-                .WithStatusCode(201)
-                .AndAlso()
-                .ContainingOutputFormatters(TestObjectFactory.GetOutputFormatter(), new CustomOutputFormatter());
+                .BadRequest(badRequest => badRequest
+                    .WithStatusCode(201)
+                    .AndAlso()
+                    .ContainingOutputFormatters(
+                        TestObjectFactory.GetOutputFormatter(), 
+                        new CustomOutputFormatter()));
         }
     }
 }

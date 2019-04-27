@@ -11,7 +11,8 @@
     public static class BadRequestTestBuilderExtensions
     {
         /// <summary>
-        /// Tests whether <see cref="BadRequestObjectResult"/> contains deeply equal error value as the provided error object.
+        /// Tests whether <see cref="BadRequestObjectResult"/>
+        /// contains deeply equal error value as the provided error object.
         /// </summary>
         /// <typeparam name="TError">Type of error object.</typeparam>
         /// <param name="builder">Instance of <see cref="IBadRequestTestBuilder"/> type.</param>
@@ -26,12 +27,14 @@
         }
 
         /// <summary>
-        /// Tests whether <see cref="BadRequestObjectResult"/> contains error object of the provided type.
+        /// Tests whether <see cref="BadRequestObjectResult"/>
+        /// contains error object of the provided type.
         /// </summary>
         /// <param name="builder">Instance of <see cref="IBadRequestTestBuilder"/> type.</param>
         /// <typeparam name="TError">Type of error object.</typeparam>
         /// <returns>Test builder of type <see cref="IModelDetailsTestBuilder{TError}"/>.</returns>
-        public static IAndModelDetailsTestBuilder<TError> WithErrorOfType<TError>(this IBadRequestTestBuilder builder)
+        public static IAndModelDetailsTestBuilder<TError> WithErrorOfType<TError>(
+            this IBadRequestTestBuilder builder)
         {
             var actualBuilder = (IBaseTestBuilderWithResponseModel)builder;
             return actualBuilder.WithModelOfType<TError>();

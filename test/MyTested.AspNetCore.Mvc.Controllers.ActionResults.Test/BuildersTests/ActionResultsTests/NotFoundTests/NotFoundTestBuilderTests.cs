@@ -19,8 +19,8 @@
                 .Instance()
                 .Calling(c => c.FullHttpNotFoundAction())
                 .ShouldReturn()
-                .NotFound()
-                .WithStatusCode(201);
+                .NotFound(notFound => notFound
+                    .WithStatusCode(201));
         }
 
         [Fact]
@@ -30,8 +30,8 @@
                 .Instance()
                 .Calling(c => c.FullHttpNotFoundAction())
                 .ShouldReturn()
-                .NotFound()
-                .WithStatusCode(HttpStatusCode.Created);
+                .NotFound(notFound => notFound
+                    .WithStatusCode(HttpStatusCode.Created));
         }
 
         [Fact]
@@ -44,8 +44,8 @@
                         .Instance()
                         .Calling(c => c.FullHttpNotFoundAction())
                         .ShouldReturn()
-                        .NotFound()
-                        .WithStatusCode(HttpStatusCode.OK);
+                        .NotFound(notFound => notFound
+                            .WithStatusCode(HttpStatusCode.OK));
                 },
                 "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result to have 200 (OK) status code, but instead received 201 (Created).");
         }
@@ -57,8 +57,8 @@
                 .Instance()
                 .Calling(c => c.FullHttpNotFoundAction())
                 .ShouldReturn()
-                .NotFound()
-                .ContainingContentType(ContentType.ApplicationJson);
+                .NotFound(notFound => notFound
+                    .ContainingContentType(ContentType.ApplicationJson));
         }
 
         [Fact]
@@ -68,8 +68,8 @@
                 .Instance()
                 .Calling(c => c.FullHttpNotFoundAction())
                 .ShouldReturn()
-                .NotFound()
-                .ContainingContentType(new MediaTypeHeaderValue(ContentType.ApplicationJson));
+                .NotFound(notFound => notFound
+                    .ContainingContentType(new MediaTypeHeaderValue(ContentType.ApplicationJson)));
         }
         
         [Fact]
@@ -79,11 +79,11 @@
                 () =>
                 {
                     MyController<MvcController>
-                       .Instance()
-                       .Calling(c => c.FullHttpNotFoundAction())
-                       .ShouldReturn()
-                       .NotFound()
-                       .ContainingContentType(new MediaTypeHeaderValue(ContentType.ApplicationOctetStream));
+                        .Instance()
+                        .Calling(c => c.FullHttpNotFoundAction())
+                        .ShouldReturn()
+                        .NotFound(notFound => notFound
+                            .ContainingContentType(new MediaTypeHeaderValue(ContentType.ApplicationOctetStream)));
                 },
                 "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result content types to contain application/octet-stream, but in fact such was not found.");
         }
@@ -95,12 +95,12 @@
                 .Instance()
                 .Calling(c => c.FullHttpNotFoundAction())
                 .ShouldReturn()
-                .NotFound()
-                .ContainingContentTypes(new List<string>
-                {
-                    ContentType.ApplicationJson,
-                    ContentType.ApplicationXml
-                });
+                .NotFound(notFound => notFound
+                    .ContainingContentTypes(new List<string>
+                    {
+                        ContentType.ApplicationJson,
+                        ContentType.ApplicationXml
+                    }));
         }
 
         [Fact]
@@ -110,8 +110,10 @@
                 .Instance()
                 .Calling(c => c.FullHttpNotFoundAction())
                 .ShouldReturn()
-                .NotFound()
-                .ContainingContentTypes(ContentType.ApplicationJson, ContentType.ApplicationXml);
+                .NotFound(notFound => notFound
+                    .ContainingContentTypes(
+                        ContentType.ApplicationJson, 
+                        ContentType.ApplicationXml));
         }
 
         [Fact]
@@ -124,12 +126,12 @@
                         .Instance()
                         .Calling(c => c.FullHttpNotFoundAction())
                         .ShouldReturn()
-                        .NotFound()
-                        .ContainingContentTypes(new List<string>
-                        {
-                            ContentType.ApplicationOctetStream,
-                            ContentType.ApplicationXml
-                        });
+                        .NotFound(notFound => notFound
+                            .ContainingContentTypes(new List<string>
+                            {
+                                ContentType.ApplicationOctetStream,
+                                ContentType.ApplicationXml
+                            }));
                 },
                 "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result content types to contain application/octet-stream, but in fact such was not found.");
         }
@@ -144,11 +146,11 @@
                         .Instance()
                         .Calling(c => c.FullHttpNotFoundAction())
                         .ShouldReturn()
-                        .NotFound()
-                        .ContainingContentTypes(new List<string>
-                        {
-                            ContentType.ApplicationXml
-                        });
+                        .NotFound(notFound => notFound
+                            .ContainingContentTypes(new List<string>
+                            {
+                                ContentType.ApplicationXml
+                            }));
                 },
                 "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result content types to have 1 item, but instead found 2.");
         }
@@ -163,13 +165,13 @@
                         .Instance()
                         .Calling(c => c.FullHttpNotFoundAction())
                         .ShouldReturn()
-                        .NotFound()
-                        .ContainingContentTypes(new List<string>
-                        {
-                            ContentType.ApplicationXml,
-                            ContentType.ApplicationJson,
-                            ContentType.ApplicationZip
-                        });
+                        .NotFound(notFound => notFound
+                            .ContainingContentTypes(new List<string>
+                            {
+                                ContentType.ApplicationXml,
+                                ContentType.ApplicationJson,
+                                ContentType.ApplicationZip
+                            }));
                 },
                 "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result content types to have 3 items, but instead found 2.");
         }
@@ -181,12 +183,12 @@
                 .Instance()
                 .Calling(c => c.FullHttpNotFoundAction())
                 .ShouldReturn()
-                .NotFound()
-                .ContainingContentTypes(new List<MediaTypeHeaderValue>
-                {
-                    new MediaTypeHeaderValue(ContentType.ApplicationJson),
-                    new MediaTypeHeaderValue(ContentType.ApplicationXml)
-                });
+                .NotFound(notFound => notFound
+                    .ContainingContentTypes(new List<MediaTypeHeaderValue>
+                    {
+                        new MediaTypeHeaderValue(ContentType.ApplicationJson),
+                        new MediaTypeHeaderValue(ContentType.ApplicationXml)
+                    }));
         }
 
         [Fact]
@@ -196,8 +198,10 @@
                 .Instance()
                 .Calling(c => c.FullHttpNotFoundAction())
                 .ShouldReturn()
-                .NotFound()
-                .ContainingContentTypes(new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml));
+                .NotFound(notFound => notFound
+                    .ContainingContentTypes(
+                        new MediaTypeHeaderValue(ContentType.ApplicationJson), 
+                        new MediaTypeHeaderValue(ContentType.ApplicationXml)));
         }
 
         [Fact]
@@ -210,12 +214,12 @@
                         .Instance()
                         .Calling(c => c.FullHttpNotFoundAction())
                         .ShouldReturn()
-                        .NotFound()
-                        .ContainingContentTypes(new List<MediaTypeHeaderValue>
-                        {
-                            new MediaTypeHeaderValue(ContentType.ApplicationOctetStream),
-                            new MediaTypeHeaderValue(ContentType.ApplicationXml)
-                        });
+                        .NotFound(notFound => notFound
+                            .ContainingContentTypes(new List<MediaTypeHeaderValue>
+                            {
+                                new MediaTypeHeaderValue(ContentType.ApplicationOctetStream),
+                                new MediaTypeHeaderValue(ContentType.ApplicationXml)
+                            }));
                 },
                 "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result content types to contain application/octet-stream, but in fact such was not found.");
         }
@@ -230,11 +234,11 @@
                         .Instance()
                         .Calling(c => c.FullHttpNotFoundAction())
                         .ShouldReturn()
-                        .NotFound()
-                        .ContainingContentTypes(new List<MediaTypeHeaderValue>
-                        {
-                            new MediaTypeHeaderValue(ContentType.ApplicationXml)
-                        });
+                        .NotFound(notFound => notFound
+                            .ContainingContentTypes(new List<MediaTypeHeaderValue>
+                            {
+                                new MediaTypeHeaderValue(ContentType.ApplicationXml)
+                            }));
                 },
                 "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result content types to have 1 item, but instead found 2.");
         }
@@ -249,13 +253,13 @@
                         .Instance()
                         .Calling(c => c.FullHttpNotFoundAction())
                         .ShouldReturn()
-                        .NotFound()
-                        .ContainingContentTypes(new List<MediaTypeHeaderValue>
-                        {
-                            new MediaTypeHeaderValue(ContentType.ApplicationXml),
-                            new MediaTypeHeaderValue(ContentType.ApplicationJson),
-                            new MediaTypeHeaderValue(ContentType.ApplicationZip)
-                        });
+                        .NotFound(notFound => notFound
+                            .ContainingContentTypes(new List<MediaTypeHeaderValue>
+                            {
+                                new MediaTypeHeaderValue(ContentType.ApplicationXml),
+                                new MediaTypeHeaderValue(ContentType.ApplicationJson),
+                                new MediaTypeHeaderValue(ContentType.ApplicationZip)
+                            }));
                 },
                 "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result content types to have 3 items, but instead found 2.");
         }
@@ -269,8 +273,8 @@
                 .Instance()
                 .Calling(c => c.HttpNotFoundActionWithFormatter(formatter))
                 .ShouldReturn()
-                .NotFound()
-                .ContainingOutputFormatter(formatter);
+                .NotFound(notFound => notFound
+                    .ContainingOutputFormatter(formatter));
         }
 
         [Fact]
@@ -285,8 +289,8 @@
                         .Instance()
                         .Calling(c => c.HttpNotFoundActionWithFormatter(formatter))
                         .ShouldReturn()
-                        .NotFound()
-                        .ContainingOutputFormatter(TestObjectFactory.GetOutputFormatter());
+                        .NotFound(notFound => notFound
+                            .ContainingOutputFormatter(TestObjectFactory.GetOutputFormatter()));
                 },
                 "When calling HttpNotFoundActionWithFormatter action in MvcController expected HTTP not found result output formatters to contain the provided formatter, but such was not found.");
         }
@@ -298,8 +302,8 @@
                 .Instance()
                 .Calling(c => c.FullHttpNotFoundAction())
                 .ShouldReturn()
-                .NotFound()
-                .ContainingOutputFormatterOfType<JsonOutputFormatter>();
+                .NotFound(notFound => notFound
+                    .ContainingOutputFormatterOfType<JsonOutputFormatter>());
         }
 
         [Fact]
@@ -312,8 +316,8 @@
                         .Instance()
                         .Calling(c => c.FullHttpNotFoundAction())
                         .ShouldReturn()
-                        .NotFound()
-                        .ContainingOutputFormatterOfType<IOutputFormatter>();
+                        .NotFound(notFound => notFound
+                            .ContainingOutputFormatterOfType<IOutputFormatter>());
                 },
                 "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result output formatters to contain formatter of IOutputFormatter type, but such was not found.");
         }
@@ -325,12 +329,12 @@
                 .Instance()
                 .Calling(c => c.FullHttpNotFoundAction())
                 .ShouldReturn()
-                .NotFound()
-                .ContainingOutputFormatters(new List<IOutputFormatter>
-                {
-                    TestObjectFactory.GetOutputFormatter(),
-                    new CustomOutputFormatter()
-                });
+                .NotFound(notFound => notFound
+                    .ContainingOutputFormatters(new List<IOutputFormatter>
+                    {
+                        TestObjectFactory.GetOutputFormatter(),
+                        new CustomOutputFormatter()
+                    }));
         }
 
         [Fact]
@@ -340,8 +344,10 @@
                 .Instance()
                 .Calling(c => c.FullHttpNotFoundAction())
                 .ShouldReturn()
-                .NotFound()
-                .ContainingOutputFormatters(TestObjectFactory.GetOutputFormatter(), new CustomOutputFormatter());
+                .NotFound(notFound => notFound
+                    .ContainingOutputFormatters(
+                        TestObjectFactory.GetOutputFormatter(), 
+                        new CustomOutputFormatter()));
         }
 
         [Fact]
@@ -354,12 +360,12 @@
                         .Instance()
                         .Calling(c => c.FullHttpNotFoundAction())
                         .ShouldReturn()
-                        .NotFound()
-                        .ContainingOutputFormatters(new List<IOutputFormatter>
-                        {
-                            new StringOutputFormatter(),
-                            new CustomOutputFormatter()
-                        });
+                        .NotFound(notFound => notFound
+                            .ContainingOutputFormatters(new List<IOutputFormatter>
+                            {
+                                new StringOutputFormatter(),
+                                new CustomOutputFormatter()
+                            }));
                 },
                 "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result output formatters to contain formatter of StringOutputFormatter type, but none was found.");
         }
@@ -374,11 +380,11 @@
                         .Instance()
                         .Calling(c => c.FullHttpNotFoundAction())
                         .ShouldReturn()
-                        .NotFound()
-                        .ContainingOutputFormatters(new List<IOutputFormatter>
-                        {
-                            TestObjectFactory.GetOutputFormatter()
-                        });
+                        .NotFound(notFound => notFound
+                            .ContainingOutputFormatters(new List<IOutputFormatter>
+                            {
+                                TestObjectFactory.GetOutputFormatter()
+                            }));
                 },
                 "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result output formatters to have 1 item, but instead found 2.");
         }
@@ -393,13 +399,13 @@
                         .Instance()
                         .Calling(c => c.FullHttpNotFoundAction())
                         .ShouldReturn()
-                        .NotFound()
-                        .ContainingOutputFormatters(new List<IOutputFormatter>
-                        {
-                            TestObjectFactory.GetOutputFormatter(),
-                            new CustomOutputFormatter(),
-                            TestObjectFactory.GetOutputFormatter()
-                        });
+                        .NotFound(notFound => notFound
+                            .ContainingOutputFormatters(new List<IOutputFormatter>
+                            {
+                                TestObjectFactory.GetOutputFormatter(),
+                                new CustomOutputFormatter(),
+                                TestObjectFactory.GetOutputFormatter()
+                            }));
                 },
                 "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result output formatters to have 3 items, but instead found 2.");
         }
@@ -411,10 +417,12 @@
                 .Instance()
                 .Calling(c => c.FullHttpNotFoundAction())
                 .ShouldReturn()
-                .NotFound()
-                .WithStatusCode(201)
-                .AndAlso()
-                .ContainingOutputFormatters(TestObjectFactory.GetOutputFormatter(), new CustomOutputFormatter());
+                .NotFound(notFound => notFound
+                    .WithStatusCode(201)
+                    .AndAlso()
+                    .ContainingOutputFormatters(
+                        TestObjectFactory.GetOutputFormatter(), 
+                        new CustomOutputFormatter()));
         }
     }
 }

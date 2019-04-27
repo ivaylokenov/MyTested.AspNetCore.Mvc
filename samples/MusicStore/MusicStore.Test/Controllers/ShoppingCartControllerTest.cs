@@ -18,13 +18,13 @@
                 .Controller<ShoppingCartController>()
                 .Calling(c => c.Index())
                 .ShouldReturn()
-                .View()
-                .WithModelOfType<ShoppingCartViewModel>()
-                .Passing(model =>
-                {
-                    Assert.Empty(model.CartItems);
-                    Assert.Equal(0, model.CartTotal);
-                });
+                .View(view => view
+                    .WithModelOfType<ShoppingCartViewModel>()
+                    .Passing(model =>
+                    {
+                        Assert.Empty(model.CartItems);
+                        Assert.Equal(0, model.CartTotal);
+                    }));
         }
 
         [Fact]
@@ -35,13 +35,13 @@
                 .WithSession(session => session.WithEntry("Session", "CartId_A"))
                 .Calling(c => c.Index())
                 .ShouldReturn()
-                .View()
-                .WithModelOfType<ShoppingCartViewModel>()
-                .Passing(model =>
-                {
-                    Assert.Empty(model.CartItems);
-                    Assert.Equal(0, model.CartTotal);
-                });
+                .View(view => view
+                    .WithModelOfType<ShoppingCartViewModel>()
+                    .Passing(model =>
+                    {
+                        Assert.Empty(model.CartItems);
+                        Assert.Equal(0, model.CartTotal);
+                    }));
         }
 
         [Fact]
@@ -65,13 +65,13 @@
                     }))
                 .Calling(c => c.Index())
                 .ShouldReturn()
-                .View()
-                .WithModelOfType<ShoppingCartViewModel>()
-                .Passing(model =>
-                {
-                    Assert.Equal(5, model.CartItems.Count);
-                    Assert.Equal(5 * 10, model.CartTotal);
-                });
+                .View(view => view
+                    .WithModelOfType<ShoppingCartViewModel>()
+                    .Passing(model =>
+                    {
+                        Assert.Equal(5, model.CartItems.Count);
+                        Assert.Equal(5 * 10, model.CartTotal);
+                    }));
         }
 
         [Fact]
@@ -87,15 +87,15 @@
                         .AddRange(CreateTestAlbums(itemPrice: 10))))
                 .Calling(c => c.AddToCart(albumId, CancellationToken.None))
                 .ShouldReturn()
-                .Redirect()
-                .To<ShoppingCartController>(c => c.Index())
-                .AndAlso()
-                .ShouldPassForThe<HttpContext>(async httpContext =>
-                {
-                    var cart = ShoppingCart.GetCart(From.Services<MusicStoreContext>(), httpContext);
-                    Assert.Single(await cart.GetCartItems());
-                    Assert.Equal(albumId, (await cart.GetCartItems()).Single().AlbumId);
-                });
+                .Redirect(redirect => redirect
+                    .To<ShoppingCartController>(c => c.Index())
+                    .AndAlso()
+                    .ShouldPassForThe<HttpContext>(async httpContext =>
+                    {
+                        var cart = ShoppingCart.GetCart(From.Services<MusicStoreContext>(), httpContext);
+                        Assert.Single(await cart.GetCartItems());
+                        Assert.Equal(albumId, (await cart.GetCartItems()).Single().AlbumId);
+                    }));
         }
 
         [Fact]
@@ -118,14 +118,14 @@
                     }))
                 .Calling(c => c.RemoveFromCart(cartItemId, CancellationToken.None))
                 .ShouldReturn()
-                .Json()
-                .WithModelOfType<ShoppingCartRemoveViewModel>()
-                .Passing(model =>
-                {
-                    Assert.Equal(numberOfItem - 1, model.CartCount);
-                    Assert.Equal((numberOfItem - 1) * 10, model.CartTotal);
-                    Assert.Equal(" has been removed from your shopping cart.", model.Message);
-                })
+                .Json(json => json
+                    .WithModelOfType<ShoppingCartRemoveViewModel>()
+                    .Passing(model =>
+                    {
+                        Assert.Equal(numberOfItem - 1, model.CartCount);
+                        Assert.Equal((numberOfItem - 1) * 10, model.CartTotal);
+                        Assert.Equal(" has been removed from your shopping cart.", model.Message);
+                    }))
                 .AndAlso()
                 .ShouldPassForThe<HttpContext>(async httpContext =>
                 {

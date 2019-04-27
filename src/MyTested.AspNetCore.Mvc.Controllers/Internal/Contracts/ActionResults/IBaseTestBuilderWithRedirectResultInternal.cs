@@ -3,7 +3,7 @@
     using Builders.Contracts.Base;
 
     public interface IBaseTestBuilderWithRedirectResultInternal<TRedirectResultTestBuilder>
-        : IBaseTestBuilderWithActionResultInternal<TRedirectResultTestBuilder>
+        : IBaseTestBuilderWithUrlHelperResultInternal<TRedirectResultTestBuilder>
         where TRedirectResultTestBuilder : IBaseTestBuilderWithActionResult
     {
     }

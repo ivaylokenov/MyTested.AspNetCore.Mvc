@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\MyTested.AspNetCore.Mvc.Models\MyTested.AspNetCore.Mvc.Models.csproj" />
     <ProjectReference Include="..\..\src\MyTested.AspNetCore.Mvc.ViewComponents.Results\MyTested.AspNetCore.Mvc.ViewComponents.Results.csproj" />
     <ProjectReference Include="..\MyTested.AspNetCore.Mvc.Test.Setups\MyTested.AspNetCore.Mvc.Test.Setups.csproj" />
   </ItemGroup>

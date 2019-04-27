@@ -2,13 +2,15 @@
 {
     using Base;
     using Contracts.Base;
+    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
-    /// Used for testing <see cref="Microsoft.AspNetCore.Mvc.ViewComponentResult"/>.
+    /// Used for testing <see cref="ViewComponentResult"/>.
     /// </summary>
     public interface IViewComponentTestBuilder : IBaseTestBuilderWithResponseModel,
         IBaseTestBuilderWithStatusCodeResult<IAndViewComponentTestBuilder>,
-        IBaseTestBuilderWithContentTypeResult<IAndViewComponentTestBuilder>
+        IBaseTestBuilderWithContentTypeResult<IAndViewComponentTestBuilder>,
+        IBaseTestBuilderWithActionResult<ViewComponentResult>
     {
     }
 }

@@ -21,7 +21,7 @@
                     services.AddSession();
                     services.AddHttpContextAccessor();
                 });
-
+            
             var httpContext = new DefaultHttpContext();
             httpContext.Request.Scheme = "Custom";
             httpContext.Response.StatusCode = 404;

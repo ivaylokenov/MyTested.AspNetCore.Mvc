@@ -9,7 +9,7 @@
     /// </summary>
     public static class PhysicalFileTestBuilderExtensions
     {
-        private const string FileName = "file name";
+        private const string FileName = "path";
 
         /// <summary>
         /// Tests whether <see cref="Microsoft.AspNetCore.Mvc.PhysicalFileResult"/>

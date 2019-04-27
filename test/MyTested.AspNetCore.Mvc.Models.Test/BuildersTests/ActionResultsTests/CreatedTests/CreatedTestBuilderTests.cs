@@ -14,8 +14,8 @@
                 .Instance()
                 .Calling(c => c.CreatedAction())
                 .ShouldReturn()
-                .Created()
-                .WithModelOfType<ICollection<ResponseModel>>();
+                .Created(created => created
+                    .WithModelOfType<ICollection<ResponseModel>>());
         }
     }
 }

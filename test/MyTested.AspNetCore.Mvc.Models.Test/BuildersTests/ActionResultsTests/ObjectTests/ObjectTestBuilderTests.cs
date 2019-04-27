@@ -14,8 +14,8 @@
                 .Instance()
                 .Calling(c => c.ObjectResultWithResponse())
                 .ShouldReturn()
-                .Object()
-                .WithModelOfType<List<ResponseModel>>();
+                .Object(result => result
+                    .WithModelOfType<List<ResponseModel>>());
         }
     }
 }

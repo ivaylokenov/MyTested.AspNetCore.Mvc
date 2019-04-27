@@ -1,36 +1,41 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Actions.ShouldReturn
 {
+    using System;
     using ActionResults.Redirect;
     using Contracts.ActionResults.Redirect;
+    using Contracts.And;
     using Microsoft.AspNetCore.Mvc;
-    using Utilities.Validators;
 
     /// <content>
-    /// Class containing methods for testing <see cref="RedirectResult"/>, <see cref="RedirectToActionResult"/> or <see cref="RedirectToRouteResult"/>.
+    /// Class containing methods for testing <see cref="RedirectResult"/>,
+    /// <see cref="RedirectToActionResult"/> or <see cref="RedirectToRouteResult"/>.
     /// </content>
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <inheritdoc />
-        public IAndRedirectTestBuilder Redirect()
+        public IAndTestBuilder Redirect() => this.Redirect(null);
+
+        /// <inheritdoc />
+        public IAndTestBuilder Redirect(Action<IRedirectTestBuilder> redirectTestBuilder)
         {
             if (this.ActionResult is RedirectToRouteResult)
             {
-                return this.ReturnRedirectTestBuilder<RedirectToRouteResult>();
+                return this.ValidateRedirectResult<RedirectToRouteResult>(redirectTestBuilder);
             }
 
             if (this.ActionResult is RedirectToActionResult)
             {
-                return this.ReturnRedirectTestBuilder<RedirectToActionResult>();
+                return this.ValidateRedirectResult<RedirectToActionResult>(redirectTestBuilder);
             }
 
-            return this.ReturnRedirectTestBuilder<RedirectResult>();
+            return this.ValidateRedirectResult<RedirectResult>(redirectTestBuilder);
         }
 
-        private IAndRedirectTestBuilder ReturnRedirectTestBuilder<TRedirectResult>()
+        private IAndTestBuilder ValidateRedirectResult<TRedirectResult>(
+            Action<IRedirectTestBuilder> redirectTestBuilder)
             where TRedirectResult : ActionResult
-        {
-            InvocationResultValidator.ValidateInvocationResultType<TRedirectResult>(this.TestContext);
-            return new RedirectTestBuilder<TRedirectResult>(this.TestContext);
-        }
+            => this.ValidateActionResult<TRedirectResult, IRedirectTestBuilder>(
+                redirectTestBuilder,
+                new RedirectTestBuilder<TRedirectResult>(this.TestContext));
     }
 }

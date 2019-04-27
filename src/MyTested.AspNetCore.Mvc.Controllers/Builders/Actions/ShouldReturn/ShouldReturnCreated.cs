@@ -1,9 +1,10 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Actions.ShouldReturn
 {
+    using System;
     using ActionResults.Created;
     using Contracts.ActionResults.Created;
+    using Contracts.And;
     using Microsoft.AspNetCore.Mvc;
-    using Utilities.Validators;
 
     /// <content>
     /// Class containing methods for testing <see cref="CreatedResult"/>, <see cref="CreatedAtActionResult"/> or <see cref="CreatedAtRouteResult"/>.
@@ -11,26 +12,29 @@
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <inheritdoc />
-        public IAndCreatedTestBuilder Created()
+        public IAndTestBuilder Created() => this.Created(null);
+
+        /// <inheritdoc />
+        public IAndTestBuilder Created(Action<ICreatedTestBuilder> createdTestBuilder)
         {
             if (this.ActionResult is CreatedAtActionResult)
             {
-                return this.ReturnCreatedTestBuilder<CreatedAtActionResult>();
+                return this.ValidateCreatedResult<CreatedAtActionResult>(createdTestBuilder);
             }
 
             if (this.ActionResult is CreatedAtRouteResult)
             {
-                return this.ReturnCreatedTestBuilder<CreatedAtRouteResult>();
+                return this.ValidateCreatedResult<CreatedAtRouteResult>(createdTestBuilder);
             }
 
-            return this.ReturnCreatedTestBuilder<CreatedResult>();
+            return this.ValidateCreatedResult<CreatedResult>(createdTestBuilder);
         }
 
-        private IAndCreatedTestBuilder ReturnCreatedTestBuilder<TCreatedResult>()
+        private IAndTestBuilder ValidateCreatedResult<TCreatedResult>(
+            Action<ICreatedTestBuilder> createdTestBuilder)
             where TCreatedResult : ObjectResult
-        {
-            InvocationResultValidator.ValidateInvocationResultType<TCreatedResult>(this.TestContext);
-            return new CreatedTestBuilder<TCreatedResult>(this.TestContext);
-        }
+            => this.ValidateActionResult<TCreatedResult, ICreatedTestBuilder>(
+                createdTestBuilder,
+                new CreatedTestBuilder<TCreatedResult>(this.TestContext));
     }
 }

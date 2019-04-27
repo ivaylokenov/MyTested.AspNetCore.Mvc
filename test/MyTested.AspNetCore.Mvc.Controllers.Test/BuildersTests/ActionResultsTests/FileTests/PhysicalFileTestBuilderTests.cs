@@ -13,7 +13,8 @@
                 .Instance()
                 .Calling(c => c.PhysicalFileResult())
                 .ShouldReturn()
-                .File()
+                .PhysicalFile()
+                .AndAlso()
                 .ShouldPassForThe<IActionResult>(actionResult =>
                 {
                     Assert.NotNull(actionResult);

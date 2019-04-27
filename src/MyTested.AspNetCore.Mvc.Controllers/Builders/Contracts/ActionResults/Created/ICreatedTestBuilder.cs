@@ -8,7 +8,8 @@
     /// <see cref="Microsoft.AspNetCore.Mvc.CreatedAtActionResult"/>
     /// or <see cref="Microsoft.AspNetCore.Mvc.CreatedAtRouteResult"/>.
     /// </summary>
-    public interface ICreatedTestBuilder : IBaseTestBuilderWithResponseModel,
+    public interface ICreatedTestBuilder 
+        : IBaseTestBuilderWithResponseModel,
         IBaseTestBuilderWithOutputResult<IAndCreatedTestBuilder>, 
         IBaseTestBuilderWithRouteValuesResult<IAndCreatedTestBuilder>
     {

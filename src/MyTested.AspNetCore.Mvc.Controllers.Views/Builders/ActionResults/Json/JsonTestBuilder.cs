@@ -4,6 +4,7 @@
     using Contracts.ActionResults.Json;
     using Exceptions;
     using Internal;
+    using Internal.Contracts.ActionResults;
     using Internal.Services;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
@@ -13,7 +14,11 @@
     /// <summary>
     /// Used for testing <see cref="JsonResult"/>.
     /// </summary>
-    public class JsonTestBuilder : BaseTestBuilderWithResponseModel<JsonResult>, IAndJsonTestBuilder
+    public class JsonTestBuilder 
+        : BaseTestBuilderWithResponseModel<JsonResult>, 
+        IAndJsonTestBuilder,
+        IBaseTestBuilderWithStatusCodeResultInternal<IAndJsonTestBuilder>,
+        IBaseTestBuilderWithContentTypeResultInternal<IAndJsonTestBuilder>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonTestBuilder"/> class.
@@ -23,7 +28,13 @@
             : base(testContext)
         {
         }
-        
+
+        /// <summary>
+        /// Gets the JSON result test builder.
+        /// </summary>
+        /// <value>Test builder of <see cref="IAndJsonTestBuilder"/> type.</value>
+        public IAndJsonTestBuilder ResultTestBuilder => this;
+
         /// <inheritdoc />
         public IJsonTestBuilder AndAlso() => this;
 

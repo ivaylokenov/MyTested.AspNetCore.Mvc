@@ -3,7 +3,7 @@
     using Builders.Contracts.Base;
 
     public interface IBaseTestBuilderWithFileResultInternal<TFileResultTestBuilder>
-        : IBaseTestBuilderWithActionResultInternal<TFileResultTestBuilder>
+        : IBaseTestBuilderWithContentTypeResultInternal<TFileResultTestBuilder>
         where TFileResultTestBuilder : IBaseTestBuilderWithActionResult
     {
     }

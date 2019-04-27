@@ -1,13 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ActionResultsTests.NotFoundTests
 {
-    using System.Collections.Generic;
-    using System.Net;
     using Exceptions;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Formatters;
-    using Microsoft.Net.Http.Headers;
     using Setups;
-    using Setups.Common;
     using Setups.Controllers;
     using Xunit;
 
@@ -20,8 +14,8 @@
                 .Instance()
                 .Calling(c => c.HttpNotFoundAction())
                 .ShouldReturn()
-                .NotFound()
-                .WithNoModel();
+                .NotFound(notFound => notFound
+                    .WithNoModel());
         }
 
         [Fact]
@@ -34,8 +28,8 @@
                         .Instance()
                         .Calling(c => c.HttpNotFoundWithObjectAction())
                         .ShouldReturn()
-                        .NotFound()
-                        .WithNoModel();
+                        .NotFound(notFound => notFound
+                            .WithNoModel());
                 },
                 "When calling HttpNotFoundWithObjectAction action in MvcController expected to not have a response model but in fact such was found.");
         }

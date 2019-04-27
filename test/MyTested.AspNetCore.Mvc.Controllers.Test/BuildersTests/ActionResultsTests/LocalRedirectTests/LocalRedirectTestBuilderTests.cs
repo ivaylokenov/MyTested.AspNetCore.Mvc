@@ -13,7 +13,8 @@
                 .Instance()
                 .Calling(c => c.LocalRedirectAction())
                 .ShouldReturn()
-                .NotFound()
+                .LocalRedirect()
+                .AndAlso()
                 .ShouldPassForThe<ActionResult>(actionResult =>
                 {
                     Assert.NotNull(actionResult);

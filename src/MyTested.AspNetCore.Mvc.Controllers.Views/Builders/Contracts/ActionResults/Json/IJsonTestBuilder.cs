@@ -9,7 +9,8 @@
     /// </summary>
     public interface IJsonTestBuilder : IBaseTestBuilderWithResponseModel, 
         IBaseTestBuilderWithStatusCodeResult<IAndJsonTestBuilder>,
-        IBaseTestBuilderWithContentTypeResult<IAndJsonTestBuilder>
+        IBaseTestBuilderWithContentTypeResult<IAndJsonTestBuilder>,
+        IBaseTestBuilderWithActionResult<JsonResult>
     {
     }
 }

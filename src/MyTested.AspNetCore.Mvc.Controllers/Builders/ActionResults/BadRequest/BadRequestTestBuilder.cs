@@ -9,16 +9,19 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Utilities.Extensions;
-    
+
     /// <summary>
     /// Used for testing bad request results.
     /// </summary>
-    /// <typeparam name="THttpBadRequestResult">Type of bad request result - <see cref="BadRequestResult"/> or <see cref="BadRequestObjectResult"/>.</typeparam>
-    public class BadRequestTestBuilder<THttpBadRequestResult> 
-        : BaseTestBuilderWithResponseModel<THttpBadRequestResult>,
+    /// <typeparam name="TBadRequestResult">
+    /// Type of bad request result - <see cref="BadRequestResult"/>
+    /// or <see cref="BadRequestObjectResult"/>.
+    /// </typeparam>
+    public class BadRequestTestBuilder<TBadRequestResult> 
+        : BaseTestBuilderWithResponseModel<TBadRequestResult>,
         IAndBadRequestTestBuilder,
-        IBaseTestBuilderWithOutputResultInternal<IAndBadRequestTestBuilder>
-        where THttpBadRequestResult : ActionResult
+        IBaseTestBuilderWithOutputResultInternal<IAndBadRequestTestBuilder> 
+        where TBadRequestResult : ActionResult
     {
         private const string ErrorMessage = "{0} bad request result error to be the given object, but in fact it was a different.";
         private const string OfTypeErrorMessage = "{0} bad request result error to be of {1} type, but instead received {2}.";
@@ -49,7 +52,7 @@
             if (actualBadRequestResult == null)
             {
                 throw new BadRequestResultAssertionException(string.Format(
-                    "{0} bad request result to contain error object, but it could not be found.",
+                    "{0} bad request result to contain error object, but such could not be found.",
                     this.TestContext.ExceptionMessagePrefix));
             }
 

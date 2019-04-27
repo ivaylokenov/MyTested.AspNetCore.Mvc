@@ -24,9 +24,9 @@
                         dbContext: entities)))
                 .Calling(c => c.Index())
                 .ShouldReturn()
-                .View()
-                .WithModelOfType<List<Genre>>()
-                .Passing(m => m.Count == 10);
+                .View(view => view
+                    .WithModelOfType<List<Genre>>()
+                    .Passing(m => m.Count == 10));
         }
 
         [Fact]
@@ -53,14 +53,14 @@
                         dbContext: entities)))
                 .Calling(c => c.Browse(genre))
                 .ShouldReturn()
-                .View()
-                .WithModelOfType<Genre>()
-                .Passing(model =>
-                {
-                    Assert.Equal(genre, model.Name);
-                    Assert.NotNull(model.Albums);
-                    Assert.Equal(3, model.Albums.Count);
-                });
+                .View(view => view
+                    .WithModelOfType<Genre>()
+                    .Passing(model =>
+                    {
+                        Assert.Equal(genre, model.Name);
+                        Assert.NotNull(model.Albums);
+                        Assert.Equal(3, model.Albums.Count);
+                    }));
         }
 
         [Fact]
@@ -98,16 +98,16 @@
                         .Passing(a => a.AlbumId == 1)))
                 .AndAlso()
                 .ShouldReturn()
-                .View()
-                .WithModelOfType<Album>()
-                .Passing(model =>
-                {
-                    Assert.NotNull(model.Genre);
-                    var genre = genres.SingleOrDefault(g => g.GenreId == model.GenreId);
-                    Assert.NotNull(genre);
-                    Assert.NotNull(genre.Albums.SingleOrDefault(a => a.AlbumId == albumId));
-                    Assert.NotNull(model.Artist);
-                });
+                .View(view => view
+                    .WithModelOfType<Album>()
+                    .Passing(model =>
+                    {
+                        Assert.NotNull(model.Genre);
+                        var genre = genres.SingleOrDefault(g => g.GenreId == model.GenreId);
+                        Assert.NotNull(genre);
+                        Assert.NotNull(genre.Albums.SingleOrDefault(a => a.AlbumId == albumId));
+                        Assert.NotNull(model.Artist);
+                    }));
         }
 
         private static Genre[] CreateTestGenres(int numberOfGenres, int numberOfAlbums, DbContext dbContext)

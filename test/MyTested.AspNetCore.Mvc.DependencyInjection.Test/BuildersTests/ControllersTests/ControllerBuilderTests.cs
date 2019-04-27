@@ -424,8 +424,8 @@
                     .WithSetupFor<IScopedService>(s => s.Value = "TestValue"))
                 .Calling(c => c.Index())
                 .ShouldReturn()
-                .Ok()
-                .WithModel("TestValue");
+                .Ok(ok => ok
+                    .WithModel("TestValue"));
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -449,8 +449,8 @@
                             .WithSetupFor<IScopedService>(s => s.Value = "TestValue"))
                         .Calling(c => c.Index())
                         .ShouldReturn()
-                        .Ok()
-                        .WithModel("TestValue");
+                        .Ok(ok => ok
+                            .WithModel("TestValue"));
                 },
                 "The 'WithSetupFor' method can be used only for services with scoped lifetime.");
 

@@ -19,8 +19,8 @@
                 .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
-                .Ok()
-                .WithStatusCode(201);
+                .Ok(ok => ok
+                    .WithStatusCode(201));
         }
 
         [Fact]
@@ -30,8 +30,8 @@
                 .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
-                .Ok()
-                .WithStatusCode(HttpStatusCode.Created);
+                .Ok(ok => ok
+                    .WithStatusCode(HttpStatusCode.Created));
         }
 
         [Fact]
@@ -44,8 +44,8 @@
                         .Instance()
                         .Calling(c => c.FullOkAction())
                         .ShouldReturn()
-                        .Ok()
-                        .WithStatusCode(HttpStatusCode.OK);
+                        .Ok(ok => ok
+                            .WithStatusCode(HttpStatusCode.OK));
                 },
                 "When calling FullOkAction action in MvcController expected OK result to have 200 (OK) status code, but instead received 201 (Created).");
         }
@@ -57,8 +57,8 @@
                 .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
-                .Ok()
-                .ContainingContentType(ContentType.ApplicationJson);
+                .Ok(ok => ok
+                    .ContainingContentType(ContentType.ApplicationJson));
         }
 
         [Fact]
@@ -68,8 +68,8 @@
                 .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
-                .Ok()
-                .ContainingContentType(new MediaTypeHeaderValue(ContentType.ApplicationJson));
+                .Ok(ok => ok
+                    .ContainingContentType(new MediaTypeHeaderValue(ContentType.ApplicationJson)));
         }
         
         [Fact]
@@ -79,11 +79,11 @@
                 () =>
                 {
                     MyController<MvcController>
-                       .Instance()
-                       .Calling(c => c.FullOkAction())
-                       .ShouldReturn()
-                       .Ok()
-                       .ContainingContentType(new MediaTypeHeaderValue(ContentType.ApplicationOctetStream));
+                        .Instance()
+                        .Calling(c => c.FullOkAction())
+                        .ShouldReturn()
+                        .Ok(ok => ok
+                            .ContainingContentType(new MediaTypeHeaderValue(ContentType.ApplicationOctetStream)));
                 },
                 "When calling FullOkAction action in MvcController expected OK result content types to contain application/octet-stream, but in fact such was not found.");
         }
@@ -95,12 +95,12 @@
                 .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
-                .Ok()
-                .ContainingContentTypes(new List<string>
-                {
-                    ContentType.ApplicationJson,
-                    ContentType.ApplicationXml
-                });
+                .Ok(ok => ok
+                    .ContainingContentTypes(new List<string>
+                    {
+                        ContentType.ApplicationJson,
+                        ContentType.ApplicationXml
+                    }));
         }
 
         [Fact]
@@ -110,8 +110,10 @@
                 .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
-                .Ok()
-                .ContainingContentTypes(ContentType.ApplicationJson, ContentType.ApplicationXml);
+                .Ok(ok => ok
+                    .ContainingContentTypes(
+                        ContentType.ApplicationJson, 
+                        ContentType.ApplicationXml));
         }
 
         [Fact]
@@ -124,12 +126,12 @@
                         .Instance()
                         .Calling(c => c.FullOkAction())
                         .ShouldReturn()
-                        .Ok()
-                        .ContainingContentTypes(new List<string>
-                        {
-                            ContentType.ApplicationOctetStream,
-                            ContentType.ApplicationXml
-                        });
+                        .Ok(ok => ok
+                            .ContainingContentTypes(new List<string>
+                            {
+                                ContentType.ApplicationOctetStream,
+                                ContentType.ApplicationXml
+                            }));
                 },
                 "When calling FullOkAction action in MvcController expected OK result content types to contain application/octet-stream, but in fact such was not found.");
         }
@@ -144,11 +146,11 @@
                         .Instance()
                         .Calling(c => c.FullOkAction())
                         .ShouldReturn()
-                        .Ok()
-                        .ContainingContentTypes(new List<string>
-                        {
-                            ContentType.ApplicationXml
-                        });
+                        .Ok(ok => ok
+                            .ContainingContentTypes(new List<string>
+                            {
+                                ContentType.ApplicationXml
+                            }));
                 },
                 "When calling FullOkAction action in MvcController expected OK result content types to have 1 item, but instead found 2.");
         }
@@ -163,13 +165,13 @@
                         .Instance()
                         .Calling(c => c.FullOkAction())
                         .ShouldReturn()
-                        .Ok()
-                        .ContainingContentTypes(new List<string>
-                        {
-                            ContentType.ApplicationXml,
-                            ContentType.ApplicationJson,
-                            ContentType.ApplicationZip
-                        });
+                        .Ok(ok => ok
+                            .ContainingContentTypes(new List<string>
+                            {
+                                ContentType.ApplicationXml,
+                                ContentType.ApplicationJson,
+                                ContentType.ApplicationZip
+                            }));
                 },
                 "When calling FullOkAction action in MvcController expected OK result content types to have 3 items, but instead found 2.");
         }
@@ -181,13 +183,13 @@
                 .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
-                .Ok()
-                .ContainingContentTypes(new List<MediaTypeHeaderValue>
-                {
-                    new MediaTypeHeaderValue(ContentType.ApplicationJson),
-                    new MediaTypeHeaderValue(ContentType.ApplicationXml)
-                });
-        }
+                .Ok(ok => ok
+                    .ContainingContentTypes(new List<MediaTypeHeaderValue>
+                    {
+                        new MediaTypeHeaderValue(ContentType.ApplicationJson),
+                        new MediaTypeHeaderValue(ContentType.ApplicationXml)
+                    }));
+            }
 
         [Fact]
         public void ContainingContentTypesAsMediaTypeHeaderValueShouldNotThrowExceptionWithCorrectParametersValue()
@@ -196,8 +198,10 @@
                 .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
-                .Ok()
-                .ContainingContentTypes(new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml));
+                .Ok(ok => ok
+                    .ContainingContentTypes(
+                    new MediaTypeHeaderValue(ContentType.ApplicationJson),
+                    new MediaTypeHeaderValue(ContentType.ApplicationXml)));
         }
 
         [Fact]
@@ -210,12 +214,12 @@
                         .Instance()
                         .Calling(c => c.FullOkAction())
                         .ShouldReturn()
-                        .Ok()
-                        .ContainingContentTypes(new List<MediaTypeHeaderValue>
-                        {
-                            new MediaTypeHeaderValue(ContentType.ApplicationOctetStream),
-                            new MediaTypeHeaderValue(ContentType.ApplicationXml)
-                        });
+                        .Ok(ok => ok
+                            .ContainingContentTypes(new List<MediaTypeHeaderValue>
+                            {
+                                new MediaTypeHeaderValue(ContentType.ApplicationOctetStream),
+                                new MediaTypeHeaderValue(ContentType.ApplicationXml)
+                            }));
                 },
                 "When calling FullOkAction action in MvcController expected OK result content types to contain application/octet-stream, but in fact such was not found.");
         }
@@ -230,11 +234,11 @@
                         .Instance()
                         .Calling(c => c.FullOkAction())
                         .ShouldReturn()
-                        .Ok()
-                        .ContainingContentTypes(new List<MediaTypeHeaderValue>
-                        {
-                            new MediaTypeHeaderValue(ContentType.ApplicationXml)
-                        });
+                        .Ok(ok => ok
+                            .ContainingContentTypes(new List<MediaTypeHeaderValue>
+                            {
+                                new MediaTypeHeaderValue(ContentType.ApplicationXml)
+                            }));
                 },
                 "When calling FullOkAction action in MvcController expected OK result content types to have 1 item, but instead found 2.");
         }
@@ -249,13 +253,13 @@
                         .Instance()
                         .Calling(c => c.FullOkAction())
                         .ShouldReturn()
-                        .Ok()
-                        .ContainingContentTypes(new List<MediaTypeHeaderValue>
-                        {
-                            new MediaTypeHeaderValue(ContentType.ApplicationXml),
-                            new MediaTypeHeaderValue(ContentType.ApplicationJson),
-                            new MediaTypeHeaderValue(ContentType.ApplicationZip)
-                        });
+                        .Ok(ok => ok
+                            .ContainingContentTypes(new List<MediaTypeHeaderValue>
+                            {
+                                new MediaTypeHeaderValue(ContentType.ApplicationXml),
+                                new MediaTypeHeaderValue(ContentType.ApplicationJson),
+                                new MediaTypeHeaderValue(ContentType.ApplicationZip)
+                            }));
                 },
                 "When calling FullOkAction action in MvcController expected OK result content types to have 3 items, but instead found 2.");
         }
@@ -269,8 +273,8 @@
                 .Instance()
                 .Calling(c => c.OkActionWithFormatter(formatter))
                 .ShouldReturn()
-                .Ok()
-                .ContainingOutputFormatter(formatter);
+                .Ok(ok => ok
+                    .ContainingOutputFormatter(formatter));
         }
 
         [Fact]
@@ -285,8 +289,8 @@
                         .Instance()
                         .Calling(c => c.OkActionWithFormatter(formatter))
                         .ShouldReturn()
-                        .Ok()
-                        .ContainingOutputFormatter(TestObjectFactory.GetOutputFormatter());
+                        .Ok(ok => ok
+                            .ContainingOutputFormatter(TestObjectFactory.GetOutputFormatter()));
                 },
                 "When calling OkActionWithFormatter action in MvcController expected OK result output formatters to contain the provided formatter, but such was not found.");
         }
@@ -298,8 +302,8 @@
                 .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
-                .Ok()
-                .ContainingOutputFormatterOfType<JsonOutputFormatter>();
+                .Ok(ok => ok
+                    .ContainingOutputFormatterOfType<JsonOutputFormatter>());
         }
 
         [Fact]
@@ -312,8 +316,8 @@
                         .Instance()
                         .Calling(c => c.FullOkAction())
                         .ShouldReturn()
-                        .Ok()
-                        .ContainingOutputFormatterOfType<IOutputFormatter>();
+                        .Ok(ok => ok
+                            .ContainingOutputFormatterOfType<IOutputFormatter>());
                 },
                 "When calling FullOkAction action in MvcController expected OK result output formatters to contain formatter of IOutputFormatter type, but such was not found.");
         }
@@ -325,12 +329,12 @@
                 .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
-                .Ok()
-                .ContainingOutputFormatters(new List<IOutputFormatter>
-                {
-                    TestObjectFactory.GetOutputFormatter(),
-                    new CustomOutputFormatter()
-                });
+                .Ok(ok => ok
+                    .ContainingOutputFormatters(new List<IOutputFormatter>
+                    {
+                        TestObjectFactory.GetOutputFormatter(),
+                        new CustomOutputFormatter()
+                    }));
         }
 
         [Fact]
@@ -340,8 +344,8 @@
                 .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
-                .Ok()
-                .ContainingOutputFormatters(TestObjectFactory.GetOutputFormatter(), new CustomOutputFormatter());
+                .Ok(ok => ok
+                    .ContainingOutputFormatters(TestObjectFactory.GetOutputFormatter(), new CustomOutputFormatter()));
         }
 
         [Fact]
@@ -354,12 +358,12 @@
                         .Instance()
                         .Calling(c => c.FullOkAction())
                         .ShouldReturn()
-                        .Ok()
-                        .ContainingOutputFormatters(new List<IOutputFormatter>
-                        {
-                            new StringOutputFormatter(),
-                            new CustomOutputFormatter()
-                        });
+                        .Ok(ok => ok
+                            .ContainingOutputFormatters(new List<IOutputFormatter>
+                            {
+                                new StringOutputFormatter(),
+                                new CustomOutputFormatter()
+                            }));
                 },
                 "When calling FullOkAction action in MvcController expected OK result output formatters to contain formatter of StringOutputFormatter type, but none was found.");
         }
@@ -374,11 +378,11 @@
                         .Instance()
                         .Calling(c => c.FullOkAction())
                         .ShouldReturn()
-                        .Ok()
-                        .ContainingOutputFormatters(new List<IOutputFormatter>
-                        {
-                            TestObjectFactory.GetOutputFormatter()
-                        });
+                        .Ok(ok => ok
+                            .ContainingOutputFormatters(new List<IOutputFormatter>
+                            {
+                                TestObjectFactory.GetOutputFormatter()
+                            }));
                 },
                 "When calling FullOkAction action in MvcController expected OK result output formatters to have 1 item, but instead found 2.");
         }
@@ -393,13 +397,13 @@
                         .Instance()
                         .Calling(c => c.FullOkAction())
                         .ShouldReturn()
-                        .Ok()
-                        .ContainingOutputFormatters(new List<IOutputFormatter>
-                        {
-                            TestObjectFactory.GetOutputFormatter(),
-                            new CustomOutputFormatter(),
-                            TestObjectFactory.GetOutputFormatter()
-                        });
+                        .Ok(ok => ok
+                            .ContainingOutputFormatters(new List<IOutputFormatter>
+                            {
+                                TestObjectFactory.GetOutputFormatter(),
+                                new CustomOutputFormatter(),
+                                TestObjectFactory.GetOutputFormatter()
+                            }));
                 },
                 "When calling FullOkAction action in MvcController expected OK result output formatters to have 3 items, but instead found 2.");
         }
@@ -411,10 +415,12 @@
                 .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
-                .Ok()
-                .WithStatusCode(201)
-                .AndAlso()
-                .ContainingOutputFormatters(TestObjectFactory.GetOutputFormatter(), new CustomOutputFormatter());
+                .Ok(ok => ok
+                    .WithStatusCode(201)
+                    .AndAlso()
+                    .ContainingOutputFormatters(
+                        TestObjectFactory.GetOutputFormatter(), 
+                        new CustomOutputFormatter()));
         }
     }
 }

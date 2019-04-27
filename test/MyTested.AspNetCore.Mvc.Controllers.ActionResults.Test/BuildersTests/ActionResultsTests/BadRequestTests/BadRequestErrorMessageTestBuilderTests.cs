@@ -14,9 +14,9 @@
                 .Instance()
                 .Calling(c => c.BadRequestWithErrorAction())
                 .ShouldReturn()
-                .BadRequest()
-                .WithErrorMessage()
-                .ThatEquals("Bad request");
+                .BadRequest(badRequest => badRequest
+                    .WithErrorMessage()
+                    .ThatEquals("Bad request"));
         }
 
         [Fact]
@@ -29,9 +29,9 @@
                         .Instance()
                         .Calling(c => c.BadRequestWithErrorAction())
                         .ShouldReturn()
-                        .BadRequest()
-                        .WithErrorMessage()
-                        .ThatEquals("Bad");
+                        .BadRequest(badRequest => badRequest
+                            .WithErrorMessage()
+                            .ThatEquals("Bad"));
                 },
                 "When calling BadRequestWithErrorAction action in MvcController expected bad request error message to be 'Bad', but instead found 'Bad request'.");
         }
@@ -43,9 +43,9 @@
                 .Instance()
                 .Calling(c => c.BadRequestWithErrorAction())
                 .ShouldReturn()
-                .BadRequest()
-                .WithErrorMessage()
-                .BeginningWith("Bad ");
+                .BadRequest(badRequest => badRequest
+                    .WithErrorMessage()
+                    .BeginningWith("Bad "));
         }
 
         [Fact]
@@ -58,9 +58,9 @@
                         .Instance()
                         .Calling(c => c.BadRequestWithErrorAction())
                         .ShouldReturn()
-                        .BadRequest()
-                        .WithErrorMessage()
-                        .BeginningWith("request");
+                        .BadRequest(badRequest => badRequest
+                            .WithErrorMessage()
+                            .BeginningWith("request"));
                 },
                 "When calling BadRequestWithErrorAction action in MvcController expected bad request error message to begin with 'request', but instead found 'Bad request'.");
         }
@@ -72,9 +72,9 @@
                 .Instance()
                 .Calling(c => c.BadRequestWithErrorAction())
                 .ShouldReturn()
-                .BadRequest()
-                .WithErrorMessage()
-                .EndingWith("request");
+                .BadRequest(badRequest => badRequest
+                    .WithErrorMessage()
+                    .EndingWith("request"));
         }
 
         [Fact]
@@ -87,9 +87,9 @@
                         .Instance()
                         .Calling(c => c.BadRequestWithErrorAction())
                         .ShouldReturn()
-                        .BadRequest()
-                        .WithErrorMessage()
-                        .EndingWith("Bad");
+                        .BadRequest(badRequest => badRequest
+                            .WithErrorMessage()
+                            .EndingWith("Bad"));
                 },
                 "When calling BadRequestWithErrorAction action in MvcController expected bad request error message to end with 'Bad', but instead found 'Bad request'.");
         }
@@ -101,9 +101,9 @@
                 .Instance()
                 .Calling(c => c.BadRequestWithErrorAction())
                 .ShouldReturn()
-                .BadRequest()
-                .WithErrorMessage()
-                .Containing("d r");
+                .BadRequest(badRequest => badRequest
+                    .WithErrorMessage()
+                    .Containing("d r"));
         }
 
         [Fact]
@@ -116,9 +116,9 @@
                         .Instance()
                         .Calling(c => c.BadRequestWithErrorAction())
                         .ShouldReturn()
-                        .BadRequest()
-                        .WithErrorMessage()
-                        .Containing("Another");
+                        .BadRequest(badRequest => badRequest
+                            .WithErrorMessage()
+                            .Containing("Another"));
                 },
                 "When calling BadRequestWithErrorAction action in MvcController expected bad request error message to contain 'Another', but instead found 'Bad request'.");
         }

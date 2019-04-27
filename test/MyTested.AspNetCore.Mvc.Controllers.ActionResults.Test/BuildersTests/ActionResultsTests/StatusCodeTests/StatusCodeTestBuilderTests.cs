@@ -19,8 +19,8 @@
                 .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
-                .StatusCode()
-                .ContainingContentType(ContentType.ApplicationJson);
+                .StatusCode(result => result
+                    .ContainingContentType(ContentType.ApplicationJson));
         }
 
         [Fact]
@@ -30,8 +30,8 @@
                 .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
-                .StatusCode()
-                .ContainingContentType(new MediaTypeHeaderValue(ContentType.ApplicationJson));
+                .StatusCode(result => result
+                    .ContainingContentType(new MediaTypeHeaderValue(ContentType.ApplicationJson)));
         }
 
         [Fact]
@@ -44,8 +44,8 @@
                        .Instance()
                        .Calling(c => c.FullObjectResultAction())
                        .ShouldReturn()
-                       .StatusCode()
-                       .ContainingContentType(new MediaTypeHeaderValue(ContentType.ApplicationOctetStream));
+                       .StatusCode(result => result
+                        .ContainingContentType(new MediaTypeHeaderValue(ContentType.ApplicationOctetStream)));
                 },
                 "When calling FullObjectResultAction action in MvcController expected status code result content types to contain application/octet-stream, but in fact such was not found.");
         }
@@ -57,12 +57,12 @@
                 .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
-                .StatusCode()
-                .ContainingContentTypes(new List<string>
-                {
-                    ContentType.ApplicationJson,
-                    ContentType.ApplicationXml
-                });
+                .StatusCode(result => result
+                    .ContainingContentTypes(new List<string>
+                    {
+                        ContentType.ApplicationJson,
+                        ContentType.ApplicationXml
+                    }));
         }
 
         [Fact]
@@ -72,8 +72,10 @@
                 .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
-                .StatusCode()
-                .ContainingContentTypes(ContentType.ApplicationJson, ContentType.ApplicationXml);
+                .StatusCode(result => result
+                    .ContainingContentTypes(
+                        ContentType.ApplicationJson, 
+                        ContentType.ApplicationXml));
         }
 
         [Fact]
@@ -86,12 +88,12 @@
                         .Instance()
                         .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
-                        .StatusCode()
-                        .ContainingContentTypes(new List<string>
-                        {
-                            ContentType.ApplicationOctetStream,
-                            ContentType.ApplicationXml
-                        });
+                        .StatusCode(result => result
+                            .ContainingContentTypes(new List<string>
+                            {
+                                ContentType.ApplicationOctetStream,
+                                ContentType.ApplicationXml
+                            }));
                 },
                 "When calling FullObjectResultAction action in MvcController expected status code result content types to contain application/octet-stream, but in fact such was not found.");
         }
@@ -106,11 +108,11 @@
                         .Instance()
                         .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
-                        .StatusCode()
-                        .ContainingContentTypes(new List<string>
-                        {
-                            ContentType.ApplicationXml
-                        });
+                        .StatusCode(result => result
+                            .ContainingContentTypes(new List<string>
+                            {
+                                ContentType.ApplicationXml
+                            }));
                 },
                 "When calling FullObjectResultAction action in MvcController expected status code result content types to have 1 item, but instead found 2.");
         }
@@ -125,13 +127,13 @@
                         .Instance()
                         .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
-                        .StatusCode()
-                        .ContainingContentTypes(new List<string>
-                        {
-                            ContentType.ApplicationXml,
-                            ContentType.ApplicationJson,
-                            ContentType.ApplicationZip
-                        });
+                        .StatusCode(result => result
+                            .ContainingContentTypes(new List<string>
+                            {
+                                ContentType.ApplicationXml,
+                                ContentType.ApplicationJson,
+                                ContentType.ApplicationZip
+                            }));
                 },
                 "When calling FullObjectResultAction action in MvcController expected status code result content types to have 3 items, but instead found 2.");
         }
@@ -143,12 +145,12 @@
                 .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
-                .StatusCode()
-                .ContainingContentTypes(new List<MediaTypeHeaderValue>
-                {
-                    new MediaTypeHeaderValue(ContentType.ApplicationJson),
-                    new MediaTypeHeaderValue(ContentType.ApplicationXml)
-                });
+                .StatusCode(result => result
+                    .ContainingContentTypes(new List<MediaTypeHeaderValue>
+                    {
+                        new MediaTypeHeaderValue(ContentType.ApplicationJson),
+                        new MediaTypeHeaderValue(ContentType.ApplicationXml)
+                    }));
         }
 
         [Fact]
@@ -158,10 +160,10 @@
                 .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
-                .StatusCode()
-                .ContainingContentTypes(
-                    new MediaTypeHeaderValue(ContentType.ApplicationJson), 
-                    new MediaTypeHeaderValue(ContentType.ApplicationXml));
+                .StatusCode(result => result
+                    .ContainingContentTypes(
+                        new MediaTypeHeaderValue(ContentType.ApplicationJson), 
+                        new MediaTypeHeaderValue(ContentType.ApplicationXml)));
         }
 
         [Fact]
@@ -174,12 +176,12 @@
                         .Instance()
                         .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
-                        .StatusCode()
-                        .ContainingContentTypes(new List<MediaTypeHeaderValue>
-                        {
-                            new MediaTypeHeaderValue(ContentType.ApplicationOctetStream),
-                            new MediaTypeHeaderValue(ContentType.ApplicationXml)
-                        });
+                        .StatusCode(result => result
+                            .ContainingContentTypes(new List<MediaTypeHeaderValue>
+                            {
+                                new MediaTypeHeaderValue(ContentType.ApplicationOctetStream),
+                                new MediaTypeHeaderValue(ContentType.ApplicationXml)
+                            }));
                 },
                 "When calling FullObjectResultAction action in MvcController expected status code result content types to contain application/octet-stream, but in fact such was not found.");
         }
@@ -194,11 +196,11 @@
                         .Instance()
                         .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
-                        .StatusCode()
-                        .ContainingContentTypes(new List<MediaTypeHeaderValue>
-                        {
-                            new MediaTypeHeaderValue(ContentType.ApplicationXml)
-                        });
+                        .StatusCode(result => result
+                            .ContainingContentTypes(new List<MediaTypeHeaderValue>
+                            {
+                                new MediaTypeHeaderValue(ContentType.ApplicationXml)
+                            }));
                 },
                 "When calling FullObjectResultAction action in MvcController expected status code result content types to have 1 item, but instead found 2.");
         }
@@ -213,13 +215,13 @@
                         .Instance()
                         .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
-                        .StatusCode()
-                        .ContainingContentTypes(new List<MediaTypeHeaderValue>
-                        {
-                            new MediaTypeHeaderValue(ContentType.ApplicationXml),
-                            new MediaTypeHeaderValue(ContentType.ApplicationJson),
-                            new MediaTypeHeaderValue(ContentType.ApplicationZip)
-                        });
+                        .StatusCode(result => result
+                            .ContainingContentTypes(new List<MediaTypeHeaderValue>
+                            {
+                                new MediaTypeHeaderValue(ContentType.ApplicationXml),
+                                new MediaTypeHeaderValue(ContentType.ApplicationJson),
+                                new MediaTypeHeaderValue(ContentType.ApplicationZip)
+                            }));
                 },
                 "When calling FullObjectResultAction action in MvcController expected status code result content types to have 3 items, but instead found 2.");
         }
@@ -233,8 +235,8 @@
                 .Instance()
                 .Calling(c => c.ObjectActionWithFormatter(formatter))
                 .ShouldReturn()
-                .StatusCode()
-                .ContainingOutputFormatter(formatter);
+                .StatusCode(result => result
+                    .ContainingOutputFormatter(formatter));
         }
 
         [Fact]
@@ -249,8 +251,8 @@
                         .Instance()
                         .Calling(c => c.ObjectActionWithFormatter(formatter))
                         .ShouldReturn()
-                        .StatusCode()
-                        .ContainingOutputFormatter(TestObjectFactory.GetOutputFormatter());
+                        .StatusCode(result => result
+                            .ContainingOutputFormatter(TestObjectFactory.GetOutputFormatter()));
                 },
                 "When calling ObjectActionWithFormatter action in MvcController expected status code result output formatters to contain the provided formatter, but such was not found.");
         }
@@ -262,8 +264,8 @@
                 .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
-                .StatusCode()
-                .ContainingOutputFormatterOfType<JsonOutputFormatter>();
+                .StatusCode(result => result
+                    .ContainingOutputFormatterOfType<JsonOutputFormatter>());
         }
 
         [Fact]
@@ -276,8 +278,8 @@
                         .Instance()
                         .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
-                        .StatusCode()
-                        .ContainingOutputFormatterOfType<IOutputFormatter>();
+                        .StatusCode(result => result
+                            .ContainingOutputFormatterOfType<IOutputFormatter>());
                 },
                 "When calling FullObjectResultAction action in MvcController expected status code result output formatters to contain formatter of IOutputFormatter type, but such was not found.");
         }
@@ -289,12 +291,12 @@
                 .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
-                .StatusCode()
-                .ContainingOutputFormatters(new List<IOutputFormatter>
-                {
-                    TestObjectFactory.GetOutputFormatter(),
-                    new CustomOutputFormatter()
-                });
+                .StatusCode(result => result
+                    .ContainingOutputFormatters(new List<IOutputFormatter>
+                    {
+                        TestObjectFactory.GetOutputFormatter(),
+                        new CustomOutputFormatter()
+                    }));
         }
 
         [Fact]
@@ -304,8 +306,10 @@
                 .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
-                .StatusCode()
-                .ContainingOutputFormatters(TestObjectFactory.GetOutputFormatter(), new CustomOutputFormatter());
+                .StatusCode(result => result
+                    .ContainingOutputFormatters(
+                        TestObjectFactory.GetOutputFormatter(), 
+                        new CustomOutputFormatter()));
         }
 
         [Fact]
@@ -318,12 +322,12 @@
                         .Instance()
                         .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
-                        .StatusCode()
-                        .ContainingOutputFormatters(new List<IOutputFormatter>
-                        {
-                            new StringOutputFormatter(),
-                            new CustomOutputFormatter()
-                        });
+                        .StatusCode(result => result
+                            .ContainingOutputFormatters(new List<IOutputFormatter>
+                            {
+                                new StringOutputFormatter(),
+                                new CustomOutputFormatter()
+                            }));
                 },
                 "When calling FullObjectResultAction action in MvcController expected status code result output formatters to contain formatter of StringOutputFormatter type, but none was found.");
         }
@@ -338,11 +342,11 @@
                         .Instance()
                         .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
-                        .StatusCode()
-                        .ContainingOutputFormatters(new List<IOutputFormatter>
-                        {
-                            TestObjectFactory.GetOutputFormatter()
-                        });
+                        .StatusCode(result => result
+                            .ContainingOutputFormatters(new List<IOutputFormatter>
+                            {
+                                TestObjectFactory.GetOutputFormatter()
+                            }));
                 },
                 "When calling FullObjectResultAction action in MvcController expected status code result output formatters to have 1 item, but instead found 2.");
         }
@@ -357,13 +361,13 @@
                         .Instance()
                         .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
-                        .StatusCode()
-                        .ContainingOutputFormatters(new List<IOutputFormatter>
-                        {
-                            TestObjectFactory.GetOutputFormatter(),
-                            new CustomOutputFormatter(),
-                            TestObjectFactory.GetOutputFormatter()
-                        });
+                        .StatusCode(result => result
+                            .ContainingOutputFormatters(new List<IOutputFormatter>
+                            {
+                                TestObjectFactory.GetOutputFormatter(),
+                                new CustomOutputFormatter(),
+                                TestObjectFactory.GetOutputFormatter()
+                            }));
                 },
                 "When calling FullObjectResultAction action in MvcController expected status code result output formatters to have 3 items, but instead found 2.");
         }
@@ -378,13 +382,13 @@
                         .Instance()
                         .Calling(c => c.StatusCodeAction())
                         .ShouldReturn()
-                        .StatusCode()
-                        .ContainingOutputFormatters(new List<IOutputFormatter>
-                        {
-                            TestObjectFactory.GetOutputFormatter(),
-                            new CustomOutputFormatter(),
-                            TestObjectFactory.GetOutputFormatter()
-                        });
+                        .StatusCode(result => result
+                            .ContainingOutputFormatters(new List<IOutputFormatter>
+                            {
+                                TestObjectFactory.GetOutputFormatter(),
+                                new CustomOutputFormatter(),
+                                TestObjectFactory.GetOutputFormatter()
+                            }));
                 },
                 "When calling StatusCodeAction action in MvcController expected status code result to inherit ObjectResult, but in fact it did not.");
         }
@@ -396,12 +400,12 @@
                 .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
-                .StatusCode()
-                .ShouldPassForThe<IActionResult>(actionResult =>
-                {
-                    Assert.NotNull(actionResult);
-                    Assert.IsAssignableFrom<ObjectResult>(actionResult);
-                });
+                .StatusCode(result => result
+                    .ShouldPassForThe<IActionResult>(actionResult =>
+                    {
+                        Assert.NotNull(actionResult);
+                        Assert.IsAssignableFrom<ObjectResult>(actionResult);
+                    }));
         }
     }
 }

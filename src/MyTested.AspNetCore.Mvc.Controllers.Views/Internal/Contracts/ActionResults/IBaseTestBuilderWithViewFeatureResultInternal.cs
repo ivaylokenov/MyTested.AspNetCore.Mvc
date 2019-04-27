@@ -3,7 +3,8 @@
     using Builders.Contracts.Base;
 
     public interface IBaseTestBuilderWithViewFeatureResultInternal<TViewFeatureResultTestBuilder>
-        : IBaseTestBuilderWithActionResultInternal<TViewFeatureResultTestBuilder>
+        : IBaseTestBuilderWithStatusCodeResultInternal<TViewFeatureResultTestBuilder>,
+        IBaseTestBuilderWithContentTypeResultInternal<TViewFeatureResultTestBuilder>
         where TViewFeatureResultTestBuilder : IBaseTestBuilderWithActionResult
     {
     }

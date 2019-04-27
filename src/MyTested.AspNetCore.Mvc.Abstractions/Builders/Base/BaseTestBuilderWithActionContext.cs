@@ -1,6 +1,11 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Base
 {
+    using System;
+    using And;
+    using Contracts.And;
+    using Exceptions;
     using Internal.TestContexts;
+    using Utilities.Extensions;
     using Utilities.Validators;
 
     public abstract class BaseTestBuilderWithActionContext : BaseTestBuilderWithComponent
@@ -24,6 +29,26 @@
                 CommonValidator.CheckForNullReference(value, nameof(this.TestContext));
                 this.testContext = value;
             }
+        }
+        
+        protected IAndTestBuilder Passing<TActionResult>(Action<TActionResult> assertions)
+        {
+            assertions(this.TestContext.MethodResultAs<TActionResult>());
+
+            return new AndTestBuilder(this.TestContext);
+        }
+
+        protected IAndTestBuilder Passing<TActionResult>(Func<TActionResult, bool> predicate)
+        {
+            if (!predicate(this.TestContext.MethodResultAs<TActionResult>()))
+            {
+                throw new InvocationResultAssertionException(string.Format(
+                    "{0} the {1} to pass the given predicate, but it failed.",
+                    this.TestContext.ExceptionMessagePrefix,
+                    this.TestContext.MethodResult.GetName()));
+            }
+
+            return new AndTestBuilder(this.TestContext);
         }
     }
 }

@@ -10,7 +10,7 @@
     /// Used for testing <see cref="ViewComponentResult"/>.
     /// </summary>
     public class ViewComponentTestBuilder 
-        : BaseTestBuilderWithViewFeatureResult<ViewComponentResult>, 
+        : BaseTestBuilderWithViewFeatureResult<ViewComponentResult, IAndViewComponentTestBuilder>, 
         IAndViewComponentTestBuilder
     {
         /// <summary>
@@ -23,6 +23,12 @@
             // Uses internal reflection caching.
             this.ViewComponentArguments = new RouteValueDictionary(this.ActionResult.Arguments);
         }
+
+        /// <summary>
+        /// Gets the view component result test builder.
+        /// </summary>
+        /// <value>Test builder of <see cref="IAndViewComponentTestBuilder"/> type.</value>
+        public override IAndViewComponentTestBuilder ResultTestBuilder => this;
 
         public IDictionary<string, object> ViewComponentArguments { get; private set; }
         

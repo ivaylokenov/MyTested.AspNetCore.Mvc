@@ -16,10 +16,10 @@
     /// </summary>
     public static class FileTestBuilderExtensions
     {
-        private const string FileStream = "file stream";
-        private const string FileName = "file name";
-        private const string FileProvider = "file provider";
-        private const string FileContents = "file contents";
+        private const string FileStream = "stream";
+        private const string FileName = "name";
+        private const string FileProvider = "provider";
+        private const string FileContents = "contents";
 
         /// <summary>
         /// Tests whether the <see cref="FileStreamResult"/>
@@ -44,7 +44,7 @@
             {
                 actualBuilder.ThrowNewFailedValidationException(
                     FileStream,
-                    "to have contents as the provided one",
+                    "to have value as the provided one",
                     "instead received different result");
             }
 
@@ -158,7 +158,7 @@
             {
                 actualBuilder.ThrowNewFailedValidationException(
                     FileContents,
-                    "to have contents as the provided ones",
+                    "to have values as the provided ones",
                     "instead received different result");
             }
 
@@ -177,7 +177,7 @@
                 var fileTestBuilderBase = (BaseTestBuilderWithComponent)fileTestBuilder;
 
                 throw new FileResultAssertionException(string.Format(
-                    "{0} file result to contain {1}, but it could not be found.",
+                    "{0} file result to contain {1}, but such could not be found.",
                     fileTestBuilderBase.TestContext.ExceptionMessagePrefix,
                     containment));
             }

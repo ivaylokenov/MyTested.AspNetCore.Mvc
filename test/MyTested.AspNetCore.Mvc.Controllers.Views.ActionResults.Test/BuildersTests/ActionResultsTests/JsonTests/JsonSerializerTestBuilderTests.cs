@@ -20,9 +20,9 @@
                 .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithCheckAdditionalContent(false));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithCheckAdditionalContent(false)));
         }
 
         [Fact]
@@ -35,9 +35,9 @@
                             .Instance()
                             .Calling(c => c.JsonWithSettingsAction())
                             .ShouldReturn()
-                            .Json()
-                            .WithJsonSerializerSettings(s =>
-                                s.WithCheckAdditionalContent(true));
+                            .Json(json => json
+                                .WithJsonSerializerSettings(s =>
+                                    s.WithCheckAdditionalContent(true)));
                    },
                    "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have enabled checking for additional content, but in fact it was disabled.");
         }
@@ -49,9 +49,9 @@
                 .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithCulture(CultureInfo.InvariantCulture));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithCulture(CultureInfo.InvariantCulture)));
         }
 
         [Fact]
@@ -64,9 +64,9 @@
                         .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
-                        .Json()
-                        .WithJsonSerializerSettings(s =>
-                            s.WithCulture(CultureInfo.CurrentCulture));
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithCulture(CultureInfo.CurrentCulture)));
                 },
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have 'English (United States)' culture, but in fact found 'Invariant Language (Invariant Country)'.");
         }
@@ -83,9 +83,9 @@
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithCulture(CultureInfo.InvariantCulture));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithCulture(CultureInfo.InvariantCulture)));
         }
 
         [Fact]
@@ -95,9 +95,9 @@
                 .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithContractResolverOfType<CamelCasePropertyNamesContractResolver>());
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithContractResolverOfType<CamelCasePropertyNamesContractResolver>()));
         }
 
         [Fact]
@@ -110,9 +110,9 @@
                         .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
-                        .Json()
-                        .WithJsonSerializerSettings(s =>
-                            s.WithContractResolverOfType<DefaultContractResolver>());
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithContractResolverOfType<DefaultContractResolver>()));
                 },
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have DefaultContractResolver, but in fact found CamelCasePropertyNamesContractResolver.");
         }
@@ -129,9 +129,9 @@
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithContractResolverOfType<CamelCasePropertyNamesContractResolver>());
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithContractResolverOfType<CamelCasePropertyNamesContractResolver>()));
         }
 
         [Fact]
@@ -144,9 +144,9 @@
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithContractResolver(jsonSettings.ContractResolver));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithContractResolver(jsonSettings.ContractResolver)));
         }
 
         [Fact]
@@ -159,9 +159,9 @@
                         .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
-                        .Json()
-                        .WithJsonSerializerSettings(s =>
-                            s.WithContractResolver(new DefaultContractResolver()));
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithContractResolver(new DefaultContractResolver())));
                 },
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have the same contract resolver as the provided one, but in fact it was different.");
         }
@@ -179,9 +179,9 @@
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithContractResolver(contractResolver));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithContractResolver(contractResolver)));
         }
 
         [Fact]
@@ -196,9 +196,9 @@
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.ContainingConverter(jsonConverter));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.ContainingConverter(jsonConverter)));
         }
 
         [Fact]
@@ -215,9 +215,9 @@
                         .WithoutValidation()        
                         .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                         .ShouldReturn()
-                        .Json()
-                        .WithJsonSerializerSettings(s =>
-                            s.ContainingConverter(jsonConverter));
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.ContainingConverter(jsonConverter)));
                 },
                 "When calling JsonWithSpecificSettingsAction action in MvcController expected JSON result serializer settings to have the provided converter, but such was not found.");
         }
@@ -234,16 +234,15 @@
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.ContainingConverterOfType<CustomJsonConverter>());
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.ContainingConverterOfType<CustomJsonConverter>()));
         }
 
         [Fact]
         public void ContainingConverterOfTypeShouldThrowExceptionWithIncorrectValue()
         {
             var jsonSerializerSettings = TestObjectFactory.GetJsonSerializerSettings();
-            var jsonConverter = new CustomJsonConverter();
 
             Test.AssertException<JsonResultAssertionException>(
                 () =>
@@ -253,9 +252,9 @@
                         .WithoutValidation()
                         .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                         .ShouldReturn()
-                        .Json()
-                        .WithJsonSerializerSettings(s =>
-                            s.ContainingConverterOfType<CustomJsonConverter>());
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.ContainingConverterOfType<CustomJsonConverter>()));
                 },
                 "When calling JsonWithSpecificSettingsAction action in MvcController expected JSON result serializer settings to have converter of CustomJsonConverter type, but such was not found.");
         }
@@ -272,9 +271,9 @@
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.ContainingConverters(jsonConverter));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.ContainingConverters(jsonConverter)));
         }
 
         [Fact]
@@ -289,9 +288,9 @@
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.ContainingConverters(new List<JsonConverter> { jsonConverter }));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.ContainingConverters(new List<JsonConverter> { jsonConverter })));
         }
 
         [Fact]
@@ -310,9 +309,9 @@
                         .WithoutValidation()
                         .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                         .ShouldReturn()
-                        .Json()
-                        .WithJsonSerializerSettings(s =>
-                            s.ContainingConverters(jsonConverter));
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.ContainingConverters(jsonConverter)));
                 },
                 "When calling JsonWithSpecificSettingsAction action in MvcController expected JSON result serializer settings to have 1 converter, but instead found 2.");
         }
@@ -333,9 +332,9 @@
                         .WithoutValidation()
                         .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                         .ShouldReturn()
-                        .Json()
-                        .WithJsonSerializerSettings(s =>
-                            s.ContainingConverters(jsonConverter, jsonConverter, jsonConverter));
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.ContainingConverters(jsonConverter, jsonConverter, jsonConverter)));
                 },
                 "When calling JsonWithSpecificSettingsAction action in MvcController expected JSON result serializer settings to have 3 converters, but instead found 2.");
         }
@@ -356,9 +355,9 @@
                         .WithoutValidation()
                         .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                         .ShouldReturn()
-                        .Json()
-                        .WithJsonSerializerSettings(s =>
-                            s.ContainingConverters(jsonConverter));
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.ContainingConverters(jsonConverter)));
                 },
                 "When calling JsonWithSpecificSettingsAction action in MvcController expected JSON result serializer settings to have converter of CustomJsonConverter type, but none was found.");
         }
@@ -371,9 +370,9 @@
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithConstructorHandling(ConstructorHandling.AllowNonPublicDefaultConstructor));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithConstructorHandling(ConstructorHandling.AllowNonPublicDefaultConstructor)));
         }
 
         [Fact]
@@ -387,9 +386,9 @@
                         .WithoutValidation()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
-                        .Json()
-                        .WithJsonSerializerSettings(s =>
-                            s.WithConstructorHandling(ConstructorHandling.Default));
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithConstructorHandling(ConstructorHandling.Default)));
                 },
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Default constructor handling, but in fact found AllowNonPublicDefaultConstructor.");
         }
@@ -406,9 +405,9 @@
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithConstructorHandling(ConstructorHandling.AllowNonPublicDefaultConstructor));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithConstructorHandling(ConstructorHandling.AllowNonPublicDefaultConstructor)));
         }
 
         [Fact]
@@ -418,9 +417,9 @@
                 .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithDateFormatHandling(DateFormatHandling.MicrosoftDateFormat));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithDateFormatHandling(DateFormatHandling.MicrosoftDateFormat)));
         }
 
         [Fact]
@@ -433,9 +432,9 @@
                         .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
-                        .Json()
-                        .WithJsonSerializerSettings(s =>
-                            s.WithDateFormatHandling(DateFormatHandling.IsoDateFormat));
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithDateFormatHandling(DateFormatHandling.IsoDateFormat)));
                 },
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have IsoDateFormat date format handling, but in fact found MicrosoftDateFormat.");
         }
@@ -447,9 +446,9 @@
                 .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithDateFormatString("TEST"));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithDateFormatString("TEST")));
         }
 
         [Fact]
@@ -462,9 +461,9 @@
                         .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
-                        .Json()
-                        .WithJsonSerializerSettings(s =>
-                            s.WithDateFormatString("Invalid"));
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithDateFormatString("Invalid")));
                 },
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have 'Invalid' date format string, but in fact found 'TEST'.");
         }
@@ -481,9 +480,9 @@
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithDateFormatHandling(DateFormatHandling.MicrosoftDateFormat));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithDateFormatHandling(DateFormatHandling.MicrosoftDateFormat)));
         }
 
         [Fact]
@@ -493,9 +492,9 @@
                 .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithDateParseHandling(DateParseHandling.DateTimeOffset));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithDateParseHandling(DateParseHandling.DateTimeOffset)));
         }
 
         [Fact]
@@ -508,9 +507,9 @@
                         .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
-                        .Json()
-                        .WithJsonSerializerSettings(s =>
-                            s.WithDateParseHandling(DateParseHandling.DateTime));
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithDateParseHandling(DateParseHandling.DateTime)));
                 },
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have DateTime date parse handling, but in fact found DateTimeOffset.");
         }
@@ -527,9 +526,9 @@
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithDateParseHandling(DateParseHandling.DateTimeOffset));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithDateParseHandling(DateParseHandling.DateTimeOffset)));
         }
 
         [Fact]
@@ -539,9 +538,9 @@
                 .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithDateTimeZoneHandling(DateTimeZoneHandling.Utc));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithDateTimeZoneHandling(DateTimeZoneHandling.Utc)));
         }
 
         [Fact]
@@ -554,9 +553,9 @@
                         .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
-                        .Json()
-                        .WithJsonSerializerSettings(s =>
-                            s.WithDateTimeZoneHandling(DateTimeZoneHandling.Local));
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithDateTimeZoneHandling(DateTimeZoneHandling.Local)));
                 },
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Local date time zone handling, but in fact found Utc.");
         }
@@ -573,9 +572,9 @@
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithDateTimeZoneHandling(DateTimeZoneHandling.Local));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithDateTimeZoneHandling(DateTimeZoneHandling.Local)));
         }
 
         [Fact]
@@ -585,9 +584,9 @@
                 .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithDefaultValueHandling(DefaultValueHandling.Ignore));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithDefaultValueHandling(DefaultValueHandling.Ignore)));
         }
 
         [Fact]
@@ -600,9 +599,9 @@
                         .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
-                        .Json()
-                        .WithJsonSerializerSettings(s =>
-                            s.WithDefaultValueHandling(DefaultValueHandling.Include));
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithDefaultValueHandling(DefaultValueHandling.Include)));
                 },
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Include default value handling, but in fact found Ignore.");
         }
@@ -619,9 +618,9 @@
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithDefaultValueHandling(DefaultValueHandling.Ignore));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithDefaultValueHandling(DefaultValueHandling.Ignore)));
         }
 
         [Fact]
@@ -636,9 +635,9 @@
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithEqualityComparer(equalityComparer));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithEqualityComparer(equalityComparer)));
         }
 
         [Fact]
@@ -651,9 +650,9 @@
                         .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
-                        .Json()
-                        .WithJsonSerializerSettings(s =>
-                            s.WithEqualityComparer(new CustomEqualityComparer()));
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithEqualityComparer(new CustomEqualityComparer())));
                 },
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have the same equality comparer as the provided one, but in fact it was different.");
         }
@@ -668,9 +667,9 @@
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithEqualityComparerOfType<CustomEqualityComparer>());
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithEqualityComparerOfType<CustomEqualityComparer>()));
         }
 
         [Fact]
@@ -683,9 +682,9 @@
                         .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
-                        .Json()
-                        .WithJsonSerializerSettings(s =>
-                            s.WithEqualityComparerOfType<IEqualityComparer>());
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithEqualityComparerOfType<IEqualityComparer>()));
                 },
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have equality comparer of IEqualityComparer type, but in fact found CustomEqualityComparer.");
         }
@@ -700,9 +699,9 @@
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithEqualityComparerOfType(typeof(CustomEqualityComparer)));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithEqualityComparerOfType(typeof(CustomEqualityComparer))));
         }
 
         [Fact]
@@ -712,9 +711,9 @@
                 .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithFloatFormatHandling(FloatFormatHandling.String));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithFloatFormatHandling(FloatFormatHandling.String)));
         }
 
         [Fact]
@@ -727,9 +726,9 @@
                        .Instance()
                        .Calling(c => c.JsonWithSettingsAction())
                        .ShouldReturn()
-                       .Json()
-                       .WithJsonSerializerSettings(s =>
-                           s.WithFloatFormatHandling(FloatFormatHandling.Symbol));
+                       .Json(json => json
+                           .WithJsonSerializerSettings(s =>
+                               s.WithFloatFormatHandling(FloatFormatHandling.Symbol)));
                 },
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Symbol float format handling, but in fact found String.");
         }
@@ -741,9 +740,9 @@
                 .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithFloatParseHandling(FloatParseHandling.Decimal));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithFloatParseHandling(FloatParseHandling.Decimal)));
         }
 
         [Fact]
@@ -756,9 +755,9 @@
                        .Instance()
                        .Calling(c => c.JsonWithSettingsAction())
                        .ShouldReturn()
-                       .Json()
-                       .WithJsonSerializerSettings(s =>
-                           s.WithFloatParseHandling(FloatParseHandling.Double));
+                       .Json(json => json
+                           .WithJsonSerializerSettings(s =>
+                               s.WithFloatParseHandling(FloatParseHandling.Double)));
                 },
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Double float parse handling, but in fact found Decimal.");
         }
@@ -770,9 +769,9 @@
                 .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithMetadataPropertyHandling(MetadataPropertyHandling.ReadAhead));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithMetadataPropertyHandling(MetadataPropertyHandling.ReadAhead)));
         }
 
         [Fact]
@@ -785,9 +784,9 @@
                        .Instance()
                        .Calling(c => c.JsonWithSettingsAction())
                        .ShouldReturn()
-                       .Json()
-                       .WithJsonSerializerSettings(s =>
-                           s.WithMetadataPropertyHandling(MetadataPropertyHandling.Ignore));
+                       .Json(json => json
+                           .WithJsonSerializerSettings(s =>
+                               s.WithMetadataPropertyHandling(MetadataPropertyHandling.Ignore)));
                 },
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Ignore metadata property handling, but in fact found ReadAhead.");
         }
@@ -804,9 +803,9 @@
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithReferenceResolver(referenceResolver));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithReferenceResolver(referenceResolver)));
         }
 
         [Fact]
@@ -819,9 +818,9 @@
                         .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
-                        .Json()
-                        .WithJsonSerializerSettings(s =>
-                            s.WithReferenceResolver(new CustomJsonReferenceResolver()));
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithReferenceResolver(new CustomJsonReferenceResolver())));
                 },
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have the same reference resolver as the provided one, but in fact it was different.");
         }
@@ -836,9 +835,9 @@
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithReferenceResolverOfType<CustomJsonReferenceResolver>());
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithReferenceResolverOfType<CustomJsonReferenceResolver>()));
         }
 
         [Fact]
@@ -851,9 +850,9 @@
                         .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
-                        .Json()
-                        .WithJsonSerializerSettings(s =>
-                            s.WithReferenceResolverOfType<IReferenceResolver>());
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithReferenceResolverOfType<IReferenceResolver>()));
                 },
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have reference resolver of IReferenceResolver type, but in fact found CustomJsonReferenceResolver.");
         }
@@ -868,9 +867,9 @@
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithReferenceResolverOfType(typeof(CustomJsonReferenceResolver)));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithReferenceResolverOfType(typeof(CustomJsonReferenceResolver))));
         }
 
         [Fact]
@@ -880,9 +879,9 @@
                 .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithStringEscapeHandling(StringEscapeHandling.EscapeHtml));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithStringEscapeHandling(StringEscapeHandling.EscapeHtml)));
         }
 
         [Fact]
@@ -895,9 +894,9 @@
                         .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
-                        .Json()
-                        .WithJsonSerializerSettings(s =>
-                            s.WithStringEscapeHandling(StringEscapeHandling.EscapeNonAscii));
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithStringEscapeHandling(StringEscapeHandling.EscapeNonAscii)));
                 },
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have EscapeNonAscii string escape handling, but in fact found EscapeHtml.");
         }
@@ -909,9 +908,9 @@
                 .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithFormatting(Formatting.Indented));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithFormatting(Formatting.Indented)));
         }
 
         [Fact]
@@ -924,9 +923,9 @@
                        .Instance()
                        .Calling(c => c.JsonWithSettingsAction())
                        .ShouldReturn()
-                       .Json()
-                       .WithJsonSerializerSettings(s =>
-                           s.WithFormatting(Formatting.None));
+                       .Json(json => json
+                           .WithJsonSerializerSettings(s =>
+                               s.WithFormatting(Formatting.None)));
                 },
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have None formatting, but in fact found Indented.");
         }
@@ -943,9 +942,9 @@
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithFormatting(Formatting.Indented));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithFormatting(Formatting.Indented)));
         }
 
         [Fact]
@@ -955,9 +954,9 @@
                 .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithMaxDepth(2));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithMaxDepth(2)));
         }
 
         [Fact]
@@ -970,9 +969,9 @@
                         .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
-                        .Json()
-                        .WithJsonSerializerSettings(s =>
-                            s.WithMaxDepth(int.MaxValue));
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithMaxDepth(int.MaxValue)));
                 },
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have 2147483647 max depth, but in fact found 2.");
         }
@@ -987,9 +986,9 @@
                         .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
-                        .Json()
-                        .WithJsonSerializerSettings(s =>
-                            s.WithMaxDepth(null));
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithMaxDepth(null)));
                 },
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have no max depth, but in fact found 2.");
         }
@@ -1008,9 +1007,9 @@
                         .WithoutValidation()
                         .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                         .ShouldReturn()
-                        .Json()
-                        .WithJsonSerializerSettings(s =>
-                            s.WithMaxDepth(int.MaxValue));
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithMaxDepth(int.MaxValue)));
                 },
                 "When calling JsonWithSpecificSettingsAction action in MvcController expected JSON result serializer settings to have 2147483647 max depth, but in fact found none.");
         }
@@ -1027,9 +1026,9 @@
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithMaxDepth(int.MaxValue));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithMaxDepth(int.MaxValue)));
         }
 
         [Fact]
@@ -1039,9 +1038,9 @@
                 .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithMissingMemberHandling(MissingMemberHandling.Ignore));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithMissingMemberHandling(MissingMemberHandling.Ignore)));
         }
 
         [Fact]
@@ -1054,9 +1053,9 @@
                         .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
-                        .Json()
-                        .WithJsonSerializerSettings(s =>
-                            s.WithMissingMemberHandling(MissingMemberHandling.Error));
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithMissingMemberHandling(MissingMemberHandling.Error)));
                 },
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Error missing member handling, but in fact found Ignore.");
         }
@@ -1073,9 +1072,9 @@
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithMissingMemberHandling(MissingMemberHandling.Error));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithMissingMemberHandling(MissingMemberHandling.Error)));
         }
 
         [Fact]
@@ -1085,9 +1084,9 @@
                 .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithNullValueHandling(NullValueHandling.Ignore));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithNullValueHandling(NullValueHandling.Ignore)));
         }
 
         [Fact]
@@ -1100,9 +1099,9 @@
                         .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
-                        .Json()
-                        .WithJsonSerializerSettings(s =>
-                            s.WithNullValueHandling(NullValueHandling.Include));
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithNullValueHandling(NullValueHandling.Include)));
                 },
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Include null value handling, but in fact found Ignore.");
         }
@@ -1119,9 +1118,9 @@
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithNullValueHandling(NullValueHandling.Include));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithNullValueHandling(NullValueHandling.Include)));
         }
 
         [Fact]
@@ -1131,9 +1130,9 @@
                 .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithObjectCreationHandling(ObjectCreationHandling.Replace));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithObjectCreationHandling(ObjectCreationHandling.Replace)));
         }
 
         [Fact]
@@ -1146,9 +1145,9 @@
                         .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
-                        .Json()
-                        .WithJsonSerializerSettings(s =>
-                            s.WithObjectCreationHandling(ObjectCreationHandling.Auto));
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithObjectCreationHandling(ObjectCreationHandling.Auto)));
                 },
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Auto object creation handling, but in fact found Replace.");
         }
@@ -1165,9 +1164,9 @@
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithObjectCreationHandling(ObjectCreationHandling.Replace));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithObjectCreationHandling(ObjectCreationHandling.Replace)));
         }
 
         [Fact]
@@ -1177,9 +1176,9 @@
                 .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithPreserveReferencesHandling(PreserveReferencesHandling.Arrays));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithPreserveReferencesHandling(PreserveReferencesHandling.Arrays)));
         }
 
         [Fact]
@@ -1192,9 +1191,9 @@
                         .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
-                        .Json()
-                        .WithJsonSerializerSettings(s =>
-                            s.WithPreserveReferencesHandling(PreserveReferencesHandling.Objects));
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithPreserveReferencesHandling(PreserveReferencesHandling.Objects)));
                 },
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Objects preserve references handling, but in fact found Arrays.");
         }
@@ -1211,9 +1210,9 @@
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithPreserveReferencesHandling(PreserveReferencesHandling.Arrays));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithPreserveReferencesHandling(PreserveReferencesHandling.Arrays)));
         }
 
         [Fact]
@@ -1223,9 +1222,9 @@
                 .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithReferenceLoopHandling(ReferenceLoopHandling.Serialize));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithReferenceLoopHandling(ReferenceLoopHandling.Serialize)));
         }
 
         [Fact]
@@ -1238,9 +1237,9 @@
                        .Instance()
                        .Calling(c => c.JsonWithSettingsAction())
                        .ShouldReturn()
-                       .Json()
-                       .WithJsonSerializerSettings(s =>
-                           s.WithReferenceLoopHandling(ReferenceLoopHandling.Ignore));
+                       .Json(json => json
+                           .WithJsonSerializerSettings(s =>
+                               s.WithReferenceLoopHandling(ReferenceLoopHandling.Ignore)));
                 },
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Ignore reference loop handling, but in fact found Serialize.");
         }
@@ -1257,9 +1256,9 @@
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithReferenceLoopHandling(ReferenceLoopHandling.Ignore));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithReferenceLoopHandling(ReferenceLoopHandling.Ignore)));
         }
 
         [Fact]
@@ -1269,9 +1268,9 @@
                 .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithTypeNameAssemblyFormatHandling(TypeNameAssemblyFormatHandling.Simple));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithTypeNameAssemblyFormatHandling(TypeNameAssemblyFormatHandling.Simple)));
         }
 
         [Fact]
@@ -1284,9 +1283,9 @@
                         .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
-                        .Json()
-                        .WithJsonSerializerSettings(s =>
-                            s.WithTypeNameAssemblyFormatHandling(TypeNameAssemblyFormatHandling.Full));
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithTypeNameAssemblyFormatHandling(TypeNameAssemblyFormatHandling.Full)));
                 },
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Full type name assembly format handling, but in fact found Simple.");
         }
@@ -1303,9 +1302,9 @@
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithTypeNameAssemblyFormatHandling(TypeNameAssemblyFormatHandling.Simple));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithTypeNameAssemblyFormatHandling(TypeNameAssemblyFormatHandling.Simple)));
         }
 
         [Fact]
@@ -1315,9 +1314,9 @@
                 .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithTypeNameHandling(TypeNameHandling.None));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithTypeNameHandling(TypeNameHandling.None)));
         }
 
         [Fact]
@@ -1330,9 +1329,9 @@
                         .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
-                        .Json()
-                        .WithJsonSerializerSettings(s =>
-                            s.WithTypeNameHandling(TypeNameHandling.Auto));
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithTypeNameHandling(TypeNameHandling.Auto)));
                 },
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Auto type name handling, but in fact found None.");
         }
@@ -1349,9 +1348,9 @@
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithTypeNameHandling(TypeNameHandling.Arrays));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithTypeNameHandling(TypeNameHandling.Arrays)));
         }
 
         [Fact]
@@ -1366,9 +1365,9 @@
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithTraceWriter(traceWriter));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithTraceWriter(traceWriter)));
         }
 
         [Fact]
@@ -1381,9 +1380,9 @@
                         .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
-                        .Json()
-                        .WithJsonSerializerSettings(s =>
-                            s.WithTraceWriter(new CustomJsonTraceWriter()));
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithTraceWriter(new CustomJsonTraceWriter())));
                 },
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have the same trace writer as the provided one, but in fact it was different.");
         }
@@ -1398,9 +1397,9 @@
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithTraceWriterOfType<CustomJsonTraceWriter>());
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithTraceWriterOfType<CustomJsonTraceWriter>()));
         }
 
         [Fact]
@@ -1413,9 +1412,9 @@
                         .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
-                        .Json()
-                        .WithJsonSerializerSettings(s =>
-                            s.WithTraceWriterOfType<ITraceWriter>());
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithTraceWriterOfType<ITraceWriter>()));
                 },
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have trace writer of ITraceWriter type, but in fact found CustomJsonTraceWriter.");
         }
@@ -1430,9 +1429,9 @@
                 .WithoutValidation()
                 .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s =>
-                    s.WithTraceWriterOfType(typeof(CustomJsonTraceWriter)));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithTraceWriterOfType(typeof(CustomJsonTraceWriter))));
         }
 
         [Fact]
@@ -1442,13 +1441,13 @@
                 .Instance()
                 .Calling(c => c.JsonWithSettingsAction())
                 .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(s => s
-                    .WithFormatting(Formatting.Indented)
-                    .AndAlso()
-                    .WithMaxDepth(2)
-                    .AndAlso()
-                    .WithConstructorHandling(ConstructorHandling.AllowNonPublicDefaultConstructor));
+                .Json(json => json
+                    .WithJsonSerializerSettings(s => s
+                        .WithFormatting(Formatting.Indented)
+                        .AndAlso()
+                        .WithMaxDepth(2)
+                        .AndAlso()
+                        .WithConstructorHandling(ConstructorHandling.AllowNonPublicDefaultConstructor)));
         }
 
         [Fact]
@@ -1461,13 +1460,13 @@
                         .Instance()
                         .Calling(c => c.JsonWithSettingsAction())
                         .ShouldReturn()
-                        .Json()
-                        .WithJsonSerializerSettings(s => s
-                            .WithFormatting(Formatting.Indented)
-                            .AndAlso()
-                            .WithMaxDepth(2)
-                            .AndAlso()
-                            .WithConstructorHandling(ConstructorHandling.Default));
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s => s
+                                .WithFormatting(Formatting.Indented)
+                                .AndAlso()
+                                .WithMaxDepth(2)
+                                .AndAlso()
+                                .WithConstructorHandling(ConstructorHandling.Default)));
                 },
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have Default constructor handling, but in fact found AllowNonPublicDefaultConstructor.");
         }

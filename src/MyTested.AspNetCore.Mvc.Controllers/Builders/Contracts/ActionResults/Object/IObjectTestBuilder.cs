@@ -2,12 +2,15 @@
 {
     using Base;
     using Contracts.Base;
+    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
-    /// Used for testing <see cref="Microsoft.AspNetCore.Mvc.ObjectResult"/>.
+    /// Used for testing <see cref="ObjectResult"/>.
     /// </summary>
-    public interface IObjectTestBuilder : IBaseTestBuilderWithResponseModel,
-        IBaseTestBuilderWithOutputResult<IAndObjectTestBuilder>
+    public interface IObjectTestBuilder 
+        : IBaseTestBuilderWithResponseModel,
+        IBaseTestBuilderWithOutputResult<IAndObjectTestBuilder>,
+        IBaseTestBuilderWithActionResult<ObjectResult>
     {
     }
 }

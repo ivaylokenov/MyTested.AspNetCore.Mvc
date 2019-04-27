@@ -21,8 +21,8 @@
                 .Instance()
                 .Calling(c => c.CreatedAction())
                 .ShouldReturn()
-                .Created()
-                .AtLocation("http://somehost.com/someuri/1?query=Test");
+                .Created(created => created
+                    .AtLocation("http://somehost.com/someuri/1?query=Test"));
         }
 
         [Fact]
@@ -35,8 +35,9 @@
                         .Instance()
                         .Calling(c => c.CreatedAction())
                         .ShouldReturn()
-                        .Created()
-                        .AtLocationPassing(location => location.StartsWith("http://somehost.com/someuri/2"));
+                        .Created(created => created
+                            .AtLocationPassing(location => location
+                                .StartsWith("http://somehost.com/someuri/2")));
                 },
                 "When calling CreatedAction action in MvcController expected created result location ('http://somehost.com/someuri/1?query=Test') to pass the given predicate, but it failed.");
         }
@@ -48,11 +49,11 @@
                 .Instance()
                 .Calling(c => c.CreatedAction())
                 .ShouldReturn()
-                .Created()
-                .AtLocationPassing(location =>
-                {
-                    Assert.Equal("http://somehost.com/someuri/1?query=Test", location);
-                });
+                .Created(created => created
+                    .AtLocationPassing(location =>
+                    {
+                        Assert.Equal("http://somehost.com/someuri/1?query=Test", location);
+                    }));
         }
 
         [Fact]
@@ -65,8 +66,8 @@
                         .Instance()
                         .Calling(c => c.CreatedAction())
                         .ShouldReturn()
-                        .Created()
-                        .AtLocation("http://somehost.com/");
+                        .Created(created => created
+                            .AtLocation("http://somehost.com/"));
                 },
                 "When calling CreatedAction action in MvcController expected created result location to be 'http://somehost.com/', but instead received 'http://somehost.com/someuri/1?query=Test'.");
         }
@@ -81,8 +82,8 @@
                         .Instance()
                         .Calling(c => c.CreatedAction())
                         .ShouldReturn()
-                        .Created()
-                        .AtLocation("http://somehost!@#?Query==true");
+                        .Created(created => created
+                            .AtLocation("http://somehost!@#?Query==true"));
                 },
                 "When calling CreatedAction action in MvcController expected created result location to be URI valid, but instead received 'http://somehost!@#?Query==true'.");
         }
@@ -94,8 +95,8 @@
                 .Instance()
                 .Calling(c => c.CreatedAction())
                 .ShouldReturn()
-                .Created()
-                .AtLocation(new Uri("http://somehost.com/someuri/1?query=Test"));
+                .Created(created => created
+                    .AtLocation(new Uri("http://somehost.com/someuri/1?query=Test")));
         }
 
         [Fact]
@@ -108,8 +109,8 @@
                         .Instance()
                         .Calling(c => c.CreatedAction())
                         .ShouldReturn()
-                        .Created()
-                        .AtLocation(new Uri("http://somehost.com/"));
+                        .Created(created => created
+                            .AtLocation(new Uri("http://somehost.com/")));
                 },
                 "When calling CreatedAction action in MvcController expected created result location to be 'http://somehost.com/', but instead received 'http://somehost.com/someuri/1?query=Test'.");
         }
@@ -121,9 +122,8 @@
                 .Instance()
                 .Calling(c => c.CreatedAction())
                 .ShouldReturn()
-                .Created()
-                .AtLocation(location =>
-                    location
+                .Created(created => created
+                    .AtLocation(location => location
                         .WithHost("somehost.com")
                         .AndAlso()
                         .WithAbsolutePath("/someuri/1")
@@ -134,7 +134,7 @@
                         .AndAlso()
                         .WithFragment(string.Empty)
                         .AndAlso()
-                        .WithQuery("?query=Test"));
+                        .WithQuery("?query=Test")));
         }
 
         [Fact]
@@ -147,9 +147,8 @@
                         .Instance()
                         .Calling(c => c.CreatedAction())
                         .ShouldReturn()
-                        .Created()
-                        .AtLocation(location =>
-                            location
+                        .Created(created => created
+                            .AtLocation(location => location
                                 .WithHost("somehost12.com")
                                 .AndAlso()
                                 .WithAbsolutePath("/someuri/1")
@@ -160,7 +159,7 @@
                                 .AndAlso()
                                 .WithFragment(string.Empty)
                                 .AndAlso()
-                                .WithQuery("?query=Test"));
+                                .WithQuery("?query=Test")));
                 },
                 "When calling CreatedAction action in MvcController expected created result URI to be 'http://somehost12.com/someuri/1?query=Test', but was in fact 'http://somehost.com/someuri/1?query=Test'.");
         }
@@ -172,8 +171,8 @@
                 .Instance()
                 .Calling(c => c.CreatedAtActionResult())
                 .ShouldReturn()
-                .Created()
-                .AtAction("MyAction");
+                .Created(created => created
+                    .AtAction("MyAction"));
         }
 
         [Fact]
@@ -186,8 +185,8 @@
                     .Instance()
                     .Calling(c => c.CreatedAtActionResult())
                     .ShouldReturn()
-                    .Created()
-                    .AtAction("Action");
+                    .Created(created => created
+                        .AtAction("Action"));
                 },
                 "When calling CreatedAtActionResult action in MvcController expected created result to have 'Action' action name, but instead received 'MyAction'.");
         }
@@ -199,8 +198,8 @@
                 .Instance()
                 .Calling(c => c.CreatedAtActionResult())
                 .ShouldReturn()
-                .Created()
-                .AtController("MyController");
+                .Created(created => created
+                    .AtController("MyController"));
         }
 
         [Fact]
@@ -213,8 +212,8 @@
                     .Instance()
                     .Calling(c => c.CreatedAtActionResult())
                     .ShouldReturn()
-                    .Created()
-                    .AtController("Controller");
+                    .Created(created => created
+                        .AtController("Controller"));
                 },
                 "When calling CreatedAtActionResult action in MvcController expected created result to have 'Controller' controller name, but instead received 'MyController'.");
         }
@@ -226,8 +225,8 @@
                 .Instance()
                 .Calling(c => c.CreatedAtRouteAction())
                 .ShouldReturn()
-                .Created()
-                .WithRouteName("Redirect");
+                .Created(created => created
+                    .WithRouteName("Redirect"));
         }
 
         [Fact]
@@ -240,8 +239,8 @@
                         .Instance()
                         .Calling(c => c.CreatedAtRouteAction())
                         .ShouldReturn()
-                        .Created()
-                        .WithRouteName("MyRedirect");
+                        .Created(created => created
+                            .WithRouteName("MyRedirect"));
                 },
                 "When calling CreatedAtRouteAction action in MvcController expected created result to have 'MyRedirect' route name, but instead received 'Redirect'.");
         }
@@ -253,8 +252,8 @@
                 .Instance()
                 .Calling(c => c.CreatedAtActionResult())
                 .ShouldReturn()
-                .Created()
-                .ContainingRouteKey("id");
+                .Created(created => created
+                    .ContainingRouteKey("id"));
         }
 
         [Fact]
@@ -264,8 +263,8 @@
                 .Instance()
                 .Calling(c => c.CreatedAtActionResult())
                 .ShouldReturn()
-                .Created()
-                .ContainingRouteValue(1);
+                .Created(created => created
+                    .ContainingRouteValue(1));
         }
         
         [Fact]
@@ -275,8 +274,8 @@
                 .Instance()
                 .Calling(c => c.CreatedAtActionResult())
                 .ShouldReturn()
-                .Created()
-                .ContainingRouteValueOfType<string>();
+                .Created(created => created
+                    .ContainingRouteValueOfType<string>());
         }
         
         [Fact]
@@ -286,8 +285,8 @@
                 .Instance()
                 .Calling(c => c.CreatedAtActionResult())
                 .ShouldReturn()
-                .Created()
-                .ContainingRouteValueOfType<int>("id");
+                .Created(created => created
+                    .ContainingRouteValueOfType<int>("id"));
         }
 
         [Fact]
@@ -300,8 +299,8 @@
                         .Instance()
                         .Calling(c => c.CreatedAtActionResult())
                         .ShouldReturn()
-                        .Created()
-                        .ContainingRouteKey("incorrect");
+                        .Created(created => created
+                            .ContainingRouteKey("incorrect"));
                 },
                 "When calling CreatedAtActionResult action in MvcController expected created result route values to have entry with 'incorrect' key, but such was not found.");
         }
@@ -313,8 +312,8 @@
                 .Instance()
                 .Calling(c => c.CreatedAtActionResult())
                 .ShouldReturn()
-                .Created()
-                .ContainingRouteValue("id", 1);
+                .Created(created => created
+                    .ContainingRouteValue("id", 1));
         }
 
         [Fact]
@@ -327,8 +326,8 @@
                         .Instance()
                         .Calling(c => c.CreatedAtActionResult())
                         .ShouldReturn()
-                        .Created()
-                        .ContainingRouteValue("incorrect", 1);
+                        .Created(created => created
+                            .ContainingRouteValue("incorrect", 1));
                 },
                 "When calling CreatedAtActionResult action in MvcController expected created result route values to have entry with 'incorrect' key and the provided value, but such was not found.");
         }
@@ -343,8 +342,8 @@
                         .Instance()
                         .Calling(c => c.CreatedAtActionResult())
                         .ShouldReturn()
-                        .Created()
-                        .ContainingRouteValue("id", 2);
+                        .Created(created => created
+                            .ContainingRouteValue("id", 2));
                 },
                 "When calling CreatedAtActionResult action in MvcController expected created result route values to have entry with 'id' key and the provided value, but the value was different.");
         }
@@ -356,8 +355,12 @@
                 .Instance()
                 .Calling(c => c.CreatedAtActionResult())
                 .ShouldReturn()
-                .Created()
-                .ContainingRouteValues(new { id = 1, text = "sometext" });
+                .Created(created => created
+                    .ContainingRouteValues(new
+                    {
+                        id = 1,
+                        text = "sometext"
+                    }));
         }
 
         [Fact]
@@ -370,8 +373,8 @@
                         .Instance()
                         .Calling(c => c.CreatedAtActionResult())
                         .ShouldReturn()
-                        .Created()
-                        .ContainingRouteValues(new { id = 1 });
+                        .Created(created => created
+                            .ContainingRouteValues(new { id = 1 }));
                 },
                 "When calling CreatedAtActionResult action in MvcController expected created result route values to have 1 entry, but in fact found 2.");
         }
@@ -386,8 +389,13 @@
                         .Instance()
                         .Calling(c => c.CreatedAtActionResult())
                         .ShouldReturn()
-                        .Created()
-                        .ContainingRouteValues(new { id = 1, second = 5, another = "test" });
+                        .Created(created => created
+                            .ContainingRouteValues(new
+                            {
+                                id = 1,
+                                second = 5,
+                                another = "test"
+                            }));
                 },
                 "When calling CreatedAtActionResult action in MvcController expected created result route values to have 3 entries, but in fact found 2.");
         }
@@ -401,8 +409,8 @@
                 .Instance()
                 .Calling(c => c.CreatedAtActionWithCustomHelperResult(urlHelper))
                 .ShouldReturn()
-                .Created()
-                .WithUrlHelper(urlHelper);
+                .Created(created => created
+                    .WithUrlHelper(urlHelper));
         }
 
         [Fact]
@@ -417,8 +425,8 @@
                         .Instance()
                         .Calling(c => c.CreatedAtActionWithCustomHelperResult(urlHelper))
                         .ShouldReturn()
-                        .Created()
-                        .WithUrlHelper(null);
+                        .Created(created => created
+                            .WithUrlHelper(null));
                 },
                 "When calling CreatedAtActionWithCustomHelperResult action in MvcController expected created result UrlHelper to be the same as the provided one, but instead received different result.");
         }
@@ -432,8 +440,8 @@
                 .Instance()
                 .Calling(c => c.CreatedAtActionWithCustomHelperResult(urlHelper))
                 .ShouldReturn()
-                .Created()
-                .WithUrlHelperOfType<CustomUrlHelper>();
+                .Created(created => created
+                    .WithUrlHelperOfType<CustomUrlHelper>());
         }
 
         [Fact]
@@ -448,8 +456,8 @@
                         .Instance()
                         .Calling(c => c.CreatedAtActionWithCustomHelperResult(urlHelper))
                         .ShouldReturn()
-                        .Created()
-                        .WithUrlHelperOfType<IUrlHelper>();
+                        .Created(created => created
+                            .WithUrlHelperOfType<IUrlHelper>());
                 },
                 "When calling CreatedAtActionWithCustomHelperResult action in MvcController expected created result UrlHelper to be of IUrlHelper type, but instead received CustomUrlHelper.");
         }
@@ -464,8 +472,8 @@
                         .Instance()
                         .Calling(c => c.CreatedAtActionResult())
                         .ShouldReturn()
-                        .Created()
-                        .WithUrlHelperOfType<IUrlHelper>();
+                        .Created(created => created
+                            .WithUrlHelperOfType<IUrlHelper>());
                 },
                 "When calling CreatedAtActionResult action in MvcController expected created result UrlHelper to be of IUrlHelper type, but instead received null.");
         }
@@ -480,10 +488,10 @@
                         .Instance()
                         .Calling(c => c.CreatedAtRouteAction())
                         .ShouldReturn()
-                        .Created()
-                        .AtController("Controller");
+                        .Created(created => created
+                            .AtController("Controller"));
                 },
-                "When calling CreatedAtRouteAction action in MvcController expected created result to contain controller name, but it could not be found.");
+                "When calling CreatedAtRouteAction action in MvcController expected created result to contain controller name, but such could not be found.");
         }
 
         [Fact]
@@ -493,10 +501,10 @@
                 .Instance()
                 .Calling(c => c.CreatedAtActionResult())
                 .ShouldReturn()
-                .Created()
-                .AtAction("MyAction")
-                .AndAlso()
-                .AtController("MyController");
+                .Created(created => created
+                    .AtAction("MyAction")
+                    .AndAlso()
+                    .AtController("MyController"));
         }
 
         [Fact]
@@ -506,8 +514,8 @@
                 .Instance()
                 .Calling(c => c.FullCreatedAction())
                 .ShouldReturn()
-                .Created()
-                .WithStatusCode(201);
+                .Created(created => created
+                    .WithStatusCode(201));
         }
 
         [Fact]
@@ -517,8 +525,8 @@
                 .Instance()
                 .Calling(c => c.FullCreatedAction())
                 .ShouldReturn()
-                .Created()
-                .WithStatusCode(HttpStatusCode.Created);
+                .Created(created => created
+                    .WithStatusCode(HttpStatusCode.Created));
         }
 
         [Fact]
@@ -531,8 +539,8 @@
                         .Instance()
                         .Calling(c => c.FullCreatedAction())
                         .ShouldReturn()
-                        .Created()
-                        .WithStatusCode(HttpStatusCode.OK);
+                        .Created(created => created
+                            .WithStatusCode(HttpStatusCode.OK));
                 },
                 "When calling FullCreatedAction action in MvcController expected created result to have 200 (OK) status code, but instead received 201 (Created).");
         }
@@ -544,8 +552,8 @@
                 .Instance()
                 .Calling(c => c.FullCreatedAction())
                 .ShouldReturn()
-                .Created()
-                .ContainingContentType(ContentType.ApplicationJson);
+                .Created(created => created
+                    .ContainingContentType(ContentType.ApplicationJson));
         }
 
         [Fact]
@@ -555,8 +563,8 @@
                 .Instance()
                 .Calling(c => c.FullCreatedAction())
                 .ShouldReturn()
-                .Created()
-                .ContainingContentType(new MediaTypeHeaderValue(ContentType.ApplicationJson));
+                .Created(created => created
+                    .ContainingContentType(new MediaTypeHeaderValue(ContentType.ApplicationJson)));
         }
 
         [Fact]
@@ -566,11 +574,11 @@
                 () =>
                 {
                     MyController<MvcController>
-                       .Instance()
-                       .Calling(c => c.FullCreatedAction())
-                       .ShouldReturn()
-                       .Created()
-                       .ContainingContentType(new MediaTypeHeaderValue(ContentType.ApplicationOctetStream));
+                        .Instance()
+                        .Calling(c => c.FullCreatedAction())
+                        .ShouldReturn()
+                        .Created(created => created
+                            .ContainingContentType(new MediaTypeHeaderValue(ContentType.ApplicationOctetStream)));
                 },
                 "When calling FullCreatedAction action in MvcController expected created result content types to contain application/octet-stream, but in fact such was not found.");
         }
@@ -582,12 +590,12 @@
                 .Instance()
                 .Calling(c => c.FullCreatedAction())
                 .ShouldReturn()
-                .Created()
-                .ContainingContentTypes(new List<string>
-                {
-                    ContentType.ApplicationJson,
-                    ContentType.ApplicationXml
-                });
+                .Created(created => created
+                    .ContainingContentTypes(new List<string>
+                    {
+                        ContentType.ApplicationJson,
+                        ContentType.ApplicationXml
+                    }));
         }
 
         [Fact]
@@ -597,8 +605,10 @@
                 .Instance()
                 .Calling(c => c.FullCreatedAction())
                 .ShouldReturn()
-                .Created()
-                .ContainingContentTypes(ContentType.ApplicationJson, ContentType.ApplicationXml);
+                .Created(created => created
+                    .ContainingContentTypes(
+                        ContentType.ApplicationJson, 
+                        ContentType.ApplicationXml));
         }
 
         [Fact]
@@ -611,12 +621,12 @@
                         .Instance()
                         .Calling(c => c.FullCreatedAction())
                         .ShouldReturn()
-                        .Created()
-                        .ContainingContentTypes(new List<string>
-                        {
-                            ContentType.ApplicationOctetStream,
-                            ContentType.ApplicationXml
-                        });
+                        .Created(created => created
+                            .ContainingContentTypes(new List<string>
+                            {
+                                ContentType.ApplicationOctetStream,
+                                ContentType.ApplicationXml
+                            }));
                 },
                 "When calling FullCreatedAction action in MvcController expected created result content types to contain application/octet-stream, but in fact such was not found.");
         }
@@ -631,11 +641,11 @@
                         .Instance()
                         .Calling(c => c.FullCreatedAction())
                         .ShouldReturn()
-                        .Created()
-                        .ContainingContentTypes(new List<string>
-                        {
-                            ContentType.ApplicationXml
-                        });
+                        .Created(created => created
+                            .ContainingContentTypes(new List<string>
+                            {
+                                ContentType.ApplicationXml
+                            }));
                 },
                 "When calling FullCreatedAction action in MvcController expected created result content types to have 1 item, but instead found 2.");
         }
@@ -650,13 +660,13 @@
                         .Instance()
                         .Calling(c => c.FullCreatedAction())
                         .ShouldReturn()
-                        .Created()
-                        .ContainingContentTypes(new List<string>
-                        {
-                            ContentType.ApplicationXml,
-                            ContentType.ApplicationJson,
-                            ContentType.ApplicationZip
-                        });
+                        .Created(created => created
+                            .ContainingContentTypes(new List<string>
+                            {
+                                ContentType.ApplicationXml,
+                                ContentType.ApplicationJson,
+                                ContentType.ApplicationZip
+                            }));
                 },
                 "When calling FullCreatedAction action in MvcController expected created result content types to have 3 items, but instead found 2.");
         }
@@ -668,12 +678,12 @@
                 .Instance()
                 .Calling(c => c.FullCreatedAction())
                 .ShouldReturn()
-                .Created()
-                .ContainingContentTypes(new List<MediaTypeHeaderValue>
-                {
-                    new MediaTypeHeaderValue(ContentType.ApplicationJson),
-                    new MediaTypeHeaderValue(ContentType.ApplicationXml)
-                });
+                .Created(created => created
+                    .ContainingContentTypes(new List<MediaTypeHeaderValue>
+                    {
+                        new MediaTypeHeaderValue(ContentType.ApplicationJson),
+                        new MediaTypeHeaderValue(ContentType.ApplicationXml)
+                    }));
         }
 
         [Fact]
@@ -683,8 +693,10 @@
                 .Instance()
                 .Calling(c => c.FullCreatedAction())
                 .ShouldReturn()
-                .Created()
-                .ContainingContentTypes(new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml));
+                .Created(created => created
+                    .ContainingContentTypes(
+                        new MediaTypeHeaderValue(ContentType.ApplicationJson), 
+                        new MediaTypeHeaderValue(ContentType.ApplicationXml)));
         }
 
         [Fact]
@@ -697,12 +709,12 @@
                         .Instance()
                         .Calling(c => c.FullCreatedAction())
                         .ShouldReturn()
-                        .Created()
-                        .ContainingContentTypes(new List<MediaTypeHeaderValue>
-                        {
-                            new MediaTypeHeaderValue(ContentType.ApplicationOctetStream),
-                            new MediaTypeHeaderValue(ContentType.ApplicationXml)
-                        });
+                        .Created(created => created
+                            .ContainingContentTypes(new List<MediaTypeHeaderValue>
+                            {
+                                new MediaTypeHeaderValue(ContentType.ApplicationOctetStream),
+                                new MediaTypeHeaderValue(ContentType.ApplicationXml)
+                            }));
                 },
                 "When calling FullCreatedAction action in MvcController expected created result content types to contain application/octet-stream, but in fact such was not found.");
         }
@@ -717,11 +729,11 @@
                         .Instance()
                         .Calling(c => c.FullCreatedAction())
                         .ShouldReturn()
-                        .Created()
-                        .ContainingContentTypes(new List<MediaTypeHeaderValue>
-                        {
-                            new MediaTypeHeaderValue(ContentType.ApplicationXml)
-                        });
+                        .Created(created => created
+                            .ContainingContentTypes(new List<MediaTypeHeaderValue>
+                            {
+                                new MediaTypeHeaderValue(ContentType.ApplicationXml)
+                            }));
                 },
                 "When calling FullCreatedAction action in MvcController expected created result content types to have 1 item, but instead found 2.");
         }
@@ -736,13 +748,13 @@
                         .Instance()
                         .Calling(c => c.FullCreatedAction())
                         .ShouldReturn()
-                        .Created()
-                        .ContainingContentTypes(new List<MediaTypeHeaderValue>
-                        {
-                            new MediaTypeHeaderValue(ContentType.ApplicationXml),
-                            new MediaTypeHeaderValue(ContentType.ApplicationJson),
-                            new MediaTypeHeaderValue(ContentType.ApplicationZip)
-                        });
+                        .Created(created => created
+                            .ContainingContentTypes(new List<MediaTypeHeaderValue>
+                            {
+                                new MediaTypeHeaderValue(ContentType.ApplicationXml),
+                                new MediaTypeHeaderValue(ContentType.ApplicationJson),
+                                new MediaTypeHeaderValue(ContentType.ApplicationZip)
+                            }));
                 },
                 "When calling FullCreatedAction action in MvcController expected created result content types to have 3 items, but instead found 2.");
         }
@@ -756,8 +768,8 @@
                 .Instance()
                 .Calling(c => c.CreatedActionWithFormatter(formatter))
                 .ShouldReturn()
-                .Created()
-                .ContainingOutputFormatter(formatter);
+                .Created(created => created
+                    .ContainingOutputFormatter(formatter));
         }
         
         [Fact]
@@ -772,8 +784,8 @@
                         .Instance()
                         .Calling(c => c.CreatedActionWithFormatter(formatter))
                         .ShouldReturn()
-                        .Created()
-                        .ContainingOutputFormatter(TestObjectFactory.GetOutputFormatter());
+                        .Created(created => created
+                            .ContainingOutputFormatter(TestObjectFactory.GetOutputFormatter()));
                 },
                 "When calling CreatedActionWithFormatter action in MvcController expected created result output formatters to contain the provided formatter, but such was not found.");
         }
@@ -785,8 +797,8 @@
                 .Instance()
                 .Calling(c => c.FullCreatedAction())
                 .ShouldReturn()
-                .Created()
-                .ContainingOutputFormatterOfType<JsonOutputFormatter>();
+                .Created(created => created
+                    .ContainingOutputFormatterOfType<JsonOutputFormatter>());
         }
 
         [Fact]
@@ -799,8 +811,8 @@
                         .Instance()
                         .Calling(c => c.FullCreatedAction())
                         .ShouldReturn()
-                        .Created()
-                        .ContainingOutputFormatterOfType<IOutputFormatter>();
+                        .Created(created => created
+                            .ContainingOutputFormatterOfType<IOutputFormatter>());
                 },
                 "When calling FullCreatedAction action in MvcController expected created result output formatters to contain formatter of IOutputFormatter type, but such was not found.");
         }
@@ -812,12 +824,12 @@
                 .Instance()
                 .Calling(c => c.FullCreatedAction())
                 .ShouldReturn()
-                .Created()
-                .ContainingOutputFormatters(new List<IOutputFormatter>
-                {
-                    TestObjectFactory.GetOutputFormatter(),
-                    new CustomOutputFormatter()
-                });
+                .Created(created => created
+                    .ContainingOutputFormatters(new List<IOutputFormatter>
+                    {
+                        TestObjectFactory.GetOutputFormatter(),
+                        new CustomOutputFormatter()
+                    }));
         }
 
         [Fact]
@@ -827,8 +839,10 @@
                 .Instance()
                 .Calling(c => c.FullCreatedAction())
                 .ShouldReturn()
-                .Created()
-                .ContainingOutputFormatters(TestObjectFactory.GetOutputFormatter(), new CustomOutputFormatter());
+                .Created(created => created
+                    .ContainingOutputFormatters(
+                        TestObjectFactory.GetOutputFormatter(), 
+                        new CustomOutputFormatter()));
         }
 
         [Fact]
@@ -841,12 +855,12 @@
                         .Instance()
                         .Calling(c => c.FullCreatedAction())
                         .ShouldReturn()
-                        .Created()
-                        .ContainingOutputFormatters(new List<IOutputFormatter>
-                        {
-                            new CustomOutputFormatter(),
-                            new StringOutputFormatter()
-                        });
+                        .Created(created => created
+                            .ContainingOutputFormatters(new List<IOutputFormatter>
+                            {
+                                new CustomOutputFormatter(),
+                                new StringOutputFormatter()
+                            }));
                 },
                 "When calling FullCreatedAction action in MvcController expected created result output formatters to contain formatter of StringOutputFormatter type, but none was found.");
         }
@@ -861,11 +875,11 @@
                         .Instance()
                         .Calling(c => c.FullCreatedAction())
                         .ShouldReturn()
-                        .Created()
-                        .ContainingOutputFormatters(new List<IOutputFormatter>
-                        {
-                            TestObjectFactory.GetOutputFormatter()
-                        });
+                        .Created(created => created
+                            .ContainingOutputFormatters(new List<IOutputFormatter>
+                            {
+                                TestObjectFactory.GetOutputFormatter()
+                            }));
                 },
                 "When calling FullCreatedAction action in MvcController expected created result output formatters to have 1 item, but instead found 2.");
         }
@@ -880,13 +894,13 @@
                         .Instance()
                         .Calling(c => c.FullCreatedAction())
                         .ShouldReturn()
-                        .Created()
-                        .ContainingOutputFormatters(new List<IOutputFormatter>
-                        {
-                            TestObjectFactory.GetOutputFormatter(),
-                            new CustomOutputFormatter(),
-                            TestObjectFactory.GetOutputFormatter()
-                        });
+                        .Created(created => created
+                            .ContainingOutputFormatters(new List<IOutputFormatter>
+                            {
+                                TestObjectFactory.GetOutputFormatter(),
+                                new CustomOutputFormatter(),
+                                TestObjectFactory.GetOutputFormatter()
+                            }));
                 },
                 "When calling FullCreatedAction action in MvcController expected created result output formatters to have 3 items, but instead found 2.");
         }

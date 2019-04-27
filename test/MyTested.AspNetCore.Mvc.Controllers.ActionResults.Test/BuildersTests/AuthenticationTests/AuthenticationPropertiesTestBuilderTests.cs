@@ -16,8 +16,9 @@
                 .Instance()
                 .Calling(c => c.ChallengeWithAuthenticationProperties())
                 .ShouldReturn()
-                .Challenge()
-                .WithAuthenticationProperties(auth => auth.WithAllowRefresh(true));
+                .Challenge(challenge => challenge
+                    .WithAuthenticationProperties(auth => auth
+                        .WithAllowRefresh(true)));
         }
         
         [Fact]
@@ -30,8 +31,9 @@
                         .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationProperties())
                         .ShouldReturn()
-                        .Challenge()
-                        .WithAuthenticationProperties(auth => auth.WithAllowRefresh(false));
+                        .Challenge(challenge => challenge
+                            .WithAuthenticationProperties(auth => auth
+                                .WithAllowRefresh(false)));
                 },
                 "When calling ChallengeWithAuthenticationProperties action in MvcController expected authentication properties to have allow refresh value of 'False', but in fact found 'True'.");
         }
@@ -46,8 +48,9 @@
                         .Instance()
                         .Calling(c => c.ChallengeWithEmptyAuthenticationProperties())
                         .ShouldReturn()
-                        .Challenge()
-                        .WithAuthenticationProperties(auth => auth.WithAllowRefresh(false));
+                        .Challenge(challenge => challenge
+                            .WithAuthenticationProperties(auth => auth
+                                .WithAllowRefresh(false)));
                 },
                 "When calling ChallengeWithEmptyAuthenticationProperties action in MvcController expected authentication properties to have allow refresh value of 'False', but in fact found null.");
         }
@@ -62,8 +65,9 @@
                         .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationProperties())
                         .ShouldReturn()
-                        .Challenge()
-                        .WithAuthenticationProperties(auth => auth.WithAllowRefresh(null));
+                        .Challenge(challenge => challenge
+                            .WithAuthenticationProperties(auth => auth
+                                .WithAllowRefresh(null)));
                 },
                 "When calling ChallengeWithAuthenticationProperties action in MvcController expected authentication properties to not have allow refresh value, but in fact found 'True'.");
         }
@@ -75,8 +79,9 @@
                 .Instance()
                 .Calling(c => c.ChallengeWithAuthenticationProperties())
                 .ShouldReturn()
-                .Challenge()
-                .WithAuthenticationProperties(auth => auth.WithExpires(new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1))));
+                .Challenge(challenge => challenge
+                    .WithAuthenticationProperties(auth => auth
+                        .WithExpires(new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)))));
         }
 
         [Fact]
@@ -89,8 +94,9 @@
                         .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationProperties())
                         .ShouldReturn()
-                        .Challenge()
-                        .WithAuthenticationProperties(auth => auth.WithExpires(new DateTimeOffset(new DateTime(2015, 1, 1, 1, 1, 1))));
+                        .Challenge(challenge => challenge
+                            .WithAuthenticationProperties(auth => auth
+                                .WithExpires(new DateTimeOffset(new DateTime(2015, 1, 1, 1, 1, 1)))));
                 },
                 "When calling ChallengeWithAuthenticationProperties action in MvcController expected authentication properties to have expires value of '12/31/2014 11:01:01 PM +00:00', but in fact found '12/31/2015 11:01:01 PM +00:00'.");
         }
@@ -105,8 +111,9 @@
                         .Instance()
                         .Calling(c => c.ChallengeWithEmptyAuthenticationProperties())
                         .ShouldReturn()
-                        .Challenge()
-                        .WithAuthenticationProperties(auth => auth.WithExpires(new DateTimeOffset(new DateTime(2015, 1, 1, 1, 1, 1))));
+                        .Challenge(challenge => challenge
+                            .WithAuthenticationProperties(auth => auth
+                                .WithExpires(new DateTimeOffset(new DateTime(2015, 1, 1, 1, 1, 1)))));
                 },
                 "When calling ChallengeWithEmptyAuthenticationProperties action in MvcController expected authentication properties to have expires value of '12/31/2014 11:01:01 PM +00:00', but in fact found null.");
         }
@@ -121,8 +128,9 @@
                         .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationProperties())
                         .ShouldReturn()
-                        .Challenge()
-                        .WithAuthenticationProperties(auth => auth.WithExpires(null));
+                        .Challenge(challenge => challenge
+                            .WithAuthenticationProperties(auth => auth
+                                .WithExpires(null)));
                 },
                 "When calling ChallengeWithAuthenticationProperties action in MvcController expected authentication properties to not have expires value, but in fact found '12/31/2015 11:01:01 PM +00:00'.");
         }
@@ -134,8 +142,9 @@
                 .Instance()
                 .Calling(c => c.ChallengeWithAuthenticationProperties())
                 .ShouldReturn()
-                .Challenge()
-                .WithAuthenticationProperties(auth => auth.WithIsPersistent(true));
+                .Challenge(challenge => challenge
+                    .WithAuthenticationProperties(auth => auth
+                        .WithIsPersistent(true)));
         }
 
         [Fact]
@@ -148,8 +157,9 @@
                         .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationProperties())
                         .ShouldReturn()
-                        .Challenge()
-                        .WithAuthenticationProperties(auth => auth.WithIsPersistent(false));
+                        .Challenge(challenge => challenge
+                            .WithAuthenticationProperties(auth => auth
+                                .WithIsPersistent(false)));
                 },
                 "When calling ChallengeWithAuthenticationProperties action in MvcController expected authentication properties to have is persistent value of 'False', but in fact found 'True'.");
         }
@@ -161,8 +171,9 @@
                 .Instance()
                 .Calling(c => c.ChallengeWithAuthenticationProperties())
                 .ShouldReturn()
-                .Challenge()
-                .WithAuthenticationProperties(auth => auth.WithIssued(new DateTimeOffset(new DateTime(2015, 1, 1, 1, 1, 1))));
+                .Challenge(challenge => challenge
+                    .WithAuthenticationProperties(auth => auth
+                        .WithIssued(new DateTimeOffset(new DateTime(2015, 1, 1, 1, 1, 1)))));
         }
 
         [Fact]
@@ -175,8 +186,9 @@
                         .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationProperties())
                         .ShouldReturn()
-                        .Challenge()
-                        .WithAuthenticationProperties(auth => auth.WithIssued(new DateTimeOffset(new DateTime(2014, 1, 1, 1, 1, 1))));
+                        .Challenge(challenge => challenge
+                            .WithAuthenticationProperties(auth => auth
+                                .WithIssued(new DateTimeOffset(new DateTime(2014, 1, 1, 1, 1, 1)))));
                 },
                 "When calling ChallengeWithAuthenticationProperties action in MvcController expected authentication properties to have issued value of '12/31/2013 11:01:01 PM +00:00', but in fact found '12/31/2014 11:01:01 PM +00:00'.");
         }
@@ -191,8 +203,9 @@
                         .Instance()
                         .Calling(c => c.ChallengeWithEmptyAuthenticationProperties())
                         .ShouldReturn()
-                        .Challenge()
-                        .WithAuthenticationProperties(auth => auth.WithIssued(new DateTimeOffset(new DateTime(2014, 1, 1, 1, 1, 1))));
+                        .Challenge(challenge => challenge
+                            .WithAuthenticationProperties(auth => auth
+                                .WithIssued(new DateTimeOffset(new DateTime(2014, 1, 1, 1, 1, 1)))));
                 },
                 "When calling ChallengeWithEmptyAuthenticationProperties action in MvcController expected authentication properties to have issued value of '12/31/2013 11:01:01 PM +00:00', but in fact found null.");
         }
@@ -207,8 +220,9 @@
                         .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationProperties())
                         .ShouldReturn()
-                        .Challenge()
-                        .WithAuthenticationProperties(auth => auth.WithIssued(null));
+                        .Challenge(challenge => challenge
+                            .WithAuthenticationProperties(auth => auth
+                                .WithIssued(null)));
                 },
                 "When calling ChallengeWithAuthenticationProperties action in MvcController expected authentication properties to not have issued value, but in fact found '12/31/2014 11:01:01 PM +00:00'.");
         }
@@ -220,8 +234,9 @@
                 .Instance()
                 .Calling(c => c.ChallengeWithAuthenticationProperties())
                 .ShouldReturn()
-                .Challenge()
-                .WithAuthenticationProperties(auth => auth.WithItem("TestKeyItem"));
+                .Challenge(challenge => challenge
+                    .WithAuthenticationProperties(auth => auth
+                        .WithItem("TestKeyItem")));
         }
 
         [Fact]
@@ -234,8 +249,9 @@
                         .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationProperties())
                         .ShouldReturn()
-                        .Challenge()
-                        .WithAuthenticationProperties(auth => auth.WithItem("TestItem"));
+                        .Challenge(challenge => challenge
+                            .WithAuthenticationProperties(auth => auth
+                                .WithItem("TestItem")));
                 },
                 "When calling ChallengeWithAuthenticationProperties action in MvcController expected authentication properties to have item with key 'TestItem', but such was not found.");
         }
@@ -247,8 +263,9 @@
                 .Instance()
                 .Calling(c => c.ChallengeWithAuthenticationProperties())
                 .ShouldReturn()
-                .Challenge()
-                .WithAuthenticationProperties(auth => auth.WithItem("TestKeyItem", "TestValueItem"));
+                .Challenge(challenge => challenge
+                    .WithAuthenticationProperties(auth => auth
+                        .WithItem("TestKeyItem", "TestValueItem")));
         }
 
         [Fact]
@@ -261,8 +278,9 @@
                         .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationProperties())
                         .ShouldReturn()
-                        .Challenge()
-                        .WithAuthenticationProperties(auth => auth.WithItem("TestItem", "TestValueItem"));
+                        .Challenge(challenge => challenge
+                            .WithAuthenticationProperties(auth => auth
+                                .WithItem("TestItem", "TestValueItem")));
                 },
                 "When calling ChallengeWithAuthenticationProperties action in MvcController expected authentication properties to have item with key 'TestItem' and value 'TestValueItem', but such was not found.");
         }
@@ -277,8 +295,9 @@
                         .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationProperties())
                         .ShouldReturn()
-                        .Challenge()
-                        .WithAuthenticationProperties(auth => auth.WithItem("TestKeyItem", "TestItem"));
+                        .Challenge(challenge => challenge
+                            .WithAuthenticationProperties(auth => auth
+                                .WithItem("TestKeyItem", "TestItem")));
                 },
                 "When calling ChallengeWithAuthenticationProperties action in MvcController expected authentication properties to have item with key 'TestKeyItem' and value 'TestItem', but the value was 'TestValueItem'.");
         }
@@ -290,13 +309,14 @@
                 .Instance()
                 .Calling(c => c.ChallengeWithAuthenticationProperties())
                 .ShouldReturn()
-                .Challenge()
-                .WithAuthenticationProperties(auth => auth.WithItems(new Dictionary<string, string>
-                {
-                    { "TestKeyItem", "TestValueItem" },
-                    { "AnotherTestKeyItem", "AnotherTestValueItem" },
-                }));
-        }
+                .Challenge(challenge => challenge
+                    .WithAuthenticationProperties(auth => auth
+                        .WithItems(new Dictionary<string, string>
+                        {
+                            { "TestKeyItem", "TestValueItem" },
+                            { "AnotherTestKeyItem", "AnotherTestValueItem" },
+                        })));
+            }
 
         [Fact]
         public void WithItemsShouldThrowExceptionWithInvalidCount()
@@ -308,11 +328,12 @@
                         .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationProperties())
                         .ShouldReturn()
-                        .Challenge()
-                        .WithAuthenticationProperties(auth => auth.WithItems(new Dictionary<string, string>
-                        {
-                            { "TestKeyItem", "TestValueItem" }
-                        }));
+                        .Challenge(challenge => challenge
+                            .WithAuthenticationProperties(auth => auth
+                                .WithItems(new Dictionary<string, string>
+                                {
+                                    { "TestKeyItem", "TestValueItem" }
+                                })));
                 },
                 "When calling ChallengeWithAuthenticationProperties action in MvcController expected authentication properties to have 1 custom item, but in fact found 2.");
         }
@@ -327,13 +348,14 @@
                         .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationProperties())
                         .ShouldReturn()
-                        .Challenge()
-                        .WithAuthenticationProperties(auth => auth.WithItems(new Dictionary<string, string>
-                        {
-                            { "TestKeyItem", "TestValueItem" },
-                            { "AnotherTestKeyItem", "TestValueItem" },
-                            { "YetAnotherTestKeyItem", "TestValueItem" }
-                        }));
+                        .Challenge(challenge => challenge
+                            .WithAuthenticationProperties(auth => auth
+                                .WithItems(new Dictionary<string, string>
+                                {
+                                    { "TestKeyItem", "TestValueItem" },
+                                    { "AnotherTestKeyItem", "TestValueItem" },
+                                    { "YetAnotherTestKeyItem", "TestValueItem" }
+                                })));
                 },
                 "When calling ChallengeWithAuthenticationProperties action in MvcController expected authentication properties to have 3 custom items, but in fact found 2.");
         }
@@ -348,12 +370,13 @@
                         .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationProperties())
                         .ShouldReturn()
-                        .Challenge()
-                        .WithAuthenticationProperties(auth => auth.WithItems(new Dictionary<string, string>
-                        {
-                            { "TestKeyItem", "TestItem" },
-                            { "AnotherTestKeyItem", "AnotherTestValueItem" },
-                        }));
+                        .Challenge(challenge => challenge
+                            .WithAuthenticationProperties(auth => auth
+                                .WithItems(new Dictionary<string, string>
+                                {
+                                    { "TestKeyItem", "TestItem" },
+                                    { "AnotherTestKeyItem", "AnotherTestValueItem" },
+                                })));
                 },
                 "When calling ChallengeWithAuthenticationProperties action in MvcController expected authentication properties to have item with key 'TestKeyItem' and value 'TestItem', but the value was 'TestValueItem'.");
         }
@@ -365,8 +388,9 @@
                 .Instance()
                 .Calling(c => c.ForbidWithAuthenticationProperties())
                 .ShouldReturn()
-                .Forbid()
-                .WithAuthenticationProperties(auth => auth.WithRedirectUri("test"));
+                .Forbid(forbid => forbid
+                    .WithAuthenticationProperties(auth => auth
+                        .WithRedirectUri("test")));
         }
 
         [Fact]
@@ -379,8 +403,9 @@
                         .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationProperties())
                         .ShouldReturn()
-                        .Challenge()
-                        .WithAuthenticationProperties(auth => auth.WithRedirectUri("another"));
+                        .Challenge(challenge => challenge
+                            .WithAuthenticationProperties(auth => auth
+                                .WithRedirectUri("another")));
                 },
                 "When calling ChallengeWithAuthenticationProperties action in MvcController expected authentication properties to have 'another' redirect URI, but in fact found 'test'.");
         }
@@ -395,8 +420,9 @@
                         .Instance()
                         .Calling(c => c.ForbidWithEmptyAuthenticationProperties())
                         .ShouldReturn()
-                        .Forbid()
-                        .WithAuthenticationProperties(auth => auth.WithRedirectUri("another"));
+                        .Forbid(forbid => forbid
+                            .WithAuthenticationProperties(auth => auth
+                                .WithRedirectUri("another")));
                 },
                 "When calling ForbidWithEmptyAuthenticationProperties action in MvcController expected authentication properties to have 'another' redirect URI, but in fact found null.");
         }
@@ -411,8 +437,9 @@
                         .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationProperties())
                         .ShouldReturn()
-                        .Challenge()
-                        .WithAuthenticationProperties(auth => auth.WithRedirectUri(null));
+                        .Challenge(challenge => challenge
+                            .WithAuthenticationProperties(auth => auth
+                                .WithRedirectUri(null)));
                 },
                 "When calling ChallengeWithAuthenticationProperties action in MvcController expected authentication properties to not have redirect URI value, but in fact found 'test'.");
         }
@@ -424,11 +451,11 @@
                 .Instance()
                 .Calling(c => c.ChallengeWithAuthenticationProperties())
                 .ShouldReturn()
-                .Challenge()
-                .WithAuthenticationProperties(auth => auth
-                    .WithItem("TestKeyItem", "TestValueItem")
-                    .AndAlso()
-                    .WithItem("AnotherTestKeyItem", "AnotherTestValueItem"));
+                .Challenge(challenge => challenge
+                    .WithAuthenticationProperties(auth => auth
+                        .WithItem("TestKeyItem", "TestValueItem")
+                        .AndAlso()
+                        .WithItem("AnotherTestKeyItem", "AnotherTestValueItem")));
         }
     }
 }

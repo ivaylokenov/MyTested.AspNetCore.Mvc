@@ -28,7 +28,7 @@ namespace FullFramework.Test
                 .Instance()
                 .Calling(c => c.RedirectToIndex())
                 .ShouldReturn()
-                .Redirect()
-                .To<HomeController>(c => c.Index());
+                .Redirect(redirect => redirect
+                    .To<HomeController>(c => c.Index()));
     }
 }

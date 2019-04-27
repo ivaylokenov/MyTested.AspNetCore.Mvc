@@ -97,8 +97,8 @@
                         return IgnoredExpressionArgument;
                     }
 
-                    if ((expressionMethodDeclaringType == TypeOfWith 
-                        && expressionArgumentMethodName != nameof(With.Default))
+                    if (expressionMethodDeclaringType == TypeOfWith 
+                        && expressionArgumentMethodName != nameof(With.Default)
                         || expressionMethodDeclaringType == TypeOfFrom)
                     {
                         return null;

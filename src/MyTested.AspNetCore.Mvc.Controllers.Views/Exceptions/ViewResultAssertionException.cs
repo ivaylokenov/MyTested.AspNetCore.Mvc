@@ -4,7 +4,9 @@
     using Internal;
 
     /// <summary>
-    /// <see cref="Exception"/> for invalid <see cref="Microsoft.AspNetCore.Mvc.ViewResult"/>, <see cref="Microsoft.AspNetCore.Mvc.PartialViewResult"/> or <see cref="Microsoft.AspNetCore.Mvc.ViewComponentResult"/>.
+    /// <see cref="Exception"/> for invalid <see cref="Microsoft.AspNetCore.Mvc.ViewResult"/>,
+    /// <see cref="Microsoft.AspNetCore.Mvc.PartialViewResult"/> or
+    /// <see cref="Microsoft.AspNetCore.Mvc.ViewComponentResult"/>.
     /// </summary>
     public class ViewResultAssertionException : Exception
     {

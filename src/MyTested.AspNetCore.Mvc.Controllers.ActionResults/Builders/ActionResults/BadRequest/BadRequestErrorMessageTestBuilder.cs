@@ -1,6 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.BadRequest
 {
-    using Builders.Base;
+    using Base;
     using Contracts.ActionResults.BadRequest;
     using Exceptions;
     using Internal.TestContexts;

@@ -7,7 +7,8 @@
     /// Used for testing <see cref="Microsoft.AspNetCore.Mvc.NotFoundResult"/>
     /// or <see cref="Microsoft.AspNetCore.Mvc.NotFoundObjectResult"/>.
     /// </summary>
-    public interface INotFoundTestBuilder : IBaseTestBuilderWithResponseModel,
+    public interface INotFoundTestBuilder 
+        : IBaseTestBuilderWithResponseModel,
         IBaseTestBuilderWithOutputResult<IAndNotFoundTestBuilder>
     {
     }

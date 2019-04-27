@@ -115,7 +115,7 @@
                 var redirectTestBuilderBase = (BaseTestBuilderWithComponent)redirectTestBuilder;
 
                 throw new RedirectResultAssertionException(string.Format(
-                    "{0} redirect result to contain {1}, but it could not be found.",
+                    "{0} redirect result to contain {1}, but such could not be found.",
                     redirectTestBuilderBase.TestContext.ExceptionMessagePrefix,
                     containment));
             }

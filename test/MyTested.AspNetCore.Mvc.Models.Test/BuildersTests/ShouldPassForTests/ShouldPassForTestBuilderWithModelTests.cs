@@ -16,12 +16,12 @@
                 .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
-                .Ok()
-                .WithModelOfType<ICollection<ResponseModel>>()
-                .ShouldPassForThe<ICollection<ResponseModel>>(model =>
-                {
-                    Assert.NotNull(model);
-                });
+                .Ok(ok => ok
+                    .WithModelOfType<ICollection<ResponseModel>>()
+                    .ShouldPassForThe<ICollection<ResponseModel>>(model =>
+                    {
+                        Assert.NotNull(model);
+                    }));
         }
 
         [Fact]
@@ -31,9 +31,9 @@
                 .Instance()
                 .Calling(c => c.FullOkAction())
                 .ShouldReturn()
-                .Ok()
-                .WithModelOfType<ICollection<ResponseModel>>()
-                .ShouldPassForThe<ICollection<ResponseModel>>(model => model != null);
+                .Ok(ok => ok
+                    .WithModelOfType<ICollection<ResponseModel>>()
+                    .ShouldPassForThe<ICollection<ResponseModel>>(model => model != null));
         }
 
         [Fact]
@@ -46,9 +46,9 @@
                         .Instance()
                         .Calling(c => c.FullOkAction())
                         .ShouldReturn()
-                        .Ok()
-                        .WithModelOfType<ICollection<ResponseModel>>()
-                        .ShouldPassForThe<ICollection<ResponseModel>>(model => model == null);
+                        .Ok(ok => ok
+                            .WithModelOfType<ICollection<ResponseModel>>()
+                            .ShouldPassForThe<ICollection<ResponseModel>>(model => model == null));
                 },
                 "Expected ICollection<ResponseModel> to pass the given predicate but it failed.");
         }

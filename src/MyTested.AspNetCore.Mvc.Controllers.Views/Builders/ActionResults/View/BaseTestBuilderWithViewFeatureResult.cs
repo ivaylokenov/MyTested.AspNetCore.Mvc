@@ -1,23 +1,34 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.View
 {
     using Base;
+    using Contracts.Base;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using Exceptions;
     using Internal;
+    using Internal.Contracts.ActionResults;
 
     /// <summary>
     /// Base class for all test builders with view features.
     /// </summary>
-    /// <typeparam name="TViewResult">Type of view result - <see cref="ViewResult"/>,
-    /// <see cref="PartialViewResult"/> or <see cref="ViewComponentResult"/>.</typeparam>
-    public abstract class BaseTestBuilderWithViewFeatureResult<TViewResult> : BaseTestBuilderWithResponseModel<TViewResult>
+    /// <typeparam name="TViewResult">
+    /// Type of view result - <see cref="ViewResult"/>,
+    /// <see cref="PartialViewResult"/> or <see cref="ViewComponentResult"/>.
+    /// </typeparam>
+    /// <typeparam name="TViewFeatureResultTestBuilder">
+    /// Type of view feature result test builder to use as a return type for common methods.
+    /// </typeparam>
+    public abstract class BaseTestBuilderWithViewFeatureResult<TViewResult, TViewFeatureResultTestBuilder> 
+        : BaseTestBuilderWithResponseModel<TViewResult>,
+        IBaseTestBuilderWithViewFeatureResultInternal<TViewFeatureResultTestBuilder>
         where TViewResult : ActionResult
+        where TViewFeatureResultTestBuilder : IBaseTestBuilderWithActionResult
     {
         private readonly string viewFeatureType;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseTestBuilderWithViewFeatureResult{TActionResult}"/> class.
+        /// Initializes a new instance of the
+        /// <see cref="BaseTestBuilderWithViewFeatureResult{TActionResult, TViewFeatureResultTestBuilder}"/> class.
         /// </summary>
         /// <param name="testContext">
         /// <see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.
@@ -28,7 +39,13 @@
             string viewFeatureType)
             : base(testContext)
             => this.viewFeatureType = viewFeatureType;
-        
+
+        /// <summary>
+        /// Gets the view feature result test builder.
+        /// </summary>
+        /// <value>Test builder of view feature result type.</value>
+        public abstract TViewFeatureResultTestBuilder ResultTestBuilder { get; }
+
         public override object GetActualModel()
         {
             if (this.ActionResult is ViewResult)

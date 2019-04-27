@@ -65,8 +65,8 @@
                 .Instance()
                 .Calling(c => c.ContentActionWithMediaType())
                 .ShouldReturn()
-                .Content()
-                .WithContentType(new MediaTypeHeaderValue(ContentType.TextPlain));
+                .Content(content => content
+                    .WithContentType(new MediaTypeHeaderValue(ContentType.TextPlain)));
         }
 
         [Fact]
@@ -76,8 +76,8 @@
                 .Instance()
                 .Calling(c => c.ContentActionWithMediaType())
                 .ShouldReturn()
-                .Content()
-                .WithContentType(ContentType.TextPlain);
+                .Content(content => content
+                    .WithContentType(ContentType.TextPlain));
         }
 
         [Fact]
@@ -90,8 +90,8 @@
                         .Instance()
                         .Calling(c => c.ContentActionWithMediaType())
                         .ShouldReturn()
-                        .Content()
-                        .WithContentType(new MediaTypeHeaderValue(ContentType.ApplicationJson));
+                        .Content(content => content
+                            .WithContentType(new MediaTypeHeaderValue(ContentType.ApplicationJson)));
                 },
                 "When calling ContentActionWithMediaType action in MvcController expected content result ContentType to be 'application/json', but instead received 'text/plain'.");
         }
@@ -106,8 +106,8 @@
                         .Instance()
                         .Calling(c => c.ContentActionWithMediaType())
                         .ShouldReturn()
-                        .Content()
-                        .WithContentType((MediaTypeHeaderValue)null);
+                        .Content(content => content
+                            .WithContentType((MediaTypeHeaderValue)null));
                 },
                 "When calling ContentActionWithMediaType action in MvcController expected content result ContentType to be null, but instead received 'text/plain'.");
         }
@@ -119,8 +119,8 @@
                 .Instance()
                 .Calling(c => c.ContentActionWithNullMediaType())
                 .ShouldReturn()
-                .Content()
-                .WithContentType((MediaTypeHeaderValue)null);
+                .Content(content => content
+                    .WithContentType((MediaTypeHeaderValue)null));
         }
 
         [Fact]
@@ -133,8 +133,8 @@
                         .Instance()
                         .Calling(c => c.ContentActionWithNullMediaType())
                         .ShouldReturn()
-                        .Content()
-                        .WithContentType(new MediaTypeHeaderValue(TestObjectFactory.MediaType));
+                        .Content(content => content
+                            .WithContentType(new MediaTypeHeaderValue(TestObjectFactory.MediaType)));
                 },
                 "When calling ContentActionWithNullMediaType action in MvcController expected content result ContentType to be 'application/json', but instead received null.");
         }

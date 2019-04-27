@@ -24,14 +24,14 @@
                 .WithData(ArticleTestData.GetArticles(total))
                 .Calling(c => c.All(page))
                 .ShouldReturn()
-                .View()
-                .WithModelOfType<ArticleListingViewModel>()
-                .Passing(articleListing =>
-                {
-                    articleListing.Articles.Count().ShouldBe(expectedCount);
-                    articleListing.Total.ShouldBe(total);
-                    articleListing.Page.ShouldBe(page);
-                });
+                .View(view => view
+                    .WithModelOfType<ArticleListingViewModel>()
+                    .Passing(articleListing =>
+                    {
+                        articleListing.Articles.Count().ShouldBe(expectedCount);
+                        articleListing.Total.ShouldBe(total);
+                        articleListing.Page.ShouldBe(page);
+                    }));
 
         [Fact]
         public void DetailsShouldReturnNotFoundWhenInvalidArticleId()
@@ -57,9 +57,9 @@
                 .WithData(ArticleTestData.GetArticles(1))
                 .Calling(c => c.Details(1))
                 .ShouldReturn()
-                .View()
-                .WithModelOfType<ArticleDetailsServiceModel>()
-                .Passing(article => article.Id == 1);
+                .View(view => view
+                    .WithModelOfType<ArticleDetailsServiceModel>()
+                    .Passing(article => article.Id == 1));
 
         [Fact]
         public void DetailsShouldReturnNotFoundWhenNonPublicArticleAndNonAdministratorNonAuthorUser()
@@ -79,9 +79,9 @@
                 .WithData(ArticleTestData.GetArticles(1))
                 .Calling(c => c.Details(1))
                 .ShouldReturn()
-                .View()
-                .WithModelOfType<ArticleDetailsServiceModel>()
-                .Passing(article => article.Id == 1);
+                .View(view => view
+                    .WithModelOfType<ArticleDetailsServiceModel>()
+                    .Passing(article => article.Id == 1));
 
         [Theory]
         [InlineData(true, TestUser.Username, null)]
@@ -98,9 +98,9 @@
                 .WithData(ArticleTestData.GetArticles(1, isPublic))
                 .Calling(c => c.Details(1))
                 .ShouldReturn()
-                .View()
-                .WithModelOfType<ArticleDetailsServiceModel>()
-                .Passing(article => article.Id == 1);
+                .View(view => view
+                    .WithModelOfType<ArticleDetailsServiceModel>()
+                    .Passing(article => article.Id == 1));
         
         [Fact]
         public void CreateGetShouldHaveRestrictionsForHttpGetOnlyAndAuthorizedUsersAndShouldReturnView()
@@ -162,8 +162,8 @@
                     .ContainingEntryWithKey(ControllerConstants.SuccessMessage))
                 .AndAlso()
                 .ShouldReturn()
-                .Redirect()
-                .To<ArticlesController>(c => c.Mine());
+                .Redirect(redirect => redirect
+                    .To<ArticlesController>(c => c.Mine()));
 
         [Fact]
         public void EditGetShouldHaveRestrictionsForHttpGetOnlyAndAuthorizedUsers()
@@ -203,9 +203,9 @@
                 .WithData(ArticleTestData.GetArticles(articleId))
                 .Calling(c => c.Edit(articleId))
                 .ShouldReturn()
-                .View()
-                .WithModelOfType<ArticleFormModel>()
-                .Passing(article => article.Title == $"Article {articleId}");
+                .View(view => view
+                    .WithModelOfType<ArticleFormModel>()
+                    .Passing(article => article.Title == $"Article {articleId}"));
     
         [Fact]
         public void EditPostShouldHaveRestrictionsForHttpPostOnlyAndAuthorizedUsers()
@@ -291,8 +291,8 @@
                     .ContainingEntryWithKey(ControllerConstants.SuccessMessage))
                 .AndAlso()
                 .ShouldReturn()
-                .Redirect()
-                .To<ArticlesController>(c => c.Mine());
+                .Redirect(redirect => redirect
+                    .To<ArticlesController>(c => c.Mine()));
 
         [Fact]
         public void DeleteShouldHaveRestrictionsForAuthorizedUsers()
@@ -381,8 +381,8 @@
                     .ContainingEntryWithKey(ControllerConstants.SuccessMessage))
                 .AndAlso()
                 .ShouldReturn()
-                .Redirect()
-                .To<ArticlesController>(c => c.Mine());
+                .Redirect(redirect => redirect
+                    .To<ArticlesController>(c => c.Mine()));
 
         [Fact]
         public void MineShouldHaveRestrictionsForAuthorizedUsers()
@@ -401,12 +401,12 @@
                 .WithData(ArticleTestData.GetArticles(2, sameUser: false))
                 .Calling(c => c.Mine())
                 .ShouldReturn()
-                .View()
-                .WithModelOfType<List<ArticleForUserListingServiceModel>>()
-                .Passing(articles =>
-                {
-                    articles.ShouldNotBeEmpty();
-                    articles.SingleOrDefault(a => a.Author == "Author 1").ShouldNotBeNull();
-                });
+                .View(view => view
+                    .WithModelOfType<List<ArticleForUserListingServiceModel>>()
+                    .Passing(articles =>
+                    {
+                        articles.ShouldNotBeEmpty();
+                        articles.SingleOrDefault(a => a.Author == "Author 1").ShouldNotBeNull();
+                    }));
     }
 }

@@ -28,9 +28,9 @@
                     .ContainingEntryOfType<List<Album>>("topselling"))
                 .AndAlso()
                 .ShouldReturn()
-                .View()
-                .WithModelOfType<List<Album>>()
-                .Passing(albums => Assert.Equal(6, albums.Count));
+                .View(view => view
+                    .WithModelOfType<List<Album>>()
+                    .Passing(albums => Assert.Equal(6, albums.Count)));
         }
         
         [Fact]

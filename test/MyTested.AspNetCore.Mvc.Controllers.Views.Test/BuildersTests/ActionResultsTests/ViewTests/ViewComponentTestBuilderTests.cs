@@ -1,13 +1,11 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ActionResultsTests.ViewTests
 {
-    using System.Collections.Generic;
     using System.Net;
     using Exceptions;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Net.Http.Headers;
     using Setups;
     using Setups.Controllers;
-    using Setups.Models;
     using Xunit;
 
     public class ViewComponentTestBuilderTests
@@ -19,8 +17,8 @@
                 .Instance()
                 .Calling(c => c.CustomViewComponentResult())
                 .ShouldReturn()
-                .ViewComponent()
-                .WithStatusCode(500);
+                .ViewComponent(viewComponent => viewComponent
+                    .WithStatusCode(500));
         }
 
         [Fact]
@@ -30,8 +28,8 @@
                 .Instance()
                 .Calling(c => c.CustomViewComponentResult())
                 .ShouldReturn()
-                .ViewComponent()
-                .WithStatusCode(HttpStatusCode.InternalServerError);
+                .ViewComponent(viewComponent => viewComponent
+                    .WithStatusCode(HttpStatusCode.InternalServerError));
         }
 
         [Fact]
@@ -44,8 +42,8 @@
                         .Instance()
                         .Calling(c => c.CustomViewComponentResult())
                         .ShouldReturn()
-                        .ViewComponent()
-                        .WithStatusCode(HttpStatusCode.NotFound);
+                        .ViewComponent(viewComponent => viewComponent
+                            .WithStatusCode(HttpStatusCode.NotFound));
                 },
                 "When calling CustomViewComponentResult action in MvcController expected view component result to have 404 (NotFound) status code, but instead received 500 (InternalServerError).");
         }
@@ -57,8 +55,8 @@
                 .Instance()
                 .Calling(c => c.CustomViewComponentResult())
                 .ShouldReturn()
-                .ViewComponent()
-                .WithContentType(ContentType.ApplicationXml);
+                .ViewComponent(viewComponent => viewComponent
+                    .WithContentType(ContentType.ApplicationXml));
         }
 
         [Fact]
@@ -68,8 +66,8 @@
                 .Instance()
                 .Calling(c => c.CustomViewComponentResult())
                 .ShouldReturn()
-                .ViewComponent()
-                .WithContentType(new MediaTypeHeaderValue(ContentType.ApplicationXml));
+                .ViewComponent(viewComponent => viewComponent
+                    .WithContentType(new MediaTypeHeaderValue(ContentType.ApplicationXml)));
         }
 
         [Fact]
@@ -79,8 +77,8 @@
                 .Instance()
                 .Calling(c => c.CustomViewComponentResult())
                 .ShouldReturn()
-                .ViewComponent()
-                .WithContentType(ContentType.ApplicationXml);
+                .ViewComponent(viewComponent => viewComponent
+                    .WithContentType(ContentType.ApplicationXml));
         }
 
         [Fact]
@@ -93,8 +91,8 @@
                         .Instance()
                         .Calling(c => c.CustomViewComponentResult())
                         .ShouldReturn()
-                        .ViewComponent()
-                        .WithContentType(new MediaTypeHeaderValue(ContentType.ApplicationJson));
+                        .ViewComponent(viewComponent => viewComponent
+                            .WithContentType(new MediaTypeHeaderValue(ContentType.ApplicationJson)));
                 },
                 "When calling CustomViewComponentResult action in MvcController expected view component result ContentType to be 'application/json', but instead received 'application/xml'.");
         }
@@ -109,8 +107,8 @@
                         .Instance()
                         .Calling(c => c.CustomViewComponentResult())
                         .ShouldReturn()
-                        .ViewComponent()
-                        .WithContentType((MediaTypeHeaderValue)null);
+                        .ViewComponent(viewComponent => viewComponent
+                            .WithContentType((MediaTypeHeaderValue)null));
                 },
                 "When calling CustomViewComponentResult action in MvcController expected view component result ContentType to be null, but instead received 'application/xml'.");
         }
@@ -122,8 +120,8 @@
                 .Instance()
                 .Calling(c => c.ViewComponentResultByName())
                 .ShouldReturn()
-                .ViewComponent()
-                .WithContentType((MediaTypeHeaderValue)null);
+                .ViewComponent(viewComponent => viewComponent
+                    .WithContentType((MediaTypeHeaderValue)null));
         }
 
         [Fact]
@@ -136,207 +134,12 @@
                         .Instance()
                         .Calling(c => c.ViewComponentResultByName())
                         .ShouldReturn()
-                        .ViewComponent()
-                        .WithContentType(new MediaTypeHeaderValue(TestObjectFactory.MediaType));
+                        .ViewComponent(viewComponent => viewComponent
+                            .WithContentType(new MediaTypeHeaderValue(TestObjectFactory.MediaType)));
                 },
                 "When calling ViewComponentResultByName action in MvcController expected view component result ContentType to be 'application/json', but instead received null.");
         }
         
-        [Fact]
-        public void WithArgumentShouldNotThrowExceptionWithCorrectArgumentName()
-        {
-            MyController<MvcController>
-                .Instance()
-                .Calling(c => c.ViewComponentResultByType())
-                .ShouldReturn()
-                .ViewComponent()
-                .ContainingArgumentWithName("model");
-        }
-
-        [Fact]
-        public void WithArgumentOfTypeAndNameShouldNotThrowExceptionWithCorrectArgumentName()
-        {
-            MyController<MvcController>
-                .Instance()
-                .Calling(c => c.ViewComponentResultByType())
-                .ShouldReturn()
-                .ViewComponent()
-                .ContainingArgumentOfType<List<ResponseModel>>("model");
-        }
-
-        [Fact]
-        public void WithArgumentShouldThrowExceptionWithIncorrectArgumentName()
-        {
-            Test.AssertException<ViewResultAssertionException>(
-                () =>
-                {
-                    MyController<MvcController>
-                        .Instance()
-                        .Calling(c => c.ViewComponentResultByType())
-                        .ShouldReturn()
-                        .ViewComponent()
-                        .ContainingArgumentWithName("id");
-                },
-                "When calling ViewComponentResultByType action in MvcController expected view component result arguments to have entry with 'id' key, but such was not found.");
-        }
-
-        [Fact]
-        public void WithArgumentWithSameKeyAndDiffeentValueShouldThrowException()
-        {
-            Test.AssertException<ViewResultAssertionException>(
-                () =>
-                {
-                    MyController<MvcController>
-                        .Instance()
-                        .Calling(c => c.ViewComponentResultByType())
-                        .ShouldReturn()
-                        .ViewComponent()
-                        .ContainingArgument("model", new { model = 1 });
-                },
-                "When calling ViewComponentResultByType action in MvcController expected view component result arguments to have entry with 'model' key and the provided value, but the value was different.");
-        }
-
-        [Fact]
-        public void WithArgumentWithSameKeyAndDiffeentNameShouldThrowException()
-        {
-            Test.AssertException<ViewResultAssertionException>(
-                () =>
-                {
-                    MyController<MvcController>
-                        .Instance()
-                        .Calling(c => c.ViewComponentResultByType())
-                        .ShouldReturn()
-                        .ViewComponent()
-                        .ContainingArgument("id", new { model = 1 });
-                },
-                "When calling ViewComponentResultByType action in MvcController expected view component result arguments to have entry with 'id' key and the provided value, but such was not found.");
-        }
-
-        [Fact]
-        public void WithArgumentShouldNotThrowExceptionWithCorrectArgument()
-        {
-            var responseModels = TestObjectFactory.GetListOfResponseModels();
-
-            MyController<MvcController>
-                .Instance()
-                .Calling(c => c.ViewComponentResultByType())
-                .ShouldReturn()
-                .ViewComponent()
-                .ContainingArgument(responseModels);
-        }
-
-        [Fact]
-        public void WithArgumentShouldNotThrowExceptionWithCorrectArgumentAndName()
-        {
-            var responseModels = TestObjectFactory.GetListOfResponseModels();
-
-            MyController<MvcController>
-                .Instance()
-                .Calling(c => c.ViewComponentResultByType())
-                .ShouldReturn()
-                .ViewComponent()
-                .ContainingArgument("model", responseModels);
-        }
-
-        [Fact]
-        public void WithArgumentShouldThrowExceptionWithIncorrectArgument()
-        {
-            Test.AssertException<ViewResultAssertionException>(
-                   () =>
-                   {
-                       MyController<MvcController>
-                           .Instance()
-                           .Calling(c => c.ViewComponentResultByType())
-                           .ShouldReturn()
-                           .ViewComponent()
-                           .ContainingArgument(1);
-                   },
-                   "When calling ViewComponentResultByType action in MvcController expected view component result arguments to have entry with the provided value, but none was found.");
-        }
-
-        [Fact]
-        public void WithArgumentShouldNotThrowExceptionWithCorrectArgumentOfType()
-        {
-            var responseModels = TestObjectFactory.GetListOfResponseModels();
-
-            MyController<MvcController>
-                .Instance()
-                .Calling(c => c.ViewComponentResultByType())
-                .ShouldReturn()
-                .ViewComponent()
-                .ContainingArgumentOfType<List<ResponseModel>>();
-        }
-
-        [Fact]
-        public void WithArgumentShouldThrowExceptionWithIncorrectArgumentOfType()
-        {
-            Test.AssertException<ViewResultAssertionException>(
-                   () =>
-                   {
-                       MyController<MvcController>
-                           .Instance()
-                           .Calling(c => c.ViewComponentResultByType())
-                           .ShouldReturn()
-                           .ViewComponent()
-                           .ContainingArgumentOfType<int>();
-                   },
-                   "When calling ViewComponentResultByType action in MvcController expected view component result arguments to have at least one entry of Int32 type, but none was found.");
-        }
-
-        [Fact]
-        public void WithArgumentsShouldNotThrowExceptionWithCorrectArguments()
-        {
-            MyController<MvcController>
-                .Instance()
-                .Calling(c => c.ViewComponentResultByName())
-                .ShouldReturn()
-                .ViewComponent()
-                .ContainingArguments(new { id = 1, test = "text" });
-        }
-
-        [Fact]
-        public void WithArgumentsShouldThrowExceptionWithIncorrectArgumentsCount()
-        {
-            Test.AssertException<ViewResultAssertionException>(
-                    (() =>
-                    {
-                        MyController<MvcController>
-                             .Instance()
-                             .Calling(c => c.ViewComponentResultByName())
-                             .ShouldReturn()
-                             .ViewComponent()
-                             .ContainingArguments(new { id = 1, text = "text", incorrect = 15 });
-                    }),
-                   "When calling ViewComponentResultByName action in MvcController expected view component result arguments to have 3 entries, but in fact found 2.");
-        }
-
-        [Fact]
-        public void WithArgumentsShouldThrowExceptionWithIncorrectArguments()
-        {
-            Test.AssertException<ViewResultAssertionException>(
-                    (() =>
-                    {
-                        MyController<MvcController>
-                             .Instance()
-                             .Calling(c => c.ViewComponentResultByName())
-                             .ShouldReturn()
-                             .ViewComponent()
-                             .ContainingArguments(new { id = 1, test = "incorrect" });
-                    }),
-                   "When calling ViewComponentResultByName action in MvcController expected view component result arguments to have entry with 'test' key and the provided value, but the value was different.");
-        }
-
-        [Fact]
-        public void WithArgumentsShouldThrowExceptionWithCorrectArgumentsAsDictionary()
-        {
-            MyController<MvcController>
-                .Instance()
-                .Calling(c => c.ViewComponentResultByName())
-                .ShouldReturn()
-                .ViewComponent()
-                .ContainingArguments(new Dictionary<string, object> { ["id"] = 1, ["test"] = "text" });
-        }
-
         [Fact]
         public void AndAlsoShouldWorkCorrectly()
         {
@@ -344,10 +147,10 @@
                 .Instance()
                 .Calling(c => c.CustomViewComponentResult())
                 .ShouldReturn()
-                .ViewComponent()
-                .WithContentType(ContentType.ApplicationXml)
-                .AndAlso()
-                .WithStatusCode(500);
+                .ViewComponent(viewComponent => viewComponent
+                    .WithContentType(ContentType.ApplicationXml)
+                    .AndAlso()
+                    .WithStatusCode(500));
         }
 
         [Fact]
@@ -358,6 +161,7 @@
                 .Calling(c => c.ViewComponentResultByName())
                 .ShouldReturn()
                 .ViewComponent()
+                .AndAlso()
                 .ShouldPassForThe<IActionResult>(actionResult =>
                 {
                     Assert.NotNull(actionResult);

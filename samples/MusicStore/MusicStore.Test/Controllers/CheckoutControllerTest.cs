@@ -83,8 +83,8 @@
                     new Order { OrderId = orderId },
                     CancellationToken.None))
                 .ShouldReturn()
-                .Redirect()
-                .To<CheckoutController>(c => c.Complete(With.No<MusicStoreContext>(), orderId));
+                .Redirect(redirect => redirect
+                    .To<CheckoutController>(c => c.Complete(With.No<MusicStoreContext>(), orderId)));
         }
 
         [Fact]

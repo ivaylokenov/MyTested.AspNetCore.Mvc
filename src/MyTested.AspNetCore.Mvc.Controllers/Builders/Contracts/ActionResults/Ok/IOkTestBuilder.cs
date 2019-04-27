@@ -7,7 +7,8 @@
     /// Used for testing <see cref="Microsoft.AspNetCore.Mvc.OkResult"/>
     /// or <see cref="Microsoft.AspNetCore.Mvc.OkObjectResult"/> result.
     /// </summary>
-    public interface IOkTestBuilder : IBaseTestBuilderWithResponseModel,
+    public interface IOkTestBuilder 
+        : IBaseTestBuilderWithResponseModel,
         IBaseTestBuilderWithOutputResult<IAndOkTestBuilder>
     {
     }

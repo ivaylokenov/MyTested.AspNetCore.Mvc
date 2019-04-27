@@ -20,8 +20,8 @@
                         .Instance()
                         .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
                         .ShouldReturn()
-                        .BadRequest()
-                        .WithErrorMessage("Good request");
+                        .BadRequest(badRequest => badRequest
+                            .WithErrorMessage("Good request"));
                 },
                 "When calling BadRequestWithModelState action in MvcController expected bad request result with error message, but instead received non-string value.");
         }
@@ -35,8 +35,8 @@
                 .Instance()
                 .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
                 .ShouldReturn()
-                .BadRequest()
-                .WithModelStateError();
+                .BadRequest(badRequest => badRequest
+                    .WithModelStateError());
         }
 
         [Fact]
@@ -51,8 +51,8 @@
                 .Instance()
                 .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
                 .ShouldReturn()
-                .BadRequest()
-                .WithModelStateError(modelState);
+                .BadRequest(badRequest => badRequest
+                    .WithModelStateError(modelState));
         }
 
         [Fact]
@@ -70,8 +70,8 @@
                         .Instance()
                         .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
                         .ShouldReturn()
-                        .BadRequest()
-                        .WithModelStateError(modelState);
+                        .BadRequest(badRequest => badRequest
+                            .WithModelStateError(modelState));
                 },
                 "When calling BadRequestWithModelState action in MvcController expected bad request model state dictionary to contain String key, but none found.");
         }
@@ -88,8 +88,8 @@
                         .Instance()
                         .Calling(c => c.BadRequestWithErrorAction())
                         .ShouldReturn()
-                        .BadRequest()
-                        .WithModelStateError(modelState);
+                        .BadRequest(badRequest => badRequest
+                            .WithModelStateError(modelState));
                 },
                 "When calling BadRequestWithErrorAction action in MvcController expected bad request result with model state dictionary as error, but instead received other type of error.");
         }
@@ -108,8 +108,8 @@
                         .Instance()
                         .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
                         .ShouldReturn()
-                        .BadRequest()
-                        .WithModelStateError(modelState);
+                        .BadRequest(badRequest => badRequest
+                            .WithModelStateError(modelState));
                 },
                 "When calling BadRequestWithModelState action in MvcController expected bad request model state dictionary to contain 1 keys, but found 2.");
         }
@@ -130,8 +130,8 @@
                         .Instance()
                         .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
                         .ShouldReturn()
-                        .BadRequest()
-                        .WithModelStateError(modelState);
+                        .BadRequest(badRequest => badRequest
+                            .WithModelStateError(modelState));
                 },
                 "When calling BadRequestWithModelState action in MvcController expected bad request model state dictionary to contain 3 keys, but found 2.");
         }
@@ -151,8 +151,8 @@
                         .Instance()
                         .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
                         .ShouldReturn()
-                        .BadRequest()
-                        .WithModelStateError(modelState);
+                        .BadRequest(badRequest => badRequest
+                            .WithModelStateError(modelState));
                 },
                 "When calling BadRequestWithModelState action in MvcController expected bad request result with message 'The RequiredString field is not required.', but instead received 'The RequiredString field is required.'.");
         }
@@ -173,8 +173,8 @@
                         .Instance()
                         .Calling(c => c.BadRequestWithModelState(requestModelWithErrors))
                         .ShouldReturn()
-                        .BadRequest()
-                        .WithModelStateError(modelState);
+                        .BadRequest(badRequest => badRequest
+                            .WithModelStateError(modelState));
                 },
                 "When calling BadRequestWithModelState action in MvcController expected bad request model state dictionary to contain 2 errors for RequiredString key, but found 1.");
         }

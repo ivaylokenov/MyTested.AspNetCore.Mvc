@@ -15,8 +15,8 @@
                 .Instance()
                 .Calling(c => c.ChallengeWithAuthenticationSchemes())
                 .ShouldReturn()
-                .Challenge()
-                .ContainingAuthenticationScheme(AuthenticationScheme.Basic);
+                .Challenge(challenge => challenge
+                    .ContainingAuthenticationScheme(AuthenticationScheme.Basic));
         }
 
         [Fact]
@@ -29,8 +29,8 @@
                         .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationSchemes())
                         .ShouldReturn()
-                        .Challenge()
-                        .ContainingAuthenticationScheme(AuthenticationScheme.Digest);
+                        .Challenge(challenge => challenge
+                            .ContainingAuthenticationScheme(AuthenticationScheme.Digest));
                 },
                 "When calling ChallengeWithAuthenticationSchemes action in MvcController expected challenge result authentication schemes to contain Digest, but none was found.");
         }
@@ -42,8 +42,12 @@
                 .Instance()
                 .Calling(c => c.ChallengeWithAuthenticationSchemes())
                 .ShouldReturn()
-                .Challenge()
-                .ContainingAuthenticationSchemes(new List<string> { AuthenticationScheme.Basic, AuthenticationScheme.NTLM });
+                .Challenge(challenge => challenge
+                    .ContainingAuthenticationSchemes(new List<string>
+                    {
+                        AuthenticationScheme.Basic,
+                        AuthenticationScheme.NTLM
+                    }));
         }
 
         [Fact]
@@ -56,8 +60,10 @@
                         .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationSchemes())
                         .ShouldReturn()
-                        .Challenge()
-                        .ContainingAuthenticationSchemes(AuthenticationScheme.Digest, AuthenticationScheme.Basic);
+                        .Challenge(challenge => challenge
+                            .ContainingAuthenticationSchemes(
+                                AuthenticationScheme.Digest, 
+                                AuthenticationScheme.Basic));
                 },
                 "When calling ChallengeWithAuthenticationSchemes action in MvcController expected challenge result authentication schemes to contain Digest, but none was found.");
         }
@@ -72,8 +78,8 @@
                         .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationSchemes())
                         .ShouldReturn()
-                        .Challenge()
-                        .ContainingAuthenticationSchemes(new[] { AuthenticationScheme.Digest });
+                        .Challenge(challenge => challenge
+                            .ContainingAuthenticationSchemes(AuthenticationScheme.Digest));
                 },
                 "When calling ChallengeWithAuthenticationSchemes action in MvcController expected challenge result authentication schemes to be 1, but instead found 2.");
         }
@@ -85,8 +91,10 @@
                 .Instance()
                 .Calling(c => c.ChallengeWithAuthenticationSchemes())
                 .ShouldReturn()
-                .Challenge()
-                .ContainingAuthenticationSchemes(AuthenticationScheme.Basic, AuthenticationScheme.NTLM);
+                .Challenge(challenge => challenge
+                    .ContainingAuthenticationSchemes(
+                        AuthenticationScheme.Basic, 
+                        AuthenticationScheme.NTLM));
         }
 
         [Fact]
@@ -96,8 +104,8 @@
                 .Instance()
                 .Calling(c => c.ChallengeWithAuthenticationProperties())
                 .ShouldReturn()
-                .Challenge()
-                .WithAuthenticationProperties(TestObjectFactory.GetAuthenticationProperties());
+                .Challenge(challenge => challenge
+                    .WithAuthenticationProperties(TestObjectFactory.GetAuthenticationProperties()));
         }
 
         [Fact]
@@ -114,8 +122,8 @@
                         .Instance()
                         .Calling(c => c.ChallengeWithAuthenticationProperties())
                         .ShouldReturn()
-                        .Challenge()
-                        .WithAuthenticationProperties(authenticationProperties);
+                        .Challenge(challenge => challenge
+                            .WithAuthenticationProperties(authenticationProperties));
                 },
                 "When calling ChallengeWithAuthenticationProperties action in MvcController expected challenge result authentication properties to be the same as the provided one, but instead received different result.");
         }
@@ -127,10 +135,10 @@
                 .Instance()
                 .Calling(c => c.ChallengeWithAuthenticationSchemes())
                 .ShouldReturn()
-                .Challenge()
-                .ContainingAuthenticationScheme(AuthenticationScheme.Basic)
-                .AndAlso()
-                .ContainingAuthenticationScheme(AuthenticationScheme.NTLM);
+                .Challenge(challenge => challenge
+                    .ContainingAuthenticationScheme(AuthenticationScheme.Basic)
+                    .AndAlso()
+                    .ContainingAuthenticationScheme(AuthenticationScheme.NTLM));
         }
     }
 }

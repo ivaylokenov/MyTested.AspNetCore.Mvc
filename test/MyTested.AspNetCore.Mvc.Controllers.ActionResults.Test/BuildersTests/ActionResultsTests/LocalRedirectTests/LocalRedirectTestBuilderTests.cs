@@ -17,8 +17,8 @@
                 .Instance()
                 .Calling(c => c.LocalRedirectPermanentAction())
                 .ShouldReturn()
-                .LocalRedirect()
-                .Permanent();
+                .LocalRedirect(localRedirect => localRedirect
+                    .Permanent());
         }
 
         [Fact]
@@ -31,8 +31,8 @@
                         .Instance()
                         .Calling(c => c.LocalRedirectAction())
                         .ShouldReturn()
-                        .LocalRedirect()
-                        .Permanent();
+                        .LocalRedirect(localRedirect => localRedirect
+                            .Permanent());
                 },
                 "When calling LocalRedirectAction action in MvcController expected local redirect result to be permanent, but in fact it was not.");
         }
@@ -44,8 +44,8 @@
                 .Instance()
                 .Calling(c => c.LocalRedirectAction())
                 .ShouldReturn()
-                .LocalRedirect()
-                .ToUrl("/local/test");
+                .LocalRedirect(localRedirect => localRedirect
+                    .ToUrl("/local/test"));
         }
 
         [Fact]
@@ -58,8 +58,8 @@
                         .Instance()
                         .Calling(c => c.LocalRedirectAction())
                         .ShouldReturn()
-                        .LocalRedirect()
-                        .ToUrl("/local");
+                        .LocalRedirect(localRedirect => localRedirect
+                            .ToUrl("/local"));
                 },
                 "When calling LocalRedirectAction action in MvcController expected local redirect result location to be '/local', but instead received '/local/test'.");
         }
@@ -74,25 +74,26 @@
                         .Instance()
                         .Calling(c => c.LocalRedirectAction())
                         .ShouldReturn()
-                        .LocalRedirect()
-                        .ToUrl("http://somehost!@#?Query==true");
+                        .LocalRedirect(localRedirect => localRedirect
+                            .ToUrl("http://somehost!@#?Query==true"));
                 },
                 "When calling LocalRedirectAction action in MvcController expected local redirect result location to be URI valid, but instead received 'http://somehost!@#?Query==true'.");
         }
 
         [Fact]
-        public void ToUrlPassingShouldNotThrowExceptionWithValidaPredicate()
+        public void ToUrlPassingShouldNotThrowExceptionWithValidPredicate()
         {
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.LocalRedirectAction())
                 .ShouldReturn()
-                .LocalRedirect()
-                .ToUrlPassing(url => url.StartsWith("/local/"));
+                .LocalRedirect(localRedirect => localRedirect
+                    .ToUrlPassing(url => url
+                        .StartsWith("/local/")));
         }
 
         [Fact]
-        public void ToUrlPassingShouldThrowExceptionWithInvalidaPredicate()
+        public void ToUrlPassingShouldThrowExceptionWithInvalidPredicate()
         {
             Test.AssertException<RedirectResultAssertionException>(
                 () =>
@@ -101,24 +102,25 @@
                         .Instance()
                         .Calling(c => c.LocalRedirectAction())
                         .ShouldReturn()
-                        .LocalRedirect()
-                        .ToUrlPassing(url => url.StartsWith("/test/"));
+                        .LocalRedirect(localRedirect => localRedirect
+                            .ToUrlPassing(url => url
+                                .StartsWith("/test/")));
                 },
                 "When calling LocalRedirectAction action in MvcController expected local redirect result location ('/local/test') to pass the given predicate, but it failed.");
         }
 
         [Fact]
-        public void ToUrlPassingShouldNotThrowExceptionWithValidaAssertions()
+        public void ToUrlPassingShouldNotThrowExceptionWithValidAssertions()
         {
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.LocalRedirectAction())
                 .ShouldReturn()
-                .LocalRedirect()
-                .ToUrlPassing(url =>
-                {
-                    Assert.StartsWith("/local/", url);
-                });
+                .LocalRedirect(localRedirect => localRedirect
+                    .ToUrlPassing(url =>
+                    {
+                        Assert.StartsWith("/local/", url);
+                    }));
         }
 
         [Fact]
@@ -128,8 +130,8 @@
                 .Instance()
                 .Calling(c => c.LocalRedirectAction())
                 .ShouldReturn()
-                .LocalRedirect()
-                .ToUrl(new Uri("/local/test", UriKind.Relative));
+                .LocalRedirect(localRedirect => localRedirect
+                    .ToUrl(new Uri("/local/test", UriKind.Relative)));
         }
 
         [Fact]
@@ -142,8 +144,8 @@
                         .Instance()
                         .Calling(c => c.LocalRedirectAction())
                         .ShouldReturn()
-                        .LocalRedirect()
-                        .ToUrl(new Uri("/local", UriKind.Relative));
+                        .LocalRedirect(localRedirect => localRedirect
+                            .ToUrl(new Uri("/local", UriKind.Relative)));
                 },
                 "When calling LocalRedirectAction action in MvcController expected local redirect result location to be '/local', but instead received '/local/test'.");
         }
@@ -155,8 +157,8 @@
                 .Instance()
                 .Calling(c => c.LocalRedirectAction())
                 .ShouldReturn()
-                .LocalRedirect()
-                .ToUrl(url => url.WithAbsolutePath("/local/test"));
+                .LocalRedirect(localRedirect => localRedirect
+                    .ToUrl(url => url.WithAbsolutePath("/local/test")));
         }
         
         [Fact]
@@ -168,8 +170,8 @@
                 .Instance()
                 .Calling(c => c.LocalRedirectActionWithCustomUrlHelper(urlHelper))
                 .ShouldReturn()
-                .LocalRedirect()
-                .WithUrlHelper(urlHelper);
+                .LocalRedirect(localRedirect => localRedirect
+                    .WithUrlHelper(urlHelper));
         }
 
         [Fact]
@@ -184,8 +186,8 @@
                         .Instance()
                         .Calling(c => c.LocalRedirectActionWithCustomUrlHelper(urlHelper))
                         .ShouldReturn()
-                        .LocalRedirect()
-                        .WithUrlHelper(null);
+                        .LocalRedirect(localRedirect => localRedirect
+                            .WithUrlHelper(null));
                 },
                 "When calling LocalRedirectActionWithCustomUrlHelper action in MvcController expected local redirect result UrlHelper to be the same as the provided one, but instead received different result.");
         }
@@ -199,8 +201,8 @@
                 .Instance()
                 .Calling(c => c.LocalRedirectActionWithCustomUrlHelper(urlHelper))
                 .ShouldReturn()
-                .LocalRedirect()
-                .WithUrlHelperOfType<CustomUrlHelper>();
+                .LocalRedirect(localRedirect => localRedirect
+                    .WithUrlHelperOfType<CustomUrlHelper>());
         }
 
         [Fact]
@@ -215,8 +217,8 @@
                         .Instance()
                         .Calling(c => c.LocalRedirectActionWithCustomUrlHelper(urlHelper))
                         .ShouldReturn()
-                        .LocalRedirect()
-                        .WithUrlHelperOfType<IUrlHelper>();
+                        .LocalRedirect(localRedirect => localRedirect
+                            .WithUrlHelperOfType<IUrlHelper>());
                 },
                 "When calling LocalRedirectActionWithCustomUrlHelper action in MvcController expected local redirect result UrlHelper to be of IUrlHelper type, but instead received CustomUrlHelper.");
         }
@@ -231,8 +233,8 @@
                         .Instance()
                         .Calling(c => c.LocalRedirectActionWithCustomUrlHelper(null))
                         .ShouldReturn()
-                        .LocalRedirect()
-                        .WithUrlHelperOfType<IUrlHelper>();
+                        .LocalRedirect(localRedirect => localRedirect
+                            .WithUrlHelperOfType<IUrlHelper>());
                 },
                 "When calling LocalRedirectActionWithCustomUrlHelper action in MvcController expected local redirect result UrlHelper to be of IUrlHelper type, but instead received null.");
         }
@@ -244,10 +246,10 @@
                 .Instance()
                 .Calling(c => c.LocalRedirectPermanentAction())
                 .ShouldReturn()
-                .LocalRedirect()
-                .Permanent()
-                .AndAlso()
-                .ToUrl("/local/test");
+                .LocalRedirect(localRedirect => localRedirect
+                    .Permanent()
+                    .AndAlso()
+                    .ToUrl("/local/test"));
         }
     }
 }

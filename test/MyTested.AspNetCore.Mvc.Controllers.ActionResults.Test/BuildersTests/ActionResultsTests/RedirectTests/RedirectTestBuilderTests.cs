@@ -17,8 +17,8 @@
                 .Instance()
                 .Calling(c => c.RedirectPermanentAction())
                 .ShouldReturn()
-                .Redirect()
-                .Permanent();
+                .Redirect(redirect => redirect
+                    .Permanent());
         }
 
         [Fact]
@@ -31,8 +31,8 @@
                         .Instance()
                         .Calling(c => c.RedirectToActionResult())
                         .ShouldReturn()
-                        .Redirect()
-                        .Permanent();
+                        .Redirect(redirect => redirect
+                            .Permanent());
                 },
                 "When calling RedirectToActionResult action in MvcController expected redirect result to be permanent, but in fact it was not.");
         }
@@ -44,8 +44,8 @@
                 .Instance()
                 .Calling(c => c.RedirectActionWithUri())
                 .ShouldReturn()
-                .Redirect()
-                .ToUrl("http://somehost.com/someuri/1?query=Test");
+                .Redirect(redirect => redirect
+                    .ToUrl("http://somehost.com/someuri/1?query=Test"));
         }
 
         [Fact]
@@ -58,8 +58,8 @@
                         .Instance()
                         .Calling(c => c.RedirectActionWithUri())
                         .ShouldReturn()
-                        .Redirect()
-                        .ToUrl("http://somehost.com/");
+                        .Redirect(redirect => redirect
+                            .ToUrl("http://somehost.com/"));
                 },
                 "When calling RedirectActionWithUri action in MvcController expected redirect result location to be 'http://somehost.com/', but instead received 'http://somehost.com/someuri/1?query=Test'.");
         }
@@ -74,25 +74,25 @@
                         .Instance()
                         .Calling(c => c.RedirectActionWithUri())
                         .ShouldReturn()
-                        .Redirect()
-                        .ToUrl("http://somehost!@#?Query==true");
+                        .Redirect(redirect => redirect
+                            .ToUrl("http://somehost!@#?Query==true"));
                 },
                 "When calling RedirectActionWithUri action in MvcController expected redirect result location to be URI valid, but instead received 'http://somehost!@#?Query==true'.");
         }
 
         [Fact]
-        public void ToUrlPassingShouldNotThrowExceptionWithValidaPredicate()
+        public void ToUrlPassingShouldNotThrowExceptionWithValidPredicate()
         {
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.RedirectActionWithUri())
                 .ShouldReturn()
-                .Redirect()
-                .ToUrlPassing(url => url.StartsWith("http://somehost.com/"));
+                .Redirect(redirect => redirect
+                    .ToUrlPassing(url => url.StartsWith("http://somehost.com/")));
         }
 
         [Fact]
-        public void ToUrlPassingShouldThrowExceptionWithInvalidaPredicate()
+        public void ToUrlPassingShouldThrowExceptionWithInvalidPredicate()
         {
             Test.AssertException<RedirectResultAssertionException>(
                 () =>
@@ -101,8 +101,8 @@
                         .Instance()
                         .Calling(c => c.RedirectActionWithUri())
                         .ShouldReturn()
-                        .Redirect()
-                        .ToUrlPassing(url => url.StartsWith("http://other.com/"));
+                        .Redirect(redirect => redirect
+                            .ToUrlPassing(url => url.StartsWith("http://other.com/")));
                 },
                 "When calling RedirectActionWithUri action in MvcController expected redirect result location ('http://somehost.com/someuri/1?query=Test') to pass the given predicate, but it failed.");
         }
@@ -114,11 +114,11 @@
                 .Instance()
                 .Calling(c => c.RedirectActionWithUri())
                 .ShouldReturn()
-                .Redirect()
-                .ToUrlPassing(url =>
-                {
-                    Assert.StartsWith("http://somehost.com/", url);
-                });
+                .Redirect(redirect => redirect
+                    .ToUrlPassing(url =>
+                    {
+                        Assert.StartsWith("http://somehost.com/", url);
+                    }));
         }
         
         [Fact]
@@ -128,8 +128,8 @@
                 .Instance()
                 .Calling(c => c.RedirectActionWithUri())
                 .ShouldReturn()
-                .Redirect()
-                .ToUrl(new Uri("http://somehost.com/someuri/1?query=Test"));
+                .Redirect(redirect => redirect
+                    .ToUrl(new Uri("http://somehost.com/someuri/1?query=Test")));
         }
 
         [Fact]
@@ -142,8 +142,8 @@
                         .Instance()
                         .Calling(c => c.RedirectActionWithUri())
                         .ShouldReturn()
-                        .Redirect()
-                        .ToUrl(new Uri("http://somehost.com/"));
+                        .Redirect(redirect => redirect
+                            .ToUrl(new Uri("http://somehost.com/")));
                 },
                 "When calling RedirectActionWithUri action in MvcController expected redirect result location to be 'http://somehost.com/', but instead received 'http://somehost.com/someuri/1?query=Test'.");
         }
@@ -155,20 +155,20 @@
                 .Instance()
                 .Calling(c => c.RedirectActionWithUri())
                 .ShouldReturn()
-                .Redirect()
-                .ToUrl(location =>
-                    location
-                        .WithHost("somehost.com")
-                        .AndAlso()
-                        .WithAbsolutePath("/someuri/1")
-                        .AndAlso()
-                        .WithPort(80)
-                        .AndAlso()
-                        .WithScheme("http")
-                        .AndAlso()
-                        .WithFragment(string.Empty)
-                        .AndAlso()
-                        .WithQuery("?query=Test"));
+                .Redirect(redirect => redirect
+                    .ToUrl(location =>
+                        location
+                            .WithHost("somehost.com")
+                            .AndAlso()
+                            .WithAbsolutePath("/someuri/1")
+                            .AndAlso()
+                            .WithPort(80)
+                            .AndAlso()
+                            .WithScheme("http")
+                            .AndAlso()
+                            .WithFragment(string.Empty)
+                            .AndAlso()
+                            .WithQuery("?query=Test")));
         }
 
         [Fact]
@@ -181,20 +181,20 @@
                         .Instance()
                         .Calling(c => c.RedirectActionWithUri())
                         .ShouldReturn()
-                        .Redirect()
-                        .ToUrl(location =>
-                            location
-                                .WithHost("somehost12.com")
-                                .AndAlso()
-                                .WithAbsolutePath("/someuri/1")
-                                .AndAlso()
-                                .WithPort(80)
-                                .AndAlso()
-                                .WithScheme("http")
-                                .AndAlso()
-                                .WithFragment(string.Empty)
-                                .AndAlso()
-                                .WithQuery("?query=Test"));
+                        .Redirect(redirect => redirect
+                            .ToUrl(location =>
+                                location
+                                    .WithHost("somehost12.com")
+                                    .AndAlso()
+                                    .WithAbsolutePath("/someuri/1")
+                                    .AndAlso()
+                                    .WithPort(80)
+                                    .AndAlso()
+                                    .WithScheme("http")
+                                    .AndAlso()
+                                    .WithFragment(string.Empty)
+                                    .AndAlso()
+                                    .WithQuery("?query=Test")));
                 },
                 "When calling RedirectActionWithUri action in MvcController expected redirect result URI to be 'http://somehost12.com/someuri/1?query=Test', but was in fact 'http://somehost.com/someuri/1?query=Test'.");
         }
@@ -206,8 +206,8 @@
                 .Instance()
                 .Calling(c => c.RedirectToActionResult())
                 .ShouldReturn()
-                .Redirect()
-                .ToAction("MyAction");
+                .Redirect(redirect => redirect
+                    .ToAction("MyAction"));
         }
 
         [Fact]
@@ -220,8 +220,8 @@
                     .Instance()
                     .Calling(c => c.RedirectToActionResult())
                     .ShouldReturn()
-                    .Redirect()
-                    .ToAction("Action");
+                    .Redirect(redirect => redirect
+                        .ToAction("Action"));
                 },
                 "When calling RedirectToActionResult action in MvcController expected redirect result to have 'Action' action name, but instead received 'MyAction'.");
         }
@@ -233,8 +233,8 @@
                 .Instance()
                 .Calling(c => c.RedirectToActionResult())
                 .ShouldReturn()
-                .Redirect()
-                .ToController("MyController");
+                .Redirect(redirect => redirect
+                    .ToController("MyController"));
         }
 
         [Fact]
@@ -247,8 +247,8 @@
                     .Instance()
                     .Calling(c => c.RedirectToActionResult())
                     .ShouldReturn()
-                    .Redirect()
-                    .ToController("Controller");
+                    .Redirect(redirect => redirect
+                        .ToController("Controller"));
                 },
                 "When calling RedirectToActionResult action in MvcController expected redirect result to have 'Controller' controller name, but instead received 'MyController'.");
         }
@@ -260,8 +260,8 @@
                 .Instance()
                 .Calling(c => c.RedirectToRouteAction())
                 .ShouldReturn()
-                .Redirect()
-                .WithRouteName("Redirect");
+                .Redirect(redirect => redirect
+                    .WithRouteName("Redirect"));
         }
 
         [Fact]
@@ -274,8 +274,8 @@
                         .Instance()
                         .Calling(c => c.RedirectToRouteAction())
                         .ShouldReturn()
-                        .Redirect()
-                        .WithRouteName("MyRedirect");
+                        .Redirect(redirect => redirect
+                            .WithRouteName("MyRedirect"));
                 },
                 "When calling RedirectToRouteAction action in MvcController expected redirect result to have 'MyRedirect' route name, but instead received 'Redirect'.");
         }
@@ -287,8 +287,8 @@
                 .Instance()
                 .Calling(c => c.RedirectToActionResult())
                 .ShouldReturn()
-                .Redirect()
-                .ContainingRouteKey("id");
+                .Redirect(redirect => redirect
+                    .ContainingRouteKey("id"));
         }
         
         [Fact]
@@ -298,8 +298,8 @@
                 .Instance()
                 .Calling(c => c.RedirectToActionResult())
                 .ShouldReturn()
-                .Redirect()
-                .ContainingRouteValue(1);
+                .Redirect(redirect => redirect
+                    .ContainingRouteValue(1));
         }
 
         [Fact]
@@ -309,8 +309,8 @@
                 .Instance()
                 .Calling(c => c.RedirectToActionResult())
                 .ShouldReturn()
-                .Redirect()
-                .ContainingRouteValueOfType<string>();
+                .Redirect(redirect => redirect
+                    .ContainingRouteValueOfType<string>());
         }
 
         [Fact]
@@ -320,8 +320,8 @@
                 .Instance()
                 .Calling(c => c.RedirectToActionResult())
                 .ShouldReturn()
-                .Redirect()
-                .ContainingRouteValueOfType<int>("id");
+                .Redirect(redirect => redirect
+                    .ContainingRouteValueOfType<int>("id"));
         }
         
         [Fact]
@@ -334,8 +334,8 @@
                         .Instance()
                         .Calling(c => c.RedirectToActionResult())
                         .ShouldReturn()
-                        .Redirect()
-                        .ContainingRouteKey("incorrect");
+                        .Redirect(redirect => redirect
+                            .ContainingRouteKey("incorrect"));
                 },
                 "When calling RedirectToActionResult action in MvcController expected redirect result route values to have entry with 'incorrect' key, but such was not found.");
         }
@@ -347,8 +347,8 @@
                 .Instance()
                 .Calling(c => c.RedirectToActionResult())
                 .ShouldReturn()
-                .Redirect()
-                .ContainingRouteValue("id", 1);
+                .Redirect(redirect => redirect
+                    .ContainingRouteValue("id", 1));
         }
 
         [Fact]
@@ -361,8 +361,8 @@
                         .Instance()
                         .Calling(c => c.RedirectToActionResult())
                         .ShouldReturn()
-                        .Redirect()
-                        .ContainingRouteValue("incorrect", 1);
+                        .Redirect(redirect => redirect
+                            .ContainingRouteValue("incorrect", 1));
                 },
                 "When calling RedirectToActionResult action in MvcController expected redirect result route values to have entry with 'incorrect' key and the provided value, but such was not found.");
         }
@@ -377,8 +377,8 @@
                         .Instance()
                         .Calling(c => c.RedirectToActionResult())
                         .ShouldReturn()
-                        .Redirect()
-                        .ContainingRouteValue("id", 2);
+                        .Redirect(redirect => redirect
+                            .ContainingRouteValue("id", 2));
                 },
                 "When calling RedirectToActionResult action in MvcController expected redirect result route values to have entry with 'id' key and the provided value, but the value was different.");
         }
@@ -390,8 +390,12 @@
                 .Instance()
                 .Calling(c => c.RedirectToActionResult())
                 .ShouldReturn()
-                .Redirect()
-                .ContainingRouteValues(new { id = 1, text = "sometext" });
+                .Redirect(redirect => redirect
+                    .ContainingRouteValues(new
+                    {
+                        id = 1,
+                        text = "sometext"
+                    }));
         }
 
         [Fact]
@@ -404,8 +408,8 @@
                         .Instance()
                         .Calling(c => c.RedirectToActionResult())
                         .ShouldReturn()
-                        .Redirect()
-                        .ContainingRouteValues(new { id = 1 });
+                        .Redirect(redirect => redirect
+                            .ContainingRouteValues(new { id = 1 }));
                 },
                 "When calling RedirectToActionResult action in MvcController expected redirect result route values to have 1 entry, but in fact found 2.");
         }
@@ -420,8 +424,13 @@
                         .Instance()
                         .Calling(c => c.RedirectToActionResult())
                         .ShouldReturn()
-                        .Redirect()
-                        .ContainingRouteValues(new { id = 1, second = 5, another = "test" });
+                        .Redirect(redirect => redirect
+                            .ContainingRouteValues(new
+                            {
+                                id = 1,
+                                second = 5,
+                                another = "test"
+                            }));
                 },
                 "When calling RedirectToActionResult action in MvcController expected redirect result route values to have 3 entries, but in fact found 2.");
         }
@@ -435,8 +444,8 @@
                 .Instance()
                 .Calling(c => c.RedirectToActionWithCustomUrlHelperResult(urlHelper))
                 .ShouldReturn()
-                .Redirect()
-                .WithUrlHelper(urlHelper);
+                .Redirect(redirect => redirect
+                    .WithUrlHelper(urlHelper));
         }
 
         [Fact]
@@ -451,8 +460,8 @@
                         .Instance()
                         .Calling(c => c.RedirectToActionWithCustomUrlHelperResult(urlHelper))
                         .ShouldReturn()
-                        .Redirect()
-                        .WithUrlHelper(null);
+                        .Redirect(redirect => redirect
+                            .WithUrlHelper(null));
                 },
                 "When calling RedirectToActionWithCustomUrlHelperResult action in MvcController expected redirect result UrlHelper to be the same as the provided one, but instead received different result.");
         }
@@ -466,8 +475,8 @@
                 .Instance()
                 .Calling(c => c.RedirectToActionWithCustomUrlHelperResult(urlHelper))
                 .ShouldReturn()
-                .Redirect()
-                .WithUrlHelperOfType<CustomUrlHelper>();
+                .Redirect(redirect => redirect
+                    .WithUrlHelperOfType<CustomUrlHelper>());
         }
 
         [Fact]
@@ -482,8 +491,8 @@
                         .Instance()
                         .Calling(c => c.RedirectToActionWithCustomUrlHelperResult(urlHelper))
                         .ShouldReturn()
-                        .Redirect()
-                        .WithUrlHelperOfType<IUrlHelper>();
+                        .Redirect(redirect => redirect
+                            .WithUrlHelperOfType<IUrlHelper>());
                 },
                 "When calling RedirectToActionWithCustomUrlHelperResult action in MvcController expected redirect result UrlHelper to be of IUrlHelper type, but instead received CustomUrlHelper.");
         }
@@ -498,8 +507,8 @@
                         .Instance()
                         .Calling(c => c.RedirectToActionResult())
                         .ShouldReturn()
-                        .Redirect()
-                        .WithUrlHelperOfType<IUrlHelper>();
+                        .Redirect(redirect => redirect
+                            .WithUrlHelperOfType<IUrlHelper>());
                 },
                 "When calling RedirectToActionResult action in MvcController expected redirect result UrlHelper to be of IUrlHelper type, but instead received null.");
         }
@@ -514,10 +523,10 @@
                         .Instance()
                         .Calling(c => c.RedirectToRouteAction())
                         .ShouldReturn()
-                        .Redirect()
-                        .ToController("Controller");
+                        .Redirect(redirect => redirect
+                            .ToController("Controller"));
                 },
-                "When calling RedirectToRouteAction action in MvcController expected redirect result to contain controller name, but it could not be found.");
+                "When calling RedirectToRouteAction action in MvcController expected redirect result to contain controller name, but such could not be found.");
         }
         
         [Fact]
@@ -527,10 +536,10 @@
                 .Instance()
                 .Calling(c => c.RedirectToActionResult())
                 .ShouldReturn()
-                .Redirect()
-                .ToAction("MyAction")
-                .AndAlso()
-                .ToController("MyController");
+                .Redirect(redirect => redirect
+                    .ToAction("MyAction")
+                    .AndAlso()
+                    .ToController("MyController"));
         }
     }
 }

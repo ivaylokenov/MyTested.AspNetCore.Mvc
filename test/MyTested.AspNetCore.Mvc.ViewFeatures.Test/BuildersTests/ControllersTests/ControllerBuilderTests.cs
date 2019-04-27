@@ -484,8 +484,8 @@
                 .WithRouteData()
                 .Calling(c => c.UrlAction())
                 .ShouldReturn()
-                .Ok()
-                .WithModel("/FullPoco/UrlAction");
+                .Ok(ok => ok
+                    .WithModel("/FullPoco/UrlAction"));
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -507,8 +507,8 @@
                         .Instance()
                         .Calling(c => c.UrlAction())
                         .ShouldReturn()
-                        .Ok()
-                        .WithModel("");
+                        .Ok(ok => ok
+                            .WithModel(""));
                 },
                 "Route values are not present in the method call but are needed for successful pass of this test case. Consider calling 'WithRouteData' on the component builder to resolve them from the provided lambda expression or set the HTTP request path by using 'WithHttpRequest'.");
 

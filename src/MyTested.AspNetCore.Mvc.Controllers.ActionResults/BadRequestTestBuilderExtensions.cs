@@ -44,7 +44,8 @@
         /// Instance of <see cref="IBadRequestTestBuilder"/> type.
         /// </param>
         /// <returns><see cref="IBadRequestErrorMessageTestBuilder"/>.</returns>
-        public static IBadRequestErrorMessageTestBuilder WithErrorMessage(this IBadRequestTestBuilder badRequestTestBuilder)
+        public static IBadRequestErrorMessageTestBuilder WithErrorMessage(
+            this IBadRequestTestBuilder badRequestTestBuilder)
         {
             var actualBuilder = GetBadRequestTestBuilder(badRequestTestBuilder);
 
@@ -138,7 +139,8 @@
             => badRequestTestBuilder
                 .ContainingOutputFormatterOfType<IAndBadRequestTestBuilder, TOutputFormatter>();
 
-        public static BadRequestTestBuilder<BadRequestObjectResult> GetBadRequestTestBuilder(IBadRequestTestBuilder badRequestTestBuilder)
+        public static BadRequestTestBuilder<BadRequestObjectResult> GetBadRequestTestBuilder(
+            IBadRequestTestBuilder badRequestTestBuilder)
         {
             var actualBadRequestTestBuilder = badRequestTestBuilder as BadRequestTestBuilder<BadRequestObjectResult>;
 
@@ -147,7 +149,7 @@
                 var badRequestTestBuilderBase = (BaseTestBuilderWithComponent)badRequestTestBuilder;
 
                 throw new BadRequestResultAssertionException(string.Format(
-                    "{0} bad request result to contain error object, but it could not be found.",
+                    "{0} bad request result to contain error object, but such could not be found.",
                     badRequestTestBuilderBase.TestContext.ExceptionMessagePrefix));
             }
 

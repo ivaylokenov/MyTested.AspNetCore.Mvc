@@ -15,8 +15,8 @@
                     .With(ServiceMock.GetInstance()))
                 .Calling(c => c.Index())
                 .ShouldReturn()
-                .Ok()
-                .WithModel(new[] { "Mock", "Test" });
+                .Ok(ok => ok
+                    .WithModel(new[] { "Mock", "Test" }));
 
         [TestMethod]
         public void RedirectToIndexShouldRedirectToIndex()
@@ -26,7 +26,7 @@
                     .With(ServiceMock.GetInstance()))
                 .Calling(c => c.RedirectToIndex())
                 .ShouldReturn()
-                .Redirect()
-                .To<HomeController>(c => c.Index());
+                .Redirect(redirect => redirect
+                    .To<HomeController>(c => c.Index()));
     }
 }

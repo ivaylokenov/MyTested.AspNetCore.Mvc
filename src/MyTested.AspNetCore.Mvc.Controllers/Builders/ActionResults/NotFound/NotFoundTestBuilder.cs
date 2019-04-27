@@ -9,14 +9,14 @@
     using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
-    /// Used for testing HTTP not found result.
+    /// Used for testing not found result.
     /// </summary>
-    /// <typeparam name="THttpNotFoundResult">Type of not found result - <see cref="NotFoundResult"/> or <see cref="NotFoundObjectResult"/>.</typeparam>
-    public class NotFoundTestBuilder<THttpNotFoundResult>
-        : BaseTestBuilderWithResponseModel<THttpNotFoundResult>,
+    /// <typeparam name="TNotFoundResult">Type of not found result - <see cref="NotFoundResult"/> or <see cref="NotFoundObjectResult"/>.</typeparam>
+    public class NotFoundTestBuilder<TNotFoundResult>
+        : BaseTestBuilderWithResponseModel<TNotFoundResult>,
         IAndNotFoundTestBuilder,
         IBaseTestBuilderWithOutputResultInternal<IAndNotFoundTestBuilder>
-        where THttpNotFoundResult : ActionResult
+        where TNotFoundResult : ActionResult
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="NotFoundTestBuilder{TActionResult}"/> class.

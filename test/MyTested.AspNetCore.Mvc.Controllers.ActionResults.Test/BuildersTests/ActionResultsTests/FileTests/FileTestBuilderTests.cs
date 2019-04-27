@@ -16,8 +16,8 @@
                 .Instance()
                 .Calling(c => c.FileWithVirtualPath())
                 .ShouldReturn()
-                .File()
-                .WithContentType(ContentType.ApplicationJson);
+                .File(file => file
+                    .WithContentType(ContentType.ApplicationJson));
         }
 
         [Fact]
@@ -27,8 +27,8 @@
                 .Instance()
                 .Calling(c => c.FileWithVirtualPath())
                 .ShouldReturn()
-                .File()
-                .WithContentType(new MediaTypeHeaderValue(ContentType.ApplicationJson));
+                .File(file => file
+                    .WithContentType(new MediaTypeHeaderValue(ContentType.ApplicationJson)));
         }
         
         [Fact]
@@ -41,8 +41,8 @@
                         .Instance()
                         .Calling(c => c.FileWithVirtualPath())
                         .ShouldReturn()
-                        .File()
-                        .WithContentType(new MediaTypeHeaderValue(ContentType.ApplicationXml));
+                        .File(file => file
+                            .WithContentType(new MediaTypeHeaderValue(ContentType.ApplicationXml)));
                 }, 
                 "When calling FileWithVirtualPath action in MvcController expected file result ContentType to be 'application/xml', but instead received 'application/json'.");
         }
@@ -54,8 +54,8 @@
                 .Instance()
                 .Calling(c => c.FileWithVirtualPath())
                 .ShouldReturn()
-                .File()
-                .WithDownloadName("FileDownloadName");
+                .File(file => file
+                    .WithDownloadName("FileDownloadName"));
         }
 
         [Fact]
@@ -68,10 +68,10 @@
                         .Instance()
                         .Calling(c => c.FileWithVirtualPath())
                         .ShouldReturn()
-                        .File()
-                        .WithDownloadName("InvalidDownloadName");
+                        .File(file => file
+                            .WithDownloadName("InvalidDownloadName"));
                 }, 
-                "When calling FileWithVirtualPath action in MvcController expected file result FileDownloadName to be 'InvalidDownloadName', but instead received 'FileDownloadName'.");
+                "When calling FileWithVirtualPath action in MvcController expected file result download name to be 'InvalidDownloadName', but instead received 'FileDownloadName'.");
         }
 
         [Fact]
@@ -84,10 +84,10 @@
                         .Instance()
                         .Calling(c => c.FileWithStream())
                         .ShouldReturn()
-                        .File()
-                        .WithDownloadName(null);
+                        .File(file => file
+                            .WithDownloadName(null));
                 },
-                "When calling FileWithStream action in MvcController expected file result FileDownloadName to be null, but instead received empty string.");
+                "When calling FileWithStream action in MvcController expected file result download name to be null, but instead received empty string.");
         }
 
         [Fact]
@@ -97,8 +97,8 @@
                 .Instance()
                 .Calling(c => c.FileWithStream())
                 .ShouldReturn()
-                .File()
-                .WithStream(new MemoryStream(new byte[] { 1, 2, 3 }));
+                .File(file => file
+                    .WithStream(new MemoryStream(new byte[] { 1, 2, 3 })));
         }
 
         [Fact]
@@ -111,10 +111,10 @@
                         .Instance()
                         .Calling(c => c.FileWithStream())
                         .ShouldReturn()
-                        .File()
-                        .WithStream(new MemoryStream(new byte[] { 1, 2 }));
+                        .File(file => file
+                            .WithStream(new MemoryStream(new byte[] { 1, 2 })));
                 },
-                "When calling FileWithStream action in MvcController expected file result FileStream to have contents as the provided one, but instead received different result.");
+                "When calling FileWithStream action in MvcController expected file result stream to have value as the provided one, but instead received different result.");
         }
 
         [Fact]
@@ -124,8 +124,8 @@
                 .Instance()
                 .Calling(c => c.FileWithVirtualPath())
                 .ShouldReturn()
-                .File()
-                .WithName("/Test");
+                .File(file => file
+                    .WithName("/Test"));
         }
 
         [Fact]
@@ -138,26 +138,26 @@
                         .Instance()
                         .Calling(c => c.FileWithVirtualPath())
                         .ShouldReturn()
-                        .File()
-                        .WithName("Invalid");
+                        .File(file => file
+                            .WithName("Invalid"));
                 }, 
-                "When calling FileWithVirtualPath action in MvcController expected file result FileName to be 'Invalid', but instead received '/Test'.");
+                "When calling FileWithVirtualPath action in MvcController expected file result name to be 'Invalid', but instead received '/Test'.");
         }
 
         [Fact]
         public void FileShouldThrowWhenPropertyDoesNotExist()
         {
             Test.AssertException<FileResultAssertionException>(
-                   () =>
-                   {
-                       MyController<MvcController>
-                           .Instance()
-                           .Calling(c => c.FileWithVirtualPath())
-                           .ShouldReturn()
-                           .File()
-                           .WithContents(new byte[0]);
-                   },
-                   "When calling FileWithVirtualPath action in MvcController expected file result to contain file contents, but it could not be found.");
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.FileWithVirtualPath())
+                        .ShouldReturn()
+                        .File(file => file
+                            .WithContents(new byte[0]));
+                },
+                "When calling FileWithVirtualPath action in MvcController expected file result to contain contents, but such could not be found.");
         }
 
         [Fact]
@@ -167,8 +167,8 @@
                 .Instance()
                 .Calling(c => c.FileWithContents())
                 .ShouldReturn()
-                .File()
-                .WithContents(new byte[] { 1, 2, 3 });
+                .File(file => file
+                    .WithContents(new byte[] { 1, 2, 3 }));
         }
 
         [Fact]
@@ -181,10 +181,10 @@
                         .Instance()
                         .Calling(c => c.FileWithContents())
                         .ShouldReturn()
-                        .File()
-                        .WithContents(new byte[] { 1, 2, 3, 4 });
+                        .File(file => file
+                            .WithContents(new byte[] { 1, 2, 3, 4 }));
                 }, 
-                "When calling FileWithContents action in MvcController expected file result FileContents to have contents as the provided ones, but instead received different result.");
+                "When calling FileWithContents action in MvcController expected file result contents to have values as the provided ones, but instead received different result.");
         }
 
         [Fact]
@@ -194,10 +194,10 @@
                 .Instance()
                 .Calling(c => c.FileWithContents())
                 .ShouldReturn()
-                .File()
-                .WithContents(new byte[] { 1, 2, 3 })
-                .AndAlso()
-                .WithContentType(ContentType.ApplicationJson);
+                .File(file => file
+                    .WithContents(new byte[] { 1, 2, 3 })
+                    .AndAlso()
+                    .WithContentType(ContentType.ApplicationJson));
         }
     }
 }

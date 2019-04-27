@@ -15,8 +15,8 @@
                 .Instance()
                 .Calling(c => c.ForbidWithAuthenticationSchemes())
                 .ShouldReturn()
-                .Forbid()
-                .ContainingAuthenticationScheme(AuthenticationScheme.Basic);
+                .Forbid(forbid => forbid
+                    .ContainingAuthenticationScheme(AuthenticationScheme.Basic));
         }
 
         [Fact]
@@ -29,8 +29,8 @@
                         .Instance()
                         .Calling(c => c.ForbidWithAuthenticationSchemes())
                         .ShouldReturn()
-                        .Forbid()
-                        .ContainingAuthenticationScheme(AuthenticationScheme.Digest);
+                        .Forbid(forbid => forbid
+                            .ContainingAuthenticationScheme(AuthenticationScheme.Digest));
                 },
                 "When calling ForbidWithAuthenticationSchemes action in MvcController expected forbid result authentication schemes to contain Digest, but none was found.");
         }
@@ -42,8 +42,12 @@
                 .Instance()
                 .Calling(c => c.ForbidWithAuthenticationSchemes())
                 .ShouldReturn()
-                .Forbid()
-                .ContainingAuthenticationSchemes(new List<string> { AuthenticationScheme.Basic, AuthenticationScheme.NTLM });
+                .Forbid(forbid => forbid
+                    .ContainingAuthenticationSchemes(new List<string>
+                    {
+                        AuthenticationScheme.Basic,
+                        AuthenticationScheme.NTLM
+                    }));
         }
 
         [Fact]
@@ -56,8 +60,8 @@
                         .Instance()
                         .Calling(c => c.ForbidWithAuthenticationSchemes())
                         .ShouldReturn()
-                        .Forbid()
-                        .ContainingAuthenticationSchemes(AuthenticationScheme.Digest, AuthenticationScheme.Basic);
+                        .Forbid(forbid => forbid
+                            .ContainingAuthenticationSchemes(AuthenticationScheme.Digest, AuthenticationScheme.Basic));
                 },
                 "When calling ForbidWithAuthenticationSchemes action in MvcController expected forbid result authentication schemes to contain Digest, but none was found.");
         }
@@ -72,8 +76,8 @@
                         .Instance()
                         .Calling(c => c.ForbidWithAuthenticationSchemes())
                         .ShouldReturn()
-                        .Forbid()
-                        .ContainingAuthenticationSchemes(new[] { AuthenticationScheme.Digest });
+                        .Forbid(forbid => forbid
+                            .ContainingAuthenticationSchemes(AuthenticationScheme.Digest));
                 },
                 "When calling ForbidWithAuthenticationSchemes action in MvcController expected forbid result authentication schemes to be 1, but instead found 2.");
         }
@@ -85,8 +89,8 @@
                 .Instance()
                 .Calling(c => c.ForbidWithAuthenticationSchemes())
                 .ShouldReturn()
-                .Forbid()
-                .ContainingAuthenticationSchemes(AuthenticationScheme.Basic, AuthenticationScheme.NTLM);
+                .Forbid(forbid => forbid
+                    .ContainingAuthenticationSchemes(AuthenticationScheme.Basic, AuthenticationScheme.NTLM));
         }
 
         [Fact]
@@ -96,8 +100,8 @@
                 .Instance()
                 .Calling(c => c.ForbidWithAuthenticationProperties())
                 .ShouldReturn()
-                .Forbid()
-                .WithAuthenticationProperties(TestObjectFactory.GetAuthenticationProperties());
+                .Forbid(forbid => forbid
+                    .WithAuthenticationProperties(TestObjectFactory.GetAuthenticationProperties()));
         }
 
         [Fact]
@@ -114,8 +118,8 @@
                         .Instance()
                         .Calling(c => c.ForbidWithAuthenticationProperties())
                         .ShouldReturn()
-                        .Forbid()
-                        .WithAuthenticationProperties(authenticationProperties);
+                        .Forbid(forbid => forbid
+                            .WithAuthenticationProperties(authenticationProperties));
                 },
                 "When calling ForbidWithAuthenticationProperties action in MvcController expected forbid result authentication properties to be the same as the provided one, but instead received different result.");
         }
@@ -127,10 +131,10 @@
                 .Instance()
                 .Calling(c => c.ForbidWithAuthenticationSchemes())
                 .ShouldReturn()
-                .Forbid()
-                .ContainingAuthenticationScheme(AuthenticationScheme.Basic)
-                .AndAlso()
-                .ContainingAuthenticationScheme(AuthenticationScheme.NTLM);
+                .Forbid(forbid => forbid
+                    .ContainingAuthenticationScheme(AuthenticationScheme.Basic)
+                    .AndAlso()
+                    .ContainingAuthenticationScheme(AuthenticationScheme.NTLM));
         }
     }
 }

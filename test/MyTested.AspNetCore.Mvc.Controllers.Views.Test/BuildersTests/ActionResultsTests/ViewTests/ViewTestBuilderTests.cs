@@ -4,10 +4,8 @@
     using System.Net;
     using Exceptions;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.ViewEngines;
     using Microsoft.Net.Http.Headers;
     using Setups;
-    using Setups.Common;
     using Setups.Controllers;
     using Setups.Models;
     using Xunit;
@@ -21,8 +19,8 @@
                 .Instance()
                 .Calling(c => c.IndexView())
                 .ShouldReturn()
-                .View("Index")
-                .WithModel(TestObjectFactory.GetListOfResponseModels());
+                .View(view => view
+                    .WithModel(TestObjectFactory.GetListOfResponseModels()));
         }
 
         [Fact]
@@ -35,8 +33,8 @@
                         .Instance()
                         .Calling(c => c.DefaultView())
                         .ShouldReturn()
-                        .View()
-                        .WithModel(TestObjectFactory.GetListOfResponseModels());
+                        .View(view => view
+                            .WithModel(TestObjectFactory.GetListOfResponseModels()));
                 },
                 "When calling DefaultView action in MvcController expected response model to be of List<ResponseModel> type, but instead received null.");
         }
@@ -51,8 +49,8 @@
                         .Instance()
                         .Calling(c => c.IndexView())
                         .ShouldReturn()
-                        .View("Index")
-                        .WithModel((string)null);
+                        .View(view => view
+                            .WithModel((string)null));
                 },
                 "When calling IndexView action in MvcController expected response model to be of String type, but instead received List<ResponseModel>.");
         }
@@ -70,8 +68,8 @@
                         .Instance()
                         .Calling(c => c.IndexView())
                         .ShouldReturn()
-                        .View("Index")
-                        .WithModel(model);
+                        .View(view => view
+                            .WithModel(model));
                 },
                 "When calling IndexView action in MvcController expected response model List<ResponseModel> to be the given model, but in fact it was a different one.");
         }
@@ -83,8 +81,8 @@
                 .Instance()
                 .Calling(c => c.IndexView())
                 .ShouldReturn()
-                .View("Index")
-                .WithModelOfType<List<ResponseModel>>();
+                .View(view => view
+                    .WithModelOfType<List<ResponseModel>>());
         }
 
         [Fact]
@@ -94,8 +92,8 @@
                 .Instance()
                 .Calling(c => c.CustomViewResult())
                 .ShouldReturn()
-                .View()
-                .WithStatusCode(500);
+                .View(view => view
+                    .WithStatusCode(500));
         }
 
         [Fact]
@@ -105,8 +103,8 @@
                 .Instance()
                 .Calling(c => c.CustomViewResult())
                 .ShouldReturn()
-                .View()
-                .WithStatusCode(HttpStatusCode.InternalServerError);
+                .View(view => view
+                    .WithStatusCode(HttpStatusCode.InternalServerError));
         }
 
         [Fact]
@@ -119,8 +117,8 @@
                         .Instance()
                         .Calling(c => c.CustomViewResult())
                         .ShouldReturn()
-                        .View()
-                        .WithStatusCode(HttpStatusCode.NotFound);
+                        .View(view => view
+                            .WithStatusCode(HttpStatusCode.NotFound));
                 },
                 "When calling CustomViewResult action in MvcController expected view result to have 404 (NotFound) status code, but instead received 500 (InternalServerError).");
         }
@@ -132,8 +130,8 @@
                 .Instance()
                 .Calling(c => c.CustomViewResult())
                 .ShouldReturn()
-                .View()
-                .WithContentType(ContentType.ApplicationXml);
+                .View(view => view
+                    .WithContentType(ContentType.ApplicationXml));
         }
 
         [Fact]
@@ -143,8 +141,8 @@
                 .Instance()
                 .Calling(c => c.CustomViewResult())
                 .ShouldReturn()
-                .View()
-                .WithContentType(new MediaTypeHeaderValue(ContentType.ApplicationXml));
+                .View(view => view
+                    .WithContentType(new MediaTypeHeaderValue(ContentType.ApplicationXml)));
         }
 
         [Fact]
@@ -154,8 +152,8 @@
                 .Instance()
                 .Calling(c => c.CustomViewResult())
                 .ShouldReturn()
-                .View()
-                .WithContentType(ContentType.ApplicationXml);
+                .View(view => view
+                    .WithContentType(ContentType.ApplicationXml));
         }
 
         [Fact]
@@ -168,8 +166,8 @@
                         .Instance()
                         .Calling(c => c.CustomViewResult())
                         .ShouldReturn()
-                        .View()
-                        .WithContentType(new MediaTypeHeaderValue(ContentType.ApplicationJson));
+                        .View(view => view
+                            .WithContentType(new MediaTypeHeaderValue(ContentType.ApplicationJson)));
                 },
                 "When calling CustomViewResult action in MvcController expected view result ContentType to be 'application/json', but instead received 'application/xml'.");
         }
@@ -184,8 +182,8 @@
                         .Instance()
                         .Calling(c => c.CustomViewResult())
                         .ShouldReturn()
-                        .View()
-                        .WithContentType((MediaTypeHeaderValue)null);
+                        .View(view => view
+                            .WithContentType((MediaTypeHeaderValue)null));
                 },
                 "When calling CustomViewResult action in MvcController expected view result ContentType to be null, but instead received 'application/xml'.");
         }
@@ -197,8 +195,8 @@
                 .Instance()
                 .Calling(c => c.DefaultView())
                 .ShouldReturn()
-                .View()
-                .WithContentType((MediaTypeHeaderValue)null);
+                .View(view => view
+                    .WithContentType((MediaTypeHeaderValue)null));
         }
 
         [Fact]
@@ -211,96 +209,12 @@
                         .Instance()
                         .Calling(c => c.DefaultView())
                         .ShouldReturn()
-                        .View()
-                        .WithContentType(new MediaTypeHeaderValue(TestObjectFactory.MediaType));
+                        .View(view => view
+                            .WithContentType(new MediaTypeHeaderValue(TestObjectFactory.MediaType)));
                 },
                 "When calling DefaultView action in MvcController expected view result ContentType to be 'application/json', but instead received null.");
         }
         
-        [Fact]
-        public void WithViewEngineShouldNotThrowExceptionWithValidViewEngine()
-        {
-            var viewEngine = TestObjectFactory.GetViewEngine();
-
-            MyController<MvcController>
-                .Instance()
-                .Calling(c => c.ViewWithViewEngine(viewEngine))
-                .ShouldReturn()
-                .View()
-                .WithViewEngine(viewEngine);
-        }
-
-        [Fact]
-        public void WithViewEngineShouldNotThrowExceptionWithNullViewEngine()
-        {
-            MyController<MvcController>
-                .Instance()
-                .Calling(c => c.DefaultView())
-                .ShouldReturn()
-                .View()
-                .WithViewEngine(null);
-        }
-        
-        [Fact]
-        public void WithViewEngineShouldThrowExceptionWithInvalidViewEngine()
-        {
-            Test.AssertException<ViewResultAssertionException>(
-                () =>
-                {
-                    MyController<MvcController>
-                        .Instance()
-                        .WithoutValidation()
-                        .Calling(c => c.ViewWithViewEngine(null))
-                        .ShouldReturn()
-                        .View()
-                        .WithViewEngine(new CustomViewEngine());
-                },
-                "When calling ViewWithViewEngine action in MvcController expected view result ViewEngine to be the same as the provided one, but instead received different result.");
-        }
-
-        [Fact]
-        public void WithViewEngineOfTypeShouldNotThrowExceptionWithValidViewEngine()
-        {
-            MyController<MvcController>
-                .Instance()
-                .Calling(c => c.ViewWithViewEngine(new CustomViewEngine()))
-                .ShouldReturn()
-                .View()
-                .WithViewEngineOfType<CustomViewEngine>();
-        }
-
-        [Fact]
-        public void WithViewEngineOfTypeShouldThrowExceptionWithInvalidViewEngine()
-        {
-            Test.AssertException<ViewResultAssertionException>(
-                () =>
-                {
-                    MyController<MvcController>
-                        .Instance()
-                        .Calling(c => c.ViewWithViewEngine(new CustomViewEngine()))
-                        .ShouldReturn()
-                        .View()
-                        .WithViewEngineOfType<IViewEngine>();
-                },
-                "When calling ViewWithViewEngine action in MvcController expected view result ViewEngine to be of IViewEngine type, but instead received CustomViewEngine.");
-        }
-
-        [Fact]
-        public void WithViewEngineOfTypeShouldNotThrowExceptionWithNullViewEngine()
-        {
-            Test.AssertException<ViewResultAssertionException>(
-                () =>
-                {
-                    MyController<MvcController>
-                        .Instance()
-                        .Calling(c => c.DefaultView())
-                        .ShouldReturn()
-                        .View()
-                        .WithViewEngineOfType<CustomViewEngine>();
-                },
-                "When calling DefaultView action in MvcController expected view result ViewEngine to be of CustomViewEngine type, but instead received null.");
-        }
-
         [Fact]
         public void AndAlsoShouldWorkCorrectly()
         {
@@ -308,10 +222,10 @@
                 .Instance()
                 .Calling(c => c.CustomViewResult())
                 .ShouldReturn()
-                .View()
-                .WithContentType(ContentType.ApplicationXml)
-                .AndAlso()
-                .WithStatusCode(500);
+                .View(view => view
+                    .WithContentType(ContentType.ApplicationXml)
+                    .AndAlso()
+                    .WithStatusCode(500));
         }
         
         [Fact]
@@ -321,8 +235,8 @@
                 .Instance()
                 .Calling(c => c.IndexPartialView())
                 .ShouldReturn()
-                .PartialView("_IndexPartial")
-                .WithModel(TestObjectFactory.GetListOfResponseModels());
+                .PartialView(partialView => partialView
+                    .WithModel(TestObjectFactory.GetListOfResponseModels()));
         }
 
         [Fact]
@@ -335,8 +249,8 @@
                         .Instance()
                         .Calling(c => c.DefaultPartialView())
                         .ShouldReturn()
-                        .PartialView()
-                        .WithModel(TestObjectFactory.GetListOfResponseModels());
+                        .PartialView(partialView => partialView
+                            .WithModel(TestObjectFactory.GetListOfResponseModels()));
                 },
                 "When calling DefaultPartialView action in MvcController expected response model to be of List<ResponseModel> type, but instead received null.");
         }
@@ -351,8 +265,8 @@
                         .Instance()
                         .Calling(c => c.IndexPartialView())
                         .ShouldReturn()
-                        .PartialView("_IndexPartial")
-                        .WithModel((string)null);
+                        .PartialView(partialView => partialView
+                            .WithModel((string)null));
                 },
                 "When calling IndexPartialView action in MvcController expected response model to be of String type, but instead received List<ResponseModel>.");
         }
@@ -370,8 +284,8 @@
                         .Instance()
                         .Calling(c => c.IndexPartialView())
                         .ShouldReturn()
-                        .PartialView("_IndexPartial")
-                        .WithModel(model);
+                        .PartialView(partialView => partialView
+                            .WithModel(model));
                 },
                 "When calling IndexPartialView action in MvcController expected response model List<ResponseModel> to be the given model, but in fact it was a different one.");
         }
@@ -383,8 +297,8 @@
                 .Instance()
                 .Calling(c => c.IndexPartialView())
                 .ShouldReturn()
-                .PartialView("_IndexPartial")
-                .WithModelOfType<List<ResponseModel>>();
+                .PartialView(partialView => partialView
+                    .WithModelOfType<List<ResponseModel>>());
         }
 
         [Fact]
@@ -394,8 +308,8 @@
                 .Instance()
                 .Calling(c => c.CustomPartialViewResult())
                 .ShouldReturn()
-                .PartialView()
-                .WithStatusCode(500);
+                .PartialView(partialView => partialView
+                    .WithStatusCode(500));
         }
 
         [Fact]
@@ -405,8 +319,8 @@
                 .Instance()
                 .Calling(c => c.CustomPartialViewResult())
                 .ShouldReturn()
-                .PartialView()
-                .WithStatusCode(HttpStatusCode.InternalServerError);
+                .PartialView(partialView => partialView
+                    .WithStatusCode(HttpStatusCode.InternalServerError));
         }
 
         [Fact]
@@ -419,8 +333,8 @@
                         .Instance()
                         .Calling(c => c.CustomPartialViewResult())
                         .ShouldReturn()
-                        .PartialView()
-                        .WithStatusCode(HttpStatusCode.NotFound);
+                        .PartialView(partialView => partialView
+                            .WithStatusCode(HttpStatusCode.NotFound));
                 },
                 "When calling CustomPartialViewResult action in MvcController expected partial view result to have 404 (NotFound) status code, but instead received 500 (InternalServerError).");
         }
@@ -432,8 +346,8 @@
                 .Instance()
                 .Calling(c => c.CustomPartialViewResult())
                 .ShouldReturn()
-                .PartialView()
-                .WithContentType(ContentType.ApplicationXml);
+                .PartialView(partialView => partialView
+                    .WithContentType(ContentType.ApplicationXml));
         }
 
         [Fact]
@@ -443,8 +357,8 @@
                 .Instance()
                 .Calling(c => c.CustomPartialViewResult())
                 .ShouldReturn()
-                .PartialView()
-                .WithContentType(new MediaTypeHeaderValue(ContentType.ApplicationXml));
+                .PartialView(partialView => partialView
+                    .WithContentType(new MediaTypeHeaderValue(ContentType.ApplicationXml)));
         }
 
         [Fact]
@@ -454,8 +368,8 @@
                 .Instance()
                 .Calling(c => c.CustomPartialViewResult())
                 .ShouldReturn()
-                .PartialView()
-                .WithContentType(ContentType.ApplicationXml);
+                .PartialView(partialView => partialView
+                    .WithContentType(ContentType.ApplicationXml));
         }
 
         [Fact]
@@ -468,8 +382,8 @@
                         .Instance()
                         .Calling(c => c.CustomPartialViewResult())
                         .ShouldReturn()
-                        .PartialView()
-                        .WithContentType(new MediaTypeHeaderValue(ContentType.ApplicationJson));
+                        .PartialView(partialView => partialView
+                            .WithContentType(new MediaTypeHeaderValue(ContentType.ApplicationJson)));
                 },
                 "When calling CustomPartialViewResult action in MvcController expected partial view result ContentType to be 'application/json', but instead received 'application/xml'.");
         }
@@ -484,8 +398,8 @@
                         .Instance()
                         .Calling(c => c.CustomPartialViewResult())
                         .ShouldReturn()
-                        .PartialView()
-                        .WithContentType((MediaTypeHeaderValue)null);
+                        .PartialView(partialView => partialView
+                            .WithContentType((MediaTypeHeaderValue)null));
                 },
                 "When calling CustomPartialViewResult action in MvcController expected partial view result ContentType to be null, but instead received 'application/xml'.");
         }
@@ -497,8 +411,8 @@
                 .Instance()
                 .Calling(c => c.DefaultPartialView())
                 .ShouldReturn()
-                .PartialView()
-                .WithContentType((MediaTypeHeaderValue)null);
+                .PartialView(partialView => partialView
+                    .WithContentType((MediaTypeHeaderValue)null));
         }
 
         [Fact]
@@ -511,99 +425,23 @@
                         .Instance()
                         .Calling(c => c.DefaultPartialView())
                         .ShouldReturn()
-                        .PartialView()
-                        .WithContentType(new MediaTypeHeaderValue(TestObjectFactory.MediaType));
+                        .PartialView(partialView => partialView
+                            .WithContentType(new MediaTypeHeaderValue(TestObjectFactory.MediaType)));
                 },
                 "When calling DefaultPartialView action in MvcController expected partial view result ContentType to be 'application/json', but instead received null.");
         }
-        
-        [Fact]
-        public void WithViewEngineShouldNotThrowExceptionWithValidViewEngineForPartials()
-        {
-            var viewEngine = TestObjectFactory.GetViewEngine();
-
-            MyController<MvcController>
-                .Instance()
-                .WithoutValidation()
-                .Calling(c => c.PartialViewWithViewEngine(viewEngine))
-                .ShouldReturn()
-                .PartialView()
-                .WithViewEngine(viewEngine);
-        }
 
         [Fact]
-        public void WithViewEngineShouldNotThrowExceptionWithNullViewEngineForPartials()
+        public void AndAlsoShouldWorkCorrectlyForViews()
         {
             MyController<MvcController>
                 .Instance()
-                .WithoutValidation()
-                .Calling(c => c.DefaultPartialView())
+                .Calling(c => c.CustomViewResult())
                 .ShouldReturn()
-                .PartialView()
-                .WithViewEngine(null);
-        }
-
-        [Fact]
-        public void WithViewEngineShouldThrowExceptionWithInvalidViewEngineForPartials()
-        {
-            Test.AssertException<ViewResultAssertionException>(
-                () =>
-                {
-                    MyController<MvcController>
-                        .Instance()
-                        .WithoutValidation()
-                        .Calling(c => c.PartialViewWithViewEngine(null))
-                        .ShouldReturn()
-                        .PartialView()
-                        .WithViewEngine(new CustomViewEngine());
-                },
-                "When calling PartialViewWithViewEngine action in MvcController expected partial view result ViewEngine to be the same as the provided one, but instead received different result.");
-        }
-
-        [Fact]
-        public void WithViewEngineOfTypeShouldNotThrowExceptionWithValidViewEngineForPartials()
-        {
-            MyController<MvcController>
-                .Instance()
-                .WithoutValidation()
-                .Calling(c => c.PartialViewWithViewEngine(new CustomViewEngine()))
-                .ShouldReturn()
-                .PartialView()
-                .WithViewEngineOfType<CustomViewEngine>();
-        }
-
-        [Fact]
-        public void WithViewEngineOfTypeShouldThrowExceptionWithInvalidViewEngineForPartials()
-        {
-            Test.AssertException<ViewResultAssertionException>(
-                () =>
-                {
-                    MyController<MvcController>
-                        .Instance()
-                        .WithoutValidation()
-                        .Calling(c => c.PartialViewWithViewEngine(new CustomViewEngine()))
-                        .ShouldReturn()
-                        .PartialView()
-                        .WithViewEngineOfType<IViewEngine>();
-                },
-                "When calling PartialViewWithViewEngine action in MvcController expected partial view result ViewEngine to be of IViewEngine type, but instead received CustomViewEngine.");
-        }
-
-        [Fact]
-        public void WithViewEngineOfTypeShouldNotThrowExceptionWithNullViewEngineForPartials()
-        {
-            Test.AssertException<ViewResultAssertionException>(
-                () =>
-                {
-                    MyController<MvcController>
-                        .Instance()
-                        .WithoutValidation()
-                        .Calling(c => c.DefaultPartialView())
-                        .ShouldReturn()
-                        .PartialView()
-                        .WithViewEngineOfType<CustomViewEngine>();
-                },
-                "When calling DefaultPartialView action in MvcController expected partial view result ViewEngine to be of CustomViewEngine type, but instead received null.");
+                .View(view => view
+                    .WithContentType(ContentType.ApplicationXml)
+                    .AndAlso()
+                    .WithStatusCode(500));
         }
 
         [Fact]
@@ -613,10 +451,10 @@
                 .Instance()
                 .Calling(c => c.CustomPartialViewResult())
                 .ShouldReturn()
-                .PartialView()
-                .WithContentType(ContentType.ApplicationXml)
-                .AndAlso()
-                .WithStatusCode(500);
+                .PartialView(partialView => partialView
+                    .WithContentType(ContentType.ApplicationXml)
+                    .AndAlso()
+                    .WithStatusCode(500));
         }
 
         [Fact]
@@ -627,10 +465,27 @@
                 .Calling(c => c.DefaultView())
                 .ShouldReturn()
                 .View()
+                .AndAlso()
                 .ShouldPassForThe<IActionResult>(actionResult =>
                 {
                     Assert.NotNull(actionResult);
                     Assert.IsAssignableFrom<ViewResult>(actionResult);
+                });
+        }
+        
+        [Fact]
+        public void AndProvideTheActionResultShouldWorkCorrectlyWithPartial()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.DefaultPartialView())
+                .ShouldReturn()
+                .PartialView()
+                .AndAlso()
+                .ShouldPassForThe<ActionResult>(actionResult =>
+                {
+                    Assert.NotNull(actionResult);
+                    Assert.IsAssignableFrom<PartialViewResult>(actionResult);
                 });
         }
     }

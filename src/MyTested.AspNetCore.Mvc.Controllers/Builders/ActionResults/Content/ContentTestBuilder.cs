@@ -14,6 +14,7 @@
     public class ContentTestBuilder
         : BaseTestBuilderWithActionResult<ContentResult>, 
         IAndContentTestBuilder,
+        IBaseTestBuilderWithStatusCodeResultInternal<IAndContentTestBuilder>,
         IBaseTestBuilderWithContentTypeResultInternal<IAndContentTestBuilder>
     {
         /// <summary>

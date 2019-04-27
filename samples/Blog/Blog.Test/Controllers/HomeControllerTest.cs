@@ -28,8 +28,8 @@
                 .WithData(ArticleTestData.GetArticles(total, arePublic))
                 .Calling(c => c.Index())
                 .ShouldReturn()
-                .View()
-                .WithModelOfType<List<ArticleListingServiceModel>>()
-                .Passing(articles => articles.Count.ShouldBe(expected));
+                .View(view => view
+                    .WithModelOfType<List<ArticleListingServiceModel>>()
+                    .Passing(articles => articles.Count.ShouldBe(expected)));
     }
 }

@@ -17,7 +17,7 @@
     public abstract class BaseTestBuilderWithFileResult<TFileResult, TFileResultTestBuilder> :
         BaseTestBuilderWithActionResult<TFileResult>,
         IBaseTestBuilderWithFileResult<TFileResultTestBuilder>,
-        IBaseTestBuilderWithFileResultInternal<TFileResultTestBuilder> 
+        IBaseTestBuilderWithFileResultInternal<TFileResultTestBuilder>
         where TFileResult : FileResult
         where TFileResultTestBuilder : IBaseTestBuilderWithActionResult
     {

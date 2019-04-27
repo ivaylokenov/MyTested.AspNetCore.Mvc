@@ -16,8 +16,8 @@
                 .Instance()
                 .Calling(c => c.StatusCodeAction())
                 .ShouldReturn()
-                .StatusCode()
-                .WithNoModel();
+                .StatusCode(result => result
+                    .WithNoModel());
         }
 
         [Fact]
@@ -30,8 +30,8 @@
                         .Instance()
                         .Calling(c => c.FullObjectResultAction())
                         .ShouldReturn()
-                        .StatusCode()
-                        .WithNoModel();
+                        .StatusCode(result => result
+                            .WithNoModel());
                 },
                 "When calling FullObjectResultAction action in MvcController expected to not have a response model but in fact such was found.");
         }
@@ -43,8 +43,8 @@
                 .Instance()
                 .Calling(c => c.FullObjectResultAction())
                 .ShouldReturn()
-                .StatusCode()
-                .WithModelOfType<List<ResponseModel>>();
+                .StatusCode(result => result
+                    .WithModelOfType<List<ResponseModel>>());
         }
     }
 }

@@ -13,7 +13,8 @@
                 .Instance()
                 .Calling(c => c.ForbidResultAction())
                 .ShouldReturn()
-                .File()
+                .Forbid()
+                .AndAlso()
                 .ShouldPassForThe<IActionResult>(actionResult =>
                 {
                     Assert.NotNull(actionResult);

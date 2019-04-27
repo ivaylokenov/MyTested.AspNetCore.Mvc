@@ -7,7 +7,8 @@
     /// <see cref="Microsoft.AspNetCore.Mvc.RedirectToActionResult"/>
     /// or <see cref="Microsoft.AspNetCore.Mvc.RedirectToRouteResult"/>.
     /// </summary>
-    public interface IRedirectTestBuilder : IBaseTestBuilderWithRedirectResult<IAndRedirectTestBuilder>, 
+    public interface IRedirectTestBuilder 
+        : IBaseTestBuilderWithRedirectResult<IAndRedirectTestBuilder>, 
         IBaseTestBuilderWithRouteValuesResult<IAndRedirectTestBuilder>
     {
     }

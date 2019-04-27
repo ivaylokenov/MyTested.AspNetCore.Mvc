@@ -1,9 +1,10 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Actions.ShouldReturn
 {
+    using System;
     using ActionResults.Forbid;
     using Contracts.ActionResults.Forbid;
+    using Contracts.And;
     using Microsoft.AspNetCore.Mvc;
-    using Utilities.Validators;
 
     /// <content>
     /// Class containing methods for testing <see cref="ForbidResult"/>.
@@ -11,10 +12,12 @@
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <inheritdoc />
-        public IAndForbidTestBuilder Forbid()
-        {
-            InvocationResultValidator.ValidateInvocationResultType<ForbidResult>(this.TestContext);
-            return new ForbidTestBuilder(this.TestContext);
-        }
+        public IAndTestBuilder Forbid() => this.Forbid(null);
+
+        /// <inheritdoc />
+        public IAndTestBuilder Forbid(Action<IForbidTestBuilder> forbidTestBuilder)
+            => this.ValidateActionResult<ForbidResult, IForbidTestBuilder>(
+                forbidTestBuilder,
+                new ForbidTestBuilder(this.TestContext));
     }
 }

@@ -22,7 +22,8 @@
         /// </summary>
         /// <param name="badRequestTestBuilder">Instance of <see cref="IBadRequestTestBuilder"/> type.</param>
         /// <returns>The same <see cref="IAndBadRequestTestBuilder"/>.</returns>
-        public static IAndBadRequestTestBuilder WithModelStateError(this IBadRequestTestBuilder badRequestTestBuilder)
+        public static IAndBadRequestTestBuilder WithModelStateError(
+            this IBadRequestTestBuilder badRequestTestBuilder)
         {
             var actualBuilder = GetBadRequestTestBuilder(badRequestTestBuilder);
             return actualBuilder.WithModelStateError(actualBuilder.TestContext.ModelState);

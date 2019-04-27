@@ -31,9 +31,9 @@
                 .WithData(ArticleTestData.GetArticles(1, isPublic: false))
                 .Calling(c => c.All())
                 .ShouldReturn()
-                .View()
-                .WithModelOfType<List<ArticleNonPublicListingServiceModel>>()
-                .Passing(articles => articles.ShouldNotBeEmpty());
+                .View(view => view
+                    .WithModelOfType<List<ArticleNonPublicListingServiceModel>>()
+                    .Passing(articles => articles.ShouldNotBeEmpty()));
 
         [Fact]
         public void ChangeVisibilityShouldChangeArticleAndRedirectToAll()
@@ -53,7 +53,7 @@
                     }))
                 .AndAlso()
                 .ShouldReturn()
-                .Redirect()
-                .To<ArticlesController>(c => c.All());
+                .Redirect(redirect => redirect
+                    .To<ArticlesController>(c => c.All()));
     }
 }

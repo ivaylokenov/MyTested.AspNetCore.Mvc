@@ -253,7 +253,7 @@
                 var createdTestBuilderBase = (BaseTestBuilderWithComponent)createdTestBuilder;
 
                 throw new CreatedResultAssertionException(string.Format(
-                    "{0} created result to contain {1}, but it could not be found.",
+                    "{0} created result to contain {1}, but such could not be found.",
                     createdTestBuilderBase.TestContext.ExceptionMessagePrefix,
                     containment));
             }

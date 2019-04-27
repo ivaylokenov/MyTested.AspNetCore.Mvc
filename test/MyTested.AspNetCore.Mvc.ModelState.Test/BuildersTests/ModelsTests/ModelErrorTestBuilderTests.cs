@@ -22,8 +22,8 @@
                     .ContainingNoErrors())
                 .AndAlso()
                 .ShouldReturn()
-                .Ok()
-                .WithModelOfType<ICollection<ResponseModel>>();
+                .Ok(ok => ok
+                    .WithModelOfType<ICollection<ResponseModel>>());
         }
 
         [Fact]
@@ -42,8 +42,8 @@
                             .ContainingNoErrors())
                         .AndAlso()
                         .ShouldReturn()
-                        .Ok()
-                        .WithModelOfType<ICollection<ResponseModel>>();
+                        .Ok(ok => ok
+                            .WithModelOfType<ICollection<ResponseModel>>());
                 },
                 "When calling OkResultActionWithRequestBody action in MvcController expected to have valid model state with no errors, but it had some.");
         }
@@ -63,8 +63,8 @@
                     .ContainingNoError("MissingError"))
                 .AndAlso()
                 .ShouldReturn()
-                .Ok()
-                .WithModel(requestBodyWithErrors);
+                .Ok(ok => ok
+                    .WithModel(requestBodyWithErrors));
         }
 
         [Fact]
@@ -83,8 +83,8 @@
                             .ContainingNoError("RequiredString"))
                         .AndAlso()
                         .ShouldReturn()
-                        .Ok()
-                        .WithModel(requestBodyWithErrors);
+                        .Ok(ok => ok
+                            .WithModel(requestBodyWithErrors));
                 },
                 "When calling ModelStateCheck action in MvcController expected to not have a model error against key 'RequiredString', but in fact such was found.");
         }
@@ -105,8 +105,8 @@
                             .ContainingError("Name"))
                         .AndAlso()
                         .ShouldReturn()
-                        .Ok()
-                        .WithModel(requestBody);
+                        .Ok(ok => ok
+                            .WithModel(requestBody));
                 },
                 "When calling ModelStateCheck action in MvcController expected to have a model error against key 'Name', but in fact none was found.");
         }
@@ -118,14 +118,14 @@
                 .Instance()
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
-                .Ok()
-                .WithModelOfType<List<ResponseModel>>()
-                .ShouldPassForThe<List<ResponseModel>>(responseModel =>
-                {
-                    Assert.NotNull(responseModel);
-                    Assert.IsAssignableFrom<List<ResponseModel>>(responseModel);
-                    Assert.Equal(2, responseModel.Count);
-                });
+                .Ok(ok => ok
+                    .WithModelOfType<List<ResponseModel>>()
+                    .ShouldPassForThe<List<ResponseModel>>(responseModel =>
+                    {
+                        Assert.NotNull(responseModel);
+                        Assert.IsAssignableFrom<List<ResponseModel>>(responseModel);
+                        Assert.Equal(2, responseModel.Count);
+                    }));
         }
 
         [Fact]
@@ -135,15 +135,15 @@
                 .Instance()
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
-                .Ok()
-                .WithModelOfType<List<ResponseModel>>()
-                .Passing(m => m.Count == 2)
-                .ShouldPassForThe<List<ResponseModel>>(responseModel =>
-                {
-                    Assert.NotNull(responseModel);
-                    Assert.IsAssignableFrom<List<ResponseModel>>(responseModel);
-                    Assert.Equal(2, responseModel.Count);
-                });
+                .Ok(ok => ok
+                    .WithModelOfType<List<ResponseModel>>()
+                    .Passing(m => m.Count == 2)
+                    .ShouldPassForThe<List<ResponseModel>>(responseModel =>
+                    {
+                        Assert.NotNull(responseModel);
+                        Assert.IsAssignableFrom<List<ResponseModel>>(responseModel);
+                        Assert.Equal(2, responseModel.Count);
+                    }));
         }
 
         [Fact]
@@ -157,14 +157,14 @@
                     .ContainingError("Test"))
                 .AndAlso()
                 .ShouldReturn()
-                .Ok()
-                .WithModelOfType<ICollection<ResponseModel>>()
-                .ShouldPassForThe<ICollection<ResponseModel>>(responseModel =>
-                {
-                    Assert.NotNull(responseModel);
-                    Assert.IsAssignableFrom<List<ResponseModel>>(responseModel);
-                    Assert.Equal(2, responseModel.Count);
-                });
+                .Ok(ok => ok
+                    .WithModelOfType<ICollection<ResponseModel>>()
+                    .ShouldPassForThe<ICollection<ResponseModel>>(responseModel =>
+                    {
+                        Assert.NotNull(responseModel);
+                        Assert.IsAssignableFrom<List<ResponseModel>>(responseModel);
+                        Assert.Equal(2, responseModel.Count);
+                    }));
         }
 
         [Fact]
@@ -175,17 +175,18 @@
                 .Calling(c => c.CustomModelStateError())
                 .ShouldHave()
                 .ModelState(modelState => modelState
-                    .ContainingError("Test").ThatEquals("Test error"))
+                    .ContainingError("Test")
+                    .ThatEquals("Test error"))
                 .AndAlso()
                 .ShouldReturn()
-                .Ok()
-                .WithModelOfType<ICollection<ResponseModel>>()
-                .ShouldPassForThe<ICollection<ResponseModel>>(responseModel =>
-                {
-                    Assert.NotNull(responseModel);
-                    Assert.IsAssignableFrom<List<ResponseModel>>(responseModel);
-                    Assert.Equal(2, responseModel.Count);
-                });
+                .Ok(ok => ok
+                    .WithModelOfType<ICollection<ResponseModel>>()
+                    .ShouldPassForThe<ICollection<ResponseModel>>(responseModel =>
+                    {
+                        Assert.NotNull(responseModel);
+                        Assert.IsAssignableFrom<List<ResponseModel>>(responseModel);
+                        Assert.Equal(2, responseModel.Count);
+                    }));
         }
     }
 }

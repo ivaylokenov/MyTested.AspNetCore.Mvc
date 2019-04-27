@@ -7,7 +7,8 @@
     /// Used for testing <see cref="Microsoft.AspNetCore.Mvc.StatusCodeResult"/>
     /// or <see cref="Microsoft.AspNetCore.Mvc.ObjectResult"/>.
     /// </summary>
-    public interface IStatusCodeTestBuilder : IBaseTestBuilderWithResponseModel,
+    public interface IStatusCodeTestBuilder 
+        : IBaseTestBuilderWithResponseModel,
         IBaseTestBuilderWithOutputResult<IAndStatusCodeTestBuilder>
     {
     }

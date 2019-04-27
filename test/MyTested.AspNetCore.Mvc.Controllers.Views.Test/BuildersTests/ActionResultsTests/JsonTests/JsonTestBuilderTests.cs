@@ -2,8 +2,8 @@
 {
     using System.Collections.Generic;
     using Exceptions;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.Net.Http.Headers;
-    using Newtonsoft.Json;
     using Setups;
     using Setups.Controllers;
     using Setups.Models;
@@ -18,32 +18,10 @@
                 .Instance()
                 .Calling(c => c.JsonAction())
                 .ShouldReturn()
-                .Json()
-                .WithModelOfType<ICollection<ResponseModel>>();
+                .Json(json => json
+                    .WithModelOfType<ICollection<ResponseModel>>());
         }
         
-        [Fact]
-        public void WithDefaultJsonSettingsShouldNotThrowExeptionWithDefaultJsonSettings()
-        {
-            MyController<MvcController>
-                .Instance()
-                .Calling(c => c.JsonAction())
-                .ShouldReturn()
-                .Json()
-                .WithDefaultJsonSerializerSettings();
-        }
-
-        [Fact]
-        public void WithJsonSerializerSettingsShouldNotThrowExceptionWithSameJsonSettings()
-        {
-            MyController<MvcController>
-                .Instance()
-                .Calling(c => c.JsonWithSettingsAction())
-                .ShouldReturn()
-                .Json()
-                .WithJsonSerializerSettings(TestObjectFactory.GetJsonSerializerSettings());
-        }
-
         [Fact]
         public void WithHttpStatusCodeShouldNotThrowExceptionWithCorrectStatusCode()
         {
@@ -51,8 +29,8 @@
                 .Instance()
                 .Calling(c => c.JsonWithStatusCodeAction())
                 .ShouldReturn()
-                .Json()
-                .WithStatusCode(200);
+                .Json(json => json
+                    .WithStatusCode(200));
         }
 
         [Fact]
@@ -65,8 +43,8 @@
                         .Instance()
                         .Calling(c => c.JsonWithStatusCodeAction())
                         .ShouldReturn()
-                        .Json()
-                        .WithStatusCode(500);
+                        .Json(json => json
+                            .WithStatusCode(500));
                 },
                 "When calling JsonWithStatusCodeAction action in MvcController expected JSON result to have 500 (InternalServerError) status code, but instead received 200 (OK).");
         }
@@ -78,8 +56,8 @@
                 .Instance()
                 .Calling(c => c.JsonWithStatusCodeAction())
                 .ShouldReturn()
-                .Json()
-                .WithContentType(ContentType.ApplicationXml);
+                .Json(json => json
+                    .WithContentType(ContentType.ApplicationXml));
         }
 
         [Fact]
@@ -92,8 +70,8 @@
                         .Instance()
                         .Calling(c => c.JsonWithStatusCodeAction())
                         .ShouldReturn()
-                        .Json()
-                        .WithContentType(ContentType.ApplicationJson);
+                        .Json(json => json
+                            .WithContentType(ContentType.ApplicationJson));
                 },
                 "When calling JsonWithStatusCodeAction action in MvcController expected JSON result ContentType to be 'application/json', but instead received 'application/xml'.");
         }
@@ -105,8 +83,8 @@
                 .Instance()
                 .Calling(c => c.JsonWithStatusCodeAction())
                 .ShouldReturn()
-                .Json()
-                .WithContentType(new MediaTypeHeaderValue(ContentType.ApplicationXml));
+                .Json(json => json
+                    .WithContentType(new MediaTypeHeaderValue(ContentType.ApplicationXml)));
         }
 
         [Fact]
@@ -119,29 +97,10 @@
                         .Instance()
                         .Calling(c => c.JsonWithStatusCodeAction())
                         .ShouldReturn()
-                        .Json()
-                        .WithContentType((MediaTypeHeaderValue)null);
+                        .Json(json => json
+                            .WithContentType((MediaTypeHeaderValue)null));
                 },
                 "When calling JsonWithStatusCodeAction action in MvcController expected JSON result ContentType to be null, but instead received 'application/xml'.");
-        }
-
-        [Fact]
-        public void WithJsonSerializerSettingsShouldThrowExceptionWithDifferentJsonSettings()
-        {
-            var jsonSerializerSettings = TestObjectFactory.GetJsonSerializerSettings();
-            jsonSerializerSettings.DateParseHandling = DateParseHandling.DateTime;
-
-            Test.AssertException<JsonResultAssertionException>(
-                () =>
-                {
-                    MyController<MvcController>
-                        .Instance()
-                        .Calling(c => c.JsonWithSettingsAction())
-                        .ShouldReturn()
-                        .Json()
-                        .WithJsonSerializerSettings(jsonSerializerSettings);
-                }, 
-                "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have DateTime date parse handling, but in fact found DateTimeOffset.");
         }
         
         [Fact]
@@ -151,10 +110,26 @@
                 .Instance()
                 .Calling(c => c.JsonWithStatusCodeAction())
                 .ShouldReturn()
+                .Json(json => json
+                    .WithStatusCode(200)
+                    .AndAlso()
+                    .WithContentType(ContentType.ApplicationXml));
+        }
+
+        [Fact]
+        public void AndProvideTheActionResultShouldWorkCorrectly()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.JsonAction())
+                .ShouldReturn()
                 .Json()
-                .WithStatusCode(200)
                 .AndAlso()
-                .WithContentType(ContentType.ApplicationXml);
+                .ShouldPassForThe<ActionResult>(actionResult =>
+                {
+                    Assert.NotNull(actionResult);
+                    Assert.IsAssignableFrom<JsonResult>(actionResult);
+                });
         }
     }
 }

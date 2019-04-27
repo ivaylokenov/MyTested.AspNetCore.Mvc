@@ -18,13 +18,13 @@
                 .Instance()
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
-                .Ok()
-                .WithModelOfType<ICollection<ResponseModel>>()
-                .Passing(m =>
-                {
-                    Assert.Equal(2, m.Count);
-                    Assert.Equal(1, m.First().IntegerValue);
-                });
+                .Ok(ок => ок
+                    .WithModelOfType<ICollection<ResponseModel>>()
+                    .Passing(m =>
+                    {
+                        Assert.Equal(2, m.Count);
+                        Assert.Equal(1, m.First().IntegerValue);
+                    }));
         }
 
         [Fact]
@@ -37,13 +37,13 @@
                         .Instance()
                         .Calling(c => c.OkResultWithResponse())
                         .ShouldReturn()
-                        .Ok()
-                        .WithModelOfType<ICollection<ResponseModel>>()
-                        .Passing(m =>
-                        {
-                            Assert.Equal(1, m.First().IntegerValue);
-                            Assert.Equal(3, m.Count);
-                        });
+                        .Ok(ок => ок
+                            .WithModelOfType<ICollection<ResponseModel>>()
+                            .Passing(m =>
+                            {
+                                Assert.Equal(1, m.First().IntegerValue);
+                                Assert.Equal(3, m.Count);
+                            }));
                 });
         }
 
@@ -54,9 +54,9 @@
                 .Instance()
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
-                .Ok()
-                .WithModelOfType<ICollection<ResponseModel>>()
-                .Passing(m => m.First().IntegerValue == 1);
+                .Ok(ок => ок
+                    .WithModelOfType<ICollection<ResponseModel>>()
+                    .Passing(m => m.First().IntegerValue == 1));
         }
 
         [Fact]
@@ -69,9 +69,9 @@
                         .Instance()
                         .Calling(c => c.OkResultWithResponse())
                         .ShouldReturn()
-                        .Ok()
-                        .WithModelOfType<IList<ResponseModel>>()
-                        .Passing(m => m.First().IntegerValue == 2);
+                        .Ok(ок => ок
+                            .WithModelOfType<IList<ResponseModel>>()
+                            .Passing(m => m.First().IntegerValue == 2));
                 }, 
                 "When calling OkResultWithResponse action in MvcController expected response model IList<ResponseModel> to pass the given predicate, but it failed.");
         }

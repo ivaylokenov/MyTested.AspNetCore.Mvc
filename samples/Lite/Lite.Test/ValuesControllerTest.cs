@@ -1,5 +1,6 @@
 ﻿namespace Lite.Test
 {
+    using Microsoft.AspNetCore.Mvc;
     using MyTested.AspNetCore.Mvc;
     using Web.Controllers;
     using Xunit;
@@ -36,8 +37,9 @@
                 .Controller<ValuesController>()
                 .Calling(c => c.Post("Test"))
                 .ShouldReturn()
-                .Created()
-                .AtLocation("/Created/Mocked");
+                .Created(created => created
+                    .PassingAs<CreatedResult>(result => result
+                        .Location == "/Created/Mocked"));
 
         [Fact]
         public void PutShouldReturnCreated()
@@ -45,8 +47,9 @@
                 .Controller<ValuesController>()
                 .Calling(c => c.Put(1, "Test"))
                 .ShouldReturn()
-                .Created()
-                .AtLocation("/Updated/1");
+                .Created(created => created
+                    .PassingAs<CreatedResult>(result => result
+                        .Location == "/Updated/1"));
 
         [Fact]
         public void DeleteShouldReturnBadRequestWithInvalidId()

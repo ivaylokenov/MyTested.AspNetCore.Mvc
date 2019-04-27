@@ -29,10 +29,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MyTested.AspNetCore.Mvc.Controllers.Views\MyTested.AspNetCore.Mvc.Controllers.Views.csproj" />
-    <ProjectReference Include="..\MyTested.AspNetCore.Mvc.Controllers\MyTested.AspNetCore.Mvc.Controllers.csproj" />
+    <ProjectReference Include="..\MyTested.AspNetCore.Mvc.Controllers.ActionResults\MyTested.AspNetCore.Mvc.Controllers.ActionResults.csproj" />
+    <ProjectReference Include="..\MyTested.AspNetCore.Mvc.Controllers.Views.ActionResults\MyTested.AspNetCore.Mvc.Controllers.Views.ActionResults.csproj" />
     <ProjectReference Include="..\MyTested.AspNetCore.Mvc.Models\MyTested.AspNetCore.Mvc.Models.csproj" />
-    <ProjectReference Include="..\MyTested.AspNetCore.Mvc.ViewComponents\MyTested.AspNetCore.Mvc.ViewComponents.csproj" />
+    <ProjectReference Include="..\MyTested.AspNetCore.Mvc.ViewComponents.Results\MyTested.AspNetCore.Mvc.ViewComponents.Results.csproj" />
   </ItemGroup>
 
 </Project>

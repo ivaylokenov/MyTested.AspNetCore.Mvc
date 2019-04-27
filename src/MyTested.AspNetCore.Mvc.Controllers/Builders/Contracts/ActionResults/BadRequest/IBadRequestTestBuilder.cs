@@ -1,12 +1,19 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.ActionResults.BadRequest
 {
     using Base;
+    using Contracts.Base;
+    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
-    /// Used for testing <see cref="Microsoft.AspNetCore.Mvc.BadRequestResult"/>
-    /// and <see cref="Microsoft.AspNetCore.Mvc.BadRequestObjectResult"/>.
+    /// Used for testing <see cref="BadRequestResult"/>
+    /// and <see cref="BadRequestObjectResult"/>.
     /// </summary>
-    public interface IBadRequestTestBuilder : IBaseTestBuilderWithOutputResult<IAndBadRequestTestBuilder>
+    public interface IBadRequestTestBuilder 
+        : IBaseTestBuilderWithOutputResult<IAndBadRequestTestBuilder>,
+        IBaseTestBuilderWithActionResult<BadRequestResult>,
+        IBaseTestBuilderWithActionResult<BadRequestObjectResult>,
+        IBaseTestBuilderWithActionResult<IActionResult>,
+        IBaseTestBuilderWithActionResult<ActionResult>
     {
     }
 }
