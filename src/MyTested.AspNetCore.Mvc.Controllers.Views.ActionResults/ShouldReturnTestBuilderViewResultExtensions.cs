@@ -25,23 +25,22 @@
             string viewName)
         {
             var actualBuilder = (ShouldReturnTestBuilder<TActionResult>)builder;
-
-            var viewType = "view";
-
+            
             var viewResult = InvocationResultValidator
                 .GetInvocationResult<ViewResult>(actualBuilder.TestContext);
             
             var actualViewName = viewResult.ViewName;
+
             if (viewName != actualViewName)
             {
                 throw ViewResultAssertionException.ForNameEquality(
                     actualBuilder.TestContext.ExceptionMessagePrefix,
-                    viewType,
+                    "view",
                     viewName,
                     actualViewName);
             }
 
-            return new ViewTestBuilder<ViewResult>(actualBuilder.TestContext, viewType);
+            return new ViewTestBuilder(actualBuilder.TestContext);
         }
     }
 }

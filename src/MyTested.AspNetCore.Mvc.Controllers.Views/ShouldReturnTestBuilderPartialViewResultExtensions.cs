@@ -14,7 +14,7 @@
     public static class ShouldReturnTestBuilderPartialViewResultExtensions
     {
         /// <summary>
-        /// Tests whether the action result is <see cref="PartialViewResult"/> with the default view name.
+        /// Tests whether the action result is <see cref="PartialViewResult"/>.
         /// </summary>
         /// <typeparam name="TActionResult">Type of action result type.</typeparam>
         /// <param name="builder">Instance of <see cref="IShouldReturnTestBuilder{TActionResult}"/> type.</param>
@@ -24,7 +24,7 @@
             => builder.PartialView(null);
 
         /// <summary>
-        /// Tests whether the action result is <see cref="PartialViewResult"/> with the default view name.
+        /// Tests whether the action result is <see cref="PartialViewResult"/>.
         /// </summary>
         /// <typeparam name="TActionResult">Type of action result type.</typeparam>
         /// <param name="builder">Instance of <see cref="IShouldReturnTestBuilder{TActionResult}"/> type.</param>
@@ -32,13 +32,13 @@
         /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
         public static IAndTestBuilder PartialView<TActionResult>(
             this IShouldReturnTestBuilder<TActionResult> builder,
-            Action<IViewTestBuilder> partialViewTestBuilder)
+            Action<IPartialViewTestBuilder> partialViewTestBuilder)
         {
             var actualBuilder = (ShouldReturnTestBuilder<TActionResult>)builder;
             
-            return actualBuilder.ValidateActionResult<PartialViewResult, IViewTestBuilder>(
+            return actualBuilder.ValidateActionResult<PartialViewResult, IPartialViewTestBuilder>(
                 partialViewTestBuilder,
-                new ViewTestBuilder<PartialViewResult>(actualBuilder.TestContext, "partial view"));
+                new PartialViewTestBuilder(actualBuilder.TestContext));
         }
     }
 }

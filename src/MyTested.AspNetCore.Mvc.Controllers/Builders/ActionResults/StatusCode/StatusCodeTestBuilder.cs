@@ -1,7 +1,9 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.StatusCode
 {
+    using System;
     using Base;
     using Contracts.ActionResults.StatusCode;
+    using Contracts.And;
     using Exceptions;
     using Internal;
     using Internal.Contracts.ActionResults;
@@ -11,7 +13,9 @@
     /// <summary>
     /// Used for testing status code result.
     /// </summary>
-    /// <typeparam name="TStatusCodeResult">Type of status code result - <see cref="StatusCodeResult"/> or <see cref="ObjectResult"/>.</typeparam>
+    /// <typeparam name="TStatusCodeResult">
+    /// Type of status code result - <see cref="StatusCodeResult"/> or <see cref="ObjectResult"/>.
+    /// </typeparam>
     public class StatusCodeTestBuilder<TStatusCodeResult>
         : BaseTestBuilderWithResponseModel<TStatusCodeResult>,
         IAndStatusCodeTestBuilder,
@@ -34,6 +38,34 @@
         public IAndStatusCodeTestBuilder ResultTestBuilder => this;
 
         /// <inheritdoc />
+        public IAndTestBuilder Passing(Action<StatusCodeResult> assertions)
+        {
+            this.ValidateActionResult<StatusCodeResult>();
+            return this.Passing<StatusCodeResult>(assertions);
+        }
+
+        /// <inheritdoc />
+        public IAndTestBuilder Passing(Func<StatusCodeResult, bool> predicate)
+        {
+            this.ValidateActionResult<StatusCodeResult>();
+            return this.Passing<StatusCodeResult>(predicate);
+        }
+
+        /// <inheritdoc />
+        public IAndTestBuilder Passing(Action<ObjectResult> assertions)
+        {
+            this.ValidateActionResult<ObjectResult>();
+            return this.Passing<ObjectResult>(assertions);
+        }
+
+        /// <inheritdoc />
+        public IAndTestBuilder Passing(Func<ObjectResult, bool> predicate)
+        {
+            this.ValidateActionResult<ObjectResult>();
+            return this.Passing<ObjectResult>(predicate);
+        }
+
+        /// <inheritdoc />
         public IStatusCodeTestBuilder AndAlso() => this;
 
         public override void ValidateNoModel() => this.WithNoModel<StatusCodeResult>();
@@ -52,5 +84,21 @@
                 propertyName,
                 expectedValue,
                 actualValue));
+
+        private void ValidateActionResult<TResult>()
+            where TResult : ActionResult
+        {
+            var actualResultType = this.ActionResult.GetType();
+            var expectedResultType = typeof(TResult);
+
+            if (actualResultType != expectedResultType)
+            {
+                throw new RedirectResultAssertionException(string.Format(
+                    "{0} action result to be {1}, but it was {2}.",
+                    this.TestContext.ExceptionMessagePrefix,
+                    expectedResultType,
+                    actualResultType));
+            }
+        }
     }
 }

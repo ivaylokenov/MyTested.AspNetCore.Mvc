@@ -3,7 +3,9 @@
     using System;
 
     /// <summary>
-    /// <see cref="Exception"/> for invalid <see cref="Microsoft.AspNetCore.Mvc.RedirectResult"/>, <see cref="Microsoft.AspNetCore.Mvc.RedirectToActionResult"/> or <see cref="Microsoft.AspNetCore.Mvc.RedirectToRouteResult"/>.
+    /// <see cref="Exception"/> for invalid <see cref="Microsoft.AspNetCore.Mvc.RedirectResult"/>,
+    /// <see cref="Microsoft.AspNetCore.Mvc.RedirectToActionResult"/>
+    /// or <see cref="Microsoft.AspNetCore.Mvc.RedirectToRouteResult"/>.
     /// </summary>
     public class RedirectResultAssertionException : Exception
     {

@@ -26,6 +26,7 @@
             var actualBuilder = (BaseTestBuilderWithComponent)badRequestTestBuilder;
             
             var actualResult = actualBuilder.TestContext.MethodResult as BadRequestResult;
+
             if (actualResult == null)
             {
                 throw new ResponseModelAssertionException(string.Format(

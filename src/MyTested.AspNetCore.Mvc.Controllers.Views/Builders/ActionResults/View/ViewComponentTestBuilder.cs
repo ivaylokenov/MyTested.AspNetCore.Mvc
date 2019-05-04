@@ -13,15 +13,17 @@
         : BaseTestBuilderWithViewFeatureResult<ViewComponentResult, IAndViewComponentTestBuilder>, 
         IAndViewComponentTestBuilder
     {
+        private IDictionary<string, object> viewComponentArguments;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ViewComponentTestBuilder"/> class.
         /// </summary>
-        /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
+        /// <param name="testContext">
+        /// <see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.
+        /// </param>
         public ViewComponentTestBuilder(ControllerTestContext testContext)
             : base(testContext, "view component")
         {
-            // Uses internal reflection caching.
-            this.ViewComponentArguments = new RouteValueDictionary(this.ActionResult.Arguments);
         }
 
         /// <summary>
@@ -30,8 +32,20 @@
         /// <value>Test builder of <see cref="IAndViewComponentTestBuilder"/> type.</value>
         public override IAndViewComponentTestBuilder ResultTestBuilder => this;
 
-        public IDictionary<string, object> ViewComponentArguments { get; private set; }
-        
+        public IDictionary<string, object> ViewComponentArguments
+        {
+            get
+            {
+                if (this.viewComponentArguments == null)
+                {
+                    // Uses internal reflection caching.
+                    this.viewComponentArguments = new RouteValueDictionary(this.ActionResult.Arguments);
+                }
+
+                return this.viewComponentArguments;
+            }
+        }
+
         /// <inheritdoc />
         public IViewComponentTestBuilder AndAlso() => this;
     }

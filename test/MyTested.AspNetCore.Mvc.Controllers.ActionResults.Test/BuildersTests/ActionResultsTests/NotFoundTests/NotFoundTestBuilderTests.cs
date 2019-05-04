@@ -47,7 +47,7 @@
                         .NotFound(notFound => notFound
                             .WithStatusCode(HttpStatusCode.OK));
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result to have 200 (OK) status code, but instead received 201 (Created).");
+                "When calling FullHttpNotFoundAction action in MvcController expected not found result to have 200 (OK) status code, but instead received 201 (Created).");
         }
 
         [Fact]
@@ -85,7 +85,7 @@
                         .NotFound(notFound => notFound
                             .ContainingContentType(new MediaTypeHeaderValue(ContentType.ApplicationOctetStream)));
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result content types to contain application/octet-stream, but in fact such was not found.");
+                "When calling FullHttpNotFoundAction action in MvcController expected not found result content types to contain application/octet-stream, but in fact such was not found.");
         }
 
         [Fact]
@@ -133,7 +133,7 @@
                                 ContentType.ApplicationXml
                             }));
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result content types to contain application/octet-stream, but in fact such was not found.");
+                "When calling FullHttpNotFoundAction action in MvcController expected not found result content types to contain application/octet-stream, but in fact such was not found.");
         }
 
         [Fact]
@@ -152,7 +152,7 @@
                                 ContentType.ApplicationXml
                             }));
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result content types to have 1 item, but instead found 2.");
+                "When calling FullHttpNotFoundAction action in MvcController expected not found result content types to have 1 item, but instead found 2.");
         }
 
         [Fact]
@@ -173,7 +173,7 @@
                                 ContentType.ApplicationZip
                             }));
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result content types to have 3 items, but instead found 2.");
+                "When calling FullHttpNotFoundAction action in MvcController expected not found result content types to have 3 items, but instead found 2.");
         }
 
         [Fact]
@@ -221,7 +221,7 @@
                                 new MediaTypeHeaderValue(ContentType.ApplicationXml)
                             }));
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result content types to contain application/octet-stream, but in fact such was not found.");
+                "When calling FullHttpNotFoundAction action in MvcController expected not found result content types to contain application/octet-stream, but in fact such was not found.");
         }
 
         [Fact]
@@ -240,7 +240,7 @@
                                 new MediaTypeHeaderValue(ContentType.ApplicationXml)
                             }));
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result content types to have 1 item, but instead found 2.");
+                "When calling FullHttpNotFoundAction action in MvcController expected not found result content types to have 1 item, but instead found 2.");
         }
 
         [Fact]
@@ -261,7 +261,7 @@
                                 new MediaTypeHeaderValue(ContentType.ApplicationZip)
                             }));
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result content types to have 3 items, but instead found 2.");
+                "When calling FullHttpNotFoundAction action in MvcController expected not found result content types to have 3 items, but instead found 2.");
         }
 
         [Fact]
@@ -292,7 +292,7 @@
                         .NotFound(notFound => notFound
                             .ContainingOutputFormatter(TestObjectFactory.GetOutputFormatter()));
                 },
-                "When calling HttpNotFoundActionWithFormatter action in MvcController expected HTTP not found result output formatters to contain the provided formatter, but such was not found.");
+                "When calling HttpNotFoundActionWithFormatter action in MvcController expected not found result output formatters to contain the provided formatter, but such was not found.");
         }
 
         [Fact]
@@ -319,7 +319,7 @@
                         .NotFound(notFound => notFound
                             .ContainingOutputFormatterOfType<IOutputFormatter>());
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result output formatters to contain formatter of IOutputFormatter type, but such was not found.");
+                "When calling FullHttpNotFoundAction action in MvcController expected not found result output formatters to contain formatter of IOutputFormatter type, but such was not found.");
         }
 
         [Fact]
@@ -367,7 +367,7 @@
                                 new CustomOutputFormatter()
                             }));
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result output formatters to contain formatter of StringOutputFormatter type, but none was found.");
+                "When calling FullHttpNotFoundAction action in MvcController expected not found result output formatters to contain formatter of StringOutputFormatter type, but none was found.");
         }
 
         [Fact]
@@ -386,7 +386,7 @@
                                 TestObjectFactory.GetOutputFormatter()
                             }));
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result output formatters to have 1 item, but instead found 2.");
+                "When calling FullHttpNotFoundAction action in MvcController expected not found result output formatters to have 1 item, but instead found 2.");
         }
 
         [Fact]
@@ -407,7 +407,7 @@
                                 TestObjectFactory.GetOutputFormatter()
                             }));
                 },
-                "When calling FullHttpNotFoundAction action in MvcController expected HTTP not found result output formatters to have 3 items, but instead found 2.");
+                "When calling FullHttpNotFoundAction action in MvcController expected not found result output formatters to have 3 items, but instead found 2.");
         }
 
         [Fact]

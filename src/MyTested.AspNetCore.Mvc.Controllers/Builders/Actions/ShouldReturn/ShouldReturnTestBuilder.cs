@@ -1,13 +1,11 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Actions.ShouldReturn
 {
     using System;
-    using ActionResults.Challenge;
     using And;
     using Base;
     using Contracts.Actions;
     using Contracts.And;
     using Internal.TestContexts;
-    using Microsoft.AspNetCore.Mvc;
     using Utilities.Validators;
 
     /// <summary>

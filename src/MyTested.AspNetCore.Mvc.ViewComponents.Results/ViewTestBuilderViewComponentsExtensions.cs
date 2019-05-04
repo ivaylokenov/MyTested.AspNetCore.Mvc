@@ -65,7 +65,7 @@
 
             return actualBuilder;
         }
-        
+
         private static ViewTestBuilder GetActualBuilder(IViewTestBuilder viewTestBuilder)
             => (ViewTestBuilder)viewTestBuilder;
     }

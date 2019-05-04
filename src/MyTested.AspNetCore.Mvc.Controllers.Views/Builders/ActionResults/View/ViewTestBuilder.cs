@@ -5,23 +5,20 @@
     using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
-    /// Used for testing view result.
+    /// Used for testing <see cref="ViewResult"/>.
     /// </summary>
-    /// <typeparam name="TViewResult">Type of view result - <see cref="ViewResult"/> or <see cref="PartialViewResult"/>.</typeparam>
-    public class ViewTestBuilder<TViewResult>
-        : BaseTestBuilderWithViewFeatureResult<TViewResult, IAndViewTestBuilder>, 
+    public class ViewTestBuilder
+        : BaseTestBuilderWithViewFeatureResult<ViewResult, IAndViewTestBuilder>, 
         IAndViewTestBuilder
-        where TViewResult : ActionResult
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ViewTestBuilder{TViewResult}"/> class.
+        /// Initializes a new instance of the <see cref="ViewTestBuilder"/> class.
         /// </summary>
-        /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
-        /// <param name="viewType">View type name.</param>
-        public ViewTestBuilder(
-            ControllerTestContext testContext,
-            string viewType)
-            : base(testContext, viewType)
+        /// <param name="testContext">
+        /// <see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.
+        /// </param>
+        public ViewTestBuilder(ControllerTestContext testContext)
+            : base(testContext, "view")
         {
         }
 

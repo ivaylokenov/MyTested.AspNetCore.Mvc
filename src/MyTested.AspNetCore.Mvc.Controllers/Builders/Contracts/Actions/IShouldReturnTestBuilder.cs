@@ -1,6 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Actions
 {
     using System;
+    using ActionResults.Accepted;
     using ActionResults.BadRequest;
     using ActionResults.Challenge;
     using ActionResults.Content;
@@ -23,6 +24,23 @@
     public interface IShouldReturnTestBuilder<TActionResult> 
         : IBaseShouldReturnTestBuilder<TActionResult, IAndTestBuilder>
     {
+        /// <summary>
+        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.AcceptedResult"/>,
+        /// <see cref="Microsoft.AspNetCore.Mvc.AcceptedAtActionResult"/> or
+        /// <see cref="Microsoft.AspNetCore.Mvc.AcceptedAtRouteResult"/>.
+        /// </summary>
+        /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
+        IAndTestBuilder Accepted();
+
+        /// <summary>
+        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.AcceptedResult"/>,
+        /// <see cref="Microsoft.AspNetCore.Mvc.AcceptedAtActionResult"/> or
+        /// <see cref="Microsoft.AspNetCore.Mvc.AcceptedAtRouteResult"/>.
+        /// </summary>
+        /// <param name="acceptedTestBuilder">Builder for testing the accepted result.</param>
+        /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
+        IAndTestBuilder Accepted(Action<IAcceptedTestBuilder> acceptedTestBuilder);
+
         /// <summary>
         /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.ChallengeResult"/>.
         /// </summary>

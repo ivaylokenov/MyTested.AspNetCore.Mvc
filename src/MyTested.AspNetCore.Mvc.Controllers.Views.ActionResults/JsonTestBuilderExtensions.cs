@@ -13,7 +13,7 @@
     public static class JsonTestBuilderExtensions
     {
         /// <summary>
-        /// Tests whether <see cref="Microsoft.AspNetCore.Mvc.JsonResult"/>
+        /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.JsonResult"/>
         /// has the default <see cref="JsonSerializerSettings"/>.
         /// </summary>
         /// <param name="jsonTestBuilder">
@@ -27,7 +27,7 @@
                     .PopulateFullJsonSerializerSettingsTestBuilder(s));
 
         /// <summary>
-        /// Tests whether <see cref="Microsoft.AspNetCore.Mvc.JsonResult"/>
+        /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.JsonResult"/>
         /// has the provided <see cref="JsonSerializerSettings"/>.
         /// </summary>
         /// <param name="jsonTestBuilder">
@@ -43,7 +43,7 @@
                     .PopulateFullJsonSerializerSettingsTestBuilder(s, jsonSerializerSettings));
 
         /// <summary>
-        /// Tests whether <see cref="Microsoft.AspNetCore.Mvc.JsonResult"/>
+        /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.JsonResult"/>
         /// has <see cref="JsonSerializerSettings"/> by using builder.
         /// </summary>
         /// <param name="jsonTestBuilder">

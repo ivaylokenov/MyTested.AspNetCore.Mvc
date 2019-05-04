@@ -1,6 +1,5 @@
 ﻿namespace Lite.Test
 {
-    using Microsoft.AspNetCore.Mvc;
     using MyTested.AspNetCore.Mvc;
     using Web.Controllers;
     using Xunit;
@@ -38,7 +37,7 @@
                 .Calling(c => c.Post("Test"))
                 .ShouldReturn()
                 .Created(created => created
-                    .PassingAs<CreatedResult>(result => result
+                    .Passing(result => result
                         .Location == "/Created/Mocked"));
 
         [Fact]
@@ -48,7 +47,7 @@
                 .Calling(c => c.Put(1, "Test"))
                 .ShouldReturn()
                 .Created(created => created
-                    .PassingAs<CreatedResult>(result => result
+                    .Passing(result => result
                         .Location == "/Updated/1"));
 
         [Fact]

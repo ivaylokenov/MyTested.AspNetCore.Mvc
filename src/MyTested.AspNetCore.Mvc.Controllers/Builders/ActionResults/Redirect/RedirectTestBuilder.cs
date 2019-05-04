@@ -1,7 +1,9 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.Redirect
 {
+    using System;
     using Base;
     using Contracts.ActionResults.Redirect;
+    using Contracts.And;
     using Exceptions;
     using Internal;
     using Internal.Contracts.ActionResults;
@@ -35,7 +37,49 @@
         public IAndRedirectTestBuilder ResultTestBuilder => this;
 
         public bool IncludeCountCheck { get; set; } = true;
-        
+
+        /// <inheritdoc />
+        public IAndTestBuilder Passing(Action<RedirectResult> assertions)
+        {
+            this.ValidateRedirectResult<RedirectResult>();
+            return this.Passing<RedirectResult>(assertions);
+        }
+
+        /// <inheritdoc />
+        public IAndTestBuilder Passing(Func<RedirectResult, bool> predicate)
+        {
+            this.ValidateRedirectResult<RedirectResult>();
+            return this.Passing<RedirectResult>(predicate);
+        }
+
+        /// <inheritdoc />
+        public IAndTestBuilder Passing(Action<RedirectToRouteResult> assertions)
+        {
+            this.ValidateRedirectResult<RedirectToRouteResult>();
+            return this.Passing<RedirectToRouteResult>(assertions);
+        }
+
+        /// <inheritdoc />
+        public IAndTestBuilder Passing(Func<RedirectToRouteResult, bool> predicate)
+        {
+            this.ValidateRedirectResult<RedirectToRouteResult>();
+            return this.Passing<RedirectToRouteResult>(predicate);
+        }
+
+        /// <inheritdoc />
+        public IAndTestBuilder Passing(Action<RedirectToActionResult> assertions)
+        {
+            this.ValidateRedirectResult<RedirectToActionResult>();
+            return this.Passing<RedirectToActionResult>(assertions);
+        }
+
+        /// <inheritdoc />
+        public IAndTestBuilder Passing(Func<RedirectToActionResult, bool> predicate)
+        {
+            this.ValidateRedirectResult<RedirectToActionResult>();
+            return this.Passing<RedirectToActionResult>(predicate);
+        }
+
         /// <inheritdoc />
         public IRedirectTestBuilder AndAlso() => this;
 
@@ -53,5 +97,21 @@
                 propertyName,
                 expectedValue,
                 actualValue));
+
+        private void ValidateRedirectResult<TResult>()
+            where TResult : ActionResult
+        {
+            var actualResultType = this.ActionResult.GetType();
+            var expectedResultType = typeof(TResult);
+
+            if (actualResultType != expectedResultType)
+            {
+                throw new RedirectResultAssertionException(string.Format(
+                    "{0} redirect result to be {1}, but it was {2}.",
+                    this.TestContext.ExceptionMessagePrefix,
+                    expectedResultType,
+                    actualResultType));
+            }
+        }
     }
 }

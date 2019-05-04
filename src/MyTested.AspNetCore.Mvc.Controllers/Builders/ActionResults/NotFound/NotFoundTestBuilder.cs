@@ -1,7 +1,9 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.NotFound
 {
+    using System;
     using Base;
     using Contracts.ActionResults.NotFound;
+    using Contracts.And;
     using Exceptions;
     using Internal;
     using Internal.Contracts.ActionResults;
@@ -34,6 +36,20 @@
         public IAndNotFoundTestBuilder ResultTestBuilder => this;
 
         /// <inheritdoc />
+        public IAndTestBuilder Passing(Action<NotFoundObjectResult> assertions)
+        {
+            this.ValidateNotFoundObjectResult();
+            return this.Passing<NotFoundObjectResult>(assertions);
+        }
+
+        /// <inheritdoc />
+        public IAndTestBuilder Passing(Func<NotFoundObjectResult, bool> predicate)
+        {
+            this.ValidateNotFoundObjectResult();
+            return this.Passing<NotFoundObjectResult>(predicate);
+        }
+
+        /// <inheritdoc />
         public IAndNotFoundTestBuilder AndAlso() => this;
 
         public override void ValidateNoModel() => this.WithNoModel<NotFoundResult>();
@@ -48,9 +64,24 @@
             => throw new NotFoundResultAssertionException(string.Format(
                 ExceptionMessages.ActionResultFormat,
                 this.TestContext.ExceptionMessagePrefix,
-                "HTTP not found",
+                "not found",
                 propertyName,
                 expectedValue,
                 actualValue));
+
+        private void ValidateNotFoundObjectResult()
+        {
+            var actualResultType = this.ActionResult.GetType();
+            var expectedResultType = typeof(NotFoundObjectResult);
+
+            if (actualResultType != expectedResultType)
+            {
+                throw new NotFoundResultAssertionException(string.Format(
+                    "{0} not found result to be {1}, but it was {2}.",
+                    this.TestContext.ExceptionMessagePrefix,
+                    expectedResultType,
+                    actualResultType));
+            }
+        }
     }
 }

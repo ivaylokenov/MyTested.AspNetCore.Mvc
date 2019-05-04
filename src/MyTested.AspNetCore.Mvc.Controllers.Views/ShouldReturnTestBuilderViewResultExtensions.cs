@@ -38,7 +38,7 @@
 
             return actualBuilder.ValidateActionResult<ViewResult, IViewTestBuilder>(
                 viewTestBuilder,
-                new ViewTestBuilder<ViewResult>(actualBuilder.TestContext, "view"));
+                new ViewTestBuilder(actualBuilder.TestContext));
         }
     }
 }

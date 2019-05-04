@@ -2,14 +2,17 @@
 {
     using Base;
     using Contracts.Base;
+    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
-    /// Used for testing <see cref="Microsoft.AspNetCore.Mvc.StatusCodeResult"/>
-    /// or <see cref="Microsoft.AspNetCore.Mvc.ObjectResult"/>.
+    /// Used for testing <see cref="StatusCodeResult"/>
+    /// or <see cref="ObjectResult"/>.
     /// </summary>
     public interface IStatusCodeTestBuilder 
         : IBaseTestBuilderWithResponseModel,
-        IBaseTestBuilderWithOutputResult<IAndStatusCodeTestBuilder>
+        IBaseTestBuilderWithOutputResult<IAndStatusCodeTestBuilder>,
+        IBaseTestBuilderWithActionResult<StatusCodeResult>,
+        IBaseTestBuilderWithActionResult<ObjectResult>
     {
     }
 }

@@ -3,7 +3,10 @@
     using System;
 
     /// <summary>
-    /// <see cref="Exception"/> for invalid <see cref="Microsoft.AspNetCore.Mvc.FileStreamResult"/>, <see cref="Microsoft.AspNetCore.Mvc.VirtualFileResult"/>, <see cref="Microsoft.AspNetCore.Mvc.FileContentResult"/> or <see cref="Microsoft.AspNetCore.Mvc.PhysicalFileResult"/>.
+    /// <see cref="Exception"/> for invalid <see cref="Microsoft.AspNetCore.Mvc.FileStreamResult"/>,
+    /// <see cref="Microsoft.AspNetCore.Mvc.VirtualFileResult"/>,
+    /// <see cref="Microsoft.AspNetCore.Mvc.FileContentResult"/>
+    /// or <see cref="Microsoft.AspNetCore.Mvc.PhysicalFileResult"/>.
     /// </summary>
     public class FileResultAssertionException : Exception
     {

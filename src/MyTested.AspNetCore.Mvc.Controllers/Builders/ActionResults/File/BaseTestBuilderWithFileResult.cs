@@ -1,7 +1,9 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.File
 {
+    using System;
     using Base;
     using Contracts.ActionResults.Base;
+    using Contracts.And;
     using Contracts.Base;
     using Exceptions;
     using Internal;
@@ -35,6 +37,14 @@
         /// </summary>
         /// <value>Test builder for the file <see cref="ActionResult"/>.</value>
         public abstract TFileResultTestBuilder ResultTestBuilder { get; }
+
+        /// <inheritdoc />
+        public IAndTestBuilder Passing(Action<FileResult> assertions)
+            => this.Passing<FileResult>(assertions);
+
+        /// <inheritdoc />
+        public IAndTestBuilder Passing(Func<FileResult, bool> predicate)
+            => this.Passing<FileResult>(predicate);
 
         /// <summary>
         /// Throws new <see cref="FileResultAssertionException"/> for the provided property name, expected value and actual value.

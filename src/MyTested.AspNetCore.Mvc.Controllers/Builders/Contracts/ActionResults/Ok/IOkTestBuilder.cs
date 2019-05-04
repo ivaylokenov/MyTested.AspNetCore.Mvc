@@ -2,14 +2,16 @@
 {
     using Base;
     using Contracts.Base;
+    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
-    /// Used for testing <see cref="Microsoft.AspNetCore.Mvc.OkResult"/>
-    /// or <see cref="Microsoft.AspNetCore.Mvc.OkObjectResult"/> result.
+    /// Used for testing <see cref="OkResult"/>
+    /// or <see cref="OkObjectResult"/> result.
     /// </summary>
     public interface IOkTestBuilder 
         : IBaseTestBuilderWithResponseModel,
-        IBaseTestBuilderWithOutputResult<IAndOkTestBuilder>
+        IBaseTestBuilderWithOutputResult<IAndOkTestBuilder>,
+        IBaseTestBuilderWithActionResult<OkObjectResult>
     {
     }
 }

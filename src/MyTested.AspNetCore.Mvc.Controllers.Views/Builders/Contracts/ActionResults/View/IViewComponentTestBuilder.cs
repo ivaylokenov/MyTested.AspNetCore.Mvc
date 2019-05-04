@@ -7,9 +7,8 @@
     /// <summary>
     /// Used for testing <see cref="ViewComponentResult"/>.
     /// </summary>
-    public interface IViewComponentTestBuilder : IBaseTestBuilderWithResponseModel,
-        IBaseTestBuilderWithStatusCodeResult<IAndViewComponentTestBuilder>,
-        IBaseTestBuilderWithContentTypeResult<IAndViewComponentTestBuilder>,
+    public interface IViewComponentTestBuilder 
+        : IBaseTestBuilderWithViewResult<IAndViewComponentTestBuilder>,
         IBaseTestBuilderWithActionResult<ViewComponentResult>
     {
     }

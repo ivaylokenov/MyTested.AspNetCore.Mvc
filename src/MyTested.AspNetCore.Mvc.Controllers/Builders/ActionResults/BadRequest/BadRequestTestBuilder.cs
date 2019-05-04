@@ -1,7 +1,9 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.BadRequest
 {
+    using System;
     using Base;
     using Contracts.ActionResults.BadRequest;
+    using Contracts.And;
     using Exceptions;
     using Internal;
     using Internal.Contracts.ActionResults;
@@ -44,20 +46,24 @@
         public IAndBadRequestTestBuilder ResultTestBuilder => this;
         
         /// <inheritdoc />
-        public IBadRequestTestBuilder AndAlso() => this;
-        
-        public object GetBadRequestObjectResultValue()
+        public IAndTestBuilder Passing(Action<BadRequestObjectResult> assertions)
         {
-            var actualBadRequestResult = this.TestContext.MethodResult as BadRequestObjectResult;
-            if (actualBadRequestResult == null)
-            {
-                throw new BadRequestResultAssertionException(string.Format(
-                    "{0} bad request result to contain error object, but such could not be found.",
-                    this.TestContext.ExceptionMessagePrefix));
-            }
-
-            return actualBadRequestResult.Value;
+            this.GetBadRequestObjectResult();
+            return this.Passing<BadRequestObjectResult>(assertions);
         }
+
+        /// <inheritdoc />
+        public IAndTestBuilder Passing(Func<BadRequestObjectResult, bool> predicate)
+        {
+            this.GetBadRequestObjectResult();
+            return this.Passing<BadRequestObjectResult>(predicate);
+        }
+
+        /// <inheritdoc />
+        public IBadRequestTestBuilder AndAlso() => this;
+
+        public object GetBadRequestObjectResultValue()
+            => this.GetBadRequestObjectResult().Value;
 
         public string GetBadRequestErrorMessage()
         {
@@ -114,6 +120,19 @@
                 propertyName,
                 expectedValue,
                 actualValue));
+
+        private BadRequestObjectResult GetBadRequestObjectResult()
+        {
+            var badRequestObjectResult = this.TestContext.MethodResult as BadRequestObjectResult;
+            if (badRequestObjectResult == null)
+            {
+                throw new BadRequestResultAssertionException(string.Format(
+                    "{0} bad request result to contain error object, but such could not be found.",
+                    this.TestContext.ExceptionMessagePrefix));
+            }
+
+            return badRequestObjectResult;
+        }
 
         private void ThrowNewHttpBadRequestResultAssertionExceptionWithMessage(string expectedMessage = null, string actualMessage = null) 
             => this.ThrowNewFailedValidationException(

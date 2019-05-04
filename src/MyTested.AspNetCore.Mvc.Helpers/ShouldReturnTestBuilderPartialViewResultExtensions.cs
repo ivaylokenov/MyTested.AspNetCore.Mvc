@@ -17,8 +17,8 @@
         /// <typeparam name="TModel">Expected model type.</typeparam>
         /// <param name="builder">Instance of <see cref="IShouldReturnTestBuilder{TActionResult}"/> type.</param>
         /// <param name="model">Expected model object.</param>
-        /// <returns>Test builder of <see cref="IAndViewTestBuilder"/> type.</returns>
-        public static IAndViewTestBuilder PartialView<TActionResult, TModel>(
+        /// <returns>Test builder of <see cref="IAndPartialViewTestBuilder"/> type.</returns>
+        public static IAndPartialViewTestBuilder PartialView<TActionResult, TModel>(
             this IShouldReturnTestBuilder<TActionResult> builder,
             TModel model)
             => builder.PartialView(null, model);
@@ -32,8 +32,8 @@
         /// <param name="builder">Instance of <see cref="IShouldReturnTestBuilder{TActionResult}"/> type.</param>
         /// <param name="viewName">Expected partial view name.</param>
         /// <param name="model">Expected model object.</param>
-        /// <returns>Test builder of <see cref="IAndViewTestBuilder"/> type.</returns>
-        public static IAndViewTestBuilder PartialView<TActionResult, TModel>(
+        /// <returns>Test builder of <see cref="IAndPartialViewTestBuilder"/> type.</returns>
+        public static IAndPartialViewTestBuilder PartialView<TActionResult, TModel>(
             this IShouldReturnTestBuilder<TActionResult> builder,
             string viewName,
             TModel model)

@@ -10,10 +10,7 @@
     /// </summary>
     public interface IBadRequestTestBuilder 
         : IBaseTestBuilderWithOutputResult<IAndBadRequestTestBuilder>,
-        IBaseTestBuilderWithActionResult<BadRequestResult>,
-        IBaseTestBuilderWithActionResult<BadRequestObjectResult>,
-        IBaseTestBuilderWithActionResult<IActionResult>,
-        IBaseTestBuilderWithActionResult<ActionResult>
+        IBaseTestBuilderWithActionResult<BadRequestObjectResult>
     {
     }
 }

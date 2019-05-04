@@ -3,7 +3,9 @@
     using System;
 
     /// <summary>
-    /// <see cref="Exception"/> for invalid <see cref="Microsoft.AspNetCore.Mvc.CreatedResult"/>, <see cref="Microsoft.AspNetCore.Mvc.CreatedAtActionResult"/> or <see cref="Microsoft.AspNetCore.Mvc.CreatedAtRouteResult"/>/>.
+    /// <see cref="Exception"/> for invalid <see cref="Microsoft.AspNetCore.Mvc.CreatedResult"/>,
+    /// <see cref="Microsoft.AspNetCore.Mvc.CreatedAtActionResult"/>
+    /// or <see cref="Microsoft.AspNetCore.Mvc.CreatedAtRouteResult"/>/>.
     /// </summary>
     public class CreatedResultAssertionException : Exception
     {

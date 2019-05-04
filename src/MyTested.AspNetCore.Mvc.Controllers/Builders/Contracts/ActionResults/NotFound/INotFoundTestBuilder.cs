@@ -2,14 +2,16 @@
 {
     using Base;
     using Contracts.Base;
+    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
-    /// Used for testing <see cref="Microsoft.AspNetCore.Mvc.NotFoundResult"/>
-    /// or <see cref="Microsoft.AspNetCore.Mvc.NotFoundObjectResult"/>.
+    /// Used for testing <see cref="NotFoundResult"/>
+    /// or <see cref="NotFoundObjectResult"/>.
     /// </summary>
     public interface INotFoundTestBuilder 
         : IBaseTestBuilderWithResponseModel,
-        IBaseTestBuilderWithOutputResult<IAndNotFoundTestBuilder>
+        IBaseTestBuilderWithOutputResult<IAndNotFoundTestBuilder>,
+        IBaseTestBuilderWithActionResult<NotFoundObjectResult>
     {
     }
 }

@@ -3,7 +3,8 @@
     using System;
 
     /// <summary>
-    /// <see cref="Exception"/> for invalid <see cref="Microsoft.AspNetCore.Mvc.BadRequestResult"/> or <see cref="Microsoft.AspNetCore.Mvc.BadRequestObjectResult"/>.
+    /// <see cref="Exception"/> for invalid <see cref="Microsoft.AspNetCore.Mvc.BadRequestResult"/>
+    /// or <see cref="Microsoft.AspNetCore.Mvc.BadRequestObjectResult"/>.
     /// </summary>
     public class BadRequestResultAssertionException : Exception
     {

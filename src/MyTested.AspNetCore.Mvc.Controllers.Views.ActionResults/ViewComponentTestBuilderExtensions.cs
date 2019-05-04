@@ -14,7 +14,7 @@
         private const string ArgumentsName = "arguments";
 
         /// <summary>
-        /// Tests whether <see cref="Microsoft.AspNetCore.Mvc.ViewComponentResult"/> will be
+        /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.ViewComponentResult"/> will be
         /// invoked with an argument with the same name as the provided one.
         /// </summary>
         /// <param name="viewComponentTestBuilder">
@@ -38,7 +38,7 @@
         }
 
         /// <summary>
-        /// Tests whether <see cref="Microsoft.AspNetCore.Mvc.ViewComponentResult"/> will be
+        /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.ViewComponentResult"/> will be
         /// invoked with an argument deeply equal to the provided one.
         /// </summary>
         /// <param name="viewComponentTestBuilder">
@@ -65,7 +65,7 @@
         }
 
         /// <summary>
-        /// Tests whether <see cref="Microsoft.AspNetCore.Mvc.ViewComponentResult"/> will be
+        /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.ViewComponentResult"/> will be
         /// invoked with an argument equal to the provided one.
         /// </summary>
         /// <param name="viewComponentTestBuilder">
@@ -90,7 +90,7 @@
         }
 
         /// <summary>
-        /// Tests whether <see cref="Microsoft.AspNetCore.Mvc.ViewComponentResult"/> will be
+        /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.ViewComponentResult"/> will be
         /// invoked with an argument of the provided type.
         /// </summary>
         /// <param name="viewComponentTestBuilder">
@@ -112,7 +112,7 @@
         }
 
         /// <summary>
-        /// Tests whether <see cref="Microsoft.AspNetCore.Mvc.ViewComponentResult"/> will be
+        /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.ViewComponentResult"/> will be
         /// invoked with an argument of the provided type and the given name.
         /// </summary>
         /// <param name="viewComponentTestBuilder">
@@ -137,7 +137,7 @@
         }
 
         /// <summary>
-        /// Tests whether <see cref="Microsoft.AspNetCore.Mvc.ViewComponentResult"/> will be
+        /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.ViewComponentResult"/> will be
         /// invoked with the provided arguments.
         /// </summary>
         /// <param name="viewComponentTestBuilder">
@@ -152,7 +152,7 @@
                 .ContainingArguments(new RouteValueDictionary(arguments));
 
         /// <summary>
-        /// Tests whether <see cref="Microsoft.AspNetCore.Mvc.ViewComponentResult"/> will be
+        /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.ViewComponentResult"/> will be
         /// invoked with the provided arguments.
         /// </summary>
         /// <param name="viewComponentTestBuilder">

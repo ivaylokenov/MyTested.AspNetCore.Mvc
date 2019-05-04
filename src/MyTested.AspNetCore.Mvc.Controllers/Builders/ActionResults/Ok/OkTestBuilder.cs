@@ -1,7 +1,9 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.Ok
 {
+    using System;
     using Base;
     using Contracts.ActionResults.Ok;
+    using Contracts.And;
     using Exceptions;
     using Internal;
     using Internal.Contracts.ActionResults;
@@ -11,7 +13,9 @@
     /// <summary>
     /// Used for testing OK result.
     /// </summary>
-    /// <typeparam name="TOkResult">Type of OK result - <see cref="OkResult"/> or <see cref="OkObjectResult"/>.</typeparam>
+    /// <typeparam name="TOkResult">
+    /// Type of OK result - <see cref="OkResult"/> or <see cref="OkObjectResult"/>.
+    /// </typeparam>
     public class OkTestBuilder<TOkResult>
         : BaseTestBuilderWithResponseModel<TOkResult>,
         IAndOkTestBuilder,
@@ -34,6 +38,20 @@
         public IAndOkTestBuilder ResultTestBuilder => this;
 
         /// <inheritdoc />
+        public IAndTestBuilder Passing(Action<OkObjectResult> assertions)
+        {
+            this.ValidateOkObjectResult();
+            return this.Passing<OkObjectResult>(assertions);
+        }
+
+        /// <inheritdoc />
+        public IAndTestBuilder Passing(Func<OkObjectResult, bool> predicate)
+        {
+            this.ValidateOkObjectResult();
+            return this.Passing<OkObjectResult>(predicate);
+        }
+
+        /// <inheritdoc />
         public IOkTestBuilder AndAlso() => this;
 
         public override void ValidateNoModel() => this.WithNoModel<OkResult>();
@@ -52,5 +70,20 @@
                 propertyName,
                 expectedValue,
                 actualValue));
+        
+        private void ValidateOkObjectResult()
+        {
+            var actualResultType = this.ActionResult.GetType();
+            var expectedResultType = typeof(OkObjectResult);
+
+            if (actualResultType != expectedResultType)
+            {
+                throw new NotFoundResultAssertionException(string.Format(
+                    "{0} OK result to be {1}, but it was {2}.",
+                    this.TestContext.ExceptionMessagePrefix,
+                    expectedResultType,
+                    actualResultType));
+            }
+        }
     }
 }

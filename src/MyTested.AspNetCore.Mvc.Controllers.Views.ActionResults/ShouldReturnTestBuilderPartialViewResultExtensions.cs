@@ -19,29 +19,28 @@
         /// <typeparam name="TActionResult">Type of action result type.</typeparam>
         /// <param name="builder">Instance of <see cref="IShouldReturnTestBuilder{TActionResult}"/> type.</param>
         /// <param name="viewName">Expected partial view name.</param>
-        /// <returns>Test builder of <see cref="IAndViewTestBuilder"/> type.</returns>
-        public static IAndViewTestBuilder PartialView<TActionResult>(
+        /// <returns>Test builder of <see cref="IAndPartialViewTestBuilder"/> type.</returns>
+        public static IAndPartialViewTestBuilder PartialView<TActionResult>(
             this IShouldReturnTestBuilder<TActionResult> builder,
             string viewName)
         {
             var actualBuilder = (ShouldReturnTestBuilder<TActionResult>)builder;
             
-            var viewType = "partial view";
-
             var viewResult = InvocationResultValidator
                 .GetInvocationResult<PartialViewResult>(actualBuilder.TestContext);
 
             var actualViewName = viewResult.ViewName;
+
             if (viewName != actualViewName)
             {
                 throw ViewResultAssertionException.ForNameEquality(
                     actualBuilder.TestContext.ExceptionMessagePrefix,
-                    viewType,
+                    "partial view",
                     viewName,
                     actualViewName);
             }
 
-            return new ViewTestBuilder<PartialViewResult>(actualBuilder.TestContext, viewType);
+            return new PartialViewTestBuilder(actualBuilder.TestContext);
         }
     }
 }

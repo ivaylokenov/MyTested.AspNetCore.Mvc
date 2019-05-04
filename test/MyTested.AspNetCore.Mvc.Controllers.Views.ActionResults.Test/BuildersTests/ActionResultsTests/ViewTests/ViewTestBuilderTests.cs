@@ -47,7 +47,7 @@
                         .View(view => view
                             .WithViewEngine(new CustomViewEngine()));
                 },
-                "When calling ViewWithViewEngine action in MvcController expected view result ViewEngine to be the same as the provided one, but instead received different result.");
+                "When calling ViewWithViewEngine action in MvcController expected view result engine to be the same as the provided one, but instead received different result.");
         }
 
         [Fact]
@@ -74,7 +74,7 @@
                         .View(view => view
                             .WithViewEngineOfType<IViewEngine>());
                 },
-                "When calling ViewWithViewEngine action in MvcController expected view result ViewEngine to be of IViewEngine type, but instead received CustomViewEngine.");
+                "When calling ViewWithViewEngine action in MvcController expected view result engine to be of IViewEngine type, but instead received CustomViewEngine.");
         }
 
         [Fact]
@@ -90,7 +90,7 @@
                         .View(view => view
                             .WithViewEngineOfType<CustomViewEngine>());
                 },
-                "When calling DefaultView action in MvcController expected view result ViewEngine to be of CustomViewEngine type, but instead received null.");
+                "When calling DefaultView action in MvcController expected view result engine to be of CustomViewEngine type, but instead received null.");
         }
         
         [Fact]
@@ -133,7 +133,7 @@
                         .PartialView(partialView => partialView
                             .WithViewEngine(new CustomViewEngine()));
                 },
-                "When calling PartialViewWithViewEngine action in MvcController expected partial view result ViewEngine to be the same as the provided one, but instead received different result.");
+                "When calling PartialViewWithViewEngine action in MvcController expected partial view result engine to be the same as the provided one, but instead received different result.");
         }
 
         [Fact]
@@ -162,7 +162,7 @@
                         .PartialView(partialView => partialView
                             .WithViewEngineOfType<IViewEngine>());
                 },
-                "When calling PartialViewWithViewEngine action in MvcController expected partial view result ViewEngine to be of IViewEngine type, but instead received CustomViewEngine.");
+                "When calling PartialViewWithViewEngine action in MvcController expected partial view result engine to be of IViewEngine type, but instead received CustomViewEngine.");
         }
 
         [Fact]
@@ -179,7 +179,7 @@
                         .PartialView(partialView => partialView
                             .WithViewEngineOfType<CustomViewEngine>());
                 },
-                "When calling DefaultPartialView action in MvcController expected partial view result ViewEngine to be of CustomViewEngine type, but instead received null.");
+                "When calling DefaultPartialView action in MvcController expected partial view result engine to be of CustomViewEngine type, but instead received null.");
         }
     }
 }

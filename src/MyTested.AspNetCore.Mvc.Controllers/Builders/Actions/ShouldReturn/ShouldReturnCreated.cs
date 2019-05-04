@@ -7,7 +7,8 @@
     using Microsoft.AspNetCore.Mvc;
 
     /// <content>
-    /// Class containing methods for testing <see cref="CreatedResult"/>, <see cref="CreatedAtActionResult"/> or <see cref="CreatedAtRouteResult"/>.
+    /// Class containing methods for testing <see cref="CreatedResult"/>,
+    /// <see cref="CreatedAtActionResult"/> or <see cref="CreatedAtRouteResult"/>.
     /// </content>
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
