@@ -17,7 +17,45 @@
         public string Action { get; set; }
 
         public IDictionary<string, object> RouteValues { get; set; }
-        
+
+        public static LinkGenerationTestContext FromAcceptedResult(IActionResult actionResult)
+        {
+            if (actionResult is AcceptedAtRouteResult acceptedAtRouteResult)
+            {
+                acceptedAtRouteResult.RouteValues = acceptedAtRouteResult.RouteValues ?? new RouteValueDictionary();
+
+                return new LinkGenerationTestContext
+                {
+                    UrlHelper = acceptedAtRouteResult.UrlHelper,
+                    RouteName = acceptedAtRouteResult.RouteName,
+                    RouteValues = new SortedDictionary<string, object>(acceptedAtRouteResult.RouteValues)
+                };
+            }
+
+            if (actionResult is AcceptedAtActionResult acceptedAtActionResult)
+            {
+                acceptedAtActionResult.RouteValues = acceptedAtActionResult.RouteValues ?? new RouteValueDictionary();
+
+                return new LinkGenerationTestContext
+                {
+                    UrlHelper = acceptedAtActionResult.UrlHelper,
+                    Controller = acceptedAtActionResult.ControllerName,
+                    Action = acceptedAtActionResult.ActionName,
+                    RouteValues = new SortedDictionary<string, object>(acceptedAtActionResult.RouteValues)
+                };
+            }
+
+            if (actionResult is AcceptedResult acceptedResult)
+            {
+                return new LinkGenerationTestContext
+                {
+                    Location = acceptedResult.Location
+                };
+            }
+
+            return null;
+        }
+
         public static LinkGenerationTestContext FromCreatedResult(IActionResult actionResult)
         {
             if (actionResult is CreatedAtRouteResult createdAtRouteResult)

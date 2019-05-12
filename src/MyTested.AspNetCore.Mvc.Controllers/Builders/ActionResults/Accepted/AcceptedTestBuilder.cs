@@ -14,7 +14,7 @@
     /// Used for testing accepted results.
     /// </summary>
     /// <typeparam name="TAcceptedResult">
-    /// Type of created result - <see cref="AcceptedResult"/>,
+    /// Type of accepted result - <see cref="AcceptedResult"/>,
     /// <see cref="AcceptedAtActionResult"/> or <see cref="AcceptedAtRouteResult"/>.
     /// </typeparam>
     public class AcceptedTestBuilder<TAcceptedResult>

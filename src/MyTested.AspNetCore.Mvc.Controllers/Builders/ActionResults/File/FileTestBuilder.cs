@@ -10,7 +10,11 @@
     /// <summary>
     /// Used for testing file result.
     /// </summary>
-    /// <typeparam name="TFileResult">Result of type <see cref="FileStreamResult"/>, <see cref="VirtualFileResult"/> or <see cref="FileContentResult"/>.</typeparam>
+    /// <typeparam name="TFileResult">
+    /// Result of type <see cref="FileStreamResult"/>,
+    /// <see cref="VirtualFileResult"/>
+    /// or <see cref="FileContentResult"/>.
+    /// </typeparam>
     public class FileTestBuilder<TFileResult>
         : BaseTestBuilderWithFileResult<TFileResult, IAndFileTestBuilder>, 
         IAndFileTestBuilder

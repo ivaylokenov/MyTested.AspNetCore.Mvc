@@ -16,8 +16,6 @@
     public static class CreatedTestBuilderExtensions
     {
         private const string Location = "location";
-        private const string ControllerName = "controller name";
-        private const string ActionName = "action name";
 
         /// <summary>
         /// Tests whether the <see cref="CreatedResult"/>
@@ -150,7 +148,7 @@
         {
             var actualBuilder = GetCreatedTestBuilder<CreatedAtActionResult>(
                 createdTestBuilder,
-                ActionName);
+                "action name");
             
             RouteActionResultValidator.ValidateActionName(
                 actualBuilder.ActionResult,
@@ -175,7 +173,7 @@
         {
             var actualBuilder = GetCreatedTestBuilder<CreatedAtActionResult>(
                 createdTestBuilder,
-                ControllerName);
+                "controller name");
             
             RouteActionResultValidator.ValidateControllerName(
                 actualBuilder.ActionResult,

@@ -9,8 +9,6 @@
     /// </summary>
     public static class PhysicalFileTestBuilderExtensions
     {
-        private const string FileName = "path";
-
         /// <summary>
         /// Tests whether <see cref="Microsoft.AspNetCore.Mvc.PhysicalFileResult"/>
         /// has the same physical file path as the provided one.
@@ -31,7 +29,7 @@
             if (physicalPath != actualPhysicalPath)
             {
                 actualBuilder.ThrowNewFailedValidationException(
-                    FileName,
+                    "path",
                     $"to be {physicalPath.GetErrorMessageName()}",
                     $"instead received '{actualPhysicalPath}'");
             }

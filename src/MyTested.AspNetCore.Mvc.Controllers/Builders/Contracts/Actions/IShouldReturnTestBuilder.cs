@@ -4,6 +4,7 @@
     using ActionResults.Accepted;
     using ActionResults.BadRequest;
     using ActionResults.Challenge;
+    using ActionResults.Conflict;
     using ActionResults.Content;
     using ActionResults.Created;
     using ActionResults.File;
@@ -53,6 +54,21 @@
         /// <param name="challengeTestBuilder">Builder for testing the challenge result.</param>
         /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
         IAndTestBuilder Challenge(Action<IChallengeTestBuilder> challengeTestBuilder);
+
+        /// <summary>
+        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.ConflictResult"/>
+        /// or <see cref="Microsoft.AspNetCore.Mvc.ConflictObjectResult"/>.
+        /// </summary>
+        /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
+        IAndTestBuilder Conflict();
+
+        /// <summary>
+        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.ConflictResult"/>
+        /// or <see cref="Microsoft.AspNetCore.Mvc.ConflictObjectResult"/>.
+        /// </summary>
+        /// <param name="conflictTestBuilder">Builder for testing the conflict result.</param>
+        /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
+        IAndTestBuilder Conflict(Action<IConflictTestBuilder> conflictTestBuilder);
 
         /// <summary>
         /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.ContentResult"/>.

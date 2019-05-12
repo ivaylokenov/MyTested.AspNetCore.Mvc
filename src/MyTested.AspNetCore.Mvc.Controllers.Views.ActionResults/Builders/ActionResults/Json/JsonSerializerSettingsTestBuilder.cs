@@ -285,8 +285,8 @@
                 if (expected.EqualityComparer != actual.EqualityComparer)
                 {
                     this.ThrowNewJsonResultAssertionException(
-                        $"the same equality comparer as the provided one",
-                        $"in fact it was different");
+                        "the same equality comparer as the provided one",
+                        "in fact it was different");
                 }
             });
 
@@ -497,8 +497,8 @@
                 if (expected.ReferenceResolverProvider() != actual.ReferenceResolverProvider())
                 {
                     this.ThrowNewJsonResultAssertionException(
-                        $"the same reference resolver as the provided one",
-                        $"in fact it was different");
+                        "the same reference resolver as the provided one",
+                        "in fact it was different");
                 }
             });
 
@@ -552,8 +552,8 @@
                 if (expected.TraceWriter != actual.TraceWriter)
                 {
                     this.ThrowNewJsonResultAssertionException(
-                        $"the same trace writer as the provided one",
-                        $"in fact it was different");
+                        "the same trace writer as the provided one",
+                        "in fact it was different");
                 }
             });
 
@@ -575,6 +575,44 @@
                     this.ThrowNewJsonResultAssertionException(
                         $"trace writer of {traceWriterType.ToFriendlyTypeName()} type",
                         $"in fact found {actualTraceWriterType.ToFriendlyTypeName()}");
+                }
+            });
+
+            return this;
+        }
+
+        /// <inheritdoc />
+        public IAndJsonSerializerSettingsTestBuilder WithSerializationBinder(ISerializationBinder serializationBinder)
+        {
+            this.jsonSerializerSettings.SerializationBinder = serializationBinder;
+            this.validations.Add((expected, actual) =>
+            {
+                if (expected.SerializationBinder != actual.SerializationBinder)
+                {
+                    this.ThrowNewJsonResultAssertionException(
+                        "the same serialization binder as the provided one",
+                        "in fact it was different");
+                }
+            });
+
+            return this;
+        }
+
+        /// <inheritdoc />
+        public IAndJsonSerializerSettingsTestBuilder WithSerializationBinderOfType<TSerializationBinder>()
+            where TSerializationBinder : ISerializationBinder => this.WithSerializationBinderOfType(typeof(TSerializationBinder));
+
+        /// <inheritdoc />
+        public IAndJsonSerializerSettingsTestBuilder WithSerializationBinderOfType(Type serializationBinderType)
+        {
+            this.validations.Add((expected, actual) =>
+            {
+                var actualSerializationBinderType = actual.SerializationBinder?.GetType();
+                if (Reflection.AreDifferentTypes(serializationBinderType, actualSerializationBinderType))
+                {
+                    this.ThrowNewJsonResultAssertionException(
+                        $"serialization binder of {serializationBinderType.ToFriendlyTypeName()} type",
+                        $"in fact found {actualSerializationBinderType.ToFriendlyTypeName()}");
                 }
             });
 

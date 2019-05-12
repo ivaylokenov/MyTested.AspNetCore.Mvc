@@ -78,7 +78,7 @@
 
             if (actualResultType != expectedResultType)
             {
-                throw new NotFoundResultAssertionException(string.Format(
+                throw new OkResultAssertionException(string.Format(
                     "{0} OK result to be {1}, but it was {2}.",
                     this.TestContext.ExceptionMessagePrefix,
                     expectedResultType,

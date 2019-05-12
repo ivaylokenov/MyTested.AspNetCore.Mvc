@@ -225,7 +225,7 @@
                 if (urlHelper != (IUrlHelper)actionResult.UrlHelper)
                 {
                     failedValidationAction(
-                        "UrlHelper",
+                        "URL helper",
                         "to be the same as the provided one",
                         "instead received different result");
                 }
@@ -250,7 +250,7 @@
                     Reflection.AreDifferentTypes(typeof(TUrlHelper), actualUrlHelper.GetType()))
                 {
                     failedValidationAction(
-                        "UrlHelper",
+                        "URL helper",
                         $"to be of {typeof(TUrlHelper).Name} type",
                         $"instead received {actualUrlHelper.GetName()}");
                 }

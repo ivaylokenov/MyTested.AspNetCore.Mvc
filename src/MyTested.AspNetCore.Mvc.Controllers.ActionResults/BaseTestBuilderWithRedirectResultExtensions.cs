@@ -14,39 +14,6 @@
     public static class BaseTestBuilderWithRedirectResultExtensions
     {
         /// <summary>
-        /// Tests whether the redirect <see cref="Microsoft.AspNetCore.Mvc.ActionResult"/> is permanent.
-        /// </summary>
-        /// <param name="baseTestBuilderWithRedirectResult">
-        /// Instance of <see cref="IBaseTestBuilderWithRedirectResult{TRedirectResultTestBuilder}"/> type.
-        /// </param>
-        /// <returns>The same redirect <see cref="Microsoft.AspNetCore.Mvc.ActionResult"/> test builder.</returns>
-        public static TRedirectResultTestBuilder Permanent<TRedirectResultTestBuilder>(
-            this IBaseTestBuilderWithRedirectResult<TRedirectResultTestBuilder> baseTestBuilderWithRedirectResult)
-            where TRedirectResultTestBuilder : IBaseTestBuilderWithActionResult
-        {
-            var actualBuilder = GetActualBuilder(baseTestBuilderWithRedirectResult);
-
-            RuntimeBinderValidator.ValidateBinding(() =>
-            {
-                var permanent = actualBuilder
-                    .TestContext
-                    .MethodResult
-                    .AsDynamic()
-                    .Permanent;
-
-                if (!permanent)
-                {
-                    actualBuilder.ThrowNewFailedValidationException(
-                        "to",
-                        "be permanent",
-                        "in fact it was not");
-                }
-            });
-            
-            return actualBuilder.ResultTestBuilder;
-        }
-
-        /// <summary>
         /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.ActionResult"/>
         /// has specific location provided by string.
         /// </summary>
@@ -180,6 +147,76 @@
                 }
             });
             
+            return actualBuilder.ResultTestBuilder;
+        }
+
+        /// <summary>
+        /// Tests whether the redirect <see cref="Microsoft.AspNetCore.Mvc.ActionResult"/> is permanent.
+        /// </summary>
+        /// <param name="baseTestBuilderWithRedirectResult">
+        /// Instance of <see cref="IBaseTestBuilderWithRedirectResult{TRedirectResultTestBuilder}"/> type.
+        /// </param>
+        /// <param name="permanent">Expected boolean value.</param>
+        /// <returns>The same redirect <see cref="Microsoft.AspNetCore.Mvc.ActionResult"/> test builder.</returns>
+        public static TRedirectResultTestBuilder Permanent<TRedirectResultTestBuilder>(
+            this IBaseTestBuilderWithRedirectResult<TRedirectResultTestBuilder> baseTestBuilderWithRedirectResult,
+            bool permanent = true)
+            where TRedirectResultTestBuilder : IBaseTestBuilderWithActionResult
+        {
+            var actualBuilder = GetActualBuilder(baseTestBuilderWithRedirectResult);
+
+            RuntimeBinderValidator.ValidateBinding(() =>
+            {
+                var actualPermanent = actualBuilder
+                    .TestContext
+                    .MethodResult
+                    .AsDynamic()
+                    .Permanent;
+
+                if (permanent != actualPermanent)
+                {
+                    actualBuilder.ThrowNewFailedValidationException(
+                        "to",
+                        $"{(permanent ? string.Empty : "not ")}be permanent",
+                        $"in fact it was{(actualPermanent ? string.Empty : " not")}");
+                }
+            });
+
+            return actualBuilder.ResultTestBuilder;
+        }
+
+        /// <summary>
+        /// Tests whether the redirect <see cref="Microsoft.AspNetCore.Mvc.ActionResult"/> is preserving the request method.
+        /// </summary>
+        /// <param name="baseTestBuilderWithRedirectResult">
+        /// Instance of <see cref="IBaseTestBuilderWithRedirectResult{TRedirectResultTestBuilder}"/> type.
+        /// </param>
+        /// <param name="preserveMethod">Expected boolean value.</param>
+        /// <returns>The same redirect <see cref="Microsoft.AspNetCore.Mvc.ActionResult"/> test builder.</returns>
+        public static TRedirectResultTestBuilder PreservingMethod<TRedirectResultTestBuilder>(
+            this IBaseTestBuilderWithRedirectResult<TRedirectResultTestBuilder> baseTestBuilderWithRedirectResult,
+            bool preserveMethod = true)
+            where TRedirectResultTestBuilder : IBaseTestBuilderWithActionResult
+        {
+            var actualBuilder = GetActualBuilder(baseTestBuilderWithRedirectResult);
+
+            RuntimeBinderValidator.ValidateBinding(() =>
+            {
+                var actualPreserveMethod = actualBuilder
+                    .TestContext
+                    .MethodResult
+                    .AsDynamic()
+                    .PreserveMethod;
+
+                if (preserveMethod != actualPreserveMethod)
+                {
+                    actualBuilder.ThrowNewFailedValidationException(
+                        "to",
+                        $"{(preserveMethod ? string.Empty : "not ")}preserve the request method",
+                        $"in fact it did{(actualPreserveMethod ? string.Empty : " not")}");
+                }
+            });
+
             return actualBuilder.ResultTestBuilder;
         }
 
