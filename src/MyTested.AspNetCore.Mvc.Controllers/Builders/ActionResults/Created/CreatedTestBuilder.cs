@@ -1,6 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.Created
 {
-    using Base;
+    using Builders.Base;
     using Contracts.ActionResults.Created;
     using Contracts.And;
     using Exceptions;

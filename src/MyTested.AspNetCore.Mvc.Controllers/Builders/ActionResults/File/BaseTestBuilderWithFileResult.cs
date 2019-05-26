@@ -1,7 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.File
 {
     using System;
-    using Base;
+    using Builders.Base;
     using Contracts.ActionResults.Base;
     using Contracts.And;
     using Contracts.Base;

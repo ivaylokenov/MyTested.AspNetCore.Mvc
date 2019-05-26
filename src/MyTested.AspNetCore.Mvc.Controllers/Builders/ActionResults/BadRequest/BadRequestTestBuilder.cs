@@ -9,8 +9,6 @@
     using Internal.Contracts.ActionResults;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.ModelBinding;
-    using Utilities.Extensions;
 
     /// <summary>
     /// Used for testing bad request results.
@@ -20,23 +18,20 @@
     /// or <see cref="BadRequestObjectResult"/>.
     /// </typeparam>
     public class BadRequestTestBuilder<TBadRequestResult> 
-        : BaseTestBuilderWithResponseModel<TBadRequestResult>,
+        : BaseTestBuilderWithErrorResult<TBadRequestResult>,
         IAndBadRequestTestBuilder,
-        IBaseTestBuilderWithOutputResultInternal<IAndBadRequestTestBuilder> 
+        IBaseTestBuilderWithErrorResultInternal<IAndBadRequestTestBuilder>
         where TBadRequestResult : ActionResult
     {
-        private const string ErrorMessage = "{0} bad request result error to be the given object, but in fact it was a different.";
-        private const string OfTypeErrorMessage = "{0} bad request result error to be of {1} type, but instead received {2}.";
+        private const string ActionResultName = "bad request";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BadRequestTestBuilder{TBadRequestResult}"/> class.
         /// </summary>
         /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
         public BadRequestTestBuilder(ControllerTestContext testContext)
-            : base(testContext)
+            : base(testContext, ActionResultName)
         {
-            this.ErrorMessageFormat = ErrorMessage;
-            this.OfTypeErrorMessageFormat = OfTypeErrorMessage;
         }
 
         /// <summary>
@@ -48,63 +43,19 @@
         /// <inheritdoc />
         public IAndTestBuilder Passing(Action<BadRequestObjectResult> assertions)
         {
-            this.GetBadRequestObjectResult();
+            this.GetObjectResult();
             return this.Passing<BadRequestObjectResult>(assertions);
         }
 
         /// <inheritdoc />
         public IAndTestBuilder Passing(Func<BadRequestObjectResult, bool> predicate)
         {
-            this.GetBadRequestObjectResult();
+            this.GetObjectResult();
             return this.Passing<BadRequestObjectResult>(predicate);
         }
 
         /// <inheritdoc />
         public IBadRequestTestBuilder AndAlso() => this;
-
-        public object GetBadRequestObjectResultValue()
-            => this.GetBadRequestObjectResult().Value;
-
-        public string GetBadRequestErrorMessage()
-        {
-            var errorMessage = this.GetBadRequestObjectResultValue() as string;
-            if (errorMessage == null)
-            {
-                this.ThrowNewHttpBadRequestResultAssertionExceptionWithMessage();
-            }
-
-            return errorMessage;
-        }
-
-        public void ValidateErrorMessage(string expectedMessage, string actualMessage)
-        {
-            if (expectedMessage != actualMessage)
-            {
-                this.ThrowNewHttpBadRequestResultAssertionExceptionWithMessage($"message '{expectedMessage}'", $"'{actualMessage}'");
-            }
-        }
-
-        public ModelStateDictionary GetModelStateFromSerializableError(object error)
-        {
-            var serializableError = error as SerializableError;
-            if (serializableError == null)
-            {
-                this.ThrowNewHttpBadRequestResultAssertionExceptionWithMessage("model state dictionary as error", "other type of error");
-            }
-
-            var result = new ModelStateDictionary();
-
-            foreach (var errorKeyValuePair in serializableError)
-            {
-                var errorKey = errorKeyValuePair.Key;
-                if (errorKeyValuePair.Value is string[] errorValues)
-                {
-                    errorValues.ForEach(er => result.AddModelError(errorKey, er));
-                }
-            }
-
-            return result;
-        }
 
         /// <summary>
         /// Throws new <see cref="BadRequestResultAssertionException"/> for the provided property name, expected value and actual value.
@@ -116,28 +67,9 @@
             => throw new BadRequestResultAssertionException(string.Format(
                 ExceptionMessages.ActionResultFormat,
                 this.TestContext.ExceptionMessagePrefix,
-                "bad request",
+                ActionResultName,
                 propertyName,
                 expectedValue,
                 actualValue));
-
-        private BadRequestObjectResult GetBadRequestObjectResult()
-        {
-            var badRequestObjectResult = this.TestContext.MethodResult as BadRequestObjectResult;
-            if (badRequestObjectResult == null)
-            {
-                throw new BadRequestResultAssertionException(string.Format(
-                    "{0} bad request result to contain error object, but such could not be found.",
-                    this.TestContext.ExceptionMessagePrefix));
-            }
-
-            return badRequestObjectResult;
-        }
-
-        private void ThrowNewHttpBadRequestResultAssertionExceptionWithMessage(string expectedMessage = null, string actualMessage = null) 
-            => this.ThrowNewFailedValidationException(
-                "with",
-                expectedMessage == null ? "error message" : $"{expectedMessage}",
-                $"instead received {(actualMessage == null ? "non-string value" : $"{actualMessage}")}");
     }
 }

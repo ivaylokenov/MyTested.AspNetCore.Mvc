@@ -261,7 +261,7 @@
                 .Calling(c => c.RedirectToRouteAction())
                 .ShouldReturn()
                 .Redirect(redirect => redirect
-                    .WithRouteName("Redirect"));
+                    .ToRoute("Redirect"));
         }
 
         [Fact]
@@ -275,7 +275,7 @@
                         .Calling(c => c.RedirectToRouteAction())
                         .ShouldReturn()
                         .Redirect(redirect => redirect
-                            .WithRouteName("MyRedirect"));
+                            .ToRoute("MyRedirect"));
                 },
                 "When calling RedirectToRouteAction action in MvcController expected redirect result to have 'MyRedirect' route name, but instead received 'Redirect'.");
         }

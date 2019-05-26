@@ -1,6 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.LocalRedirect
 {
-    using Base;
+    using Builders.Base;
     using Contracts.ActionResults.LocalRedirect;
     using Exceptions;
     using Internal;
@@ -11,7 +11,8 @@
     /// <summary>
     /// Used for testing <see cref="LocalRedirectResult"/>.
     /// </summary>
-    public class LocalRedirectTestBuilder : BaseTestBuilderWithActionResult<LocalRedirectResult>,
+    public class LocalRedirectTestBuilder 
+        : BaseTestBuilderWithActionResult<LocalRedirectResult>,
         IAndLocalRedirectTestBuilder,
         IBaseTestBuilderWithRedirectResultInternal<IAndLocalRedirectTestBuilder>
     {

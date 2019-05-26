@@ -50,6 +50,7 @@
                 typeOfActualReturnValue: actualBuilder.GetModelReturnType());
 
             actualBuilder.TestContext.Model = actualBuilder.GetActualModel();
+
             return new AndTestBuilder(actualBuilder.TestContext);
         }
 
@@ -81,6 +82,7 @@
             }
 
             actualBuilder.TestContext.Model = actualBuilder.GetActualModel<TModel>();
+
             return new ModelDetailsTestBuilder<TModel>(actualBuilder.TestContext);
         }
 
@@ -89,18 +91,18 @@
         /// </summary>
         /// <typeparam name="TModel">Type of the model.</typeparam>
         /// <param name="builder">Instance of <see cref="IBaseTestBuilderWithResponseModel"/> type.</param>
-        /// <param name="expectedModel">Expected model to be returned.</param>
+        /// <param name="model">Expected model to be returned from the action result.</param>
         /// <returns>Test builder of <see cref="IModelDetailsTestBuilder{TModel}"/>.</returns>
         public static IAndModelDetailsTestBuilder<TModel> WithModel<TModel>(
             this IBaseTestBuilderWithResponseModel builder,
-            TModel expectedModel)
+            TModel model)
         {
             var actualBuilder = (BaseTestBuilderWithResponseModel)builder;
 
             actualBuilder.WithModelOfType<TModel>();
 
             var actualModel = actualBuilder.GetActualModel<TModel>();
-            if (Reflection.AreNotDeeplyEqual(expectedModel, actualModel))
+            if (Reflection.AreNotDeeplyEqual(model, actualModel))
             {
                 throw new ResponseModelAssertionException(string.Format(
                     actualBuilder.ErrorMessageFormat,
@@ -109,6 +111,7 @@
             }
 
             actualBuilder.TestContext.Model = actualModel;
+
             return new ModelDetailsTestBuilder<TModel>(actualBuilder.TestContext);
         }
     }

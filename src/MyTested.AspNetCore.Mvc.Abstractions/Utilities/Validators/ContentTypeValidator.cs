@@ -64,11 +64,13 @@
             Action<string, string, string> failedValidationAction)
         {
             var contentTypes = (MediaTypeCollection)TryGetContentTypesCollection(result);
-            if (!contentTypes.Contains(expectedContentType.MediaType.Value))
+            var expectedContentTypeValue = expectedContentType.ToString();
+
+            if (!contentTypes.Contains(expectedContentTypeValue))
             {
                 failedValidationAction(
                     "content types",
-                    $"to contain {expectedContentType.MediaType}",
+                    $"to contain {expectedContentTypeValue}",
                     "in fact such was not found");
             }
         }
@@ -85,7 +87,7 @@
             Action<string, string, string> failedValidationAction)
         {
             var actualContentTypes = (IList<string>)SortContentTypes(TryGetContentTypesCollection(result));
-            var expectedContentTypes = SortContentTypes(contentTypes.Select(m => m.MediaType.Value));
+            var expectedContentTypes = SortContentTypes(contentTypes.Select(m => m.ToString()));
 
             if (actualContentTypes.Count != expectedContentTypes.Count)
             {

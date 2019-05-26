@@ -14,7 +14,8 @@
                 .Instance()
                 .Calling(c => c.StatusCodeAction())
                 .ShouldReturn()
-                .StatusCode(500);
+                .StatusCode(result => result
+                    .WithStatusCode(500));
         }
 
         [Fact]
@@ -27,7 +28,8 @@
                         .Instance()
                         .Calling(c => c.StatusCodeAction())
                         .ShouldReturn()
-                        .StatusCode(200);
+                        .StatusCode(result => result
+                            .WithStatusCode(200));
                 },
                 "When calling StatusCodeAction action in MvcController expected status code result to have 200 (OK) status code, but instead received 500 (InternalServerError).");
         }

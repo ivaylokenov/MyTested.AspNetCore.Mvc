@@ -16,8 +16,9 @@
                 .Instance()
                 .Calling(c => c.ContentAction())
                 .ShouldReturn()
-                .Content("content")
-                .WithStatusCode(200);
+                .Content(result => result
+                    .WithContent("content")
+                    .WithStatusCode(200));
         }
 
         [Fact]
@@ -27,8 +28,9 @@
                 .Instance()
                 .Calling(c => c.ContentAction())
                 .ShouldReturn()
-                .Content("content")
-                .WithStatusCode(HttpStatusCode.OK);
+                .Content(result => result
+                    .WithContent("content")
+                    .WithStatusCode(HttpStatusCode.OK));
         }
 
         [Fact]
@@ -41,8 +43,9 @@
                         .Instance()
                         .Calling(c => c.ContentAction())
                         .ShouldReturn()
-                        .Content("content")
-                        .WithStatusCode(HttpStatusCode.NotFound);
+                        .Content(result => result
+                            .WithContent("content")
+                            .WithStatusCode(HttpStatusCode.NotFound));
                 },
                 "When calling ContentAction action in MvcController expected content result to have 404 (NotFound) status code, but instead received 200 (OK).");
         }
@@ -54,8 +57,9 @@
                 .Instance()
                 .Calling(c => c.ContentActionWithMediaType())
                 .ShouldReturn()
-                .Content("content")
-                .WithContentType(ContentType.TextPlain);
+                .Content(result => result
+                    .WithContent("content")
+                    .WithContentType(ContentType.TextPlain));
         }
 
         [Fact]
@@ -146,10 +150,11 @@
                 .Instance()
                 .Calling(c => c.ContentAction())
                 .ShouldReturn()
-                .Content("content")
-                .WithStatusCode(HttpStatusCode.OK)
-                .AndAlso()
-                .WithContentType(ContentType.ApplicationJson);
+                .Content(result => result
+                    .WithContent("content")
+                    .WithStatusCode(HttpStatusCode.OK)
+                    .AndAlso()
+                    .WithContentType(ContentType.ApplicationJson));
         }
     }
 }

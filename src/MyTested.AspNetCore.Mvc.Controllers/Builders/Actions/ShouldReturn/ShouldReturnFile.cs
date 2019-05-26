@@ -7,7 +7,8 @@
     using Microsoft.AspNetCore.Mvc;
 
     /// <content>
-    /// Class containing methods for testing <see cref="FileStreamResult"/>, <see cref="VirtualFileResult"/>, <see cref="FileContentResult"/> or <see cref="PhysicalFileResult"/>.
+    /// Class containing methods for testing <see cref="FileStreamResult"/>, <see cref="VirtualFileResult"/>,
+    /// <see cref="FileContentResult"/> or <see cref="PhysicalFileResult"/>.
     /// </content>
     public partial class ShouldReturnTestBuilder<TActionResult>
     {

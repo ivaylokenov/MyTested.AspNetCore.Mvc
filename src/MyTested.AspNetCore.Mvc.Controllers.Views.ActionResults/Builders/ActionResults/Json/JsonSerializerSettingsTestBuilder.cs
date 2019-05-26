@@ -5,7 +5,7 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
-    using Base;
+    using Builders.Base;
     using Contracts.ActionResults.Json;
     using Exceptions;
     using Internal.TestContexts;

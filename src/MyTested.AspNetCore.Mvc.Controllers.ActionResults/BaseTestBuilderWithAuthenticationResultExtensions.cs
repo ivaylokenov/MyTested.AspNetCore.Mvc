@@ -25,7 +25,7 @@
         /// <param name="authenticationScheme">Expected authentication scheme as string.</param>
         /// <returns>The same authentication <see cref="Microsoft.AspNetCore.Mvc.ActionResult"/> test builder.</returns>
         public static TAuthenticationResultTestBuilder ContainingAuthenticationScheme<TAuthenticationResultTestBuilder>(
-            this IBaseTestBuilderWithAuthenticationResult<TAuthenticationResultTestBuilder> baseTestBuilderWithAuthenticationResult,
+            this IBaseTestBuilderWithAuthenticationSchemesResult<TAuthenticationResultTestBuilder> baseTestBuilderWithAuthenticationResult,
             string authenticationScheme)
             where TAuthenticationResultTestBuilder : IBaseTestBuilderWithActionResult
         {
@@ -49,7 +49,7 @@
         /// <param name="authenticationSchemes">Expected authentication schemes as collection.</param>
         /// <returns>The same authentication <see cref="Microsoft.AspNetCore.Mvc.ActionResult"/> test builder.</returns>
         public static TAuthenticationResultTestBuilder ContainingAuthenticationSchemes<TAuthenticationResultTestBuilder>(
-            this IBaseTestBuilderWithAuthenticationResult<TAuthenticationResultTestBuilder> baseTestBuilderWithAuthenticationResult,
+            this IBaseTestBuilderWithAuthenticationSchemesResult<TAuthenticationResultTestBuilder> baseTestBuilderWithAuthenticationResult,
             IEnumerable<string> authenticationSchemes)
             where TAuthenticationResultTestBuilder : IBaseTestBuilderWithActionResult
         {
@@ -73,7 +73,7 @@
         /// <param name="authenticationSchemes">Expected authentication schemes as string parameters.</param>
         /// <returns>The same <see cref="Microsoft.AspNetCore.Mvc.ActionResult"/> test builder.</returns>
         public static TAuthenticationResultTestBuilder ContainingAuthenticationSchemes<TAuthenticationResultTestBuilder>(
-            this IBaseTestBuilderWithAuthenticationResult<TAuthenticationResultTestBuilder> baseTestBuilderWithAuthenticationResult,
+            this IBaseTestBuilderWithAuthenticationSchemesResult<TAuthenticationResultTestBuilder> baseTestBuilderWithAuthenticationResult,
             params string[] authenticationSchemes)
             where TAuthenticationResultTestBuilder : IBaseTestBuilderWithActionResult
             => baseTestBuilderWithAuthenticationResult

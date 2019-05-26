@@ -1,7 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.Accepted
 {
     using System;
-    using Base;
+    using Builders.Base;
     using Contracts.ActionResults.Accepted;
     using Contracts.And;
     using Exceptions;

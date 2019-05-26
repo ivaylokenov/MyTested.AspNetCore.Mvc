@@ -14,7 +14,8 @@
                 .Instance()
                 .Calling(c => c.ContentAction())
                 .ShouldReturn()
-                .Content("content");
+                .Content(result => result
+                    .WithContent("content"));
         }
 
         [Fact]
@@ -24,7 +25,8 @@
                 .Instance()
                 .Calling(c => c.ContentActionWithMediaType())
                 .ShouldReturn()
-                .Content("content");
+                .Content(result => result
+                    .WithContent("content"));
         }
 
         [Fact]
@@ -37,7 +39,8 @@
                         .Instance()
                         .Calling(c => c.ContentAction())
                         .ShouldReturn()
-                        .Content("incorrect");
+                        .Content(result => result
+                            .WithContent("incorrect"));
                 },
                 "When calling ContentAction action in MvcController expected content result to contain 'incorrect', but instead received 'content'.");
         }
@@ -52,7 +55,8 @@
                         .Instance()
                         .Calling(c => c.BadRequestAction())
                         .ShouldReturn()
-                        .Content("content");
+                        .Content(result => result
+                            .WithContent("content"));
                 },
                 "When calling BadRequestAction action in MvcController expected result to be ContentResult, but instead received BadRequestResult.");
         }
@@ -64,7 +68,9 @@
                 .Instance()
                 .Calling(c => c.ContentAction())
                 .ShouldReturn()
-                .Content(content => content.StartsWith("con"));
+                .Content(result => result
+                    .WithContent(content => content
+                        .StartsWith("con")));
         }
         
         [Fact]
@@ -77,7 +83,9 @@
                         .Instance()
                         .Calling(c => c.ContentAction())
                         .ShouldReturn()
-                        .Content(content => content.StartsWith("invalid"));
+                        .Content(result => result
+                            .WithContent(content => content
+                                .StartsWith("invalid")));
                 },
                 "When calling ContentAction action in MvcController expected content result ('content') to pass the given predicate, but it failed.");
         }
@@ -89,10 +97,11 @@
                 .Instance()
                 .Calling(c => c.ContentAction())
                 .ShouldReturn()
-                .Content(content =>
-                {
-                    Assert.StartsWith("con", content);
-                });
+                .Content(result => result
+                    .WithContent(content =>
+                    {
+                        Assert.StartsWith("con", content);
+                    }));
         }
     }
 }

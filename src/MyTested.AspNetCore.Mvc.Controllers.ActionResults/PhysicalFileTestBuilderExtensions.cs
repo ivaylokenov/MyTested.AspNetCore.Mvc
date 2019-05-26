@@ -31,7 +31,7 @@
                 actualBuilder.ThrowNewFailedValidationException(
                     "path",
                     $"to be {physicalPath.GetErrorMessageName()}",
-                    $"instead received '{actualPhysicalPath}'");
+                    $"instead received {actualPhysicalPath.GetErrorMessageName()}");
             }
 
             return actualBuilder;

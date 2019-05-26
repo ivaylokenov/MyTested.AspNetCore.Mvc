@@ -1,8 +1,8 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Actions.ShouldReturn
 {
     using System;
-    using ActionResults.Forbid;
-    using Contracts.ActionResults.Forbid;
+    using ActionResults.Authentication;
+    using Contracts.ActionResults.Authentication;
     using Contracts.And;
     using Microsoft.AspNetCore.Mvc;
 

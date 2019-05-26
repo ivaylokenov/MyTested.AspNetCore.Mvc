@@ -9,7 +9,7 @@
     /// and <see cref="BadRequestObjectResult"/>.
     /// </summary>
     public interface IBadRequestTestBuilder 
-        : IBaseTestBuilderWithOutputResult<IAndBadRequestTestBuilder>,
+        : IBaseTestBuilderWithErrorResult<IAndBadRequestTestBuilder>,
         IBaseTestBuilderWithActionResult<BadRequestObjectResult>
     {
     }

@@ -1,7 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.NotFound
 {
     using System;
-    using Base;
+    using Builders.Base;
     using Contracts.ActionResults.NotFound;
     using Contracts.And;
     using Exceptions;

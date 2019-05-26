@@ -1,7 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.Ok
 {
     using System;
-    using Base;
+    using Builders.Base;
     using Contracts.ActionResults.Ok;
     using Contracts.And;
     using Exceptions;

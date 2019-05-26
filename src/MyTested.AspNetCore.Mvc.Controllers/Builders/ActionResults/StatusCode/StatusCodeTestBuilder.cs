@@ -1,7 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.StatusCode
 {
     using System;
-    using Base;
+    using Builders.Base;
     using Contracts.ActionResults.StatusCode;
     using Contracts.And;
     using Exceptions;

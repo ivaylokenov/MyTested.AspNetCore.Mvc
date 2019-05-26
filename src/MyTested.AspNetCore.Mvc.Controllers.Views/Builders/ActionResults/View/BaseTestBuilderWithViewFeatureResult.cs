@@ -1,6 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.View
 {
-    using Base;
+    using Builders.Base;
     using Contracts.Base;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;

@@ -1,7 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.Redirect
 {
     using System;
-    using Base;
+    using Builders.Base;
     using Contracts.ActionResults.Redirect;
     using Contracts.And;
     using Exceptions;

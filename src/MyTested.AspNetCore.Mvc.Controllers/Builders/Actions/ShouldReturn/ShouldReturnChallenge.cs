@@ -1,8 +1,8 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Actions.ShouldReturn
 {
     using System;
-    using ActionResults.Challenge;
-    using Contracts.ActionResults.Challenge;
+    using ActionResults.Authentication;
+    using Contracts.ActionResults.Authentication;
     using Contracts.And;
     using Microsoft.AspNetCore.Mvc;
 

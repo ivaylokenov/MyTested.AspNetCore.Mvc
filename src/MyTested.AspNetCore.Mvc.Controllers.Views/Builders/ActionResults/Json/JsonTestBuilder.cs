@@ -1,6 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.Json
 {
-    using Base;
+    using Builders.Base;
     using Contracts.ActionResults.Json;
     using Exceptions;
     using Internal;

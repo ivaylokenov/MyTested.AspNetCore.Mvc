@@ -13,10 +13,10 @@
         /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.ViewResult"/>
         /// with the provided deeply equal model object.
         /// </summary>
-        /// <typeparam name="TActionResult">Type of action result.</typeparam>
+        /// <typeparam name="TActionResult">Type of the action result.</typeparam>
         /// <typeparam name="TModel">Expected model type.</typeparam>
         /// <param name="builder">Instance of <see cref="IShouldReturnTestBuilder{TActionResult}"/> type.</param>
-        /// <param name="model">Expected model object.</param>
+        /// <param name="model">Expected deeply equal model object.</param>
         /// <returns>Test builder of <see cref="IAndViewTestBuilder"/> type.</returns>
         public static IAndViewTestBuilder View<TActionResult, TModel>(
             this IShouldReturnTestBuilder<TActionResult> builder,
@@ -27,11 +27,11 @@
         /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.ViewResult"/>
         /// with the provided view name and deeply equal model object.
         /// </summary>
-        /// <typeparam name="TActionResult">Type of action result.</typeparam>
+        /// <typeparam name="TActionResult">Type of the action result.</typeparam>
         /// <typeparam name="TModel">Expected model type.</typeparam>
         /// <param name="builder">Instance of <see cref="IShouldReturnTestBuilder{TActionResult}"/> type.</param>
         /// <param name="viewName">Expected view name.</param>
-        /// <param name="model">Expected model object.</param>
+        /// <param name="model">Expected deeply equal model object.</param>
         /// <returns>Test builder of <see cref="IAndViewTestBuilder"/> type.</returns>
         public static IAndViewTestBuilder View<TActionResult, TModel>(
             this IShouldReturnTestBuilder<TActionResult> builder,

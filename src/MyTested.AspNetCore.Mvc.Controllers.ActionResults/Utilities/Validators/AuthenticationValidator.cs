@@ -30,7 +30,7 @@
             {
                 failedValidationAction(
                     "authentication schemes",
-                    $"to contain {authenticationScheme}",
+                    $"to contain {authenticationScheme.GetErrorMessageName()}",
                     "none was found");
             }
         }
@@ -65,7 +65,7 @@
                 {
                     failedValidationAction(
                         "authentication schemes",
-                        $"to contain {expectedAuthenticationSchemes[i]}",
+                        $"to contain {expectedAuthenticationSchemes[i].GetErrorMessageName()}",
                         "none was found");
                 }
             }

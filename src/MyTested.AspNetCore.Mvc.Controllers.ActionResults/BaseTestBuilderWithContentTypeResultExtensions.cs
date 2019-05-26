@@ -49,7 +49,7 @@
             MediaTypeHeaderValue contentType)
             where TContentTypeResultTestBuilder : IBaseTestBuilderWithActionResult
             => baseTestBuilderWithContentTypeResult
-                .WithContentType(contentType?.MediaType.Value);
+                .WithContentType(contentType?.ToString());
 
         private static IBaseTestBuilderWithContentTypeResultInternal<TContentTypeResultTestBuilder>
             GetActualBuilder<TContentTypeResultTestBuilder>(

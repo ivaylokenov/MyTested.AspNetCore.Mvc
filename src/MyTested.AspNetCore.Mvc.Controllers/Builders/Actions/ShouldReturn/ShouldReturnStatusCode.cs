@@ -28,7 +28,7 @@
             return new AndTestBuilder(this.TestContext);
         }
 
-        public IAndStatusCodeTestBuilder GetStatusCodeTestBuilder()
+        private IAndStatusCodeTestBuilder GetStatusCodeTestBuilder()
         {
             if (this.ActionResult is StatusCodeResult)
             {
@@ -39,14 +39,5 @@
             InvocationResultValidator.ValidateInvocationResultType<ObjectResult>(this.TestContext);
             return new StatusCodeTestBuilder<ObjectResult>(this.TestContext);
         }
-
-        public void ThrowNewStatusCodeResultAssertionException(string propertyName, string expectedValue, string actualValue) 
-            => throw new StatusCodeResultAssertionException(string.Format(
-                "When calling {0} action in {1} expected status code result {2} {3}, but {4}.",
-                this.ActionName,
-                this.Controller.GetName(),
-                propertyName,
-                expectedValue,
-                actualValue));
     }
 }

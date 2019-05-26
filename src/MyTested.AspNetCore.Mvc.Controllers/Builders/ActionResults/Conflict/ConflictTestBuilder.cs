@@ -1,6 +1,5 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.Conflict
 {
-    using Base;
     using Contracts.ActionResults.Conflict;
     using Contracts.And;
     using Exceptions;
@@ -9,19 +8,23 @@
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
     using System;
+    using Base;
 
     /// <summary>
     /// Used for testing conflict result.
     /// </summary>
     /// <typeparam name="TConflictResult">
-    /// Type of conflict result - <see cref="ConflictResult"/> or <see cref="ConflictObjectResult"/>.
+    /// Type of conflict result - <see cref="ConflictResult"/>
+    /// or <see cref="ConflictObjectResult"/>.
     /// </typeparam>
     public class ConflictTestBuilder<TConflictResult>
-        : BaseTestBuilderWithResponseModel<TConflictResult>,
+        : BaseTestBuilderWithErrorResult<TConflictResult>,
         IAndConflictTestBuilder,
-        IBaseTestBuilderWithOutputResultInternal<IAndConflictTestBuilder>
+        IBaseTestBuilderWithErrorResultInternal<IAndConflictTestBuilder>
         where TConflictResult : ActionResult
     {
+        private const string ActionResultName = "conflict";
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ConflictTestBuilder{TConflictResult}"/> class.
         /// </summary>
@@ -29,7 +32,7 @@
         /// <see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.
         /// </param>
         public ConflictTestBuilder(ControllerTestContext testContext)
-            : base(testContext)
+            : base(testContext, ActionResultName)
         {
         }
 
@@ -42,14 +45,14 @@
         /// <inheritdoc />
         public IAndTestBuilder Passing(Action<ConflictObjectResult> assertions)
         {
-            this.ValidateConflictObjectResult();
+            this.GetObjectResult();
             return this.Passing<ConflictObjectResult>(assertions);
         }
 
         /// <inheritdoc />
         public IAndTestBuilder Passing(Func<ConflictObjectResult, bool> predicate)
         {
-            this.ValidateConflictObjectResult();
+            this.GetObjectResult();
             return this.Passing<ConflictObjectResult>(predicate);
         }
 
@@ -68,24 +71,9 @@
             => throw new ConflictResultAssertionException(string.Format(
                 ExceptionMessages.ActionResultFormat,
                 this.TestContext.ExceptionMessagePrefix,
-                "conflict",
+                ActionResultName,
                 propertyName,
                 expectedValue,
                 actualValue));
-
-        private void ValidateConflictObjectResult()
-        {
-            var actualResultType = this.ActionResult.GetType();
-            var expectedResultType = typeof(ConflictObjectResult);
-
-            if (actualResultType != expectedResultType)
-            {
-                throw new ConflictResultAssertionException(string.Format(
-                    "{0} conflict result to be {1}, but it was {2}.",
-                    this.TestContext.ExceptionMessagePrefix,
-                    expectedResultType,
-                    actualResultType));
-            }
-        }
     }
 }

@@ -2,19 +2,20 @@
 {
     using System;
     using ActionResults.Accepted;
+    using ActionResults.Authentication;
     using ActionResults.BadRequest;
-    using ActionResults.Challenge;
     using ActionResults.Conflict;
     using ActionResults.Content;
     using ActionResults.Created;
     using ActionResults.File;
-    using ActionResults.Forbid;
     using ActionResults.LocalRedirect;
     using ActionResults.NotFound;
     using ActionResults.Object;
     using ActionResults.Ok;
     using ActionResults.Redirect;
     using ActionResults.StatusCode;
+    using ActionResults.Unauthorized;
+    using ActionResults.UnprocessableEntity;
     using And;
     using Invocations;
 
@@ -172,7 +173,7 @@
         /// <param name="badRequestTestBuilder">Builder for testing the bad request result.</param>
         /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
         IAndTestBuilder BadRequest(Action<IBadRequestTestBuilder> badRequestTestBuilder);
-
+        
         /// <summary>
         /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.NotFoundResult"/>
         /// or <see cref="Microsoft.AspNetCore.Mvc.NotFoundObjectResult"/>.
@@ -189,10 +190,19 @@
         IAndTestBuilder NotFound(Action<INotFoundTestBuilder> notFoundTestBuilder);
 
         /// <summary>
-        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.UnauthorizedResult"/>.
+        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.UnauthorizedResult"/>
+        /// or <see cref="Microsoft.AspNetCore.Mvc.UnauthorizedObjectResult"/>.
         /// </summary>
         /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
         IAndTestBuilder Unauthorized();
+
+        /// <summary>
+        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.UnauthorizedResult"/>
+        /// or <see cref="Microsoft.AspNetCore.Mvc.UnauthorizedObjectResult"/>.
+        /// </summary>
+        /// <param name="unauthorizedTestBuilder">Builder for testing the unauthorized result.</param>
+        /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
+        IAndTestBuilder Unauthorized(Action<IUnauthorizedTestBuilder> unauthorizedTestBuilder);
 
         /// <summary>
         /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.LocalRedirectResult"/>.
@@ -242,6 +252,32 @@
         /// <param name="redirectTestBuilder">Builder for testing the redirect result.</param>
         /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
         IAndTestBuilder Redirect(Action<IRedirectTestBuilder> redirectTestBuilder);
+        
+        /// <summary>
+        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.SignInResult"/>.
+        /// </summary>
+        /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
+        IAndTestBuilder SignIn();
+
+        /// <summary>
+        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.SignInResult"/>.
+        /// </summary>
+        /// <param name="signInTestBuilder">Builder for testing the sign in result.</param>
+        /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
+        IAndTestBuilder SignIn(Action<ISignInTestBuilder> signInTestBuilder);
+
+        /// <summary>
+        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.SignOutResult"/>.
+        /// </summary>
+        /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
+        IAndTestBuilder SignOut();
+
+        /// <summary>
+        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.SignOutResult"/>.
+        /// </summary>
+        /// <param name="signOutTestBuilder">Builder for testing the sign out result.</param>
+        /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
+        IAndTestBuilder SignOut(Action<ISignOutTestBuilder> signOutTestBuilder);
 
         /// <summary>
         /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.StatusCodeResult"/>
@@ -257,6 +293,21 @@
         /// <param name="statusCodeTestBuilder">Builder for testing the status code result.</param>
         /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
         IAndTestBuilder StatusCode(Action<IStatusCodeTestBuilder> statusCodeTestBuilder);
+
+        /// <summary>
+        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.UnprocessableEntityResult"/>
+        /// or <see cref="Microsoft.AspNetCore.Mvc.UnprocessableEntityObjectResult"/>.
+        /// </summary>
+        /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
+        IAndTestBuilder UnprocessableEntity();
+
+        /// <summary>
+        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.UnprocessableEntityResult"/>
+        /// or <see cref="Microsoft.AspNetCore.Mvc.UnprocessableEntityObjectResult"/>.
+        /// </summary>
+        /// <param name="unprocessableEntityTestBuilder">Builder for testing the unprocessable entity result.</param>
+        /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
+        IAndTestBuilder UnprocessableEntity(Action<IUnprocessableEntityTestBuilder> unprocessableEntityTestBuilder);
 
         /// <summary>
         /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.EmptyResult"/>.
