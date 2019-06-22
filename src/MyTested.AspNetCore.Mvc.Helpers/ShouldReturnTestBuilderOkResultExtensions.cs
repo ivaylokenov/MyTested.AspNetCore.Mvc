@@ -11,7 +11,7 @@
     {
         /// <summary>
         /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.OkObjectResult"/>
-        /// with the same deeply equal return model as the provided one.
+        /// with the same deeply equal model as the provided one.
         /// </summary>
         /// <typeparam name="TActionResult">Type of the action result.</typeparam>
         /// <typeparam name="TModel">Expected model type.</typeparam>

@@ -6,7 +6,7 @@
 
     /// <summary>
     /// Contains <see cref="Microsoft.AspNetCore.Mvc.BadRequestResult"/> and <see cref="Microsoft.AspNetCore.Mvc.BadRequestObjectResult"/>
-    /// methods for <see cref="IShouldReturnTestBuilder{TActionResult}"/>.
+    /// extension methods for <see cref="IShouldReturnTestBuilder{TActionResult}"/>.
     /// </summary>
     public static class ShouldReturnTestBuilderBadRequestResultExtensions
     {

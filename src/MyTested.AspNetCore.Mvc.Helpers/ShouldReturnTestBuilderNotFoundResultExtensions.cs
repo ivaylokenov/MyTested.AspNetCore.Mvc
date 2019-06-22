@@ -5,13 +5,13 @@
 
     /// <summary>
     /// Contains <see cref="Microsoft.AspNetCore.Mvc.NotFoundResult"/> and <see cref="Microsoft.AspNetCore.Mvc.NotFoundObjectResult"/>
-    /// methods for <see cref="IShouldReturnTestBuilder{TActionResult}"/>.
+    /// extension methods for <see cref="IShouldReturnTestBuilder{TActionResult}"/>.
     /// </summary>
     public static class ShouldReturnTestBuilderNotFoundResultExtensions
     {
         /// <summary>
         /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.NotFoundObjectResult"/>
-        /// with the same deeply equal return model as the provided one.
+        /// with the same deeply equal model as the provided one.
         /// </summary>
         /// <typeparam name="TActionResult">Type of the action result.</typeparam>
         /// <typeparam name="TModel">Expected model type.</typeparam>

@@ -9,8 +9,7 @@
     /// or <see cref="ConflictObjectResult"/> result.
     /// </summary>
     public interface IConflictTestBuilder
-        : IBaseTestBuilderWithResponseModel,
-        IBaseTestBuilderWithOutputResult<IAndConflictTestBuilder>,
+        : IBaseTestBuilderWithErrorResult<IAndConflictTestBuilder>,
         IBaseTestBuilderWithActionResult<ConflictObjectResult>
     {
     }

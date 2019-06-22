@@ -27,7 +27,7 @@
         /// <summary>
         /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.StatusCodeResult"/>
         /// or <see cref="Microsoft.AspNetCore.Mvc.ObjectResult"/> with the same status code
-        /// and deeply equal return model as the provided ones.
+        /// and deeply equal model as the provided ones.
         /// </summary>
         /// <typeparam name="TActionResult">Type of the action result.</typeparam>
         /// <typeparam name="TModel">Expected model type.</typeparam>
