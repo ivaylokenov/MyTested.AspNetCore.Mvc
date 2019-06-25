@@ -189,7 +189,7 @@
                         .LocalRedirect(localRedirect => localRedirect
                             .WithUrlHelper(null));
                 },
-                "When calling LocalRedirectActionWithCustomUrlHelper action in MvcController expected local redirect result UrlHelper to be the same as the provided one, but instead received different result.");
+                "When calling LocalRedirectActionWithCustomUrlHelper action in MvcController expected local redirect result URL helper to be the same as the provided one, but instead received different result.");
         }
 
         [Fact]
@@ -220,7 +220,7 @@
                         .LocalRedirect(localRedirect => localRedirect
                             .WithUrlHelperOfType<IUrlHelper>());
                 },
-                "When calling LocalRedirectActionWithCustomUrlHelper action in MvcController expected local redirect result UrlHelper to be of IUrlHelper type, but instead received CustomUrlHelper.");
+                "When calling LocalRedirectActionWithCustomUrlHelper action in MvcController expected local redirect result URL helper to be of IUrlHelper type, but instead received CustomUrlHelper.");
         }
 
         [Fact]
@@ -236,7 +236,7 @@
                         .LocalRedirect(localRedirect => localRedirect
                             .WithUrlHelperOfType<IUrlHelper>());
                 },
-                "When calling LocalRedirectActionWithCustomUrlHelper action in MvcController expected local redirect result UrlHelper to be of IUrlHelper type, but instead received null.");
+                "When calling LocalRedirectActionWithCustomUrlHelper action in MvcController expected local redirect result URL helper to be of IUrlHelper type, but instead received null.");
         }
 
         [Fact]

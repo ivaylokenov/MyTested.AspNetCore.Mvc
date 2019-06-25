@@ -27,9 +27,7 @@
         {
             var actualBuilder = GetActualBuilder(baseTestBuilderWithErrorResult);
 
-            var actualResult = actualBuilder.TestContext.MethodResult as ObjectResult;
-
-            if (actualResult == null)
+            if (actualBuilder.TestContext.MethodResult is ObjectResult)
             {
                 actualBuilder.ThrowNewFailedValidationException(
                     "to not have",

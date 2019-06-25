@@ -2,30 +2,16 @@
 {
     using Builders.Contracts.Actions;
     using Builders.Contracts.And;
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Contains <see cref="Microsoft.AspNetCore.Mvc.ViewResult"/>
     /// extension methods for <see cref="IShouldReturnTestBuilder{TActionResult}"/>.
     /// </summary>
-    public static class ShouldReturnTestBuilderViewResultExtensions
+    public static class ShouldReturnTestBuilderJsonResultExtensions
     {
         /// <summary>
-        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.ViewResult"/>
-        /// with the same view name as the provided one.
-        /// </summary>
-        /// <typeparam name="TActionResult">Type of the action result.</typeparam>
-        /// <param name="shouldReturnTestBuilder">Instance of <see cref="IShouldReturnTestBuilder{TActionResult}"/> type.</param>
-        /// <param name="viewName">Expected view name.</param>
-        /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
-        public static IAndTestBuilder View<TActionResult>(
-            this IShouldReturnTestBuilder<TActionResult> shouldReturnTestBuilder,
-            string viewName)
-            => shouldReturnTestBuilder
-                .View(view => view
-                    .WithName(viewName));
-
-        /// <summary>
-        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.ViewResult"/>
+        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.JsonResult"/>
         /// with the same deeply equal model as the provided one.
         /// </summary>
         /// <typeparam name="TActionResult">Type of the action result.</typeparam>
@@ -33,30 +19,30 @@
         /// <param name="shouldReturnTestBuilder">Instance of <see cref="IShouldReturnTestBuilder{TActionResult}"/> type.</param>
         /// <param name="model">Expected deeply equal model object.</param>
         /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
-        public static IAndTestBuilder View<TActionResult, TModel>(
+        public static IAndTestBuilder Json<TActionResult, TModel>(
             this IShouldReturnTestBuilder<TActionResult> shouldReturnTestBuilder,
             TModel model)
             => shouldReturnTestBuilder
-                .View(view => view
+                .Json(view => view
                     .WithModel(model));
 
         /// <summary>
-        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.ViewResult"/>
-        /// with the same view name and deeply equal model as the provided ones.
+        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.JsonResult"/>
+        /// with the same deeply equal model and JSON serializer settings as the provided ones.
         /// </summary>
         /// <typeparam name="TActionResult">Type of the action result.</typeparam>
         /// <typeparam name="TModel">Expected model type.</typeparam>
         /// <param name="shouldReturnTestBuilder">Instance of <see cref="IShouldReturnTestBuilder{TActionResult}"/> type.</param>
-        /// <param name="viewName">Expected view name.</param>
         /// <param name="model">Expected deeply equal model object.</param>
+        /// <param name="serializerSettings">Expected JSON serializer settings.</param>
         /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
-        public static IAndTestBuilder View<TActionResult, TModel>(
+        public static IAndTestBuilder Json<TActionResult, TModel>(
             this IShouldReturnTestBuilder<TActionResult> shouldReturnTestBuilder,
-            string viewName,
-            TModel model)
+            TModel model,
+            JsonSerializerSettings serializerSettings)
             => shouldReturnTestBuilder
-                .View(view => view
-                    .WithName(viewName)
+                .Json(view => view
+                    .WithJsonSerializerSettings(serializerSettings)
                     .WithModel(model));
     }
 }

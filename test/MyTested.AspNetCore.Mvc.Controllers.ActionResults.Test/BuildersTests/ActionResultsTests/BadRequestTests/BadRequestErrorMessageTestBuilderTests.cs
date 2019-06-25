@@ -22,7 +22,7 @@
         [Fact]
         public void ThatEqualsShouldThrowExceptionWithIncorrectErrorMessage()
         {
-            Test.AssertException<BadRequestResultAssertionException>(
+            Test.AssertException<ErrorMessageAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
@@ -33,7 +33,7 @@
                             .WithErrorMessage()
                             .ThatEquals("Bad"));
                 },
-                "When calling BadRequestWithErrorAction action in MvcController expected bad request error message to be 'Bad', but instead found 'Bad request'.");
+                "When calling BadRequestWithErrorAction action in MvcController expected error message to be 'Bad', but instead found 'Bad request'.");
         }
 
         [Fact]
@@ -51,7 +51,7 @@
         [Fact]
         public void BeginningWithShouldThrowExceptionWithIncorrectErrorMessage()
         {
-            Test.AssertException<BadRequestResultAssertionException>(
+            Test.AssertException<ErrorMessageAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
@@ -62,7 +62,7 @@
                             .WithErrorMessage()
                             .BeginningWith("request"));
                 },
-                "When calling BadRequestWithErrorAction action in MvcController expected bad request error message to begin with 'request', but instead found 'Bad request'.");
+                "When calling BadRequestWithErrorAction action in MvcController expected error message to begin with 'request', but instead found 'Bad request'.");
         }
 
         [Fact]
@@ -80,7 +80,7 @@
         [Fact]
         public void EndingWithShouldThrowExceptionWithIncorrectErrorMessage()
         {
-            Test.AssertException<BadRequestResultAssertionException>(
+            Test.AssertException<ErrorMessageAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
@@ -91,7 +91,7 @@
                             .WithErrorMessage()
                             .EndingWith("Bad"));
                 },
-                "When calling BadRequestWithErrorAction action in MvcController expected bad request error message to end with 'Bad', but instead found 'Bad request'.");
+                "When calling BadRequestWithErrorAction action in MvcController expected error message to end with 'Bad', but instead found 'Bad request'.");
         }
 
         [Fact]
@@ -109,7 +109,7 @@
         [Fact]
         public void ContainingShouldThrowExceptionWithIncorrectErrorMessage()
         {
-            Test.AssertException<BadRequestResultAssertionException>(
+            Test.AssertException<ErrorMessageAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
@@ -120,7 +120,7 @@
                             .WithErrorMessage()
                             .Containing("Another"));
                 },
-                "When calling BadRequestWithErrorAction action in MvcController expected bad request error message to contain 'Another', but instead found 'Bad request'.");
+                "When calling BadRequestWithErrorAction action in MvcController expected error message to contain 'Another', but instead found 'Bad request'.");
         }
     }
 }

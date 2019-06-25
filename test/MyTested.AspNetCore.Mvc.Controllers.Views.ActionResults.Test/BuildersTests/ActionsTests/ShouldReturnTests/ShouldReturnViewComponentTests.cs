@@ -16,7 +16,8 @@
                 .Instance()
                 .Calling(c => c.ViewComponentResultByName())
                 .ShouldReturn()
-                .ViewComponent("TestComponent");
+                .ViewComponent(viewComponent => viewComponent
+                    .WithName("TestComponent"));
         }
 
         [Fact]
@@ -29,7 +30,8 @@
                        .Instance()
                        .Calling(c => c.BadRequestAction())
                        .ShouldReturn()
-                       .ViewComponent("TestComponent");
+                       .ViewComponent(viewComponent => viewComponent
+                           .WithName("TestComponent"));
                 },
                 "When calling BadRequestAction action in MvcController expected result to be ViewComponentResult, but instead received BadRequestResult.");
         }
@@ -44,7 +46,8 @@
                         .Instance()
                         .Calling(c => c.ViewComponentResultByName())
                         .ShouldReturn()
-                        .ViewComponent("Incorrect");
+                        .ViewComponent(viewComponent => viewComponent
+                            .WithName("Incorrect"));
                 },
                 "When calling ViewComponentResultByName action in MvcController expected view component result to be 'Incorrect', but instead received 'TestComponent'.");
         }
@@ -56,7 +59,19 @@
                 .Instance()
                 .Calling(c => c.ViewComponentResultByType())
                 .ShouldReturn()
-                .ViewComponent(typeof(CustomViewComponent));
+                .ViewComponent(viewComponent => viewComponent
+                    .OfType(typeof(CustomViewComponent)));
+        }
+        
+        [Fact]
+        public void ShouldReturnViewComponentShouldNotThrowExceptionWithCorrectViewComponentTypeAsGeneric()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ViewComponentResultByType())
+                .ShouldReturn()
+                .ViewComponent(viewComponent => viewComponent
+                    .OfType<CustomViewComponent>());
         }
 
         [Fact]
@@ -69,7 +84,8 @@
                        .Instance()
                        .Calling(c => c.BadRequestAction())
                        .ShouldReturn()
-                       .ViewComponent(typeof(CustomViewComponent));
+                       .ViewComponent(viewComponent => viewComponent
+                           .OfType(typeof(CustomViewComponent)));
                 },
                 "When calling BadRequestAction action in MvcController expected result to be ViewComponentResult, but instead received BadRequestResult.");
         }
@@ -84,7 +100,8 @@
                         .Instance()
                         .Calling(c => c.ViewComponentResultByType())
                         .ShouldReturn()
-                        .ViewComponent(typeof(ViewComponent));
+                        .ViewComponent(viewComponent => viewComponent
+                            .OfType(typeof(ViewComponent)));
                 },
                 "When calling ViewComponentResultByType action in MvcController expected view component result to be 'ViewComponent', but instead received 'CustomViewComponent'.");
         }

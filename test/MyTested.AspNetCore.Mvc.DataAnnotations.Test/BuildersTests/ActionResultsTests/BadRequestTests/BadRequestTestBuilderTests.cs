@@ -73,7 +73,7 @@
                         .BadRequest(badRequest => badRequest
                             .WithModelStateError(modelState));
                 },
-                "When calling BadRequestWithModelState action in MvcController expected bad request model state dictionary to contain String key, but none found.");
+                "When calling BadRequestWithModelState action in MvcController expected bad request result model state dictionary to contain 'String' key, but it was not found.");
         }
 
         [Fact]
@@ -111,7 +111,7 @@
                         .BadRequest(badRequest => badRequest
                             .WithModelStateError(modelState));
                 },
-                "When calling BadRequestWithModelState action in MvcController expected bad request model state dictionary to contain 1 keys, but found 2.");
+                "When calling BadRequestWithModelState action in MvcController expected bad request result model state dictionary to contain 1 keys, but instead found 2.");
         }
 
         [Fact]
@@ -133,7 +133,7 @@
                         .BadRequest(badRequest => badRequest
                             .WithModelStateError(modelState));
                 },
-                "When calling BadRequestWithModelState action in MvcController expected bad request model state dictionary to contain 3 keys, but found 2.");
+                "When calling BadRequestWithModelState action in MvcController expected bad request result model state dictionary to contain 3 keys, but instead found 2.");
         }
 
         [Fact]
@@ -176,7 +176,7 @@
                         .BadRequest(badRequest => badRequest
                             .WithModelStateError(modelState));
                 },
-                "When calling BadRequestWithModelState action in MvcController expected bad request model state dictionary to contain 2 errors for RequiredString key, but found 1.");
+                "When calling BadRequestWithModelState action in MvcController expected bad request result model state dictionary to contain 2 errors for the 'RequiredString' key, but instead found 1.");
         }
     }
 }

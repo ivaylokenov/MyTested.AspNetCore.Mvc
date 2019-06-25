@@ -19,8 +19,9 @@ namespace FullFramework.Test
                 .Instance()
                 .Calling(c => c.Index())
                 .ShouldReturn()
-                .View(nameof(HomeController.Index))
-                .WithModel("Test Data");
+                .View(view => view
+                    .WithName(nameof(HomeController.Index))
+                    .WithModel("Test Data"));
 
         [Fact]
         public void RedirectShouldRedirectToIndex()

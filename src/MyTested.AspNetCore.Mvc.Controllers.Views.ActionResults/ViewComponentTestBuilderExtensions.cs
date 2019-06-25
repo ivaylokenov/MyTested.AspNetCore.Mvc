@@ -1,9 +1,12 @@
 ﻿namespace MyTested.AspNetCore.Mvc
 {
+    using System;
     using System.Collections.Generic;
     using Builders.ActionResults.View;
     using Builders.Contracts.ActionResults.View;
+    using Exceptions;
     using Microsoft.AspNetCore.Routing;
+    using Utilities;
     using Utilities.Validators;
 
     /// <summary>
@@ -14,13 +17,89 @@
         private const string ArgumentsName = "arguments";
 
         /// <summary>
+        /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.ViewComponentResult"/>
+        /// has the same name as the provided one.
+        /// </summary>
+        /// <param name="viewComponentTestBuilder">
+        /// Instance of <see cref="IViewComponentTestBuilder"/> type.
+        /// </param>
+        /// <param name="viewComponentName">Expected view component name.</param>
+        /// <returns>The same <see cref="IAndViewComponentTestBuilder"/>.</returns>
+        public static IAndViewComponentTestBuilder WithName(
+            this IViewComponentTestBuilder viewComponentTestBuilder,
+            string viewComponentName)
+        {
+            var actualBuilder = GetActualBuilder(viewComponentTestBuilder);
+
+            var actualViewComponentName = actualBuilder
+                .ActionResult
+                .ViewComponentName;
+
+            if (viewComponentName != actualViewComponentName)
+            {
+                throw ViewResultAssertionException.ForNameEquality(
+                    actualBuilder.TestContext.ExceptionMessagePrefix,
+                    "view component",
+                    viewComponentName,
+                    actualViewComponentName);
+            }
+
+            return actualBuilder;
+        }
+
+        /// <summary>
+        /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.ViewComponentResult"/>
+        /// is of the same type as the provided one.
+        /// </summary>
+        /// <param name="viewComponentTestBuilder">
+        /// Instance of <see cref="IViewComponentTestBuilder"/> type.
+        /// </param>
+        /// <param name="viewComponentType">Expected view component type.</param>
+        /// <returns>The same <see cref="IAndViewComponentTestBuilder"/>.</returns>
+        public static IAndViewComponentTestBuilder OfType(
+            this IViewComponentTestBuilder viewComponentTestBuilder,
+            Type viewComponentType)
+        {
+            var actualBuilder = GetActualBuilder(viewComponentTestBuilder);
+
+            var actualViewComponentType = actualBuilder
+                .ActionResult
+                .ViewComponentType;
+
+            if (viewComponentType != actualViewComponentType)
+            {
+                throw ViewResultAssertionException.ForNameEquality(
+                    actualBuilder.TestContext.ExceptionMessagePrefix,
+                    "view component",
+                    viewComponentType.ToFriendlyTypeName(),
+                    actualViewComponentType.ToFriendlyTypeName());
+            }
+
+            return actualBuilder;
+        }
+
+        /// <summary>
+        /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.ViewComponentResult"/>
+        /// is of the same type as the provided one.
+        /// </summary>
+        /// <typeparam name="TViewComponentType">Expected view component type.</typeparam>
+        /// <param name="viewComponentTestBuilder">
+        /// Instance of <see cref="IViewComponentTestBuilder"/> type.
+        /// </param>
+        /// <returns>The same <see cref="IAndViewComponentTestBuilder"/>.</returns>
+        public static IAndViewComponentTestBuilder OfType<TViewComponentType>(
+            this IViewComponentTestBuilder viewComponentTestBuilder)
+            => viewComponentTestBuilder
+                .OfType(typeof(TViewComponentType));
+
+        /// <summary>
         /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.ViewComponentResult"/> will be
         /// invoked with an argument with the same name as the provided one.
         /// </summary>
         /// <param name="viewComponentTestBuilder">
         /// Instance of <see cref="IViewComponentTestBuilder"/> type.
         /// </param>
-        /// <param name="name">Name of the argument.</param>
+        /// <param name="name">Expected argument name.</param>
         /// <returns>The same <see cref="IAndViewComponentTestBuilder"/>.</returns>
         public static IAndViewComponentTestBuilder ContainingArgumentWithName(
             this IViewComponentTestBuilder viewComponentTestBuilder,
@@ -44,7 +123,7 @@
         /// <param name="viewComponentTestBuilder">
         /// Instance of <see cref="IViewComponentTestBuilder"/> type.
         /// </param>
-        /// <param name="name">Name of the argument.</param>
+        /// <param name="name">Expected argument name.</param>
         /// <param name="value">Expected argument value.</param>
         /// <returns>The same <see cref="IAndViewComponentTestBuilder"/>.</returns>
         public static IAndViewComponentTestBuilder ContainingArgument(
@@ -71,8 +150,8 @@
         /// <param name="viewComponentTestBuilder">
         /// Instance of <see cref="IViewComponentTestBuilder"/> type.
         /// </param>
-        /// <typeparam name="TArgument">Type of the argument.</typeparam>
-        /// <param name="argument">Argument object.</param>
+        /// <typeparam name="TArgument">Expected argument type.</typeparam>
+        /// <param name="argument">Expected argument value.</param>
         /// <returns>The same <see cref="IAndViewComponentTestBuilder"/>.</returns>
         public static IAndViewComponentTestBuilder ContainingArgument<TArgument>(
             this IViewComponentTestBuilder viewComponentTestBuilder,
@@ -96,7 +175,7 @@
         /// <param name="viewComponentTestBuilder">
         /// Instance of <see cref="IViewComponentTestBuilder"/> type.
         /// </param>
-        /// <typeparam name="TArgument">Type of the argument.</typeparam>
+        /// <typeparam name="TArgument">Expected argument type.</typeparam>
         /// <returns>The same <see cref="IAndViewComponentTestBuilder"/>.</returns>
         public static IAndViewComponentTestBuilder ContainingArgumentOfType<TArgument>(
             this IViewComponentTestBuilder viewComponentTestBuilder)
@@ -118,7 +197,7 @@
         /// <param name="viewComponentTestBuilder">
         /// Instance of <see cref="IViewComponentTestBuilder"/> type.
         /// </param>
-        /// <typeparam name="TArgument">Type of the argument.</typeparam>
+        /// <typeparam name="TArgument">Expected argument type.</typeparam>
         /// <param name="name">Name of the argument.</param>
         /// <returns>The same <see cref="IAndViewComponentTestBuilder"/>.</returns>
         public static IAndViewComponentTestBuilder ContainingArgumentOfType<TArgument>(
@@ -143,7 +222,7 @@
         /// <param name="viewComponentTestBuilder">
         /// Instance of <see cref="IViewComponentTestBuilder"/> type.
         /// </param>
-        /// <param name="arguments">Arguments object.</param>
+        /// <param name="arguments">Expected arguments object.</param>
         /// <returns>The same <see cref="IAndViewComponentTestBuilder"/>.</returns>
         public static IAndViewComponentTestBuilder ContainingArguments(
             this IViewComponentTestBuilder viewComponentTestBuilder,
@@ -158,7 +237,7 @@
         /// <param name="viewComponentTestBuilder">
         /// Instance of <see cref="IViewComponentTestBuilder"/> type.
         /// </param>
-        /// <param name="arguments">Argument objects as dictionary.</param>
+        /// <param name="arguments">Expected arguments object as dictionary.</param>
         /// <returns>The same <see cref="IAndViewComponentTestBuilder"/>.</returns>
         public static IAndViewComponentTestBuilder ContainingArguments(
             this IViewComponentTestBuilder viewComponentTestBuilder,

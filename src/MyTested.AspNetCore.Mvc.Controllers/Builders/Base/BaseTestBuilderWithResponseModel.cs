@@ -67,7 +67,7 @@
             if (!(this.TestContext.MethodResult is ObjectResult objectResult))
             {
                 throw new InvocationResultAssertionException(string.Format(
-                    "{0} action result to inherit from ObjectResult, but it did not.",
+                    "{0} action result to inherit from ObjectResult and have response data, but it did not.",
                     this.TestContext.ExceptionMessagePrefix));
             }
 

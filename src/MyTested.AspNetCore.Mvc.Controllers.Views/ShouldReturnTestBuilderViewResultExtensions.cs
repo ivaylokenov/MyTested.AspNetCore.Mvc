@@ -24,7 +24,7 @@
             => builder.View(null);
 
         /// <summary>
-        /// Tests whether the action result is <see cref="ViewResult"/> with the default view name.
+        /// Tests whether the action result is <see cref="ViewResult"/>.
         /// </summary>
         /// <typeparam name="TActionResult">Type of action result type.</typeparam>
         /// <param name="builder">Instance of <see cref="IShouldReturnTestBuilder{TActionResult}"/> type.</param>

@@ -1,7 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc
 {
-    using Builders.Contracts.ActionResults.View;
     using Builders.Contracts.Actions;
+    using Builders.Contracts.And;
 
     /// <summary>
     /// Contains <see cref="Microsoft.AspNetCore.Mvc.PartialViewResult"/>
@@ -11,36 +11,52 @@
     {
         /// <summary>
         /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.PartialViewResult"/>
-        /// with the provided deeply equal model object.
+        /// with the same view name as the provided one.
         /// </summary>
         /// <typeparam name="TActionResult">Type of the action result.</typeparam>
-        /// <typeparam name="TModel">Expected model type.</typeparam>
-        /// <param name="builder">Instance of <see cref="IShouldReturnTestBuilder{TActionResult}"/> type.</param>
-        /// <param name="model">Expected deeply equal model object.</param>
-        /// <returns>Test builder of <see cref="IAndPartialViewTestBuilder"/> type.</returns>
-        public static IAndPartialViewTestBuilder PartialView<TActionResult, TModel>(
-            this IShouldReturnTestBuilder<TActionResult> builder,
-            TModel model)
-            => builder.PartialView(null, model);
+        /// <param name="shouldReturnTestBuilder">Instance of <see cref="IShouldReturnTestBuilder{TActionResult}"/> type.</param>
+        /// <param name="viewName">Expected view name.</param>
+        /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
+        public static IAndTestBuilder PartialView<TActionResult>(
+            this IShouldReturnTestBuilder<TActionResult> shouldReturnTestBuilder,
+            string viewName)
+            => shouldReturnTestBuilder
+                .PartialView(partialView => partialView
+                    .WithName(viewName));
 
         /// <summary>
         /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.PartialViewResult"/>
-        /// with the provided partial view name and deeply equal model object.
+        /// with the same deeply equal model as the provided one.
         /// </summary>
         /// <typeparam name="TActionResult">Type of the action result.</typeparam>
         /// <typeparam name="TModel">Expected model type.</typeparam>
-        /// <param name="builder">Instance of <see cref="IShouldReturnTestBuilder{TActionResult}"/> type.</param>
-        /// <param name="viewName">Expected partial view name.</param>
+        /// <param name="shouldReturnTestBuilder">Instance of <see cref="IShouldReturnTestBuilder{TActionResult}"/> type.</param>
         /// <param name="model">Expected deeply equal model object.</param>
-        /// <returns>Test builder of <see cref="IAndPartialViewTestBuilder"/> type.</returns>
-        public static IAndPartialViewTestBuilder PartialView<TActionResult, TModel>(
-            this IShouldReturnTestBuilder<TActionResult> builder,
+        /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
+        public static IAndTestBuilder PartialView<TActionResult, TModel>(
+            this IShouldReturnTestBuilder<TActionResult> shouldReturnTestBuilder,
+            TModel model)
+            => shouldReturnTestBuilder
+                .PartialView(partialView => partialView
+                    .WithModel(model));
+
+        /// <summary>
+        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.PartialViewResult"/>
+        /// with the same view name and deeply equal model as the provided ones.
+        /// </summary>
+        /// <typeparam name="TActionResult">Type of the action result.</typeparam>
+        /// <typeparam name="TModel">Expected model type.</typeparam>
+        /// <param name="shouldReturnTestBuilder">Instance of <see cref="IShouldReturnTestBuilder{TActionResult}"/> type.</param>
+        /// <param name="viewName">Expected view name.</param>
+        /// <param name="model">Expected deeply equal model object.</param>
+        /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
+        public static IAndTestBuilder PartialView<TActionResult, TModel>(
+            this IShouldReturnTestBuilder<TActionResult> shouldReturnTestBuilder,
             string viewName,
             TModel model)
-        {
-            var viewTestBuilder = builder.PartialView(viewName);
-            viewTestBuilder.WithModel(model);
-            return viewTestBuilder;
-        }
+            => shouldReturnTestBuilder
+                .PartialView(partialView => partialView
+                    .WithName(viewName)
+                    .WithModel(model));
     }
 }

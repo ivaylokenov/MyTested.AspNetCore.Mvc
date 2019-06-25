@@ -20,8 +20,9 @@
                 .Instance()
                 .Calling(c => c.Index())
                 .ShouldReturn()
-                .View(nameof(HomeController.Index))
-                .WithModel("1/1/2020 Test Data");
+                .View(view => view
+                    .WithName(nameof(HomeController.Index))
+                    .WithModel("1/1/2020 Test Data"));
 
         [TestMethod]
         public void RedirectShouldRedirectToIndex()

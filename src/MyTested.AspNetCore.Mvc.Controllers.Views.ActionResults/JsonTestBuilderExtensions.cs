@@ -49,7 +49,7 @@
         /// <param name="jsonTestBuilder">
         /// Instance of <see cref="IJsonTestBuilder"/> type.
         /// </param>
-        /// <param name="jsonSerializerSettingsBuilder">Builder for creating <see cref="JsonSerializerSettings"/>.</param>
+        /// <param name="jsonSerializerSettingsBuilder">Builder for testing <see cref="JsonSerializerSettings"/>.</param>
         /// <returns>The same <see cref="IAndJsonTestBuilder"/>.</returns>
         public static IAndJsonTestBuilder WithJsonSerializerSettings(
             this IJsonTestBuilder jsonTestBuilder,

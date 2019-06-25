@@ -26,7 +26,7 @@
         [Fact]
         public void WithNoErrorShouldThrowExceptionWithError()
         {
-            Test.AssertException<ResponseModelAssertionException>(
+            Test.AssertException<BadRequestResultAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
@@ -53,7 +53,7 @@
         [Fact]
         public void WithErrorMessageShouldThrowExceptionWhenResultDoesNotHaveErrorMessage()
         {
-            Test.AssertException<BadRequestResultAssertionException>(
+            Test.AssertException<InvocationResultAssertionException>(
                 () =>
                 {
                     MyController<MvcController>
@@ -62,8 +62,8 @@
                         .ShouldReturn()
                         .BadRequest(badRequest => badRequest
                             .WithErrorMessage());
-                }, 
-                "When calling BadRequestAction action in MvcController expected bad request result to contain error object, but such could not be found.");
+                },
+                "When calling BadRequestAction action in MvcController expected action result to inherit from ObjectResult and have response data, but it did not.");
         }
 
         [Fact]

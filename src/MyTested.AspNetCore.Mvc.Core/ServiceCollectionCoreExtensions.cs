@@ -21,7 +21,7 @@
                 .AddCoreTesting()
                 .AddRoutingTesting()
                 .AddControllersTesting();
-
+            
             return serviceCollection;
         }
     }

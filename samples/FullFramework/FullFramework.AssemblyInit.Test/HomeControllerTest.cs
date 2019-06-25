@@ -20,8 +20,9 @@ namespace FullFramework.AssemblyInit.Test
                 .Instance()
                 .Calling(c => c.Index())
                 .ShouldReturn()
-                .View(nameof(HomeController.Index))
-                .WithModel("Test Data");
+                .View(view => view
+                    .WithName(nameof(HomeController.Index))
+                    .WithModel("Test Data"));
 
         [TestMethod]
         public void RedirectShouldRedirectToIndex()

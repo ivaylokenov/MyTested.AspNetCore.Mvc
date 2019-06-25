@@ -3,6 +3,7 @@
     using Builders.Base;
     using Builders.Contracts.ActionResults.Base;
     using Builders.Contracts.Base;
+    using Internal;
     using Internal.Contracts.ActionResults;
     using Microsoft.AspNetCore.Mvc.ViewEngines;
     using Utilities;
@@ -17,12 +18,49 @@
         /// <summary>
         /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.ViewResult"/>
         /// or the <see cref="Microsoft.AspNetCore.Mvc.PartialViewResult"/>
+        /// has the same view name as the provided one.
+        /// </summary>
+        /// <param name="baseTestBuilderWithViewResult">
+        /// Instance of <see cref="IBaseTestBuilderWithViewResult{TViewResultTestBuilder}"/> type.
+        /// </param>
+        /// <param name="viewName">Expected view name.</param>
+        /// <returns>The same <see cref="Microsoft.AspNetCore.Mvc.ActionResult"/> test builder.</returns>
+        public static TViewResultTestBuilder WithName<TViewResultTestBuilder>(
+            this IBaseTestBuilderWithViewResult<TViewResultTestBuilder> baseTestBuilderWithViewResult,
+            string viewName)
+            where TViewResultTestBuilder : IBaseTestBuilderWithActionResult
+        {
+            var actualBuilder = GetActualBuilder(baseTestBuilderWithViewResult);
+
+            RuntimeBinderValidator.ValidateBinding(() =>
+            {
+                var actualViewName = actualBuilder
+                    .TestContext
+                    .MethodResult
+                    .AsDynamic()
+                    ?.ViewName as string;
+
+                if (viewName != actualViewName)
+                {
+                    actualBuilder.ThrowNewFailedValidationException(
+                        "to",
+                        $"be {TestHelper.GetFriendlyName(viewName)}",
+                        $"instead received {TestHelper.GetFriendlyName(actualViewName)}");
+                }
+            });
+
+            return actualBuilder.ResultTestBuilder;
+        }
+
+        /// <summary>
+        /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.ViewResult"/>
+        /// or the <see cref="Microsoft.AspNetCore.Mvc.PartialViewResult"/>
         /// has the same <see cref="IViewEngine"/> as the provided one.
         /// </summary>
         /// <param name="baseTestBuilderWithViewResult">
         /// Instance of <see cref="IBaseTestBuilderWithViewResult{TViewResultTestBuilder}"/> type.
         /// </param>
-        /// <param name="viewEngine">View engine of type <see cref="IViewEngine"/>.</param>
+        /// <param name="viewEngine">Expected view engine of type <see cref="IViewEngine"/>.</param>
         /// <returns>The same <see cref="Microsoft.AspNetCore.Mvc.ActionResult"/> test builder.</returns>
         public static TViewResultTestBuilder WithViewEngine<TViewResultTestBuilder>(
             this IBaseTestBuilderWithViewResult<TViewResultTestBuilder> baseTestBuilderWithViewResult,

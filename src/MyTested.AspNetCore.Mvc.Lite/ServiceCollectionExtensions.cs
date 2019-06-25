@@ -21,7 +21,7 @@
                 .AddCoreTesting()
                 .AddControllersTesting()
                 .AddViewComponentsTesting();
-
+            
             return serviceCollection;
         }
     }

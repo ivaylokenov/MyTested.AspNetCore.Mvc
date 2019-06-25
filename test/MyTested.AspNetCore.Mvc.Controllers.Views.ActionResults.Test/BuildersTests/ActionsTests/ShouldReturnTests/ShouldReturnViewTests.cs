@@ -14,7 +14,8 @@
                 .Instance()
                 .Calling(c => c.IndexView())
                 .ShouldReturn()
-                .View("Index");
+                .View(view => view
+                    .WithName("Index"));
         }
         
         [Fact]
@@ -27,7 +28,8 @@
                        .Instance()
                        .Calling(c => c.IndexView())
                        .ShouldReturn()
-                       .View("Incorrect");
+                       .View(view => view
+                           .WithName("Incorrect"));
                 },
                 "When calling IndexView action in MvcController expected view result to be 'Incorrect', but instead received 'Index'.");
         }
@@ -39,7 +41,8 @@
                 .Instance()
                 .Calling(c => c.IndexPartialView())
                 .ShouldReturn()
-                .PartialView("_IndexPartial");
+                .PartialView(view => view
+                    .WithName("_IndexPartial"));
         }
         
         [Fact]
@@ -52,7 +55,8 @@
                        .Instance()
                        .Calling(c => c.IndexPartialView())
                        .ShouldReturn()
-                       .PartialView("Incorrect");
+                       .PartialView(view => view
+                           .WithName("Incorrect"));
                 },
                 "When calling IndexPartialView action in MvcController expected partial view result to be 'Incorrect', but instead received '_IndexPartial'.");
         }

@@ -32,7 +32,7 @@
                         .Challenge(challenge => challenge
                             .ContainingAuthenticationScheme(AuthenticationScheme.Digest));
                 },
-                "When calling ChallengeWithAuthenticationSchemes action in MvcController expected challenge result authentication schemes to contain Digest, but none was found.");
+                "When calling ChallengeWithAuthenticationSchemes action in MvcController expected challenge result authentication schemes to contain 'Digest', but none was found.");
         }
 
         [Fact]
@@ -65,7 +65,7 @@
                                 AuthenticationScheme.Digest, 
                                 AuthenticationScheme.Basic));
                 },
-                "When calling ChallengeWithAuthenticationSchemes action in MvcController expected challenge result authentication schemes to contain Digest, but none was found.");
+                "When calling ChallengeWithAuthenticationSchemes action in MvcController expected challenge result authentication schemes to contain 'Digest', but none was found.");
         }
 
         [Fact]

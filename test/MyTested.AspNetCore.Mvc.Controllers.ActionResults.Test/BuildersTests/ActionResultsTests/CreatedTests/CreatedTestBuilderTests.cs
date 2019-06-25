@@ -428,7 +428,7 @@
                         .Created(created => created
                             .WithUrlHelper(null));
                 },
-                "When calling CreatedAtActionWithCustomHelperResult action in MvcController expected created result UrlHelper to be the same as the provided one, but instead received different result.");
+                "When calling CreatedAtActionWithCustomHelperResult action in MvcController expected created result URL helper to be the same as the provided one, but instead received different result.");
         }
 
         [Fact]
@@ -459,7 +459,7 @@
                         .Created(created => created
                             .WithUrlHelperOfType<IUrlHelper>());
                 },
-                "When calling CreatedAtActionWithCustomHelperResult action in MvcController expected created result UrlHelper to be of IUrlHelper type, but instead received CustomUrlHelper.");
+                "When calling CreatedAtActionWithCustomHelperResult action in MvcController expected created result URL helper to be of IUrlHelper type, but instead received CustomUrlHelper.");
         }
 
         [Fact]
@@ -475,7 +475,7 @@
                         .Created(created => created
                             .WithUrlHelperOfType<IUrlHelper>());
                 },
-                "When calling CreatedAtActionResult action in MvcController expected created result UrlHelper to be of IUrlHelper type, but instead received null.");
+                "When calling CreatedAtActionResult action in MvcController expected created result URL helper to be of IUrlHelper type, but instead received null.");
         }
 
         [Fact]

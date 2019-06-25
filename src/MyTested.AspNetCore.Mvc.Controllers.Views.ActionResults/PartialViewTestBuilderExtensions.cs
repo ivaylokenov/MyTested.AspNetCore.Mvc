@@ -15,7 +15,7 @@
         /// <param name="viewTestBuilder">
         /// Instance of <see cref="IPartialViewTestBuilder"/> type.
         /// </param>
-        /// <typeparam name="TViewEngine">View engine of type <see cref="IViewEngine"/>.</typeparam>
+        /// <typeparam name="TViewEngine">Expected view engine of type <see cref="IViewEngine"/>.</typeparam>
         /// <returns>The same <see cref="IAndPartialViewTestBuilder"/>.</returns>
         public static IAndPartialViewTestBuilder WithViewEngineOfType<TViewEngine>(
             this IPartialViewTestBuilder viewTestBuilder)

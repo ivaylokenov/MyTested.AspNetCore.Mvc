@@ -463,7 +463,7 @@
                         .Redirect(redirect => redirect
                             .WithUrlHelper(null));
                 },
-                "When calling RedirectToActionWithCustomUrlHelperResult action in MvcController expected redirect result UrlHelper to be the same as the provided one, but instead received different result.");
+                "When calling RedirectToActionWithCustomUrlHelperResult action in MvcController expected redirect result URL helper to be the same as the provided one, but instead received different result.");
         }
 
         [Fact]
@@ -494,7 +494,7 @@
                         .Redirect(redirect => redirect
                             .WithUrlHelperOfType<IUrlHelper>());
                 },
-                "When calling RedirectToActionWithCustomUrlHelperResult action in MvcController expected redirect result UrlHelper to be of IUrlHelper type, but instead received CustomUrlHelper.");
+                "When calling RedirectToActionWithCustomUrlHelperResult action in MvcController expected redirect result URL helper to be of IUrlHelper type, but instead received CustomUrlHelper.");
         }
 
         [Fact]
@@ -510,7 +510,7 @@
                         .Redirect(redirect => redirect
                             .WithUrlHelperOfType<IUrlHelper>());
                 },
-                "When calling RedirectToActionResult action in MvcController expected redirect result UrlHelper to be of IUrlHelper type, but instead received null.");
+                "When calling RedirectToActionResult action in MvcController expected redirect result URL helper to be of IUrlHelper type, but instead received null.");
         }
 
         [Fact]

@@ -32,7 +32,7 @@
                         .Forbid(forbid => forbid
                             .ContainingAuthenticationScheme(AuthenticationScheme.Digest));
                 },
-                "When calling ForbidWithAuthenticationSchemes action in MvcController expected forbid result authentication schemes to contain Digest, but none was found.");
+                "When calling ForbidWithAuthenticationSchemes action in MvcController expected forbid result authentication schemes to contain 'Digest', but none was found.");
         }
 
         [Fact]
@@ -63,7 +63,7 @@
                         .Forbid(forbid => forbid
                             .ContainingAuthenticationSchemes(AuthenticationScheme.Digest, AuthenticationScheme.Basic));
                 },
-                "When calling ForbidWithAuthenticationSchemes action in MvcController expected forbid result authentication schemes to contain Digest, but none was found.");
+                "When calling ForbidWithAuthenticationSchemes action in MvcController expected forbid result authentication schemes to contain 'Digest', but none was found.");
         }
 
         [Fact]
