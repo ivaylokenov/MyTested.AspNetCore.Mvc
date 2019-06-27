@@ -64,9 +64,9 @@
                     .WithFormField("PromoCode", "FREE"))
                 .WithSession(session => session
                     .WithEntry("Session", cartId))
-                .WithAuthenticatedUser()
+                .WithUser()
                 .WithRouteData()
-                .WithDbContext(db => db
+                .WithData(db => db
                     .WithEntities(entities =>
                     {
                         var cartItems = CreateTestCartItems(
@@ -120,8 +120,8 @@
         {
             MyMvc
                 .Controller<CheckoutController>()
-                .WithAuthenticatedUser(user => user.WithUsername("TestUser"))
-                .WithDbContext(dbContext =>
+                .WithUser(user => user.WithUsername("TestUser"))
+                .WithData(dbContext =>
                     dbContext.WithSet<Order>(o => o.Add(new Order
                     {
                         OrderId = 1,
@@ -137,8 +137,8 @@
         {
             MyMvc
                 .Controller<CheckoutController>()
-                .WithAuthenticatedUser(user => user.WithUsername("TestUser"))
-                .WithDbContext(dbContext =>
+                .WithUser(user => user.WithUsername("TestUser"))
+                .WithData(dbContext =>
                     dbContext.WithSet<Order>(o => o.Add(new Order
                     {
                         OrderId = 1,

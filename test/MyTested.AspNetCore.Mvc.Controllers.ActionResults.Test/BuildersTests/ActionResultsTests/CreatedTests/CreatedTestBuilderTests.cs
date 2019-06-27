@@ -226,7 +226,7 @@
                 .Calling(c => c.CreatedAtRouteAction())
                 .ShouldReturn()
                 .Created(created => created
-                    .ToRoute("Redirect"));
+                    .AtRoute("Redirect"));
         }
 
         [Fact]
@@ -240,7 +240,7 @@
                         .Calling(c => c.CreatedAtRouteAction())
                         .ShouldReturn()
                         .Created(created => created
-                            .ToRoute("MyRedirect"));
+                            .AtRoute("MyRedirect"));
                 },
                 "When calling CreatedAtRouteAction action in MvcController expected created result to have 'MyRedirect' route name, but instead received 'Redirect'.");
         }

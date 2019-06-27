@@ -17,7 +17,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .WithServices(services => services
+                .WithDependencies(services => services
                     .WithNo<IInjectedService>()
                     .WithNo<RequestModel>()
                     .WithNo<IAnotherInjectedService>())
@@ -31,7 +31,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .WithServices(services => services
+                .WithDependencies(services => services
                     .WithNo<IInjectedService>())
                 .Calling(c => c.OkResultAction())
                 .ShouldReturn()
@@ -43,7 +43,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .WithServices(services => services
+                .WithDependencies(services => services
                     .WithNo<IInjectedService>())
                 .Calling(c => c.OkResultAction())
                 .ShouldReturn()
@@ -55,7 +55,7 @@
         {
             MyController<FullPocoController>
                 .Instance()
-                .WithServices(services => services
+                .WithDependencies(services => services
                     .WithNo<IInjectedService>()
                     .WithNo<RequestModel>()
                     .WithNo<IAnotherInjectedService>())
@@ -69,7 +69,7 @@
         {
             MyController<FullPocoController>
                 .Instance()
-                .WithServices(services => services
+                .WithDependencies(services => services
                     .WithNo<IInjectedService>())
                 .Calling(c => c.OkResultAction())
                 .ShouldReturn()
@@ -81,7 +81,7 @@
         {
             MyController<FullPocoController>
                 .Instance()
-                .WithServices(services => services
+                .WithDependencies(services => services
                     .WithNo<IInjectedService>())
                 .Calling(c => c.OkResultAction())
                 .ShouldReturn()
@@ -93,7 +93,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .WithServices(services => services
+                .WithDependencies(services => services
                     .With<IInjectedService>(new InjectedService()))
                 .ShouldPassForThe<MvcController>(controller =>
                 {
@@ -109,7 +109,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .WithServices(services => services
+                .WithDependencies(services => services
                     .With<IAnotherInjectedService>(new AnotherInjectedService())
                     .With<IInjectedService>(new InjectedService()))
                 .ShouldPassForThe<MvcController>(controller =>
@@ -126,7 +126,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .WithServices(services => services
+                .WithDependencies(services => services
                     .With<IAnotherInjectedService>(new AnotherInjectedService())
                     .With<RequestModel>(new RequestModel())
                     .With<IInjectedService>(new InjectedService()))
@@ -144,7 +144,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .WithServices(services => services
+                .WithDependencies(services => services
                     .With(new RequestModel())
                     .With(new AnotherInjectedService())
                     .With(new InjectedService()))
@@ -158,7 +158,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .WithServices(services => services
+                .WithDependencies(services => services
                     .With(new RequestModel())
                     .AndAlso()
                     .With(new AnotherInjectedService())
@@ -176,7 +176,7 @@
         {
             MyController<FullPocoController>
                 .Instance()
-                .WithServices(services => services
+                .WithDependencies(services => services
                     .With<IInjectedService>(new InjectedService()))
                 .ShouldPassForThe<FullPocoController>(controller =>
                 {
@@ -194,7 +194,7 @@
         {
             MyController<FullPocoController>
                 .Instance()
-                .WithServices(services => services
+                .WithDependencies(services => services
                     .With<IAnotherInjectedService>(new AnotherInjectedService())
                     .With<IInjectedService>(new InjectedService()))
                 .ShouldPassForThe<FullPocoController>(controller =>
@@ -213,7 +213,7 @@
         {
             MyController<FullPocoController>
                 .Instance()
-                .WithServices(services => services
+                .WithDependencies(services => services
                     .With<IAnotherInjectedService>(new AnotherInjectedService())
                     .With<RequestModel>(new RequestModel())
                     .With<IInjectedService>(new InjectedService()))
@@ -233,7 +233,7 @@
         {
             MyController<FullPocoController>
                 .Instance()
-                .WithServices(services => services
+                .WithDependencies(services => services
                     .With(new RequestModel())
                     .With(new AnotherInjectedService())
                     .With(new InjectedService()))
@@ -247,7 +247,7 @@
         {
             MyController<FullPocoController>
                 .Instance()
-                .WithServices(services => services
+                .WithDependencies(services => services
                     .With(new RequestModel())
                     .AndAlso()
                     .With(new AnotherInjectedService())
@@ -264,7 +264,7 @@
         {
             MyController<FullPocoController>
                 .Instance()
-                .WithServices(new List<object> { new RequestModel(), new AnotherInjectedService(), new InjectedService() })
+                .WithDependencies(new List<object> { new RequestModel(), new AnotherInjectedService(), new InjectedService() })
                 .Calling(c => c.OkResultAction())
                 .ShouldReturn()
                 .Ok();
@@ -275,7 +275,7 @@
         {
             MyController<FullPocoController>
                 .Instance()
-                .WithServices(new RequestModel(), new AnotherInjectedService(), new InjectedService())
+                .WithDependencies(new RequestModel(), new AnotherInjectedService(), new InjectedService())
                 .Calling(c => c.OkResultAction())
                 .ShouldReturn()
                 .Ok();
@@ -289,7 +289,7 @@
                 {
                     MyController<FullPocoController>
                         .Instance()
-                        .WithServices(services => services
+                        .WithDependencies(services => services
                             .With(new RequestModel())
                             .With<IAnotherInjectedService>(new AnotherInjectedService())
                             .With<IInjectedService>(new InjectedService())
@@ -303,7 +303,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .WithServices(new List<object> { new RequestModel(), new AnotherInjectedService(), new InjectedService() })
+                .WithDependencies(new List<object> { new RequestModel(), new AnotherInjectedService(), new InjectedService() })
                 .Calling(c => c.AuthorizedAction())
                 .ShouldReturn()
                 .NotFound();
@@ -314,7 +314,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .WithServices(new RequestModel(), new AnotherInjectedService(), new InjectedService())
+                .WithDependencies(new RequestModel(), new AnotherInjectedService(), new InjectedService())
                 .Calling(c => c.AuthorizedAction())
                 .ShouldReturn()
                 .NotFound();
@@ -328,7 +328,7 @@
                 {
                     MyController<MvcController>
                         .Instance()
-                        .WithServices(services => services
+                        .WithDependencies(services => services
                             .With(new RequestModel())
                             .With<IAnotherInjectedService>(new AnotherInjectedService())
                             .With<IInjectedService>(new InjectedService())
@@ -345,7 +345,7 @@
                 {
                     MyController<NoParameterlessConstructorController>
                         .Instance()
-                        .WithServices(services => services
+                        .WithDependencies(services => services
                             .With(new RequestModel())
                             .With(new ResponseModel())
                             .With<IAnotherInjectedService>(new AnotherInjectedService()))
@@ -364,7 +364,7 @@
                 {
                     MyController<NoParameterlessConstructorController>
                         .Instance()
-                        .WithServices(services => services
+                        .WithDependencies(services => services
                             .With(new RequestModel())
                             .With(new ResponseModel())
                             .With<IAnotherInjectedService>(new AnotherInjectedService()))
@@ -387,7 +387,7 @@
 
             MyController<ServicesController>
                 .Instance()
-                .WithServices(services => services
+                .WithDependencies(services => services
                     .WithNo<IScopedService>()
                     .WithSetupFor<IScopedService>(s => s.Value = "Custom"))
                 .Calling(c => c.DoNotSetValue())
@@ -397,7 +397,7 @@
 
             MyController<ServicesController>
                 .Instance()
-                .WithServices(services => services
+                .WithDependencies(services => services
                     .WithNo<IScopedService>()
                     .WithSetupFor<IScopedService>(s => s.Value = "SecondCustom"))
                 .Calling(c => c.FromServices(From.Services<IScopedService>()))
@@ -420,7 +420,7 @@
 
             MyController<ScopedServiceController>
                 .Instance()
-                .WithServices(services => services
+                .WithDependencies(services => services
                     .WithSetupFor<IScopedService>(s => s.Value = "TestValue"))
                 .Calling(c => c.Index())
                 .ShouldReturn()
@@ -445,7 +445,7 @@
                 {
                     MyController<ScopedServiceController>
                         .Instance()
-                        .WithServices(services => services
+                        .WithDependencies(services => services
                             .WithSetupFor<IScopedService>(s => s.Value = "TestValue"))
                         .Calling(c => c.Index())
                         .ShouldReturn()

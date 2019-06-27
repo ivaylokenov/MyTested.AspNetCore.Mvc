@@ -20,7 +20,7 @@
         /// </param>
         /// <param name="routeName">Expected route name.</param>
         /// <returns>The same route values <see cref="Microsoft.AspNetCore.Mvc.ActionResult"/> test builder.</returns>
-        public static TRouteValuesResultTestBuilder ToRoute<TRouteValuesResultTestBuilder>(
+        public static TRouteValuesResultTestBuilder WithRouteName<TRouteValuesResultTestBuilder>(
             this IBaseTestBuilderWithRouteValuesResult<TRouteValuesResultTestBuilder> baseTestBuilderWithRouteValuesResult,
             string routeName)
             where TRouteValuesResultTestBuilder : IBaseTestBuilderWithActionResult

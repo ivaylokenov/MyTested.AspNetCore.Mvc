@@ -15,7 +15,7 @@
                 .Routing()
                 .ShouldMap(request => request
                     .WithLocation("/Checkout/AddressAndPayment")
-                    .WithAuthenticatedUser())
+                    .WithUser())
                 .To<CheckoutController>(c => c.AddressAndPayment());
         }
 
@@ -49,7 +49,7 @@
                         Phone = phone,
                         Email = email
                     })
-                    .WithAuthenticatedUser()
+                    .WithUser()
                     .WithAntiForgeryToken())
                 .To<CheckoutController>(c => c.AddressAndPayment(
                     With.Any<MusicStoreContext>(),
@@ -77,7 +77,7 @@
                 .Routing()
                 .ShouldMap(request => request
                     .WithLocation("/Checkout/Complete/1")
-                    .WithAuthenticatedUser())
+                    .WithUser())
                 .To<CheckoutController>(c => c.Complete(With.Any<MusicStoreContext>(), 1));
         }
     }

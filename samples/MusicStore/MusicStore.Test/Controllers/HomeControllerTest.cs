@@ -17,7 +17,7 @@
                 .Controller<HomeController>()
                 .WithOptions(options => options
                     .For<AppSettings>(settings => settings.CacheDbResults = true))
-                .WithDbContext(dbContext => dbContext
+                .WithData(dbContext => dbContext
                     .WithSet<Album>(albums => albums
                         .AddRange(TestAlbumDataProvider.GetAlbums())))
                 .Calling(c => c.Index(

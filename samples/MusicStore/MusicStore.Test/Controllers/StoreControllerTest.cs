@@ -17,7 +17,7 @@
         {
             MyMvc
                 .Controller<StoreController>()
-                .WithDbContext(db => db
+                .WithData(db => db
                     .WithEntities(entities => CreateTestGenres(
                         numberOfGenres: 10,
                         numberOfAlbums: 1,
@@ -46,7 +46,7 @@
 
             MyMvc
                 .Controller<StoreController>()
-                .WithDbContext(db => db
+                .WithData(db => db
                     .WithEntities(entities => CreateTestGenres(
                         numberOfGenres: 3,
                         numberOfAlbums: 3,
@@ -83,7 +83,7 @@
                 .Controller<StoreController>()
                 .WithOptions(options => options
                     .For<AppSettings>(settings => settings.CacheDbResults = true))
-                .WithDbContext(db => db
+                .WithData(db => db
                     .WithEntities(entities => genres = CreateTestGenres(
                         numberOfGenres: 3,
                         numberOfAlbums: 3,

@@ -18,7 +18,7 @@
                 .ShouldReturn()
                 .Challenge(challenge => challenge
                     .WithAuthenticationProperties(auth => auth
-                        .WithAllowRefresh(true)));
+                        .AllowingRefresh(true)));
         }
         
         [Fact]
@@ -33,7 +33,7 @@
                         .ShouldReturn()
                         .Challenge(challenge => challenge
                             .WithAuthenticationProperties(auth => auth
-                                .WithAllowRefresh(false)));
+                                .AllowingRefresh(false)));
                 },
                 "When calling ChallengeWithAuthenticationProperties action in MvcController expected authentication properties to have allow refresh value of 'False', but in fact found 'True'.");
         }
@@ -50,7 +50,7 @@
                         .ShouldReturn()
                         .Challenge(challenge => challenge
                             .WithAuthenticationProperties(auth => auth
-                                .WithAllowRefresh(false)));
+                                .AllowingRefresh(false)));
                 },
                 "When calling ChallengeWithEmptyAuthenticationProperties action in MvcController expected authentication properties to have allow refresh value of 'False', but in fact found null.");
         }
@@ -67,13 +67,13 @@
                         .ShouldReturn()
                         .Challenge(challenge => challenge
                             .WithAuthenticationProperties(auth => auth
-                                .WithAllowRefresh(null)));
+                                .AllowingRefresh(null)));
                 },
                 "When calling ChallengeWithAuthenticationProperties action in MvcController expected authentication properties to not have allow refresh value, but in fact found 'True'.");
         }
 
         [Fact]
-        public void WithExpiresShouldNotThrowExceptionWithValidValue()
+        public void WithExpirationShouldNotThrowExceptionWithValidValue()
         {
             MyController<MvcController>
                 .Instance()
@@ -81,11 +81,11 @@
                 .ShouldReturn()
                 .Challenge(challenge => challenge
                     .WithAuthenticationProperties(auth => auth
-                        .WithExpires(new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)))));
+                        .WithExpiration(new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)))));
         }
 
         [Fact]
-        public void WithExpiresShouldThrowExceptionWithInvalidValue()
+        public void WithExpirationShouldThrowExceptionWithInvalidValue()
         {
             Test.AssertException<AuthenticationPropertiesAssertionException>(
                 () =>
@@ -96,13 +96,13 @@
                         .ShouldReturn()
                         .Challenge(challenge => challenge
                             .WithAuthenticationProperties(auth => auth
-                                .WithExpires(new DateTimeOffset(new DateTime(2015, 1, 1, 1, 1, 1)))));
+                                .WithExpiration(new DateTimeOffset(new DateTime(2015, 1, 1, 1, 1, 1)))));
                 },
-                "When calling ChallengeWithAuthenticationProperties action in MvcController expected authentication properties to have expires value of '12/31/2014 11:01:01 PM +00:00', but in fact found '12/31/2015 11:01:01 PM +00:00'.");
+                "When calling ChallengeWithAuthenticationProperties action in MvcController expected authentication properties to have expiration value of '12/31/2014 11:01:01 PM +00:00', but in fact found '12/31/2015 11:01:01 PM +00:00'.");
         }
 
         [Fact]
-        public void WithExpiresShouldThrowExceptionWithInvalidValueEmptyOriginal()
+        public void WithExpirationShouldThrowExceptionWithInvalidValueEmptyOriginal()
         {
             Test.AssertException<AuthenticationPropertiesAssertionException>(
                 () =>
@@ -113,13 +113,13 @@
                         .ShouldReturn()
                         .Challenge(challenge => challenge
                             .WithAuthenticationProperties(auth => auth
-                                .WithExpires(new DateTimeOffset(new DateTime(2015, 1, 1, 1, 1, 1)))));
+                                .WithExpiration(new DateTimeOffset(new DateTime(2015, 1, 1, 1, 1, 1)))));
                 },
-                "When calling ChallengeWithEmptyAuthenticationProperties action in MvcController expected authentication properties to have expires value of '12/31/2014 11:01:01 PM +00:00', but in fact found null.");
+                "When calling ChallengeWithEmptyAuthenticationProperties action in MvcController expected authentication properties to have expiration value of '12/31/2014 11:01:01 PM +00:00', but in fact found null.");
         }
 
         [Fact]
-        public void WithExpiresShouldThrowExceptionWithInvalidValueNullValue()
+        public void WithExpirationShouldThrowExceptionWithInvalidValueNullValue()
         {
             Test.AssertException<AuthenticationPropertiesAssertionException>(
                 () =>
@@ -130,9 +130,9 @@
                         .ShouldReturn()
                         .Challenge(challenge => challenge
                             .WithAuthenticationProperties(auth => auth
-                                .WithExpires(null)));
+                                .WithExpiration(null)));
                 },
-                "When calling ChallengeWithAuthenticationProperties action in MvcController expected authentication properties to not have expires value, but in fact found '12/31/2015 11:01:01 PM +00:00'.");
+                "When calling ChallengeWithAuthenticationProperties action in MvcController expected authentication properties to not have expiration value, but in fact found '12/31/2015 11:01:01 PM +00:00'.");
         }
 
         [Fact]
@@ -144,7 +144,7 @@
                 .ShouldReturn()
                 .Challenge(challenge => challenge
                     .WithAuthenticationProperties(auth => auth
-                        .WithIsPersistent(true)));
+                        .Persistent(true)));
         }
 
         [Fact]
@@ -159,7 +159,7 @@
                         .ShouldReturn()
                         .Challenge(challenge => challenge
                             .WithAuthenticationProperties(auth => auth
-                                .WithIsPersistent(false)));
+                                .Persistent(false)));
                 },
                 "When calling ChallengeWithAuthenticationProperties action in MvcController expected authentication properties to have is persistent value of 'False', but in fact found 'True'.");
         }
@@ -173,7 +173,7 @@
                 .ShouldReturn()
                 .Challenge(challenge => challenge
                     .WithAuthenticationProperties(auth => auth
-                        .WithIssued(new DateTimeOffset(new DateTime(2015, 1, 1, 1, 1, 1)))));
+                        .IssuedOn(new DateTimeOffset(new DateTime(2015, 1, 1, 1, 1, 1)))));
         }
 
         [Fact]
@@ -188,7 +188,7 @@
                         .ShouldReturn()
                         .Challenge(challenge => challenge
                             .WithAuthenticationProperties(auth => auth
-                                .WithIssued(new DateTimeOffset(new DateTime(2014, 1, 1, 1, 1, 1)))));
+                                .IssuedOn(new DateTimeOffset(new DateTime(2014, 1, 1, 1, 1, 1)))));
                 },
                 "When calling ChallengeWithAuthenticationProperties action in MvcController expected authentication properties to have issued value of '12/31/2013 11:01:01 PM +00:00', but in fact found '12/31/2014 11:01:01 PM +00:00'.");
         }
@@ -205,7 +205,7 @@
                         .ShouldReturn()
                         .Challenge(challenge => challenge
                             .WithAuthenticationProperties(auth => auth
-                                .WithIssued(new DateTimeOffset(new DateTime(2014, 1, 1, 1, 1, 1)))));
+                                .IssuedOn(new DateTimeOffset(new DateTime(2014, 1, 1, 1, 1, 1)))));
                 },
                 "When calling ChallengeWithEmptyAuthenticationProperties action in MvcController expected authentication properties to have issued value of '12/31/2013 11:01:01 PM +00:00', but in fact found null.");
         }
@@ -222,7 +222,7 @@
                         .ShouldReturn()
                         .Challenge(challenge => challenge
                             .WithAuthenticationProperties(auth => auth
-                                .WithIssued(null)));
+                                .IssuedOn(null)));
                 },
                 "When calling ChallengeWithAuthenticationProperties action in MvcController expected authentication properties to not have issued value, but in fact found '12/31/2014 11:01:01 PM +00:00'.");
         }

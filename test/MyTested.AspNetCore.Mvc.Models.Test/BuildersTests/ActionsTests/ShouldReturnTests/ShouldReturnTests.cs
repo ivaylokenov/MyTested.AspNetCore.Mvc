@@ -492,7 +492,7 @@
         }
 
         [Fact]
-        public void DynamicResultShouldBeProperlyRecognised()
+        public void DynamicResultShouldBeProperlyRecognized()
         {
             MyController<MvcController>
                 .Instance()

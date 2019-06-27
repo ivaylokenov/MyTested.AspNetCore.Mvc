@@ -24,7 +24,7 @@
                 .Instance()
                 .Calling(c => c.Create(new CustomModel { Id = 1, Name = "Test" }))
                 .ShouldHave()
-                .DbContext(dbContext => dbContext
+                .Data(dbContext => dbContext
                     .WithEntities<CustomDbContext>(db =>
                     {
                         Assert.NotNull(db.Models.FirstOrDefaultAsync(m => m.Id == 1));
@@ -50,7 +50,7 @@
                 .Instance()
                 .Calling(c => c.Create(new CustomModel { Id = 1, Name = "Test" }))
                 .ShouldHave()
-                .DbContext(dbContext => dbContext
+                .Data(dbContext => dbContext
                     .WithEntities<CustomDbContext>(db => db.Models.FirstOrDefaultAsync(m => m.Id == 1) != null))
                 .AndAlso()
                 .ShouldReturn()
@@ -73,7 +73,7 @@
                 .Instance()
                 .Calling(c => c.Create(new CustomModel { Id = 1, Name = "Test" }))
                 .ShouldHave()
-                .DbContext(dbContext => dbContext
+                .Data(dbContext => dbContext
                     .WithEntities<CustomDbContext>(db => db.Models.FirstOrDefaultAsync(m => m.Id == 1) != null))
                 .AndAlso()
                 .ShouldReturn()
@@ -85,7 +85,7 @@
                     .Instance()
                     .Calling(c => c.Create(new CustomModel { Id = 2, Name = "Test" }))
                     .ShouldHave()
-                    .DbContext(dbContext => dbContext
+                    .Data(dbContext => dbContext
                         .WithEntities<CustomDbContext>(db => db.Models.FirstOrDefaultAsync(m => m.Id == 1) == null))
                     .AndAlso()
                     .ShouldReturn()
@@ -110,7 +110,7 @@
                 .Instance()
                 .Calling(c => c.Create(new CustomModel { Id = 1, Name = "Test" }))
                 .ShouldHave()
-                .DbContext(dbContext => dbContext
+                .Data(dbContext => dbContext
                     .WithSet<CustomDbContext, CustomModel>(set =>
                     {
                         Assert.NotNull(set.FirstOrDefaultAsync(m => m.Id == 1));
@@ -136,7 +136,7 @@
                 .Instance()
                 .Calling(c => c.Create(new CustomModel { Id = 1, Name = "Test" }))
                 .ShouldHave()
-                .DbContext(dbContext => dbContext
+                .Data(dbContext => dbContext
                     .WithSet<CustomDbContext, CustomModel>(set => set.FirstOrDefaultAsync(m => m.Id == 1) != null))
                 .AndAlso()
                 .ShouldReturn()
@@ -159,7 +159,7 @@
                 .Instance()
                 .Calling(c => c.Create(new CustomModel { Id = 1, Name = "Test" }))
                 .ShouldHave()
-                .DbContext(dbContext => dbContext
+                .Data(dbContext => dbContext
                     .WithSet<CustomDbContext, CustomModel>(set => set.FirstOrDefaultAsync(m => m.Id == 1) != null))
                 .AndAlso()
                 .ShouldReturn()
@@ -171,7 +171,7 @@
                     .Instance()
                     .Calling(c => c.Create(new CustomModel { Id = 2, Name = "Test" }))
                     .ShouldHave()
-                    .DbContext(dbContext => dbContext
+                    .Data(dbContext => dbContext
                         .WithSet<CustomDbContext, CustomModel>(set => set.FirstOrDefaultAsync(m => m.Id == 1) == null))
                     .AndAlso()
                     .ShouldReturn()

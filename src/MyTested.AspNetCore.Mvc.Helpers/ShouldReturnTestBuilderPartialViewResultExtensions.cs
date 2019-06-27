@@ -38,6 +38,7 @@
             TModel model)
             => shouldReturnTestBuilder
                 .PartialView(partialView => partialView
+                    .WithName(null)
                     .WithModel(model));
 
         /// <summary>

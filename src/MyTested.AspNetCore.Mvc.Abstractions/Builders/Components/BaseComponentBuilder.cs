@@ -72,11 +72,11 @@
             var component = this.TestContext.Component;
             if (component == null)
             {
-                var explicitDependenciesAreSet = this.TestContext.AggregatedServices.Any();
+                var explicitDependenciesAreSet = this.TestContext.AggregatedDependencies.Any();
                 if (explicitDependenciesAreSet)
                 {
                     // Custom dependencies are set, try create instance with them.
-                    component = Reflection.TryCreateInstance<TComponent>(this.TestContext.AggregatedServices);
+                    component = Reflection.TryCreateInstance<TComponent>(this.TestContext.AggregatedDependencies);
                 }
                 else
                 {
@@ -102,7 +102,7 @@
 
                 if (component == null)
                 {
-                    var friendlyServiceNames = this.TestContext.AggregatedServices
+                    var friendlyServiceNames = this.TestContext.AggregatedDependencies
                         .Keys
                         .Select(k => k.ToFriendlyTypeName());
 
@@ -111,7 +111,7 @@
                     throw new UnresolvedServicesException(string.Format(
                         "{0} could not be instantiated because it contains no constructor taking {1} parameters.",
                         typeof(TComponent).ToFriendlyTypeName(),
-                        this.TestContext.AggregatedServices.Count == 0 ? "no" : $"{joinedFriendlyServices} as"));
+                        this.TestContext.AggregatedDependencies.Count == 0 ? "no" : $"{joinedFriendlyServices} as"));
                 }
 
                 this.TestContext.ComponentConstructionDelegate = () => component;

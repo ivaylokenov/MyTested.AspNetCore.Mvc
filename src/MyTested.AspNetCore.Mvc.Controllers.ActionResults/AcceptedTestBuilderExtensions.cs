@@ -184,6 +184,21 @@
         }
 
         /// <summary>
+        /// Tests whether the <see cref="AcceptedAtRouteResult"/>
+        /// has specific route name.
+        /// </summary>
+        /// <param name="acceptedTestBuilder">
+        /// Instance of <see cref="IAcceptedTestBuilder"/> type.
+        /// </param>
+        /// <param name="routeName">Expected route name.</param>
+        /// <returns>The same <see cref="IAndAcceptedTestBuilder"/>.</returns>
+        public static IAndAcceptedTestBuilder AtRoute(
+            this IAcceptedTestBuilder acceptedTestBuilder,
+            string routeName)
+            => acceptedTestBuilder
+                .WithRouteName(routeName);
+
+        /// <summary>
         /// Tests whether the accepted result
         /// contains <see cref="IOutputFormatter"/> of the provided type.
         /// </summary>

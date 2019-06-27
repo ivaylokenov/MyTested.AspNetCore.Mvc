@@ -153,7 +153,7 @@
             TModel model)
             => shouldReturnTestBuilder
                 .Created(result => result
-                    .ToRoute(routeName)
+                    .AtRoute(routeName)
                     .WithModel(model));
 
         /// <summary>
@@ -193,7 +193,7 @@
             TModel model)
             => shouldReturnTestBuilder
                 .Created(result => result
-                    .ToRoute(routeName)
+                    .AtRoute(routeName)
                     .ContainingRouteValues(routeValues)
                     .WithModel(model));
     }

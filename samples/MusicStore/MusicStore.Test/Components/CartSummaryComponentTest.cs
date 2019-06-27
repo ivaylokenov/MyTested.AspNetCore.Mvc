@@ -19,7 +19,7 @@
             MyMvc
                 .ViewComponent<CartSummaryComponent>()
                 .WithSession(session => session.WithEntry("Session", cartId))
-                .WithDbContext(dbContext => dbContext
+                .WithData(dbContext => dbContext
                     .WithEntities(entities => entities
                         .AddRange(GetCartItems(cartId, albumName, totalCartItems))))
                 .InvokedWith(vc => vc.InvokeAsync())

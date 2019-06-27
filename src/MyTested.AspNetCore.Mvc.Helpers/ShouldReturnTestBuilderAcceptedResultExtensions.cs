@@ -244,7 +244,7 @@
             string routeName)
             => shouldReturnTestBuilder
                 .Accepted(result => result
-                    .ToRoute(routeName));
+                    .AtRoute(routeName));
 
         /// <summary>
         /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.AcceptedAtRouteResult"/>
@@ -261,7 +261,7 @@
             object routeValues)
             => shouldReturnTestBuilder
                 .Accepted(result => result
-                    .ToRoute(routeName)
+                    .AtRoute(routeName)
                     .ContainingRouteValues(routeValues));
 
         /// <summary>
@@ -301,7 +301,7 @@
             TModel model)
             => shouldReturnTestBuilder
                 .Accepted(result => result
-                    .ToRoute(routeName)
+                    .AtRoute(routeName)
                     .ContainingRouteValues(routeValues)
                     .WithModel(model));
     }

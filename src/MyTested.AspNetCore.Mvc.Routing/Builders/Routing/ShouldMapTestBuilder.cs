@@ -228,17 +228,13 @@
 
         /// <inheritdoc />
         public IAndResolvedRouteTestBuilder To<TController>(Expression<Action<TController>> actionCall)
-            where TController : class
-        {
-            return this.ProcessRouteLambdaExpression(actionCall);
-        }
+            where TController : class 
+            => this.ProcessRouteLambdaExpression(actionCall);
 
         /// <inheritdoc />
         public IAndResolvedRouteTestBuilder To<TController>(Expression<Func<TController, Task>> actionCall)
-            where TController : class
-        {
-            return this.ProcessRouteLambdaExpression(actionCall);
-        }
+            where TController : class 
+            => this.ProcessRouteLambdaExpression(actionCall);
 
         /// <inheritdoc />
         public void ToNonExistingRoute()

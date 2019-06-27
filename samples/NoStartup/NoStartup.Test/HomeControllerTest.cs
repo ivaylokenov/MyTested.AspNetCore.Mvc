@@ -11,7 +11,7 @@
         public void IndexShouldReturnOkWithCorrectModel()
             => MyController<HomeController>
                 .Instance()
-                .WithServices(services => services
+                .WithDependencies(services => services
                     .With(ServiceMock.GetInstance()))
                 .Calling(c => c.Index())
                 .ShouldReturn()
@@ -22,7 +22,7 @@
         public void RedirectToIndexShouldRedirectToIndex()
             => MyController<HomeController>
                 .Instance()
-                .WithServices(services => services
+                .WithDependencies(services => services
                     .With(ServiceMock.GetInstance()))
                 .Calling(c => c.RedirectToIndex())
                 .ShouldReturn()

@@ -16,7 +16,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .WithAuthenticatedUser(user => user
+                .WithUser(user => user
                     .WithNameType("CustomUsername")
                     .WithUsername("MyUsername"))
                 .ShouldPassForThe<MvcController>(controller =>
@@ -33,7 +33,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .WithAuthenticatedUser(user => user
+                .WithUser(user => user
                     .WithRoleType("CustomRole")
                     .InRole("MyRole"))
                 .ShouldPassForThe<MvcController>(controller =>
@@ -50,7 +50,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .WithAuthenticatedUser()
+                .WithUser()
                 .ShouldPassForThe<Controller>(controller =>
                 {
                     var claim = controller.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
@@ -65,7 +65,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .WithAuthenticatedUser(user => user
+                .WithUser(user => user
                     .WithIdentifier("TestingId"))
                 .ShouldPassForThe<MvcController>(controller =>
                 {
@@ -81,7 +81,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .WithAuthenticatedUser(user => user
+                .WithUser(user => user
                     .WithClaim("MyClaim", "MyValue"))
                 .ShouldPassForThe<MvcController>(controller =>
                 {
@@ -97,7 +97,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .WithAuthenticatedUser(user => user
+                .WithUser(user => user
                     .WithClaim(new Claim("MyClaim", "MyValue")))
                 .ShouldPassForThe<MvcController>(controller =>
                 {
@@ -113,7 +113,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .WithAuthenticatedUser(user => user
+                .WithUser(user => user
                     .WithClaims(new Claim("MyClaim", "MyValue"), new Claim("MySecondClaim", "MySecondValue")))
                 .ShouldPassForThe<MvcController>(controller =>
                 {
@@ -132,7 +132,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .WithAuthenticatedUser(user => user
+                .WithUser(user => user
                     .WithClaims(new List<Claim> { new Claim("MyClaim", "MyValue"), new Claim("MySecondClaim", "MySecondValue") }))
                 .ShouldPassForThe<MvcController>(controller =>
                 {
@@ -151,7 +151,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .WithAuthenticatedUser(user => user
+                .WithUser(user => user
                     .WithIdentity(new ClaimsIdentity(new List<Claim> { new Claim("MyClaim", "MyValue"), new Claim("MySecondClaim", "MySecondValue") })))
                 .ShouldPassForThe<MvcController>(controller =>
                 {
@@ -170,7 +170,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .WithAuthenticatedUser(user => user
+                .WithUser(user => user
                     .WithIdentity(new GenericIdentity("GenericName")))
                 .ShouldPassForThe<MvcController>(controller =>
                 {
@@ -186,7 +186,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .WithAuthenticatedUser(user => user
+                .WithUser(user => user
                     .WithIdentity(new CustomIdentity("GenericName"))
                     .WithIdentity(new CustomIdentity("SecondGenericName")))
                 .ShouldPassForThe<MvcController>(controller =>
@@ -203,7 +203,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .WithAuthenticatedUser(user => user
+                .WithUser(user => user
                     .WithIdentity(identity => identity
                         .WithIdentifier("IdentityIdentifier")
                         .WithUsername("IdentityUsername")
@@ -228,7 +228,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .WithAuthenticatedUser(user => user
+                .WithUser(user => user
                     .WithIdentity(identity => identity
                         .WithNameType("CustomName")
                         .WithRoleType("CustomRole")

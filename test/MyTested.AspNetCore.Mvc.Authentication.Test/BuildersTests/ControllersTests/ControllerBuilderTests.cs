@@ -13,7 +13,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .WithAuthenticatedUser()
+                .WithUser()
                 .Calling(c => c.AuthorizedAction())
                 .ShouldReturn()
                 .Ok()
@@ -34,7 +34,7 @@
         {
             MyController<MvcController>
                 .Instance()
-                .WithAuthenticatedUser(user => user
+                .WithUser(user => user
                     .WithUsername("NewUserName")
                     .WithAuthenticationType("Custom")
                     .InRole("NormalUser")
@@ -76,7 +76,7 @@
 
             MyController<FullPocoController>
                 .Instance()
-                .WithAuthenticatedUser()
+                .WithUser()
                 .Calling(c => c.AuthorizedAction())
                 .ShouldReturn()
                 .Ok()
@@ -106,7 +106,7 @@
 
             MyController<FullPocoController>
                 .Instance()
-                .WithAuthenticatedUser(user => user
+                .WithUser(user => user
                     .WithUsername("NewUserName")
                     .WithAuthenticationType("Custom")
                     .InRole("NormalUser")

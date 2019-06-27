@@ -35,7 +35,7 @@
         }
 
         /// <inheritdoc />
-        public IAndJsonSerializerSettingsTestBuilder WithCheckAdditionalContent(bool checkAdditionalContent)
+        public IAndJsonSerializerSettingsTestBuilder WithAdditionalContentChecking(bool checkAdditionalContent)
         {
             this.jsonSerializerSettings.CheckAdditionalContent = checkAdditionalContent;
             this.validations.Add((expected, actual) =>

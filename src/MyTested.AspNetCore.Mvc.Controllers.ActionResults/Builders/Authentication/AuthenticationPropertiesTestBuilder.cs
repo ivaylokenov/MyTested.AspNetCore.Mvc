@@ -31,7 +31,7 @@
         }
         
         /// <inheritdoc />
-        public IAndAuthenticationPropertiesTestBuilder WithAllowRefresh(bool? allowRefresh)
+        public IAndAuthenticationPropertiesTestBuilder AllowingRefresh(bool? allowRefresh)
         {
             this.authenticationProperties.AllowRefresh = allowRefresh;
             this.validations.Add((expected, actual) =>
@@ -48,15 +48,15 @@
         }
 
         /// <inheritdoc />
-        public IAndAuthenticationPropertiesTestBuilder WithExpires(DateTimeOffset? expiresUtc)
+        public IAndAuthenticationPropertiesTestBuilder WithExpiration(DateTimeOffset? expiration)
         {
-            this.authenticationProperties.ExpiresUtc = expiresUtc;
+            this.authenticationProperties.ExpiresUtc = expiration;
             this.validations.Add((expected, actual) =>
             {
                 if (expected.ExpiresUtc != actual.ExpiresUtc)
                 {
                     this.ThrowNewAuthenticationPropertiesAssertionException(
-                        expected.ExpiresUtc == null ? "not have expires value" : $"have expires value of {expected.ExpiresUtc.GetErrorMessageName()}",
+                        expected.ExpiresUtc == null ? "not have expiration value" : $"have expiration value of {expected.ExpiresUtc.GetErrorMessageName()}",
                         $"in fact found {actual.ExpiresUtc.GetErrorMessageName()}");
                 }
             });
@@ -65,7 +65,7 @@
         }
 
         /// <inheritdoc />
-        public IAndAuthenticationPropertiesTestBuilder WithIsPersistent(bool isPersistent)
+        public IAndAuthenticationPropertiesTestBuilder Persistent(bool isPersistent)
         {
             this.authenticationProperties.IsPersistent = isPersistent;
             this.validations.Add((expected, actual) =>
@@ -82,9 +82,9 @@
         }
 
         /// <inheritdoc />
-        public IAndAuthenticationPropertiesTestBuilder WithIssued(DateTimeOffset? issuedUtc)
+        public IAndAuthenticationPropertiesTestBuilder IssuedOn(DateTimeOffset? issuedOn)
         {
-            this.authenticationProperties.IssuedUtc = issuedUtc;
+            this.authenticationProperties.IssuedUtc = issuedOn;
             this.validations.Add((expected, actual) =>
             {
                 if (expected.IssuedUtc != actual.IssuedUtc)

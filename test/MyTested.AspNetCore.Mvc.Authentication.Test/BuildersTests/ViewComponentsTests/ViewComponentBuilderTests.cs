@@ -11,7 +11,7 @@
         {
             MyViewComponent<UserComponent>
                 .Instance()
-                .WithAuthenticatedUser()
+                .WithUser()
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .View()
@@ -33,7 +33,7 @@
         {
             MyViewComponent<UserComponent>
                 .Instance()
-                .WithAuthenticatedUser(user => user
+                .WithUser(user => user
                     .WithUsername("NewUserName")
                     .WithAuthenticationType("Custom")
                     .InRole("NormalUser")

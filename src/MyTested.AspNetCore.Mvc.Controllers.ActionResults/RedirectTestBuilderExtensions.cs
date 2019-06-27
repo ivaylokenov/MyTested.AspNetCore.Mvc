@@ -61,6 +61,21 @@
         }
 
         /// <summary>
+        /// Tests whether the <see cref="RedirectToRouteResult"/>
+        /// has specific route name.
+        /// </summary>
+        /// <param name="redirectTestBuilder">
+        /// Instance of <see cref="IRedirectTestBuilder"/> type.
+        /// </param>
+        /// <param name="routeName">Expected route name.</param>
+        /// <returns>The same <see cref="IAndRedirectTestBuilder"/>.</returns>
+        public static IAndRedirectTestBuilder ToRoute(
+            this IRedirectTestBuilder redirectTestBuilder,
+            string routeName)
+            => redirectTestBuilder
+                .WithRouteName(routeName);
+
+        /// <summary>
         /// Tests whether the <see cref="RedirectToPageResult"/>
         /// result has specific page name.
         /// </summary>

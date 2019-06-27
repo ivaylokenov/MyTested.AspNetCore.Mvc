@@ -22,7 +22,7 @@
                 .ShouldReturn()
                 .Json(json => json
                     .WithJsonSerializerSettings(s =>
-                        s.WithCheckAdditionalContent(false)));
+                        s.WithAdditionalContentChecking(false)));
         }
 
         [Fact]
@@ -37,7 +37,7 @@
                             .ShouldReturn()
                             .Json(json => json
                                 .WithJsonSerializerSettings(s =>
-                                    s.WithCheckAdditionalContent(true)));
+                                    s.WithAdditionalContentChecking(true)));
                    },
                    "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have enabled checking for additional content, but in fact it was disabled.");
         }

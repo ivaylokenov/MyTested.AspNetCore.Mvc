@@ -18,7 +18,7 @@
         /// </summary>
         /// <param name="checkAdditionalContent">Expected boolean value.</param>
         /// <returns>The same <see cref="IAndJsonSerializerSettingsTestBuilder"/>.</returns>
-        IAndJsonSerializerSettingsTestBuilder WithCheckAdditionalContent(bool checkAdditionalContent);
+        IAndJsonSerializerSettingsTestBuilder WithAdditionalContentChecking(bool checkAdditionalContent);
 
         /// <summary>
         /// Tests the <see cref="JsonSerializerSettings.Culture"/> property

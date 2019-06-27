@@ -184,6 +184,21 @@
         }
 
         /// <summary>
+        /// Tests whether the <see cref="CreatedAtRouteResult"/>
+        /// has specific route name.
+        /// </summary>
+        /// <param name="createdTestBuilder">
+        /// Instance of <see cref="ICreatedTestBuilder"/> type.
+        /// </param>
+        /// <param name="routeName">Expected route name.</param>
+        /// <returns>The same <see cref="IAndCreatedTestBuilder"/>.</returns>
+        public static IAndCreatedTestBuilder AtRoute(
+            this ICreatedTestBuilder createdTestBuilder,
+            string routeName)
+            => createdTestBuilder
+                .WithRouteName(routeName);
+
+        /// <summary>
         /// Tests whether the created result
         /// contains <see cref="IOutputFormatter"/> of the provided type.
         /// </summary>

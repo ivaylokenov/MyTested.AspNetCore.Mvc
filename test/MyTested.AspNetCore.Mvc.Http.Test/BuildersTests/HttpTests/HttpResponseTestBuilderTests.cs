@@ -113,7 +113,7 @@
                         .AndAlso()
                         .WithValue("TestCookieValue")
                         .AndAlso()
-                        .WithSecure(true)
+                        .WithSecurity(true)
                         .AndAlso()
                         .WithHttpOnly(true)
                         .AndAlso()
@@ -121,7 +121,7 @@
                         .AndAlso()
                         .WithDomain("testdomain.com")
                         .AndAlso()
-                        .WithExpires(new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)))
+                        .WithExpiration(new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)))
                         .AndAlso()
                         .WithPath("/")));
         }
@@ -318,11 +318,11 @@
                         .HttpResponse(response => response
                             .ContainingCookie(cookie => cookie
                                 .WithValue("TestCookieValue")
-                                .WithSecure(true)
+                                .WithSecurity(true)
                                 .WithHttpOnly(true)
                                 .WithMaxAge(null)
                                 .WithDomain("testdomain.com")
-                                .WithExpires(new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)))
+                                .WithExpiration(new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)))
                                 .WithSameSite(Microsoft.Net.Http.Headers.SameSiteMode.None)
                                 .WithPath("/")));
                 },
@@ -343,12 +343,12 @@
                             .ContainingCookie(cookie => cookie
                                 .WithName("TestCookie")
                                 .WithValue("TestCookieValue12")
-                                .WithSecure(true)
+                                .WithSecurity(true)
                                 .WithHttpOnly(true)
                                 .WithMaxAge(null)
                                 .WithDomain("testdomain.com")
                                 .WithSameSite(Microsoft.Net.Http.Headers.SameSiteMode.Strict)
-                                .WithExpires(new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)))
+                                .WithExpiration(new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)))
                                 .WithPath("/")));
                 },
                 "When calling CustomVoidResponseAction action in MvcController expected HTTP response cookies to contain cookie with 'TestCookie' name and 'TestCookie=TestCookieValue12; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly' value, but the value was 'TestCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly'.");

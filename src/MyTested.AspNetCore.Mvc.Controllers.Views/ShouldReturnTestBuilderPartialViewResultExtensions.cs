@@ -6,6 +6,7 @@
     using Builders.Contracts.ActionResults.View;
     using Builders.Contracts.Actions;
     using Builders.Contracts.And;
+    using Internal.Extensions;
     using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
@@ -21,7 +22,9 @@
         /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
         public static IAndTestBuilder PartialView<TActionResult>(
             this IShouldReturnTestBuilder<TActionResult> builder)
-            => builder.PartialView(null);
+            => builder
+                .PartialView(partialView => partialView
+                    .WithDefaultName());
 
         /// <summary>
         /// Tests whether the action result is <see cref="PartialViewResult"/>.

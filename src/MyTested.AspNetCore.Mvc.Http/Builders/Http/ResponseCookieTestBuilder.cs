@@ -68,9 +68,9 @@
         }
 
         /// <inheritdoc />
-        public IAndResponseCookieTestBuilder WithExpires(DateTimeOffset? expires)
+        public IAndResponseCookieTestBuilder WithExpiration(DateTimeOffset? expiration)
         {
-            this.responseCookie.Expires = expires;
+            this.responseCookie.Expires = expiration;
             this.validations.Add((expected, actual) => expected.Expires == actual.Expires);
             return this;
         }
@@ -108,9 +108,9 @@
         }
 
         /// <inheritdoc />
-        public IAndResponseCookieTestBuilder WithSecure(bool secure)
+        public IAndResponseCookieTestBuilder WithSecurity(bool security)
         {
-            this.responseCookie.Secure = secure;
+            this.responseCookie.Secure = security;
             this.validations.Add((expected, actual) => expected.Secure == actual.Secure);
             return this;
         }

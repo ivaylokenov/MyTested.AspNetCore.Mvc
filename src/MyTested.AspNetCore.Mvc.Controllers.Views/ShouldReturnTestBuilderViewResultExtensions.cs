@@ -6,6 +6,7 @@
     using Builders.Contracts.ActionResults.View;
     using Builders.Contracts.Actions;
     using Builders.Contracts.And;
+    using Internal.Extensions;
     using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
@@ -21,7 +22,9 @@
         /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
         public static IAndTestBuilder View<TActionResult>(
             this IShouldReturnTestBuilder<TActionResult> builder)
-            => builder.View(null);
+            => builder
+                .View(view => view
+                    .WithDefaultName());
 
         /// <summary>
         /// Tests whether the action result is <see cref="ViewResult"/>.

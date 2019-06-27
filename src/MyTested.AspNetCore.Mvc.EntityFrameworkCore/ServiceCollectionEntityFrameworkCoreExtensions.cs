@@ -58,8 +58,9 @@
                             ServiceLifetime.Scoped);
                     }
 
-                    var genericMethod = AddScopedDatabaseMethodInfo.MakeGenericMethod(existingDbContextService.ImplementationType);
-                    genericMethod.Invoke(null, new object[] { serviceCollection });
+                    AddScopedDatabaseMethodInfo
+                        .MakeGenericMethod(existingDbContextService.ImplementationType)
+                        .Invoke(null, new object[] { serviceCollection });
                 });
             
             TestServiceProvider.SaveServiceLifetime(BaseDbContextType, ServiceLifetime.Scoped);

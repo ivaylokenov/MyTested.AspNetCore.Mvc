@@ -18,6 +18,21 @@
         /// <summary>
         /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.ViewResult"/>
         /// or the <see cref="Microsoft.AspNetCore.Mvc.PartialViewResult"/>
+        /// has the default view name.
+        /// </summary>
+        /// <param name="baseTestBuilderWithViewResult">
+        /// Instance of <see cref="IBaseTestBuilderWithViewResult{TViewResultTestBuilder}"/> type.
+        /// </param>
+        /// <returns>The same <see cref="Microsoft.AspNetCore.Mvc.ActionResult"/> test builder.</returns>
+        public static TViewResultTestBuilder WithDefaultName<TViewResultTestBuilder>(
+            this IBaseTestBuilderWithViewResult<TViewResultTestBuilder> baseTestBuilderWithViewResult)
+            where TViewResultTestBuilder : IBaseTestBuilderWithActionResult
+            => baseTestBuilderWithViewResult
+                .WithName(null);
+
+        /// <summary>
+        /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.ViewResult"/>
+        /// or the <see cref="Microsoft.AspNetCore.Mvc.PartialViewResult"/>
         /// has the same view name as the provided one.
         /// </summary>
         /// <param name="baseTestBuilderWithViewResult">

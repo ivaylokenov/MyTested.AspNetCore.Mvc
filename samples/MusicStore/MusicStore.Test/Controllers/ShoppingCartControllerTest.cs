@@ -52,7 +52,7 @@
             MyMvc
                 .Controller<ShoppingCartController>()
                 .WithSession(session => session.WithEntry("Session", cartId))
-                .WithDbContext(db => db
+                .WithData(db => db
                     .WithEntities(entities => 
                     {
                         var cartItems = CreateTestCartItems(
@@ -82,7 +82,7 @@
             MyMvc
                 .Controller<ShoppingCartController>()
                 .WithSession(session => session.WithEntry("Session", "CartId_A"))
-                .WithDbContext(db => db
+                .WithData(db => db
                     .WithEntities(entities => entities
                         .AddRange(CreateTestAlbums(itemPrice: 10))))
                 .Calling(c => c.AddToCart(albumId, CancellationToken.None))
@@ -109,7 +109,7 @@
             MyMvc
                 .Controller<ShoppingCartController>()
                 .WithSession(session => session.WithEntry("Session", cartId))
-                .WithDbContext(db => db
+                .WithData(db => db
                     .WithEntities(entities =>
                     {
                         var cartItems = CreateTestCartItems(cartId, unitPrice, numberOfItem);
