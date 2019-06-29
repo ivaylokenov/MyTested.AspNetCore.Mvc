@@ -33,9 +33,9 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.*" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.*" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.2.*" />
   </ItemGroup>
 
 </Project>

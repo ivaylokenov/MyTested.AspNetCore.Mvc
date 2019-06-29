@@ -14,12 +14,18 @@
     public static class HttpRequestBuilderAuthenticationExtensions
     {
         /// <summary>
-        /// Sets default authenticated <see cref="Microsoft.AspNetCore.Http.HttpContext.User"/> to the built request with "TestId" identifier (Id) and "TestUser" username.
+        /// Sets default authenticated <see cref="Microsoft.AspNetCore.Http.HttpContext.User"/> to the built request with "TestId" identifier and "TestUser" username.
         /// </summary>
         /// <param name="httpRequestBuilder">Instance of <see cref="IHttpRequestBuilder"/> type.</param>
-        /// <returns>The same component builder.</returns>
+        /// <returns>The same <see cref="IAndHttpRequestBuilder"/>.</returns>
         public static IAndHttpRequestBuilder WithUser(this IHttpRequestBuilder httpRequestBuilder)
-            => httpRequestBuilder.WithUser();
+        {
+            var actualHttpRequestBuilder = (HttpRequestBuilder)httpRequestBuilder;
+
+            actualHttpRequestBuilder.HttpContext.User = ClaimsPrincipalBuilder.DefaultAuthenticated;
+
+            return actualHttpRequestBuilder;
+        }
 
         /// <summary>
         /// Sets an authenticated <see cref="Microsoft.AspNetCore.Http.HttpContext.User"/> to the built request with "TestId" identifier (Id) and the provided username and roles.
@@ -32,9 +38,10 @@
             this IHttpRequestBuilder httpRequestBuilder,
             string username,
             IEnumerable<string> roles)
-            => httpRequestBuilder.WithUser(user => user
-                .WithUsername(username)
-                .InRoles(roles));
+            => httpRequestBuilder
+                .WithUser(user => user
+                    .WithUsername(username)
+                    .InRoles(roles));
 
         /// <summary>
         /// Sets an authenticated <see cref="Microsoft.AspNetCore.Http.HttpContext.User"/> to the built request with "TestId" identifier (Id) and the provided username and optional roles.
@@ -47,7 +54,8 @@
             this IHttpRequestBuilder httpRequestBuilder,
             string username,
             params string[] roles)
-            => httpRequestBuilder.WithUser(username, roles.AsEnumerable());
+            => httpRequestBuilder
+                .WithUser(username, roles.AsEnumerable());
 
         /// <summary>
         /// Sets an authenticated <see cref="Microsoft.AspNetCore.Http.HttpContext.User"/> to the built request with the provided identifier (Id), username and roles.
@@ -62,10 +70,11 @@
             string identifier,
             string username,
             IEnumerable<string> roles)
-            => httpRequestBuilder.WithUser(user => user
-                .WithIdentifier(identifier)
-                .WithUsername(username)
-                .InRoles(roles));
+            => httpRequestBuilder
+                .WithUser(user => user
+                    .WithIdentifier(identifier)
+                    .WithUsername(username)
+                    .InRoles(roles));
 
         /// <summary>
         /// Sets an authenticated <see cref="Microsoft.AspNetCore.Http.HttpContext.User"/> to the built request with the provided identifier (Id), username and optional roles.
@@ -80,7 +89,8 @@
             string identifier,
             string username,
             params string[] roles)
-            => httpRequestBuilder.WithUser(identifier, username, roles.AsEnumerable());
+            => httpRequestBuilder
+                .WithUser(identifier, username, roles.AsEnumerable());
 
         /// <summary>
         /// Sets an authenticated <see cref="Microsoft.AspNetCore.Http.HttpContext.User"/> to the built request with "TestId" identifier (Id) and the provided username and roles.
@@ -91,7 +101,9 @@
         public static IAndHttpRequestBuilder WithUser(
             this IHttpRequestBuilder httpRequestBuilder,
             IEnumerable<string> roles)
-            => httpRequestBuilder.WithUser(user => user.InRoles(roles));
+            => httpRequestBuilder
+                .WithUser(user => user
+                    .InRoles(roles));
         
         /// <summary>
         /// Sets an authenticated <see cref="Microsoft.AspNetCore.Http.HttpContext.User"/> to the built request with "TestId" identifier (Id) and the provided username and roles.
@@ -102,40 +114,17 @@
         public static IAndHttpRequestBuilder WithUser(
             this IHttpRequestBuilder httpRequestBuilder,
             params string[] roles)
-            => httpRequestBuilder.WithUser(user => user.InRoles(roles));
-
+            => httpRequestBuilder
+                .WithUser(user => user
+                    .InRoles(roles));
+        
         /// <summary>
         /// Sets custom authenticated <see cref="Microsoft.AspNetCore.Http.HttpContext.User"/> to the built request using the provided user builder.
         /// </summary>
         /// <param name="httpRequestBuilder">Instance of <see cref="IHttpRequestBuilder"/> type.</param>
         /// <param name="userBuilder">Action setting the <see cref="Microsoft.AspNetCore.Http.HttpContext.User"/> by using <see cref="IClaimsPrincipalBuilder"/>.</param>
-        /// <returns>The same component builder.</returns>
+        /// <returns>The same <see cref="IAndHttpRequestBuilder"/>.</returns>
         public static IAndHttpRequestBuilder WithUser(
-            this IHttpRequestBuilder httpRequestBuilder,
-            Action<IClaimsPrincipalBuilder> userBuilder)
-            => httpRequestBuilder.WithUser(userBuilder);
-
-        /// <summary>
-        /// Sets default authenticated <see cref="Microsoft.AspNetCore.Http.HttpContext.User"/> to the built request with "TestId" identifier and "TestUser" username.
-        /// </summary>
-        /// <param name="httpRequestBuilder">Instance of <see cref="IHttpRequestBuilder"/> type.</param>
-        /// <returns>The same <see cref="IAndHttpRequestBuilder"/>.</returns>
-        public static IAndHttpRequestBuilder WithAuthenticatedUser(this IHttpRequestBuilder httpRequestBuilder)
-        {
-            var actualHttpRequestBuilder = (HttpRequestBuilder)httpRequestBuilder;
-
-            actualHttpRequestBuilder.HttpContext.User = ClaimsPrincipalBuilder.DefaultAuthenticated;
-
-            return actualHttpRequestBuilder;
-        }
-
-        /// <summary>
-        /// Sets custom authenticated <see cref="Microsoft.AspNetCore.Http.HttpContext.User"/> to the built request using the provided user builder.
-        /// </summary>
-        /// <param name="httpRequestBuilder">Instance of <see cref="IHttpRequestBuilder"/> type.</param>
-        /// <param name="userBuilder">Action setting the <see cref="Microsoft.AspNetCore.Http.HttpContext.User"/> by using <see cref="IClaimsPrincipalBuilder"/>.</param>
-        /// <returns>The same <see cref="IAndHttpRequestBuilder"/>.</returns>
-        public static IAndHttpRequestBuilder WithAuthenticatedUser(
             this IHttpRequestBuilder httpRequestBuilder,
             Action<IClaimsPrincipalBuilder> userBuilder)
         {

@@ -29,7 +29,7 @@
 
             MyController<ServicesController>
                 .Instance()
-                .WithDependencies(services => services
+                .WithDependencies(dependencies => dependencies
                     .WithNo<IScopedService>())
                 .Calling(c => c.DoNotSetValue())
                 .ShouldReturn()

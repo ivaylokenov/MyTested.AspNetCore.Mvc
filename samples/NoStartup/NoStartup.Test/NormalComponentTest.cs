@@ -11,7 +11,7 @@
         public void InvokeAsyncShouldReturnViewWithCorrectModel()
             => MyViewComponent<NormalComponent>
                 .Instance()
-                .WithDependencies(services => services
+                .WithDependencies(dependencies => dependencies
                     .With(ServiceMock.GetInstance()))
                 .InvokedWith(c => c.InvokeAsync())
                 .ShouldReturn()

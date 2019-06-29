@@ -118,7 +118,7 @@
                 if (exception.InnerException is FileNotFoundException)
                 {
                     throw new InvalidOperationException(
-                        $"Application dependencies could not be loaded correctly. If your web project references the '{AspNetCoreMetaPackageName}' package, you need to reference it in your test project too. Additionally, make sure the SDK is set to 'Microsoft.NET.Sdk.Web' in your test project's '.csproj' file.");
+                        $"Application dependencies could not be loaded correctly. If your web project references the '{WebFramework.AspNetCoreMetaPackageName}' package, you need to reference it in your test project too. Additionally, make sure the SDK is set to 'Microsoft.NET.Sdk.Web' in your test project's '.csproj' file.");
                 }
 
                 throw;

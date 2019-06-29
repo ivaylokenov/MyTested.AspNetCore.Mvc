@@ -65,7 +65,9 @@
         private static void Initialize()
         {
             TestWebServer.EnsureTestAssembly();
-            
+
+            TestFramework.EnsureCorrectVersion(TestWebServer.GetDependencyContext());
+
             ValidateStartup();
 
             TestCounter.SetLicenseData(

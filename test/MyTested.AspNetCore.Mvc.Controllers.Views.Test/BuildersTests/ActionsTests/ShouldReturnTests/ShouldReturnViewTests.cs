@@ -33,6 +33,21 @@
         }
         
         [Fact]
+        public void ShouldReturnViewShouldThrowExceptionIfActionResultIsViewResultWithoutDefaultName()
+        {
+            Test.AssertException<ViewResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                       .Instance()
+                       .Calling(c => c.IndexView())
+                       .ShouldReturn()
+                       .View();
+                },
+                "When calling IndexView action in MvcController expected view result name to be the default one, but instead received 'Index'.");
+        }
+
+        [Fact]
         public void ShouldReturnPartialViewShouldNotThrowExceptionWithDefaultPartialView()
         {
             MyController<MvcController>
@@ -55,6 +70,21 @@
                        .PartialView();
                 },
                 "When calling DefaultView action in MvcController expected result to be PartialViewResult, but instead received ViewResult.");
+        }
+
+        [Fact]
+        public void ShouldReturnPartialViewShouldThrowExceptionIfActionResultIsPartialViewResultWithoutDefaultName()
+        {
+            Test.AssertException<ViewResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                       .Instance()
+                       .Calling(c => c.IndexPartialView())
+                       .ShouldReturn()
+                       .PartialView();
+                },
+                "When calling IndexPartialView action in MvcController expected partial view result name to be the default one, but instead received '_IndexPartial'.");
         }
     }
 }

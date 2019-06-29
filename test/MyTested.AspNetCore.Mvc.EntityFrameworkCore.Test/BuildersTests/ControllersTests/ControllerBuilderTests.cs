@@ -50,7 +50,7 @@
 
             MyController<DbContextController>
                 .Instance()
-                .WithData(dbContext => dbContext
+                .WithData(data => data
                     .WithEntities<CustomDbContext>(db => db
                         .Models.Add(new CustomModel
                         {
@@ -64,7 +64,7 @@
 
             MyController<DbContextController>
                 .Instance()
-                .WithData(dbContext => dbContext
+                .WithData(data => data
                     .WithEntities(db => db.Add(new CustomModel
                         {
                             Id = 1,
@@ -78,7 +78,7 @@
 
             MyController<DbContextController>
                 .Instance()
-                .WithData(dbContext => dbContext
+                .WithData(data => data
                     .WithEntities(
                         new CustomModel
                         {
@@ -98,7 +98,7 @@
 
             MyController<DbContextController>
                 .Instance()
-                .WithData(dbContext => dbContext
+                .WithData(data => data
                     .WithEntities<CustomDbContext>(db => db
                         .Models.Add(new CustomModel
                         {
@@ -111,7 +111,7 @@
 
             MyController<DbContextController>
                 .Instance()
-                .WithData(dbContext => dbContext
+                .WithData(data => data
                     .WithEntities<CustomDbContext>(
                         new CustomModel
                         {
@@ -149,7 +149,7 @@
 
             MyController<DbContextController>
                 .Instance()
-                .WithData(dbContext => dbContext
+                .WithData(data => data
                     .WithSet<CustomDbContext, CustomModel>(set => set
                         .Add(new CustomModel
                         {
@@ -164,7 +164,7 @@
 
             MyController<DbContextController>
                 .Instance()
-                .WithData(dbContext => dbContext
+                .WithData(data => data
                     .WithSet<CustomDbContext, CustomModel>(set => set
                         .Add(new CustomModel
                         {

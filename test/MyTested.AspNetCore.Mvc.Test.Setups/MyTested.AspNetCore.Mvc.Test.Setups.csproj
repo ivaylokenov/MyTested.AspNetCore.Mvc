@@ -8,6 +8,7 @@
     <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
     <PackageId>MyTested.AspNetCore.Mvc.Test.Setups</PackageId>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <IsTestProject>false</IsTestProject>
   </PropertyGroup>
 
   <ItemGroup>

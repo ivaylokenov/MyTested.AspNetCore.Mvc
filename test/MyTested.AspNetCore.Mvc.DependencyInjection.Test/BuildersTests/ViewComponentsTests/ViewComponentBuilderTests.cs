@@ -13,7 +13,7 @@
         {
             MyViewComponent<MultipleServicesComponent>
                 .Instance()
-                .WithDependencies(services => services
+                .WithDependencies(dependencies => dependencies
                     .With<IInjectedService>(new InjectedService())
                     .WithNo<IAnotherInjectedService>())
                 .InvokedWith(c => c.Invoke())
@@ -34,7 +34,7 @@
 
             MyViewComponent<MultipleServicesComponent>
                 .Instance()
-                .WithDependencies(services => services
+                .WithDependencies(dependencies => dependencies
                     .With(service)
                     .With(anotherService))
                 .InvokedWith(c => c.Invoke())
@@ -78,7 +78,7 @@
 
             MyViewComponent<ScopedServiceComponent>
                 .Instance()
-                .WithDependencies(services => services
+                .WithDependencies(dependencies => dependencies
                     .WithSetupFor<IScopedService>(s => s.Value = "TestValue"))
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()

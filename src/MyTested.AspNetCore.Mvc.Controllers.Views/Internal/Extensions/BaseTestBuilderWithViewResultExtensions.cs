@@ -25,8 +25,8 @@
                 if (actualViewName != null)
                 {
                     actualBuilder.ThrowNewFailedValidationException(
-                        "to",
-                        $"be {TestHelper.GetFriendlyName(null)}",
+                        "name",
+                        $"to be {TestHelper.GetFriendlyName(null)}",
                         $"instead received {TestHelper.GetFriendlyName(actualViewName)}");
                 }
             });

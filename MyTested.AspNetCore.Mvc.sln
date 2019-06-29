@@ -231,7 +231,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyTested.AspNetCore.Mvc.Con
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyTested.AspNetCore.Mvc.Controllers.ActionResults.Test", "test\MyTested.AspNetCore.Mvc.Controllers.ActionResults.Test\MyTested.AspNetCore.Mvc.Controllers.ActionResults.Test.csproj", "{4E038FA2-52FA-47CD-8797-6FD6CAE8741E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyTested.AspNetCore.Mvc.ViewComponents.Results.Test", "test\MyTested.AspNetCore.Mvc.ViewComponents.Results.Test\MyTested.AspNetCore.Mvc.ViewComponents.Results.Test.csproj", "{32B24AD2-9D35-4A5A-86CE-8C7862DED27E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyTested.AspNetCore.Mvc.ViewComponents.Results.Test", "test\MyTested.AspNetCore.Mvc.ViewComponents.Results.Test\MyTested.AspNetCore.Mvc.ViewComponents.Results.Test.csproj", "{32B24AD2-9D35-4A5A-86CE-8C7862DED27E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

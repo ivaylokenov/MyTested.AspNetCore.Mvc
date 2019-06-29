@@ -29,9 +29,10 @@
             string username,
             IEnumerable<string> roles)
             where TBuilder : IBaseTestBuilder
-            => builder.WithUser(user => user
-                .WithUsername(username)
-                .InRoles(roles));
+            => builder
+                .WithUser(user => user
+                    .WithUsername(username)
+                    .InRoles(roles));
 
         /// <summary>
         /// Sets an authenticated <see cref="Microsoft.AspNetCore.Http.HttpContext.User"/> to the
@@ -49,7 +50,8 @@
             string username, 
             params string[] roles)
             where TBuilder : IBaseTestBuilder
-            => builder.WithUser(username, roles.AsEnumerable());
+            => builder
+                .WithUser(username, roles.AsEnumerable());
 
         /// <summary>
         /// Sets an authenticated <see cref="Microsoft.AspNetCore.Http.HttpContext.User"/> to the
@@ -71,10 +73,11 @@
             string username,
             IEnumerable<string> roles)
             where TBuilder : IBaseTestBuilder
-            => builder.WithUser(user => user
-                .WithIdentifier(identifier)
-                .WithUsername(username)
-                .InRoles(roles));
+            => builder
+                .WithUser(user => user
+                    .WithIdentifier(identifier)
+                    .WithUsername(username)
+                    .InRoles(roles));
 
         /// <summary>
         /// Sets an authenticated <see cref="Microsoft.AspNetCore.Http.HttpContext.User"/> to the
@@ -96,7 +99,8 @@
             string username,
             params string[] roles)
             where TBuilder : IBaseTestBuilder
-            => builder.WithUser(identifier, username, roles.AsEnumerable());
+            => builder
+                .WithUser(identifier, username, roles.AsEnumerable());
         
         /// <summary>
         /// Sets an authenticated <see cref="Microsoft.AspNetCore.Http.HttpContext.User"/> to the
@@ -110,7 +114,8 @@
             this IBaseTestBuilderWithComponentBuilder<TBuilder> builder,
             IEnumerable<string> roles)
             where TBuilder : IBaseTestBuilder
-            => builder.WithUser(user => user.InRoles(roles));
+            => builder
+                .WithUser(user => user.InRoles(roles));
         
         /// <summary>
         /// Sets an authenticated <see cref="Microsoft.AspNetCore.Http.HttpContext.User"/> to the
@@ -124,7 +129,9 @@
             this IBaseTestBuilderWithComponentBuilder<TBuilder> builder,
             params string[] roles)
             where TBuilder : IBaseTestBuilder
-            => builder.WithUser(user => user.InRoles(roles));
+            => builder
+                .WithUser(user => user
+                    .InRoles(roles));
         
         /// <summary>
         /// Sets default authenticated <see cref="Microsoft.AspNetCore.Http.HttpContext.User"/> to the

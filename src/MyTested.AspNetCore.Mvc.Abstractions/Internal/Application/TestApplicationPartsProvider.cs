@@ -12,28 +12,6 @@
 
     public static partial class TestApplication
     {
-        // Copied from the ASP.NET Core source code.
-        private static readonly HashSet<string> AspNetCoreMvcLibraries = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
-        {
-            "Microsoft.AspNetCore.App",
-            "Microsoft.AspNetCore.Mvc",
-            "Microsoft.AspNetCore.Mvc.Abstractions",
-            "Microsoft.AspNetCore.Mvc.ApiExplorer",
-            "Microsoft.AspNetCore.Mvc.Core",
-            "Microsoft.AspNetCore.Mvc.Cors",
-            "Microsoft.AspNetCore.Mvc.DataAnnotations",
-            "Microsoft.AspNetCore.Mvc.Formatters.Json",
-            "Microsoft.AspNetCore.Mvc.Formatters.Xml",
-            "Microsoft.AspNetCore.Mvc.Localization",
-            "Microsoft.AspNetCore.Mvc.NewtonsoftJson",
-            "Microsoft.AspNetCore.Mvc.Razor",
-            "Microsoft.AspNetCore.Mvc.RazorPages",
-            "Microsoft.AspNetCore.Mvc.TagHelpers",
-            "Microsoft.AspNetCore.Mvc.ViewFeatures"
-        };
-
-        private static string AspNetCoreMetaPackageName => AspNetCoreMvcLibraries.First();
-
         private static void EnsureApplicationParts(IServiceProvider applicationServiceProvider)
         {
             var baseStartupTypeAssembly = TestWebServer.WebAssembly;
@@ -59,7 +37,7 @@
 
                 if (applicationPartManager.ApplicationParts.All(a => a.Name != baseStartupTypeAssemblyName))
                 {
-                    throw new InvalidOperationException($"Web application {baseStartupTypeAssemblyName} could not be loaded correctly. Make sure the SDK is set to 'Microsoft.NET.Sdk.Web' in your test project's '.csproj' file. Additionally, if your web project references the '{AspNetCoreMetaPackageName}' package, you need to reference it in your test project too.");
+                    throw new InvalidOperationException($"Web application {baseStartupTypeAssemblyName} could not be loaded correctly. Make sure the SDK is set to 'Microsoft.NET.Sdk.Web' in your test project's '.csproj' file. Additionally, if your web project references the '{WebFramework.AspNetCoreMetaPackageName}' package, you need to reference it in your test project too.");
                 }
 
                 if (ServerTestConfiguration.General.AutomaticApplicationParts)
@@ -78,7 +56,7 @@
         private static IEnumerable<AssemblyPart> GetTestAssemblyParts(IEnumerable<string> currentParts)
             => TestWebServer.ProjectLibraries
                 .Where(l => l.Name != TestWebServer.TestAssemblyName)
-                .Where(l => l.Dependencies.Select(d => d.Name).Any(d => AspNetCoreMvcLibraries.Contains(d)))
+                .Where(l => l.Dependencies.Select(d => d.Name).Any(d => WebFramework.AspNetCoreMvcLibraries.Contains(d)))
                 .Where(l => !currentParts.Contains(l.Name))
                 .Select(d => new AssemblyPart(Assembly.Load(new AssemblyName(d.Name))));
     }

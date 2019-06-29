@@ -29,7 +29,7 @@
             IEnumerable<object> entities)
             where TBuilder : IBaseTestBuilder
             => builder
-                .WithData(dbContext => dbContext
+                .WithData(data => data
                     .WithEntities(entities));
 
         /// <summary>
@@ -48,7 +48,7 @@
             params object[] entities)
             where TBuilder : IBaseTestBuilder
             => builder
-                .WithData(dbContext => dbContext
+                .WithData(data => data
                     .WithEntities(entities));
         
         /// <summary>
