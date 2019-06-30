@@ -204,7 +204,10 @@
             });
 
             //Populates the MusicStore sample data
-            SampleData.InitializeMusicStoreDatabaseAsync(app.ApplicationServices).Wait();
+            using (var serviceScope = app.ApplicationServices.CreateScope())
+            {
+                SampleData.InitializeMusicStoreDatabaseAsync(serviceScope.ServiceProvider).Wait();
+            }
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2003
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29020.237
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{09353A03-2B0C-496B-8EB1-2CB6A22D758B}"
 EndProject
@@ -184,8 +184,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication.Services", "samples\Configuration\WebApplication.Services\WebApplication.Services.csproj", "{285B7341-5273-450A-B3A6-0E4EC49BDDB6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication.Controllers", "samples\Configuration\WebApplication.Controllers\WebApplication.Controllers.csproj", "{6428D0E8-D35B-4A95-BC6F-8EA21638B7D7}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Core.MissingWebSdk", "samples\Configuration\Test.Core.MissingWebSdk\Test.Core.MissingWebSdk.csproj", "{8ACFBE07-C0B2-49C3-A14C-091F9BD7DE86}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Core.MissingAppPackage", "samples\Configuration\Test.Core.MissingAppPackage\Test.Core.MissingAppPackage.csproj", "{B9BBB806-06EA-4546-B3F7-D60DC5CEC748}"
 EndProject
@@ -555,10 +553,6 @@ Global
 		{6428D0E8-D35B-4A95-BC6F-8EA21638B7D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6428D0E8-D35B-4A95-BC6F-8EA21638B7D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6428D0E8-D35B-4A95-BC6F-8EA21638B7D7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8ACFBE07-C0B2-49C3-A14C-091F9BD7DE86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8ACFBE07-C0B2-49C3-A14C-091F9BD7DE86}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8ACFBE07-C0B2-49C3-A14C-091F9BD7DE86}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8ACFBE07-C0B2-49C3-A14C-091F9BD7DE86}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B9BBB806-06EA-4546-B3F7-D60DC5CEC748}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B9BBB806-06EA-4546-B3F7-D60DC5CEC748}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9BBB806-06EA-4546-B3F7-D60DC5CEC748}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -744,7 +738,6 @@ Global
 		{41D54FAD-53BB-48AE-8D1D-10AB382321B8} = {7BEC9808-8650-4322-BCC6-1D7D91B53678}
 		{285B7341-5273-450A-B3A6-0E4EC49BDDB6} = {7BEC9808-8650-4322-BCC6-1D7D91B53678}
 		{6428D0E8-D35B-4A95-BC6F-8EA21638B7D7} = {7BEC9808-8650-4322-BCC6-1D7D91B53678}
-		{8ACFBE07-C0B2-49C3-A14C-091F9BD7DE86} = {7BEC9808-8650-4322-BCC6-1D7D91B53678}
 		{B9BBB806-06EA-4546-B3F7-D60DC5CEC748} = {7BEC9808-8650-4322-BCC6-1D7D91B53678}
 		{2E61B0D4-8291-49FA-9360-5799A295E9ED} = {7BEC9808-8650-4322-BCC6-1D7D91B53678}
 		{85D57D38-706F-471C-9BEC-F900C276BD53} = {7BEC9808-8650-4322-BCC6-1D7D91B53678}

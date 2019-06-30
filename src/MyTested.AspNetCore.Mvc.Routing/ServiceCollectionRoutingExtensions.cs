@@ -55,9 +55,6 @@
                 routingServiceCollection.AddModelBindingActionInvoker();
             }
 
-            // Disable end-point routing until it is fully supported by the test framework.
-            routingServiceCollection.Configure<MvcOptions>(options => options.EnableEndpointRouting = false);
-
             routingServices.ServiceCollection = routingServiceCollection;
 
             return serviceCollection;

@@ -38,7 +38,7 @@
             services
                 .AddDefaultIdentity<User>()
                 .AddRoles<IdentityRole>()
-                .AddDefaultUI(UIFramework.Bootstrap4)
+                .AddDefaultUI()
                 .AddEntityFrameworkStores<BlogDbContext>();
 
             services
@@ -51,7 +51,7 @@
                     options.Password.RequireUppercase = false;
                 });
 
-            services.AddAutoMapper();
+            services.AddAutoMapper(typeof(IArticleService).Assembly);
 
             services.AddTransient<IArticleService, ArticleService>();
             services.AddTransient<IDateTimeProvider, DateTimeProvider>();
@@ -61,7 +61,7 @@
                 {
                     options.AddAutoValidateAntiforgeryToken();
                 })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

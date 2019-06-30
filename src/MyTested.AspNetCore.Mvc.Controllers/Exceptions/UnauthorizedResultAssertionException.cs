@@ -3,8 +3,7 @@
     using System;
 
     /// <summary>
-    /// <see cref="Exception"/> for invalid <see cref="Microsoft.AspNetCore.Mvc.UnauthorizedResult"/>
-    /// or <see cref="Microsoft.AspNetCore.Mvc.UnauthorizedObjectResult"/>.
+    /// <see cref="Exception"/> for invalid <see cref="Microsoft.AspNetCore.Mvc.UnauthorizedResult"/>.
     /// </summary>
     public class UnauthorizedResultAssertionException : Exception
     {

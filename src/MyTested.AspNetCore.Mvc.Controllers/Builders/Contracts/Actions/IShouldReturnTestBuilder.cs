@@ -14,7 +14,6 @@
     using ActionResults.Ok;
     using ActionResults.Redirect;
     using ActionResults.StatusCode;
-    using ActionResults.Unauthorized;
     using ActionResults.UnprocessableEntity;
     using And;
     using Invocations;
@@ -190,19 +189,10 @@
         IAndTestBuilder NotFound(Action<INotFoundTestBuilder> notFoundTestBuilder);
 
         /// <summary>
-        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.UnauthorizedResult"/>
-        /// or <see cref="Microsoft.AspNetCore.Mvc.UnauthorizedObjectResult"/>.
+        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.UnauthorizedResult"/>.
         /// </summary>
         /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
         IAndTestBuilder Unauthorized();
-
-        /// <summary>
-        /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.UnauthorizedResult"/>
-        /// or <see cref="Microsoft.AspNetCore.Mvc.UnauthorizedObjectResult"/>.
-        /// </summary>
-        /// <param name="unauthorizedTestBuilder">Builder for testing the unauthorized result.</param>
-        /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
-        IAndTestBuilder Unauthorized(Action<IUnauthorizedTestBuilder> unauthorizedTestBuilder);
 
         /// <summary>
         /// Tests whether the action result is <see cref="Microsoft.AspNetCore.Mvc.LocalRedirectResult"/>.

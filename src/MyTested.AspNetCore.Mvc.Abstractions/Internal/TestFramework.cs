@@ -8,7 +8,7 @@
     {
         public const string TestFrameworkName = "MyTested.AspNetCore.Mvc";
         public const string ReleaseDate = "2019-07-01";
-        public const string VersionPrefix = "2.2";
+        public const string VersionPrefix = "2.1";
 
         internal static void EnsureCorrectVersion(DependencyContext dependencyContext)
         {
@@ -20,7 +20,7 @@
 
             if (libraryWithMismatchedVersion != null)
             {
-                throw new InvalidOperationException($"This version of {TestFrameworkName} only supports ASP.NET Core {VersionPrefix}.* applications but a {libraryWithMismatchedVersion.Version} assembly was referenced - {libraryWithMismatchedVersion.Name}.");
+                throw new InvalidOperationException($"This version of {TestFrameworkName} only supports ASP.NET Core {VersionPrefix} applications but a {libraryWithMismatchedVersion.Version} assembly was referenced - {libraryWithMismatchedVersion.Name}.");
             }
         }
     }
