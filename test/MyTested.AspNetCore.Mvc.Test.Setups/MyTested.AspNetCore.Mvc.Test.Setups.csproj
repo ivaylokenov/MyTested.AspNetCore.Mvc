@@ -9,6 +9,7 @@
     <PackageId>MyTested.AspNetCore.Mvc.Test.Setups</PackageId>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <IsTestProject>false</IsTestProject>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>

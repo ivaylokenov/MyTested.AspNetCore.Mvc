@@ -17,13 +17,15 @@
     <PackageId>MyTested.AspNetCore.Mvc.Core</PackageId>
     <PackageTags>aspnetcore;aspnetcoremvc;testing;unit;tests;fluent;testing;framework;asp;net;core;mvc;test;mymvc;mytested</PackageTags>
     <PackageIconUrl>https://raw.githubusercontent.com/ivaylokenov/MyTested.AspNetCore.Mvc/master/tools/nuget-logo.png</PackageIconUrl>
-    <PackageProjectUrl>https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://mytestedasp.net/</PackageProjectUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>git://github.com/ivaylokenov/MyTested.AspNetCore.Mvc</RepositoryUrl>
+    <RepositoryUrl>https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc</RepositoryUrl>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <RootNamespace>MyTested.AspNetCore.Mvc</RootNamespace>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
@@ -32,6 +34,10 @@
     <ProjectReference Include="..\MyTested.AspNetCore.Mvc.Controllers\MyTested.AspNetCore.Mvc.Controllers.csproj" />
     <ProjectReference Include="..\MyTested.AspNetCore.Mvc.Models\MyTested.AspNetCore.Mvc.Models.csproj" />
     <ProjectReference Include="..\MyTested.AspNetCore.Mvc.Routing\MyTested.AspNetCore.Mvc.Routing.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="../../LICENSE" Pack="true" PackagePath="" />
   </ItemGroup>
 
 </Project>

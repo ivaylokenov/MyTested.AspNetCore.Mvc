@@ -17,19 +17,25 @@
     <PackageId>MyTested.AspNetCore.Mvc.Controllers.Views.ActionResults</PackageId>
     <PackageTags>aspnetcore;aspnetcoremvc;testing;unit;tests;fluent;testing;framework;asp;net;core;mvc;test;mymvc;mytested</PackageTags>
     <PackageIconUrl>https://raw.githubusercontent.com/ivaylokenov/MyTested.AspNetCore.Mvc/master/tools/nuget-logo.png</PackageIconUrl>
-    <PackageProjectUrl>https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://mytestedasp.net/</PackageProjectUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>git://github.com/ivaylokenov/MyTested.AspNetCore.Mvc</RepositoryUrl>
+    <RepositoryUrl>https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc</RepositoryUrl>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <RootNamespace>MyTested.AspNetCore.Mvc</RootNamespace>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MyTested.AspNetCore.Mvc.Controllers.Views\MyTested.AspNetCore.Mvc.Controllers.Views.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="../../LICENSE" Pack="true" PackagePath="" />
   </ItemGroup>
 
 </Project>
