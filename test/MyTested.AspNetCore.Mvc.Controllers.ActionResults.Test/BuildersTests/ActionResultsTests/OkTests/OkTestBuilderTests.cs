@@ -271,6 +271,7 @@
 
             MyController<MvcController>
                 .Instance()
+                .WithoutValidation()
                 .Calling(c => c.OkActionWithFormatter(formatter))
                 .ShouldReturn()
                 .Ok(ok => ok
@@ -287,6 +288,7 @@
 
                     MyController<MvcController>
                         .Instance()
+                        .WithoutValidation()
                         .Calling(c => c.OkActionWithFormatter(formatter))
                         .ShouldReturn()
                         .Ok(ok => ok

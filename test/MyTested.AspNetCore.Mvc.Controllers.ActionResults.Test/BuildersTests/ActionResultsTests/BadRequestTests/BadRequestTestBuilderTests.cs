@@ -352,6 +352,7 @@
 
             MyController<MvcController>
                 .Instance()
+                .WithoutValidation()
                 .Calling(c => c.HttpBadRequestActionWithFormatter(formatter))
                 .ShouldReturn()
                 .BadRequest(badRequest => badRequest
@@ -368,6 +369,7 @@
 
                     MyController<MvcController>
                         .Instance()
+                        .WithoutValidation()
                         .Calling(c => c.HttpBadRequestActionWithFormatter(formatter))
                         .ShouldReturn()
                         .BadRequest(badRequest => badRequest

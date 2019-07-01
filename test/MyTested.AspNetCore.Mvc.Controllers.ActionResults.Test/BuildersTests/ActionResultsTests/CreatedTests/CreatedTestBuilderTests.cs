@@ -766,6 +766,7 @@
 
             MyController<MvcController>
                 .Instance()
+                .WithoutValidation()
                 .Calling(c => c.CreatedActionWithFormatter(formatter))
                 .ShouldReturn()
                 .Created(created => created
@@ -782,6 +783,7 @@
 
                     MyController<MvcController>
                         .Instance()
+                        .WithoutValidation()
                         .Calling(c => c.CreatedActionWithFormatter(formatter))
                         .ShouldReturn()
                         .Created(created => created

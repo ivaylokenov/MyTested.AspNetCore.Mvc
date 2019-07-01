@@ -269,6 +269,7 @@
 
             MyController<MvcController>
                 .Instance()
+                .WithoutValidation()
                 .Calling(c => c.ObjectActionWithFormatter(formatter))
                 .ShouldReturn()
                 .Object(result => result
@@ -285,6 +286,7 @@
 
                     MyController<MvcController>
                         .Instance()
+                        .WithoutValidation()
                         .Calling(c => c.ObjectActionWithFormatter(formatter))
                         .ShouldReturn()
                         .Object(result => result

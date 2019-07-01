@@ -233,6 +233,7 @@
 
             MyController<MvcController>
                 .Instance()
+                .WithoutValidation()
                 .Calling(c => c.ObjectActionWithFormatter(formatter))
                 .ShouldReturn()
                 .StatusCode(result => result
@@ -249,6 +250,7 @@
 
                     MyController<MvcController>
                         .Instance()
+                        .WithoutValidation()
                         .Calling(c => c.ObjectActionWithFormatter(formatter))
                         .ShouldReturn()
                         .StatusCode(result => result

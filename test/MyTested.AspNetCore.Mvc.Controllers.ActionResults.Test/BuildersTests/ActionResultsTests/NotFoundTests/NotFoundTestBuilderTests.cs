@@ -271,6 +271,7 @@
 
             MyController<MvcController>
                 .Instance()
+                .WithoutValidation()
                 .Calling(c => c.HttpNotFoundActionWithFormatter(formatter))
                 .ShouldReturn()
                 .NotFound(notFound => notFound
@@ -287,6 +288,7 @@
 
                     MyController<MvcController>
                         .Instance()
+                        .WithoutValidation()
                         .Calling(c => c.HttpNotFoundActionWithFormatter(formatter))
                         .ShouldReturn()
                         .NotFound(notFound => notFound
