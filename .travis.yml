@@ -1,30 +1,19 @@
-language: csharp  
-sudo: required  
-dist: trusty  
-env:  
-  - CLI_VERSION=1.0.0-preview2-1-003177
-addons:  
+language: csharp
+sudo: required
+dist: trusty
+addons:
   apt:
     packages:
-    - gettext
-    - libcurl4-openssl-dev
-    - libicu-dev
-    - libssl-dev
     - libunwind8
-    - zlib1g
-mono:  
-  - 4.2.3
-os:  
-  - linux
-  - osx
-osx_image: xcode7.3.1 
-branches:  
+mono: none
+os:
+- linux
+- osx
+osx_image: xcode8.2
+branches:
   only:
-    - master
-    - development
-install:  
-  - export DOTNET_INSTALL_DIR="$PWD/.dotnetcli"
-  - curl -sSL https://raw.githubusercontent.com/dotnet/cli/rel/1.0.0/scripts/obtain/dotnet-install.sh | bash /dev/stdin --version "$CLI_VERSION" --install-dir "$DOTNET_INSTALL_DIR"
-  - export PATH="$DOTNET_INSTALL_DIR:$PATH"  
-script:  
-  - ./build.sh
+  - master
+  - development
+  - ^version-.*$
+script:
+- ./build.sh
