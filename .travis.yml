@@ -14,5 +14,4 @@ branches:
   - development
   - ^version-.*$
 script:
-  - dotnet restore
   - dotnet test -c Release -f netcoreapp2.1
