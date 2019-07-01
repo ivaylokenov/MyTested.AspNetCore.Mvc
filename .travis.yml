@@ -1,10 +1,8 @@
 language: csharp
 sudo: required
 dist: trusty
-addons:
-  apt:
-    packages:
-    - libunwind8
+dotnet: 2.1.11
+solution: MyTested.AspNetCore.Mvc.sln
 mono: none
 os:
 - linux
@@ -16,4 +14,5 @@ branches:
   - development
   - ^version-.*$
 script:
-- ./build.sh
+  - dotnet restore
+  - dotnet test
