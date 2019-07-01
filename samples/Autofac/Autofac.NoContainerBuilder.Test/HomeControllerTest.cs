@@ -22,7 +22,7 @@ namespace Autofac.NoContainerBuilder.Test
                 .View(view => view
                     .WithName(nameof(HomeController.Index))
                     .WithModelOfType<string>()
-                    .Passing(model => throw new System.Exception($"Test:model:Test")));
+                    .Passing(model => throw new System.Exception($"Test:{model}:Test")));
 
         [Fact]
         public void RedirectShouldRedirectToIndex()
