@@ -7,9 +7,14 @@ branches:
 image: Visual Studio 2019 Preview
 configuration: Release
 clone_depth: 1
+before_build:
+- cmd: dotnet restore
 build:
   project: MyTested.AspNetCore.Mvc.sln
   verbosity: minimal
 test_script:
 - cmd: dotnet test "samples/MusicStore/MusicStore.Test/MusicStore.Test.csproj" --configuration Release --no-build
 - cmd: dotnet test "samples/Blog/Blog.Test/Blog.Test.csproj" --configuration Release --no-build
+- cmd: dotnet test "samples/ApplicationParts/ApplicationParts.Test/ApplicationParts.Test.csproj" --configuration Release --no-build
+- cmd: dotnet test "samples/Autofac/Autofac.AssemblyInit.Test/Autofac.AssemblyInit.Test.csproj" --configuration Release --no-build
+- cmd: dotnet test "samples/Autofac/Autofac.NoContainerBuilder.Test/Autofac.NoContainerBuilder.Test.csproj" --configuration Release --no-build
