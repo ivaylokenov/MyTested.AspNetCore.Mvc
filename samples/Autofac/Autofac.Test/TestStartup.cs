@@ -15,8 +15,9 @@
         // or in an assembly initialization method if your test runner supports it.
         // Note that 'IsRunningOn' should be called only once per test project.
         static TestStartup()
-            => MyApplication.IsRunningOn(server => server
-                .WithServices(services => services.AddAutofac()));
+            => MyApplication
+                .IsRunningOn(server => server
+                    .WithServices(services => services.AddAutofac()));
 
         public TestStartup(IConfiguration configuration) 
             : base(configuration)

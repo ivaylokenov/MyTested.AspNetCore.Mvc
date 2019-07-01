@@ -19,7 +19,7 @@
         public IActionResult Index() 
             => this.View(
                 nameof(this.Index), 
-                $"{this.dateTime.GetTime().ToShortDateString()} {this.data.GetData()}");
+                $"{this.dateTime.GetTime().ToString("M/d/yyyy")} {this.data.GetData()}");
 
         public IActionResult RedirectToIndex()
             => this.RedirectToAction(nameof(this.Index));

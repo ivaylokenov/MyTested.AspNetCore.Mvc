@@ -207,7 +207,7 @@
                            SameSite = SameSiteMode.Lax
                        }));
                 },
-                "When calling CustomVoidResponseAction action in MvcController expected HTTP response cookies to contain cookie with the provided options - 'TestCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure', but in fact they were different - 'TestCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly'.");
+                "When calling CustomVoidResponseAction action in MvcController expected HTTP response cookies to contain cookie with the provided options - 'TestCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure', but in fact they were different - 'TestCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly'.");
         }
 
         [Fact]
@@ -351,7 +351,7 @@
                                 .WithExpiration(new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)))
                                 .WithPath("/")));
                 },
-                "When calling CustomVoidResponseAction action in MvcController expected HTTP response cookies to contain cookie with 'TestCookie' name and 'TestCookie=TestCookieValue12; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly' value, but the value was 'TestCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly'.");
+                "When calling CustomVoidResponseAction action in MvcController expected HTTP response cookies to contain cookie with 'TestCookie' name and 'TestCookie=TestCookieValue12; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly' value, but the value was 'TestCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly'.");
         }
 
         [Fact]
@@ -461,7 +461,7 @@
                 ["MultipleTestHeader"] = new[] { "FirstMultipleTestHeaderValue", "AnotherMultipleTestHeaderValue" },
                 ["Content-Type"] = "application/json",
                 ["Content-Length"] = "100",
-                ["Set-Cookie"] = new[] { "TestCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly", "AnotherCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=lax; httponly" },
+                ["Set-Cookie"] = new[] { "TestCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly", "AnotherCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=lax; httponly" },
             };
 
             MyController<MvcController>
@@ -476,7 +476,7 @@
         {
             var headers = new HeaderDictionary
             {
-                ["Set-Cookie"] = new[] { "TestCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly", "AnotherCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly" },
+                ["Set-Cookie"] = new[] { "TestCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; httponly", "AnotherCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; httponly" },
             };
 
 
@@ -498,7 +498,7 @@
             var headers = new HeaderDictionary
             {
                 ["TestHeader"] = "Test",
-                ["Set-Cookie"] = new[] { "TestCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly", "AnotherCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly" },
+                ["Set-Cookie"] = new[] { "TestCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; httponly", "AnotherCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; httponly" },
             };
 
 
@@ -528,7 +528,7 @@
                     MultipleTestHeader = new[] { "FirstMultipleTestHeaderValue", "AnotherMultipleTestHeaderValue" },
                     Content_Type = "application/json",
                     Content_Length = "100",
-                    Set_Cookie = new[] { "TestCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly", "AnotherCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=lax; httponly" },
+                    Set_Cookie = new[] { "TestCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly", "AnotherCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=lax; httponly" },
                 }));
         }
 
@@ -546,7 +546,7 @@
                     ["MultipleTestHeader"] = "FirstMultipleTestHeaderValue,AnotherMultipleTestHeaderValue",
                     ["Content-Type"] = "application/json",
                     ["Content-Length"] = "100",
-                    ["Set-Cookie"] = "TestCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly,AnotherCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=lax; httponly"
+                    ["Set-Cookie"] = "TestCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly,AnotherCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=lax; httponly"
                 }));
         }
 
@@ -564,7 +564,7 @@
                     ["MultipleTestHeader"] = new[] { "FirstMultipleTestHeaderValue", "AnotherMultipleTestHeaderValue" },
                     ["Content-Type"] = "application/json",
                     ["Content-Length"] = "100",
-                    ["Set-Cookie"] = new[] { "TestCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly", "AnotherCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=lax; httponly" }
+                    ["Set-Cookie"] = new[] { "TestCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly", "AnotherCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=lax; httponly" }
                 }));
         }
 
@@ -582,7 +582,7 @@
                     ["MultipleTestHeader"] = new[] { "FirstMultipleTestHeaderValue", "AnotherMultipleTestHeaderValue" },
                     ["Content-Type"] = new[] { "application/json" },
                     ["Content-Length"] = new[] { "100" },
-                    ["Set-Cookie"] = new[] { "TestCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly", "AnotherCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=lax; httponly" }
+                    ["Set-Cookie"] = new[] { "TestCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly", "AnotherCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=lax; httponly" }
                 }));
         }
 

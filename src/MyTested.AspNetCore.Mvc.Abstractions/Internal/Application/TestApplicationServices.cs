@@ -117,16 +117,14 @@
             {
                 if (exception.InnerException is FileNotFoundException)
                 {
-                    throw new InvalidOperationException(
-                        $"Application dependencies could not be loaded correctly. If your web project references the '{WebFramework.AspNetCoreMetaPackageName}' package, you need to reference it in your test project too. Additionally, make sure the SDK is set to 'Microsoft.NET.Sdk.Web' in your test project's '.csproj' file.");
+                    throw new InvalidOperationException($"Application dependencies could not be loaded correctly. If your web project references the '{WebFramework.AspNetCoreMetaPackageName}' package, you need to reference it in your test project too. Additionally, make sure the SDK is set to 'Microsoft.NET.Sdk.Web' in your test project's '.csproj' file.");
                 }
 
                 throw;
             }
             catch (InvalidOperationException exception)
             {
-                throw new InvalidOperationException(
-                    $"{exception.Message} Services could not be configured. If your web project is registering services outside of the Startup class (during the WebHost configuration in the Program.cs file for example), you should provide them to the test framework too by calling 'IsRunningOn(server => server.WithServices(servicesAction))'. Since this method should be called only once per test project, you may invoke it in the static constructor of your {TestWebServer.Environment.EnvironmentName}Startup class or if your test runner supports it - in the test assembly initialization.");
+                throw new InvalidOperationException($"{exception.Message} Services could not be configured. If your web project is registering services outside of the Startup class (during the WebHost configuration in the Program.cs file for example), you should provide them to the test framework too by calling 'IsRunningOn(server => server.WithServices(servicesAction))'. Since this method should be called only once per test project, you may invoke it in the static constructor of your {TestWebServer.Environment.EnvironmentName}Startup class or if your test runner supports it - in the test assembly initialization.");
             }
         }
 

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Reflection;
     using Configuration;
@@ -109,10 +110,17 @@
         {
             if (dependencyContext == null)
             {
-                dependencyContext = DependencyContext.Load(TestAssembly);
-                if (dependencyContext == null)
+                try
                 {
-                    throw new InvalidOperationException("Testing infrastructure could not be loaded. Depending on your project's configuration you may need to set '<PreserveCompilationContext>true</PreserveCompilationContext>' in the test assembly's '.csproj' file.");
+                    dependencyContext = DependencyContext.Load(TestAssembly);
+                    if (dependencyContext == null)
+                    {
+                        throw new InvalidOperationException("Testing infrastructure could not be loaded. Depending on your project's configuration you may need to set '<PreserveCompilationContext>true</PreserveCompilationContext>' in the test assembly's '.csproj' file.");
+                    }
+                }
+                catch (FileLoadException)
+                {
+                    throw new InvalidOperationException($"Application dependencies could not be loaded correctly. You may need to reference the '{WebFramework.AspNetCoreMetaPackageName}' package in your test project. Additionally, make sure the SDK is set to 'Microsoft.NET.Sdk.Web' in your test project's '.csproj' file.");
                 }
             }
 
