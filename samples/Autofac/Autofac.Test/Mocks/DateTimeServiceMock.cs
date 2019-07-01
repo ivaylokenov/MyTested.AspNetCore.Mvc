@@ -5,6 +5,6 @@
 
     public class DateTimeServiceMock : IDateTimeService
     {
-        public DateTime GetTime() => new DateTime(2020, 1, 1);
+        public DateTime GetTime() => new DateTime(2020, 1, 1, 1, 1, 1, DateTimeKind.Utc);
     }
 }
