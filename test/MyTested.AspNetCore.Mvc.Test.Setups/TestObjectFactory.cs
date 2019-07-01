@@ -47,9 +47,9 @@
             var authenticationProperties = new AuthenticationProperties
             {
                 AllowRefresh = true,
-                ExpiresUtc = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)),
+                ExpiresUtc = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
                 IsPersistent = true,
-                IssuedUtc = new DateTimeOffset(new DateTime(2015, 1, 1, 1, 1, 1)),
+                IssuedUtc = new DateTimeOffset(new DateTime(2015, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
                 RedirectUri = "test"
             };
 
@@ -87,7 +87,7 @@
                     HttpOnly = true,
                     Secure = true,
                     Domain = "testdomain.com",
-                    Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)),
+                    Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
                     Path = "/",
                     SameSite = SameSiteMode.Strict
                 });
@@ -99,7 +99,7 @@
                     HttpOnly = true,
                     Secure = true,
                     Domain = "testdomain.com",
-                    Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)),
+                    Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
                     Path = "/"
                 });
             response.ContentLength = 100;

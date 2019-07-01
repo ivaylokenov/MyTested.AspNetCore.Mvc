@@ -32,7 +32,7 @@
                         HttpOnly = true,
                         Secure = true,
                         Domain = "testdomain.com",
-                        Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)),
+                        Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
                         Path = "/"
                     }))
                 .AndAlso()
@@ -65,7 +65,7 @@
                         HttpOnly = true,
                         Secure = true,
                         Domain = "testdomain.com",
-                        Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)),
+                        Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
                         Path = "/"
                     }));
         }
@@ -121,7 +121,7 @@
                         .AndAlso()
                         .WithDomain("testdomain.com")
                         .AndAlso()
-                        .WithExpiration(new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)))
+                        .WithExpiration(new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)))
                         .AndAlso()
                         .WithPath("/")));
         }
@@ -202,7 +202,7 @@
                            HttpOnly = false,
                            Secure = true,
                            Domain = "testdomain.com",
-                           Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)),
+                           Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
                            Path = "/",
                            SameSite = SameSiteMode.Lax
                        }));
@@ -322,7 +322,7 @@
                                 .WithHttpOnly(true)
                                 .WithMaxAge(null)
                                 .WithDomain("testdomain.com")
-                                .WithExpiration(new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)))
+                                .WithExpiration(new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)))
                                 .WithSameSite(Microsoft.Net.Http.Headers.SameSiteMode.None)
                                 .WithPath("/")));
                 },
@@ -348,7 +348,7 @@
                                 .WithMaxAge(null)
                                 .WithDomain("testdomain.com")
                                 .WithSameSite(Microsoft.Net.Http.Headers.SameSiteMode.Strict)
-                                .WithExpiration(new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)))
+                                .WithExpiration(new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)))
                                 .WithPath("/")));
                 },
                 "When calling CustomVoidResponseAction action in MvcController expected HTTP response cookies to contain cookie with 'TestCookie' name and 'TestCookie=TestCookieValue12; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly' value, but the value was 'TestCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly'.");
@@ -711,7 +711,7 @@
                         HttpOnly = true,
                         Secure = true,
                         Domain = "testdomain.com",
-                        Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)),
+                        Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
                         Path = "/"
                     }));
         }
