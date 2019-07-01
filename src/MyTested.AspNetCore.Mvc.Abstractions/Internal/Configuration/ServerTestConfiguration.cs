@@ -6,6 +6,7 @@
     public static class ServerTestConfiguration
     {
         internal const string DefaultConfigurationFile = "testsettings.json";
+        internal const string OptionalConfigurationFile = "testconfig.json"; // For backwards compatibility.
 
         private static IConfigurationBuilder configurationBuilder;
         private static TestConfiguration globalConfiguration;
@@ -21,7 +22,7 @@
                     {
                         configurationBuilder = new ConfigurationBuilder()
                             .AddJsonFile(DefaultConfigurationFile, optional: true)
-                            .AddJsonFile("testconfig.json", optional: true); // For backwards compatibility.
+                            .AddJsonFile(OptionalConfigurationFile, optional: true); 
                     }
 
                     AdditionalConfiguration?.Invoke(configurationBuilder);

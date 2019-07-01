@@ -23,10 +23,7 @@
                 .View(view => view
                     .WithName(nameof(HomeController.Index))
                     .WithModelOfType<string>()
-                    .Passing(m =>
-                    {
-                        throw new System.Exception(m);
-                    }));
+                    .Passing(model => model == "1/1/2020 Test Data"));
 
         [TestMethod]
         public void RedirectShouldRedirectToIndex()
