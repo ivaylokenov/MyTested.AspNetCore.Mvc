@@ -14,6 +14,7 @@ branches:
   - development
   - ^version-.*$
 script:
+  - dotnet build
   - dotnet test "samples/MusicStore/MusicStore.Test/MusicStore.Test.csproj" --configuration Release --no-build -f netcoreapp2.1
   - dotnet test "samples/Blog/Blog.Test/Blog.Test.csproj" --configuration Release --no-build -f netcoreapp2.1
   - dotnet test "samples/ApplicationParts/ApplicationParts.Test/ApplicationParts.Test.csproj" --configuration Release --no-build -f netcoreapp2.1
