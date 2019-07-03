@@ -21,8 +21,7 @@ namespace Autofac.NoContainerBuilder.Test
                 .ShouldReturn()
                 .View(view => view
                     .WithName(nameof(HomeController.Index))
-                    .WithModelOfType<string>()
-                    .Passing(model => throw new System.Exception($"Test:{model}:Test")));
+                    .WithModel("2020 Test Data"));
 
         [Fact]
         public void RedirectShouldRedirectToIndex()
