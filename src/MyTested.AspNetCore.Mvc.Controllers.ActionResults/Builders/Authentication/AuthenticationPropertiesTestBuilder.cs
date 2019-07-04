@@ -56,8 +56,8 @@
                 if (expected.ExpiresUtc != actual.ExpiresUtc)
                 {
                     this.ThrowNewAuthenticationPropertiesAssertionException(
-                        expected.ExpiresUtc == null ? "not have expiration value" : $"have expiration value of {expected.ExpiresUtc.GetErrorMessageName()}",
-                        $"in fact found {actual.ExpiresUtc.GetErrorMessageName()}");
+                        expected.ExpiresUtc == null ? "not have expiration value" : $"have expiration value of {expected.ExpiresUtc.ToFormattedString().GetErrorMessageName()}",
+                        $"in fact found {actual.ExpiresUtc.ToFormattedString().GetErrorMessageName()}");
                 }
             });
 
@@ -90,8 +90,8 @@
                 if (expected.IssuedUtc != actual.IssuedUtc)
                 {
                     this.ThrowNewAuthenticationPropertiesAssertionException(
-                        expected.IssuedUtc == null ? "not have issued value" : $"have issued value of {expected.IssuedUtc.GetErrorMessageName()}",
-                        $"in fact found {actual.IssuedUtc.GetErrorMessageName()}");
+                        expected.IssuedUtc == null ? "not have issued value" : $"have issued value of {expected.IssuedUtc.ToFormattedString().GetErrorMessageName()}",
+                        $"in fact found {actual.IssuedUtc.ToFormattedString().GetErrorMessageName()}");
                 }
             });
 
