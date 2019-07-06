@@ -1,6 +1,6 @@
-﻿namespace MyTested.AspNetCore.Mvc.TempData.Test
+﻿namespace MyTested.AspNetCore.Mvc.Test
 {
-    using Mvc.Test.Setups;
+    using Setups;
 
     public class TestStartup : DefaultStartup
     {

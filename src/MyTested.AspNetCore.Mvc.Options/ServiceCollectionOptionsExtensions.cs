@@ -13,9 +13,7 @@
         /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <returns>The same <see cref="IServiceCollection"/>.</returns>
-        public static IServiceCollection ReplaceOptions(this IServiceCollection serviceCollection)
-        {
-            return serviceCollection.Replace(typeof(IOptions<>), typeof(OptionsManager<>), ServiceLifetime.Scoped);
-        }
+        public static IServiceCollection ReplaceOptions(this IServiceCollection serviceCollection) 
+            => serviceCollection.Replace(typeof(IOptions<>), typeof(OptionsManager<>), ServiceLifetime.Scoped);
     }
 }

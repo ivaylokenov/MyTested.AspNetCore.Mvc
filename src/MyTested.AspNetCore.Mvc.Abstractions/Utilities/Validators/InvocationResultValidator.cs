@@ -75,10 +75,8 @@
         public static void ValidateInvocationResultType<TExpectedType>(
             ComponentTestContext testContext,
             bool canBeAssignable = false,
-            bool allowDifferentGenericTypeDefinitions = false)
-        {
-            ValidateInvocationResultType(testContext, typeof(TExpectedType), canBeAssignable, allowDifferentGenericTypeDefinitions);
-        }
+            bool allowDifferentGenericTypeDefinitions = false) 
+            => ValidateInvocationResultType(testContext, typeof(TExpectedType), canBeAssignable, allowDifferentGenericTypeDefinitions);
 
         public static void ValidateInvocationResult<TResult>(ComponentTestContext testContext, TResult model)
         {

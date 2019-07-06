@@ -1,7 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Utilities.Validators
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
     using Extensions;
@@ -31,10 +30,9 @@
                 .GetRequiredService<IUrlHelperFactory>()
                 .GetUrlHelper(actionContext);
 
-            ICollection<string> ignoredRouteKeys;
             var expectedUri = urlHelper.ExpressionLink(
                 expectedRouteValuesAsLambdaExpression,
-                out ignoredRouteKeys);
+                out var ignoredRouteKeys);
 
             var actualUri = urlHelper.GenerateLink(
                 linkGenerationTestContext,

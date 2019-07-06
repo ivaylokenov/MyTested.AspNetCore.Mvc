@@ -1,0 +1,38 @@
+﻿@model IEnumerable<ArticleForUserListingServiceModel>
+
+@{
+    ViewData.SetTitle("My Articles");
+}
+
+@{
+    var publishedArticles = Model
+        .Where(a => a.IsPublic)
+        .OrderByDescending(a => a.PublishedOn)
+        .ToList();
+
+    var waitingForApprovalArticles = Model
+        .Where(a => !a.IsPublic)
+        .OrderByDescending(a => a.PublishedOn)
+        .ToList();
+}
+
+@if (!publishedArticles.Any() && !waitingForApprovalArticles.Any())
+{
+    <h2 class="text-center margin-top-20">You don't have any articles yet! Create one from <a asp-controller="Articles" asp-action="Create">here</a>!</h2>
+}
+
+@if (publishedArticles.Any())
+{
+    <div class="text-center">
+        <h1 class="display-4">Published Articles</h1>
+        <partial name="_ArticleListingPartial" model="@publishedArticles" />
+    </div>
+}
+
+@if (waitingForApprovalArticles.Any())
+{
+    <div class="text-center">
+        <h1 class="display-4">Waiting For Approval</h1>
+        <partial name="_ArticleListingPartial" model="@waitingForApprovalArticles" />
+    </div>
+}

@@ -5,46 +5,55 @@
     using System.Threading.Tasks;
     using Contracts;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Controllers;
+    using Microsoft.AspNetCore.Mvc.Filters;
+    using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.AspNetCore.Mvc.Internal;
-    using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.Extensions.Logging;
+    using Utilities.Validators;
 
-    public class ModelBindingActionInvoker : ControllerActionInvoker, IModelBindingActionInvoker
+    public class ModelBindingActionInvoker : ResourceInvoker, IModelBindingActionInvoker
     {
-        private readonly IControllerFactory controllerFactory;
-        private readonly IControllerArgumentBinder controllerArgumentBinder;
+        private readonly ControllerActionInvokerCacheEntry cacheEntry;
         private readonly ControllerContext controllerContext;
 
+        private Dictionary<string, object> arguments;
+
         public ModelBindingActionInvoker(
-            ControllerActionInvokerCache cache,
-            IControllerFactory controllerFactory,
-            IControllerArgumentBinder controllerArgumentBinder,
             ILogger logger,
-            DiagnosticSource diagnosticSource,
-            ActionContext actionContext,
-            IReadOnlyList<IValueProviderFactory> valueProviderFactories,
-            int maxModelValidationErrors)
-                : base(cache, controllerFactory, controllerArgumentBinder, logger, diagnosticSource, actionContext, valueProviderFactories, maxModelValidationErrors)
+            DiagnosticListener diagnosticListener,
+            IActionResultTypeMapper mapper,
+            ControllerContext controllerContext,
+            ControllerActionInvokerCacheEntry cacheEntry,
+            IFilterMetadata[] filters)
+            : base(diagnosticListener, logger, mapper, controllerContext, filters, controllerContext.ValueProviderFactories)
         {
-            this.BoundActionArguments = new Dictionary<string, object>();
+            CommonValidator.CheckForNullReference(cacheEntry, nameof(cacheEntry));
 
-            this.controllerFactory = controllerFactory;
-            this.controllerArgumentBinder = controllerArgumentBinder;
-
-            this.controllerContext = new ControllerContext(actionContext);
-            this.controllerContext.ModelState.MaxAllowedErrors = maxModelValidationErrors;
-            this.controllerContext.ValueProviderFactories = new List<IValueProviderFactory>(valueProviderFactories);
+            this.cacheEntry = cacheEntry;
+            this.controllerContext = controllerContext;
         }
 
-        public IDictionary<string, object> BoundActionArguments { get; private set; }
+        public IDictionary<string, object> BoundActionArguments => this.arguments;
         
-        public override Task InvokeAsync()
+        protected override async Task InvokeInnerFilterAsync()
         {
-            var controller = this.controllerFactory.CreateController(this.controllerContext);
-            this.controllerArgumentBinder.BindArgumentsAsync(controllerContext, controller, this.BoundActionArguments);
+            // Not initialized in the constructor because filters may
+            // short-circuit the request and tests will fail with wrong exception message.
+            this.arguments = new Dictionary<string, object>();
 
-            return TaskCache.CompletedTask;
+            var actionDescriptor = this.controllerContext.ActionDescriptor;
+            if (actionDescriptor.BoundProperties.Count == 0 &&
+                actionDescriptor.Parameters.Count == 0)
+            {
+                return;
+            }
+
+            await this.cacheEntry.ControllerBinderDelegate(this.controllerContext, _instance, this.arguments);
+        }
+
+        protected override void ReleaseResources()
+        {
+            // Intentionally does nothing.
         }
     }
 }

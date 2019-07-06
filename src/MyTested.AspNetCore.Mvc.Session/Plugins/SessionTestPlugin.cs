@@ -13,47 +13,41 @@
         private readonly Type defaultSessionStoreImplementationType = typeof(DistributedSessionStore);
 
         public Func<ServiceDescriptor, bool> ServiceSelectorPredicate
-        {
-            get
-            {
-                return
-                    serviceDescriptor =>
-                        serviceDescriptor.ServiceType == defaultSessionStoreServiceType &&
-                        serviceDescriptor.ImplementationType == defaultSessionStoreImplementationType;
-            }
-        }
+            => serviceDescriptor =>
+                serviceDescriptor.ServiceType == this.defaultSessionStoreServiceType &&
+                serviceDescriptor.ImplementationType == this.defaultSessionStoreImplementationType;
 
         public Action<IServiceCollection> ServiceRegistrationDelegate => serviceCollection => serviceCollection.ReplaceSession();
 
-        public Action<HttpContext> HttpFeatureRegistrationDelegate
-        {
-            get
+        public Action<HttpContext> HttpFeatureRegistrationDelegate 
+            => httpContext =>
             {
-                return httpContext =>
+                var sessionStore = httpContext.RequestServices.GetService<ISessionStore>();
+                if (sessionStore != null)
                 {
-                    var sessionStore = httpContext.RequestServices.GetService<ISessionStore>();
-                    if (sessionStore != null)
+                    if (httpContext.Features.Get<ISessionFeature>() == null)
                     {
-                        if (httpContext.Features.Get<ISessionFeature>() == null)
+                        ISession mockedSession;
+                        if (sessionStore is SessionStoreMock)
                         {
-                            ISession mockedSession;
-                            if (sessionStore is SessionStoreMock)
-                            {
-                                mockedSession = new SessionMock();
-                            }
-                            else
-                            {
-                                mockedSession = sessionStore.Create(Guid.NewGuid().ToString(), TimeSpan.Zero, () => true, true);
-                            }
-
-                            httpContext.Features.Set<ISessionFeature>(new SessionFeatureMock
-                            {
-                                Session = mockedSession
-                            });
+                            mockedSession = new SessionMock();
                         }
+                        else
+                        {
+                            mockedSession = sessionStore.Create(
+                                Guid.NewGuid().ToString(), 
+                                TimeSpan.Zero,
+                                TimeSpan.Zero,
+                                () => true, 
+                                true);
+                        }
+
+                        httpContext.Features.Set<ISessionFeature>(new SessionFeatureMock
+                        {
+                            Session = mockedSession
+                        });
                     }
-                };
-            }
-        }
+                }
+            };
     }
 }

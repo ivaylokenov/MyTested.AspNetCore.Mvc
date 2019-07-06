@@ -229,7 +229,7 @@
                     .ContainingEntry(entry => entry
                         .WithKey("Test")
                         .WithValueOfType<string>()
-                        .Passing(v => Assert.True(v.StartsWith("Bag")))))
+                        .Passing(v => Assert.StartsWith("Bag", v))))
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();

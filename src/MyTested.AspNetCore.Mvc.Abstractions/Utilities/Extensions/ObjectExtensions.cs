@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
     using Microsoft.AspNetCore.Routing;
     using Utilities;
 
@@ -24,10 +25,22 @@
         }
 
         /// <summary>
-        /// Returns the provided object casted as dynamic type.
+        /// Returns the provided object cast as dynamic type.
         /// </summary>
         /// <returns>Object of dynamic type.</returns>
         public static dynamic AsDynamic(this object obj) => obj?.GetType().CastTo<dynamic>(obj);
+        
+        public static T GetFieldValue<T>(this object obj, string fieldName)
+        {
+            var fieldValue = obj
+                ?.GetType()
+                .GetTypeInfo()
+                .DeclaredFields
+                .FirstOrDefault(f => f.Name == fieldName)
+                ?.GetValue(obj);
+
+            return fieldValue.TryCastTo<T>();
+        }
 
         /// <summary>
         /// Gets friendly type name of object. Useful for generic types.
@@ -68,20 +81,15 @@
             return $"'{errorMessageName}'";
         }
 
-        public static IDictionary<string, string> ToStringValueDictionary(this object obj)
-        {
-            return ObjectToDictionary<string>(obj);
-        }
+        public static IDictionary<string, string> ToStringValueDictionary(this object obj) 
+            => ObjectToDictionary<string>(obj);
 
-        public static IDictionary<string, object> ToObjectValueDictionary(this object obj)
-        {
-            return ObjectToDictionary<object>(obj);
-        }
+        public static IDictionary<string, object> ToObjectValueDictionary(this object obj) 
+            => ObjectToDictionary<object>(obj);
 
         private static IDictionary<string, TValue> ObjectToDictionary<TValue>(object obj)
         {
-            var objAsStringValueDictionary = obj as IDictionary<string, TValue>;
-            if (objAsStringValueDictionary != null)
+            if (obj is IDictionary<string, TValue> objAsStringValueDictionary)
             {
                 return objAsStringValueDictionary;
             }

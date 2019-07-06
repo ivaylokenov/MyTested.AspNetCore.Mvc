@@ -1,20 +1,25 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.StatusCode
 {
-    using System.Collections.Generic;
-    using Base;
+    using System;
+    using Builders.Base;
     using Contracts.ActionResults.StatusCode;
+    using Contracts.And;
     using Exceptions;
+    using Internal;
+    using Internal.Contracts.ActionResults;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Formatters;
-    using Microsoft.Net.Http.Headers;
 
     /// <summary>
     /// Used for testing status code result.
     /// </summary>
-    /// <typeparam name="TStatusCodeResult">Type of status code result - <see cref="StatusCodeResult"/> or <see cref="ObjectResult"/>.</typeparam>
+    /// <typeparam name="TStatusCodeResult">
+    /// Type of status code result - <see cref="StatusCodeResult"/> or <see cref="ObjectResult"/>.
+    /// </typeparam>
     public class StatusCodeTestBuilder<TStatusCodeResult>
-        : BaseTestBuilderWithResponseModel<TStatusCodeResult>, IAndStatusCodeTestBuilder
+        : BaseTestBuilderWithResponseModel<TStatusCodeResult>,
+        IAndStatusCodeTestBuilder,
+        IBaseTestBuilderWithOutputResultInternal<IAndStatusCodeTestBuilder>
         where TStatusCodeResult : ActionResult
     {
         /// <summary>
@@ -25,86 +30,39 @@
             : base(testContext)
         {
         }
-        
+
+        /// <summary>
+        /// Gets the status code result test builder.
+        /// </summary>
+        /// <value>Test builder of <see cref="IAndStatusCodeTestBuilder"/>.</value>
+        public IAndStatusCodeTestBuilder ResultTestBuilder => this;
+
         /// <inheritdoc />
-        public IAndStatusCodeTestBuilder ContainingContentType(string contentType)
+        public IAndTestBuilder Passing(Action<StatusCodeResult> assertions)
         {
-            this.ValidateObjectResult();
-            this.ValidateContainingOfContentType(contentType);
-            return this;
+            this.ValidateActionResult<StatusCodeResult>();
+            return this.Passing<StatusCodeResult>(assertions);
         }
 
         /// <inheritdoc />
-        public IAndStatusCodeTestBuilder ContainingContentType(MediaTypeHeaderValue contentType)
+        public IAndTestBuilder Passing(Func<StatusCodeResult, bool> predicate)
         {
-            this.ValidateObjectResult();
-            this.ValidateContainingOfContentType(contentType);
-            return this;
+            this.ValidateActionResult<StatusCodeResult>();
+            return this.Passing<StatusCodeResult>(predicate);
         }
 
         /// <inheritdoc />
-        public IAndStatusCodeTestBuilder ContainingContentTypes(IEnumerable<string> contentTypes)
+        public IAndTestBuilder Passing(Action<ObjectResult> assertions)
         {
-            this.ValidateObjectResult();
-            this.ValidateContentTypes(contentTypes);
-            return this;
+            this.ValidateActionResult<ObjectResult>();
+            return this.Passing<ObjectResult>(assertions);
         }
 
         /// <inheritdoc />
-        public IAndStatusCodeTestBuilder ContainingContentTypes(params string[] contentTypes)
+        public IAndTestBuilder Passing(Func<ObjectResult, bool> predicate)
         {
-            this.ValidateObjectResult();
-            this.ValidateContentTypes(contentTypes);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndStatusCodeTestBuilder ContainingContentTypes(IEnumerable<MediaTypeHeaderValue> contentTypes)
-        {
-            this.ValidateObjectResult();
-            this.ValidateContentTypes(contentTypes);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndStatusCodeTestBuilder ContainingContentTypes(params MediaTypeHeaderValue[] contentTypes)
-        {
-            this.ValidateObjectResult();
-            this.ValidateContentTypes(contentTypes);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndStatusCodeTestBuilder ContainingOutputFormatter(IOutputFormatter outputFormatter)
-        {
-            this.ValidateObjectResult();
-            this.ValidateContainingOfOutputFormatter(outputFormatter);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndStatusCodeTestBuilder ContainingOutputFormatterOfType<TOutputFormatter>()
-            where TOutputFormatter : IOutputFormatter
-        {
-            this.ValidateObjectResult();
-            this.ValidateContainingOutputFormatterOfType<TOutputFormatter>();
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndStatusCodeTestBuilder ContainingOutputFormatters(IEnumerable<IOutputFormatter> outputFormatters)
-        {
-            this.ValidateObjectResult();
-            this.ValidateOutputFormatters(outputFormatters);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndStatusCodeTestBuilder ContainingOutputFormatters(params IOutputFormatter[] outputFormatters)
-        {
-            this.ValidateObjectResult();
-            this.ValidateOutputFormatters(outputFormatters);
-            return this;
+            this.ValidateActionResult<ObjectResult>();
+            return this.Passing<ObjectResult>(predicate);
         }
 
         /// <inheritdoc />
@@ -113,31 +71,34 @@
         public override void ValidateNoModel() => this.WithNoModel<StatusCodeResult>();
 
         /// <summary>
-        /// Throws new status code result assertion exception for the provided property name, expected value and actual value.
+        /// Throws new <see cref="StatusCodeResultAssertionException"/> for the provided property name, expected value and actual value.
         /// </summary>
         /// <param name="propertyName">Property name on which the testing failed.</param>
         /// <param name="expectedValue">Expected value of the tested property.</param>
         /// <param name="actualValue">Actual value of the tested property.</param>
-        protected override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)
-            => this.ThrowNewStatusCodeResultAssertionException(propertyName, expectedValue, actualValue);
-        
-        private void ValidateObjectResult()
-        {
-            var objectResult = this.TestContext.MethodResult as ObjectResult;
-            if (objectResult == null)
-            {
-                this.ThrowNewStatusCodeResultAssertionException("to inherit", nameof(ObjectResult), "in fact it did not");
-            }
-        }
-
-        private void ThrowNewStatusCodeResultAssertionException(string propertyName, string expectedValue, string actualValue)
-        {
-            throw new StatusCodeResultAssertionException(string.Format(
-                "{0} status code result {1} {2}, but {3}.",
+        public override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue) 
+            => throw new StatusCodeResultAssertionException(string.Format(
+                ExceptionMessages.ActionResultFormat,
                 this.TestContext.ExceptionMessagePrefix,
+                "status code",
                 propertyName,
                 expectedValue,
                 actualValue));
+
+        private void ValidateActionResult<TResult>()
+            where TResult : ActionResult
+        {
+            var actualResultType = this.ActionResult.GetType();
+            var expectedResultType = typeof(TResult);
+
+            if (actualResultType != expectedResultType)
+            {
+                throw new RedirectResultAssertionException(string.Format(
+                    "{0} action result to be {1}, but it was {2}.",
+                    this.TestContext.ExceptionMessagePrefix,
+                    expectedResultType,
+                    actualResultType));
+            }
         }
     }
 }

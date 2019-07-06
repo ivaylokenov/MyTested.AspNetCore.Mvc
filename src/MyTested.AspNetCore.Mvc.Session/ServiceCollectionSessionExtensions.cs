@@ -14,9 +14,7 @@
         /// </summary>
         /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/> type.</param>
         /// <returns>The same <see cref="IServiceCollection"/>.</returns>
-        public static IServiceCollection ReplaceSession(this IServiceCollection serviceCollection)
-        {
-            return serviceCollection.ReplaceTransient<ISessionStore, SessionStoreMock>();
-        }
+        public static IServiceCollection ReplaceSession(this IServiceCollection serviceCollection) 
+            => serviceCollection.ReplaceTransient<ISessionStore, SessionStoreMock>();
     }
 }

@@ -9,7 +9,7 @@
         private readonly Type serviceProviderType = typeof(IServiceProvider);
 
         public object TryGetValue(Type type, ComponentTestContext testContext)
-            => Reflection.AreAssignable(serviceProviderType, type) // ServiceProvider
+            => Reflection.AreAssignable(this.serviceProviderType, type) // ServiceProvider.
                 ? testContext.HttpContext.RequestServices
                 : null;
     }

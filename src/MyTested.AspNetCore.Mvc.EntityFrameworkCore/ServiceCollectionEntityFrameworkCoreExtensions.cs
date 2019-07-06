@@ -4,9 +4,11 @@
     using System.Linq;
     using System.Reflection;
     using Internal.EntityFrameworkCore;
+    using Internal.Services;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Infrastructure;
     using Microsoft.Extensions.DependencyInjection;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Contains Entity Framework Core extension methods for <see cref="IServiceCollection"/>.
@@ -16,10 +18,10 @@
         private static readonly Type BaseDbContextType = typeof(DbContext);
         private static readonly Type BaseDbContextOptionsType = typeof(DbContextOptions);
 
-        private static readonly MethodInfo ReplaceDatabaseMethodInfo =
+        private static readonly MethodInfo AddScopedDatabaseMethodInfo =
             typeof(ServiceCollectionEntityFrameworkCoreExtensions)
                 .GetTypeInfo()
-                .GetDeclaredMethod(nameof(ReplaceDatabase));
+                .GetDeclaredMethod(nameof(AddScopedDatabase));
 
         /// <summary>
         /// Replaces the registered <see cref="DbContext"/> with an in memory scoped implementation.
@@ -28,41 +30,51 @@
         /// <returns>The same <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection ReplaceDbContext(this IServiceCollection serviceCollection)
         {
-            var existingDbContextOptionsService =
-                serviceCollection.FirstOrDefault(s => BaseDbContextOptionsType.IsAssignableFrom(s.ServiceType));
+            // Remove all DbContextOptions services.
+            serviceCollection
+                .Where(s => BaseDbContextOptionsType.IsAssignableFrom(s.ServiceType))
+                .ToArray()
+                .ForEach(existingDbContextOptionsService => serviceCollection
+                    .Remove(existingDbContextOptionsService.ServiceType));
 
-            if (existingDbContextOptionsService != null)
-            {
-                serviceCollection.Remove(existingDbContextOptionsService.ServiceType);
-            }
+            // Remove all base DbContext services.
+            serviceCollection
+                .Where(s => BaseDbContextType == s.ServiceType)
+                .ToArray()
+                .ForEach(existingDbContextService => serviceCollection
+                    .Remove(existingDbContextService));
 
-            var existingDbContext =
-                serviceCollection.FirstOrDefault(s => BaseDbContextType.IsAssignableFrom(s.ImplementationType));
-
-            if (existingDbContext != null)
-            {
-                if (existingDbContext.Lifetime != ServiceLifetime.Scoped)
+            // Replace the database services with in memory scoped ones.
+            serviceCollection
+                .Where(s => BaseDbContextType.IsAssignableFrom(s.ImplementationType))
+                .ToArray()
+                .ForEach(existingDbContextService =>
                 {
-                    serviceCollection.Replace(
-                        existingDbContext.ServiceType,
-                        existingDbContext.ImplementationFactory,
-                        ServiceLifetime.Scoped);
-                }
+                    if (existingDbContextService.Lifetime != ServiceLifetime.Scoped)
+                    {
+                        serviceCollection.Replace(
+                            existingDbContextService.ServiceType,
+                            existingDbContextService.ImplementationFactory,
+                            ServiceLifetime.Scoped);
+                    }
 
-                var genericMethod = ReplaceDatabaseMethodInfo.MakeGenericMethod(existingDbContext.ImplementationType);
-                genericMethod.Invoke(null, new object[] { serviceCollection });
-            }
+                    AddScopedDatabaseMethodInfo
+                        .MakeGenericMethod(existingDbContextService.ImplementationType)
+                        .Invoke(null, new object[] { serviceCollection });
+                });
+            
+            TestServiceProvider.SaveServiceLifetime(BaseDbContextType, ServiceLifetime.Scoped);
 
             return serviceCollection;
         }
 
-        private static void ReplaceDatabase<TDbContext>(IServiceCollection serviceCollection)
+        private static void AddScopedDatabase<TDbContext>(IServiceCollection serviceCollection)
             where TDbContext : DbContext
         {
-            serviceCollection.Replace<DbContext>(s => s.GetRequiredService<TDbContext>(), ServiceLifetime.Scoped);
+            serviceCollection.AddScoped<DbContext>(s => s.GetRequiredService<TDbContext>());
             serviceCollection.AddDbContext<TDbContext>(opts =>
             {
-                opts.UseInMemoryDatabase();
+                opts.UseInMemoryDatabase(Guid.NewGuid().ToString());
 
                 ((IDbContextOptionsBuilderInfrastructure)opts).AddOrUpdateExtension(new ScopedInMemoryOptionsExtension());
             });

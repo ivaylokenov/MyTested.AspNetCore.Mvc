@@ -35,7 +35,7 @@
 
             set
             {
-                CommonValidator.CheckForNullReference(value, nameof(RouteData));
+                CommonValidator.CheckForNullReference(value, nameof(this.RouteData));
                 this.ComponentContext.RouteData = value;
                 base.RouteData = value;
             }

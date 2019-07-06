@@ -1,23 +1,24 @@
-﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.HttpNotFound
+﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.NotFound
 {
     using System;
-    using System.Collections.Generic;
-    using System.Net;
-    using Base;
+    using Builders.Base;
     using Contracts.ActionResults.NotFound;
+    using Contracts.And;
     using Exceptions;
+    using Internal;
+    using Internal.Contracts.ActionResults;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Formatters;
-    using Microsoft.Net.Http.Headers;
 
     /// <summary>
-    /// Used for testing HTTP not found result.
+    /// Used for testing not found result.
     /// </summary>
-    /// <typeparam name="THttpNotFoundResult">Type of not found result - <see cref="NotFoundResult"/> or <see cref="NotFoundObjectResult"/>.</typeparam>
-    public class NotFoundTestBuilder<THttpNotFoundResult>
-        : BaseTestBuilderWithResponseModel<THttpNotFoundResult>, IAndNotFoundTestBuilder
-        where THttpNotFoundResult : ActionResult
+    /// <typeparam name="TNotFoundResult">Type of not found result - <see cref="NotFoundResult"/> or <see cref="NotFoundObjectResult"/>.</typeparam>
+    public class NotFoundTestBuilder<TNotFoundResult>
+        : BaseTestBuilderWithResponseModel<TNotFoundResult>,
+        IAndNotFoundTestBuilder,
+        IBaseTestBuilderWithOutputResultInternal<IAndNotFoundTestBuilder>
+        where TNotFoundResult : ActionResult
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="NotFoundTestBuilder{TActionResult}"/> class.
@@ -27,90 +28,25 @@
             : base(testContext)
         {
         }
-        
+
+        /// <summary>
+        /// Gets the HTTP not found result test builder.
+        /// </summary>
+        /// <value>Test builder of <see cref="IAndNotFoundTestBuilder"/>.</value>
+        public IAndNotFoundTestBuilder ResultTestBuilder => this;
+
         /// <inheritdoc />
-        public IAndNotFoundTestBuilder WithStatusCode(int statusCode)
+        public IAndTestBuilder Passing(Action<NotFoundObjectResult> assertions)
         {
-            this.ValidateStatusCode(statusCode);
-            return this;
+            this.ValidateNotFoundObjectResult();
+            return this.Passing<NotFoundObjectResult>(assertions);
         }
 
         /// <inheritdoc />
-        public IAndNotFoundTestBuilder WithStatusCode(HttpStatusCode statusCode)
+        public IAndTestBuilder Passing(Func<NotFoundObjectResult, bool> predicate)
         {
-            this.ValidateStatusCode(statusCode);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndNotFoundTestBuilder ContainingContentType(string contentType)
-        {
-            this.ValidateContainingOfContentType(contentType);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndNotFoundTestBuilder ContainingContentType(MediaTypeHeaderValue contentType)
-        {
-            this.ValidateContainingOfContentType(contentType);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndNotFoundTestBuilder ContainingContentTypes(IEnumerable<string> contentTypes)
-        {
-            this.ValidateContentTypes(contentTypes);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndNotFoundTestBuilder ContainingContentTypes(params string[] contentTypes)
-        {
-            this.ValidateContentTypes(contentTypes);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndNotFoundTestBuilder ContainingContentTypes(IEnumerable<MediaTypeHeaderValue> contentTypes)
-        {
-            this.ValidateContentTypes(contentTypes);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndNotFoundTestBuilder ContainingContentTypes(params MediaTypeHeaderValue[] contentTypes)
-        {
-            this.ValidateContentTypes(contentTypes);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndNotFoundTestBuilder ContainingOutputFormatter(IOutputFormatter outputFormatter)
-        {
-            this.ValidateContainingOfOutputFormatter(outputFormatter);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndNotFoundTestBuilder ContainingOutputFormatterOfType<TOutputFormatter>()
-            where TOutputFormatter : IOutputFormatter
-        {
-            this.ValidateContainingOutputFormatterOfType<TOutputFormatter>();
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndNotFoundTestBuilder ContainingOutputFormatters(IEnumerable<IOutputFormatter> outputFormatters)
-        {
-            this.ValidateOutputFormatters(outputFormatters);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndNotFoundTestBuilder ContainingOutputFormatters(params IOutputFormatter[] outputFormatters)
-        {
-            this.ValidateOutputFormatters(outputFormatters);
-            return this;
+            this.ValidateNotFoundObjectResult();
+            return this.Passing<NotFoundObjectResult>(predicate);
         }
 
         /// <inheritdoc />
@@ -119,22 +55,33 @@
         public override void ValidateNoModel() => this.WithNoModel<NotFoundResult>();
 
         /// <summary>
-        /// Throws new HTTP not found result assertion exception for the provided property name, expected value and actual value.
+        /// Throws new <see cref="NotFoundResultAssertionException"/> for the provided property name, expected value and actual value.
         /// </summary>
-        /// <param name="propertyName">Property name on which the testing failed..</param>
+        /// <param name="propertyName">Property name on which the testing failed.</param>
         /// <param name="expectedValue">Expected value of the tested property.</param>
         /// <param name="actualValue">Actual value of the tested property.</param>
-        protected override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)
-            => this.ThrowNewHttpNotFoundResultAssertionException(propertyName, expectedValue, actualValue);
-
-        private void ThrowNewHttpNotFoundResultAssertionException(string propertyName, string expectedValue, string actualValue)
-        {
-            throw new NotFoundResultAssertionException(string.Format(
-                "{0} HTTP not found result {1} {2}, but {3}.",
+        public override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue) 
+            => throw new NotFoundResultAssertionException(string.Format(
+                ExceptionMessages.ActionResultFormat,
                 this.TestContext.ExceptionMessagePrefix,
+                "not found",
                 propertyName,
                 expectedValue,
                 actualValue));
+
+        private void ValidateNotFoundObjectResult()
+        {
+            var actualResultType = this.ActionResult.GetType();
+            var expectedResultType = typeof(NotFoundObjectResult);
+
+            if (actualResultType != expectedResultType)
+            {
+                throw new NotFoundResultAssertionException(string.Format(
+                    "{0} not found result to be {1}, but it was {2}.",
+                    this.TestContext.ExceptionMessagePrefix,
+                    expectedResultType,
+                    actualResultType));
+            }
         }
     }
 }

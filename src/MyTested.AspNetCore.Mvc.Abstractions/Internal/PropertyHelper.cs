@@ -22,9 +22,9 @@
             this.Properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
         }
 
-        protected Type Type { get; private set; }
+        protected Type Type { get; }
 
-        protected IEnumerable<PropertyInfo> Properties { get; private set; }
+        protected IEnumerable<PropertyInfo> Properties { get; }
         
         public static Func<object, TResult> MakeFastPropertyGetter<TResult>(PropertyInfo propertyInfo)
         {
@@ -71,10 +71,8 @@
         }
 
         protected PropertyInfo FindPropertyWithAttribute<TAttribute>()
-            where TAttribute : Attribute
-        {
-            return this.Properties.FirstOrDefault(pr => pr.GetCustomAttribute(typeof(TAttribute), true) != null);
-        }
+            where TAttribute : Attribute 
+            => this.Properties.FirstOrDefault(pr => pr.GetCustomAttribute(typeof(TAttribute), true) != null);
 
         protected void ThrowNewInvalidOperationExceptionIfNull(object value, string propertyName)
         {
@@ -84,21 +82,17 @@
             }
         }
 
-        // Called via reflection
+        // Called via reflection.
         private static TValue CallPropertyGetter<TDeclaringType, TValue>(
             Func<TDeclaringType, TValue> getter,
-            object target)
-        {
-            return getter((TDeclaringType)target);
-        }
+            object target) 
+            => getter((TDeclaringType)target);
 
-        // Called via reflection
+        // Called via reflection.
         private static void CallPropertySetter<TDeclaringType, TValue>(
             Action<TDeclaringType, TValue> setter,
             object target,
             object value)
-        {
-            setter((TDeclaringType)target, (TValue)value);
-        }
+            => setter((TDeclaringType)target, (TValue)value);
     }
 }

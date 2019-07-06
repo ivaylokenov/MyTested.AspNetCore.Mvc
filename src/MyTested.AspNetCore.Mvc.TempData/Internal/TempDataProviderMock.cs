@@ -6,10 +6,8 @@
 
     public class TempDataProviderMock : ITempDataProvider
     {
-        public IDictionary<string, object> LoadTempData(HttpContext context)
-        {
-            return new Dictionary<string, object>();
-        }
+        public IDictionary<string, object> LoadTempData(HttpContext context) 
+            => new Dictionary<string, object>();
 
         public void SaveTempData(HttpContext context, IDictionary<string, object> values)
         {

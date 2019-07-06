@@ -1,30 +1,25 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.File
 {
-    using System.IO;
-    using System.Linq;
+    using System;
     using Contracts.ActionResults.File;
-    using Contracts.Base;
+    using Contracts.And;
     using Exceptions;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.FileProviders;
-    using Microsoft.Net.Http.Headers;
-    using Utilities;
-    using Utilities.Extensions;
 
     /// <summary>
     /// Used for testing file result.
     /// </summary>
-    /// <typeparam name="TFileResult">Result of type <see cref="FileStreamResult"/>, <see cref="VirtualFileResult"/> or <see cref="FileContentResult"/>.</typeparam>
+    /// <typeparam name="TFileResult">
+    /// Result of type <see cref="FileStreamResult"/>,
+    /// <see cref="VirtualFileResult"/>
+    /// or <see cref="FileContentResult"/>.
+    /// </typeparam>
     public class FileTestBuilder<TFileResult>
-        : BaseFileTestBuilder<TFileResult>, IAndFileTestBuilder
+        : BaseTestBuilderWithFileResult<TFileResult, IAndFileTestBuilder>, 
+        IAndFileTestBuilder
         where TFileResult : FileResult
     {
-        private const string FileName = "file name";
-        private const string FileProvider = "file provider";
-        private const string FileStream = "file stream";
-        private const string FileContents = "file contents";
-
         /// <summary>
         /// Initializes a new instance of the <see cref="FileTestBuilder{TFileResult}"/> class.
         /// </summary>
@@ -34,123 +29,70 @@
         {
         }
 
+        /// <summary>
+        /// Gets the file result test builder.
+        /// </summary>
+        /// <value>Test builder of <see cref="IAndFileTestBuilder"/> type.</value>
+        public override IAndFileTestBuilder ResultTestBuilder => this;
+
         /// <inheritdoc />
-        public IAndFileTestBuilder WithContentType(string contentType)
+        public IAndTestBuilder Passing(Action<FileContentResult> assertions)
         {
-            this.ValidateContentType(contentType);
-            return this;
+            this.ValidateFileResult<FileContentResult>();
+            return this.Passing<FileContentResult>(assertions);
+        }
+
+        public IAndTestBuilder Passing(Func<FileContentResult, bool> predicate)
+        {
+            this.ValidateFileResult<FileContentResult>();
+            return this.Passing<FileContentResult>(predicate);
         }
 
         /// <inheritdoc />
-        public IAndFileTestBuilder WithContentType(MediaTypeHeaderValue contentType)
-            => this.WithContentType(contentType?.MediaType);
-
-        /// <inheritdoc />
-        public IAndFileTestBuilder WithFileDownloadName(string fileDownloadName)
+        public IAndTestBuilder Passing(Action<FileStreamResult> assertions)
         {
-            this.ValidateFileDownloadName(fileDownloadName);
-            return this;
+            this.ValidateFileResult<FileStreamResult>();
+            return this.Passing<FileStreamResult>(assertions);
         }
 
         /// <inheritdoc />
-        public IAndFileTestBuilder WithStream(Stream stream)
+        public IAndTestBuilder Passing(Func<FileStreamResult, bool> predicate)
         {
-            var fileStreamResult = this.GetFileResult<FileStreamResult>(FileStream);
-            var expectedContents = stream.ToByteArray();
-            var actualContents = fileStreamResult.FileStream.ToByteArray();
-            if (!expectedContents.SequenceEqual(actualContents))
-            {
-                this.ThrowNewFileResultAssertionException(
-                    "FileStream",
-                    "to have contents as the provided one",
-                    "instead received different result");
-            }
-
-            return this;
+            this.ValidateFileResult<FileStreamResult>();
+            return this.Passing<FileStreamResult>(predicate);
         }
 
         /// <inheritdoc />
-        public IAndFileTestBuilder WithFileName(string fileName)
+        public IAndTestBuilder Passing(Action<VirtualFileResult> assertions)
         {
-            var virtualFileResult = this.GetFileResult<VirtualFileResult>(FileName);
-            var actualFileName = virtualFileResult.FileName;
-            if (fileName != virtualFileResult.FileName)
-            {
-                this.ThrowNewFileResultAssertionException(
-                    "FileName",
-                    $"to be '{fileName}'",
-                    $"instead received '{actualFileName}'");
-            }
-
-            return this;
+            this.ValidateFileResult<VirtualFileResult>();
+            return this.Passing<VirtualFileResult>(assertions);
         }
 
         /// <inheritdoc />
-        public IAndFileTestBuilder WithFileProvider(IFileProvider fileProvider)
+        public IAndTestBuilder Passing(Func<VirtualFileResult, bool> predicate)
         {
-            var virtualFileResult = this.GetFileResult<VirtualFileResult>(FileProvider);
-            if (fileProvider != virtualFileResult.FileProvider)
-            {
-                this.ThrowNewFileResultAssertionException(
-                    "FileProvider",
-                    "to be the same as the provided one",
-                    "instead received different result");
-            }
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndFileTestBuilder WithFileProviderOfType<TFileProvider>()
-            where TFileProvider : IFileProvider
-        {
-            var virtualFileResult = this.GetFileResult<VirtualFileResult>(FileProvider);
-            var actualFileProvider = virtualFileResult.FileProvider;
-
-            if (actualFileProvider == null ||
-                Reflection.AreDifferentTypes(typeof(TFileProvider), actualFileProvider.GetType()))
-            {
-                this.ThrowNewFileResultAssertionException(
-                    "FileProvider",
-                    $"to be of {typeof(TFileProvider).Name} type",
-                    $"instead received {actualFileProvider.GetName()}");
-            }
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndFileTestBuilder WithContents(byte[] fileContents)
-        {
-            var fileContentResult = this.GetFileResult<FileContentResult>(FileContents);
-            if (!fileContents.SequenceEqual(fileContentResult.FileContents))
-            {
-                this.ThrowNewFileResultAssertionException(
-                   "FileContents",
-                   "to have contents as the provided ones",
-                   "instead received different result");
-            }
-
-            return this;
+            this.ValidateFileResult<VirtualFileResult>();
+            return this.Passing<VirtualFileResult>(predicate);
         }
 
         /// <inheritdoc />
         public IFileTestBuilder AndAlso() => this;
         
-        private TExpectedFileResult GetFileResult<TExpectedFileResult>(string containment)
-            where TExpectedFileResult : class
+        private void ValidateFileResult<TResult>()
+            where TResult : FileResult
         {
-            var actualFileResult = this.ActionResult as TExpectedFileResult;
-            if (actualFileResult == null)
+            var actualResultType = this.ActionResult.GetType();
+            var expectedResultType = typeof(TResult);
+
+            if (actualResultType != expectedResultType)
             {
                 throw new FileResultAssertionException(string.Format(
-                    "When calling {0} action in {1} expected file result to contain {2}, but it could not be found.",
-                    this.ActionName,
-                    this.Controller.GetName(),
-                    containment));
+                    "{0} file result to be {1}, but it was {2}.",
+                    this.TestContext.ExceptionMessagePrefix,
+                    expectedResultType,
+                    actualResultType));
             }
-
-            return actualFileResult;
         }
     }
 }

@@ -3,7 +3,8 @@
     using System;
 
     /// <summary>
-    /// <see cref="Exception"/> for invalid <see cref="Microsoft.AspNetCore.Mvc.OkResult"/> or <see cref="Microsoft.AspNetCore.Mvc.OkObjectResult"/>.
+    /// <see cref="Exception"/> for invalid <see cref="Microsoft.AspNetCore.Mvc.OkResult"/>
+    /// or <see cref="Microsoft.AspNetCore.Mvc.OkObjectResult"/>.
     /// </summary>
     public class OkResultAssertionException : Exception
     {

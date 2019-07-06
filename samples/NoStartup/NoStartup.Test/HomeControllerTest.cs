@@ -11,11 +11,22 @@
         public void IndexShouldReturnOkWithCorrectModel()
             => MyController<HomeController>
                 .Instance()
-                .WithServices(services => services
+                .WithDependencies(dependencies => dependencies
                     .With(ServiceMock.GetInstance()))
                 .Calling(c => c.Index())
                 .ShouldReturn()
-                .Ok()
-                .WithModel(new[] { "Mock", "Test" });
+                .Ok(ok => ok
+                    .WithModel(new[] { "Mock", "Test" }));
+
+        [TestMethod]
+        public void RedirectToIndexShouldRedirectToIndex()
+            => MyController<HomeController>
+                .Instance()
+                .WithDependencies(dependencies => dependencies
+                    .With(ServiceMock.GetInstance()))
+                .Calling(c => c.RedirectToIndex())
+                .ShouldReturn()
+                .Redirect(redirect => redirect
+                    .To<HomeController>(c => c.Index()));
     }
 }

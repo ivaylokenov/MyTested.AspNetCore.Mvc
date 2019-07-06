@@ -21,14 +21,11 @@
 
         public HttpContext HttpContext
         {
-            get
-            {
-                return this.httpContextMock;
-            }
+            get => this.httpContextMock;
 
             set
             {
-                CommonValidator.CheckForNullReference(value, nameof(HttpContext));
+                CommonValidator.CheckForNullReference(value, nameof(this.HttpContext));
                 this.httpContextMock = HttpContextMock.From(value);
                 TestHelper.SetHttpContextToAccessor(this.httpContextMock);
             }
@@ -56,7 +53,7 @@
 
             set
             {
-                CommonValidator.CheckForNullReference(value, nameof(RouteData));
+                CommonValidator.CheckForNullReference(value, nameof(this.RouteData));
                 this.routeData = value;
             }
         }

@@ -16,7 +16,7 @@
                 .Calling(c => c.BadRequestWithErrorAction())
                 .ShouldReturn()
                 .BadRequest()
-                .WithErrorMessage()
+                .AndAlso()
                 .ShouldPassForThe<MvcController>(controller =>
                 {
                     Assert.NotNull(controller);
@@ -33,7 +33,7 @@
                 .Attributes()
                 .ShouldPassForThe<ControllerAttributes>(attributes =>
                 {
-                    Assert.Equal(2, attributes.Count());
+                    Assert.Equal(4, attributes.Count());
                 });
         }
         
@@ -48,7 +48,7 @@
                 .AndAlso()
                 .ShouldPassForThe<ActionAttributes>(attributes =>
                 {
-                    Assert.Equal(6, attributes.Count());
+                    Assert.Equal(8, attributes.Count());
                 });
         }
 

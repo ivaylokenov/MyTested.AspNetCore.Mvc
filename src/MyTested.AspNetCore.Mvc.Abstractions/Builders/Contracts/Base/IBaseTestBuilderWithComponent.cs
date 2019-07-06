@@ -4,7 +4,7 @@
     using And;
 
     /// <summary>
-    /// Base class for all test builders with component.
+    /// Base interface for all test builders with component.
     /// </summary>
     public interface IBaseTestBuilderWithComponent : IBaseTestBuilder
     {
@@ -12,7 +12,7 @@
         /// Tests whether the provided component type passes the given assertions.
         /// </summary>
         /// <typeparam name="TComponent">Type of component to test.</typeparam>
-        /// <param name="assertions">Action containing assertions on the provided component.</param>
+        /// <param name="assertions">Action containing assertions for the provided component.</param>
         /// <returns>The same <see cref="IBaseTestBuilderWithComponent"/>.</returns>
         IAndTestBuilder ShouldPassForThe<TComponent>(Action<TComponent> assertions)
             where TComponent : class;

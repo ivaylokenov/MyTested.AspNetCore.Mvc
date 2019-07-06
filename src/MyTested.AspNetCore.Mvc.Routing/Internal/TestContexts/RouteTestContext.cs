@@ -39,7 +39,9 @@
                 this.HttpContext.Features.Get<IHttpAuthenticationFeature>()
                 ?? new HttpAuthenticationFeature();
 
+#pragma warning disable 618
             httpAuthenticationFeature.Handler = new RouteAuthenticationHandler();
+#pragma warning restore 618
 
             this.HttpContext.Features.Set(httpAuthenticationFeature);
         }

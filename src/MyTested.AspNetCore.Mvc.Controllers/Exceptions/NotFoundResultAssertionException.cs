@@ -3,7 +3,8 @@
     using System;
 
     /// <summary>
-    /// <see cref="Exception"/> for invalid <see cref="Microsoft.AspNetCore.Mvc.NotFoundResult"/> or <see cref="Microsoft.AspNetCore.Mvc.NotFoundObjectResult"/>.
+    /// <see cref="Exception"/> for invalid <see cref="Microsoft.AspNetCore.Mvc.NotFoundResult"/>
+    /// or <see cref="Microsoft.AspNetCore.Mvc.NotFoundObjectResult"/>.
     /// </summary>
     public class NotFoundResultAssertionException : Exception
     {

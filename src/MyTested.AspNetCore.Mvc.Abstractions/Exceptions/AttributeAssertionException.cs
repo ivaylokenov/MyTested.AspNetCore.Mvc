@@ -7,6 +7,8 @@
     /// </summary>
     public class AttributeAssertionException : Exception
     {
+        public const string DefaultFormat = "When testing {0} was expected to have {1} with {2}, but {3}.";
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AttributeAssertionException"/> class.
         /// </summary>

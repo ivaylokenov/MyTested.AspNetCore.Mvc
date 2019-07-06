@@ -1,8 +1,7 @@
-﻿@using Microsoft.AspNetCore.Identity
-@using ApplicationParts.Models;
+﻿@using Microsoft.AspNetCore.Authentication
 
-@model ApplicationParts.Models.AccountViewModels.LoginViewModel
-@inject SignInManager<ApplicationUser> SignInManager
+@model LoginViewModel
+@inject IAuthenticationSchemeProvider SchemeProvider
 
 @{
     ViewData["Title"] = "Log in";
@@ -59,24 +58,25 @@
             <h4>Use another service to log in.</h4>
             <hr />
             @{
-                var loginProviders = SignInManager.GetExternalAuthenticationSchemes().ToList();
-                if (loginProviders.Count == 0)
+                var schemes = await SchemeProvider.GetAllSchemesAsync();
+                var loginProviders = schemes.ToList();
+                if (!loginProviders.Any())
                 {
                     <div>
                         <p>
-                            There are no external authentication services configured. See <a href="http://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
+                            There are no external authentication services configured. See <a href="http://go.microsoft.com/fwlink/?LinkId=313242">this article</a>
                             for details on setting up this ASP.NET application to support logging in via external services.
                         </p>
                     </div>
                 }
                 else
                 {
-                    <form asp-controller="Account" asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
-                        <div>
+                    <form asp-controller="Account" asp-action="ExternalLogin" asp-route-returnurl="@ViewBag.ReturnUrl" method="post" class="form-horizontal" role="form">
+                        <div id="socialLoginList">
                             <p>
-                                @foreach (var provider in loginProviders)
+                                @foreach (var p in loginProviders)
                                 {
-                                    <button type="submit" class="btn btn-default" name="provider" value="@provider.AuthenticationScheme" title="Log in using your @provider.DisplayName account">@provider.AuthenticationScheme</button>
+                                    <button type="submit" class="btn btn-default" id="@p.Name" name="provider" value="@p.Name" title="Log in using your @p.Name account">@p.Name</button>
                                 }
                             </p>
                         </div>

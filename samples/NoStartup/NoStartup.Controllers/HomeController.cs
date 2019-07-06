@@ -8,12 +8,12 @@
     {
         private readonly IService service;
 
-        public HomeController(IService myService)
-        {
-            this.service = myService;
-        }
+        public HomeController(IService myService) => this.service = myService;
 
         public async Task<IActionResult> Index()
             => await Task.FromResult(this.Ok(this.service.GetData()));
+
+        public IActionResult RedirectToIndex()
+            => this.RedirectToAction(nameof(this.Index));
     }
 }

@@ -24,9 +24,10 @@
     public class HttpResponseTestBuilder : BaseTestBuilderWithComponent,
         IAndHttpResponseTestBuilder
     {
-        private static Encoding defaultEncoding = Encoding.UTF8;
+        private static readonly Encoding DefaultEncoding = Encoding.UTF8;
 
-        private HttpResponse httpResponse;
+        private readonly HttpResponse httpResponse;
+
         private bool contentTypeTested;
 
         /// <summary>
@@ -57,7 +58,7 @@
 
         /// <inheritdoc />
         public IAndHttpResponseTestBuilder WithBodyOfType<TBody>(string contentType)
-            => this.WithBodyOfType<TBody>(contentType, defaultEncoding);
+            => this.WithBodyOfType<TBody>(contentType, DefaultEncoding);
 
         /// <inheritdoc />
         public IAndHttpResponseTestBuilder WithBodyOfType<TBody>(string contentType, Encoding encoding)
@@ -79,7 +80,7 @@
 
         /// <inheritdoc />
         public IAndHttpResponseTestBuilder WithBody<TBody>(TBody body, string contentType)
-            => this.WithBody(body, contentType, defaultEncoding);
+            => this.WithBody(body, contentType, DefaultEncoding);
 
         /// <inheritdoc />
         public IAndHttpResponseTestBuilder WithBody<TBody>(TBody body, string contentType, Encoding encoding)
@@ -99,7 +100,7 @@
 
         /// <inheritdoc />
         public IAndHttpResponseTestBuilder WithStringBody(string body)
-            => this.WithStringBody(body, defaultEncoding);
+            => this.WithStringBody(body, DefaultEncoding);
 
         /// <inheritdoc />
         public IAndHttpResponseTestBuilder WithStringBody(string body, Encoding encoding)
@@ -107,7 +108,7 @@
 
         /// <inheritdoc />
         public IAndHttpResponseTestBuilder WithJsonBody(string jsonBody)
-            => this.WithJsonBody(jsonBody, defaultEncoding);
+            => this.WithJsonBody(jsonBody, DefaultEncoding);
 
         /// <inheritdoc />
         public IAndHttpResponseTestBuilder WithJsonBody(string jsonBody, Encoding encoding)
@@ -117,7 +118,7 @@
 
         /// <inheritdoc />
         public IAndHttpResponseTestBuilder WithJsonBody<TBody>(TBody jsonBody)
-            => this.WithJsonBody(jsonBody, defaultEncoding);
+            => this.WithJsonBody(jsonBody, DefaultEncoding);
 
         /// <inheritdoc />
         public IAndHttpResponseTestBuilder WithJsonBody<TBody>(TBody jsonBody, Encoding encoding)
@@ -167,7 +168,7 @@
             cookieBuilder(newResponseCookieTestBuilder);
             var expectedCookie = newResponseCookieTestBuilder.GetResponseCookie();
 
-            var expectedCookieName = expectedCookie.Name;
+            var expectedCookieName = expectedCookie.Name.Value;
             this.ContainingCookie(expectedCookieName);
             var actualCookie = this.GetCookieByKey(expectedCookieName);
 
@@ -420,10 +421,10 @@
         private CookieOptions GetCookieOptions(SetCookieHeaderValue cookie)
             => new CookieOptions
             {
-                Domain = cookie.Domain,
+                Domain = cookie.Domain.Value,
                 Expires = cookie.Expires,
                 HttpOnly = cookie.HttpOnly,
-                Path = cookie.Path,
+                Path = cookie.Path.Value,
                 Secure = cookie.Secure
             };
 

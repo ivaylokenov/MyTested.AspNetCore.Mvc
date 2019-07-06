@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using ApplicationParts.Models;
 using ApplicationParts.Models.ManageViewModels;
 using ApplicationParts.Services;
+using Microsoft.AspNetCore.Authentication;
 
 namespace ApplicationParts.Controllers
 {
@@ -15,6 +16,7 @@ namespace ApplicationParts.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IAuthenticationSchemeProvider _schemeProvider;
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
@@ -22,12 +24,14 @@ namespace ApplicationParts.Controllers
         public ManageController(
         UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
+        IAuthenticationSchemeProvider schemeProvider,
         IEmailSender emailSender,
         ISmsSender smsSender,
         ILoggerFactory loggerFactory)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _schemeProvider = schemeProvider;
             _emailSender = emailSender;
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<ManageController>();
@@ -272,7 +276,8 @@ namespace ApplicationParts.Controllers
                 return View("Error");
             }
             var userLogins = await _userManager.GetLoginsAsync(user);
-            var otherLogins = _signInManager.GetExternalAuthenticationSchemes().Where(auth => userLogins.All(ul => auth.AuthenticationScheme != ul.LoginProvider)).ToList();
+            var schemes = await _schemeProvider.GetAllSchemesAsync();
+            var otherLogins = schemes.Where(auth => userLogins.All(ul => auth.Name != ul.LoginProvider)).ToList();
             ViewData["ShowRemoveButton"] = user.PasswordHash != null || userLogins.Count > 1;
             return View(new ManageLoginsViewModel
             {

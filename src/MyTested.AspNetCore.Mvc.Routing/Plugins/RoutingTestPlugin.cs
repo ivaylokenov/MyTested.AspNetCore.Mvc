@@ -7,13 +7,13 @@
     {
         public long Priority => -8000;
 
-        public Action<IServiceCollection> DefaultServiceRegistrationDelegate =>
-            serviceCollection => serviceCollection
+        public Action<IServiceCollection> DefaultServiceRegistrationDelegate 
+            => serviceCollection => serviceCollection
                 .AddMvcCore()
                 .AddFormatterMappings()
                 .AddJsonFormatters();
 
-        public Action<IServiceCollection> RoutingServiceRegistrationDelegate => 
-            serviceCollection => serviceCollection.AddRoutingTesting();
+        public Action<IServiceCollection> RoutingServiceRegistrationDelegate 
+            => serviceCollection => serviceCollection.AddRoutingTesting();
     }
 }

@@ -1,8 +1,8 @@
-﻿namespace MyTested.AspNetCore.Mvc.ViewComponents.Test
+﻿namespace MyTested.AspNetCore.Mvc.Test
 {
-    using Microsoft.Extensions.DependencyInjection;
-    using Mvc.Test.Setups;
     using System.Reflection;
+    using Microsoft.Extensions.DependencyInjection;
+    using Setups;
 
     public class TestStartup : DefaultStartup
     {

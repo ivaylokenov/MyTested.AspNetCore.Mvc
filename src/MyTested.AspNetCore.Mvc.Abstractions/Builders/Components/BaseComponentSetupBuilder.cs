@@ -6,7 +6,6 @@
     {
         private Action<TComponent> componentSetupAction;
         
-        /// <inheritdoc />
         public TBuilder WithSetup(Action<TComponent> componentSetup)
         {
             this.componentSetupAction += componentSetup;

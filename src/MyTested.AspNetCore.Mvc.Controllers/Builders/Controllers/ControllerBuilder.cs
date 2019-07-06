@@ -2,7 +2,6 @@
 {
     using Components;
     using Contracts.Controllers;
-    using Internal.Application;
     using Internal.Configuration;
     using Internal.Contracts;
     using Internal.TestContexts;
@@ -23,14 +22,12 @@
         /// </summary>
         /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
         public ControllerBuilder(ControllerTestContext testContext)
-            : base(testContext)
-        {
-            this.EnabledModelStateValidation = TestApplication
-                .Configuration()
-                .Controllers()
-                .ModelStateValidation();
-        }
-        
+            : base(testContext) 
+            => this.EnabledModelStateValidation = ServerTestConfiguration
+                .Global
+                .GetControllersConfiguration()
+                .ModelStateValidation;
+
         public bool EnabledModelStateValidation { get; set; }
 
         protected override string ComponentName => "controller";
@@ -66,11 +63,9 @@
             }
         }
 
-        protected override void ActivateComponent()
-        {
-            this.Services
+        protected override void ActivateComponent() 
+            => this.Services
                 .GetServices<IControllerPropertyActivator>()
                 ?.ForEach(a => a.Activate(this.TestContext.ComponentContext, this.TestContext.Component));
-        }
     }
 }

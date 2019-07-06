@@ -27,7 +27,7 @@
         /// <summary>
         /// Tests whether <see cref="Microsoft.AspNetCore.Mvc.ViewComponents.ContentViewComponentResult"/> passes the given assertions.
         /// </summary>
-        /// <param name="assertions">Action containing all assertions on the content.</param>
+        /// <param name="assertions">Action containing all assertions for the content.</param>
         /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
         IAndTestBuilder Content(Action<string> assertions);
 
@@ -54,7 +54,7 @@
         /// <summary>
         /// Tests whether <see cref="Microsoft.AspNetCore.Html.IHtmlContent"/> passes the given assertions.
         /// </summary>
-        /// <param name="assertions">Action containing all assertions on the HTML content.</param>
+        /// <param name="assertions">Action containing all assertions for the HTML content.</param>
         /// <returns>Test builder of <see cref="IAndTestBuilder"/> type.</returns>
         IAndTestBuilder HtmlContent(Action<string> assertions);
 

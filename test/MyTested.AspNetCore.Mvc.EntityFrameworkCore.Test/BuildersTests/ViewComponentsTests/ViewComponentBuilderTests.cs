@@ -22,7 +22,7 @@
 
             MyViewComponent<FindDataComponent>
                 .Instance()
-                .WithDbContext(dbContext => dbContext
+                .WithData(data => data
                     .WithEntities<CustomDbContext>(db => db
                         .Models.Add(new CustomModel
                         {
@@ -37,7 +37,7 @@
 
             MyViewComponent<FindDataComponent>
                 .Instance()
-                .WithDbContext(dbContext => dbContext
+                .WithData(data => data
                     .WithEntities(db => db.Add(new CustomModel
                     {
                         Id = 1,
@@ -51,7 +51,7 @@
 
             MyViewComponent<FindDataComponent>
                 .Instance()
-                .WithDbContext(dbContext => dbContext
+                .WithData(data => data
                     .WithEntities<CustomDbContext>(db => db
                         .Models.Add(new CustomModel
                         {
@@ -84,7 +84,7 @@
 
             MyViewComponent<FindDataComponent>
                 .Instance()
-                .WithDbContext(dbContext => dbContext
+                .WithData(data => data
                     .WithSet<CustomDbContext, CustomModel>(set => set
                         .Add(new CustomModel
                         {
@@ -99,7 +99,7 @@
 
             MyViewComponent<FindDataComponent>
                 .Instance()
-                .WithDbContext(dbContext => dbContext
+                .WithData(data => data
                     .WithSet<CustomDbContext, CustomModel>(set => set
                         .Add(new CustomModel
                         {

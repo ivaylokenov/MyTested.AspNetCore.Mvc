@@ -9,7 +9,8 @@
     public static class ViewComponentShouldReturnTestBuilderExtensions
     {
         /// <summary>
-        /// Tests whether the view component result is <see cref="Microsoft.AspNetCore.Mvc.ViewComponents.ViewViewComponentResult"/> with the provided deeply equal model object.
+        /// Tests whether the view component result is <see cref="Microsoft.AspNetCore.Mvc.ViewComponents.ViewViewComponentResult"/>
+        /// with the provided deeply equal model object.
         /// </summary>
         /// <typeparam name="TInvocationResult">Type of invocation result.</typeparam>
         /// <typeparam name="TModel">Expected model type.</typeparam>
@@ -18,13 +19,12 @@
         /// <returns>Test builder of <see cref="IAndViewTestBuilder"/> type.</returns>
         public static IAndViewTestBuilder View<TInvocationResult, TModel>(
             this IViewComponentShouldReturnTestBuilder<TInvocationResult> builder,
-            TModel model)
-        {
-            return builder.View(null, model);
-        }
+            TModel model) 
+            => builder.View(null, model);
 
         /// <summary>
-        /// Tests whether the view component result is <see cref="Microsoft.AspNetCore.Mvc.ViewComponents.ViewViewComponentResult"/> with the provided view name and deeply equal model object.
+        /// Tests whether the view component result is <see cref="Microsoft.AspNetCore.Mvc.ViewComponents.ViewViewComponentResult"/>
+        /// with the provided view name and deeply equal model object.
         /// </summary>
         /// <typeparam name="TInvocationResult">Type of invocation result.</typeparam>
         /// <typeparam name="TModel">Expected model type.</typeparam>

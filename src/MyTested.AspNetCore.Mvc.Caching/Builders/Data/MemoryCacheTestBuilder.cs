@@ -139,8 +139,7 @@
             var key = expectedMemoryCacheEntry.Key;
             this.ContainingEntryWithKey(key);
 
-            ICacheEntry actualMemoryCacheEntry;
-            mockedMemoryCache.TryGetCacheEntry(key, out actualMemoryCacheEntry);
+            mockedMemoryCache.TryGetCacheEntry(key, out var actualMemoryCacheEntry);
 
             var validations = newMemoryCacheEntryBuilder.GetMemoryCacheEntryMockValidations();
             validations.ForEach(v => v(expectedMemoryCacheEntry, actualMemoryCacheEntry));

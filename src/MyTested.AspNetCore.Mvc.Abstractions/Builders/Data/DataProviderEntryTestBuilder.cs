@@ -46,7 +46,7 @@
         /// <inheritdoc />
         public IAndDataProviderEntryTestBuilder WithValue(object value)
         {
-            this.validations.Add((actual) =>
+            this.validations.Add(actual =>
             {
                 if (Reflection.AreNotDeeplyEqual(value, actual))
                 {
@@ -62,7 +62,7 @@
         /// <inheritdoc />
         public IAndDataProviderEntryDetailsTestBuilder<TValue> WithValueOfType<TValue>()
         {
-            this.validations.Add((actual) =>
+            this.validations.Add(actual =>
             {
                 var expectedType = typeof(TValue);
                 var actualType = actual.GetType();
@@ -70,8 +70,8 @@
                 if (Reflection.AreDifferentTypes(expectedType, actualType))
                 {
                     this.ThrowNewDataProviderAssertionException(
-                        $"to have entry with '{this.entryKey}' key and value of {expectedType.ToFriendlyTypeName()} type",
-                        $"in fact found {actualType.ToFriendlyTypeName()}");
+                        $"to have entry with '{this.entryKey}' key and value of '{expectedType.ToFriendlyTypeName()}' type",
+                        $"in fact found '{actualType.ToFriendlyTypeName()}'");
                 }
             });
 

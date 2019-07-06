@@ -1,7 +1,7 @@
 ﻿namespace MusicStore.Test.Mocks
 {
     using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.Logging;
@@ -15,12 +15,13 @@
         internal const string LockedOutUser = "Locked@invalid.com";
 
         public SignInManagerMock(
-            UserManager<ApplicationUser> userManager,
-            IHttpContextAccessor contextAccessor,
-            IUserClaimsPrincipalFactory<ApplicationUser> claimsFactory,
-            IOptions<IdentityOptions> optionsAccessor,
-            ILogger<SignInManager<ApplicationUser>> logger)
-            : base(userManager, contextAccessor, claimsFactory, optionsAccessor, logger)
+            UserManager<ApplicationUser> userManager, 
+            IHttpContextAccessor contextAccessor, 
+            IUserClaimsPrincipalFactory<ApplicationUser> claimsFactory, 
+            IOptions<IdentityOptions> optionsAccessor, 
+            ILogger<SignInManager<ApplicationUser>> logger, 
+            IAuthenticationSchemeProvider schemes)
+            : base(userManager, contextAccessor, claimsFactory, optionsAccessor, logger, schemes)
         {
         }
 

@@ -22,10 +22,7 @@
 
         public override RouteData RouteData
         {
-            get
-            {
-                return base.RouteData;
-            }
+            get => base.RouteData;
 
             set
             {

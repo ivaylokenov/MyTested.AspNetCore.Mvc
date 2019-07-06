@@ -2,7 +2,6 @@
 {
     using System;
     using Exceptions;
-    using Microsoft.AspNetCore.Http;
     using Setups;
     using Setups.Controllers;
     using Xunit;

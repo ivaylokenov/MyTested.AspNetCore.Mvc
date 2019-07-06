@@ -1,14 +1,12 @@
-﻿namespace MyTested.AspNetCore.Mvc.EntityFrameworkCore.Test
+﻿namespace MyTested.AspNetCore.Mvc.Test
 {
-    using Microsoft.Extensions.DependencyInjection;
-    using Mvc.Test.Setups;
     using System.Reflection;
+    using Microsoft.Extensions.DependencyInjection;
+    using Setups;
 
     public class TestStartup : DefaultStartup
     {
-        public override void ConfigureServices(IServiceCollection services)
-        {
-            services.AddMvc().AddApplicationPart(typeof(TestStartup).GetTypeInfo().Assembly);
-        }
+        public override void ConfigureServices(IServiceCollection services) 
+            => services.AddMvc().AddApplicationPart(typeof(TestStartup).GetTypeInfo().Assembly);
     }
 }

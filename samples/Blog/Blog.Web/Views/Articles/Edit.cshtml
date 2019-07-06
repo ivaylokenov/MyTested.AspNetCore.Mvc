@@ -1,0 +1,17 @@
+﻿@model ArticleFormModel
+
+@{
+    ViewData.SetTitle("Edit Article");
+}
+
+<h2>Edit Article</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <partial name="_ArticleForm" model="@Model" />
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

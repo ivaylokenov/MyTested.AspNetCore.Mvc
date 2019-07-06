@@ -19,8 +19,8 @@
                 .WithoutValidation()
                 .Calling(c => c.FileWithFileProvider(fileProvider))
                 .ShouldReturn()
-                .File()
-                .WithFileProvider(fileProvider);
+                .File(file => file
+                    .WithFileProvider(fileProvider));
         }
 
         [Fact]
@@ -31,8 +31,8 @@
                 .WithoutValidation()
                 .Calling(c => c.FileWithNullProvider())
                 .ShouldReturn()
-                .File()
-                .WithFileProvider(null);
+                .File(file => file
+                    .WithFileProvider(null));
         }
 
 
@@ -47,10 +47,10 @@
                         .WithoutValidation()
                         .Calling(c => c.FileWithFileProvider(null))
                         .ShouldReturn()
-                        .File()
-                        .WithFileProvider(new CustomFileProvider());
+                        .File(file => file
+                            .WithFileProvider(new CustomFileProvider()));
                 },
-                "When calling FileWithFileProvider action in MvcController expected file result FileProvider to be the same as the provided one, but instead received different result.");
+                "When calling FileWithFileProvider action in MvcController expected file result provider to be the same as the provided one, but instead received different result.");
         }
 
         [Fact]
@@ -61,8 +61,8 @@
                 .WithoutValidation()
                 .Calling(c => c.FileWithFileProvider(null))
                 .ShouldReturn()
-                .File()
-                .WithFileProviderOfType<CustomFileProvider>();
+                .File(file => file
+                    .WithFileProviderOfType<CustomFileProvider>());
         }
 
         [Fact]
@@ -76,10 +76,10 @@
                         .WithoutValidation()
                         .Calling(c => c.FileWithFileProvider(null))
                         .ShouldReturn()
-                        .File()
-                        .WithFileProviderOfType<IFileProvider>();
+                        .File(file => file
+                            .WithFileProviderOfType<IFileProvider>());
                 },
-                "When calling FileWithFileProvider action in MvcController expected file result FileProvider to be of IFileProvider type, but instead received CustomFileProvider.");
+                "When calling FileWithFileProvider action in MvcController expected file result provider to be of IFileProvider type, but instead received CustomFileProvider.");
         }
 
         [Fact]
@@ -93,10 +93,10 @@
                         .WithoutValidation()
                         .Calling(c => c.FileWithNullProvider())
                         .ShouldReturn()
-                        .File()
-                        .WithFileProviderOfType<CustomFileProvider>();
+                        .File(file => file
+                            .WithFileProviderOfType<CustomFileProvider>());
                 },
-                "When calling FileWithNullProvider action in MvcController expected file result FileProvider to be of CustomFileProvider type, but instead received null.");
+                "When calling FileWithNullProvider action in MvcController expected file result provider to be of CustomFileProvider type, but instead received null.");
         }
     }
 }

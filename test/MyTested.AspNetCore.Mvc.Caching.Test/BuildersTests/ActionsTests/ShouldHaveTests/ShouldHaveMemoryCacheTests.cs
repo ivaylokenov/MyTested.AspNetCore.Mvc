@@ -4,7 +4,6 @@
     using Microsoft.Extensions.DependencyInjection;
     using Setups;
     using Setups.Controllers;
-    using Setups.ViewComponents;
     using Xunit;
 
     public class ShouldHaveMemoryCacheTests

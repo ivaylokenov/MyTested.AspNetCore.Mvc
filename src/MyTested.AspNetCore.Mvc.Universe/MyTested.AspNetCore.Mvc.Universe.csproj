@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>My Tested ASP.NET Core MVC is a powerful testing library providing easy fluent interface to test the ASP.NET Core MVC framework.</Description>
+    <Copyright>2015-2019 Ivaylo Kenov</Copyright>
+    <AssemblyTitle>MyTested.AspNetCore.Mvc.Universe</AssemblyTitle>
+    <VersionPrefix>2.1.0</VersionPrefix>
+    <Authors>Ivaylo Kenov</Authors>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AssemblyName>MyTested.AspNetCore.Mvc.Universe</AssemblyName>
+    <AssemblyOriginatorKeyFile>../../tools/Key.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+    <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
+    <PackageId>MyTested.AspNetCore.Mvc.Universe</PackageId>
+    <PackageTags>aspnetcore;aspnetcoremvc;testing;unit;tests;fluent;testing;framework;asp;net;core;mvc;test;mymvc;mytested</PackageTags>
+    <PackageIconUrl>https://raw.githubusercontent.com/ivaylokenov/MyTested.AspNetCore.Mvc/master/tools/nuget-logo.png</PackageIconUrl>
+    <PackageProjectUrl>https://mytestedasp.net/</PackageProjectUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc</RepositoryUrl>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <RootNamespace>MyTested.AspNetCore.Mvc</RootNamespace>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MyTested.AspNetCore.Mvc\MyTested.AspNetCore.Mvc.csproj" />
+    <ProjectReference Include="..\MyTested.AspNetCore.Mvc.Authentication\MyTested.AspNetCore.Mvc.Authentication.csproj" />
+    <ProjectReference Include="..\MyTested.AspNetCore.Mvc.Caching\MyTested.AspNetCore.Mvc.Caching.csproj" />
+    <ProjectReference Include="..\MyTested.AspNetCore.Mvc.EntityFrameworkCore\MyTested.AspNetCore.Mvc.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\MyTested.AspNetCore.Mvc.Session\MyTested.AspNetCore.Mvc.Session.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="../../LICENSE" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+</Project>

@@ -1,19 +1,34 @@
 language: csharp
 sudo: required
 dist: trusty
-addons:
-  apt:
-    packages:
-    - libunwind8
+dotnet: 2.1.700
+solution: MyTested.AspNetCore.Mvc.sln
 mono: none
 os:
 - linux
 - osx
-osx_image: xcode8.2
+osx_image: xcode9.4
 branches:
   only:
   - master
   - development
   - ^version-.*$
 script:
-- ./build.sh
+  - dotnet test "samples/MusicStore/MusicStore.Test/MusicStore.Test.csproj" --configuration Release --framework netcoreapp2.1
+  - dotnet test "samples/Blog/Blog.Test/Blog.Test.csproj" --configuration Release --framework netcoreapp2.1
+  - dotnet test "samples/ApplicationParts/ApplicationParts.Test/ApplicationParts.Test.csproj" --configuration Release --framework netcoreapp2.1
+  - dotnet test "samples/Autofac/Autofac.AssemblyInit.Test/Autofac.AssemblyInit.Test.csproj" --configuration Release --framework netcoreapp2.1
+  - dotnet test "samples/Autofac/Autofac.NoContainerBuilder.Test/Autofac.NoContainerBuilder.Test.csproj" --configuration Release --framework netcoreapp2.1
+  - dotnet test "samples/Autofac/Autofac.Test/Autofac.Test.csproj" --configuration Release --framework netcoreapp2.1
+  - dotnet test "samples/Configuration/Test.Core.MissingAppPackage/Test.Core.MissingAppPackage.csproj" --configuration Release --framework netcoreapp2.1
+  - dotnet test "samples/Configuration/Test.DifferentEnvironment/Test.DifferentEnvironment.csproj" --configuration Release --framework netcoreapp2.1
+  - dotnet test "samples/Configuration/Test.ExplicitNoStartupType/Test.ExplicitNoStartupType.csproj" --configuration Release --framework netcoreapp2.1
+  - dotnet test "samples/Configuration/Test.MissingStartupType/Test.MissingStartupType.csproj" --configuration Release --framework netcoreapp2.1
+  - dotnet test "samples/Configuration/Test.NoAsync/Test.NoAsync.csproj" --configuration Release --framework netcoreapp2.1
+  - dotnet test "samples/Configuration/Test.NoStartupType/Test.NoStartupType.csproj" --configuration Release --framework netcoreapp2.1
+  - dotnet test "samples/Configuration/Test.WrongStartupType/Test.WrongStartupType.csproj" --configuration Release --framework netcoreapp2.1
+  - dotnet test "samples/Configuration/Test.WrongTestAssembly/Test.WrongTestAssembly.csproj" --configuration Release --framework netcoreapp2.1
+  - dotnet test "samples/Configuration/Test.WrongWebAssembly/Test.WrongWebAssembly.csproj" --configuration Release --framework netcoreapp2.1
+  - dotnet test "samples/Lite/Lite.Test/Lite.Test.csproj" --configuration Release --framework netcoreapp2.1
+  - dotnet test "samples/NoStartup/NoStartup.Test/NoStartup.Test.csproj" --configuration Release --framework netcoreapp2.1
+  - dotnet test "samples/WebStartup/WebStartup.Test/WebStartup.Test.csproj" --configuration Release --framework netcoreapp2.1

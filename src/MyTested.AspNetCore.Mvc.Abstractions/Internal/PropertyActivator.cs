@@ -31,8 +31,8 @@
                 throw new ArgumentNullException(nameof(instance));
             }
 
-            var value = valueAccessor(context);
-            fastPropertySetter(instance, value);
+            var value = this.valueAccessor(context);
+            this.fastPropertySetter(instance, value);
             return value;
         }
 

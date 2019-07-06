@@ -4,10 +4,9 @@
     using System.Buffers;
     using System.Collections.Generic;
     using System.Globalization;
-    using System.Runtime.Serialization.Formatters;
     using Common;
+    using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Http.Authentication;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.AspNetCore.Mvc.ViewEngines;
@@ -22,6 +21,7 @@
     public static class TestObjectFactory
     {
         public const string MediaType = "application/json";
+        public const string TestDatabaseName = "TestDatabase";
 
         public static Action<IServiceCollection> GetCustomServicesRegistrationAction()
             => services =>
@@ -47,9 +47,9 @@
             var authenticationProperties = new AuthenticationProperties
             {
                 AllowRefresh = true,
-                ExpiresUtc = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)),
+                ExpiresUtc = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
                 IsPersistent = true,
-                IssuedUtc = new DateTimeOffset(new DateTime(2015, 1, 1, 1, 1, 1)),
+                IssuedUtc = new DateTimeOffset(new DateTime(2015, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
                 RedirectUri = "test"
             };
 
@@ -87,8 +87,9 @@
                     HttpOnly = true,
                     Secure = true,
                     Domain = "testdomain.com",
-                    Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)),
-                    Path = "/"
+                    Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
+                    Path = "/",
+                    SameSite = SameSiteMode.Strict
                 });
             response.Cookies.Append(
                 "AnotherCookie",
@@ -98,7 +99,7 @@
                     HttpOnly = true,
                     Secure = true,
                     Domain = "testdomain.com",
-                    Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)),
+                    Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
                     Path = "/"
                 });
             response.ContentLength = 100;
@@ -109,10 +110,10 @@
         public static Uri GetUri() => new Uri("http://somehost.com/someuri/1?query=Test");
 
         public static Action<string, string> GetFailingValidationActionWithTwoParameteres()
-            => (x, y) => { throw new NullReferenceException($"{x} {y}"); };
+            => (x, y) => throw new NullReferenceException($"{x} {y}");
 
         public static Action<string, string, string> GetFailingValidationAction()
-            => (x, y, z) => { throw new NullReferenceException($"{x} {y} {z}"); };
+            => (x, y, z) => throw new NullReferenceException($"{x} {y} {z}");
 
         public static RequestModel GetNullRequestModel() => null;
 
@@ -158,7 +159,7 @@
                  PreserveReferencesHandling = PreserveReferencesHandling.Arrays,
                  ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
                  StringEscapeHandling = StringEscapeHandling.EscapeHtml,
-                 TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
+                 TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
                  TypeNameHandling = TypeNameHandling.None,
                  TraceWriter = new CustomJsonTraceWriter()
              };

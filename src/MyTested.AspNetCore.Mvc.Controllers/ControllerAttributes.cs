@@ -5,7 +5,7 @@
     using Utilities.Validators;
 
     /// <summary>
-    /// Class used for specifying additional assertions on the controller attributes.
+    /// Class used for specifying additional assertions for the controller attributes.
     /// </summary>
     public class ControllerAttributes : IEnumerable<object>
     {

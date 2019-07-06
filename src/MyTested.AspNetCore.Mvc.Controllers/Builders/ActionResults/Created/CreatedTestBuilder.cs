@@ -1,352 +1,121 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.Created
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Net;
-    using Base;
+    using Builders.Base;
     using Contracts.ActionResults.Created;
-    using Contracts.Uri;
+    using Contracts.And;
     using Exceptions;
+    using Internal;
+    using Internal.Contracts.ActionResults;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Formatters;
-    using Microsoft.AspNetCore.Routing;
-    using Microsoft.Net.Http.Headers;
-    using Utilities.Validators;
+    using System;
 
     /// <summary>
     /// Used for testing created results.
     /// </summary>
-    /// <typeparam name="TCreatedResult">Type of created result - <see cref="CreatedResult"/>, <see cref="CreatedAtActionResult"/> or <see cref="CreatedAtRouteResult"/>.</typeparam>
+    /// <typeparam name="TCreatedResult">
+    /// Type of created result - <see cref="CreatedResult"/>,
+    /// <see cref="CreatedAtActionResult"/> or <see cref="CreatedAtRouteResult"/>.
+    /// </typeparam>
     public class CreatedTestBuilder<TCreatedResult>
-        : BaseTestBuilderWithResponseModel<TCreatedResult>, IAndCreatedTestBuilder
+        : BaseTestBuilderWithResponseModel<TCreatedResult>,
+        IAndCreatedTestBuilder,
+        IBaseTestBuilderWithOutputResultInternal<IAndCreatedTestBuilder>,
+        IBaseTestBuilderWithRouteValuesResultInternal<IAndCreatedTestBuilder>
         where TCreatedResult : ObjectResult
     {
-        private readonly ControllerTestContext controllerTestContext;
-
-        private const string Location = "location";
-        private const string RouteName = "route name";
-        private const string RouteValues = "route values";
-        private const string UrlHelper = "URL helper";
-        
         /// <summary>
         /// Initializes a new instance of the <see cref="CreatedTestBuilder{TCreatedResult}"/> class.
         /// </summary>
-        /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
+        /// <param name="testContext">
+        /// <see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
         public CreatedTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
-            CommonValidator.CheckForNullReference(testContext, nameof(ControllerTestContext));
-            this.controllerTestContext = testContext;
         }
 
         public bool IncludeCountCheck { get; set; } = true;
 
+        /// <summary>
+        /// Gets the created result test builder.
+        /// </summary>
+        /// <value>Test builder of <see cref="IAndCreatedTestBuilder"/> type.</value>
+        public IAndCreatedTestBuilder ResultTestBuilder => this;
+
         /// <inheritdoc />
-        public IAndCreatedTestBuilder WithStatusCode(int statusCode)
+        public IAndTestBuilder Passing(Action<CreatedResult> assertions)
         {
-            this.ValidateStatusCode(statusCode);
-            return this;
+            this.ValidateCreatedResult<CreatedResult>();
+            return this.Passing<CreatedResult>(assertions);
         }
 
         /// <inheritdoc />
-        public IAndCreatedTestBuilder WithStatusCode(HttpStatusCode statusCode)
+        public IAndTestBuilder Passing(Func<CreatedResult, bool> predicate)
         {
-            this.ValidateStatusCode(statusCode);
-            return this;
+            this.ValidateCreatedResult<CreatedResult>();
+            return this.Passing<CreatedResult>(predicate);
         }
 
         /// <inheritdoc />
-        public IAndCreatedTestBuilder ContainingContentType(string contentType)
+        public IAndTestBuilder Passing(Action<CreatedAtRouteResult> assertions)
         {
-            this.ValidateContainingOfContentType(contentType);
-            return this;
+            this.ValidateCreatedResult<CreatedAtRouteResult>();
+            return this.Passing<CreatedAtRouteResult>(assertions);
         }
 
         /// <inheritdoc />
-        public IAndCreatedTestBuilder ContainingContentType(MediaTypeHeaderValue contentType)
+        public IAndTestBuilder Passing(Func<CreatedAtRouteResult, bool> predicate)
         {
-            this.ValidateContainingOfContentType(contentType);
-            return this;
+            this.ValidateCreatedResult<CreatedAtRouteResult>();
+            return this.Passing<CreatedAtRouteResult>(predicate);
         }
 
         /// <inheritdoc />
-        public IAndCreatedTestBuilder ContainingContentTypes(IEnumerable<string> contentTypes)
+        public IAndTestBuilder Passing(Action<CreatedAtActionResult> assertions)
         {
-            this.ValidateContentTypes(contentTypes);
-            return this;
+            this.ValidateCreatedResult<CreatedAtActionResult>();
+            return this.Passing<CreatedAtActionResult>(assertions);
         }
 
         /// <inheritdoc />
-        public IAndCreatedTestBuilder ContainingContentTypes(params string[] contentTypes)
+        public IAndTestBuilder Passing(Func<CreatedAtActionResult, bool> predicate)
         {
-            this.ValidateContentTypes(contentTypes);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder ContainingContentTypes(IEnumerable<MediaTypeHeaderValue> contentTypes)
-        {
-            this.ValidateContentTypes(contentTypes);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder ContainingContentTypes(params MediaTypeHeaderValue[] contentTypes)
-        {
-            this.ValidateContentTypes(contentTypes);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder ContainingOutputFormatter(IOutputFormatter outputFormatter)
-        {
-            this.ValidateContainingOfOutputFormatter(outputFormatter);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder ContainingOutputFormatterOfType<TOutputFormatter>()
-            where TOutputFormatter : IOutputFormatter
-        {
-            this.ValidateContainingOutputFormatterOfType<TOutputFormatter>();
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder ContainingOutputFormatters(IEnumerable<IOutputFormatter> outputFormatters)
-        {
-            this.ValidateOutputFormatters(outputFormatters);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder ContainingOutputFormatters(params IOutputFormatter[] outputFormatters)
-        {
-            this.ValidateOutputFormatters(outputFormatters);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder AtLocation(string location)
-        {
-            var uri = LocationValidator.ValidateAndGetWellFormedUriString(location, this.ThrowNewCreatedResultAssertionException);
-            return this.AtLocation(uri);
-        }
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder AtLocationPassing(Action<string> assertions)
-        {
-            var createdResult = this.GetCreatedResult<CreatedResult>(Location);
-            assertions(createdResult.Location);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder AtLocationPassing(Func<string, bool> predicate)
-        {
-            var createdResult = this.GetCreatedResult<CreatedResult>(Location);
-            var location = createdResult.Location;
-            if (!predicate(location))
-            {
-                this.ThrowNewCreatedResultAssertionException(
-                    $"location ('{location}')",
-                    "to pass the given predicate",
-                    "it failed");
-            }
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder AtLocation(Uri location)
-        {
-            var createdResult = this.GetCreatedResult<CreatedResult>(Location);
-            LocationValidator.ValidateUri(
-                createdResult,
-                location.OriginalString,
-                this.ThrowNewCreatedResultAssertionException);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder AtLocation(Action<IUriTestBuilder> uriTestBuilder)
-        {
-            var createdResult = this.GetCreatedResult<CreatedResult>(Location);
-            LocationValidator.ValidateLocation(
-                createdResult,
-                uriTestBuilder,
-                this.ThrowNewCreatedResultAssertionException);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder AtAction(string actionName)
-        {
-            var createdAtActionResult = this.GetCreatedResult<CreatedAtActionResult>("action name");
-            RouteActionResultValidator.ValidateActionName(
-                createdAtActionResult,
-                actionName,
-                this.ThrowNewCreatedResultAssertionException);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder AtController(string controllerName)
-        {
-            var createdAtActionResult = this.GetCreatedResult<CreatedAtActionResult>("controller name");
-            RouteActionResultValidator.ValidateControllerName(
-                createdAtActionResult,
-                controllerName,
-                this.ThrowNewCreatedResultAssertionException);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder WithRouteName(string routeName)
-        {
-            var createdAtRouteResult = this.GetCreatedResult<CreatedAtRouteResult>("route name");
-            RouteActionResultValidator.ValidateRouteName(
-                createdAtRouteResult,
-                routeName,
-                this.ThrowNewCreatedResultAssertionException);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder ContainingRouteKey(string key)
-        {
-            RouteActionResultValidator.ValidateRouteValue(
-                this.TestContext.MethodResult,
-                key,
-                this.ThrowNewCreatedResultAssertionException);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder ContainingRouteValue<TRouteValue>(TRouteValue value)
-        {
-            RouteActionResultValidator.ValidateRouteValue(
-                this.TestContext.MethodResult,
-                value,
-                this.ThrowNewCreatedResultAssertionException);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder ContainingRouteValueOfType<TRouteValue>()
-        {
-            RouteActionResultValidator.ValidateRouteValueOfType<TRouteValue>(
-                this.TestContext.MethodResult,
-                this.ThrowNewCreatedResultAssertionException);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder ContainingRouteValueOfType<TRouteValue>(string key)
-        {
-            RouteActionResultValidator.ValidateRouteValueOfType<TRouteValue>(
-                this.TestContext.MethodResult,
-                key,
-                this.ThrowNewCreatedResultAssertionException);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder ContainingRouteValue(string key, object value)
-        {
-            RouteActionResultValidator.ValidateRouteValue(
-                this.TestContext.MethodResult,
-                key,
-                value,
-                this.ThrowNewCreatedResultAssertionException);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder ContainingRouteValues(object routeValues)
-            => this.ContainingRouteValues(new RouteValueDictionary(routeValues));
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder ContainingRouteValues(IDictionary<string, object> routeValues)
-        {
-            RouteActionResultValidator.ValidateRouteValues(
-                this.TestContext.MethodResult,
-                routeValues,
-                this.IncludeCountCheck,
-                this.ThrowNewCreatedResultAssertionException);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder WithUrlHelper(IUrlHelper urlHelper)
-        {
-            RouteActionResultValidator.ValidateUrlHelper(
-                this.TestContext.MethodResult,
-                urlHelper,
-                this.ThrowNewCreatedResultAssertionException);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndCreatedTestBuilder WithUrlHelperOfType<TUrlHelper>()
-            where TUrlHelper : IUrlHelper
-        {
-            RouteActionResultValidator.ValidateUrlHelperOfType<TUrlHelper>(
-                this.TestContext.MethodResult,
-                this.ThrowNewCreatedResultAssertionException);
-
-            return this;
+            this.ValidateCreatedResult<CreatedAtActionResult>();
+            return this.Passing<CreatedAtActionResult>(predicate);
         }
 
         /// <inheritdoc />
         public ICreatedTestBuilder AndAlso() => this;
-        
+
         /// <summary>
-        /// Throws new created result assertion exception for the provided property name, expected value and actual value.
+        /// Throws new <see cref="CreatedResultAssertionException"/> for the provided property name, expected value and actual value.
         /// </summary>
         /// <param name="propertyName">Property name on which the testing failed.</param>
         /// <param name="expectedValue">Expected value of the tested property.</param>
         /// <param name="actualValue">Actual value of the tested property.</param>
-        protected override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)
-            => this.ThrowNewCreatedResultAssertionException(propertyName, expectedValue, actualValue);
-
-        private TExpectedCreatedResult GetCreatedResult<TExpectedCreatedResult>(string containment)
-            where TExpectedCreatedResult : class
-        {
-            var actualRedirectResult = this.TestContext.MethodResult as TExpectedCreatedResult;
-            if (actualRedirectResult == null)
-            {
-                this.ThrowNewCreatedResultAssertionException(
-                    "to contain",
-                    containment,
-                    "it could not be found");
-            }
-
-            return actualRedirectResult;
-        }
-
-        public void ThrowNewCreatedResultAssertionException(string propertyName, string expectedValue, string actualValue)
-        {
-            throw new CreatedResultAssertionException(string.Format(
-                "{0} created result {1} {2}, but {3}.",
+        public override void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue)
+            => throw new CreatedResultAssertionException(string.Format(
+                ExceptionMessages.ActionResultFormat,
                 this.TestContext.ExceptionMessagePrefix,
+                "created",
                 propertyName,
                 expectedValue,
                 actualValue));
+
+        private void ValidateCreatedResult<TResult>()
+            where TResult : ObjectResult
+        {
+            var actualResultType = this.ActionResult.GetType();
+            var expectedResultType = typeof(TResult);
+
+            if (actualResultType != expectedResultType)
+            {
+                throw new CreatedResultAssertionException(string.Format(
+                    "{0} created result to be {1}, but it was {2}.",
+                    this.TestContext.ExceptionMessagePrefix,
+                    expectedResultType,
+                    actualResultType));
+            }
         }
     }
 }

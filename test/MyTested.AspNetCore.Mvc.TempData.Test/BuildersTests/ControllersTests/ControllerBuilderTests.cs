@@ -74,7 +74,7 @@
                     .WithEntry("key", "value"))
                 .ShouldPassForThe<FullPocoController>(controller =>
                 {
-                    Assert.Equal(1, controller.CustomTempData.Count);
+                    Assert.Single(controller.CustomTempData);
                 });
 
             MyApplication.StartsFrom<DefaultStartup>();

@@ -8,7 +8,7 @@
     {
         private readonly Type defaultMvcMarkerServiceType = typeof(MvcMarkerService);
 
-        public Func<ServiceDescriptor, bool> ServiceSelectorPredicate =>
-            serviceDescriptor => serviceDescriptor.ServiceType == defaultMvcMarkerServiceType;
+        public Func<ServiceDescriptor, bool> ServiceSelectorPredicate 
+            => serviceDescriptor => serviceDescriptor.ServiceType == this.defaultMvcMarkerServiceType;
     }
 }

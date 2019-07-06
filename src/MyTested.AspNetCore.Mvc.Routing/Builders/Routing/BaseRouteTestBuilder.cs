@@ -16,10 +16,8 @@
         /// Initializes a new instance of the <see cref="BaseRouteTestBuilder"/> class.
         /// </summary>
         /// <param name="testContext"><see cref="RouteTestContext"/> containing data about the currently executed assertion chain.</param>
-        protected BaseRouteTestBuilder(RouteTestContext testContext)
-        {
-            this.TestContext = testContext;
-        }
+        protected BaseRouteTestBuilder(RouteTestContext testContext) 
+            => this.TestContext = testContext;
 
         /// <summary>
         /// Gets or sets the currently used <see cref="RouteTestContext"/>.
@@ -27,10 +25,7 @@
         /// <value>Result of <see cref="RouteTestContext"/> type.</value>
         protected RouteTestContext TestContext
         {
-            get
-            {
-                return this.testContext;
-            }
+            get => this.testContext;
 
             set
             {

@@ -31,11 +31,8 @@
         /// <value>Result of type <see cref="HttpTestContext"/>.</value>
         public HttpTestContext TestContext
         {
-            get
-            {
-                return this.testContext;
-            }
-            
+            get => this.testContext;
+
             private set
             {
                 CommonValidator.CheckForNullReference(value, nameof(this.TestContext));

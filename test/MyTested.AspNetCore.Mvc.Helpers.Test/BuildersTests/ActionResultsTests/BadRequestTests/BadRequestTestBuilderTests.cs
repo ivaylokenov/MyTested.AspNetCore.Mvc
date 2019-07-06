@@ -15,8 +15,8 @@
                 .Instance()
                 .Calling(c => c.BadRequestWithCustomError())
                 .ShouldReturn()
-                .BadRequest()
-                .WithError(TestObjectFactory.GetListOfResponseModels());
+                .BadRequest(badRequest => badRequest
+                    .WithError(TestObjectFactory.GetListOfResponseModels()));
         }
 
         [Fact]
@@ -26,8 +26,8 @@
                 .Instance()
                 .Calling(c => c.BadRequestWithCustomError())
                 .ShouldReturn()
-                .BadRequest()
-                .WithErrorOfType<List<ResponseModel>>();
+                .BadRequest(badRequest => badRequest
+                    .WithErrorOfType<List<ResponseModel>>());
         }
     }
 }

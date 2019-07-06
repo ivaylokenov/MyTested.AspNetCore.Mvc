@@ -2,7 +2,6 @@
 {
     using System;
     using System.Linq;
-    using System.Threading.Tasks;
     using Contracts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Abstractions;
@@ -11,6 +10,7 @@
     using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.DependencyInjection;
+    using Utilities;
     using Utilities.Extensions;
 
     /// <summary>
@@ -65,8 +65,7 @@
 
             var actionContext = new ActionContext(routeContext.HttpContext, routeContext.RouteData, actionDescriptor);
 
-            var controllerActionDescriptor = actionDescriptor as ControllerActionDescriptor;
-            if (controllerActionDescriptor == null)
+            if (!(actionDescriptor is ControllerActionDescriptor controllerActionDescriptor))
             {
                 throw new InvalidOperationException("Only controller actions are supported by the route testing.");
             }
@@ -74,10 +73,9 @@
             var actionInvokerFactory = services.GetRequiredService<IActionInvokerFactory>();
 
             var invoker = actionInvokerFactory.CreateInvoker(actionContext);
-            var modelBindingActionInvoker = invoker as IModelBindingActionInvoker;
-            if (modelBindingActionInvoker == null)
+            if (!(invoker is IModelBindingActionInvoker modelBindingActionInvoker))
             {
-                throw new InvalidOperationException("Route testing requires the selected IActionInvoker by the IActionInvokerFactory to implement IModelBindingActionInvoker.");
+                throw new InvalidOperationException($"Route testing requires the selected {nameof(IActionInvoker)} by the {nameof(IActionInvokerFactory)} to implement {nameof(IModelBindingActionInvoker)}.");
             }
 
             try

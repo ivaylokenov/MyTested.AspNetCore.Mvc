@@ -3,7 +3,6 @@
     using Internal.Contracts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Abstractions;
-    using Microsoft.AspNetCore.Mvc.Controllers;
 
     public class CustomModelBindingActionInvokerFactory : IModelBindingActionInvokerFactory
     {

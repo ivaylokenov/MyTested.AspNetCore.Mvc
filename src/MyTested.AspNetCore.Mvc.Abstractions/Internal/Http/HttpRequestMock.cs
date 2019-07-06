@@ -29,7 +29,7 @@
         /// </summary>
         public HttpRequestMock(HttpContext httpContext)
         {
-            CommonValidator.CheckForNullReference(httpContext, nameof(HttpContext));
+            CommonValidator.CheckForNullReference(httpContext, nameof(this.HttpContext));
 
             this.httpContext = httpContext;
             this.headerDictionary = new HeaderDictionary();

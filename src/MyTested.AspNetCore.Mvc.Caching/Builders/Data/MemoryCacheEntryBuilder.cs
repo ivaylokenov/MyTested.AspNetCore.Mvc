@@ -13,10 +13,8 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="MemoryCacheEntryBuilder"/> class.
         /// </summary>
-        public MemoryCacheEntryBuilder()
-        {
-            this.MemoryCacheEntry = new CacheEntryMock();
-        }
+        public MemoryCacheEntryBuilder() 
+            => this.MemoryCacheEntry = new CacheEntryMock();
 
         /// <summary>
         /// Gets the mocked <see cref="IMemoryCache"/> entry.

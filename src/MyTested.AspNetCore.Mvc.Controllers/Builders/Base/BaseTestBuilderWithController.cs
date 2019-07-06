@@ -40,10 +40,7 @@
         /// <value>Result of type <see cref="ControllerTestContext"/>.</value>
         public new ControllerTestContext TestContext
         {
-            get
-            {
-                return this.testContext;
-            }
+            get => this.testContext;
 
             private set
             {

@@ -1,0 +1,21 @@
+﻿@model IEnumerable<ArticleListingServiceModel>
+
+<div class="container">
+    <div class="row">
+        @foreach (var article in Model)
+        {
+            <div class="col-4">
+                <div class="panel article-panel">
+                    <div class="panel-heading">
+                        <h3 class="text-center">
+                            <a class="text-dark" asp-area="" asp-controller="Articles" asp-action="Details" asp-route-id="@article.Id">@article.Title</a>
+                        </h3>
+                    </div>
+                    <div class="panel-body text-center">
+                        @(article.PublishedOn != null ? article.PublishedOn.Value.ToShortDateString() : string.Empty) <em>by @article.Author</em>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -43,9 +43,7 @@
         /// <param name="secondType">Second type to be checked.</param>
         /// <returns>True or false.</returns>
         public static bool AreSameTypes(Type firstType, Type secondType)
-        {
-            return firstType == secondType;
-        }
+            => firstType == secondType;
 
         /// <summary>
         /// Checks whether two objects have different types.
@@ -54,9 +52,7 @@
         /// <param name="secondObject">Second object to be checked.</param>
         /// <returns>True or false.</returns>
         public static bool AreDifferentTypes(object firstObject, object secondObject)
-        {
-            return !AreSameTypes(firstObject, secondObject);
-        }
+            => !AreSameTypes(firstObject, secondObject);
 
         /// <summary>
         /// Checks whether two types are different.
@@ -65,9 +61,7 @@
         /// <param name="secondType">Second type to be checked.</param>
         /// <returns>True or false.</returns>
         public static bool AreDifferentTypes(Type firstType, Type secondType)
-        {
-            return !AreSameTypes(firstType, secondType);
-        }
+            => !AreSameTypes(firstType, secondType);
 
         /// <summary>
         /// Checks whether two types are assignable.
@@ -76,9 +70,7 @@
         /// <param name="inheritedType">Inherited type to be checked.</param>
         /// <returns>True or false.</returns>
         public static bool AreAssignable(Type baseType, Type inheritedType)
-        {
-            return baseType.IsAssignableFrom(inheritedType);
-        }
+            => baseType.IsAssignableFrom(inheritedType);
 
         /// <summary>
         /// Checks whether two types are not assignable.
@@ -87,9 +79,7 @@
         /// <param name="inheritedType">Inherited type to be checked.</param>
         /// <returns>True or false.</returns>
         public static bool AreNotAssignable(Type baseType, Type inheritedType)
-        {
-            return !AreAssignable(baseType, inheritedType);
-        }
+            => !AreAssignable(baseType, inheritedType);
 
         /// <summary>
         /// Checks whether a type is generic.
@@ -97,9 +87,7 @@
         /// <param name="type">Type to be checked.</param>
         /// <returns>True or false.</returns>
         public static bool IsGeneric(Type type)
-        {
-            return type.GetTypeInfo().IsGenericType;
-        }
+            => type.GetTypeInfo().IsGenericType;
 
         /// <summary>
         /// Checks whether a type is not generic.
@@ -107,9 +95,7 @@
         /// <param name="type">Type to be checked.</param>
         /// <returns>True or false.</returns>
         public static bool IsNotGeneric(Type type)
-        {
-            return !IsGeneric(type);
-        }
+            => !IsGeneric(type);
 
         /// <summary>
         /// Checks whether a type is generic definition.
@@ -117,9 +103,7 @@
         /// <param name="type">Type to be checked.</param>
         /// <returns>True or false.</returns>
         public static bool IsGenericTypeDefinition(Type type)
-        {
-            return type.GetTypeInfo().IsGenericTypeDefinition;
-        }
+            => type.GetTypeInfo().IsGenericTypeDefinition;
 
         /// <summary>
         /// Checks whether two types are assignable by generic definition.
@@ -128,10 +112,9 @@
         /// <param name="inheritedType">Inherited type to be checked.</param>
         /// <returns>True or false.</returns>
         public static bool AreAssignableByGeneric(Type baseType, Type inheritedType)
-        {
-            return IsGeneric(inheritedType) && IsGeneric(baseType) &&
-                   baseType.IsAssignableFrom(inheritedType.GetGenericTypeDefinition());
-        }
+            => IsGeneric(inheritedType) 
+                && IsGeneric(baseType) 
+                && baseType.IsAssignableFrom(inheritedType.GetGenericTypeDefinition());
 
         /// <summary>
         /// Checks whether two generic types have different generic arguments.
@@ -164,13 +147,11 @@
         /// <param name="inheritedType">Inherited type to be checked.</param>
         /// <returns>True or false.</returns>
         public static bool ContainsGenericTypeDefinitionInterface(Type baseType, Type inheritedType)
-        {
-            return inheritedType
+            => inheritedType
                 .GetInterfaces()
                 .Where(t => t.GetTypeInfo().IsGenericType)
                 .Select(t => t.GetGenericTypeDefinition())
                 .Any(t => t == baseType);
-        }
 
         /// <summary>
         /// Performs dynamic casting from type to generic result.
@@ -178,7 +159,7 @@
         /// <typeparam name="TResult">Result type from casting.</typeparam>
         /// <param name="type">Type from which the casting should be done.</param>
         /// <param name="data">Object from which the casting should be done.</param>
-        /// <returns>Casted object of type TResult.</returns>
+        /// <returns>Cast object of type TResult.</returns>
         public static TResult CastTo<TResult>(this Type type, object data)
         {
             var dataParam = Expression.Parameter(typeof(object), "data");
@@ -235,9 +216,7 @@
 
         public static T TryCreateInstance<T>(params object[] constructorParameters)
             where T : class
-        {
-            return TryCreateInstance<T>(constructorParameters.ToDictionary(k => k?.GetType()));
-        }
+            => TryCreateInstance<T>(constructorParameters.ToDictionary(k => k?.GetType()));
 
         /// <summary>
         /// Tries to create instance of type T by using the provided unordered constructor parameters.
@@ -311,19 +290,13 @@
         public static IEnumerable<object> GetCustomAttributes(object obj)
         {
             var type = obj.GetType();
-            return TypeAttributesCache.GetOrAdd(type, _ =>
-            {
-                return type.GetTypeInfo().GetCustomAttributes(false);
-            });
+            return TypeAttributesCache
+                .GetOrAdd(type, _ => type.GetTypeInfo().GetCustomAttributes(false));
         }
 
         public static IEnumerable<object> GetCustomAttributes(MethodInfo method)
-        {
-            return MethodAttributesCache.GetOrAdd(method, _ =>
-            {
-                return method.GetCustomAttributes(false);
-            });
-        }
+            => MethodAttributesCache
+                .GetOrAdd(method, _ => method.GetCustomAttributes(false));
 
         /// <summary>
         /// Checks whether two objects are deeply equal by reflecting all their public properties recursively. Resolves successfully value and reference types, overridden Equals method, custom == operator, IComparable, nested objects and collection properties.
@@ -332,9 +305,7 @@
         /// <param name="actual">Actual object.</param>
         /// <returns>True or false.</returns>
         public static bool AreDeeplyEqual(object expected, object actual)
-        {
-            return AreDeeplyEqual(expected, actual, new ConditionalWeakTable<object, object>());
-        }
+            => AreDeeplyEqual(expected, actual, new ConditionalWeakTable<object, object>());
 
         /// <summary>
         /// Checks whether two objects are not deeply equal by reflecting all their public properties recursively. Resolves successfully value and reference types, overridden Equals method, custom == operator, IComparable, nested objects and collection properties.
@@ -344,9 +315,7 @@
         /// <returns>True or false.</returns>
         /// <remarks>This method is used for the route testing. Since the ASP.NET Core MVC model binder creates new instances, circular references are not checked.</remarks>
         public static bool AreNotDeeplyEqual(object expected, object actual)
-        {
-            return !AreDeeplyEqual(expected, actual);
-        }
+            => !AreDeeplyEqual(expected, actual);
 
         /// <summary>
         /// Creates a delegate from an object by providing MethodInfo filter.
@@ -378,9 +347,7 @@
         /// <param name="propertyName">Property name to check.</param>
         /// <returns>True or False.</returns>
         public static bool DynamicPropertyExists(dynamic dynamicObject, string propertyName)
-        {
-            return dynamicObject.GetType().GetProperty(propertyName) != null;
-        }
+            => dynamicObject.GetType().GetProperty(propertyName) != null;
 
         public static bool IsAnonymousType(Type type)
         {
@@ -398,8 +365,7 @@
 
         private static ConstructorInfo GetConstructorByUnorderedParameters(this Type type, IEnumerable<Type> types)
         {
-            ConstructorInfo cachedConstructor;
-            if (TypesWithOneConstructorCache.TryGetValue(type, out cachedConstructor))
+            if (TypesWithOneConstructorCache.TryGetValue(type, out var cachedConstructor))
             {
                 return cachedConstructor;
             }
@@ -451,8 +417,7 @@
 
             if (expectedType != typeof(string) && !expectedType.GetTypeInfo().IsValueType)
             {
-                object alreadyCheckedObject = null;
-                if (processedElements.TryGetValue(expected, out alreadyCheckedObject))
+                if (processedElements.TryGetValue(expected, out _))
                 {
                     return true;
                 }
@@ -515,15 +480,12 @@
         }
 
         private static bool AreNotDeeplyEqual(object expected, object actual, ConditionalWeakTable<object, object> processedElements)
-        {
-            return !AreDeeplyEqual(expected, actual, processedElements);
-        }
+            => !AreDeeplyEqual(expected, actual, processedElements);
 
         private static bool CollectionsAreDeeplyEqual(object expected, object actual, ConditionalWeakTable<object, object> processedElements)
         {
             var expectedAsEnumerable = (IEnumerable)expected;
-            var actualAsEnumerable = actual as IEnumerable;
-            if (actualAsEnumerable == null)
+            if (!(actual is IEnumerable actualAsEnumerable))
             {
                 return false;
             }
@@ -550,10 +512,9 @@
 
         private static bool ComparablesAreDeeplyEqual(object expected, object actual)
         {
-            var expectedAsIComparable = expected as IComparable;
-            if (expectedAsIComparable != null)
+            if (expected is IComparable expectedAsComparable)
             {
-                if (expectedAsIComparable.CompareTo(actual) == 0)
+                if (expectedAsComparable.CompareTo(actual) == 0)
                 {
                     return true;
                 }
@@ -572,11 +533,9 @@
         }
 
         private static bool ObjectImplementsIComparable(object obj)
-        {
-            return obj.GetType()
+            => obj.GetType()
                 .GetInterfaces()
                 .FirstOrDefault(i => i.Name.StartsWith("IComparable")) != null;
-        }
 
         private static bool ObjectPropertiesAreDeeplyEqual(object expected, object actual, ConditionalWeakTable<object, object> processedElements)
         {
@@ -591,7 +550,7 @@
                 var expectedPropertyValue = expectedProperties[key];
                 var actualPropertyValue = actualProperties[key];
 
-                if (expectedPropertyValue is IEnumerable && expectedPropertyValue?.GetType() != typeof(string))
+                if (expectedPropertyValue is IEnumerable && expectedPropertyValue.GetType() != typeof(string))
                 {
                     if (!CollectionsAreDeeplyEqual(expectedPropertyValue, actualPropertyValue, processedElements))
                     {
@@ -611,14 +570,11 @@
 
         public class DeepEqualResult
         {
-            private DeepEqualResult(bool areEqual)
-            {
-                this.AreEqual = areEqual;
-            }
+            private DeepEqualResult(bool areEqual) => this.AreEqual = areEqual;
 
             public static DeepEqualResult Success { get; } = new DeepEqualResult(true);
 
-            public bool AreEqual { get; private set; }
+            public bool AreEqual { get; }
 
             public string ErrorPath { get; private set; }
 
@@ -626,20 +582,15 @@
 
             public object ActualValue { get; private set; }
 
-            public static DeepEqualResult Failure(string errorPath, object expected, object actual)
-            {
-                return new DeepEqualResult(false)
+            public static DeepEqualResult Failure(string errorPath, object expected, object actual) 
+                => new DeepEqualResult(false)
                 {
                     ErrorPath = errorPath,
                     ExpectedValue = expected,
                     ActualValue = actual
                 };
-            }
 
-            public static implicit operator bool(DeepEqualResult result)
-            {
-                return result.AreEqual;
-            }
+            public static implicit operator bool(DeepEqualResult result) => result.AreEqual;
         }
 
         private static class New<T>

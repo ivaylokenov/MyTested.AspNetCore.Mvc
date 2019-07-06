@@ -13,10 +13,7 @@
     public class MyController<TController> : ControllerBuilder<TController>
         where TController : class
     {
-        static MyController()
-        {
-            TestApplication.TryInitialize();
-        }
+        static MyController() => TestApplication.TryInitialize();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MyController{TController}"/> class.
@@ -48,29 +45,23 @@
         /// Starts a controller test.
         /// </summary>
         /// <returns>Test builder of <see cref="IControllerBuilder{TController}"/> type.</returns>
-        public static IControllerBuilder<TController> Instance()
-        {
-            return Instance((TController)null);
-        }
+        public static IControllerBuilder<TController> Instance() 
+            => Instance((TController)null);
 
         /// <summary>
         /// Starts a controller test.
         /// </summary>
         /// <param name="controller">Instance of the ASP.NET Core MVC controller to test.</param>
         /// <returns>Test builder of <see cref="IControllerBuilder{TController}"/> type.</returns>
-        public static IControllerBuilder<TController> Instance(TController controller)
-        {
-            return Instance(() => controller);
-        }
+        public static IControllerBuilder<TController> Instance(TController controller) 
+            => Instance(() => controller);
 
         /// <summary>
         /// Starts a controller test.
         /// </summary>
         /// <param name="construction">Construction function returning the instantiated controller.</param>
         /// <returns>Test builder of <see cref="IControllerBuilder{TController}"/> type.</returns>
-        public static IControllerBuilder<TController> Instance(Func<TController> construction)
-        {
-            return new MyController<TController>(construction);
-        }
+        public static IControllerBuilder<TController> Instance(Func<TController> construction) 
+            => new MyController<TController>(construction);
     }
 }

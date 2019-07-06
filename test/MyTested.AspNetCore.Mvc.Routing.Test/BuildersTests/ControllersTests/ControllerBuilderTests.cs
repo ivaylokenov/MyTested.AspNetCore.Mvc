@@ -13,8 +13,8 @@
                 .WithRouteData()
                 .Calling(c => c.UrlAction())
                 .ShouldReturn()
-                .Ok()
-                .WithModel("/api/test");
+                .Ok(ok => ok
+                    .WithModel("/api/test"));
         }
     }
 }

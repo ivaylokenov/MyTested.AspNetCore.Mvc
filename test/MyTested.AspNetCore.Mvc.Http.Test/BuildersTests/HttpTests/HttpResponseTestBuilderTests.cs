@@ -32,7 +32,7 @@
                         HttpOnly = true,
                         Secure = true,
                         Domain = "testdomain.com",
-                        Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)),
+                        Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
                         Path = "/"
                     }))
                 .AndAlso()
@@ -65,7 +65,7 @@
                         HttpOnly = true,
                         Secure = true,
                         Domain = "testdomain.com",
-                        Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)),
+                        Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
                         Path = "/"
                     }));
         }
@@ -113,7 +113,7 @@
                         .AndAlso()
                         .WithValue("TestCookieValue")
                         .AndAlso()
-                        .WithSecure(true)
+                        .WithSecurity(true)
                         .AndAlso()
                         .WithHttpOnly(true)
                         .AndAlso()
@@ -121,7 +121,7 @@
                         .AndAlso()
                         .WithDomain("testdomain.com")
                         .AndAlso()
-                        .WithExpired(new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)))
+                        .WithExpiration(new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)))
                         .AndAlso()
                         .WithPath("/")));
         }
@@ -153,7 +153,7 @@
                         .AndAlso()
                         .WithValue(value =>
                         {
-                            Assert.True(value.StartsWith("TestCookie"));
+                            Assert.StartsWith("TestCookie", value);
                         })));
         }
 
@@ -202,11 +202,12 @@
                            HttpOnly = false,
                            Secure = true,
                            Domain = "testdomain.com",
-                           Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)),
-                           Path = "/"
+                           Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
+                           Path = "/",
+                           SameSite = SameSiteMode.Lax
                        }));
                 },
-                "When calling CustomVoidResponseAction action in MvcController expected HTTP response cookies to contain cookie with the provided options - 'TestCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure', but in fact they were different - 'TestCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly'.");
+                "When calling CustomVoidResponseAction action in MvcController expected HTTP response cookies to contain cookie with the provided options - 'TestCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure', but in fact they were different - 'TestCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly'.");
         }
 
         [Fact]
@@ -317,11 +318,12 @@
                         .HttpResponse(response => response
                             .ContainingCookie(cookie => cookie
                                 .WithValue("TestCookieValue")
-                                .WithSecure(true)
+                                .WithSecurity(true)
                                 .WithHttpOnly(true)
                                 .WithMaxAge(null)
                                 .WithDomain("testdomain.com")
-                                .WithExpired(new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)))
+                                .WithExpiration(new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)))
+                                .WithSameSite(Microsoft.Net.Http.Headers.SameSiteMode.None)
                                 .WithPath("/")));
                 },
                 "Cookie name must be provided. 'WithName' method must be called on the cookie builder in order to run this test case successfully.");
@@ -341,14 +343,15 @@
                             .ContainingCookie(cookie => cookie
                                 .WithName("TestCookie")
                                 .WithValue("TestCookieValue12")
-                                .WithSecure(true)
+                                .WithSecurity(true)
                                 .WithHttpOnly(true)
                                 .WithMaxAge(null)
                                 .WithDomain("testdomain.com")
-                                .WithExpired(new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)))
+                                .WithSameSite(Microsoft.Net.Http.Headers.SameSiteMode.Strict)
+                                .WithExpiration(new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)))
                                 .WithPath("/")));
                 },
-                "When calling CustomVoidResponseAction action in MvcController expected HTTP response cookies to contain cookie with 'TestCookie' name and 'TestCookie=TestCookieValue12; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly' value, but the value was 'TestCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly'.");
+                "When calling CustomVoidResponseAction action in MvcController expected HTTP response cookies to contain cookie with 'TestCookie' name and 'TestCookie=TestCookieValue12; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly' value, but the value was 'TestCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly'.");
         }
 
         [Fact]
@@ -458,7 +461,7 @@
                 ["MultipleTestHeader"] = new[] { "FirstMultipleTestHeaderValue", "AnotherMultipleTestHeaderValue" },
                 ["Content-Type"] = "application/json",
                 ["Content-Length"] = "100",
-                ["Set-Cookie"] = new[] { "TestCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly", "AnotherCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly" },
+                ["Set-Cookie"] = new[] { "TestCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly", "AnotherCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=lax; httponly" },
             };
 
             MyController<MvcController>
@@ -473,7 +476,7 @@
         {
             var headers = new HeaderDictionary
             {
-                ["Set-Cookie"] = new[] { "TestCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly", "AnotherCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly" },
+                ["Set-Cookie"] = new[] { "TestCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; httponly", "AnotherCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; httponly" },
             };
 
 
@@ -495,7 +498,7 @@
             var headers = new HeaderDictionary
             {
                 ["TestHeader"] = "Test",
-                ["Set-Cookie"] = new[] { "TestCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly", "AnotherCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly" },
+                ["Set-Cookie"] = new[] { "TestCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; httponly", "AnotherCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; httponly" },
             };
 
 
@@ -525,7 +528,7 @@
                     MultipleTestHeader = new[] { "FirstMultipleTestHeaderValue", "AnotherMultipleTestHeaderValue" },
                     Content_Type = "application/json",
                     Content_Length = "100",
-                    Set_Cookie = new[] { "TestCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly", "AnotherCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly" },
+                    Set_Cookie = new[] { "TestCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly", "AnotherCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=lax; httponly" },
                 }));
         }
 
@@ -543,7 +546,7 @@
                     ["MultipleTestHeader"] = "FirstMultipleTestHeaderValue,AnotherMultipleTestHeaderValue",
                     ["Content-Type"] = "application/json",
                     ["Content-Length"] = "100",
-                    ["Set-Cookie"] = "TestCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly,AnotherCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly"
+                    ["Set-Cookie"] = "TestCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly,AnotherCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=lax; httponly"
                 }));
         }
 
@@ -561,7 +564,7 @@
                     ["MultipleTestHeader"] = new[] { "FirstMultipleTestHeaderValue", "AnotherMultipleTestHeaderValue" },
                     ["Content-Type"] = "application/json",
                     ["Content-Length"] = "100",
-                    ["Set-Cookie"] = new[] { "TestCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly", "AnotherCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly" }
+                    ["Set-Cookie"] = new[] { "TestCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly", "AnotherCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=lax; httponly" }
                 }));
         }
 
@@ -579,7 +582,7 @@
                     ["MultipleTestHeader"] = new[] { "FirstMultipleTestHeaderValue", "AnotherMultipleTestHeaderValue" },
                     ["Content-Type"] = new[] { "application/json" },
                     ["Content-Length"] = new[] { "100" },
-                    ["Set-Cookie"] = new[] { "TestCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly", "AnotherCookie=TestCookieValue; expires=Thu, 31 Dec 2015 23:01:01 GMT; domain=testdomain.com; path=/; secure; httponly" }
+                    ["Set-Cookie"] = new[] { "TestCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=strict; httponly", "AnotherCookie=TestCookieValue; expires=Fri, 01 Jan 2016 01:01:01 GMT; domain=testdomain.com; path=/; secure; samesite=lax; httponly" }
                 }));
         }
 
@@ -708,7 +711,7 @@
                         HttpOnly = true,
                         Secure = true,
                         Domain = "testdomain.com",
-                        Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1)),
+                        Expires = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
                         Path = "/"
                     }));
         }

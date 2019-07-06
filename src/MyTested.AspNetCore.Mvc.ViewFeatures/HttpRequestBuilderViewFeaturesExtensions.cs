@@ -27,10 +27,10 @@
             var antiForgeryOptions = httpContext.RequestServices.GetRequiredService<IOptions<AntiforgeryOptions>>().Value;
 
             var tokens = antiForgery.GetTokens(httpContext);
-
-            if (antiForgeryOptions.CookieName != null)
+            
+            if (antiForgeryOptions.Cookie.Name != null)
             {
-                actualHttpRequestBuilder.WithCookie(antiForgeryOptions.CookieName, tokens.CookieToken);
+                actualHttpRequestBuilder.WithCookie(antiForgeryOptions.Cookie.Name, tokens.CookieToken);
             }
 
             if (antiForgeryOptions.HeaderName != null)

@@ -1,7 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Utilities.Validators
 {
     using Exceptions;
-    using Extensions;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
 

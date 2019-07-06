@@ -5,7 +5,7 @@
     using Utilities.Validators;
 
     /// <summary>
-    /// Class used for specifying additional assertions on the view component attributes.
+    /// Class used for specifying additional assertions for the view component attributes.
     /// </summary>
     public class ViewComponentAttributes : IEnumerable<object>
     {

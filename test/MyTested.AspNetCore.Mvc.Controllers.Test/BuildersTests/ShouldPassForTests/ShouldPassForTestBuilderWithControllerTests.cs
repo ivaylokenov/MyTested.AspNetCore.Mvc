@@ -73,7 +73,7 @@
                 .Ok()
                 .ShouldPassForThe<ControllerAttributes>(attributes =>
                 {
-                    Assert.Equal(2, attributes.Count());
+                    Assert.Equal(4, attributes.Count());
                 });
         }
 
@@ -83,7 +83,7 @@
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.FullOkAction())
-                .ShouldPassForThe<ControllerAttributes>(attributes => attributes.Count() == 2);
+                .ShouldPassForThe<ControllerAttributes>(attributes => attributes.Count() == 4);
         }
 
         [Fact]

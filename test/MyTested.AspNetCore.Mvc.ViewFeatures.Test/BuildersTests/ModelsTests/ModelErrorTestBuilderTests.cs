@@ -23,8 +23,8 @@
                     .ContainingErrorFor(r => r.RequiredString))
                 .AndAlso()
                 .ShouldReturn()
-                .Ok()
-                .WithModel(requestBodyWithErrors);
+                .Ok(ok => ok
+                    .WithModel(requestBodyWithErrors));
         }
 
         [Fact]
@@ -44,8 +44,8 @@
                             .ContainingErrorFor(r => r.RequiredString))
                         .AndAlso()
                         .ShouldReturn()
-                        .Ok()
-                        .WithModel(requestBody);
+                        .Ok(ok => ok
+                            .WithModel(requestBody));
                 },
                 "When calling ModelStateCheck action in MvcController expected to have a model error against key 'RequiredString', but in fact none was found.");
         }
@@ -64,8 +64,8 @@
                     .ContainingNoErrorFor(r => r.RequiredString))
                 .AndAlso()
                 .ShouldReturn()
-                .Ok()
-                .WithModel(requestBody);
+                .Ok(ok => ok
+                    .WithModel(requestBody));
         }
 
         [Fact]
@@ -85,8 +85,8 @@
                             .ContainingNoErrorFor(r => r.RequiredString))
                         .AndAlso()
                         .ShouldReturn()
-                        .Ok()
-                        .WithModel(requestBodyWithErrors);
+                        .Ok(ok => ok
+                            .WithModel(requestBodyWithErrors));
                 },
                 "When calling ModelStateCheck action in MvcController expected to have no model errors against key RequiredString, but found some.");
         }
@@ -106,8 +106,8 @@
                     .ContainingNoErrorFor(r => r.RequiredString))
                 .AndAlso()
                 .ShouldReturn()
-                .Ok()
-                .WithModel(requestBody);
+                .Ok(ok => ok
+                    .WithModel(requestBody));
         }
 
         [Fact]
@@ -128,8 +128,8 @@
                             .ContainingNoErrorFor(r => r.RequiredString))
                         .AndAlso()
                         .ShouldReturn()
-                        .Ok()
-                        .WithModel(requestBodyWithErrors);
+                        .Ok(ok => ok
+                            .WithModel(requestBodyWithErrors));
                 },
                 "When calling ModelStateCheck action in MvcController expected to have no model errors against key Integer, but found some.");
         }
@@ -146,15 +146,15 @@
                     .ContainingNoErrorFor(m => m.Count))
                 .AndAlso()
                 .ShouldReturn()
-                .Ok()
-                .WithModelOfType<List<ResponseModel>>()
-                .AndAlso()
-                .ShouldPassForThe<List<ResponseModel>>(responseModel =>
-                {
-                    Assert.NotNull(responseModel);
-                    Assert.IsAssignableFrom<List<ResponseModel>>(responseModel);
-                    Assert.Equal(2, responseModel.Count);
-                });
+                .Ok(ok => ok
+                    .WithModelOfType<List<ResponseModel>>()
+                    .AndAlso()
+                    .ShouldPassForThe<List<ResponseModel>>(responseModel =>
+                    {
+                        Assert.NotNull(responseModel);
+                        Assert.IsAssignableFrom<List<ResponseModel>>(responseModel);
+                        Assert.Equal(2, responseModel.Count);
+                    }));
         }
     }
 }

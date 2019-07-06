@@ -2,10 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading;
     using System.Threading.Tasks;
     using Contracts;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc.Internal;
 
     public class SessionMock : ISession, ISessionMock
     {
@@ -25,9 +25,9 @@
 
         public void Clear() => this.session.Clear();
 
-        public Task CommitAsync() => TaskCache.CompletedTask;
+        public Task CommitAsync(CancellationToken cancellationToken = default(CancellationToken)) => Task.CompletedTask;
 
-        public Task LoadAsync() => TaskCache.CompletedTask;
+        public Task LoadAsync(CancellationToken cancellationToken = default(CancellationToken)) => Task.CompletedTask;
 
         public void Remove(string key)
         {
@@ -41,7 +41,7 @@
         {
             this.session[key] = value;
         }
-
+        
         public bool TryGetValue(string key, out byte[] value)
         {
             if (this.session.ContainsKey(key))

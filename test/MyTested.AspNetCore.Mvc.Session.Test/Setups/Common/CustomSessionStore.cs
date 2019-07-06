@@ -8,7 +8,12 @@
     {
         public bool IsAvailable => true;
 
-        public ISession Create(string sessionKey, TimeSpan idleTimeout, Func<bool> tryEstablishSession, bool isNewSessionKey)
+        public ISession Create(
+            string sessionKey, 
+            TimeSpan idleTimeout, 
+            TimeSpan ioTimeout, 
+            Func<bool> tryEstablishSession, 
+            bool isNewSessionKey)
         {
             return new CustomSession();
         }

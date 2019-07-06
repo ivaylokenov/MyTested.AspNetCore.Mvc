@@ -10,6 +10,6 @@
             this.Context = httpContextAccessor.HttpContext;
         }
 
-        public HttpContext Context { get; private set; }
+        public HttpContext Context { get; }
     }
 }

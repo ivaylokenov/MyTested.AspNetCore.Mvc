@@ -3,14 +3,13 @@
     using Contracts.ActionResults.File;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Net.Http.Headers;
-    using Utilities.Extensions;
 
     /// <summary>
     /// Used for testing <see cref="PhysicalFileResult"/>.
     /// </summary>
     public class PhysicalFileTestBuilder
-        : BaseFileTestBuilder<PhysicalFileResult>, IAndPhysicalFileTestBuilder
+        : BaseTestBuilderWithFileResult<PhysicalFileResult, IAndPhysicalFileTestBuilder>, 
+        IAndPhysicalFileTestBuilder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PhysicalFileTestBuilder"/> class.
@@ -21,39 +20,12 @@
         {
         }
 
-        /// <inheritdoc />
-        public IAndPhysicalFileTestBuilder WithContentType(string contentType)
-        {
-            this.ValidateContentType(contentType);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndPhysicalFileTestBuilder WithContentType(MediaTypeHeaderValue contentType)
-            => this.WithContentType(contentType?.MediaType);
-
-        /// <inheritdoc />
-        public IAndPhysicalFileTestBuilder WithFileDownloadName(string fileDownloadName)
-        {
-            this.ValidateFileDownloadName(fileDownloadName);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndPhysicalFileTestBuilder WithPhysicalPath(string physicalPath)
-        {
-            var actualPhysicalPath = (this.ActionResult as PhysicalFileResult)?.FileName;
-            if (physicalPath != actualPhysicalPath)
-            {
-                this.ThrowNewFileResultAssertionException(
-                    "FileName",
-                    $"to be {physicalPath.GetErrorMessageName()}",
-                    $"instead received '{actualPhysicalPath}'");
-            }
-
-            return this;
-        }
-
+        /// <summary>
+        /// Gets the physical file result test builder.
+        /// </summary>
+        /// <value>Test builder of <see cref="IAndPhysicalFileTestBuilder"/> type.</value>
+        public override IAndPhysicalFileTestBuilder ResultTestBuilder => this;
+        
         /// <inheritdoc />
         public IPhysicalFileTestBuilder AndAlso() => this;
     }
