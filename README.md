@@ -192,7 +192,7 @@ A controller integration test uses the globally registered services from the `Te
 // and tests for valid model state,
 // and tests for added by the action view bag entry,
 // and tests for view result and model with specific assertions.
-MyController<MyController>
+MyController<MyMvcController>
     .Instance()
     .WithUser(user => user
         .WithUsername("MyUserName"))
@@ -219,7 +219,7 @@ MyController<MyController>
 // and sets DbContext data for the current test,
 // and tests for added by the action cache entry,
 // and tests for view result with specific model type.
-MyController<MyController>
+MyController<MyMvcController>
     .Instance()
     .WithOptions(options => options
         .For<MyAppSettings>(settings => settings.Cache = true))
@@ -246,7 +246,7 @@ MyController<MyController>
 // and tests for saved data in the DbContext after the action call,
 // and tests for added by the action temp data entry with а specific key,
 // and tests for redirect result to a specific action. 
-MyController<MyController>
+MyController<MyMvcController>
     .Instance()
     .Calling(c => c.MyAction(new MyFormModel
     {
@@ -282,7 +282,7 @@ A controller unit test uses service mocks explicitly provided in each separate a
 ```c#
 // Instantiates controller with the provided service mocks,
 // and tests for view result.
-MyController<MyController>
+MyController<MyMvcController>
     .Instance()
     .WithDependencies(
         serviceMock,
@@ -294,7 +294,7 @@ MyController<MyController>
 	
 // Instantiates controller with the provided service mocks,
 // and tests for view result.
-MyController<MyController>
+MyController<MyMvcController>
     .Instance()
     .WithDependencies(dependencies => dependencies
         .With<IService>(serviceMock)
@@ -366,7 +366,7 @@ An attribute declaration test validates controller and action attribute declarat
 
 ```c#
 // Tests for specific controller attributes - Area and Authorize.
-MyController<MyController>
+MyController<MyMvcController>
     .Instance()
     .ShouldHave()
     .Attributes(attributes => attributes
@@ -374,7 +374,7 @@ MyController<MyController>
         .RestrictingForAuthorizedRequests(ControllerConstants.AdministratorRole));
 
 // Tests for specific action attributes - HttpGet, AllowAnonymous, ValidateAntiForgeryToken, and ActionName.
-MyController<MyController>
+MyController<MyMvcController>
     .Instance()
     .Calling(c => c.MyAction(With.Empty<int>())) // Provides no value for the action parameter.
     .ShouldHave()
@@ -391,7 +391,7 @@ All applicable methods are available on the view component testing API too:
 
 ```c#
 // View component integration test.
-MyViewComponent<MyComponent>
+MyViewComponent<MyMvcController>
     .Instance()
     .WithSession(session => session
         .WithEntry("MySession", "MySessionValue"))
@@ -409,7 +409,7 @@ MyViewComponent<MyComponent>
     .WithModelOfType<MyResponseModel>();
 	
 // View component unit test.
-MyViewComponent<MyComponent>
+MyViewComponent<MyMvcController>
     .Instance()
     .WithDependencies(
         serviceMock,
@@ -430,7 +430,7 @@ MyViewComponent<MyComponent>
 MyMvc
 
     // Arrange
-    .Controller<MyController>()
+    .Controller<MyMvcController>()
     .WithHttpRequest(request => request
         .WithFormField("MyFormField", "MyFormFieldValue"))
     .WithSession(session => session
@@ -457,7 +457,7 @@ MyMvc
 // With variables.
 
 // Arrange
-var controller = MyController<MyController>
+var controller = MyController<MyMvcController>
     .Instance()
     .WithUser(username, new[] { role })
     .WithData(MyTestData.GetData());
@@ -482,7 +482,7 @@ Just random **MyTested.AspNetCore.Mvc** assertions:
 // with specific tests for the error messages,
 // and tests whether the action returns view with the same request model.
 MyMvc
-    .Controller<MyController>()
+    .Controller<MyMvcController>()
     .Calling(c => c.MyAction(myRequestWithErrors))
     .ShouldHave()
     .ModelState(modelState => modelState
@@ -498,7 +498,7 @@ MyMvc
 // Tests whether the action throws an exception 
 // of a particular type and with a particular error message.
 MyMvc
-    .Controller<MyController>()
+    .Controller<MyMvcController>()
     .Calling(c => c.MyActionWithException())
     .ShouldThrow()
     .Exception()
@@ -511,7 +511,7 @@ MyMvc
 // and writes to the response specific content type,
 // custom header, and custom cookie.
 MyMvc
-    .Controller<MyController>()
+    .Controller<MyMvcController>()
     .Calling(c => c.MyAction())
     .ShouldHave()
     .HttpResponse(response => response
