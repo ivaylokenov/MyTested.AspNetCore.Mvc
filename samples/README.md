@@ -5,10 +5,14 @@ Here you can find a few working samples, which will get you started with the lib
 
 ## Application Samples
 
- - **MusicStore** - sample showing how to use MyTested.AspNetCore.Mvc with an automatically resolved `TestStartup` class for unit testing controllers, view components and routes. It uses the [official ASP.NET Core MVC sample](https://github.com/aspnet/MusicStore) and [xUnit](http://xunit.github.io/). 
+ - **Blog** - fully-featured web application sample showing how to use **MyTested.AspNetCore.Mvc** with the best coding practices in mind. It uses [AutoMapper](https://automapper.org), [Moq](https://github.com/moq/moq4), [Shouldly](https://github.com/shouldly/shouldly) and [xUnit](http://xunit.github.io/).
+ - **MusicStore** - sample showing how to use **MyTested.AspNetCore.Mvc** with an automatically resolved `TestStartup` class for testing controllers, view components and routes. It uses the [official ASP.NET Core MVC sample](https://github.com/aspnet/MusicStore) and [xUnit](http://xunit.github.io/). 
 
 ## Functional Test Samples
 
+ - **AutoFac** - minimalistic functional sample showing how to use **MyTested.AspNetCore.Mvc** with a third-party dependency injection container. Uses [AutoFac](https://autofac.org) and [xUnit](http://xunit.github.io/).
  - **ApplicationParts** - minimalistic functional sample testing whether controllers are found correctly when registered from external assemblies. Uses manual `Startup` configuration and [NUnit](https://github.com/nunit/dotnet-test-nunit).
- - **NoStartup** - minimalistic functional sample showing how to use the testing library without any globally configured `Startup` class. Uses [MSTest](https://blogs.msdn.microsoft.com/visualstudioalm/2016/09/01/announcing-mstest-v2-framework-support-for-net-core-1-0-rtm/).
+ - **NoStartup** - minimalistic functional sample showing how to use the testing library without any globally configured `Startup` class. Uses [MSTest](https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-mstest).
  - **Lite** - minimalistic functional sample showing how to use the completely **FREE** and **UNLIMITED** version of the library - `MyTested.AspNetCore.Mvc.Lite`. Tests API controllers by using automatically resolved `TestStartup` class and [Moq](https://github.com/moq/moq4).
+ - **FullFramework** - minimalistic functional samples showing how to use **MyTested.AspNetCore.Mvc** with the full .NET Framework. Uses [xUnit](http://xunit.github.io/).
+ - **WebStartup** - minimalistic functional sample showing how to use the testing library with the web application's `Startup` class. Uses [xUnit](http://xunit.github.io/).
