@@ -10,6 +10,8 @@
 
 *Downloads:* [![NuGet Badge](https://buildstats.info/nuget/MyTested.AspNetCore.Mvc)](https://www.nuget.org/packages/MyTested.AspNetCore.Mvc/)
 
+<img src="https://raw.githubusercontent.com/ivaylokenov/MyTested.AspNetCore.Mvc/version-2.1/tools/test-sample.gif" />
+
 **MyTested.AspNetCore.Mvc** has [more than 500 assertion methods](https://MyTestedASP.NET/Core/Mvc/Features) and is 100% covered by [more than 2000 unit tests](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/tree/version-2.1/test). It should work correctly. Almost all items in the [issues page](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/issues) are expected future features and enhancements.
 
 **MyTested.AspNetCore.Mvc** helps you speed up the testing process in your web development team! If you find that statement unbelievable, these are the words which some of the many happy **MyTested.AspNetCore.Mvc** users once said: 
