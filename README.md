@@ -68,7 +68,7 @@ To add **MyTested.AspNetCore.Mvc** to your solution, you must follow these simpl
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" /> <!-- Reference to the web framework -->
-    <PackageReference Include="MyTested.AspNetCore.Mvc.Universe" Version="2.1.0" /> <!-- MyTested.AspNetCore.Mvc -->
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Universe" Version="2.1.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
     <PackageReference Include="xunit" Version="2.4.0" /> <!-- Can be any testing framework --> 
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
