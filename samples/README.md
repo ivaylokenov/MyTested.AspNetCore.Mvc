@@ -5,8 +5,8 @@ Here you can find a few working samples, which will get you started with the lib
 
 ## Application Samples
 
- - **Blog** - fully-featured web application sample showing how to use **MyTested.AspNetCore.Mvc** with the best coding practices in mind. It uses [AutoMapper](https://automapper.org), [Moq](https://github.com/moq/moq4), [Shouldly](https://github.com/shouldly/shouldly) and [xUnit](http://xunit.github.io/).
- - **MusicStore** - sample showing how to use **MyTested.AspNetCore.Mvc** with an automatically resolved `TestStartup` class for testing controllers, view components and routes. It uses the [official ASP.NET Core MVC sample](https://github.com/aspnet/MusicStore) and [xUnit](http://xunit.github.io/). 
+ - **Blog** - fully-featured web application sample showing how to use **MyTested.AspNetCore.Mvc** with the best coding practices in mind. Uses [AutoMapper](https://automapper.org), [Moq](https://github.com/moq/moq4), [Shouldly](https://github.com/shouldly/shouldly) and [xUnit](http://xunit.github.io/).
+ - **MusicStore** - sample showing how to use **MyTested.AspNetCore.Mvc** with an automatically resolved `TestStartup` class for testing controllers, view components and routes. Uses the [official ASP.NET Core MVC test application](https://github.com/aspnet/AspNetCore/tree/master/src/MusicStore) and [xUnit](http://xunit.github.io/). 
 
 ## Functional Test Samples
 
