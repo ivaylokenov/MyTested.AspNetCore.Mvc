@@ -287,7 +287,7 @@ MyController<MyMvcController>
     .WithDependencies(
         serviceMock,
         anotherServiceMock,
-		From.Services<IYetAnotherService>()) // Provides a global service.
+        From.Services<IYetAnotherService>()) // Provides a global service.
     .Calling(c => c.MyAction())
     .ShouldReturn()
     .View();
