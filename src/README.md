@@ -31,4 +31,4 @@ MyTested.AspNetCore.Mvc Packages
  - `MyTested.AspNetCore.Mvc` - Contains MVC related assertion methods
  - `MyTested.AspNetCore.Mvc.Universe` - Combines all packages listed above
  
- - `MyTested.AspNetCore.Mvc.Lite` - Completely **FREE** and **UNLIMITED** version of the library. It should not be used in combination with any other package. Includes `Controllers`, `ViewActionResults` and `ViewComponents`.
+ - `MyTested.AspNetCore.Mvc.Lite` - Completely **FREE** and **UNLIMITED** version of the library. It should not be used in combination with any other package. Includes `Controllers`, `Controllers.Views` and `ViewComponents`.
