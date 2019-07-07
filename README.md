@@ -135,49 +135,6 @@ It is **strongly advised** to read the [tutorial](http://docs.mytestedasp.net/tu
 
 You can also check out the [provided samples](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/tree/version-2.1/samples) for real-life ASP.NET Core MVC application testing.
 
-## Package Installation
-
-You can install this library using [NuGet](https://www.nuget.org/packages/MyTested.AspNetCore.Mvc.Universe) into your test project (or reference it directly in your `.csproj` file). Currently **MyTested.AspNetCore.Mvc** is fully compatible with ASP.NET Core MVC 2.1.0 and all older versions available on the official NuGet feed.
-
-```powershell
-Install-Package MyTested.AspNetCore.Mvc.Universe
-```
-
-This package will include all available assertion methods in your test project, including ones for authentication, database, session, caching and more. If you want only the MVC related features, install `MyTested.AspNetCore.Mvc`. If you want to use the completely **FREE** and **UNLIMITED** version of the library, install only `MyTested.AspNetCore.Mvc.Lite` and no other package. Additionally, if you prefer, you can be more specific by including only some of the packages:
-
- - `MyTested.AspNetCore.Mvc.Configuration` - Contains setup and assertion methods for configurations
- - `MyTested.AspNetCore.Mvc.Controllers` - Contains setup and assertion methods for controllers
- - `MyTested.AspNetCore.Mvc.Controllers.Attributes` - Contains setup and assertion methods for controller attributes
- - `MyTested.AspNetCore.Mvc.Controllers.ActionResults` - Contains setup and assertion methods for controller API action results
- - `MyTested.AspNetCore.Mvc.Controllers.Views` - Contains setup and assertion methods for controller view features
- - `MyTested.AspNetCore.Mvc.Controllers.Views.ActionResults` - Contains setup and assertion methods for controller view action results
- - `MyTested.AspNetCore.Mvc.Models` - Contains setup and assertion methods for response and view models
- - `MyTested.AspNetCore.Mvc.Routing` - Contains setup and assertion methods for routes
- - `MyTested.AspNetCore.Mvc.Core` - Contains setup and assertion methods for MVC core features
- - `MyTested.AspNetCore.Mvc.TempData` - Contains setup and assertion methods for `ITempDataDictionary`
- - `MyTested.AspNetCore.Mvc.ViewData` - Contains assertion methods for `ViewDataDictionary` and dynamic `ViewBag`
- - `MyTested.AspNetCore.Mvc.ViewComponents` - Contains setup and assertion methods for view components
- - `MyTested.AspNetCore.Mvc.ViewComponents.Attributes` - Contains setup and assertion methods for view component attributes
- - `MyTested.AspNetCore.Mvc.ViewComponents.Results` - Contains setup and assertion methods for view component results
- - `MyTested.AspNetCore.Mvc.ViewFeatures` - Contains setup and assertion methods for MVC view features
- - `MyTested.AspNetCore.Mvc.Http` - Contains setup and assertion methods for HTTP context, request and response
- - `MyTested.AspNetCore.Mvc.Authentication` - Contains setup methods for `ClaimsPrincipal`
- - `MyTested.AspNetCore.Mvc.ModelState` - Contains setup and assertion methods for `ModelStateDictionary` validations
- - `MyTested.AspNetCore.Mvc.DataAnnotations` - Contains setup and assertion methods for data annotation validations
- - `MyTested.AspNetCore.Mvc.EntityFrameworkCore` - Contains setup and assertion methods for `DbContext`
- - `MyTested.AspNetCore.Mvc.DependencyInjection` - Contains setup methods for dependency injection services
- - `MyTested.AspNetCore.Mvc.Caching` - Contains setup and assertion methods for `IMemoryCache`
- - `MyTested.AspNetCore.Mvc.Session` - Contains setup and assertion methods for `ISession`
- - `MyTested.AspNetCore.Mvc.Options` - Contains setup and assertion methods for `IOptions`
- - `MyTested.AspNetCore.Mvc.Helpers` - Contains additional helper methods for easier assertions
- - `MyTested.AspNetCore.Mvc.Lite` - Completely **FREE** and **UNLIMITED** version of the library. It should not be used in combination with any other package. Includes `Controllers`, `Controllers.Views` and `ViewComponents`.
- 
-After the downloading is complete, just add `using MyTested.AspNetCore.Mvc;` to your source code and you are ready to test in the most elegant and developer friendly way.
-
-```c#	
-using MyTested.AspNetCore.Mvc;
-```
-
 ## Test Examples
 
 Here are some examples of how **powerful** the fluent testing API actually is! 
@@ -393,7 +350,7 @@ All applicable methods are available on the view component testing API too:
 
 ```c#
 // View component integration test.
-MyViewComponent<MyMvcController>
+MyViewComponent<MyMvcComponent>
     .Instance()
     .WithSession(session => session
         .WithEntry("MySession", "MySessionValue"))
@@ -411,7 +368,7 @@ MyViewComponent<MyMvcController>
     .WithModelOfType<MyResponseModel>();
 	
 // View component unit test.
-MyViewComponent<MyMvcController>
+MyViewComponent<MyMvcComponent>
     .Instance()
     .WithDependencies(
         serviceMock,
@@ -530,6 +487,49 @@ MyMvc
 	.AndAlso()
     .ShouldReturn()
     .Ok();
+```
+
+## Package Installation
+
+You can install this library using [NuGet](https://www.nuget.org/packages/MyTested.AspNetCore.Mvc.Universe) into your test project (or reference it directly in your `.csproj` file). Currently **MyTested.AspNetCore.Mvc** is fully compatible with ASP.NET Core MVC 2.1.0 and all older versions available on the official NuGet feed.
+
+```powershell
+Install-Package MyTested.AspNetCore.Mvc.Universe
+```
+
+This package will include all available assertion methods in your test project, including ones for authentication, database, session, caching and more. If you want only the MVC related features, install `MyTested.AspNetCore.Mvc`. If you want to use the completely **FREE** and **UNLIMITED** version of the library, install only `MyTested.AspNetCore.Mvc.Lite` and no other package. Additionally, if you prefer, you can be more specific by including only some of the packages:
+
+ - `MyTested.AspNetCore.Mvc.Configuration` - Contains setup and assertion methods for configurations
+ - `MyTested.AspNetCore.Mvc.Controllers` - Contains setup and assertion methods for controllers
+ - `MyTested.AspNetCore.Mvc.Controllers.Attributes` - Contains setup and assertion methods for controller attributes
+ - `MyTested.AspNetCore.Mvc.Controllers.ActionResults` - Contains setup and assertion methods for controller API action results
+ - `MyTested.AspNetCore.Mvc.Controllers.Views` - Contains setup and assertion methods for controller view features
+ - `MyTested.AspNetCore.Mvc.Controllers.Views.ActionResults` - Contains setup and assertion methods for controller view action results
+ - `MyTested.AspNetCore.Mvc.Models` - Contains setup and assertion methods for response and view models
+ - `MyTested.AspNetCore.Mvc.Routing` - Contains setup and assertion methods for routes
+ - `MyTested.AspNetCore.Mvc.Core` - Contains setup and assertion methods for MVC core features
+ - `MyTested.AspNetCore.Mvc.TempData` - Contains setup and assertion methods for `ITempDataDictionary`
+ - `MyTested.AspNetCore.Mvc.ViewData` - Contains assertion methods for `ViewDataDictionary` and dynamic `ViewBag`
+ - `MyTested.AspNetCore.Mvc.ViewComponents` - Contains setup and assertion methods for view components
+ - `MyTested.AspNetCore.Mvc.ViewComponents.Attributes` - Contains setup and assertion methods for view component attributes
+ - `MyTested.AspNetCore.Mvc.ViewComponents.Results` - Contains setup and assertion methods for view component results
+ - `MyTested.AspNetCore.Mvc.ViewFeatures` - Contains setup and assertion methods for MVC view features
+ - `MyTested.AspNetCore.Mvc.Http` - Contains setup and assertion methods for HTTP context, request and response
+ - `MyTested.AspNetCore.Mvc.Authentication` - Contains setup methods for `ClaimsPrincipal`
+ - `MyTested.AspNetCore.Mvc.ModelState` - Contains setup and assertion methods for `ModelStateDictionary` validations
+ - `MyTested.AspNetCore.Mvc.DataAnnotations` - Contains setup and assertion methods for data annotation validations
+ - `MyTested.AspNetCore.Mvc.EntityFrameworkCore` - Contains setup and assertion methods for `DbContext`
+ - `MyTested.AspNetCore.Mvc.DependencyInjection` - Contains setup methods for dependency injection services
+ - `MyTested.AspNetCore.Mvc.Caching` - Contains setup and assertion methods for `IMemoryCache`
+ - `MyTested.AspNetCore.Mvc.Session` - Contains setup and assertion methods for `ISession`
+ - `MyTested.AspNetCore.Mvc.Options` - Contains setup and assertion methods for `IOptions`
+ - `MyTested.AspNetCore.Mvc.Helpers` - Contains additional helper methods for easier assertions
+ - `MyTested.AspNetCore.Mvc.Lite` - Completely **FREE** and **UNLIMITED** version of the library. It should not be used in combination with any other package. Includes `Controllers`, `Controllers.Views` and `ViewComponents`.
+ 
+After the downloading is complete, just add `using MyTested.AspNetCore.Mvc;` to your source code and you are ready to test in the most elegant and developer friendly way.
+
+```c#	
+using MyTested.AspNetCore.Mvc;
 ```
 
 ## Versioning
