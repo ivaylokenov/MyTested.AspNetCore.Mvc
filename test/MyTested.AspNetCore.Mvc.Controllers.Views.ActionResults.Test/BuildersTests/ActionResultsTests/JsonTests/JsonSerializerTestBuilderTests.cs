@@ -66,7 +66,7 @@
                         .ShouldReturn()
                         .Json(json => json
                             .WithJsonSerializerSettings(s =>
-                                s.WithCulture(CultureInfo.CurrentCulture)));
+                                s.WithCulture(new CultureInfo("en-US"))));
                 },
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have 'English (United States)' culture, but in fact found 'Invariant Language (Invariant Country)'.");
         }
