@@ -7,7 +7,7 @@
     public class CreatedTestBuilderTests
     {
         [Fact]
-        public void AndProvideTheActionResultShouldWorkCorrectly()
+        public void AndProvideTheActionResultShouldWorkCorrectlyCreated()
         {
             MyController<MvcController>
                 .Instance()

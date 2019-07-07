@@ -36,7 +36,7 @@
         }
 
         [Fact]
-        public void AndAlsoShouldWorkCorrectly()
+        public void AndAlsoShouldWorkCorrectlyAggregateException()
         {
             MyController<MvcController>
                 .Instance()

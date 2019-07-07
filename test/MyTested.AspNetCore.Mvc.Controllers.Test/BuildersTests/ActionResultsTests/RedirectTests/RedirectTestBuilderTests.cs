@@ -7,7 +7,7 @@
     public class RedirectTestBuilderTests
     {
         [Fact]
-        public void AndProvideTheActionResultShouldWorkCorrectly()
+        public void AndProvideTheActionResultShouldWorkCorrectlyRedirect()
         {
             MyController<MvcController>
                 .Instance()

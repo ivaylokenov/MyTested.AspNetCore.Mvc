@@ -396,7 +396,7 @@
         }
 
         [Fact]
-        public void AndProvideTheActionResultShouldWorkCorrectly()
+        public void AndProvideTheActionResultShouldWorkCorrectlyStatusCodeActionResults()
         {
             MyController<MvcController>
                 .Instance()

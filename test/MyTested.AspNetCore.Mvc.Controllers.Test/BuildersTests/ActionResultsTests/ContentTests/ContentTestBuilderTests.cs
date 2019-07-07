@@ -7,7 +7,7 @@
     public class ContentTestBuilderTests
     {
         [Fact]
-        public void AndProvideTheActionResultShouldWorkCorrectly()
+        public void AndProvideTheActionResultShouldWorkCorrectlyContent()
         {
             MyController<MvcController>
                 .Instance()

@@ -1483,16 +1483,15 @@
         }
 
         [Fact]
-        public void AndAlsoShouldWorkCorrectly()
+        public void AndAlsoShouldWorkCorrectlyAttributes()
         {
             MyController<AttributesController>
                 .Instance()
                 .ShouldHave()
-                .Attributes(attributes
-                    => attributes
-                        .AllowingAnonymousRequests()
-                        .AndAlso()
-                        .ChangingRouteTo("api/test"));
+                .Attributes(attributes => attributes
+                    .AllowingAnonymousRequests()
+                    .AndAlso()
+                    .ChangingRouteTo("api/test"));
         }
     }
 }

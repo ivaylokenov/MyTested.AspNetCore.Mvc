@@ -50,7 +50,7 @@
         }
         
         [Fact]
-        public void AndAlsoShouldWorkCorrectly()
+        public void AndAlsoShouldWorkCorrectlyJsonActionResults()
         {
             MyController<MvcController>
                 .Instance()

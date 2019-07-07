@@ -495,7 +495,7 @@
         }
 
         [Fact]
-        public void AndAlsoShouldWorkCorrectly()
+        public void AndAlsoShouldWorkCorrectlyCreated()
         {
             MyController<MvcController>
                 .Instance()

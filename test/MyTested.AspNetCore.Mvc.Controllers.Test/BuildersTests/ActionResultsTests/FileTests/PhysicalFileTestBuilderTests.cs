@@ -7,7 +7,7 @@
     public class PhysicalFileTestBuilderTests
     {
         [Fact]
-        public void AndProvideTheActionResultShouldWorkCorrectly()
+        public void AndProvideTheActionResultShouldWorkCorrectlyPhysicalFile()
         {
             MyController<MvcController>
                 .Instance()

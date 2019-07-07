@@ -104,7 +104,7 @@
         }
         
         [Fact]
-        public void AndAlsoShouldWorkCorrectly()
+        public void AndAlsoShouldWorkCorrectlyJson()
         {
             MyController<MvcController>
                 .Instance()
@@ -117,7 +117,7 @@
         }
 
         [Fact]
-        public void AndProvideTheActionResultShouldWorkCorrectly()
+        public void AndProvideTheActionResultShouldWorkCorrectlyJson()
         {
             MyController<MvcController>
                 .Instance()

@@ -413,7 +413,7 @@
         }
 
         [Fact]
-        public void AndAlsoShouldWorkCorrectly()
+        public void AndAlsoShouldWorkCorrectlyNotFound()
         {
             MyController<MvcController>
                 .Instance()

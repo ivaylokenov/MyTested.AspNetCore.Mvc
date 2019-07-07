@@ -530,7 +530,7 @@
         }
         
         [Fact]
-        public void AndAlsoShouldWorkCorrectly()
+        public void AndAlsoShouldWorkCorrectlyRedirect()
         {
             MyController<MvcController>
                 .Instance()

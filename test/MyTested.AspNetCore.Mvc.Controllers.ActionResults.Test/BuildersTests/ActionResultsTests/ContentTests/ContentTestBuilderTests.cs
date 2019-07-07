@@ -144,7 +144,7 @@
         }
 
         [Fact]
-        public void AndAlsoShouldWorkCorrectly()
+        public void AndAlsoShouldWorkCorrectlyContent()
         {
             MyController<MvcController>
                 .Instance()

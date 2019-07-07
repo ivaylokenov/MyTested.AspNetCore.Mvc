@@ -411,7 +411,7 @@
         }
 
         [Fact]
-        public void AndAlsoShouldWorkCorrectly()
+        public void AndAlsoShouldWorkCorrectlyOk()
         {
             MyController<MvcController>
                 .Instance()

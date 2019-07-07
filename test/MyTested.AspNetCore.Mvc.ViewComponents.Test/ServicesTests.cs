@@ -98,7 +98,7 @@
         }
         
         [Fact]
-        public void IActionContextAccessorShouldWorkCorrectlySynchronously()
+        public void ActionContextAccessorShouldWorkCorrectlySynchronouslyViewComponents()
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
@@ -134,7 +134,7 @@
         }
 
         [Fact]
-        public void IActionContextAccessorShouldWorkCorrectlyAsynchronously()
+        public void ActionContextAccessorShouldWorkCorrectlyAsynchronouslyViewComponents()
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
@@ -228,7 +228,7 @@
         }
 
         [Fact]
-        public void WithCustomActionContextShouldSetItToAccessor()
+        public void WithCustomActionContextShouldSetItToAccessorViewComponents()
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
@@ -254,7 +254,7 @@
         }
 
         [Fact]
-        public void WithCustomActionContextFuncShouldSetItToAccessor()
+        public void WithCustomActionContextFuncShouldSetItToAccessorViewComponents()
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()

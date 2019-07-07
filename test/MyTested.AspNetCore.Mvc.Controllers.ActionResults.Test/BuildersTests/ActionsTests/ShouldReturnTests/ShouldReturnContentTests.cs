@@ -8,7 +8,7 @@
     public class ShouldReturnContentTests
     {
         [Fact]
-        public void ShouldReturnContentShouldNotThrowExceptionWithNegotiatedContentResult()
+        public void ShouldReturnContentShouldNotThrowExceptionWithNegotiatedContentResultControllers()
         {
             MyController<MvcController>
                 .Instance()

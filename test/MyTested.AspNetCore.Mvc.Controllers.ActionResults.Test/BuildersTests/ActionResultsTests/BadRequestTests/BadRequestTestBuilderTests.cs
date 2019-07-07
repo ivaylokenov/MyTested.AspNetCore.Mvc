@@ -494,7 +494,7 @@
         }
 
         [Fact]
-        public void AndAlsoShouldWorkCorrectly()
+        public void AndAlsoShouldWorkCorrectlyBadRequest()
         {
             MyController<MvcController>
                 .Instance()

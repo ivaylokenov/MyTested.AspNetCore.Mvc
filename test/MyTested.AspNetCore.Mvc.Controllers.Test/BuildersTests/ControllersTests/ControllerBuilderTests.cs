@@ -226,7 +226,7 @@
         }
 
         [Fact]
-        public void PrepareControllerShouldSetCorrectPropertiesWithDefaultServices()
+        public void PrepareControllerShouldSetCorrectPropertiesWithDefaultServicesControllers()
         {
             MyController<MvcController>
                 .Instance()

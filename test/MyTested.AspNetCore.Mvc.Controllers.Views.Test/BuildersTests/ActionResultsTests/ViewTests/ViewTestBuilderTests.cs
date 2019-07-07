@@ -216,7 +216,7 @@
         }
         
         [Fact]
-        public void AndAlsoShouldWorkCorrectly()
+        public void AndAlsoShouldWorkCorrectlyView()
         {
             MyController<MvcController>
                 .Instance()
@@ -458,7 +458,7 @@
         }
 
         [Fact]
-        public void AndProvideTheActionResultShouldWorkCorrectly()
+        public void AndProvideTheActionResultShouldWorkCorrectlyView()
         {
             MyController<MvcController>
                 .Instance()

@@ -240,7 +240,7 @@
         }
 
         [Fact]
-        public void AndAlsoShouldWorkCorrectly()
+        public void AndAlsoShouldWorkCorrectlyLocalRedirect()
         {
             MyController<MvcController>
                 .Instance()

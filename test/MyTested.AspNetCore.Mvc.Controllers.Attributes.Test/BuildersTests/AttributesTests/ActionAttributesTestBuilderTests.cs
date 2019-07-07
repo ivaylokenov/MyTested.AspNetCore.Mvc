@@ -1721,7 +1721,7 @@
         }
 
         [Fact]
-        public void AndAlsoShouldWorkCorrectly()
+        public void AndAlsoShouldWorkCorrectlyActionAttributes()
         {
             MyController<MvcController>
                 .Instance()

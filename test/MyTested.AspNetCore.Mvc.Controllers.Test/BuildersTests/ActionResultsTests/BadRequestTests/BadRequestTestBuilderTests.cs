@@ -7,7 +7,7 @@
     public class BadRequestTestBuilderTests
     {
         [Fact]
-        public void AndProvideTheActionResultShouldWorkCorrectly()
+        public void AndProvideTheActionResultShouldWorkCorrectlyBadRequest()
         {
             MyController<MvcController>
                 .Instance()

@@ -190,7 +190,7 @@
         }
 
         [Fact]
-        public void PrepareControllerShouldSetCorrectPropertiesWithDefaultServices()
+        public void PrepareControllerShouldSetCorrectPropertiesWithDefaultServicesViewComponents()
         {
             MyViewComponent<NormalComponent>
                 .Instance()

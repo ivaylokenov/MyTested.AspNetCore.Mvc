@@ -133,7 +133,7 @@
         }
 
         [Fact]
-        public void AndAlsoShouldWorkCorrectly()
+        public void AndAlsoShouldWorkCorrectlyPhysicalFile()
         {
             MyController<MvcController>
                 .Instance()

@@ -7,7 +7,7 @@
     public class ObjectTestBuilderTests
     {
         [Fact]
-        public void AndProvideTheActionResultShouldWorkCorrectly()
+        public void AndProvideTheActionResultShouldWorkCorrectlyObject()
         {
             MyController<MvcController>
                 .Instance()

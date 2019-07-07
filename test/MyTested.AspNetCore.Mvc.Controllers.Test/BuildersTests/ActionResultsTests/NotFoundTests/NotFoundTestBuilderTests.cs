@@ -7,7 +7,7 @@
     public class NotFoundTestBuilderTests
     {
         [Fact]
-        public void AndProvideTheActionResultShouldWorkCorrectly()
+        public void AndProvideTheActionResultShouldWorkCorrectlyNotFound()
         {
             MyController<MvcController>
                 .Instance()

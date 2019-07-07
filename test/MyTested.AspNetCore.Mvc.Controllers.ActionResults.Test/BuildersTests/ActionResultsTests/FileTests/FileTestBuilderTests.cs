@@ -188,7 +188,7 @@
         }
 
         [Fact]
-        public void AndAlsoShouldWorkCorrectly()
+        public void AndAlsoShouldWorkCorrectlyFile()
         {
             MyController<MvcController>
                 .Instance()

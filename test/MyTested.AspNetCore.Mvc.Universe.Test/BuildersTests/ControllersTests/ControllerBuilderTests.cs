@@ -70,7 +70,7 @@
         }
 
         [Fact]
-        public void WithHttpContextShouldPopulateCustomHttpContext()
+        public void WithHttpContextShouldPopulateCustomHttpContextUniverse()
         {
             MyApplication
                 .StartsFrom<TestStartup>()

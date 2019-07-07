@@ -329,7 +329,7 @@
         }
 
         [Fact]
-        public void WithHttpContextShouldPopulateCustomHttpContextForPocoController()
+        public void WithHttpContextShouldPopulateCustomHttpContextForPocoControllerWithViewFeatures()
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
@@ -560,7 +560,7 @@
         }
 
         [Fact]
-        public void PrepareControllerShouldSetCorrectPropertiesWithDefaultServices()
+        public void PrepareControllerShouldSetCorrectPropertiesWithDefaultServicesViewFeatures()
         {
             MyController<MvcController>
                 .Instance()

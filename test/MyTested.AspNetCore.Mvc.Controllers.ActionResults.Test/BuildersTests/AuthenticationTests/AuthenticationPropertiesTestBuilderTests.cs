@@ -445,7 +445,7 @@
         }
 
         [Fact]
-        public void AndAlsoShouldWorkCorrectly()
+        public void AndAlsoShouldWorkCorrectlyChallenge()
         {
             MyController<MvcController>
                 .Instance()

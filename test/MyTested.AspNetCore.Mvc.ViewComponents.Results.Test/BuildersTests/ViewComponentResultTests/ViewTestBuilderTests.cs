@@ -94,7 +94,7 @@
         }
 
         [Fact]
-        public void AndAlsoShouldWorkCorrectly()
+        public void AndAlsoShouldWorkCorrectlyView()
         {
             MyViewComponent<ViewResultComponent>
                 .Instance()

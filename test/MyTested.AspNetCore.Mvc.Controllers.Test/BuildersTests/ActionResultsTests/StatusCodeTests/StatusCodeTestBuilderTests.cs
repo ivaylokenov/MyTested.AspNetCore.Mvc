@@ -7,7 +7,7 @@
     public class StatusCodeTestBuilderTests
     {
         [Fact]
-        public void AndProvideTheActionResultShouldWorkCorrectly()
+        public void AndProvideTheActionResultShouldWorkCorrectlyStatusCode()
         {
             MyController<MvcController>
                 .Instance()

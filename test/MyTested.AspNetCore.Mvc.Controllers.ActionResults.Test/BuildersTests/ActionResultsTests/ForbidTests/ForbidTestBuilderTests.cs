@@ -125,7 +125,7 @@
         }
 
         [Fact]
-        public void AndAlsoShouldWorkCorrectly()
+        public void AndAlsoShouldWorkCorrectlyForbid()
         {
             MyController<MvcController>
                 .Instance()
