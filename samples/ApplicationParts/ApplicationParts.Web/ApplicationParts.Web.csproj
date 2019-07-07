@@ -42,13 +42,6 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.1.*" />
   </ItemGroup>
 
-  <Target Name="PrepublishScript" BeforeTargets="PrepareForPublish" Condition=" '$(IsCrossTargetingBuild)' != 'true' ">
-    <Exec Command="npm install" />
-    <Exec Command="bower install" />
-    <Exec Command="gulp clean" />
-    <Exec Command="gulp min" />
-  </Target>
-
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
   </ItemGroup>
