@@ -6,7 +6,7 @@
 - [Become a backer or sponsor on OpenCollective](https://opencollective.com/mytestedaspnet)
 - [One-time donation via PayPal](http://paypal.me/ivaylokenov)
 - [One-time donation via Buy my a coffee](http://buymeacoff.ee/ivaylokenov)
-- One-time donation via crypto-currencies:
+- One-time donation via cryptocurrencies:
   - BTC (Bitcoin) - 3P49XMiGXxqR2Dq1HdqHpkCa6UD848rpBU 
   - BCH (Bitcoin Cash) - qqgyjlvmuydf6gtfhfdypyw2u8utmc3uqg4nwma3y4
   - ETC (Ethereum) - 0x2bc55e4b1B9b296B751738631CD24b2f701E588F
@@ -65,3 +65,6 @@ Funds donated via both platforms are used for development and marketing purposes
 
 ## Backers
 Aleksandur Gyuzelov, Bogomil Stoev, Desislav Stoyanov, Emil Venkov, Georgi Krasimirov Georgiev, Kristiyan Mihailov, Lyubomir Krastanov, Nikolay Boyadzhiev, Nikolay Mihaylov, Rositsa Nenova, Slavi Bozhikov, Vasil Bonev, Yuriy Georgiev, Калин Ценков, Velina Getova, Gabriel Daskalov
+
+## One-Time Donations
+Mariya Georgieva, Tanya Georgieva, Danny Berova, German Dimitrov, Aleksandar Evangelatov, Anton Petrov, Hristo Ivanov, Anna Stambolieva, Nedelcho Penev, Yulian Ashikov, Boyana Aleksova, Plamen Haralambiev, Victoria Karamanova, Ivaylo Goranov, Aneliya Drazheva, Zdravko Yakimov, Vanya Kuncheva, Georgi Petrov, Stanimir Pavlov, Teodor Stefanov, Stefan Minchev, Simon Valentinova Kochova, Marin Marinov, Petar Peshev, Radoslav Astardzhiev, Dimitar Radkov, Aleksandar Tsvetkov, Georgi Dragnev, Veselin Neychev, Kaloyan Kolev, Andrey Blagoev, Yordan Penev, Ventsislav Yordanov, Nikolay Georgiev, Siyana Yasenova Zdravkova, Ani Kalpachka, Gergana Damyanova, Petya Koleva, Dyanko Petkov, Nikola Kolchakov, Borislava Hranova
