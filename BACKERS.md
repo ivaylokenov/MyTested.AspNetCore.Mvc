@@ -1,6 +1,6 @@
 # Sponsors &amp; Backers
 
-**MyTested.AspNetCore.Mvc** is a community-driven open source project. It's an independent project with its ongoing development made possible thanks to the support by these awesome [backers](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/development/BACKERS.md). If you'd like to join them, please consider:
+**MyTested.AspNetCore.Mvc** is a community-driven open source library. It's an independent project with its ongoing development made possible thanks to the support by these awesome [backers](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/development/BACKERS.md). If you'd like to join them, please consider:
 
 - [Become a backer or sponsor on Patreon](https://www.patreon.com/ivaylokenov)
 - [Become a backer or sponsor on OpenCollective](https://opencollective.com/mytestedaspnet)
@@ -29,3 +29,26 @@ Funds donated via both platforms are used for development and marketing purposes
     </tr>
   </tbody>
 </table>
+
+## Kickstarters
+- Ines Ivanova 
+- Rusko Kumovski
+
+## Top Backers
+- Bace Kar pod prekor Silovio aka Brudlordo
+- Kris Petrov
+- Hristo Hentov
+- Vasil Valchanov
+- Nikola Stankov
+- Ellie Stankova
+- Krasimir Gavrilov
+- Pavel Kolev
+- Regina Uzunova
+- Victoria Karamanova
+- Yanislav Asenov
+- Peter
+- Mihail Duchev
+- Ico Dimov
+- Viktor Klisurski
+- Desi Zlatanova
+
