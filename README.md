@@ -1,5 +1,19 @@
 <h1><img src="https://raw.githubusercontent.com/ivaylokenov/MyTested.AspNetCore.Mvc/master/tools/logo.png" align="left" alt="MyTested.AspNetCore.Mvc" width="100">&nbsp; MyTested.AspNetCore.Mvc - Fluent Testing<br />&nbsp; Library for ASP.NET Core MVC</h1> 
 
+## Gold Sponsors
+
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="middle">
+        <a href="https://softuni.org/" target="_blank">
+          <img width="148px" src="https://softuni.org/platform/assets/icons/logo.svg">
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
 ## Project Description
 
 **MyTested.AspNetCore.Mvc** is a strongly-typed unit testing library providing an easy fluent interface to test the [ASP.NET Core MVC](https://github.com/aspnet/AspNetCore) framework. It is testing framework agnostic so that you can combine it with a test runner of your choice (e.g. [xUnit](https://github.com/xunit/xunit), [NUnit](https://github.com/nunit/nunit), etc.). 
@@ -29,13 +43,31 @@ Take a look around and...
 
 👀 ...if you find it useful, make sure you **subscribe** for future releases by clicking the **"Watch"** button and choosing **"Releases only"**!
 
-✔ ...if you want to **support** the project, go to [https://MyTestedASP.NET](https://MyTestedASP.NET) and consider purchasing a premium [license](#license)!
+✔ ...if you want to **support** the project, **[become a sponsor/backer](#sponsors--backers)** or go to [https://MyTestedASP.NET](https://MyTestedASP.NET), and consider **purchasing a premium [license](#license)**!
 
 #### Featured in
 
 - [The official ASP.NET Core MVC repository](https://github.com/aspnet/AspNetCore/tree/master/src/Mvc#aspnet-core-mvc)
 - [NuGet Package of the week in "The week in .NET – 6/28/2016"](https://devblogs.microsoft.com/dotnet/the-week-in-net-6282016/)
 - [Awesome .NET Core](https://github.com/thangchung/awesome-dotnet-core#testing)
+
+## Sponsors &amp; Backers
+
+**MyTested.AspNetCore.Mvc** is a community-driven open source library. It's an independent project with its ongoing development made possible thanks to the support by these awesome [backers](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/development/BACKERS.md). If you'd like to join them, please consider:
+
+- [Become a backer or sponsor on Patreon](https://www.patreon.com/ivaylokenov)
+- [Become a backer or sponsor on OpenCollective](https://opencollective.com/mytestedaspnet)
+- [One-time donation via PayPal](http://paypal.me/ivaylokenov)
+- [One-time donation via Buy Me A Coffee](http://buymeacoff.ee/ivaylokenov)
+- One-time donation via cryptocurrencies:
+  - BTC (Bitcoin) - 3P49XMiGXxqR2Dq1HdqHpkCa6UD848rpBU 
+  - BCH (Bitcoin Cash) - qqgyjlvmuydf6gtfhfdypyw2u8utmc3uqg4nwma3y4
+  - ETC (Ethereum) - 0x2bc55e4b1B9b296B751738631CD24b2f701E588F
+  - LTC (Litecoin) - MQ1GJum1QuqAuUsc6LarE3Z6TQQJ3rJwsA
+
+#### What's the difference between Patreon and OpenCollective?
+
+Funds donated via both platforms are used for development and marketing purposes. Funds donated via OpenCollective are managed with transparent expenses. Your name/logo will receive proper recognition and exposure by donating on either platform.
 
 ## Quick Start
 
