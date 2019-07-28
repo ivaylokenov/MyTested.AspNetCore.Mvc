@@ -52,3 +52,16 @@ Funds donated via both platforms are used for development and marketing purposes
 - Viktor Klisurski
 - Desi Zlatanova
 
+## Generous One-Time Donations
+- My-Amazing-Store
+- Mereor
+- Stoyan Stoyanov
+- Yotko Kanchev
+- Dimitar Yovkov
+- Vassil Terziev
+- Anton Ivanov
+- Sideriss
+- Pavel Doychinov
+
+## Backers
+Aleksandur Gyuzelov, Bogomil Stoev, Desislav Stoyanov, Emil Venkov, Georgi Krasimirov Georgiev, Kristiyan Mihailov, Lyubomir Krastanov, Nikolay Boyadzhiev, Nikolay Mihaylov, Rositsa Nenova, Slavi Bozhikov, Vasil Bonev, Yuriy Georgiev, Калин Ценков, Velina Getova, Gabriel Daskalov
