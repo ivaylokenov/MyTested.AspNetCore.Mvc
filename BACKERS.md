@@ -31,7 +31,7 @@ Funds donated via both platforms are used for development and marketing purposes
 </table>
 
 ## Kickstarters
-- Ines Ivanova 
+- Ines Ivanova from [C# In 15 Minutes](https://www.youtube.com/channel/UCljus-YO63ae0vwuuPWDasA)
 - Rusko Kumovski
 
 ## Top Backers
@@ -42,7 +42,7 @@ Funds donated via both platforms are used for development and marketing purposes
 - Nikola Stankov
 - Ellie Stankova
 - Krasimir Gavrilov
-- Pavel Kolev
+- Pavel Kolev from [Rebellious Software](https://www.rebellioussoftware.com)
 - Regina Uzunova
 - Victoria Karamanova
 - Yanislav Asenov
