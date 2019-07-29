@@ -51,6 +51,7 @@ Funds donated via both platforms are used for development and marketing purposes
 - Ico Dimov
 - Viktor Klisurski
 - Desi Zlatanova
+- Tsenko Tsenov
 
 ## Generous One-Time Donations
 - My-Amazing-Store
