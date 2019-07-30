@@ -4,10 +4,11 @@
     using Internal.Services;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using Setups.Controllers;
-    using Xunit;
     using Microsoft.Extensions.DependencyInjection.Extensions;
     using Setups;
+    using Setups.Controllers;
+    using System;
+    using Xunit;
 
     public class ViewDataPropertyHelperTests
     {
@@ -57,6 +58,31 @@
             Assert.Same(gotViewData, controller.CustomViewData);
             
             MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void ViewDataGetterShouldThrowNullReferenceExceptionWithNull()
+        {
+            MyApplication.StartsFrom<DefaultStartup>();
+
+            var helper = ViewDataPropertyHelper.GetViewDataProperties<MvcController>();
+
+            Assert.Throws<NullReferenceException>(() => helper.ViewDataGetter(null));
+        }
+
+        [Fact]
+        public void ViewDataGetterShouldThrowInvalidOperationExceptionForPrivatePocoController()
+        {
+            MyApplication.StartsFrom<DefaultStartup>();
+
+            var helper = ViewDataPropertyHelper.GetViewDataProperties<PrivatePocoController>();
+            var controller = new PrivatePocoController(TestServiceProvider.Global);
+
+            Test.AssertException<InvalidOperationException>(
+                () =>
+                {
+                    helper.ViewDataGetter(controller);
+                }, "ViewDataDictionary could not be found on the provided PrivatePocoController. The property should be specified manually by providing component instance or using the specified helper methods.");
         }
     }
 }
