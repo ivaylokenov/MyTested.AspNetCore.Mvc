@@ -6,6 +6,7 @@
     using Setups;
     using Setups.Common;
     using Setups.Controllers;
+    using Utilities;
     using Xunit;
 
     public class LocalRedirectTestBuilderTests
@@ -250,6 +251,59 @@
                     .Permanent()
                     .AndAlso()
                     .ToUrl("/local/test"));
+        }
+
+
+        [Fact]
+        public void PassingShouldCorrectlyRunItsAssertionFunction()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.LocalRedirectAction())
+                .ShouldReturn()
+                .LocalRedirect(localRedirect => localRedirect
+                    .Passing(lr => lr.Url == "/local/test"));
+        }
+
+        [Fact]
+        public void PassingShouldThrowAnExceptionOnAnIncorrectAssertion()
+        {
+            Test.AssertException<InvocationResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.LocalRedirectAction())
+                        .ShouldReturn()
+                        .LocalRedirect(localRedirect => localRedirect
+                            .Passing(lr => lr.Url == string.Empty));
+                },
+                $"When calling {nameof(MvcController.LocalRedirectAction)} " +
+                $"action in {nameof(MvcController)} expected the LocalRedirectResult to pass the given predicate, but it failed.");
+        }
+
+        [Fact]
+        public void PassingShouldCorrectlyRunItsAssertionAction()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.LocalRedirectAction())
+                .ShouldReturn()
+                .LocalRedirect(localRedirect => localRedirect
+                    .Passing(lr =>
+                    {
+                        const string expectedRedirect = "/local/test";
+                        var actualRedirect = lr.Url;
+                        if (expectedRedirect != actualRedirect)
+                        {
+                            throw new InvalidAssertionException(
+                                string.Format("Expected {0} to have {1} equal to {2}, but it was {3}.",
+                                    lr.GetType().ToFriendlyTypeName(),
+                                    nameof(lr.Url),
+                                    expectedRedirect,
+                                    actualRedirect));
+                        };
+                    }));
         }
     }
 }
