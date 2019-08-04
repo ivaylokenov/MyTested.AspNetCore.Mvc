@@ -34,7 +34,8 @@
                         .ContainingAuthenticationScheme(AuthenticationScheme.Digest));
                },
                $"When calling {nameof(MvcController.SignOutWithAuthenticationSchemes)} " +
-               $"action in MvcController expected sign out result authentication schemes to contain 'Digest', but none was found.");
+               $"action in {nameof(MvcController)} expected sign out result " +
+               $"authentication schemes to contain 'Digest', but none was found.");
         }
 
         [Fact]
@@ -77,7 +78,8 @@
                             .ContainingAuthenticationSchemes(AuthenticationScheme.Digest, AuthenticationScheme.Basic));
                 },
                 $"When calling {nameof(MvcController.SignOutWithAuthenticationSchemes)} " +
-                $"action in MvcController expected sign out result authentication schemes to contain 'Digest', but none was found.");
+                $"action in {nameof(MvcController)} expected sign out result " +
+                $"authentication schemes to contain 'Digest', but none was found.");
         }
 
         [Fact]
@@ -94,7 +96,8 @@
                             .ContainingAuthenticationSchemes(AuthenticationScheme.Digest));
                 },
                 $"When calling {nameof(MvcController.SignOutWithAuthenticationSchemes)} " +
-                $"action in MvcController expected sign out result authentication schemes to be 1, but instead found 2.");
+                $"action in {nameof(MvcController)} expected sign out result " +
+                $"authentication schemes to be 1, but instead found 2.");
         }
 
         [Fact]
@@ -126,7 +129,8 @@
                             .WithAuthenticationProperties(authenticationProperties));
                 },
                 $"When calling {nameof(MvcController.SignOutWithAuthenticationProperties)} " +
-                $"action in MvcController expected sign out result authentication properties to be the same as the provided one, but instead received different result.");
+                $"action in {nameof(MvcController)} expected sign out result " +
+                $"authentication properties to be the same as the provided one, but instead received different result.");
         }
 
         [Fact]

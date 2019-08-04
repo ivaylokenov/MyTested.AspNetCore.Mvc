@@ -26,14 +26,15 @@
                () =>
                {
                    MyController<MvcController>
-                .Instance()
-                .Calling(c => c.SignInWithEmptyAuthenticationPropertiesAndScheme())
-                .ShouldReturn()
-                .SignIn(signIn => signIn
-                    .WithAuthenticationScheme(AuthenticationScheme.Digest));
+                        .Instance()
+                        .Calling(c => c.SignInWithEmptyAuthenticationPropertiesAndScheme())
+                        .ShouldReturn()
+                        .SignIn(signIn => signIn
+                            .WithAuthenticationScheme(AuthenticationScheme.Digest));
                },
                $"When calling {nameof(MvcController.SignInWithEmptyAuthenticationPropertiesAndScheme)} " +
-               $"action in MvcController expected sign in result authentication scheme to be 'Digest', but instead received 'Basic'.");
+               $"action in {nameof(MvcController)} expected sign in result " +
+               $"authentication scheme to be 'Digest', but instead received 'Basic'.");
         }
 
         [Fact]
@@ -65,7 +66,8 @@
                             .WithAuthenticationProperties(authenticationProperties));
                 },
                 $"When calling {nameof(MvcController.SignInWithAuthenticationPropertiesAndScheme)} " +
-                $"action in MvcController expected sign in result authentication properties to be the same as the provided one, but instead received different result.");
+                $"action in {nameof(MvcController)} expected sign in result authentication properties " +
+                $"to be the same as the provided one, but instead received different result.");
         }
 
         [Fact]
