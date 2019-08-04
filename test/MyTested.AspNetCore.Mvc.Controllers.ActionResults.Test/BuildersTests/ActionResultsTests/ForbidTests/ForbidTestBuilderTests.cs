@@ -4,6 +4,7 @@
     using Exceptions;
     using Setups;
     using Setups.Controllers;
+    using Utilities;
     using Xunit;
 
     public class ForbidTestBuilderTests
@@ -135,6 +136,58 @@
                     .ContainingAuthenticationScheme(AuthenticationScheme.Basic)
                     .AndAlso()
                     .ContainingAuthenticationScheme(AuthenticationScheme.NTLM));
+        }
+
+        [Fact]
+        public void PassingShouldCorrectlyRunItsAssertionFunction()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ForbidWithAuthenticationSchemes())
+                .ShouldReturn()
+                .Forbid(forbid => forbid
+                    .Passing(f => f.AuthenticationSchemes?.Count == 2));
+        }
+
+        [Fact]
+        public void PassingShouldThrowAnExceptionOnAnIncorrectAssertion()
+        {
+            Test.AssertException<InvocationResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.ForbidWithAuthenticationSchemes())
+                        .ShouldReturn()
+                        .Forbid(forbid => forbid
+                            .Passing(f => f.AuthenticationSchemes?.Count == 0));
+                },
+                $"When calling {nameof(MvcController.ForbidWithAuthenticationSchemes)} " +
+                $"action in {nameof(MvcController)} expected the ForbidResult to pass the given predicate, but it failed.");
+        }
+
+        [Fact]
+        public void PassingShouldCorrectlyRunItsAssertionAction()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ForbidWithAuthenticationSchemes())
+                .ShouldReturn()
+                .Forbid(forbid => forbid
+                    .Passing(f =>
+                    {
+                        const int expectedAuthSchemesCount = 2;
+                        var actualAuthSchemesCount = f.AuthenticationSchemes?.Count;
+                        if (actualAuthSchemesCount != expectedAuthSchemesCount)
+                        {
+                            throw new InvalidAssertionException(
+                                string.Format("Expected {0} to have {1} {2}, but it was {3}.",
+                                    f.GetType().ToFriendlyTypeName(),
+                                    expectedAuthSchemesCount,
+                                    nameof(f.AuthenticationSchemes),
+                                    actualAuthSchemesCount));
+                        };
+                    }));
         }
     }
 }
