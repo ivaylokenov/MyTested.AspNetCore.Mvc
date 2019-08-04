@@ -8,6 +8,7 @@
     using Setups;
     using Setups.Common;
     using Setups.Controllers;
+    using Utilities;
     using Xunit;
 
     public class ObjectTestBuilderTests
@@ -421,6 +422,59 @@
                     .ContainingOutputFormatters(
                         TestObjectFactory.GetOutputFormatter(), 
                         new CustomOutputFormatter()));
+        }
+
+
+        [Fact]
+        public void PassingShouldCorrectlyRunItsAssertionFunction()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.FullObjectResultAction())
+                .ShouldReturn()
+                .Object(obj => obj
+                    .Passing(o => o.Formatters?.Count == 2));
+        }
+
+        [Fact]
+        public void PassingShouldThrowAnExceptionOnAnIncorrectAssertion()
+        {
+            Test.AssertException<InvocationResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.FullObjectResultAction())
+                        .ShouldReturn()
+                        .Object(obj => obj
+                            .Passing(o => o.Formatters?.Count == 0));
+                },
+                $"When calling {nameof(MvcController.FullObjectResultAction)} " +
+                $"action in {nameof(MvcController)} expected the ObjectResult to pass the given predicate, but it failed.");
+        }
+
+        [Fact]
+        public void PassingShouldCorrectlyRunItsAssertionAction()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.FullObjectResultAction())
+                .ShouldReturn()
+                .Object(obj => obj
+                    .Passing(o =>
+                    {
+                        const int expectedFormattersCount = 2;
+                        var actualFormattersCount = o.Formatters?.Count;
+                        if (actualFormattersCount != expectedFormattersCount)
+                        {
+                            throw new InvalidAssertionException(
+                                string.Format("Expected {0} to have {1} {2}, but it has {3}.",
+                                    o.GetType().ToFriendlyTypeName(),
+                                    expectedFormattersCount,
+                                    nameof(o.Formatters),
+                                    actualFormattersCount));
+                        };
+                    }));
         }
     }
 }
