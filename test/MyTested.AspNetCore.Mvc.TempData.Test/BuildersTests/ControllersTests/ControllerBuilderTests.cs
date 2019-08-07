@@ -9,7 +9,7 @@
     public class ControllerBuilderTests
     {
         [Fact]
-        public void WithTempDataShouldPopulateTempDataCorrectly()
+        public void WithValidTempDataValueShouldPopulateTempDataCorrectly()
         {
             MyController<MvcController>
                 .Instance()
@@ -20,6 +20,20 @@
                 .Calling(c => c.TempDataAction())
                 .ShouldReturn()
                 .Ok();
+        }
+
+        [Fact]
+        public void WithInvalidTempDataValueShouldReturnBadRequest()
+        {
+            MyController<MvcController>
+                .Instance()
+                .WithTempData(tempData =>
+                {
+                    tempData.WithEntry("invalid", "value");
+                })
+                .Calling(c => c.TempDataAction())
+                .ShouldReturn()
+                .BadRequest();
         }
 
         [Fact]
@@ -36,7 +50,7 @@
         }
 
         [Fact]
-        public void WithTempDataShouldPopulateTempDataCorrectlyForPocoController()
+        public void WithValidTempDataValueShouldPopulateTempDataCorrectlyForPocoController()
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
@@ -54,6 +68,29 @@
                 .Calling(c => c.TempDataAction())
                 .ShouldReturn()
                 .Ok();
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithInvalidTempDataValueShouldReturnBadRequestForPocoController()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+                });
+
+            MyController<FullPocoController>
+                .Instance()
+                .WithTempData(tempData =>
+                {
+                    tempData.WithEntry("invalid", "value");
+                })
+                .Calling(c => c.TempDataAction())
+                .ShouldReturn()
+                .BadRequest();
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
