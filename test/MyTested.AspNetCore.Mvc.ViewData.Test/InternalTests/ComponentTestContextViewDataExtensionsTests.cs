@@ -24,7 +24,8 @@
                         .AndAlso()
                         .ShouldReturn()
                         .View();
-                }, "ViewDataDictionary could not be found on the provided PocoViewComponent. The property should be specified manually by providing component instance or using the specified helper methods.");
+                }, 
+                "ViewDataDictionary could not be found on the provided PocoViewComponent. The property should be specified manually by providing component instance or using the specified helper methods.");
         }
 
         [Fact]
