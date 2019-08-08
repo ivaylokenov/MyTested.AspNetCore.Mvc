@@ -14,10 +14,10 @@
                 .Instance()
                 .WithHttpRequest(request => request
                     .WithUser("TestUserName", new List<string>
-                {
-                    "Administrator",
-                    "Moderator"
-                }))
+                    {
+                        "Administrator",
+                        "Moderator"
+                    }))
                 .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     Assert.Equal(0, builtRequest.Query.Count);
@@ -33,10 +33,10 @@
                 .Instance()
                 .WithHttpRequest(request => request
                     .WithUser("TestUserName", new string[]
-                {
-                    "Administrator",
-                    "Moderator"
-                }))
+                    {
+                        "Administrator",
+                        "Moderator"
+                    }))
                 .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     Assert.Equal(0, builtRequest.Query.Count);
@@ -52,10 +52,10 @@
                 .Instance()
                 .WithHttpRequest(request => request
                     .WithUser("TestIdentifier", "TestUserName", new List<string>
-                {
-                    "Administrator",
-                    "Moderator"
-                }))
+                    {
+                        "Administrator",
+                        "Moderator"
+                    }))
                 .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     Assert.Equal(0, builtRequest.Query.Count);
@@ -71,10 +71,10 @@
                 .Instance()
                 .WithHttpRequest(request => request
                     .WithUser("TestIdentifier", "TestUserName", new string[]
-                {
-                    "Administrator",
-                    "Moderator"
-                }))
+                    {
+                        "Administrator",
+                        "Moderator"
+                    }))
                 .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     Assert.Equal(0, builtRequest.Query.Count);
@@ -90,10 +90,10 @@
                 .Instance()
                 .WithHttpRequest(request => request
                     .WithUser(new List<string>
-                {
-                    "Administrator",
-                    "Moderator"
-                }))
+                    {
+                        "Administrator",
+                        "Moderator"
+                    }))
                 .ShouldPassForThe<HttpRequest>(builtRequest =>
                 {
                     Assert.Equal(0, builtRequest.Query.Count);
