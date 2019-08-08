@@ -131,5 +131,47 @@
                 .ShouldReturn()
                 .Ok();
         }
+
+        [Fact]
+        public void ViewBagWithBuilderShouldContainMultipleEntries()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.AddViewBagAction())
+                .ShouldHave()
+                .ViewBag(viewBag => viewBag
+                    .ContainingEntries(new { Test = "BagValue", Another = "AnotherValue" }))
+                .AndAlso()
+                .ShouldReturn()
+                .Ok();
+        }
+
+        [Fact]
+        public void ViewBagWithBuilderShouldContainEntryWithKey()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.AddViewBagAction())
+                .ShouldHave()
+                .ViewBag(viewBag => viewBag
+                    .ContainingEntryWithKey("Another"))
+                .AndAlso()
+                .ShouldReturn()
+                .Ok();
+        }
+
+        [Fact]
+        public void ViewBagWithBuilderShouldContainEntryOfTypeString()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.AddViewBagAction())
+                .ShouldHave()
+                .ViewBag(viewBag => viewBag
+                    .ContainingEntryOfType<string>())
+                .AndAlso()
+                .ShouldReturn()
+                .Ok();
+        }
     }
 }
