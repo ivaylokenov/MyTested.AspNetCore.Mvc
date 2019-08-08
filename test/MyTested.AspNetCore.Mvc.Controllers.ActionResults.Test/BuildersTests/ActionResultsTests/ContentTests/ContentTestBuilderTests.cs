@@ -5,6 +5,7 @@
     using Microsoft.Net.Http.Headers;
     using Setups;
     using Setups.Controllers;
+    using Utilities;
     using Xunit;
 
     public class ContentTestBuilderTests
@@ -156,5 +157,58 @@
                     .AndAlso()
                     .WithContentType(ContentType.ApplicationJson));
         }
+
+
+        [Fact]
+        public void PassingShouldCorrectlyRunItsAssertionFunction()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ContentAction())
+                .ShouldReturn()
+                .Content(content => content
+                    .Passing(c => c.Content == "content"));
+        }
+
+        [Fact]
+        public void PassingShouldThrowAnExceptionOnAnIncorrectAssertion()
+        {
+            Test.AssertException<InvocationResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.ContentAction())
+                        .ShouldReturn()
+                        .Content(content => content
+                            .Passing(c => c.Content == string.Empty));
+                },
+                $"When calling ContentAction action in MvcController expected the ContentResult to pass the given predicate, but it failed.");
+        }
+
+        [Fact]
+        public void PassingShouldCorrectlyRunItsAssertionAction()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ContentAction())
+                .ShouldReturn()
+                .Content(content => content
+                    .Passing(c =>
+                    {
+                        const string expectedContentBody = "content";
+                        var actualContentBody = c.Content;
+                        if (actualContentBody != expectedContentBody)
+                        {
+                            throw new InvalidAssertionException(
+                                string.Format("Expected {0} to have {1} equal to content, but it was {2}.",
+                                    c.GetType().ToFriendlyTypeName(),
+                                    nameof(c.Content),
+                                    actualContentBody));
+                        };
+                    }));
+        }
+
+
     }
 }

@@ -5,6 +5,7 @@
     using Microsoft.Net.Http.Headers;
     using Setups;
     using Setups.Controllers;
+    using Utilities;
     using Xunit;
 
     public class FileTestBuilderTests
@@ -198,6 +199,58 @@
                     .WithContents(new byte[] { 1, 2, 3 })
                     .AndAlso()
                     .WithContentType(ContentType.ApplicationJson));
+        }
+
+
+        [Fact]
+        public void PassingShouldCorrectlyRunItsAssertionFunction()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.FileWithVirtualPath())
+                .ShouldReturn()
+                .File(file => file
+                    .Passing(f => f.FileName == "/Test"));
+        }
+
+        [Fact]
+        public void PassingShouldThrowAnExceptionOnAnIncorrectAssertion()
+        {
+            Test.AssertException<InvocationResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.FileWithVirtualPath())
+                        .ShouldReturn()
+                        .File(file => file
+                            .Passing(f => f.FileName == string.Empty));
+                },
+                $"When calling FileWithVirtualPath action in MvcController expected the VirtualFileResult to pass the given predicate, but it failed.");
+        }
+
+        [Fact]
+        public void PassingShouldCorrectlyRunItsAssertionAction()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.FileWithVirtualPath())
+                .ShouldReturn()
+                .File(file => file
+                    .Passing(f =>
+                    {
+                        const string expectedFileName = "/Test";
+                        var actualFileName = f.FileName;
+                        if (actualFileName != expectedFileName)
+                        {
+                            throw new InvalidAssertionException(
+                                string.Format("Expected {0} to have {1} equal to {2}, but it was {3}.",
+                                    f.GetType().ToFriendlyTypeName(),
+                                    nameof(f.FileName),
+                                    expectedFileName,
+                                    actualFileName));
+                        };
+                    }));
         }
     }
 }

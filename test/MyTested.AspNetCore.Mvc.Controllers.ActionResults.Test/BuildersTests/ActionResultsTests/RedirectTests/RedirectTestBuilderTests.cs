@@ -6,6 +6,7 @@
     using Setups;
     using Setups.Common;
     using Setups.Controllers;
+    using Utilities;
     using Xunit;
 
     public class RedirectTestBuilderTests
@@ -540,6 +541,58 @@
                     .ToAction("MyAction")
                     .AndAlso()
                     .ToController("MyController"));
+        }
+
+
+        [Fact]
+        public void PassingShouldCorrectlyRunItsAssertionFunction()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.RedirectToActionResult())
+                .ShouldReturn()
+                .Redirect(redirect => redirect
+                    .Passing(r => r.ActionName == "MyAction"));
+        }
+
+        [Fact]
+        public void PassingShouldThrowAnExceptionOnAnIncorrectAssertion()
+        {
+            Test.AssertException<InvocationResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.RedirectToActionResult())
+                        .ShouldReturn()
+                        .Redirect(redirect => redirect
+                            .Passing(r => r.ActionName == string.Empty));
+                },
+                $"When calling RedirectToActionResult action in MvcController expected the RedirectToActionResult to pass the given predicate, but it failed.");
+        }
+
+        [Fact]
+        public void PassingShouldCorrectlyRunItsAssertionAction()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.RedirectToActionResult())
+                .ShouldReturn()
+                .Redirect(redirect => redirect
+                    .Passing(r =>
+                    {
+                        const string expectedActionName = "MyAction";
+                        var actualActionName = r.ActionName;
+                        if (actualActionName != expectedActionName)
+                        {
+                            throw new InvalidAssertionException(
+                               string.Format("Expected {0} to have {1} equal to {2}, but it was {3}.",
+                                    r.GetType().ToFriendlyTypeName(),
+                                    nameof(r.ActionName),
+                                    expectedActionName,
+                                    actualActionName));
+                        };
+                    }));
         }
     }
 }
