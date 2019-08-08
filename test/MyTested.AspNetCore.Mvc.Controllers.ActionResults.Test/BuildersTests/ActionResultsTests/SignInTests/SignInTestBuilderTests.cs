@@ -23,18 +23,16 @@
         public void ShouldReturnSignInShouldThrowExceptionIfResultIsSignInWithIncorrectAuthenticationScheme()
         {
             Test.AssertException<SignInResultAssertionException>(
-               () =>
-               {
-                   MyController<MvcController>
+                () =>
+                {
+                    MyController<MvcController>
                         .Instance()
                         .Calling(c => c.SignInWithEmptyAuthenticationPropertiesAndScheme())
                         .ShouldReturn()
                         .SignIn(signIn => signIn
                             .WithAuthenticationScheme(AuthenticationScheme.Digest));
-               },
-               $"When calling {nameof(MvcController.SignInWithEmptyAuthenticationPropertiesAndScheme)} " +
-               $"action in {nameof(MvcController)} expected sign in result " +
-               $"authentication scheme to be 'Digest', but instead received 'Basic'.");
+                },
+                $"When calling SignInWithEmptyAuthenticationPropertiesAndScheme action in MvcController expected sign in result authentication scheme to be 'Digest', but instead received 'Basic'.");
         }
 
         [Fact]
@@ -65,9 +63,7 @@
                         .SignIn(signIn => signIn
                             .WithAuthenticationProperties(authenticationProperties));
                 },
-                $"When calling {nameof(MvcController.SignInWithAuthenticationPropertiesAndScheme)} " +
-                $"action in {nameof(MvcController)} expected sign in result authentication properties " +
-                $"to be the same as the provided one, but instead received different result.");
+                $"When calling SignInWithAuthenticationPropertiesAndScheme action in MvcController expected sign in result authentication properties to be the same as the provided one, but instead received different result.");
         }
 
         [Fact]
@@ -108,8 +104,7 @@
                         .SignIn(signIn => signIn
                             .Passing(si => si.AuthenticationScheme == AuthenticationScheme.Digest));
                 },
-                $"When calling {nameof(MvcController.SignInWithAuthenticationPropertiesAndScheme)} " +
-                $"action in {nameof(MvcController)} expected the SignInResult to pass the given predicate, but it failed.");
+                $"When calling SignInWithAuthenticationPropertiesAndScheme action in MvcController expected the SignInResult to pass the given predicate, but it failed.");
         }
 
         [Fact]

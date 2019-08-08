@@ -33,9 +33,7 @@
                         .SignOut(signOut => signOut
                         .ContainingAuthenticationScheme(AuthenticationScheme.Digest));
                },
-               $"When calling {nameof(MvcController.SignOutWithAuthenticationSchemes)} " +
-               $"action in {nameof(MvcController)} expected sign out result " +
-               $"authentication schemes to contain 'Digest', but none was found.");
+               $"When calling SignOutWithAuthenticationSchemes action in MvcController expected sign out result authentication schemes to contain 'Digest', but none was found.");
         }
 
         [Fact]
@@ -77,9 +75,7 @@
                         .SignOut(signOut => signOut
                             .ContainingAuthenticationSchemes(AuthenticationScheme.Digest, AuthenticationScheme.Basic));
                 },
-                $"When calling {nameof(MvcController.SignOutWithAuthenticationSchemes)} " +
-                $"action in {nameof(MvcController)} expected sign out result " +
-                $"authentication schemes to contain 'Digest', but none was found.");
+                $"When calling SignOutWithAuthenticationSchemes action in MvcController expected sign out result authentication schemes to contain 'Digest', but none was found.");
         }
 
         [Fact]
@@ -95,9 +91,7 @@
                         .SignOut(signOut => signOut
                             .ContainingAuthenticationSchemes(AuthenticationScheme.Digest));
                 },
-                $"When calling {nameof(MvcController.SignOutWithAuthenticationSchemes)} " +
-                $"action in {nameof(MvcController)} expected sign out result " +
-                $"authentication schemes to be 1, but instead found 2.");
+                $"When calling SignOutWithAuthenticationSchemes action in MvcController expected sign out result authentication schemes to be 1, but instead found 2.");
         }
 
         [Fact]
@@ -128,9 +122,7 @@
                         .SignOut(signOut => signOut
                             .WithAuthenticationProperties(authenticationProperties));
                 },
-                $"When calling {nameof(MvcController.SignOutWithAuthenticationProperties)} " +
-                $"action in {nameof(MvcController)} expected sign out result " +
-                $"authentication properties to be the same as the provided one, but instead received different result.");
+                $"When calling SignOutWithAuthenticationProperties action in MvcController expected sign out result authentication properties to be the same as the provided one, but instead received different result.");
         }
 
         [Fact]
@@ -171,8 +163,7 @@
                         .SignOut(signOut => signOut
                             .Passing(so => so.AuthenticationSchemes?.Count == 0));
                 },
-                $"When calling {nameof(MvcController.SignOutWithAuthenticationSchemes)} " +
-                $"action in {nameof(MvcController)} expected the SignOutResult to pass the given predicate, but it failed.");
+                $"When calling SignOutWithAuthenticationSchemes action in MvcController expected the SignOutResult to pass the given predicate, but it failed.");
         }
 
         [Fact]

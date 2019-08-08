@@ -568,8 +568,7 @@
                         .Redirect(redirect => redirect
                             .Passing(r => r.ActionName == string.Empty));
                 },
-                $"When calling {nameof(MvcController.RedirectToActionResult)} " +
-                $"action in {nameof(MvcController)} expected the RedirectToActionResult to pass the given predicate, but it failed.");
+                $"When calling RedirectToActionResult action in MvcController expected the RedirectToActionResult to pass the given predicate, but it failed.");
         }
 
         [Fact]

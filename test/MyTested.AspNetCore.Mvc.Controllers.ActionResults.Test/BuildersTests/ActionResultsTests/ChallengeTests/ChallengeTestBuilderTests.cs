@@ -167,8 +167,7 @@
                         .Challenge(challenge => challenge
                             .Passing(c => c.AuthenticationSchemes?.Count == 0));
                 },
-                $"When calling {nameof(MvcController.ChallengeWithAuthenticationSchemes)} " +
-                $"action in {nameof(MvcController)} expected the ChallengeResult to pass the given predicate, but it failed.");
+                $"When calling ChallengeWithAuthenticationSchemes action in MvcController expected the ChallengeResult to pass the given predicate, but it failed.");
         }
 
         [Fact]

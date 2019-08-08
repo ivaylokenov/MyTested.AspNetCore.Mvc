@@ -226,8 +226,7 @@
                         .File(file => file
                             .Passing(f => f.FileName == string.Empty));
                 },
-                $"When calling {nameof(MvcController.FileWithVirtualPath)} " +
-                $"action in {nameof(MvcController)} expected the VirtualFileResult to pass the given predicate, but it failed.");
+                $"When calling FileWithVirtualPath action in MvcController expected the VirtualFileResult to pass the given predicate, but it failed.");
         }
 
         [Fact]

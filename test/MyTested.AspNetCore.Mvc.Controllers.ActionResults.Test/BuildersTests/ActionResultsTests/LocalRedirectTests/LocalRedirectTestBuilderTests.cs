@@ -278,8 +278,7 @@
                         .LocalRedirect(localRedirect => localRedirect
                             .Passing(lr => lr.Url == string.Empty));
                 },
-                $"When calling {nameof(MvcController.LocalRedirectAction)} " +
-                $"action in {nameof(MvcController)} expected the LocalRedirectResult to pass the given predicate, but it failed.");
+                $"When calling LocalRedirectAction action in MvcController expected the LocalRedirectResult to pass the given predicate, but it failed.");
         }
 
         [Fact]

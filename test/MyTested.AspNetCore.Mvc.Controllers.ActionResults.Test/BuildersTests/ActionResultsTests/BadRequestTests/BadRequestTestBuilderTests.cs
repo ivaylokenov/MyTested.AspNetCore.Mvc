@@ -532,9 +532,8 @@
                         .ShouldReturn()
                         .BadRequest(badRequest => badRequest
                             .Passing(br => br.Formatters?.Count == 0));
-                }, 
-                $"When calling {nameof(MvcController.FullHttpBadRequestAction)} " +
-                $"action in {nameof(MvcController)} expected the BadRequestObjectResult to pass the given predicate, but it failed.");
+                },
+                $"When calling FullHttpBadRequestAction action in MvcController expected the BadRequestObjectResult to pass the given predicate, but it failed.");
         }
 
         [Fact]

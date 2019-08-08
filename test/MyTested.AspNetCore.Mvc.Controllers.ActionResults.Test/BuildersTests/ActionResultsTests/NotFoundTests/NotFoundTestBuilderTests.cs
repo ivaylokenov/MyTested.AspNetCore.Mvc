@@ -453,8 +453,7 @@
                         .NotFound(notFound => notFound
                             .Passing(nf => nf.Formatters?.Count == 0));
                 },
-                $"When calling {nameof(MvcController.FullHttpNotFoundAction)} " +
-                $"action in {nameof(MvcController)} expected the NotFoundObjectResult to pass the given predicate, but it failed.");
+                $"When calling FullHttpNotFoundAction action in MvcController expected the NotFoundObjectResult to pass the given predicate, but it failed.");
         }
 
         [Fact]

@@ -183,8 +183,7 @@
                         .Content(content => content
                             .Passing(c => c.Content == string.Empty));
                 },
-                $"When calling {nameof(MvcController.ContentAction)} " +
-                $"action in {nameof(MvcController)} expected the ContentResult to pass the given predicate, but it failed.");
+                $"When calling ContentAction action in MvcController expected the ContentResult to pass the given predicate, but it failed.");
         }
 
         [Fact]

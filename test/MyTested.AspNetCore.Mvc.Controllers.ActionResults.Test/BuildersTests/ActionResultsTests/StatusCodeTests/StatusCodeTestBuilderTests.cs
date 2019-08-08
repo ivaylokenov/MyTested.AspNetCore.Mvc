@@ -436,8 +436,7 @@
                         .StatusCode(result => result
                             .Passing(r => r.Formatters?.Count == 0));
                 },
-                $"When calling {nameof(MvcController.FullObjectResultAction)} " +
-                $"action in {nameof(MvcController)} expected the ObjectResult to pass the given predicate, but it failed.");
+                $"When calling FullObjectResultAction action in MvcController expected the ObjectResult to pass the given predicate, but it failed.");
         }
 
         [Fact]

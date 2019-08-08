@@ -449,9 +449,8 @@
                         .ShouldReturn()
                         .Ok(ok => ok
                             .Passing(o => o.Formatters?.Count == 0));
-                }, 
-                $"When calling {nameof(MvcController.FullOkAction)} " +
-                $"action in {nameof(MvcController)} expected the OkObjectResult to pass the given predicate, but it failed.");
+                },
+                $"When calling FullOkAction action in MvcController expected the OkObjectResult to pass the given predicate, but it failed.");
         }
 
         [Fact]

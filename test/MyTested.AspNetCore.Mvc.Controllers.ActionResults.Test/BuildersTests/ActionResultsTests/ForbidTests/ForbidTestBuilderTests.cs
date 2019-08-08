@@ -162,8 +162,7 @@
                         .Forbid(forbid => forbid
                             .Passing(f => f.AuthenticationSchemes?.Count == 0));
                 },
-                $"When calling {nameof(MvcController.ForbidWithAuthenticationSchemes)} " +
-                $"action in {nameof(MvcController)} expected the ForbidResult to pass the given predicate, but it failed.");
+                $"When calling ForbidWithAuthenticationSchemes action in MvcController expected the ForbidResult to pass the given predicate, but it failed.");
         }
 
         [Fact]
