@@ -347,34 +347,34 @@
         public void TempDataWithBuilderWithPredicateShouldWorkWithCorrectPassingAssertions()
         {
             MyController<MvcController>
-                        .Instance()
-                        .Calling(c => c.AddTempDataAction())
-                        .ShouldHave()
-                        .TempData(tempData => tempData
-                            .ContainingEntry(entry => entry
-                                .WithKey("Test")
-                                .WithValueOfType<string>()
-                                .Passing(v => Assert.StartsWith("Temp", v))))
-                        .AndAlso()
-                        .ShouldReturn()
-                        .Ok();
+                .Instance()
+                .Calling(c => c.AddTempDataAction())
+                .ShouldHave()
+                .TempData(tempData => tempData
+                .ContainingEntry(entry => entry
+                    .WithKey("Test")
+                    .WithValueOfType<string>()
+                    .Passing(v => Assert.StartsWith("Temp", v))))
+                .AndAlso()
+                .ShouldReturn()
+                .Ok();
         }
 
         [Fact]
         public void TempDataWithBuilderWithPredicateShouldWorkWithCorrectPassingPredicate()
         {
             MyController<MvcController>
-                        .Instance()
-                        .Calling(c => c.AddTempDataAction())
-                        .ShouldHave()
-                        .TempData(tempData => tempData
-                            .ContainingEntry(entry => entry
-                                .WithKey("Test")
-                                .WithValueOfType<string>()
-                                .Passing(v => v.StartsWith("Temp"))))
-                        .AndAlso()
-                        .ShouldReturn()
-                        .Ok();
+                .Instance()
+                .Calling(c => c.AddTempDataAction())
+                .ShouldHave()
+                .TempData(tempData => tempData
+                .ContainingEntry(entry => entry
+                    .WithKey("Test")
+                    .WithValueOfType<string>()
+                    .Passing(v => v.StartsWith("Temp"))))
+                .AndAlso()
+                .ShouldReturn()
+                .Ok();
         }
 
         [Fact]
@@ -403,13 +403,13 @@
         public void ContainingEntryOfTypeShouldNotThrowWithCorrectEntry()
         {
             MyController<MvcController>
-                        .Instance()
-                        .Calling(c => c.AddTempDataAction())
-                        .ShouldHave()
-                        .TempData(tempData => tempData.ContainingEntryOfType<string>())
-                        .AndAlso()
-                        .ShouldReturn()
-                        .Ok();
+                .Instance()
+                .Calling(c => c.AddTempDataAction())
+                .ShouldHave()
+                .TempData(tempData => tempData.ContainingEntryOfType<string>())
+                .AndAlso()
+                .ShouldReturn()
+                .Ok();
         }
 
         [Fact]
@@ -434,13 +434,13 @@
         public void ContainingEntryOfTypeAndKeyShouldNotThrowWithCorrectEntry()
         {
             MyController<MvcController>
-                        .Instance()
-                        .Calling(c => c.AddTempDataAction())
-                        .ShouldHave()
-                        .TempData(tempData => tempData.ContainingEntryOfType<string>("Test"))
-                        .AndAlso()
-                        .ShouldReturn()
-                        .Ok();
+                .Instance()
+                .Calling(c => c.AddTempDataAction())
+                .ShouldHave()
+                .TempData(tempData => tempData.ContainingEntryOfType<string>("Test"))
+                .AndAlso()
+                .ShouldReturn()
+                .Ok();
         }
 
         [Fact]
@@ -483,13 +483,13 @@
         public void ContainingEntryWithValueShouldNotThrowWithCorrectEntry()
         {
             MyController<MvcController>
-                        .Instance()
-                        .Calling(c => c.AddTempDataAction())
-                        .ShouldHave()
-                        .TempData(tempData => tempData.ContainingEntryWithValue("TempValue"))
-                        .AndAlso()
-                        .ShouldReturn()
-                        .Ok();
+                .Instance()
+                .Calling(c => c.AddTempDataAction())
+                .ShouldHave()
+                .TempData(tempData => tempData.ContainingEntryWithValue("TempValue"))
+                .AndAlso()
+                .ShouldReturn()
+                .Ok();
         }
 
         [Fact]
@@ -514,16 +514,16 @@
         public void ContainingEntryWithKeyShouldNotThrowWithCorrectEntry()
         {
             MyController<MvcController>
-                        .Instance()
-                        .Calling(c => c.AddTempDataAction())
-                        .ShouldHave()
-                        .TempData(tempData => tempData
-                            .ContainingEntryWithKey("Test")
-                            .AndAlso()
-                            .ContainingEntryWithKey("Another"))
-                        .AndAlso()
-                        .ShouldReturn()
-                        .Ok();
+                .Instance()
+                .Calling(c => c.AddTempDataAction())
+                .ShouldHave()
+                .TempData(tempData => tempData
+                    .ContainingEntryWithKey("Test")
+                    .AndAlso()
+                    .ContainingEntryWithKey("Another"))
+                .AndAlso()
+                .ShouldReturn()
+                .Ok();
         }
 
         [Fact]
