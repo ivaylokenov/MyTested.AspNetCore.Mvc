@@ -92,8 +92,7 @@
         {
             MyViewComponent<UserComponent>
                 .Instance()
-                .WithUser("NewUserName",
-                new List<string>
+                .WithUser("NewUserName", new List<string>
                 {
                     "Administrator"
                 })
@@ -118,8 +117,7 @@
         {
             MyViewComponent<UserComponent>
                 .Instance()
-                .WithUser("IdentityIdentifier", "NewUserName",
-                new List<string>
+                .WithUser("IdentityIdentifier", "NewUserName", new List<string>
                 {
                     "Administrator"
                 })
