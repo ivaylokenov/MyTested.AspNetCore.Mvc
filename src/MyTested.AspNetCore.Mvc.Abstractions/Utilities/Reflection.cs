@@ -446,9 +446,9 @@
                 return false;
             }
 
-            if (expectedType.GetTypeInfo().IsPrimitive && actualType.GetTypeInfo().IsPrimitive)
+            if (expectedType.GetTypeInfo().IsPrimitive || expectedType.GetTypeInfo().IsEnum)
             {
-                return expected.ToString() == actual.ToString();
+                return expected.Equals(actual);
             }
 
             var equalsOperator = expectedType.GetMethods().FirstOrDefault(m => m.Name == "op_Equality");
