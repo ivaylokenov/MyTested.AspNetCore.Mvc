@@ -86,5 +86,20 @@
                 },
                 "When calling IndexPartialView action in MvcController expected partial view result name to be the default one, but instead received '_IndexPartial'.");
         }
+
+        [Fact]
+        public void ShouldReturnPartialViewShouldThrowExceptionWithNullAction()
+        {
+            Test.AssertException<InvocationResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                       .Instance()
+                       .Calling(c => c.NullAction())
+                       .ShouldReturn()
+                       .PartialView();
+                },
+                "When calling NullAction action in MvcController expected result to be PartialViewResult, but instead received null.");
+        }
     }
 }

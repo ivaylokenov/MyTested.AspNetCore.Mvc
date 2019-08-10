@@ -21,7 +21,7 @@
                 .Json(json => json
                     .WithModelOfType<ICollection<ResponseModel>>());
         }
-        
+
         [Fact]
         public void WithHttpStatusCodeShouldNotThrowExceptionWithCorrectStatusCode()
         {
@@ -130,6 +130,16 @@
                     Assert.NotNull(actionResult);
                     Assert.IsAssignableFrom<JsonResult>(actionResult);
                 });
+        }
+
+        [Fact]
+        public void WithNullJsonShouldReturnNoModel()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.NullJsonAction())
+                .ShouldReturn()
+                .Json(json => json.WithNoModel());
         }
     }
 }

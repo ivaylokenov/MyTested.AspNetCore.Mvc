@@ -95,6 +95,11 @@
             };
         }
 
+        public IActionResult NullViewComponent()
+        {
+            return this.ViewComponent((string)null);
+        }
+
         public IActionResult ViewWithViewEngine(IViewEngine viewEngine)
         {
             return new ViewResult
@@ -762,6 +767,16 @@
         public IActionResult JsonAction()
         {
             return this.Json(this.ResponseModel);
+        }
+
+        public IActionResult EmptyJsonAction()
+        {
+            return this.Json("{}");
+        }
+
+        public IActionResult NullJsonAction()
+        {
+            return this.Json(null);
         }
 
         public IActionResult JsonWithStatusCodeAction()
