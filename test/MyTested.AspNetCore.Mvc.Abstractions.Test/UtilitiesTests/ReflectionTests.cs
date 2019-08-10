@@ -1,6 +1,4 @@
-﻿using MyTested.AspNetCore.Mvc.Test.Setups.Common;
-
-namespace MyTested.AspNetCore.Mvc.Test.UtilitiesTests
+﻿namespace MyTested.AspNetCore.Mvc.Test.UtilitiesTests
 {
     using System;
     using System.Collections.Generic;
@@ -8,6 +6,7 @@ namespace MyTested.AspNetCore.Mvc.Test.UtilitiesTests
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
+    using Setups.Common;
     using Setups.Controllers;
     using Setups.Models;
     using Setups.Services;
