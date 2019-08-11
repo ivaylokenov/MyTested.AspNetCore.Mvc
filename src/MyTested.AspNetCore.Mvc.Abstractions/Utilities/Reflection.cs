@@ -448,7 +448,7 @@
 
             if (expectedType.GetTypeInfo().IsPrimitive || expectedType.GetTypeInfo().IsEnum)
             {
-                return expected.Equals(actual);
+                return expected.ToString() == actual.ToString();
             }
 
             var equalsOperator = expectedType.GetMethods().FirstOrDefault(m => m.Name == "op_Equality");
