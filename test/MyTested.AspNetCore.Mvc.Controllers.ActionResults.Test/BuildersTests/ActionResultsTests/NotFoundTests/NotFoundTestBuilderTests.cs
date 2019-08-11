@@ -8,6 +8,7 @@
     using Setups;
     using Setups.Common;
     using Setups.Controllers;
+    using Utilities;
     using Xunit;
 
     public class NotFoundTestBuilderTests
@@ -425,6 +426,58 @@
                     .ContainingOutputFormatters(
                         TestObjectFactory.GetOutputFormatter(), 
                         new CustomOutputFormatter()));
+        }
+
+
+        [Fact]
+        public void PassingShouldCorrectlyRunItsAssertionFunction()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.FullHttpNotFoundAction())
+                .ShouldReturn()
+                .NotFound(notFound => notFound
+                    .Passing(nf => nf.Formatters?.Count == 2));
+        }
+
+        [Fact]
+        public void PassingShouldThrowAnExceptionOnAnIncorrectAssertion()
+        {
+            Test.AssertException<InvocationResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.FullHttpNotFoundAction())
+                        .ShouldReturn()
+                        .NotFound(notFound => notFound
+                            .Passing(nf => nf.Formatters?.Count == 0));
+                },
+                $"When calling FullHttpNotFoundAction action in MvcController expected the NotFoundObjectResult to pass the given predicate, but it failed.");
+        }
+
+        [Fact]
+        public void PassingShouldCorrectlyRunItsAssertionAction()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.FullHttpNotFoundAction())
+                .ShouldReturn()
+                .NotFound(notFound => notFound
+                    .Passing(nf =>
+                    {
+                        const int actualFormattersCount = 2;
+                        var expectedFormattersCount = nf.Formatters?.Count;
+                        if (expectedFormattersCount != actualFormattersCount)
+                        {
+                            throw new InvalidAssertionException(
+                                string.Format("Expected {0} to have {1} {2}, but it has {3}.",
+                                    nf.GetType().ToFriendlyTypeName(),
+                                    actualFormattersCount,
+                                    nameof(nf.Formatters),
+                                    expectedFormattersCount));
+                        };
+                    }));
         }
     }
 }

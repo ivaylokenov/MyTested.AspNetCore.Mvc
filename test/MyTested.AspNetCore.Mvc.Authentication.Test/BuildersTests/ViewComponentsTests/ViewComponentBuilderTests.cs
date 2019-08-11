@@ -1,6 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ViewComponentsTests
 {
     using Setups.ViewComponents;
+    using System.Collections.Generic;
     using System.Security.Claims;
     using Xunit;
 
@@ -63,5 +64,102 @@
                 });
         }
         
+        [Fact]
+        public void WithAuthenticatedUserShouldPopulateUserRoleProperly()
+        {
+            MyViewComponent<UserComponent>
+                .Instance()
+                .WithUser(new List<string>
+                {
+                    "Administrator"
+                })
+                .InvokedWith(c => c.Invoke())
+                .ShouldReturn()
+                .View()
+                .ShouldPassForThe<UserComponent>(viewComponent =>
+                {
+                    var user = viewComponent.User as ClaimsPrincipal;
+
+                    Assert.NotNull(user);
+                    Assert.True(user.IsInRole("Administrator"));
+                    Assert.Equal("Passport", user.Identity.AuthenticationType);
+                    Assert.True(user.Identity.IsAuthenticated);
+                });
+        }
+
+        [Fact]
+        public void WithAuthenticatedUserShouldPopulateUserNameAndRoleProperly()
+        {
+            MyViewComponent<UserComponent>
+                .Instance()
+                .WithUser("NewUserName", new List<string>
+                {
+                    "Administrator"
+                })
+                .InvokedWith(c => c.Invoke())
+                .ShouldReturn()
+                .View()
+                .ShouldPassForThe<UserComponent>(viewComponent =>
+                {
+                    var user = viewComponent.User as ClaimsPrincipal;
+
+                    Assert.NotNull(user);
+                    Assert.True(user.IsInRole("Administrator"));
+                    Assert.Equal("NewUserName", user.Identity.Name);
+                    Assert.True(user.HasClaim(ClaimTypes.Name, "NewUserName"));
+                    Assert.Equal("Passport", user.Identity.AuthenticationType);
+                    Assert.True(user.Identity.IsAuthenticated);
+                });
+        }
+
+        [Fact]
+        public void WithAuthenticatedUserShouldPopulateIdAndUserNameAndRoleProperly()
+        {
+            MyViewComponent<UserComponent>
+                .Instance()
+                .WithUser("IdentityIdentifier", "NewUserName", new List<string>
+                {
+                    "Administrator"
+                })
+                .InvokedWith(c => c.Invoke())
+                .ShouldReturn()
+                .View()
+                .ShouldPassForThe<UserComponent>(viewComponent =>
+                {
+                    var user = viewComponent.User as ClaimsPrincipal;
+                    var usernameClaim = viewComponent.User.Identity;
+
+                    Assert.NotNull(user);
+                    Assert.True(user.IsInRole("Administrator"));
+                    Assert.True(user.HasClaim(ClaimTypes.NameIdentifier, "IdentityIdentifier"));
+                    Assert.Equal("NewUserName", user.Identity.Name);
+                    Assert.True(user.HasClaim(ClaimTypes.Name, "NewUserName"));
+                    Assert.Equal("Passport", user.Identity.AuthenticationType);
+                    Assert.True(user.Identity.IsAuthenticated);
+                });
+        }
+
+        [Fact]
+        public void WithAuthenticatedUserShouldPopulateRoleProperly()
+        {
+            MyViewComponent<UserComponent>
+                .Instance()
+                .WithUser(new string[]
+                {
+                    "Administrator"
+                })
+                .InvokedWith(c => c.Invoke())
+                .ShouldReturn()
+                .View()
+                .ShouldPassForThe<UserComponent>(viewComponent =>
+                {
+                    var user = viewComponent.User as ClaimsPrincipal;
+
+                    Assert.NotNull(user);
+                    Assert.True(user.IsInRole("Administrator"));
+                    Assert.Equal("Passport", user.Identity.AuthenticationType);
+                    Assert.True(user.Identity.IsAuthenticated);
+                });
+        }
     }
 }
