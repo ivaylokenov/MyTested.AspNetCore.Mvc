@@ -59,10 +59,10 @@
                 () =>
                 {
                     MyController<MvcController>
-                         .Instance()
-                         .Calling(c => c.NullAction())
-                         .ShouldReturn()
-                         .Json();
+                        .Instance()
+                        .Calling(c => c.NullAction())
+                        .ShouldReturn()
+                        .Json();
                 },
                 "When calling NullAction action in MvcController expected result to be JsonResult, but instead received null.");
         }
@@ -74,10 +74,10 @@
                 () =>
                 {
                     MyController<MvcController>
-                            .Instance()
-                            .Calling(c => c.ContentAction())
-                            .ShouldReturn()
-                            .Json();
+                        .Instance()
+                        .Calling(c => c.ContentAction())
+                        .ShouldReturn()
+                        .Json();
                 },
                 "When calling ContentAction action in MvcController expected result to be JsonResult, but instead received ContentResult.");
         }

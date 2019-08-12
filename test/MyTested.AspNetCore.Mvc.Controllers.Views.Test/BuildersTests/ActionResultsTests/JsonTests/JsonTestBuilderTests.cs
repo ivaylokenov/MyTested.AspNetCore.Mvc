@@ -48,7 +48,7 @@
                 },
                 "When calling JsonWithStatusCodeAction action in MvcController expected JSON result to have 500 (InternalServerError) status code, but instead received 200 (OK).");
         }
-        
+
         [Fact]
         public void WithContentTypeShouldNotThrowExceptionWithCorrectContentType()
         {
@@ -102,7 +102,7 @@
                 },
                 "When calling JsonWithStatusCodeAction action in MvcController expected JSON result ContentType to be null, but instead received 'application/xml'.");
         }
-        
+
         [Fact]
         public void AndAlsoShouldWorkCorrectly()
         {

@@ -139,7 +139,7 @@
                 },
                 "When calling ViewComponentResultByName action in MvcController expected view component result ContentType to be 'application/json', but instead received null.");
         }
-        
+
         [Fact]
         public void AndAlsoShouldWorkCorrectly()
         {
@@ -167,6 +167,18 @@
                     Assert.NotNull(actionResult);
                     Assert.IsAssignableFrom<ViewComponentResult>(actionResult);
                 });
+        }
+
+        [Fact]
+        public void WithNoModelShouldNotThrowExceptionWhenNoModelIsReturned()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.ViewComponentResultByType())
+                .ShouldReturn()
+                .ViewComponent(viewComponent =>
+                    viewComponent.WithNoModel()); 
+            // ViewComponent is not settable, not sure if this is a valid case.
         }
     }
 }

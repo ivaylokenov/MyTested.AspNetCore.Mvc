@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Security.Claims;
     using System.Threading.Tasks;
     using Common;
     using Microsoft.AspNetCore.Authorization;
@@ -13,6 +12,7 @@
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.AspNetCore.Mvc.ViewEngines;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.FileProviders;
@@ -74,7 +74,7 @@
         {
             return this.View();
         }
-        
+
         public IActionResult DefaultViewWithModel()
         {
             return this.View(this.ResponseModel);
@@ -167,7 +167,15 @@
                 ContentType = ContentType.ApplicationXml
             };
         }
-        
+
+        public IActionResult CustomViewComponentResultWithViewData()
+        {
+            return new ViewComponentResult
+            {
+                ViewData = new ViewDataDictionary(new object() as ViewDataDictionary)
+            };
+        }
+
         public IActionResult IndexOutOfRangeException()
         {
             throw new IndexOutOfRangeException();
@@ -294,11 +302,11 @@
         [HttpDelete]
         [SkipStatusCodePages]
         [ResponseCache(
-            CacheProfileName = "Test Profile", 
-            Duration = 30, 
+            CacheProfileName = "Test Profile",
+            Duration = 30,
             Location = ResponseCacheLocation.Client,
             VaryByHeader = "Test Header",
-            VaryByQueryKeys = new [] { "FirstQuery", "SecondQuery" },
+            VaryByQueryKeys = new[] { "FirstQuery", "SecondQuery" },
             NoStore = true,
             Order = 2)]
         public IActionResult VariousAttributesAction()
@@ -450,15 +458,15 @@
 
         public IActionResult SignInWithAuthenticationPropertiesAndScheme()
         {
-            return this.SignIn(ClaimsPrincipalBuilder.DefaultAuthenticated, 
-                TestObjectFactory.GetAuthenticationProperties(), 
+            return this.SignIn(ClaimsPrincipalBuilder.DefaultAuthenticated,
+                TestObjectFactory.GetAuthenticationProperties(),
                 AuthenticationScheme.Basic);
         }
 
         public IActionResult SignInWithEmptyAuthenticationPropertiesAndScheme()
         {
-            return this.SignIn(ClaimsPrincipalBuilder.DefaultAuthenticated, 
-                TestObjectFactory.GetEmptyAuthenticationProperties(), 
+            return this.SignIn(ClaimsPrincipalBuilder.DefaultAuthenticated,
+                TestObjectFactory.GetEmptyAuthenticationProperties(),
                 AuthenticationScheme.Basic);
         }
 
@@ -933,11 +941,11 @@
 
             return this.BadRequest();
         }
-        
+
         public IActionResult FullSessionAction()
         {
             var session = this.HttpContext.Session;
-            
+
             var hasId = session.GetString("HasId");
             if (!string.IsNullOrWhiteSpace(hasId) && hasId == "HasIdValue")
             {
@@ -1020,7 +1028,7 @@
             this.TempData.Add("Another", "AnotherValue");
             return this.Ok();
         }
-        
+
         public IActionResult AddViewBagAction()
         {
             this.ViewBag.Test = "BagValue";

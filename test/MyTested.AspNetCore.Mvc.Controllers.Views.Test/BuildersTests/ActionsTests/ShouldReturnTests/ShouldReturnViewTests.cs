@@ -24,10 +24,10 @@
                 () =>
                 {
                     MyController<MvcController>
-                       .Instance()
-                       .Calling(c => c.BadRequestAction())
-                       .ShouldReturn()
-                       .View();
+                        .Instance()
+                        .Calling(c => c.BadRequestAction())
+                        .ShouldReturn()
+                        .View();
                 },
                 "When calling BadRequestAction action in MvcController expected result to be ViewResult, but instead received BadRequestResult.");
         }
@@ -39,10 +39,10 @@
                 () =>
                 {
                     MyController<MvcController>
-                       .Instance()
-                       .Calling(c => c.IndexView())
-                       .ShouldReturn()
-                       .View();
+                        .Instance()
+                        .Calling(c => c.IndexView())
+                        .ShouldReturn()
+                        .View();
                 },
                 "When calling IndexView action in MvcController expected view result name to be the default one, but instead received 'Index'.");
         }
@@ -64,10 +64,10 @@
                 () =>
                 {
                     MyController<MvcController>
-                       .Instance()
-                       .Calling(c => c.DefaultView())
-                       .ShouldReturn()
-                       .PartialView();
+                        .Instance()
+                        .Calling(c => c.DefaultView())
+                        .ShouldReturn()
+                        .PartialView();
                 },
                 "When calling DefaultView action in MvcController expected result to be PartialViewResult, but instead received ViewResult.");
         }
@@ -79,10 +79,10 @@
                 () =>
                 {
                     MyController<MvcController>
-                       .Instance()
-                       .Calling(c => c.IndexPartialView())
-                       .ShouldReturn()
-                       .PartialView();
+                        .Instance()
+                        .Calling(c => c.IndexPartialView())
+                        .ShouldReturn()
+                        .PartialView();
                 },
                 "When calling IndexPartialView action in MvcController expected partial view result name to be the default one, but instead received '_IndexPartial'.");
         }
@@ -94,10 +94,10 @@
                 () =>
                 {
                     MyController<MvcController>
-                       .Instance()
-                       .Calling(c => c.NullAction())
-                       .ShouldReturn()
-                       .PartialView();
+                        .Instance()
+                        .Calling(c => c.NullAction())
+                        .ShouldReturn()
+                        .PartialView();
                 },
                 "When calling NullAction action in MvcController expected result to be PartialViewResult, but instead received null.");
         }
