@@ -78,6 +78,22 @@
         }
 
         [Fact]
+        public void ShouldReturnViewShouldThrowExceptionWithEmptyString()
+        {
+            Test.AssertException<ViewResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                       .Instance()
+                       .Calling(c => c.IndexView())
+                       .ShouldReturn()
+                       .View(view => view
+                           .WithName(string.Empty));
+                },
+                "When calling IndexView action in MvcController expected view result to be '', but instead received 'Index'.");
+        }
+
+        [Fact]
         public void ShouldReturnViewShouldThrowExceptionWithNullViewName()
         {
             Test.AssertException<ViewResultAssertionException>(
