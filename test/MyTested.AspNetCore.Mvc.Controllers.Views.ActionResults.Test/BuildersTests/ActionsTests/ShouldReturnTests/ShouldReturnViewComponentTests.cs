@@ -116,7 +116,7 @@
                         .ViewComponent(viewComponent => viewComponent
                             .WithName("incorrect"));
                 },
-                "When calling ViewComponentResultByName action in MvcController expected view component result to be 'incorrect', but instead received 'Incorrect'.");
+                "When calling ViewComponent action in MvcController expected view component result to be 'incorrect', but instead received 'Incorrect'.");
         }
 
         [Fact]
