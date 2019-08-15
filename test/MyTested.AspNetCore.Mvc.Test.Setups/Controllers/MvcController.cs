@@ -170,10 +170,13 @@
 
         public IActionResult CustomViewComponentResultWithViewData()
         {
-            return new ViewComponentResult
+            var viewComponent = new ViewComponentResult
             {
-                ViewData = new ViewDataDictionary(new object() as ViewDataDictionary)
+                ViewData = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary())
             };
+
+            viewComponent.ViewData.Model = TestObjectFactory.GetListOfResponseModels();
+            return viewComponent;
         }
 
         public IActionResult IndexOutOfRangeException()

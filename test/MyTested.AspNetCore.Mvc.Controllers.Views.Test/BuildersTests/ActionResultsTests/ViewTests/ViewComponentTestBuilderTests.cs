@@ -1,9 +1,11 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ActionResultsTests.ViewTests
 {
+    using System.Collections.Generic;
     using System.Net;
     using Exceptions;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Net.Http.Headers;
+    using MyTested.AspNetCore.Mvc.Test.Setups.Models;
     using Setups;
     using Setups.Controllers;
     using Xunit;
@@ -177,8 +179,76 @@
                 .Calling(c => c.ViewComponentResultByType())
                 .ShouldReturn()
                 .ViewComponent(viewComponent =>
-                    viewComponent.WithNoModel()); 
-            // ViewComponent is not settable, not sure if this is a valid case.
+                    viewComponent.WithNoModel());
+        }
+
+        [Fact]
+        public void WithModelOfTypeShouldNotThrowExceptionWithCorrectTypeForViewComponents()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.CustomViewComponentResultWithViewData())
+                .ShouldReturn()
+                .ViewComponent(viewComponent =>
+                    viewComponent.WithModelOfType<List<ResponseModel>>());
+        }
+
+        [Fact]
+        public void WithModelShouldNotThrowExceptionWithCorrectModelForViewComponent()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.CustomViewComponentResultWithViewData())
+                .ShouldReturn()
+                .ViewComponent(viewComponent => viewComponent
+                    .WithModel(TestObjectFactory.GetListOfResponseModels()));
+        }
+
+        [Fact]
+        public void WithModelShouldExceptionWithCorrectModelForViewComponentWhenSuchDiffers()
+        {
+            Test.AssertException<ResponseModelAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.CustomViewComponentResultWithViewData())
+                        .ShouldReturn()
+                        .ViewComponent(viewComponent => viewComponent
+                            .WithModel(new object()));
+                },
+                "When calling CustomViewComponentResultWithViewData action in MvcController expected response model Object to be the given model, but in fact it was a different one.");
+        }
+
+        [Fact]
+        public void AndProvideTheActionResultShouldWorkCorrectlyForViewComponentModel()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.CustomViewComponentResultWithViewData())
+                .ShouldReturn()
+                .ViewComponent()
+                .ShouldPassForThe<IActionResult>(actionResult =>
+                {
+                    Assert.NotNull(actionResult);
+                    Assert.NotNull((actionResult as ViewComponentResult).Model);
+                });
+        }
+
+        [Fact]
+        public void WithNoModelShouldExceptionWithCorrectModelForViewComponentWhenSuchExist()
+        {
+            Test.AssertException<ResponseModelAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.CustomViewComponentResultWithViewData())
+                        .ShouldReturn()
+                        .ViewComponent(viewComponent => viewComponent
+                            .WithNoModel());
+                },
+                "When calling CustomViewComponentResultWithViewData action in MvcController expected to not have a view model but in fact such was found.");
         }
     }
 }
