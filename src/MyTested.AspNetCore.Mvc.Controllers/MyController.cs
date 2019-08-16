@@ -2,11 +2,11 @@
 {
     using System;
     using System.Linq.Expressions;
+    using Builders.Contracts.Actions;
     using Builders.Contracts.Controllers;
     using Builders.Controllers;
     using Internal.Application;
     using Internal.TestContexts;
-    using MyTested.AspNetCore.Mvc.Builders.Contracts.Actions;
 
     /// <summary>
     /// Provides methods to specify an ASP.NET Core MVC controller test case.
@@ -66,13 +66,13 @@
         public static IControllerBuilder<TController> Instance(Func<TController> construction) 
             => new MyController<TController>(construction);
 
-
         /// <summary>
-        /// Starts a controller test.
+        /// Indicates which action should be invoked and tested.
         /// </summary>
-        /// <param name="actionCall">Construction function returning the instantiated controller.</param>
+        /// <typeparam name="TActionResult">Type of result from action.</typeparam>
+        /// <param name="actionCall">Method call expression indicating invoked action.</param>
         /// <returns>Test builder of <see cref="IActionResultTestBuilder{TActionResult}"/> type.</returns>
         public new static IActionResultTestBuilder<TActionResult> Calling<TActionResult>(Expression<Func<TController, TActionResult>> actionCall)
-            => Instance((TController)null).Calling(actionCall);
+            => Instance().Calling(actionCall);
     }
 }
