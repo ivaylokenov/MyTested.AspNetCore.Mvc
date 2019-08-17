@@ -93,6 +93,7 @@
                 .Ok();
 
             controller
+                .WithMemoryCache(cache => cache.WithEntry(string.Empty, string.Empty))
                 .Calling(c => c.MemoryCacheAction())
                 .ShouldReturn()
                 .BadRequest();

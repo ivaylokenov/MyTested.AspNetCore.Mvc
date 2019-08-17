@@ -13,7 +13,6 @@ namespace Test.MissingStartupType
             var exception = Assert.Throws<TypeInitializationException>(() =>
             {
                 MyController<HomeController>
-                    .Instance()
                     .Calling(c => c.Index())
                     .ShouldReturn()
                     .View();

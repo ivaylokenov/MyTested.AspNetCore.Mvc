@@ -13,7 +13,6 @@
         [Fact]
         public void PrivacyShouldReturnDefaultView()
             => MyController<HomeController>
-                .Instance()
                 .Calling(c => c.Privacy())
                 .ShouldReturn()
                 .View();
