@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq.Expressions;
+    using System.Threading.Tasks;
     using Builders.Contracts.Actions;
     using Builders.Contracts.Controllers;
     using Builders.Controllers;
@@ -73,6 +74,35 @@
         /// <param name="actionCall">Method call expression indicating invoked action.</param>
         /// <returns>Test builder of <see cref="IActionResultTestBuilder{TActionResult}"/> type.</returns>
         public new static IActionResultTestBuilder<TActionResult> Calling<TActionResult>(Expression<Func<TController, TActionResult>> actionCall)
-            => Instance().Calling(actionCall);
+            => Instance()
+                .Calling(actionCall);
+
+        /// <summary>
+        /// Indicates which action should be invoked and tested.
+        /// </summary>
+        /// <typeparam name="TActionResult">Type of result from action.</typeparam>
+        /// <param name="actionCall">Method call expression indicating invoked asynchronous action.</param>
+        /// <returns>Test builder of <see cref="IActionResultTestBuilder{TActionResult}"/> type.</returns>
+        public new static IActionResultTestBuilder<TActionResult> Calling<TActionResult>(Expression<Func<TController, Task<TActionResult>>> actionCall)
+            => Instance()
+                .Calling(actionCall);
+
+        /// <summary>
+        /// Indicates which action should be invoked and tested.
+        /// </summary>
+        /// <param name="actionCall">Method call expression indicating invoked void action.</param>
+        /// <returns>Test builder of <see cref="IActionResultTestBuilder{TActionResult}"/> type.</returns>
+        public new static IVoidActionResultTestBuilder Calling(Expression<Action<TController>> actionCall)
+            => Instance()
+                .Calling(actionCall);
+
+        /// <summary>
+        /// Indicates which action should be invoked and tested.
+        /// </summary>
+        /// <param name="actionCall">Method call expression indicating invoked asynchronous void action.</param>
+        /// <returns>Test builder of <see cref="IActionResultTestBuilder{TActionResult}"/> type.</returns>
+        public new static IVoidActionResultTestBuilder Calling(Expression<Func<TController, Task>> actionCall)
+            => Instance()
+                .Calling(actionCall);
     }
 }
