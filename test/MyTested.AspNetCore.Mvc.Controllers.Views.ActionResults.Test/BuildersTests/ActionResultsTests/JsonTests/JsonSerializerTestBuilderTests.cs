@@ -223,6 +223,39 @@
         }
 
         [Fact]
+        public void WithContractResolverOfTypeShouldNotThrowException()
+        {
+            var jsonSerializerSettings = TestObjectFactory.GetJsonSerializerSettings();
+
+            MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
+                    .ShouldReturn()
+                    .Json(json => json
+                        .WithJsonSerializerSettings(s =>
+                            s.WithContractResolverOfType(typeof(CamelCasePropertyNamesContractResolver))));
+        }
+
+        [Fact]
+        public void WithContractResolverOfTypeShouldThrowException()
+        {
+            var jsonSerializerSettings = TestObjectFactory.GetJsonSerializerSettings();
+
+            Test.AssertException<JsonResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
+                        .ShouldReturn()
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithContractResolverOfType(typeof(IContractResolver))));
+                },
+                "When calling JsonWithSpecificSettingsAction action in MvcController expected JSON result serializer settings to have IContractResolver, but in fact found CamelCasePropertyNamesContractResolver.");
+        }
+
+        [Fact]
         public void WithoutContractResolverOfTypeShouldThrowException()
         {
             var jsonSerializerSettings = TestObjectFactory.GetJsonSerializerSettings();
