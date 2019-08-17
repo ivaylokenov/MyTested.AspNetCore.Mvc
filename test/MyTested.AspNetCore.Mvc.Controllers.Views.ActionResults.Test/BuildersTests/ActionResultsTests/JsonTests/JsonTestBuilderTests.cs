@@ -20,6 +20,53 @@
         }
 
         [Fact]
+        public void WithDefaultJsonSettingsShouldNotThrowExceptionAndPassAssertions()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.JsonAction())
+                .ShouldReturn()
+                .Json(json => json
+                        .WithDefaultJsonSerializerSettings()
+                        .AndAlso()
+                        .Passing(j => 
+                        {
+                            Assert.Null(j.SerializerSettings);
+                        }));
+        }
+
+        [Fact]
+        public void WithDefaultJsonSettingsShouldThrowExceptionWithNull()
+        {
+            Assert.Throws<InvocationAssertionException>(() =>
+            {
+                MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.JsonWithSpecificSettingsAction(null))
+                    .ShouldReturn()
+                    .Json(json => json
+                        .WithDefaultJsonSerializerSettings());
+            });
+        }
+
+        [Fact]
+        public void WithDefaultJsonSettingsShouldThrowExceptionWithBuildInSerializationSettings()
+        {
+            var jsonSettings = new JsonSerializerSettings();
+
+            Test.AssertException<JsonResultAssertionException>(() =>
+            {
+                MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
+                    .ShouldReturn()
+                    .Json(json => json
+                        .WithDefaultJsonSerializerSettings());
+            },
+            "When calling JsonWithSpecificSettingsAction action in MvcController expected JSON result serializer settings to have DefaultContractResolver, but in fact found null.");
+        }
+
+        [Fact]
         public void WithJsonSerializerSettingsShouldNotThrowExceptionWithSameJsonSettings()
         {
             MyController<MvcController>
@@ -29,7 +76,96 @@
                 .Json(json => json
                     .WithJsonSerializerSettings(TestObjectFactory.GetJsonSerializerSettings()));
         }
-        
+
+        [Fact]
+        public void WithJsonSerializerSettingsShouldNotThrowExceptionWithValidSettings()
+        {
+            var jsonSettings = TestObjectFactory.GetJsonSerializerSettings();
+
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
+                .ShouldReturn()
+                .Json(json => json
+                    .WithJsonSerializerSettings(jsonSettings));
+        }
+
+        [Fact]
+        public void WithJsonSerializerSettingsShouldNotThrowExceptionWithBuiltInSettings()
+        {
+            var jsonSettings = new JsonSerializerSettings();
+
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
+                .ShouldReturn()
+                .Json(json => json
+                    .WithJsonSerializerSettings(jsonSettings));
+        }
+
+        [Fact]
+        public void WithJsonSerializerSettingsShouldNotThrowExceptionWithActionSettings()
+        {
+            var jsonSettings = new JsonSerializerSettings
+            {
+                CheckAdditionalContent = true,
+                NullValueHandling = NullValueHandling.Ignore
+            };
+
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
+                .ShouldReturn()
+                .Json(json => json
+                    .WithJsonSerializerSettings(settings => 
+                    {
+                        settings.WithAdditionalContentChecking(true);
+                        settings.WithNullValueHandling(NullValueHandling.Ignore);
+                    }));
+        }
+
+        [Fact]
+        public void WithJsonSerializerSettingsShouldThrowExceptionWithActionSettings()
+        {
+            var jsonSettings = new JsonSerializerSettings
+            {
+                CheckAdditionalContent = true,
+                NullValueHandling = NullValueHandling.Ignore
+            };
+
+            Test.AssertException<JsonResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.JsonWithSpecificSettingsAction(jsonSettings))
+                        .ShouldReturn()
+                        .Json(json => json
+                            .WithJsonSerializerSettings(settings =>
+                            {
+                                settings.WithAdditionalContentChecking(false);
+                                settings.WithNullValueHandling(NullValueHandling.Ignore);
+                            }));
+                },
+                "When calling JsonWithSpecificSettingsAction action in MvcController expected JSON result serializer settings to have disabled checking for additional content, but in fact it was enabled.");
+        }
+
+        [Fact]
+        public void WithJsonSerializerSettingsShouldThrowExceptionWithNull()
+        {
+            var jsonSettings = TestObjectFactory.GetJsonSerializerSettings();
+
+            Assert.Throws<InvocationAssertionException>(() =>
+            {
+                MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.JsonWithSpecificSettingsAction(null))
+                    .ShouldReturn()
+                    .Json(json => json
+                        .WithJsonSerializerSettings(jsonSettings));
+            });
+        }
+
         [Fact]
         public void WithJsonSerializerSettingsShouldThrowExceptionWithDifferentJsonSettings()
         {
