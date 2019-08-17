@@ -1,6 +1,8 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ActionsTests.ShouldHaveTests
 {
     using Exceptions;
+    using Microsoft.Extensions.DependencyInjection;
+    using MyTested.AspNetCore.Mvc.Plugins;
     using Setups;
     using Setups.Controllers;
     using Setups.ViewComponents;
@@ -242,6 +244,19 @@
                         .InvalidModelState(withNumberOfErrors: 5);
                 },
                 "When invoking NormalComponent expected to have invalid model state with 5 errors, but in fact contained 0.");
+        }
+
+        [Fact]
+
+        public void ShouldHaveDefaultServices()
+        {
+            ModelStateTestPlugin modelStateTestPlugin = new ModelStateTestPlugin();
+            ServiceCollection serviceCollection = new ServiceCollection();
+            
+            modelStateTestPlugin.DefaultServiceRegistrationDelegate(serviceCollection);
+          
+            Assert.True(serviceCollection.Count == 60);
+
         }
     }
 }

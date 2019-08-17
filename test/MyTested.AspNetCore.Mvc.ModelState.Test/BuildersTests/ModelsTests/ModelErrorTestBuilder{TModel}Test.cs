@@ -1,4 +1,6 @@
-﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ModelsTests
+﻿
+
+namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ModelsTests
 {
     using System.Collections.Generic;
     using Exceptions;
@@ -6,8 +8,7 @@
     using Setups.Controllers;
     using Setups.Models;
     using Xunit;
-
-    public class ModelErrorTestBuilderTests
+    public class ModelErrorTestBuilder_TModel_Test
     {
         [Fact]
         public void ContainingNoErrorsShouldNotThrowExceptionWhenThereAreNoModelStateErrors()
@@ -18,7 +19,7 @@
                 .Instance()
                 .Calling(c => c.OkResultActionWithRequestBody(1, requestBody))
                 .ShouldHave()
-                .ModelState(modelState => modelState
+                .ModelState(modelState => modelState.For<RequestModel>()
                     .ContainingNoErrors())
                 .AndAlso()
                 .ShouldReturn()
@@ -38,7 +39,7 @@
                         .Instance()
                         .Calling(c => c.OkResultActionWithRequestBody(1, requestBodyWithErrors))
                         .ShouldHave()
-                        .ModelState(modelState => modelState
+                        .ModelState(modelState => modelState.For<RequestModel>()
                             .ContainingNoErrors())
                         .AndAlso()
                         .ShouldReturn()
@@ -47,7 +48,6 @@
                 },
                 "When calling OkResultActionWithRequestBody action in MvcController expected to have valid model state with no errors, but it had some.");
         }
-
         [Fact]
         public void AndModelStateErrorShouldNotThrowExceptionWhenTheProvidedModelStateErrorExists()
         {
@@ -57,7 +57,7 @@
                 .Instance()
                 .Calling(c => c.ModelStateCheck(requestBodyWithErrors))
                 .ShouldHave()
-                .ModelState(modelState => modelState
+                .ModelState(modelState => modelState.For<RequestModel>()
                     .ContainingError("RequiredString")
                     .AndAlso()
                     .ContainingNoError("MissingError"))
@@ -79,7 +79,7 @@
                         .Instance()
                         .Calling(c => c.ModelStateCheck(requestBodyWithErrors))
                         .ShouldHave()
-                        .ModelState(modelState => modelState
+                        .ModelState(modelState => modelState.For<RequestModel>()
                             .ContainingNoError("RequiredString"))
                         .AndAlso()
                         .ShouldReturn()
@@ -101,7 +101,7 @@
                         .Instance()
                         .Calling(c => c.ModelStateCheck(requestBody))
                         .ShouldHave()
-                        .ModelState(modelState => modelState
+                        .ModelState(modelState => modelState.For<RequestModel>()
                             .ContainingError("Name"))
                         .AndAlso()
                         .ShouldReturn()
@@ -111,40 +111,7 @@
                 "When calling ModelStateCheck action in MvcController expected to have a model error against key 'Name', but in fact none was found.");
         }
 
-        [Fact]
-        public void AndProvideTheModelShouldReturnProperModelWhenThereIsResponseModel()
-        {
-            MyController<MvcController>
-                .Instance()
-                .Calling(c => c.OkResultWithResponse())
-                .ShouldReturn()
-                .Ok(ok => ok
-                    .WithModelOfType<List<ResponseModel>>()
-                    .ShouldPassForThe<List<ResponseModel>>(responseModel =>
-                    {
-                        Assert.NotNull(responseModel);
-                        Assert.IsAssignableFrom<List<ResponseModel>>(responseModel);
-                        Assert.Equal(2, responseModel.Count);
-                    }));
-        }
 
-        [Fact]
-        public void AndProvideTheModelShouldReturnProperModelWhenThereIsResponseModelWithPassing()
-        {
-            MyController<MvcController>
-                .Instance()
-                .Calling(c => c.OkResultWithResponse())
-                .ShouldReturn()
-                .Ok(ok => ok
-                    .WithModelOfType<List<ResponseModel>>()
-                    .Passing(m => m.Count == 2)
-                    .ShouldPassForThe<List<ResponseModel>>(responseModel =>
-                    {
-                        Assert.NotNull(responseModel);
-                        Assert.IsAssignableFrom<List<ResponseModel>>(responseModel);
-                        Assert.Equal(2, responseModel.Count);
-                    }));
-        }
 
         [Fact]
         public void AndProvideTheModelShouldReturnProperModelWhenThereIsResponseModelWithModelStateError()
@@ -153,7 +120,7 @@
                 .Instance()
                 .Calling(c => c.CustomModelStateError())
                 .ShouldHave()
-                .ModelState(modelState => modelState
+                .ModelState(modelState => modelState.For<RequestModel>()
                     .ContainingError("Test"))
                 .AndAlso()
                 .ShouldReturn()
@@ -174,7 +141,7 @@
                 .Instance()
                 .Calling(c => c.CustomModelStateError())
                 .ShouldHave()
-                .ModelState(modelState => modelState
+                .ModelState(modelState => modelState.For<RequestModel>()
                     .ContainingError("Test")
                     .ThatEquals("Test error"))
                 .AndAlso()
@@ -197,7 +164,7 @@
                 .Instance()
                 .Calling(c => c.CustomModelStateError())
                 .ShouldHave()
-                .ModelState(modelState => modelState
+                .ModelState(modelState => modelState.For<RequestModel>()
                     .ContainingError("Test")
                     .BeginningWith("Test"))
                 .AndAlso()
@@ -220,7 +187,7 @@
                 .Instance()
                 .Calling(c => c.CustomModelStateError())
                 .ShouldHave()
-                .ModelState(modelState => modelState
+                .ModelState(modelState => modelState.For<RequestModel>()
                     .ContainingError("Test")
                     .EndingWith("error"))
                 .AndAlso()
@@ -243,7 +210,7 @@
                 .Instance()
                 .Calling(c => c.CustomModelStateError())
                 .ShouldHave()
-                .ModelState(modelState => modelState
+                .ModelState(modelState => modelState.For<RequestModel>()
                     .ContainingError("Test")
                     .Containing("st err"))
                 .AndAlso()
@@ -266,7 +233,8 @@
                 .Instance()
                 .Calling(c => c.CustomModelStateError())
                 .ShouldHave()
-                .ModelState(modelState => modelState
+                .ModelState(modelState => modelState.For<RequestModel>()
+                    .ContainingError("Test")
                     .ContainingError("Test"))
                 .AndAlso()
                 .ShouldReturn()
@@ -281,3 +249,4 @@
         }
     }
 }
+
