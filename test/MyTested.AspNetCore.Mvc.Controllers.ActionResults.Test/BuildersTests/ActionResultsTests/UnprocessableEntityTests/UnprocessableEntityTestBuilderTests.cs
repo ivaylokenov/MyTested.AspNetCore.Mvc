@@ -31,7 +31,7 @@
         }
 
         [Fact]
-        public void WithStatusCodeShouldThrowExceptionWithInCorrectStatusCode()
+        public void WithStatusCodeShouldThrowExceptionWithIncorrectStatusCode()
         {
             Test.AssertException<UnprocessableEntityResultAssertionException>(
                 () =>
@@ -43,11 +43,15 @@
                         .UnprocessableEntity(unprocessableEntity => unprocessableEntity
                             .WithStatusCode(415));
                 },
+#if NETCOREAPP
                 "When calling UnprocessableEntityAction action in MvcController expected unprocessable entity result to have 415 (UnsupportedMediaType) status code, but instead received 422 (UnprocessableEntity).");
+#else
+                "When calling UnprocessableEntityAction action in MvcController expected unprocessable entity result to have 415 (UnsupportedMediaType) status code, but instead received 422 (422).");
+#endif
         }
 
         [Fact]
-        public void WithStatusCodeAsEnumShouldThrowExceptionWithInCorrectStatusCode()
+        public void WithStatusCodeAsEnumShouldThrowExceptionWithIncorrectStatusCode()
         {
             Test.AssertException<UnprocessableEntityResultAssertionException>(
                 () =>
@@ -59,7 +63,11 @@
                         .UnprocessableEntity(unprocessableEntity => unprocessableEntity
                             .WithStatusCode(HttpStatusCode.UnsupportedMediaType));
                 },
+#if NETCOREAPP
                 "When calling UnprocessableEntityAction action in MvcController expected unprocessable entity result to have 415 (UnsupportedMediaType) status code, but instead received 422 (UnprocessableEntity).");
+#else
+                "When calling UnprocessableEntityAction action in MvcController expected unprocessable entity result to have 415 (UnsupportedMediaType) status code, but instead received 422 (422).");
+#endif
         }
 
         [Fact]

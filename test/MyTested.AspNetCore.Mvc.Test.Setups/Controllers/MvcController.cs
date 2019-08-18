@@ -784,6 +784,19 @@
             return this.BadRequest(this.ResponseModel);
         }
 
+        public IActionResult AcceptedAction()
+        {
+            return this.Accepted();
+        }
+
+        public IActionResult FullAcceptedAction()
+        {
+            return new AcceptedResult()
+            {
+                ContentTypes = new MediaTypeCollection { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) }
+            };
+        }
+
         public IActionResult ConflictAction()
         {
             return this.Conflict();
