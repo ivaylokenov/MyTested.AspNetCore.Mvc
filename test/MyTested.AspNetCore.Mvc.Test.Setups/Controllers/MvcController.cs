@@ -4,8 +4,8 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Security.Claims;
     using System.Threading.Tasks;
+    using Builders.Authentication;
     using Common;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
@@ -18,7 +18,6 @@
     using Microsoft.Extensions.FileProviders;
     using Microsoft.Net.Http.Headers;
     using Models;
-    using MyTested.AspNetCore.Mvc.Builders.Authentication;
     using Newtonsoft.Json;
     using Services;
 

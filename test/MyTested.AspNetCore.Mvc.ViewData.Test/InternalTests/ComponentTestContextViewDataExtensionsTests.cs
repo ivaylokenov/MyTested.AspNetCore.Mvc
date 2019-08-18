@@ -33,10 +33,8 @@
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
-                .WithServices(services =>
-                {
-                    services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-                });
+                .WithServices(services => services
+                    .TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>());
 
             MyController<FullPocoController>
                 .Instance()

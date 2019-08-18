@@ -79,7 +79,6 @@
                     .WithAuthenticationScheme(AuthenticationScheme.Basic));
         }
 
-
         [Fact]
         public void PassingShouldCorrectlyRunItsAssertionFunction()
         {
