@@ -7,7 +7,7 @@
     using Setups.Models;
     using Xunit;
 
-    public class ModelErrorTestBuilderTest<TModel>
+    public class ModelErrorTestBuilderTModelTest
     {
         [Fact]
         public void ContainingNoErrorsShouldNotThrowExceptionWhenThereAreNoModelStateErrors()
