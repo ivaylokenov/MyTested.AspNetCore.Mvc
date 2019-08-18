@@ -85,6 +85,11 @@
             return this.View("Index", this.ResponseModel);
         }
 
+        public IActionResult ViewResultByName()
+        {
+            return this.View("TestView", new { id = 1, test = "text" });
+        }
+
         public IActionResult CustomViewResult()
         {
             return new ViewResult
