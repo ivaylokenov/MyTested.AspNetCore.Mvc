@@ -8,6 +8,7 @@ namespace MyTested.AspNetCore.Mvc.Test.PluginsTests
     using Plugins;
     using System;
     using Xunit;
+
     public class LiteTestPluginTest
     {
         [Fact]
