@@ -19,6 +19,7 @@
     using Microsoft.Extensions.FileProviders;
     using Microsoft.Net.Http.Headers;
     using Models;
+    using Builders.Authentication;
     using Newtonsoft.Json;
     using Services;
 
@@ -781,6 +782,19 @@
         public IActionResult BadRequestWithCustomError()
         {
             return this.BadRequest(this.ResponseModel);
+        }
+
+        public IActionResult UnprocessableEntityAction()
+        {
+            return this.UnprocessableEntity();
+        }
+
+        public IActionResult FullUnprocessableEntityAction()
+        {
+            return new UnprocessableEntityObjectResult(this.ModelState)
+            {
+                ContentTypes = new MediaTypeCollection { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) }
+            };
         }
 
         public IActionResult ModelStateWithNestedError()
