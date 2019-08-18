@@ -1,14 +1,13 @@
-﻿
-
-namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ModelsTests
+﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ModelsTests
 {
-    using System.Collections.Generic;
     using Exceptions;
     using Setups;
     using Setups.Controllers;
     using Setups.Models;
+    using System.Collections.Generic;
     using Xunit;
-    public class ModelErrorTestBuilder_TModel_Test
+
+    public class ModelErrorTestBuilderTest<TModel>
     {
         [Fact]
         public void ContainingNoErrorsShouldNotThrowExceptionWhenThereAreNoModelStateErrors()
@@ -19,7 +18,8 @@ namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ModelsTests
                 .Instance()
                 .Calling(c => c.OkResultActionWithRequestBody(1, requestBody))
                 .ShouldHave()
-                .ModelState(modelState => modelState.For<RequestModel>()
+                .ModelState(modelState => modelState
+                    .For<RequestModel>()
                     .ContainingNoErrors())
                 .AndAlso()
                 .ShouldReturn()
@@ -39,7 +39,8 @@ namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ModelsTests
                         .Instance()
                         .Calling(c => c.OkResultActionWithRequestBody(1, requestBodyWithErrors))
                         .ShouldHave()
-                        .ModelState(modelState => modelState.For<RequestModel>()
+                        .ModelState(modelState => modelState
+                            .For<RequestModel>()
                             .ContainingNoErrors())
                         .AndAlso()
                         .ShouldReturn()
@@ -48,6 +49,7 @@ namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ModelsTests
                 },
                 "When calling OkResultActionWithRequestBody action in MvcController expected to have valid model state with no errors, but it had some.");
         }
+
         [Fact]
         public void AndModelStateErrorShouldNotThrowExceptionWhenTheProvidedModelStateErrorExists()
         {
@@ -57,7 +59,8 @@ namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ModelsTests
                 .Instance()
                 .Calling(c => c.ModelStateCheck(requestBodyWithErrors))
                 .ShouldHave()
-                .ModelState(modelState => modelState.For<RequestModel>()
+                .ModelState(modelState => modelState
+                    .For<RequestModel>()
                     .ContainingError("RequiredString")
                     .AndAlso()
                     .ContainingNoError("MissingError"))
@@ -79,7 +82,8 @@ namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ModelsTests
                         .Instance()
                         .Calling(c => c.ModelStateCheck(requestBodyWithErrors))
                         .ShouldHave()
-                        .ModelState(modelState => modelState.For<RequestModel>()
+                        .ModelState(modelState => modelState
+                            .For<RequestModel>()
                             .ContainingNoError("RequiredString"))
                         .AndAlso()
                         .ShouldReturn()
@@ -101,7 +105,8 @@ namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ModelsTests
                         .Instance()
                         .Calling(c => c.ModelStateCheck(requestBody))
                         .ShouldHave()
-                        .ModelState(modelState => modelState.For<RequestModel>()
+                        .ModelState(modelState => modelState
+                            .For<RequestModel>()
                             .ContainingError("Name"))
                         .AndAlso()
                         .ShouldReturn()
@@ -111,8 +116,6 @@ namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ModelsTests
                 "When calling ModelStateCheck action in MvcController expected to have a model error against key 'Name', but in fact none was found.");
         }
 
-
-
         [Fact]
         public void AndProvideTheModelShouldReturnProperModelWhenThereIsResponseModelWithModelStateError()
         {
@@ -120,7 +123,8 @@ namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ModelsTests
                 .Instance()
                 .Calling(c => c.CustomModelStateError())
                 .ShouldHave()
-                .ModelState(modelState => modelState.For<RequestModel>()
+                .ModelState(modelState => modelState
+                    .For<RequestModel>()
                     .ContainingError("Test"))
                 .AndAlso()
                 .ShouldReturn()
@@ -141,7 +145,8 @@ namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ModelsTests
                 .Instance()
                 .Calling(c => c.CustomModelStateError())
                 .ShouldHave()
-                .ModelState(modelState => modelState.For<RequestModel>()
+                .ModelState(modelState => modelState
+                    .For<RequestModel>()
                     .ContainingError("Test")
                     .ThatEquals("Test error"))
                 .AndAlso()
@@ -157,14 +162,14 @@ namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ModelsTests
         }
 
         [Fact]
-
         public void AndProvideTheModelShouldReturnProperModelWhenThereIsResponseModelWithModelStateErrorAndBeginningWith()
         {
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.CustomModelStateError())
                 .ShouldHave()
-                .ModelState(modelState => modelState.For<RequestModel>()
+                .ModelState(modelState => modelState
+                    .For<RequestModel>()
                     .ContainingError("Test")
                     .BeginningWith("Test"))
                 .AndAlso()
@@ -180,14 +185,14 @@ namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ModelsTests
         }
 
         [Fact]
-
         public void AndProvideTheModelShouldReturnProperModelWhenThereIsResponseModelWithModelStateErrorAndEndingWith()
         {
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.CustomModelStateError())
                 .ShouldHave()
-                .ModelState(modelState => modelState.For<RequestModel>()
+                .ModelState(modelState => modelState
+                    .For<RequestModel>()
                     .ContainingError("Test")
                     .EndingWith("error"))
                 .AndAlso()
@@ -203,14 +208,14 @@ namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ModelsTests
         }
 
         [Fact]
-
         public void AndProvideTheModelShouldReturnProperModelWhenThereIsResponseModelWithModelStateErrorAndContaining()
         {
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.CustomModelStateError())
                 .ShouldHave()
-                .ModelState(modelState => modelState.For<RequestModel>()
+                .ModelState(modelState => modelState
+                    .For<RequestModel>()
                     .ContainingError("Test")
                     .Containing("st err"))
                 .AndAlso()
@@ -226,14 +231,14 @@ namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ModelsTests
         }
 
         [Fact]
-
         public void AndProvideTheModelShouldReturnProperModelWhenThereIsResponseModelWithModelStateErrorAndContainingError()
         {
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.CustomModelStateError())
                 .ShouldHave()
-                .ModelState(modelState => modelState.For<RequestModel>()
+                .ModelState(modelState => modelState
+                    .For<RequestModel>()
                     .ContainingError("Test")
                     .ContainingError("Test"))
                 .AndAlso()

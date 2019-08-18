@@ -2,7 +2,7 @@
 {
     using Exceptions;
     using Microsoft.Extensions.DependencyInjection;
-    using MyTested.AspNetCore.Mvc.Plugins;
+    using Plugins;
     using Setups;
     using Setups.Controllers;
     using Setups.ViewComponents;
@@ -247,16 +247,14 @@
         }
 
         [Fact]
-
         public void ShouldHaveDefaultServices()
         {
-            ModelStateTestPlugin modelStateTestPlugin = new ModelStateTestPlugin();
-            ServiceCollection serviceCollection = new ServiceCollection();
+            var modelStateTestPlugin = new ModelStateTestPlugin();
+            var serviceCollection = new ServiceCollection();
             
             modelStateTestPlugin.DefaultServiceRegistrationDelegate(serviceCollection);
           
             Assert.True(serviceCollection.Count == 60);
-
         }
     }
 }
