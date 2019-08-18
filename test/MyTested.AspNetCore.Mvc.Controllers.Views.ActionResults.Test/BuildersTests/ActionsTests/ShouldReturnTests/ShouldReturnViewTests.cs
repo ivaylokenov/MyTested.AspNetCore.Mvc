@@ -2,9 +2,9 @@
 {
     using Exceptions;
     using Microsoft.AspNetCore.Mvc;
-    using MyTested.AspNetCore.Mvc.Test.Setups.Models;
     using Setups;
     using Setups.Controllers;
+    using Setups.Models;
     using System.Collections.Generic;
     using Xunit;
 
@@ -28,12 +28,12 @@
                 .Instance()
                 .Calling(c => c.IndexView())
                 .ShouldReturn()
-                .View(view => view
-                    .Passing((v) =>
+                .View(result => result
+                    .Passing(view =>
                     {
-                        Assert.False(string.IsNullOrEmpty(v.ViewName));
-                        Assert.Equal("Index", v.ViewName);
-                        Assert.True(typeof(ViewResult) == v.GetType());
+                        Assert.False(string.IsNullOrEmpty(view.ViewName));
+                        Assert.Equal("Index", view.ViewName);
+                        Assert.True(typeof(ViewResult) == view.GetType());
                     }));
         }
 
@@ -55,10 +55,10 @@
                 .Instance()
                 .Calling(c => c.IndexView())
                 .ShouldReturn()
-                .View(view => view
+                .View(result => result
                     .WithName("Index")
                     .AndAlso()
-                    .Passing(v => v.GetType() == typeof(ViewResult)));
+                    .Passing(view => view.GetType() == typeof(ViewResult)));
         }
 
         [Fact]
@@ -143,12 +143,12 @@
                 .Instance()
                 .Calling(c => c.IndexPartialView())
                 .ShouldReturn()
-                .PartialView(view => view
-                    .Passing(v =>
+                .PartialView(result => result
+                    .Passing(partialView =>
                     {
-                        Assert.False(string.IsNullOrEmpty(v.ViewName));
-                        Assert.Equal("_IndexPartial", v.ViewName);
-                        Assert.True(typeof(PartialViewResult) == v.GetType());
+                        Assert.False(string.IsNullOrEmpty(partialView.ViewName));
+                        Assert.Equal("_IndexPartial", partialView.ViewName);
+                        Assert.True(typeof(PartialViewResult) == partialView.GetType());
                     }));
         }
 
@@ -218,11 +218,11 @@
                 .Instance()
                 .Calling(c => c.DefaultView())
                 .ShouldReturn()
-                .View(view => view
-                    .Passing(v => 
+                .View(result => result
+                    .Passing(view =>
                     {
-                        Assert.True(string.IsNullOrEmpty(v.ViewName));
-                        Assert.True(v.GetType() == typeof(ViewResult));
+                        Assert.True(string.IsNullOrEmpty(view.ViewName));
+                        Assert.True(view.GetType() == typeof(ViewResult));
                     }));
         }
 
@@ -246,9 +246,9 @@
                 .Instance()
                 .Calling(c => c.CustomViewResult())
                 .ShouldReturn()
-                .View(view => view
+                .View(result => result
                     .WithDefaultName()
-                    .Passing(v => v.GetType() == typeof(ViewResult)));
+                    .Passing(view => view.GetType() == typeof(ViewResult)));
         }
 
         [Fact]
@@ -269,11 +269,11 @@
                 .Instance()
                 .Calling(c => c.DefaultPartialView())
                 .ShouldReturn()
-                .PartialView(view => view
-                    .Passing(v =>
+                .PartialView(result => result
+                    .Passing(partialView =>
                     {
-                        Assert.True(string.IsNullOrEmpty(v.ViewName));
-                        Assert.True(v.GetType() == typeof(PartialViewResult));
+                        Assert.True(string.IsNullOrEmpty(partialView.ViewName));
+                        Assert.True(partialView.GetType() == typeof(PartialViewResult));
                     }));
         }
 

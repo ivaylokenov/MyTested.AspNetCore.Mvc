@@ -49,14 +49,14 @@
                 .Instance()
                 .Calling(c => c.ViewComponent("MyComponent"))
                 .ShouldReturn()
-                .ViewComponent(viewComponent => viewComponent
+                .ViewComponent(result => result
                     .WithName("MyComponent")
                     .AndAlso()
-                    .Passing(vc => 
+                    .Passing(viewComponent => 
                     {
-                        Assert.NotNull(vc);
-                        Assert.NotEmpty(vc.ViewComponentName);
-                        Assert.True(typeof(ViewComponentResult) == vc.GetType());
+                        Assert.NotNull(viewComponent);
+                        Assert.NotEmpty(viewComponent.ViewComponentName);
+                        Assert.True(typeof(ViewComponentResult) == viewComponent.GetType());
                     }));
         }
 

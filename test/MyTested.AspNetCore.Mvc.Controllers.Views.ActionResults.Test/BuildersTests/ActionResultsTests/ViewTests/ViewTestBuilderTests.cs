@@ -42,14 +42,14 @@
                 .Instance()
                 .Calling(c => c.ViewWithViewEngine(viewEngine))
                 .ShouldReturn()
-                .View(view => view
+                .View(result => result
                     .WithViewEngine(viewEngine)
                     .AndAlso()
-                    .Passing(v =>
+                    .Passing(view =>
                     {
-                        Assert.NotNull(v.ViewEngine);
-                        Assert.IsAssignableFrom<IViewEngine>(v.ViewEngine);
-                        Assert.True(typeof(CustomViewEngine) == v.ViewEngine.GetType());
+                        Assert.NotNull(view.ViewEngine);
+                        Assert.IsAssignableFrom<IViewEngine>(view.ViewEngine);
+                        Assert.True(typeof(CustomViewEngine) == view.ViewEngine.GetType());
                     }));
         }
 
@@ -60,10 +60,10 @@
                 .Instance()
                 .Calling(c => c.View())
                 .ShouldReturn()
-                .View(view => view
-                    .Passing(v =>
+                .View(result => result
+                    .Passing(view =>
                     {
-                        Assert.Null(v.ViewEngine);
+                        Assert.Null(view.ViewEngine);
                     }));
         }
 
@@ -222,14 +222,14 @@
                 .WithoutValidation()
                 .Calling(c => c.PartialViewWithViewEngine(viewEngine))
                 .ShouldReturn()
-                .PartialView(partialView => partialView
+                .PartialView(result => result
                     .WithViewEngine(viewEngine)
                     .AndAlso()
-                    .Passing(pv => 
+                    .Passing(partialView => 
                     {
-                        Assert.NotNull(pv.ViewEngine);
-                        Assert.IsAssignableFrom<IViewEngine>(pv.ViewEngine);
-                        Assert.True(typeof(CustomViewEngine) == pv.ViewEngine.GetType());
+                        Assert.NotNull(partialView.ViewEngine);
+                        Assert.IsAssignableFrom<IViewEngine>(partialView.ViewEngine);
+                        Assert.True(typeof(CustomViewEngine) == partialView.ViewEngine.GetType());
                     }));
         }
 

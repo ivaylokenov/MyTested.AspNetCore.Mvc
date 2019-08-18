@@ -26,13 +26,13 @@
                 .Instance()
                 .Calling(c => c.JsonAction())
                 .ShouldReturn()
-                .Json(json => json
-                        .WithDefaultJsonSerializerSettings()
-                        .AndAlso()
-                        .Passing(j => 
-                        {
-                            Assert.Null(j.SerializerSettings);
-                        }));
+                .Json(result => result
+                    .WithDefaultJsonSerializerSettings()
+                    .AndAlso()
+                    .Passing(json => 
+                    {
+                        Assert.Null(json.SerializerSettings);
+                    }));
         }
 
         [Fact]
