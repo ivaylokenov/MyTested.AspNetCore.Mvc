@@ -31,7 +31,7 @@
         }
 
         [Fact]
-        public void WithStatusCodeShouldThrowExceptionWithInCorrectStatusCode()
+        public void WithStatusCodeShouldThrowExceptionWithIncorrectStatusCode()
         {
             Test.AssertException<AcceptedResultAssertionException>(
                 () =>
@@ -47,7 +47,7 @@
         }
 
         [Fact]
-        public void WithStatusCodeAsEnumShouldThrowExceptionWithInCorrectStatusCode()
+        public void WithStatusCodeAsEnumShouldThrowExceptionWithIncorrectStatusCode()
         {
             Test.AssertException<AcceptedResultAssertionException>(
                 () =>
