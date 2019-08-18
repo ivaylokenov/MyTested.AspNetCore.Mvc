@@ -11,7 +11,6 @@
         public void NoAttributesShouldNotThrowExceptionWithControllerContainingNoAttributes()
         {
             MyViewComponent<NormalComponent>
-                .Instance()
                 .ShouldHave()
                 .NoAttributes();
         }
@@ -23,7 +22,6 @@
                 () =>
                 {
                     MyViewComponent<AttributesComponent>
-                        .Instance()
                         .ShouldHave()
                         .NoAttributes();
                 },
@@ -34,7 +32,6 @@
         public void AttributesShouldNotThrowEceptionWithControllerContainingAttributes()
         {
             MyViewComponent<AttributesComponent>
-                .Instance()
                 .ShouldHave()
                 .Attributes();
         }
@@ -46,7 +43,6 @@
                 () =>
                 {
                     MyViewComponent<NormalComponent>
-                        .Instance()
                         .ShouldHave()
                         .Attributes();
                 },
@@ -57,7 +53,6 @@
         public void AttributesShouldNotThrowEceptionWithControllerContainingNumberOfAttributes()
         {
             MyViewComponent<AttributesComponent>
-                .Instance()
                 .ShouldHave()
                 .Attributes(withTotalNumberOf: 2);
         }
@@ -69,7 +64,6 @@
                 () =>
                 {
                     MyViewComponent<AttributesComponent>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(withTotalNumberOf: 10);
                 },
@@ -83,7 +77,6 @@
                 () =>
                 {
                     MyViewComponent<AttributesComponent>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(withTotalNumberOf: 1);
                 },

@@ -28,7 +28,6 @@
         public void AndProvideTheControllerAttributesShouldReturnProperAttributes()
         {
             MyController<MvcController>
-                .Instance()
                 .ShouldHave()
                 .Attributes()
                 .ShouldPassForThe<ControllerAttributes>(attributes =>

@@ -63,5 +63,13 @@
         /// <returns>Test builder of <see cref="IViewComponentBuilder{TViewComponent}"/> type.</returns>
         public static IViewComponentBuilder<TViewComponent> Instance(Func<TViewComponent> construction) 
             => new MyViewComponent<TViewComponent>(construction);
+
+        /// <summary>
+        /// Used for testing view component additional details.
+        /// </summary>
+        /// <returns>Test builder of <see cref="IViewComponentTestBuilder"/> type.</returns>
+        public new static IViewComponentTestBuilder ShouldHave()
+            => Instance()
+                .ShouldHave();
     }
 }

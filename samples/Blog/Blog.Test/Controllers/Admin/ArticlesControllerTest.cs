@@ -18,7 +18,6 @@
         [Fact]
         public void ControllerShouldBeInAdminArea()
             => MyController<ArticlesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attrs => attrs
                     .SpecifyingArea(ControllerConstants.AdministratorArea)

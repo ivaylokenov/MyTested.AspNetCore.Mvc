@@ -30,7 +30,6 @@
         public void AndProvideTheControllerAttributesShouldReturnProperAttributes()
         {
             MyViewComponent<AttributesComponent>
-                .Instance()
                 .ShouldHave()
                 .Attributes()
                 .ShouldPassForThe<ViewComponentAttributes>(attributes =>
