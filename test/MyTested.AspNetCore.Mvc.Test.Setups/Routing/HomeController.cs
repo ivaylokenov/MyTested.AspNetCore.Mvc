@@ -6,24 +6,14 @@
 
     public class HomeController : Controller
     {
-        public IActionResult Index()
-        {
-            return this.View();
-        }
+        public IActionResult Index() => this.View();
 
-        public async Task<IActionResult> AsyncMethod()
-        {
-            return await Task.Run(() => this.Ok());
-        }
+        public async Task<IActionResult> AsyncMethod() 
+            => await Task.Run(() => this.Ok());
 
-        public IActionResult Contact(int id)
-        {
-            return this.View();
-        }
+        public IActionResult Contact(int id) => this.View();
 
-        public IActionResult FailingAction()
-        {
-            throw new InvalidOperationException();
-        }
+        public IActionResult FailingAction() 
+            => throw new InvalidOperationException();
     }
 }

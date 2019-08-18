@@ -23,7 +23,7 @@
             serviceCollection => serviceCollection.AddViewComponentsTesting();
 
         public object TryGetValue(Type type, ComponentTestContext testContext)
-            => Reflection.AreAssignable(viewComponentAttributesType, type) // ViewComponentAttributes
+            => Reflection.AreAssignable(this.viewComponentAttributesType, type) // ViewComponentAttributes
                 ? new ViewComponentAttributes(testContext.ComponentAttributes)
                 : null;
     }

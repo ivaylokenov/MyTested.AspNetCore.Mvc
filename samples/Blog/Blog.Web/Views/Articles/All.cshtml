@@ -1,0 +1,37 @@
+﻿@model ArticleListingViewModel
+
+@{
+    ViewData.SetTitle("All Articles");
+}
+
+@if (Model.Articles.Any())
+{
+    <div class="text-center">
+        <h1 class="display-4">@ViewData.GetTitle()</h1>
+        <partial name="_ArticleListingPartial" model="@Model.Articles" />
+
+        <div class="container margin-top-20">
+            <div class="row">
+                <div class="col-2">
+                    @if (Model.Page > 1)
+                    {
+                        <a class="disabled" href="/Articles/All?page=@(Model.Page - 1)">&lt;&lt; Prev</a>
+                    }
+                </div>
+                <div class="col-md-8"></div>
+                <div class="col-2">
+                    @if (Model.Total - ServicesConstants.ArticlesPerPage * Model.Page > 0)
+                    {
+                        <a class="pull-right" href="/Articles/All?page=@(Model.Page + 1)">Next &gt;&gt;</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <h2 class="text-center margin-top-20">No articles available here!</h2>
+}
+
+

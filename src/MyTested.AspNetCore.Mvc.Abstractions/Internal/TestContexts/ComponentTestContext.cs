@@ -12,7 +12,7 @@
     {
         private object component;
         private IEnumerable<object> componentAttributes;
-        private IDictionary<Type, object> aggregatedServices;
+        private IDictionary<Type, object> aggregatedDependencies;
         private string methodName;
         private MethodInfo method;
         private LambdaExpression methodCall;
@@ -45,25 +45,22 @@
             }
         }
 
-        public IDictionary<Type, object> AggregatedServices
+        public IDictionary<Type, object> AggregatedDependencies
         {
             get
             {
-                if (this.aggregatedServices == null)
+                if (this.aggregatedDependencies == null)
                 {
-                    this.aggregatedServices = new Dictionary<Type, object>();
+                    this.aggregatedDependencies = new Dictionary<Type, object>();
                 }
 
-                return this.aggregatedServices;
+                return this.aggregatedDependencies;
             }
         }
 
         public string MethodName
         {
-            get
-            {
-                return this.methodName;
-            }
+            get => this.methodName;
 
             set
             {
@@ -87,10 +84,7 @@
 
         public LambdaExpression MethodCall
         {
-            get
-            {
-                return this.methodCall;
-            }
+            get => this.methodCall;
 
             set
             {
@@ -128,10 +122,7 @@
                 return this.model;
             }
 
-            set
-            {
-                this.model = value;
-            }
+            set => this.model = value;
         }
 
         public Func<object> ComponentConstructionDelegate { get; set; }

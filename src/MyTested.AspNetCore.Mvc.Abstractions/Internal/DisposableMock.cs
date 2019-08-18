@@ -7,16 +7,14 @@
     /// </summary>
     public class DisposableMock : IDisposable
     {
-        private static DisposableMock defaultDisposableMock = new DisposableMock();
-
-        public static DisposableMock Instance => defaultDisposableMock;
+        public static DisposableMock Instance => new DisposableMock();
 
         /// <summary>
         /// Does nothing.
         /// </summary>
         public void Dispose()
         {
-            // intentionally does nothing
+            // Intentionally does nothing.
         }
     }
 }

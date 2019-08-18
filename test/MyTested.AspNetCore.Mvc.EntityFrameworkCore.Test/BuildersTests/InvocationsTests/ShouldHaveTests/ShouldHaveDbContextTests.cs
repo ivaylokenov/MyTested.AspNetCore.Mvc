@@ -17,14 +17,14 @@
                 .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
-                    services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase());
+                    services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase(TestObjectFactory.TestDatabaseName));
                 });
 
             MyViewComponent<CreateDataComponent>
                 .Instance()
                 .InvokedWith(c => c.Invoke(new CustomModel { Id = 1, Name = "Test" }))
                 .ShouldHave()
-                .DbContext(dbContext => dbContext
+                .Data(dbContext => dbContext
                     .WithEntities<CustomDbContext>(db =>
                     {
                         Assert.NotNull(db.Models.FirstOrDefaultAsync(m => m.Id == 1));
@@ -43,14 +43,14 @@
                 .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
-                    services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase());
+                    services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase(TestObjectFactory.TestDatabaseName));
                 });
 
             MyViewComponent<CreateDataComponent>
                 .Instance()
                 .InvokedWith(c => c.Invoke(new CustomModel { Id = 1, Name = "Test" }))
                 .ShouldHave()
-                .DbContext(dbContext => dbContext
+                .Data(dbContext => dbContext
                     .WithEntities<CustomDbContext>(db => db.Models.FirstOrDefaultAsync(m => m.Id == 1) != null))
                 .AndAlso()
                 .ShouldReturn()
@@ -66,14 +66,14 @@
                 .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
-                    services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase());
+                    services.AddDbContext<CustomDbContext>(options => options.UseInMemoryDatabase(TestObjectFactory.TestDatabaseName));
                 });
 
             MyViewComponent<CreateDataComponent>
                 .Instance()
                 .InvokedWith(c => c.Invoke(new CustomModel { Id = 1, Name = "Test" }))
                 .ShouldHave()
-                .DbContext(dbContext => dbContext
+                .Data(dbContext => dbContext
                     .WithEntities<CustomDbContext>(db => db.Models.FirstOrDefaultAsync(m => m.Id == 1) != null))
                 .AndAlso()
                 .ShouldReturn()
@@ -85,7 +85,7 @@
                     .Instance()
                     .InvokedWith(c => c.Invoke(new CustomModel { Id = 2, Name = "Test" }))
                     .ShouldHave()
-                    .DbContext(dbContext => dbContext
+                    .Data(dbContext => dbContext
                         .WithEntities<CustomDbContext>(db => db.Models.FirstOrDefaultAsync(m => m.Id == 1) == null))
                     .AndAlso()
                     .ShouldReturn()

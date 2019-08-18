@@ -1,9 +1,10 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Actions.ShouldReturn
 {
-    using ActionResults.HttpNotFound;
+    using System;
+    using ActionResults.NotFound;
     using Contracts.ActionResults.NotFound;
+    using Contracts.And;
     using Microsoft.AspNetCore.Mvc;
-    using Utilities.Validators;
 
     /// <content>
     /// Class containing methods for testing <see cref="NotFoundResult"/> or <see cref="NotFoundObjectResult"/>.
@@ -11,21 +12,24 @@
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <inheritdoc />
-        public IAndNotFoundTestBuilder NotFound()
+        public IAndTestBuilder NotFound() => this.NotFound(null);
+
+        /// <inheritdoc />
+        public IAndTestBuilder NotFound(Action<INotFoundTestBuilder> notFoundTestBuilder)
         {
             if (this.ActionResult is NotFoundObjectResult)
             {
-                return this.ReturnNotFoundTestBuilder<NotFoundObjectResult>();
+                return this.ValidateNotFoundResult<NotFoundObjectResult>(notFoundTestBuilder);
             }
 
-            return this.ReturnNotFoundTestBuilder<NotFoundResult>();
+            return this.ValidateNotFoundResult<NotFoundResult>(notFoundTestBuilder);
         }
 
-        private IAndNotFoundTestBuilder ReturnNotFoundTestBuilder<TNotFoundResult>()
+        private IAndTestBuilder ValidateNotFoundResult<TNotFoundResult>(
+            Action<INotFoundTestBuilder> notFoundTestBuilder)
             where TNotFoundResult : ActionResult
-        {
-            InvocationResultValidator.ValidateInvocationResultType<TNotFoundResult>(this.TestContext);
-            return new NotFoundTestBuilder<TNotFoundResult>(this.TestContext);
-        }
+            => this.ValidateActionResult<TNotFoundResult, INotFoundTestBuilder>(
+                notFoundTestBuilder,
+                new NotFoundTestBuilder<TNotFoundResult>(this.TestContext));
     }
 }

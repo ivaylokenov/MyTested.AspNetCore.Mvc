@@ -7,6 +7,7 @@
     /// </summary>
     /// <typeparam name="TAttributesTestBuilder">Type of attributes test builder to use as a return type for common methods.</typeparam>
     public interface IBaseAttributesTestBuilder<TAttributesTestBuilder>
+        where TAttributesTestBuilder : IBaseAttributesTestBuilder<TAttributesTestBuilder>
     {
         /// <summary>
         /// Tests whether the collected attributes contain the provided attribute type.
@@ -20,7 +21,7 @@
         /// Tests whether the collected attributes contain the provided attribute type passing the given assertions.
         /// </summary>
         /// <typeparam name="TAttribute">Type of expected attribute.</typeparam>
-        /// <param name="assertions">Action containing assertions on the provided attribute.</param>
+        /// <param name="assertions">Action containing assertions for the provided attribute.</param>
         /// <returns>The same attributes test builder.</returns>
         TAttributesTestBuilder PassingFor<TAttribute>(Action<TAttribute> assertions)
             where TAttribute : Attribute;

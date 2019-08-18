@@ -76,8 +76,9 @@
 
             var actualEntry = this.DataProvider[key];
 
-            var validations = newDataProviderEntryBuilder.GetDataProviderEntryValidations();
-            validations.ForEach(v => v(actualEntry));
+            newDataProviderEntryBuilder
+                .GetDataProviderEntryValidations()
+                .ForEach(v => v(actualEntry));
             
             return this.DataProviderTestBuilder;
         }

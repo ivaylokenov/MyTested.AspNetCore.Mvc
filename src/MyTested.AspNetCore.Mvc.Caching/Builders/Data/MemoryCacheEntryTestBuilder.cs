@@ -84,8 +84,8 @@
                 if (expectedExpiration != actualExpiration)
                 {
                     this.ThrowNewDataProviderAssertionException(
-                        $"to have entry with '{this.MemoryCacheEntry.Key}' key and {expectedExpiration.GetErrorMessageName()} absolute expiration",
-                        $"in fact found {actualExpiration.GetErrorMessageName()}");
+                        $"to have entry with '{this.MemoryCacheEntry.Key}' key and {expectedExpiration.ToFormattedString().GetErrorMessageName()} absolute expiration",
+                        $"in fact found {actualExpiration.ToFormattedString().GetErrorMessageName()}");
                 }
             });
 

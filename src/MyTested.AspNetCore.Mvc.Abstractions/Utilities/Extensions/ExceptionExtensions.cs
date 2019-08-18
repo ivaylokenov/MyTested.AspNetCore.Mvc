@@ -7,8 +7,7 @@
     {
         public static Exception Unwrap(this Exception exception)
         {
-            var aggregateException = exception as AggregateException;
-            if (aggregateException != null)
+            if (exception is AggregateException aggregateException)
             {
                 return aggregateException.InnerExceptions.FirstOrDefault();
             }

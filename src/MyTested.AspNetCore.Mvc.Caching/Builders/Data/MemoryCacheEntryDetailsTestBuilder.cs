@@ -1,7 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Data
 {
     using System;
-    using Base;
     using Contracts.Data;
     using Utilities.Validators;
 

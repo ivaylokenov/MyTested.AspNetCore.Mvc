@@ -89,7 +89,7 @@
                         .ShouldReturn()
                         .Ok();
                 },
-                "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with 'test' key and '2/1/2016 1:01:01 AM +00:00' absolute expiration, but in fact found '1/1/2016 1:01:01 AM +00:00'.");
+                "When calling AddMemoryCacheAction action in MvcController expected memory cache to have entry with 'test' key and 'Mon, 01 Feb 2016 01:01:01 GMT' absolute expiration, but in fact found 'Fri, 01 Jan 2016 01:01:01 GMT'.");
         }
 
         [Fact]

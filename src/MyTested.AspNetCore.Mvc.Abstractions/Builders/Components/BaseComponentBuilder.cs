@@ -10,6 +10,7 @@
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Http;
     using Utilities;
+    using Utilities.Extensions;
     using Utilities.Validators;
 
     public abstract partial class BaseComponentBuilder<TComponent, TTestContext, TBuilder> : BaseTestBuilderWithComponentBuilder<TBuilder>
@@ -20,7 +21,7 @@
         private TTestContext testContext;
         private bool isPreparedForTesting;
 
-        public BaseComponentBuilder(TTestContext testContext)
+        protected BaseComponentBuilder(TTestContext testContext)
             : base(testContext)
         {
             this.TestContext = testContext;
@@ -31,10 +32,7 @@
 
         public new TTestContext TestContext
         {
-            get
-            {
-                return this.testContext;
-            }
+            get => this.testContext;
 
             set
             {
@@ -74,15 +72,15 @@
             var component = this.TestContext.Component;
             if (component == null)
             {
-                var explicitDependenciesAreSet = this.TestContext.AggregatedServices.Any();
+                var explicitDependenciesAreSet = this.TestContext.AggregatedDependencies.Any();
                 if (explicitDependenciesAreSet)
                 {
-                    // custom dependencies are set, try create instance with them
-                    component = Reflection.TryCreateInstance<TComponent>(this.TestContext.AggregatedServices);
+                    // Custom dependencies are set, try create instance with them.
+                    component = Reflection.TryCreateInstance<TComponent>(this.TestContext.AggregatedDependencies);
                 }
                 else
                 {
-                    // no custom dependencies are set, try create instance with component factory
+                    // No custom dependencies are set, try create instance with component factory.
                     component = this.TryCreateComponentWithFactory();
 
                     if (component != null)
@@ -91,20 +89,20 @@
                     }
                     else
                     {
-                        // no component from the factory, try create instance with the global services
+                        // No component from the factory, try create instance with the global services.
                         component = TestHelper.TryCreateInstance<TComponent>();
                     }
                 }
 
                 if (component == null && !explicitDependenciesAreSet)
                 {
-                    // no component at this point, try to create one with default constructor
+                    // No component at this point, try to create one with default constructor.
                     component = Reflection.TryFastCreateInstance<TComponent>();
                 }
 
                 if (component == null)
                 {
-                    var friendlyServiceNames = this.TestContext.AggregatedServices
+                    var friendlyServiceNames = this.TestContext.AggregatedDependencies
                         .Keys
                         .Select(k => k.ToFriendlyTypeName());
 
@@ -113,7 +111,7 @@
                     throw new UnresolvedServicesException(string.Format(
                         "{0} could not be instantiated because it contains no constructor taking {1} parameters.",
                         typeof(TComponent).ToFriendlyTypeName(),
-                        this.TestContext.AggregatedServices.Count == 0 ? "no" : $"{joinedFriendlyServices} as"));
+                        this.TestContext.AggregatedDependencies.Count == 0 ? "no" : $"{joinedFriendlyServices} as"));
                 }
 
                 this.TestContext.ComponentConstructionDelegate = () => component;
@@ -130,7 +128,7 @@
         {
             if (!this.IsValidComponent)
             {
-                throw new InvalidOperationException($"{typeof(TComponent).ToFriendlyTypeName()} is not a valid {this.ComponentName} type.");
+                throw new InvalidOperationException($"{typeof(TComponent).ToFriendlyTypeName()} is not recognized as a valid {this.ComponentName} type. Classes decorated with 'Non{this.ComponentName.CapitalizeAndJoin()}Attribute' are not considered as passable {this.ComponentName}s. Additionally, make sure the SDK is set to 'Microsoft.NET.Sdk.Web' in your test project's '.csproj' file in order to enable proper {this.ComponentName} discovery. If your type is still not recognized, you may manually add it in the application part manager by using the 'AddMvc().PartManager.ApplicationParts.Add(applicationPart))' method.");
             }
         }
 

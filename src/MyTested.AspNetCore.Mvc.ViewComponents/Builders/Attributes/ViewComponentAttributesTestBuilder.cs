@@ -2,43 +2,27 @@
 {
     using Contracts.Attributes;
     using Internal.TestContexts;
-    using Microsoft.AspNetCore.Mvc;
-    using Utilities.Extensions;
 
+    /// <summary>
+    /// Used for testing view component attributes.
+    /// </summary>
     public class ViewComponentAttributesTestBuilder : BaseAttributesTestBuilder<IAndViewComponentAttributesTestBuilder>,
         IAndViewComponentAttributesTestBuilder
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ViewComponentAttributesTestBuilder"/> class.
+        /// </summary>
+        /// <param name="testContext">
+        /// <see cref="ComponentTestContext"/> containing data about the currently executed assertion chain.
+        /// </param>
         public ViewComponentAttributesTestBuilder(ComponentTestContext testContext)
             : base(testContext)
         {
         }
-
-        /// <inheritdoc />
-        public IAndViewComponentAttributesTestBuilder IndicatingViewComponentExplicitly()
-            => this.ContainingAttributeOfType<ViewComponentAttribute>();
-
-        /// <inheritdoc />
-        public IAndViewComponentAttributesTestBuilder ChangingViewComponentNameTo(string viewComponentName)
-        {
-            this.ContainingAttributeOfType<ViewComponentAttribute>();
-            this.Validations.Add(attrs =>
-            {
-                var viewComponentAttribute = this.GetAttributeOfType<ViewComponentAttribute>(attrs);
-                var actualViewComponentName = viewComponentAttribute.Name;
-                if (viewComponentName != actualViewComponentName)
-                {
-                    this.ThrowNewAttributeAssertionException(
-                        $"{viewComponentAttribute.GetName()} with '{viewComponentName}' name",
-                        $"in fact found '{actualViewComponentName}'");
-                }
-            });
-
-            return this;
-        }
-
+        
+        public override IAndViewComponentAttributesTestBuilder AttributesTestBuilder => this;
+        
         /// <inheritdoc />
         public IViewComponentAttributesTestBuilder AndAlso() => this;
-
-        protected override IAndViewComponentAttributesTestBuilder GetAttributesTestBuilder() => this;
     }
 }

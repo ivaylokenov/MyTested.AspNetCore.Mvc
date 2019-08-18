@@ -1,0 +1,10 @@
+﻿@model IEnumerable<ArticleListingServiceModel>
+@{
+    ViewData.SetTitle("Home Page");
+}
+
+<div class="text-center jumbotron margin-top-20">
+    <h1 class="display-4">Welcome to our Blog</h1>
+</div>
+
+<partial name="_ArticleListingPartial" model="@Model"/>

@@ -13,11 +13,11 @@
         public Action<IServiceCollection> ServiceRegistrationDelegate =>
             serviceCollection => serviceCollection.AddCoreTesting();
 
-        // this call prepares all application conventions and fills the controller action descriptor cache
+        // Тhis call prepares all application conventions and fills the controller action descriptor cache.
         public Action<IServiceProvider> InitializationDelegate => serviceProvider => serviceProvider.GetService<IControllerActionDescriptorCache>();
 
         public object TryGetValue(Type type, ComponentTestContext testContext)
-            => Reflection.AreAssignable(exceptionType, type) // Exception
+            => Reflection.AreAssignable(this.exceptionType, type) // Exception.
                 ? testContext.CaughtException
                 : null;
     }

@@ -1,20 +1,21 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.Content
 {
-    using System.Net;
-    using Base;
+    using Builders.Base;
     using Contracts.ActionResults.Content;
     using Exceptions;
+    using Internal;
+    using Internal.Contracts.ActionResults;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Net.Http.Headers;
-    using Utilities.Extensions;
-    using Utilities.Validators;
 
     /// <summary>
     /// Used for testing <see cref="ContentResult"/>.
     /// </summary>
     public class ContentTestBuilder
-        : BaseTestBuilderWithActionResult<ContentResult>, IAndContentTestBuilder
+        : BaseTestBuilderWithActionResult<ContentResult>, 
+        IAndContentTestBuilder,
+        IBaseTestBuilderWithStatusCodeResultInternal<IAndContentTestBuilder>,
+        IBaseTestBuilderWithContentTypeResultInternal<IAndContentTestBuilder>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ContentTestBuilder"/> class.
@@ -25,48 +26,28 @@
         {
         }
 
-        /// <inheritdoc />
-        public IAndContentTestBuilder WithStatusCode(int statusCode)
-            => this.WithStatusCode((HttpStatusCode)statusCode);
-
-        /// <inheritdoc />
-        public IAndContentTestBuilder WithStatusCode(HttpStatusCode statusCode)
-        {
-            HttpStatusCodeValidator.ValidateHttpStatusCode(
-                statusCode,
-                this.ActionResult.StatusCode,
-                this.ThrowNewContentResultAssertionException);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndContentTestBuilder WithContentType(string contentType)
-        {
-            ContentTypeValidator.ValidateContentType(
-                contentType,
-                this.ActionResult.ContentType,
-                this.ThrowNewContentResultAssertionException);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndContentTestBuilder WithContentType(MediaTypeHeaderValue contentType)
-            => this.WithContentType(contentType?.MediaType);
+        /// <summary>
+        /// Gets the content result test builder.
+        /// </summary>
+        /// <value>Test builder of <see cref="IAndContentTestBuilder"/> type.</value>
+        public IAndContentTestBuilder ResultTestBuilder => this;
 
         /// <inheritdoc />
         public IContentTestBuilder AndAlso() => this;
-        
-        private void ThrowNewContentResultAssertionException(string propertyName, string expectedValue, string actualValue)
-        {
-            throw new ContentResultAssertionException(string.Format(
-                "When calling {0} action in {1} expected content result {2} {3}, but {4}.",
-                this.ActionName,
-                this.Controller.GetName(),
+
+        /// <summary>
+        /// Throws new <see cref="ContentResultAssertionException"/> for the provided property name, expected value and actual value.
+        /// </summary>
+        /// <param name="propertyName">Property name on which the testing failed.</param>
+        /// <param name="expectedValue">Expected value of the tested property.</param>
+        /// <param name="actualValue">Actual value of the tested property.</param>
+        public void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue) 
+            => throw new ContentResultAssertionException(string.Format(
+                ExceptionMessages.ActionResultFormat,
+                this.TestContext.ExceptionMessagePrefix,
+                "content",
                 propertyName,
                 expectedValue,
                 actualValue));
-        }
     }
 }

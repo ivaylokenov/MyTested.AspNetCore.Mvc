@@ -1,9 +1,10 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Actions.ShouldReturn
 {
+    using System;
     using ActionResults.BadRequest;
     using Contracts.ActionResults.BadRequest;
+    using Contracts.And;
     using Microsoft.AspNetCore.Mvc;
-    using Utilities.Validators;
 
     /// <content>
     /// Class containing methods for testing <see cref="BadRequestResult"/> or <see cref="BadRequestObjectResult"/>.
@@ -11,21 +12,24 @@
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <inheritdoc />
-        public IAndBadRequestTestBuilder BadRequest()
+        public IAndTestBuilder BadRequest() => this.BadRequest(null);
+
+        /// <inheritdoc />
+        public IAndTestBuilder BadRequest(Action<IBadRequestTestBuilder> badRequestTestBuilder)
         {
             if (this.ActionResult is BadRequestObjectResult)
             {
-                return this.ReturnBadRequestTestBuilder<BadRequestObjectResult>();
+                return this.ValidateBadRequestResult<BadRequestObjectResult>(badRequestTestBuilder);
             }
 
-            return this.ReturnBadRequestTestBuilder<BadRequestResult>();
+            return this.ValidateBadRequestResult<BadRequestResult>(badRequestTestBuilder);
         }
 
-        private IAndBadRequestTestBuilder ReturnBadRequestTestBuilder<TBadRequestResult>()
+        private IAndTestBuilder ValidateBadRequestResult<TBadRequestResult>(
+            Action<IBadRequestTestBuilder> badRequestTestBuilder)
             where TBadRequestResult : ActionResult
-        {
-            InvocationResultValidator.ValidateInvocationResultType<TBadRequestResult>(this.TestContext);
-            return new BadRequestTestBuilder<TBadRequestResult>(this.TestContext);
-        }
+            => this.ValidateActionResult<TBadRequestResult, IBadRequestTestBuilder>(
+                badRequestTestBuilder,
+                new BadRequestTestBuilder<TBadRequestResult>(this.TestContext));
     }
 }

@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
+    using Setups.Common;
     using Setups.Controllers;
     using Setups.Models;
     using Setups.Services;
@@ -295,15 +296,15 @@
         public void ToFriendlyTypeNameShouldReturnProperNameWhenTypeIsAnonymous()
         {
             var name = new { }.GetType().ToFriendlyTypeName();
-            Assert.True(name.StartsWith("AnonymousType"));
+            Assert.StartsWith("AnonymousType", name);
         }
 
         [Fact]
         public void ToFriendlyTypeNameShouldReturnProperNameWhenTypeIsAnonymousWithGeneric()
         {
             var name = new { Int = 1, String = "Test" }.GetType().ToFriendlyTypeName();
-            Assert.True(name.StartsWith("AnonymousType"));
-            Assert.True(name.EndsWith("<Int32, String>"));
+            Assert.StartsWith("AnonymousType", name);
+            Assert.EndsWith("<Int32, String>", name);
         }
 
         [Fact]
@@ -417,9 +418,11 @@
             var attributeTypes = attributes.Select(a => a.GetType()).ToList();
 
             Assert.NotNull(attributes);
-            Assert.Equal(2, attributes.Count());
-            Assert.True(attributeTypes.Contains(typeof(AuthorizeAttribute)));
-            Assert.True(attributeTypes.Contains(typeof(RouteAttribute)));
+            Assert.Equal(4, attributes.Count);
+            Assert.Contains(typeof(AuthorizeAttribute), attributeTypes);
+            Assert.Contains(typeof(RouteAttribute), attributeTypes);
+            Assert.Contains(typeof(FormatFilterAttribute), attributeTypes);
+            Assert.Contains(typeof(ValidateAntiForgeryTokenAttribute), attributeTypes);
         }
 
         [Fact]
@@ -448,6 +451,24 @@
         }
 
         [Fact]
+        public void AreDeeplyEqualShouldWorkCorrectlyWithEnumerations()
+        {
+            // Enum with default values.
+            Assert.True(Reflection.AreDeeplyEqual(DateTimeKind.Unspecified, DateTimeKind.Unspecified));
+            Assert.False(Reflection.AreDeeplyEqual(DateTimeKind.Local, DateTimeKind.Utc));
+
+            //Enum with overridden values.
+            Assert.True(Reflection.AreDeeplyEqual(AttributeTargets.Delegate, AttributeTargets.Delegate));
+            Assert.False(Reflection.AreDeeplyEqual(AttributeTargets.Assembly, AttributeTargets.All));
+            Assert.False(Reflection.AreDeeplyEqual(AttributeTargets.Assembly, AttributeTargets.Module));
+
+            //Enum with default and overriden values.
+            Assert.True(Reflection.AreDeeplyEqual(CustomEnum.DefaultConstant, CustomEnum.DefaultConstant));
+            Assert.False(Reflection.AreDeeplyEqual(CustomEnum.DefaultConstant, CustomEnum.ConstantWithCustomValue));
+            Assert.False(Reflection.AreDeeplyEqual(CustomEnum.DefaultConstant, CustomEnum.CombinedConstant));
+        }
+
+        [Fact]
         public void AreDeeplyEqualsShouldWorkCorrectlyWithNormalObjects()
         {
             Assert.True(Reflection.AreDeeplyEqual(new object(), new object()));
@@ -461,6 +482,10 @@
             Assert.True(Reflection.AreDeeplyEqual(new EqualsModel { Integer = 1, String = "test" }, new EqualsModel { Integer = 1, String = "another" }));
             Assert.True(Reflection.AreDeeplyEqual(new EqualityOperatorModel { Integer = 1, String = "test" }, new EqualityOperatorModel { Integer = 1, String = "another" }));
             Assert.False(Reflection.AreDeeplyEqual(new object(), "test"));
+            Assert.False(Reflection.AreDeeplyEqual(new object(), AttributeTargets.All));
+            Assert.False(Reflection.AreDeeplyEqual(AttributeTargets.All, new object()));
+            Assert.True(Reflection.AreDeeplyEqual(AttributeTargets.All, (object)AttributeTargets.All));
+            Assert.True(Reflection.AreDeeplyEqual((object)AttributeTargets.All, AttributeTargets.All));
             Assert.False(Reflection.AreDeeplyEqual(DateTime.Now, "test"));
             Assert.False(Reflection.AreDeeplyEqual("test", DateTime.Now));
             Assert.False(Reflection.AreDeeplyEqual(true, new object()));
@@ -486,12 +511,14 @@
                 {
                     Integer = 1,
                     String = "test1",
+                    Enum = CustomEnum.ConstantWithCustomValue,
                     Nested = new NestedModel { Integer = 2, String = "test2", Nested = new NestedModel { Integer = 3, String = "test3" } }
                 },
                 new NestedModel
                 {
                     Integer = 1,
                     String = "test1",
+                    Enum = CustomEnum.ConstantWithCustomValue,
                     Nested = new NestedModel { Integer = 2, String = "test2", Nested = new NestedModel { Integer = 3, String = "test3" } }
                 }));
 
@@ -500,12 +527,14 @@
                 {
                     Integer = 1,
                     String = "test",
+                    Enum = CustomEnum.ConstantWithCustomValue,
                     Nested = new NestedModel { Integer = 2, String = "test2", Nested = new NestedModel { Integer = 3, String = "test3" } }
                 },
                 new NestedModel
                 {
                     Integer = 1,
                     String = "test",
+                    Enum = CustomEnum.ConstantWithCustomValue,
                     Nested = new NestedModel { Integer = 2, String = "test1", Nested = new NestedModel { Integer = 3, String = "test3" } }
                 }));
 
@@ -514,12 +543,14 @@
                 {
                     Integer = 1,
                     String = "test1",
+                    Enum = CustomEnum.ConstantWithCustomValue,
                     Nested = new NestedModel { Integer = 2, String = "test2", Nested = new NestedModel { Integer = 3, String = "test2" } }
                 },
                 new NestedModel
                 {
                     Integer = 1,
                     String = "test1",
+                    Enum = CustomEnum.ConstantWithCustomValue,
                     Nested = new NestedModel { Integer = 2, String = "test2", Nested = new NestedModel { Integer = 3, String = "test3" } }
                 }));
         }
@@ -533,13 +564,13 @@
                     new NestedModel
                     {
                         Integer = 1, String = "test1",
-                        Nested = new NestedModel { Integer = 2, String = "test2", Nested = new NestedModel { Integer = 3, String = "test3" } }
+                        Nested = new NestedModel { Integer = 2, String = "test2", Enum = CustomEnum.CombinedConstant, Nested = new NestedModel { Integer = 3, String = "test3" } }
                     },
                     new NestedModel
                     {
                         Integer = 1,
                         String = "test1",
-                        Nested = new NestedModel { Integer = 2, String = "test2", Nested = new NestedModel { Integer = 3, String = "test3" } }
+                        Nested = new NestedModel { Integer = 2, String = "test2", Enum = CustomEnum.CombinedConstant, Nested = new NestedModel { Integer = 3, String = "test3" } }
                     }
                 },
                 new List<NestedModel>
@@ -547,13 +578,13 @@
                     new NestedModel
                     {
                         Integer = 1, String = "test1",
-                        Nested = new NestedModel { Integer = 2, String = "test2", Nested = new NestedModel { Integer = 3, String = "test3" } }
+                        Nested = new NestedModel { Integer = 2, String = "test2", Enum = CustomEnum.CombinedConstant, Nested = new NestedModel { Integer = 3, String = "test3" } }
                     },
                     new NestedModel
                     {
                         Integer = 1,
                         String = "test1",
-                        Nested = new NestedModel { Integer = 2, String = "test2", Nested = new NestedModel { Integer = 3, String = "test3" } }
+                        Nested = new NestedModel { Integer = 2, String = "test2", Enum = CustomEnum.CombinedConstant, Nested = new NestedModel { Integer = 3, String = "test3" } }
                     }
                 }));
 
@@ -563,11 +594,13 @@
                 {
                     Integer = 1,
                     String = "test1",
+                    Enum = CustomEnum.ConstantWithCustomValue,
                     Nested =
                         new NestedModel
                         {
                             Integer = 2,
                             String = "test2",
+                            Enum = CustomEnum.ConstantWithCustomValue,
                             Nested = new NestedModel { Integer = 3, String = "test3" }
                         }
                 },
@@ -575,11 +608,13 @@
                 {
                     Integer = 1,
                     String = "test1",
+                    Enum = CustomEnum.ConstantWithCustomValue,
                     Nested =
                         new NestedModel
                         {
                             Integer = 2,
                             String = "test2",
+                            Enum = CustomEnum.ConstantWithCustomValue,
                             Nested = new NestedModel { Integer = 3, String = "test3" }
                         }
                 }
@@ -591,11 +626,13 @@
                 {
                     Integer = 1,
                     String = "test1",
+                    Enum = CustomEnum.ConstantWithCustomValue,
                     Nested =
                         new NestedModel
                         {
                             Integer = 2,
                             String = "test2",
+                            Enum = CustomEnum.ConstantWithCustomValue,
                             Nested = new NestedModel { Integer = 3, String = "test3" }
                         }
                 },
@@ -603,11 +640,13 @@
                 {
                     Integer = 1,
                     String = "test1",
+                    Enum = CustomEnum.ConstantWithCustomValue,
                     Nested =
                         new NestedModel
                         {
                             Integer = 2,
                             String = "test2",
+                            Enum = CustomEnum.ConstantWithCustomValue,
                             Nested = new NestedModel { Integer = 3, String = "test3" }
                         }
                 }
@@ -892,13 +931,13 @@
 
             var firstDictionaryWithObject = new Dictionary<string, NestedModel>
             {
-                { "Key", new NestedModel { Integer = 1, String = "Text" } },
+                { "Key", new NestedModel { Integer = 1, String = "Text", Enum = CustomEnum.ConstantWithCustomValue} },
                 { "AnotherKey", new NestedModel { Integer = 2, String = "AnotherText" } }
             };
 
             var secondDictionaryWithObject = new Dictionary<string, NestedModel>
             {
-                { "Key", new NestedModel { Integer = 1, String = "Text" } },
+                { "Key", new NestedModel { Integer = 1, String = "Text", Enum = CustomEnum.ConstantWithCustomValue } },
                 { "AnotherKey", new NestedModel { Integer = 2, String = "AnotherText" } }
             };
 
@@ -906,13 +945,13 @@
 
             firstDictionaryWithObject = new Dictionary<string, NestedModel>
             {
-                { "Key", new NestedModel { Integer = 1, String = "Text" } },
+                { "Key", new NestedModel { Integer = 1, String = "Text", Enum = CustomEnum.ConstantWithCustomValue } },
                 { "AnotherKey", new NestedModel { Integer = 2, String = "Text" } }
             };
 
             secondDictionaryWithObject = new Dictionary<string, NestedModel>
             {
-                { "Key", new NestedModel { Integer = 1, String = "Text" } },
+                { "Key", new NestedModel { Integer = 1, String = "Text",  } },
                 { "AnotherKey", new NestedModel { Integer = 2, String = "AnotherText" } }
             };
 
@@ -954,7 +993,7 @@
         {
             Assert.Throws<ArgumentException>(() =>
             {
-                var actionDelegate = Reflection.CreateDelegateFromMethod<Action<IServiceCollection>>(
+                Reflection.CreateDelegateFromMethod<Action<IServiceCollection>>(
                 new CustomStartup(),
                 m => m.Name == "ConfigureServicesAndBuildProvider" && m.ReturnType == typeof(IServiceProvider));
             });

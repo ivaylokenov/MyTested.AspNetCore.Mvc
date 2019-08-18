@@ -21,7 +21,7 @@
     /// </summary>
     public class HttpRequestBuilder : IAndHttpRequestBuilder
     {
-        private static Encoding defaultEncoding = Encoding.UTF8;
+        private static readonly Encoding DefaultEncoding = Encoding.UTF8;
 
         private readonly HttpRequestMock request;
 
@@ -30,11 +30,12 @@
         /// </summary>
         public HttpRequestBuilder(HttpContext httpContext)
         {
-            CommonValidator.CheckForNullReference(httpContext, nameof(HttpContext));
+            CommonValidator.CheckForNullReference(httpContext, nameof(this.HttpContext));
 
             this.request = new HttpRequestMock(httpContext)
             {
                 Scheme = HttpScheme.Http,
+                Method = HttpMethod.Get,
                 Path = "/"
             };
         }
@@ -50,7 +51,7 @@
 
         /// <inheritdoc />
         public IAndHttpRequestBuilder WithBody<TBody>(TBody body, string contentType)
-            => this.WithBody(body, contentType, defaultEncoding);
+            => this.WithBody(body, contentType, DefaultEncoding);
 
         /// <inheritdoc />
         public IAndHttpRequestBuilder WithBody<TBody>(TBody body, string contentType, Encoding encoding)
@@ -65,7 +66,7 @@
 
         /// <inheritdoc />
         public IAndHttpRequestBuilder WithStringBody(string body)
-            => this.WithStringBody(body, defaultEncoding);
+            => this.WithStringBody(body, DefaultEncoding);
 
         /// <inheritdoc />
         public IAndHttpRequestBuilder WithStringBody(string body, Encoding encoding)
@@ -73,7 +74,7 @@
 
         /// <inheritdoc />
         public IAndHttpRequestBuilder WithJsonBody(string jsonBody)
-            => this.WithJsonBody(jsonBody, defaultEncoding);
+            => this.WithJsonBody(jsonBody, DefaultEncoding);
 
         /// <inheritdoc />
         public IAndHttpRequestBuilder WithJsonBody(string jsonBody, Encoding encoding)
@@ -85,7 +86,7 @@
 
         /// <inheritdoc />
         public IAndHttpRequestBuilder WithJsonBody(object jsonBody)
-            => this.WithJsonBody(jsonBody, defaultEncoding);
+            => this.WithJsonBody(jsonBody, DefaultEncoding);
 
         /// <inheritdoc />
         public IAndHttpRequestBuilder WithJsonBody(object jsonBody, Encoding encoding)

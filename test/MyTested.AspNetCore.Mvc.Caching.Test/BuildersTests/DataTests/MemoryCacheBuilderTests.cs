@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Internal.Caching;
+    using Microsoft.AspNetCore.Mvc.ApplicationParts;
     using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.DependencyInjection;
     using Setups;
@@ -15,7 +16,16 @@
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
-                .WithServices(services => services.AddMemoryCache());
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+
+                    services
+                        .AddMvc()
+                        .PartManager
+                        .ApplicationParts
+                        .Add(new AssemblyPart(this.GetType().Assembly));
+                });
         }
 
         [Fact]
@@ -29,8 +39,8 @@
                     .WithEntry("Another", "AnotherValid"))
                 .Calling(c => c.FullMemoryCacheAction(From.Services<IMemoryCache>()))
                 .ShouldReturn()
-                .Ok()
-                .WithModel("Normal");
+                .Ok(ok => ok
+                    .WithModel("Normal"));
         }
 
         [Fact]
@@ -48,15 +58,15 @@
                     }))
                 .Calling(c => c.FullMemoryCacheAction(From.Services<IMemoryCache>()))
                 .ShouldReturn()
-                .Ok()
-                .WithModel(new CacheEntryMock("FullEntry")
-                {
-                    Value = "FullEntryValid",
-                    AbsoluteExpiration = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
-                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(1),
-                    Priority = CacheItemPriority.High,
-                    SlidingExpiration = TimeSpan.FromMinutes(5)
-                });
+                .Ok(ok => ok
+                    .WithModel(new CacheEntryMock("FullEntry")
+                    {
+                        Value = "FullEntryValid",
+                        AbsoluteExpiration = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
+                        AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(1),
+                        Priority = CacheItemPriority.High,
+                        SlidingExpiration = TimeSpan.FromMinutes(5)
+                    }));
         }
 
         [Fact]
@@ -79,15 +89,15 @@
                         .WithSlidingExpiration(TimeSpan.FromMinutes(5))))
                 .Calling(c => c.FullMemoryCacheAction(From.Services<IMemoryCache>()))
                 .ShouldReturn()
-                .Ok()
-                .WithModel(new CacheEntryMock("FullEntry")
-                {
-                    Value = "FullEntryValid",
-                    AbsoluteExpiration = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
-                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(1),
-                    Priority = CacheItemPriority.High,
-                    SlidingExpiration = TimeSpan.FromMinutes(5)
-                });
+                .Ok(ok => ok
+                    .WithModel(new CacheEntryMock("FullEntry")
+                    {
+                        Value = "FullEntryValid",
+                        AbsoluteExpiration = new DateTimeOffset(new DateTime(2016, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
+                        AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(1),
+                        Priority = CacheItemPriority.High,
+                        SlidingExpiration = TimeSpan.FromMinutes(5)
+                    }));
         }
 
         [Fact]
@@ -120,18 +130,15 @@
                     }))
                 .Calling(c => c.FullMemoryCacheAction(From.Services<IMemoryCache>()))
                 .ShouldReturn()
-                .Ok()
-                .WithModel(new Dictionary<object, object>
-                {
-                    ["first"] = "firstValue",
-                    ["second"] = "secondValue",
-                    ["third"] = "thirdValue"
-                });
+                .Ok(ok => ok
+                    .WithModel(new Dictionary<object, object>
+                    {
+                        ["first"] = "firstValue",
+                        ["second"] = "secondValue",
+                        ["third"] = "thirdValue"
+                    }));
         }
 
-        public void Dispose()
-        {
-            MyApplication.StartsFrom<DefaultStartup>();
-        }
+        public void Dispose() => MyApplication.StartsFrom<DefaultStartup>();
     }
 }

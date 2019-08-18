@@ -1,9 +1,10 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Actions.ShouldReturn
 {
+    using System;
     using ActionResults.Ok;
     using Contracts.ActionResults.Ok;
+    using Contracts.And;
     using Microsoft.AspNetCore.Mvc;
-    using Utilities.Validators;
 
     /// <content>
     /// Class containing methods for testing <see cref="OkResult"/> or <see cref="OkObjectResult"/>.
@@ -11,21 +12,23 @@
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <inheritdoc />
-        public IAndOkTestBuilder Ok()
+        public IAndTestBuilder Ok() => this.Ok(null);
+
+        /// <inheritdoc />
+        public IAndTestBuilder Ok(Action<IOkTestBuilder> okTestBuilder)
         {
             if (this.ActionResult is OkObjectResult)
             {
-                return this.ReturnOkTestBuilder<OkObjectResult>();
+                return this.ValidateOkResult<OkObjectResult>(okTestBuilder);
             }
 
-            return this.ReturnOkTestBuilder<OkResult>();
+            return this.ValidateOkResult<OkResult>(okTestBuilder);
         }
 
-        private IAndOkTestBuilder ReturnOkTestBuilder<THttpOkResult>()
-            where THttpOkResult : ActionResult
-        {
-            InvocationResultValidator.ValidateInvocationResultType<THttpOkResult>(this.TestContext);
-            return new OkTestBuilder<THttpOkResult>(this.TestContext);
-        }
+        private IAndTestBuilder ValidateOkResult<TOkResult>(Action<IOkTestBuilder> okTestBuilder)
+            where TOkResult : ActionResult
+            => this.ValidateActionResult<TOkResult, IOkTestBuilder>(
+                okTestBuilder,
+                new OkTestBuilder<TOkResult>(this.TestContext));
     }
 }

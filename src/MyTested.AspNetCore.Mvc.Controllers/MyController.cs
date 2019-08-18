@@ -1,6 +1,9 @@
 ﻿namespace MyTested.AspNetCore.Mvc
 {
     using System;
+    using System.Linq.Expressions;
+    using System.Threading.Tasks;
+    using Builders.Contracts.Actions;
     using Builders.Contracts.Controllers;
     using Builders.Controllers;
     using Internal.Application;
@@ -13,10 +16,7 @@
     public class MyController<TController> : ControllerBuilder<TController>
         where TController : class
     {
-        static MyController()
-        {
-            TestApplication.TryInitialize();
-        }
+        static MyController() => TestApplication.TryInitialize();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MyController{TController}"/> class.
@@ -48,29 +48,61 @@
         /// Starts a controller test.
         /// </summary>
         /// <returns>Test builder of <see cref="IControllerBuilder{TController}"/> type.</returns>
-        public static IControllerBuilder<TController> Instance()
-        {
-            return Instance((TController)null);
-        }
+        public static IControllerBuilder<TController> Instance() 
+            => Instance((TController)null);
 
         /// <summary>
         /// Starts a controller test.
         /// </summary>
         /// <param name="controller">Instance of the ASP.NET Core MVC controller to test.</param>
         /// <returns>Test builder of <see cref="IControllerBuilder{TController}"/> type.</returns>
-        public static IControllerBuilder<TController> Instance(TController controller)
-        {
-            return Instance(() => controller);
-        }
+        public static IControllerBuilder<TController> Instance(TController controller) 
+            => Instance(() => controller);
 
         /// <summary>
         /// Starts a controller test.
         /// </summary>
         /// <param name="construction">Construction function returning the instantiated controller.</param>
         /// <returns>Test builder of <see cref="IControllerBuilder{TController}"/> type.</returns>
-        public static IControllerBuilder<TController> Instance(Func<TController> construction)
-        {
-            return new MyController<TController>(construction);
-        }
+        public static IControllerBuilder<TController> Instance(Func<TController> construction) 
+            => new MyController<TController>(construction);
+
+        /// <summary>
+        /// Indicates which action should be invoked and tested.
+        /// </summary>
+        /// <typeparam name="TActionResult">Type of result from action.</typeparam>
+        /// <param name="actionCall">Method call expression indicating invoked action.</param>
+        /// <returns>Test builder of <see cref="IActionResultTestBuilder{TActionResult}"/> type.</returns>
+        public new static IActionResultTestBuilder<TActionResult> Calling<TActionResult>(Expression<Func<TController, TActionResult>> actionCall)
+            => Instance()
+                .Calling(actionCall);
+
+        /// <summary>
+        /// Indicates which action should be invoked and tested.
+        /// </summary>
+        /// <typeparam name="TActionResult">Type of result from action.</typeparam>
+        /// <param name="actionCall">Method call expression indicating invoked asynchronous action.</param>
+        /// <returns>Test builder of <see cref="IActionResultTestBuilder{TActionResult}"/> type.</returns>
+        public new static IActionResultTestBuilder<TActionResult> Calling<TActionResult>(Expression<Func<TController, Task<TActionResult>>> actionCall)
+            => Instance()
+                .Calling(actionCall);
+
+        /// <summary>
+        /// Indicates which action should be invoked and tested.
+        /// </summary>
+        /// <param name="actionCall">Method call expression indicating invoked void action.</param>
+        /// <returns>Test builder of <see cref="IActionResultTestBuilder{TActionResult}"/> type.</returns>
+        public new static IVoidActionResultTestBuilder Calling(Expression<Action<TController>> actionCall)
+            => Instance()
+                .Calling(actionCall);
+
+        /// <summary>
+        /// Indicates which action should be invoked and tested.
+        /// </summary>
+        /// <param name="actionCall">Method call expression indicating invoked asynchronous void action.</param>
+        /// <returns>Test builder of <see cref="IActionResultTestBuilder{TActionResult}"/> type.</returns>
+        public new static IVoidActionResultTestBuilder Calling(Expression<Func<TController, Task>> actionCall)
+            => Instance()
+                .Calling(actionCall);
     }
 }

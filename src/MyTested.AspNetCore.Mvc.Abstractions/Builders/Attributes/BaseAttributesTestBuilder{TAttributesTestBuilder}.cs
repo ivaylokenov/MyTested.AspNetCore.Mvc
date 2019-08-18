@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Base;
     using Exceptions;
     using Internal.TestContexts;
     using Utilities;
@@ -24,12 +23,13 @@
         protected BaseAttributesTestBuilder(ComponentTestContext testContext)
             : base(testContext)
         {
-            this.AttributesBuilder = this.GetAttributesTestBuilder();
         }
 
-        protected TAttributesTestBuilder AttributesBuilder { get; private set; }
-
-        protected abstract TAttributesTestBuilder GetAttributesTestBuilder();
+        /// <summary>
+        /// Gets the attributes test builder.
+        /// </summary>
+        /// <value>Test builder for the attributes.</value>
+        public abstract TAttributesTestBuilder AttributesTestBuilder { get; }
 
         /// <inheritdoc />
         public TAttributesTestBuilder ContainingAttributeOfType<TAttribute>()
@@ -46,7 +46,7 @@
                 }
             });
 
-            return this.AttributesBuilder;
+            return this.AttributesTestBuilder;
         }
 
         /// <inheritdoc />
@@ -55,7 +55,7 @@
         {
             this.ContainingAttributeOfType<TAttribute>();
             this.Validations.Add(attrs => assertions(this.GetAttributeOfType<TAttribute>(attrs)));
-            return this.AttributesBuilder;
+            return this.AttributesTestBuilder;
         }
 
         /// <inheritdoc />
@@ -74,7 +74,7 @@
                 }
             });
 
-            return this.AttributesBuilder;
+            return this.AttributesTestBuilder;
         }
 
         /// <summary>
@@ -83,11 +83,9 @@
         /// <typeparam name="TAttribute">Type of expected attribute.</typeparam>
         /// <param name="attributes">Collection of attributes.</param>
         /// <returns>The found attribute of the given type.</returns>
-        protected TAttribute GetAttributeOfType<TAttribute>(IEnumerable<object> attributes)
-            where TAttribute : Attribute
-        {
-            return (TAttribute)attributes.First(a => a.GetType() == typeof(TAttribute));
-        }
+        public TAttribute GetAttributeOfType<TAttribute>(IEnumerable<object> attributes)
+            where TAttribute : Attribute 
+            => (TAttribute)attributes.First(a => a.GetType() == typeof(TAttribute));
 
         /// <summary>
         /// Gets an attribute of the given type from the provided collection of objects.
@@ -96,18 +94,14 @@
         /// <param name="attributes">Collection of attributes.</param>
         /// <returns>The found attribute of the given type or null, if such attribute is not found.</returns>
         protected TAttribute TryGetAttributeOfType<TAttribute>(IEnumerable<object> attributes)
-            where TAttribute : Attribute
-        {
-            return attributes.FirstOrDefault(a => a.GetType() == typeof(TAttribute)) as TAttribute;
-        }
-        
-        protected virtual void ThrowNewAttributeAssertionException(string expectedValue, string actualValue)
-        {
-            throw new AttributeAssertionException(string.Format(
+            where TAttribute : Attribute 
+            => attributes.FirstOrDefault(a => a.GetType() == typeof(TAttribute)) as TAttribute;
+
+        public virtual void ThrowNewAttributeAssertionException(string expectedValue, string actualValue) 
+            => throw new AttributeAssertionException(string.Format(
                 "When testing {0} was expected to have {1}, but {2}.",
                 this.TestContext.Component.GetName(),
                 expectedValue,
                 actualValue));
-        }
     }
 }

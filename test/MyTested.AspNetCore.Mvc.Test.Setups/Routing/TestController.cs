@@ -4,14 +4,8 @@
 
     public class TestController : Controller
     {
-        public IActionResult Index()
-        {
-            return this.View();
-        }
+        public IActionResult Index() => this.View();
 
-        public IActionResult WithDataToken(string random)
-        {
-            return this.View();
-        }
+        public IActionResult WithDataToken(string random) => this.View();
     }
 }

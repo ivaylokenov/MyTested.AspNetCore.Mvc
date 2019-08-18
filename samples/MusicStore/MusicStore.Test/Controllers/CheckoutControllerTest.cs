@@ -64,9 +64,9 @@
                     .WithFormField("PromoCode", "FREE"))
                 .WithSession(session => session
                     .WithEntry("Session", cartId))
-                .WithAuthenticatedUser()
+                .WithUser()
                 .WithRouteData()
-                .WithDbContext(db => db
+                .WithData(db => db
                     .WithEntities(entities =>
                     {
                         var cartItems = CreateTestCartItems(
@@ -77,13 +77,14 @@
                         entities.AddRange(cartItems.Select(n => n.Album).Distinct());
                         entities.AddRange(cartItems);
                     }))
+                .WithoutValidation()
                 .Calling(c => c.AddressAndPayment(
                     From.Services<MusicStoreContext>(),
                     new Order { OrderId = orderId },
                     CancellationToken.None))
                 .ShouldReturn()
-                .Redirect()
-                .To<CheckoutController>(c => c.Complete(With.No<MusicStoreContext>(), orderId));
+                .Redirect(redirect => redirect
+                    .To<CheckoutController>(c => c.Complete(With.No<MusicStoreContext>(), orderId)));
         }
 
         [Fact]
@@ -119,8 +120,8 @@
         {
             MyMvc
                 .Controller<CheckoutController>()
-                .WithAuthenticatedUser(user => user.WithUsername("TestUser"))
-                .WithDbContext(dbContext =>
+                .WithUser(user => user.WithUsername("TestUser"))
+                .WithData(dbContext =>
                     dbContext.WithSet<Order>(o => o.Add(new Order
                     {
                         OrderId = 1,
@@ -136,8 +137,8 @@
         {
             MyMvc
                 .Controller<CheckoutController>()
-                .WithAuthenticatedUser(user => user.WithUsername("TestUser"))
-                .WithDbContext(dbContext =>
+                .WithUser(user => user.WithUsername("TestUser"))
+                .WithData(dbContext =>
                     dbContext.WithSet<Order>(o => o.Add(new Order
                     {
                         OrderId = 1,
@@ -151,14 +152,14 @@
         private static CartItem[] CreateTestCartItems(string cartId, decimal itemPrice, int numberOfItem)
         {
             var albums = Enumerable.Range(1, 10).Select(n =>
-                new Album()
+                new Album
                 {
                     AlbumId = n,
                     Price = itemPrice,
                 }).ToArray();
 
             var cartItems = Enumerable.Range(1, numberOfItem).Select(n =>
-                new CartItem()
+                new CartItem
                 {
                     Count = 1,
                     CartId = cartId,

@@ -17,8 +17,8 @@
                 .Instance()
                 .Calling(c => c.CreatedAtRouteAction())
                 .ShouldReturn()
-                .Created()
-                .At<NoAttributesController>(c => c.WithParameter(1));
+                .Created(created => created
+                    .At<NoAttributesController>(c => c.WithParameter(1)));
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -35,8 +35,8 @@
                         .Instance()
                         .Calling(c => c.CreatedAtRouteAction())
                         .ShouldReturn()
-                        .Created()
-                        .At<MvcController>(c => c.AsyncOkResultAction());
+                        .Created(created => created
+                            .At<MvcController>(c => c.AsyncOkResultAction()));
                 },
                 "When calling CreatedAtRouteAction action in MvcController expected created result to have resolved location to '/api/test', but in fact received '/api/Redirect/WithParameter?id=1'.");
 
@@ -52,8 +52,8 @@
                 .Instance()
                 .Calling(c => c.CreatedAtRouteVoidAction())
                 .ShouldReturn()
-                .Created()
-                .At<NoAttributesController>(c => c.VoidAction());
+                .Created(created => created
+                    .At<NoAttributesController>(c => c.VoidAction()));
 
             MyApplication.StartsFrom<DefaultStartup>();
         }

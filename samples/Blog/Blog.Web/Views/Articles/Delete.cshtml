@@ -1,0 +1,10 @@
+﻿@model int
+
+@{
+    ViewData.SetTitle("Delete Article");
+}
+
+<h1>Are you sure you want do delete this article?</h1>
+
+<a class="btn btn-danger" asp-controller="Articles" asp-action="ConfirmDelete" asp-route-id="@Model">Yes</a>
+<a class="btn btn-default" asp-controller="Articles" asp-action="Details" asp-route-id="@Model">No</a>

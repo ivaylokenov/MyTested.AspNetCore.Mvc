@@ -36,8 +36,9 @@
                 .Controller<ValuesController>()
                 .Calling(c => c.Post("Test"))
                 .ShouldReturn()
-                .Created()
-                .AtLocation("/Created/Mocked");
+                .Created(created => created
+                    .Passing(result => result
+                        .Location == "/Created/Mocked"));
 
         [Fact]
         public void PutShouldReturnCreated()
@@ -45,8 +46,9 @@
                 .Controller<ValuesController>()
                 .Calling(c => c.Put(1, "Test"))
                 .ShouldReturn()
-                .Created()
-                .AtLocation("/Updated/1");
+                .Created(created => created
+                    .Passing(result => result
+                        .Location == "/Updated/1"));
 
         [Fact]
         public void DeleteShouldReturnBadRequestWithInvalidId()

@@ -17,16 +17,16 @@
         {
             MyMvc
                 .Controller<StoreController>()
-                .WithDbContext(db => db
+                .WithData(db => db
                     .WithEntities(entities => CreateTestGenres(
                         numberOfGenres: 10,
                         numberOfAlbums: 1,
                         dbContext: entities)))
                 .Calling(c => c.Index())
                 .ShouldReturn()
-                .View()
-                .WithModelOfType<List<Genre>>()
-                .Passing(m => m.Count == 10);
+                .View(view => view
+                    .WithModelOfType<List<Genre>>()
+                    .Passing(m => m.Count == 10));
         }
 
         [Fact]
@@ -46,21 +46,21 @@
 
             MyMvc
                 .Controller<StoreController>()
-                .WithDbContext(db => db
+                .WithData(db => db
                     .WithEntities(entities => CreateTestGenres(
                         numberOfGenres: 3,
                         numberOfAlbums: 3,
                         dbContext: entities)))
                 .Calling(c => c.Browse(genre))
                 .ShouldReturn()
-                .View()
-                .WithModelOfType<Genre>()
-                .Passing(model =>
-                {
-                    Assert.Equal(genre, model.Name);
-                    Assert.NotNull(model.Albums);
-                    Assert.Equal(3, model.Albums.Count);
-                });
+                .View(view => view
+                    .WithModelOfType<Genre>()
+                    .Passing(model =>
+                    {
+                        Assert.Equal(genre, model.Name);
+                        Assert.NotNull(model.Albums);
+                        Assert.Equal(3, model.Albums.Count);
+                    }));
         }
 
         [Fact]
@@ -74,7 +74,7 @@
         }
 
         [Fact]
-        public void DetailsShouldAlbumDetails()
+        public void DetailsShouldReturnAlbumDetails()
         {
             Genre[] genres = null;
             var albumId = 1;
@@ -83,7 +83,7 @@
                 .Controller<StoreController>()
                 .WithOptions(options => options
                     .For<AppSettings>(settings => settings.CacheDbResults = true))
-                .WithDbContext(db => db
+                .WithData(db => db
                     .WithEntities(entities => genres = CreateTestGenres(
                         numberOfGenres: 3,
                         numberOfAlbums: 3,
@@ -98,39 +98,44 @@
                         .Passing(a => a.AlbumId == 1)))
                 .AndAlso()
                 .ShouldReturn()
-                .View()
-                .WithModelOfType<Album>()
-                .Passing(model =>
-                {
-                    Assert.NotNull(model.Genre);
-                    var genre = genres.SingleOrDefault(g => g.GenreId == model.GenreId);
-                    Assert.NotNull(genre);
-                    Assert.NotNull(genre.Albums.SingleOrDefault(a => a.AlbumId == albumId));
-                    Assert.Null(model.Artist);
-                });
+                .View(view => view
+                    .WithModelOfType<Album>()
+                    .Passing(model =>
+                    {
+                        Assert.NotNull(model.Genre);
+                        var genre = genres.SingleOrDefault(g => g.GenreId == model.GenreId);
+                        Assert.NotNull(genre);
+                        Assert.NotNull(genre.Albums.SingleOrDefault(a => a.AlbumId == albumId));
+                        Assert.NotNull(model.Artist);
+                    }));
         }
 
         private static Genre[] CreateTestGenres(int numberOfGenres, int numberOfAlbums, DbContext dbContext)
         {
             var albums = Enumerable.Range(1, numberOfAlbums * numberOfGenres).Select(n =>
-                  new Album()
+                  new Album
                   {
                       AlbumId = n,
+                      Artist = new Artist
+                      {
+                          ArtistId = n,
+                          Name = "Artist " + n
+                      }
                   }).ToList();
 
-            var generes = Enumerable.Range(1, numberOfGenres).Select(n =>
-                 new Genre()
+            var genres = Enumerable.Range(1, numberOfGenres).Select(n =>
+                 new Genre
                  {
                      Albums = albums.Where(i => i.AlbumId % numberOfGenres == n - 1).ToList(),
                      GenreId = n,
-                     Name = "Genre " + n,
+                     Name = "Genre " + n
                  });
 
             dbContext.AddRange(albums);
-            dbContext.AddRange(generes);
+            dbContext.AddRange(genres);
             dbContext.SaveChanges();
 
-            return generes.ToArray();
+            return genres.ToArray();
         }
     }
 }

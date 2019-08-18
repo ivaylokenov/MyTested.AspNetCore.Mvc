@@ -96,10 +96,10 @@
                     model,
                     With.No<string>()))
                 .ShouldReturn()
-                .Redirect()
-                .To<HomeController>(c => c.Index(
-                    With.No<MusicStoreContext>(),
-                    With.No<IMemoryCache>()));
+                .Redirect(redirect => redirect
+                    .To<HomeController>(c => c.Index(
+                        With.No<MusicStoreContext>(),
+                        With.No<IMemoryCache>())));
         }
         
         [Fact]
@@ -119,8 +119,8 @@
                     model,
                     returnUrl))
                 .ShouldReturn()
-                .Redirect()
-                .ToUrl(returnUrl);
+                .Redirect(redirect => redirect
+                    .ToUrl(returnUrl));
         }
         
         [Fact]
@@ -141,8 +141,8 @@
                     model,
                     returnUrl))
                 .ShouldReturn()
-                .Redirect()
-                .To<AccountController>(c => c.SendCode(model.RememberMe, returnUrl));
+                .Redirect(redirect => redirect
+                    .To<AccountController>(c => c.SendCode(model.RememberMe, returnUrl)));
         }
         
         [Fact]

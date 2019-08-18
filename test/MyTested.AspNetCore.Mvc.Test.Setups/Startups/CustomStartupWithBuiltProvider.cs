@@ -11,12 +11,12 @@
         {
             services.AddMvc();
             services.AddTransient<IInjectedService, ReplaceableInjectedService>();
+
+            services.AddCoreTesting();
+
             return services.BuildServiceProvider();
         }
 
-        public void Configure(IApplicationBuilder app)
-        {
-            app.UseMvcWithDefaultRoute();
-        }
+        public void Configure(IApplicationBuilder app) => app.UseMvcWithDefaultRoute();
     }
 }

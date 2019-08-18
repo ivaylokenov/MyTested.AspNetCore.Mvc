@@ -11,7 +11,8 @@
         /// <summary>
         /// Tests whether the <see cref="Microsoft.Extensions.Caching.Memory.IMemoryCache"/> entry passes the given assertions.
         /// </summary>
-        /// <param name="assertions">Action containing all assertions on the <see cref="Microsoft.Extensions.Caching.Memory.IMemoryCache"/> entry.</param>
+        /// <param name="assertions">Action containing all assertions
+        /// for the <see cref="Microsoft.Extensions.Caching.Memory.IMemoryCache"/> entry.</param>
         /// <returns>The same <see cref="IAndMemoryCacheEntryTestBuilder"/>.</returns>
         IAndMemoryCacheEntryTestBuilder Passing(Action<TValue> assertions);
 

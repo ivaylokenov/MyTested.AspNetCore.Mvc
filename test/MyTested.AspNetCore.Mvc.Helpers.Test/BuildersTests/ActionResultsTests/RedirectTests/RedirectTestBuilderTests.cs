@@ -17,8 +17,8 @@
                 .Instance()
                 .Calling(c => c.RedirectToRouteAction())
                 .ShouldReturn()
-                .Redirect()
-                .To<NoAttributesController>(c => c.WithParameter(1));
+                .Redirect(redirect => redirect
+                    .To<NoAttributesController>(c => c.WithParameter(1)));
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -32,8 +32,8 @@
                 .Instance()
                 .Calling(c => c.RedirectToRouteAction())
                 .ShouldReturn()
-                .Redirect()
-                .To<NoAttributesController>(c => c.WithParameter(With.Any<int>()));
+                .Redirect(redirect => redirect
+                    .To<NoAttributesController>(c => c.WithParameter(With.Any<int>())));
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -47,8 +47,8 @@
                 .Instance()
                 .Calling(c => c.RedirectToRouteVoidAction())
                 .ShouldReturn()
-                .Redirect()
-                .To<NoAttributesController>(c => c.VoidAction());
+                .Redirect(redirect => redirect
+                    .To<NoAttributesController>(c => c.VoidAction()));
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -65,8 +65,8 @@
                         .Instance()
                         .Calling(c => c.RedirectToRouteAction())
                         .ShouldReturn()
-                        .Redirect()
-                        .To<MvcController>(c => c.AsyncOkResultAction());
+                        .Redirect(redirect => redirect
+                            .To<MvcController>(c => c.AsyncOkResultAction()));
                 },
                 "When calling RedirectToRouteAction action in MvcController expected redirect result to have resolved location to '/api/test', but in fact received '/api/Redirect/WithParameter?id=1'.");
 

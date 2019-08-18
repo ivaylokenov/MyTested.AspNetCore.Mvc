@@ -1,20 +1,20 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.ActionResults.LocalRedirect
 {
-    using System;
-    using Base;
+    using Builders.Base;
     using Contracts.ActionResults.LocalRedirect;
-    using Contracts.Uri;
     using Exceptions;
+    using Internal;
+    using Internal.Contracts.ActionResults;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc;
-    using Utilities.Extensions;
-    using Utilities.Validators;
 
     /// <summary>
     /// Used for testing <see cref="LocalRedirectResult"/>.
     /// </summary>
-    public class LocalRedirectTestBuilder : BaseTestBuilderWithActionResult<LocalRedirectResult>,
-        IAndLocalRedirectTestBuilder
+    public class LocalRedirectTestBuilder 
+        : BaseTestBuilderWithActionResult<LocalRedirectResult>,
+        IAndLocalRedirectTestBuilder,
+        IBaseTestBuilderWithRedirectResultInternal<IAndLocalRedirectTestBuilder>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="LocalRedirectTestBuilder"/> class.
@@ -25,108 +25,28 @@
         {
         }
 
-        /// <inheritdoc />
-        public IAndLocalRedirectTestBuilder Permanent()
-        {
-            if (!this.ActionResult.Permanent)
-            {
-                this.ThrowNewRedirectResultAssertionException(
-                    "to",
-                    "be permanent",
-                    "in fact it was not");
-            }
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndLocalRedirectTestBuilder ToUrl(string localUrl)
-        {
-            var uri = LocationValidator.ValidateAndGetWellFormedUriString(
-                localUrl,
-                this.ThrowNewRedirectResultAssertionException);
-
-            return this.ToUrl(uri);
-        }
-
-        /// <inheritdoc />
-        public IAndLocalRedirectTestBuilder ToUrlPassing(Action<string> assertions)
-        {
-            assertions(this.ActionResult.Url);
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndLocalRedirectTestBuilder ToUrlPassing(Func<string, bool> predicate)
-        {
-            var url = this.ActionResult.Url;
-            if (!predicate(url))
-            {
-                this.ThrowNewRedirectResultAssertionException(
-                    $"location ('{url}')",
-                    "to pass the given predicate",
-                    "it failed");
-            }
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndLocalRedirectTestBuilder ToUrl(Action<IUriTestBuilder> uriTestBuilder)
-        {
-            LocationValidator.ValidateLocation(
-                this.ActionResult,
-                uriTestBuilder,
-                this.ThrowNewRedirectResultAssertionException);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndLocalRedirectTestBuilder ToUrl(Uri localUrl)
-        {
-            LocationValidator.ValidateUri(
-                this.ActionResult,
-                localUrl.OriginalString,
-                this.ThrowNewRedirectResultAssertionException);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndLocalRedirectTestBuilder WithUrlHelper(IUrlHelper urlHelper)
-        {
-            RouteActionResultValidator.ValidateUrlHelper(
-                this.ActionResult,
-                urlHelper,
-                this.ThrowNewRedirectResultAssertionException);
-
-            return this;
-        }
-
-        /// <inheritdoc />
-        public IAndLocalRedirectTestBuilder WithUrlHelperOfType<TUrlHelper>()
-            where TUrlHelper : IUrlHelper
-        {
-            RouteActionResultValidator.ValidateUrlHelperOfType<TUrlHelper>(
-                this.ActionResult,
-                this.ThrowNewRedirectResultAssertionException);
-
-            return this;
-        }
-
+        /// <summary>
+        /// Gets the local redirect result test builder.
+        /// </summary>
+        /// <value>Test builder of <see cref="IAndLocalRedirectTestBuilder"/> type.</value>
+        public IAndLocalRedirectTestBuilder ResultTestBuilder => this;
+        
         /// <inheritdoc />
         public ILocalRedirectTestBuilder AndAlso() => this;
-        
-        public void ThrowNewRedirectResultAssertionException(string propertyName, string expectedValue, string actualValue)
-        {
-            throw new RedirectResultAssertionException(string.Format(
-                "When calling {0} action in {1} expected local redirect result {2} {3}, but {4}.",
-                this.ActionName,
-                this.Controller.GetName(),
+
+        /// <summary>
+        /// Throws new <see cref="RedirectResultAssertionException"/> for the provided property name, expected value and actual value.
+        /// </summary>
+        /// <param name="propertyName">Property name on which the testing failed.</param>
+        /// <param name="expectedValue">Expected value of the tested property.</param>
+        /// <param name="actualValue">Actual value of the tested property.</param>
+        public void ThrowNewFailedValidationException(string propertyName, string expectedValue, string actualValue) 
+            => throw new RedirectResultAssertionException(string.Format(
+                ExceptionMessages.ActionResultFormat,
+                this.TestContext.ExceptionMessagePrefix,
+                "local redirect",
                 propertyName,
                 expectedValue,
                 actualValue));
-        }
     }
 }

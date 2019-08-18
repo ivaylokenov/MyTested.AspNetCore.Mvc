@@ -45,7 +45,7 @@
         {
             this.validations.Add((expected, actual) =>
             {
-                assertions(actual.Value);
+                assertions(actual.Value.Value);
                 return true;
             });
 
@@ -55,7 +55,7 @@
         /// <inheritdoc />
         public IAndResponseCookieTestBuilder WithValue(Func<string, bool> predicate)
         {
-            this.validations.Add((expected, actual) => predicate(actual.Value));
+            this.validations.Add((expected, actual) => predicate(actual.Value.Value));
             return this;
         }
 
@@ -68,9 +68,9 @@
         }
 
         /// <inheritdoc />
-        public IAndResponseCookieTestBuilder WithExpired(DateTimeOffset? expires)
+        public IAndResponseCookieTestBuilder WithExpiration(DateTimeOffset? expiration)
         {
-            this.responseCookie.Expires = expires;
+            this.responseCookie.Expires = expiration;
             this.validations.Add((expected, actual) => expected.Expires == actual.Expires);
             return this;
         }
@@ -100,9 +100,17 @@
         }
 
         /// <inheritdoc />
-        public IAndResponseCookieTestBuilder WithSecure(bool secure)
+        public IAndResponseCookieTestBuilder WithSameSite(SameSiteMode sameSite)
         {
-            this.responseCookie.Secure = secure;
+            this.responseCookie.SameSite = sameSite;
+            this.validations.Add((expected, actual) => expected.SameSite == actual.SameSite);
+            return this;
+        }
+
+        /// <inheritdoc />
+        public IAndResponseCookieTestBuilder WithSecurity(bool security)
+        {
+            this.responseCookie.Secure = security;
             this.validations.Add((expected, actual) => expected.Secure == actual.Secure);
             return this;
         }
@@ -120,9 +128,7 @@
             return this.responseCookie;
         }
 
-        internal ICollection<Func<SetCookieHeaderValue, SetCookieHeaderValue, bool>> GetResponseCookieValidations()
-        {
-            return this.validations;
-        }
+        internal ICollection<Func<SetCookieHeaderValue, SetCookieHeaderValue, bool>> GetResponseCookieValidations() 
+            => this.validations;
     }
 }

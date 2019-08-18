@@ -5,7 +5,6 @@
     using Builders.Contracts.Models;
     using Builders.Models;
     using Exceptions;
-    using Utilities.Extensions;
     using Utilities.Validators;
     using Builders.Contracts.Base;
     using Builders.Base;
@@ -66,7 +65,12 @@
         {
             var actualBuilder = (BaseTestBuilderWithComponentBuilder<TBuilder>)builder;
 
-            var actualModelStateErrors = (actualBuilder.TestContext as ActionTestContext)?.ModelState.Values.SelectMany(c => c.Errors).Count();
+            var actualModelStateErrors = (actualBuilder.TestContext as ActionTestContext)
+                ?.ModelState
+                .Values
+                .SelectMany(c => c.Errors)
+                .Count();
+
             if (actualModelStateErrors == 0
                 || (withNumberOfErrors != null && actualModelStateErrors != withNumberOfErrors))
             {

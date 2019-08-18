@@ -1,13 +1,13 @@
-﻿namespace MyTested.AspNetCore.Mvc.Test
+﻿namespace MyTested.AspNetCore.Mvc.Licensing.Test
 {
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Licensing;
     using Microsoft.Extensions.Configuration;
-    using Setups.Controllers;
+    using Mvc.Test.Setups;
+    using Mvc.Test.Setups.Controllers;
     using Xunit;
-    using Setups;
 
     public class MyTestedMvcLicensingTests
     {
@@ -16,13 +16,8 @@
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
-                .WithTestConfiguration(config =>
-                {
-                    config.AddInMemoryCollection(new[]
-                    {
-                        new KeyValuePair<string, string>("License", null),
-                    });
-                })
+                .WithConfiguration(configuration => configuration
+                    .Add("License", null))
                 .WithTestAssembly(this);
 
             LicenseValidator.ClearLicenseDetails();
@@ -49,6 +44,8 @@
             .ConfigureAwait(false)
             .GetAwaiter()
             .GetResult();
+            
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
@@ -56,13 +53,8 @@
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
-                .WithTestConfiguration(config =>
-                {
-                    config.AddInMemoryCollection(new[]
-                    {
-                        new KeyValuePair<string, string>("License", "1-3i7E5P3qX5IUWHIAfcXG6DSbOwUBidygp8bnYY/2Rd9zA15SwRWP6QDDp+m/dDTZNBFX2eIHcU/gdcdm83SL695kf3VyvMPw+iyPN6QBh/WnfQwGLqBecrQw+WNPJMz6UgXi2q4e4s/D8/iSjMlwCnzJvC2Yv3zSuADdWObQsygxOjk5OTktMTItMzE6YWRtaW5AbXl0ZXN0ZWRhc3AubmV0Ok15VGVzdGVkLk12YyBUZXN0czpGdWxsOk15VGVzdGVkLkFzcE5ldENvcmUuTXZjLg=="),
-                    });
-                })
+                .WithConfiguration(configuration => configuration
+                    .Add("License", "1-3i7E5P3qX5IUWHIAfcXG6DSbOwUBidygp8bnYY/2Rd9zA15SwRWP6QDDp+m/dDTZNBFX2eIHcU/gdcdm83SL695kf3VyvMPw+iyPN6QBh/WnfQwGLqBecrQw+WNPJMz6UgXi2q4e4s/D8/iSjMlwCnzJvC2Yv3zSuADdWObQsygxOjk5OTktMTItMzE6YWRtaW5AbXl0ZXN0ZWRhc3AubmV0Ok15VGVzdGVkLk12YyBUZXN0czpGdWxsOk15VGVzdGVkLkFzcE5ldENvcmUuTXZjLg=="))
                 .WithTestAssembly(this);
 
             LicenseValidator.ClearLicenseDetails();
@@ -98,10 +90,8 @@
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
-                .WithTestConfiguration(config =>
-                {
-                    config.AddJsonFile("multilicenseconfig.json");
-                })
+                .WithConfiguration(config => config
+                    .AddJsonFile("multilicenseconfig.json"))
                 .WithTestAssembly(this);
 
             LicenseValidator.ClearLicenseDetails();

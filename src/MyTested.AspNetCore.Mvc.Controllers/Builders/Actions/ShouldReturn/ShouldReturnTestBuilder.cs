@@ -1,8 +1,12 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Actions.ShouldReturn
 {
+    using System;
+    using And;
     using Base;
     using Contracts.Actions;
+    using Contracts.And;
     using Internal.TestContexts;
+    using Utilities.Validators;
 
     /// <summary>
     /// Used for testing returned action result.
@@ -18,6 +22,18 @@
         public ShouldReturnTestBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
+        }
+
+        public IAndTestBuilder ValidateActionResult<TResult, TTestBuilder>(
+            Action<TTestBuilder> testBuilderAction = null,
+            TTestBuilder testBuilder = null)
+            where TTestBuilder : class
+        {
+            InvocationResultValidator.ValidateInvocationResultType<TResult>(this.TestContext);
+
+            testBuilderAction?.Invoke(testBuilder);
+
+            return new AndTestBuilder(this.TestContext);
         }
     }
 }

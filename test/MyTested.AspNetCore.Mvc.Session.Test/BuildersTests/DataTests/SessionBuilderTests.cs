@@ -34,8 +34,8 @@
                     .WithEntry("HasId", "HasIdValue"))
                 .Calling(c => c.FullSessionAction())
                 .ShouldReturn()
-                .Ok()
-                .WithModel("TestId");
+                .Ok(ok => ok
+                    .WithModel("TestId"));
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -58,21 +58,21 @@
                     .WithEntry("HasId", "HasIdValue"))
                 .Calling(c => c.FullSessionAction())
                 .ShouldReturn()
-                .Ok()
-                .ShouldPassForThe<OkObjectResult>(actionResult =>
-                {
-                    var okObjectResult = actionResult as OkObjectResult;
+                .Ok(ok => ok
+                    .ShouldPassForThe<OkObjectResult>(actionResult =>
+                    {
+                        var okObjectResult = actionResult as OkObjectResult;
 
-                    Assert.NotNull(okObjectResult);
-                    Assert.IsAssignableFrom<string>(okObjectResult.Value);
+                        Assert.NotNull(okObjectResult);
+                        Assert.IsAssignableFrom<string>(okObjectResult.Value);
 
-                    var modelAsString = (string)okObjectResult.Value;
+                        var modelAsString = (string)okObjectResult.Value;
 
-                    Assert.NotNull(modelAsString);
-                    Assert.NotEmpty(modelAsString);
+                        Assert.NotNull(modelAsString);
+                        Assert.NotEmpty(modelAsString);
 
-                    MyApplication.StartsFrom<DefaultStartup>();
-                });
+                        MyApplication.StartsFrom<DefaultStartup>();
+                    }));
         }
 
         [Fact]
@@ -95,8 +95,8 @@
                             .WithEntry("HasId", "HasIdValue"))
                         .Calling(c => c.FullSessionAction())
                         .ShouldReturn()
-                        .Ok()
-                        .WithModel("TestId");
+                        .Ok(ok => ok
+                            .WithModel("TestId"));
                 },
                 "Setting session Id requires the registered ISession service to implement ISessionMock.");
 
@@ -121,8 +121,8 @@
                     .WithEntry("ByteEntry", new byte[] { 1, 2, 3 }))
                 .Calling(c => c.FullSessionAction())
                 .ShouldReturn()
-                .Ok()
-                .WithModel(new byte[] { 1, 2, 3 });
+                .Ok(ok => ok
+                    .WithModel(new byte[] { 1, 2, 3 }));
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -145,8 +145,8 @@
                     .WithEntry("IntEntry", 1))
                 .Calling(c => c.FullSessionAction())
                 .ShouldReturn()
-                .Ok()
-                .WithModel(1);
+                .Ok(ok => ok
+                    .WithModel(1));
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -174,13 +174,13 @@
                     }))
                 .Calling(c => c.MultipleSessionValuesAction())
                 .ShouldReturn()
-                .Ok()
-                .WithModel(new SessionResponseModel
-                {
-                    String = "test",
-                    Integer = 1,
-                    Byte = new byte[] { 1, 2, 3 }
-                });
+                .Ok(ok => ok
+                    .WithModel(new SessionResponseModel
+                    {
+                        String = "test",
+                        Integer = 1,
+                        Byte = new byte[] { 1, 2, 3 }
+                    }));
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -203,8 +203,8 @@
                     .WithEntries(new Dictionary<string, byte[]> { ["ByteEntry"] = new byte[] { 1, 2, 3 }, ["Test"] = null }))
                 .Calling(c => c.FullSessionAction())
                 .ShouldReturn()
-                .Ok()
-                .WithModel(new byte[] { 1, 2, 3 });
+                .Ok(ok => ok
+                    .WithModel(new byte[] { 1, 2, 3 }));
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -227,8 +227,8 @@
                     .WithEntries(new Dictionary<string, string> { ["StringEntry"] = "stringTest" }))
                 .Calling(c => c.FullSessionAction())
                 .ShouldReturn()
-                .Ok()
-                .WithModel("stringTest");
+                .Ok(ok => ok
+                    .WithModel("stringTest"));
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -251,8 +251,8 @@
                     .WithEntries(new Dictionary<string, int> { ["IntEntry"] = 1 }))
                 .Calling(c => c.FullSessionAction())
                 .ShouldReturn()
-                .Ok()
-                .WithModel(1);
+                .Ok(ok => ok
+                    .WithModel(1));
 
             MyApplication.StartsFrom<DefaultStartup>();
         }

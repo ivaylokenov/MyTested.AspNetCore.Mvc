@@ -25,26 +25,22 @@
         private HttpContextMock HttpContext => this.TestContext.HttpContextMock;
 
         /// <inheritdoc />
-        public IShouldMapTestBuilder ShouldMap(string location)
-        {
-            return this.ShouldMap(request => request
+        public IShouldMapTestBuilder ShouldMap(string location) 
+            => this.ShouldMap(request => request
                 .WithLocation(location)
                 .WithMethod(HttpMethod.Get));
-        }
 
         /// <inheritdoc />
-        public IShouldMapTestBuilder ShouldMap(Uri location)
-        {
-            return this.ShouldMap(request => request
+        public IShouldMapTestBuilder ShouldMap(Uri location) 
+            => this.ShouldMap(request => request
                 .WithLocation(location)
                 .WithMethod(HttpMethod.Get));
-        }
 
         /// <inheritdoc />
         public IShouldMapTestBuilder ShouldMap(HttpRequest request)
         {
             this.HttpContext.CustomRequest = request;
-            return this.ShouldMap(this.HttpContext);
+            return this.ShouldMap();
         }
 
         /// <inheritdoc />
@@ -53,12 +49,10 @@
             var httpBuilder = new HttpRequestBuilder(this.HttpContext);
             httpRequestBuilder(httpBuilder);
             httpBuilder.ApplyTo(this.HttpContext.Request);
-            return this.ShouldMap(this.HttpContext);
+            return this.ShouldMap();
         }
 
-        private IShouldMapTestBuilder ShouldMap(HttpContext httpContext)
-        {
-            return new ShouldMapTestBuilder(this.TestContext);
-        }
+        private IShouldMapTestBuilder ShouldMap() 
+            => new ShouldMapTestBuilder(this.TestContext);
     }
 }

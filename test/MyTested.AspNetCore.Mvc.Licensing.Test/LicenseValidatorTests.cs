@@ -1,11 +1,11 @@
-﻿namespace MyTested.AspNetCore.Mvc.Test
+﻿namespace MyTested.AspNetCore.Mvc.Licensing.Test
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Security.Cryptography;
     using Licensing;
-    using Setups;
+    using Mvc.Test.Setups;
     using Xunit;
 
     public class LicenseValidatorTests

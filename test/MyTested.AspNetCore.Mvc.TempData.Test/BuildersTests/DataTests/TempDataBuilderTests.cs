@@ -17,8 +17,8 @@
                     .WithEntry("Another", "AnotherValid"))
                 .Calling(c => c.TempDataAction())
                 .ShouldReturn()
-                .Ok()
-                .WithModel("Valid");
+                .Ok(ok => ok
+                    .WithModel("Valid"));
         }
         
         [Fact]
@@ -34,8 +34,8 @@
                     }))
                 .Calling(c => c.TempDataAction())
                 .ShouldReturn()
-                .Ok()
-                .WithModel("Valid");
+                .Ok(ok => ok
+                    .WithModel("Valid"));
         }
         
         [Fact]
@@ -47,8 +47,8 @@
                     .WithEntries(new { Test = "Valid", Second = "SecondValid" }))
                 .Calling(c => c.TempDataAction())
                 .ShouldReturn()
-                .Ok()
-                .WithModel("Valid");
+                .Ok(ok => ok
+                    .WithModel("Valid"));
         }
     }
 }

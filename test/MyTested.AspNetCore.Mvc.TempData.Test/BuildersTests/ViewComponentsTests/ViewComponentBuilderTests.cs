@@ -9,17 +9,25 @@
     public class ViewComponentBuilderTests
     {
         [Fact]
-        public void WithTempDataShouldPopulateTempDataCorrectly()
+        public void WithValidTempDataValueShouldPopulateTempDataCorrectly()
         {
             MyViewComponent<TempDataComponent>
                 .Instance()
-                .WithTempData(tempData =>
-                {
-                    tempData.WithEntry("test", "value");
-                })
+                .WithTempData(tempData => tempData.WithEntry("test", "value"))
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .Content("value");
+        }
+
+        [Fact]
+        public void WithInvalidTempDataValueShouldReturnViewWithNoModel()
+        {
+            MyViewComponent<TempDataComponent>
+                .Instance()
+                .WithTempData(tempData => tempData.WithEntry("invalid", "value"))
+                .InvokedWith(c => c.Invoke())
+                .ShouldReturn()
+                .View();
         }
 
         [Fact]
@@ -40,10 +48,7 @@
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
-                .WithServices(services =>
-                {
-                    services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-                });
+                .WithServices(services => services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>());
 
             MyViewComponent<PocoViewComponent>
                 .Instance()

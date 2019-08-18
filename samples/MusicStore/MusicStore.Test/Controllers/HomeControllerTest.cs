@@ -17,7 +17,7 @@
                 .Controller<HomeController>()
                 .WithOptions(options => options
                     .For<AppSettings>(settings => settings.CacheDbResults = true))
-                .WithDbContext(dbContext => dbContext
+                .WithData(data => data
                     .WithSet<Album>(albums => albums
                         .AddRange(TestAlbumDataProvider.GetAlbums())))
                 .Calling(c => c.Index(
@@ -28,9 +28,9 @@
                     .ContainingEntryOfType<List<Album>>("topselling"))
                 .AndAlso()
                 .ShouldReturn()
-                .View()
-                .WithModelOfType<List<Album>>()
-                .Passing(albums => Assert.Equal(6, albums.Count));
+                .View(view => view
+                    .WithModelOfType<List<Album>>()
+                    .Passing(albums => Assert.Equal(6, albums.Count)));
         }
         
         [Fact]
@@ -68,21 +68,21 @@
             public static Album[] GetAlbums()
             {
                 var generes = Enumerable.Range(1, 10).Select(n =>
-                    new Genre()
+                    new Genre
                     {
                         GenreId = n,
                         Name = "Genre Name " + n,
                     }).ToArray();
 
                 var artists = Enumerable.Range(1, 10).Select(n =>
-                    new Artist()
+                    new Artist
                     {
                         ArtistId = n + 1,
                         Name = "Artist Name " + n,
                     }).ToArray();
 
                 var albums = Enumerable.Range(1, 10).Select(n =>
-                    new Album()
+                    new Album
                     {
                         Artist = artists[n - 1],
                         ArtistId = n,

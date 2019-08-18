@@ -3,6 +3,7 @@
     using System;
     using Builders.Contracts.Routing;
     using Builders.Routing;
+    using Internal;
     using Internal.Application;
     using Internal.Configuration;
     using Internal.TestContexts;
@@ -12,10 +13,7 @@
     /// </summary>
     public class MyRouting : RouteTestBuilder
     {
-        static MyRouting()
-        {
-            TestApplication.TryInitialize();
-        }
+        static MyRouting() => TestApplication.TryInitialize();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MyRouting"/> class.
@@ -27,9 +25,9 @@
                 Services = TestApplication.RoutingServices
             })
         {
-            if (TestApplication.Configuration().General().NoStartup())
+            if (ServerTestConfiguration.Global.GetGeneralConfiguration().NoStartup)
             {
-                throw new InvalidOperationException("Testing routes without a Startup class is not supported. Set the 'General.NoStartup' option in the test configuration ('testconfig.json' file by default) to 'true' and provide a Startup class.");
+                throw new InvalidOperationException(ExceptionMessages.RouteTestingUnavailable);
             }
         }
 
@@ -37,9 +35,6 @@
         /// Starts a route test.
         /// </summary>
         /// <returns>Test builder of <see cref="IRouteTestBuilder"/> type.</returns>
-        public static IRouteTestBuilder Configuration()
-        {
-            return new MyRouting();
-        }
+        public static IRouteTestBuilder Configuration() => new MyRouting();
     }
 }

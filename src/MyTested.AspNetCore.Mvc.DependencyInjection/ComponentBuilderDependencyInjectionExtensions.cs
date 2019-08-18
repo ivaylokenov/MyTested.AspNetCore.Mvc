@@ -5,8 +5,8 @@
     using System.Linq;
     using Builders.Base;
     using Builders.Contracts.Base;
-    using Builders.Contracts.Services;
-    using Builders.Services;
+    using Builders.Contracts.Dependencies;
+    using Builders.Dependencies;
     using Utilities.Extensions;
 
     /// <summary>
@@ -15,56 +15,60 @@
     public static class ComponentBuilderDependencyInjectionExtensions
     {
         /// <summary>
-        /// Sets services on the tested component.
+        /// Sets service dependencies on the tested component.
         /// </summary>
         /// <typeparam name="TBuilder">Class representing ASP.NET Core MVC test builder.</typeparam>
         /// <param name="builder">Instance of <see cref="IBaseTestBuilderWithComponentBuilder{TBuilder}"/> type.</param>
-        /// <param name="servicesBuilder">Action setting the services by using <see cref="IServicesBuilder"/>.</param>
+        /// <param name="dependenciesBuilder">
+        /// Action setting the service dependencies by using <see cref="IDependenciesBuilder"/>.
+        /// </param>
         /// <returns>The same component builder.</returns>
-        public static TBuilder WithServices<TBuilder>(
+        public static TBuilder WithDependencies<TBuilder>(
             this IBaseTestBuilderWithComponentBuilder<TBuilder> builder,
-            Action<IServicesBuilder> servicesBuilder)
+            Action<IDependenciesBuilder> dependenciesBuilder)
             where TBuilder : IBaseTestBuilder
         {
             var actualBuilder = (BaseTestBuilderWithComponentBuilder<TBuilder>)builder;
 
-            servicesBuilder(new ServicesBuilder(actualBuilder.TestContext));
+            dependenciesBuilder(new DependenciesBuilder(actualBuilder.TestContext));
 
             return actualBuilder.Builder;
         }
 
         /// <summary>
-        /// Sets constructor services on the tested component.
+        /// Sets constructor service dependencies on the tested component.
         /// </summary>
         /// <typeparam name="TBuilder">Class representing ASP.NET Core MVC test builder.</typeparam>
         /// <param name="builder">Instance of <see cref="IBaseTestBuilderWithComponentBuilder{TBuilder}"/> type.</param>
-        /// <param name="services">Collection of service dependencies to inject into the component constructor.</param>
+        /// <param name="dependencies">Collection of service dependencies to inject into the component constructor.</param>
         /// <returns>The same component builder.</returns>
-        public static TBuilder WithServices<TBuilder>(
+        public static TBuilder WithDependencies<TBuilder>(
             this IBaseTestBuilderWithComponentBuilder<TBuilder> builder,
-            IEnumerable<object> services)
+            IEnumerable<object> dependencies)
             where TBuilder : IBaseTestBuilder
         {
             var actualBuilder = (BaseTestBuilderWithComponentBuilder<TBuilder>)builder;
 
-            services.ForEach(service => actualBuilder.WithServices(serviceBuilder => serviceBuilder.With(service)));
+            dependencies
+                .ForEach(dependency => actualBuilder
+                    .WithDependencies(dependenciesBuilder => dependenciesBuilder
+                        .With(dependency)));
 
             return actualBuilder.Builder;
         }
 
         /// <summary>
-        /// Sets constructor services on the tested component.
+        /// Sets constructor service dependencies on the tested component.
         /// </summary>
         /// <typeparam name="TBuilder">Class representing ASP.NET Core MVC test builder.</typeparam>
         /// <param name="builder">Instance of <see cref="IBaseTestBuilderWithComponentBuilder{TBuilder}"/> type.</param>
-        /// <param name="services">Services to inject into the component constructor.</param>
+        /// <param name="dependencies">Service dependencies to inject into the component constructor.</param>
         /// <returns>The same component builder.</returns>
-        public static TBuilder WithServices<TBuilder>(
+        public static TBuilder WithDependencies<TBuilder>(
             this IBaseTestBuilderWithComponentBuilder<TBuilder> builder,
-            params object[] services)
-            where TBuilder : IBaseTestBuilder
-        {
-            return builder.WithServices(services.AsEnumerable());
-        }
+            params object[] dependencies)
+            where TBuilder : IBaseTestBuilder 
+            => builder
+                .WithDependencies(dependencies.AsEnumerable());
     }
 }

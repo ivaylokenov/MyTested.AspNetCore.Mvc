@@ -4,9 +4,6 @@
 
     public class PocoController
     {
-        public IActionResult Action(int id)
-        {
-            return null;
-        }
+        public IActionResult Action(int id) => null;
     }
 }

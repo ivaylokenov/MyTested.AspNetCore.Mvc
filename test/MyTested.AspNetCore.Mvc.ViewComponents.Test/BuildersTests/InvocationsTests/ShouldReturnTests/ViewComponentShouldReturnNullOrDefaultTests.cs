@@ -1,6 +1,5 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.InvocationsTests.ShouldReturnTests
 {
-    using System;
     using Setups;
     using Setups.ViewComponents;
     using Xunit;

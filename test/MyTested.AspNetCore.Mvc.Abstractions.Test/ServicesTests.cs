@@ -1,26 +1,34 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test
 {
-    using System;
-    using System.Linq;
     using Internal;
     using Internal.Application;
+    using Internal.Contracts;
+    using Internal.Routing;
     using Internal.Services;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Hosting.Builder;
+    using Microsoft.AspNetCore.Hosting.Internal;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.Caching.Memory;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.DependencyInjection.Extensions;
     using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.ObjectPool;
     using Microsoft.Extensions.Options;
     using Setups;
     using Setups.Common;
     using Setups.Controllers;
     using Setups.Services;
     using Setups.Startups;
+    using System;
+    using System.Diagnostics;
+    using System.Linq;
     using Xunit;
 
     public class ServicesTests
@@ -83,20 +91,74 @@
             var injectedService = TestServiceProvider.GetService<IInjectedService>();
 
             Assert.NotNull(injectedService);
-            Assert.IsAssignableFrom(typeof(ReplaceableInjectedService), injectedService);
+            Assert.IsAssignableFrom<ReplaceableInjectedService>(injectedService);
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]
-        public void IsUsingWithStartUpClassShouldWorkCorrectlyWithFunc()
+        public void IsUsingWithStartUpClassShouldWorkCorrectlyWithServiceProviderWhenTestServicesAreAddedByHand()
         {
             MyApplication.StartsFrom<CustomStartupWithBuiltProvider>();
 
-            var injectedService = TestServiceProvider.GetService<IInjectedService>();
+            var injectedService = TestApplication.Services.GetService<IInjectedService>();
+            var injectedServiceFromRoutingServices = TestApplication.RoutingServices.GetService<IInjectedService>();
 
             Assert.NotNull(injectedService);
-            Assert.IsAssignableFrom(typeof(ReplaceableInjectedService), injectedService);
+            Assert.IsAssignableFrom<ReplaceableInjectedService>(injectedService);
+
+            Assert.NotNull(injectedServiceFromRoutingServices);
+            Assert.IsAssignableFrom<ReplaceableInjectedService>(injectedServiceFromRoutingServices);
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+        
+        [Fact]
+        public void IsUsingWithStartUpClassShouldWorkCorrectlyWithCustomServiceProviderWhenTestServicesAreAddedByHand()
+        {
+            MyApplication.StartsFrom<CustomStartupWithCustomServiceProvider>();
+
+            var injectedService = TestApplication.Services.GetService<IInjectedService>();
+            var injectedServiceFromRoutingServices = TestApplication.RoutingServices.GetService<IInjectedService>();
+
+            Assert.NotNull(injectedService);
+            Assert.IsAssignableFrom<InjectedService>(injectedService);
+
+            Assert.NotNull(injectedServiceFromRoutingServices);
+            Assert.IsAssignableFrom<InjectedService>(injectedServiceFromRoutingServices);
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+        
+        [Fact]
+        public void IsUsingWithStartUpClassShouldThrowStartupExceptionWithServiceProviderWhenTestServicesAreMissing()
+        {
+            Test.AssertException<InvalidOperationException>(
+                () =>
+                {
+                    MyApplication.StartsFrom<CustomStartupWithDefaultBuildProvider>();
+
+                    TestServiceProvider.GetService<IInjectedService>();
+                },
+                "Testing services could not be resolved. If your ConfigureServices method returns an IServiceProvider, you should either change it to return 'void' or manually register the required testing services by calling one of the provided IServiceCollection extension methods in the 'MyTested.AspNetCore.Mvc' namespace. An easy way to do the second option is to add a TestStartup class at the root of your test project and invoke the extension methods there.");
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+        
+        [Fact]
+        public void IsUsingWithStartUpClassShouldThrowExceptionWithServiceProviderWhenTestServicesAreMissing()
+        {
+            Test.AssertException<InvalidOperationException>(
+                () =>
+                {
+                    MyApplication
+                        .StartsFrom<InvalidStartup>()
+                        .WithConfiguration(configuration => configuration
+                            .Add("General:Environment", "Invalid"));
+
+                    TestServiceProvider.GetService<IInjectedService>();
+                },
+                "Testing services could not be resolved. If your ConfigureServices method returns an IServiceProvider, you should either change it to return 'void' or manually register the required testing services by calling one of the provided IServiceCollection extension methods in the 'MyTested.AspNetCore.Mvc' namespace.");
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -114,7 +176,7 @@
             var injectedServices = TestServiceProvider.GetService<IInjectedService>();
 
             Assert.NotNull(injectedServices);
-            Assert.IsAssignableFrom(typeof(InjectedService), injectedServices);
+            Assert.IsAssignableFrom<InjectedService>(injectedServices);
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -132,7 +194,7 @@
         }
 
         [Fact]
-        public void IsUsingShouldRecreateServicesEverytimeItIsInvoked()
+        public void IsUsingShouldRecreateServicesEveryTimeItIsInvoked()
         {
             MyApplication.StartsFrom<DefaultStartup>();
 
@@ -180,7 +242,7 @@
 
             Assert.NotNull(service);
         }
-
+        
         [Fact]
         public void DefaultConfigShouldSetDefaultRoutes()
         {
@@ -263,7 +325,8 @@
         [Fact]
         public void CustomStartupWithAdditionalServiceShouldSetThem()
         {
-            MyApplication.StartsFrom<CustomStartup>()
+            MyApplication
+                .StartsFrom<CustomStartup>()
                 .WithServices(services =>
                 {
                     services.AddTransient<IAnotherInjectedService, AnotherInjectedService>();
@@ -286,7 +349,8 @@
         {
             var set = false;
 
-            MyApplication.StartsFrom<CustomStartup>()
+            MyApplication
+                .StartsFrom<CustomStartup>()
                 .WithConfiguration(app =>
                 {
                     set = true;
@@ -309,7 +373,8 @@
         [Fact]
         public void WithCustomStartupAndAdditionalRoutesShouldWorkCorrectly()
         {
-            MyApplication.StartsFrom<CustomStartup>()
+            MyApplication
+                .StartsFrom<CustomStartup>()
                 .WithRoutes(routes =>
                 {
                     routes.MapRoute(
@@ -332,7 +397,8 @@
         [Fact]
         public void WithoutHttpContextFactoryTheDefaultMockHttpContextShouldBeProvided()
         {
-            MyApplication.StartsFrom<DefaultStartup>()
+            MyApplication
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.RemoveTransient<IHttpContextFactory>();
@@ -353,7 +419,8 @@
         [Fact]
         public void WithHttpContextFactoryShouldReturnMockHttpContextBasedOnTheFactoryCreatedHttpContext()
         {
-            MyApplication.StartsFrom<DefaultStartup>()
+            MyApplication
+                .StartsFrom<DefaultStartup>()
                 .WithServices(services =>
                 {
                     services.ReplaceTransient<IHttpContextFactory, CustomHttpContextFactory>();
@@ -370,7 +437,7 @@
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
-        
+
         [Fact]
         public void MockMemoryCacheShouldNotBeRegisteredIfNoCacheIsAdded()
         {
@@ -382,7 +449,7 @@
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
-        
+
         [Fact]
         public void CustomTempDataProviderShouldOverrideTheMockOne()
         {
@@ -408,7 +475,7 @@
                     services.AddTransient<IAnotherInjectedService, AnotherInjectedService>();
                 });
 
-            // this call ensures services are loaded (uses lazy loading)
+            // This call ensures services are loaded (uses lazy loading).
             var setupServices = TestApplication.Services;
 
             Assert.NotNull(setupServices.GetService<IScopedService>());
@@ -423,20 +490,287 @@
 
             var transientServiceLifetime = TestServiceProvider.GetServiceLifetime<IAnotherInjectedService>();
             Assert.Equal(ServiceLifetime.Transient, transientServiceLifetime);
-            
+
             MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void DefaultServicesShouldBeRegisteredCorrectly()
+        {
+            MyApplication.StartsFrom<DefaultStartup>();
+
+            Assert.NotNull(TestServiceProvider.GetService<IHostingEnvironment>());
+            Assert.NotNull(TestServiceProvider.GetService<IApplicationLifetime>());
+            Assert.NotNull(TestServiceProvider.GetService<IApplicationBuilderFactory>());
+            Assert.NotNull(TestServiceProvider.GetService<IHttpContextFactory>());
+            Assert.NotNull(TestServiceProvider.GetService<IMiddlewareFactory>());
+            Assert.NotNull(TestServiceProvider.GetService<ILoggerFactory>());
+            Assert.NotNull(TestServiceProvider.GetService<IConfiguration>());
+            Assert.NotNull(TestServiceProvider.GetService<DiagnosticListener>());
+            Assert.NotNull(TestServiceProvider.GetService<DiagnosticSource>());
+            Assert.NotNull(TestServiceProvider.GetService<IStartupFilter>());
+            Assert.NotNull(TestServiceProvider.GetService<IServiceProviderFactory<IServiceCollection>>());
+            Assert.NotNull(TestServiceProvider.GetService<ObjectPoolProvider>());
+            Assert.NotNull(TestServiceProvider.GetService<IRoutingServices>());
+        }
+
+        [Fact]
+        public void MissingRoutingServicesShouldThrowException()
+        {
+            Test.AssertException<InvalidOperationException>(
+                () =>
+                {
+                    MyApplication
+                        .StartsFrom<DefaultStartup>()
+                        .WithServices(services => services.Remove<IRoutingServices>());
+
+                    TestServiceProvider.GetService<IInjectedService>();
+                },
+                "No service for type 'MyTested.AspNetCore.Mvc.Internal.Contracts.IRoutingServices' has been registered.");
+
+            MyApplication
+                .IsRunningOn(server => server
+                    .WithStartup<DefaultStartup>());
+        }
+
+        [Fact]
+        public void CustomRoutingServiceProviderShouldReplaceTheDefaultOne()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    var servicesClone = new ServiceCollection { services };
+
+                    servicesClone.AddTransient<IInjectedService, InjectedService>();
+
+                    var routingServices = new RoutingServices
+                    {
+                        ServiceProvider = servicesClone.BuildServiceProvider()
+                    };
+
+                    services.ReplaceSingleton<IRoutingServices>(routingServices);
+                });
+
+            var defaultService = TestApplication.Services.GetService<IInjectedService>();
+            var routingService = TestApplication.RoutingServices.GetService<IInjectedService>();
+
+            Assert.Null(defaultService);
+            Assert.NotNull(routingService);
+
+            MyApplication
+                .IsRunningOn(server => server
+                    .WithStartup<DefaultStartup>());
+        }
+
+        [Fact]
+        public void CustomRoutingServiceCollectionShouldReplaceTheDefaultOne()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    var servicesClone = new ServiceCollection { services };
+
+                    servicesClone.AddTransient<IInjectedService, InjectedService>();
+
+                    var routingServices = new RoutingServices
+                    {
+                        ServiceCollection = servicesClone
+                    };
+
+                    services.ReplaceSingleton<IRoutingServices>(routingServices);
+                });
+
+            var defaultService = TestApplication.Services.GetService<IInjectedService>();
+            var routingService = TestApplication.RoutingServices.GetService<IInjectedService>();
+
+            Assert.Null(defaultService);
+            Assert.NotNull(routingService);
+
+            MyApplication
+                .IsRunningOn(server => server
+                    .WithStartup<DefaultStartup>());
+        }
+
+        [Fact]
+        public void MissingRoutingServiceCollectionShouldThrowException()
+        {
+            Test.AssertException<InvalidOperationException>(
+                () =>
+                {
+                    MyApplication
+                        .StartsFrom<DefaultStartup>()
+                        .WithServices(services =>
+                        {
+                            var routingServices = new RoutingServices
+                            {
+                                ServiceCollection = null
+                            };
+
+                            services.ReplaceSingleton<IRoutingServices>(routingServices);
+                        });
+
+                    // This call ensures services are loaded (uses lazy loading).
+                    var setupServices = TestApplication.Services;
+                },
+                "Route testing requires the registered IRoutingServices service implementation to provide test routing services by either the ServiceProvider property or the ServiceCollection one.");
+
+            MyApplication
+                .IsRunningOn(server => server
+                    .WithStartup<DefaultStartup>());
         }
 
         [Fact]
         public void FullConfigureStartupShouldInjectServicesCorrectly()
         {
             MyApplication.StartsFrom<FullConfigureStartup>();
-            
+
             Assert.NotNull(TestServiceProvider.GetService<IHostingEnvironment>());
             Assert.NotNull(TestServiceProvider.GetService<ILoggerFactory>());
             Assert.NotNull(TestServiceProvider.GetService<IApplicationLifetime>());
 
+            MyApplication
+                .IsRunningOn(server => server
+                    .WithStartup<DefaultStartup>());
+        }
+
+        [Fact]
+        public void ConfigureContainerServicesShouldBeRegistered()
+        {
+            MyApplication
+                .IsRunningOn(server => server
+                    .WithServices(services => services
+                        .AddTransient<IServiceProviderFactory<CustomContainer>, CustomContainerFactory>())
+                    .WithStartup<CustomStartupWithConfigureContainer>());
+
+            var injectedService = TestApplication.Services.GetService<IInjectedService>();
+            var injectedServiceFromRouteServiceProvider = TestApplication.RoutingServices.GetService<IInjectedService>();
+
+            Assert.NotNull(injectedService);
+            Assert.IsAssignableFrom<InjectedService>(injectedService);
+
+            Assert.NotNull(injectedServiceFromRouteServiceProvider);
+            Assert.IsAssignableFrom<InjectedService>(injectedServiceFromRouteServiceProvider);
+
+            MyApplication
+                .IsRunningOn(server => server
+                    .WithStartup<DefaultStartup>());
+        }
+
+        [Fact]
+        public void ConfigureContainerServicesShouldBeRegisteredFromStaticStartup()
+        {
+            MyApplication.StartsFrom<StaticStartup>();
+
+            var injectedService = TestApplication.Services.GetService<IInjectedService>();
+            var injectedServiceFromRouteServiceProvider = TestApplication.RoutingServices.GetService<IInjectedService>();
+
+            Assert.NotNull(injectedService);
+            Assert.IsAssignableFrom<InjectedService>(injectedService);
+
+            Assert.NotNull(injectedServiceFromRouteServiceProvider);
+            Assert.IsAssignableFrom<InjectedService>(injectedServiceFromRouteServiceProvider);
+
+            MyApplication
+                .IsRunningOn(server => server
+                    .WithStartup<DefaultStartup>());
+        }
+
+        [Fact]
+        public void ConfigureContainerWithNoServerServicesShouldThrowCorrectExceptionMessage()
+        {
+            Test.AssertException<InvalidOperationException>(
+                () =>
+                {
+                    MyApplication.StartsFrom<CustomStartupWithDefaultConfigureContainer>();
+
+                    // This call ensures services are loaded (uses lazy loading).
+                    var setupServices = TestApplication.Services;
+                },
+                "No service for type 'Microsoft.Extensions.DependencyInjection.IServiceProviderFactory`1[MyTested.AspNetCore.Mvc.Test.Setups.Common.CustomContainer]' has been registered. Services could not be configured. If your web project is registering services outside of the Startup class (during the WebHost configuration in the Program.cs file for example), you should provide them to the test framework too by calling 'IsRunningOn(server => server.WithServices(servicesAction))'. Since this method should be called only once per test project, you may invoke it in the static constructor of your TestStartup class or if your test runner supports it - in the test assembly initialization.");
+
             MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void RegisteringServerServicesTwiceShouldResolveThemCorrectly()
+        {
+            MyApplication.IsRunningOn(server => server
+                .WithServices(services => services
+                    .AddTransient<IInjectedService, InjectedService>())
+                .WithStartup<DefaultStartup>());
+
+            var injectedService = TestServiceProvider.GetService<IInjectedService>();
+
+            Assert.NotNull(injectedService);
+            Assert.IsAssignableFrom<InjectedService>(injectedService);
+
+            MyApplication.IsRunningOn(server => server
+                .WithServices(services => services
+                    .AddTransient<IAnotherInjectedService, AnotherInjectedService>())
+                .WithStartup<DefaultStartup>());
+
+            var secondInjectedService = TestServiceProvider.GetService<IInjectedService>();
+            var anotherInjectedService = TestServiceProvider.GetService<IAnotherInjectedService>();
+
+            Assert.Null(secondInjectedService);
+            Assert.NotNull(anotherInjectedService);
+            Assert.IsAssignableFrom<AnotherInjectedService>(anotherInjectedService);
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void StartupConfigureFilterShouldRegisterServices()
+        {
+            MyApplication
+                .IsRunningOn(server => server
+                    .WithServices(services =>
+                    {
+                        services
+                            .AddTransient<IServiceProviderFactory<CustomContainer>, CustomContainerFactory>();
+
+                        services
+                            .TryAddEnumerable(ServiceDescriptor.Transient(
+                                typeof(IStartupConfigureServicesFilter), typeof(CustomConfigureFilter)));
+
+                        services
+                            .TryAddEnumerable(ServiceDescriptor.Transient(
+                                typeof(IStartupConfigureContainerFilter<CustomContainer>), typeof(CustomConfigureFilter)));
+                    })
+                    .WithStartup<CustomStartupWithConfigureContainer>());
+
+            var injectedService = TestApplication.Services.GetService<IInjectedService>();
+            var injectedServiceFromRouteServiceProvider = TestApplication.RoutingServices.GetService<IInjectedService>();
+
+            Assert.NotNull(injectedService);
+            Assert.IsAssignableFrom<InjectedService>(injectedService);
+
+            Assert.NotNull(injectedServiceFromRouteServiceProvider);
+            Assert.IsAssignableFrom<InjectedService>(injectedServiceFromRouteServiceProvider);
+
+            var anotherInjectedService = TestApplication.Services.GetService<IAnotherInjectedService>();
+            var anotherInjectedServiceFromRouteServiceProvider = TestApplication.RoutingServices.GetService<IAnotherInjectedService>();
+
+            Assert.NotNull(anotherInjectedService);
+            Assert.IsAssignableFrom<AnotherInjectedService>(anotherInjectedService);
+
+            Assert.NotNull(anotherInjectedServiceFromRouteServiceProvider);
+            Assert.IsAssignableFrom<AnotherInjectedService>(anotherInjectedServiceFromRouteServiceProvider);
+            
+            var scopedService = TestApplication.Services.GetService<IScopedService>();
+            var scopedServiceFromRouteServiceProvider = TestApplication.RoutingServices.GetService<IScopedService>();
+
+            Assert.NotNull(scopedService);
+            Assert.IsAssignableFrom<ScopedService>(scopedService);
+
+            Assert.NotNull(scopedServiceFromRouteServiceProvider);
+            Assert.IsAssignableFrom<ScopedService>(scopedServiceFromRouteServiceProvider);
+
+            MyApplication
+                .IsRunningOn(server => server
+                    .WithStartup<DefaultStartup>());
         }
     }
 }

@@ -18,10 +18,8 @@
         /// </summary>
         /// <param name="testContext"><see cref="ComponentTestContext"/> containing data about the currently executed assertion chain.</param>
         public ViewDataTestBuilder(ComponentTestContext testContext)
-            : base(testContext, ViewDataName)
-        {
-            this.testContext = testContext;
-        }
+            : base(testContext, ViewDataName) 
+            => this.testContext = testContext;
 
         /// <summary>
         /// Gets the data provider test builder.

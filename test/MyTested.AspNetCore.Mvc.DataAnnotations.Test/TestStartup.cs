@@ -1,6 +1,6 @@
-﻿namespace MyTested.AspNetCore.Mvc.DataAnnotations.Test
+﻿namespace MyTested.AspNetCore.Mvc.Test
 {
-    using Mvc.Test.Setups;
+    using Setups;
 
     public class TestStartup : DefaultStartup
     {

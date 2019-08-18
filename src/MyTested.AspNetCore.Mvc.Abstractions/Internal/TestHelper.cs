@@ -5,13 +5,13 @@
     using Http;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Features;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.AspNetCore.Mvc.Internal;
     using Plugins;
     using Services;
     using TestContexts;
     using Utilities;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Infrastructure;
 
     public static class TestHelper
     {
@@ -118,9 +118,7 @@
         /// </summary>
         /// <param name="name">Name to format.</param>
         /// <returns>Formatted string.</returns>
-        public static string GetFriendlyName(string name)
-        {
-            return name == null ? "the default one" : $"'{name}'";
-        }
+        public static string GetFriendlyName(string name) 
+            => name == null ? "the default one" : $"'{name}'";
     }
 }

@@ -1,9 +1,10 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Actions.ShouldReturn
 {
-    using ActionResults.Challenge;
-    using Contracts.ActionResults.Challenge;
+    using System;
+    using ActionResults.Authentication;
+    using Contracts.ActionResults.Authentication;
+    using Contracts.And;
     using Microsoft.AspNetCore.Mvc;
-    using Utilities.Validators;
 
     /// <content>
     /// Class containing methods for testing <see cref="ChallengeResult"/>.
@@ -11,10 +12,12 @@
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <inheritdoc />
-        public IAndChallengeTestBuilder Challenge()
-        {
-            InvocationResultValidator.ValidateInvocationResultType<ChallengeResult>(this.TestContext);
-            return new ChallengeTestBuilder(this.TestContext);
-        }
+        public IAndTestBuilder Challenge() => this.Challenge(null);
+
+        /// <inheritdoc />
+        public IAndTestBuilder Challenge(Action<IChallengeTestBuilder> challengeTestBuilder)
+            => this.ValidateActionResult<ChallengeResult, IChallengeTestBuilder>(
+                challengeTestBuilder,
+                new ChallengeTestBuilder(this.TestContext));
     }
 }

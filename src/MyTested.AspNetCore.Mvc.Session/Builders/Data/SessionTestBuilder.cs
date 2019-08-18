@@ -1,12 +1,12 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Data
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using Contracts.Data;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Routing;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
     using Utilities.Validators;
 
     /// <summary>
@@ -80,27 +80,19 @@
 
         /// <inheritdoc />
         public IAndSessionTestBuilder ContainingEntries(IDictionary<string, byte[]> entries)
-        {
-            return this.ContainingEntries<byte[]>(entries);
-        }
+            => this.ContainingEntries<byte[]>(entries);
 
         /// <inheritdoc />
         public IAndSessionTestBuilder ContainingEntries(IDictionary<string, object> entries)
-        {
-            return this.ContainingEntries<object>(entries, true);
-        }
+            => this.ContainingEntries<object>(entries, true);
 
         /// <inheritdoc />
         public IAndSessionTestBuilder ContainingEntries(IDictionary<string, string> entries)
-        {
-            return this.ContainingEntries<string>(entries);
-        }
+            => this.ContainingEntries<string>(entries);
 
         /// <inheritdoc />
         public IAndSessionTestBuilder ContainingEntries(IDictionary<string, int> entries)
-        {
-            return this.ContainingEntries<int>(entries);
-        }
+            => this.ContainingEntries<int>(entries);
 
         /// <inheritdoc />
         public ISessionTestBuilder AndAlso() => this;
@@ -122,21 +114,16 @@
             return result;
         }
 
-        private static byte[] ConvertStringToByteArray(string value)
-        {
-            return Encoding.UTF8.GetBytes(value);
-        }
+        private static byte[] ConvertStringToByteArray(string value) => Encoding.UTF8.GetBytes(value);
 
         private static byte[] ConvertIntegerToByteArray(int value)
-        {
-            return new byte[]
+            => new[]
             {
                 (byte)(value >> 24),
                 (byte)(0xFF & (value >> 16)),
                 (byte)(0xFF & (value >> 8)),
                 (byte)(0xFF & value)
             };
-        }
 
         private static object ConvertToByteEntry<T>(KeyValuePair<string, T> entry)
         {
@@ -147,7 +134,8 @@
             {
                 return ConvertStringToByteArray(entry.Value as string);
             }
-            else if (typeOfValue == typeof(int))
+
+            if (typeOfValue == typeof(int))
             {
                 return ConvertIntegerToByteArray((entry.Value as int?).Value);
             }
@@ -155,7 +143,7 @@
             return value;
         }
 
-        private IAndSessionTestBuilder ContainingEntries<Т>(IDictionary<string, Т> entries, bool includeCountCheck = false)
+        private IAndSessionTestBuilder ContainingEntries<T>(IDictionary<string, T> entries, bool includeCountCheck = false)
         {
             DictionaryValidator.ValidateValues(
                 this.DataProviderName,

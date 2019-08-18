@@ -25,10 +25,8 @@
             IAndModelErrorTestBuilder modelErrorTestBuilder,
             string errorKey,
             IEnumerable<ModelError> aggregatedErrors)
-            : base(testContext, errorKey, aggregatedErrors)
-        {
-            this.modelErrorTestBuilder = modelErrorTestBuilder;
-        }
+            : base(testContext, errorKey, aggregatedErrors) 
+            => this.modelErrorTestBuilder = modelErrorTestBuilder;
 
         /// <inheritdoc />
         public IAndModelErrorTestBuilder ThatEquals(string errorMessage)
@@ -59,10 +57,8 @@
         }
 
         /// <inheritdoc />
-        public IModelErrorDetailsTestBuilder ContainingError(string errorKey)
-        {
-            return this.modelErrorTestBuilder.ContainingError(errorKey);
-        }
+        public IModelErrorDetailsTestBuilder ContainingError(string errorKey) 
+            => this.modelErrorTestBuilder.ContainingError(errorKey);
 
         /// <inheritdoc />
         public IModelErrorTestBuilder AndAlso() => this.modelErrorTestBuilder;

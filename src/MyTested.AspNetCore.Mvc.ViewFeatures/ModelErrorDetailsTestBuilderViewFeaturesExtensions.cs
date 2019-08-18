@@ -20,12 +20,10 @@
         /// <returns>The same <see cref="IModelErrorDetailsTestBuilder{TModel}"/>.</returns>
         public static IModelErrorDetailsTestBuilder<TModel> ContainingErrorFor<TModel, TMember>(
             this IModelErrorDetailsTestBuilder<TModel> modelErrorDetailsTestBuilder,
-            Expression<Func<TModel, TMember>> memberWithError)
-        {
-            return ((ModelErrorDetailsTestBuilder<TModel>)modelErrorDetailsTestBuilder)
+            Expression<Func<TModel, TMember>> memberWithError) 
+            =>((ModelErrorDetailsTestBuilder<TModel>)modelErrorDetailsTestBuilder)
                 .ModelErrorTestBuilder
                 .ContainingErrorFor(memberWithError);
-        }
 
         /// <summary>
         /// Tests whether tested <see cref="Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary"/> contains no error by member expression.
@@ -37,11 +35,9 @@
         /// <returns>Test builder of <see cref="IModelErrorTestBuilder{TModel}"/> type.</returns>
         public static IModelErrorTestBuilder<TModel> ContainingNoErrorFor<TModel, TMember>(
             this IModelErrorDetailsTestBuilder<TModel> modelErrorDetailsTestBuilder,
-            Expression<Func<TModel, TMember>> memberWithNoError)
-        {
-            return ((ModelErrorDetailsTestBuilder<TModel>)modelErrorDetailsTestBuilder)
+            Expression<Func<TModel, TMember>> memberWithNoError) 
+            => ((ModelErrorDetailsTestBuilder<TModel>)modelErrorDetailsTestBuilder)
                 .ModelErrorTestBuilder
                 .ContainingNoErrorFor(memberWithNoError);
-        }
     }
 }

@@ -7,14 +7,14 @@
 
     public class FullConfigureStartup
     {
-        public virtual void ConfigureTestServices(IServiceCollection services)
-        {
-            services.AddMvc();
-        }
+        public virtual void ConfigureTestServices(IServiceCollection services) 
+            => services.AddMvc();
 
-        public virtual void ConfigureTest(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IApplicationLifetime appLifetime)
-        {
-            app.UseMvcWithDefaultRoute();
-        }
+        public virtual void ConfigureTest(
+            IApplicationBuilder app, 
+            IHostingEnvironment env, 
+            ILoggerFactory loggerFactory, 
+            IApplicationLifetime appLifetime) 
+            => app.UseMvcWithDefaultRoute();
     }
 }

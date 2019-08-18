@@ -8,7 +8,7 @@
     public class StoreRouteTests
     {
         [Fact]
-        public void IndexShouldBeRoutedCorrectly()
+        public void GetIndexShouldBeRoutedCorrectly()
         {
             MyMvc
                 .Routing()
@@ -17,7 +17,7 @@
         }
 
         [Fact]
-        public void BrowseShouldBeRoutedCorrectly()
+        public void GetBrowseShouldBeRoutedCorrectly()
         {
             MyMvc
                 .Routing()
@@ -26,7 +26,7 @@
         }
 
         [Fact]
-        public void DetailsShouldBeRoutedCorrectly()
+        public void GetDetailsShouldBeRoutedCorrectly()
         {
             MyMvc
                 .Routing()

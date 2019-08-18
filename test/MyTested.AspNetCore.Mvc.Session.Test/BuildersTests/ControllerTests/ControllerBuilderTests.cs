@@ -36,6 +36,8 @@
         [Fact]
         public void WithSessionShouldThrowExceptionIfSessionIsNotSet()
         {
+            MyApplication.StartsFrom<DefaultStartup>();
+
             Test.AssertException<InvalidOperationException>(
                 () =>
                 {

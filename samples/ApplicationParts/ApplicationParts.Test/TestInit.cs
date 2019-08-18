@@ -8,6 +8,8 @@
     public class TestInit
     {
         [OneTimeSetUp]
-        public void Init() => MyApplication.StartsFrom<Startup>().WithTestAssembly(this);
+        public void Init() 
+            => MyApplication
+                .StartsFrom<Startup>();
     }
 }

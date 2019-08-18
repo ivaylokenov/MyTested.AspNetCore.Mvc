@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ArticleNonPublicListingServiceModel>
+
+@{
+    ViewData.SetTitle("Articles Administration");
+}
+
+<h1 class="display-4 text-center">@ViewData.GetTitle()</h1>
+
+@if (Model.Any())
+{
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Author
+            </th>
+            <th>
+                Public
+            </th>
+            <th>
+                Publish Date
+            </th>
+            <th></th>
+        </tr>
+        @foreach (var article in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-area="" asp-controller="Articles" asp-action="Details" asp-route-id="@article.Id">@article.Title</a>
+                </td>
+                <td>@article.Author</td>
+                <td>@(article.IsPublic ? "Yes" : "No")</td>
+                <td>@article.PublishedOn?.ToShortDateString()</td>
+                <td>
+                    <a asp-area="" asp-controller="Articles" asp-action="Edit" asp-route-id="@article.Id" class="btn btn-warning">Edit</a>
+                    <a asp-area="" asp-controller="Articles" asp-action="Delete" asp-route-id="@article.Id" class="btn btn-danger">Delete</a>
+
+                    @{
+                        var visibilityButtonClass = article.IsPublic ? "btn-dark" : "btn-primary";
+                        var visibilityButtonText = article.IsPublic ? "Hide" : "Make Public";
+                    }
+
+                    <a asp-area="Admin" asp-controller="Articles" asp-action="ChangeVisibility" asp-route-id="@article.Id" class="btn @visibilityButtonClass">@visibilityButtonText</a>
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <h2 class="text-center margin-top-20">No articles available in the system!</h2>
+}

@@ -7,30 +7,27 @@
     {
         private IConfiguration configuration;
 
-        public BaseConfiguration(IConfiguration configuration)
+        protected BaseConfiguration(IConfiguration configuration)
         {
             this.Configuration = configuration;
         }
 
         public IConfiguration Configuration
         {
-            get
-            {
-                return this.configuration;
-            }
+            get => this.configuration;
 
             private set
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("Test configuration cannot be null.");
+                    throw new ArgumentException("Test configuration cannot be null.");
                 }
 
                 this.configuration = value;
             }
         }
 
-        protected string Prefix { get; set; }
+        protected internal virtual string Prefix => null;
 
         protected string GetValue(string key)
             => this.GetValue<string>(key, null);

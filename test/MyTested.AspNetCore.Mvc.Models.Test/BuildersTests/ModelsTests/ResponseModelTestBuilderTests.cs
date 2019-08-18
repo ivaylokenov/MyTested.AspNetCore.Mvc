@@ -17,8 +17,8 @@
                 .Instance()
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
-                .Ok()
-                .WithModelOfType<ICollection<ResponseModel>>();
+                .Ok(ок => ок
+                    .WithModelOfType<ICollection<ResponseModel>>());
         }
 
         [Fact]
@@ -28,8 +28,8 @@
                 .Instance()
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
-                .Ok()
-                .WithModelOfType<IList<ResponseModel>>();
+                .Ok(ок => ок
+                    .WithModelOfType<IList<ResponseModel>>());
         }
 
         [Fact]
@@ -39,8 +39,8 @@
                 .Instance()
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
-                .Ok()
-                .WithModelOfType<List<ResponseModel>>();
+                .Ok(ок => ок
+                    .WithModelOfType<List<ResponseModel>>());
         }
 
         [Fact]
@@ -53,8 +53,8 @@
                         .Instance()
                         .Calling(c => c.OkResultAction())
                         .ShouldReturn()
-                        .Ok()
-                        .WithModelOfType<ResponseModel>();
+                        .Ok(ok => ok
+                            .WithModelOfType<ResponseModel>());
                 }, 
                 "When calling OkResultAction action in MvcController expected response model to be of ResponseModel type, but instead received null.");
         }
@@ -69,8 +69,8 @@
                         .Instance()
                         .Calling(c => c.OkResultWithInterfaceResponse())
                         .ShouldReturn()
-                        .Ok()
-                        .WithModelOfType<ResponseModel>();
+                        .Ok(ok => ok
+                            .WithModelOfType<ResponseModel>());
                 }, 
                 "When calling OkResultWithInterfaceResponse action in MvcController expected response model to be of ResponseModel type, but instead received List<ResponseModel>.");
         }
@@ -85,8 +85,8 @@
                         .Instance()
                         .Calling(c => c.OkResultWithInterfaceResponse())
                         .ShouldReturn()
-                        .Ok()
-                        .WithModelOfType<ICollection<int>>();
+                        .Ok(ok => ok
+                            .WithModelOfType<ICollection<int>>());
                 }, 
                 "When calling OkResultWithInterfaceResponse action in MvcController expected response model to be of ICollection<Int32> type, but instead received List<ResponseModel>.");
         }
@@ -100,12 +100,12 @@
                 .Instance(() => controller)
                 .Calling(c => c.OkResultWithInterfaceResponse())
                 .ShouldReturn()
-                .Ok()
-                .WithModel(controller.ResponseModel);
+                .Ok(ok => ok
+                    .WithModel(controller.ResponseModel));
         }
 
         [Fact]
-        public void WithResponceModelShouldNotThrowExceptionWithDeeplyEqualPassedExpectedObject()
+        public void WithResponseModelShouldNotThrowExceptionWithDeeplyEqualPassedExpectedObject()
         {
             var controller = new MvcController();
 
@@ -113,12 +113,12 @@
                 .Instance()
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
-                .Ok()
-                .WithModel(controller.ResponseModel);
+                .Ok(ok => ok
+                    .WithModel(controller.ResponseModel));
         }
 
         [Fact]
-        public void WithResponceModelShouldThrowExceptionWithDifferentPassedExpectedObject()
+        public void WithResponseModelShouldThrowExceptionWithDifferentPassedExpectedObject()
         {
             var controller = new MvcController();
 
@@ -132,8 +132,8 @@
                         .Instance()
                         .Calling(c => c.OkResultWithResponse())
                         .ShouldReturn()
-                        .Ok()
-                        .WithModel(another);
+                        .Ok(ok => ok
+                            .WithModel(another));
                 },
                 "When calling OkResultWithResponse action in MvcController expected response model List<ResponseModel> to be the given model, but in fact it was a different one.");
         }
@@ -145,8 +145,8 @@
                 .Instance()
                 .Calling(c => c.OkResultAction())
                 .ShouldReturn()
-                .Ok()
-                .WithNoModel();
+                .Ok(ok => ok
+                    .WithNoModel());
         }
 
         [Fact]
@@ -159,8 +159,8 @@
                         .Instance()
                         .Calling(c => c.OkResultWithResponse())
                         .ShouldReturn()
-                        .Ok()
-                        .WithNoModel();
+                        .Ok(ok => ok
+                            .WithNoModel());
                 }, 
                 "When calling OkResultWithResponse action in MvcController expected to not have a response model but in fact such was found.");
         }

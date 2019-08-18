@@ -202,13 +202,13 @@
                     c => c.ActionWithOverloads(With.No<int?>()),
                     controllerName,
                     actionName,
-                    new Dictionary<string, object> { });
+                    new Dictionary<string, object>());
                 
                 data.Add(
                     c => c.ActionWithOverloads(With.No<int>()),
                     controllerName,
                     actionName,
-                    new Dictionary<string, object> { });
+                    new Dictionary<string, object>());
 
                 data.Add(
                     c => c.ActionWithOverloads(GetInt()),

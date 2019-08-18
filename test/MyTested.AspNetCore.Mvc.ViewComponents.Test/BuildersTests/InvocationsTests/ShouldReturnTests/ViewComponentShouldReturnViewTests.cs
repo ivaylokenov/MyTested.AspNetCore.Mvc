@@ -2,7 +2,6 @@
 {
     using Exceptions;
     using Setups;
-    using Setups.Models;
     using Setups.ViewComponents;
     using Xunit;
 

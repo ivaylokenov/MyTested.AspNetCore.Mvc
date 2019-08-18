@@ -18,14 +18,15 @@
 
         public static bool Validate(IEnumerable<string> licenses, DateTime releaseDate, string projectNamespace)
         {
-            if (licenses == null || !licenses.Any())
+            var licensesArray = licenses?.ToArray();
+            if (licensesArray == null || !licensesArray.Any())
             {
                 throw new InvalidLicenseException("No license provided");
             }
 
             registeredLicenses = new List<LicenseDetails>();
 
-            foreach (var license in licenses)
+            foreach (var license in licensesArray)
             {
                 try
                 {
@@ -40,7 +41,7 @@
 
             return true;
         }
-        
+
         public static IEnumerable<LicenseDetails> GetLicenseDetails()
         {
             if (registeredLicenses == null || !registeredLicenses.Any())
@@ -66,10 +67,7 @@
             return licenses;
         }
 
-        public static void ClearLicenseDetails()
-        {
-            registeredLicenses = null;
-        }
+        public static void ClearLicenseDetails() => registeredLicenses = null;
 
         private static void Validate(string license, DateTime releaseDate, string projectNamespace)
         {
@@ -87,8 +85,7 @@
             var licenseIdData = licenseParts[0];
             var licenseDetailsData = licenseParts[1];
 
-            int licenseId;
-            if (!int.TryParse(licenseIdData, NumberStyles.Integer, CultureInfo.InvariantCulture, out licenseId))
+            if (!int.TryParse(licenseIdData, NumberStyles.Integer, CultureInfo.InvariantCulture, out var licenseId))
             {
                 throw new InvalidLicenseException("License text is invalid");
             }
@@ -112,14 +109,16 @@
                 throw new InvalidLicenseException("License details are invalid");
             }
 
-            DateTime expiryDate;
-            if (!DateTime.TryParseExact(parsedLicenseParts[1], "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out expiryDate))
+            if (!DateTime.TryParseExact(parsedLicenseParts[1], "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var expiryDate))
             {
                 throw new InvalidLicenseException("License expiry date is invalid");
             }
 
-            int parsedLicenseId;
-            if (!int.TryParse(parsedLicenseParts[0], NumberStyles.Integer, CultureInfo.InvariantCulture, out parsedLicenseId))
+            if (!int.TryParse(
+                parsedLicenseParts[0], 
+                NumberStyles.Integer, 
+                CultureInfo.InvariantCulture, 
+                out var parsedLicenseId))
             {
                 throw new InvalidLicenseException("License ID is invalid");
             }
@@ -136,6 +135,9 @@
 
             var parsedSigningData = licenseDetails.GetSignificateData();
 
+            var signingData = new byte[SigningDataLength];
+            Array.Copy(licenseAsBytes, signingData, SigningDataLength);
+            
             var cryptoProvider = new RSACryptoServiceProvider(1024)
             {
                 PersistKeyInCsp = false
@@ -143,10 +145,9 @@
 
             cryptoProvider.ImportCspBlob(Convert.FromBase64String(PublicKey));
 
-            var signingData = new byte[SigningDataLength];
-            Array.Copy(licenseAsBytes, signingData, SigningDataLength);
+            var dataVerified = cryptoProvider.VerifyData(parsedSigningData, SHA1.Create(), signingData);
 
-            if (!cryptoProvider.VerifyData(parsedSigningData, SHA1.Create(), signingData))
+            if (!dataVerified)
             {
                 throw new InvalidLicenseException("License text does not match signature");
             }

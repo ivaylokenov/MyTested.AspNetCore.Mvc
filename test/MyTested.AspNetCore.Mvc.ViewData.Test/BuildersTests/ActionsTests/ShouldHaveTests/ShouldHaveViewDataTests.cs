@@ -131,5 +131,47 @@
                 .ShouldReturn()
                 .Ok();
         }
+
+        [Fact]
+        public void ViewDataWithBuilderShouldContainMultipleEntries()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.AddViewDataAction())
+                .ShouldHave()
+                .ViewData(viewData => viewData
+                    .ContainingEntries(new { Test = "DataValue", Another = "AnotherValue" }))
+                .AndAlso()
+                .ShouldReturn()
+                .Ok();
+        }
+
+        [Fact]
+        public void ViewDataWithBuilderShouldContainEntryWithKey()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.AddViewDataAction())
+                .ShouldHave()
+                .ViewData(viewData => viewData
+                    .ContainingEntryWithKey("Another"))
+                .AndAlso()
+                .ShouldReturn()
+                .Ok();
+        }
+
+        [Fact]
+        public void ViewDataWithBuilderShouldContainEntryOfTypeString()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.AddViewDataAction())
+                .ShouldHave()
+                .ViewData(viewData => viewData
+                    .ContainingEntryOfType<string>())
+                .AndAlso()
+                .ShouldReturn()
+                .Ok();
+        }
     }
 }

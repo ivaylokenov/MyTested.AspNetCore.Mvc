@@ -1,7 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.UtilitiesTests.ValidatorsTests
 {
     using System;
-    using System.Collections.Generic;
     using Setups;
     using Utilities.Validators;
     using Xunit;

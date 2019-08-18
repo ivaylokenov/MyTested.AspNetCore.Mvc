@@ -2,9 +2,9 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc.Internal;
 
     public class CustomSession : ISession
     {
@@ -18,14 +18,14 @@
         {
         }
 
-        public Task CommitAsync()
+        public Task CommitAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return TaskCache.CompletedTask;
+            return Task.CompletedTask;
         }
 
-        public Task LoadAsync()
+        public Task LoadAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return TaskCache.CompletedTask;
+            return Task.CompletedTask;
         }
 
         public void Remove(string key)

@@ -5,13 +5,14 @@
 
     public static class ObjectModelValidatorExtensions
     {
-        public static void Validate(this IObjectModelValidator objectModelValidator, ControllerContext controllerContext, object model)
-        {
-            objectModelValidator.Validate(
+        public static void Validate(
+            this IObjectModelValidator objectModelValidator, 
+            ControllerContext controllerContext, 
+            object model) 
+            => objectModelValidator.Validate(
                 controllerContext,
                 validationState: null,
                 prefix: string.Empty,
                 model: model);
-        }
     }
 }

@@ -1,8 +1,10 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Actions.ShouldReturn
 {
-    using System.Net;
+    using System;
     using ActionResults.StatusCode;
+    using And;
     using Contracts.ActionResults.StatusCode;
+    using Contracts.And;
     using Exceptions;
     using Microsoft.AspNetCore.Mvc;
     using Utilities.Extensions;
@@ -14,26 +16,16 @@
     public partial class ShouldReturnTestBuilder<TActionResult>
     {
         /// <inheritdoc />
-        public IAndStatusCodeTestBuilder StatusCode()
-        {
-            return this.GetStatusCodeTestBuilder();
-        }
+        public IAndTestBuilder StatusCode() => this.StatusCode(null);
 
         /// <inheritdoc />
-        public IAndStatusCodeTestBuilder StatusCode(int statusCode)
+        public IAndTestBuilder StatusCode(Action<IStatusCodeTestBuilder> statusCodeTestBuilder)
         {
-            return this.StatusCode((HttpStatusCode)statusCode);
-        }
+            var actualStatusCodeTestBuilder = this.GetStatusCodeTestBuilder();
 
-        /// <inheritdoc />
-        public IAndStatusCodeTestBuilder StatusCode(HttpStatusCode statusCode)
-        {
-            HttpStatusCodeValidator.ValidateHttpStatusCode(
-                this.ActionResult,
-                statusCode,
-                this.ThrowNewStatusCodeResultAssertionException);
+            statusCodeTestBuilder?.Invoke(actualStatusCodeTestBuilder);
 
-            return this.GetStatusCodeTestBuilder();
+            return new AndTestBuilder(this.TestContext);
         }
 
         private IAndStatusCodeTestBuilder GetStatusCodeTestBuilder()
@@ -46,17 +38,6 @@
 
             InvocationResultValidator.ValidateInvocationResultType<ObjectResult>(this.TestContext);
             return new StatusCodeTestBuilder<ObjectResult>(this.TestContext);
-        }
-
-        private void ThrowNewStatusCodeResultAssertionException(string propertyName, string expectedValue, string actualValue)
-        {
-            throw new StatusCodeResultAssertionException(string.Format(
-                "When calling {0} action in {1} expected status code result {2} {3}, but {4}.",
-                this.ActionName,
-                this.Controller.GetName(),
-                propertyName,
-                expectedValue,
-                actualValue));
         }
     }
 }

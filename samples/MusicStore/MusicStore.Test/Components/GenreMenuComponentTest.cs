@@ -14,7 +14,7 @@
         {
             MyMvc
                 .ViewComponent<GenreMenuComponent>()
-                .WithDbContext(dbContext => dbContext
+                .WithData(data => data
                     .WithEntities(entities => entities.AddRange(GetGenres)))
                 .InvokedWith(vc => vc.InvokeAsync())
                 .ShouldReturn()

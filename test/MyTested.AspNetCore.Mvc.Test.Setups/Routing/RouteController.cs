@@ -6,15 +6,9 @@
     public class RouteController : Controller
     {
         [Route("AttributeAction")]
-        public IActionResult Index()
-        {
-            return this.View();
-        }
+        public IActionResult Index() => this.View();
 
         [HttpGet("[action]/{id}")]
-        public IActionResult Action(int id)
-        {
-            return this.View();
-        }
+        public IActionResult Action(int id) => this.View();
     }
 }

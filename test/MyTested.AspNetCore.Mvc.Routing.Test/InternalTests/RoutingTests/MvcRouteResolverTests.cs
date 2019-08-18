@@ -9,7 +9,6 @@
     using Microsoft.AspNetCore.Routing;
     using Setups;
     using Setups.Routing;
-    using Routing.Test;
     using Xunit;
 
     public class MvcRouteResolverTests
@@ -136,11 +135,11 @@
             Assert.Equal(typeof(NormalController).GetTypeInfo(), routeInfo.ControllerType);
             Assert.Equal("Normal", routeInfo.ControllerName);
             Assert.Equal("ActionWithMultipleParameters", routeInfo.Action);
-            Assert.Equal(3, routeInfo.ActionArguments.Count);
+            Assert.Equal(2, routeInfo.ActionArguments.Count);
             Assert.Equal(5, routeInfo.ActionArguments["id"].Value);
             Assert.Equal("test", routeInfo.ActionArguments["text"].Value);
-            Assert.True(routeInfo.ActionArguments.ContainsKey("model"));
-            Assert.True(routeInfo.ModelState.IsValid);
+            Assert.False(routeInfo.ActionArguments.ContainsKey("model"));
+            Assert.False(routeInfo.ModelState.IsValid);
         }
 
         [Fact]
@@ -270,15 +269,10 @@
             Assert.Equal(typeof(NormalController).GetTypeInfo(), routeInfo.ControllerType);
             Assert.Equal("Normal", routeInfo.ControllerName);
             Assert.Equal("ActionWithModel", routeInfo.Action);
-            Assert.Equal(2, routeInfo.ActionArguments.Count);
+            Assert.Equal(1, routeInfo.ActionArguments.Count);
             Assert.Equal(5, routeInfo.ActionArguments["id"].Value);
-            Assert.True(routeInfo.ActionArguments.ContainsKey("model"));
-
-            var model = routeInfo.ActionArguments["model"].Value as RequestModel;
-
-            Assert.Null(model);
-
-            Assert.True(routeInfo.ModelState.IsValid);
+            Assert.False(routeInfo.ActionArguments.ContainsKey("model"));
+            Assert.False(routeInfo.ModelState.IsValid);
         }
 
         [Fact]
@@ -338,7 +332,31 @@
             Assert.True(routeInfo.IsResolved);
         }
 
-        private RouteContext GetRouteContext(string url, string method = "GET", string queryString = null, string body = null, string contentType = null)
+        [Fact]
+        public void ResolveShouldReturnProperErrorWhenRequestFiltersArePresentAndRequestIsNotSetup()
+        {
+            var routeInfo = MvcRouteResolver.Resolve(
+                TestApplication.RoutingServices,
+                TestApplication.Router,
+                this.GetRouteContext("/Normal/FiltersAction"));
+
+            Assert.False(routeInfo.IsResolved);
+            Assert.Equal(
+                "action could not be invoked because of the declared filters. You must set the request properties so that they will pass through the pipeline",
+                routeInfo.UnresolvedError);
+            Assert.Null(routeInfo.ControllerType);
+            Assert.Null(routeInfo.ControllerName);
+            Assert.Null(routeInfo.Action);
+            Assert.Null(routeInfo.ActionArguments);
+            Assert.Null(routeInfo.ModelState);
+        }
+
+        private RouteContext GetRouteContext(
+            string url, 
+            string method = "GET", 
+            string queryString = null, 
+            string body = null, 
+            string contentType = null)
         {
             MyApplication.StartsFrom<DefaultStartup>();
 

@@ -17,9 +17,16 @@
         [Test]
         public void HomeControllerShouldReturnView()
             => MyController<HomeController>
-                .Instance()
                 .Calling(c => c.Index())
                 .ShouldReturn()
                 .View();
+        
+        [Test]
+        public void RedirectShouldRedirectToIndex()
+            => MyController<HomeController>
+                .Calling(c => c.RedirectToIndex())
+                .ShouldReturn()
+                .Redirect(redirect => redirect
+                    .To<HomeController>(c => c.Index()));
     }
 }

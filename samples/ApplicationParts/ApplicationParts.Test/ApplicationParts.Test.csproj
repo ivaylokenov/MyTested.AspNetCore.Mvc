@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\MyTested.AspNetCore.Mvc.Controllers.Views\MyTested.AspNetCore.Mvc.Controllers.Views.csproj" />
+    <ProjectReference Include="..\..\..\src\MyTested.AspNetCore.Mvc.Controllers\MyTested.AspNetCore.Mvc.Controllers.csproj" />
+    <ProjectReference Include="..\..\..\src\MyTested.AspNetCore.Mvc.Helpers\MyTested.AspNetCore.Mvc.Helpers.csproj" />
+    <ProjectReference Include="..\..\..\src\MyTested.AspNetCore.Mvc.Routing\MyTested.AspNetCore.Mvc.Routing.csproj" />
+    <ProjectReference Include="..\ApplicationParts.Web\ApplicationParts.Web.csproj" />
+    <ProjectReference Include="..\ApplicationParts.Controllers\ApplicationParts.Controllers.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+    <PackageReference Include="NUnit" Version="3.11.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.11.2" />
+  </ItemGroup>
+
+</Project>

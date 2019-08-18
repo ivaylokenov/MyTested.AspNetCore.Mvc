@@ -10,16 +10,11 @@
         private readonly Type defaultOptionsImplementationType = typeof(OptionsManager<>);
         
         public Func<ServiceDescriptor, bool> ServiceSelectorPredicate
-        {
-            get
-            {
-                return
-                    serviceDescriptor =>
-                        serviceDescriptor.ServiceType == defaultOptionsServiceType &&
-                        serviceDescriptor.ImplementationType == defaultOptionsImplementationType;
-            }
-        }
+            => serviceDescriptor =>
+                serviceDescriptor.ServiceType == this.defaultOptionsServiceType &&
+                serviceDescriptor.ImplementationType == this.defaultOptionsImplementationType;
 
-        public Action<IServiceCollection> ServiceRegistrationDelegate => serviceCollection => serviceCollection.ReplaceOptions();
+        public Action<IServiceCollection> ServiceRegistrationDelegate 
+            => serviceCollection => serviceCollection.ReplaceOptions();
     }
 }
