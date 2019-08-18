@@ -1,11 +1,11 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ActionsTests.ShouldReturnTests
 {
+    using System.Collections.Generic;
     using Exceptions;
     using Microsoft.AspNetCore.Mvc;
     using Setups;
     using Setups.Controllers;
     using Setups.Models;
-    using System.Collections.Generic;
     using Xunit;
 
     public class ShouldReturnViewTests

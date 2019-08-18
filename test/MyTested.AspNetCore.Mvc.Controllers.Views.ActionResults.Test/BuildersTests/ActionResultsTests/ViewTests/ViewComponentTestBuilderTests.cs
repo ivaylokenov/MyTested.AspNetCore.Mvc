@@ -1,10 +1,10 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ActionResultsTests.ViewTests
 {
+    using System.Collections.Generic;
     using Exceptions;
     using Setups;
     using Setups.Controllers;
     using Setups.Models;
-    using System.Collections.Generic;
     using Xunit;
 
     public class ViewComponentTestBuilderTests

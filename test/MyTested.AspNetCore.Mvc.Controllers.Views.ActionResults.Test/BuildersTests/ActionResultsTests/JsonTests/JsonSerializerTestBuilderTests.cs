@@ -1,15 +1,15 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ActionResultsTests.JsonTests
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Globalization;
     using Exceptions;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using Setups;
     using Setups.Common;
     using Setups.Controllers;
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Globalization;
     using Xunit;
 
     public class JsonSerializerSettingsTestBuilderTests
