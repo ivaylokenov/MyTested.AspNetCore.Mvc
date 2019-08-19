@@ -1,9 +1,9 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.InvocationsTests.ShouldHaveTests
 {
+    using System.Collections.Generic;
     using Exceptions;
     using Setups;
     using Setups.ViewComponents;
-    using System.Collections.Generic;
     using Xunit;
 
     public class ShouldHaveTempDataTests

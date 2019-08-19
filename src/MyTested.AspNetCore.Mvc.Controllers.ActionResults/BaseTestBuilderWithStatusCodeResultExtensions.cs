@@ -13,14 +13,14 @@
     public static class BaseTestBuilderWithStatusCodeResultExtensions
     {
         /// <summary>
-        /// Tests whether the status code action result
+        /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.Infrastructure.IStatusCodeActionResult"/>
         /// has the same status code as the provided one.
         /// </summary>
         /// <param name="baseTestBuilderWithStatusCodeResult">
         /// Instance of <see cref="IBaseTestBuilderWithStatusCodeResult{TStatusCodeResultTestBuilder}"/> type.
         /// </param>
         /// <param name="statusCode">Status code as integer.</param>
-        /// <returns>The same status code action result test builder.</returns>
+        /// <returns>The same <see cref="Microsoft.AspNetCore.Mvc.Infrastructure.IStatusCodeActionResult"/> test builder.</returns>
         public static TStatusCodeResultTestBuilder WithStatusCode<TStatusCodeResultTestBuilder>(
             this IBaseTestBuilderWithStatusCodeResult<TStatusCodeResultTestBuilder> baseTestBuilderWithStatusCodeResult,
             int statusCode)
@@ -29,14 +29,14 @@
                 .WithStatusCode((SystemHttpStatusCode)statusCode);
 
         /// <summary>
-        /// Tests whether the status code action result
+        /// Tests whether the <see cref="Microsoft.AspNetCore.Mvc.Infrastructure.IStatusCodeActionResult"/>
         /// has the same status code as the provided <see cref="System.Net.HttpStatusCode"/>.
         /// </summary>
         /// <param name="baseTestBuilderWithStatusCodeResult">
         /// Instance of <see cref="IBaseTestBuilderWithStatusCodeResult{TStatusCodeResultTestBuilder}"/> type.
         /// </param>
         /// <param name="statusCode"><see cref="System.Net.HttpStatusCode"/> enumeration.</param>
-        /// <returns>The same status code action result test builder.</returns>
+        /// <returns>The same <see cref="Microsoft.AspNetCore.Mvc.Infrastructure.IStatusCodeActionResult"/> test builder.</returns>
         public static TStatusCodeResultTestBuilder WithStatusCode<TStatusCodeResultTestBuilder>(
             this IBaseTestBuilderWithStatusCodeResult<TStatusCodeResultTestBuilder> baseTestBuilderWithStatusCodeResult,
             SystemHttpStatusCode statusCode)

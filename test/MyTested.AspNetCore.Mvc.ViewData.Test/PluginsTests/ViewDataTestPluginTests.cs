@@ -33,10 +33,7 @@
 
             testPlugin.DefaultServiceRegistrationDelegate(serviceCollection);
 
-            var methodReturnType = testPlugin.DefaultServiceRegistrationDelegate.Method.ReturnType.Name;
-
-            Assert.True(methodReturnType == "Void");
-            Assert.True(serviceCollection.Count == 126);
+            Assert.True(serviceCollection.Count == 145);
         }
     }
 }
