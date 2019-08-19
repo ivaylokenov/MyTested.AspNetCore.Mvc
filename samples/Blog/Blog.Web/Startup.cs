@@ -1,6 +1,7 @@
 ﻿namespace Blog.Web
 {
     using AutoMapper;
+    using Controllers;
     using Data;
     using Data.Models;
     using Infrastructure;
@@ -9,7 +10,6 @@
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Identity.UI;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
@@ -51,17 +51,18 @@
                     options.Password.RequireUppercase = false;
                 });
 
-            services.AddAutoMapper(typeof(IArticleService).Assembly);
-
-            services.AddTransient<IArticleService, ArticleService>();
-            services.AddTransient<IDateTimeProvider, DateTimeProvider>();
+            services.AddAutoMapper(
+                typeof(IArticleService).Assembly,
+                typeof(HomeController).Assembly);
 
             services
-                .AddMvc(options =>
-                {
-                    options.AddAutoValidateAntiforgeryToken();
-                })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+                .AddTransient<IArticleService, ArticleService>()
+                .AddTransient<IDateTimeProvider, DateTimeProvider>();
+
+            services
+                .AddMvc(options => options
+                    .AddAutoValidateAntiforgeryToken())
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
