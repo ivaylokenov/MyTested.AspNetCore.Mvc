@@ -141,6 +141,17 @@
             };
         }
 
+        public IActionResult CustomPartialViewResultWithViewData()
+        {
+            var partialView = new PartialViewResult
+            {
+                ViewData = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary())
+            };
+
+            partialView.ViewData.Model = TestObjectFactory.GetListOfResponseModels();
+            return partialView;
+        }
+
         public IActionResult ViewComponentResultByName()
         {
             return this.ViewComponent("TestComponent", new { id = 1, test = "text" });
