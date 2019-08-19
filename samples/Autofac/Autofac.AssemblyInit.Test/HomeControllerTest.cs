@@ -17,7 +17,6 @@
         [TestMethod]
         public void IndexShouldReturnViewWithCorrectModel()
             => MyController<HomeController>
-                .Instance()
                 .Calling(c => c.Index())
                 .ShouldReturn()
                 .View(view => view
@@ -27,7 +26,6 @@
         [TestMethod]
         public void RedirectShouldRedirectToIndex()
             => MyController<HomeController>
-                .Instance()
                 .Calling(c => c.RedirectToIndex())
                 .ShouldReturn()
                 .Redirect(redirect => redirect

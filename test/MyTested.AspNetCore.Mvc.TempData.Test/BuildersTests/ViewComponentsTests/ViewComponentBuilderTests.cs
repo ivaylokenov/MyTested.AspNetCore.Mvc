@@ -13,7 +13,8 @@
         {
             MyViewComponent<TempDataComponent>
                 .Instance()
-                .WithTempData(tempData => tempData.WithEntry("test", "value"))
+                .WithTempData(tempData => tempData
+                    .WithEntry("test", "value"))
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .Content("value");
@@ -24,7 +25,8 @@
         {
             MyViewComponent<TempDataComponent>
                 .Instance()
-                .WithTempData(tempData => tempData.WithEntry("invalid", "value"))
+                .WithTempData(tempData => tempData
+                    .WithEntry("invalid", "value"))
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .View();
@@ -48,7 +50,8 @@
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
-                .WithServices(services => services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>());
+                .WithServices(services => services
+                    .TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>());
 
             MyViewComponent<PocoViewComponent>
                 .Instance()

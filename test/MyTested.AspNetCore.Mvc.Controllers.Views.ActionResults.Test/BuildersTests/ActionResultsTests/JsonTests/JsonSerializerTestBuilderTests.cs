@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ActionResultsTests.JsonTests
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Globalization;
@@ -40,6 +41,46 @@
                                     s.WithAdditionalContentChecking(true)));
                    },
                    "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have enabled checking for additional content, but in fact it was disabled.");
+        }
+
+        [Fact]
+        public void WithCheckAdditionalContentShouldThrowExceptionForDisabledAdditionalChecks()
+        {
+            var jsonSerializerSettings = TestObjectFactory.GetJsonSerializerSettings();
+            jsonSerializerSettings.CheckAdditionalContent = true;
+
+            Test.AssertException<JsonResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
+                        .ShouldReturn()
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithAdditionalContentChecking(false)));
+                },
+                "When calling JsonWithSpecificSettingsAction action in MvcController expected JSON result serializer settings to have disabled checking for additional content, but in fact it was enabled.");
+        }
+
+        [Fact]
+        public void WithCheckAdditionalContentShouldThrowExceptionForEnabledAdditionalChecks()
+        {
+            var jsonSerializerSettings = TestObjectFactory.GetJsonSerializerSettings();
+            jsonSerializerSettings.CheckAdditionalContent = false;
+
+            Test.AssertException<JsonResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
+                        .ShouldReturn()
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithAdditionalContentChecking(true)));
+                },
+                "When calling JsonWithSpecificSettingsAction action in MvcController expected JSON result serializer settings to have enabled checking for additional content, but in fact it was disabled.");
         }
 
         [Fact]
@@ -150,6 +191,21 @@
         }
 
         [Fact]
+        public void WithoutContractResolverShouldNotThrowException()
+        {
+            var jsonSerializerSettings = TestObjectFactory.GetJsonSerializerSettings();
+            jsonSerializerSettings.ContractResolver = null;
+
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
+                .ShouldReturn()
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithContractResolver(null)));
+        }
+
+        [Fact]
         public void WithContractResolverShouldThrowExceptionWithIncorrectValue()
         {
             Test.AssertException<JsonResultAssertionException>(
@@ -164,6 +220,95 @@
                                 s.WithContractResolver(new DefaultContractResolver())));
                 },
                 "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have the same contract resolver as the provided one, but in fact it was different.");
+        }
+
+        [Fact]
+        public void WithContractResolverOfTypeShouldNotThrowException()
+        {
+            var jsonSerializerSettings = TestObjectFactory.GetJsonSerializerSettings();
+
+            MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
+                    .ShouldReturn()
+                    .Json(json => json
+                        .WithJsonSerializerSettings(s =>
+                            s.WithContractResolverOfType(typeof(CamelCasePropertyNamesContractResolver))));
+        }
+
+        [Fact]
+        public void WithContractResolverOfTypeShouldThrowException()
+        {
+            var jsonSerializerSettings = TestObjectFactory.GetJsonSerializerSettings();
+
+            Test.AssertException<JsonResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
+                        .ShouldReturn()
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithContractResolverOfType(typeof(IContractResolver))));
+                },
+                "When calling JsonWithSpecificSettingsAction action in MvcController expected JSON result serializer settings to have IContractResolver, but in fact found CamelCasePropertyNamesContractResolver.");
+        }
+
+        [Fact]
+        public void WithoutContractResolverOfTypeShouldThrowException()
+        {
+            var jsonSerializerSettings = TestObjectFactory.GetJsonSerializerSettings();
+            jsonSerializerSettings.ContractResolver = null;
+
+            Test.AssertException<JsonResultAssertionException>(() =>
+            {
+                MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
+                    .ShouldReturn()
+                    .Json(json => json
+                        .WithJsonSerializerSettings(s =>
+                            s.WithContractResolverOfType(typeof(DefaultContractResolver))));
+            },
+            "When calling JsonWithSpecificSettingsAction action in MvcController expected JSON result serializer settings to have DefaultContractResolver, but in fact found null.");
+        }
+
+        [Fact]
+        public void WithDefaultContractResolverOfTypeShouldThrowExceptionWithIncorrectValue()
+        {
+            var jsonSerializerSettings = TestObjectFactory.GetJsonSerializerSettings();
+            jsonSerializerSettings.ContractResolver = new DefaultContractResolver();
+
+            Test.AssertException<JsonResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
+                        .ShouldReturn()
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithContractResolverOfType(typeof(CamelCasePropertyNamesContractResolver))));
+                },
+                "When calling JsonWithSpecificSettingsAction action in MvcController expected JSON result serializer settings to have CamelCasePropertyNamesContractResolver, but in fact found DefaultContractResolver.");
+        }
+
+        [Fact]
+        public void WithCamelCaseContractResolverShouldThrowExceptionWithIncorrectValue()
+        {
+            Test.AssertException<JsonResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.JsonAction())
+                        .ShouldReturn()
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithContractResolverOfType(typeof(CamelCasePropertyNamesContractResolver))));
+                },
+                "When calling JsonAction action in MvcController expected JSON result serializer settings to have CamelCasePropertyNamesContractResolver, but in fact found DefaultContractResolver.");
         }
 
         [Fact]
@@ -705,6 +850,22 @@
         }
 
         [Fact]
+        public void WithEqualityComparerOfTypeShouldThrowException()
+        {
+            Test.AssertException<JsonResultAssertionException>(() =>
+            {
+                MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.JsonWithSpecificSettingsAction(new JsonSerializerSettings()))
+                    .ShouldReturn()
+                    .Json(json => json
+                        .WithJsonSerializerSettings(s =>
+                            s.WithEqualityComparerOfType(typeof(IEqualityComparer))));
+            },
+            "When calling JsonWithSpecificSettingsAction action in MvcController expected JSON result serializer settings to have equality comparer of IEqualityComparer type, but in fact found null.");
+        }
+
+        [Fact]
         public void WithFloatFormatHandlingShouldNotThrowExceptionWithCorrectValue()
         {
             MyController<MvcController>
@@ -858,6 +1019,18 @@
         }
 
         [Fact]
+        public void WithReferenceResolverOfTypeShouldNotThrowException()
+        {
+            MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.JsonWithSettingsAction())
+                        .ShouldReturn()
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithReferenceResolverOfType(typeof(CustomJsonReferenceResolver))));
+        }
+
+        [Fact]
         public void WithReferenceResolverOfTypeWithTypeShouldNotThrowExceptionWithCorrectValue()
         {
             var jsonSettings = TestObjectFactory.GetJsonSerializerSettings();
@@ -870,6 +1043,21 @@
                 .Json(json => json
                     .WithJsonSerializerSettings(s =>
                         s.WithReferenceResolverOfType(typeof(CustomJsonReferenceResolver))));
+        }
+
+        [Fact]
+        public void WithReferenceResolverOfTypeShouldNotThrowExceptionWithNull()
+        {
+            var jsonSerializerSettings = TestObjectFactory.GetJsonSerializerSettings();
+            jsonSerializerSettings.ReferenceResolverProvider = () => null;
+
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
+                .ShouldReturn()
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithReferenceResolverOfType(null)));
         }
 
         [Fact]
@@ -1388,6 +1576,18 @@
         }
 
         [Fact]
+        public void WithTraceWriterOfTypeShouldNotThrowException()
+        {
+            MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.JsonWithSettingsAction())
+                        .ShouldReturn()
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithTraceWriterOfType(typeof(CustomJsonTraceWriter))));
+        }
+
+        [Fact]
         public void WithTraceWriterOfTypeShouldNotThrowExceptionWithCorrectValue()
         {
             var jsonSettings = TestObjectFactory.GetJsonSerializerSettings();
@@ -1400,6 +1600,37 @@
                 .Json(json => json
                     .WithJsonSerializerSettings(s =>
                         s.WithTraceWriterOfType<CustomJsonTraceWriter>()));
+        }
+
+        [Fact]
+        public void WithTraceWriterOfTypeShouldNotThrowExceptionWithDefaultWriter()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.JsonWithSpecificSettingsAction(new JsonSerializerSettings()))
+                .ShouldReturn()
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithTraceWriterOfType(null)));
+        }
+
+        [Fact]
+        public void WithTraceWriterOfTypeShouldThrowExceptionWithDifferentTypes()
+        {
+            var jsonSerializerSettings = TestObjectFactory.GetJsonSerializerSettings();
+            jsonSerializerSettings.TraceWriter = new DiagnosticsTraceWriter();
+
+            Test.AssertException<JsonResultAssertionException>(() =>
+            {
+                MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
+                    .ShouldReturn()
+                    .Json(json => json
+                        .WithJsonSerializerSettings(s =>
+                            s.WithTraceWriterOfType(typeof(CustomJsonTraceWriter))));
+            },
+            "When calling JsonWithSpecificSettingsAction action in MvcController expected JSON result serializer settings to have trace writer of CustomJsonTraceWriter type, but in fact found DiagnosticsTraceWriter.");
         }
 
         [Fact]
@@ -1432,6 +1663,175 @@
                 .Json(json => json
                     .WithJsonSerializerSettings(s =>
                         s.WithTraceWriterOfType(typeof(CustomJsonTraceWriter))));
+        }
+
+        [Fact]
+        public void WithSerializationBinderShouldNotThrowExceptionWithCorrectValue()
+        {
+            var jsonSerializerSettings = TestObjectFactory.GetJsonSerializerSettings();
+            var defaultSerializationBinder = new DefaultSerializationBinder();
+            jsonSerializerSettings.SerializationBinder = defaultSerializationBinder;
+
+            MyController<MvcController>
+                .Instance()
+                .WithoutValidation()
+                .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
+                .ShouldReturn()
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithSerializationBinder(defaultSerializationBinder)));
+        }
+
+        [Fact]
+        public void WithoutSerializationBinderShouldNotThrowExceptionWithCorrectValue()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.JsonAction())
+                .ShouldReturn()
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithSerializationBinder(null)));
+        }
+
+        [Fact]
+        public void WithSerializationBinderShouldThrowExceptionWithIncorrectValue()
+        {
+            var defaultSerializationBinder = new DefaultSerializationBinder();
+
+            Test.AssertException<JsonResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.JsonWithSettingsAction())
+                        .ShouldReturn()
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithSerializationBinder(defaultSerializationBinder)));
+                },
+                "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have the same serialization binder as the provided one, but in fact it was different.");
+        }
+
+        [Fact]
+        public void WithoutSerializationBinderOfTypeShouldNotThrowExceptionWithCorrectValue()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.JsonAction())
+                .ShouldReturn()
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithSerializationBinderOfType(null)));
+        }
+
+        [Fact]
+        public void WithSerializationBinderOfTypeShouldNotThrowExceptionWithCorrectValue()
+        {
+            var jsonSerializerSettings = TestObjectFactory.GetJsonSerializerSettings();
+            var defaultSerializationBinder = new DefaultSerializationBinder();
+            jsonSerializerSettings.SerializationBinder = defaultSerializationBinder;
+
+            MyController<MvcController>
+                .Instance()
+                .WithoutValidation()
+                .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
+                .ShouldReturn()
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithSerializationBinderOfType(typeof(DefaultSerializationBinder))));
+        }
+
+        [Fact]
+        public void WithPreviouslySetSerializationBinderShouldThrowException()
+        {
+            var jsonSerializerSettings = TestObjectFactory.GetJsonSerializerSettings();
+            var defaultSerializationBinder = new DefaultSerializationBinder();
+            jsonSerializerSettings.SerializationBinder = defaultSerializationBinder;
+
+            Test.AssertException<InvalidOperationException>(() =>
+            {
+                MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
+                    .ShouldReturn()
+                    .Json(json => json
+                        .WithJsonSerializerSettings(s =>
+                            s.WithSerializationBinderOfType(typeof(DefaultSerializationBinder))));
+            },
+            "Cannot get SerializationBinder because an ISerializationBinder was previously set.");
+        }
+
+        [Fact]
+        public void WithSerializationBinderOfTypeShouldThrowExceptionWithIncorrectValue()
+        {
+            Test.AssertException<JsonResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.JsonWithSettingsAction())
+                        .ShouldReturn()
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithSerializationBinderOfType(typeof(DefaultSerializationBinder))));
+                },
+                "When calling JsonWithSettingsAction action in MvcController expected JSON result serializer settings to have serialization binder of DefaultSerializationBinder type, but in fact found null.");
+        }
+
+        [Fact]
+        public void WithSerializationBinderOfTypeShouldNotThrowException()
+        {
+            var jsonSerializerSettings = TestObjectFactory.GetJsonSerializerSettings();
+            jsonSerializerSettings.SerializationBinder = new DefaultSerializationBinder();
+
+            MyController<MvcController>
+                .Instance()
+                .WithoutValidation()
+                .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
+                .ShouldReturn()
+                .Json(json => json
+                    .WithJsonSerializerSettings(s =>
+                        s.WithSerializationBinderOfType<DefaultSerializationBinder>()));
+        }
+
+        [Fact]
+        public void WithSerializationBinderOfTypeShouldThrowException()
+        {
+            var jsonSerializerSettings = TestObjectFactory.GetJsonSerializerSettings();
+            jsonSerializerSettings.SerializationBinder = null;
+
+            Test.AssertException<JsonResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
+                        .ShouldReturn()
+                        .Json(json => json
+                            .WithJsonSerializerSettings(s =>
+                                s.WithSerializationBinderOfType<DefaultSerializationBinder>()));
+                },
+                "When calling JsonWithSpecificSettingsAction action in MvcController expected JSON result serializer settings to have serialization binder of DefaultSerializationBinder type, but in fact found null.");
+        }
+
+        [Fact]
+        public void WithPreviouslySetSerializationBinderOfTypeShouldThrowException()
+        {
+            var jsonSerializerSettings = TestObjectFactory.GetJsonSerializerSettings();
+            jsonSerializerSettings.SerializationBinder = new DefaultSerializationBinder();
+
+            Test.AssertException<InvalidOperationException>(() =>
+            {
+                MyController<MvcController>
+                    .Instance()
+                    .Calling(c => c.JsonWithSpecificSettingsAction(jsonSerializerSettings))
+                    .ShouldReturn()
+                    .Json(json => json
+                        .WithJsonSerializerSettings(s =>
+                            s.WithSerializationBinderOfType<DefaultSerializationBinder>()));
+            },
+            "Cannot get SerializationBinder because an ISerializationBinder was previously set.");
         }
 
         [Fact]

@@ -28,7 +28,7 @@
 
             services.AddSingleton<IDateTimeService>(_ => new DateTimeService());
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             
             var builder = this.GetContainerBuilder(services);
 

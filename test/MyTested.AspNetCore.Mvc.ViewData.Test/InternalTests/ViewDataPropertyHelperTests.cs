@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.InternalTests
 {
+    using System;
     using Internal;
     using Internal.Services;
     using Microsoft.AspNetCore.Http;
@@ -7,7 +8,6 @@
     using Microsoft.Extensions.DependencyInjection.Extensions;
     using Setups;
     using Setups.Controllers;
-    using System;
     using Xunit;
 
     public class ViewDataPropertyHelperTests
