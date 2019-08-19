@@ -281,7 +281,6 @@ MyController<MyMvcController>
 // and tests for added by the action temp data entry with а specific key,
 // and tests for redirect result to a specific action. 
 MyController<MyMvcController>
-    .Instance()
     .Calling(c => c.MyAction(new MyFormModel
     {
         Title = title,
@@ -401,7 +400,6 @@ An attribute declaration test validates controller and action attribute declarat
 ```c#
 // Tests for specific controller attributes - Area and Authorize.
 MyController<MyMvcController>
-    .Instance()
     .ShouldHave()
     .Attributes(attributes => attributes
         .SpecifyingArea(ControllerConstants.AdministratorArea)
