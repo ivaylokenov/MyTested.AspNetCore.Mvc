@@ -39,7 +39,6 @@
         public void PassingForShouldNotThrowExceptionWithCorrectAssertions()
         {
             MyViewComponent<AttributesComponent>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .PassingFor<ViewComponentAttribute>(vc => Assert.Equal("Test", vc.Name)));
@@ -52,7 +51,6 @@
                 () =>
                 {
                     MyViewComponent<AttributesComponent>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .PassingFor<ViewComponentAttribute>(route => Assert.Equal("Invalid", route.Name)));
@@ -66,7 +64,6 @@
                 () =>
                 {
                     MyViewComponent<AttributesComponent>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .PassingFor<ActionNameAttribute>(authorize => Assert.Equal("Admin", authorize.Name)));
@@ -78,7 +75,6 @@
         public void PassingForShouldNotThrowExceptionWithCorrectPredicate()
         {
             MyViewComponent<AttributesComponent>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .PassingFor<ViewComponentAttribute>(route => route.Name == "Test"));
@@ -91,7 +87,6 @@
                 () =>
                 {
                     MyViewComponent<AttributesComponent>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .PassingFor<ViewComponentAttribute>(vc => vc.Name == "Invalid"));
@@ -106,7 +101,6 @@
                 () =>
                 {
                     MyViewComponent<AttributesComponent>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .PassingFor<ActionNameAttribute>(vc => vc.Name == "Admin"));
