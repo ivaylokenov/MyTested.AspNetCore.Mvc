@@ -934,6 +934,14 @@
             return this.Unauthorized();
         }
 
+        public IActionResult FullUnauthorizedAction()
+        {
+            return new UnauthorizedObjectResult(this.ResponseModel)
+            {
+                ContentTypes = new MediaTypeCollection { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) },
+            };
+        }
+
         public bool GenericStructAction()
         {
             return true;
