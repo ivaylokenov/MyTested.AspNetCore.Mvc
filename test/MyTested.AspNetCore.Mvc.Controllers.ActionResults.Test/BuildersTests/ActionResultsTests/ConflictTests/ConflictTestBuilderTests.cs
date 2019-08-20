@@ -62,8 +62,6 @@
                 "When calling ConflictAction action in MvcController expected conflict result to have 415 (UnsupportedMediaType) status code, but instead received 409 (Conflict).");
         }
 
-
-
         [Fact]
         public void AndAlsoShouldWorkCorrectly()
         {
