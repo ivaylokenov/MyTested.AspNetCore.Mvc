@@ -1,5 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Exceptions;
     using Internal.ViewComponents;
     using Microsoft.AspNetCore.Mvc;
@@ -11,12 +13,28 @@
     using Setups;
     using Setups.Services;
     using Setups.ViewComponents;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
     using Xunit;
 
     public class ServicesTests
     {
+        [Fact]
+        public void ViewComponentBuilderWithEmptyConstructorShouldNotBeNull()
+        {
+            var viewComponentBuilder = new MyViewComponent<NormalComponent>();
+
+            Assert.NotNull(viewComponentBuilder);
+        }
+
+        [Fact]
+        public void ViewComponentBuilderWithConstructorWithViewComponentShouldNotBeNull()
+        {
+            var viewComponent = new NormalComponent();
+            var viewComponentBuilder = new MyViewComponent<NormalComponent>(viewComponent);
+
+            Assert.NotNull(viewComponentBuilder);
+            Assert.IsAssignableFrom<NormalComponent>(viewComponentBuilder.TestContext.Component);
+        }
+
         [Fact]
         public void ViewComponentWithoutConstructorFunctionShouldPopulateCorrectNewInstanceOfViewComponentType()
         {
