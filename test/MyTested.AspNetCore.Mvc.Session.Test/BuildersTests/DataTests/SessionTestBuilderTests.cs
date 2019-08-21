@@ -57,7 +57,8 @@
                         .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
-                        .Session(session => session.ContainingEntryWithKey("Invalid"))
+                        .Session(session => session
+                            .ContainingEntryWithKey("Invalid"))
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
@@ -83,7 +84,8 @@
                 .Instance()
                 .Calling(c => c.AddSessionAction())
                 .ShouldHave()
-                .Session(session => session.ContainingEntryWithValue(new byte[] { 1, 2, 3 }))
+                .Session(session => session
+                    .ContainingEntryWithValue(new byte[] { 1, 2, 3 }))
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
@@ -110,7 +112,8 @@
                         .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
-                        .Session(session => session.ContainingEntryWithValue(new byte[] { 1, 2, 4 }))
+                        .Session(session => session
+                            .ContainingEntryWithValue(new byte[] { 1, 2, 4 }))
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
@@ -136,7 +139,8 @@
                 .Instance()
                 .Calling(c => c.AddSessionAction())
                 .ShouldHave()
-                .Session(session => session.ContainingEntryWithValue("Text"))
+                .Session(session => session
+                    .ContainingEntryWithValue("Text"))
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
@@ -163,7 +167,8 @@
                         .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
-                        .Session(session => session.ContainingEntryWithValue("Invalid"))
+                        .Session(session => session
+                            .ContainingEntryWithValue("Invalid"))
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
@@ -189,7 +194,8 @@
                 .Instance()
                 .Calling(c => c.AddSessionAction())
                 .ShouldHave()
-                .Session(session => session.ContainingEntryWithValue(1))
+                .Session(session => session
+                    .ContainingEntryWithValue(1))
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
@@ -216,7 +222,8 @@
                         .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
-                        .Session(session => session.ContainingEntryWithValue(2))
+                        .Session(session => session
+                            .ContainingEntryWithValue(2))
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
@@ -242,7 +249,8 @@
                 .Instance()
                 .Calling(c => c.AddSessionAction())
                 .ShouldHave()
-                .Session(session => session.ContainingEntry("Bytes", new byte[] { 1, 2, 3 }))
+                .Session(session => session
+                    .ContainingEntry("Bytes", new byte[] { 1, 2, 3 }))
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
@@ -251,7 +259,7 @@
         }
 
         [Fact]
-        public void ContainingEntryShouldThrowExceptionWithIncorrectEntry()
+        public void ContainingEntryShouldThrowExceptionWithIncorrectEntryValue()
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
@@ -269,12 +277,43 @@
                         .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
-                        .Session(session => session.ContainingEntry("Bytes", new byte[] { 1, 2, 4 }))
+                        .Session(session => session
+                            .ContainingEntry("Bytes", new byte[] { 1, 2, 4 }))
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
                 },
                 "When calling AddSessionAction action in MvcController expected session to have entry with 'Bytes' key and the provided value, but the value was different.");
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void ContainingEntryShouldThrowExceptionWithIncorrectEntryKey()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
+                    services.AddSession();
+                });
+
+            Test.AssertException<DataProviderAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.AddSessionAction())
+                        .ShouldHave()
+                        .Session(session => session
+                            .ContainingEntry("Invalid", new byte[] { 1, 2, 3 }))
+                        .AndAlso()
+                        .ShouldReturn()
+                        .Ok();
+                },
+                "When calling AddSessionAction action in MvcController expected session to have entry with 'Invalid' key and the provided value, but such was not found.");
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -295,7 +334,8 @@
                 .Instance()
                 .Calling(c => c.AddSessionAction())
                 .ShouldHave()
-                .Session(session => session.ContainingEntry("String", "Text"))
+                .Session(session => session
+                    .ContainingEntry("String", "Text"))
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
@@ -304,7 +344,7 @@
         }
 
         [Fact]
-        public void ContainingStringEntryShouldThrowExceptionWithIncorrectEntry()
+        public void ContainingStringEntryShouldThrowExceptionWithIncorrectEntryValue()
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
@@ -322,12 +362,43 @@
                         .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
-                        .Session(session => session.ContainingEntry("String", "Invalid"))
+                        .Session(session => session
+                            .ContainingEntry("String", "Invalid"))
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
                 },
                 "When calling AddSessionAction action in MvcController expected session to have entry with 'String' key and the provided value, but the value was different.");
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void ContainingStringEntryShouldThrowExceptionWithIncorrectEntryKey()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
+                    services.AddSession();
+                });
+
+            Test.AssertException<DataProviderAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.AddSessionAction())
+                        .ShouldHave()
+                        .Session(session => session
+                            .ContainingEntry("Invalid", "Text"))
+                        .AndAlso()
+                        .ShouldReturn()
+                        .Ok();
+                },
+                "When calling AddSessionAction action in MvcController expected session to have entry with 'Invalid' key and the provided value, but such was not found.");
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -348,7 +419,8 @@
                 .Instance()
                 .Calling(c => c.AddSessionAction())
                 .ShouldHave()
-                .Session(session => session.ContainingEntry("Integer", 1))
+                .Session(session => session
+                    .ContainingEntry("Integer", 1))
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
@@ -357,7 +429,7 @@
         }
 
         [Fact]
-        public void ContainingIntegerEntryShouldThrowExceptionWithIncorrectEntry()
+        public void ContainingIntegerEntryShouldThrowExceptionWithIncorrectEntryValue()
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
@@ -375,12 +447,43 @@
                         .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
-                        .Session(session => session.ContainingEntry("Integer", 2))
+                        .Session(session => session
+                            .ContainingEntry("Integer", 2))
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
                 },
                 "When calling AddSessionAction action in MvcController expected session to have entry with 'Integer' key and the provided value, but the value was different.");
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void ContainingIntegerEntryShouldThrowExceptionWithIncorrectEntryKey()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
+                    services.AddSession();
+                });
+
+            Test.AssertException<DataProviderAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.AddSessionAction())
+                        .ShouldHave()
+                        .Session(session => session
+                            .ContainingEntry("Invalid", 1))
+                        .AndAlso()
+                        .ShouldReturn()
+                        .Ok();
+                },
+                "When calling AddSessionAction action in MvcController expected session to have entry with 'Invalid' key and the provided value, but such was not found.");
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -1063,7 +1166,8 @@
                         .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
-                        .Session(session => session.ContainingEntryWithKey("Invalid"))
+                        .Session(session => session
+                            .ContainingEntryWithKey("Invalid"))
                         .AndAlso()
                         .ShouldReturn()
                         .View();
