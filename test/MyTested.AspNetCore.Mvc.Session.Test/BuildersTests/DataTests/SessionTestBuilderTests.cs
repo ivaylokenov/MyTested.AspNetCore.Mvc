@@ -57,7 +57,8 @@
                         .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
-                        .Session(session => session.ContainingEntryWithKey("Invalid"))
+                        .Session(session => session
+                            .ContainingEntryWithKey("Invalid"))
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
@@ -83,7 +84,8 @@
                 .Instance()
                 .Calling(c => c.AddSessionAction())
                 .ShouldHave()
-                .Session(session => session.ContainingEntryWithValue(new byte[] { 1, 2, 3 }))
+                .Session(session => session
+                    .ContainingEntryWithValue(new byte[] { 1, 2, 3 }))
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
@@ -110,7 +112,8 @@
                         .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
-                        .Session(session => session.ContainingEntryWithValue(new byte[] { 1, 2, 4 }))
+                        .Session(session => session
+                            .ContainingEntryWithValue(new byte[] { 1, 2, 4 }))
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
@@ -136,7 +139,8 @@
                 .Instance()
                 .Calling(c => c.AddSessionAction())
                 .ShouldHave()
-                .Session(session => session.ContainingEntryWithValue("Text"))
+                .Session(session => session
+                    .ContainingEntryWithValue("Text"))
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
@@ -163,7 +167,8 @@
                         .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
-                        .Session(session => session.ContainingEntryWithValue("Invalid"))
+                        .Session(session => session
+                            .ContainingEntryWithValue("Invalid"))
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
@@ -189,7 +194,8 @@
                 .Instance()
                 .Calling(c => c.AddSessionAction())
                 .ShouldHave()
-                .Session(session => session.ContainingEntryWithValue(1))
+                .Session(session => session
+                    .ContainingEntryWithValue(1))
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
@@ -216,7 +222,8 @@
                         .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
-                        .Session(session => session.ContainingEntryWithValue(2))
+                        .Session(session => session
+                            .ContainingEntryWithValue(2))
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
@@ -242,7 +249,8 @@
                 .Instance()
                 .Calling(c => c.AddSessionAction())
                 .ShouldHave()
-                .Session(session => session.ContainingEntry("Bytes", new byte[] { 1, 2, 3 }))
+                .Session(session => session
+                    .ContainingEntry("Bytes", new byte[] { 1, 2, 3 }))
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
@@ -269,7 +277,8 @@
                         .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
-                        .Session(session => session.ContainingEntry("Bytes", new byte[] { 1, 2, 4 }))
+                        .Session(session => session
+                            .ContainingEntry("Bytes", new byte[] { 1, 2, 4 }))
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
@@ -298,7 +307,8 @@
                         .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
-                        .Session(session => session.ContainingEntry("Invalid", new byte[] { 1, 2, 3 }))
+                        .Session(session => session
+                            .ContainingEntry("Invalid", new byte[] { 1, 2, 3 }))
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
@@ -324,7 +334,8 @@
                 .Instance()
                 .Calling(c => c.AddSessionAction())
                 .ShouldHave()
-                .Session(session => session.ContainingEntry("String", "Text"))
+                .Session(session => session
+                    .ContainingEntry("String", "Text"))
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
@@ -351,7 +362,8 @@
                         .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
-                        .Session(session => session.ContainingEntry("String", "Invalid"))
+                        .Session(session => session
+                            .ContainingEntry("String", "Invalid"))
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
@@ -380,7 +392,8 @@
                         .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
-                        .Session(session => session.ContainingEntry("Invalid", "Text"))
+                        .Session(session => session
+                            .ContainingEntry("Invalid", "Text"))
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
@@ -406,7 +419,8 @@
                 .Instance()
                 .Calling(c => c.AddSessionAction())
                 .ShouldHave()
-                .Session(session => session.ContainingEntry("Integer", 1))
+                .Session(session => session
+                    .ContainingEntry("Integer", 1))
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
@@ -433,7 +447,8 @@
                         .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
-                        .Session(session => session.ContainingEntry("Integer", 2))
+                        .Session(session => session
+                            .ContainingEntry("Integer", 2))
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
@@ -462,7 +477,8 @@
                         .Instance()
                         .Calling(c => c.AddSessionAction())
                         .ShouldHave()
-                        .Session(session => session.ContainingEntry("Invalid", 1))
+                        .Session(session => session
+                            .ContainingEntry("Invalid", 1))
                         .AndAlso()
                         .ShouldReturn()
                         .Ok();
@@ -1150,7 +1166,8 @@
                         .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
-                        .Session(session => session.ContainingEntryWithKey("Invalid"))
+                        .Session(session => session
+                            .ContainingEntryWithKey("Invalid"))
                         .AndAlso()
                         .ShouldReturn()
                         .View();

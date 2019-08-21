@@ -297,7 +297,11 @@
             MyController<MvcController>
                 .Instance()
                 .WithSession(session => session
-                    .WithEntries(new Dictionary<string, byte[]> { ["ByteEntry"] = new byte[] { 1, 2, 3 }, ["Test"] = null }))
+                    .WithEntries(new Dictionary<string, byte[]>
+                    {
+                        ["ByteEntry"] = new byte[] { 1, 2, 3 },
+                        ["Test"] = null
+                    }))
                 .Calling(c => c.FullSessionAction())
                 .ShouldReturn()
                 .Ok(ok => ok
@@ -321,7 +325,11 @@
             MyController<MvcController>
                 .Instance()
                 .WithSession(session => session
-                    .WithEntries(new Dictionary<string, byte[]> { ["InvalidEntry"] = new byte[] { 1, 2, 3 }, ["Test"] = null }))
+                    .WithEntries(new Dictionary<string, byte[]>
+                    {
+                        ["InvalidEntry"] = new byte[] { 1, 2, 3 },
+                        ["Test"] = null
+                    }))
                 .Calling(c => c.FullSessionAction())
                 .ShouldReturn()
                 .BadRequest();
@@ -344,7 +352,10 @@
             MyController<MvcController>
                 .Instance()
                 .WithSession(session => session
-                    .WithEntries(new Dictionary<string, string> { ["StringEntry"] = "stringTest" }))
+                    .WithEntries(new Dictionary<string, string>
+                    {
+                        ["StringEntry"] = "stringTest"
+                    }))
                 .Calling(c => c.FullSessionAction())
                 .ShouldReturn()
                 .Ok(ok => ok
@@ -368,7 +379,10 @@
             MyController<MvcController>
                 .Instance()
                 .WithSession(session => session
-                    .WithEntries(new Dictionary<string, string> { ["InvalidEntry"] = "stringTest" }))
+                    .WithEntries(new Dictionary<string, string>
+                    {
+                        ["InvalidEntry"] = "stringTest"
+                    }))
                 .Calling(c => c.FullSessionAction())
                 .ShouldReturn()
                 .BadRequest();
@@ -391,7 +405,10 @@
             MyController<MvcController>
                 .Instance()
                 .WithSession(session => session
-                    .WithEntries(new Dictionary<string, int> { ["IntEntry"] = 1 }))
+                    .WithEntries(new Dictionary<string, int>
+                    {
+                        ["IntEntry"] = 1
+                    }))
                 .Calling(c => c.FullSessionAction())
                 .ShouldReturn()
                 .Ok(ok => ok
@@ -415,7 +432,10 @@
             MyController<MvcController>
                 .Instance()
                 .WithSession(session => session
-                    .WithEntries(new Dictionary<string, int> { ["InvalidEntry"] = 1 }))
+                    .WithEntries(new Dictionary<string, int>
+                    {
+                        ["InvalidEntry"] = 1
+                    }))
                 .Calling(c => c.FullSessionAction())
                 .ShouldReturn()
                 .BadRequest();
@@ -637,7 +657,11 @@
             MyViewComponent<FullSessionComponent>
                 .Instance()
                 .WithSession(session => session
-                    .WithEntries(new Dictionary<string, byte[]> { ["ByteEntry"] = new byte[] { 1, 2, 3 }, ["Test"] = null }))
+                    .WithEntries(new Dictionary<string, byte[]>
+                    {
+                        ["ByteEntry"] = new byte[] { 1, 2, 3 },
+                        ["Test"] = null
+                    }))
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .View()
@@ -661,7 +685,11 @@
             MyViewComponent<FullSessionComponent>
                 .Instance()
                 .WithSession(session => session
-                    .WithEntries(new Dictionary<string, byte[]> { ["InvalidEntry"] = new byte[] { 1, 2, 3 }, ["Test"] = null }))
+                    .WithEntries(new Dictionary<string, byte[]>
+                    {
+                        ["InvalidEntry"] = new byte[] { 1, 2, 3 },
+                        ["Test"] = null
+                    }))
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .Content("Invalid");
@@ -684,7 +712,10 @@
             MyViewComponent<FullSessionComponent>
                 .Instance()
                 .WithSession(session => session
-                    .WithEntries(new Dictionary<string, string> { ["StringEntry"] = "stringTest" }))
+                    .WithEntries(new Dictionary<string, string>
+                    {
+                        ["StringEntry"] = "stringTest"
+                    }))
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .View()
@@ -708,7 +739,10 @@
             MyViewComponent<FullSessionComponent>
                 .Instance()
                 .WithSession(session => session
-                    .WithEntries(new Dictionary<string, string> { ["InvalidEntry"] = "stringTest" }))
+                    .WithEntries(new Dictionary<string, string>
+                    {
+                        ["InvalidEntry"] = "stringTest"
+                    }))
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .Content("Invalid");
@@ -731,7 +765,10 @@
             MyViewComponent<FullSessionComponent>
                 .Instance()
                 .WithSession(session => session
-                    .WithEntries(new Dictionary<string, int> { ["IntEntry"] = 1 }))
+                    .WithEntries(new Dictionary<string, int>
+                    {
+                        ["IntEntry"] = 1
+                    }))
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .View()
@@ -755,7 +792,10 @@
             MyViewComponent<FullSessionComponent>
                 .Instance()
                 .WithSession(session => session
-                    .WithEntries(new Dictionary<string, int> { ["InvalidEntry"] = 1 }))
+                    .WithEntries(new Dictionary<string, int>
+                    {
+                        ["InvalidEntry"] = 1
+                    }))
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .Content("Invalid");
