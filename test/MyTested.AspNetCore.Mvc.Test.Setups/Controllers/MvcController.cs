@@ -783,6 +783,45 @@
             return this.BadRequest(this.ResponseModel);
         }
 
+        public IActionResult AcceptedAction()
+        {
+            return this.Accepted();
+        }
+
+        public IActionResult FullAcceptedAction()
+        {
+            return new AcceptedResult()
+            {
+                ContentTypes = new MediaTypeCollection { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) }
+            };
+        }
+
+        public IActionResult ConflictAction()
+        {
+            return this.Conflict();
+        }
+
+        public IActionResult FullConflictAction()
+        {
+            return new ConflictObjectResult(this.ModelState)
+            {
+                ContentTypes = new MediaTypeCollection { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) }
+            };
+        }
+
+        public IActionResult UnprocessableEntityAction()
+        {
+            return this.UnprocessableEntity();
+        }
+
+        public IActionResult FullUnprocessableEntityAction()
+        {
+            return new UnprocessableEntityObjectResult(this.ModelState)
+            {
+                ContentTypes = new MediaTypeCollection { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) }
+            };
+        }
+
         public IActionResult ModelStateWithNestedError()
         {
             this.ModelState.AddModelError<NestedModel>(m => m.Nested.Integer, "NestedError");
@@ -892,6 +931,14 @@
         public IActionResult UnauthorizedAction()
         {
             return this.Unauthorized();
+        }
+
+        public IActionResult FullUnauthorizedAction()
+        {
+            return new UnauthorizedObjectResult(this.ResponseModel)
+            {
+                ContentTypes = new MediaTypeCollection { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) },
+            };
         }
 
         public bool GenericStructAction()
