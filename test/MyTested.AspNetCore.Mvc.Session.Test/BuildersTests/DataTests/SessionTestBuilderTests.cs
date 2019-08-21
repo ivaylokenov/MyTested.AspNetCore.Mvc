@@ -251,7 +251,7 @@
         }
 
         [Fact]
-        public void ContainingEntryShouldThrowExceptionWithIncorrectEntry()
+        public void ContainingEntryShouldThrowExceptionWithIncorrectEntryValue()
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
@@ -275,6 +275,35 @@
                         .Ok();
                 },
                 "When calling AddSessionAction action in MvcController expected session to have entry with 'Bytes' key and the provided value, but the value was different.");
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void ContainingEntryShouldThrowExceptionWithIncorrectEntryKey()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
+                    services.AddSession();
+                });
+
+            Test.AssertException<DataProviderAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.AddSessionAction())
+                        .ShouldHave()
+                        .Session(session => session.ContainingEntry("Invalid", new byte[] { 1, 2, 3 }))
+                        .AndAlso()
+                        .ShouldReturn()
+                        .Ok();
+                },
+                "When calling AddSessionAction action in MvcController expected session to have entry with 'Invalid' key and the provided value, but such was not found.");
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -304,7 +333,7 @@
         }
 
         [Fact]
-        public void ContainingStringEntryShouldThrowExceptionWithIncorrectEntry()
+        public void ContainingStringEntryShouldThrowExceptionWithIncorrectEntryValue()
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
@@ -328,6 +357,35 @@
                         .Ok();
                 },
                 "When calling AddSessionAction action in MvcController expected session to have entry with 'String' key and the provided value, but the value was different.");
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void ContainingStringEntryShouldThrowExceptionWithIncorrectEntryKey()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
+                    services.AddSession();
+                });
+
+            Test.AssertException<DataProviderAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.AddSessionAction())
+                        .ShouldHave()
+                        .Session(session => session.ContainingEntry("Invalid", "Text"))
+                        .AndAlso()
+                        .ShouldReturn()
+                        .Ok();
+                },
+                "When calling AddSessionAction action in MvcController expected session to have entry with 'Invalid' key and the provided value, but such was not found.");
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -357,7 +415,7 @@
         }
 
         [Fact]
-        public void ContainingIntegerEntryShouldThrowExceptionWithIncorrectEntry()
+        public void ContainingIntegerEntryShouldThrowExceptionWithIncorrectEntryValue()
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
@@ -381,6 +439,35 @@
                         .Ok();
                 },
                 "When calling AddSessionAction action in MvcController expected session to have entry with 'Integer' key and the provided value, but the value was different.");
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void ContainingIntegerEntryShouldThrowExceptionWithIncorrectEntryKey()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
+                    services.AddSession();
+                });
+
+            Test.AssertException<DataProviderAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.AddSessionAction())
+                        .ShouldHave()
+                        .Session(session => session.ContainingEntry("Invalid", 1))
+                        .AndAlso()
+                        .ShouldReturn()
+                        .Ok();
+                },
+                "When calling AddSessionAction action in MvcController expected session to have entry with 'Invalid' key and the provided value, but such was not found.");
 
             MyApplication.StartsFrom<DefaultStartup>();
         }

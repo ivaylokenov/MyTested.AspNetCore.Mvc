@@ -152,6 +152,75 @@
         }
 
         [Fact]
+        public void WithWrongEntryKeyAndStringValueShouldReturnBadRequest()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
+                    services.AddSession();
+                });
+
+            MyController<MvcController>
+                .Instance()
+                .WithSession(session => session
+                    .WithEntry("Invalid", "value"))
+                .Calling(c => c.FullSessionAction())
+                .ShouldReturn()
+                .BadRequest();
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithWrongEntryKeyAndIntegerValueShouldReturnBadRequest()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
+                    services.AddSession();
+                });
+
+            MyController<MvcController>
+                .Instance()
+                .WithSession(session => session
+                    .WithEntry("Invalid", 1))
+                .Calling(c => c.FullSessionAction())
+                .ShouldReturn()
+                .BadRequest();
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithWrongEntryKeyAndByteArrayValueShouldReturnBadRequest()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
+                    services.AddSession();
+                });
+
+            MyController<MvcController>
+                .Instance()
+                .WithSession(session => session
+                    .WithEntry("Invalid", new byte[] { 1, 2, 3 }))
+                .Calling(c => c.FullSessionAction())
+                .ShouldReturn()
+                .BadRequest();
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
         public void WithEntriesAsObjectShouldWorkCorrectly()
         {
             MyApplication
@@ -186,6 +255,34 @@
         }
 
         [Fact]
+        public void WithEntriesAsObjectShouldReturnBadRequestWithWrongKeys()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
+                    services.AddSession();
+                });
+
+            MyController<MvcController>
+                .Instance()
+                .WithSession(session => session
+                .WithEntries(new
+                {
+                    InvalidStringKey = "value",
+                    InvalidIntKey = 1,
+                    InvalidByteKey = new byte[] { 1, 2, 3 }
+                }))
+                .Calling(c => c.FullSessionAction())
+                .ShouldReturn()
+                .BadRequest();
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
         public void WithEntriesAsByteDictionaryShouldWorkCorrectly()
         {
             MyApplication
@@ -205,6 +302,29 @@
                 .ShouldReturn()
                 .Ok(ok => ok
                     .WithModel(new byte[] { 1, 2, 3 }));
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithEntriesAsByteDictionaryAndWrongKeyShouldReturnBadRequest()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
+                    services.AddSession();
+                });
+
+            MyController<MvcController>
+                .Instance()
+                .WithSession(session => session
+                    .WithEntries(new Dictionary<string, byte[]> { ["InvalidEntry"] = new byte[] { 1, 2, 3 }, ["Test"] = null }))
+                .Calling(c => c.FullSessionAction())
+                .ShouldReturn()
+                .BadRequest();
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -234,6 +354,29 @@
         }
 
         [Fact]
+        public void WithEntriesAsStringDictionaryAndWrongKeyShouldReturnBadRequest()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
+                    services.AddSession();
+                });
+
+            MyController<MvcController>
+                .Instance()
+                .WithSession(session => session
+                    .WithEntries(new Dictionary<string, string> { ["InvalidEntry"] = "stringTest" }))
+                .Calling(c => c.FullSessionAction())
+                .ShouldReturn()
+                .BadRequest();
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
         public void WithEntriesAsIntDictionaryShouldWorkCorrectly()
         {
             MyApplication
@@ -256,7 +399,30 @@
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
-        
+
+        [Fact]
+        public void WithEntriesAsIntDictionaryAndWrongKeyShouldReturnBadRequest()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
+                    services.AddSession();
+                });
+
+            MyController<MvcController>
+                .Instance()
+                .WithSession(session => session
+                    .WithEntries(new Dictionary<string, int> { ["InvalidEntry"] = 1 }))
+                .Calling(c => c.FullSessionAction())
+                .ShouldReturn()
+                .BadRequest();
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
         [Fact]
         public void WithIdShouldSetIdCorrectlyInViewComponent()
         {
@@ -283,7 +449,7 @@
         }
         
         [Fact]
-        public void WithEntryShouldSetCorrectEntryInViewComponent()
+        public void WithByteArrayEntryShouldSetCorrectEntryInViewComponent()
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
@@ -302,6 +468,297 @@
                 .ShouldReturn()
                 .View()
                 .WithModel(new byte[] { 1, 2, 3 });
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithIntEntryShouldSetCorrectEntryInViewComponent()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
+                    services.AddSession();
+                });
+
+            MyViewComponent<FullSessionComponent>
+                .Instance()
+                .WithSession(session => session
+                    .WithEntry("IntEntry", 1))
+                .InvokedWith(c => c.Invoke())
+                .ShouldReturn()
+                .View()
+                .WithModel(1);
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithWrongEntryKeyAndStringValueShouldNotSetEntryInViewComponent()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
+                    services.AddSession();
+                });
+
+            MyViewComponent<FullSessionComponent>
+                .Instance()
+                .WithSession(session => session
+                    .WithEntry("InvalidEntry", "value"))
+                .InvokedWith(c => c.Invoke())
+                .ShouldReturn()
+                .Content("Invalid");
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithWrongEntryKeyAndIntValueShouldNotSetEntryInViewComponent()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
+                    services.AddSession();
+                });
+
+            MyViewComponent<FullSessionComponent>
+                .Instance()
+                .WithSession(session => session
+                    .WithEntry("InvalidEntry", 1))
+                .InvokedWith(c => c.Invoke())
+                .ShouldReturn()
+                .Content("Invalid");
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithWrongEntryKeyAndByteArrayValueShouldNotSetEntryInViewComponent()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
+                    services.AddSession();
+                });
+
+            MyViewComponent<FullSessionComponent>
+                .Instance()
+                .WithSession(session => session
+                    .WithEntry("InvalidEntry", new byte[] { 1, 2, 3 }))
+                .InvokedWith(c => c.Invoke())
+                .ShouldReturn()
+                .Content("Invalid");
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithEntriesAsObjectShouldSetCorrectEntryInViewComponent()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
+                    services.AddSession();
+                });
+
+            MyViewComponent<FullSessionComponent>
+                .Instance()
+                .WithSession(session => session
+                    .WithEntries(new
+                    {
+                        StringEntry = "test",
+                        IntEntry = 1,
+                        ByteEntry = new byte[] { 1, 2, 3 }
+                    }))
+                .InvokedWith(c => c.Invoke())
+                .ShouldReturn()
+                .View()
+                .WithModel(new byte[] { 1, 2, 3 });
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithWrongEntryKeyAndEntriesAsObjectShouldNotSetEntryInViewComponent()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
+                    services.AddSession();
+                });
+
+            MyViewComponent<FullSessionComponent>
+                .Instance()
+                .WithSession(session => session
+                .WithEntries(new
+                {
+                    InvalidStringKey = "value",
+                    InvalidIntKey = 1,
+                    InvalidByteKey = new byte[] { 1, 2, 3 }
+                }))
+                .InvokedWith(c => c.Invoke())
+                .ShouldReturn()
+                .Content("Invalid");
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithEntriesAsByteDictionaryShouldSetCorrectEntryInViewComponent()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
+                    services.AddSession();
+                });
+
+            MyViewComponent<FullSessionComponent>
+                .Instance()
+                .WithSession(session => session
+                    .WithEntries(new Dictionary<string, byte[]> { ["ByteEntry"] = new byte[] { 1, 2, 3 }, ["Test"] = null }))
+                .InvokedWith(c => c.Invoke())
+                .ShouldReturn()
+                .View()
+                .WithModel(new byte[] { 1, 2, 3 });
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithEntriesAsByteDictionaryAndWrongKeyShouldNotSetCorrectEntryInViewComponent()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
+                    services.AddSession();
+                });
+
+            MyViewComponent<FullSessionComponent>
+                .Instance()
+                .WithSession(session => session
+                    .WithEntries(new Dictionary<string, byte[]> { ["InvalidEntry"] = new byte[] { 1, 2, 3 }, ["Test"] = null }))
+                .InvokedWith(c => c.Invoke())
+                .ShouldReturn()
+                .Content("Invalid");
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithEntriesAsStringDictionaryShouldSetCorrectEntryInViewComponent()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
+                    services.AddSession();
+                });
+
+            MyViewComponent<FullSessionComponent>
+                .Instance()
+                .WithSession(session => session
+                    .WithEntries(new Dictionary<string, string> { ["StringEntry"] = "stringTest" }))
+                .InvokedWith(c => c.Invoke())
+                .ShouldReturn()
+                .View()
+                .WithModel("stringTest");
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithEntriesAsStringDictionaryAndWrongKeyShouldNotSetCorrectEntryInViewComponent()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
+                    services.AddSession();
+                });
+
+            MyViewComponent<FullSessionComponent>
+                .Instance()
+                .WithSession(session => session
+                    .WithEntries(new Dictionary<string, string> { ["InvalidEntry"] = "stringTest" }))
+                .InvokedWith(c => c.Invoke())
+                .ShouldReturn()
+                .Content("Invalid");
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithEntriesAsIntDictionaryShouldSetCorrectEntryInViewComponent()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
+                    services.AddSession();
+                });
+
+            MyViewComponent<FullSessionComponent>
+                .Instance()
+                .WithSession(session => session
+                    .WithEntries(new Dictionary<string, int> { ["IntEntry"] = 1 }))
+                .InvokedWith(c => c.Invoke())
+                .ShouldReturn()
+                .View()
+                .WithModel(1);
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithEntriesAsIntDictionaryAndWrongKeyShouldNotSetCorrectEntryInViewComponent()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddMemoryCache();
+                    services.AddDistributedMemoryCache();
+                    services.AddSession();
+                });
+
+            MyViewComponent<FullSessionComponent>
+                .Instance()
+                .WithSession(session => session
+                    .WithEntries(new Dictionary<string, int> { ["InvalidEntry"] = 1 }))
+                .InvokedWith(c => c.Invoke())
+                .ShouldReturn()
+                .Content("Invalid");
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
