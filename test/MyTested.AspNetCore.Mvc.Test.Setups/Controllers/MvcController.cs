@@ -13,6 +13,7 @@
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.AspNetCore.Mvc.ViewEngines;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.FileProviders;
@@ -73,7 +74,7 @@
         {
             return this.View();
         }
-        
+
         public IActionResult DefaultViewWithModel()
         {
             return this.View(this.ResponseModel);
@@ -97,6 +98,11 @@
                 ContentType = ContentType.ApplicationXml,
                 ViewEngine = new CustomViewEngine()
             };
+        }
+
+        public IActionResult NullViewComponent()
+        {
+            return this.ViewComponent((string)null);
         }
 
         public IActionResult ViewWithViewEngine(IViewEngine viewEngine)
@@ -140,6 +146,17 @@
             };
         }
 
+        public IActionResult CustomPartialViewResultWithViewData()
+        {
+            var partialView = new PartialViewResult
+            {
+                ViewData = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary())
+            };
+
+            partialView.ViewData.Model = TestObjectFactory.GetListOfResponseModels();
+            return partialView;
+        }
+
         public IActionResult ViewComponentResultByName()
         {
             return this.ViewComponent("TestComponent", new { id = 1, test = "text" });
@@ -166,7 +183,18 @@
                 ContentType = ContentType.ApplicationXml
             };
         }
-        
+
+        public IActionResult CustomViewComponentResultWithViewData()
+        {
+            var viewComponent = new ViewComponentResult
+            {
+                ViewData = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary())
+            };
+
+            viewComponent.ViewData.Model = TestObjectFactory.GetListOfResponseModels();
+            return viewComponent;
+        }
+
         public IActionResult IndexOutOfRangeException()
         {
             throw new IndexOutOfRangeException();
@@ -293,11 +321,11 @@
         [HttpDelete]
         [SkipStatusCodePages]
         [ResponseCache(
-            CacheProfileName = "Test Profile", 
-            Duration = 30, 
+            CacheProfileName = "Test Profile",
+            Duration = 30,
             Location = ResponseCacheLocation.Client,
             VaryByHeader = "Test Header",
-            VaryByQueryKeys = new [] { "FirstQuery", "SecondQuery" },
+            VaryByQueryKeys = new[] { "FirstQuery", "SecondQuery" },
             NoStore = true,
             Order = 2)]
         public IActionResult VariousAttributesAction()
@@ -449,15 +477,15 @@
 
         public IActionResult SignInWithAuthenticationPropertiesAndScheme()
         {
-            return this.SignIn(ClaimsPrincipalBuilder.DefaultAuthenticated, 
-                TestObjectFactory.GetAuthenticationProperties(), 
+            return this.SignIn(ClaimsPrincipalBuilder.DefaultAuthenticated,
+                TestObjectFactory.GetAuthenticationProperties(),
                 AuthenticationScheme.Basic);
         }
 
         public IActionResult SignInWithEmptyAuthenticationPropertiesAndScheme()
         {
-            return this.SignIn(ClaimsPrincipalBuilder.DefaultAuthenticated, 
-                TestObjectFactory.GetEmptyAuthenticationProperties(), 
+            return this.SignIn(ClaimsPrincipalBuilder.DefaultAuthenticated,
+                TestObjectFactory.GetEmptyAuthenticationProperties(),
                 AuthenticationScheme.Basic);
         }
 
@@ -755,6 +783,45 @@
             return this.BadRequest(this.ResponseModel);
         }
 
+        public IActionResult AcceptedAction()
+        {
+            return this.Accepted();
+        }
+
+        public IActionResult FullAcceptedAction()
+        {
+            return new AcceptedResult()
+            {
+                ContentTypes = new MediaTypeCollection { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) }
+            };
+        }
+
+        public IActionResult ConflictAction()
+        {
+            return this.Conflict();
+        }
+
+        public IActionResult FullConflictAction()
+        {
+            return new ConflictObjectResult(this.ModelState)
+            {
+                ContentTypes = new MediaTypeCollection { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) }
+            };
+        }
+
+        public IActionResult UnprocessableEntityAction()
+        {
+            return this.UnprocessableEntity();
+        }
+
+        public IActionResult FullUnprocessableEntityAction()
+        {
+            return new UnprocessableEntityObjectResult(this.ModelState)
+            {
+                ContentTypes = new MediaTypeCollection { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) }
+            };
+        }
+
         public IActionResult ModelStateWithNestedError()
         {
             this.ModelState.AddModelError<NestedModel>(m => m.Nested.Integer, "NestedError");
@@ -766,6 +833,16 @@
         public IActionResult JsonAction()
         {
             return this.Json(this.ResponseModel);
+        }
+
+        public IActionResult EmptyJsonAction()
+        {
+            return this.Json("{}");
+        }
+
+        public IActionResult NullJsonAction()
+        {
+            return this.Json(null);
         }
 
         public IActionResult JsonWithStatusCodeAction()
@@ -856,6 +933,14 @@
             return this.Unauthorized();
         }
 
+        public IActionResult FullUnauthorizedAction()
+        {
+            return new UnauthorizedObjectResult(this.ResponseModel)
+            {
+                ContentTypes = new MediaTypeCollection { new MediaTypeHeaderValue(ContentType.ApplicationJson), new MediaTypeHeaderValue(ContentType.ApplicationXml) },
+            };
+        }
+
         public bool GenericStructAction()
         {
             return true;
@@ -922,11 +1007,11 @@
 
             return this.BadRequest();
         }
-        
+
         public IActionResult FullSessionAction()
         {
             var session = this.HttpContext.Session;
-            
+
             var hasId = session.GetString("HasId");
             if (!string.IsNullOrWhiteSpace(hasId) && hasId == "HasIdValue")
             {
@@ -1009,7 +1094,7 @@
             this.TempData.Add("Another", "AnotherValue");
             return this.Ok();
         }
-        
+
         public IActionResult AddViewBagAction()
         {
             this.ViewBag.Test = "BagValue";

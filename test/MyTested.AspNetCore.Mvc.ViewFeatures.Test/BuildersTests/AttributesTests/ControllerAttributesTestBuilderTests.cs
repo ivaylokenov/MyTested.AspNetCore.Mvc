@@ -11,7 +11,6 @@
         public void ValidatingAntiForgeryTokenShouldNotThrowExceptionWithTheAttribute()
         {
             MyController<MvcController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.ValidatingAntiForgeryToken());
         }
@@ -23,7 +22,6 @@
                 () =>
                 {
                     MyController<AttributesController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.ValidatingAntiForgeryToken());
                 },
@@ -34,7 +32,6 @@
         public void IgnoringAntiForgeryTokenShouldNotThrowExceptionWithTheAttribute()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.IgnoringAntiForgeryToken());
         }
@@ -46,7 +43,6 @@
                 () =>
                 {
                     MyController<MvcController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.IgnoringAntiForgeryToken());
                 },
@@ -57,7 +53,6 @@
         public void SkippingStatusCodePagesShouldNotThrowExceptionWithTheAttribute()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.SkippingStatusCodePages());
         }
@@ -69,7 +64,6 @@
                 () =>
                 {
                     MyController<MvcController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.SkippingStatusCodePages());
                 },

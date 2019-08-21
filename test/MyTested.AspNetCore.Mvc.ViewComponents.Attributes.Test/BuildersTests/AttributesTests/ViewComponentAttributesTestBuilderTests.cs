@@ -51,7 +51,6 @@
         public void IndicatingControllerShouldNotThrowExceptionWithTheAttribute()
         {
             MyViewComponent<AttributesComponent>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .IndicatingViewComponentExplicitly());
@@ -64,7 +63,6 @@
                 () =>
                 {
                     MyViewComponent<ComponentWithCustomAttribute>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .IndicatingViewComponentExplicitly());
