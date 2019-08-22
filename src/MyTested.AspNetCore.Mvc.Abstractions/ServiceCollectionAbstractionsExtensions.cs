@@ -7,7 +7,6 @@
     using Internal.Caching;
     using Internal.Contracts;
     using Internal.Services;
-    using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
     using Utilities.Extensions;
