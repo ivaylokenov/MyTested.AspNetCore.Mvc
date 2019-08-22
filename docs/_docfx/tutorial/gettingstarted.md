@@ -8,42 +8,45 @@ First things first - we need a test assembly! Open the [Music Store solution](ht
 
 <img src="/images/tutorial/createtestproject.jpg" alt="Create .NET Core test assembly" />
 
-Delete the auto-generated **"Class1.cs"** file and open the **"project.json"** to configure the test runner:
+Delete the auto-generated **"Class1.cs"** file and open the **"MusicStore.Test.csproj"** to configure the test runner:
 
- - Remove the version of the project. Test assemblies do not need it
- - Add **"netcoreapp1.0"** and **"net451"** to the supported frameworks and remove the **"netstandard1.6"** one. We want to run our tests for both the full .NET Framework and the .NET Core
- - Add **"dotnet-test-xunit"**, **"xunit"**, **"MyTested.AspNetCore.Mvc"** and **"MusicStore"** as dependencies
- - Set **"xunit"** to be the **"testRunner"** of the project
- 
-Your **"project.json"** file should look like this:
+Use NuGet package manager to install these packages:
+ - [MyTested.AspNetCore.Mvc](https://www.nuget.org/packages/MyTested.AspNetCore.Mvc/)
+ - [MyTested.AspNetCore.Mvc.Universe](https://www.nuget.org/packages/MyTested.AspNetCore.Mvc.Universe/)
+ - [xunit](https://www.nuget.org/packages/xunit/)
+ - [xunit.runner.visualstudio](https://www.nuget.org/packages/xunit.runner.visualstudio/)
 
-```json
-{
-  "dependencies": {
-    "dotnet-test-xunit": "2.2.0-*",
-    "xunit": "2.2.0-*",
-    "MyTested.AspNetCore.Mvc": "1.0.0",
-    "MusicStore": "*"
-  },
+After that you must add reference to the **"MusicStore.Web"** project.
 
-  "frameworks": {
-    "netcoreapp1.0": {
-      "imports": "dotnet5.4",
-      "dependencies": {
-        "Microsoft.NETCore.App": {
-          "version": "1.0.1",
-          "type": "platform"
-        }
-      }
-    },
-    "net451": {}
-  },
+Now your **"MusicStore.Test.csproj"** file should look like this*:
 
-  "testRunner": "xunit"
-}
+```xml
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.6" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Universe" Version="2.2.0" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MusicStore.Web\MusicStore.Web.csproj" />
+  </ItemGroup>
+
+</Project>
 ```
 
-You may need to change/update the versions of the listed packages with more recent ones.
+*You may need to change/update the versions of the listed packages with more recent ones.
 
 ## Our first test
 
@@ -121,16 +124,19 @@ You were expecting that, right? You should not be surprised after the first fail
 
 Still here? Good! Now repeat after me and then everything will be explained to you (it's a promise)!
 
-Go to the **"MusicStore"** project root, copy the **"config.json"** file and paste it at the root of the test project. 
+Go to the **"MusicStore"** project root, copy the **"config.json"** file and paste it at the root of the test project.
 
-Go to the **"project.json"** file at the test project and add the copied **"config.json"** file to the build output:
+After than you must swith **"Copy To Output Directory"** property of **"config.json"** file to **"Copy if newer"** or manualy put this on the **"MusicStore.Test.csproj"** file :
+```xml
+  <!--Other ItemGroups -->
+  
+  <ItemGroup>
+    <Content Update="config.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 
-```json
-"buildOptions": {
-  "copyToOutput": [
-    "config.json"
-  ]
-},
+  <!--Other ItemGroups -->
 ```
 
 <img src="/images/tutorial/configjson.jpg" alt="Copied config.json from the web project" />
@@ -157,39 +163,6 @@ Your **"config.json"** file should look like this:
 
 Now run the test again in Visual Studio and... oh, miracle, it passes! :)
 
-## Multiple frameworks
-
-Don't be too happy yet as there is a (not-so) small problem here. Visual Studio runs the discovered tests only for the first targeted framework, which in our case is **"netcoreapp1.0"**. But how to test for the other one - **"net451"**?
-
-Go to the **"MusicStore.Test"** project folder and open a console terminal there. The easiest way is pressing "SHIFT + Right Mouse Button" somewhere in the window and then clicking "Open command window here".
-
-<img src="/images/tutorial/terminal.jpg" alt="Console terminal at the root of the test project" />
-
-Type **"dotnet test"** and hit **"Enter**".
-
-<img src="/images/tutorial/net451fail.jpg" alt=".NET Framework test fails" />
-
-Oh, well... This does not look good... Fail again! Why are you even doing this tutorial, you may wonder? :(
-
-If you still decide to stick around - .NET Core runs our test fine but the full .NET framework fails because it cannot load correctly all the plugin dependencies My Tested ASP.NET Core MVC needs (more information available [HERE](/guide/plugins.html)). 
-
-Do not worry, this one is easy. Go to the test assembly's **"project.json"** file and set the **"preserveCompilationContext"** option under **"buildOptions"** to **"true"**:
-
-```json
-"buildOptions": {
-  "preserveCompilationContext": true,
-  "copyToOutput": [
-    "config.json"
-  ]
-},
-```
-
-Go back to the console terminal and run **"dotnet test"** again.
-
-<img src="/images/tutorial/firsttestpass.jpg" alt="First test passes" />
-
-Oh, miracles! The test passes correctly without any big and ugly errors! Oh, yeah, do you feel the happiness? This library is DA BOMB!!! :) 
-
 ## Understanding the details
 
 OK, back to that promise - the detailed explanation for all the different fails.
@@ -211,9 +184,7 @@ var builder = new ConfigurationBuilder()
 	.AddJsonFile("config.json")
 ```
 
-The JSON file is not optional, and since we inherit from the original web **"Startup"**, our **"TestStartup"** class runs the same code thus requiring the **"config.json"** file to be present. (Un)fortunately, the base project directory will be the output directory of the test project, and the test runner will search for the file there. We may make the **"config.json"** optional, but it may lead to unexpected behavior and exceptions in our web application, so our best option here is to copy the same file into the test project and change all important values with dummy ones. Copy-pasting is not a good practice but letting the tests touch and read the original application configuration values like database connection strings, security passwords, and potentially others is even worse. Additionally, only copying the file is not enough for it to end up in the output directory, so we need to add it explicitly in the test assembly's **"project.json"** configuration.
-
-**Third**, we noticed Visual Studio does not run the discovered tests for all specified frameworks, so we went to the console and tried running them there. Unfortunately, the test failed for the **"net451"** framework. The reason is simple. The full framework does not save and store our project references and dependencies, so all the required test plugin classes could not be loaded. By setting the **"preserveCompilationContext"** option to **"true"** the compiler will store the dependencies information into a JSON file from where later during runtime it can be read successfully.
+The JSON file is not optional, and since we inherit from the original web **"Startup"**, our **"TestStartup"** class runs the same code thus requiring the **"config.json"** file to be present. (Un)fortunately, the base project directory will be the output directory of the test project, and the test runner will search for the file there. We may make the **"config.json"** optional, but it may lead to unexpected behavior and exceptions in our web application, so our best option here is to copy the same file into the test project and change all important values with dummy ones. Copy-pasting is not a good practice but letting the tests touch and read the original application configuration values like database connection strings, security passwords, and potentially others is even worse. Additionally, only copying the file is not enough for it to end up in the output directory, so we need to add it explicitly in the test assembly's **"MusicStore.Test.csproj"** configuration.
 
 ## Error messages
 
@@ -232,7 +203,8 @@ public void AddressAndPaymentShouldReturnDefaultView()
 Run the test, and you will see a nice descriptive error message from My Tested ASP.NET Core MVC:
 
 ```text
-When calling AddressAndPayment action in CheckoutController expected result to be BadRequestResult, but instead received ViewResult.
+MyTested.AspNetCore.Mvc.Exceptions.InvocationResultAssertionException :
+ When calling AddressAndPayment action in CheckoutController expected result to be BadRequestResult, but instead received ViewResult.
 ```
 
 Of course, you should undo the change and return the **"View"** call (unless you want a failing test during the whole tutorial but that's up to you again). :)
