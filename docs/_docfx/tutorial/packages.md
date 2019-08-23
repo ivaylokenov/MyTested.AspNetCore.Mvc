@@ -108,7 +108,7 @@ Run the test, and it should pass correctly. As you can see, My Tested ASP.NET Co
 .Calling(c => c.RemoveLogin(With.No<string>(), With.No<string>()))
 ```
 
-As a bonus, let's assert some details of the redirect action result. We can see it redirects to the **"ManageLogins"** action with some **"ManageMessageId"** route value so we better test them, but first we need to install another package -  **"MyTested.AspNetCore.Mvc.Controllers.ActionResults"** who allows you to test specific things:
+As a bonus, let's assert some details of the redirect action result. We can see it redirects to the **"ManageLogins"** action with some **"ManageMessageId"** route value so we better test them, but first we need to install another package -  **"MyTested.AspNetCore.Mvc.Controllers.ActionResults"** who allows you to test specific things like this:
 
 ```c#
 [Fact]

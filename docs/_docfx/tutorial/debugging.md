@@ -7,7 +7,9 @@ In this section we will learn how easy is to debug failing tests.
 Let's see how nice and friendly error message My Tested ASP.NET Core MVC provides on a failed test. Go to the **"ManageControllerTest"** and change the redirect action:
 
 ```c#
-.ToAction(nameof(ManageController.LinkLogin))
+.Redirect(redirect => redirect
+                    .ToAction(nameof(ManageController.ManageLogins))
+                    .ContainingRouteValues(new { Message = ManageController.ManageMessageId.Error }));
 ```
 
 Run the test, and you will see a detailed error message showing exactly what has failed:
@@ -19,8 +21,9 @@ When calling RemoveLogin action in ManageController expected redirect result to 
 We can see in the above message that the redirect action is actually **"ManageLogins"** so let's return that value and try something else. Change the **"Message"** route value property to **"Error"**:
 
 ```c#
-.ToAction(nameof(ManageController.ManageLogins))
-.ContainingRouteValues(new { Error = ManageController.ManageMessageId.Error });
+.Redirect(redirect => redirect
+                    .ToAction(nameof(ManageController.ManageLogins))
+                    .ContainingRouteValues(new { Error = ManageController.ManageMessageId.Error }));
 ```
 
 Run the test again, and you should see:
