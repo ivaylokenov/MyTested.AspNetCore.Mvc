@@ -20,7 +20,19 @@
             {
                 return this.View(byteEntry);
             }
-            
+
+            var intEntry = session.GetInt32("IntEntry");
+            if (intEntry != null)
+            {
+                return this.View(intEntry);
+            }
+
+            var stringEntry = session.GetString("StringEntry");
+            if (stringEntry != null)
+            {
+                return this.View<string>(stringEntry);
+            }
+
             return this.Content("Invalid");
         }
     }

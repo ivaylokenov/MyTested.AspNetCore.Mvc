@@ -214,7 +214,7 @@
                 },
                 "When calling DefaultView action in MvcController expected view result ContentType to be 'application/json', but instead received null.");
         }
-        
+
         [Fact]
         public void AndAlsoShouldWorkCorrectly()
         {
@@ -227,7 +227,25 @@
                     .AndAlso()
                     .WithStatusCode(500));
         }
-        
+
+        [Fact]
+        public void AndAlsoShouldWorkCorrectlyWhenDifferInStatusCode()
+        {
+            Test.AssertException<ViewResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.CustomViewResult())
+                        .ShouldReturn()
+                        .View(view => view
+                            .WithContentType(ContentType.ApplicationXml)
+                            .AndAlso()
+                            .WithStatusCode(200));
+                },
+                "When calling CustomViewResult action in MvcController expected view result to have 200 (OK) status code, but instead received 500 (InternalServerError).");
+        }
+
         [Fact]
         public void WithModelShouldNotThrowExceptionWithCorrectModelForPartials()
         {
@@ -310,6 +328,17 @@
                 .ShouldReturn()
                 .PartialView(partialView => partialView
                     .WithStatusCode(500));
+        }
+
+        [Fact]
+        public void WithNoModelShouldNotThrowExceptionWhenModelIsNotProvided()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.CustomPartialViewResult())
+                .ShouldReturn()
+                .PartialView(partialView => partialView
+                    .WithNoModel());
         }
 
         [Fact]
@@ -458,6 +487,24 @@
         }
 
         [Fact]
+        public void AndAlsoShouldWorkCorrectlyForPartialsWhenDifferInStatusCode()
+        {
+            Test.AssertException<ViewResultAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.CustomPartialViewResult())
+                        .ShouldReturn()
+                        .PartialView(view => view
+                            .WithContentType(ContentType.ApplicationXml)
+                            .AndAlso()
+                            .WithStatusCode(200));
+                },
+                "When calling CustomPartialViewResult action in MvcController expected partial view result to have 200 (OK) status code, but instead received 500 (InternalServerError).");
+        }
+
+        [Fact]
         public void AndProvideTheActionResultShouldWorkCorrectly()
         {
             MyController<MvcController>
@@ -472,7 +519,7 @@
                     Assert.IsAssignableFrom<ViewResult>(actionResult);
                 });
         }
-        
+
         [Fact]
         public void AndProvideTheActionResultShouldWorkCorrectlyWithPartial()
         {
@@ -487,6 +534,75 @@
                     Assert.NotNull(actionResult);
                     Assert.IsAssignableFrom<PartialViewResult>(actionResult);
                 });
+        }
+
+        [Fact]
+        public void WithModelOfTypeShouldNotThrowExceptionWithCorrectTypeForPartialView()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.CustomPartialViewResultWithViewData())
+                .ShouldReturn()
+                .PartialView(partialView =>
+                    partialView.WithModelOfType<List<ResponseModel>>());
+        }
+
+        [Fact]
+        public void WithModelShouldNotThrowExceptionWithCorrectModelForPartialView()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.CustomPartialViewResultWithViewData())
+                .ShouldReturn()
+                .PartialView(partialView => partialView
+                    .WithModel(TestObjectFactory.GetListOfResponseModels()));
+        }
+
+        [Fact]
+        public void WithModelShouldExceptionWithCorrectModelForPartialViewWhenSuchDiffers()
+        {
+            Test.AssertException<ResponseModelAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.CustomPartialViewResultWithViewData())
+                        .ShouldReturn()
+                        .PartialView(partialView => partialView
+                            .WithModel(new object()));
+                },
+                "When calling CustomPartialViewResultWithViewData action in MvcController expected response model Object to be the given model, but in fact it was a different one.");
+        }
+
+        [Fact]
+        public void AndProvideTheActionResultShouldWorkCorrectlyForPartialViewModel()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.CustomPartialViewResultWithViewData())
+                .ShouldReturn()
+                .PartialView()
+                .ShouldPassForThe<IActionResult>(actionResult =>
+                {
+                    Assert.NotNull(actionResult);
+                    Assert.NotNull((actionResult as PartialViewResult).Model);
+                });
+        }
+
+        [Fact]
+        public void WithNoModelShouldExceptionWithCorrectModelForPartialViewWhenSuchExist()
+        {
+            Test.AssertException<ResponseModelAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.CustomPartialViewResultWithViewData())
+                        .ShouldReturn()
+                        .PartialView(partialView => partialView
+                            .WithNoModel());
+                },
+                "When calling CustomPartialViewResultWithViewData action in MvcController expected to not have a view model but in fact such was found.");
         }
     }
 }

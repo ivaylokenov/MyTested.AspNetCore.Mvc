@@ -104,5 +104,13 @@
         public new static IVoidActionResultTestBuilder Calling(Expression<Func<TController, Task>> actionCall)
             => Instance()
                 .Calling(actionCall);
+
+        /// <summary>
+        /// Used for testing controller additional details.
+        /// </summary>
+        /// <returns>Test builder of <see cref="IControllerTestBuilder"/> type.</returns>
+        public new static IControllerTestBuilder ShouldHave()
+            => Instance()
+                .ShouldHave();
     }
 }

@@ -30,24 +30,23 @@ Funds donated via both platforms are used for development and marketing purposes
   </tbody>
 </table>
 
+## Generous Backers
+- Plamen Petkov
+
 ## Kickstarters
 - Ines Ivanova from [C# In 15 Minutes](https://www.youtube.com/channel/UCljus-YO63ae0vwuuPWDasA)
 - Rusko Kumovski
 
 ## Top Backers
 - Bace Kar pod prekor Silovio aka Brudlordo
-- Kris Petrov
 - Hristo Hentov
 - Vasil Valchanov
-- Nikola Stankov
 - Ellie Stankova
 - Krasimir Gavrilov
 - Pavel Kolev from [Rebellious Software](https://www.rebellioussoftware.com)
 - Regina Uzunova
 - Victoria Karamanova
 - Yanislav Asenov
-- Peter
-- Mihail Duchev
 - Ico Dimov
 - Viktor Klisurski
 - Desi Zlatanova
@@ -68,4 +67,10 @@ Funds donated via both platforms are used for development and marketing purposes
 Aleksandur Gyuzelov, Bogomil Stoev, Desislav Stoyanov, Emil Venkov, Georgi Krasimirov Georgiev, Kristiyan Mihailov, Lyubomir Krastanov, Nikolay Boyadzhiev, Nikolay Mihaylov, Rositsa Nenova, Slavi Bozhikov, Vasil Bonev, Yuriy Georgiev, Калин Ценков, Velina Getova, Gabriel Daskalov
 
 ## One-Time Donations
-Mariya Georgieva, Tanya Georgieva, Danny Berova, German Dimitrov, Aleksandar Evangelatov, Anton Petrov, Hristo Ivanov, Anna Stambolieva, Nedelcho Penev, Yulian Ashikov, Boyana Aleksova, Plamen Haralambiev, Victoria Karamanova, Ivaylo Goranov, Aneliya Drazheva, Zdravko Yakimov, Vanya Kuncheva, Georgi Petrov, Stanimir Pavlov, Teodor Stefanov, Stefan Minchev, Simon Valentinova Kochova, Marin Marinov, Petar Peshev, Radoslav Astardzhiev, Dimitar Radkov, Aleksandar Tsvetkov, Georgi Dragnev, Veselin Neychev, Kaloyan Kolev, Andrey Blagoev, Yordan Penev, Ventsislav Yordanov, Nikolay Georgiev, Siyana Yasenova Zdravkova, Ani Kalpachka, Gergana Damyanova, Petya Koleva, Dyanko Petkov, Nikola Kolchakov, Borislava Hranova
+Philip Shishov, Mariya Georgieva, Tanya Georgieva, Danny Berova, German Dimitrov, Aleksandar Evangelatov, Anton Petrov, Hristo Ivanov, Anna Stambolieva, Nedelcho Penev, Yulian Ashikov, Boyana Aleksova, Plamen Haralambiev, Victoria Karamanova, Ivaylo Goranov, Aneliya Drazheva, Zdravko Yakimov, Vanya Kuncheva, Georgi Petrov, Stanimir Pavlov, Teodor Stefanov, Stefan Minchev, Simon Valentinova Kochova, Marin Marinov, Petar Peshev, Radoslav Astardzhiev, Dimitar Radkov, Aleksandar Tsvetkov, Georgi Dragnev, Veselin Neychev, Kaloyan Kolev, Andrey Blagoev, Yordan Penev, Ventsislav Yordanov, Nikolay Georgiev, Siyana Yasenova Zdravkova, Ani Kalpachka, Gergana Damyanova, Petya Koleva, Dyanko Petkov, Nikola Kolchakov, Borislava Hranova
+
+## Previous Supporters
+- Kris Petrov
+- Mihail Duchev
+- Nikola Stankov
+- Peter

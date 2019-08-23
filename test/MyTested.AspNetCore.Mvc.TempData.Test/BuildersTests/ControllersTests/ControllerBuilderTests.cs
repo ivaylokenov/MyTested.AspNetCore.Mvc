@@ -13,7 +13,8 @@
         {
             MyController<MvcController>
                 .Instance()
-                .WithTempData(tempData => tempData.WithEntry("test", "value"))
+                .WithTempData(tempData => tempData
+                    .WithEntry("test", "value"))
                 .Calling(c => c.TempDataAction())
                 .ShouldReturn()
                 .Ok();
@@ -24,7 +25,8 @@
         {
             MyController<MvcController>
                 .Instance()
-                .WithTempData(tempData => tempData.WithEntry("invalid", "value"))
+                .WithTempData(tempData => tempData
+                    .WithEntry("invalid", "value"))
                 .Calling(c => c.TempDataAction())
                 .ShouldReturn()
                 .BadRequest();
@@ -52,7 +54,8 @@
 
             MyController<FullPocoController>
                 .Instance()
-                .WithTempData(tempData => tempData.WithEntry("test", "value"))
+                .WithTempData(tempData => tempData
+                    .WithEntry("test", "value"))
                 .Calling(c => c.TempDataAction())
                 .ShouldReturn()
                 .Ok();
@@ -65,7 +68,8 @@
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
-                .WithServices(services => services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>());
+                .WithServices(services => services
+                    .TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>());
 
             MyController<FullPocoController>
                 .Instance()
@@ -82,7 +86,8 @@
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
-                .WithServices(services => services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>());
+                .WithServices(services => services
+                    .TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>());
 
             MyController<FullPocoController>
                 .Instance()

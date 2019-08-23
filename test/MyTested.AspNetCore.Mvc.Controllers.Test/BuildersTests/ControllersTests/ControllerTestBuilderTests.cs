@@ -11,7 +11,6 @@
         public void NoAttributesShouldNotThrowExceptionWithControllerContainingNoAttributes()
         {
             MyController<NoAttributesController>
-                .Instance()
                 .ShouldHave()
                 .NoAttributes();
         }
@@ -23,7 +22,6 @@
                 () =>
                 {
                     MyController<MvcController>
-                        .Instance()
                         .ShouldHave()
                         .NoAttributes();
                 }, 
@@ -34,7 +32,6 @@
         public void AttributesShouldNotThrowExceptionWithControllerContainingAttributes()
         {
             MyController<MvcController>
-                .Instance()
                 .ShouldHave()
                 .Attributes();
         }
@@ -46,7 +43,6 @@
                 () =>
                 {
                     MyController<NoAttributesController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes();
                 }, 
@@ -57,7 +53,6 @@
         public void AttributesShouldNotThrowExceptionWithControllerContainingNumberOfAttributes()
         {
             MyController<MvcController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(withTotalNumberOf: 4);
         }
@@ -69,7 +64,6 @@
                 () =>
                 {
                     MyController<MvcController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(withTotalNumberOf: 10);
                 }, 
@@ -83,7 +77,6 @@
                 () =>
                 {
                     MyController<MvcController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(withTotalNumberOf: 1);
                 },
