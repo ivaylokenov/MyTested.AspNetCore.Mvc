@@ -69,7 +69,7 @@ Unfortunately, it still does not compile, because you will receive error like th
 ```
 The **"Controllers"** package contains assertions methods only for the [ControllerBase](https://github.com/aspnet/Mvc/blob/dev/src/Microsoft.AspNetCore.Mvc.Core/ControllerBase.cs) class which does not include view features and action results.
 
-You can see this by examining the IntelliSense of the test: :
+You can see this by examining the IntelliSense of the test:
 
 <img src="/images/tutorial/coreintellisense.jpg" alt="Controllers package IntelliSense" />
 
