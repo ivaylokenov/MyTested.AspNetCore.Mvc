@@ -167,7 +167,7 @@ Now run the test again in Visual Studio and... oh, miracle, it passes! :)
 
 OK, back to that promise - the detailed explanation for all the different fails.
 
-**Basically three things happened.**
+**Basically two things happened.**
 
 **First**, My Tested ASP.NET Core MVC needs to resolve the services required by the different components in your web application - controllers, view components, etc. By default, the testing framework is configured to need a **"TestStartup"** class at the root of the test project from where it prepares the global service provider. For this reason, we got an exception telling us we need to add the **"TestStartup"** class. Remember:
 

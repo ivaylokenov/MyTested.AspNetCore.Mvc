@@ -26,18 +26,26 @@ The full list and descriptions of all available packages can be found [HERE](/gu
 
 ## Breaking down the MVC package
 
-Now, let's get back to the testing. Go to the **"project.json"** file and replace the **"MyTested.AspNetCore.Mvc"** dependency with **"MyTested.AspNetCore.Mvc.Controllers"**. We will start using the small and specific packages for now, and then we will switch to the **"Universe"** one later in the tutorial.
+Now, let's get back to the testing. Go to the **"MusicStore.Test.csproj"** file and replace the **"MyTested.AspNetCore.Mvc"** dependency with **"MyTested.AspNetCore.Mvc.Controllers"**. We will start using the small and specific packages for now, and then we will switch to the **"Universe"** one later in the tutorial.
 
-Your **"project.json"** dependencies should look like this:
+Your **"MusicStore.Test.csproj"** dependencies should look like this:
 
-```json
-"dependencies": {
-  "dotnet-test-xunit": "2.2.0-*",
-  "xunit": "2.2.0-*",
-  "MyTested.AspNetCore.Mvc.Controllers": "1.0.0",
-  "MusicStore": "*"
-},
-``` 
+```xml
+<!-- Other ItemGropus -->
+
+<ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.6" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers" Version="2.2.0" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+<!-- Other ItemGropus -->
+```
 
 If you try to build the solution, you will receive an error stating that **"MyMvc"** does not exist.
 
@@ -55,9 +63,13 @@ public void AddressAndPaymentShouldReturnDefaultView()
         .View();
 ```
 
-Unfortunately, it still does not compile because the **"Controllers"** package contains assertions methods only for the [ControllerBase](https://github.com/aspnet/Mvc/blob/dev/src/Microsoft.AspNetCore.Mvc.Core/ControllerBase.cs) class which does not include view features and action results.
+Unfortunately, it still does not compile, because you will receive error like this:
+```text
+'IShouldReturnTestBuilder<IActionResult>' does not contain a definition for 'View' and no accessible extension method 'View' accepting a first argument of type 'IShouldReturnTestBuilder<IActionResult>' could be found (are you missing a using directive or an assembly reference?
+```
+The **"Controllers"** package contains assertions methods only for the [ControllerBase](https://github.com/aspnet/Mvc/blob/dev/src/Microsoft.AspNetCore.Mvc.Core/ControllerBase.cs) class which does not include view features and action results.
 
-You can see this by examining the IntelliSense of the test:
+You can see this by examining the IntelliSense of the test: :
 
 <img src="/images/tutorial/coreintellisense.jpg" alt="Controllers package IntelliSense" />
 
@@ -96,39 +108,48 @@ Run the test, and it should pass correctly. As you can see, My Tested ASP.NET Co
 .Calling(c => c.RemoveLogin(With.No<string>(), With.No<string>()))
 ```
 
-As a bonus, let's assert some details of the redirect action result. We can see it redirects to the **"ManageLogins"** action with some **"ManageMessageId"** route value so we better test them:
+As a bonus, let's assert some details of the redirect action result. We can see it redirects to the **"ManageLogins"** action with some **"ManageMessageId"** route value so we better test them, but first we need to install another package -  **"MyTested.AspNetCore.Mvc.Controllers.ActionResults"** who allows you to test specific things:
 
 ```c#
 [Fact]
 public void RemoveLoginShouldReturnRedirectToActionWithNoUser()
-    => MyController<ManageController>
-        .Instance()
-        .Calling(c => c.RemoveLogin(
-            With.No<string>(),
-            With.No<string>()))
-        .ShouldReturn()
-        .Redirect()
-        .ToAction(nameof(ManageController.ManageLogins))
-        .ContainingRouteValues(new { Message = ManageController.ManageMessageId.Error });
+            => MyController<ManageController>
+                .Instance()
+                .Calling(c => c.RemoveLogin(
+                    With.No<string>(),
+                    With.No<string>()))
+                .ShouldReturn()
+                .Redirect(redirect => redirect
+                    .ToAction(nameof(ManageController.ManageLogins))
+                    .ContainingRouteValues(new { Message = ManageController.ManageMessageId.Error }));
 ```
 
 Now we can sleep peacefully! :)
 
 ## Adding view action results
 
-OK, back to that commented test. We cannot test views with our current dependencies. Go to the **"project.json"** and add **"MyTested.AspNetCore.Mvc.ViewActionResults"** as a dependency:
+OK, back to that commented test. We cannot test views with our current dependencies. Go to the **"MusicStore.Test.csproj"** and add **"MyTested.AspNetCore.Mvc.Controllers.Views"** package as a dependency:
 
-```json
-"dependencies": {
-  "dotnet-test-xunit": "2.2.0-*",
-  "xunit": "2.2.0-*",
-  "MyTested.AspNetCore.Mvc.Controllers": "1.0.0",
-  "MyTested.AspNetCore.Mvc.ViewActionResults": "1.0.0", // <---
-  "MusicStore": "*"
-},
-``` 
+```xml
+<!-- Other ItemGroups -->
 
-This package adds all action results from the [Controller](https://github.com/aspnet/Mvc/blob/dev/src/Microsoft.AspNetCore.Mvc.ViewFeatures/Controller.cs) class from the [ViewFeatures](https://github.com/aspnet/Mvc/tree/dev/src/Microsoft.AspNetCore.Mvc.ViewFeatures) MVC package. Go back to the **"CheckoutControllerTest"** class and uncomment the view test. It should compile and pass successfully now.
+<ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.ActionResults" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.Views" Version="2.2.0" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+<!-- Other ItemGroups -->
+```
+
+Go back to the **"CheckoutControllerTest"** class and uncomment the view test. It should compile and pass successfully now.
 
 ## Section summary
 
