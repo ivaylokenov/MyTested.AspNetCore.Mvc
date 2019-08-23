@@ -2,7 +2,6 @@
 {
     using Contracts;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Hosting.Internal;
     using Microsoft.Extensions.DependencyInjection;
     using Plugins;
     using Server;
@@ -277,7 +276,9 @@
             private Action<TContainerBuilder> BuildFiltersPipeline(
                 Action<TContainerBuilder> configureContainer)
                 => builder => this.serverServiceProvider
+#pragma warning disable CS0612 // Type or member is obsolete
                     .GetRequiredService<IEnumerable<IStartupConfigureContainerFilter<TContainerBuilder>>>()
+#pragma warning restore CS0612 // Type or member is obsolete
                     .Reverse()
                     .Aggregate(configureContainer, (current, filter) => filter
                         .ConfigureContainer(current))(builder);

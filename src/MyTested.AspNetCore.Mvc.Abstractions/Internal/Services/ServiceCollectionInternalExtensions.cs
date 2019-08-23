@@ -28,8 +28,10 @@
         {
             serviceCollection.TryAddEnumerable(
                 ServiceDescriptor.Transient<IActionInvokerProvider, ModelBindingActionInvokerProvider>());
-            serviceCollection.TryAddSingleton<IModelBindingActionInvokerFactory, ModelBindingActionInvokerFactory>();
 
+            serviceCollection.TryAddSingleton<ModelBindingActionInvokerCache>();
+            serviceCollection.TryAddSingleton<IModelBindingActionInvokerFactory, ModelBindingActionInvokerFactory>();
+            
             return serviceCollection;
         }
 

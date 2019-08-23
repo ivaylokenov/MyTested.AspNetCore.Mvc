@@ -35,7 +35,9 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.6.0-*" />
+    <PackageReference Include="Microsoft.DotNet.PlatformAbstractions" Version="3.0.0-*" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.0.0-*" />
+    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="3.0.0-*" />
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="3.0.0-*" />
   </ItemGroup>
 

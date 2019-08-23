@@ -6,9 +6,10 @@
     using Logging;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Hosting.Builder;
-    using Microsoft.AspNetCore.Hosting.Internal;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.Extensions.Hosting.Internal;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.ObjectPool;
     using Services;
@@ -23,10 +24,10 @@
 
             // Default server services.
             serviceCollection.AddSingleton(Environment);
-            serviceCollection.AddSingleton<IApplicationLifetime, ApplicationLifetime>();
+            serviceCollection.AddSingleton<IHostApplicationLifetime, ApplicationLifetime>();
 
             serviceCollection.AddTransient<IApplicationBuilderFactory, ApplicationBuilderFactory>();
-            serviceCollection.AddTransient<IHttpContextFactory, HttpContextFactory>();
+            serviceCollection.AddTransient<IHttpContextFactory, DefaultHttpContextFactory>();
             serviceCollection.AddScoped<IMiddlewareFactory, MiddlewareFactory>();
             serviceCollection.AddOptions();
 
@@ -40,7 +41,6 @@
             serviceCollection.AddSingleton(diagnosticListener);
             serviceCollection.AddSingleton<DiagnosticSource>(diagnosticListener);
 
-            serviceCollection.AddTransient<IStartupFilter, AutoRequestServicesStartupFilter>();
             serviceCollection.AddTransient<IServiceProviderFactory<IServiceCollection>, DefaultServiceProviderFactory>();
 
             serviceCollection.AddSingleton<ObjectPoolProvider, DefaultObjectPoolProvider>();

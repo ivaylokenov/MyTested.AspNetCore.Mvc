@@ -3,9 +3,83 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
 
-    internal static class WebFramework
+    public static class WebFramework
     {
+        public static class Internals
+        {
+            public static Type RequestCookieCollection
+            {
+                get
+                {
+                    var assembly = Assembly.Load(new AssemblyName("Microsoft.AspNetCore.Http"));
+                    var type = assembly.GetType("Microsoft.AspNetCore.Http.RequestCookieCollection");
+                    return type;
+                }
+            }
+
+            public static Type DefaultHttpRequest
+            {
+                get
+                {
+                    var assembly = Assembly.Load(new AssemblyName("Microsoft.AspNetCore.Http"));
+                    var type = assembly.GetType("Microsoft.AspNetCore.Http.DefaultHttpRequest");
+                    return type;
+                }
+            }
+
+            public static Type DefaultHttpResponse
+            {
+                get
+                {
+                    var assembly = Assembly.Load(new AssemblyName("Microsoft.AspNetCore.Http"));
+                    var type = assembly.GetType("Microsoft.AspNetCore.Http.DefaultHttpResponse");
+                    return type;
+                }
+            }
+
+            public static Type MvcMarkerService
+            {
+                get
+                {
+                    var assembly = Assembly.Load(new AssemblyName("Microsoft.AspNetCore.Mvc.Core"));
+                    var type = assembly.GetType("Microsoft.Extensions.DependencyInjection.MvcMarkerService");
+                    return type;
+                }
+            }
+
+            public static Type TypeActivatorCache
+            {
+                get
+                {
+                    var assembly = Assembly.Load(new AssemblyName("Microsoft.AspNetCore.Mvc.Core"));
+                    var type = assembly.GetType("Microsoft.AspNetCore.Mvc.Infrastructure.ITypeActivatorCache");
+                    return type;
+                }
+            }
+
+            public static Type ControllerActionInvokerCache
+            {
+                get
+                {
+                    var assembly = Assembly.Load(new AssemblyName("Microsoft.AspNetCore.Mvc.Core"));
+                    var type = assembly.GetType("Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvokerCache");
+                    return type;
+                }
+            }
+
+            public static Type ControllerActionInvoker
+            {
+                get
+                {
+                    var assembly = Assembly.Load(new AssemblyName("Microsoft.AspNetCore.Mvc.Core"));
+                    var type = assembly.GetType("Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker");
+                    return type;
+                }
+            }
+        }
+
         // Copied from the ASP.NET Core source code.
         internal static readonly HashSet<string> AspNetCoreMvcLibraries = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {

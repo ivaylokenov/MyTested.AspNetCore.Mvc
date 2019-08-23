@@ -2,40 +2,45 @@
 {
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Reflection;
     using System.Threading.Tasks;
     using Contracts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Filters;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
-    using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.Extensions.Logging;
     using Utilities.Validators;
 
-    public class ModelBindingActionInvoker : ResourceInvoker, IModelBindingActionInvoker
+    public class ModelBindingActionInvoker : IModelBindingActionInvoker
     {
-        private readonly ControllerActionInvokerCacheEntry cacheEntry;
+        private readonly dynamic cacheEntry;
         private readonly ControllerContext controllerContext;
+        private readonly object invoker;
 
         private Dictionary<string, object> arguments;
 
         public ModelBindingActionInvoker(
             ILogger logger,
             DiagnosticListener diagnosticListener,
+            IActionContextAccessor actionContextAccessor,
             IActionResultTypeMapper mapper,
             ControllerContext controllerContext,
-            ControllerActionInvokerCacheEntry cacheEntry,
+            dynamic cacheEntry,
             IFilterMetadata[] filters)
-            : base(diagnosticListener, logger, mapper, controllerContext, filters, controllerContext.ValueProviderFactories)
         {
             CommonValidator.CheckForNullReference(cacheEntry, nameof(cacheEntry));
-
+            
             this.cacheEntry = cacheEntry;
             this.controllerContext = controllerContext;
+
+            var invokerType = WebFramework.Internals.ControllerActionInvoker;
+            var constructor = invokerType.GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic)[0];
+            this.invoker = constructor.Invoke(new object[] { logger, diagnosticListener, actionContextAccessor, mapper, controllerContext, cacheEntry, filters });
         }
 
         public IDictionary<string, object> BoundActionArguments => this.arguments;
-        
-        protected override async Task InvokeInnerFilterAsync()
+
+        public async Task InvokeAsync()
         {
             // Not initialized in the constructor because filters may
             // short-circuit the request and tests will fail with wrong exception message.
@@ -48,12 +53,11 @@
                 return;
             }
 
-            await this.cacheEntry.ControllerBinderDelegate(this.controllerContext, _instance, this.arguments);
-        }
+            await (Task)this.invoker.GetType().GetMethod(nameof(this.InvokeAsync)).Invoke(this.invoker, null);
 
-        protected override void ReleaseResources()
-        {
-            // Intentionally does nothing.
+            var controllerInstance = this.cacheEntry.ControllerFactory(this.controllerContext);
+
+            await this.cacheEntry.ControllerBinderDelegate(this.controllerContext, controllerInstance, this.arguments);
         }
     }
 }
