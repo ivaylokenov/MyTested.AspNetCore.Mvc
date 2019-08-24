@@ -33,10 +33,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.*" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="../../LICENSE" Pack="true" PackagePath="" />
   </ItemGroup>
 

@@ -57,7 +57,7 @@
         {
             var actualBuilder = (JsonTestBuilder)jsonTestBuilder;
 
-            var actualJsonSerializerSettings = actualBuilder.GetJsonResult().SerializerSettings
+            var actualJsonSerializerSettings = actualBuilder.GetJsonResult().SerializerSettings as JsonSerializerSettings
                 ?? actualBuilder.GetServiceDefaultSerializerSettings()
                 ?? new JsonSerializerSettings();
 
