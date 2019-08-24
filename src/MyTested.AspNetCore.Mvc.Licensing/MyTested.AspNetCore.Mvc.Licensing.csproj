@@ -6,7 +6,7 @@
     <AssemblyTitle>MyTested.AspNetCore.Mvc.Licensing</AssemblyTitle>
     <VersionPrefix>3.0.0</VersionPrefix>
     <Authors>Ivaylo Kenov</Authors>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>

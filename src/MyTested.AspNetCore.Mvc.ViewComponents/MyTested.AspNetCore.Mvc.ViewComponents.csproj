@@ -4,9 +4,9 @@
     <Description>My Tested ASP.NET Core MVC view components assertion methods.</Description>
     <Copyright>2015-2019 Ivaylo Kenov</Copyright>
     <AssemblyTitle>MyTested.AspNetCore.Mvc.ViewComponents</AssemblyTitle>
-    <VersionPrefix>2.2.0</VersionPrefix>
+    <VersionPrefix>3.0.0</VersionPrefix>
     <Authors>Ivaylo Kenov</Authors>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
