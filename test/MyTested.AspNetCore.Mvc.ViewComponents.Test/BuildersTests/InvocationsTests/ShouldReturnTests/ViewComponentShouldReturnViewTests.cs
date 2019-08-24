@@ -11,7 +11,6 @@
         public void ShouldReturnViewShouldNotThrowExceptionWithDefaultView()
         {
             MyViewComponent<ViewResultComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke(null))
                 .ShouldReturn()
                 .View();
@@ -21,7 +20,6 @@
         public void ShouldReturnViewWithNameShouldNotThrowExceptionWithCorrectName()
         {
             MyViewComponent<ViewResultComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke("custom"))
                 .ShouldReturn()
                 .View("Custom");
@@ -34,7 +32,6 @@
                 () =>
                 {
                     MyViewComponent<NormalComponent>
-                       .Instance()
                        .InvokedWith(c => c.Invoke())
                        .ShouldReturn()
                        .View();
@@ -49,7 +46,6 @@
                 () =>
                 {
                     MyViewComponent<ViewResultComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke("custom"))
                         .ShouldReturn()
                         .View("Incorrect");

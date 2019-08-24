@@ -16,7 +16,6 @@
             var viewEngine = TestObjectFactory.GetViewEngine();
 
             MyViewComponent<ViewEngineComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke(viewEngine))
                 .ShouldReturn()
                 .View()
@@ -27,7 +26,6 @@
         public void WithViewEngineShouldNotThrowExceptionWithNullViewEngine()
         {
             MyViewComponent<ViewResultComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke("Test"))
                 .ShouldReturn()
                 .View("SomeView")
@@ -41,7 +39,6 @@
                 () =>
                 {
                     MyViewComponent<ViewEngineComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke(null))
                         .ShouldReturn()
                         .View()
@@ -54,7 +51,6 @@
         public void WithViewEngineOfTypeShouldNotThrowExceptionWithValidViewEngine()
         {
             MyViewComponent<ViewEngineComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke(new CustomViewEngine()))
                 .ShouldReturn()
                 .View()
@@ -68,7 +64,6 @@
                 () =>
                 {
                     MyViewComponent<ViewEngineComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke(new CustomViewEngine()))
                         .ShouldReturn()
                         .View()
@@ -84,7 +79,6 @@
                 () =>
                 {
                     MyViewComponent<ViewResultComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke(null))
                         .ShouldReturn()
                         .View()
@@ -97,7 +91,6 @@
         public void AndAlsoShouldWorkCorrectly()
         {
             MyViewComponent<ViewResultComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke("All"))
                 .ShouldReturn()
                 .View("SomeView")

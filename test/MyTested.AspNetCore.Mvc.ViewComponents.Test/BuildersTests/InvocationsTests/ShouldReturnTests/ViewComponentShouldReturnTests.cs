@@ -15,7 +15,6 @@
         public void ShouldReturnShouldNotThrowExceptionWithClassTypes()
         {
             MyViewComponent<NormalComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .ResultOfType<ContentViewComponentResult>();
@@ -25,7 +24,6 @@
         public void ShouldReturnShouldNotThrowExceptionWithClassTypesAndTypeOf()
         {
             MyViewComponent<NormalComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .ResultOfType(typeof(ContentViewComponentResult));
@@ -35,7 +33,6 @@
         public void ShouldReturnShouldNotThrowExceptionWithInterfaceTypes()
         {
             MyViewComponent<HtmlContentComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .ResultOfType<IHtmlContent>();
@@ -45,7 +42,6 @@
         public void ShouldReturnShouldNotThrowExceptionWithInterfaceTypesAndTypeOf()
         {
             MyViewComponent<HtmlContentComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .ResultOfType(typeof(IHtmlContent));
@@ -55,7 +51,6 @@
         public void ShouldReturnShouldThrowExceptionWithClassTypesAndInterfaceReturn()
         {
             MyViewComponent<HtmlContentComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .ResultOfType<HtmlContentBuilder>();
@@ -65,7 +60,6 @@
         public void ShouldReturnShouldThrowExceptionWithClassTypesAndTypeOfAndInterfaceReturn()
         {
             MyViewComponent<HtmlContentComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .ResultOfType(typeof(HtmlContentBuilder));
@@ -75,7 +69,6 @@
         public void ShouldReturnShouldWorkWithModelDetailsTestsWithGenericDefinition()
         {
             MyViewComponent<NormalComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .ResultOfType<ContentViewComponentResult>()
@@ -89,7 +82,6 @@
                 () =>
                 {
                     MyViewComponent<ExceptionComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldReturn()
                         .ResultOfType<IViewComponentResult>();
@@ -104,7 +96,6 @@
                 () =>
                 {
                     MyViewComponent<AggregateExceptionComponent>
-                        .Instance()
                         .InvokedWith(c => c.InvokeAsync())
                         .ShouldReturn()
                         .ResultOfType<IViewComponentResult>();
@@ -119,7 +110,6 @@
                 () =>
                 {
                     MyViewComponent<NormalComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldReturn()
                         .ResultOfType<ContentViewComponentResult>()
@@ -135,7 +125,6 @@
                 () =>
                 {
                     MyViewComponent<NormalComponent>
-                       .Instance()
                        .InvokedWith(c => c.Invoke())
                        .ShouldReturn()
                        .ResultOfType<string>();
@@ -150,7 +139,6 @@
                 () =>
                 {
                     MyViewComponent<NormalComponent>
-                       .Instance()
                        .InvokedWith(c => c.Invoke())
                        .ShouldReturn()
                        .ResultOfType(typeof(string));
@@ -162,7 +150,6 @@
         public void ShouldReturnResultShouldWorkCorrectlyWithCorrectModel()
         {
             MyViewComponent<StringComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .Result("TestString");
@@ -175,7 +162,6 @@
                 () =>
                 {
                     MyViewComponent<StringComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldReturn()
                         .Result(TestObjectFactory.GetListOfResponseModels());
@@ -190,7 +176,6 @@
                 () =>
                 {
                     MyViewComponent<StringComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldReturn()
                         .Result("Incorrect");
@@ -202,7 +187,6 @@
         public void WithShouldWorkCorrectly()
         {
             MyViewComponent<ArgumentsComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke(With.No<int>(), With.No<RequestModel>()))
                 .ShouldReturn()
                 .Content("0,");

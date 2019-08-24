@@ -1,6 +1,9 @@
 ﻿namespace MyTested.AspNetCore.Mvc
 {
     using System;
+    using System.Linq.Expressions;
+    using System.Threading.Tasks;
+    using Builders.Contracts.Invocations;
     using Builders.Contracts.ViewComponents;
     using Builders.ViewComponents;
     using Internal.Application;
@@ -71,5 +74,25 @@
         public new static IViewComponentTestBuilder ShouldHave()
             => Instance()
                 .ShouldHave();
+
+        /// <summary>
+        /// Indicates which view component method should be invoked and tested.
+        /// </summary>
+        /// <typeparam name="TInvocationResult">Type of result from the invocation.</typeparam>
+        /// <param name="invocationCall">Method call expression indicating invoked method.</param>
+        /// <returns>Test builder of <see cref="IViewComponentResultTestBuilder{TInvocationResult}"/> type.</returns>
+        public new static IViewComponentResultTestBuilder<TInvocationResult> InvokedWith<TInvocationResult>(Expression<Func<TViewComponent, TInvocationResult>> invocationCall)
+            => Instance()
+                .InvokedWith(invocationCall);
+
+        /// <summary>
+        /// Indicates which view component method should be invoked and tested.
+        /// </summary>
+        /// <typeparam name="TInvocationResult">Type of result from the invocation.</typeparam>
+        /// <param name="invocationCall">Method call expression indicating invoked asynchronous method.</param>
+        /// <returns>Test builder of <see cref="IViewComponentResultTestBuilder{TInvocationResult}"/> type.</returns>
+        public new static IViewComponentResultTestBuilder<TInvocationResult> InvokedWith<TInvocationResult>(Expression<Func<TViewComponent, Task<TInvocationResult>>> invocationCall)
+            => Instance()
+                .InvokedWith(invocationCall);
     }
 }
