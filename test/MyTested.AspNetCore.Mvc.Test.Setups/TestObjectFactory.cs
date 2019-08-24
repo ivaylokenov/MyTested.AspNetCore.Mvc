@@ -105,7 +105,10 @@
             response.ContentLength = 100;
         }
 
-        public static IOutputFormatter GetOutputFormatter() => new JsonOutputFormatter(GetJsonSerializerSettings(), ArrayPool<char>.Create());
+        public static IOutputFormatter GetOutputFormatter() => new NewtonsoftJsonOutputFormatter(
+            GetJsonSerializerSettings(), 
+            ArrayPool<char>.Create(),
+            new MvcOptions());
 
         public static Uri GetUri() => new Uri("http://somehost.com/someuri/1?query=Test");
 

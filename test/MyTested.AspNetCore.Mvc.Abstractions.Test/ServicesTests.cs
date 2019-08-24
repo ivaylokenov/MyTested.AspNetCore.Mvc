@@ -1,5 +1,8 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test
 {
+    using System;
+    using System.Diagnostics;
+    using System.Linq;
     using Internal;
     using Internal.Application;
     using Internal.Contracts;
@@ -8,16 +11,15 @@
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Hosting.Builder;
-    using Microsoft.AspNetCore.Hosting.Internal;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
+    using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.ObjectPool;
     using Microsoft.Extensions.Options;
@@ -26,9 +28,6 @@
     using Setups.Controllers;
     using Setups.Services;
     using Setups.Startups;
-    using System;
-    using System.Diagnostics;
-    using System.Linq;
     using Xunit;
 
     public class ServicesTests
@@ -38,7 +37,7 @@
         {
             MyApplication.StartsFrom<DefaultStartup>();
 
-            var markerService = TestServiceProvider.GetService<MvcMarkerService>();
+            var markerService = TestServiceProvider.GetService(WebFramework.Internals.MvcMarkerService);
 
             Assert.NotNull(markerService);
         }
@@ -198,7 +197,7 @@
         {
             MyApplication.StartsFrom<DefaultStartup>();
 
-            var markerService = TestServiceProvider.GetService<MvcMarkerService>();
+            var markerService = TestServiceProvider.GetService(WebFramework.Internals.MvcMarkerService);
 
             Assert.NotNull(markerService);
 
@@ -238,7 +237,7 @@
         {
             MyApplication.StartsFrom<DefaultStartup>();
 
-            var service = TestServiceProvider.GetRequiredService<MvcMarkerService>();
+            var service = TestServiceProvider.GetService(WebFramework.Internals.MvcMarkerService);
 
             Assert.NotNull(service);
         }
@@ -264,7 +263,7 @@
                     services.AddMvc();
                 });
 
-            var service = TestServiceProvider.GetRequiredService<MvcMarkerService>();
+            var service = TestServiceProvider.GetService(WebFramework.Internals.MvcMarkerService);
 
             Assert.NotNull(service);
 
@@ -499,8 +498,8 @@
         {
             MyApplication.StartsFrom<DefaultStartup>();
 
-            Assert.NotNull(TestServiceProvider.GetService<IHostingEnvironment>());
-            Assert.NotNull(TestServiceProvider.GetService<IApplicationLifetime>());
+            Assert.NotNull(TestServiceProvider.GetService<IHostEnvironment>());
+            Assert.NotNull(TestServiceProvider.GetService<IHostApplicationLifetime>());
             Assert.NotNull(TestServiceProvider.GetService<IApplicationBuilderFactory>());
             Assert.NotNull(TestServiceProvider.GetService<IHttpContextFactory>());
             Assert.NotNull(TestServiceProvider.GetService<IMiddlewareFactory>());
@@ -626,9 +625,9 @@
         {
             MyApplication.StartsFrom<FullConfigureStartup>();
 
-            Assert.NotNull(TestServiceProvider.GetService<IHostingEnvironment>());
+            Assert.NotNull(TestServiceProvider.GetService<IHostEnvironment>());
             Assert.NotNull(TestServiceProvider.GetService<ILoggerFactory>());
-            Assert.NotNull(TestServiceProvider.GetService<IApplicationLifetime>());
+            Assert.NotNull(TestServiceProvider.GetService<IHostApplicationLifetime>());
 
             MyApplication
                 .IsRunningOn(server => server
@@ -719,58 +718,6 @@
             Assert.IsAssignableFrom<AnotherInjectedService>(anotherInjectedService);
 
             MyApplication.StartsFrom<DefaultStartup>();
-        }
-
-        [Fact]
-        public void StartupConfigureFilterShouldRegisterServices()
-        {
-            MyApplication
-                .IsRunningOn(server => server
-                    .WithServices(services =>
-                    {
-                        services
-                            .AddTransient<IServiceProviderFactory<CustomContainer>, CustomContainerFactory>();
-
-                        services
-                            .TryAddEnumerable(ServiceDescriptor.Transient(
-                                typeof(IStartupConfigureServicesFilter), typeof(CustomConfigureFilter)));
-
-                        services
-                            .TryAddEnumerable(ServiceDescriptor.Transient(
-                                typeof(IStartupConfigureContainerFilter<CustomContainer>), typeof(CustomConfigureFilter)));
-                    })
-                    .WithStartup<CustomStartupWithConfigureContainer>());
-
-            var injectedService = TestApplication.Services.GetService<IInjectedService>();
-            var injectedServiceFromRouteServiceProvider = TestApplication.RoutingServices.GetService<IInjectedService>();
-
-            Assert.NotNull(injectedService);
-            Assert.IsAssignableFrom<InjectedService>(injectedService);
-
-            Assert.NotNull(injectedServiceFromRouteServiceProvider);
-            Assert.IsAssignableFrom<InjectedService>(injectedServiceFromRouteServiceProvider);
-
-            var anotherInjectedService = TestApplication.Services.GetService<IAnotherInjectedService>();
-            var anotherInjectedServiceFromRouteServiceProvider = TestApplication.RoutingServices.GetService<IAnotherInjectedService>();
-
-            Assert.NotNull(anotherInjectedService);
-            Assert.IsAssignableFrom<AnotherInjectedService>(anotherInjectedService);
-
-            Assert.NotNull(anotherInjectedServiceFromRouteServiceProvider);
-            Assert.IsAssignableFrom<AnotherInjectedService>(anotherInjectedServiceFromRouteServiceProvider);
-            
-            var scopedService = TestApplication.Services.GetService<IScopedService>();
-            var scopedServiceFromRouteServiceProvider = TestApplication.RoutingServices.GetService<IScopedService>();
-
-            Assert.NotNull(scopedService);
-            Assert.IsAssignableFrom<ScopedService>(scopedService);
-
-            Assert.NotNull(scopedServiceFromRouteServiceProvider);
-            Assert.IsAssignableFrom<ScopedService>(scopedServiceFromRouteServiceProvider);
-
-            MyApplication
-                .IsRunningOn(server => server
-                    .WithStartup<DefaultStartup>());
         }
     }
 }
