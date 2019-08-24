@@ -56,8 +56,9 @@
 
         public HttpRequest CustomRequest
         {
-            set => this.httpRequest = value
-                ?? (HttpRequest)Activator.CreateInstance(WebFramework.Internals.DefaultHttpRequest, this.httpContext);
+            set => this.httpRequest = value ?? (HttpRequest)Activator.CreateInstance(
+                WebFramework.Internals.DefaultHttpRequest, 
+                this.httpContext);
         }
 
         /// <summary>

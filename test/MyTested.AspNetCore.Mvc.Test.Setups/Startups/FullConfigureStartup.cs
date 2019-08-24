@@ -14,7 +14,9 @@
             IApplicationBuilder app, 
             IHostEnvironment env, 
             ILoggerFactory loggerFactory,
-            IHostApplicationLifetime appLifetime) 
-            => app.UseMvcWithDefaultRoute();
+            IHostApplicationLifetime appLifetime) => app
+            .UseRouting()
+            .UseEndpoints(endpoints => endpoints
+                .MapDefaultControllerRoute());
     }
 }

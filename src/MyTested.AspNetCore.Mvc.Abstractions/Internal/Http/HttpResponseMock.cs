@@ -17,7 +17,9 @@
         /// </summary>
         /// <param name="context">Default HTTP context.</param>
         public HttpResponseMock(HttpContext context) 
-            => this.httpResponse = (HttpResponse)Activator.CreateInstance(WebFramework.Internals.DefaultHttpResponse, context);
+            => this.httpResponse = (HttpResponse)Activator.CreateInstance(
+                WebFramework.Internals.DefaultHttpResponse, 
+                new DefaultHttpContext(context.Features));
 
         public override Stream Body 
         { 

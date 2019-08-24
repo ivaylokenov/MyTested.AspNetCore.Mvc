@@ -110,7 +110,7 @@
         {
             try
             {
-                return startupMethods.ConfigureServicesDelegate(serviceCollection);
+                return startupMethods.ConfigureServicesDelegate?.Invoke(serviceCollection);
             }
             catch (TargetInvocationException exception)
             {
@@ -261,7 +261,7 @@
                     .CreateInstance(
                         WebFramework.Internals.ConfigureContainerBuilder,
                         this.configureContainerMethod)
-                    .AsDynamic();
+                    .Exposed();
 
                 Func<Action<object>, Action<object>> configureContainerPipeline = this.ConfigureContainerPipeline;
 
@@ -270,7 +270,9 @@
                 var serviceProviderFactory = serviceProvider.GetRequiredService<IServiceProviderFactory<TContainerBuilder>>();
                 var builder = serviceProviderFactory.CreateBuilder(this.services);
 
-                configureContainerBuilder.Build(this.startupTypeMethods.StartupInstance)(builder);
+                configureContainerBuilder
+                    .Build(this.startupTypeMethods.StartupInstance)
+                    .Invoke(builder);
 
                 return serviceProviderFactory.CreateServiceProvider(builder);
             }

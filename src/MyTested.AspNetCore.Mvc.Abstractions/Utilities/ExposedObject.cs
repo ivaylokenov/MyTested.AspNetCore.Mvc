@@ -2,6 +2,8 @@
 {
     using System;
     using System.Dynamic;
+    using System.Reflection;
+    using Extensions;   
 
     public class ExposedObject : DynamicObject
     {
@@ -12,7 +14,7 @@
         public ExposedObject(object instance)
         {
             this.instance = instance;
-            this.type = instance.GetType();
+            this.type = instance?.GetType();
         }
 
         public ExposedObject(Type type)
@@ -28,12 +30,44 @@
 
             return true;
         }
+        
+        public override bool TryGetMember(GetMemberBinder binder, out object result)
+        {
+            var property = this.type.GetProperty(binder.Name);
+
+            result = property.GetValue(this.instance);
+
+            return true;
+        }
 
         public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
         {
             var method = this.type.GetMethod(binder.Name);
 
-            result = method.Invoke(this.instance, args);
+            try
+            {
+                result = method
+                    .Invoke(this.instance, args)
+                    .Exposed();
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException != null)
+                {
+                    throw ex.InnerException;
+                }
+
+                throw ex;
+            }
+
+            return true;
+        }
+
+        public override bool TryConvert(ConvertBinder binder, out object result)
+        {
+            result = binder.Type.GetTypeInfo().IsInstanceOfType(this.instance) 
+                ? this.instance
+                : Convert.ChangeType(this.instance, binder.Type);
 
             return true;
         }

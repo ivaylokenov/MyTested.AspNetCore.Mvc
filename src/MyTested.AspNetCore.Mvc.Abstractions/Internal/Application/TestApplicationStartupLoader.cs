@@ -113,7 +113,7 @@
 
                 var startupLoader = WebFramework.Internals.StartupLoader.Exposed();
                 
-                var startupMethods = startupLoader.LoadMethods(
+                startupMethods = startupLoader.LoadMethods(
                     serviceCollection.BuildServiceProviderFromFactory(),
                     StartupType,
                     TestWebServer.Environment.EnvironmentName);

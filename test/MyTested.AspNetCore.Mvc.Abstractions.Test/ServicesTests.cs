@@ -301,6 +301,24 @@
             var setRoutes = TestApplication.Router as RouteCollection;
 
             Assert.NotNull(setRoutes);
+            Assert.Equal(1, setRoutes.Count);
+        }
+
+        [Fact]
+        public void DefaultConfigAndAdditionalRoutesShouldSetOnlyThemWithoutEndpoints()
+        {
+            MyApplication
+                .StartsFrom<NoEndpointsStartup>()
+                .WithRoutes(routes =>
+                {
+                    routes.MapRoute(
+                        name: "another",
+                        template: "{controller=Home}/{action=Index}/{id?}");
+                });
+
+            var setRoutes = TestApplication.Router as RouteCollection;
+
+            Assert.NotNull(setRoutes);
             Assert.Equal(3, setRoutes.Count);
         }
 
@@ -388,7 +406,7 @@
             var routesCollection = TestApplication.Router as RouteCollection;
 
             Assert.NotNull(routesCollection);
-            Assert.Equal(3, routesCollection.Count);
+            Assert.Equal(1, routesCollection.Count);
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
