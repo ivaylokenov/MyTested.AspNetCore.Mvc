@@ -2,14 +2,13 @@
 {
     using System;
     using Configuration;
-    using Microsoft.Extensions.Hosting;
-    using Microsoft.Extensions.Hosting.Internal;
+    using Microsoft.AspNetCore.Hosting;
 
     public static partial class TestWebServer
     {
-        private static IHostEnvironment environment;
+        private static IWebHostEnvironment environment;
 
-        internal static IHostEnvironment Environment
+        internal static IWebHostEnvironment Environment
         {
             get
             {
@@ -25,8 +24,8 @@
         internal static string ApplicationName
             => ServerTestConfiguration.General.ApplicationName ?? WebAssemblyName ?? TestAssemblyName;
         
-        private static IHostEnvironment PrepareEnvironment()
-            => new HostingEnvironment
+        private static IWebHostEnvironment PrepareEnvironment()
+            => new TestHostEnvironment
             {
                 ApplicationName = ApplicationName,
                 EnvironmentName = ServerTestConfiguration.General.EnvironmentName,

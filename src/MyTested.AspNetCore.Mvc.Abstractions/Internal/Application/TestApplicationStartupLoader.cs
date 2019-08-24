@@ -8,6 +8,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using Server;
     using Services;
+    using Utilities.Extensions;
 
     public static partial class TestApplication
     {
@@ -110,16 +111,13 @@
                 
                 TestWebServer.AdditionalServices?.Invoke(serviceCollection);
 
-                var startupLoaderType = WebFramework.Internals.StartupLoader;
-                var loadMethodsMethod = startupLoaderType.GetMethod("LoadMethods");
-
-                startupMethods = loadMethodsMethod.Invoke(null, new object[]
-                {
+                var startupLoader = WebFramework.Internals.StartupLoader.Exposed();
+                
+                var startupMethods = startupLoader.LoadMethods(
                     serviceCollection.BuildServiceProviderFromFactory(),
                     StartupType,
-                    TestWebServer.Environment.EnvironmentName
-                });
-
+                    TestWebServer.Environment.EnvironmentName);
+                
                 if (typeof(IStartup).GetTypeInfo().IsAssignableFrom(StartupType.GetTypeInfo()))
                 {
                     serviceCollection.AddSingleton(typeof(IStartup), StartupType);

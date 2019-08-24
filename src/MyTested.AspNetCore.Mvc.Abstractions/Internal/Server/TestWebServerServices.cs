@@ -24,6 +24,7 @@
 
             // Default server services.
             serviceCollection.AddSingleton(Environment);
+            serviceCollection.AddSingleton<IHostEnvironment>(Environment);
             serviceCollection.AddSingleton<IHostApplicationLifetime, ApplicationLifetime>();
 
             serviceCollection.AddTransient<IApplicationBuilderFactory, ApplicationBuilderFactory>();

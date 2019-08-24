@@ -7,14 +7,14 @@
     public static class TestFramework
     {
         public const string TestFrameworkName = "MyTested.AspNetCore.Mvc";
-        public const string ReleaseDate = "2019-07-01";
-        public const string VersionPrefix = "2.2";
+        public const string ReleaseDate = "2019-10-01";
+        public const string VersionPrefix = "3.0";
 
         internal static void EnsureCorrectVersion(DependencyContext dependencyContext)
         {
             var aspNetCoreMvcLibraries = dependencyContext
                 .RuntimeLibraries
-                .Where(l => WebFramework.AspNetCoreMvcLibraries.Contains(l.Name));
+                .Where(l => WebFramework.AspNetCoreMvcCommonLibraries.Contains(l.Name));
 
             var libraryWithMismatchedVersion = aspNetCoreMvcLibraries.FirstOrDefault(d => !d.Version.StartsWith(VersionPrefix));
 

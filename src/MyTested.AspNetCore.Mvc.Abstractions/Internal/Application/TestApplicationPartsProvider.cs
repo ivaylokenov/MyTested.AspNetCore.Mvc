@@ -30,7 +30,7 @@
             }
             
             var applicationPartManager = applicationServiceProvider.GetService<ApplicationPartManager>();
-
+            
             if (applicationPartManager != null && baseStartupTypeAssembly != null)
             {
                 var baseStartupTypeAssemblyName = baseStartupTypeAssembly.GetShortName();

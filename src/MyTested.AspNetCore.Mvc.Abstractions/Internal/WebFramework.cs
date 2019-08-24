@@ -89,8 +89,6 @@
                 }
             }
 
-
-
             public static Type ControllerActionInvokerCache
             {
                 get
@@ -138,8 +136,9 @@
             "Microsoft.AspNetCore.App",
             "Microsoft.AspNetCore.Mvc",
             "Microsoft.AspNetCore.Mvc.Abstractions",
-            "Microsoft.AspNetCore.Mvc.ApiExplorer",
             "Microsoft.AspNetCore.Mvc.Core",
+            "Microsoft.AspNetCore.Mvc.ViewFeatures",
+            "Microsoft.AspNetCore.Mvc.ApiExplorer",
             "Microsoft.AspNetCore.Mvc.Cors",
             "Microsoft.AspNetCore.Mvc.DataAnnotations",
             "Microsoft.AspNetCore.Mvc.Formatters.Json",
@@ -148,10 +147,11 @@
             "Microsoft.AspNetCore.Mvc.NewtonsoftJson",
             "Microsoft.AspNetCore.Mvc.Razor",
             "Microsoft.AspNetCore.Mvc.RazorPages",
-            "Microsoft.AspNetCore.Mvc.TagHelpers",
-            "Microsoft.AspNetCore.Mvc.ViewFeatures"
+            "Microsoft.AspNetCore.Mvc.TagHelpers"
         };
 
         internal static string AspNetCoreMetaPackageName => AspNetCoreMvcLibraries.First();
+
+        internal static IEnumerable<string> AspNetCoreMvcCommonLibraries => AspNetCoreMvcLibraries.Take(5);
     }
 }
