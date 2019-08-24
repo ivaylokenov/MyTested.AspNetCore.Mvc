@@ -89,16 +89,6 @@
                 }
             }
 
-            public static Type ControllerActionInvokerCache
-            {
-                get
-                {
-                    var assembly = Assembly.Load(new AssemblyName("Microsoft.AspNetCore.Mvc.Core"));
-                    var type = assembly.GetType("Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvokerCache");
-                    return type;
-                }
-            }
-
             public static Type AttributeRouting
             {
                 get
@@ -119,12 +109,32 @@
                 }
             }
 
+            public static Type ControllerPropertyActivator
+            {
+                get
+                {
+                    var assembly = Assembly.Load(new AssemblyName("Microsoft.AspNetCore.Mvc.Core"));
+                    var type = assembly.GetType("Microsoft.AspNetCore.Mvc.Controllers.IControllerPropertyActivator");
+                    return type;
+                }
+            }
+
             public static Type ControllerActionInvoker
             {
                 get
                 {
                     var assembly = Assembly.Load(new AssemblyName("Microsoft.AspNetCore.Mvc.Core"));
                     var type = assembly.GetType("Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker");
+                    return type;
+                }
+            }
+
+            public static Type ControllerActionInvokerCache
+            {
+                get
+                {
+                    var assembly = Assembly.Load(new AssemblyName("Microsoft.AspNetCore.Mvc.Core"));
+                    var type = assembly.GetType("Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvokerCache");
                     return type;
                 }
             }

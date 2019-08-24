@@ -2,11 +2,11 @@
 {
     using Components;
     using Contracts.Controllers;
+    using Internal;
     using Internal.Configuration;
     using Internal.Contracts;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc.Controllers;
-    using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.Extensions.DependencyInjection;
     using Utilities.Extensions;
 
@@ -65,7 +65,7 @@
 
         protected override void ActivateComponent() 
             => this.Services
-                .GetServices<IControllerPropertyActivator>()
-                ?.ForEach(a => a.Activate(this.TestContext.ComponentContext, this.TestContext.Component));
+                .GetServices(WebFramework.Internals.ControllerPropertyActivator)
+                ?.ForEach(a => a.Exposed().Activate(this.TestContext.ComponentContext, this.TestContext.Component));
     }
 }

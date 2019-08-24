@@ -1,6 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.Controllers
 {
     using System.Collections.Generic;
+    using Actions;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.AspNetCore.Routing;
