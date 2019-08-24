@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
+    using Actions;
     using Contracts;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Abstractions;
@@ -19,13 +20,15 @@
         private readonly ILogger logger;
         private readonly DiagnosticListener diagnosticListener;
         private readonly IActionResultTypeMapper mapper;
+        private readonly IActionContextAccessor actionContextAccessor;
 
         public ModelBindingActionInvokerFactory(
             ModelBindingActionInvokerCache modelBindingActionInvokerCache,
             IOptions<MvcOptions> optionsAccessor,
             ILoggerFactory loggerFactory,
             DiagnosticListener diagnosticListener,
-            IActionResultTypeMapper mapper)
+            IActionResultTypeMapper mapper,
+            IActionContextAccessor actionContextAccessor)
         {
             this.modelBindingActionInvokerCache = modelBindingActionInvokerCache;
             this.valueProviderFactories = optionsAccessor.Value.ValueProviderFactories.ToArray();
@@ -33,6 +36,7 @@
             this.logger = loggerFactory.CreateLogger<ModelBindingActionInvoker>();
             this.diagnosticListener = diagnosticListener;
             this.mapper = mapper;
+            this.actionContextAccessor = actionContextAccessor ?? ActionContextAccessorMock.Null;
         }
 
         public IActionInvoker CreateModelBindingActionInvoker(ActionContext actionContext)
@@ -49,6 +53,7 @@
             return new ModelBindingActionInvoker(
                 this.logger,
                 this.diagnosticListener,
+                this.actionContextAccessor,
                 this.mapper,
                 controllerContext,
                 cacheResult.cacheEntry,

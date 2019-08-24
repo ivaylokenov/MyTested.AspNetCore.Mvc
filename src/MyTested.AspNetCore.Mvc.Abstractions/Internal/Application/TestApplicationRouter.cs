@@ -3,7 +3,6 @@
     using System;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.AspNetCore.Routing;
 
     public static partial class TestApplication
@@ -50,7 +49,11 @@
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
 
-                routeBuilder.Routes.Insert(0, AttributeRouting.CreateAttributeMegaRoute(serviceProvider));
+                var attributeRoutingType = WebFramework.Internals.AttributeRouting;
+                var createAttributeMegaRouteMethod = attributeRoutingType.GetMethod("CreateAttributeMegaRoute");
+                var router = (IRouter)createAttributeMegaRouteMethod.Invoke(null, new[] { serviceProvider });
+
+                routeBuilder.Routes.Insert(0, router);
             }
 
             router = routeBuilder.Build();

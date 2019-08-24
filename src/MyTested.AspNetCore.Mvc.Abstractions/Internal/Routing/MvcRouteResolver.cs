@@ -7,7 +7,6 @@
     using Microsoft.AspNetCore.Mvc.Abstractions;
     using Microsoft.AspNetCore.Mvc.Controllers;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
-    using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.DependencyInjection;
     using Utilities;
@@ -44,8 +43,9 @@
                 var actions = routeContext
                     .RouteData
                     .Routers
-                    .OfType<MvcAttributeRouteHandler>()
+                    .Where(r => r.GetType() == WebFramework.Internals.MvcAttributeRouteHandler)
                     .FirstOrDefault()
+                    .AsDynamic()
                     ?.Actions
                     ?? actionSelector.SelectCandidates(routeContext);
                 

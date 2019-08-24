@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Internal
+﻿namespace MyTested.AspNetCore.Mvc.Internal.Actions
 {
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc.Controllers;

@@ -9,6 +9,36 @@
     {
         public static class Internals
         {
+            public static Type StartupLoader
+            {
+                get
+                {
+                    var assembly = Assembly.Load(new AssemblyName("Microsoft.AspNetCore.Hosting"));
+                    var type = assembly.GetType("Microsoft.AspNetCore.Hosting.StartupLoader");
+                    return type;
+                }
+            }
+
+            public static Type ConventionBasedStartup
+            {
+                get
+                {
+                    var assembly = Assembly.Load(new AssemblyName("Microsoft.AspNetCore.Hosting"));
+                    var type = assembly.GetType("Microsoft.AspNetCore.Hosting.ConventionBasedStartup");
+                    return type;
+                }
+            }
+
+            public static Type ConfigureContainerBuilder
+            {
+                get
+                {
+                    var assembly = Assembly.Load(new AssemblyName("Microsoft.AspNetCore.Hosting"));
+                    var type = assembly.GetType("Microsoft.AspNetCore.Hosting.ConfigureContainerBuilder");
+                    return type;
+                }
+            }
+
             public static Type RequestCookieCollection
             {
                 get
@@ -59,12 +89,34 @@
                 }
             }
 
+
+
             public static Type ControllerActionInvokerCache
             {
                 get
                 {
                     var assembly = Assembly.Load(new AssemblyName("Microsoft.AspNetCore.Mvc.Core"));
                     var type = assembly.GetType("Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvokerCache");
+                    return type;
+                }
+            }
+
+            public static Type AttributeRouting
+            {
+                get
+                {
+                    var assembly = Assembly.Load(new AssemblyName("Microsoft.AspNetCore.Mvc.Core"));
+                    var type = assembly.GetType("Microsoft.AspNetCore.Mvc.Routing.AttributeRouting");
+                    return type;
+                }
+            }
+
+            public static Type MvcAttributeRouteHandler
+            {
+                get
+                {
+                    var assembly = Assembly.Load(new AssemblyName("Microsoft.AspNetCore.Mvc.Core"));
+                    var type = assembly.GetType("Microsoft.AspNetCore.Mvc.Routing.MvcAttributeRouteHandler");
                     return type;
                 }
             }

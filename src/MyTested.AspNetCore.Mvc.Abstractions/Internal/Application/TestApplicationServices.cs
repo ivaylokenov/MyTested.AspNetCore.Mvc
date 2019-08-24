@@ -240,13 +240,13 @@
         {
             private readonly IServiceProvider serverServiceProvider;
             private readonly IServiceCollection services;
-            private readonly StartupMethods startupTypeMethods;
+            private readonly dynamic startupTypeMethods;
             private readonly MethodInfo configureContainerMethod;
 
             public RoutingServiceProviderBuilder(
                 IServiceProvider serverServiceProvider,
                 IServiceCollection services,
-                StartupMethods startupTypeMethods,
+                dynamic startupTypeMethods,
                 MethodInfo configureContainerMethod)
             {
                 this.serverServiceProvider = serverServiceProvider;
@@ -257,10 +257,15 @@
 
             public override IServiceProvider BuildServiceProvider()
             {
-                var configureContainerBuilder = new ConfigureContainerBuilder(this.configureContainerMethod)
-                {
-                    ConfigureContainerFilters = this.ConfigureContainerPipeline
-                };
+                var configureContainerBuilder = Activator
+                    .CreateInstance(
+                        WebFramework.Internals.ConfigureContainerBuilder,
+                        this.configureContainerMethod)
+                    .AsDynamic();
+
+                Func<Action<object>, Action<object>> configureContainerPipeline = this.ConfigureContainerPipeline;
+
+                configureContainerBuilder.ConfigureContainerFilters = configureContainerPipeline;
 
                 var serviceProviderFactory = serviceProvider.GetRequiredService<IServiceProviderFactory<TContainerBuilder>>();
                 var builder = serviceProviderFactory.CreateBuilder(this.services);
