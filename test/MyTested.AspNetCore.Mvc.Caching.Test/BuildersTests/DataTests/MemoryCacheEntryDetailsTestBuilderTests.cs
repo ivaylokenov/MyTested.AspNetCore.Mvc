@@ -78,7 +78,6 @@
         public void WithValidShouldNotThrowExceptionWithViewComponentCorrectValuePredicate()
         {
             MyViewComponent<MemoryCacheValuesComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .MemoryCache(memoryCache => memoryCache
@@ -98,7 +97,6 @@
                 () =>
                 {
                     MyViewComponent<MemoryCacheValuesComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .MemoryCache(memoryCache => memoryCache

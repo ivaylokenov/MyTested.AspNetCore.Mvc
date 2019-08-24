@@ -15,7 +15,6 @@
         public void AndProvideShouldReturnProperController()
         {
             MyViewComponent<NormalComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .Content("Test")
@@ -42,7 +41,6 @@
         public void AndProvideShouldReturnProperActionResult()
         {
             MyViewComponent<NormalComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .Content("Test")
@@ -57,7 +55,6 @@
         public void AndProvideShouldReturnProperCaughtException()
         {
             MyViewComponent<ExceptionComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldThrow()
                 .Exception()
@@ -75,7 +72,6 @@
                 () =>
                 {
                     MyViewComponent<NormalComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldPassForThe<ViewComponentAttributes>(attributes => attributes.Count() == 4);
                 },

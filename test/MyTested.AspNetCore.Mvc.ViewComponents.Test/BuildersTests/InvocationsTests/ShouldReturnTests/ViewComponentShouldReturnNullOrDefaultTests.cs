@@ -11,7 +11,6 @@
         public void ShouldReturnNullShouldNotThrowExceptionWhenReturnValueNull()
         {
             MyViewComponent<NullComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .Null();
@@ -24,7 +23,6 @@
                 () =>
                 {
                     MyViewComponent<NormalComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldReturn()
                         .Null();
@@ -36,7 +34,6 @@
         public void ShouldReturnNotNullShouldNotThrowExceptionWhenReturnValueNotNull()
         {
             MyViewComponent<NormalComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .NotNull();
@@ -49,7 +46,6 @@
                 () =>
                 {
                     MyViewComponent<NullComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldReturn()
                         .NotNull();
@@ -61,7 +57,6 @@
         public void ShouldReturnDefaultShouldNotThrowExceptionWhenReturnValueIDefaultForClass()
         {
             MyViewComponent<NullComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .DefaultValue();
@@ -74,7 +69,6 @@
                 () =>
                 {
                     MyViewComponent<NormalComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldReturn()
                         .DefaultValue();
