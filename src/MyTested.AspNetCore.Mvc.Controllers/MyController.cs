@@ -112,5 +112,13 @@
         public new static IControllerTestBuilder ShouldHave()
             => Instance()
                 .ShouldHave();
+
+        /// <summary>
+        /// Starts a controller test.
+        /// </summary>
+        /// <param name="controllerInstanceBuilder">Instance of the ASP.NET Core MVC controller to test.</param>
+        /// <returns>Test builder of <see cref="IControllerInstanceBuilder{TController}"/> type.</returns>
+        public static IControllerInstanceBuilder<TController> Isntance(Action<IControllerInstanceBuilder<TController>> controllerInstanceBuilder)
+            => null;
     }
 }
