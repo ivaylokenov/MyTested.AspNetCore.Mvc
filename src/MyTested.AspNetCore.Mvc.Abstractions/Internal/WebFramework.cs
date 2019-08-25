@@ -89,6 +89,16 @@
                 }
             }
 
+            public static Type ObjectMethodExecutor
+            {
+                get
+                {
+                    var assembly = Assembly.Load(new AssemblyName("Microsoft.AspNetCore.Mvc.Core"));
+                    var type = assembly.GetType("Microsoft.Extensions.Internal.ObjectMethodExecutor");
+                    return type;
+                }
+            }
+
             public static Type AttributeRouting
             {
                 get
@@ -135,6 +145,26 @@
                 {
                     var assembly = Assembly.Load(new AssemblyName("Microsoft.AspNetCore.Mvc.Core"));
                     var type = assembly.GetType("Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvokerCache");
+                    return type;
+                }
+            }
+
+            public static Type ControllerBinderDelegate
+            {
+                get
+                {
+                    var assembly = Assembly.Load(new AssemblyName("Microsoft.AspNetCore.Mvc.Core"));
+                    var type = assembly.GetType("Microsoft.AspNetCore.Mvc.Controllers.ControllerBinderDelegate");
+                    return type;
+                }
+            }
+
+            public static Type ActionMethodExecutor
+            {
+                get
+                {
+                    var assembly = Assembly.Load(new AssemblyName("Microsoft.AspNetCore.Mvc.Core"));
+                    var type = assembly.GetType("Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor");
                     return type;
                 }
             }

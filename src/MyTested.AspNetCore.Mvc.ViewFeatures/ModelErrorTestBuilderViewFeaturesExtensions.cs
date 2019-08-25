@@ -14,9 +14,9 @@
     /// </summary>
     public static class ModelErrorTestBuilderViewFeaturesExtensions
     {
-        private static readonly dynamic expressionHelper = WebFramework.Internals.ExpressionHelper.Exposed();
+        private static readonly dynamic ExpressionHelper = WebFramework.Internals.ExpressionHelper.Exposed();
 
-        private static readonly IDictionary<LambdaExpression, string> expressionTextCache
+        private static readonly IDictionary<LambdaExpression, string> ExpressionTextCache
             = new ConcurrentDictionary<LambdaExpression, string>(WebFramework.Internals.LambdaExpressionComparer.Exposed().Instance);
 
         /// <summary>
@@ -33,7 +33,7 @@
         {
             var actualModelErrorTestBuilder = (ModelErrorTestBuilder<TModel>)modelErrorTestBuilder;
 
-            var memberName = expressionHelper.GetExpressionText(memberWithError, expressionTextCache);
+            var memberName = ExpressionHelper.GetExpressionText(memberWithError, ExpressionTextCache);
             actualModelErrorTestBuilder.ContainingError(memberName);
 
             return new ModelErrorDetailsTestBuilder<TModel>(
@@ -57,7 +57,7 @@
         {
             var actualModelErrorTestBuilder = (ModelErrorTestBuilder<TModel>)modelErrorTestBuilder;
 
-            var memberName = expressionHelper.GetExpressionText(memberWithNoError, expressionTextCache);
+            var memberName = ExpressionHelper.GetExpressionText(memberWithNoError, ExpressionTextCache);
             if (actualModelErrorTestBuilder.ModelState.ContainsKey(memberName))
             {
                 actualModelErrorTestBuilder.ThrowNewModelErrorAssertionException(

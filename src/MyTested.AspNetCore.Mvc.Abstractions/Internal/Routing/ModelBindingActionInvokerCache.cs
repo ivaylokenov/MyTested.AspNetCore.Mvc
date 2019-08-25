@@ -1,25 +1,22 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.Routing
 {
-    using System;
     using Microsoft.AspNetCore.Mvc;
     using Services;
+    using Utilities.Extensions;
 
     public class ModelBindingActionInvokerCache
     {
-        private dynamic methodDelegate;
+        private dynamic instance;
 
         public dynamic GetCachedResult(ControllerContext controllerContext)
         {
-            if (this.methodDelegate == null)
+            if (this.instance == null)
             {
                 var type = WebFramework.Internals.ControllerActionInvokerCache;
-                var instance = TestServiceProvider.GetService(type);
-                var method = type.GetMethod(nameof(GetCachedResult));
-                var typeOfDelegate = typeof(Func<,>).MakeGenericType(typeof(ControllerContext), method.ReturnType);
-                this.methodDelegate = method.CreateDelegate(typeOfDelegate, instance);
+                this.instance = TestServiceProvider.GetService(type).Exposed();
             }
             
-            return this.methodDelegate(controllerContext);
+            return this.instance.GetCachedResult(controllerContext);
         }
     }
 }

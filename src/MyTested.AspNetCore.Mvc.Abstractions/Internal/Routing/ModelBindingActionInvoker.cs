@@ -9,12 +9,14 @@
     using Microsoft.AspNetCore.Mvc.Filters;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.Extensions.Logging;
+    using Utilities.Extensions;
     using Utilities.Validators;
 
     public class ModelBindingActionInvoker : IModelBindingActionInvoker
     {
-        private readonly dynamic cacheEntry;
         private readonly ControllerContext controllerContext;
+        private readonly dynamic cacheEntry;
+        private readonly dynamic cacheEntryMock;
         private readonly object invoker;
 
         private Dictionary<string, object> arguments;
@@ -26,16 +28,21 @@
             IActionResultTypeMapper mapper,
             ControllerContext controllerContext,
             dynamic cacheEntry,
+            dynamic cacheEntryMock,
             IFilterMetadata[] filters)
         {
             CommonValidator.CheckForNullReference(cacheEntry, nameof(cacheEntry));
-            
-            this.cacheEntry = cacheEntry;
+            CommonValidator.CheckForNullReference(cacheEntryMock, nameof(cacheEntryMock));
+            CommonValidator.CheckForNullReference(controllerContext, nameof(controllerContext));
+
             this.controllerContext = controllerContext;
+
+            this.cacheEntry = cacheEntry;
+            this.cacheEntryMock = cacheEntryMock;
 
             var invokerType = WebFramework.Internals.ControllerActionInvoker;
             var constructor = invokerType.GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic)[0];
-            this.invoker = constructor.Invoke(new object[] { logger, diagnosticListener, actionContextAccessor, mapper, controllerContext, cacheEntry, filters });
+            this.invoker = constructor.Invoke(new object[] { logger, diagnosticListener, actionContextAccessor, mapper, controllerContext, cacheEntryMock, filters });
         }
 
         public IDictionary<string, object> BoundActionArguments => this.arguments;
@@ -53,11 +60,13 @@
                 return;
             }
 
-            await (Task)this.invoker.GetType().GetMethod(nameof(this.InvokeAsync)).Invoke(this.invoker, null);
+            // Invokes the filter pipeline and executes a mocked action.
+            await this.invoker.Exposed().InvokeAsync();
 
-            var controllerInstance = this.cacheEntry.ControllerFactory(this.controllerContext);
+            // Invokes the model binding on the real action.
+            var controllerInstance = this.cacheEntry.ControllerFactory.Invoke(this.controllerContext);
 
-            await this.cacheEntry.ControllerBinderDelegate(this.controllerContext, controllerInstance, this.arguments);
+            await this.cacheEntry.ControllerBinderDelegate.DynamicInvoke(this.controllerContext, controllerInstance, this.arguments);
         }
     }
 }

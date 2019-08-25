@@ -2,6 +2,8 @@
 {
     using System;
     using System.IO;
+    using System.IO.Pipelines;
+    using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
 
@@ -26,7 +28,7 @@
             get => this.httpResponse.Body; 
             set => this.httpResponse.Body = value; 
         }
-        
+
         public override long? ContentLength
         {
             get => this.httpResponse.ContentLength;
@@ -38,6 +40,8 @@
             get => this.httpResponse.ContentType;
             set => this.httpResponse.ContentType = value;
         }
+
+        public override PipeWriter BodyWriter => this.httpResponse.BodyWriter;
 
         public override IResponseCookies Cookies => this.httpResponse.Cookies;
 
@@ -73,6 +77,14 @@
         public override void Redirect(string location, bool permanent)
             => this.httpResponse
                 .Redirect(location, permanent);
+
+        public override Task StartAsync(CancellationToken cancellationToken = default)
+            => this.httpResponse
+                .StartAsync(cancellationToken);
+
+        public override Task CompleteAsync()
+            => this.httpResponse
+                .CompleteAsync();
 
         /// <summary>
         /// Does nothing. Intentionally left empty, otherwise some HTTP features are not working correctly.

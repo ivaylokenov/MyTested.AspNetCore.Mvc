@@ -67,7 +67,7 @@
 
         public static Stream WriteToStream<TBody>(TBody value, string contentType, Encoding encoding)
         {
-            // formatters do not support non HTTP context processing
+            // Formatters do not support non HTTP context processing.
             var httpContext = new HttpContextMock();
             httpContext.Response.Body = new MemoryStream();
 
@@ -92,7 +92,7 @@
             
             AsyncHelper.RunSync(() => outputFormatter.WriteAsync(outputFormatterCanWriteContext));
 
-            // copy memory stream because formatters close the original one
+            // Copy memory stream because formatters close the original one.
             return new MemoryStream(((MemoryStream)httpContext.Response.Body).ToArray());
         }
 
