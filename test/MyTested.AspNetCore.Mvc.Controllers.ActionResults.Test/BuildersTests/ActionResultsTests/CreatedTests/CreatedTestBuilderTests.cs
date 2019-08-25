@@ -800,7 +800,7 @@
                 .Calling(c => c.FullCreatedAction())
                 .ShouldReturn()
                 .Created(created => created
-                    .ContainingOutputFormatterOfType<JsonOutputFormatter>());
+                    .ContainingOutputFormatterOfType<NewtonsoftJsonOutputFormatter>());
         }
 
         [Fact]
