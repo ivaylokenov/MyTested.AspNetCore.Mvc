@@ -45,6 +45,14 @@
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="MyController{TController}"/> class.
+        /// </summary>
+        /// <param name="controllerInstanceBuilder">Builder for creating the controller instance.</param>
+        public MyController(Action<IControllerInstanceBuilder<TController>> controllerInstanceBuilder)
+            : this()
+            => controllerInstanceBuilder(new ControllerInstanceBuilder<TController>(this.TestContext));
+
+        /// <summary>
         /// Starts a controller test.
         /// </summary>
         /// <returns>Test builder of <see cref="IControllerBuilder{TController}"/> type.</returns>
@@ -66,6 +74,14 @@
         /// <returns>Test builder of <see cref="IControllerBuilder{TController}"/> type.</returns>
         public static IControllerBuilder<TController> Instance(Func<TController> construction) 
             => new MyController<TController>(construction);
+
+        /// <summary>
+        /// Starts a controller test.
+        /// </summary>
+        /// <param name="controllerInstanceBuilder">Builder for creating the controller instance.</param>
+        /// <returns>Test builder of <see cref="IControllerActionCallBuilder{TController}"/> type.</returns>
+        public static IControllerActionCallBuilder<TController> Instance(Action<IControllerInstanceBuilder<TController>> controllerInstanceBuilder)
+            => new MyController<TController>(controllerInstanceBuilder);
 
         /// <summary>
         /// Indicates which action should be invoked and tested.
@@ -112,13 +128,5 @@
         public new static IControllerTestBuilder ShouldHave()
             => Instance()
                 .ShouldHave();
-
-        /// <summary>
-        /// Starts a controller test.
-        /// </summary>
-        /// <param name="controllerInstanceBuilder">Instance of the ASP.NET Core MVC controller to test.</param>
-        /// <returns>Test builder of <see cref="IControllerInstanceBuilder{TController}"/> type.</returns>
-        public static IControllerInstanceBuilder<TController> Isntance(Action<IControllerInstanceBuilder<TController>> controllerInstanceBuilder)
-            => null;
     }
 }

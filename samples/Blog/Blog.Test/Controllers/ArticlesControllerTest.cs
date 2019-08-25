@@ -20,8 +20,8 @@
         [InlineData(18, 2, 6)]
         public void AllShouldReturnDefaultViewWithCorrectModel(int total, int page, int expectedCount)
             => MyController<ArticlesController>
-                .Instance()
-                .WithData(ArticleTestData.GetArticles(total))
+                .Instance(instance => instance
+                    .WithData(ArticleTestData.GetArticles(total)))
                 .Calling(c => c.All(page))
                 .ShouldReturn()
                 .View(view => view

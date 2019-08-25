@@ -65,6 +65,16 @@
             => new MyController<TController>(construction);
 
         /// <summary>
+        /// Starts a controller test.
+        /// </summary>
+        /// <typeparam name="TController">Class representing ASP.NET Core MVC controller.</typeparam>
+        /// <param name="controllerInstanceBuilder">Builder for creating the controller instance.</param>
+        /// <returns>Test builder of <see cref="IControllerActionCallBuilder{TController}"/> type.</returns>
+        public static IControllerActionCallBuilder<TController> Controller<TController>(Action<IControllerInstanceBuilder<TController>> controllerInstanceBuilder)
+            where TController : class
+            => new MyController<TController>(controllerInstanceBuilder);
+
+        /// <summary>
         /// Starts a view component test.
         /// </summary>
         /// <typeparam name="TViewComponent">Class representing ASP.NET Core MVC view component.</typeparam>
