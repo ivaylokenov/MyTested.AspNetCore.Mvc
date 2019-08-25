@@ -21,9 +21,8 @@
         public static TBuilder WithRouteData<TBuilder>(
             this IBaseTestBuilderWithComponentBuilder<TBuilder> builder)
             where TBuilder : IBaseTestBuilder
-        {
-            return builder.WithRouteData(null);
-        }
+            => builder
+                .WithRouteData(null);
 
         /// <summary>
         /// Indicates that route values should be extracted from the provided action call expression adding the given additional values.
