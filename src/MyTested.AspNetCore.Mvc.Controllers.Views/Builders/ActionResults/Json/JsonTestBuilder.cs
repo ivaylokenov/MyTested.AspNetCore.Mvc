@@ -43,7 +43,7 @@
         public JsonResult GetJsonResult() => this.TestContext.MethodResult as JsonResult;
 
         public JsonSerializerSettings GetServiceDefaultSerializerSettings()
-            => TestServiceProvider.GetService<IOptions<MvcJsonOptions>>()?.Value?.SerializerSettings;
+            => TestServiceProvider.GetService<IOptions<MvcNewtonsoftJsonOptions>>()?.Value?.SerializerSettings;
 
         /// <summary>
         /// Throws new <see cref="JsonResultAssertionException"/> for the provided property name, expected value and actual value.

@@ -3,7 +3,6 @@
     using Builders.Contracts.Http;
     using Builders.Http;
     using Microsoft.AspNetCore.Antiforgery;
-    using Microsoft.AspNetCore.Antiforgery.Internal;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Options;
 
@@ -42,15 +41,15 @@
                 actualHttpRequestBuilder.WithFormField(antiForgeryOptions.FormFieldName, tokens.RequestToken);
             }
 
-            var generatedAntiforgeryFeature = httpContext.Features.Get<IAntiforgeryFeature>();
+            //var generatedAntiforgeryFeature = httpContext.Features.Get<IAntiforgeryFeature>();
 
-            httpContext.Features.Set<IAntiforgeryFeature>(new AntiforgeryFeature
-            {
-                HaveDeserializedCookieToken = false,
-                HaveDeserializedRequestToken = false,
-                CookieToken = generatedAntiforgeryFeature.NewCookieToken,
-                RequestToken = generatedAntiforgeryFeature.NewRequestToken
-            });
+            //httpContext.Features.Set<IAntiforgeryFeature>(new AntiforgeryFeature
+            //{
+            //    HaveDeserializedCookieToken = false,
+            //    HaveDeserializedRequestToken = false,
+            //    CookieToken = generatedAntiforgeryFeature.NewCookieToken,
+            //    RequestToken = generatedAntiforgeryFeature.NewRequestToken
+            //});
 
             return actualHttpRequestBuilder;
         }

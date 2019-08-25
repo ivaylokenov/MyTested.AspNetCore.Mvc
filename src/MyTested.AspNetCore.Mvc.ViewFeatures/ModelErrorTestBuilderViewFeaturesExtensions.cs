@@ -1,17 +1,23 @@
 ﻿namespace MyTested.AspNetCore.Mvc
 {
     using System;
+    using System.Collections.Concurrent;
+    using System.Collections.Generic;
     using System.Linq.Expressions;
     using Builders.Contracts.Models;
     using Builders.Models;
-    using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
+    using Internal;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Contains view features extension methods for <see cref="IModelErrorTestBuilder{TModel}"/>.
     /// </summary>
     public static class ModelErrorTestBuilderViewFeaturesExtensions
     {
-        private static readonly ExpressionTextCache ExpressionTextCache = new ExpressionTextCache();
+        private static readonly dynamic expressionHelper = WebFramework.Internals.ExpressionHelper.Exposed();
+
+        private static readonly IDictionary<LambdaExpression, string> expressionTextCache
+            = new ConcurrentDictionary<LambdaExpression, string>(WebFramework.Internals.LambdaExpressionComparer.Exposed().Instance);
 
         /// <summary>
         /// Tests whether the tested <see cref="Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary"/> contains error by member expression.
@@ -27,7 +33,7 @@
         {
             var actualModelErrorTestBuilder = (ModelErrorTestBuilder<TModel>)modelErrorTestBuilder;
 
-            var memberName = ExpressionHelper.GetExpressionText(memberWithError, ExpressionTextCache);
+            var memberName = expressionHelper.GetExpressionText(memberWithError, expressionTextCache);
             actualModelErrorTestBuilder.ContainingError(memberName);
 
             return new ModelErrorDetailsTestBuilder<TModel>(
@@ -51,7 +57,7 @@
         {
             var actualModelErrorTestBuilder = (ModelErrorTestBuilder<TModel>)modelErrorTestBuilder;
 
-            var memberName = ExpressionHelper.GetExpressionText(memberWithNoError, ExpressionTextCache);
+            var memberName = expressionHelper.GetExpressionText(memberWithNoError, expressionTextCache);
             if (actualModelErrorTestBuilder.ModelState.ContainsKey(memberName))
             {
                 actualModelErrorTestBuilder.ThrowNewModelErrorAssertionException(

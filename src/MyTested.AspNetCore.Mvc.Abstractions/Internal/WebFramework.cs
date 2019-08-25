@@ -138,6 +138,26 @@
                     return type;
                 }
             }
+
+            public static Type ExpressionHelper
+            {
+                get
+                {
+                    var assembly = Assembly.Load(new AssemblyName("Microsoft.AspNetCore.Mvc.ViewFeatures"));
+                    var type = assembly.GetType("Microsoft.AspNetCore.Mvc.ViewFeatures.ExpressionHelper");
+                    return type;
+                }
+            }
+
+            public static Type LambdaExpressionComparer
+            {
+                get
+                {
+                    var assembly = Assembly.Load(new AssemblyName("Microsoft.AspNetCore.Mvc.ViewFeatures"));
+                    var type = assembly.GetType("Microsoft.AspNetCore.Mvc.ViewFeatures.LambdaExpressionComparer");
+                    return type;
+                }
+            }
         }
 
         // Copied from the ASP.NET Core source code.
