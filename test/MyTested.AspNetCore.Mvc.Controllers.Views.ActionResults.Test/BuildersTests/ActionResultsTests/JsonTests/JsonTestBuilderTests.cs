@@ -36,17 +36,14 @@
         }
 
         [Fact]
-        public void WithDefaultJsonSettingsShouldThrowExceptionWithNull()
+        public void WithDefaultJsonSettingsShouldWorkCorrectlyWithNull()
         {
-            Assert.Throws<InvocationAssertionException>(() =>
-            {
-                MyController<MvcController>
-                    .Instance()
-                    .Calling(c => c.JsonWithSpecificSettingsAction(null))
-                    .ShouldReturn()
-                    .Json(json => json
-                        .WithDefaultJsonSerializerSettings());
-            });
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.JsonWithSpecificSettingsAction(null))
+                .ShouldReturn()
+                .Json(json => json
+                    .WithDefaultJsonSerializerSettings());
         }
 
         [Fact]
@@ -151,11 +148,11 @@
         }
 
         [Fact]
-        public void WithJsonSerializerSettingsShouldThrowExceptionWithNull()
+        public void WithJsonSerializerSettingsShouldThrowWithNull()
         {
             var jsonSettings = TestObjectFactory.GetJsonSerializerSettings();
 
-            Assert.Throws<InvocationAssertionException>(() =>
+            Assert.Throws<JsonResultAssertionException>(() =>
             {
                 MyController<MvcController>
                     .Instance()
