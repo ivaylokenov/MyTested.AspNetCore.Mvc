@@ -4,6 +4,7 @@
     using Microsoft.AspNetCore.Http.Features;
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Security.Claims;
     using System.Threading;
     using Utilities.Validators;
@@ -128,6 +129,11 @@
             if (this.Features.Get<IHttpResponseFeature>() == null)
             {
                 this.Features.Set<IHttpResponseFeature>(new HttpResponseFeature());
+            }
+
+            if (this.Features.Get<IHttpResponseBodyFeature>() == null)
+            {
+                this.Features.Set<IHttpResponseBodyFeature>(new StreamResponseBodyFeature(Stream.Null));
             }
 
             if (this.Features.Get<IServiceProvidersFeature>() == null)

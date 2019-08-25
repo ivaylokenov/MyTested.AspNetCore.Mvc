@@ -53,25 +53,26 @@
             set => this.httpResponse.StatusCode = value;
         }
 
-        public static HttpResponseMock From(HttpContext httpContext, HttpResponse httpResponse)
-        {
-            return new HttpResponseMock(httpContext)
+        public static HttpResponseMock From(HttpContext httpContext, HttpResponse httpResponse) 
+            => new HttpResponseMock(httpContext)
             {
                 Body = httpResponse.Body,
                 ContentLength = httpResponse.ContentLength,
                 ContentType = httpResponse.ContentType,
                 StatusCode = httpResponse.StatusCode
             };
-        }
 
         public override void OnCompleted(Func<object, Task> callback, object state)
-            => this.httpResponse.OnCompleted(callback, state);
+            => this.httpResponse
+                .OnCompleted(callback, state);
 
         public override void OnStarting(Func<object, Task> callback, object state)
-            => this.httpResponse.OnStarting(callback, state);
+            => this.httpResponse
+                .OnStarting(callback, state);
 
         public override void Redirect(string location, bool permanent)
-            => this.httpResponse.Redirect(location, permanent);
+            => this.httpResponse
+                .Redirect(location, permanent);
 
         /// <summary>
         /// Does nothing. Intentionally left empty, otherwise some HTTP features are not working correctly.
