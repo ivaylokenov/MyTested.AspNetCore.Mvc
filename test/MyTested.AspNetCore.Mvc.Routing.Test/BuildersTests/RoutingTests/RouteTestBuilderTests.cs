@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using Exceptions;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.AspNetCore.Mvc.Routing;
     using Setups;
@@ -744,12 +743,12 @@
         [Fact]
         public void ShouldMapWithRequestShouldWorkCorrectly()
         {
-            var request = new DefaultHttpRequest(new DefaultHttpContext());
-            request.Path = "/Normal/FromServicesAction";
+            var context = new DefaultHttpContext();
+            context.Request.Path = "/Normal/FromServicesAction";
 
             MyRouting
                 .Configuration()
-                .ShouldMap(request)
+                .ShouldMap(context.Request)
                 .To<NormalController>(c => c.FromServicesAction(From.Services<IActionSelector>()));
         }
 

@@ -19,10 +19,7 @@
             this.type = instance?.GetType();
         }
 
-        public ExposedObject(Type type)
-        {
-            this.type = type;
-        }
+        public ExposedObject(Type type) => this.type = type;
 
         public object Object => this.instance ?? this.type;
 
@@ -47,7 +44,7 @@
                 return true;
             }
 
-            var field = this.type.GetField(binder.Name);
+            var field = this.type.GetField(binder.Name, Flags);
 
             if (field != null)
             {
@@ -70,7 +67,7 @@
                 return true;
             }
 
-            var field = this.type.GetField(binder.Name);
+            var field = this.type.GetField(binder.Name, Flags);
 
             if (field != null)
             {

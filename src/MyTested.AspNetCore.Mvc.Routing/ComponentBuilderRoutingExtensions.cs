@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc
 {
+    using System.Linq;
     using Builders.Base;
     using Builders.Contracts.Base;
     using Internal.Application;
@@ -52,6 +53,10 @@
                 if (testContext.RouteData == null)
                 {
                     testContext.RouteData = new RouteData();
+                }
+
+                if (!testContext.RouteData.Routers.Any())
+                {
                     testContext.RouteData.Routers.Add(TestApplication.Router);
                 }
                 

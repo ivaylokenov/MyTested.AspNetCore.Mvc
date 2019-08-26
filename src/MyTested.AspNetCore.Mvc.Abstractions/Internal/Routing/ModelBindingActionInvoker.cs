@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.Routing
 {
+    using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Reflection;
@@ -14,6 +15,8 @@
 
     public class ModelBindingActionInvoker : IModelBindingActionInvoker
     {
+        private static readonly Type RouteActionResultMockType = typeof(RouteActionResultMock);
+
         private readonly ControllerContext controllerContext;
         private readonly dynamic cacheEntry;
         private readonly dynamic cacheEntryMock;
@@ -49,6 +52,17 @@
 
         public async Task InvokeAsync()
         {
+            var exposedInvoker = this.invoker.Exposed();
+
+            // Invoke the filter pipeline and execute the fake action mock.
+            await exposedInvoker.InvokeAsync();
+
+            if (exposedInvoker._result.GetType() != RouteActionResultMockType)
+            {
+                // Filters short-circuited the action pipeline. Do not perform model binding.
+                return;
+            }
+
             // Not initialized in the constructor because filters may
             // short-circuit the request and tests will fail with wrong exception message.
             this.arguments = new Dictionary<string, object>();
@@ -57,11 +71,9 @@
             if (actionDescriptor.BoundProperties.Count == 0 &&
                 actionDescriptor.Parameters.Count == 0)
             {
+                // No parameters on the real action. Do not perform model binding.
                 return;
             }
-
-            // Invokes the filter pipeline and executes a mocked action.
-            await this.invoker.Exposed().InvokeAsync();
 
             // Invokes the model binding on the real action.
             var controllerInstance = this.cacheEntry.ControllerFactory.Invoke(this.controllerContext);

@@ -66,6 +66,8 @@
         protected override void ActivateComponent() 
             => this.Services
                 .GetServices(WebFramework.Internals.ControllerPropertyActivator)
-                ?.ForEach(a => a.Exposed().Activate(this.TestContext.ComponentContext, this.TestContext.Component));
+                ?.ForEach(a => a
+                    .Exposed()
+                    .Activate(this.TestContext.ComponentContext, this.TestContext.Component));
     }
 }

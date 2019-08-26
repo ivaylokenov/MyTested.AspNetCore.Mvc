@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.TestContexts
 {
+    using System.Linq;
     using System.Linq.Expressions;
     using Application;
     using Http;
@@ -42,7 +43,7 @@
                 if (this.routeData == null)
                 {
                     this.routeData = this.HttpContext.GetRouteData();
-                    if (this.routeData == null)
+                    if (this.routeData == null || !this.routeData.Routers.Any())
                     {
                         this.routeData = RouteDataResolver.ResolveRouteData(TestApplication.Router, this.HttpContext);
                     }

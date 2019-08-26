@@ -33,7 +33,7 @@
         {
             var actualModelErrorTestBuilder = (ModelErrorTestBuilder<TModel>)modelErrorTestBuilder;
 
-            var memberName = ExpressionHelper.GetExpressionText(memberWithError, ExpressionTextCache);
+            string memberName = ExpressionHelper.GetExpressionText(memberWithError, ExpressionTextCache);
             actualModelErrorTestBuilder.ContainingError(memberName);
 
             return new ModelErrorDetailsTestBuilder<TModel>(
@@ -57,7 +57,7 @@
         {
             var actualModelErrorTestBuilder = (ModelErrorTestBuilder<TModel>)modelErrorTestBuilder;
 
-            var memberName = ExpressionHelper.GetExpressionText(memberWithNoError, ExpressionTextCache);
+            string memberName = ExpressionHelper.GetExpressionText(memberWithNoError, ExpressionTextCache);
             if (actualModelErrorTestBuilder.ModelState.ContainsKey(memberName))
             {
                 actualModelErrorTestBuilder.ThrowNewModelErrorAssertionException(

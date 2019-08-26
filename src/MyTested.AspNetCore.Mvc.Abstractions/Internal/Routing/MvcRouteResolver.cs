@@ -45,8 +45,8 @@
                     .Routers
                     .Where(r => r.GetType() == WebFramework.Internals.MvcAttributeRouteHandler)
                     .FirstOrDefault()
-                    .AsDynamic()
-                    ?.Actions
+                    ?.Exposed()
+                    .Actions
                     ?? actionSelector.SelectCandidates(routeContext);
                 
                 actionDescriptor = actionSelector.SelectBestCandidate(
