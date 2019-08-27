@@ -16,16 +16,16 @@
             => app.SeedDataAsync().GetAwaiter().GetResult();
 
         public static IApplicationBuilder UseMvcWithAreas(this IApplicationBuilder app)
-            => app.UseMvc(routes =>
+            => app.UseEndpoints(routes =>
             {
-                routes.MapRoute(
+                routes.MapControllerRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}"
+                    pattern: "{controller=Home}/{action=Index}/{id?}"
                 );
 
-                routes.MapRoute(
+                routes.MapControllerRoute(
                     name: "areas",
-                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
                 );
             });
 
