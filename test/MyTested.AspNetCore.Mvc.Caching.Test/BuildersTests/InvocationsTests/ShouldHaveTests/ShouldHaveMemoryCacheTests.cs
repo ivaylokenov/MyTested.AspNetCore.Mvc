@@ -23,7 +23,6 @@
         public void NoMemoryCacheShouldNotThrowExceptionWithViewComponentNoCacheEntries()
         {
             MyViewComponent<NormalComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .NoMemoryCache()
@@ -39,7 +38,6 @@
                 () =>
                 {
                     MyViewComponent<MemoryCacheValuesComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .NoMemoryCache()
@@ -54,7 +52,6 @@
         public void MemoryCacheWithNoNumberShouldNotThrowExceptionWithViewComponentAnyCacheEntries()
         {
             MyViewComponent<MemoryCacheValuesComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .MemoryCache()
@@ -70,7 +67,6 @@
                 () =>
                 {
                     MyViewComponent<NormalComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .MemoryCache()
@@ -85,7 +81,6 @@
         public void MemoryCacheWithNumberShouldNotThrowExceptionWithCorrectCacheEntries()
         {
             MyViewComponent<MemoryCacheValuesComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .MemoryCache(withNumberOfEntries: 2)
@@ -101,7 +96,6 @@
                 () =>
                 {
                     MyViewComponent<MemoryCacheValuesComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .MemoryCache(1)
@@ -119,7 +113,6 @@
                 () =>
                 {
                     MyViewComponent<MemoryCacheValuesComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .MemoryCache(3)
@@ -134,7 +127,6 @@
         public void MemoryCacheWithBuilderShouldNotThrowWithCorrectEntry()
         {
             MyViewComponent<MemoryCacheValuesComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .MemoryCache(cache => cache
@@ -151,7 +143,6 @@
                 () =>
                 {
                     MyViewComponent<MemoryCacheValuesComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .MemoryCache(cache => cache
@@ -170,7 +161,6 @@
                 () =>
                 {
                     MyViewComponent<MemoryCacheValuesComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .MemoryCache(cache => cache
@@ -186,7 +176,6 @@
         public void MemoryCacheWithBuilderShouldWorkCorrectlyWithMemoryCacheEntryOptions()
         {
             MyViewComponent<MemoryCacheValuesComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .MemoryCache(cache => cache
@@ -209,7 +198,6 @@
                 () =>
                 {
                     MyViewComponent<MemoryCacheValuesComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .MemoryCache(cache => cache
@@ -234,7 +222,6 @@
                 () =>
                 {
                     MyViewComponent<MemoryCacheValuesComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .MemoryCache(cache => cache
@@ -261,7 +248,6 @@
                 () =>
                 {
                     MyViewComponent<MemoryCacheValuesComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .MemoryCache(cache => cache
@@ -288,7 +274,6 @@
                 () =>
                 {
                     MyViewComponent<MemoryCacheValuesComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .MemoryCache(cache => cache
@@ -315,7 +300,6 @@
                 () =>
                 {
                     MyViewComponent<MemoryCacheValuesComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .MemoryCache(cache => cache
@@ -342,7 +326,6 @@
                 () =>
                 {
                     MyViewComponent<MemoryCacheValuesComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .MemoryCache(cache => cache
@@ -364,7 +347,6 @@
         public void MemoryCacheWithBuilderShouldWorkCorrectlyWithDictionaryOfCacheEntries()
         {
             MyViewComponent<MemoryCacheValuesComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .MemoryCache(cache => cache
@@ -385,7 +367,6 @@
                 () =>
                 {
                     MyViewComponent<MemoryCacheValuesComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .MemoryCache(cache => cache
@@ -407,7 +388,6 @@
                 () =>
                 {
                     MyViewComponent<MemoryCacheValuesComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .MemoryCache(cache => cache
@@ -430,7 +410,6 @@
                 () =>
                 {
                     MyViewComponent<MemoryCacheValuesComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .MemoryCache(cache => cache
@@ -450,7 +429,6 @@
         public void MemoryCacheWithBuilderWithPredicateShouldWorkWithCorrectPassingAssertions()
         {
             MyViewComponent<MemoryCacheValuesComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .MemoryCache(cache => cache
@@ -467,7 +445,6 @@
         public void MemoryCacheWithBuilderWithPredicateShouldWorkWithCorrectPassingPredicate()
         {
             MyViewComponent<MemoryCacheValuesComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .MemoryCache(cache => cache
@@ -487,7 +464,6 @@
                 () =>
                 {
                     MyViewComponent<MemoryCacheValuesComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .MemoryCache(cache => cache
@@ -509,7 +485,6 @@
                 () =>
                 {
                     MyViewComponent<MemoryCacheValuesComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .MemoryCache(cache => cache
@@ -529,7 +504,6 @@
                 () =>
                 {
                     MyViewComponent<MemoryCacheValuesComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .MemoryCache(cache => cache
@@ -547,7 +521,6 @@
         public void MemoryCacheWithBuilderWithPredicateShouldWorkWithCorrectAbsoluteExpiration()
         {
             MyViewComponent<MemoryCacheValuesComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .MemoryCache(cache => cache
@@ -569,7 +542,6 @@
                 () =>
                 {
                     MyViewComponent<MemoryCacheValuesComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .MemoryCache(cache => cache
@@ -587,7 +559,6 @@
         public void MemoryCacheWithBuilderWithPredicateShouldWorkWithCorrectAbsoluteExpirationRelativeToNow()
         {
             MyViewComponent<MemoryCacheValuesComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .MemoryCache(cache => cache
@@ -609,7 +580,6 @@
                 () =>
                 {
                     MyViewComponent<MemoryCacheValuesComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .MemoryCache(cache => cache
@@ -627,7 +597,6 @@
         public void MemoryCacheWithBuilderWithPredicateShouldWorkWithCorrectSlidingExpiration()
         {
             MyViewComponent<MemoryCacheValuesComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .MemoryCache(cache => cache
@@ -649,7 +618,6 @@
                 () =>
                 {
                     MyViewComponent<MemoryCacheValuesComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .MemoryCache(cache => cache
@@ -667,7 +635,6 @@
         public void MemoryCacheWithBuilderWithPredicateShouldWorkWithCorrectPriority()
         {
             MyViewComponent<MemoryCacheValuesComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .MemoryCache(cache => cache
@@ -689,7 +656,6 @@
                 () =>
                 {
                     MyViewComponent<MemoryCacheValuesComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .MemoryCache(cache => cache
@@ -707,7 +673,6 @@
         public void ContainingEntryOfTypeShouldNotThrowWithCorrectEntry()
         {
             MyViewComponent<MemoryCacheValuesComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .MemoryCache(cache => cache.ContainingEntryOfType<string>())
@@ -723,7 +688,6 @@
                 () =>
                 {
                     MyViewComponent<MemoryCacheValuesComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .MemoryCache(cache => cache.ContainingEntryOfType<int>())
@@ -738,7 +702,6 @@
         public void ContainingEntryOfTypeAndKeyShouldNotThrowWithCorrectEntry()
         {
             MyViewComponent<MemoryCacheValuesComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .MemoryCache(cache => cache.ContainingEntryOfType<string>("test"))
@@ -754,7 +717,6 @@
                 () =>
                 {
                     MyViewComponent<MemoryCacheValuesComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .MemoryCache(cache => cache.ContainingEntryOfType<string>("Invalid"))
@@ -772,7 +734,6 @@
                 () =>
                 {
                     MyViewComponent<MemoryCacheValuesComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .MemoryCache(cache => cache.ContainingEntryOfType<int>("test"))
@@ -787,7 +748,6 @@
         public void ContainingEntryWithValueShouldNotThrowWithCorrectEntry()
         {
             MyViewComponent<MemoryCacheValuesComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .MemoryCache(cache => cache.ContainingEntryWithValue("value"))
@@ -803,7 +763,6 @@
                 () =>
                 {
                     MyViewComponent<MemoryCacheValuesComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .MemoryCache(cache => cache.ContainingEntryWithValue("invalid"))
@@ -818,7 +777,6 @@
         public void ContainingEntryWithKeyShouldNotThrowWithCorrectEntry()
         {
             MyViewComponent<MemoryCacheValuesComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .MemoryCache(cache => cache
@@ -837,7 +795,6 @@
                 () =>
                 {
                     MyViewComponent<MemoryCacheValuesComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .MemoryCache(cache => cache.ContainingEntryWithKey("Invalid"))

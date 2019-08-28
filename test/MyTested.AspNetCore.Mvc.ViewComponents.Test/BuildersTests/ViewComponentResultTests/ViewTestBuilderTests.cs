@@ -16,7 +16,6 @@
         public void WithModelShouldNotThrowExceptionWithCorrectModel()
         {
             MyViewComponent<ViewResultComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke("All"))
                 .ShouldReturn()
                 .View("SomeView")
@@ -30,7 +29,6 @@
                 () =>
                 {
                     MyViewComponent<ViewResultComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke("All"))
                         .ShouldReturn()
                         .View("SomeView")
@@ -46,7 +44,6 @@
                 () =>
                 {
                     MyViewComponent<ViewResultComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke("All"))
                         .ShouldReturn()
                         .View("SomeView")
@@ -62,7 +59,6 @@
                 () =>
                 {
                     MyViewComponent<ViewResultComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke("All"))
                         .ShouldReturn()
                         .View("SomeView")
@@ -102,7 +98,6 @@
         public void WithModelOfTypeShouldNotThrowExceptionWithCorrectType()
         {
             MyViewComponent<ViewResultComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke("All"))
                 .ShouldReturn()
                 .View("SomeView")
@@ -248,7 +243,6 @@
         public void AndProvideTheActionResultShouldWorkCorrectlyWithPartial()
         {
             MyViewComponent<ViewResultComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke("All"))
                 .ShouldReturn()
                 .View("SomeView")

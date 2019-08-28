@@ -14,7 +14,6 @@
         public void NoAttributesShouldNotThrowExceptionWithActionContainingNoAttributes()
         {
             MyViewComponent<NormalComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .NoAttributes();
@@ -27,7 +26,6 @@
                 () =>
                 {
                     MyViewComponent<AttributesComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .NoAttributes();
@@ -39,7 +37,6 @@
         public void AttributesShouldNotThrowExceptionWithActionContainingAttributes()
         {
             MyViewComponent<AttributesComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .Attributes();
@@ -83,7 +80,6 @@
                 () =>
                 {
                     MyViewComponent<NormalComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .Attributes();
@@ -110,7 +106,6 @@
         public void AttributesShouldNotThrowExceptionWithActionContainingNumberOfAttributes()
         {
             MyViewComponent<AttributesComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .Attributes(withTotalNumberOf: 2);
@@ -123,7 +118,6 @@
                 () =>
                 {
                     MyViewComponent<AttributesComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .Attributes(withTotalNumberOf: 10);
@@ -138,7 +132,6 @@
                 () =>
                 {
                     MyViewComponent<AttributesComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .Attributes(withTotalNumberOf: 1);

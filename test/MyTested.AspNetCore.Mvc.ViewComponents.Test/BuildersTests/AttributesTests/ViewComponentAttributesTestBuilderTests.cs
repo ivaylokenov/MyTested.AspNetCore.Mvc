@@ -14,7 +14,6 @@
         public void ContainingAttributeOfTypeShouldNotThrowExceptionWithViewComponentWithTheAttribute()
         {
             MyViewComponent<AttributesComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .Attributes(attributes => attributes.ContainingAttributeOfType<CustomAttribute>());
@@ -27,7 +26,6 @@
                 () =>
                 {
                     MyViewComponent<AttributesComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .Attributes(attributes => attributes.ContainingAttributeOfType<HttpPatchAttribute>());

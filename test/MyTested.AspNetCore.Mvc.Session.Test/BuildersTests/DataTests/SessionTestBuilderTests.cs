@@ -1133,7 +1133,6 @@
                 });
 
             MyViewComponent<AddSessionComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .Session(session => session
@@ -1163,7 +1162,6 @@
                 () =>
                 {
                     MyViewComponent<AddSessionComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .Session(session => session

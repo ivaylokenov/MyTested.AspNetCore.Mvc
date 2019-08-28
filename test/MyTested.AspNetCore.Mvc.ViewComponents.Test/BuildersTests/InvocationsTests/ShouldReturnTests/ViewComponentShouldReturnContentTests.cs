@@ -12,7 +12,6 @@
         public void ShouldReturnContentShouldNotThrowExceptionWithContentResult()
         {
             MyViewComponent<NormalComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .Content();
@@ -22,7 +21,6 @@
         public void ShouldReturnContentShouldNotThrowExceptionWithContentResultAndValue()
         {
             MyViewComponent<NormalComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .Content("Test");
@@ -35,7 +33,6 @@
                 () =>
                 {
                     MyViewComponent<NormalComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldReturn()
                         .Content("incorrect");
@@ -80,7 +77,6 @@
                 () =>
                 {
                     MyViewComponent<AsyncComponent>
-                        .Instance()
                         .InvokedWith(c => c.InvokeAsync())
                         .ShouldReturn()
                         .Content("content");
@@ -92,7 +88,6 @@
         public void ShouldReturnContentWithPredicateShouldNotThrowExceptionWithValidPredicate()
         {
             MyViewComponent<NormalComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .Content(content => content.StartsWith("Te"));
@@ -105,7 +100,6 @@
                 () =>
                 {
                     MyViewComponent<NormalComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldReturn()
                         .Content(content => content.StartsWith("invalid"));
@@ -117,7 +111,6 @@
         public void ShouldReturnContentWithAssertionsShouldNotThrowExceptionWithValidPredicate()
         {
             MyViewComponent<NormalComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .Content(content =>
