@@ -4,6 +4,7 @@
     using Setups;
     using Setups.ViewComponents;
     using Xunit;
+    using Xunit.Sdk;
 
     public class ViewComponentShouldReturnContentTests
     {
@@ -40,6 +41,36 @@
                         .Content("incorrect");
                 },
                 "When invoking NormalComponent expected content result to contain 'incorrect', but instead received 'Test'.");
+        }
+
+        [Fact]
+        public void ShouldReturnContentShouldThrowExceptionWithEmptyContent()
+        {
+            Test.AssertException<ContentViewComponentResultAssertionException>(
+                () =>
+                {
+                    MyViewComponent<NormalComponent>
+                        .Instance()
+                        .InvokedWith(c => c.Invoke())
+                        .ShouldReturn()
+                        .Content(string.Empty);
+                },
+                "When invoking NormalComponent expected content result to contain '', but instead received 'Test'.");
+        }
+
+        [Fact]
+        public void ShouldReturnContentShouldThrowExceptionWithNull()
+        {
+            Test.AssertException<ContentViewComponentResultAssertionException>(
+                () =>
+                {
+                    MyViewComponent<NormalComponent>
+                        .Instance()
+                        .InvokedWith(c => c.Invoke())
+                        .ShouldReturn()
+                        .Content(content: null);
+                },
+                "When invoking NormalComponent expected content result to contain '', but instead received 'Test'.");
         }
 
         [Fact]
@@ -92,6 +123,23 @@
                 .Content(content =>
                 {
                     Assert.StartsWith("Te", content);
+                });
+        }
+
+        [Fact]
+        public void ShouldReturnContentWithAssertionsShouldThrowExceptionWithInvalidPredicate()
+        {
+            Assert.Throws<StartsWithException>(
+                () =>
+                {
+                    MyViewComponent<NormalComponent>
+                        .Instance()
+                        .InvokedWith(c => c.Invoke())
+                        .ShouldReturn()
+                        .Content(content =>
+                        {
+                            Assert.StartsWith("te", content);
+                        });
                 });
         }
     }
