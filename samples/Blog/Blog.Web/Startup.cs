@@ -61,9 +61,11 @@
                 .AddTransient<IDateTimeProvider, DateTimeProvider>();
 
             services
-                .AddMvc(options => options
+                .AddControllersWithViews(options => options
                     .AddAutoValidateAntiforgeryToken())
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
+            services.AddRazorPages();
         }
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

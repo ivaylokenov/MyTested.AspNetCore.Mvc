@@ -27,6 +27,8 @@
                     name: "areas",
                     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
                 );
+
+                routes.MapRazorPages();
             });
 
         public static async Task<IApplicationBuilder> SeedDataAsync(this IApplicationBuilder app)
