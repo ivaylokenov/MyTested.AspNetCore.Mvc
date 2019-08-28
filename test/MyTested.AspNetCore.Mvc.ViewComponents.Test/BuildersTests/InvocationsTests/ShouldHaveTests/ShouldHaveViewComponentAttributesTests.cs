@@ -1,9 +1,12 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.InvocationsTests.ShouldHaveTests
 {
     using Exceptions;
+    using Microsoft.AspNetCore.Mvc;
+    using MyTested.AspNetCore.Mvc.Test.Setups.Common;
     using Setups;
     using Setups.ViewComponents;
     using Xunit;
+    using Xunit.Sdk;
 
     public class ShouldHaveViewComponentAttributesTests
     {
@@ -16,7 +19,7 @@
                 .ShouldHave()
                 .NoAttributes();
         }
-        
+
         [Fact]
         public void NoAttributesShouldThrowExceptionWithActionContainingAttributes()
         {
@@ -33,7 +36,7 @@
         }
         
         [Fact]
-        public void AttributesShouldNotThrowEceptionWithActionContainingAttributes()
+        public void AttributesShouldNotThrowExceptionWithActionContainingAttributes()
         {
             MyViewComponent<AttributesComponent>
                 .Instance()
@@ -43,7 +46,38 @@
         }
 
         [Fact]
-        public void AttributesShouldThrowEceptionWithActionContainingNoAttributes()
+        public void AttributesShouldNotThrowExceptionWithActionContainingAttributesOfType()
+        {
+            MyViewComponent<AttributesComponent>
+                .Instance()
+                .InvokedWith(c => c.Invoke())
+                .ShouldHave()
+                .Attributes(attributes => 
+                {
+                    attributes.ContainingAttributeOfType<CustomAttribute>();
+                });
+        }
+
+        [Fact]
+        public void AttributesShouldThrowExceptionWithActionContainingAttributesOfTypeWithIncorrectValue()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyViewComponent<AttributesComponent>
+                        .Instance()
+                        .InvokedWith(c => c.Invoke())
+                        .ShouldHave()
+                        .Attributes(attributes =>
+                        {
+                            attributes.ContainingAttributeOfType<AreaAttribute>();
+                        });
+                },
+                "When testing AttributesComponent was expected to have AreaAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void AttributesShouldThrowExceptionWithActionContainingNoAttributes()
         {
             Test.AssertException<AttributeAssertionException>(
                 () =>
@@ -56,9 +90,24 @@
                 },
                 "When testing NormalComponent was expected to have at least 1 attribute, but in fact none was found.");
         }
-        
+
         [Fact]
-        public void AttributesShouldNotThrowEceptionWithActionContainingNumberOfAttributes()
+        public void AttributesShouldThrowExceptionWithActionContainingZeroAttributes()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyViewComponent<NormalComponent>
+                        .Instance()
+                        .InvokedWith(c => c.Invoke())
+                        .ShouldHave()
+                        .Attributes(withTotalNumberOf: 0);
+                },
+                "When testing NormalComponent was expected to have at least 1 attribute, but in fact none was found.");
+        }
+
+        [Fact]
+        public void AttributesShouldNotThrowExceptionWithActionContainingNumberOfAttributes()
         {
             MyViewComponent<AttributesComponent>
                 .Instance()
@@ -68,7 +117,7 @@
         }
 
         [Fact]
-        public void AttributesShouldThrowEceptionWithActionContainingNumberOfAttributes()
+        public void AttributesShouldThrowExceptionWithActionContainingNumberOfAttributes()
         {
             Test.AssertException<AttributeAssertionException>(
                 () =>
@@ -83,7 +132,7 @@
         }
 
         [Fact]
-        public void AttributesShouldThrowEceptionWithActionContainingNumberOfAttributesTestingWithOne()
+        public void AttributesShouldThrowExceptionWithActionContainingNumberOfAttributesTestingWithOne()
         {
             Test.AssertException<AttributeAssertionException>(
                 () =>
@@ -95,6 +144,41 @@
                         .Attributes(withTotalNumberOf: 1);
                 },
                 "When testing AttributesComponent was expected to have 1 attribute, but in fact found 2.");
+        }
+
+        [Fact]
+        public void AndAlsoShouldWorkCorrectly()
+        {
+            MyViewComponent<PocoViewComponent>
+                .Instance()
+                .InvokedWith(c => c.Invoke())
+                .ShouldHave()
+                .NoAttributes()
+                .AndAlso()
+                .ShouldPassForThe<PocoViewComponent>((viewComponent) =>
+                {
+                    Assert.NotNull(viewComponent);
+                    Assert.Empty(viewComponent.TempData);
+                });
+        }
+
+        [Fact]
+        public void AndAlsoShouldThrowExceptionWithIncorrectAssertions()
+        {
+            Assert.Throws<TrueException>(
+                () =>
+                {
+                    MyViewComponent<PocoViewComponent>
+                        .Instance()
+                        .InvokedWith(c => c.Invoke())
+                        .ShouldHave()
+                        .NoAttributes()
+                        .AndAlso()
+                        .ShouldPassForThe<PocoViewComponent>((viewComponent) =>
+                        {
+                            Assert.True(viewComponent.TempData == null);
+                        });
+                });
         }
     }
 }
