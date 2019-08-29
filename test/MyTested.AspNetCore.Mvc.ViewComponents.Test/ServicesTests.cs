@@ -9,6 +9,7 @@
     using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.AspNetCore.Mvc.ViewComponents;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.Extensions.DependencyInjection;
     using Setups;
     using Setups.Services;
@@ -323,7 +324,85 @@
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
-        
+
+        [Fact]
+        public void WithViewContextWithoutViewDataShouldSetItToAccessor()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+                });
+
+            ViewDataDictionary viewData = null;
+
+            MyViewComponent<AccessorComponent>
+                .Instance()
+                .WithViewContext(viewContext =>
+                {
+                    viewContext.ViewData = null;
+                })
+                .ShouldPassForThe<AccessorComponent>(viewComponent =>
+                {
+                    viewData = viewComponent.ViewContext.ViewData;
+                });
+
+            Assert.NotNull(viewData);
+            Assert.IsAssignableFrom<ViewDataDictionaryMock>(viewData);
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithViewComponentContextWithoutViewComponentDescriptorShouldSetItToAccessor()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+                });
+
+            var context = new ViewComponentContext { ViewComponentDescriptor = null };
+
+            MyViewComponent<AccessorComponent>
+                .Instance()
+                .WithViewComponentContext(context)
+                .ShouldPassForThe<AccessorComponent>(viewComponent =>
+                {
+                    Assert.NotNull(viewComponent);
+                    Assert.NotNull(viewComponent.ViewComponentContext);
+                    Assert.NotNull(viewComponent.ViewComponentContext.ViewComponentDescriptor);
+                });
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithViewComponentContextWithoutViewContextShouldSetItToAccessor()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+                });
+
+            var context = new ViewComponentContext { ViewContext = null };
+
+            MyViewComponent<AccessorComponent>
+                .Instance()
+                .WithViewComponentContext(context)
+                .ShouldPassForThe<AccessorComponent>(viewComponent =>
+                {
+                    Assert.NotNull(viewComponent);
+                    Assert.NotNull(viewComponent.ViewContext);
+                });
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
         [Fact]
         public void WithViewComponentContextFuncShouldSetItToAccessor()
         {
@@ -373,6 +452,72 @@
                     Assert.NotNull(viewComponent);
                     Assert.NotNull(viewComponent.ActionContext);
                     Assert.Equal("Test", viewComponent.ActionContext.ActionDescriptor.DisplayName);
+                });
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithViewContextWithoutValidationMessageElementShouldSetItToAccessor()
+        {
+            var mvcOptions = new MvcViewOptions()
+            {
+                HtmlHelperOptions = new HtmlHelperOptions()
+            };
+
+            mvcOptions.HtmlHelperOptions.ValidationMessageElement = "Test";
+
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddSingleton(mvcOptions);
+                    services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+                });
+
+            MyViewComponent<AccessorComponent>
+                .Instance()
+                .WithViewContext(viewContext =>
+                {
+                    viewContext.ValidationMessageElement = null;
+                })
+                .ShouldPassForThe<AccessorComponent>(viewComponent =>
+                {
+                    Assert.NotNull(viewComponent.ViewContext.ValidationMessageElement);
+                    Assert.True(viewComponent.ViewContext.ValidationMessageElement == "Test");
+                });
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithViewContextWithoutValidationSummaryMessageElementShouldSetItToAccessor()
+        {
+            var mvcOptions = new MvcViewOptions()
+            {
+                HtmlHelperOptions = new HtmlHelperOptions()
+            };
+
+            mvcOptions.HtmlHelperOptions.ValidationSummaryMessageElement = "Test";
+
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddSingleton(mvcOptions);
+                    services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+                });
+
+            MyViewComponent<AccessorComponent>
+                .Instance()
+                .WithViewContext(viewContext =>
+                {
+                    viewContext.ValidationSummaryMessageElement = null;
+                })
+                .ShouldPassForThe<AccessorComponent>(viewComponent =>
+                {
+                    Assert.NotNull(viewComponent.ViewContext.ValidationSummaryMessageElement);
+                    Assert.True(viewComponent.ViewContext.ValidationSummaryMessageElement == "Test");
                 });
 
             MyApplication.StartsFrom<DefaultStartup>();
