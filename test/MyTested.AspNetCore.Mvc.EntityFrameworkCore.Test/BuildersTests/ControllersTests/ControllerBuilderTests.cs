@@ -7,6 +7,8 @@
     using Setups.Common;
     using Xunit;
     using Setups;
+    using System.Collections.Generic;
+    using System.Linq;
 
     public class ControllerBuilderTests
     {
@@ -28,12 +30,12 @@
                     Id = 1,
                     Name = "Test"
                 })
-                .Calling(c => c.Find(1))
+                .Calling(c => c.Get(1))
                 .ShouldReturn()
                 .Ok(ok => ok
                     .WithModelOfType<CustomModel>()
                     .Passing(m => m.Name == "Test"));
-            
+
             MyApplication.StartsFrom<DefaultStartup>();
         }
 
@@ -54,9 +56,10 @@
                     .WithEntities<CustomDbContext>(db => db
                         .Models.Add(new CustomModel
                         {
-                            Id = 1, Name = "Test"
+                            Id = 1,
+                            Name = "Test"
                         })))
-                .Calling(c => c.Find(1))
+                .Calling(c => c.Get(1))
                 .ShouldReturn()
                 .Ok(ok => ok
                     .WithModelOfType<CustomModel>()
@@ -66,11 +69,11 @@
                 .Instance()
                 .WithData(data => data
                     .WithEntities(db => db.Add(new CustomModel
-                        {
-                            Id = 1,
-                            Name = "Test"
-                        })))
-                .Calling(c => c.Find(1))
+                    {
+                        Id = 1,
+                        Name = "Test"
+                    })))
+                .Calling(c => c.Get(1))
                 .ShouldReturn()
                 .Ok(ok => ok
                     .WithModelOfType<CustomModel>()
@@ -90,7 +93,7 @@
                             Id = 2,
                             Name = "Test 2"
                         }))
-                .Calling(c => c.Find(1))
+                .Calling(c => c.Get(1))
                 .ShouldReturn()
                 .Ok(ok => ok
                     .WithModelOfType<CustomModel>()
@@ -105,7 +108,7 @@
                             Id = 2,
                             Name = "Test"
                         })))
-                .Calling(c => c.Find(1))
+                .Calling(c => c.Get(1))
                 .ShouldReturn()
                 .NotFound();
 
@@ -123,13 +126,13 @@
                             Id = 3,
                             Name = "Test 3"
                         }))
-                .Calling(c => c.Find(1))
+                .Calling(c => c.Get(1))
                 .ShouldReturn()
                 .NotFound();
 
             MyController<DbContextController>
                 .Instance()
-                .Calling(c => c.Find(1))
+                .Calling(c => c.Get(1))
                 .ShouldReturn()
                 .NotFound();
 
@@ -156,7 +159,7 @@
                             Id = 1,
                             Name = "Test"
                         })))
-                .Calling(c => c.Find(1))
+                .Calling(c => c.Get(1))
                 .ShouldReturn()
                 .Ok(ok => ok
                     .WithModelOfType<CustomModel>()
@@ -171,19 +174,19 @@
                             Id = 2,
                             Name = "Test"
                         })))
-                .Calling(c => c.Find(1))
+                .Calling(c => c.Get(1))
                 .ShouldReturn()
                 .NotFound();
 
             MyController<DbContextController>
                 .Instance()
-                .Calling(c => c.Find(1))
+                .Calling(c => c.Get(1))
                 .ShouldReturn()
                 .NotFound();
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
-        
+
         [Fact]
         public void WithEntitiesShouldSetupMultipleDbContext()
         {
@@ -193,7 +196,7 @@
                 {
                     services.AddDbContext<CustomDbContext>(options =>
                         options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=TestDb;Trusted_Connection=True;MultipleActiveResultSets=true;Connect Timeout=30;"));
-                    
+
                     services.AddDbContext<AnotherDbContext>(options =>
                         options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=AnotherTestDb;Trusted_Connection=True;MultipleActiveResultSets=true;Connect Timeout=30;"));
                 });
@@ -224,7 +227,7 @@
                         Model = modelName,
                         AnotherModel = anotherModelName
                     }));
-            
+
             MyController<MultipleDbContextController>
                 .Instance()
                 .WithData(data => data
@@ -277,7 +280,7 @@
                 .Calling(c => c.Find(1))
                 .ShouldReturn()
                 .NotFound();
-            
+
             MyController<MultipleDbContextController>
                 .Instance()
                 .Calling(c => c.Find(1))
@@ -296,7 +299,7 @@
                 {
                     services.AddDbContext<CustomDbContext>(options =>
                         options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=TestDb;Trusted_Connection=True;MultipleActiveResultSets=true;Connect Timeout=30;"));
-                    
+
                     services.AddDbContext<AnotherDbContext>(options =>
                         options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=AnotherTestDb;Trusted_Connection=True;MultipleActiveResultSets=true;Connect Timeout=30;"));
                 });
@@ -340,7 +343,7 @@
                 .Calling(c => c.Find(1))
                 .ShouldReturn()
                 .NotFound();
-            
+
             MyController<MultipleDbContextController>
                 .Instance()
                 .WithData(data => data
@@ -356,7 +359,7 @@
 
             MyController<DbContextController>
                 .Instance()
-                .Calling(c => c.Find(1))
+                .Calling(c => c.Get(1))
                 .ShouldReturn()
                 .NotFound();
 
@@ -408,6 +411,172 @@
                 "DbContext is not registered in the test service provider.");
 
             MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithoutDataParamsReturnsCorrectResultCodeWhenAllProvidedDataIsDelete()
+        {
+            MyApplication
+                .StartsFrom<TestStartup>()
+                .WithServices(services => services.AddDbContext<CustomDbContext>());
+
+            var model = new CustomModel
+            {
+                Id = 1,
+                Name = "Test"
+            };
+
+            MyController<DbContextController>
+                .Instance()
+                .WithData(model)
+                .WithoutData(model)
+                .Calling(c => c.Get(model.Id))
+                .ShouldReturn()
+                .NotFound();
+        }
+
+        [Fact]
+        public void WithoutDataDeletingWholeDatabaseReturnsCorrectData()
+        {
+            MyApplication
+                  .StartsFrom<TestStartup>()
+                  .WithServices(services => services.AddDbContext<CustomDbContext>());
+
+            var models = new List<CustomModel> { new CustomModel
+            {
+                Id = 1,
+                Name = "Test"
+            }};
+
+            MyController<DbContextController>
+                .Instance()
+                .WithData(models)
+                .WithoutData()
+                .Calling(c => c.Get(models.First().Id))
+                .ShouldReturn()
+                .NotFound();
+        }
+
+        [Fact]
+        public void WithoutDataThrowsExceptionWhenNullIsProvided()
+        {
+            MyApplication
+                .StartsFrom<TestStartup>()
+                .WithServices(services => services.AddDbContext<CustomDbContext>());
+
+            var model = new CustomModel
+            {
+                Id = 1,
+                Name = "Test"
+            };
+
+            MyController<DbContextController>
+                .Instance()
+                .WithData(model)
+                .WithoutData(default(List<object>))
+                .Calling(c => c.Get(model.Id))
+                .ShouldReturn()
+                .NotFound();
+        }
+
+        [Fact]
+        public void WithoutDataDoesNotDeleteAnythingIfEmptyCollectionIsProvided()
+        {
+            MyApplication
+                .StartsFrom<TestStartup>()
+                .WithServices(services => services.AddDbContext<CustomDbContext>());
+
+            var models = new List<CustomModel> {
+                new CustomModel
+                {
+                    Id = 1,
+                    Name = "Test"
+                },
+            new CustomModel
+                {
+                    Id = 2,
+                    Name = "Test2"
+                }
+            };
+
+            MyController<DbContextController>
+                .Instance()
+                .WithData(models)
+                .WithoutData(new List<object>())
+                .Calling(c => c.Get(models.Last().Id))
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .WithModelOfType<CustomModel>()
+                    .Passing(cm => cm.Name.Equals(models.Last().Name)));
+        }
+
+        [Fact]
+        public void WithoutDataWithProvidedOnlyPartialDataForDeletionReturnsCorrectResult()
+        {
+            MyApplication
+                .StartsFrom<TestStartup>()
+                .WithServices(services => services.AddDbContext<CustomDbContext>());
+
+            var models = new List<CustomModel> {
+                new CustomModel
+                {
+                    Id = 1,
+                    Name = "Test"
+                },
+                new CustomModel
+                {
+                    Id = 2,
+                    Name = "Test2"
+                },
+                new CustomModel
+                {
+                    Id = 3,
+                    Name = "Test3"
+                }
+            };
+
+            MyController<DbContextController>
+                .Instance()
+                .WithData(models)
+                .WithoutData(new Func<IEnumerable<object>>(() =>
+                    {
+                        models.RemoveAt(1);
+                        return models;
+                    })
+                    .Invoke())
+                .Calling(c => c.GetAll())
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .WithModelOfType<List<CustomModel>>()
+                    .Passing(mdls => mdls.Count == 1));
+        }
+
+        [Fact]
+        public void WithoutDataReturnsCorrectDataWhenAllTableEntitiesAreDeleted()
+        {
+            MyApplication
+                .StartsFrom<TestStartup>()
+                .WithServices(services => services.AddDbContext<CustomDbContext>());
+
+            var models = new List<CustomModel> {
+                new CustomModel
+                {
+                    Id = 1,
+                    Name = "Test"
+                },
+                new CustomModel
+                {
+                    Id = 2,
+                    Name = "Test2"
+                }};
+
+            MyController<DbContextController>
+                .Instance()
+                .WithData(models)
+                .WithoutData(models)
+                .Calling(c => c.GetAll())
+                .ShouldReturn()
+                .NotFound();
         }
     }
 }
