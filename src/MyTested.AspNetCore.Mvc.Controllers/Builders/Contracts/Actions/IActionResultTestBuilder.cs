@@ -7,7 +7,7 @@
     /// Used for testing the action and its result.
     /// </summary>
     /// <typeparam name="TActionResult">Type of action result to be tested.</typeparam>
-    public interface IActionResultTestBuilder<TActionResult> : IBaseTestBuilderWithActionResult
+    public interface IActionResultTestBuilder<TActionResult> : IBaseTestBuilderWithInvokedAction
     {
         /// <summary>
         /// Used for testing the action's additional data - action attributes, HTTP response, view bag and more.

@@ -227,14 +227,14 @@
         }
 
         /// <inheritdoc />
-        public IAndResolvedRouteTestBuilder To<TController>(Expression<Action<TController>> actionCall)
+        public IControllerRouteTestBuilder<TController> To<TController>(Expression<Action<TController>> actionCall)
             where TController : class 
-            => this.ProcessRouteLambdaExpression(actionCall);
+            => this.ProcessRouteLambdaExpression<TController>(actionCall);
 
         /// <inheritdoc />
-        public IAndResolvedRouteTestBuilder To<TController>(Expression<Func<TController, Task>> actionCall)
+        public IControllerRouteTestBuilder<TController> To<TController>(Expression<Func<TController, Task>> actionCall)
             where TController : class 
-            => this.ProcessRouteLambdaExpression(actionCall);
+            => this.ProcessRouteLambdaExpression<TController>(actionCall);
 
         /// <inheritdoc />
         public void ToNonExistingRoute()
@@ -251,11 +251,11 @@
         /// <inheritdoc />
         public IResolvedRouteTestBuilder AndAlso() => this;
 
-        private IAndResolvedRouteTestBuilder ProcessRouteLambdaExpression(LambdaExpression actionCall)
+        private IControllerRouteTestBuilder<TController> ProcessRouteLambdaExpression<TController>(LambdaExpression actionCall)
         {
             this.actionCallExpression = actionCall;
             this.ValidateRouteInformation();
-            return this;
+            return new ControllerRouteTestBuilder<TController>(this.TestContext);
         }
 
         private void ValidateRouteInformation()

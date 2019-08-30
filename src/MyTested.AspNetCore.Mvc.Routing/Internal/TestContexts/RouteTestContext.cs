@@ -3,7 +3,6 @@
     using System;
     using Microsoft.AspNetCore.Routing;
     using Microsoft.AspNetCore.Http.Features.Authentication;
-    using Routing;
 
     public class RouteTestContext : HttpTestContext
     {
