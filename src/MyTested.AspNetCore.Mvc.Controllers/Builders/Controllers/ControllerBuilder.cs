@@ -1,20 +1,16 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Controllers
 {
-    using Components;
     using Contracts.Controllers;
-    using Internal;
     using Internal.Configuration;
-    using Internal.Contracts;
     using Internal.TestContexts;
-    using Microsoft.AspNetCore.Mvc.Controllers;
-    using Microsoft.Extensions.DependencyInjection;
-    using Utilities.Extensions;
 
     /// <summary>
     /// Used for building the controller which will be tested.
     /// </summary>
     /// <typeparam name="TController">Class representing ASP.NET Core MVC controller.</typeparam>
-    public partial class ControllerBuilder<TController> : BaseComponentBuilder<TController, ControllerTestContext, IAndControllerBuilder<TController>>, IAndControllerBuilder<TController>
+    public partial class ControllerBuilder<TController> 
+        : BaseControllerBuilder<TController, IAndControllerBuilder<TController>>, 
+        IAndControllerBuilder<TController>
         where TController : class
     {
         /// <summary>
@@ -30,13 +26,6 @@
 
         public bool EnabledModelStateValidation { get; set; }
 
-        protected override string ComponentName => "controller";
-
-        protected override bool IsValidComponent
-            => this.Services
-                .GetRequiredService<IValidControllersCache>()
-                .IsValid(typeof(TController));
-
         /// <inheritdoc />
         public IAndControllerBuilder<TController> AndAlso() => this;
 
@@ -48,26 +37,5 @@
         }
         
         protected override IAndControllerBuilder<TController> SetBuilder() => this;
-        
-        protected override TController TryCreateComponentWithFactory()
-        {
-            try
-            {
-                return this.Services
-                    .GetService<IControllerFactory>()
-                    ?.CreateController(this.TestContext.ComponentContext) as TController;
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        protected override void ActivateComponent() 
-            => this.Services
-                .GetServices(WebFramework.Internals.ControllerPropertyActivator)
-                ?.ForEach(a => a
-                    .Exposed()
-                    .Activate(this.TestContext.ComponentContext, this.TestContext.Component));
     }
 }

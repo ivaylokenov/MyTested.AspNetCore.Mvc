@@ -21,7 +21,6 @@
         public void InvokedWithShouldPopulateCorrectInvokeNameAndInvocationResultWithNormalActionCall()
         {
             var testBuilder = MyViewComponent<NormalComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke());
 
             this.CheckViewComponentResultTestBuilder(testBuilder, "Invoke");
@@ -31,7 +30,6 @@
         public void InvokedWithShouldPopulateCorrectActionNameAndActionResultWithAsyncActionCall()
         {
             var testBuilder = MyViewComponent<AsyncComponent>
-                .Instance()
                 .InvokedWith(c => c.InvokeAsync());
 
             this.CheckViewComponentResultTestBuilder(testBuilder, "InvokeAsync");
@@ -41,7 +39,6 @@
         public void InvokedWithShouldHaveValidEmptyModelState()
         {
             MyViewComponent<NormalComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .Content()
@@ -59,7 +56,6 @@
         public void WithAuthenticatedNotCalledShouldNotHaveAuthorizedUser()
         {
             MyViewComponent<NormalComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .Content()
@@ -97,7 +93,6 @@
         public void InvokedWithShouldPopulateCorrectActionDescriptor()
         {
             MyViewComponent<NormalComponent>
-                .Instance()
                 .InvokedWith(vc => vc.Invoke())
                 .ShouldPassForThe<NormalComponent>(viewComponent =>
                 {
@@ -115,7 +110,6 @@
                 () =>
                 {
                     MyViewComponent<UrlComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldReturn()
                         .Content();
@@ -130,7 +124,6 @@
                 () =>
                 {
                     MyViewComponent<ExceptionComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldReturn()
                         .Content();
@@ -283,7 +276,6 @@
         public void WithArgumentsShouldResolveCorrectly()
         {
             MyViewComponent<ArgumentsComponent>
-                .Instance()
                 .InvokedWith(vc => vc.Invoke(1, new RequestModel { RequiredString = "Test" }))
                 .ShouldReturn()
                 .Content("1,Test")

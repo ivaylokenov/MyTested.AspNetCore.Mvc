@@ -11,7 +11,6 @@
         public void ChangingViewComponentNameToShouldNotThrowExceptionWithViewComponentWithTheAttribute()
         {
             MyViewComponent<AttributesComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .Attributes(attributes => attributes.ChangingViewComponentNameTo("Test"));
@@ -24,7 +23,6 @@
                 () =>
                 {
                     MyViewComponent<AttributesComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .Attributes(attributes => attributes.ChangingViewComponentNameTo("Another"));
@@ -39,7 +37,6 @@
                 () =>
                 {
                     MyViewComponent<NormalComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .Attributes(attributes => attributes.ChangingViewComponentNameTo("Normal"));

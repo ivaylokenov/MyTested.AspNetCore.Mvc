@@ -17,7 +17,6 @@
                 () =>
                 {
                     MyViewComponent<PocoViewComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .NoViewData()

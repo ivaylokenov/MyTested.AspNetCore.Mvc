@@ -696,7 +696,6 @@
         public void ViewComponentInvocationShouldNotThrowExceptionWithCorrectResponse()
         {
             MyViewComponent<HttpResponseComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .HttpResponse(response => response
@@ -724,7 +723,6 @@
                 () =>
                 {
                     MyViewComponent<HttpResponseComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .HttpResponse(response => response.WithJsonBody(new RequestModel { Integer = 2, RequiredString = "Text" }));
