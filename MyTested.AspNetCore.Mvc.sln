@@ -235,6 +235,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Core.MissingWebSdk", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyTested.AspNetCore.Mvc.Pipeline", "src\MyTested.AspNetCore.Mvc.Pipeline\MyTested.AspNetCore.Mvc.Pipeline.csproj", "{FA139588-1E38-4242-BB71-7784010DFEE4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyTested.AspNetCore.Mvc.Pipeline.Test", "test\MyTested.AspNetCore.Mvc.Pipeline.Test\MyTested.AspNetCore.Mvc.Pipeline.Test.csproj", "{241D1E6E-6639-4D45-98A0-0BFA1F200C5A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -657,6 +659,10 @@ Global
 		{FA139588-1E38-4242-BB71-7784010DFEE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA139588-1E38-4242-BB71-7784010DFEE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA139588-1E38-4242-BB71-7784010DFEE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{241D1E6E-6639-4D45-98A0-0BFA1F200C5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{241D1E6E-6639-4D45-98A0-0BFA1F200C5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{241D1E6E-6639-4D45-98A0-0BFA1F200C5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{241D1E6E-6639-4D45-98A0-0BFA1F200C5A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -775,6 +781,7 @@ Global
 		{32B24AD2-9D35-4A5A-86CE-8C7862DED27E} = {D140FA14-A6C2-4279-8A41-35BC55279DA8}
 		{E88A7195-A252-4C51-8255-6442ADD67874} = {7BEC9808-8650-4322-BCC6-1D7D91B53678}
 		{FA139588-1E38-4242-BB71-7784010DFEE4} = {09353A03-2B0C-496B-8EB1-2CB6A22D758B}
+		{241D1E6E-6639-4D45-98A0-0BFA1F200C5A} = {D140FA14-A6C2-4279-8A41-35BC55279DA8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {99A2DEDD-5195-4EE6-A546-B1CA54C5539F}
