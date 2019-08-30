@@ -2,10 +2,10 @@
 {
     using Components;
     using Contracts.Base;
+    using Internal;
     using Internal.Contracts;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc.Controllers;
-    using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.Extensions.DependencyInjection;
     using System.Linq.Expressions;
     using System.Reflection;
@@ -53,8 +53,10 @@
 
         protected override void ActivateComponent()
             => this.Services
-                .GetServices<IControllerPropertyActivator>()
-                ?.ForEach(a => a.Activate(this.TestContext.ComponentContext, this.TestContext.Component));
+                .GetServices(WebFramework.Internals.ControllerPropertyActivator)
+                ?.ForEach(a => a
+                    .Exposed()
+                    .Activate(this.TestContext.ComponentContext, this.TestContext.Component));
 
         protected override void ProcessAndValidateMethod(LambdaExpression methodCall, MethodInfo methodInfo)
         {
