@@ -9,9 +9,9 @@
         public IActionResult Index() => this.View();
 
         public async Task<IActionResult> AsyncMethod() 
-            => await Task.Run(() => this.Ok());
+            => await Task.Run(() => this.Ok("Test"));
 
-        public IActionResult Contact(int id) => this.View();
+        public IActionResult Contact(int id) => this.Ok(id);
 
         public IActionResult FailingAction() 
             => throw new InvalidOperationException();

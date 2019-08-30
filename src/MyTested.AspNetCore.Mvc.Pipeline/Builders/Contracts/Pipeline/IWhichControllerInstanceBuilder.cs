@@ -2,6 +2,7 @@
 {
     using Builders.Contracts.Actions;
     using Controllers;
+    using Internal.Results;
 
     /// <summary>
     /// Used for building the controller which will be tested after a route assertion.
@@ -9,7 +10,8 @@
     /// <typeparam name="TController"></typeparam>
     public interface IWhichControllerInstanceBuilder<TController> 
         : IBaseControllerBuilder<TController, IAndWhichControllerInstanceBuilder<TController>>,
-        IActionResultTestBuilder<object>
+        IActionResultTestBuilder<MethodResult>,
+        IVoidActionResultTestBuilder
         where TController : class
     {
     }

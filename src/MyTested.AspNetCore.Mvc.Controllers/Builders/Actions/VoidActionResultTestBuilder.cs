@@ -6,6 +6,7 @@
     using Contracts.CaughtExceptions;
     using CaughtExceptions;
     using Internal;
+    using Internal.Results;
     using Internal.TestContexts;
     using ShouldHave;
     using Utilities.Validators;
@@ -33,10 +34,10 @@
         }
 
         /// <inheritdoc />
-        public IShouldHaveTestBuilder<VoidMethodResult> ShouldHave()
+        public IShouldHaveTestBuilder<MethodResult> ShouldHave()
         {
             InvocationValidator.CheckForException(this.CaughtException, this.TestContext.ExceptionMessagePrefix);
-            return new ShouldHaveTestBuilder<VoidMethodResult>(this.TestContext);
+            return new ShouldHaveTestBuilder<MethodResult>(this.TestContext);
         }
 
         /// <inheritdoc />

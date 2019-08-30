@@ -32,6 +32,17 @@
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShouldMapTestBuilder"/> class.
+        /// </summary>
+        /// <param name="testContext"><see cref="RouteTestContext"/> containing data about the currently executed assertion chain.</param>
+        /// <param name="actionCallExpression">Method call expression indicating the expected resolved action.</param>
+        protected ShouldMapTestBuilder(
+            RouteTestContext testContext,
+            LambdaExpression actionCallExpression)
+            : this(testContext)
+            => this.actionCallExpression = actionCallExpression;
+
         private RouteContext RouteContext => this.TestContext.RouteContext;
 
         /// <inheritdoc />
@@ -254,8 +265,10 @@
         private IControllerRouteTestBuilder<TController> ProcessRouteLambdaExpression<TController>(LambdaExpression actionCall)
         {
             this.actionCallExpression = actionCall;
+
             this.ValidateRouteInformation();
-            return new ControllerRouteTestBuilder<TController>(this.TestContext);
+
+            return new ControllerRouteTestBuilder<TController>(this.TestContext, actionCall);
         }
 
         private void ValidateRouteInformation()

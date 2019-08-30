@@ -5,6 +5,9 @@
     using Builders.Contracts.Controllers;
     using Builders.Contracts.Pipeline;
     using Builders.Contracts.Routing;
+    using Builders.Pipeline;
+    using Builders.Routing;
+    using Internal.TestContexts;
 
     /// <summary>
     /// Contains extension methods for <see cref="IControllerRouteTestBuilder{TController}"/>.
@@ -21,7 +24,14 @@
             this IControllerRouteTestBuilder<TController> builder)
             where TController : class
         {
-            return null;
+            var actualBuilder = (ControllerRouteTestBuilder<TController>)builder;
+
+            var actionCall = actualBuilder.ActionCallExpression;
+
+            return new WhichControllerInstanceBuilder<TController>(new ControllerTestContext
+            {
+                MethodCall = actionCall
+            });
         }
 
         /// <summary>

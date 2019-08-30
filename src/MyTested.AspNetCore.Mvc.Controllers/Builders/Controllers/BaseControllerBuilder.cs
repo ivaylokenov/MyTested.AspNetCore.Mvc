@@ -3,12 +3,11 @@
     using Components;
     using Contracts.Base;
     using Internal;
+    using Internal.Configuration;
     using Internal.Contracts;
     using Internal.TestContexts;
     using Microsoft.AspNetCore.Mvc.Controllers;
     using Microsoft.Extensions.DependencyInjection;
-    using System.Linq.Expressions;
-    using System.Reflection;
     using Utilities.Extensions;
 
     /// <summary>
@@ -27,8 +26,12 @@
         /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
         protected BaseControllerBuilder(ControllerTestContext testContext) 
             : base(testContext)
-        {
-        }
+        => this.EnabledModelStateValidation = ServerTestConfiguration
+                .Global
+                .GetControllersConfiguration()
+                .ModelStateValidation;
+
+        public bool EnabledModelStateValidation { get; set; }
 
         protected override string ComponentName => "controller";
 
@@ -57,10 +60,5 @@
                 ?.ForEach(a => a
                     .Exposed()
                     .Activate(this.TestContext.ComponentContext, this.TestContext.Component));
-
-        protected override void ProcessAndValidateMethod(LambdaExpression methodCall, MethodInfo methodInfo)
-        {
-            // Intentionally left empty. Not all controller builders allow action execution.
-        }
     }
 }

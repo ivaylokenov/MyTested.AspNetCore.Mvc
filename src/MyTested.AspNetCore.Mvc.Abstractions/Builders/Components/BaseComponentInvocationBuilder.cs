@@ -3,7 +3,7 @@
     using System;
     using System.Linq.Expressions;
     using System.Threading.Tasks;
-    using Internal;
+    using Internal.Results;
     using Internal.TestContexts;
     using Utilities;
     using System.Reflection;

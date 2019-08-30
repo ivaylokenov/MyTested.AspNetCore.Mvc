@@ -1,9 +1,9 @@
-﻿namespace MyTested.AspNetCore.Mvc.Internal
+﻿namespace MyTested.AspNetCore.Mvc.Internal.Results
 {
     /// <summary>
-    /// Represents void method result in generic test builder.
+    /// Represents void method result in a generic test builder.
     /// </summary>
-    public class VoidMethodResult
+    public class VoidMethodResult : MethodResult
     {
         /// <summary>
         /// Gets an instance of <see cref="VoidMethodResult"/>.
