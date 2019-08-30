@@ -2,7 +2,6 @@
 {
     using System;
     using System.Reflection;
-    using Contracts.Controllers;
     using Internal.Controllers;
     using Microsoft.AspNetCore.Mvc;
     using Utilities.Validators;
@@ -10,34 +9,32 @@
     /// <content>
     /// Used for building the controller which will be tested.
     /// </content>
-    public partial class ControllerBuilder<TController>
+    public abstract partial class BaseControllerBuilder<TController, TBuilder>
     {
         /// <inheritdoc />
-        public IAndControllerBuilder<TController> WithControllerContext(ControllerContext controllerContext)
-        {
-            return this.WithActionContext(controllerContext);
-        }
+        public TBuilder WithControllerContext(ControllerContext controllerContext)
+            => this.WithActionContext(controllerContext);
 
         /// <inheritdoc />
-        public IAndControllerBuilder<TController> WithControllerContext(Action<ControllerContext> controllerContextSetup)
+        public TBuilder WithControllerContext(Action<ControllerContext> controllerContextSetup)
         {
             this.TestContext.ComponentContextPreparationDelegate += controllerContextSetup;
-            return this;
+            return this.Builder;
         }
 
         /// <inheritdoc />
-        public IAndControllerBuilder<TController> WithActionContext(ActionContext actionContext)
+        public TBuilder WithActionContext(ActionContext actionContext)
         {
             CommonValidator.CheckForNullReference(actionContext, nameof(ActionContext));
             this.TestContext.ComponentContext = ControllerContextMock.FromActionContext(this.TestContext, actionContext);
-            return this;
+            return this.Builder;
         }
 
         /// <inheritdoc />
-        public IAndControllerBuilder<TController> WithActionContext(Action<ActionContext> actionContextSetup)
+        public TBuilder WithActionContext(Action<ActionContext> actionContextSetup)
         {
             this.TestContext.ComponentContextPreparationDelegate += actionContextSetup;
-            return this;
+            return this.Builder;
         }
         
         protected override void PrepareComponentContext()
