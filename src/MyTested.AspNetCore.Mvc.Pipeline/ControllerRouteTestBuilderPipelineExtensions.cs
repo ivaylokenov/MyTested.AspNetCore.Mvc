@@ -7,6 +7,7 @@
     using Builders.Contracts.Routing;
     using Builders.Pipeline;
     using Builders.Routing;
+    using Internal.Results;
     using Internal.TestContexts;
 
     /// <summary>
@@ -30,6 +31,7 @@
 
             return new WhichControllerInstanceBuilder<TController>(new ControllerTestContext
             {
+                ComponentConstructionDelegate = () => null,
                 MethodCall = actionCall
             });
         }
@@ -41,7 +43,7 @@
         /// <param name="builder">Instance of <see cref="IControllerRouteTestBuilder{TController}"/> type.</param>
         /// <param name="controllerInstanceBuilder">Builder for creating the controller instance.</param>
         /// <returns>Test builder of <see cref="IActionResultTestBuilder{TActionResult}"/> type.</returns>
-        public static IActionResultTestBuilder<object> Which<TController>(
+        public static IActionResultTestBuilder<MethodResult> Which<TController>(
             this IControllerRouteTestBuilder<TController> builder,
             Action<IControllerInstanceBuilder<TController>> controllerInstanceBuilder)
             where TController : class

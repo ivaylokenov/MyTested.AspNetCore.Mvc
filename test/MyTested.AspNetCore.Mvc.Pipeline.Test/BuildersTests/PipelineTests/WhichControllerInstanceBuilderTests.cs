@@ -34,5 +34,66 @@
                         .Value
                         .Equals("Test")));
         }
+
+        [Fact]
+        public void WhichShouldResolveCorrectEmptyAction()
+        {
+            MyRouting
+                .Configuration()
+                .ShouldMap("/Home/Empty")
+                .To<HomeController>(c => c.Empty())
+                .Which()
+                .ShouldReturnEmpty();
+        }
+
+        [Fact]
+        public void WhichShouldResolveCorrectEmptyAsyncAction()
+        {
+            MyRouting
+                .Configuration()
+                .ShouldMap("/Home/EmptyTask")
+                .To<HomeController>(c => c.EmptyTask())
+                .Which()
+                .ShouldReturnEmpty();
+        }
+
+        [Fact]
+        public void WhichShouldResolveCorrectAsyncActionWithSetup()
+        {
+            const string testData = "TestData";
+
+            MyRouting
+                .Configuration()
+                .ShouldMap("/Home/AsyncMethod")
+                .To<HomeController>(c => c.AsyncMethod())
+                .Which()
+                .WithSetup(c =>
+                {
+                    c.Data = testData;
+                })
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .Passing(result => result
+                        .Value
+                        .Equals(testData)));
+        }
+
+        [Fact]
+        public void WhichShouldResolveCorrectAsyncActionWithInnerSetup()
+        {
+            const string testData = "TestData";
+
+            MyRouting
+                .Configuration()
+                .ShouldMap("/Home/AsyncMethod")
+                .To<HomeController>(c => c.AsyncMethod())
+                .Which(controller => controller
+                    .WithSetup(c => c.Data = testData))
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .Passing(result => result
+                        .Value
+                        .Equals(testData)));
+        }
     }
 }
