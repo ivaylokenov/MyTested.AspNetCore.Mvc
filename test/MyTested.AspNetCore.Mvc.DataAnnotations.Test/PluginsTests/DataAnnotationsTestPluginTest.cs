@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MyTested.AspNetCore.Mvc.Test.PluginsTests
+﻿namespace MyTested.AspNetCore.Mvc.Test.PluginsTests
 {
     using Microsoft.Extensions.DependencyInjection;
     using Plugins;
     using System;
     using Xunit;
-
     public class DataAnnotationsTestPluginTest
     {
         [Fact]
