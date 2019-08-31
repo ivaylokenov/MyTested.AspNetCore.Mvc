@@ -14,6 +14,7 @@
 
             Assert.Throws<NullReferenceException>(() => testPlugin.ServiceRegistrationDelegate(null));
         }
+
         [Fact]
         public void ShouldInvokeMethodOfTypeVoidWithValidServiceCollection()
         {
