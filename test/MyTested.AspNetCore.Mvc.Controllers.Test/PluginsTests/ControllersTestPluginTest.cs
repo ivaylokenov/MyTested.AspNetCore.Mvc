@@ -4,11 +4,7 @@
     using Plugins;
     using System;
     using Xunit;
-    using Internal.TestContexts;
-    using Setups;
-    using Microsoft.AspNetCore.Mvc;
-    using System.Collections.Generic;
-
+    
     public class ControllersTestPluginTest
     {
         [Fact]
@@ -27,7 +23,6 @@
             var testPlugin = new ControllersTestPlugin();
 
             Assert.Throws<ArgumentNullException>(() => testPlugin.DefaultServiceRegistrationDelegate(null));
-            //Exeption types not equal
             Assert.Throws<NullReferenceException>(() => testPlugin.ServiceRegistrationDelegate(null));
         }
 
@@ -57,20 +52,6 @@
 
             Assert.True(methodReturnType == "Void");
             Assert.True(serviceCollection.Count == 7);
-        }
-
-        [Fact]
-
-        public void ShouldGetValue()
-        {
-            MyApplication.StartsFrom<DefaultStartup>();
-
-            var controllerTestPlugin = new ControllersTestPlugin();
-      
-            Assert.Equal(typeof(ControllerAttributes), controllerTestPlugin.TryGetValue(typeof(ControllerAttributes), new ControllerTestContext()).GetType());
-            Assert.Equal(typeof(ActionAttributes), controllerTestPlugin.TryGetValue(typeof(ActionAttributes), new ControllerTestContext()).GetType());
-            Assert.Null(controllerTestPlugin.TryGetValue(typeof(ControllerAttributes), new ControllerTestContext()));
-            Assert.Null(controllerTestPlugin.TryGetValue(typeof(ActionAttributes), new ControllerTestContext()));
         }
     }
 }
