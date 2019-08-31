@@ -14,7 +14,7 @@
 
             Assert.IsAssignableFrom<IDefaultRegistrationPlugin>(testPlugin);
             Assert.NotNull(testPlugin);
-            Assert.Equal(-8000, testPlugin.Priority);
+            Assert.Equal(-1000, testPlugin.Priority);
         }
 
         [Fact]
@@ -37,7 +37,7 @@
             var methodReturnType = testPlugin.DefaultServiceRegistrationDelegate.Method.ReturnType.Name;
 
             Assert.True(methodReturnType == "Void");
-            Assert.True(serviceCollection.Count == 63);
+            Assert.True(serviceCollection.Count == 126);
         }
 
         [Fact]
