@@ -93,6 +93,23 @@
         }
 
         [Fact]
+        public void PrepareControllerShouldSetCorrectPropertiesWithCustomSetupAndInnerBuilder()
+        {
+            MyController<MvcController>
+                .Instance(instance => instance
+                    .WithSetup(c =>
+                    {
+                        c.ControllerContext = new ControllerContext();
+                    }))
+                .ShouldPassForThe<MvcController>(controller =>
+                {
+                    Assert.NotNull(controller);
+                    Assert.NotNull(controller.ControllerContext);
+                    Assert.Null(controller.ControllerContext.HttpContext);
+                });
+        }
+
+        [Fact]
         public void CallingShouldPopulateCorrectActionDescriptor()
         {
             MyController<MvcController>

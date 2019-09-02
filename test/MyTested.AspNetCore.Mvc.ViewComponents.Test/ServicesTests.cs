@@ -89,7 +89,6 @@
                 () =>
                 {
                     MyViewComponent<ServicesComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldReturn()
                         .View();

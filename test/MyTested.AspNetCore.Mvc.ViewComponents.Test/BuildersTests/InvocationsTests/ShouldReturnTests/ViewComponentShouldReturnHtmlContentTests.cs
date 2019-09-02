@@ -11,7 +11,6 @@
         public void ShouldReturnContentShouldNotThrowExceptionWithContentResult()
         {
             MyViewComponent<HtmlContentComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .HtmlContent();
@@ -21,7 +20,6 @@
         public void ShouldReturnContentShouldNotThrowExceptionWithContentResultAndValue()
         {
             MyViewComponent<HtmlContentComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .HtmlContent("<input type='button' />");
@@ -34,7 +32,6 @@
                 () =>
                 {
                     MyViewComponent<HtmlContentComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldReturn()
                         .HtmlContent("incorrect");
@@ -49,7 +46,6 @@
                 () =>
                 {
                     MyViewComponent<NormalComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldReturn()
                         .HtmlContent("content");
@@ -61,7 +57,6 @@
         public void ShouldReturnContentWithPredicateShouldNotThrowExceptionWithValidPredicate()
         {
             MyViewComponent<HtmlContentComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .HtmlContent(content => content.StartsWith("<input "));
@@ -74,7 +69,6 @@
                 () =>
                 {
                     MyViewComponent<HtmlContentComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldReturn()
                         .HtmlContent(content => content.StartsWith("invalid"));
@@ -86,7 +80,6 @@
         public void ShouldReturnContentWithAssertionsShouldNotThrowExceptionWithValidPredicate()
         {
             MyViewComponent<HtmlContentComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .HtmlContent(content =>
