@@ -5,6 +5,7 @@
     using Builders.Contracts.Base;
     using Builders.Contracts.Models;
     using Builders.Models;
+    using MyTested.AspNetCore.Mvc.Internal.TestContexts;
 
     /// <summary>
     /// Contains extension methods for <see cref="IBaseTestBuilderWithComponentBuilder{TBuilder}"/>.
@@ -18,7 +19,7 @@
         {
             var actualBuilder = (BaseTestBuilderWithComponentBuilder<TBuilder>)builder;
 
-            modelStateTestBuilder(new ModelStateBuilder());
+            modelStateTestBuilder(new ModelStateBuilder(actualBuilder.TestContext as ActionTestContext));
 
             return actualBuilder.Builder;
         }
