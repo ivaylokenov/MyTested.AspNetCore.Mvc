@@ -41,11 +41,18 @@
 
         /// <inheritdoc />
         public IAndModelStateBuilder WithErrors(object errors)
-            => this.WithErrors(new RouteValueDictionary(errors));
+        {
+            var errorsAsDictionary = new RouteValueDictionary(errors);
+            errorsAsDictionary
+                .ForEach(err => this.AddError(err.Key, err.Value.ToString()));
 
+            return this;
+        }
+            
         /// <inheritdoc />
         public IModelStateBuilder AndAlso() => this;
 
-        private void AddError(string key, string errorMessage) => this.ModelState.AddModelError(key, errorMessage);
+        private void AddError(string key, string errorMessage) 
+            => this.ModelState.AddModelError(key, errorMessage);
     }
 }
