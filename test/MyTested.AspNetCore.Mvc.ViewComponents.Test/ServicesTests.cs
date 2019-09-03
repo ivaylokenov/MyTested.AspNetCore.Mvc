@@ -11,6 +11,7 @@
     using Microsoft.AspNetCore.Mvc.ViewComponents;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.Extensions.DependencyInjection;
+    using MyTested.AspNetCore.Mvc.Internal.Contracts;
     using Setups;
     using Setups.Services;
     using Setups.ViewComponents;
@@ -547,6 +548,24 @@
                     Assert.NotNull(viewComponent.ActionContext);
                     Assert.Equal("Test", viewComponent.ActionContext.ActionDescriptor.DisplayName);
                 });
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void ViewComponentDescriptorCacheShouldWorkCorrectlyAndReturnDescriptor()
+        {
+            MyApplication.StartsFrom<DefaultStartup>();
+
+            MyViewComponent<NormalComponent>
+                       .InvokedWith(c => c.Invoke())
+                       .ShouldPassForThe<NormalComponent>(vc =>
+                       {
+                           var cache = vc.HttpContext.RequestServices.GetService<IViewComponentDescriptorCache>();
+                           var viewComponentDescriptor = cache.GetViewComponentDescriptor(vc.GetType().GetMethod("Invoke"));
+
+                           Assert.True(viewComponentDescriptor.GetType() == typeof(ViewComponentDescriptor));
+                       });
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
