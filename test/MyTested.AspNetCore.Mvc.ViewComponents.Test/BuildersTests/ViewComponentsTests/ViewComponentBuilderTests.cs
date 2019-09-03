@@ -1,5 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ViewComponentsTests
 {
+    using System;
+    using System.Reflection;
     using Builders.Base;
     using Builders.Contracts.Base;
     using Builders.Contracts.Invocations;
@@ -11,8 +13,6 @@
     using Setups;
     using Setups.Models;
     using Setups.ViewComponents;
-    using System;
-    using System.Reflection;
     using Xunit;
 
     public class ViewComponentBuilderTests
@@ -102,7 +102,7 @@
                     Assert.Equal("Invoke", viewComponent.ViewComponentContext.ViewComponentDescriptor.MethodInfo.Name);
                 });
         }
-        
+
         [Fact]
         public void UnresolvedRouteValuesShouldHaveFriendlyException()
         {
@@ -291,6 +291,24 @@
                     MyViewComponent<NonViewComponent>.Instance();
                 },
                 "NonViewComponent is not recognized as a valid view component type. Classes decorated with 'NonViewComponentAttribute' are not considered as passable view components. Additionally, make sure the SDK is set to 'Microsoft.NET.Sdk.Web' in your test project's '.csproj' file in order to enable proper view component discovery. If your type is still not recognized, you may manually add it in the application part manager by using the 'AddMvc().PartManager.ApplicationParts.Add(applicationPart))' method.");
+        }
+
+        [Fact]
+        public void AndAlsoShouldWorkCorrectly()
+        {
+            MyViewComponent<NormalComponent>
+                .Instance()
+                .WithViewComponentContext(viewComponentContext =>
+                {
+                    viewComponentContext.ViewContext.RouteData.Values.Add("testkey", "testvalue");
+                })
+                .AndAlso()
+                .ShouldPassForThe<NormalComponent>(viewComponent =>
+                {
+                    Assert.NotNull(viewComponent);
+                    Assert.NotNull(viewComponent.ViewComponentContext);
+                    Assert.True(viewComponent.ViewComponentContext.ViewContext.RouteData.Values.ContainsKey("testkey"));
+                });
         }
 
         private void CheckViewComponentResultTestBuilder<TInvocationResult>(
