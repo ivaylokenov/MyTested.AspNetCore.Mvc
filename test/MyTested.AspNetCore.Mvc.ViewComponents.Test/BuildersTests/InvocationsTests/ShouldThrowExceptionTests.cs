@@ -1,9 +1,9 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.InvocationsTests
 {
+    using System;
     using Exceptions;
     using Setups;
     using Setups.ViewComponents;
-    using System;
     using Xunit;
 
     public class ShouldThrowExceptionTests
