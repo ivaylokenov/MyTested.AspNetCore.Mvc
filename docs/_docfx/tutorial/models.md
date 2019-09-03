@@ -45,17 +45,26 @@ The test still passes but it we examine the **"ChangePassword"** action, we will
 .ShouldPassForThe<Controller>(controller => Assert.Equal(2, controller.ModelState.Count))
 ```
 
-However, there is always a better way! Go to the **"project.json"** file and add **"MyTested.AspNetCore.Mvc.ModelState"** as a dependency:
+However, there is always a better way! Go to the **"MusicStore.Test.csproj"** file and add **"MyTested.AspNetCore.Mvc.ModelState"** as a dependency:
 
-```json
-"dependencies": {
-  "dotnet-test-xunit": "2.2.0-*",
-  "xunit": "2.2.0-*",
-  "MyTested.AspNetCore.Mvc.Controllers": "1.0.0",
-  "MyTested.AspNetCore.Mvc.ModelState": "1.0.0", // <---
-  "MyTested.AspNetCore.Mvc.ViewActionResults": "1.0.0",
-  "MusicStore": "*"
-},
+```xml
+<!-- Other ItemGroups -->
+
+<ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.ActionResults" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.Views" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.ModelState" Version="2.2.0" />
+    
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  <!-- Other ItemGroups -->
 ```
 
 Besides the **"ShouldReturn"**, there is another very helpful method - **"ShouldHave"**. With **"ShouldHave"** you can test different kinds of components after the action has been invoked. For example, we want to check whether the model state has become invalid, so we need to add:
@@ -105,22 +114,31 @@ If you want to be more specific, the fluent API allows testing for specific mode
 
 There is a better way to test for specific model state errors, but more on that later (as always in this tutorial). :)
 
-Most of the time you will want to run the validation during the action call. However, if you don't want for some reason, add **"MyTested.AspNetCore.Mvc.DataAnnotations"** to your **"project.json" file and call ""*WithoutValidation*"" for the tested controller.
+Most of the time you will want to run the validation during the action call. However, if you don't want for some reason, add **"MyTested.AspNetCore.Mvc.DataAnnotations"** to your **"MusicStore.Test.csproj"** file and call ""*WithoutValidation*"" for the tested controller.
 
 ## Action result models
 
 To test action result models, you need to add **"MyTested.AspNetCore.Mvc.Models"** as a dependency of the test assembly:
 
-```json
-"dependencies": {
-  "dotnet-test-xunit": "2.2.0-*",
-  "xunit": "2.2.0-*",
-  "MyTested.AspNetCore.Mvc.Controllers": "1.0.0",
-  "MyTested.AspNetCore.Mvc.ModelState": "1.0.0",
-  "MyTested.AspNetCore.Mvc.Models": "1.0.0", // <---
-  "MyTested.AspNetCore.Mvc.ViewActionResults": "1.0.0",
-  "MusicStore": "*"
-},
+```xml
+<!-- Other ItemGroups -->
+
+<ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.ActionResults" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.Views" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Models" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.ModelState" Version="2.2.0" />
+    
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  <!-- Other ItemGroups -->
 ```
 
 By adding the above package, you will add another set of useful extension methods for all action results returning a model object. First, remove this line from the **"ChangePassword"** test:
@@ -141,8 +159,7 @@ MyController<ManageController>
     .InvalidModelState()
     .AndAlso()
     .ShouldReturn()
-    .View()
-    .WithNoModel();
+    .View(view => view.WithNoModel());
 ```
 
 We should receive error message with no doubt - our action returns the same model after all:
@@ -158,8 +175,7 @@ From here on we have two options - testing the whole model for deep equality or 
 Let's see the deep equality:
 
 ```c#
-.View()
-.WithModel(model)
+.View(v => v.WithModel<ChangePasswordViewModel>(model));
 ```
 
 Since we expect the action to return the same view model as the one provided as an action parameter, we just pass it to the **"WithModel"** method, and it will be validated for us. Note that this test will also work:
@@ -177,11 +193,11 @@ MyController<ManageController>
     .InvalidModelState()
     .AndAlso()
     .ShouldReturn()
-    .View()
-    .WithModel(new ChangePasswordViewModel
-    {
-        ConfirmPassword = "TestValue"
-    });
+    .View(view => 
+        view.WithModel<ChangePasswordViewModel>(
+            new ChangePasswordViewModel {
+                    ConfirmPassword = "TestValue" })
+        );
 ```
 
 Although the models are not pointing to the same instance, My Tested ASP.NET Core MVC will validate them by comparing their properties deeply. It works perfectly with interfaces, collections, generics, comparables, nested models and [many more object types](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/development/test/MyTested.AspNetCore.Mvc.Abstractions.Test/UtilitiesTests/ReflectionTests.cs#L426). 
@@ -191,8 +207,7 @@ Although it is cool and easy to use the deep equality assertion, most of the tim
 Introducing the last model assertion options - **"WithModelOfType"** and **"Passing"**. These two methods combined can give you enough flexibility to test only what you need from the model object. **"WithModelOfType"** allows you to test only for the type of the action result model so let's use it instead of **"WithModel"**:
 
 ```c#
-.View()
-.WithModelOfType<ChangePasswordViewModel>()
+.View(view => view.WithModelOfType<ChangePasswordViewModel>());
 ```
 
 The test will pass if you run it, but you still need to assert whether the returned model was the same as the parameter one. Luckily, the **"Passing"** method takes a delegate which tests the action result model, allowing you to be as specific in your assertions as you see fit:
@@ -207,9 +222,8 @@ MyController<ManageController>
     .InvalidModelState()
     .AndAlso()
     .ShouldReturn()
-    .View()
-    .WithModelOfType<ChangePasswordViewModel>()
-    .Passing(viewModel => viewModel == model);
+    .View(view => view.WithModelOfType<ChangePasswordViewModel>()
+                      .Passing(viewModel => viewModel == model));
 ```
 
 Aaaand... our work here is done (this time for real)! :)
