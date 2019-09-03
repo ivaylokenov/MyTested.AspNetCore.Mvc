@@ -5,7 +5,7 @@
     using Builders.Contracts.Base;
     using Builders.Contracts.Models;
     using Builders.Models;
-    using MyTested.AspNetCore.Mvc.Internal.TestContexts;
+    using Internal.TestContexts;
 
     /// <summary>
     /// Contains extension methods for <see cref="IBaseTestBuilderWithComponentBuilder{TBuilder}"/>.

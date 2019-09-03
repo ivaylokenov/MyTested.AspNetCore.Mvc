@@ -3,9 +3,9 @@
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.AspNetCore.Routing;
-    using MyTested.AspNetCore.Mvc.Builders.Contracts.Models;
-    using MyTested.AspNetCore.Mvc.Internal.TestContexts;
-    using MyTested.AspNetCore.Mvc.Utilities.Extensions;
+    using Contracts.Models;
+    using Internal.TestContexts;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Used for building <see cref="ModelStateDictionary"/>
