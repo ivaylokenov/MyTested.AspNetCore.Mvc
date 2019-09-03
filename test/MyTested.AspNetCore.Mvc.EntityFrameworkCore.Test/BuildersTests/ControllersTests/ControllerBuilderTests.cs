@@ -578,5 +578,99 @@
                 .ShouldReturn()
                 .NotFound();
         }
+
+        [Fact]
+        public void WithoutDataReturnsCorrectDataWhenDeletingNonExistingObjects()
+        {
+            MyApplication
+                .StartsFrom<TestStartup>()
+                .WithServices(services => services.AddDbContext<CustomDbContext>());
+
+            var models = new List<CustomModel> {
+                new CustomModel
+                {
+                    Id = 1,
+                    Name = "Test"
+                }};
+
+            MyController<DbContextController>
+                .Instance()
+                .WithoutData(models)
+                .Calling(c => c.GetAll())
+                .ShouldReturn()
+                .NotFound();
+        }
+
+        [Fact]
+        public void WithoutSetReturnsCorrectDataWhenWholeRangeIsRemoved()
+        {
+            MyApplication
+                .StartsFrom<TestStartup>()
+                .WithServices(services => services.AddDbContext<CustomDbContext>());
+
+            var models = new List<CustomModel> {
+                new CustomModel
+                {
+                    Id = 1,
+                    Name = "Test"
+                }};
+
+            MyController<DbContextController>
+                .Instance()
+                .WithData(models)
+                .WithoutData(data =>
+                    data.WithoutSet<CustomModel>(
+                        cm => cm.RemoveRange(models)))
+                .Calling(c => c.GetAll())
+                .ShouldReturn()
+                .NotFound();
+        }
+
+        [Fact]
+        public void WithoutSetReturnsCorrectDataWhenPartialEntitiesAreRemoved()
+        {
+            MyApplication
+                .StartsFrom<TestStartup>()
+                .WithServices(services => services.AddDbContext<CustomDbContext>());
+
+            var models = new List<CustomModel> {
+                new CustomModel
+                {
+                    Id = 1,
+                    Name = "Test1"
+                },
+                new CustomModel
+                {
+                    Id = 2,
+                    Name = "Test2"
+                }};
+
+            MyController<DbContextController>
+                .Instance()
+                .WithData(models)
+                .WithoutData(data =>
+                    data.WithoutSet<CustomModel>(
+                        cm => cm.Remove(models.Last())))
+                .Calling(c => c.GetAll())
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .WithModelOfType<List<CustomModel>>()
+                    .Passing(mdls => mdls.Count == 1));
+        }
+
+        [Fact]
+        public void WithoutSetReturnsCorrectDataWhenDeletingNonExistingObjects()
+        {
+            MyApplication
+                .StartsFrom<TestStartup>()
+                .WithServices(services => services.AddDbContext<CustomDbContext>());
+
+            MyController<DbContextController>
+                .Instance()
+                .WithoutData(data => data.WithoutSet<CustomModel>(cm => cm.Remove(new CustomModel())))
+                .Calling(c => c.GetAll())
+                .ShouldReturn()
+                .NotFound();
+        }
     }
 }

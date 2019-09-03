@@ -83,7 +83,7 @@
         /// <inheritdoc />
         public IAndDbContextBuilder WithoutEntities(IEnumerable<object> entities)
             => this.WithoutEntities(dbContext => dbContext.RemoveRange(entities));
-        
+
         /// <inheritdoc />
         public IAndDbContextBuilder WithoutEntities<TDbContext>(IEnumerable<object> entities)
             where TDbContext : DbContext
@@ -113,7 +113,15 @@
 
             var dbContext = this.TestContext.GetDbContext<TDbContext>();
             dbContextSetup(dbContext);
-            dbContext.SaveChanges();
+
+            try
+            {
+                dbContext.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                // Intentional silent fail.
+            }
 
             return this;
         }
@@ -132,7 +140,15 @@
 
             var dbContext = this.TestContext.GetDbContext<TDbContext>();
             entitySetup(dbContext.Set<TEntity>());
-            dbContext.SaveChanges();
+
+            try
+            {
+                dbContext.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                // Intentional silent fail.
+            }
 
             return this;
         }
