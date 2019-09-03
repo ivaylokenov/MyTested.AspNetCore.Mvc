@@ -9,7 +9,7 @@
 
     public class TestStartup : Startup
     {
-        public TestStartup(IHostingEnvironment env)
+        public TestStartup(IWebHostEnvironment env)
             : base(env)
         {
         }
