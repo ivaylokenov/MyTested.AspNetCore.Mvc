@@ -2,12 +2,12 @@
 {
     using System;
     using System.Linq;
+    using Exceptions;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ViewComponents;
     using Setups;
     using Setups.ViewComponents;
     using Xunit;
-    using Exceptions;
 
     public class ShouldPassForTests
     {

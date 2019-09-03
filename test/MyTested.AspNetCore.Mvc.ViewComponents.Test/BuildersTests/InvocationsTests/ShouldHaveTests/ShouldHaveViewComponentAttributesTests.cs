@@ -32,7 +32,7 @@
                 },
                 "When testing AttributesComponent was expected to not have any attributes, but it had some.");
         }
-        
+
         [Fact]
         public void AttributesShouldNotThrowExceptionWithActionContainingAttributes()
         {
@@ -49,7 +49,7 @@
                 .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
-                .Attributes(attributes => 
+                .Attributes(attributes =>
                 {
                     attributes.ContainingAttributeOfType<CustomAttribute>();
                 });
