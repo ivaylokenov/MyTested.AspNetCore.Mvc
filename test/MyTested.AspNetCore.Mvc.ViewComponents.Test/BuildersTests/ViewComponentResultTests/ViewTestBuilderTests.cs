@@ -174,7 +174,6 @@
                 "When invoking ViewResultComponent expected response model to be of ResponseModel type, but instead received null.");
         }
 
-
         [Fact]
         public void WithGenericModelShouldNotThrowException()
         {

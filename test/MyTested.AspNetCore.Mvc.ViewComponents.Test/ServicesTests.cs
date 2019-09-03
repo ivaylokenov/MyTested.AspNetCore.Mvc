@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Exceptions;
+    using Internal.Contracts;
     using Internal.ViewComponents;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Abstractions;
@@ -11,7 +12,6 @@
     using Microsoft.AspNetCore.Mvc.ViewComponents;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.Extensions.DependencyInjection;
-    using MyTested.AspNetCore.Mvc.Internal.Contracts;
     using Setups;
     using Setups.Services;
     using Setups.ViewComponents;
@@ -558,14 +558,14 @@
             MyApplication.StartsFrom<DefaultStartup>();
 
             MyViewComponent<NormalComponent>
-                       .InvokedWith(c => c.Invoke())
-                       .ShouldPassForThe<NormalComponent>(vc =>
-                       {
-                           var cache = vc.HttpContext.RequestServices.GetService<IViewComponentDescriptorCache>();
-                           var viewComponentDescriptor = cache.GetViewComponentDescriptor(vc.GetType().GetMethod("Invoke"));
+                .InvokedWith(c => c.Invoke())
+                .ShouldPassForThe<NormalComponent>(vc =>
+                {
+                    var cache = vc.HttpContext.RequestServices.GetService<IViewComponentDescriptorCache>();
+                    var viewComponentDescriptor = cache.GetViewComponentDescriptor(vc.GetType().GetMethod("Invoke"));
 
-                           Assert.True(viewComponentDescriptor.GetType() == typeof(ViewComponentDescriptor));
-                       });
+                    Assert.True(viewComponentDescriptor.GetType() == typeof(ViewComponentDescriptor));
+                });
 
             MyApplication.StartsFrom<DefaultStartup>();
         }

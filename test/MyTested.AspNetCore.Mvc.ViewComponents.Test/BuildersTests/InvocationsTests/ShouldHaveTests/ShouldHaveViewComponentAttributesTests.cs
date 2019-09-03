@@ -2,8 +2,8 @@
 {
     using Exceptions;
     using Microsoft.AspNetCore.Mvc;
-    using MyTested.AspNetCore.Mvc.Test.Setups.Common;
     using Setups;
+    using Setups.Common;
     using Setups.ViewComponents;
     using Xunit;
     using Xunit.Sdk;

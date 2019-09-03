@@ -2,8 +2,8 @@
 {
     using System;
     using Microsoft.Extensions.DependencyInjection;
-    using MyTested.AspNetCore.Mvc.Plugins;
-    using MyTested.AspNetCore.Mvc.Test.Setups.ViewComponents;
+    using Plugins;
+    using Setups.ViewComponents;
     using Xunit;
 
     public class ViewComponentsTestPluginTests
