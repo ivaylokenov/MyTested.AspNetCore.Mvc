@@ -16,10 +16,8 @@
         /// Initializes a new instance of the <see cref="MemoryCacheBuilder"/> class.
         /// </summary>
         /// <param name="services"><see cref="IServiceProvider"/> providing the current <see cref="IMemoryCache"/>.</param>
-        public MemoryCacheBuilder(IServiceProvider services)
-        {
-            this.MemoryCache = services.GetRequiredService<IMemoryCache>();
-        }
+        public MemoryCacheBuilder(IServiceProvider services) 
+            => this.MemoryCache = services.GetRequiredService<IMemoryCache>();
 
         /// <summary>
         /// Gets the mocked <see cref="IMemoryCache"/>.

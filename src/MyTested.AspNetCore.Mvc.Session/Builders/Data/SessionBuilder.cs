@@ -17,13 +17,14 @@
         /// Initializes a new instance of the <see cref="SessionBuilder"/> class.
         /// </summary>
         /// <param name="session"><see cref="ISession"/> to built.</param>
-        public SessionBuilder(ISession session) => this.Session = session;
+        public SessionBuilder(ISession session) 
+            => this.Session = session;
 
         /// <summary>
         /// Gets the <see cref="ISession"/>.
         /// </summary>
         /// <value>The built <see cref="ISession"/>.</value>
-        protected ISession Session { get; }
+        protected ISession Session { get; private set; }
 
         /// <inheritdoc />
         public IAndSessionBuilder WithId(string sessionId)

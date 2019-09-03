@@ -27,19 +27,21 @@
 
         /// <inheritdoc />
         public IShouldHaveTestBuilder<MethodResult> ShouldHave()
-        {
-            this.InvokeAction();
+            => this
+                .InvokeAndGetActionResultTestBuilder()
+                .ShouldHave();
 
-            var actionResultTestBuilder = new ActionResultTestBuilder<MethodResult>(this.TestContext);
-
-            return actionResultTestBuilder.ShouldHave();
-        }
+        /// <inheritdoc />
+        public IShouldThrowTestBuilder ShouldThrow()
+            => this
+                .InvokeAndGetActionResultTestBuilder()
+                .ShouldThrow();
 
         /// <inheritdoc />
         public IShouldReturnTestBuilder<MethodResult> ShouldReturn()
         {
             this.InvokeAction();
-
+            // epa iznesi tuka IActionResultInterface che da e po-lesno iznasqneto tuk + iznesi dolu Invoke na nshto kato ActionCallExpression.Invoke()
             var actionResultTestBuilder = new ActionResultTestBuilder<MethodResult>(this.TestContext);
 
             return actionResultTestBuilder.ShouldReturn();
@@ -56,19 +58,16 @@
         }
 
         /// <inheritdoc />
-        public IShouldThrowTestBuilder ShouldThrow()
-        {
-            this.InvokeAction();
-
-            var actionResultTestBuilder = new VoidActionResultTestBuilder(this.TestContext);
-
-            return actionResultTestBuilder.ShouldThrow();
-        }
-
-        /// <inheritdoc />
         public IWhichControllerInstanceBuilder<TController> AndAlso() => this;
 
         protected override IAndWhichControllerInstanceBuilder<TController> SetBuilder() => this;
+
+        private IBaseActionResultTestBuilder<MethodResult> InvokeAndGetActionResultTestBuilder()
+        {
+            this.InvokeAction();
+
+            return new VoidActionResultTestBuilder(this.TestContext);
+        }
 
         private void InvokeAction()
         {
