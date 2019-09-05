@@ -4,9 +4,11 @@ using System.Text;
 
 namespace MyTested.AspNetCore.Mvc.Test.PluginsTests
 {
+    using Microsoft.AspNetCore.Mvc.Cors;
     using Microsoft.Extensions.DependencyInjection;
     using Plugins;
     using System;
+    using System.Linq;
     using Xunit;
 
     public class LiteTestPluginTest
@@ -40,7 +42,7 @@ namespace MyTested.AspNetCore.Mvc.Test.PluginsTests
             var methodReturnType = testPlugin.DefaultServiceRegistrationDelegate.Method.ReturnType.Name;
 
             Assert.True(methodReturnType == "Void");
-            Assert.True(serviceCollection.Count == 191);
+            Assert.Contains(serviceCollection, s => s.ServiceType == typeof(CorsAuthorizationFilter));
         }
     }
 }

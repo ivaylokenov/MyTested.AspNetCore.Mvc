@@ -1,8 +1,10 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.PluginsTests
 {
+    using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.DependencyInjection;
     using Plugins;
     using System;
+    using System.Linq;
     using Xunit;
 
     public class CachingTestPluginTest
@@ -26,7 +28,7 @@
             var methodReturnType = testPlugin.ServiceRegistrationDelegate.Method.ReturnType.Name;
 
             Assert.True(methodReturnType == "Void");
-            Assert.True(serviceCollection.Count == 1);
+            Assert.Contains(serviceCollection, s => s.ServiceType == typeof(IMemoryCache));
         }
     }
 }

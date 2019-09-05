@@ -1,6 +1,8 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.PlungsTests
 {
+    using Microsoft.AspNetCore.Mvc.Formatters.Json.Internal;
     using Microsoft.Extensions.DependencyInjection;
+    using MyTested.AspNetCore.Mvc.Internal.Contracts;
     using Plugins;
     using System;
     using Xunit;
@@ -37,7 +39,7 @@
             var methodReturnType = testPlugin.DefaultServiceRegistrationDelegate.Method.ReturnType.Name;
 
             Assert.True(methodReturnType == "Void");
-            Assert.True(serviceCollection.Count == 63);
+            Assert.Contains(serviceCollection, s => s.ServiceType == typeof(JsonResultExecutor));
         }
 
         [Fact]
@@ -51,7 +53,7 @@
             var methodReturnType = testPlugin.RoutingServiceRegistrationDelegate.Method.ReturnType.Name;
 
             Assert.True(methodReturnType == "Void");
-            Assert.True(serviceCollection.Count == 1);
+            Assert.Contains(serviceCollection, s => s.ServiceType == typeof(IRoutingServices));
         }
     }
 }

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MyTested.AspNetCore.Mvc.Test.Plugins
+﻿namespace MyTested.AspNetCore.Mvc.Test.Plugins
 {
+    using Microsoft.AspNetCore.Mvc.Formatters.Json.Internal;
     using Microsoft.Extensions.DependencyInjection;
     using Mvc.Plugins;
     using System;
@@ -40,7 +37,7 @@ namespace MyTested.AspNetCore.Mvc.Test.Plugins
             var methodReturnType = testPlugin.DefaultServiceRegistrationDelegate.Method.ReturnType.Name;
 
             Assert.True(methodReturnType == "Void");
-            Assert.True(serviceCollection.Count == 126);
+            Assert.Contains(serviceCollection, s => s.ServiceType == typeof(JsonResultExecutor));
         }
     }
 }

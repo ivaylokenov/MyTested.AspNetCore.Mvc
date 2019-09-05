@@ -1,8 +1,12 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.PluginsTests
 {
+    using Microsoft.AspNetCore.Mvc.Controllers;
+    using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Options;
     using Plugins;
     using System;
+    using System.Linq;
     using Xunit;
     
     public class ControllersTestPluginTest
@@ -37,7 +41,7 @@
             var methodReturnType = testPlugin.DefaultServiceRegistrationDelegate.Method.ReturnType.Name;
 
             Assert.True(methodReturnType == "Void");
-            Assert.True(serviceCollection.Count == 58);
+            Assert.Contains(serviceCollection, s => s.ServiceType == typeof(MiddlewareFilterBuilder));
         }
 
         [Fact]
@@ -49,9 +53,9 @@
             testPlugin.ServiceRegistrationDelegate(serviceCollection);
 
             var methodReturnType = testPlugin.ServiceRegistrationDelegate.Method.ReturnType.Name;
-
+           
             Assert.True(methodReturnType == "Void");
-            Assert.True(serviceCollection.Count == 7);
+            Assert.Contains(serviceCollection, s => s.ServiceType == typeof(IOptions<>));
         }
     }
 }

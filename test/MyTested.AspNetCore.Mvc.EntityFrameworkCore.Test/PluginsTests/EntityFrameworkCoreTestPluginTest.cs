@@ -7,6 +7,7 @@
     using Plugins;
     using System;
     using Xunit;
+    using System.Linq;
 
     public class EntityFrameworkCoreTestPluginTest
     {
@@ -30,7 +31,7 @@
             var methodReturnType = testPlugin.ServiceRegistrationDelegate.Method.ReturnType.Name;
 
             Assert.True(methodReturnType == "Void");
-            Assert.True(serviceCollection.Count == 13);
+            Assert.Contains(serviceCollection, s => s.ServiceType == typeof(DbContextOptions));
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.PluginsTests
 {
+    using Microsoft.AspNetCore.Mvc.Formatters.Json.Internal;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.Extensions.DependencyInjection;
     using Plugins;
     using System;
@@ -37,7 +39,7 @@
             var methodReturnType = testPlugin.DefaultServiceRegistrationDelegate.Method.ReturnType.Name;
 
             Assert.True(methodReturnType == "Void");
-            Assert.True(serviceCollection.Count == 126);
+            Assert.Contains(serviceCollection, s => s.ServiceType == typeof(JsonResultExecutor));
         }
 
         [Fact]
@@ -51,7 +53,7 @@
             var methodReturnType = testPlugin.ServiceRegistrationDelegate.Method.ReturnType.Name;
 
             Assert.True(methodReturnType == "Void");
-            Assert.True(serviceCollection.Count == 1);
+            Assert.Contains(serviceCollection, s => s.ServiceType == typeof(ITempDataProvider));
         }
     }
 }

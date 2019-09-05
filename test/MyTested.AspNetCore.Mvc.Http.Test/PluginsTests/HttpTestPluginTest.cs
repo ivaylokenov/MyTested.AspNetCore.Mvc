@@ -1,8 +1,11 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.PluginsTests
 {
+    using Microsoft.AspNetCore.Mvc.Formatters.Json.Internal;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Options;
     using Plugins;
     using System;
+    using System.Linq;
     using Xunit;
 
     public class HttpTestPluginTest
@@ -35,9 +38,9 @@
             testPlugin.DefaultServiceRegistrationDelegate(serviceCollection);
 
             var methodReturnType = testPlugin.DefaultServiceRegistrationDelegate.Method.ReturnType.Name;
-
+           
             Assert.True(methodReturnType == "Void");
-            Assert.True(serviceCollection.Count == 63);
+            Assert.Contains(serviceCollection, s => s.ServiceType == typeof(JsonResultExecutor));
         }
 
         [Fact]
@@ -51,7 +54,8 @@
             var methodReturnType = testPlugin.ServiceRegistrationDelegate.Method.ReturnType.Name;
 
             Assert.True(methodReturnType == "Void");
-            Assert.True(serviceCollection.Count == 6);
+            Assert.Contains(serviceCollection, s => s.ServiceType == typeof(IOptions<>));
+
         }
     }
 }

@@ -4,9 +4,11 @@ using System.Text;
 
 namespace MyTested.AspNetCore.Mvc.Test.PluginTests
 {
+    using Microsoft.AspNetCore.Mvc.Formatters.Json.Internal;
     using Microsoft.Extensions.DependencyInjection;
     using Plugins;
     using System;
+    using System.Linq;
     using Xunit;
 
     public class ViewActionResultTestPluginTest
@@ -40,7 +42,7 @@ namespace MyTested.AspNetCore.Mvc.Test.PluginTests
             var methodReturnType = testPlugin.DefaultServiceRegistrationDelegate.Method.ReturnType.Name;
 
             Assert.True(methodReturnType == "Void");
-            Assert.True(serviceCollection.Count == 126);
+            Assert.Contains(serviceCollection, s => s.ServiceType == typeof(JsonResultExecutor));
         }
     }
 }
