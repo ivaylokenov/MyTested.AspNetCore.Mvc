@@ -1,4 +1,4 @@
-﻿namespace Blog.Test.Controllers.Admin
+﻿namespace Blog.Test.Pipeline.Admin
 {
     using System;
     using System.Collections.Generic;
@@ -13,22 +13,18 @@
 
     using ArticlesController = Web.Areas.Admin.Controllers.ArticlesController;
 
-    public class ArticlesControllerTest
+    public class ArticlesPipelineTest
     {
         [Fact]
-        public void ControllerShouldBeInAdminArea()
-            => MyController<ArticlesController>
-                .ShouldHave()
-                .Attributes(attrs => attrs
-                    .SpecifyingArea(ControllerConstants.AdministratorArea)
-                    .RestrictingForAuthorizedRequests(ControllerConstants.AdministratorRole));
-
-        [Fact]
-        public void AllShouldReturnViewWithAllArticles()
-            => MyController<ArticlesController>
-                .Instance(instance => instance
+        public void GetAllShouldReturnViewWithAllArticles()
+            => MyMvc
+                .Pipeline()
+                .ShouldMap(request => request
+                    .WithLocation("/Admin/Articles/All")
+                    .WithUser(new[] { ControllerConstants.AdministratorRole }))
+                .To<ArticlesController>(c => c.All())
+                .Which(controller => controller
                     .WithData(ArticleTestData.GetArticles(1, isPublic: false)))
-                .Calling(c => c.All())
                 .ShouldReturn()
                 .View(view => view
                     .WithModelOfType<List<ArticleNonPublicListingServiceModel>>()
@@ -37,11 +33,15 @@
                         .NotBeEmpty()));
 
         [Fact]
-        public void ChangeVisibilityShouldChangeArticleAndRedirectToAll()
-            => MyController<ArticlesController>
-                .Instance(instance => instance
+        public void GetMineShouldChangeArticleAndRedirectToAll()
+            => MyMvc
+                .Pipeline()
+                .ShouldMap(request => request
+                    .WithLocation("/Admin/Articles/ChangeVisibility/1")
+                    .WithUser(new[] { ControllerConstants.AdministratorRole }))
+                .To<ArticlesController>(c => c.ChangeVisibility(1))
+                .Which(controller => controller
                     .WithData(ArticleTestData.GetArticles(1, isPublic: false)))
-                .Calling(c => c.ChangeVisibility(1))
                 .ShouldHave()
                 .Data(data => data
                     .WithSet<Article>(set => set

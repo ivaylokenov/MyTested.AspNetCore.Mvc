@@ -12,7 +12,7 @@
             => serviceDescriptor =>
                 this.baseDbContextType.IsAssignableFrom(serviceDescriptor.ImplementationType);
 
-        public Action<IServiceCollection> ServiceRegistrationDelegate 
+        public Action<IServiceCollection> ServiceRegistrationDelegate
             => serviceCollection => serviceCollection.ReplaceDbContext();
     }
 }

@@ -17,15 +17,10 @@
                 serviceDescriptor.ImplementationType == this.defaultCachingImplementationType;
 
         public Action<IServiceCollection> ServiceRegistrationDelegate
-        {
-            get
+            => serviceCollection =>
             {
-                return serviceCollection =>
-                {
-                    serviceCollection.ReplaceMemoryCache();
-                    TestHelper.GlobalTestCleanup += () => TestServiceProvider.GetService<IMemoryCache>()?.Dispose();
-                };
-            }
-        }
+                serviceCollection.ReplaceMemoryCache();
+                TestHelper.GlobalTestCleanup += () => TestServiceProvider.GetService<IMemoryCache>()?.Dispose();
+            };
     }
 }

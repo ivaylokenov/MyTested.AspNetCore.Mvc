@@ -37,6 +37,13 @@
             => testServerBuilder(new TestServerBuilder());
 
         /// <summary>
+        /// Starts a pipeline test.
+        /// </summary>
+        /// <returns>Test builder of <see cref="IRouteTestBuilder"/> type.</returns>
+        public static IRouteTestBuilder Pipeline()
+            => new MyPipeline();
+
+        /// <summary>
         /// Starts a route test.
         /// </summary>
         /// <returns>Test builder of <see cref="IRouteTestBuilder"/> type.</returns>

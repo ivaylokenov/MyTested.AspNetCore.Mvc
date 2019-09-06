@@ -1,24 +1,26 @@
-﻿namespace Blog.Test.Controllers
+﻿namespace Blog.Test.Pipeline
 {
     using System.Collections.Generic;
     using Blog.Controllers;
     using Data;
     using FluentAssertions;
-    using MyTested.AspNetCore.Mvc;
     using Services.Models;
+    using MyTested.AspNetCore.Mvc;
     using Xunit;
 
-    public class HomeControllerTest
-    {        
+    public class HomePipelineTest
+    {
         [Theory]
         [InlineData(2, true, 2)]
         [InlineData(4, true, 3)]
         [InlineData(4, false, 0)]
-        public void IndexShouldReturnDefaultViewWithCorrectModel(int total, bool arePublic, int expected)
-            => MyController<HomeController>
-                .Instance(instance => instance
+        public void GetIndexShouldReturnDefaultViewWithCorrectModel(int total, bool arePublic, int expected)
+            => MyMvc
+                .Pipeline()
+                .ShouldMap("/")
+                .To<HomeController>(c => c.Index())
+                .Which(controller => controller
                     .WithData(ArticleTestData.GetArticles(total, arePublic)))
-                .Calling(c => c.Index())
                 .ShouldReturn()
                 .View(view => view
                     .WithModelOfType<List<ArticleListingServiceModel>>()
@@ -27,9 +29,12 @@
                         .HaveCount(expected)));
 
         [Fact]
-        public void PrivacyShouldReturnDefaultView()
-            => MyController<HomeController>
-                .Calling(c => c.Privacy())
+        public void GetPrivacyShouldReturnDefaultView()
+            => MyMvc
+                .Pipeline()
+                .ShouldMap("/Home/Privacy")
+                .To<HomeController>(c => c.Privacy())
+                .Which()
                 .ShouldReturn()
                 .View();
     }

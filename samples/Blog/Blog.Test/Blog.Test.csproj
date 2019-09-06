@@ -6,19 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="testsettings.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="testsettings.json">
+    <None Update="testsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="5.9.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.3.0-*" />
-    <PackageReference Include="Moq" Version="4.12.0" />
-    <PackageReference Include="Shouldly" Version="4.0.0-*" />
+    <PackageReference Include="Moq" Version="4.13.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
       <PrivateAssets>all</PrivateAssets>
