@@ -2,7 +2,6 @@
 {
     using System;
     using Builders.Contracts.Actions;
-    using Builders.Contracts.Controllers;
     using Builders.Contracts.Pipeline;
     using Builders.Contracts.Routing;
     using Builders.Pipeline;
@@ -24,17 +23,7 @@
         public static IWhichControllerInstanceBuilder<TController> Which<TController>(
             this IControllerRouteTestBuilder<TController> builder)
             where TController : class
-        {
-            var actualBuilder = (ControllerRouteTestBuilder<TController>)builder;
-
-            var actionCall = actualBuilder.ActionCallExpression;
-
-            return new WhichControllerInstanceBuilder<TController>(new ControllerTestContext
-            {
-                ComponentConstructionDelegate = () => null,
-                MethodCall = actionCall
-            });
-        }
+            => (IWhichControllerInstanceBuilder<TController>)builder.Which(null);
 
         /// <summary>
         /// Allows the route test to continue the assertion chain on the matched controller action.
@@ -45,10 +34,22 @@
         /// <returns>Test builder of <see cref="IActionResultTestBuilder{TActionResult}"/> type.</returns>
         public static IActionResultTestBuilder<MethodResult> Which<TController>(
             this IControllerRouteTestBuilder<TController> builder,
-            Action<IControllerInstanceBuilder<TController>> controllerInstanceBuilder)
+            Action<IWhichControllerInstanceBuilder<TController>> controllerInstanceBuilder)
             where TController : class
         {
-            return null;
+            var actualBuilder = (ControllerRouteTestBuilder<TController>)builder;
+
+            var actionCall = actualBuilder.ActionCallExpression;
+
+            var whichControllerInstanceBuilder = new WhichControllerInstanceBuilder<TController>(new ControllerTestContext
+            {
+                ComponentConstructionDelegate = () => null,
+                MethodCall = actionCall
+            });
+
+            controllerInstanceBuilder?.Invoke(whichControllerInstanceBuilder);
+
+            return whichControllerInstanceBuilder;
         }
     }
 }
