@@ -105,6 +105,9 @@
         public static bool IsGenericTypeDefinition(Type type)
             => type.GetTypeInfo().IsGenericTypeDefinition;
 
+        public static bool HasGenericTypeDefinition(Type type, Type genericTypeDefinition)
+            => type.IsGenericType && type.GetGenericTypeDefinition() == genericTypeDefinition;
+
         /// <summary>
         /// Checks whether two types are assignable by generic definition.
         /// </summary>
@@ -362,6 +365,9 @@
                 && (type.Name.Contains("AnonymousType") || type.Name.Contains("AnonType"))
                 && (typeInfo.Attributes & TypeAttributes.NotPublic) == TypeAttributes.NotPublic;
         }
+
+        public static MethodInfo GetNonPublicMethod(Type type, string name)
+            => type.GetMethod(name, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
 
         private static ConstructorInfo GetConstructorByUnorderedParameters(this Type type, IEnumerable<Type> types)
         {

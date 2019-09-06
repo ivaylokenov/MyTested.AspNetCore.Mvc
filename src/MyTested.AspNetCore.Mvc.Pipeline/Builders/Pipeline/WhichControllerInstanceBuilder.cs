@@ -1,10 +1,5 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Pipeline
 {
-    using System;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using System.Reflection;
-    using System.Threading.Tasks;
     using Builders.Actions;
     using Builders.Contracts.Actions;
     using Builders.Contracts.Base;
@@ -15,11 +10,19 @@
     using Internal.TestContexts;
     using Utilities;
 
+    /// <summary>
+    /// Used for building the controller which will be tested after a route assertion.
+    /// </summary>
+    /// <typeparam name="TController">Class representing ASP.NET Core MVC controller.</typeparam>
     public class WhichControllerInstanceBuilder<TController>
         : BaseControllerBuilder<TController, IAndWhichControllerInstanceBuilder<TController>>,
         IAndWhichControllerInstanceBuilder<TController>
         where TController : class
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WhichControllerInstanceBuilder{TController}"/> class.
+        /// </summary>
+        /// <param name="testContext"><see cref="ControllerTestContext"/> containing data about the currently executed assertion chain.</param>
         public WhichControllerInstanceBuilder(ControllerTestContext testContext)
             : base(testContext)
         {
@@ -38,23 +41,19 @@
                 .ShouldThrow();
 
         /// <inheritdoc />
+        public IBaseTestBuilderWithInvokedAction ShouldReturnEmpty()
+            => this
+                .InvokeAndGetActionResultTestBuilder()
+                .ShouldReturnEmpty();
+
+        /// <inheritdoc />
         public IShouldReturnTestBuilder<MethodResult> ShouldReturn()
         {
             this.InvokeAction();
-            // epa iznesi tuka IActionResultInterface che da e po-lesno iznasqneto tuk + iznesi dolu Invoke na nshto kato ActionCallExpression.Invoke()
+
             var actionResultTestBuilder = new ActionResultTestBuilder<MethodResult>(this.TestContext);
 
             return actionResultTestBuilder.ShouldReturn();
-        }
-
-        /// <inheritdoc />
-        public IBaseTestBuilderWithInvokedAction ShouldReturnEmpty()
-        {
-            this.InvokeAction();
-
-            var actionResultTestBuilder = new VoidActionResultTestBuilder(this.TestContext);
-
-            return actionResultTestBuilder.ShouldReturnEmpty();
         }
 
         /// <inheritdoc />
@@ -62,7 +61,7 @@
 
         protected override IAndWhichControllerInstanceBuilder<TController> SetBuilder() => this;
 
-        private IBaseActionResultTestBuilder<MethodResult> InvokeAndGetActionResultTestBuilder()
+        private VoidActionResultTestBuilder InvokeAndGetActionResultTestBuilder()
         {
             this.InvokeAction();
 
@@ -70,65 +69,7 @@
         }
 
         private void InvokeAction()
-        {
-            var methodCall = this.TestContext.MethodCall;
-            var methodInfo = ExpressionParser.GetMethodInfo(methodCall);
-
-            if (methodInfo.ReturnType == typeof(void))
-            {
-                var actionCall = Expression.Lambda<Action<TController>>(
-                    methodCall.Body,
-                    methodCall.Parameters);
-
-                this.Invoke(actionCall);
-            }
-            else if (methodInfo.ReturnType == typeof(Task))
-            {
-                var actionCall = Expression.Lambda<Func<TController, Task>>(
-                    methodCall.Body,
-                    methodCall.Parameters);
-
-                this.Invoke(actionCall);
-            }
-            else
-            {
-                var methodName = nameof(this.CallInvoke);
-                var returnType = methodInfo.ReturnType;
-
-                if (returnType.IsGenericType && returnType.GetGenericTypeDefinition() == typeof(Task<>))
-                {
-                    methodName = nameof(this.CallTaskInvoke);
-                    returnType = returnType.GetGenericArguments().First();
-                }
-
-                var invokeActionOpenGeneric = this.GetType().GetMethod(
-                    methodName,
-                    BindingFlags.Instance | BindingFlags.NonPublic);
-
-                var invokeActionClosedGeneric = invokeActionOpenGeneric.MakeGenericMethod(returnType);
-
-                invokeActionClosedGeneric.Invoke(this, new[] { methodCall });
-            }
-        }
-
-        // Called via reflection.
-        private void CallInvoke<TActionResult>(LambdaExpression methodCall)
-        {
-            var actionCall = Expression.Lambda<Func<TController, TActionResult>>(
-                methodCall.Body,
-                methodCall.Parameters);
-
-            this.Invoke(actionCall);
-        }
-
-        // Called via reflection.
-        private void CallTaskInvoke<TActionResult>(LambdaExpression methodCall)
-        {
-            var actionCall = Expression.Lambda<Func<TController, Task<TActionResult>>>(
-                methodCall.Body,
-                methodCall.Parameters);
-
-            this.Invoke(actionCall);
-        }
+            => ActionCallExpressionInvoker<TController>
+                .Invoke(this.TestContext.MethodCall, this);
     }
 }

@@ -14,28 +14,28 @@
         /// <inheritdoc />
         public IActionResultTestBuilder<TActionResult> Calling<TActionResult>(Expression<Func<TController, TActionResult>> actionCall)
         {
-            this.Invoke(actionCall);
+            this.InvokeResult(actionCall);
             return new ActionResultTestBuilder<TActionResult>(this.TestContext);
         }
 
         /// <inheritdoc />
         public IActionResultTestBuilder<TActionResult> Calling<TActionResult>(Expression<Func<TController, Task<TActionResult>>> actionCall)
         {
-            this.Invoke(actionCall);
+            this.InvokeAsyncResult(actionCall);
             return new ActionResultTestBuilder<TActionResult>(this.TestContext);
         }
 
         /// <inheritdoc />
         public IVoidActionResultTestBuilder Calling(Expression<Action<TController>> actionCall)
         {
-            this.Invoke(actionCall);
+            this.InvokeVoid(actionCall);
             return new VoidActionResultTestBuilder(this.TestContext);
         }
 
         /// <inheritdoc />
         public IVoidActionResultTestBuilder Calling(Expression<Func<TController, Task>> actionCall)
         {
-            this.Invoke(actionCall);
+            this.InvokeAsyncVoid(actionCall);
             return new VoidActionResultTestBuilder(this.TestContext);
         }
     }
