@@ -1,17 +1,17 @@
-﻿namespace MyTested.AspNetCore.Mvc.Test.PluginsTests
-{
+﻿namespace MyTested.AspNetCore.Mvc.Test.PluginTests
+{ 
     using System;
     using Microsoft.AspNetCore.Mvc.Formatters.Json.Internal;
     using Microsoft.Extensions.DependencyInjection;
     using Plugins;
     using Xunit;
 
-    public class ViewDataTestPluginTests
+    public class ViewActionResultTestPluginTest
     {
         [Fact]
         public void ShouldHavePriorityWithDefaultValue()
         {
-            var testPlugin = new ViewDataTestPlugin();
+            var testPlugin = new ViewActionResultsTestPlugin();
 
             Assert.IsAssignableFrom<IDefaultRegistrationPlugin>(testPlugin);
             Assert.NotNull(testPlugin);
@@ -21,7 +21,7 @@
         [Fact]
         public void ShouldThrowArgumentNullExceptionWithInvalidServiceCollection()
         {
-            var testPlugin = new ViewDataTestPlugin();
+            var testPlugin = new ViewActionResultsTestPlugin();
 
             Assert.Throws<ArgumentNullException>(() => testPlugin.DefaultServiceRegistrationDelegate(null));
         }
@@ -29,7 +29,7 @@
         [Fact]
         public void ShouldInvokeMethodOfTypeVoidWithValidServiceCollection()
         {
-            var testPlugin = new ViewDataTestPlugin();
+            var testPlugin = new ViewActionResultsTestPlugin();
             var serviceCollection = new ServiceCollection();
 
             testPlugin.DefaultServiceRegistrationDelegate(serviceCollection);

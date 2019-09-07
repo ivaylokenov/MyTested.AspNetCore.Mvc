@@ -1,17 +1,18 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.PluginsTests
-{
+{  
     using System;
     using Microsoft.AspNetCore.Mvc.Formatters.Json.Internal;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.Extensions.DependencyInjection;
     using Plugins;
     using Xunit;
 
-    public class ViewDataTestPluginTests
+    public class TempDataTestPluginTest
     {
         [Fact]
         public void ShouldHavePriorityWithDefaultValue()
         {
-            var testPlugin = new ViewDataTestPlugin();
+            var testPlugin = new TempDataTestPlugin();
 
             Assert.IsAssignableFrom<IDefaultRegistrationPlugin>(testPlugin);
             Assert.NotNull(testPlugin);
@@ -21,15 +22,16 @@
         [Fact]
         public void ShouldThrowArgumentNullExceptionWithInvalidServiceCollection()
         {
-            var testPlugin = new ViewDataTestPlugin();
+            var testPlugin = new TempDataTestPlugin();
 
             Assert.Throws<ArgumentNullException>(() => testPlugin.DefaultServiceRegistrationDelegate(null));
+            Assert.Throws<NullReferenceException>(() => testPlugin.ServiceRegistrationDelegate(null));
         }
 
         [Fact]
-        public void ShouldInvokeMethodOfTypeVoidWithValidServiceCollection()
+        public void ShouldInvokeMethodOfTypeVoidWithValidServiceCollectionForDefaultRegistration()
         {
-            var testPlugin = new ViewDataTestPlugin();
+            var testPlugin = new TempDataTestPlugin();
             var serviceCollection = new ServiceCollection();
 
             testPlugin.DefaultServiceRegistrationDelegate(serviceCollection);
@@ -38,6 +40,20 @@
 
             Assert.True(methodReturnType == "Void");
             Assert.Contains(serviceCollection, s => s.ServiceType == typeof(JsonResultExecutor));
+        }
+
+        [Fact]
+        public void ShouldInvokeMethodOfTypeVoidWithValidServiceCollection()
+        {
+            var testPlugin = new TempDataTestPlugin();
+            var serviceCollection = new ServiceCollection();
+
+            testPlugin.ServiceRegistrationDelegate(serviceCollection);
+
+            var methodReturnType = testPlugin.ServiceRegistrationDelegate.Method.ReturnType.Name;
+
+            Assert.True(methodReturnType == "Void");
+            Assert.Contains(serviceCollection, s => s.ServiceType == typeof(ITempDataProvider));
         }
     }
 }
