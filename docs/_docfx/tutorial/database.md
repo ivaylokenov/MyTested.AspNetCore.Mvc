@@ -24,8 +24,7 @@ public void IndexShouldReturnViewWithGenres()
         .Instance()
         .Calling(c => c.Index())
         .ShouldReturn()
-        .View()
-        .WithModelOfType<List<Genre>>();
+        .View(view => view.WithModelOfType<List<Genre>>());
 ``` 
 
 A nice little test. With a big "KABOOM"!
@@ -46,19 +45,29 @@ Not cool for sure! The exception occurs because our **"config.json"** file conta
 
 And we should be happy about it! The last thing we want is our tests knowing where the application database is.
 
-But we still need to write a test against the **"DbContext"**! Fear no more - go to the **"project.json"** file and add ""*MyTested.AspNetCore.Mvc.EntityFrameworkCore*"" as a dependency:
+But we still need to write a test against the **"DbContext"**! Fear no more - go to the **"MusicStore.Test.csproj"** file and add ""*MyTested.AspNetCore.Mvc.EntityFrameworkCore*"" as a dependency:
 
-```json
-"dependencies": {
-  "dotnet-test-xunit": "2.2.0-*",
-  "xunit": "2.2.0-*",
-  "MyTested.AspNetCore.Mvc.Controllers": "1.0.0",
-  "MyTested.AspNetCore.Mvc.EntityFrameworkCore": "1.0.0", // <---
-  "MyTested.AspNetCore.Mvc.ModelState": "1.0.0",
-  "MyTested.AspNetCore.Mvc.Models": "1.0.0",
-  "MyTested.AspNetCore.Mvc.ViewActionResults": "1.0.0",
-  "MusicStore": "*"
-},
+```xml
+<!-- Other ItemGroups -->
+
+<ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.ActionResults" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.Views" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.EntityFrameworkCore" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Models" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.ModelState" Version="2.2.0" />
+    
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+</ItemGroup>
+
+<!-- Other ItemGroups -->
 ```
 
 Now run the test again and see the magic! :)
@@ -92,31 +101,30 @@ The best part of this test is the fact that these data objects live in scoped pe
 public void IndexShouldReturnViewWithGenres()
     => MyController<StoreController>
         .Instance()
-        .WithDbContext(dbContext => dbContext // <---
+        .WithData(dbContext => dbContext
             .WithEntities(entities => entities.AddRange(
                 new Genre { Name = "FirstGenre" },
                 new Genre { Name = "SecondGenre" })))
         .Calling(c => c.Index())
         .ShouldReturn()
-        .View()
-        .WithModelOfType<List<Genre>>()
-        .Passing(model => model.Count == 2); // <---
-        
+        .View(view => view.WithModelOfType<List<Genre>>()
+                          .Passing(model => model.Count == 2));
+
 [Fact]
 public void IWillShowScopedDatabaseServices()
     => MyController<StoreController>
         .Instance()
-        .WithDbContext(dbContext => dbContext // <---
+        .WithData(dbContext => dbContext
             .WithEntities(entities => entities.AddRange(
                 new Genre { Name = "ThirdGenre" })))
         .Calling(c => c.Index())
         .ShouldReturn()
-        .View()
-        .WithModelOfType<List<Genre>>()
-        .Passing(model => model.Count == 1 && model.All(g => g.Name == "ThirdGenre")); // <---
+        .View(view => view.WithModelOfType<List<Genre>>()
+                          .Passing(model=>model.Count == 1 && 
+                                   model.TrueForAll(g=> g.Name == "ThirdGenre")));
 ```
 
-Both tests pass successfully. They are almost the same, but you can notice the difference in the database objects. The first test adds two entities and passes the predicate expecting two objects in the returned list. The second test adds another entity and passes the expectation of having a single genre with a specific name. It is evident the database is fresh, clean and empty while running each test. This is the power of scoped test services - they allow each test to be run in an isolated and asynchronous environment. 
+Both tests pass successfully. They are almost the same, but you can notice the difference in the database objects. The first test adds two entities and passes the predicate expecting two objects in the returned list. The second test adds another entity and passes the expectation of having a single genre with a specific name. It is evident the database is fresh, clean and empty while running each test. This is the power of scoped test services - they allow each test to be run in an isolated and asynchronous environment.
 
 ## Asserting saved database changes
 
@@ -141,20 +149,30 @@ public async Task<IActionResult> Create(
 }
 ```
 
-The action expects an **"IMemoryCache"** service, and since we will cover caching later in this tutorial, we will need a cache mock. Add **"Moq"** to the **"project.json"** dependencies:
+The action expects an **"IMemoryCache"** service, and since we will cover caching later in this tutorial, we will need a cache mock. Add **"Moq"** to the **"MusicStore.Test.csproj"** dependencies:
 
-```json
-"dependencies": {
-  "dotnet-test-xunit": "2.2.0-*",
-  "xunit": "2.2.0-*",
-  "Moq": "4.6.38-*", // <---
-  "MyTested.AspNetCore.Mvc.Controllers": "1.0.0",
-  "MyTested.AspNetCore.Mvc.EntityFrameworkCore": "1.0.0",
-  "MyTested.AspNetCore.Mvc.ModelState": "1.0.0",
-  "MyTested.AspNetCore.Mvc.Models": "1.0.0",
-  "MyTested.AspNetCore.Mvc.ViewActionResults": "1.0.0",
-  "MusicStore": "*"
-},
+```xml
+<!-- Other ItemGroups -->
+
+<ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="Moq" Version="4.13.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.ActionResults" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.Views" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.EntityFrameworkCore" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Models" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.ModelState" Version="2.2.0" />
+    
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+</ItemGroup>
+
+<!-- Other ItemGroups -->
 ```
 
 Create a **"StoreManagerControllerTest"** class, add the necessary usings and write the following test:
@@ -169,7 +187,6 @@ public void CreateShouldSaveAlbumWithValidModelStateAndRedirect()
         Title = "TestAlbum",
         Price = 50
     };
-            
     MyController<StoreManagerController>
         .Instance()
         .Calling(c => c.Create(
@@ -180,13 +197,12 @@ public void CreateShouldSaveAlbumWithValidModelStateAndRedirect()
         .ValidModelState()
         .AndAlso()
         .ShouldHave()
-        .DbContext(db => db
+        .Data(db => db
             .WithSet<Album>(albums => albums
                 .Any(a => a.AlbumId == album.AlbumId)))
         .AndAlso()
         .ShouldReturn()
-        .Redirect()
-        .ToAction(nameof(StoreManagerController.Index));
+        .Redirect(rediret => rediret.ToAction(nameof(StoreManagerController.Index)));
 }
 ```
 
@@ -194,7 +210,7 @@ The actual database assertion is in the following lines:
 
 ```c#
 .ShouldHave()
-.DbContext(db => db
+.Data(db => db
 	.WithSet<Album>(albums => albums
 		.Any(a => a.AlbumId == album.AlbumId)))
 ```
@@ -250,13 +266,13 @@ Testing the **"Index"** action does not require anything more than adding lots o
 ```c#
 MyController<HomeController>
     .Instance()
-    .WithDbContext(db => db // <---
+    .WithData(db => db
         .WithSet<Album>(set => AddAlbums(set)))
     .Calling(c => c.Index())
     .ShouldReturn()
-    .Ok()
-    .WithModelOfType<List<Album>>()
-    .Passing(model => model.Count == 10);
+    .Ok(result => result.
+        .WithModelOfType<List<Album>>()
+        .Passing(model => model.Count == 10));
 ```
 
 Piece of cake! :)
