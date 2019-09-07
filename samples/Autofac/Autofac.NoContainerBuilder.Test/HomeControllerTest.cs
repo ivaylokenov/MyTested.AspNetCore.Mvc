@@ -16,7 +16,6 @@ namespace Autofac.NoContainerBuilder.Test
         [Fact]
         public void IndexShouldReturnViewWithCorrectModel()
             => MyController<HomeController>
-                .Instance()
                 .Calling(c => c.Index())
                 .ShouldReturn()
                 .View(view => view
@@ -26,7 +25,6 @@ namespace Autofac.NoContainerBuilder.Test
         [Fact]
         public void RedirectShouldRedirectToIndex()
             => MyController<HomeController>
-                .Instance()
                 .Calling(c => c.RedirectToIndex())
                 .ShouldReturn()
                 .Redirect(redirect => redirect

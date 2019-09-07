@@ -13,7 +13,6 @@ namespace Test.NoStartupType
             var exception = Assert.Throws<TypeInitializationException>(() =>
             {
                 MyController<HomeController>
-                    .Instance()
                     .Calling(c => c.Index())
                     .ShouldReturn()
                     .View();

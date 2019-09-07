@@ -11,7 +11,6 @@
         public void NoViewDataShouldNotThrowExceptionWithNoEntries()
         {
             MyViewComponent<NormalComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .NoViewData()
@@ -27,7 +26,6 @@
                 () =>
                 {
                     MyViewComponent<AddViewDataComponent>
-                       .Instance()
                        .InvokedWith(c => c.Invoke())
                        .ShouldHave()
                        .NoViewData()
@@ -42,7 +40,6 @@
         public void ViewDataWithNoNumberShouldNotThrowExceptionWithAnyEntries()
         {
             MyViewComponent<AddViewDataComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .ViewData()
@@ -58,7 +55,6 @@
                 () =>
                 {
                     MyViewComponent<NormalComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .ViewData()
@@ -73,7 +69,6 @@
         public void ViewDataWithNumberShouldNotThrowExceptionWithCorrectEntries()
         {
             MyViewComponent<AddViewDataComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .ViewData(withNumberOfEntries: 2)
@@ -89,7 +84,6 @@
                 () =>
                 {
                     MyViewComponent<NormalComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .ViewData(1)
@@ -107,7 +101,6 @@
                 () =>
                 {
                     MyViewComponent<AddViewDataComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .ViewData(3)
@@ -122,7 +115,6 @@
         public void ViewDataWithBuilderShouldWorkCorrectly()
         {
             MyViewComponent<AddViewDataComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .ViewData(viewData => viewData

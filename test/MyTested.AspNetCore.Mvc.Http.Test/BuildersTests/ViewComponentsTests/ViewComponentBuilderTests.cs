@@ -87,7 +87,6 @@
         public void WithRequestShouldNotWorkWithDefaultRequestAction()
         {
             MyViewComponent<HttpRequestComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .Content();
@@ -122,7 +121,6 @@
         public void HttpResponseAssertionsShouldWorkCorrectly()
         {
             MyViewComponent<NormalComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .Content()
@@ -136,7 +134,6 @@
         public void HttpResponsePredicateShouldWorkCorrectly()
         {
             MyViewComponent<NormalComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldPassForThe<HttpResponse>(response => response != null);
         }
@@ -148,7 +145,6 @@
                 () =>
                 {
                     MyViewComponent<NormalComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldPassForThe<HttpResponse>(response => response == null);
                 },

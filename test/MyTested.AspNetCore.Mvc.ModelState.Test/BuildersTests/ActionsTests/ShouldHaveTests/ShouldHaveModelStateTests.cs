@@ -148,7 +148,6 @@
         public void ShouldHaveValidModelStateShouldBeValidWithViewComponentValidModelState()
         {
             MyViewComponent<NormalComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .ValidModelState();
@@ -223,7 +222,6 @@
                 () =>
                 {
                     MyViewComponent<NormalComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .InvalidModelState();
@@ -238,7 +236,6 @@
                 () =>
                 {
                     MyViewComponent<NormalComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .InvalidModelState(withNumberOfErrors: 5);

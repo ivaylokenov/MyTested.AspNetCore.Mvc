@@ -126,6 +126,12 @@
 
         public static RequestModel GetRequestModelWithErrors() => new RequestModel();
 
+        public static ResponseModel GetValidResponseModel()
+            => new ResponseModel
+            {
+                IntegerValue = 10
+            };
+
         public static List<ResponseModel> GetListOfResponseModels()
             => new List<ResponseModel>
             {

@@ -63,7 +63,6 @@
                 .Content("Invalid");
 
             MyViewComponent<FindDataComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke(1))
                 .ShouldReturn()
                 .Content("Invalid");
@@ -111,7 +110,6 @@
                 .Content("Invalid");
 
             MyViewComponent<FindDataComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke(1))
                 .ShouldReturn()
                 .Content("Invalid");

@@ -13,7 +13,6 @@ namespace Test.Core.MissingAppPackage
             var exception = Assert.Throws<InvalidOperationException>(() =>
             {
                 MyController<HomeController>
-                    .Instance()
                     .Calling(c => c.Index())
                     .ShouldReturn()
                     .View();

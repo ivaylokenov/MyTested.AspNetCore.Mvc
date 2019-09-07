@@ -1,9 +1,9 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.InvocationsTests.ShouldHaveTests
 {
+    using System.Collections.Generic;
     using Exceptions;
     using Setups;
     using Setups.ViewComponents;
-    using System.Collections.Generic;
     using Xunit;
 
     public class ShouldHaveTempDataTests
@@ -12,7 +12,6 @@
         public void NoTempDataShouldNotThrowExceptionWithNoEntries()
         {
             MyViewComponent<NormalComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .NoTempData()
@@ -28,7 +27,6 @@
                 () =>
                 {
                     MyViewComponent<AddTempDataComponent>
-                       .Instance()
                        .InvokedWith(c => c.Invoke())
                        .ShouldHave()
                        .NoTempData()
@@ -43,7 +41,6 @@
         public void TempDataWithNoNumberShouldNotThrowExceptionWithAnyEntries()
         {
             MyViewComponent<AddTempDataComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .TempData()
@@ -59,7 +56,6 @@
                 () =>
                 {
                     MyViewComponent<NormalComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .TempData()
@@ -74,7 +70,6 @@
         public void TempDataWithNumberShouldNotThrowExceptionWithCorrectEntries()
         {
             MyViewComponent<AddTempDataComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .TempData(withNumberOfEntries: 2)
@@ -90,7 +85,6 @@
                 () =>
                 {
                     MyViewComponent<NormalComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .TempData(1)
@@ -108,7 +102,6 @@
                 () =>
                 {
                     MyViewComponent<AddTempDataComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .TempData(3)
@@ -123,7 +116,6 @@
         public void TempDataWithBuilderShouldNotThrowWithCorrectEntry()
         {
             MyViewComponent<AddTempDataComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .TempData(tempData => tempData
@@ -140,7 +132,6 @@
                 () =>
                 {
                     MyViewComponent<AddTempDataComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .TempData(tempData => tempData
@@ -159,7 +150,6 @@
                 () =>
                 {
                     MyViewComponent<AddTempDataComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .TempData(tempData => tempData
@@ -175,7 +165,6 @@
         public void TempDataWithBuilderShouldWorkCorrectlyWithAnonymousObjectOfTempDataEntries()
         {
             MyViewComponent<AddTempDataComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .TempData(tempData => tempData
@@ -196,7 +185,6 @@
                 () =>
                 {
                     MyViewComponent<AddTempDataComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .TempData(tempData => tempData
@@ -218,7 +206,6 @@
                 () =>
                 {
                     MyViewComponent<AddTempDataComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .TempData(tempData => tempData
@@ -241,7 +228,6 @@
                 () =>
                 {
                     MyViewComponent<AddTempDataComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .TempData(tempData => tempData
@@ -261,7 +247,6 @@
         public void TempDataWithBuilderShouldWorkCorrectlyWithDictionaryOfTempDataEntries()
         {
             MyViewComponent<AddTempDataComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .TempData(tempData => tempData
@@ -282,7 +267,6 @@
                 () =>
                 {
                     MyViewComponent<AddTempDataComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .TempData(tempData => tempData
@@ -304,7 +288,6 @@
                 () =>
                 {
                     MyViewComponent<AddTempDataComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .TempData(tempData => tempData
@@ -327,7 +310,6 @@
                 () =>
                 {
                     MyViewComponent<AddTempDataComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .TempData(tempData => tempData
@@ -347,7 +329,6 @@
         public void TempDataWithBuilderWithPredicateShouldWorkWithCorrectPassingAssertions()
         {
             MyViewComponent<AddTempDataComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .TempData(tempData => tempData
@@ -364,7 +345,6 @@
         public void TempDataWithBuilderWithPredicateShouldWorkWithCorrectPassingPredicate()
         {
             MyViewComponent<AddTempDataComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .TempData(tempData => tempData
@@ -384,7 +364,6 @@
                 () =>
                 {
                     MyViewComponent<AddTempDataComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .TempData(tempData => tempData
@@ -403,7 +382,6 @@
         public void ContainingEntryOfTypeShouldNotThrowWithCorrectEntry()
         {
             MyViewComponent<AddTempDataComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .TempData(tempData => tempData.ContainingEntryOfType<string>())
@@ -419,7 +397,6 @@
                 () =>
                 {
                     MyViewComponent<AddTempDataComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .TempData(tempData => tempData.ContainingEntryOfType<int>())
@@ -434,7 +411,6 @@
         public void ContainingEntryOfTypeAndKeyShouldNotThrowWithCorrectEntry()
         {
             MyViewComponent<AddTempDataComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .TempData(tempData => tempData.ContainingEntryOfType<string>("Test"))
@@ -450,7 +426,6 @@
                 () =>
                 {
                     MyViewComponent<AddTempDataComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .TempData(tempData => tempData.ContainingEntryOfType<string>("Invalid"))
@@ -468,7 +443,6 @@
                 () =>
                 {
                     MyViewComponent<AddTempDataComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .TempData(tempData => tempData.ContainingEntryOfType<int>("Test"))
@@ -483,7 +457,6 @@
         public void ContainingEntryWithValueShouldNotThrowWithCorrectEntry()
         {
             MyViewComponent<AddTempDataComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .TempData(tempData => tempData.ContainingEntryWithValue("TempValue"))
@@ -499,7 +472,6 @@
                 () =>
                 {
                     MyViewComponent<AddTempDataComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .TempData(tempData => tempData.ContainingEntryWithValue("Invalid"))
@@ -514,7 +486,6 @@
         public void ContainingEntryWithKeyShouldNotThrowWithCorrectEntry()
         {
             MyViewComponent<AddTempDataComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .TempData(tempData => tempData
@@ -533,7 +504,6 @@
                 () =>
                 {
                     MyViewComponent<AddTempDataComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .TempData(tempData => tempData.ContainingEntryWithKey("Invalid"))

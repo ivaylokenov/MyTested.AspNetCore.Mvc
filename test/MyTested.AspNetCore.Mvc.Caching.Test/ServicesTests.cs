@@ -68,7 +68,6 @@
                 .View();
 
             MyViewComponent<MemoryCacheComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .Content("No cache");
@@ -93,6 +92,7 @@
                 .Ok();
 
             controller
+                .WithMemoryCache(cache => cache.WithEntry(string.Empty, string.Empty))
                 .Calling(c => c.MemoryCacheAction())
                 .ShouldReturn()
                 .BadRequest();
