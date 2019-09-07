@@ -1,12 +1,10 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.PluginsTests
 {
-    using Microsoft.AspNetCore.Mvc.Controllers;
+    using System;
     using Microsoft.AspNetCore.Mvc.Internal;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Options;
     using Plugins;
-    using System;
-    using System.Linq;
     using Xunit;
     
     public class ControllersTestPluginTest

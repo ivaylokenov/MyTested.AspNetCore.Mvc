@@ -1,11 +1,11 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.PluginsTests
-{
+{ 
+    using System;
     using Microsoft.AspNetCore.Mvc.DataAnnotations;
     using Microsoft.Extensions.DependencyInjection;
     using Plugins;
-    using System;
-    using System.Linq;
     using Xunit;
+
     public class DataAnnotationsTestPluginTest
     {
         [Fact]

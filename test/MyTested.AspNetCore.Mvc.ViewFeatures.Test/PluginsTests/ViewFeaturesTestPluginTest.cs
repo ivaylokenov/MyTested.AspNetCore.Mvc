@@ -1,9 +1,9 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.Plugins
 {
+    using System;
     using Microsoft.AspNetCore.Mvc.Formatters.Json.Internal;
     using Microsoft.Extensions.DependencyInjection;
     using Mvc.Plugins;
-    using System;
     using Xunit;
 
     public class ViewFeaturesTestPluginTest

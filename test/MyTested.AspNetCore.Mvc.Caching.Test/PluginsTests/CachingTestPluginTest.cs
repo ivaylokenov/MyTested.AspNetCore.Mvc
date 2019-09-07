@@ -1,10 +1,9 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.PluginsTests
 {
+    using System;
     using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.DependencyInjection;
     using Plugins;
-    using System;
-    using System.Linq;
     using Xunit;
 
     public class CachingTestPluginTest

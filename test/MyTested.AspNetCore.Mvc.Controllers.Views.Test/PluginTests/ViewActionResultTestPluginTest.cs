@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MyTested.AspNetCore.Mvc.Test.PluginTests
-{
+﻿namespace MyTested.AspNetCore.Mvc.Test.PluginTests
+{ 
+    using System;
     using Microsoft.AspNetCore.Mvc.Formatters.Json.Internal;
     using Microsoft.Extensions.DependencyInjection;
     using Plugins;
-    using System;
-    using System.Linq;
     using Xunit;
 
     public class ViewActionResultTestPluginTest
