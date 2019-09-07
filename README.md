@@ -119,7 +119,7 @@ To add **MyTested.AspNetCore.Mvc** to your solution, you must follow these simpl
 namespace MyApp.Tests
 {
     using MyTested.AspNetCore.Mvc;
-	
+    
     using Microsoft.Extensions.DependencyInjection;
 
     public class TestStartup : Startup
@@ -127,7 +127,7 @@ namespace MyApp.Tests
         public void ConfigureTestServices(IServiceCollection services)
         {
             base.ConfigureServices(services);
-			
+            
             // Replace only your own custom services. The ASP.NET Core ones 
             // are already replaced by MyTested.AspNetCore.Mvc. 
             services.Replace<IService, MockedService>();
@@ -142,7 +142,7 @@ namespace MyApp.Tests
 namespace MyApp.Tests.Controllers
 {
     using MyTested.AspNetCore.Mvc;
-	
+    
     using MyApp.Controllers;
     using Xunit;
 
@@ -185,7 +185,7 @@ A controller integration test uses the globally registered services from the `Te
 // and tests for view result and model with specific assertions.
 MyController<MyMvcController>
     .Instance(instance => instance
-	    .WithUser(user => user
+        .WithUser(user => user
             .WithUsername("MyUserName")))
     .Calling(c => c.MyAction(myRequestModel))
     .ShouldHave()
@@ -274,14 +274,14 @@ A controller unit test uses service mocks explicitly provided in each separate a
 // and tests for view result.
 MyController<MyMvcController>
     .Instance(instance => instance
-    	.WithDependencies(
+        .WithDependencies(
             serviceMock,
             anotherServiceMock,
             From.Services<IYetAnotherService>())) // Provides a global service.
     .Calling(c => c.MyAction())
     .ShouldReturn()
     .View();
-	
+    
 // Instantiates controller with the provided service mocks,
 // and tests for view result.
 MyController<MyMvcController>
@@ -367,7 +367,7 @@ MyMvc
     .ShouldMap("/My/Action/1")
     .To<MyController>(c => c.Action(1))
     .Which(controller => controller
-	    .WithUser()
+        .WithUser()
         .WithData(MyDataProvider.GetMyModels()))
     .ShouldReturn()
     .Redirect(redirect => redirect
@@ -383,9 +383,9 @@ MyMvc
     .ShouldMap("/My/Action/1")
     .To<MyController>(c => c.Action(1))
     .Which(controller => controller
-	    .WithUser()
+        .WithUser()
         .WithData(MyDataProvider.GetMyModels())
-		.WithDependencies(
+        .WithDependencies(
             serviceMock,
             anotherServiceMock))
     .ShouldReturn()
@@ -442,7 +442,7 @@ MyViewComponent<MyMvcController>
     .ShouldReturn()
     .View()
     .WithModelOfType<MyResponseModel>();
-	
+    
 // View component unit test.
 MyViewComponent<MyMvcController>
     .Instance(instance => instance
@@ -475,20 +475,20 @@ MyMvc
     .WithData(data => data
         .WithEntities(entities => 
             AddData(sessionId, entities)))
-			
+            
     // Act
     .Calling(c => c.MyAction(
         From.Services<MyDataContext>(), // Action injected services can be populated with this call.
         new MyModel { Id = id },
         CancellationToken.None))
-			
+            
     // Assert
     .ShouldReturn()
     .Redirect(redirect => redirect
         .To<AnotherController>(c => c.AnotherAction(
             With.No<MyDataContext>(),
             id)));
-			
+            
 // With variables.
 
 // Arrange
@@ -496,7 +496,7 @@ var controller = MyController<MyMvcController>
     .Instance()
     .WithUser(username, new[] { role })
     .WithData(MyTestData.GetData());
-	
+    
 // Act
 var call = controller.Calling(c => c.MyAction(id));
     
@@ -560,7 +560,7 @@ MyMvc
             .WithDomain("mydomain.com")
             .WithExpiration(myDateTimeOffset)
             .WithPath("/")))
-	.AndAlso()
+    .AndAlso()
     .ShouldReturn()
     .Ok();
 ```
@@ -581,9 +581,10 @@ This package will include all available assertion methods in your test project, 
  - `MyTested.AspNetCore.Mvc.Controllers.ActionResults` - Contains setup and assertion methods for controller API action results
  - `MyTested.AspNetCore.Mvc.Controllers.Views` - Contains setup and assertion methods for controller view features
  - `MyTested.AspNetCore.Mvc.Controllers.Views.ActionResults` - Contains setup and assertion methods for controller view action results
- - `MyTested.AspNetCore.Mvc.Models` - Contains setup and assertion methods for response and view models
+ - `MyTested.AspNetCore.Mvc.Models` - Contains setup and assertion methods for responses and view models
  - `MyTested.AspNetCore.Mvc.Routing` - Contains setup and assertion methods for routes
  - `MyTested.AspNetCore.Mvc.Core` - Contains setup and assertion methods for MVC core features
+ - `MyTested.AspNetCore.Mvc.Pipeline` - Contains setup methods for pipeline tests
  - `MyTested.AspNetCore.Mvc.TempData` - Contains setup and assertion methods for `ITempDataDictionary`
  - `MyTested.AspNetCore.Mvc.ViewData` - Contains assertion methods for `ViewDataDictionary` and dynamic `ViewBag`
  - `MyTested.AspNetCore.Mvc.ViewComponents` - Contains setup and assertion methods for view components
@@ -604,7 +605,7 @@ This package will include all available assertion methods in your test project, 
  
 After the downloading is complete, just add `using MyTested.AspNetCore.Mvc;` to your source code and you are ready to test in the most elegant and developer friendly way.
 
-```c#	
+```c#    
 using MyTested.AspNetCore.Mvc;
 ```
 
