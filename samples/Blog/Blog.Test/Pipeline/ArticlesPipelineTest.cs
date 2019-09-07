@@ -113,7 +113,6 @@
                     .WithUser("Author Id 1", "Author 1"))
                 .To<ArticlesController>(c => c.Mine())
                 .Which(controller => controller
-                    .WithUser("Author Id 1", "Author 1")
                     .WithData(ArticleTestData.GetArticles(2, sameUser: false)))
                 .ShouldReturn()
                 .View(view => view
