@@ -242,16 +242,5 @@
                 },
                 "When invoking NormalComponent expected to have invalid model state with 5 errors, but in fact contained 0.");
         }
-
-        [Fact]
-        public void ShouldHaveDefaultServices()
-        {
-            var modelStateTestPlugin = new ModelStateTestPlugin();
-            var serviceCollection = new ServiceCollection();
-            
-            modelStateTestPlugin.DefaultServiceRegistrationDelegate(serviceCollection);
-          
-            Assert.True(serviceCollection.Count == 60);
-        }
     }
 }
