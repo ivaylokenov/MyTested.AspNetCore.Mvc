@@ -1,13 +1,12 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.PluginsTests
 {
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.DependencyInjection;
+    using System;
     using Setups;
     using Setups.Common;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.DependencyInjection;
     using Plugins;
-    using System;
     using Xunit;
-    using System.Linq;
 
     public class EntityFrameworkCoreTestPluginTest
     {

@@ -1,10 +1,10 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.PluginsTests
 {
     using System;
-    using Xunit;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.AspNetCore.Mvc.DataAnnotations;
     using Plugins;
+    using Xunit;
 
     public class ModelStateTestPluginTest
     {
