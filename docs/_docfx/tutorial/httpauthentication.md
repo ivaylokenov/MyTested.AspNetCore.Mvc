@@ -109,7 +109,7 @@ By default tests do not have an authenticated user identity. Write this one in t
 public void CompleteShouldReturnViewWithCorrectIdWithFoundOrderForTheUser()
     => MyController<CheckoutController>
         .Instance()
-        .WithDbContext(db => db
+        .WithData(db => db
             .WithEntities(entities => entities.Add(new Order
             {
                 OrderId = 1,
@@ -117,8 +117,7 @@ public void CompleteShouldReturnViewWithCorrectIdWithFoundOrderForTheUser()
             })))
         .Calling(c => c.Complete(From.Services<MusicStoreContext>(), 1))
         .ShouldReturn()
-        .View()
-        .WithModel(1);
+        .View(v => v.WithModel(1));
 ```
 
 It fails. Obviously, we need an authenticated user to test this action. We can attach it to the **"HttpContext"** but let's make it easier. Head over to the **"MusicStore.Test.csproj"** file again and add **"MyTested.AspNetCore.Mvc.Authentication"**:
@@ -157,8 +156,8 @@ It fails. Obviously, we need an authenticated user to test this action. We can a
 public void CompleteShouldReturnViewWithCorrectIdWithFoundOrderForTheUser()
     => MyController<CheckoutController>
         .Instance()
-        .WithAuthenticatedUser() // <---
-        .WithDbContext(db => db
+        .WithUser() // <---
+        .WithData(db => db
             .WithEntities(entities => entities.Add(new Order
             {
                 OrderId = 1,
@@ -166,8 +165,7 @@ public void CompleteShouldReturnViewWithCorrectIdWithFoundOrderForTheUser()
             })))
         .Calling(c => c.Complete(From.Services<MusicStoreContext>(), 1))
         .ShouldReturn()
-        .View()
-        .WithModel(1);
+        .View(v => v.WithModel(1));
 ```
 
 You will receive a passing test because the default authenticated user has **"TestId"** identifier and **"TestUser"** username. Change the order **"Username"** property to **"MyTestUser"** and you will need to provide the username of the identity in order to make the test pass again:
@@ -190,7 +188,37 @@ public void CompleteShouldReturnViewWithCorrectIdWithFoundOrderForTheUser2()
         .View(v => v.WithModel(1));
 ```
 
-Of course, we also need to test the result when the order is not for the currently authenticated user. In this case, we need to return the **"Error"** view:
+Of course, we also need to test the result when the order is not for the currently authenticated user. In this case, we need to return the **"Error"** view, but to do that open **"MusicStore.Test.csproj"** file again and add **"MyTested.AspNetCore.Mvc.Helpers"** package:
+
+```xml
+<!-- Other ItemGroups -->
+
+<ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="Moq" Version="4.13.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Authentication" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.ActionResults" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.Views" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.DependencyInjection" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.EntityFrameworkCore" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Helpers" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Http" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Models" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.ModelState" Version="2.2.0" />
+
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+<!-- Other ItemGroups -->
+```
+
+And now add this test and it should pass:
 
 ```c#
 [Fact]
