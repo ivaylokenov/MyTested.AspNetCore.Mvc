@@ -13,36 +13,46 @@ var formCollection = await HttpContext.Request.ReadFormAsync();
 
 try
 {
-	if (string.Equals(formCollection["PromoCode"].FirstOrDefault(), PromoCode,
-		StringComparison.OrdinalIgnoreCase) == false)
-	{
-		return View(order);
-	}
-	
+    if (string.Equals(formCollection["PromoCode"].FirstOrDefault(), PromoCode,
+        StringComparison.OrdinalIgnoreCase) == false)
+    {
+        return View(order);
+    }
+
 // action code skipped for brevity
 ```
 
 The action reads the form and checks for an input named **"PromoCode"**. If it does not equal **"FREE"**, the action returns its view with the same order provided by the form. Let's test this logic!
 
-Go to the **"project.json"** file and add **"MyTested.AspNetCore.Mvc.Http"** as a dependency:
+Go to the **"MusicStore.Test.csproj"** file and add **"MyTested.AspNetCore.Mvc.Http"** as a dependency:
 
-```json
-"dependencies": {
-  "dotnet-test-xunit": "2.2.0-*",
-  "xunit": "2.2.0-*",
-  "Moq": "4.6.38-*",
-  "MyTested.AspNetCore.Mvc.Controllers": "1.0.0",
-  "MyTested.AspNetCore.Mvc.DependencyInjection": "1.0.0",
-  "MyTested.AspNetCore.Mvc.EntityFrameworkCore": "1.0.0",
-  "MyTested.AspNetCore.Mvc.Http": "1.0.0", // <---
-  "MyTested.AspNetCore.Mvc.ModelState": "1.0.0",
-  "MyTested.AspNetCore.Mvc.Models": "1.0.0",
-  "MyTested.AspNetCore.Mvc.ViewActionResults": "1.0.0",
-  "MusicStore": "*"
-},
+```xml
+<!-- Other ItemGroups -->
+
+<ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="Moq" Version="4.13.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.ActionResults" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.Views" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.DependencyInjection" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.EntityFrameworkCore" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Http" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Models" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.ModelState" Version="2.2.0" />
+
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+<!-- Other ItemGroups -->
 ```
 
-This package will provide you with additional methods - two of them are **"WithHttpContext"** and **"WithHttpRequest"**. We will use the second one - it provides a fast way to set up every single part of the HTTP request. 
+This package will provide you with additional methods - two of them are **"WithHttpContext"** and **"WithHttpRequest"**. We will use the second one - it provides a fast way to set up every single part of the HTTP request.
 
 Go to the **"CheckoutControllerTest"** and add the following test:
 
@@ -51,18 +61,18 @@ Go to the **"CheckoutControllerTest"** and add the following test:
 public void AddressAndPaymentShouldRerurnViewWithInvalidPostedPromoCode()
     => MyController<CheckoutController>
         .Instance()
-        .WithHttpRequest(request => request // <---
+        .WithHttpRequest(r => r // <---
             .WithFormField("PromoCode", "Invalid"))
         .Calling(c => c.AddressAndPayment(
             From.Services<MusicStoreContext>(),
             With.Default<Order>(),
             CancellationToken.None))
         .ShouldHave()
-        .ValidModelState()
+        .InvalidModelState()
         .AndAlso()
         .ShouldReturn()
-        .View()
-        .WithModel(With.Default<Order>());
+        .View(v => v
+            .WithModel(With.Default<Order>()));
 ```
 
 We have successfully tested that with an invalid promo code in the request form, our action should return the same view with the proper model. The **"WithHttpRequest"** method allows you to add form fields, files, headers, body, cookies and more. We will see more of it when we cover route testing.
@@ -77,16 +87,16 @@ Now let's take a look at the **"Complete"** action in the same controller:
 var userName = HttpContext.User.Identity.Name;
 
 bool isValid = await dbContext.Orders.AnyAsync(
-	o => o.OrderId == id &&
-	o.Username == userName);
+    o => o.OrderId == id &&
+    o.Username == userName);
 
 if (isValid)
 {
-	return View(id);
+    return View(id);
 }
 else
 {
-	return View("Error");
+    return View("Error");
 }
 
 // action code skipped for brevity
@@ -111,23 +121,33 @@ public void CompleteShouldReturnViewWithCorrectIdWithFoundOrderForTheUser()
         .WithModel(1);
 ```
 
-It fails. Obviously, we need an authenticated user to test this action. We can attach it to the **"HttpContext"** but let's make it easier. Head over to the **"project.json"** file again and add **"MyTested.AspNetCore.Mvc.Authentication"**:
+It fails. Obviously, we need an authenticated user to test this action. We can attach it to the **"HttpContext"** but let's make it easier. Head over to the **"MusicStore.Test.csproj"** file again and add **"MyTested.AspNetCore.Mvc.Authentication"**:
 
-```json
-"dependencies": {
-  "dotnet-test-xunit": "2.2.0-*",
-  "xunit": "2.2.0-*",
-  "Moq": "4.6.38-*",
-  "MyTested.AspNetCore.Mvc.Authentication": "1.0.0", // <---
-  "MyTested.AspNetCore.Mvc.Controllers": "1.0.0",
-  "MyTested.AspNetCore.Mvc.DependencyInjection": "1.0.0",
-  "MyTested.AspNetCore.Mvc.EntityFrameworkCore": "1.0.0",
-  "MyTested.AspNetCore.Mvc.Http": "1.0.0",
-  "MyTested.AspNetCore.Mvc.ModelState": "1.0.0",
-  "MyTested.AspNetCore.Mvc.Models": "1.0.0",
-  "MyTested.AspNetCore.Mvc.ViewActionResults": "1.0.0",
-  "MusicStore": "*"
-},
+```xml
+<!-- Other ItemGroups -->
+
+<ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="Moq" Version="4.13.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Authentication" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.ActionResults" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.Views" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.DependencyInjection" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.EntityFrameworkCore" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Http" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Models" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.ModelState" Version="2.2.0" />
+
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+<!-- Other ItemGroups -->
 ```
 
 **"WithAuthenticatedUser"** method will be added to the fluent API. You can use it to set identifier, username, roles, claims, and identities. But for now call it empty like this:
@@ -154,12 +174,12 @@ You will receive a passing test because the default authenticated user has **"Te
 
 ```c#
 [Fact]
-public void CompleteShouldReturnViewWithCorrectIdWithFoundOrderForTheUser()
+public void CompleteShouldReturnViewWithCorrectIdWithFoundOrderForTheUser2()
     => MyController<CheckoutController>
         .Instance()
-        .WithAuthenticatedUser(user => user // <---
+        .WithUser(user => user // <---
             .WithUsername("MyTestUser"))
-        .WithDbContext(db => db
+        .WithData(db => db
             .WithEntities(entities => entities.Add(new Order
             {
                 OrderId = 1,
@@ -167,8 +187,7 @@ public void CompleteShouldReturnViewWithCorrectIdWithFoundOrderForTheUser()
             })))
         .Calling(c => c.Complete(From.Services<MusicStoreContext>(), 1))
         .ShouldReturn()
-        .View()
-        .WithModel(1);
+        .View(v => v.WithModel(1));
 ```
 
 Of course, we also need to test the result when the order is not for the currently authenticated user. In this case, we need to return the **"Error"** view:
@@ -178,9 +197,9 @@ Of course, we also need to test the result when the order is not for the current
 public void CompleteShouldReturnErrorViewWithInvalidOrderForTheUser()
     => MyController<CheckoutController>
         .Instance()
-        .WithAuthenticatedUser(user => user
+        .WithUser(user => user
             .WithUsername("InvalidUser"))
-        .WithDbContext(db => db
+        .WithData(db => db
             .WithEntities(entities => entities.Add(new Order
             {
                 OrderId = 1,
