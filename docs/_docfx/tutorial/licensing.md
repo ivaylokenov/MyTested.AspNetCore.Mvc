@@ -75,16 +75,21 @@ Then add the following JSON in it:
 }
 ```
 
-This license is tied to the **"MusicStore.Test"** project. To unlock the testing framework limitations, we need to do one more thing. Go to the **"project.json"** file and add **"testconfig.json"** in the **"copyToOutput"** array:
+This license is tied to the **"MusicStore.Test"** project. To unlock the testing framework limitations, we need to do one more thing. Go to the **"MusicStore.Test.csproj"** file and add **"testconfig.json"** in the **"copyToOutput"** array:
 
-```json
-"buildOptions": {
-  "preserveCompilationContext": true,
-  "copyToOutput": [
-    "config.json",
-    "testconfig.json"
-  ]
-},
+```xml
+<!-- Other ItemGroups -->
+
+<ItemGroup>
+    <Content Update="config.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="testconfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+<!-- Other ItemGroups -->
 ```
 
 From now on the **"testconfig.json"** file will be copied to the build output directory, and My Tested ASP.NET Core MVC will be able to read it successfully. More information about the test configuration can be found [HERE](/guide/testconfig.html).
