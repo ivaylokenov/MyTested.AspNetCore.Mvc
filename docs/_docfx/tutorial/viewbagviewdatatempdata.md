@@ -9,32 +9,43 @@ Let's test something simple - the HTTP Get overload of the **"Login"** action in
 ```c#
 public IActionResult Login(string returnUrl = null)
 {
-	ViewBag.ReturnUrl = returnUrl;
-	return View();
+    ViewBag.ReturnUrl = returnUrl;
+    return View();
 }
 ```
 
 We need a new dependency (again?!) - **"MyTested.AspNetCore.Mvc.ViewData"**:
 
-```json
-"dependencies": {
-  "dotnet-test-xunit": "2.2.0-*",
-  "xunit": "2.2.0-*",
-  "Moq": "4.6.38-*",
-  "MyTested.AspNetCore.Mvc.Authentication": "1.0.0",
-  "MyTested.AspNetCore.Mvc.Caching": "1.0.0",
-  "MyTested.AspNetCore.Mvc.Controllers": "1.0.0",
-  "MyTested.AspNetCore.Mvc.DependencyInjection": "1.0.0",
-  "MyTested.AspNetCore.Mvc.EntityFrameworkCore": "1.0.0",
-  "MyTested.AspNetCore.Mvc.Http": "1.0.0",
-  "MyTested.AspNetCore.Mvc.ModelState": "1.0.0",
-  "MyTested.AspNetCore.Mvc.Models": "1.0.0",
-  "MyTested.AspNetCore.Mvc.Options": "1.0.0",
-  "MyTested.AspNetCore.Mvc.Session": "1.0.0",
-  "MyTested.AspNetCore.Mvc.ViewActionResults": "1.0.0",
-  "MyTested.AspNetCore.Mvc.ViewData": "1.0.0", // <---
-  "MusicStore": "*"
-},
+```xml
+<!-- Other ItemGroups -->
+
+<ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="Moq" Version="4.13.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Authentication" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Caching" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.ActionResults" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.Views" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.DependencyInjection" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.EntityFrameworkCore" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Helpers" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Http" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Models" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.ModelState" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Options" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Session" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.ViewData" Version="2.2.0" />
+
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+</ItemGroup>
+
+<!-- Other ItemGroups -->
 ```
 
 We need to add the **"ViewData"** features, because the **"ViewBag"** is actually a [dynamic version of it](https://github.com/aspnet/Mvc/blob/dev/src/Microsoft.AspNetCore.Mvc.ViewFeatures/Controller.cs#L91).
@@ -66,9 +77,9 @@ Let's write another one - for the HTTP Get overload of the **"Create"** action i
 ```c#
 public IActionResult Create()
 {
-	ViewBag.GenreId = new SelectList(DbContext.Genres, "GenreId", "Name");
-	ViewBag.ArtistId = new SelectList(DbContext.Artists, "ArtistId", "Name");
-	return View();
+    ViewBag.GenreId = new SelectList(DbContext.Genres, "GenreId", "Name");
+    ViewBag.ArtistId = new SelectList(DbContext.Artists, "ArtistId", "Name");
+    return View();
 }
 ```
 
@@ -92,7 +103,7 @@ public void CreateShouldHaveValidEntriesInViewBag()
 
     MyController<StoreManagerController>
         .Instance()
-        .WithDbContext(db => db
+        .WithData(db => db
             .WithEntities(entities =>
             {
                 entities.AddRange(genres);
@@ -104,10 +115,10 @@ public void CreateShouldHaveValidEntriesInViewBag()
             .ContainingEntries(new
             {
                 GenreId = new SelectList(
-					From.Services<MusicStoreContext>().Genres, "GenreId", "Name"),
-					
+                    From.Services<MusicStoreContext>().Genres, "GenreId", "Name"),
+
                 ArtistId = new SelectList(
-					From.Services<MusicStoreContext>().Artists, "ArtistId", "Name")
+                    From.Services<MusicStoreContext>().Artists, "ArtistId", "Name")
             }))
         .AndAlso()
         .ShouldReturn()
@@ -120,13 +131,13 @@ The **"ContainingEntries"** call is equivalent to this one:
 ```c#
 .ContainingEntries(new Dictionary<string, object>
 {
-	["GenreId"] = new SelectList(
-		From.Services<MusicStoreContext>().Genres, "GenreId", "Name"),
-		
-	["ArtistId"] = new SelectList(
-		From.Services<MusicStoreContext>().Artists, "ArtistId", "Name")
+    ["GenreId"] = new SelectList(
+        From.Services<MusicStoreContext>().Genres, "GenreId", "Name"),
+
+    ["ArtistId"] = new SelectList(
+        From.Services<MusicStoreContext>().Artists, "ArtistId", "Name")
 }))
-``` 
+```
 
 Both methods will validate whether the total number of entries in the **"ViewBag"** is equal to the total number you provide in the test. For a sanity check - remove the **"ArtistId"** property from anonymous object and run the test again:
 
@@ -138,10 +149,10 @@ If you do not want the total number of entries validation, just use:
 
 ```c#
 .ViewBag(viewBag => viewBag // <---
-	.ContainingEntry("GenreId", new SelectList(
-		From.Services<MusicStoreContext>().Genres, "GenreId", "Name"))
-	.ContainingEntry("ArtistId", new SelectList(
-		From.Services<MusicStoreContext>().Artists, "ArtistId", "Name")))
+    .ContainingEntry("GenreId", new SelectList(
+        From.Services<MusicStoreContext>().Genres, "GenreId", "Name"))
+    .ContainingEntry("ArtistId", new SelectList(
+        From.Services<MusicStoreContext>().Artists, "ArtistId", "Name")))
 ```
 
 ## ViewData and TempData
@@ -150,40 +161,40 @@ If you do not want the total number of entries validation, just use:
 
 ```c#
 MyController<SomeController>
-	.Instance()
-	.Calling(c => c.SomeAction())
-	.ShouldHave()
-	.ViewData(viewData => viewData // <---
-		.ContainingEntry("SomeKey", someValue))
-	.AndAlso()
-	.ShouldReturn()
-	.View();
+    .Instance()
+    .Calling(c => c.SomeAction())
+    .ShouldHave()
+    .ViewData(viewData => viewData // <---
+        .ContainingEntry("SomeKey", someValue))
+    .AndAlso()
+    .ShouldReturn()
+    .View();
 ```
 
 **"TempData"** too, but you will need the **"MyTested.AspNetCore.Mvc.TempData"** package:
 
 ```c#
 MyController<SomeController>
-	.Instance()
-	.Calling(c => c.SomeAction())
-	.ShouldHave()
-	.TempData(tempData => tempData // <---
-		.ContainingEntry("SomeKey", someValue))
-	.AndAlso()
-	.ShouldReturn()
-	.View();
+    .Instance()
+    .Calling(c => c.SomeAction())
+    .ShouldHave()
+    .TempData(tempData => tempData // <---
+        .ContainingEntry("SomeKey", someValue))
+    .AndAlso()
+    .ShouldReturn()
+    .View();
 ```
 
 Additionally, you can populate the **"TempData"** dictionary before the actual action call:
 
 ```c#
 MyController<SomeController>
-	.Instance()
-	.WithTempData(tempData => tempData
-		.WithEntry("SomeKey", someValue))
-	.Calling(c => c.SomeAction())
-	.ShouldReturn()
-	.View();
+    .Instance()
+    .WithTempData(tempData => tempData
+        .WithEntry("SomeKey", someValue))
+    .Calling(c => c.SomeAction())
+    .ShouldReturn()
+    .View();
 ```
 
 ## Section summary
