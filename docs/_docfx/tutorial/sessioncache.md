@@ -6,23 +6,34 @@ In this section we will cover two of the most commonly used modules for data per
 
 To use the built-in session capabilities of My Tested ASP.NET Core MVC, we need to add **"MyTested.AspNetCore.Mvc.Session"** as a dependency:
 
-```json
-"dependencies": {
-  "dotnet-test-xunit": "2.2.0-*",
-  "xunit": "2.2.0-*",
-  "Moq": "4.6.38-*",
-  "MyTested.AspNetCore.Mvc.Authentication": "1.0.0",
-  "MyTested.AspNetCore.Mvc.Controllers": "1.0.0",
-  "MyTested.AspNetCore.Mvc.DependencyInjection": "1.0.0",
-  "MyTested.AspNetCore.Mvc.EntityFrameworkCore": "1.0.0",
-  "MyTested.AspNetCore.Mvc.Http": "1.0.0",
-  "MyTested.AspNetCore.Mvc.ModelState": "1.0.0",
-  "MyTested.AspNetCore.Mvc.Models": "1.0.0",
-  "MyTested.AspNetCore.Mvc.Options": "1.0.0",
-  "MyTested.AspNetCore.Mvc.Session": "1.0.0", // <---
-  "MyTested.AspNetCore.Mvc.ViewActionResults": "1.0.0",
-  "MusicStore": "*"
-},
+```xml
+<!-- Other ItemGroups -->
+
+<ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="Moq" Version="4.13.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Authentication" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.ActionResults" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.Views" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.DependencyInjection" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.EntityFrameworkCore" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Helpers" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Http" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Models" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.ModelState" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Options" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Session" Version="2.2.0" />
+
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+</ItemGroup>
+
+<!-- Other ItemGroups -->
 ```
 
 Adding this package will replace the default session services with scoped mocks, which are empty at the beginning of each test. It's quite easy to test with them. Let's see! :)
@@ -36,8 +47,8 @@ var cartId = context.Session.GetString("Session");
 
 if (cartId == null)
 {
-	cartId = Guid.NewGuid().ToString();
-	context.Session.SetString("Session", cartId);
+    cartId = Guid.NewGuid().ToString();
+    context.Session.SetString("Session", cartId);
 }
 
 return cartId;
@@ -51,14 +62,14 @@ Let's assert that if the session is initially empty, an entry with **"Session"**
 [Fact]
 public void AddToCartShouldPopulateSessionCartIfMissing()
     => MyController<ShoppingCartController>
-		.Instance()
-		.WithDbContext(db => db
-			.WithEntities(entities => entities
-				.Add(new Album { AlbumId = 1 })))
-		.Calling(c => c.AddToCart(1))
-		.ShouldHave()
-		.Session(session => session
-			.ContainingEntryWithKey("Session"));
+        .Instance()
+        .WithData(db => db
+            .WithEntities(entities => entities
+                .Add(new Album { AlbumId = 1 })))
+        .Calling(c => c.AddToCart(1))
+        .ShouldHave()
+        .Session(session => session
+            .ContainingEntryWithKey("Session"));
 ```
 
 Next, let's assert that the cart item is actually saved into the database. We will need to provide a custom shopping cart ID by using the **"WithSession"** method:
@@ -69,7 +80,7 @@ public void AddToCartShouldSaveTheAlbumsIntoDatabaseAndSession()
     => MyController<ShoppingCartController>
         .Instance()
         .WithSession(session => session.WithEntry("Session", "TestCart")) // <---
-        .WithDbContext(db => db
+        .WithData(db => db
             .WithEntities(entities => entities
                 .Add(new Album { AlbumId = 1 })))
         .Calling(c => c.AddToCart(1))
@@ -79,34 +90,45 @@ public void AddToCartShouldSaveTheAlbumsIntoDatabaseAndSession()
                 .Any(a => a.AlbumId == 1 && a.CartId == "TestCart")))
         .AndAlso()
         .ShouldReturn()
-        .Redirect()
-        .ToAction(nameof(ShoppingCartController.Index));
+        .Redirect(r => r
+            .ToAction(nameof(ShoppingCartController.Index)));
 ```
 
 Of course, you can extract the magic strings... :)
 
 ## Cache
 
-For the caching assertions, we will need **"MyTested.AspNetCore.Mvc.Caching"** as a dependency. Go and add it to the **"project.json"**:
+For the caching assertions, we will need **"MyTested.AspNetCore.Mvc.Caching"** as a dependency. Go and add it to the **"MusicStore.Test.csproj"**:
 
-```json
-"dependencies": {
-  "dotnet-test-xunit": "2.2.0-*",
-  "xunit": "2.2.0-*",
-  "Moq": "4.6.38-*",
-  "MyTested.AspNetCore.Mvc.Authentication": "1.0.0",
-  "MyTested.AspNetCore.Mvc.Caching": "1.0.0", // <---
-  "MyTested.AspNetCore.Mvc.Controllers": "1.0.0",
-  "MyTested.AspNetCore.Mvc.DependencyInjection": "1.0.0",
-  "MyTested.AspNetCore.Mvc.EntityFrameworkCore": "1.0.0",
-  "MyTested.AspNetCore.Mvc.Http": "1.0.0",
-  "MyTested.AspNetCore.Mvc.ModelState": "1.0.0",
-  "MyTested.AspNetCore.Mvc.Models": "1.0.0",
-  "MyTested.AspNetCore.Mvc.Options": "1.0.0",
-  "MyTested.AspNetCore.Mvc.Session": "1.0.0",
-  "MyTested.AspNetCore.Mvc.ViewActionResults": "1.0.0",
-  "MusicStore": "*"
-},
+```xml
+<!-- Other ItemGroups -->
+
+<ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="Moq" Version="4.13.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Authentication" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Caching" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.ActionResults" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.Views" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.DependencyInjection" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.EntityFrameworkCore" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Helpers" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Http" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Models" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.ModelState" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Options" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Session" Version="2.2.0" />
+
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+</ItemGroup>
+
+<!-- Other ItemGroups -->
 ```
 
 Since the package automatically replaces the default memory cache services with scoped mocks, we no longer need this code in the **"TestStartup"** class:
@@ -187,16 +209,16 @@ First, we should test that no cache entries are saved if the **"CacheDbResults"*
 [Fact]
 public void IndexShouldNotUseCacheIfOptionsDisableIt()
     => MyController<HomeController>
-		.Instance()
-		.WithOptions(options => options
-			.For<AppSettings>(settings => settings.CacheDbResults = false))
-		.WithDbContext(db => db
-			.WithEntities(entities => entities.AddRange(Albums)))
-		.Calling(c => c.Index(
-			From.Services<MusicStoreContext>(),
-			From.Services<IMemoryCache>()))
-		.ShouldHave()
-		.NoMemoryCache(); // <---
+        .Instance()
+        .WithOptions(options => options
+            .For<AppSettings>(settings => settings.CacheDbResults = false))
+        .WithData(db => db
+            .WithEntities(entities => entities.AddRange(Albums)))
+        .Calling(c => c.Index(
+            From.Services<MusicStoreContext>(),
+            From.Services<IMemoryCache>()))
+        .ShouldHave()
+        .NoMemoryCache(); // <---
 ```
 
 Unfortunately, the **"NoMemoryCache"** call will not work:
@@ -210,14 +232,14 @@ With straightforward action debugging we may not see what exactly is going on be
 Easy! Add these lines:
 
 ```c#
-.WithDbContext(db => db
-	.WithEntities(entities => entities.AddRange(Albums)))
+.WithData(db => db
+    .WithEntities(entities => entities.AddRange(Albums)))
 .Calling(c => c.Index(
-	From.Services<MusicStoreContext>(),
-	From.Services<IMemoryCache>()))
+    From.Services<MusicStoreContext>(),
+    From.Services<IMemoryCache>()))
 .ShouldPassForThe<IServiceProvider>(services => // <--- add these instead of NoMemoryCache
 {
-	var memoryCache = services.GetService<IMemoryCache>();
+    var memoryCache = services.GetService(typeof(IMemoryCache));;
 }); // <--- and put a breakpoint here
 ```
 
@@ -229,10 +251,10 @@ One of the possible fixes is:
 
 ```c#
 .Calling(c => c.Index(
-	From.Services<MusicStoreContext>(),
-	From.Services<IMemoryCache>()))
+    From.Services<MusicStoreContext>(),
+    From.Services<IMemoryCache>()))
 .ShouldPassForThe<IServiceProvider>(services => Assert.Null(services // <---
-	.GetRequiredService<IMemoryCache>().Get("topselling")));
+    .GetRequiredService<IMemoryCache>().Get("topselling")));
 ```
 
 You may use custom mocks too, but it is not necessary.
@@ -246,7 +268,7 @@ public void IndexShouldSaveCorrectCacheEntriesIfOptionsEnableIt()
         .Instance()
         .WithOptions(options => options
             .For<AppSettings>(settings => settings.CacheDbResults = true))
-        .WithDbContext(db => db
+        .WithData(db => db
             .WithEntities(entities => entities.AddRange(Albums)))
         .Calling(c => c.Index(
             From.Services<MusicStoreContext>(),
@@ -261,9 +283,9 @@ public void IndexShouldSaveCorrectCacheEntriesIfOptionsEnableIt()
                 .Passing(albums => albums.Count == 6)))
         .AndAlso()
         .ShouldReturn()
-        .View()
-        .WithModelOfType<List<Album>>()
-        .Passing(albums => albums.Count == 6);
+        .View(v => v
+            .WithModelOfType<List<Album>>()
+            .Passing(albums => albums.Count == 6));
 ```
 
 Finally, we should validate that if the cache contains the albums entry, no database query should be called. We will use an empty database and assert the view model:
