@@ -4,29 +4,41 @@ If you have a single route mapping (for example the default one), it will be not
 
 ## Validating controllers and actions
 
-Go to the **"project.json"** file and add the **"MyTested.AspNetCore.Mvc.Routing"** dependency:
+Go to the **"MusicStore.Test.csproj"** file and add the **"MyTested.AspNetCore.Mvc.Routing"** dependency:
 
-```json
-"dependencies": {
-  "dotnet-test-xunit": "2.2.0-*",
-  "xunit": "2.2.0-*",
-  "Moq": "4.6.38-*",
-  "MyTested.AspNetCore.Mvc.Authentication": "1.0.0",
-  "MyTested.AspNetCore.Mvc.Caching": "1.0.0",
-  "MyTested.AspNetCore.Mvc.Controllers": "1.0.0",
-  "MyTested.AspNetCore.Mvc.DependencyInjection": "1.0.0",
-  "MyTested.AspNetCore.Mvc.EntityFrameworkCore": "1.0.0",
-  "MyTested.AspNetCore.Mvc.Http": "1.0.0",
-  "MyTested.AspNetCore.Mvc.ModelState": "1.0.0",
-  "MyTested.AspNetCore.Mvc.Models": "1.0.0",
-  "MyTested.AspNetCore.Mvc.Options": "1.0.0",
-  "MyTested.AspNetCore.Mvc.Routing": "1.0.0", // <---
-  "MyTested.AspNetCore.Mvc.Session": "1.0.0",
-  "MyTested.AspNetCore.Mvc.ViewActionResults": "1.0.0",
-  "MyTested.AspNetCore.Mvc.ViewComponents": "1.0.0",
-  "MyTested.AspNetCore.Mvc.ViewData": "1.0.0",
-  "MusicStore": "*"
-},
+```xml
+<!-- Other ItemGroups -->
+
+<ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="Moq" Version="4.13.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Authentication" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Caching" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.ActionResults" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.Views" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.DependencyInjection" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.EntityFrameworkCore" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Helpers" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Http" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Models" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.ModelState" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Options" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Routing" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Session" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.TempData" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.ViewComponents" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.ViewData" Version="2.2.0" />
+
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+</ItemGroup>
+
+<!-- Other ItemGroups -->
 ```
 
 Create **"Routing"** folder at the root of the test project and add **"HomeRouteTest"** class in it. We will start with something easy and validate the **"Error"** action in **"HomeController"**:
@@ -34,7 +46,7 @@ Create **"Routing"** folder at the root of the test project and add **"HomeRoute
 ```c#
 public IActionResult Error()
 {
-	// action code skipped for brevity
+    // action code skipped for brevity
 }
 ```
 
@@ -58,7 +70,7 @@ We will now going to validate route values next to controllers and actions. The 
 ```c#
 public async Task<IActionResult> AddToCart(int id)
 {
-	// action code skipped for brevity
+    // action code skipped for brevity
 }
 ```
 
@@ -70,7 +82,7 @@ public void GetAddToCartActionShouldBeRoutedSuccessfuly()
     => MyRouting
         .Configuration()
         .ShouldMap("/ShoppingCart/AddToCart/1")
-        .To<ShoppingCartController>(c => c.AddToCart(1));
+        .To<ShoppingCartController>(c => c.AddToCart(1,CancellationToken.None));
 ```
 
 Query strings are also easy. Let's test the **"Browse"** action in the **"StoreController"**:
@@ -78,7 +90,7 @@ Query strings are also easy. Let's test the **"Browse"** action in the **"StoreC
 ```c#
 public async Task<IActionResult> Browse(string genre)
 {
-	// action code skipped for brevity
+    // action code skipped for brevity
 }
 ```
 
@@ -87,10 +99,10 @@ Create **"StoreRouteTest""** class and add the following test:
 ```c#
 [Fact]
 public void GetBrowseActionShouldBeRoutedSuccessfuly()
-	=> MyRouting
-		.Configuration()
-		.ShouldMap("/Store/Browse?genre=HipHop")
-		.To<StoreController>(c => c.Browse("HipHop"));
+    => MyRouting
+        .Configuration()
+        .ShouldMap("/Store/Browse?genre=HipHop")
+        .To<StoreController>(c => c.Browse("HipHop"));
 ```
 
 And if you change **"HipHop"** with **"Rock"**, for example, you will see the following error message:
@@ -105,10 +117,10 @@ Some action parameters do not have to be tested. They come from the service prov
 
 ```c#
 public async Task<IActionResult> Index(
-	[FromServices] MusicStoreContext dbContext,
-	[FromServices] IMemoryCache cache)
+    [FromServices] MusicStoreContext dbContext,
+    [FromServices] IMemoryCache cache)
 {
-	// action code skipped for brevity
+    // action code skipped for brevity
 }
 ```
 
@@ -117,12 +129,12 @@ We do not want to test the **"MusicStoreContext"** and the **"IMemoryCache"** ac
 ```c#
 [Fact]
 public void GetIndexActionShouldBeRoutedSuccessfuly()
-	=> MyRouting
-		.Configuration()
-		.ShouldMap("/Home")
-		.To<HomeController>(c => c.Index(
-			With.Any<MusicStoreContext>(), // <---
-			With.Any<IMemoryCache>())); // <---
+    => MyRouting
+        .Configuration()
+        .ShouldMap("/Home")
+        .To<HomeController>(c => c.Index(
+            With.Any<MusicStoreContext>(), // <---
+            With.Any<IMemoryCache>())); // <---
 ```
 
 **"With.Any"** can be used on any action parameter expected in a route test.
@@ -134,10 +146,10 @@ All of the above examples are using HTTP Get method and the provided path as req
 ```c#
 [HttpPost]
 public async Task<IActionResult> RemoveFromCart(
-	int id,
-	CancellationToken requestAborted)
+    int id,
+    CancellationToken requestAborted)
 {
-	// action code skipped for brevity
+    // action code skipped for brevity
 }
 ```
 
@@ -159,14 +171,14 @@ We are testing with HTTP Get request while the action is restricted only to HTTP
 ```c#
 [Fact]
 public void PostRemoveFromCartActionShouldBeRoutedSuccessfuly()
-	=> MyRouting
-		.Configuration()
-		.ShouldMap(request => request // <---
-			.WithMethod(HttpMethod.Post)
-			.WithLocation("/ShoppingCart/RemoveFromCart/1"))
-		.To<ShoppingCartController>(c => c.RemoveFromCart(
-			1,
-			With.Any<CancellationToken>()));
+    => MyRouting
+        .Configuration()
+        .ShouldMap(request => request // <---
+            .WithMethod(HttpMethod.Post)
+            .WithLocation("/ShoppingCart/RemoveFromCart/1"))
+        .To<ShoppingCartController>(c => c.RemoveFromCart(
+            1,
+            With.Any<CancellationToken>()));
 ```
 
 This way we are explicitly setting the request to have HTTP Post method making the routing match the specified controller, action and route value.
@@ -179,7 +191,7 @@ Besides route values, you can also assert that all request properties (like its 
 [HttpPost]
 public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
 {
-	// action code skipped for brevity
+    // action code skipped for brevity
 }
 ```
 
@@ -225,38 +237,38 @@ The **"Music Store"** web application does not have any JSON-based model binding
 
 ```c#
 MyRouting
-	.Configuration()
-	.ShouldMap(request => request
-		.WithMethod(HttpMethod.Post)
-		.WithLocation("/My/Action")
-		.WithJsonBody(@"{""MyNumber"":1,""MyString"":""MyText""}"))
-	.To<MyController>(c => c.Action(
-		new MyModel
-		{
-			MyNumber = 1,
-			MyString = "MyText"
-		}));
+    .Configuration()
+    .ShouldMap(request => request
+        .WithMethod(HttpMethod.Post)
+        .WithLocation("/My/Action")
+        .WithJsonBody(@"{""MyNumber"":1,""MyString"":""MyText""}"))
+    .To<MyController>(c => c.Action(
+        new MyModel
+        {
+            MyNumber = 1,
+            MyString = "MyText"
+        }));
 ```
 
 There is also an anonymous object overload:
 
 ```c#
 MyRouting
-	.Configuration()
-	.ShouldMap(request => request
-		.WithMethod(HttpMethod.Post)
-		.WithLocation("/My/Action")
-		.WithJsonBody(new
-		{
-			MyNumber = 1,
-			MyString = "MyText"
-		}))
-	.To<MyController>(c => c.Action(
-		new MyModel
-		{
-			MyNumber = 1,
-			MyString = "MyText"
-		}));
+    .Configuration()
+    .ShouldMap(request => request
+        .WithMethod(HttpMethod.Post)
+        .WithLocation("/My/Action")
+        .WithJsonBody(new
+        {
+            MyNumber = 1,
+            MyString = "MyText"
+        }))
+    .To<MyController>(c => c.Action(
+        new MyModel
+        {
+            MyNumber = 1,
+            MyString = "MyText"
+        }));
 ```
 
 It may seem a bit strange at first, but My Tested ASP.NET Core MVC serializes the anonymous object to JSON string, attach it to the HTTP request body as a stream and pass it to the routing system.
@@ -265,11 +277,11 @@ Of course, you can always ignore model binding and just assert controllers and a
 
 ```c#
 MyRouting
-	.Configuration()
-	.ShouldMap(request => request
-		.WithMethod(HttpMethod.Post)
-		.WithLocation("/My/Action"))
-	.To<MyController>(c => c.Action(With.Any<MyModel>()));
+    .Configuration()
+    .ShouldMap(request => request
+        .WithMethod(HttpMethod.Post)
+        .WithLocation("/My/Action"))
+    .To<MyController>(c => c.Action(With.Any<MyModel>()));
 ```
 
 ## Section summary
