@@ -25,23 +25,24 @@
         }
 
         /// <inheritdoc />
-        public IAndAggregateExceptionTestBuilder ContainingInnerExceptionOfType<TInnerException>()
-            where TInnerException : Exception
+        public IAndAggregateExceptionTestBuilder ContainingInnerExceptionOfType(Type innerException)
         {
-            var expectedInnerExceptionType = typeof(TInnerException);
-            var innerExceptionFound = this.aggregateException.InnerExceptions.Any(e => e.GetType() == expectedInnerExceptionType);
+            var innerExceptionFound = this.aggregateException.InnerExceptions.Any(e => e.GetType() == innerException);
             if (!innerExceptionFound)
             {
                 throw new InvalidExceptionAssertionException(string.Format(
                     "{0} {1} to contain {2}, but none was found.",
                     this.TestContext.ExceptionMessagePrefix,
                     nameof(AggregateException),
-                    expectedInnerExceptionType.ToFriendlyTypeName()));
+                    innerException.ToFriendlyTypeName()));
             }
 
             return this;
         }
 
+        public IAndAggregateExceptionTestBuilder ContainingInnerExceptionOfType<TInnerException>()
+            where TInnerException : Exception  => this.ContainingInnerExceptionOfType(typeof(TInnerException));
+        
         /// <inheritdoc />
         public new IAggregateExceptionTestBuilder AndAlso() => this;
     }

@@ -14,5 +14,7 @@
         /// <returns>The same <see cref="IAndAggregateExceptionTestBuilder"/>.</returns>
         IAndAggregateExceptionTestBuilder ContainingInnerExceptionOfType<TInnerException>()
             where TInnerException : Exception;
+
+        IAndAggregateExceptionTestBuilder ContainingInnerExceptionOfType(Type innerExeption);
     }
 }
