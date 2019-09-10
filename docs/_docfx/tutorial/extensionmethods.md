@@ -23,7 +23,7 @@ If we take a look at the **"WithModelOfType"** signature, we will see it is an e
 public static IAndModelDetailsTestBuilder<TModel> WithModelOfType<TModel>(this IBaseTestBuilderWithResponseModel builder);
 ```
 
-We will extend the same interface so that all action results with models are extended. Create a folder **"Extensions"** in the test project and add **"ResponseModelExtensions"** class containing the code below. 
+We will extend the same interface so that all action results with models are extended. Create a folder **"Extensions"** in the test project and add **"ResponseModelExtensions"** class containing the code below.
 
 ```c#
 using MyTested.AspNetCore.Mvc.Builders.Base;
@@ -37,23 +37,23 @@ using System.Collections.Generic;
 public static class ResponseModelExtensions
 {
     public static IBaseTestBuilderWithComponent WithCollectionModelOfType<TModel>(
-		// base test builder we are extending
+        // base test builder we are extending
         this IBaseTestBuilderWithResponseModel builder,
-		// optional predicate the model should pass
+        // optional predicate the model should pass
         Func<ICollection<TModel>, bool> predicate = null)
     {
-		// cast to the actual class behind the interface
-        var actualBuilder = (BaseTestBuilderWithResponseModel)builder; 
-		// helper method validating the model type
-        var modelCollection = actualBuilder.GetActualModel<ICollection<TModel>>(); 
-            
-		// execute the predicate if exists
-        if (predicate != null && !predicate(modelCollection)) 
-        {
-			// get the current test context
-            var testContext = actualBuilder.TestContext; 
+        // cast to the actual class behind the interface
+        var actualBuilder = (BaseTestBuilderWithResponseModel)builder;
+        // helper method validating the model type
+        var modelCollection = actualBuilder.GetActualModel<ICollection<TModel>>();
 
-			// throw exception for invalid predicate
+        // execute the predicate if exists
+        if (predicate != null && !predicate(modelCollection))
+        {
+            // get the current test context
+            var testContext = actualBuilder.TestContext;
+
+            // throw exception for invalid predicate
             throw new ResponseModelAssertionException(string.Format(
                 "When calling {0} in {1} expected response model collection of {2} to pass the given predicate, but it failed.",
                 testContext.MethodName,
@@ -61,19 +61,19 @@ public static class ResponseModelExtensions
                 typeof(TModel).ToFriendlyTypeName()));
         }
 
-		// return the same test builder
-        return actualBuilder; 
+        // return the same test builder
+        return actualBuilder;
     }
 }
 ```
 
 Let's break it down and explain the most important parts of this extension method:
 
- - **"IBaseTestBuilderWithComponent"** is a base interface containing **"ShouldPassFor"** methods allowing you to continue the fluent API.
- - **"actualBuilder"** is a variable holding the actual class behind the **"IBaseTestBuilderWithResponseModel"** interface. The class' name is the same as the interface but without the 'I' in front of it. After the casting you will receive more functionality you can use - methods like the **"GetActualModel"** used above. Their purpose is to help you execute the test but not to be part of the actual fluent API.
- - The **"TestContext"** is part of every single test builder class. It contains information about the currently executed test. For example in the scope of a controller test, the **"Component"** property will contain the controller instance and the **"MethodName"** property will contain the name of the tested action. More information available [HERE](/guide/testcontext.html).
- - The **"GetName"** and **"ToFriendlyTypeName"** extension methods can be used to format various display names.
- 
+- **"IBaseTestBuilderWithComponent"** is a base interface containing **"ShouldPassFor"** methods allowing you to continue the fluent API.
+- **"actualBuilder"** is a variable holding the actual class behind the **"IBaseTestBuilderWithResponseModel"** interface. The class' name is the same as the interface but without the 'I' in front of it. After the casting you will receive more functionality you can use - methods like the **"GetActualModel"** used above. Their purpose is to help you execute the test but not to be part of the actual fluent API.
+- The **"TestContext"** is part of every single test builder class. It contains information about the currently executed test. For example in the scope of a controller test, the **"Component"** property will contain the controller instance and the **"MethodName"** property will contain the name of the tested action. More information available [HERE](/guide/testcontext.html).
+- The **"GetName"** and **"ToFriendlyTypeName"** extension methods can be used to format various display names.
+
 ## Using existing methods
 
 Let's add new testing functionality based on existing methods. For example instead of this call:
@@ -81,7 +81,7 @@ Let's add new testing functionality based on existing methods. For example inste
 ```c#
 .ShouldHave()
 .Attributes(attributes => attributes
-	.SpecifyingArea("Admin"))
+    .SpecifyingArea("Admin"))
 ```
 
 We remove the magic string:
@@ -89,7 +89,7 @@ We remove the magic string:
 ```c#
 .ShouldHave()
 .Attributes(attributes => attributes
-	.SpecifyingAdminArea())
+    .SpecifyingAdminArea())
 ```
 
 We need to extend the **"IControllerActionAttributesTestBuilder<TAttributesTestBuilder>"** interface. Add **"ControllerActionAttributeExtensions"** class with the following code in it:
