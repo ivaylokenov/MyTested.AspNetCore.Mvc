@@ -7,15 +7,15 @@
     /// <summary>
     /// Used for building mocked <see cref="IMemoryCache"/>.
     /// </summary>
-    public interface IMemoryCacheBuilder
+    public interface IWithMemoryCacheBuilder
     {
         /// <summary>
         /// Adds cache entry to the mocked <see cref="IMemoryCache"/>.
         /// </summary>
         /// <param name="key">Key of the cache entry.</param>
         /// <param name="value">Value of the cache entry.</param>
-        /// <returns>The same <see cref="IAndMemoryCacheBuilder"/>.</returns>
-        IAndMemoryCacheBuilder WithEntry(object key, object value);
+        /// <returns>The same <see cref="IAndWithMemoryCacheBuilder"/>.</returns>
+        IAndWithMemoryCacheBuilder WithEntry(object key, object value);
 
         /// <summary>
         /// Adds cache entry to the mocked <see cref="IMemoryCache"/>.
@@ -23,21 +23,21 @@
         /// <param name="key">Key of the cache entry.</param>
         /// <param name="value">Value of the cache entry.</param>
         /// <param name="options"><see cref="MemoryCacheEntryOptions"/> of the cache entry.</param>
-        /// <returns>The same <see cref="IAndMemoryCacheBuilder"/>.</returns>
-        IAndMemoryCacheBuilder WithEntry(object key, object value, MemoryCacheEntryOptions options);
+        /// <returns>The same <see cref="IAndWithMemoryCacheBuilder"/>.</returns>
+        IAndWithMemoryCacheBuilder WithEntry(object key, object value, MemoryCacheEntryOptions options);
 
         /// <summary>
         /// Adds cache entry to the mocked <see cref="IMemoryCache"/>.
         /// </summary>
         /// <param name="memoryCacheEntryBuilder">Builder for creating cache entry.</param>
-        /// <returns>The same <see cref="IAndMemoryCacheBuilder"/>.</returns>
-        IAndMemoryCacheBuilder WithEntry(Action<IMemoryCacheEntryKeyBuilder> memoryCacheEntryBuilder);
+        /// <returns>The same <see cref="IAndWithMemoryCacheBuilder"/>.</returns>
+        IAndWithMemoryCacheBuilder WithEntry(Action<IMemoryCacheEntryKeyBuilder> memoryCacheEntryBuilder);
 
         /// <summary>
         /// Adds cache entries to the mocked <see cref="IMemoryCache"/>.
         /// </summary>
         /// <param name="entries">Dictionary of cache entries.</param>
-        /// <returns>The same <see cref="IAndMemoryCacheBuilder"/>.</returns>
-        IAndMemoryCacheBuilder WithEntries(IDictionary<object, object> entries);
+        /// <returns>The same <see cref="IAndWithMemoryCacheBuilder"/>.</returns>
+        IAndWithMemoryCacheBuilder WithEntries(IDictionary<object, object> entries);
     }
 }

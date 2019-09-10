@@ -4,45 +4,35 @@
     using System.Collections.Generic;
     using Contracts.Data;
     using Microsoft.Extensions.Caching.Memory;
-    using Microsoft.Extensions.DependencyInjection;
     using Utilities.Extensions;
 
     /// <summary>
     /// Used for building mocked <see cref="IMemoryCache"/>.
     /// </summary>
-    public class MemoryCacheBuilder : IAndMemoryCacheBuilder
+    public class MemoryCacheWithBuilder : MemoryCacheBaseBuilder, IAndWithMemoryCacheBuilder
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MemoryCacheBuilder"/> class.
+        /// Initializes a new instance of the <see cref="MemoryCacheWithBuilder"/> class.
         /// </summary>
         /// <param name="services"><see cref="IServiceProvider"/> providing the current <see cref="IMemoryCache"/>.</param>
-        public MemoryCacheBuilder(IServiceProvider services)
-        {
-            this.MemoryCache = services.GetRequiredService<IMemoryCache>();
-        }
-
-        /// <summary>
-        /// Gets the mocked <see cref="IMemoryCache"/>.
-        /// </summary>
-        /// <value>Built <see cref="IMemoryCache"/>.</value>
-        protected IMemoryCache MemoryCache { get; private set; }
+        public MemoryCacheWithBuilder(IServiceProvider services) : base(services) { }
 
         /// <inheritdoc />
-        public IAndMemoryCacheBuilder WithEntry(object key, object value)
+        public IAndWithMemoryCacheBuilder WithEntry(object key, object value)
         {
             this.MemoryCache.Set(key, value);
             return this;
         }
 
         /// <inheritdoc />
-        public IAndMemoryCacheBuilder WithEntry(object key, object value, MemoryCacheEntryOptions options)
+        public IAndWithMemoryCacheBuilder WithEntry(object key, object value, MemoryCacheEntryOptions options)
         {
             this.MemoryCache.Set(key, value, options);
             return this;
         }
 
         /// <inheritdoc />
-        public IAndMemoryCacheBuilder WithEntry(Action<IMemoryCacheEntryKeyBuilder> memoryCacheEntryBuilder)
+        public IAndWithMemoryCacheBuilder WithEntry(Action<IMemoryCacheEntryKeyBuilder> memoryCacheEntryBuilder)
         {
             var newMemoryCacheEntryBuilder = new MemoryCacheEntryBuilder();
             memoryCacheEntryBuilder(newMemoryCacheEntryBuilder);
@@ -58,13 +48,13 @@
         }
 
         /// <inheritdoc />
-        public IAndMemoryCacheBuilder WithEntries(IDictionary<object, object> entries)
+        public IAndWithMemoryCacheBuilder WithEntries(IDictionary<object, object> entries)
         {
             entries.ForEach(e => this.WithEntry(e.Key, e.Value));
             return this;
         }
 
         /// <inheritdoc />
-        public IMemoryCacheBuilder AndAlso() => this;
+        public IWithMemoryCacheBuilder AndAlso() => this;
     }
 }

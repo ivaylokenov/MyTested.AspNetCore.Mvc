@@ -33,5 +33,10 @@
 
             return this.BadRequest();
         }
+
+        public IActionResult GetCount([FromServices]IMemoryCache cache)
+        {
+            return this.Ok((cache as IMemoryCacheMock).GetCacheAsDictionary().Count);
+        }
     }
 }

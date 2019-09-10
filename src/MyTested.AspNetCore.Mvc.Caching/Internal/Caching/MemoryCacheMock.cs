@@ -12,13 +12,10 @@
 
         private readonly IDictionary<object, ICacheEntry> cache;
 
-        public MemoryCacheMock() 
+        public MemoryCacheMock()
             => this.cache = this.GetCurrentCache();
 
         public int Count => this.cache.Count;
-        
-        public void Dispose() 
-            => this.cache.Clear();
 
         public void Remove(object key)
         {
@@ -59,8 +56,22 @@
             return false;
         }
 
-        public IDictionary<object, object> GetCacheAsDictionary() 
+        public IDictionary<object, object> GetCacheAsDictionary()
             => this.cache.ToDictionary(c => c.Key, c => c.Value.Value);
+
+        public void RemoveKeys(IEnumerable<object> keys)
+        {
+            foreach (var key in keys)
+            {
+                this.Remove(key);
+            }
+        }
+
+        public void ClearCache()
+            => this.cache.Clear();
+
+        public void Dispose()
+            => this.ClearCache();
 
         private IDictionary<object, ICacheEntry> GetCurrentCache()
         {

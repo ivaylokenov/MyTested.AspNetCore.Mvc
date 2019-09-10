@@ -139,6 +139,55 @@
                     }));
         }
 
+        [Fact]
+        public void WithoutMemoryCacheShouldReturnEmptyCache()
+        {
+            MyController<MemoryCacheController>
+                .Instance()
+                .WithMemoryCache(memoryCache => memoryCache
+                    .WithEntries(new Dictionary<object, object>
+                    {
+                        ["first"] = "firstValue",
+                        ["second"] = "secondValue",
+                        ["third"] = "thirdValue"
+                    }))
+                .WithoutMemoryCache()
+                .Calling(c => c.GetCount(From.Services<IMemoryCache>()))
+                .ShouldReturn()
+                .Ok(ok => ok.WithModel(0));
+        }
+
+        [Fact]
+        public void WithoutMemoryCacheShouldReturnEmptyCacheWhenClearingAlreadyEmptyCache()
+        {
+            MyController<MemoryCacheController>
+                .Instance()
+                .WithMemoryCache(memoryCache => memoryCache
+                    .WithEntries(new Dictionary<object, object>()))
+                .WithoutMemoryCache()
+                .Calling(c => c.GetCount(From.Services<IMemoryCache>()))
+                .ShouldReturn()
+                .Ok(ok => ok.WithModel(0));
+        }
+
+        [Fact]
+        public void WithoutMemoryEntryCacheShouldReturnEmptyCache()
+        {
+            MyController<MemoryCacheController>
+                .Instance()
+                .WithMemoryCache(memoryCache => memoryCache
+                    .WithEntries(new Dictionary<object, object>
+                    {
+                        ["first"] = "firstValue",
+                        ["second"] = "secondValue",
+                        ["third"] = "thirdValue"
+                    }))
+                .WithoutMemoryCache(cache => cache.WithoutEntry("second"))
+                .Calling(c => c.GetCount(From.Services<IMemoryCache>()))
+                .ShouldReturn()
+                .Ok(ok => ok.WithModel(2));
+        }
+
         public void Dispose() => MyApplication.StartsFrom<DefaultStartup>();
     }
 }
