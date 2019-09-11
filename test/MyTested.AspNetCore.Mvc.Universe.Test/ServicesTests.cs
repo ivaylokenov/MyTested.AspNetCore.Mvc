@@ -1,17 +1,24 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test
 {
+    using Internal;
     using Internal.Caching;
+    using Internal.Contracts;
     using Internal.EntityFrameworkCore;
+    using Internal.Formatters;
     using Internal.Services;
     using Internal.Session;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.AspNetCore.Session;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Infrastructure;
     using Microsoft.EntityFrameworkCore.InMemory.Infrastructure.Internal;
     using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Options;
     using Setups;
     using Setups.Common;
+    using System;
     using System.Linq;
     using Xunit;
 
@@ -161,6 +168,129 @@
             Assert.NotNull(coreOptionsExtension);
             Assert.NotNull(inMemoryOptionsExtension);
             Assert.NotNull(scopedInMemoryOptionsExtension);
+        }
+
+        [Fact]
+        public void AddMvcUniverseTestingShouldReplaceOptionsWithScopedOnes()
+        {
+            var services = new ServiceCollection();
+            services.AddMvc();
+
+            Assert.Contains(services, s => s.ServiceType == typeof(IOptions<>) && s.Lifetime == ServiceLifetime.Singleton);
+
+            services.AddMvcUniverseTesting();
+
+            Assert.Contains(services, s => s.ServiceType == typeof(IOptions<>) && s.Lifetime == ServiceLifetime.Scoped);
+        }
+
+        [Fact]
+        public void AddMvcUniverseTestingShouldAddStringInputFormatter()
+        {
+            MyApplication.StartsFrom<TestStartup>();
+
+            var builtOptions = TestServiceProvider.GetService<IOptions<MvcOptions>>();
+            builtOptions.Value.InputFormatters.RemoveType<StringInputFormatter>();
+
+            Assert.NotNull(builtOptions);
+            Assert.True(builtOptions.Value.InputFormatters.Count == 2);
+            Assert.DoesNotContain(typeof(StringInputFormatter), builtOptions.Value.InputFormatters.Select(f => f.GetType()));
+
+            MyApplication.StartsFrom<TestStartup>()
+                .WithServices(services =>
+                {
+                    services.AddMvcUniverseTesting();
+                });
+
+            builtOptions = TestServiceProvider.GetService<IOptions<MvcOptions>>();
+
+            Assert.NotNull(builtOptions);
+            Assert.True(builtOptions.Value.InputFormatters.Count == 3);
+            Assert.Contains(typeof(StringInputFormatter), builtOptions.Value.InputFormatters.Select(f => f.GetType()));
+        }
+
+        [Fact]
+        public void AddMvcUniverseTestingShouldReplaceTempDataProviderWithMockedVersion()
+        {
+            MyApplication.StartsFrom<TestStartup>()
+                .WithServices(services =>
+                {
+                    services.Replace<ITempDataProvider, CustomTempDataProvider>(ServiceLifetime.Scoped);
+                });
+
+            var tempDataPovider = TestServiceProvider.GetService<ITempDataProvider>();
+
+            Assert.NotNull(tempDataPovider);
+            Assert.True(typeof(CustomTempDataProvider) == tempDataPovider.GetType());
+
+            MyApplication.StartsFrom<TestStartup>()
+                .WithServices(services =>
+                {
+                    services.AddMvcUniverseTesting();
+                });
+
+            tempDataPovider = TestServiceProvider.GetService<ITempDataProvider>();
+
+            Assert.NotNull(tempDataPovider);
+            Assert.True(typeof(TempDataProviderMock) == tempDataPovider.GetType());
+        }
+
+        [Fact]
+        public void AddMvcUniverseTestingWithoutTempDataProviderShouldReplaceItWithMockedVersion()
+        {
+            var services = new ServiceCollection();
+
+            services.AddMvc();
+            services.Remove<ITempDataProvider>();
+            var defaultTempDataProvider = services.BuildServiceProvider().GetService<ITempDataProvider>();
+
+            services.AddMvcUniverseTesting();
+            var mockTempDataProvider = services.BuildServiceProvider().GetService<ITempDataProvider>();
+
+            Assert.Null(defaultTempDataProvider);
+            Assert.NotNull(mockTempDataProvider);
+            Assert.IsAssignableFrom<ITempDataProvider>(mockTempDataProvider);
+            Assert.IsAssignableFrom<TempDataProviderMock>(mockTempDataProvider);
+        }
+
+        [Fact]
+        public void AddMvcUniverseTestingShouldAddViewComponentTesting()
+        {
+            var services = new ServiceCollection();
+
+            services.AddMvc();
+
+            var viewComponentPropertyActivator = services.BuildServiceProvider().GetService<IViewComponentPropertyActivator>();
+            var viewComponentDescriptorCache = services.BuildServiceProvider().GetService<IViewComponentDescriptorCache>();
+
+            Assert.Null(viewComponentPropertyActivator);
+            Assert.Null(viewComponentDescriptorCache);
+
+            services.AddMvcUniverseTesting();
+
+            viewComponentPropertyActivator = services.BuildServiceProvider().GetService<IViewComponentPropertyActivator>();
+            viewComponentDescriptorCache = services.BuildServiceProvider().GetService<IViewComponentDescriptorCache>();
+
+            Assert.NotNull(viewComponentPropertyActivator);
+            Assert.NotNull(viewComponentDescriptorCache);
+
+            Assert.Contains(services, s => s.ServiceType == typeof(IViewComponentPropertyActivator) && s.Lifetime == ServiceLifetime.Singleton);
+            Assert.Contains(services, s => s.ServiceType == typeof(IViewComponentDescriptorCache) && s.Lifetime == ServiceLifetime.Singleton);
+
+            Assert.IsAssignableFrom<IViewComponentPropertyActivator>(viewComponentPropertyActivator);
+            Assert.IsAssignableFrom<IViewComponentDescriptorCache>(viewComponentDescriptorCache);
+        }
+
+        [Fact]
+        public void WithoutServiceCollectionShouldThrowException()
+        {
+            IServiceCollection services = null;
+
+            Test.AssertException<NullReferenceException>(
+                () =>
+                {
+                    services.AddMvcUniverseTesting();
+                },
+                "serviceCollection cannot be null.");
         }
     }
 }
