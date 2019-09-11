@@ -51,7 +51,7 @@ Funds donated via both platforms are used for development and marketing purposes
 - Viktor Klisurski
 - Desi Zlatanova
 - Tsenko Tsenov
-- Ivan Ivanov
+- [Ivan Ivanov](https://github.com/csyntax)
 
 ## Generous One-Time Donations
 - My-Amazing-Store
