@@ -6,9 +6,9 @@
     using Blog.Controllers;
     using Blog.Data.Models;
     using Data;
-    using FluentAssertions;
     using MyTested.AspNetCore.Mvc;
     using Services.Models;
+    using Shouldly;
     using Xunit;
 
     using ArticlesController = Web.Areas.Admin.Controllers.ArticlesController;
@@ -32,9 +32,7 @@
                 .ShouldReturn()
                 .View(view => view
                     .WithModelOfType<List<ArticleNonPublicListingServiceModel>>()
-                    .Passing(articles => articles
-                        .Should()
-                        .NotBeEmpty()));
+                    .Passing(articles => articles.ShouldNotBeEmpty()));
 
         [Fact]
         public void ChangeVisibilityShouldChangeArticleAndRedirectToAll()
@@ -44,19 +42,14 @@
                 .Calling(c => c.ChangeVisibility(1))
                 .ShouldHave()
                 .Data(data => data
-                    .WithSet<Article>(set => set
-                        .FirstOrDefault(a => a.IsPublic)
-                        .Should()
-                        .NotBeNull()
-                        .And
-                        .Subject
-                        .As<Article>()
-                        .PublishedOn
-                        .Should()
-                        .NotBeNull()
-                        .And
-                        .Should()
-                        .Be(new DateTime(1, 1, 1))))
+                    .WithSet<Article>(set =>
+                    {
+                        var article = set.FirstOrDefault(a => a.IsPublic);
+
+                        article.ShouldNotBeNull();
+                        article.PublishedOn.ShouldNotBeNull();
+                        article.PublishedOn.ShouldBe(new DateTime(1, 1, 1));
+                    }))
                 .AndAlso()
                 .ShouldReturn()
                 .Redirect(redirect => redirect

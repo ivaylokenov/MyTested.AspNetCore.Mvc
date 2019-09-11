@@ -6,10 +6,10 @@
     using Blog.Controllers.Models;
     using Blog.Data.Models;
     using Data;
-    using FluentAssertions;
     using MyTested.AspNetCore.Mvc;
     using Services;
     using Services.Models;
+    using Shouldly;
     using Xunit;
 
     public class ArticlesPipelineTest
@@ -30,9 +30,9 @@
                     .WithModelOfType<ArticleListingViewModel>()
                     .Passing(articleListing =>
                     {
-                        articleListing.Articles.Should().HaveCount(expectedCount);
-                        articleListing.Total.Should().Be(total);
-                        articleListing.Page.Should().Be(page);
+                        articleListing.Articles.Count().ShouldBe(expectedCount);
+                        articleListing.Total.ShouldBe(total);
+                        articleListing.Page.ShouldBe(page);
                     }));
 
         [Fact]
@@ -86,15 +86,11 @@
                 .AndAlso()
                 .ShouldHave()
                 .Data(data => data
-                    .WithSet<Article>(set => set
-                        .Should()
-                        .NotBeEmpty()
-                        .And
-                        .Subject
-                        .SingleOrDefault(a => a.Title == title)
-                        .Should()
-                        .NotBeNull()
-                    ))
+                    .WithSet<Article>(set =>
+                    {
+                        set.ShouldNotBeEmpty();
+                        set.SingleOrDefault(a => a.Title == title).ShouldNotBeNull();
+                    }))
                 .AndAlso()
                 .ShouldHave()
                 .TempData(tempData => tempData
@@ -117,13 +113,10 @@
                 .ShouldReturn()
                 .View(view => view
                     .WithModelOfType<List<ArticleForUserListingServiceModel>>()
-                    .Passing(articles => articles
-                        .Should()
-                        .NotBeEmpty()
-                        .And
-                        .Subject
-                        .SingleOrDefault(a => a.Author == "Author 1")
-                        .Should()
-                        .NotBeNull()));
+                    .Passing(articles =>
+                    {
+                        articles.ShouldNotBeEmpty();
+                        articles.SingleOrDefault(a => a.Author == "Author 1").ShouldNotBeNull();
+                    }));
     }
 }

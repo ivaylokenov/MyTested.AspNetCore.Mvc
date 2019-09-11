@@ -3,10 +3,10 @@
     using System.Collections.Generic;
     using Blog.Controllers;
     using Data;
-    using FluentAssertions;
     using Services.Models;
     using MyTested.AspNetCore.Mvc;
     using Xunit;
+    using Shouldly;
 
     public class HomePipelineTest
     {
@@ -24,9 +24,7 @@
                 .ShouldReturn()
                 .View(view => view
                     .WithModelOfType<List<ArticleListingServiceModel>>()
-                    .Passing(articles => articles
-                        .Should()
-                        .HaveCount(expected)));
+                    .Passing(articles => articles.Count.ShouldBe(expected)));
 
         [Fact]
         public void GetPrivacyShouldReturnDefaultView()

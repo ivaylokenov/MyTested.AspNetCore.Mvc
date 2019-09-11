@@ -3,9 +3,9 @@
     using System.Collections.Generic;
     using Blog.Controllers;
     using Data;
-    using FluentAssertions;
     using MyTested.AspNetCore.Mvc;
     using Services.Models;
+    using Shouldly;
     using Xunit;
 
     public class HomeControllerTest
@@ -22,9 +22,7 @@
                 .ShouldReturn()
                 .View(view => view
                     .WithModelOfType<List<ArticleListingServiceModel>>()
-                    .Passing(articles => articles
-                        .Should()
-                        .HaveCount(expected)));
+                    .Passing(articles => articles.Count.ShouldBe(expected)));
 
         [Fact]
         public void PrivacyShouldReturnDefaultView()
