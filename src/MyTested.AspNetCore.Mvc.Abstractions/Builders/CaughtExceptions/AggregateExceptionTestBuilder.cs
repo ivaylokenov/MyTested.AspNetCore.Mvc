@@ -40,6 +40,7 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IAndAggregateExceptionTestBuilder ContainingInnerExceptionOfType<TInnerException>()
             where TInnerException : Exception  => this.ContainingInnerExceptionOfType(typeof(TInnerException));
         
