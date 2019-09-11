@@ -272,7 +272,7 @@
             Type withType)
             where TAttributesTestBuilder : IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
             => controllerActionAttributesTestBuilder
-                .SpecifyingProduction(production => production.WithType(withType));
+                .SpecifyingProduction(production => production.OfType(withType));
 
         /// <summary>
         /// Tests whether the collected attributes contain <see cref="ProducesAttribute"/>.
@@ -290,7 +290,7 @@
             where TAttributesTestBuilder : IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
             => controllerActionAttributesTestBuilder
                 .SpecifyingProduction(production => production
-                    .WithType(withType)
+                    .OfType(withType)
                     .WithContentTypes(withContentTypes));
 
         /// <summary>
@@ -358,8 +358,7 @@
             Type configurationType)
             where TAttributesTestBuilder : IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
             => controllerActionAttributesTestBuilder
-                .SpecifyingMiddleware(middleware => 
-                    middleware.WithType(configurationType));
+                .SpecifyingMiddleware(middleware => middleware.OfType(configurationType));
 
         /// <summary>
         /// Tests whether the collected attributes contain <see cref="MiddlewareFilterAttribute"/>.

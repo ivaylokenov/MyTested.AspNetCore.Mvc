@@ -500,7 +500,7 @@
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes
                     .SpecifyingProduction(production => production
-                        .WithType(typeof(RequestModel))
+                        .OfType(typeof(RequestModel))
                         .WithContentTypes("application/javascript", "application/pdf")
                         .WithOrder(2)));
         }
@@ -526,7 +526,7 @@
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes
                     .SpecifyingProduction(production => production
-                        .WithType(typeof(RequestModel))
+                        .OfType(typeof(RequestModel))
                         .AndAlso()
                         .WithContentTypes(new List<string> { "application/pdf", "application/javascript" })
                         .AndAlso()
@@ -601,8 +601,8 @@
                         .Calling(c => c.VariousAttributesAction())
                         .ShouldHave()
                         .ActionAttributes(attributes => attributes
-                            .SpecifyingMiddleware(middleware => 
-                                middleware.WithType(typeof(MyPipeline))));
+                            .SpecifyingMiddleware(middleware => middleware
+                                .OfType(typeof(MyPipeline))));
         }
 
         [Fact]
@@ -616,8 +616,8 @@
                         .Calling(c => c.VariousAttributesAction())
                         .ShouldHave()
                         .ActionAttributes(attributes => attributes
-                            .SpecifyingMiddleware(middleware =>
-                                middleware.WithType(typeof(MyOtherPipeline))));
+                            .SpecifyingMiddleware(middleware => middleware
+                                .OfType(typeof(MyOtherPipeline))));
                 },
                 "When calling VariousAttributesAction action in MvcController expected action to have MiddlewareFilterAttribute with 'MyOtherPipeline' type, but in fact found 'MyPipeline'.");
         }
@@ -633,8 +633,7 @@
                         .Calling(c => c.VariousAttributesAction())
                         .ShouldHave()
                         .ActionAttributes(attributes => attributes
-                            .SpecifyingMiddleware(middleware =>
-                                middleware.WithOrder(1)));
+                            .SpecifyingMiddleware(middleware => middleware.WithOrder(1)));
                 },
                 "When calling VariousAttributesAction action in MvcController expected action to have MiddlewareFilterAttribute with order of 1, but in fact found 2.");
         }
@@ -647,8 +646,7 @@
                 .Calling(c => c.VariousAttributesAction())
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes
-                    .SpecifyingMiddleware(middleware =>
-                        middleware.WithOrder(2)));
+                    .SpecifyingMiddleware(middleware => middleware.WithOrder(2)));
         }
 
         [Fact]
@@ -660,7 +658,7 @@
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes
                     .SpecifyingMiddleware(middleware => middleware
-                        .WithType(typeof(MyPipeline))
+                        .OfType(typeof(MyPipeline))
                         .AndAlso()
                         .WithOrder(2)));
         }
@@ -677,7 +675,7 @@
                         .ShouldHave()
                         .ActionAttributes(attributes => attributes
                             .SpecifyingMiddleware(middleware => middleware
-                                .WithType(typeof(MyPipeline))
+                                .OfType(typeof(MyPipeline))
                                 .AndAlso()
                                 .WithOrder(1)));
                 },

@@ -11,8 +11,8 @@
         /// Tests whether a <see cref="Microsoft.AspNetCore.Mvc.MiddlewareFilterAttribute"/>
         /// has the same <see cref="Microsoft.AspNetCore.Mvc.MiddlewareFilterAttribute.ConfigurationType"/> value as the provided one.
         /// </summary>
-        /// <param name="type">Expected type value.</param>
+        /// <param name="configurationType">A type which configures a middleware pipeline.</param>
         /// <returns>The same <see cref="IMiddlewareFilterAttributeTestBuilder"/>.</returns>
-        IAndMiddlewareFilterAttributeTestBuilder WithType(Type type);
+        IAndMiddlewareFilterAttributeTestBuilder OfType(Type configurationType);
     }
 }

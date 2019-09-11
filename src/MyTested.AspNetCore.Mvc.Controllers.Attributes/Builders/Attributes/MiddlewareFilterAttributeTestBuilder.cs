@@ -1,8 +1,8 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Attributes
 {
+    using System;
     using Microsoft.AspNetCore.Mvc;
     using Contracts.Attributes;
-    using System;
     using Internal.TestContexts;
     using Utilities;
 
@@ -24,7 +24,7 @@
         => this.Attribute = new MiddlewareFilterAttribute(typeof(object));
 
         /// <inheritdoc />
-        public IAndMiddlewareFilterAttributeTestBuilder WithType(Type configurationType)
+        public IAndMiddlewareFilterAttributeTestBuilder OfType(Type configurationType)
         {
             this.Attribute = new MiddlewareFilterAttribute(configurationType);
             this.Validations.Add((expected, actual) =>
@@ -43,6 +43,7 @@
             return this;
         }
 
+        /// <inheritdoc />
         public IAndMiddlewareFilterAttributeTestBuilder WithOrder(int order)
         {
             this.ValidateOrder(order);
