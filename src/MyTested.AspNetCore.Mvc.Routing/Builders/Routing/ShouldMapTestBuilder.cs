@@ -43,7 +43,7 @@
             : this(testContext)
             => this.actionCallExpression = actionCallExpression;
 
-        private RouteContext RouteContext => this.TestContext.RouteContext;
+        public RouteContext RouteContext => this.TestContext.RouteContext;
 
         /// <inheritdoc />
         public IAndResolvedRouteTestBuilder ToAction(string actionName)

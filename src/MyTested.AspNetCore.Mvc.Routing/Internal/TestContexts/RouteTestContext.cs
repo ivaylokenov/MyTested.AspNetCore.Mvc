@@ -8,10 +8,7 @@
     {
         private RouteContext routeContext;
 
-        public RouteTestContext()
-        {
-            this.SetAuthentication();
-        }
+        public RouteTestContext() => this.SetAuthentication();
 
         public IRouter Router { get; internal set; }
 

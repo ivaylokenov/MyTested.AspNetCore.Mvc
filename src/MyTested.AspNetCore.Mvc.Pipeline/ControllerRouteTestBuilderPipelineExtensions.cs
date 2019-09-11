@@ -39,10 +39,13 @@
         {
             var actualBuilder = (ControllerRouteTestBuilder<TController>)builder;
 
+            var routeContext = actualBuilder.RouteContext;
             var actionCall = actualBuilder.ActionCallExpression;
 
             var whichControllerInstanceBuilder = new WhichControllerInstanceBuilder<TController>(new ControllerTestContext
             {
+                HttpContext = routeContext.HttpContext,
+                RouteData = routeContext.RouteData,
                 ComponentConstructionDelegate = () => null,
                 MethodCall = actionCall
             });
