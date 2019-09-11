@@ -39,6 +39,6 @@
         /// </summary>
         /// <param name="type">Expected type value.</param>
         /// <returns>The same <see cref="IAndProducesAttributeTestBuilder"/>.</returns>
-        IAndProducesAttributeTestBuilder WithType(Type type);
+        IAndProducesAttributeTestBuilder OfType(Type type);
     }
 }
