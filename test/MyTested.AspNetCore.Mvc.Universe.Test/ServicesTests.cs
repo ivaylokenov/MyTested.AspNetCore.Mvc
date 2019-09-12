@@ -41,6 +41,7 @@
             Assert.IsAssignableFrom<IMemoryCache>(defaultMemoryCache);
             Assert.IsAssignableFrom<IMemoryCache>(mockMemoryCache);
             Assert.IsAssignableFrom<MemoryCacheMock>(mockMemoryCache);
+            Assert.Contains(services, s => s.ServiceType == typeof(IMemoryCache) && s.Lifetime == ServiceLifetime.Transient);
         }
 
         [Fact]
@@ -59,6 +60,7 @@
             Assert.NotNull(mockMemoryCache);
             Assert.IsAssignableFrom<IMemoryCache>(mockMemoryCache);
             Assert.IsAssignableFrom<MemoryCacheMock>(mockMemoryCache);
+            Assert.Contains(services, s => s.ServiceType == typeof(IMemoryCache) && s.Lifetime == ServiceLifetime.Transient);
         }
 
         [Fact]
@@ -278,6 +280,85 @@
 
             Assert.IsAssignableFrom<IViewComponentPropertyActivator>(viewComponentPropertyActivator);
             Assert.IsAssignableFrom<IViewComponentDescriptorCache>(viewComponentDescriptorCache);
+        }
+
+        [Fact]
+        public void AddMvcUniverseTestingShouldAddControllersTestingServices()
+        {
+            var services = new ServiceCollection();
+            services.AddMvc();
+
+            var validControllersCache = services.BuildServiceProvider().GetService<IValidControllersCache>();
+
+            Assert.Null(validControllersCache);
+
+            services.AddMvcUniverseTesting();
+            validControllersCache = services.BuildServiceProvider().GetService<IValidControllersCache>();
+
+            Assert.NotNull(validControllersCache);
+            Assert.IsAssignableFrom<IValidControllersCache>(validControllersCache);
+            Assert.Contains(services, s => s.ServiceType == typeof(IValidControllersCache) && s.Lifetime == ServiceLifetime.Singleton);
+        }
+
+        [Fact]
+        public void AddMvcUniverseTestingShouldAddControllersTestingServicesAndConfigureConventions()
+        {
+            MyApplication.StartsFrom<TestStartup>();
+
+            var mvcOptions = TestServiceProvider.GetService<IOptions<MvcOptions>>();
+
+            Assert.NotNull(mvcOptions);
+            Assert.NotEmpty(mvcOptions.Value.Conventions);
+            Assert.True(mvcOptions.Value.Conventions.Count == 1);
+
+            MyApplication.StartsFrom<TestStartup>()
+                .WithServices(services =>
+                {
+                    services.AddMvcUniverseTesting();
+                });
+
+            var validControllersCache = TestServiceProvider.GetService<IValidControllersCache>();
+
+            Assert.NotNull(validControllersCache);
+            Assert.IsAssignableFrom<IValidControllersCache>(validControllersCache);
+
+            mvcOptions = TestServiceProvider.GetService<IOptions<MvcOptions>>();
+
+            Assert.NotNull(mvcOptions);
+            Assert.NotEmpty(mvcOptions.Value.Conventions);
+            Assert.True(mvcOptions.Value.Conventions.Count == 2);
+        }
+
+        [Fact]
+        public void AddMvcUniverseTestingShouldAddRoutingTestingServices()
+        {
+            var services = new ServiceCollection();
+            services.AddMvc();
+
+            var routingServices = services.BuildServiceProvider().GetService<IRoutingServices>();
+
+            Assert.Null(routingServices);
+
+            services.AddMvcUniverseTesting();
+            routingServices = services.BuildServiceProvider().GetService<IRoutingServices>();
+
+            Assert.NotNull(routingServices);
+            Assert.IsAssignableFrom<IRoutingServices>(routingServices);
+            Assert.Contains(services, s => s.ServiceType == typeof(IRoutingServices) && s.Lifetime == ServiceLifetime.Singleton);
+        }
+
+        [Fact]
+        public void AddMvcUniverseTestingShouldAddRoutingTestingServicesAndDisableEndPointRouting()
+        {
+            MyApplication.StartsFrom<TestStartup>()
+                .WithServices(services =>
+                {
+                    services.AddMvcUniverseTesting();
+                });
+
+            var mvcOptions = TestServiceProvider.GetService<IOptions<MvcOptions>>();
+
+            Assert.False(mvcOptions.Value.EnableEndpointRouting);
         }
 
         [Fact]
