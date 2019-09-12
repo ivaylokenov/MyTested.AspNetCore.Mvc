@@ -19,6 +19,7 @@
     using Microsoft.Extensions.FileProviders;
     using Microsoft.Net.Http.Headers;
     using Models;
+    using Pipelines;
     using Newtonsoft.Json;
     using Services;
 
@@ -328,6 +329,7 @@
             VaryByQueryKeys = new[] { "FirstQuery", "SecondQuery" },
             NoStore = true,
             Order = 2)]
+        [MiddlewareFilter(typeof(MyPipeline), Order = 2)]
         public IActionResult VariousAttributesAction()
         {
             return this.Ok();

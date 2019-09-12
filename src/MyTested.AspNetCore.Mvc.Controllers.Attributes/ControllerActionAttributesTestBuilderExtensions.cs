@@ -272,7 +272,7 @@
             Type withType)
             where TAttributesTestBuilder : IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
             => controllerActionAttributesTestBuilder
-                .SpecifyingProduction(production => production.WithType(withType));
+                .SpecifyingProduction(production => production.OfType(withType));
 
         /// <summary>
         /// Tests whether the collected attributes contain <see cref="ProducesAttribute"/>.
@@ -290,7 +290,7 @@
             where TAttributesTestBuilder : IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
             => controllerActionAttributesTestBuilder
                 .SpecifyingProduction(production => production
-                    .WithType(withType)
+                    .OfType(withType)
                     .WithContentTypes(withContentTypes));
 
         /// <summary>
@@ -340,6 +340,56 @@
 
                 var validations = newProducesAttributeTestBuilder.GetAttributeValidations();
                 validations.ForEach(v => v(expectedProducesAttribute, actualProducesAttribute));
+            });
+
+            return actualBuilder.AttributesTestBuilder;
+        }
+
+        /// <summary>
+        /// Tests whether the collected attributes contain <see cref="MiddlewareFilterAttribute"/>.
+        /// </summary>
+        /// <param name="controllerActionAttributesTestBuilder">
+        /// Instance of <see cref="IControllerActionAttributesTestBuilder{TAttributesTestBuilder}"/> type.
+        /// </param>
+        /// <param name="configurationType">A type which configures a middleware pipeline.</param>
+        /// <returns>The same attributes test builder.</returns>
+        public static TAttributesTestBuilder SpecifyingMiddleware<TAttributesTestBuilder>(
+            this IControllerActionAttributesTestBuilder<TAttributesTestBuilder> controllerActionAttributesTestBuilder,
+            Type configurationType)
+            where TAttributesTestBuilder : IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
+            => controllerActionAttributesTestBuilder
+                .SpecifyingMiddleware(middleware => middleware.OfType(configurationType));
+
+        /// <summary>
+        /// Tests whether the collected attributes contain <see cref="MiddlewareFilterAttribute"/>.
+        /// </summary>
+        /// <param name="controllerActionAttributesTestBuilder">
+        /// Instance of <see cref="IControllerActionAttributesTestBuilder{TAttributesTestBuilder}"/> type.
+        /// </param>
+        /// <param name="middlewareFilterAttributeBuilder">Expected <see cref="MiddlewareFilterAttribute"/> builder.</param>
+        /// <returns>The same attributes test builder.</returns>
+        public static TAttributesTestBuilder SpecifyingMiddleware<TAttributesTestBuilder>(
+            this IControllerActionAttributesTestBuilder<TAttributesTestBuilder> controllerActionAttributesTestBuilder,
+            Action<IMiddlewareFilterAttributeTestBuilder> middlewareFilterAttributeBuilder)
+            where TAttributesTestBuilder : IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
+        {
+            var actualBuilder = (BaseAttributesTestBuilder<TAttributesTestBuilder>)controllerActionAttributesTestBuilder;
+
+            actualBuilder.ContainingAttributeOfType<MiddlewareFilterAttribute>();
+
+            actualBuilder.Validations.Add(attrs =>
+            {
+                var newMiddlewareFilterAttributeBuilder = new MiddlewareFilterAttributeTestBuilder(
+                    actualBuilder.TestContext,
+                    actualBuilder.ThrowNewAttributeAssertionException);
+
+                middlewareFilterAttributeBuilder(newMiddlewareFilterAttributeBuilder);
+
+                var expectedAttribute = newMiddlewareFilterAttributeBuilder.GetAttribute();
+                var actualAttribute = actualBuilder.GetAttributeOfType<MiddlewareFilterAttribute>(attrs);
+
+                var validations = newMiddlewareFilterAttributeBuilder.GetAttributeValidations();
+                validations.ForEach(v => v(expectedAttribute, actualAttribute));
             });
 
             return actualBuilder.AttributesTestBuilder;

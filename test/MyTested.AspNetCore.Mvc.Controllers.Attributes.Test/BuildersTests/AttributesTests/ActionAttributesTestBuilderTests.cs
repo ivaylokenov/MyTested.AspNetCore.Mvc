@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using Exceptions;
     using Microsoft.AspNetCore.Mvc;
+    using Setups.Pipelines;
     using Setups;
     using Setups.Controllers;
     using Setups.Models;
@@ -499,7 +500,7 @@
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes
                     .SpecifyingProduction(production => production
-                        .WithType(typeof(RequestModel))
+                        .OfType(typeof(RequestModel))
                         .WithContentTypes("application/javascript", "application/pdf")
                         .WithOrder(2)));
         }
@@ -525,7 +526,7 @@
                 .ShouldHave()
                 .ActionAttributes(attributes => attributes
                     .SpecifyingProduction(production => production
-                        .WithType(typeof(RequestModel))
+                        .OfType(typeof(RequestModel))
                         .AndAlso()
                         .WithContentTypes(new List<string> { "application/pdf", "application/javascript" })
                         .AndAlso()
@@ -547,6 +548,138 @@
                                 .WithOrder(1)));
                 },
                 "When calling Post action in ApiController expected action to have ProducesAttribute with order of 1, but in fact found 2.");
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldNotThrowExceptionWithCorrectAttribute()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.VariousAttributesAction())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SpecifyingMiddleware(typeof(MyPipeline)));
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldThrowExceptionWithMissingAttribute()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.NormalActionWithAttributes())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingMiddleware(typeof(MyPipeline)));
+                },
+                "When calling NormalActionWithAttributes action in MvcController expected action to have MiddlewareFilterAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldThrowExceptionWithCorrectAttributeAndWrongConfigurationType()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.VariousAttributesAction())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingMiddleware(typeof(MyOtherPipeline)));
+                },
+                "When calling VariousAttributesAction action in MvcController expected action to have MiddlewareFilterAttribute with 'MyOtherPipeline' type, but in fact found 'MyPipeline'.");
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldNotThrowExceptionWithCorrectAttributeConfigurationType()
+        {
+            MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.VariousAttributesAction())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingMiddleware(middleware => middleware
+                                .OfType(typeof(MyPipeline))));
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldThrowExceptionWithWrongConfigurationType()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.VariousAttributesAction())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingMiddleware(middleware => middleware
+                                .OfType(typeof(MyOtherPipeline))));
+                },
+                "When calling VariousAttributesAction action in MvcController expected action to have MiddlewareFilterAttribute with 'MyOtherPipeline' type, but in fact found 'MyPipeline'.");
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldThrowExceptionWithCorrectAttributeAndWrongOrder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.VariousAttributesAction())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingMiddleware(middleware => middleware.WithOrder(1)));
+                },
+                "When calling VariousAttributesAction action in MvcController expected action to have MiddlewareFilterAttribute with order of 1, but in fact found 2.");
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldNotThrowExceptionWithCorrectAttributeTypeAndUsingBuilderForOrder()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.VariousAttributesAction())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SpecifyingMiddleware(middleware => middleware.WithOrder(2)));
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldNotThrowExceptionWithCorrectAttributeConfigTypeAndUsingBuilderForOrder()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.VariousAttributesAction())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .SpecifyingMiddleware(middleware => middleware
+                        .OfType(typeof(MyPipeline))
+                        .AndAlso()
+                        .WithOrder(2)));
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldThrowExceptionWithCorrectAttributeConfigTypeAndUsingBuilderForOrderWithWrongOrder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.VariousAttributesAction())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .SpecifyingMiddleware(middleware => middleware
+                                .OfType(typeof(MyPipeline))
+                                .AndAlso()
+                                .WithOrder(1)));
+                },
+                "When calling VariousAttributesAction action in MvcController expected action to have MiddlewareFilterAttribute with order of 1, but in fact found 2.");
         }
 
         [Fact]
