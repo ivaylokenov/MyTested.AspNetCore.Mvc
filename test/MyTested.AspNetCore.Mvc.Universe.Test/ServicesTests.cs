@@ -1,10 +1,13 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test
 {
+    using System;
+    using System.Linq;
     using Internal;
     using Internal.Caching;
     using Internal.Contracts;
     using Internal.EntityFrameworkCore;
     using Internal.Formatters;
+    using Internal.Routing;
     using Internal.Services;
     using Internal.Session;
     using Microsoft.AspNetCore.Mvc;
@@ -18,8 +21,6 @@
     using Microsoft.Extensions.Options;
     using Setups;
     using Setups.Common;
-    using System;
-    using System.Linq;
     using Xunit;
 
     public class ServicesTests
@@ -45,12 +46,13 @@
         }
 
         [Fact]
-        public void AddMvcUniverseTestingWithoutMemoryCacheShouldReplaceItWithMockedVersion()
+        public void AddMvcUniverseTestingWithoutMemoryCacheShouldAddMockedVersion()
         {
             var services = new ServiceCollection();
 
             services.AddMvc();
             services.Remove<IMemoryCache>();
+
             var defaultMemoryCache = services.BuildServiceProvider().GetService<IMemoryCache>();
 
             services.AddMvcUniverseTesting();
@@ -64,7 +66,7 @@
         }
 
         [Fact]
-        public void AddMvcUniverseTestingShouldOvverideDefaultMemoryCacheWithMockedVersion()
+        public void AddMvcUniverseTestingShouldOverrideDefaultMemoryCacheWithMockedVersion()
         {
             MyApplication
                 .StartsFrom<TestStartup>()
@@ -82,31 +84,32 @@
         }
 
         [Fact]
-        public void AddMvcUniverseTestingShouldReplaceDefaultSessionStoreWithMockedVersion()
+        public void AddMvcUniverseTestingShouldReplaceCustomSessionStoreWithMockedVersion()
         {
             var services = new ServiceCollection();
+
             services.AddMvc();
             services.AddTransient<ISessionStore, CustomSessionStore>();
 
-            var defaultSessionStore = services.BuildServiceProvider().GetService<ISessionStore>();
+            var customSessionStore = services.BuildServiceProvider().GetService<ISessionStore>();
 
             services.AddMvcUniverseTesting();
             var mockSessionStore= services.BuildServiceProvider().GetService<ISessionStore>();
 
-            Assert.NotNull(defaultSessionStore);
+            Assert.NotNull(customSessionStore);
             Assert.NotNull(mockSessionStore);
-            Assert.NotSame(mockSessionStore, defaultSessionStore);
-            Assert.IsAssignableFrom<ISessionStore>(defaultSessionStore);
+            Assert.NotSame(mockSessionStore, customSessionStore);
+            Assert.IsAssignableFrom<ISessionStore>(customSessionStore);
             Assert.IsAssignableFrom<ISessionStore>(mockSessionStore);
             Assert.IsAssignableFrom<SessionStoreMock>(mockSessionStore);
         }
 
         [Fact]
-        public void AddMvcUniverseTestingWithoutSessionStoreShouldReplaceItWithMockedVersion()
+        public void AddMvcUniverseTestingWithoutSessionStoreShouldAddMockedVersion()
         {
             var services = new ServiceCollection();
-            services.AddMvc();
 
+            services.AddMvc();
             var defaultSessionStore = services.BuildServiceProvider().GetService<ISessionStore>();
 
             services.AddMvcUniverseTesting();
@@ -119,7 +122,7 @@
         }
 
         [Fact]
-        public void AddMvcUniverseTestingShouldOvverideNullSessionStoreWithMockedVersion()
+        public void AddMvcUniverseTestingShouldOverrideNullSessionStoreWithMockedVersion()
         {
             MyApplication
                 .StartsFrom<TestStartup>()
@@ -128,10 +131,10 @@
                     services.AddMvcUniverseTesting();
                 });
 
-            var session = TestServiceProvider.GetService<ISessionStore>();
+            var sessionStore = TestServiceProvider.GetService<ISessionStore>();
 
-            Assert.NotNull(session);
-            Assert.IsAssignableFrom<SessionStoreMock>(session);
+            Assert.NotNull(sessionStore);
+            Assert.IsAssignableFrom<SessionStoreMock>(sessionStore);
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -176,6 +179,7 @@
         public void AddMvcUniverseTestingShouldReplaceOptionsWithScopedOnes()
         {
             var services = new ServiceCollection();
+
             services.AddMvc();
 
             Assert.Contains(services, s => s.ServiceType == typeof(IOptions<>) && s.Lifetime == ServiceLifetime.Singleton);
@@ -190,12 +194,12 @@
         {
             MyApplication.StartsFrom<TestStartup>();
 
-            var builtOptions = TestServiceProvider.GetService<IOptions<MvcOptions>>();
-            builtOptions.Value.InputFormatters.RemoveType<StringInputFormatter>();
+            var builtInOptions = TestServiceProvider.GetService<IOptions<MvcOptions>>();
+            builtInOptions.Value.InputFormatters.RemoveType<StringInputFormatter>();
 
-            Assert.NotNull(builtOptions);
-            Assert.True(builtOptions.Value.InputFormatters.Count == 2);
-            Assert.DoesNotContain(typeof(StringInputFormatter), builtOptions.Value.InputFormatters.Select(f => f.GetType()));
+            Assert.NotNull(builtInOptions);
+            Assert.True(builtInOptions.Value.InputFormatters.Count == 2);
+            Assert.DoesNotContain(typeof(StringInputFormatter), builtInOptions.Value.InputFormatters.Select(f => f.GetType()));
 
             MyApplication.StartsFrom<TestStartup>()
                 .WithServices(services =>
@@ -203,11 +207,35 @@
                     services.AddMvcUniverseTesting();
                 });
 
-            builtOptions = TestServiceProvider.GetService<IOptions<MvcOptions>>();
+            builtInOptions = TestServiceProvider.GetService<IOptions<MvcOptions>>();
 
-            Assert.NotNull(builtOptions);
-            Assert.True(builtOptions.Value.InputFormatters.Count == 3);
-            Assert.Contains(typeof(StringInputFormatter), builtOptions.Value.InputFormatters.Select(f => f.GetType()));
+            Assert.NotNull(builtInOptions);
+            Assert.True(builtInOptions.Value.InputFormatters.Count == 3);
+            Assert.Contains(typeof(StringInputFormatter), builtInOptions.Value.InputFormatters.Select(f => f.GetType()));
+        }
+
+        [Fact]
+        public void AddMvcUniverseTestingWithStringInputFormatterShouldNotOverrideIt()
+        {
+            var inputFormatter = new StringInputFormatter();
+
+            MyApplication.StartsFrom<TestStartup>()
+                .WithServices(services =>
+                {
+                    services.Configure<MvcOptions>(options =>
+                    {
+                        options.InputFormatters.Add(inputFormatter);
+                    });
+
+                    services.AddMvcUniverseTesting();
+                });
+
+            var builtInOptions = TestServiceProvider.GetService<IOptions<MvcOptions>>();
+
+            Assert.NotNull(builtInOptions);
+            Assert.True(builtInOptions.Value.InputFormatters.Count == 3);
+            Assert.Contains(typeof(StringInputFormatter), builtInOptions.Value.InputFormatters.Select(f => f.GetType()));
+            Assert.Same(inputFormatter, builtInOptions.Value.InputFormatters.FirstOrDefault(f => f.GetType() == typeof(StringInputFormatter)));
         }
 
         [Fact]
@@ -237,12 +265,13 @@
         }
 
         [Fact]
-        public void AddMvcUniverseTestingWithoutTempDataProviderShouldReplaceItWithMockedVersion()
+        public void AddMvcUniverseTestingWithoutTempDataProviderShouldAddMockedVersion()
         {
             var services = new ServiceCollection();
 
             services.AddMvc();
             services.Remove<ITempDataProvider>();
+
             var defaultTempDataProvider = services.BuildServiceProvider().GetService<ITempDataProvider>();
 
             services.AddMvcUniverseTesting();
@@ -286,6 +315,7 @@
         public void AddMvcUniverseTestingShouldAddControllersTestingServices()
         {
             var services = new ServiceCollection();
+
             services.AddMvc();
 
             var validControllersCache = services.BuildServiceProvider().GetService<IValidControllersCache>();
@@ -333,6 +363,7 @@
         public void AddMvcUniverseTestingShouldAddRoutingTestingServices()
         {
             var services = new ServiceCollection();
+
             services.AddMvc();
 
             var routingServices = services.BuildServiceProvider().GetService<IRoutingServices>();
@@ -345,6 +376,26 @@
             Assert.NotNull(routingServices);
             Assert.IsAssignableFrom<IRoutingServices>(routingServices);
             Assert.Contains(services, s => s.ServiceType == typeof(IRoutingServices) && s.Lifetime == ServiceLifetime.Singleton);
+        }
+
+        [Fact]
+        public void AddMvcUniverseTestingWithRoutingTestingServicesShouldNotOverrideThem()
+        {
+            IRoutingServices routingServices = new RoutingServices();
+
+            var services = new ServiceCollection();
+
+            services.AddMvc();
+            services.AddSingleton(typeof(IRoutingServices), routingServices);
+
+            Assert.NotNull(services.BuildServiceProvider().GetService<IRoutingServices>());
+
+            services.AddMvcUniverseTesting();
+            var actualRoutingServices = services.BuildServiceProvider().GetService<IRoutingServices>();
+
+            Assert.NotNull(routingServices);
+            Assert.IsAssignableFrom<IRoutingServices>(routingServices);
+            Assert.Same(routingServices, actualRoutingServices);
         }
 
         [Fact]
