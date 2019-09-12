@@ -59,17 +59,17 @@
         /// Instance of <see cref="IBaseTestBuilderWithComponentBuilder{TBuilder}"/> type.
         /// </param>
         /// <param name="dbContextBuilder">
-        /// Action setting the <see cref="Microsoft.EntityFrameworkCore.DbContext"/> by using <see cref="IDbContextBuilder"/>.
+        /// Action setting the <see cref="Microsoft.EntityFrameworkCore.DbContext"/> by using <see cref="IWithDbContextBuilder"/>.
         /// </param>
         /// <returns>The same component builder.</returns>
         public static TBuilder WithData<TBuilder>(
             this IBaseTestBuilderWithComponentBuilder<TBuilder> builder,
-            Action<IDbContextBuilder> dbContextBuilder)
+            Action<IWithDbContextBuilder> dbContextBuilder)
             where TBuilder : IBaseTestBuilder
         {
             var actualBuilder = (BaseTestBuilderWithComponentBuilder<TBuilder>)builder;
 
-            dbContextBuilder(new DbContextBuilder(actualBuilder.TestContext));
+            dbContextBuilder(new WithDbContextBuilder(actualBuilder.TestContext));
 
             return actualBuilder.Builder;
         }
@@ -135,16 +135,16 @@
         /// Instance of <see cref="IBaseTestBuilderWithComponentBuilder{TBuilder}"/> type.
         /// </param>
         /// <param name="dbContextBuilder">
-        /// Action setting the <see cref="Microsoft.EntityFrameworkCore.DbContext"/> by using <see cref="IDbContextBuilder"/>.</param>
+        /// Action setting the <see cref="Microsoft.EntityFrameworkCore.DbContext"/> by using <see cref="IWithDbContextBuilder"/>.</param>
         /// <returns></returns>
         public static TBuilder WithoutData<TBuilder>(
             this IBaseTestBuilderWithComponentBuilder<TBuilder> builder,
-            Action<IDbContextBuilder> dbContextBuilder)
+            Action<IWithoutDbContextBuilder> dbContextBuilder)
             where TBuilder : IBaseTestBuilder
         {
             var actualBuilder = (BaseTestBuilderWithComponentBuilder<TBuilder>)builder;
 
-            dbContextBuilder(new DbContextBuilder(actualBuilder.TestContext));
+            dbContextBuilder(new WithoutDbContextBuilder(actualBuilder.TestContext));
 
             return actualBuilder.Builder;
         }

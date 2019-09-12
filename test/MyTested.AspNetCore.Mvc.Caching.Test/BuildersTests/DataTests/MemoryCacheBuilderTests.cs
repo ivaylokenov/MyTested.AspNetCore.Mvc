@@ -171,7 +171,7 @@
         }
 
         [Fact]
-        public void WithoutMemoryEntryCacheShouldReturnEmptyCache()
+        public void WithoutMemoryEntryCacheShouldReturnCorrectCacheData()
         {
             MyController<MemoryCacheController>
                 .Instance()
