@@ -7,6 +7,7 @@
     using Setups;
     using Setups.Controllers;
     using Setups.Models;
+    using Setups.ActionFilters;
     using Xunit;
 
     using HttpMethod = System.Net.Http.HttpMethod;
@@ -680,6 +681,174 @@
                                 .WithOrder(1)));
                 },
                 "When calling VariousAttributesAction action in MvcController expected action to have MiddlewareFilterAttribute with order of 1, but in fact found 2.");
+        }
+
+        [Fact]
+        public void WithServiceFilterShouldNotThrowExceptionWithCorrectAttribute()
+        {
+            MyApplication.StartsFrom<TestStartup>();
+
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.VariousAttributesAction())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .WithServiceFilter(typeof(MyActionFilter)));
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithServiceFilterShouldThrowExceptionWithMissingAttribute()
+        {
+            MyApplication.StartsFrom<TestStartup>();
+
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.NormalActionWithAttributes())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .WithServiceFilter(typeof(MyActionFilter)));
+                },
+                "When calling NormalActionWithAttributes action in MvcController expected action to have ServiceFilterAttribute, but in fact such was not found.");
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithServiceFilterShouldThrowExceptionWithCorrectAttributeAndWrongConfigurationType()
+        {
+            MyApplication.StartsFrom<TestStartup>();
+
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.VariousAttributesAction())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .WithServiceFilter(typeof(MyOtherActionFilter)));
+                },
+                "When calling VariousAttributesAction action in MvcController expected action to have ServiceFilterAttribute with 'MyOtherActionFilter' type, but in fact found 'MyActionFilter'.");
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithServiceFilterShouldNotThrowExceptionWithCorrectServiceFilterType()
+        {
+            MyApplication.StartsFrom<TestStartup>();
+
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.VariousAttributesAction())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .WithServiceFilter(filter => filter
+                        .OfType(typeof(MyActionFilter))));
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithServiceFilterShouldThrowExceptionWithWrongServiceFilterType()
+        {
+            MyApplication.StartsFrom<TestStartup>();
+
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.VariousAttributesAction())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .WithServiceFilter(filter => filter
+                                .OfType(typeof(MyOtherActionFilter))));
+                },
+                "When calling VariousAttributesAction action in MvcController expected action to have ServiceFilterAttribute with 'MyOtherActionFilter' type, but in fact found 'MyActionFilter'.");
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithServiceFilterShouldThrowExceptionWithCorrectAttributeAndWrongOrder()
+        {
+            MyApplication.StartsFrom<TestStartup>();
+
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.VariousAttributesAction())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .WithServiceFilter(filter => filter.WithOrder(1)));
+                },
+                "When calling VariousAttributesAction action in MvcController expected action to have ServiceFilterAttribute with order of 1, but in fact found 2.");
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithServiceFilterShouldNotThrowExceptionWithCorrectAttributeTypeAndUsingBuilderForOrder()
+        {
+            MyApplication.StartsFrom<TestStartup>();
+
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.VariousAttributesAction())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .WithServiceFilter(filter => filter.WithOrder(2)));
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithServiceFilterShouldNotThrowExceptionWithCorrectAttributeServiceTypeAndUsingBuilderForOrder()
+        {
+            MyApplication.StartsFrom<TestStartup>();
+
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.VariousAttributesAction())
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .WithServiceFilter(filter => filter
+                        .OfType(typeof(MyActionFilter))
+                        .AndAlso()
+                        .WithOrder(2)));
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithServiceFilterShouldThrowExceptionWithCorrectAttributeServiceTypeAndUsingBuilderForOrderWithWrongOrder()
+        {
+            MyApplication.StartsFrom<TestStartup>();
+
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.VariousAttributesAction())
+                        .ShouldHave()
+                        .ActionAttributes(attributes => attributes
+                            .WithServiceFilter(filter => filter
+                                .OfType(typeof(MyActionFilter))
+                                .AndAlso()
+                                .WithOrder(1)));
+                },
+                "When calling VariousAttributesAction action in MvcController expected action to have ServiceFilterAttribute with order of 1, but in fact found 2.");
+
+            MyApplication.StartsFrom<DefaultStartup>();
         }
 
         [Fact]

@@ -22,6 +22,7 @@
     using Pipelines;
     using Newtonsoft.Json;
     using Services;
+    using ActionFilters;
 
     [Authorize(Roles = "Admin,Moderator")]
     [FormatFilter]
@@ -330,6 +331,7 @@
             NoStore = true,
             Order = 2)]
         [MiddlewareFilter(typeof(MyPipeline), Order = 2)]
+        [ServiceFilter(typeof(MyActionFilter), Order = 2)]
         public IActionResult VariousAttributesAction()
         {
             return this.Ok();

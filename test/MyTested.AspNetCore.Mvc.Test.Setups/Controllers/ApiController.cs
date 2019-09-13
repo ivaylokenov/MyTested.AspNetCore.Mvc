@@ -2,12 +2,14 @@
 {
     using Microsoft.AspNetCore.Mvc;
     using Models;
+    using ActionFilters;
     using Pipelines;
 
     [ApiController]
     [Consumes("application/json", "application/xml")]
     [Produces("application/json", "application/xml", Type = typeof(ResponseModel), Order = 1)]
     [MiddlewareFilter(typeof(MyPipeline), Order = 2)]
+    [ServiceFilter(typeof(MyActionFilter), Order = 2)]
     public class ApiController : Controller
     {
         [Route("/route")]

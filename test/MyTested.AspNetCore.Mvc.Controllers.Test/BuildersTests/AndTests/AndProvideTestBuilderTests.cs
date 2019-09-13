@@ -47,7 +47,7 @@
                 .AndAlso()
                 .ShouldPassForThe<ActionAttributes>(attributes =>
                 {
-                    Assert.Equal(9, attributes.Count());
+                    Assert.Equal(10, attributes.Count());
                 });
         }
 
