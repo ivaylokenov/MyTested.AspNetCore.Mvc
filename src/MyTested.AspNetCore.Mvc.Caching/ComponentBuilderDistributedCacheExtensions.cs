@@ -4,6 +4,7 @@
     using Builders.Base;
     using Builders.Contracts.Base;
     using Builders.Contracts.Data;
+    using Builders.Data;
 
     /// <summary>
     /// Contains <see cref="Microsoft.Extensions.Caching.Distributed.IDistributedCache"/> extension methods for <see cref="IBaseTestBuilderWithComponentBuilder{TBuilder}"/>.
@@ -24,8 +25,7 @@
         {
             var actualBuilder = (BaseTestBuilderWithComponentBuilder<TBuilder>)builder;
 
-            //TODO: Implement DistributedCacheBuilder.
-            //distributedCacheBuilder(new MemoryCacheBuilder(actualBuilder.TestContext.HttpContext.RequestServices));
+            distributedCacheBuilder(new DistributedCacheBuilder(actualBuilder.TestContext.HttpContext.RequestServices));
 
             return actualBuilder.Builder;
         }
