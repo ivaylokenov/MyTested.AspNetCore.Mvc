@@ -9,7 +9,7 @@
     /// <summary>
     /// Contains <see cref="Microsoft.Extensions.Caching.Memory.IMemoryCache"/> extension methods for <see cref="IBaseTestBuilderWithComponentBuilder{TBuilder}"/>.
     /// </summary>
-    public static class ComponentBuilderCachingExtensions
+    public static class ComponentBuilderMemoryCacheExtensions
     {
         /// <summary>
         /// Sets initial values to the <see cref="Microsoft.Extensions.Caching.Memory.IMemoryCache"/> service.
