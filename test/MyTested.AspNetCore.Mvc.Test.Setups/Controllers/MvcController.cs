@@ -998,6 +998,19 @@
             return this.Ok();
         }
 
+        public IActionResult DistributedCacheAction()
+        {
+            var distributedCache = this.HttpContext.RequestServices.GetService<IDistributedCache>();
+
+            var cacheValue = distributedCache.Get("test");
+            if (cacheValue?.SequenceEqual(new byte[] { 127, 127, 127 }) ?? false)
+            {
+                return this.Ok();
+            }
+
+            return this.BadRequest();
+        }
+
         public IActionResult MemoryCacheAction()
         {
             var memoryCache = this.HttpContext.RequestServices.GetService<IMemoryCache>();

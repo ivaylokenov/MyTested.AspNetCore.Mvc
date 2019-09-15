@@ -13,6 +13,8 @@
     using Xunit;
     using Setups.ViewComponents;
     using Setups;
+    using Microsoft.Extensions.Caching.Distributed;
+    using MyTested.AspNetCore.Mvc.Internal.Contracts;
 
     public class ServicesTests
     {
@@ -211,6 +213,188 @@
                     Assert.Equal("third", thirdValue);
                     Assert.Equal("fourth", fourthValue);
                     Assert.Equal("fifth", fifthValue);
+
+                    MyApplication.StartsFrom<DefaultStartup>();
+                })
+                .ConfigureAwait(false)
+                .GetAwaiter()
+                .GetResult();
+        }
+
+        [Fact]
+        public void MockDistributedCacheShouldBeRegisteredWithAddedCaching()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services => services.AddDistributedMemoryCache());
+
+            Assert.IsAssignableFrom<DistributedCacheMock>(TestServiceProvider.GetService<IDistributedCache>());
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void MockDistributedCacheShouldBeDifferentForEveryCallSynchronously()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services => services.AddDistributedMemoryCache());
+
+            // second call should not have cache entries
+            MyController<MvcController>
+                .Instance()
+                .WithDistributedCache(cache => cache.WithEntry("test", new byte[] { 127, 127,127 }))
+                .Calling(c => c.DistributedCacheAction())
+                .ShouldReturn()
+                .Ok();
+
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.DistributedCacheAction())
+                .ShouldReturn()
+                .BadRequest();
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void MockDistributedCacheShouldBeDifferentForEveryCallSynchronouslyWithCachedControllerBuilder()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services => services.AddDistributedMemoryCache());
+
+            var controller = new MyController<MvcController>();
+
+            // second call should not have cache entries
+            controller
+                .WithDistributedCache(cache => cache.WithEntry("test", new byte[] { 127, 127,127 }))
+                .Calling(c => c.DistributedCacheAction())
+                .ShouldReturn()
+                .Ok();
+
+            controller
+                .WithDistributedCache(cache => cache.WithEntry(string.Empty, new byte[] { }))
+                .Calling(c => c.DistributedCacheAction())
+                .ShouldReturn()
+                .BadRequest();
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void DefaultConfigurationShouldSetMockDistributedCache()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services => services.AddDistributedMemoryCache());
+
+            var distributedCache = TestServiceProvider.GetService<IDistributedCache>();
+
+            Assert.NotNull(distributedCache);
+            Assert.IsAssignableFrom<DistributedCacheMock>(distributedCache);
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void CustomDistributedCacheShouldOverrideTheMockOne()
+        {
+            MyApplication.StartsFrom<CachingDataStartup>();
+
+            var distributedCache = TestServiceProvider.GetService<IDistributedCache>();
+
+            Assert.NotNull(distributedCache);
+            Assert.IsAssignableFrom<CustomDistributedCache>(distributedCache);
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void ExplicitMockDistributedCacheShouldOverrideIt()
+        {
+            MyApplication
+                .StartsFrom<DataStartup>()
+                .WithServices(services =>
+                {
+                    services.ReplaceDistributedCache();
+                });
+
+            var distributedCache = TestServiceProvider.GetService<IDistributedCache>();
+
+            Assert.NotNull(distributedCache);
+            Assert.IsAssignableFrom<DistributedCacheMock>(distributedCache);
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void MockDistributedCacheShouldBeDifferentForEveryCallAsynchronously()
+        {
+            Task
+                .Run(async () =>
+                {
+                    MyApplication
+                        .StartsFrom<DefaultStartup>()
+                        .WithServices(services => services.AddDistributedMemoryCache());
+
+                    //var mockCache = TestServiceProvider.GetService<IDistributedCache>() as IDistributedCacheMock;
+                    //
+                    //TestHelper.GlobalTestCleanup += () => mockCache?.Dispose();
+                    TestHelper.ExecuteTestCleanup();
+
+                    byte[] firstValue = null;
+                    byte[] secondValue = null;
+                    byte[] thirdValue = null;
+                    byte[] fourthValue = null;
+                    byte[] fifthValue = null;
+
+                    var tasks = new List<Task>
+                    {
+                        Task.Run(() =>
+                        {
+                            var distributedCache = TestServiceProvider.GetService<IDistributedCache>();
+                            distributedCache.Set("test", new byte[]{ 1 });
+                            firstValue = TestServiceProvider.GetService<IDistributedCache>().Get("test");
+                            TestHelper.ExecuteTestCleanup();
+                        }),
+                        Task.Run(() =>
+                        {
+                            var distributedCache = TestServiceProvider.GetService<IDistributedCache>();
+                            distributedCache.Set("test", new byte[]{ 2 });
+                            secondValue = TestServiceProvider.GetService<IDistributedCache>().Get("test");
+                            TestHelper.ExecuteTestCleanup();
+                        }),
+                        Task.Run(() =>
+                        {
+                            var distributedCache = TestServiceProvider.GetService<IDistributedCache>();
+                            distributedCache.Set("test", new byte[]{ 3 });
+                            thirdValue = TestServiceProvider.GetService<IDistributedCache>().Get("test");
+                            TestHelper.ExecuteTestCleanup();
+                        }),
+                        Task.Run(() =>
+                        {
+                            var distributedCache = TestServiceProvider.GetService<IDistributedCache>();
+                            distributedCache.Set("test", new byte[]{ 4 });
+                            fourthValue = TestServiceProvider.GetService<IDistributedCache>().Get("test");
+                            TestHelper.ExecuteTestCleanup();
+                        }),
+                        Task.Run(() =>
+                        {
+                            var distributedCache = TestServiceProvider.GetService<IDistributedCache>();
+                            distributedCache.Set("test", new byte[]{ 5 });
+                            fifthValue = TestServiceProvider.GetService<IDistributedCache>().Get("test");
+                            TestHelper.ExecuteTestCleanup();
+                        })
+                    };
+
+                    await Task.WhenAll(tasks);
+
+                    Assert.Equal(new byte[] { 1 }, firstValue);
+                    Assert.Equal(new byte[] { 2 }, secondValue);
+                    Assert.Equal(new byte[] { 3 }, thirdValue);
+                    Assert.Equal(new byte[] { 4 }, fourthValue);
+                    Assert.Equal(new byte[] { 5 }, fifthValue);
 
                     MyApplication.StartsFrom<DefaultStartup>();
                 })
