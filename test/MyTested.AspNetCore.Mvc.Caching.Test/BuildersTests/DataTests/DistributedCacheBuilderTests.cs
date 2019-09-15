@@ -1,14 +1,15 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.DataTests
 {
+    using System;
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc.ApplicationParts;
-    using Microsoft.Extensions.Caching.Memory;
+    using Microsoft.Extensions.Caching.Distributed;
     using Microsoft.Extensions.DependencyInjection;
     using Setups;
     using Setups.Controllers;
     using Xunit;
 
-    public class DistributedCacheBuilderTests
+    public class DistributedCacheBuilderTests : IDisposable
     {
         public DistributedCacheBuilderTests()
         {
@@ -27,36 +28,93 @@
         }
 
         [Fact]
-        public void InterfaceDescription()
+        public void WithDistributedCacheShouldUseMock()
         {
-            MyController<MemoryCacheController>
+
+            MyController<DistributedCacheController>
                 .Instance()
-                .WithDistributedCache(distributedCache => distributedCache
-                    .WithEntry("Normal", "NormalValid")
-                    .WithEntry("Another", "AnotherValid"))
-                    .WithEntries(new Dictionary<object, object>
-                        {
-                            ["first"] = "firstValue",
-                            ["second"] = "secondValue",
-                            ["third"] = "thirdValue"
-                        })
-                    .WithEntries(new Dictionary<object, object>
-                    {
-                        ["fourth"] = "fourthValue",
-                        ["fifth"] = "fifthValue",
-                        ["sixth"] = "sixthValue"
-                    })
-                    .AndAlso()
-                    .WithEntries(new Dictionary<object, object>
-                    {
-                        ["seventh"] = "seventhValue",
-                        ["eight"] = "eightValue",
-                    })
-                .AndAlso()
-                .WithEntry("YetAnother", "YetAnotherValue")
-                .Calling(c => c.FullMemoryCacheAction(From.Services<IMemoryCache>()))
+                .WithDistributedCache(distributedCache => {})
+                .Calling(c => c.ValidDistributedCacheAction(From.Services<IDistributedCache>()))
                 .ShouldReturn()
                 .Ok();
         }
+
+        [Fact]
+        public void WithEntryShouldSetCorrectValues()
+        {
+            var val = new Byte[] { 127, 127, 127 };
+
+            MyController<DistributedCacheController>
+                .Instance()
+                .WithDistributedCache(distributedCache => distributedCache
+                    .WithEntry("FirstEntry", val)
+                    .WithEntry("SecondEntry", val)
+                    .WithEntry("ThirdEntry", val))
+                .Calling(c => c.ValidDistributedCacheEntriesAction(From.Services<IDistributedCache>()))
+                .ShouldReturn()
+                .Ok();
+        }
+
+        [Fact]
+        public void WithEntriesShouldSetCorrectValues()
+        {
+            var val = new Byte[] { 127, 127, 127 };
+
+            MyController<DistributedCacheController>
+                .Instance()
+                .WithDistributedCache(distributedCache => distributedCache
+                    .WithEntries(new Dictionary<string, byte[]>()
+                    {
+                        {"FirstEntry", val},
+                        {"SecondEntry", val},
+                        {"ThirdEntry", val},
+                    }))
+                .Calling(c => c.ValidDistributedCacheEntriesAction(From.Services<IDistributedCache>()))
+                .ShouldReturn()
+                .Ok();
+        }
+
+        [Fact]
+        public void WithEntryAndEntriesShouldSetCorrectValues()
+        {
+            var val = new Byte[] { 127, 127, 127 };
+
+            MyController<DistributedCacheController>
+                .Instance()
+                .WithDistributedCache(distributedCache => distributedCache
+                    .WithEntry("FirstEntry", val)
+                    .WithEntries(new Dictionary<string, byte[]>()
+                    {
+                        {"SecondEntry", val},
+                        {"ThirdEntry", val},
+                    }))
+                .Calling(c => c.ValidDistributedCacheEntriesAction(From.Services<IDistributedCache>()))
+                .ShouldReturn()
+                .Ok();
+        }
+
+        [Fact]
+        public void AndAlsoShouldWorkCorrectly()
+        {
+            var val = new Byte[] { 127, 127, 127 };
+
+            MyController<DistributedCacheController>
+                .Instance()
+                .WithDistributedCache(distributedCache => distributedCache
+                    .WithEntry("FirstEntry", val)
+                    .AndAlso()
+                    .WithEntry("SecondEntry", val)
+                    .AndAlso()
+                    .WithEntries(new Dictionary<string, byte[]>()
+                    {
+                        {"ThirdEntry", val},
+                        {"FourthEntry", val},
+                    }))
+                .Calling(c => c.ValidDistributedCacheEntriesAction(From.Services<IDistributedCache>()))
+                .ShouldReturn()
+                .Ok();
+        }
+
+        public void Dispose() => MyApplication.StartsFrom<DefaultStartup>();
     }
 }
