@@ -29,24 +29,21 @@ Go to the **"MusicStore.Test.csproj"** file and add **"MyTested.AspNetCore.Mvc.H
 ```xml
 <!-- Other ItemGroups -->
 
-<ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
     <PackageReference Include="Moq" Version="4.13.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.ActionResults" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.Views" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.DependencyInjection" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.EntityFrameworkCore" Version="2.2.0" />
+	<!-- MyTested.AspNetCore.Mvc.Http package -->
     <PackageReference Include="MyTested.AspNetCore.Mvc.Http" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Models" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.ModelState" Version="2.2.0" />
-
-    <PackageReference Include="xunit" Version="2.4.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
   </ItemGroup>
 
 <!-- Other ItemGroups -->
@@ -54,14 +51,14 @@ Go to the **"MusicStore.Test.csproj"** file and add **"MyTested.AspNetCore.Mvc.H
 
 This package will provide you with additional methods - two of them are **"WithHttpContext"** and **"WithHttpRequest"**. We will use the second one - it provides a fast way to set up every single part of the HTTP request.
 
-Go to the **"CheckoutControllerTest"** and add the following test:
+Go to the **"CheckoutControllerTest"** class and add the following test:
 
 ```c#
 [Fact]
 public void AddressAndPaymentShouldRerurnViewWithInvalidPostedPromoCode()
     => MyController<CheckoutController>
         .Instance()
-        .WithHttpRequest(r => r // <---
+        .WithHttpRequest(request => request // <---
             .WithFormField("PromoCode", "Invalid"))
         .Calling(c => c.AddressAndPayment(
             From.Services<MusicStoreContext>(),
@@ -71,7 +68,7 @@ public void AddressAndPaymentShouldRerurnViewWithInvalidPostedPromoCode()
         .InvalidModelState()
         .AndAlso()
         .ShouldReturn()
-        .View(v => v
+        .View(result => result
             .WithModel(With.Default<Order>()));
 ```
 
@@ -102,22 +99,25 @@ else
 // action code skipped for brevity
 ```
 
-By default tests do not have an authenticated user identity. Write this one in the **"CheckoutControllerTest"**, run it and see for yourself:
+By default tests do not have an authenticated user identity. Write this theory in the **"CheckoutControllerTest"**, run it, and see for yourself:
 
 ```c#
-[Fact]
-public void CompleteShouldReturnViewWithCorrectIdWithFoundOrderForTheUser()
+[Theory]
+[InlineData(1)]
+public void CompleteShouldReturnViewWithCorrectIdWithFoundOrderForTheUser(int orderId)
     => MyController<CheckoutController>
         .Instance()
-        .WithData(db => db
-            .WithEntities(entities => entities.Add(new Order
-            {
-                OrderId = 1,
-                Username = "TestUser"
-            })))
-        .Calling(c => c.Complete(From.Services<MusicStoreContext>(), 1))
+        .WithData(new Order
+        {
+            OrderId = orderId,
+            Username = "TestUser"
+        })
+        .Calling(c => c.Complete(
+            From.Services<MusicStoreContext>(),
+            orderId))
         .ShouldReturn()
-        .View(v => v.WithModel(1));
+        .View(result => result
+            .WithModel(orderId));
 ```
 
 It fails. Obviously, we need an authenticated user to test this action. We can attach it to the **"HttpContext"** but let's make it easier. Head over to the **"MusicStore.Test.csproj"** file again and add **"MyTested.AspNetCore.Mvc.Authentication"**:
@@ -125,10 +125,11 @@ It fails. Obviously, we need an authenticated user to test this action. We can a
 ```xml
 <!-- Other ItemGroups -->
 
-<ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
     <PackageReference Include="Moq" Version="4.13.0" />
+	<!-- MyTested.AspNetCore.Mvc.Authentication package -->
     <PackageReference Include="MyTested.AspNetCore.Mvc.Authentication" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.ActionResults" Version="2.2.0" />
@@ -138,64 +139,68 @@ It fails. Obviously, we need an authenticated user to test this action. We can a
     <PackageReference Include="MyTested.AspNetCore.Mvc.Http" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Models" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.ModelState" Version="2.2.0" />
-
-    <PackageReference Include="xunit" Version="2.4.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
   </ItemGroup>
 
 <!-- Other ItemGroups -->
 ```
 
-**"WithAuthenticatedUser"** method will be added to the fluent API. You can use it to set identifier, username, roles, claims, and identities. But for now call it empty like this:
+**"WithUser"** method will be added to the fluent API. You can use it to set identifier, username, roles, claims, and identities. But for now call it empty like this:
 
 ```c#
-[Fact]
-public void CompleteShouldReturnViewWithCorrectIdWithFoundOrderForTheUser()
+[Theory]
+[InlineData(1)]
+public void CompleteShouldReturnViewWithCorrectIdWithFoundOrderForTheUser(int orderId)
     => MyController<CheckoutController>
         .Instance()
-        .WithUser() // <---
-        .WithData(db => db
-            .WithEntities(entities => entities.Add(new Order
-            {
-                OrderId = 1,
-                Username = "TestUser"
-            })))
-        .Calling(c => c.Complete(From.Services<MusicStoreContext>(), 1))
+        .WithUser()
+        .WithData(new Order
+        {
+            OrderId = orderId,
+            Username = "TestUser"
+        })
+        .Calling(c => c.Complete(
+            From.Services<MusicStoreContext>(),
+            orderId))
         .ShouldReturn()
-        .View(v => v.WithModel(1));
+        .View(result => result
+            .WithModel(orderId));
 ```
 
-You will receive a passing test because the default authenticated user has **"TestId"** identifier and **"TestUser"** username. Change the order **"Username"** property to **"MyTestUser"** and you will need to provide the username of the identity in order to make the test pass again:
+You will receive a passing test because the default authenticated user has **"TestId"** identifier and **"TestUser"** username. Change the order's **"Username"** property to **"MyTestUser"** and you will need to provide the username of the identity in order to make the test pass again:
 
 ```c#
-[Fact]
-public void CompleteShouldReturnViewWithCorrectIdWithFoundOrderForTheUser2()
+[Theory]
+[InlineData(1, "MyTestUser")]
+public void CompleteShouldReturnViewWithCorrectIdWithFoundOrderForTheUser(
+    int orderId,
+    string username)
     => MyController<CheckoutController>
         .Instance()
         .WithUser(user => user // <---
-            .WithUsername("MyTestUser"))
-        .WithData(db => db
-            .WithEntities(entities => entities.Add(new Order
-            {
-                OrderId = 1,
-                Username = "MyTestUser"
-            })))
-        .Calling(c => c.Complete(From.Services<MusicStoreContext>(), 1))
+            .WithUsername(username))
+        .WithData(new Order
+        {
+            OrderId = orderId,
+            Username = username
+        })
+        .Calling(c => c.Complete(
+            From.Services<MusicStoreContext>(),
+            orderId))
         .ShouldReturn()
-        .View(v => v.WithModel(1));
+        .View(result => result
+            .WithModel(orderId));
 ```
 
-Of course, we also need to test the result when the order is not for the currently authenticated user. In this case, we need to return the **"Error"** view, but to do that open **"MusicStore.Test.csproj"** file again and add **"MyTested.AspNetCore.Mvc.Helpers"** package:
+Of course, we also need to test the result when the order is not for the currently authenticated user. In this case, we need to assert the **"Error"** view, but to do that open **"MusicStore.Test.csproj"** file again and add **"MyTested.AspNetCore.Mvc.Helpers"** package:
 
 ```xml
 <!-- Other ItemGroups -->
 
-<ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
     <PackageReference Include="Moq" Version="4.13.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Authentication" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers" Version="2.2.0" />
@@ -203,37 +208,38 @@ Of course, we also need to test the result when the order is not for the current
     <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.Views" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.DependencyInjection" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.EntityFrameworkCore" Version="2.2.0" />
+	<!-- MyTested.AspNetCore.Mvc.Helpers package -->
     <PackageReference Include="MyTested.AspNetCore.Mvc.Helpers" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Http" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Models" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.ModelState" Version="2.2.0" />
-
-    <PackageReference Include="xunit" Version="2.4.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
   </ItemGroup>
 
 <!-- Other ItemGroups -->
 ```
 
-And now add this test and it should pass:
+The **"Helpers"** package contains additional useful extension methods you may want to use.
+
+Now add this test and it should pass:
 
 ```c#
-[Fact]
-public void CompleteShouldReturnErrorViewWithInvalidOrderForTheUser()
+[Theory]
+[InlineData(1)]
+public void CompleteShouldReturnErrorViewWithInvalidOrderForTheUser(int orderId)
     => MyController<CheckoutController>
         .Instance()
         .WithUser(user => user
             .WithUsername("InvalidUser"))
-        .WithData(db => db
-            .WithEntities(entities => entities.Add(new Order
-            {
-                OrderId = 1,
-                Username = "MyTestUser"
-            })))
-        .Calling(c => c.Complete(From.Services<MusicStoreContext>(), 1))
+        .WithData(new Order
+        {
+            OrderId = orderId,
+            Username = "MyTestUser"
+        })
+        .Calling(c => c.Complete(
+            From.Services<MusicStoreContext>(),
+            orderId))
         .ShouldReturn()
         .View("Error");
 ```
@@ -261,7 +267,11 @@ public void AccessDeniedShouldReturnOkStatusCodeAndProperView()
 The **"HttpResponse"** method allows assertions of every part of the HTTP response - body, headers, cookies, etc. For example, if you add this line:
 
 ```c#
-.ContainingHeader("InvalidHeader")
+.ShouldHave()
+.HttpResponse(response => response
+    .ContainingHeader("InvalidHeader") // <---
+    .WithStatusCode(HttpStatusCode.OK))
+.AndAlso()
 ```
 
 You will receive a nice little error message (as always):
