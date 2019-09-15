@@ -8,7 +8,7 @@ First things first - we need a test assembly! Open the [Music Store solution](ht
 
 <img src="/images/tutorial/createtestproject.jpg" alt="Create .NET Core test project" />
 
-Delete the auto-generated **"UnitTest1.cs"** file and install [MyTested.AspNetCore.Mvc.Universe](https://www.nuget.org/packages/MyTested.AspNetCore.Mvc.Universe/) from NuGet.
+Delete the auto-generated **"UnitTest1.cs"** file and install [MyTested.AspNetCore.Mvc](https://www.nuget.org/packages/MyTested.AspNetCore.Mvc/) from NuGet.
 
 After that you must add a reference to the **"MusicStore"** project.
 
@@ -25,7 +25,7 @@ Now your **"MusicStore.Test.csproj"** file should look like this*:
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
-    <PackageReference Include="MyTested.AspNetCore.Mvc.Universe" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc" Version="2.2.0" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
   </ItemGroup>
@@ -190,7 +190,7 @@ Open the **"MusicStore.Test.csproj"** file and update it:
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" /> <!-- Reference to the metapackage -->
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
-    <PackageReference Include="MyTested.AspNetCore.Mvc.Universe" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc" Version="2.2.0" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
   </ItemGroup>
