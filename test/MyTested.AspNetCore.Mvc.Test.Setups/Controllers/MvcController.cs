@@ -15,6 +15,7 @@
     using Microsoft.AspNetCore.Mvc.ViewEngines;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.Extensions.Caching.Memory;
+    using Microsoft.Extensions.Caching.Distributed;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.FileProviders;
     using Microsoft.Net.Http.Headers;
@@ -1069,6 +1070,13 @@
             });
 
             memoryCache.Set("another", "anotherValue");
+
+            return this.Ok();
+        }
+
+        public IActionResult AddDistributedCacheAction()
+        {
+            var distributedCache = this.HttpContext.RequestServices.GetService<IDistributedCache>();
 
             return this.Ok();
         }
