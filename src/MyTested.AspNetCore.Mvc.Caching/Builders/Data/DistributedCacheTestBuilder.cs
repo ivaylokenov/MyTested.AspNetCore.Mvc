@@ -1,45 +1,165 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Data
 {
     using System.Collections.Generic;
+    using System.Linq;
     using Microsoft.Extensions.Caching.Distributed;
+    using Microsoft.Extensions.DependencyInjection;
+    using Builders.Base;
     using Builders.Contracts.Data;
+    using Exceptions;
     using Internal.TestContexts;
+    using Internal.Contracts;
+    using Utilities;
+    using Utilities.Extensions;
 
-    public class DistributedCacheTestBuilder : IAndDistributedCacheTestBuilder
+    /// <summary>
+    /// Used for testing <see cref="IDistributedCache"/>.
+    /// </summary>
+    public class DistributedCacheTestBuilder : BaseTestBuilderWithComponent, IAndDistributedCacheTestBuilder
     {
+        internal const string DistributedCacheName = "distributed cache";
+
+        private readonly IDistributedCache distributedCache;
+
+        private IDistributedCacheMock distributedCacheMock;
+        private Dictionary<string, byte[]> distributedCacheDictionary;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DistributedCacheTestBuilder"/> class.
+        /// </summary>
+        /// <param name="testContext"><see cref="ComponentTestContext"/> containing data about the currently executed assertion chain.</param>
         public DistributedCacheTestBuilder(ComponentTestContext testContext)
+            : base(testContext)
         {
-
+            this.distributedCache = this.GetDistributedCache();
+            this.distributedCacheMock = this.GetDistributedCacheMock();
+            this.distributedCacheDictionary = this.GetDistributedCacheDictionary();
         }
 
-        public IDistributedCacheTestBuilder AndAlso()
-        {
-            throw new System.NotImplementedException();
-        }
-
+        /// <inheritdoc />
         public IAndDistributedCacheTestBuilder ContainingEntries(IDictionary<string, byte[]> entries)
         {
-            throw new System.NotImplementedException();
+            var expectedItems = entries.Count;
+            var actualItems = ((IDistributedCacheMock)distributedCache).Count; //TODO: check where count is needed and either copy mem cache implementation or provide way to get count.
+
+            if (expectedItems != actualItems)
+            {
+                this.ThrowNewDataProviderAssertionException(
+                    DistributedCacheName,
+                    $"to have {expectedItems} {(expectedItems != 1 ? "entries" : "entry")}",
+                    $"in fact found {actualItems}");
+            }
+
+            entries.ForEach(e => this.ContainingEntry(e.Key, e.Value));
+            return this;
         }
 
+        /// <inheritdoc />
         public IAndDistributedCacheTestBuilder ContainingEntry(string key, byte[] value)
         {
-            throw new System.NotImplementedException();
+            var actualValue = this.GetValue(key);
+            if (Reflection.AreNotDeeplyEqual(value, actualValue))
+            {
+                this.ThrowNewDataProviderAssertionException(
+                    DistributedCacheName,
+                    "to have entry with the given value",
+                    "in fact it was different");
+            }
+
+            return this;
         }
 
+        /// <inheritdoc />
         public IAndDistributedCacheTestBuilder ContainingEntry(string key, byte[] value, DistributedCacheEntryOptions options)
         {
-            throw new System.NotImplementedException();
+            this.ContainingEntry(key, value);
+
+            this.distributedCacheMock.TryGetCacheEntryOptions(key, out var actualOptions);
+
+            if (Reflection.AreNotDeeplyEqual(options, actualOptions))
+            {
+                this.ThrowNewDataProviderAssertionException(
+                    DistributedCacheName,
+                    "to have entry with the given options",
+                    "in fact they were different");
+            }
+
+            return this;
         }
 
+        /// <inheritdoc />
         public IAndDistributedCacheTestBuilder ContainingEntryWithKey(string key)
         {
-            throw new System.NotImplementedException();
+            this.GetValue(key);
+
+            return this;
         }
 
+        /// <inheritdoc />
         public IAndDistributedCacheTestBuilder ContainingEntryWithValue(byte[] value)
         {
-            throw new System.NotImplementedException();
+            var hasValue = this.distributedCacheDictionary
+                .Values
+                .Any(v => Reflection.AreDeeplyEqual(v, value));
+
+            if (!hasValue)
+            {
+                this.ThrowNewDataProviderAssertionException(
+                    DistributedCacheName,
+                    "to have an entry with the given value",
+                    "such was not found");
+            }
+
+            return this;
+        }
+
+        /// <inheritdoc />
+        public IDistributedCacheTestBuilder AndAlso() => this;
+
+        private IDistributedCache GetDistributedCache()
+        {
+            return this.TestContext
+                .HttpContext
+                .RequestServices
+                .GetRequiredService<IDistributedCache>();
+        }
+
+        private IDistributedCacheMock GetDistributedCacheMock()
+        {
+            if (this.distributedCacheMock == null)
+            {
+                this.distributedCacheMock = this.distributedCache.AsDistributedCacheMock();
+            }
+
+            return this.distributedCacheMock;
+        }
+
+        private Dictionary<string, byte[]> GetDistributedCacheDictionary()
+            => this.distributedCacheMock.GetCacheAsDictionary();
+
+        private byte[] GetValue(string key)
+        {
+            var value = this.distributedCache.Get(key);
+
+            if (value == null)
+            {
+                this.ThrowNewDataProviderAssertionException(
+                    DistributedCacheName,
+                    "to have an entry with the given key",
+                    "such was not found");
+            }
+
+            return value;
+        }
+
+        private void ThrowNewDataProviderAssertionException(string propertyName, string expectedValue, string actualValue)
+        {
+            throw new DataProviderAssertionException(string.Format(
+                "{0} {1} {2}, but {3}.",
+                this.TestContext.ExceptionMessagePrefix,
+                propertyName,
+                expectedValue,
+                actualValue));
         }
     }
 }
