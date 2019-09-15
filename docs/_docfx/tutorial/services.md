@@ -99,6 +99,7 @@ public class TestStartup : Startup
     {
     }
 
+	// needs the Microsoft.Extensions.DependencyInjection namespace
     public void ConfigureTestServices(IServiceCollection services)
     {
     }
@@ -119,7 +120,7 @@ Now all tests should pass again.
 Before replacing the **"SignInManager"**, we need a mock. Let's create a minimalistic manual mock for it. Add **"Mocks"** folder in your test project and create the following class in it:
 
 ```c#
-using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
@@ -129,32 +130,32 @@ using System.Threading.Tasks;
 
 public class SignInManagerMock : SignInManager<ApplicationUser>
 {
-	public SignInManagerMock(
+    public SignInManagerMock(
         UserManager<ApplicationUser> userManager,
         IHttpContextAccessor contextAccessor,
         IUserClaimsPrincipalFactory<ApplicationUser> claimsFactory,
         IOptions<IdentityOptions> optionsAccessor,
         ILogger<SignInManager<ApplicationUser>> logger,
         IAuthenticationSchemeProvider authProvider)
-        : base(userManager, contextAccessor, claimsFactory, optionsAccessor, logger,authProvider)
+        : base(userManager, contextAccessor, claimsFactory, optionsAccessor, logger, authProvider)
     {
     }
 
-	public override Task<SignInResult> PasswordSignInAsync(string userName, string password, bool isPersistent, bool lockoutOnFailure)
-	{
-		if (userName == "valid@valid.com" && password == "valid")
-		{
-			return Task.FromResult(SignInResult.Success);
-		}
+    public override Task<SignInResult> PasswordSignInAsync(string userName, string password, bool isPersistent, bool lockoutOnFailure)
+    {
+        if (userName == "valid@valid.com" && password == "valid")
+        {
+            return Task.FromResult(SignInResult.Success);
+        }
 
-		return Task.FromResult(SignInResult.Failed);
-	}
+        return Task.FromResult(SignInResult.Failed);
+    }
 }
 ```
 
 We have created a **"SignInManager"** mock which returns successful sign in result, if specific username and password are provided. Otherwise, returns failed result.
 
-Now we need to tell the testing framework to use our mock instead of the actual implementation.
+Now we need to tell the testing framework to use our mock instead of the actual ASP.NET Core implementation.
 
 My Tested ASP.NET Core MVC provides a lot of useful extension methods on the service collection. Add this using in the **"TestStartup"** class:
 
@@ -206,7 +207,8 @@ public void LoginShouldReturnRedirectToLocalWithValidLoginViewModel()
         .ValidModelState()
         .AndAlso()
         .ShouldReturn()
-        .Redirect(r => r.ToUrl(redirectUrl));
+        .Redirect(result => result
+            .ToUrl(redirectUrl));
 }
 ```
 
@@ -233,7 +235,8 @@ public void LoginShouldReturnViewWithSameModelWithInvalidLoginViewModel()
             .ThatEquals("Invalid login attempt."))
         .AndAlso()
         .ShouldReturn()
-        .View(v => v.WithModel(model));
+        .View(result => result
+            .WithModel(model));
 }
 ```
 
@@ -369,7 +372,7 @@ public async Task<IActionResult> Details(
 }
 ```
 
-We want to test that with disabled global caching in the **"AppSettings"** options, we dot not try to cache the database result.
+We want to test that with disabled global caching in the **"AppSettings"** options, we do not cache the database result.
 
 First, we need to prepare the **"IMemoryCache"** mock to throw an exception when setting an entry with specific key. Go to the **"MockProvider"** class (or create it, if you haven't already) and add the following:
 
@@ -401,23 +404,20 @@ Go to the **"MusicStore.Test.csproj"** file in the test project and add **"MyTes
 ```xml
 <!-- Other ItemGroups -->
 
-<ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
     <PackageReference Include="Moq" Version="4.13.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.ActionResults" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.Views" Version="2.2.0" />
+	<!-- MyTested.AspNetCore.Mvc.DependencyInjection package -->
     <PackageReference Include="MyTested.AspNetCore.Mvc.DependencyInjection" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.EntityFrameworkCore" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Models" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.ModelState" Version="2.2.0" />
-
-    <PackageReference Include="xunit" Version="2.4.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
   </ItemGroup>
 
 <!-- Other ItemGroups -->
@@ -433,13 +433,17 @@ public void DetailsShouldNotSaveCacheEntryWithDisabledGlobalCache()
     {
         AlbumId = int.MaxValue
     };
+
     MyController<StoreManagerController>
         .Instance()
-        .WithData(db => db.WithEntities(e=>e.Add(album)))
-        .Calling(c => c.Details(MockProvider.ThrowableMemoryCache, int.MaxValue))
+		.WithData(album)
+        .Calling(c => c.Details(
+            MockProvider.ThrowableMemoryCache, 
+            int.MaxValue))
         .ShouldReturn()
-        .View(v => v.WithModelOfType<Album>()
-                    .Passing(m => m.AlbumId == int.MaxValue));
+        .View(result => result
+            .WithModelOfType<Album>()
+            .Passing(m => m.AlbumId == int.MaxValue));
 }
 ```
 
@@ -452,7 +456,7 @@ When calling Details action in StoreManagerController expected no exception but 
 Let's disable the caching only for this test. Add the following lines of code right after the **"Instance"** call:
 
 ```c#
-.WithServices(services => services
+.WithDependencies(services => services
     .WithSetupFor<IOptions<AppSettings>>(settings => settings
         .Value.CacheDbResults = false))
 ```
@@ -550,12 +554,12 @@ You can also use the **"WithServices"** method in the following way:
 public void BrowseShouldReturnCorrectViewModelWithValidGenre()
     => MyController<StoreController>
         .Instance()
-        .WithDependencies( // <---
+        .WithDependencies(
             MockProvider.MusicStoreContext,
             Mock.Of<IOptions<AppSettings>>())
         .Calling(c => c.Browse("Rap"))
         .ShouldReturn()
-        .View(v => v
+        .View(result => result
             .WithModelOfType<Genre>()
             .Passing(model => model.GenreId == 2));
 ```
@@ -567,12 +571,12 @@ Or like this:
 public void BrowseShouldReturnCorrectViewModelWithValidGenre()
     => MyController<StoreController>
         .Instance()
-        .WithDependencies(d => d // <---
+        .WithDependencies(dependencies => dependencies // <---
             .With(MockProvider.MusicStoreContext)
             .With(Mock.Of<IOptions<AppSettings>>()))
         .Calling(c => c.Browse("Rap"))
         .ShouldReturn()
-        .View(v => v
+        .View(result => result
             .WithModelOfType<Genre>()
             .Passing(model => model.GenreId == 2));
 ```
