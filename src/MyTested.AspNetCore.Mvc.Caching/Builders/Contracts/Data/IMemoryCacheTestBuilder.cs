@@ -32,6 +32,13 @@
         IAndMemoryCacheTestBuilder ContainingEntryOfType<TValue>();
 
         /// <summary>
+        /// Tests whether the <see cref="IMemoryCache"/> contains entry with value of the provided type.
+        /// </summary>
+        /// <param name="valueType"></param>
+        /// <returns></returns>
+        IAndMemoryCacheTestBuilder ContainingEntryOfType(Type valueType);
+
+        /// <summary>
         /// Tests whether the <see cref="IMemoryCache"/> contains entry with the provided key and corresponding value.
         /// </summary>
         /// <param name="key">Key of the cache entry.</param>
@@ -46,6 +53,14 @@
         /// <param name="key">Key of the cache entry.</param>
         /// <returns>The same <see cref="IAndMemoryCacheBuilder"/>.</returns>
         IAndMemoryCacheTestBuilder ContainingEntryOfType<TValue>(object key);
+
+        /// <summary>
+        /// Tests whether the <see cref="IMemoryCache"/> contains entry with value of the provided type and the given key.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="valueType"></param>
+        /// <returns></returns>
+        IAndMemoryCacheTestBuilder ContainingEntryOfType(object key, Type valueType);
 
         /// <summary>
         /// Tests whether the <see cref="IMemoryCache"/> contains entry with the provided key, corresponding value and the deeply equal options to the given ones.
