@@ -1077,6 +1077,14 @@
         public IActionResult AddDistributedCacheAction()
         {
             var distributedCache = this.HttpContext.RequestServices.GetService<IDistributedCache>();
+            distributedCache.Set("test", new byte[] { 127, 127, 127 }, new DistributedCacheEntryOptions
+            { 
+                AbsoluteExpiration = new DateTimeOffset(new DateTime(2020, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(1),
+                SlidingExpiration = TimeSpan.FromMinutes(5)
+            });
+
+            distributedCache.Set("another", new byte[] { 4, 20 });
 
             return this.Ok();
         }

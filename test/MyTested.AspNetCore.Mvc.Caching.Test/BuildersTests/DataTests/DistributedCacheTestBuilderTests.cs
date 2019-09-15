@@ -26,7 +26,7 @@
                 .Calling(c => c.AddDistributedCacheAction())
                 .ShouldHave()
                 .DistributedCache(cache => cache
-                    .ContainingEntry("Key", cacheValue))
+                    .ContainingEntry("test", cacheValue))
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
@@ -40,7 +40,7 @@
                 .Calling(c => c.AddDistributedCacheAction())
                 .ShouldHave()
                 .DistributedCache(cache => cache
-                    .ContainingEntryWithKey("Key"))
+                    .ContainingEntryWithKey("test"))
                 .AndAlso()
                 .ShouldReturn()
                 .Ok();
@@ -71,7 +71,7 @@
                 .Calling(c => c.AddDistributedCacheAction())
                 .ShouldHave()
                 .DistributedCache(cache => cache
-                    .ContainingEntry("Key", cacheValue, new DistributedCacheEntryOptions
+                    .ContainingEntry("test", cacheValue, new DistributedCacheEntryOptions
                     {
                         AbsoluteExpiration = new DateTimeOffset(new DateTime(2020, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
                         AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(1),
@@ -93,9 +93,8 @@
                 .DistributedCache(cache => cache
                     .ContainingEntries(new Dictionary<string, byte[]>
                     {
-                        {"FirstEntry", cacheValue },
-                        {"SecondEntry", cacheValue },
-                        {"ThirdEntry", cacheValue }
+                        {"test", new byte[] { 127, 127, 127 } },
+                        {"another", new byte[] { 4, 20} },
                     }))
                 .AndAlso()
                 .ShouldReturn()

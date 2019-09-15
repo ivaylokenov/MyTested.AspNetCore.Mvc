@@ -42,7 +42,7 @@
         [Fact]
         public void WithEntryShouldSetCorrectValues()
         {
-            var val = new Byte[] { 127, 127, 127 };
+            var val = new byte[] { 127, 127, 127 };
 
             MyController<DistributedCacheController>
                 .Instance()
@@ -58,7 +58,7 @@
         [Fact]
         public void WithEntriesShouldSetCorrectValues()
         {
-            var val = new Byte[] { 127, 127, 127 };
+            var val = new byte[] { 127, 127, 127 };
 
             MyController<DistributedCacheController>
                 .Instance()
@@ -77,7 +77,7 @@
         [Fact]
         public void WithEntryAndEntriesShouldSetCorrectValues()
         {
-            var val = new Byte[] { 127, 127, 127 };
+            var val = new byte[] { 127, 127, 127 };
 
             MyController<DistributedCacheController>
                 .Instance()
@@ -96,7 +96,7 @@
         [Fact]
         public void AndAlsoShouldWorkCorrectly()
         {
-            var val = new Byte[] { 127, 127, 127 };
+            var val = new byte[] { 127, 127, 127 };
 
             MyController<DistributedCacheController>
                 .Instance()
