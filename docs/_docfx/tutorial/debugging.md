@@ -4,12 +4,10 @@ In this section we will learn how easy is to debug failing tests.
 
 ## Friendly error messages
 
-Let's see how nice and friendly error message My Tested ASP.NET Core MVC provides on a failed test. Go to the **"ManageControllerTest"** and change the redirect action:
+Let's see what nice and friendly error message My Tested ASP.NET Core MVC provides on a failed test. Go to the **"ManageControllerTest"** and change the redirect action:
 
 ```c#
-.Redirect(redirect => redirect
-                    .ToAction(nameof(ManageController.ManageLogins))
-                    .ContainingRouteValues(new { Message = ManageController.ManageMessageId.Error }));
+.ToAction(nameof(ManageController.LinkLogin));
 ```
 
 Run the test, and you will see a detailed error message showing exactly what has failed:
@@ -21,9 +19,7 @@ When calling RemoveLogin action in ManageController expected redirect result to 
 We can see in the above message that the redirect action is actually **"ManageLogins"** so let's return that value and try something else. Change the **"Message"** route value property to **"Error"**:
 
 ```c#
-.Redirect(redirect => redirect
-                    .ToAction(nameof(ManageController.ManageLogins))
-                    .ContainingRouteValues(new { Error = ManageController.ManageMessageId.Error }));
+.ContainingRouteValues(new { Error = ManageController.ManageMessageId.Error }));
 ```
 
 Run the test again, and you should see:
@@ -48,4 +44,4 @@ You know the drill from here on! :)
 
 ## Section summary
 
-In this section we learned how helpful and developer-friendly is My Tested ASP.NET Core MVC with failed tests. Later in the tutorial we will also see how easy it is to debug with the **"ShouldPassFor"** method. But enough about failures and errors. Let's dive into the [Controllers](/tutorial/controllers.html) testing!
+In this section we learned how helpful and developer-friendly is My Tested ASP.NET Core MVC with failed tests. Later in the tutorial we will also see how easy it is to debug with the **"ShouldPassForThe"** generic method. But enough about failures and errors. Let's dive into the [Controllers](/tutorial/controllers.html) testing!
