@@ -41,15 +41,25 @@
         public static void ValidateContainingOutputFormatterOfType<TOutputFormatter>(
             ObjectResult objectResult,
             Action<string, string, string> failedValidationAction)
+            => ValidateContainingOutputFormatterOfType(objectResult, failedValidationAction, typeof(TOutputFormatter));
+
+        /// <summary>
+        /// Validates whether object result Formatters contains the provided type of output formatter.
+        /// </summary>
+        /// <param name="objectResult">Object result to test.</param>
+        /// <param name="failedValidationAction">Action to call in case of failed validation.</param>
+        /// <param name="outputFromatterType"></param>
+        public static void ValidateContainingOutputFormatterOfType(
+            ObjectResult objectResult,
+            Action<string, string, string> failedValidationAction,Type outputFromatterType)
         {
             var outputFormatters = objectResult.Formatters;
-            var typeOfExpectedOutputFormatter = typeof(TOutputFormatter);
 
-            if (outputFormatters.All(f => Reflection.AreDifferentTypes(f.GetType(), typeOfExpectedOutputFormatter)))
+            if (outputFormatters.All(f => Reflection.AreDifferentTypes(f.GetType(), outputFromatterType)))
             {
                 failedValidationAction(
                     "output formatters",
-                    $"to contain formatter of {typeOfExpectedOutputFormatter.Name} type",
+                    $"to contain formatter of {outputFromatterType.Name} type",
                     "such was not found");
             }
         }
