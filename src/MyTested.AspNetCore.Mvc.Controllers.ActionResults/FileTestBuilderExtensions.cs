@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc
 {
+    using System;
     using System.IO;
     using System.Linq;
     using Builders.ActionResults.File;
@@ -119,6 +120,19 @@
         public static IAndFileTestBuilder WithFileProviderOfType<TFileProvider>(
             this IFileTestBuilder fileTestBuilder)
             where TFileProvider : IFileProvider
+            => WithFileProviderOfType(fileTestBuilder, typeof(TFileProvider));
+
+        /// <summary>
+        /// Tests whether the <see cref="VirtualFileResult"/>
+        /// has the same file provider type as the provided one.
+        /// </summary>
+        /// <param name="fileTestBuilder">
+        /// Instance of <see cref="IFileTestBuilder"/> type.
+        /// </param>
+        /// <param name="fileProviderType"></param>
+        /// <returns>The same <see cref="IAndFileTestBuilder"/>.</returns>
+        public static IAndFileTestBuilder WithFileProviderOfType(
+            this IFileTestBuilder fileTestBuilder,Type fileProviderType)
         {
             var actualBuilder = GetFileTestBuilder<VirtualFileResult>(fileTestBuilder, FileProvider);
 
@@ -126,11 +140,11 @@
             var actualFileProvider = virtualFileResult.FileProvider;
 
             if (actualFileProvider == null ||
-                Reflection.AreDifferentTypes(typeof(TFileProvider), actualFileProvider.GetType()))
+                Reflection.AreDifferentTypes(fileProviderType, actualFileProvider.GetType()))
             {
                 actualBuilder.ThrowNewFailedValidationException(
                     FileProvider,
-                    $"to be of {typeof(TFileProvider).Name} type",
+                    $"to be of {fileProviderType.Name} type",
                     $"instead received {actualFileProvider.GetName()}");
             }
 
