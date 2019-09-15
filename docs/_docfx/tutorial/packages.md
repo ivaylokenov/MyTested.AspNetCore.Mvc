@@ -38,6 +38,7 @@ Your **"MusicStore.Test.csproj"** dependencies should look like this:
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
+	<!-- MyTested.AspNetCore.Mvc.Controllers package -->
     <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers" Version="2.2.0" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
@@ -118,6 +119,7 @@ As a bonus, let's assert some details of the redirect action result. We can see 
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers" Version="2.2.0" />
+	<!-- MyTested.AspNetCore.Mvc.Controllers.ActionResults package -->
     <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.ActionResults" Version="2.2.0" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
@@ -133,7 +135,9 @@ And the test:
 public void RemoveLoginShouldReturnRedirectToActionWithNoUser()
     => MyController<ManageController>
         .Instance()
-        .Calling(c => c.RemoveLogin(With.No<string>(), With.No<string>()))
+        .Calling(c => c.RemoveLogin(
+            With.No<string>(), 
+            With.No<string>()))
         .ShouldReturn()
         .Redirect(result => result
             .ToAction(nameof(ManageController.ManageLogins))
@@ -149,7 +153,9 @@ If we do not include the **"MyTested.AspNetCore.Mvc.Controllers.ActionResults"**
 public void RemoveLoginShouldReturnRedirectToActionWithNoUser()
     => MyController<ManageController>
         .Instance()
-        .Calling(c => c.RemoveLogin(With.No<string>(), With.No<string>()))
+        .Calling(c => c.RemoveLogin(
+            With.No<string>(), 
+            With.No<string>()))
         .ShouldReturn()
         .Redirect(result => result
             .Passing(redirect =>
@@ -179,6 +185,7 @@ OK, back to that commented test. We cannot test views with our current dependenc
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.ActionResults" Version="2.2.0" />
+	<!-- MyTested.AspNetCore.Mvc.Controllers.Views package -->
     <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.Views" Version="2.2.0" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
