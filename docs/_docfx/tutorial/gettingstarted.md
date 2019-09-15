@@ -82,6 +82,8 @@ Since My Tested ASP.NET Core MVC provides a fluent API, tests can be written wit
 
 Let's build the solution and run the test.
 
+Wait for it...
+
 <img src="/images/tutorial/nostartuperror.jpg" alt="First unit test fails because of missing configuration" />
 
 Surprise! The simplest test fails. This testing framework is a waste of time! :(
@@ -115,9 +117,20 @@ Now, take a look at the **"CheckoutController"**. You may have noticed its const
 
 Now run the test again.
 
-<img src="/images/tutorial/configjsonerror.jpg" alt="First unit test fails because of missing config.json" />
+Wait for it...
 
-You were expecting that, right? You should not be surprised after the first fail at all... :(
+And...
+
+FAIL AGAIN!
+
+```text
+System.IO.FileNotFoundException :
+ The configuration file 'config.json' was not found and is not optional.
+```
+
+You were expecting that, right? You should not be surprised after the first fail at all... 
+
+The struggle with this testing framework is real... :(
 
 Still here? Good! Now repeat after me and then everything will be explained to you (it's a promise)!
 
@@ -197,7 +210,15 @@ Open the **"MusicStore.Test.csproj"** file and update it:
 
 *.NET Core 3.0 test projects do not need this change and work correctly without the Web SDK.*
 
-Run the test again and... Oh, miracle, it passes! :)
+Run the test again and... Oh, miracles! The test passes correctly without any big and ugly errors! Oh, yeah, do you feel the happiness? This library is DA BOMB!!! :)
+
+## Running tests from the CLI
+
+You may want to run your tests from the command-line interface. Go to the **"MusicStore.Test"** project folder and open a console terminal there. The easiest way is pressing "SHIFT + Right Mouse Button" somewhere in the window and then clicking "Open command window here" or "Open PowerShell window here".
+
+Then type "dotnet test" and hit "Enter".
+
+<img src="/images/tutorial/firsttestpass.jpg" alt="Running tests from the CLI" />
 
 ## Understanding the details
 
