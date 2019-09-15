@@ -4,5 +4,6 @@
 
     public interface IDistributedCacheMock : IDistributedCache
     {
+        int Count { get; }
     }
 }

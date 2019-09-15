@@ -2,20 +2,20 @@
 {
     using Microsoft.Extensions.Caching.Distributed;
 
-    public class DistributedCacheEntry
+    internal class DistributedCacheEntry
     {
-        public DistributedCacheEntry()
+        internal DistributedCacheEntry()
         {
         }
 
-        public DistributedCacheEntry(byte[] value, DistributedCacheEntryOptions options)
+        internal DistributedCacheEntry(byte[] value, DistributedCacheEntryOptions options)
         {
             this.Value = value;
             this.Options = options;
         }
 
-        public byte[] Value { get; set; }
+        internal byte[] Value { get; set; }
 
-        public DistributedCacheEntryOptions Options { get; set; }
+        internal DistributedCacheEntryOptions Options { get; set; }
     }
 }
