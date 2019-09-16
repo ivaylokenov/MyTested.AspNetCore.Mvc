@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Data
+﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Data.DistributedCache
 {
     /// <summary>
     /// Used for adding AndAlso() method to the <see cref="Microsoft.Extensions.Caching.Distributed.IDistributedCache"/> tests.

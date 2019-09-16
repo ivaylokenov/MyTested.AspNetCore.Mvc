@@ -14,7 +14,7 @@
     using Setups.ViewComponents;
     using Setups;
     using Microsoft.Extensions.Caching.Distributed;
-    using MyTested.AspNetCore.Mvc.Internal.Contracts;
+    using Internal.Contracts;
 
     public class ServicesTests
     {

@@ -2,9 +2,9 @@
 {
     using System;
     using Builders.Contracts.Base;
-    using Builders.Contracts.Data;
-    using Builders.Data;
     using Builders.Base;
+    using Builders.Contracts.Data.MemoryCache;
+    using Builders.Data.MemoryCache;
 
     /// <summary>
     /// Contains <see cref="Microsoft.Extensions.Caching.Memory.IMemoryCache"/> extension methods for <see cref="IBaseTestBuilderWithComponentBuilder{TBuilder}"/>.

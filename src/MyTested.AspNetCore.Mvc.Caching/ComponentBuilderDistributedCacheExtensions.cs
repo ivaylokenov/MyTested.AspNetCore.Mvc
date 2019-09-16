@@ -3,8 +3,8 @@
     using System;
     using Builders.Base;
     using Builders.Contracts.Base;
-    using Builders.Contracts.Data;
-    using Builders.Data;
+    using Builders.Contracts.Data.DistributedCache;
+    using Builders.Data.DistributedCache;
 
     /// <summary>
     /// Contains <see cref="Microsoft.Extensions.Caching.Distributed.IDistributedCache"/> extension methods for <see cref="IBaseTestBuilderWithComponentBuilder{TBuilder}"/>.

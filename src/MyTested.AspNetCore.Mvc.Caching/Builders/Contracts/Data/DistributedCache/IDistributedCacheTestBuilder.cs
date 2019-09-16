@@ -1,5 +1,6 @@
-﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Data
+﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Data.DistributedCache
 {
+    using System;
     using Microsoft.Extensions.Caching.Distributed;
     using System.Collections.Generic;
 
@@ -24,6 +25,13 @@
         /// <param name="options"><see cref="DistributedCacheEntryOptions"/> of the cache entry.</param>
         /// <returns>The same <see cref="IAndDistributedCacheTestBuilder"/>.</returns>
         IAndDistributedCacheTestBuilder ContainingEntry(string key, byte[] value, DistributedCacheEntryOptions options);
+
+        /// <summary>
+        /// Tests whether the <see cref="IDistributedCache"/> contains specific entry by using a builder. 
+        /// </summary>
+        /// <param name="distributedCacheEntryTestBuilder">Builder for setting specific cache entry tests.</param>
+        /// <returns>The same <see cref="IAndDistributedCacheTestBuilder"/>.</returns>
+        IAndDistributedCacheTestBuilder ContainingEntry(Action<IDistributedCacheEntryKeyTestBuilder> distributedCacheEntryTestBuilder);
 
         /// <summary>
         /// Tests whether the <see cref="IDistributedCache"/> contains entry with the provided key.

@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Data
+﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Data.MemoryCache
 {
     using System;
     using System.Collections.Generic;

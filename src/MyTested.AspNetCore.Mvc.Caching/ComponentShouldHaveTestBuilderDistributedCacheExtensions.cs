@@ -1,12 +1,12 @@
 ﻿namespace MyTested.AspNetCore.Mvc
 {
     using Builders.Contracts.Base;
-    using Builders.Contracts.Data;
     using Builders.Base;
     using System;
+    using Builders.Contracts.Data.DistributedCache;
     using Utilities.Validators;
     using Internal.TestContexts;
-    using Builders.Data;
+    using Builders.Data.DistributedCache;
 
     public static class ComponentShouldHaveTestBuilderDistributedCacheExtensions
     {

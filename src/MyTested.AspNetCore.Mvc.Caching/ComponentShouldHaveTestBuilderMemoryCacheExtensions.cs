@@ -3,8 +3,8 @@
     using System;
     using Builders.Base;
     using Builders.Contracts.Base;
-    using Builders.Contracts.Data;
-    using Builders.Data;
+    using Builders.Contracts.Data.MemoryCache;
+    using Builders.Data.MemoryCache;
     using Internal.TestContexts;
     using Utilities.Validators;
 

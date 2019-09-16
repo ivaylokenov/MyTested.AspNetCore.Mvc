@@ -1,7 +1,7 @@
-﻿namespace MyTested.AspNetCore.Mvc.Builders.Data
+﻿namespace MyTested.AspNetCore.Mvc.Builders.Data.MemoryCache
 {
     using System;
-    using Contracts.Data;
+    using Contracts.Data.MemoryCache;
     using Utilities.Validators;
 
     /// <summary>

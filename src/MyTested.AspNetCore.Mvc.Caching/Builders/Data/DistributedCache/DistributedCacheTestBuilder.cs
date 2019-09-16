@@ -1,11 +1,12 @@
-﻿namespace MyTested.AspNetCore.Mvc.Builders.Data
+﻿namespace MyTested.AspNetCore.Mvc.Builders.Data.DistributedCache
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.Extensions.Caching.Distributed;
     using Microsoft.Extensions.DependencyInjection;
-    using Builders.Base;
-    using Builders.Contracts.Data;
+    using Base;
+    using Contracts.Data.DistributedCache;
     using Exceptions;
     using Internal.TestContexts;
     using Internal.Contracts;
@@ -85,6 +86,11 @@
             }
 
             return this;
+        }
+
+        public IAndDistributedCacheTestBuilder ContainingEntry(Action<IDistributedCacheEntryKeyTestBuilder> distributedCacheEntryTestBuilder)
+        {
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc />
