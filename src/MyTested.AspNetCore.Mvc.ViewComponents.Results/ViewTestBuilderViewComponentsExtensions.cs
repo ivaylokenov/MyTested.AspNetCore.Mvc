@@ -4,6 +4,7 @@
     using Builders.ViewComponentResults;
     using Exceptions;
     using Microsoft.AspNetCore.Mvc.ViewEngines;
+    using System;
     using Utilities;
 
     /// <summary>
@@ -48,18 +49,30 @@
         public static IAndViewTestBuilder WithViewEngineOfType<TViewEngine>(
             this IViewTestBuilder viewTestBuilder)
             where TViewEngine : IViewEngine
+            => WithViewEngineOfType(viewTestBuilder, typeof(TViewEngine));
+
+        /// <summary>
+        /// Tests whether <see cref="Microsoft.AspNetCore.Mvc.ViewComponents.ViewViewComponentResult"/>
+        /// has the same <see cref="IViewEngine"/> type as the provided one.
+        /// </summary>
+        /// <param name="viewTestBuilder">
+        /// Instance of <see cref="IViewTestBuilder"/> type.
+        /// </param>
+        /// <param name="viewEngineType"></param>
+        /// <returns>The same <see cref="IAndViewTestBuilder"/>.</returns>
+        public static IAndViewTestBuilder WithViewEngineOfType(
+            this IViewTestBuilder viewTestBuilder,Type viewEngineType)
         {
             var actualBuilder = GetActualBuilder(viewTestBuilder);
 
             var actualViewEngineType = actualBuilder.ViewResult?.ViewEngine?.GetType();
-            var expectedViewEngineType = typeof(TViewEngine);
 
             if (actualViewEngineType == null
-                || Reflection.AreDifferentTypes(expectedViewEngineType, actualViewEngineType))
+                || Reflection.AreDifferentTypes(viewEngineType, actualViewEngineType))
             {
                 throw ViewViewComponentResultAssertionException.ForViewEngineType(
                     actualBuilder.TestContext.ExceptionMessagePrefix,
-                    expectedViewEngineType.ToFriendlyTypeName(),
+                    viewEngineType.ToFriendlyTypeName(),
                     actualViewEngineType.ToFriendlyTypeName());
             }
 
