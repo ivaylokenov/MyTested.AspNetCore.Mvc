@@ -1,5 +1,6 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.Caching
 {
+    using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
@@ -78,5 +79,10 @@
 
         public Dictionary<string, byte[]> GetCacheAsDictionary()
             => this.cache.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Value);
+
+        public void Dispose()
+        {
+            this.cache.Clear();
+        }
     }
 }

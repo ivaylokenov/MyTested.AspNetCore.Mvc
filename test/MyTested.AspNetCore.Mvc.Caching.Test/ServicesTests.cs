@@ -338,9 +338,9 @@
                         .StartsFrom<DefaultStartup>()
                         .WithServices(services => services.AddDistributedMemoryCache());
 
-                    //var mockCache = TestServiceProvider.GetService<IDistributedCache>() as IDistributedCacheMock;
-                    //
-                    //TestHelper.GlobalTestCleanup += () => mockCache?.Dispose();
+                    var mockCache = TestServiceProvider.GetService<IDistributedCache>() as IDistributedCacheMock;
+                    
+                    TestHelper.GlobalTestCleanup += () => mockCache?.Dispose();
                     TestHelper.ExecuteTestCleanup();
 
                     byte[] firstValue = null;

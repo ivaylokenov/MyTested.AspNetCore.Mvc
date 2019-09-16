@@ -5,12 +5,12 @@
     using Builders.Base;
     using System;
     using Utilities.Validators;
-    using MyTested.AspNetCore.Mvc.Internal.TestContexts;
-    using MyTested.AspNetCore.Mvc.Builders.Data;
+    using Internal.TestContexts;
+    using Builders.Data;
 
     public static class ComponentShouldHaveTestBuilderDistributedCacheExtensions
     {
-        /* /// <summary>
+        /// <summary>
         /// Tests whether the component does not set any <see cref="Microsoft.Extensions.Caching.Distributed.IDistributedCache"/> entries.
         /// </summary>
         /// <typeparam name="TBuilder">Class representing ASP.NET Core MVC test builder.</typeparam>
@@ -25,18 +25,18 @@
             {
                 DataProviderValidator.ThrowNewDataProviderAssertionExceptionWithNoEntries(
                     actualBuilder.TestContext,
-                    DistributedCacheTestBuilder.MemoryCacheName);
+                    DistributedCacheTestBuilder.DistributedCacheName);
             }
 
             return actualBuilder.Builder;
         }
-
+        
         /// <summary>
         /// Tests whether the component sets specific <see cref="Microsoft.Extensions.Caching.Distributed.IDistributedCache"/> entries.
         /// </summary>
         /// <typeparam name="TBuilder">Class representing ASP.NET Core MVC test builder.</typeparam>
         /// <param name="builder">Instance of <see cref="IBaseTestBuilderWithComponentShouldHaveTestBuilder{TBuilder}"/> type.</param>
-        /// <param name="withNumberOfEntries">Expected number of <see cref="Microsoft.Extensions.Caching.Distributed.IDistributedCache"/> entries.
+        /// <param name="withNumberOfEntries">Expected number of <see cref="Microsoft.Extensions.Caching.Distributed.IDistributedCache"/> entries.</param>
         /// <returns>The same component should have test builder.</returns>
         public static TBuilder DistributedCache<TBuilder>(
             this IBaseTestBuilderWithComponentShouldHaveTestBuilder<TBuilder> builder,
@@ -47,12 +47,12 @@
 
              DataProviderValidator.ValidateDataProviderNumberOfEntries(
                 actualBuilder.TestContext,
-                DistributedCacheTestBuilder.MemoryCacheName,
+                DistributedCacheTestBuilder.DistributedCacheName,
                 withNumberOfEntries,
                 actualBuilder.TestContext.GetDistributedCacheMock().Count);
 
             return actualBuilder.Builder;
-        }*/
+        }
 
         /// <summary>
         /// Tests whether the component sets specific <see cref="Microsoft.Extensions.Caching.Distributed.IDistributedCache"/> entries.
