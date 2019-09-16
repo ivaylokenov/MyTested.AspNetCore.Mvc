@@ -14,51 +14,47 @@ public IActionResult Login(string returnUrl = null)
 }
 ```
 
-We need a new dependency (again?!) - **"MyTested.AspNetCore.Mvc.ViewData"**:
+We need a new dependency (seriously, stop it with these dependencies) - **"MyTested.AspNetCore.Mvc.ViewData"**:
 
 ```xml
 <!-- Other ItemGroups -->
 
-<ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
     <PackageReference Include="Moq" Version="4.13.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Authentication" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Caching" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.ActionResults" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.Attributes" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.Views" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.Views.ActionResults" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.DependencyInjection" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.EntityFrameworkCore" Version="2.2.0" />
-    <PackageReference Include="MyTested.AspNetCore.Mvc.Helpers" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Http" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Models" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.ModelState" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Options" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Session" Version="2.2.0" />
+	<!-- MyTested.AspNetCore.Mvc.ViewData package -->
     <PackageReference Include="MyTested.AspNetCore.Mvc.ViewData" Version="2.2.0" />
-
-    <PackageReference Include="xunit" Version="2.4.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-</ItemGroup>
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+  </ItemGroup>
 
 <!-- Other ItemGroups -->
 ```
 
-We need to add the **"ViewData"** features, because the **"ViewBag"** is actually a [dynamic version of it](https://github.com/aspnet/Mvc/blob/dev/src/Microsoft.AspNetCore.Mvc.ViewFeatures/Controller.cs#L91).
+We need to add the **"ViewData"** features, because the **"ViewBag"** is actually a [dynamic version of it](https://github.com/aspnet/AspNetCore/blob/master/src/Mvc/Mvc.ViewFeatures/src/Controller.cs#L91).
 
 I hope you remember how we tested session and cache. Well, the **"ViewBag"** (**"ViewData"** and **"TempData"** too) is no different:
 
 ```c#
-[Fact]
-public void LoginShouldHaveReturnUrlInTheViewBag()
-{
-    var returnUrl = "Test/Return/Url";
-
-    MyController<AccountController>
+[Theory]
+[InlineData("Test/Return/Url")]
+public void LoginShouldHaveReturnUrlInTheViewBag(string returnUrl)
+    => MyController<AccountController>
         .Instance()
         .Calling(c => c.Login(returnUrl))
         .ShouldHave()
@@ -67,7 +63,6 @@ public void LoginShouldHaveReturnUrlInTheViewBag()
         .AndAlso()
         .ShouldReturn()
         .View();
-}
 ```
 
 ## Testing with multiple ViewBag entries
@@ -103,12 +98,8 @@ public void CreateShouldHaveValidEntriesInViewBag()
 
     MyController<StoreManagerController>
         .Instance()
-        .WithData(db => db
-            .WithEntities(entities =>
-            {
-                entities.AddRange(genres);
-                entities.AddRange(artists);
-            }))
+        .WithData(genres)
+        .WithData(artists)
         .Calling(c => c.Create())
         .ShouldHave()
         .ViewBag(viewBag => viewBag // <---
@@ -139,7 +130,7 @@ The **"ContainingEntries"** call is equivalent to this one:
 }))
 ```
 
-Both methods will validate whether the total number of entries in the **"ViewBag"** is equal to the total number you provide in the test. For a sanity check - remove the **"ArtistId"** property from anonymous object and run the test again:
+Both methods will validate whether the total number of entries in the **"ViewBag"** is equal to the total number you provide in the test. For a sanity check - remove the **"ArtistId"** property from the anonymous object and run the test again:
 
 ```text
 When calling Create action in StoreManagerController expected view bag to have 1 entry, but in fact found 2.
@@ -157,7 +148,7 @@ If you do not want the total number of entries validation, just use:
 
 ## ViewData and TempData
 
-**"ViewData"** have the same API:
+**"ViewData"** has the same API:
 
 ```c#
 MyController<SomeController>
@@ -199,4 +190,4 @@ MyController<SomeController>
 
 ## Section summary
 
-We saw how easy it is to test with **"ViewBag"**, **"ViewData"** and **"TempData"**. Their fluent assertion APIs are very similar to the **"Session"** and **"Cache"** ones. But enough about controllers, let's finally move on to [View Components](/tutorial/viewcomponents.html)!
+We saw how easy it is to test with **"ViewBag"**, **"ViewData"** and **"TempData"**. Their fluent assertion APIs are very similar to the **"Session"** and the **"Cache"** ones. But enough about controllers, let's finally move on to [View Components](/tutorial/viewcomponents.html)!
