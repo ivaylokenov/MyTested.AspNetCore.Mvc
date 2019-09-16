@@ -4,7 +4,7 @@ Usually, a controller action should not throw any exceptions but rather return s
 
 ## Asserting thrown exceptions
 
-Currently the **"Music Store"** application handles most of it potential bad requests, but there is a possible exception in the **"AddToCart"** action located in the **"ShoppingCartController"**. More specifically, this code:
+Currently the **"Music Store"** application handles most of its potential bad requests, but there is a possible exception in the **"AddToCart"** action located in the **"ShoppingCartController"**. More specifically, this code:
 
 ```c#
 var addedAlbum = await DbContext.Albums
@@ -19,14 +19,14 @@ public void AddToCartShouldThrowExceptionWithInvalidId()
     => MyController<ShoppingCartController>
         .Instance()
         .Calling(c => c.AddToCart(1, CancellationToken.None))
-        .ShouldThrow()
+        .ShouldThrow() // <--
         .AggregateException()
         .ContainingInnerExceptionOfType<InvalidOperationException>()
         .WithMessage()
         .Containing("Sequence contains no elements");
 ```
 
-Since we do not add any entries to the scoped in-memory database, the test should pass without any problem. With it we are validating that the action throws **"AggregateException"** with message containing **"Sequence contains no elements"** and inner **"InvalidOperationException"**. Next to the **"AggregateException"**, there is the normal **"Exception"** call, which asserts non-asynchronous errors.
+Since we do not add any entries to the scoped in-memory database, the test should pass without any problem. With it we are validating that the action throws **"AggregateException"** with inner **"InvalidOperationException"** and a message containing **"Sequence contains no elements"**. Next to the **"AggregateException"**, there is the normal **"Exception"** call, which asserts non-asynchronous errors.
 
 ## Uncaught exceptions
 
