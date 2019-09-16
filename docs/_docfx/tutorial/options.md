@@ -17,28 +17,26 @@ Go to the **"MusicStore.Test.csproj"** file and add **"MyTested.AspNetCore.Mvc.O
 ```xml
 <!-- Other ItemGroups -->
 
-<ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
     <PackageReference Include="Moq" Version="4.13.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Authentication" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.ActionResults" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.Attributes" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.Views" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.Views.ActionResults" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.DependencyInjection" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.EntityFrameworkCore" Version="2.2.0" />
-    <PackageReference Include="MyTested.AspNetCore.Mvc.Helpers" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Http" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Models" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.ModelState" Version="2.2.0" />
+	<!-- MyTested.AspNetCore.Mvc.Options package -->
     <PackageReference Include="MyTested.AspNetCore.Mvc.Options" Version="2.2.0" />
-
-    <PackageReference Include="xunit" Version="2.4.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-</ItemGroup>
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+  </ItemGroup>
 
 <!-- Other ItemGroups -->
 ```
