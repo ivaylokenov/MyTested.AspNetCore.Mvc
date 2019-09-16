@@ -446,6 +446,56 @@
         }
 
         /// <summary>
+        /// Tests whether the collected attributes contain <see cref="TypeFilterAttribute"/>.
+        /// </summary>
+        /// <param name="controllerActionAttributesTestBuilder">
+        /// Instance of <see cref="IControllerActionAttributesTestBuilder{TAttributesTestBuilder}"/> type.
+        /// </param>
+        /// <param name="type">The <see cref="Type"/> of filter to create.</param>
+        /// <returns>The same attributes test builder.</returns>
+        public static TAttributesTestBuilder WithTypeFilter<TAttributesTestBuilder>(
+            this IControllerActionAttributesTestBuilder<TAttributesTestBuilder> controllerActionAttributesTestBuilder,
+            Type type)
+            where TAttributesTestBuilder : IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
+            => controllerActionAttributesTestBuilder
+                .WithTypeFilter(filter => filter.OfType(type));
+
+        /// <summary>
+        /// Tests whether the collected attributes contain <see cref="TypeFilterAttribute"/>.
+        /// </summary>
+        /// <param name="controllerActionAttributesTestBuilder">
+        /// Instance of <see cref="IControllerActionAttributesTestBuilder{TAttributesTestBuilder}"/> type.
+        /// </param>
+        /// <param name="typeFilterAttributeBuilder">Expected <see cref="TypeFilterAttribute"/> builder.</param>
+        /// <returns>The same attributes test builder.</returns>
+        public static TAttributesTestBuilder WithTypeFilter<TAttributesTestBuilder>(
+            this IControllerActionAttributesTestBuilder<TAttributesTestBuilder> controllerActionAttributesTestBuilder,
+            Action<ITypeFilterAttributeTestBuilder> typeFilterAttributeBuilder)
+            where TAttributesTestBuilder : IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
+        {
+            var actualBuilder = (BaseAttributesTestBuilder<TAttributesTestBuilder>)controllerActionAttributesTestBuilder;
+
+            actualBuilder.ContainingAttributeOfType<TypeFilterAttribute>();
+
+            actualBuilder.Validations.Add(attrs =>
+            {
+                var newTypeFilterAttributeBuilder = new TypeFilterAttributeTestBuilder(
+                    actualBuilder.TestContext,
+                    actualBuilder.ThrowNewAttributeAssertionException);
+
+                typeFilterAttributeBuilder(newTypeFilterAttributeBuilder);
+
+                var expectedAttribute = newTypeFilterAttributeBuilder.GetAttribute();
+                var actualAttribute = actualBuilder.GetAttributeOfType<TypeFilterAttribute>(attrs);
+
+                var validations = newTypeFilterAttributeBuilder.GetAttributeValidations();
+                validations.ForEach(v => v(expectedAttribute, actualAttribute));
+            });
+
+            return actualBuilder.AttributesTestBuilder;
+        }
+
+        /// <summary>
         /// Tests whether the collected attributes contain <see cref="RequireHttpsAttribute"/>.
         /// </summary>
         /// <param name="controllerActionAttributesTestBuilder">

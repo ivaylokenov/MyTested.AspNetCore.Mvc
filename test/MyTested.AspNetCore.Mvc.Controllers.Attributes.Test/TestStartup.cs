@@ -11,6 +11,7 @@
         {
             services.AddScoped<IInjectedService, InjectedService>();
             services.AddScoped<MyActionFilter>();
+            services.AddScoped<MyActionFilterWithArgs>();
 
             base.ConfigureServices(services);
         }

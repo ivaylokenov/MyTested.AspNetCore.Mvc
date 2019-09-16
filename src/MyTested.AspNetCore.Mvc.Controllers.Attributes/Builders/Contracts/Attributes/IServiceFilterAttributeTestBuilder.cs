@@ -12,7 +12,7 @@
         /// has the same <see cref="Microsoft.AspNetCore.Mvc.ServiceFilterAttribute.ServiceType"/> value as the provided one.
         /// </summary>
         /// <param name="type">The <see cref="Type"/> of filter to find.</param>
-        /// <returns>The same <see cref="IMiddlewareFilterAttributeTestBuilder"/>.</returns>
+        /// <returns>The same <see cref="IAndServiceFilterAttributeTestBuilder"/>.</returns>
         IAndServiceFilterAttributeTestBuilder OfType(Type type);
     }
 }

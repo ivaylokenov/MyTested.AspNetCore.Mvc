@@ -153,7 +153,7 @@
             };
 
             Assert.NotNull(attributes);
-            Assert.Equal(10, attributes.Count);
+            Assert.Equal(11, attributes.Count);
 
             var allAttributesArePresent = expectedTypes.All(attributes.Contains);
             Assert.True(allAttributesArePresent);

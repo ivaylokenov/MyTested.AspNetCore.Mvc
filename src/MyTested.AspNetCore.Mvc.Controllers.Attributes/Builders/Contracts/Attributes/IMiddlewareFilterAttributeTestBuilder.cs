@@ -12,7 +12,7 @@
         /// has the same <see cref="Microsoft.AspNetCore.Mvc.MiddlewareFilterAttribute.ConfigurationType"/> value as the provided one.
         /// </summary>
         /// <param name="configurationType">A type which configures a middleware pipeline.</param>
-        /// <returns>The same <see cref="IMiddlewareFilterAttributeTestBuilder"/>.</returns>
+        /// <returns>The same <see cref="IAndMiddlewareFilterAttributeTestBuilder"/>.</returns>
         IAndMiddlewareFilterAttributeTestBuilder OfType(Type configurationType);
     }
 }
