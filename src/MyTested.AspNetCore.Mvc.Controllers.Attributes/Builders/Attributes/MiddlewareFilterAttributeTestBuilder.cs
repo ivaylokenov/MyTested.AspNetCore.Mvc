@@ -9,7 +9,7 @@
     /// <summary>
     /// Used for testing <see cref="MiddlewareFilterAttribute"/>.
     /// </summary>
-    public class MiddlewareFilterAttributeTestBuilder : BaseAttributeTestBuilderWithOrder<MiddlewareFilterAttribute>,
+    public class MiddlewareFilterAttributeTestBuilder : BaseAttributeTestBuilderWithOrderAndType<MiddlewareFilterAttribute>,
         IAndMiddlewareFilterAttributeTestBuilder
     {
         /// <summary>
@@ -26,20 +26,7 @@
         /// <inheritdoc />
         public IAndMiddlewareFilterAttributeTestBuilder OfType(Type configurationType)
         {
-            this.Attribute = new MiddlewareFilterAttribute(configurationType);
-            this.Validations.Add((expected, actual) =>
-            {
-                var expectedType = expected.ConfigurationType;
-                var actualType = actual.ConfigurationType;
-
-                if (Reflection.AreDifferentTypes(expectedType, actualType))
-                {
-                    this.FailedValidationAction(
-                        $"{this.ExceptionMessagePrefix}'{expectedType.ToFriendlyTypeName()}' type",
-                        $"in fact found '{actualType.ToFriendlyTypeName()}'");
-                }
-            });
-
+            this.ValidateType(configurationType, attr => attr.ConfigurationType);
             return this;
         }
 

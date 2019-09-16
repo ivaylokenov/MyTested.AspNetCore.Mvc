@@ -9,7 +9,7 @@
     /// <summary>
     /// Used for testing <see cref="ServiceFilterAttribute"/>.
     /// </summary>
-    public class ServiceFilterAttributeTestBuilder : BaseAttributeTestBuilderWithOrder<ServiceFilterAttribute>,
+    public class ServiceFilterAttributeTestBuilder : BaseAttributeTestBuilderWithOrderAndType<ServiceFilterAttribute>,
         IAndServiceFilterAttributeTestBuilder
     {
         /// <summary>
@@ -26,20 +26,7 @@
         /// <inheritdoc />
         public IAndServiceFilterAttributeTestBuilder OfType(Type type)
         {
-            this.Attribute = new ServiceFilterAttribute(type);
-            this.Validations.Add((expected, actual) =>
-            {
-                var expectedType = expected.ServiceType;
-                var actualType = actual.ServiceType;
-
-                if (Reflection.AreDifferentTypes(expectedType, actualType))
-                {
-                    this.FailedValidationAction(
-                        $"{this.ExceptionMessagePrefix}'{expectedType.ToFriendlyTypeName()}' type",
-                        $"in fact found '{actualType.ToFriendlyTypeName()}'");
-                }
-            });
-
+            this.ValidateType(type, attr => attr.ServiceType);
             return this;
         }
 

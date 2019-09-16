@@ -12,7 +12,7 @@
     /// <summary>
     /// Used for testing <see cref="TypeFilterAttribute"/>.
     /// </summary>
-    public class TypeFilterAttributeTestBuilder : BaseAttributeTestBuilderWithOrder<TypeFilterAttribute>,
+    public class TypeFilterAttributeTestBuilder : BaseAttributeTestBuilderWithOrderAndType<TypeFilterAttribute>,
         IAndTypeFilterAttributeTestBuilder
     {
         /// <summary>
@@ -29,20 +29,7 @@
         /// <inheritdoc />
         public IAndTypeFilterAttributeTestBuilder OfType(Type type)
         {
-            this.Attribute = new TypeFilterAttribute(type);
-            this.Validations.Add((expected, actual) =>
-            {
-                var expectedType = expected.ImplementationType;
-                var actualType = actual.ImplementationType;
-
-                if (Reflection.AreDifferentTypes(expectedType, actualType))
-                {
-                    this.FailedValidationAction(
-                        $"{this.ExceptionMessagePrefix}'{expectedType.ToFriendlyTypeName()}' type",
-                        $"in fact found '{actualType.ToFriendlyTypeName()}'");
-                }
-            });
-
+            this.ValidateType(type, attr => attr.ImplementationType);
             return this;
         }
 
