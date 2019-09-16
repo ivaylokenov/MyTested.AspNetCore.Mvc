@@ -29,7 +29,7 @@ MyController<ManageController>
 To skip the manual arrange of the model state dictionary, we can use the built-in validation in My Tested ASP.NET Core MVC. It is quite easy to do - the testing framework will validate all models passed as action parameters by default. If you examine the **"ChangePasswordViewModel"**, you will notice the two required properties - **"OldPassword"** and **"NewPassword"**. So, if we provide our action method with 'null' values for these two model properties, My Tested ASP.NET Core MVC will validate them by using the registered services in the **"TestStartup"** class we created earlier. So let's change the view model, remove the **"WithSetup"** call, and run the test again:
 
 ```c#
-var model = new ChangePasswordViewModel(); // <--
+var model = new ChangePasswordViewModel(); // <---
 
 MyController<ManageController>
     .Instance()
@@ -161,7 +161,7 @@ MyController<ManageController>
     .AndAlso()
     .ShouldReturn()
     .View(result => result
-        .WithNoModel()); // <--
+        .WithNoModel()); // <---
 ```
 
 We should receive error message with no doubt - our action returns the same model after all:

@@ -65,7 +65,7 @@ public void AddToCartShouldPopulateSessionCartIfMissing(int albumId)
         .WithData(new Album { AlbumId = albumId })
         .Calling(c => c.AddToCart(albumId, CancellationToken.None))
         .ShouldHave()
-        .Session(session => session // <--
+        .Session(session => session // <---
             .ContainingEntryWithKey("Session"));
 ```
 
@@ -79,12 +79,12 @@ public void AddToCartShouldSaveTheAlbumsIntoDatabaseAndSession(
     string sessionValue)
     => MyController<ShoppingCartController>
         .Instance()
-        .WithSession(session => session // <--
+        .WithSession(session => session // <---
             .WithEntry("Session", sessionValue))
         .WithData(new Album { AlbumId = albumId })
         .Calling(c => c.AddToCart(albumId, CancellationToken.None))
         .ShouldHave()
-        .Data(data => data // <--
+        .Data(data => data // <---
             .WithSet<CartItem>(cartItems => cartItems
                 .Any(a => a.AlbumId == albumId && a.CartId == sessionValue)))
         .AndAlso()
@@ -222,7 +222,7 @@ public void IndexShouldNotUseCacheIfOptionsDisableIt()
             From.Services<MusicStoreContext>(),
             From.Services<IMemoryCache>()))
         .ShouldHave()
-        .NoMemoryCache(); // <--
+        .NoMemoryCache(); // <---
 ```
 
 Unfortunately, the **"NoMemoryCache"** call will not work:
@@ -277,7 +277,7 @@ public void IndexShouldSaveCorrectCacheEntriesIfOptionsEnableIt(int totalAlbums)
             From.Services<MusicStoreContext>(),
             From.Services<IMemoryCache>()))
         .ShouldHave()
-        .MemoryCache(cache => cache // <--
+        .MemoryCache(cache => cache // <---
             .ContainingEntry(entry => entry
                 .WithKey("topselling")
                 .WithPriority(CacheItemPriority.High)

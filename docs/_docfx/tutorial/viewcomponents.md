@@ -5,38 +5,35 @@ In this section we are going to stop asserting controllers (finally) and concent
 ```xml
 <!-- Other ItemGroups -->
 
-<ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
     <PackageReference Include="Moq" Version="4.13.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Authentication" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Caching" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.ActionResults" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.Attributes" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.Views" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.Views.ActionResults" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.DependencyInjection" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.EntityFrameworkCore" Version="2.2.0" />
-    <PackageReference Include="MyTested.AspNetCore.Mvc.Helpers" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Http" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Models" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.ModelState" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Options" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Session" Version="2.2.0" />
-    <PackageReference Include="MyTested.AspNetCore.Mvc.TempData" Version="2.2.0" />
+	<!-- MyTested.AspNetCore.Mvc.ViewComponents package -->
     <PackageReference Include="MyTested.AspNetCore.Mvc.ViewComponents" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.ViewData" Version="2.2.0" />
-
-    <PackageReference Include="xunit" Version="2.4.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-</ItemGroup>
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+  </ItemGroup>
 
 <!-- Other ItemGroups -->
 ```
 
-Then we need to create a **"ViewComponents"** folder at the root of our test project and add **"CartSummaryComponentTest"** class in it. We are going to assert the **"CartSummaryComponent"** component.
+Then we need to create a **"ViewComponents"** folder at the root of our test project and add **"CartSummaryComponentTest"** class in it. We are going to assert the **"CartSummaryComponent"**.
 
 ## Arrange
 
@@ -58,22 +55,29 @@ public async Task<IViewComponentResult> InvokeAsync()
 }
 ```
 
-We need session cart ID and items in the database for the shopping cart. Let's create a helper method for generating the entities:
+We need session cart ID and items in the database for the shopping cart. Add a **"CartItemData"** class in the **"Data"** folder and write these lines in it:
 
 ```c#
-private static IEnumerable<CartItem> GetCartItems(string cartId, string albumTitle)
-{
-    var album = new Album { AlbumId = 1, Title = albumTitle };
+using MusicStore.Models;
+using System.Collections.Generic;
+using System.Linq;
 
-    return Enumerable
-        .Range(1, 10)
-        .Select(n => new CartItem
-        {
-            AlbumId = 1,
-            Album = album,
-            Count = 1,
-            CartId = cartId,
-        });
+public class CartItemData
+{
+    public static IEnumerable<CartItem> GetMany(string cartId, string albumTitle)
+    {
+        var album = new Album { AlbumId = 1, Title = albumTitle };
+
+        return Enumerable
+            .Range(1, 10)
+            .Select(n => new CartItem
+            {
+                AlbumId = 1,
+                Album = album,
+                Count = 1,
+                CartId = cartId,
+            });
+    }
 }
 ```
 
@@ -102,9 +106,7 @@ MyViewComponent<CartSummaryComponent>
     .Instance()
     .WithSession(session => session
         .WithEntry("Session", "TestCart"))
-    .WithData(db => db // <---
-        .WithEntities(entities => entities
-            .AddRange(GetCartItems("TestCart", "TestAlbum"))))
+    .WithData(CartItemData.GetMany("TestCart", "TestAlbum")) // <---
 ```
 
 ## Act
@@ -149,7 +151,7 @@ MyViewComponent<CartSummaryComponent>
 
 Rebuild the project and run the test to see it pass! :)
 
-As with all tests with My Tested ASP.NET Core MVC, if you have and invalid value, you will receive a friendly error message. Change **"Session"** to **"Cache"** and see for yourself:
+As with all tests with My Tested ASP.NET Core MVC, if you have an invalid value, you will receive a friendly error message. Change **"Session"** to **"Cache"** and see for yourself:
 
 ```text
 When invoking CartSummaryComponent expected view bag to have entry with 'CartCount' key and the provided value, but the value was different.
@@ -157,4 +159,4 @@ When invoking CartSummaryComponent expected view bag to have entry with 'CartCou
 
 ## Section Summary
 
-View component testing provides the same API methods as the controller one as long as they are applicable. You should be seeing the big picture of the library now. The next section is interesting - the good old [Routing](/tutorial/routing.html) testing!
+View component testing provides the same API methods as the controller one as long as they are applicable. You should be seeing the big picture of the library now. The next section is interesting - the good old [Route](/tutorial/routing.html) testing!

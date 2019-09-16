@@ -92,7 +92,7 @@ public void RemoveAlbumConfirmedShouldHaveCorrectAttributes()
             With.No<int>(),
             With.No<CancellationToken>()))
         .ShouldHave()
-        .ActionAttributes(attributes => attributes // <--
+        .ActionAttributes(attributes => attributes // <---
             .RestrictingForHttpMethod(HttpMethod.Post)
             .ChangingActionNameTo("RemoveAlbum"));
 ```
@@ -132,7 +132,7 @@ public void StoreManagerControllerShouldHaveCorrectAttributes()
         .ShouldHave()
         .Attributes(attributes => attributes
             .SpecifyingArea("Admin")
-            .PassingFor<AuthorizeAttribute>(authorize => authorize // <--
+            .PassingFor<AuthorizeAttribute>(authorize => authorize // <---
                 .Policy == "ManageStore"));
 ```
 

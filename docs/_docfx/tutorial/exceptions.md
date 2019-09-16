@@ -19,7 +19,7 @@ public void AddToCartShouldThrowExceptionWithInvalidId()
     => MyController<ShoppingCartController>
         .Instance()
         .Calling(c => c.AddToCart(1, CancellationToken.None))
-        .ShouldThrow() // <--
+        .ShouldThrow() // <---
         .AggregateException()
         .ContainingInnerExceptionOfType<InvalidOperationException>()
         .WithMessage()
