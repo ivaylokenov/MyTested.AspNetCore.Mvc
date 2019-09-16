@@ -12,7 +12,7 @@ The **"Lite"** edition of the library provides only a small subset of the availa
 
 - Perfect for small MVC applications
 - Completely free and unlimited
-- Includes only **"Controllers"**, **"ViewActionResults"** and **"ViewComponents"**
+- Includes only **"Controllers"**, **"Controllers.Views"** and **"ViewComponents"**
 - Cannot be used in combination with any other package
 - Requires manual mock creation of commonly used services
 - Can be used by everyone
@@ -20,7 +20,7 @@ The **"Lite"** edition of the library provides only a small subset of the availa
 
 ### Community
 
-The **"Community"** edition of the library is fully unlocked, and the whole fluent testing API can be used for free. This version is exclusively available only for individuals, open-source projects, startups and educational institutions.
+The **"Community"** edition of the library is fully unlocked, and the whole fluent testing API can be used for free. This version is exclusively available only for individuals, open-source projects, startups, small businesses (up to 5 developers), and educational institutions.
 
 - Perfect for every MVC application complying with the special terms
 - Completely free and unlimited
@@ -31,7 +31,7 @@ The **"Community"** edition of the library is fully unlocked, and the whole flue
 
 ### Trial
 
-The **"Trial"** edition of the library is fully featured but allows up to 100 assertions (around 25 unit tests) per test project. You may use it in multiple projects to overcome this limitation or just write only a few tests with it (for example asserting a very important route in your application)
+The **"Trial"** edition of the library is fully featured but allows up to 100 assertions (around 25 unit tests) per test project. You may use it in multiple projects to overcome this limitation or just write only a few tests with it (for example asserting very important routes in your application)
 
 - Perfect for previewing the framework
 - Completely free with limitations
@@ -43,29 +43,31 @@ The **"Trial"** edition of the library is fully featured but allows up to 100 as
 
 ### Commercial
 
-The **"Commercial"** edition of the library is fully unlocked and unlimited. This version requires a paid license code.
+The **"Commercial"** edition of the library is fully unlocked and unlimited. Using it with .NET Core 3.0 or later requires a paid license code. All versions before 3.0 do not have such restrictions.
 
 - Perfect for every MVC application
 - No limitations
-- Requires paid license code
+- Requires paid license code for .NET Core 3.0 or later
 - Developers can include [any package they prefer](/guide/packages.html)
 - Fully featured edition
 - Can be used by everyone
-- License codes can be purchased from [HERE](https://mytestedasp.net/Core/Mvc#pricing)
+- License codes for .NET Core 3.0 or later can be purchased from [HERE](https://mytestedasp.net/Core/Mvc#pricing)
 
 Choose wisely! :)
 
 ## Registering a license code
 
-If you followed the tutorial strictly, you should have reached the free trial version limitations of My Tested ASP.NET Core MVC. When you run a single test (no matter which one), it should pass. But if you try to run them all at once, you should receive the following exception:
+If you followed the tutorial strictly and your framework is .NET Core 3.0 or later, you should have reached the free trial version limitations of My Tested ASP.NET Core MVC. Otherwise, you may skip this section, and go test some [Attributes](/tutorial/attributes.html)!
+
+Without a license code, when you run a single test (no matter which one), it should pass. But if you try to run them all at once, you should receive the following exception:
 
 ```text
 The free-quota limit of 100 assertions per test project has been reached. Please visit https://mytestedasp.net/core/mvc#pricing to request a free license or upgrade to a commercial one.
 ```
 
-We will now register a license code in **"MusicStore.Test"** and remove this restriction. Create a **"testconfig.json"** file at the root of the project:
+We will now register a license code in **"MusicStore.Test"** and remove this restriction. Create a **"testsettings.json"** file at the root of the project:
 
-<img src="/images/tutorial/testconfigfile.jpg" alt="testconfig.json file at the root of the project" />
+<img src="/images/tutorial/testconfigfile.jpg" alt="testsettings.json file at the root of the project" />
 
 Then add the following JSON in it:
 
@@ -75,16 +77,16 @@ Then add the following JSON in it:
 }
 ```
 
-This license is tied to the **"MusicStore.Test"** project. To unlock the testing framework limitations, we need to do one more thing. Go to the **"MusicStore.Test.csproj"** file and add **"testconfig.json"** in the **"copyToOutput"** array:
+This license is tied to the **"MusicStore.Test"** project. To unlock the testing framework limitations, we need to do one more thing. Set the **"testsettings.json"** file to be copied to the output directory or go to the **"MusicStore.Test.csproj"** and add these lines manually:
 
 ```xml
 <!-- Other ItemGroups -->
 
-<ItemGroup>
+  <ItemGroup>
     <Content Update="config.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Update="testconfig.json">
+    <Content Update="testsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -92,7 +94,7 @@ This license is tied to the **"MusicStore.Test"** project. To unlock the testing
 <!-- Other ItemGroups -->
 ```
 
-From now on the **"testconfig.json"** file will be copied to the build output directory, and My Tested ASP.NET Core MVC will be able to read it successfully. More information about the test configuration can be found [HERE](/guide/testconfig.html).
+From now on the **"testsettings.json"** file will be copied to the build output directory, and My Tested ASP.NET Core MVC will be able to read it successfully. More information about the test configuration can be found [HERE](/guide/testsettings.html).
 
 Rebuild the solution and run the tests again. All of them should pass. We have unlocked the full version of the library! :)
 
