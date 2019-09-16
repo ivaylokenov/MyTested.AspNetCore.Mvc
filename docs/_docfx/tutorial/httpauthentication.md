@@ -193,7 +193,7 @@ public void CompleteShouldReturnViewWithCorrectIdWithFoundOrderForTheUser(
             .WithModel(orderId));
 ```
 
-Of course, we also need to test the result when the order is not for the currently authenticated user. In this case, we need to assert the **"Error"** view, but to do that open **"MusicStore.Test.csproj"** file again and add **"MyTested.AspNetCore.Mvc.Helpers"** package:
+Of course, we also need to test the result when the order is not for the currently authenticated user. In this case, we need to assert the **"Error"** view, but to do it fluently open the **"MusicStore.Test.csproj"** file again and add **"MyTested.AspNetCore.Mvc.Views.ActionResults"** package:
 
 ```xml
 <!-- Other ItemGroups -->
@@ -206,10 +206,10 @@ Of course, we also need to test the result when the order is not for the current
     <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.ActionResults" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.Views" Version="2.2.0" />
+	<!-- MyTested.AspNetCore.Mvc.Controllers.Views.ActionResults package -->
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.Views.ActionResults" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.DependencyInjection" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.EntityFrameworkCore" Version="2.2.0" />
-	<!-- MyTested.AspNetCore.Mvc.Helpers package -->
-    <PackageReference Include="MyTested.AspNetCore.Mvc.Helpers" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Http" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.Models" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.ModelState" Version="2.2.0" />
@@ -220,7 +220,7 @@ Of course, we also need to test the result when the order is not for the current
 <!-- Other ItemGroups -->
 ```
 
-The **"Helpers"** package contains additional useful extension methods you may want to use.
+The **"Views.ActionResults"** package contains additional useful extension methods for view related results.
 
 Now add this test and it should pass:
 
@@ -241,7 +241,8 @@ public void CompleteShouldReturnErrorViewWithInvalidOrderForTheUser(int orderId)
             From.Services<MusicStoreContext>(),
             orderId))
         .ShouldReturn()
-        .View("Error");
+        .View(result => result
+            .WithName("Error")); // <---
 ```
 
 ## HTTP Response
@@ -261,7 +262,8 @@ public void AccessDeniedShouldReturnOkStatusCodeAndProperView()
             .WithStatusCode(HttpStatusCode.OK))
         .AndAlso()
         .ShouldReturn()
-        .View("~/Views/Shared/AccessDenied.cshtml");
+        .View(result => result
+            .WithName("~/Views/Shared/AccessDenied.cshtml"));
 ```
 
 The **"HttpResponse"** method allows assertions of every part of the HTTP response - body, headers, cookies, etc. For example, if you add this line:
@@ -286,4 +288,4 @@ Cool! :)
 
 Well, these were easier than the last section's test services. While the request testing is more suitable for other components, authentication plays a significant role in the actions' logic.
 
-If you followed the tutorial strictly, you should have reached the free trial version limitations of My Tested ASP.NET Core MVC. Let's take a break from the code and learn more about the [Licensing](/tutorial/licensing.html) of the testing framework.
+You have learned quite a lot. Let's take a break from the code and learn more about the [Licensing](/tutorial/licensing.html) of the testing framework.
