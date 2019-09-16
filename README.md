@@ -43,7 +43,7 @@ Take a look around and...
 
 😏 ...if you find it useful, make sure you **subscribe** for future releases by clicking the **"Watch"** button and choosing **"Releases only"**!
 
-👀 ...if you want to learn cool C# coding techniques, **subscribe** to my [YouTube channel](https://www.youtube.com/channel/UCP5Ons7fK3yKhX6lhc9XcfQ), where I regularly post online video lessons!
+👀 ...if you want to learn cool C# coding techniques, **subscribe** to my **[YouTube channel](https://www.youtube.com/channel/UCP5Ons7fK3yKhX6lhc9XcfQ)**, where I regularly post online video lessons!
 
 ✔ ...if you want to **support** the project, **[become a sponsor/backer](#sponsors--backers)** or go to [https://MyTestedASP.NET](https://MyTestedASP.NET), and consider **purchasing a premium [license](#license)**!
 
