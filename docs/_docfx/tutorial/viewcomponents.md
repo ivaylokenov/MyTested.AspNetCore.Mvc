@@ -157,6 +157,6 @@ As with all tests with My Tested ASP.NET Core MVC, if you have an invalid value,
 When invoking CartSummaryComponent expected view bag to have entry with 'CartCount' key and the provided value, but the value was different.
 ```
 
-## Section Summary
+## Section summary
 
 View component testing provides the same API methods as the controller one as long as they are applicable. You should be seeing the big picture of the library now. The next section is interesting - the good old [Route](/tutorial/routing.html) testing!
