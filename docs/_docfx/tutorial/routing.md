@@ -212,6 +212,7 @@ As it was mentioned earlier, route testing executes the MVC action filters (even
     <PackageReference Include="MyTested.AspNetCore.Mvc.Session" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.ViewComponents" Version="2.2.0" />
     <PackageReference Include="MyTested.AspNetCore.Mvc.ViewData" Version="2.2.0" />
+	<!-- MyTested.AspNetCore.Mvc.ViewFeatures package -->
     <PackageReference Include="MyTested.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />

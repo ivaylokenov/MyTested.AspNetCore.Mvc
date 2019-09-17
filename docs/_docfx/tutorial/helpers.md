@@ -9,18 +9,15 @@ You may add the **"MyTested.AspNetCore.Mvc.Helpers"** package which adds extensi
 ```xml
 <!-- Other ItemGroups -->
 
-<ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
     <PackageReference Include="Moq" Version="4.13.0" />
+	<!-- MyTested.AspNetCore.Mvc.Universe package -->
     <PackageReference Include="MyTested.AspNetCore.Mvc.Universe" Version="2.2.0" />
-
-    <PackageReference Include="xunit" Version="2.4.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-</ItemGroup>
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+  </ItemGroup>
 
 <!-- Other ItemGroups -->
 ```
@@ -31,7 +28,8 @@ One of the helpers is allowing us to assert controller action results with a sin
 
 ```c#
 .ShouldReturn()
-.View(v => v.WithModel(model);
+.View(result => result
+    .WithModel(model);
 ```
 
 They can be written like this:
@@ -90,7 +88,7 @@ It is up to you!
 
 ## Model state expression-based assertions
 
-Instead of string-based model state assertions line in the **"ManageControllerTest"**:
+Instead of string-based model state assertions like in the **"ManageControllerTest"**:
 
 ```c#
 .Calling(c => c.ChangePassword(model))
