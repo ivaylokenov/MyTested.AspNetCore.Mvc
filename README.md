@@ -18,7 +18,7 @@
 
 **MyTested.AspNetCore.Mvc** is a strongly-typed unit testing library providing an easy fluent interface to test the [ASP.NET Core MVC](https://github.com/aspnet/AspNetCore) framework. It is testing framework agnostic so that you can combine it with a test runner of your choice (e.g. [xUnit](https://github.com/xunit/xunit), [NUnit](https://github.com/nunit/nunit), etc.). 
 
-*Windows:* [![Build status](https://ci.appveyor.com/api/projects/status/3xlag3a7f87bg4on?svg=true)](https://ci.appveyor.com/project/ivaylokenov/mytested-aspnetcore-mvc)
+*Windows:* [![Financial Contributors on Open Collective](https://opencollective.com/mytestedaspnet/all/badge.svg?label=financial+contributors)](https://opencollective.com/mytestedaspnet) [![Build status](https://ci.appveyor.com/api/projects/status/3xlag3a7f87bg4on?svg=true)](https://ci.appveyor.com/project/ivaylokenov/mytested-aspnetcore-mvc)
 
 *Ubuntu & Mac OS:* [![Build Status](https://travis-ci.org/ivaylokenov/MyTested.AspNetCore.Mvc.svg?branch=development)](https://travis-ci.org/ivaylokenov/MyTested.AspNetCore.Mvc) 
 
@@ -568,6 +568,36 @@ MyMvc
 **MyTested.AspNetCore.Mvc** follows the ASP.NET Core MVC versions with which the testing framework is fully compatible. Specifically, the *major* and the *minor* versions will be incremented only when the MVC framework has a new official release. For example, version 2.2.\* of the testing framework is fully compatible with ASP.NET Core MVC 2.2.\*, version 1.1.\* is fully compatible with ASP.NET Core MVC 1.1.\*, version 1.0.15 is fully compatible with ASP.NET Core MVC 1.0.\*, and so on. 
 
 The public interface of **MyTested.AspNetCore.Mvc** will not have any breaking changes when the version increases (unless entirely necessary).
+
+## Contributors
+
+### Code Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+<a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/graphs/contributors"><img src="https://opencollective.com/mytestedaspnet/contributors.svg?width=890&button=false" /></a>
+
+### Financial Contributors
+
+Become a financial contributor and help us sustain our community. [[Contribute](https://opencollective.com/mytestedaspnet/contribute)]
+
+#### Individuals
+
+<a href="https://opencollective.com/mytestedaspnet"><img src="https://opencollective.com/mytestedaspnet/individuals.svg?width=890"></a>
+
+#### Organizations
+
+Support this project with your organization. Your logo will show up here with a link to your website. [[Contribute](https://opencollective.com/mytestedaspnet/contribute)]
+
+<a href="https://opencollective.com/mytestedaspnet/organization/0/website"><img src="https://opencollective.com/mytestedaspnet/organization/0/avatar.svg"></a>
+<a href="https://opencollective.com/mytestedaspnet/organization/1/website"><img src="https://opencollective.com/mytestedaspnet/organization/1/avatar.svg"></a>
+<a href="https://opencollective.com/mytestedaspnet/organization/2/website"><img src="https://opencollective.com/mytestedaspnet/organization/2/avatar.svg"></a>
+<a href="https://opencollective.com/mytestedaspnet/organization/3/website"><img src="https://opencollective.com/mytestedaspnet/organization/3/avatar.svg"></a>
+<a href="https://opencollective.com/mytestedaspnet/organization/4/website"><img src="https://opencollective.com/mytestedaspnet/organization/4/avatar.svg"></a>
+<a href="https://opencollective.com/mytestedaspnet/organization/5/website"><img src="https://opencollective.com/mytestedaspnet/organization/5/avatar.svg"></a>
+<a href="https://opencollective.com/mytestedaspnet/organization/6/website"><img src="https://opencollective.com/mytestedaspnet/organization/6/avatar.svg"></a>
+<a href="https://opencollective.com/mytestedaspnet/organization/7/website"><img src="https://opencollective.com/mytestedaspnet/organization/7/avatar.svg"></a>
+<a href="https://opencollective.com/mytestedaspnet/organization/8/website"><img src="https://opencollective.com/mytestedaspnet/organization/8/avatar.svg"></a>
+<a href="https://opencollective.com/mytestedaspnet/organization/9/website"><img src="https://opencollective.com/mytestedaspnet/organization/9/avatar.svg"></a>
 
 ## License
 
