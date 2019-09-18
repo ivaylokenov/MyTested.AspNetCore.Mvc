@@ -2,12 +2,12 @@
 {
     using System;
     using System.Linq;
+    using Exceptions;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ViewComponents;
     using Setups;
     using Setups.ViewComponents;
     using Xunit;
-    using Exceptions;
 
     public class ShouldPassForTests
     {
@@ -15,7 +15,6 @@
         public void AndProvideShouldReturnProperController()
         {
             MyViewComponent<NormalComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .Content("Test")
@@ -30,7 +29,6 @@
         public void AndProvideTheControllerAttributesShouldReturnProperAttributes()
         {
             MyViewComponent<AttributesComponent>
-                .Instance()
                 .ShouldHave()
                 .Attributes()
                 .ShouldPassForThe<ViewComponentAttributes>(attributes =>
@@ -43,7 +41,6 @@
         public void AndProvideShouldReturnProperActionResult()
         {
             MyViewComponent<NormalComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .Content("Test")
@@ -58,7 +55,6 @@
         public void AndProvideShouldReturnProperCaughtException()
         {
             MyViewComponent<ExceptionComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldThrow()
                 .Exception()
@@ -76,7 +72,6 @@
                 () =>
                 {
                     MyViewComponent<NormalComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldPassForThe<ViewComponentAttributes>(attributes => attributes.Count() == 4);
                 },

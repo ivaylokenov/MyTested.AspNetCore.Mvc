@@ -4,6 +4,38 @@ This section will cover testing of attributes and their properties.
 
 ## Controller attributes
 
+First, we need another package. Again?! 
+
+Do not worry, later in this tutorial we are going to use the **"Universe"** package and this madness will end. The purpose here is to show you the different components of the testing framework.
+
+Now, obey the rules and add **"MyTested.AspNetCore.Mvc.Controllers.Attributes"** to your **"MusicStore.Test.csproj"** project:
+
+```xml
+<!-- Other ItemGroups -->
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
+    <PackageReference Include="Moq" Version="4.13.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Authentication" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.ActionResults" Version="2.2.0" />
+	<!-- MyTested.AspNetCore.Mvc.Controllers.Attributes package -->
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.Attributes" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.Views" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.Views.ActionResults" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.DependencyInjection" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.EntityFrameworkCore" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Http" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Models" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.ModelState" Version="2.2.0" />
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+  </ItemGroup>
+
+<!-- Other ItemGroups -->
+``` 
+
 Let's assert that our **"CheckoutController"** is decorated with the commonly used **"AuthorizeAttribute"**. Go to the **CheckoutControllerTest"** class and add the following test:
 
 ```c#
@@ -54,15 +86,15 @@ We need to test the **"HttpPost"** and **"ActionName"** attributes:
 [Fact]
 public void RemoveAlbumConfirmedShouldHaveCorrectAttributes()
     => MyController<StoreManagerController>
-    .Instance()
-    .Calling(c => c.RemoveAlbumConfirmed(
-        With.No<IMemoryCache>(),
-        With.No<int>(),
-        With.No<CancellationToken>()))
-    .ShouldHave()
-    .ActionAttributes(attributes => attributes // <---
-        .RestrictingForHttpMethod(HttpMethod.Post)
-        .ChangingActionNameTo("RemoveAlbum"));
+        .Instance()
+        .Calling(c => c.RemoveAlbumConfirmed(
+            With.No<IMemoryCache>(),
+            With.No<int>(),
+            With.No<CancellationToken>()))
+        .ShouldHave()
+        .ActionAttributes(attributes => attributes // <---
+            .RestrictingForHttpMethod(HttpMethod.Post)
+            .ChangingActionNameTo("RemoveAlbum"));
 ```
 
 Working like a charm! :)
@@ -100,7 +132,8 @@ public void StoreManagerControllerShouldHaveCorrectAttributes()
         .ShouldHave()
         .Attributes(attributes => attributes
             .SpecifyingArea("Admin")
-            .PassingFor<AuthorizeAttribute>(authorize => authorize.Policy == "ManageStore"));
+            .PassingFor<AuthorizeAttribute>(authorize => authorize // <---
+                .Policy == "ManageStore"));
 ```
 
 ## Section summary

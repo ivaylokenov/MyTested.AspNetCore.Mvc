@@ -52,8 +52,12 @@
             {
                 return (this.ActionResult as ViewResult).Model;
             }
+            else if (this.ActionResult is PartialViewResult)
+            {
+                return (this.ActionResult as PartialViewResult)?.ViewData?.Model;
+            }
 
-            return (this.ActionResult as PartialViewResult)?.ViewData?.Model;
+            return (this.ActionResult as ViewComponentResult)?.ViewData?.Model;
         }
 
         public override void ValidateNoModel()

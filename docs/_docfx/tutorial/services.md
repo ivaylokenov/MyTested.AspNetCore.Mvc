@@ -16,9 +16,9 @@ public class HomeController : Controller
         _appSettings = options.Value;
     }
 
-	// controller code skipped for brevity
+    // controller code skipped for brevity
 }
-``` 
+```
 
 But we never specify any dependency in our tests explicitly. We do not provide a mock for the **"IOptions"** interface anywhere in our test project. So how the testing framework decides which services to use?
 
@@ -50,15 +50,15 @@ Like in a typical test scenario, some of the inherited services need to be repla
 public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
 {
     // action code skipped for brevity
-	
+
     var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
     if (result.Succeeded)
     {
         _logger.LogInformation("Logged in {userName}.", model.Email);
         return RedirectToLocal(returnUrl);
     }
-    
-	// action code skipped for brevity
+
+    // action code skipped for brevity
 }
 ```
 
@@ -78,10 +78,10 @@ public class AccountController : Controller
         SignInManager = signInManager;
         _logger = logger;
     }
-	
-	public UserManager<ApplicationUser> UserManager { get; }
 
-	public SignInManager<ApplicationUser> SignInManager { get; }
+    public UserManager<ApplicationUser> UserManager { get; }
+
+    public SignInManager<ApplicationUser> SignInManager { get; }
 	
 	// controller code skipped for brevity
 }
@@ -99,6 +99,7 @@ public class TestStartup : Startup
     {
     }
 
+	// needs the Microsoft.Extensions.DependencyInjection namespace
     public void ConfigureTestServices(IServiceCollection services)
     {
     }
@@ -119,7 +120,7 @@ Now all tests should pass again.
 Before replacing the **"SignInManager"**, we need a mock. Let's create a minimalistic manual mock for it. Add **"Mocks"** folder in your test project and create the following class in it:
 
 ```c#
-using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
@@ -129,31 +130,32 @@ using System.Threading.Tasks;
 
 public class SignInManagerMock : SignInManager<ApplicationUser>
 {
-	public SignInManagerMock(
-		UserManager<ApplicationUser> userManager,
-		IHttpContextAccessor contextAccessor,
-		IUserClaimsPrincipalFactory<ApplicationUser> claimsFactory,
-		IOptions<IdentityOptions> optionsAccessor,
-		ILogger<SignInManager<ApplicationUser>> logger)
-		: base(userManager, contextAccessor, claimsFactory, optionsAccessor, logger)
-	{
-	}
+    public SignInManagerMock(
+        UserManager<ApplicationUser> userManager,
+        IHttpContextAccessor contextAccessor,
+        IUserClaimsPrincipalFactory<ApplicationUser> claimsFactory,
+        IOptions<IdentityOptions> optionsAccessor,
+        ILogger<SignInManager<ApplicationUser>> logger,
+        IAuthenticationSchemeProvider authProvider)
+        : base(userManager, contextAccessor, claimsFactory, optionsAccessor, logger, authProvider)
+    {
+    }
 
-	public override Task<SignInResult> PasswordSignInAsync(string userName, string password, bool isPersistent, bool lockoutOnFailure)
-	{
-		if (userName == "valid@valid.com" && password == "valid")
-		{
-			return Task.FromResult(SignInResult.Success);
-		}
+    public override Task<SignInResult> PasswordSignInAsync(string userName, string password, bool isPersistent, bool lockoutOnFailure)
+    {
+        if (userName == "valid@valid.com" && password == "valid")
+        {
+            return Task.FromResult(SignInResult.Success);
+        }
 
-		return Task.FromResult(SignInResult.Failed);
-	}
+        return Task.FromResult(SignInResult.Failed);
+    }
 }
 ```
 
 We have created a **"SignInManager"** mock which returns successful sign in result, if specific username and password are provided. Otherwise, returns failed result.
 
-Now we need to tell the testing framework to use our mock instead of the actual implementation.
+Now we need to tell the testing framework to use our mock instead of the actual ASP.NET Core implementation.
 
 My Tested ASP.NET Core MVC provides a lot of useful extension methods on the service collection. Add this using in the **"TestStartup"** class:
 
@@ -177,7 +179,7 @@ From now on, during testing, all injectable constructors will receive the mock i
 The **"ReplaceSingleton"** method will find a singleton implementation of the service and replace it with the type we want. Other commonly used methods are:
 
 - **"ReplaceTransient"**, **"ReplaceScoped"**, **"ReplaceSingleton"** - these replace the service without changing its lifetime
-- **"ReplaceLifetime"** - replaces the lifetime of the service without changing its implementation 
+- **"ReplaceLifetime"** - replaces the lifetime of the service without changing its implementation
 - **"Replace"** - allows replacing both the service implementation and its lifetime
 - **"RemoveTransient"**, **"RemoveScoped"**, **"RemoveSingleton"** - these remove the service with the corresponding lifetime
 - **"Remove"** - removes the service no matter its lifetime
@@ -205,8 +207,8 @@ public void LoginShouldReturnRedirectToLocalWithValidLoginViewModel()
         .ValidModelState()
         .AndAlso()
         .ShouldReturn()
-        .Redirect()
-        .ToUrl(redirectUrl);
+        .Redirect(result => result
+            .ToUrl(redirectUrl));
 }
 ```
 
@@ -233,8 +235,8 @@ public void LoginShouldReturnViewWithSameModelWithInvalidLoginViewModel()
             .ThatEquals("Invalid login attempt."))
         .AndAlso()
         .ShouldReturn()
-        .View()
-        .WithModel(model);
+        .View(result => result
+            .WithModel(model));
 }
 ```
 
@@ -370,7 +372,7 @@ public async Task<IActionResult> Details(
 }
 ```
 
-We want to test that with disabled global caching in the **"AppSettings"** options, we dot not try to cache the database result.
+We want to test that with disabled global caching in the **"AppSettings"** options, we do not cache the database result.
 
 First, we need to prepare the **"IMemoryCache"** mock to throw an exception when setting an entry with specific key. Go to the **"MockProvider"** class (or create it, if you haven't already) and add the following:
 
@@ -380,7 +382,7 @@ public static IMemoryCache ThrowableMemoryCache
     get
     {
         var memoryCacheMock = new Mock<IMemoryCache>();
-                
+
         memoryCacheMock
             .Setup(c => c.CreateEntry(
                 It.Is<string>(k => k == $"album_{int.MaxValue}")))
@@ -397,21 +399,28 @@ Next, we need to set the **"CacheDbResults"** property in the registered **"AppS
 
 Enter scoped service set up! :)
 
-Go to the **"project.json"** file in the test project and add **"MyTested.AspNetCore.Mvc.DependencyInjection"** as a dependency:
+Go to the **"MusicStore.Test.csproj"** file in the test project and add **"MyTested.AspNetCore.Mvc.DependencyInjection"** as a dependency:
 
-```json
-"dependencies": {
-  "dotnet-test-xunit": "2.2.0-*",
-  "xunit": "2.2.0-*",
-  "Moq": "4.6.38-*",
-  "MyTested.AspNetCore.Mvc.Controllers": "1.0.0",
-  "MyTested.AspNetCore.Mvc.DependencyInjection": "1.0.0", // <---
-  "MyTested.AspNetCore.Mvc.EntityFrameworkCore": "1.0.0",
-  "MyTested.AspNetCore.Mvc.ModelState": "1.0.0",
-  "MyTested.AspNetCore.Mvc.Models": "1.0.0",
-  "MyTested.AspNetCore.Mvc.ViewActionResults": "1.0.0",
-  "MusicStore": "*"
-},
+```xml
+<!-- Other ItemGroups -->
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
+    <PackageReference Include="Moq" Version="4.13.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.ActionResults" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.Views" Version="2.2.0" />
+	<!-- MyTested.AspNetCore.Mvc.DependencyInjection package -->
+    <PackageReference Include="MyTested.AspNetCore.Mvc.DependencyInjection" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.EntityFrameworkCore" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Models" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.ModelState" Version="2.2.0" />
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+  </ItemGroup>
+
+<!-- Other ItemGroups -->
 ```
 
 This package will add service related extension methods to the fluent API. Let's write the test without modifying the **"AppSettings"** configuration:
@@ -419,18 +428,23 @@ This package will add service related extension methods to the fluent API. Let's
 ```c#
 [Fact]
 public void DetailsShouldNotSaveCacheEntryWithDisabledGlobalCache()
-	=> MyController<StoreManagerController>
-		.Instance()
-		.WithDbContext(db => db
-			.WithEntities(entities => entities.Add(new Album 
-			{ 
-				AlbumId = int.MaxValue 
-			})))
-		.Calling(c => c.Details(MockProvider.ThrowableMemoryCache, int.MaxValue))
-		.ShouldReturn()
-		.View()
-		.WithModelOfType<Album>()
-		.Passing(m => m.AlbumId == int.MaxValue);
+{
+    var album = new Album
+    {
+        AlbumId = int.MaxValue
+    };
+
+    MyController<StoreManagerController>
+        .Instance()
+		.WithData(album)
+        .Calling(c => c.Details(
+            MockProvider.ThrowableMemoryCache, 
+            int.MaxValue))
+        .ShouldReturn()
+        .View(result => result
+            .WithModelOfType<Album>()
+            .Passing(m => m.AlbumId == int.MaxValue));
+}
 ```
 
 As you can see, we are adding an album with an ID equal to the maximum integer value. Additionally, in the **"Calling"** method we are providing explicitly the memory cache mock which throws invalid operation exception. Running this test will produce an error as expected:
@@ -442,9 +456,9 @@ When calling Details action in StoreManagerController expected no exception but 
 Let's disable the caching only for this test. Add the following lines of code right after the **"Instance"** call:
 
 ```c#
-.WithServices(services => services
-	.WithSetupFor<IOptions<AppSettings>>(settings => settings
-		.Value.CacheDbResults = false))
+.WithDependencies(services => services
+    .WithSetupFor<IOptions<AppSettings>>(settings => settings
+        .Value.CacheDbResults = false))
 ```
 
 This call will set up the options service to have the **"CacheDbResults"** property set to **"false"** only for this test. Run it only to see it failing again:
@@ -470,17 +484,17 @@ Sometimes you do not want to have the global services injected into the controll
 ```c#
 public async Task<IActionResult> Browse(string genre)
 {
-	var genreModel = await DbContext.Genres
-		.Include(g => g.Albums)
-		.Where(g => g.Name == genre)
-		.FirstOrDefaultAsync();
+    var genreModel = await DbContext.Genres
+        .Include(g => g.Albums)
+        .Where(g => g.Name == genre)
+        .FirstOrDefaultAsync();
 
-	if (genreModel == null)
-	{
-		return NotFound();
-	}
+    if (genreModel == null)
+    {
+        return NotFound();
+    }
 
-	return View(genreModel);
+    return View(genreModel);
 }
 ```
 
@@ -494,10 +508,10 @@ public static MusicStoreContext MusicStoreContext
         var efServiceProvider = new ServiceCollection()
             .AddEntityFrameworkInMemoryDatabase()
             .BuildServiceProvider();
-                
+
         var serviceProvider = new ServiceCollection()
             .AddDbContext<MusicStoreContext>(db => db
-                .UseInMemoryDatabase()
+                .UseInMemoryDatabase(databaseName: "TestDB")
                 .UseInternalServiceProvider(efServiceProvider))
             .BuildServiceProvider();
 
@@ -539,15 +553,15 @@ You can also use the **"WithServices"** method in the following way:
 [Fact]
 public void BrowseShouldReturnCorrectViewModelWithValidGenre()
     => MyController<StoreController>
-		.Instance()
-		.WithServices( // <---
-			MockProvider.MusicStoreContext,
-			Mock.Of<IOptions<AppSettings>>())
-		.Calling(c => c.Browse("Rap"))
-		.ShouldReturn()
-		.View()
-		.WithModelOfType<Genre>()
-		.Passing(model => model.GenreId == 2);
+        .Instance()
+        .WithDependencies(
+            MockProvider.MusicStoreContext,
+            Mock.Of<IOptions<AppSettings>>())
+        .Calling(c => c.Browse("Rap"))
+        .ShouldReturn()
+        .View(result => result
+            .WithModelOfType<Genre>()
+            .Passing(model => model.GenreId == 2));
 ```
 
 Or like this:
@@ -556,15 +570,15 @@ Or like this:
 [Fact]
 public void BrowseShouldReturnCorrectViewModelWithValidGenre()
     => MyController<StoreController>
-		.Instance()
-		.WithServices(services => services // <---
-			.With(MockProvider.MusicStoreContext)
-			.With(Mock.Of<IOptions<AppSettings>>()))
-		.Calling(c => c.Browse("Rap"))
-		.ShouldReturn()
-		.View()
-		.WithModelOfType<Genre>()
-		.Passing(model => model.GenreId == 2);
+        .Instance()
+        .WithDependencies(dependencies => dependencies // <---
+            .With(MockProvider.MusicStoreContext)
+            .With(Mock.Of<IOptions<AppSettings>>()))
+        .Calling(c => c.Browse("Rap"))
+        .ShouldReturn()
+        .View(result => result
+            .WithModelOfType<Genre>()
+            .Passing(model => model.GenreId == 2));
 ```
 
 ## FromServices attribute
@@ -574,8 +588,8 @@ Some services are injected through the action parameters with the use of the **"
 ```c#
 public async Task<IActionResult> Create(
 	Album album,
-	[FromServices] IMemoryCache cache, // <---
-	CancellationToken requestAborted)
+    [FromServices] IMemoryCache cache, // <---
+    CancellationToken requestAborted)
 {
 	// action code skipped for brevity
 }
@@ -587,10 +601,10 @@ Go to the **"StoreManagerControllerTest"** class and take a look at the unit tes
 // test code skipped for brevity
 
 .Calling(c => c.Create(
-	album,
-	Mock.Of<IMemoryCache>(), // <---
-	With.Default<CancellationToken>()))
-	
+    album,
+    Mock.Of<IMemoryCache>(), // <---
+    With.Default<CancellationToken>()))
+
 // test code skipped for brevity
 ```
 
@@ -645,9 +659,9 @@ You can even combine it with the previous example by specifying one global and o
 public void BrowseShouldReturnNotFoundWithInvalidGenre()
     => MyController<StoreController>
         .Instance()
-		.WithServices(
-			MockProvider.MusicStoreContext,
-			From.Services<IOptions<AppSettings>>()) // <---
+        .WithDependencies(
+            MockProvider.MusicStoreContext,
+            From.Services<IOptions<AppSettings>>()) // <---
         .Calling(c => c.Browse("Invalid"))
         .ShouldReturn()
         .NotFound();

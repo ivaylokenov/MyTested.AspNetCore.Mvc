@@ -6,6 +6,7 @@
     using Setups;
     using Setups.Controllers;
     using Setups.Models;
+    using Setups.Pipelines;
     using Xunit;
 
     public class ControllerAttributesTestBuilderTests
@@ -14,7 +15,6 @@
         public void ChangingRouteToShouldNotThrowExceptionWithControllerWithTheAttribute()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.ChangingRouteTo("api/test"));
         }
@@ -23,7 +23,6 @@
         public void ChangingRouteToShouldNotThrowExceptionWithControllerWithTheAttributeAndCaseDifference()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.ChangingRouteTo("api/Test"));
         }
@@ -32,7 +31,6 @@
         public void ChangingRouteToShouldNotThrowExceptionWithControllerWithTheAttributeByUsingBuilder()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .ChangingRouteTo(route => route
@@ -50,7 +48,6 @@
                 () =>
                 {
                     MyController<AttributesController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.ChangingRouteTo("api/another"));
                 },
@@ -61,7 +58,6 @@
         public void ChangingRouteToShouldNotThrowExceptionWithControllerWithTheAttributeAndCorrectName()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.ChangingRouteTo("api/test", withName: "TestRouteAttributes"));
         }
@@ -73,7 +69,6 @@
                 () =>
                 {
                     MyController<AttributesController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.ChangingRouteTo("api/test", withName: "AnotherRoute"));
                 },
@@ -84,7 +79,6 @@
         public void ChangingRouteToShouldNotThrowExceptionWithActionWithTheAttributeAndCorrectOrder()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.ChangingRouteTo("api/test", withOrder: 1));
         }
@@ -96,7 +90,6 @@
                 () =>
                 {
                     MyController<AttributesController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.ChangingRouteTo("api/test", withOrder: 2));
                 },
@@ -110,7 +103,6 @@
                 () =>
                 {
                     MyController<AreaController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.ChangingRouteTo("api/test"));
                 },
@@ -121,7 +113,6 @@
         public void SpecifyingAreaShouldNotThrowExceptionWithActionWithTheAttribute()
         {
             MyController<AreaController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.SpecifyingArea("CustomArea"));
         }
@@ -133,7 +124,6 @@
                 () =>
                 {
                     MyController<AreaController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.SpecifyingArea("AnotherArea"));
                 },
@@ -147,7 +137,6 @@
                 () =>
                 {
                     MyController<MvcController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.SpecifyingArea("CustomArea"));
                 },
@@ -158,7 +147,6 @@
         public void SpecifyingConsumptionShouldNotThrowExceptionWithCorrectAttributeAndContentType()
         {
             MyController<ApiController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.SpecifyingConsumption("application/xml"));
         }
@@ -170,7 +158,6 @@
                 () =>
                 {
                     MyController<MvcController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.SpecifyingConsumption("application/xml"));
                 },
@@ -184,7 +171,6 @@
                 () =>
                 {
                     MyController<ApiController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.SpecifyingConsumption("wrong-content-type"));
                 },
@@ -195,7 +181,6 @@
         public void SpecifyingConsumptionShouldNotThrowExceptionWithCorrectAttributeAndContentTypes()
         {
             MyController<ApiController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.SpecifyingConsumption("application/xml", "application/json"));
         }
@@ -207,7 +192,6 @@
                 () =>
                 {
                     MyController<ApiController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.SpecifyingConsumption("application/xml", "application/json", "application/pdf"));
                 },
@@ -221,7 +205,6 @@
                 () =>
                 {
                     MyController<ApiController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.SpecifyingConsumption("application/xml", "wrong-content-type"));
                 },
@@ -232,7 +215,6 @@
         public void SpecifyingConsumptionShouldNotThrowExceptionWithCorrectAttributeAndContentTypesAsList()
         {
             MyController<ApiController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.SpecifyingConsumption(new List<string>
                 {
@@ -245,7 +227,6 @@
         public void SpecifyingProductionShouldNotThrowExceptionWithCorrectAttributeAndContentType()
         {
             MyController<ApiController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.SpecifyingProduction("application/xml"));
         }
@@ -257,7 +238,6 @@
                 () =>
                 {
                     MyController<MvcController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.SpecifyingProduction("application/xml"));
                 },
@@ -271,7 +251,6 @@
                 () =>
                 {
                     MyController<ApiController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.SpecifyingProduction("wrong-content-type"));
                 },
@@ -282,7 +261,6 @@
         public void SpecifyingProductionShouldNotThrowExceptionWithCorrectAttributeAndContentTypes()
         {
             MyController<ApiController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.SpecifyingProduction("application/xml", "application/json"));
         }
@@ -294,7 +272,6 @@
                 () =>
                 {
                     MyController<ApiController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.SpecifyingProduction("application/xml", "application/json", "application/pdf"));
                 },
@@ -308,7 +285,6 @@
                 () =>
                 {
                     MyController<ApiController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.SpecifyingProduction("application/xml", "wrong-content-type"));
                 },
@@ -319,7 +295,6 @@
         public void SpecifyingProductionShouldNotThrowExceptionWithCorrectAttributeAndContentTypesAsList()
         {
             MyController<ApiController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.SpecifyingProduction(new List<string>
                 {
@@ -332,7 +307,6 @@
         public void SpecifyingProductionShouldNotThrowExceptionWithCorrectAttributeAndCorrectType()
         {
             MyController<ApiController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .SpecifyingProduction(typeof(ResponseModel)));
@@ -345,7 +319,6 @@
                 () =>
                 {
                     MyController<ApiController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .SpecifyingProduction(typeof(RequestModel)));
@@ -360,7 +333,6 @@
                 () =>
                 {
                     MyController<MvcController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.SpecifyingProduction(typeof(ResponseModel), "application/xml"));
                 },
@@ -371,7 +343,6 @@
         public void SpecifyingProductionShouldNotThrowExceptionWithCorrectAttributeTypeAndContentTypes()
         {
             MyController<ApiController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.SpecifyingProduction(typeof(ResponseModel), "application/xml", "application/json"));
         }
@@ -383,7 +354,6 @@
                 () =>
                 {
                     MyController<ApiController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .SpecifyingProduction(typeof(ResponseModel), "application/xml", "application/json", "application/pdf"));
@@ -398,7 +368,6 @@
                 () =>
                 {
                     MyController<ApiController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .SpecifyingProduction(typeof(ResponseModel), "application/xml", "wrong-content-type"));
@@ -410,7 +379,6 @@
         public void SpecifyingProductionShouldNotThrowExceptionWithCorrectAttributeTypeAndContentTypesAsList()
         {
             MyController<ApiController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.SpecifyingProduction(typeof(ResponseModel), new List<string>
                 {
@@ -423,11 +391,10 @@
         public void SpecifyingProductionShouldNotThrowExceptionWithCorrectAttributeTypeAndUsingBuilder()
         {
             MyController<ApiController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .SpecifyingProduction(production => production
-                        .WithType(typeof(ResponseModel))
+                        .OfType(typeof(ResponseModel))
                         .WithContentTypes("application/xml", "application/json")
                         .WithOrder(1)));
         }
@@ -436,7 +403,6 @@
         public void SpecifyingProductionShouldNotThrowExceptionWithCorrectAttributeTypeAndUsingBuilderForOrder()
         {
             MyController<ApiController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .SpecifyingProduction(production => production
@@ -447,11 +413,10 @@
         public void SpecifyingProductionShouldNotThrowExceptionWithCorrectAttributeTypeAndUsingBuilderWithContentTypeList()
         {
             MyController<ApiController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .SpecifyingProduction(production => production
-                        .WithType(typeof(ResponseModel))
+                        .OfType(typeof(ResponseModel))
                         .AndAlso()
                         .WithContentTypes(new List<string> { "application/xml", "application/json" })
                         .AndAlso()
@@ -465,7 +430,6 @@
                 () =>
                 {
                     MyController<ApiController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .SpecifyingProduction(production => production
@@ -475,10 +439,123 @@
         }
 
         [Fact]
+        public void SpecifyingMiddlewareShouldNotThrowExceptionWithCorrectAttribute()
+        {
+            MyController<ApiController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .SpecifyingMiddleware(typeof(MyPipeline)));
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldThrowExceptionWithMissingAttribute()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<AttributesController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .SpecifyingMiddleware(typeof(MyPipeline)));
+                },
+                "When testing AttributesController was expected to have MiddlewareFilterAttribute, but in fact such was not found.");
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldThrowExceptionWithCorrectAttributeAndWrongConfigurationType()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .SpecifyingMiddleware(typeof(MyOtherPipeline)));
+                },
+                "When testing ApiController was expected to have MiddlewareFilterAttribute with 'MyOtherPipeline' type, but in fact found 'MyPipeline'.");
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldNotThrowExceptionWithCorrectAttributeConfigurationType()
+        {
+            MyController<ApiController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .SpecifyingMiddleware(middleware => middleware
+                        .OfType(typeof(MyPipeline))));
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldThrowExceptionWithWrongConfigurationType()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .SpecifyingMiddleware(middleware => middleware
+                                .OfType(typeof(MyOtherPipeline))));
+                },
+                "When testing ApiController was expected to have MiddlewareFilterAttribute with 'MyOtherPipeline' type, but in fact found 'MyPipeline'.");
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldThrowExceptionWithCorrectAttributeAndWrongOrder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .SpecifyingMiddleware(middleware => middleware.WithOrder(1)));
+                },
+                "When testing ApiController was expected to have MiddlewareFilterAttribute with order of 1, but in fact found 2.");
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldNotThrowExceptionWithCorrectAttributeTypeAndUsingBuilderForOrder()
+        {
+            MyController<ApiController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .SpecifyingMiddleware(middleware => middleware.WithOrder(2)));
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldNotThrowExceptionWithCorrectAttributeConfigTypeAndUsingBuilderForOrder()
+        {
+            MyController<ApiController>
+                .ShouldHave()
+                .Attributes(attributes => attributes
+                    .SpecifyingMiddleware(middleware => middleware
+                        .OfType(typeof(MyPipeline))
+                        .AndAlso()
+                        .WithOrder(2)));
+        }
+
+        [Fact]
+        public void SpecifyingMiddlewareShouldThrowExceptionWithCorrectAttributeConfigTypeAndUsingBuilderForOrderWithWrongOrder()
+        {
+            Test.AssertException<AttributeAssertionException>(
+                () =>
+                {
+                    MyController<ApiController>
+                        .ShouldHave()
+                        .Attributes(attributes => attributes
+                            .SpecifyingMiddleware(middleware => middleware
+                                .OfType(typeof(MyPipeline))
+                                .AndAlso()
+                                .WithOrder(1)));
+                },
+                "When testing ApiController was expected to have MiddlewareFilterAttribute with order of 1, but in fact found 2.");
+        }
+
+        [Fact]
         public void RequiringHttpsShouldNotThrowExceptionWithTheAttribute()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.RequiringHttps());
         }
@@ -490,7 +567,6 @@
                 () =>
                 {
                     MyController<MvcController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.RequiringHttps());
                 },
@@ -501,7 +577,6 @@
         public void RequiringHttpsShouldNotThrowExceptionWithTheAttributeAndCorrectValue()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.RequiringHttps(false));
         }
@@ -513,7 +588,6 @@
                 () =>
                 {
                     MyController<AttributesController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.RequiringHttps(true));
                 },
@@ -524,7 +598,6 @@
         public void AllowingAnonymousRequestsShouldNotThrowExceptionWithTheAttribute()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.AllowingAnonymousRequests());
         }
@@ -536,7 +609,6 @@
                 () =>
                 {
                     MyController<MvcController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.AllowingAnonymousRequests());
                 },
@@ -547,7 +619,6 @@
         public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithTheAttribute()
         {
             MyController<MvcController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.RestrictingForAuthorizedRequests());
         }
@@ -559,7 +630,6 @@
                 () =>
                 {
                     MyController<AttributesController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.RestrictingForAuthorizedRequests());
                 },
@@ -570,7 +640,6 @@
         public void RestrictingForAuthorizedRequestsShouldNotThrowExceptionWithTheAttributeWithCorrectRoles()
         {
             MyController<MvcController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.RestrictingForAuthorizedRequests(withAllowedRoles: "Admin,Moderator"));
         }
@@ -582,7 +651,6 @@
                 () =>
                 {
                     MyController<MvcController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.RestrictingForAuthorizedRequests(withAllowedRoles: "Admin"));
                 },
@@ -593,7 +661,6 @@
         public void AddingFormatShouldNotThrowExceptionWithTheAttribute()
         {
             MyController<MvcController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.AddingFormat());
         }
@@ -605,7 +672,6 @@
                 () =>
                 {
                     MyController<AttributesController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.AddingFormat());
                 },
@@ -616,7 +682,6 @@
         public void CachingResponseShouldNotThrowExceptionWithTheAttribute()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.CachingResponse());
         }
@@ -628,7 +693,6 @@
                 () =>
                 {
                     MyController<MvcController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.CachingResponse());
                 },
@@ -639,7 +703,6 @@
         public void CachingResponseShouldNotThrowExceptionWithTheAttributeAndCorrectDuration()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.CachingResponse(60));
         }
@@ -651,7 +714,6 @@
                 () =>
                 {
                     MyController<AttributesController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.CachingResponse(30));
                 },
@@ -662,7 +724,6 @@
         public void CachingResponseShouldNotThrowExceptionWithTheAttributeAndCorrectCacheProfileName()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.CachingResponse("Test Profile Controller"));
         }
@@ -674,7 +735,6 @@
                 () =>
                 {
                     MyController<AttributesController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.CachingResponse("Wrong Profile"));
                 },
@@ -685,7 +745,6 @@
         public void CachingResponseShouldNotThrowExceptionWithTheAttributeAndCorrectDurationWithBuilder()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .CachingResponse(responseCache => responseCache
@@ -699,7 +758,6 @@
                 () =>
                 {
                     MyController<AttributesController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .CachingResponse(responseCache => responseCache
@@ -712,7 +770,6 @@
         public void CachingResponseShouldNotThrowExceptionWithTheAttributeAndCorrectLocationWithBuilder()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .CachingResponse(responseCache => responseCache
@@ -726,7 +783,6 @@
                 () =>
                 {
                     MyController<AttributesController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .CachingResponse(responseCache => responseCache
@@ -739,7 +795,6 @@
         public void CachingResponseShouldNotThrowExceptionWithTheAttributeAndCorrectNoStoreWithBuilder()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .CachingResponse(responseCache => responseCache
@@ -753,7 +808,6 @@
                 () =>
                 {
                     MyController<AttributesController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .CachingResponse(responseCache => responseCache
@@ -766,7 +820,6 @@
         public void CachingResponseShouldNotThrowExceptionWithTheAttributeAndCorrectVaryByHeaderWithBuilder()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .CachingResponse(responseCache => responseCache
@@ -780,7 +833,6 @@
                 () =>
                 {
                     MyController<AttributesController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .CachingResponse(responseCache => responseCache
@@ -793,7 +845,6 @@
         public void CachingResponseShouldNotThrowExceptionWithTheAttributeAndCorrectVaryByQueryKeyWithBuilder()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .CachingResponse(responseCache => responseCache
@@ -807,7 +858,6 @@
                 () =>
                 {
                     MyController<AttributesController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .CachingResponse(responseCache => responseCache
@@ -821,7 +871,6 @@
         public void CachingResponseShouldNotThrowExceptionWithCorrectAttributeAndCorrectVaryQueryKeysWithBuilder()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .CachingResponse(responseCache => responseCache
@@ -835,7 +884,6 @@
                 () =>
                 {
                     MyController<AttributesController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .CachingResponse(responseCache => responseCache
@@ -851,7 +899,6 @@
                 () =>
                 {
                     MyController<AttributesController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .CachingResponse(responseCache => responseCache
@@ -867,7 +914,6 @@
                 () =>
                 {
                     MyController<AttributesController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                         .CachingResponse(responseCache => responseCache
@@ -880,7 +926,6 @@
         public void CachingResponseShouldNotThrowExceptionWithCorrectAttributeAndVaryQueryKeyAsList()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .CachingResponse(responseCache => responseCache
@@ -891,7 +936,6 @@
         public void CachingResponseShouldNotThrowExceptionWithTheAttributeAndCorrectCacheProfileNameWithBuilder()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .CachingResponse(responseCache => responseCache
@@ -905,7 +949,6 @@
                 () =>
                 {
                     MyController<AttributesController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .CachingResponse(responseCache => responseCache
@@ -918,7 +961,6 @@
         public void CachingResponseShouldNotThrowExceptionWithTheAttributeAndCorrectOrderWithBuilder()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .CachingResponse(responseCache => responseCache
@@ -932,7 +974,6 @@
                 () =>
                 {
                     MyController<AttributesController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .CachingResponse(responseCache => responseCache
@@ -945,7 +986,6 @@
         public void CachingResponseShouldNotThrowExceptionWithTheAttributeAndCorrectValuesWithBuilder()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .CachingResponse(responseCache => responseCache
@@ -971,7 +1011,6 @@
                 () =>
                 {
                     MyController<AttributesController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .CachingResponse(responseCache => responseCache
@@ -999,7 +1038,6 @@
                 () =>
                 {
                     MyController<MvcController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
@@ -1012,7 +1050,6 @@
         public void SettingRequestFormLimitsToShouldNotThrowExceptionWithTheAttributeAndCorrectBufferBody()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
@@ -1026,7 +1063,6 @@
                 () =>
                 {
                     MyController<AttributesController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
@@ -1039,7 +1075,6 @@
         public void SettingRequestFormLimitsToShouldNotThrowExceptionWithTheAttributeAndCorrectMemoryBufferThreshold()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
@@ -1053,7 +1088,6 @@
                 () =>
                 {
                     MyController<AttributesController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
@@ -1066,7 +1100,6 @@
         public void SettingRequestFormLimitsToShouldNotThrowExceptionWithTheAttributeAndCorrectBufferBodyLengthLimit()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
@@ -1080,7 +1113,6 @@
                 () =>
                 {
                     MyController<AttributesController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
@@ -1093,7 +1125,6 @@
         public void SettingRequestFormLimitsToShouldNotThrowExceptionWithTheAttributeAndCorrectValueCountLimit()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
@@ -1107,7 +1138,6 @@
                 () =>
                 {
                     MyController<AttributesController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
@@ -1120,7 +1150,6 @@
         public void SettingRequestFormLimitsToShouldNotThrowExceptionWithTheAttributeAndCorrectKeyLengthLimit()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
@@ -1134,7 +1163,6 @@
                 () =>
                 {
                     MyController<AttributesController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
@@ -1147,7 +1175,6 @@
         public void SettingRequestFormLimitsToShouldNotThrowExceptionWithTheAttributeAndCorrectValueLengthLimit()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
@@ -1161,7 +1188,6 @@
                 () =>
                 {
                     MyController<AttributesController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
@@ -1174,7 +1200,6 @@
         public void SettingRequestFormLimitsToShouldNotThrowExceptionWithTheAttributeAndCorrectMultipartBoundaryLengthLimit()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
@@ -1188,7 +1213,6 @@
                 () =>
                 {
                     MyController<AttributesController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
@@ -1201,7 +1225,6 @@
         public void SettingRequestFormLimitsToShouldNotThrowExceptionWithTheAttributeAndCorrectMultipartHeadersCountLimit()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
@@ -1215,7 +1238,6 @@
                 () =>
                 {
                     MyController<AttributesController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
@@ -1228,7 +1250,6 @@
         public void SettingRequestFormLimitsToShouldNotThrowExceptionWithTheAttributeAndCorrectMultipartHeadersLengthLimit()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
@@ -1242,7 +1263,6 @@
                 () =>
                 {
                     MyController<AttributesController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
@@ -1255,7 +1275,6 @@
         public void SettingRequestFormLimitsToShouldNotThrowExceptionWithTheAttributeAndCorrectMultipartBodyLengthLimit()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
@@ -1269,7 +1288,6 @@
                 () =>
                 {
                     MyController<AttributesController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
@@ -1282,7 +1300,6 @@
         public void SettingRequestFormLimitsToShouldNotThrowExceptionWithTheAttributeAndCorrectOrder()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
@@ -1296,7 +1313,6 @@
                 () =>
                 {
                     MyController<AttributesController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
@@ -1309,7 +1325,6 @@
         public void SettingRequestFormLimitsToShouldNotThrowExceptionWithTheAttributeAndCorrectBuilder()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
@@ -1345,7 +1360,6 @@
                 () =>
                 {
                     MyController<AttributesController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .SettingRequestFormLimitsTo(requestFormLimits => requestFormLimits
@@ -1380,7 +1394,6 @@
         public void SettingRequestSizeLimitToShouldNotThrowExceptionWithTheAttribute()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.SettingRequestSizeLimitTo(2048));
         }
@@ -1392,7 +1405,6 @@
                 () =>
                 {
                     MyController<MvcController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.SettingRequestSizeLimitTo(2048));
                 },
@@ -1406,7 +1418,6 @@
                 () =>
                 {
                     MyController<AttributesController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.SettingRequestSizeLimitTo(1024));
                 },
@@ -1417,7 +1428,6 @@
         public void DisablingRequestSizeLimitShouldNotThrowExceptionWithTheAttribute()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.DisablingRequestSizeLimit());
         }
@@ -1429,7 +1439,6 @@
                 () =>
                 {
                     MyController<MvcController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.DisablingRequestSizeLimit());
                 },
@@ -1440,7 +1449,6 @@
         public void IndicatingControllerShouldNotThrowExceptionWithTheAttribute()
         {
             MyController<AreaController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.IndicatingControllerExplicitly());
         }
@@ -1452,7 +1460,6 @@
                 () =>
                 {
                     MyController<MvcController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.IndicatingControllerExplicitly());
                 },
@@ -1463,7 +1470,6 @@
         public void IndicatingApiControllerShouldNotThrowExceptionWithTheAttribute()
         {
             MyController<ApiController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.IndicatingApiController());
         }
@@ -1475,7 +1481,6 @@
                 () =>
                 {
                     MyController<MvcController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.IndicatingApiController());
                 },
@@ -1486,7 +1491,6 @@
         public void AndAlsoShouldWorkCorrectly()
         {
             MyController<AttributesController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes
                     => attributes

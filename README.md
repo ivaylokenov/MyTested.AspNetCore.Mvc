@@ -41,7 +41,9 @@ Take a look around and...
 
 ⭐️ ...if you like the library, **star** the repository and **show** it to your friends!
 
-👀 ...if you find it useful, make sure you **subscribe** for future releases by clicking the **"Watch"** button and choosing **"Releases only"**!
+😏 ...if you find it useful, make sure you **subscribe** for future releases by clicking the **"Watch"** button and choosing **"Releases only"**!
+
+👀 ...if you want to learn cool C# coding techniques, **subscribe** to my [YouTube channel](https://www.youtube.com/channel/UCP5Ons7fK3yKhX6lhc9XcfQ), where I regularly post online video lessons!
 
 ✔ ...if you want to **support** the project, **[become a sponsor/backer](#sponsors--backers)** or go to [https://MyTestedASP.NET](https://MyTestedASP.NET), and consider **purchasing a premium [license](#license)**!
 
@@ -163,7 +165,7 @@ Basically, **MyTested.AspNetCore.Mvc** throws an unhandled exception with a frie
 
 ## Detailed Documentation
 
-It is **strongly advised** to read the [tutorial](http://docs.mytestedasp.net/tutorial/intro.html) to get familiar with **MyTested.AspNetCore.Mvc** in more details. Additionally, you may see the [testing guide](http://docs.mytestedasp.net/guide/intro.html) or the [API reference](http://docs.mytestedasp.net/api/index.html) for a full list of available features.
+It is **strongly advised** to read the [tutorial](http://docs.mytestedasp.net/tutorial/intro.html) or watch [this online video lesson](https://www.youtube.com/watch?v=Tf2P-410Za4) to get familiar with **MyTested.AspNetCore.Mvc** in more details. Additionally, you may see the [testing guide](http://docs.mytestedasp.net/guide/intro.html) or the [API reference](http://docs.mytestedasp.net/api/index.html) for a full list of available features.
 
 You can also check out the [provided samples](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/tree/version-2.2/samples) for real-life ASP.NET Core MVC application testing.
 
@@ -400,7 +402,6 @@ An attribute declaration test validates controller and action attribute declarat
 ```c#
 // Tests for specific controller attributes - Area and Authorize.
 MyController<MyMvcController>
-    .Instance()
     .ShouldHave()
     .Attributes(attributes => attributes
         .SpecifyingArea(ControllerConstants.AdministratorArea)

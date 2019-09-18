@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!--[if IE]><![endif]-->
 <html>
   <head>
@@ -7,13 +7,13 @@
     <title>Options </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Options ">
-    <meta name="generator" content="docfx 2.6.3.0">
+    <meta name="generator" content="docfx 2.45.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
     <link rel="stylesheet" href="../styles/main.css">
-    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:navrel" content="">
     <meta property="docfx:tocrel" content="toc.html">
     <meta property="docfx:rel" content="../">
     <meta property="og:title" content="Flexible and asynchronous testing framework for ASP.NET Core MVC">
@@ -30,7 +30,7 @@
     <meta property="twitter:url" content="https://mytestedasp.net/">
     <meta property="twitter:image" content="https://mytestedasp.net/Content/Images/logosocial.jpg">
   </head>
-  <body data-spy="scroll" data-target="#affix">
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
         <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
@@ -75,55 +75,63 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-              <h1 id="options" sourcefile="tutorial/options.md" sourcestartlinenumber="1" sourceendlinenumber="1">Options</h1>
-              
-<p sourcefile="tutorial/options.md" sourcestartlinenumber="3" sourceendlinenumber="3">Remember this code?</p>
-<pre sourcefile="tutorial/options.md" sourcestartlinenumber="5" sourceendlinenumber="9"><code class="lang-c#">.WithServices(services =&gt; services
+<h1 id="options">Options</h1>
+
+<p>Remember this code?</p>
+<pre><code class="lang-c#">.WithServices(services =&gt; services
     .WithSetupFor&lt;IOptions&lt;AppSettings&gt;&gt;(settings =&gt; settings
         .Value.CacheDbResults = false))
-</code></pre><p sourcefile="tutorial/options.md" sourcestartlinenumber="11" sourceendlinenumber="11">In this section we are going to improve it with the built-in options setup methods.</p>
-<h2 id="options-configuration-setup" sourcefile="tutorial/options.md" sourcestartlinenumber="13" sourceendlinenumber="13">Options configuration setup</h2>
-<p sourcefile="tutorial/options.md" sourcestartlinenumber="15" sourceendlinenumber="15">Go to the <strong>&quot;project.json&quot;</strong> file and add <strong>&quot;MyTested.AspNetCore.Mvc.Options&quot;</strong> as a dependency of the test project:</p>
-<pre sourcefile="tutorial/options.md" sourcestartlinenumber="17" sourceendlinenumber="33"><code class="lang-json">&quot;dependencies&quot;: {
-  &quot;dotnet-test-xunit&quot;: &quot;2.2.0-*&quot;,
-  &quot;xunit&quot;: &quot;2.2.0-*&quot;,
-  &quot;Moq&quot;: &quot;4.6.38-*&quot;,
-  &quot;MyTested.AspNetCore.Mvc.Authentication&quot;: &quot;1.0.0&quot;,
-  &quot;MyTested.AspNetCore.Mvc.Controllers&quot;: &quot;1.0.0&quot;,
-  &quot;MyTested.AspNetCore.Mvc.DependencyInjection&quot;: &quot;1.0.0&quot;,
-  &quot;MyTested.AspNetCore.Mvc.EntityFrameworkCore&quot;: &quot;1.0.0&quot;,
-  &quot;MyTested.AspNetCore.Mvc.Http&quot;: &quot;1.0.0&quot;,
-  &quot;MyTested.AspNetCore.Mvc.ModelState&quot;: &quot;1.0.0&quot;,
-  &quot;MyTested.AspNetCore.Mvc.Models&quot;: &quot;1.0.0&quot;,
-  &quot;MyTested.AspNetCore.Mvc.Options&quot;: &quot;1.0.0&quot;, // &lt;---
-  &quot;MyTested.AspNetCore.Mvc.ViewActionResults&quot;: &quot;1.0.0&quot;,
-  &quot;MusicStore&quot;: &quot;*&quot;
-},
-</code></pre><p sourcefile="tutorial/options.md" sourcestartlinenumber="35" sourceendlinenumber="35">Adding this package will automatically make all the options related services scoped.</p>
-<p sourcefile="tutorial/options.md" sourcestartlinenumber="37" sourceendlinenumber="37">Go to the unit test asserting the <strong>&quot;Details&quot;</strong> action in the <strong>&quot;StoreManagerControllerTest&quot;</strong> controller and change the following code:</p>
-<pre sourcefile="tutorial/options.md" sourcestartlinenumber="39" sourceendlinenumber="43"><code class="lang-c#">.WithServices(services =&gt; services
+</code></pre><p>In this section we are going to improve it with the built-in options setup methods.</p>
+<h2 id="options-configuration-setup">Options configuration setup</h2>
+<p>Go to the <strong>&quot;MusicStore.Test.csproj&quot;</strong> file and add <strong>&quot;MyTested.AspNetCore.Mvc.Options&quot;</strong> as a dependency of the test project:</p>
+<pre><code class="lang-xml">&lt;!-- Other ItemGroups --&gt;
+
+  &lt;ItemGroup&gt;
+    &lt;PackageReference Include=&quot;Microsoft.AspNetCore.App&quot; /&gt;
+    &lt;PackageReference Include=&quot;Microsoft.NET.Test.Sdk&quot; Version=&quot;16.0.1&quot; /&gt;
+    &lt;PackageReference Include=&quot;Moq&quot; Version=&quot;4.13.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Authentication&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Controllers&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Controllers.ActionResults&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Controllers.Attributes&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Controllers.Views&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Controllers.Views.ActionResults&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.DependencyInjection&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.EntityFrameworkCore&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Http&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Models&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.ModelState&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;!-- MyTested.AspNetCore.Mvc.Options package --&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Options&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;xunit&quot; Version=&quot;2.4.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;xunit.runner.visualstudio&quot; Version=&quot;2.4.0&quot; /&gt;
+  &lt;/ItemGroup&gt;
+
+&lt;!-- Other ItemGroups --&gt;
+</code></pre><p>Adding this package will automatically make all the options related services scoped.</p>
+<p>Go to the unit test asserting the <strong>&quot;Details&quot;</strong> action in the <strong>&quot;StoreManagerControllerTest&quot;</strong> controller and change the following code:</p>
+<pre><code class="lang-c#">.WithServices(services =&gt; services
     .WithSetupFor&lt;IOptions&lt;AppSettings&gt;&gt;(settings =&gt; settings
         .Value.CacheDbResults = false))
-</code></pre><p sourcefile="tutorial/options.md" sourcestartlinenumber="45" sourceendlinenumber="45">With this one:</p>
-<pre sourcefile="tutorial/options.md" sourcestartlinenumber="47" sourceendlinenumber="50"><code class="lang-c#">.WithOptions(options =&gt; options
+</code></pre><p>With this one:</p>
+<pre><code class="lang-c#">.WithOptions(options =&gt; options
     .For&lt;AppSettings&gt;(settings =&gt; settings.CacheDbResults = false))
-</code></pre><p sourcefile="tutorial/options.md" sourcestartlinenumber="52" sourceendlinenumber="52">Much more readable! :)</p>
-<p sourcefile="tutorial/options.md" sourcestartlinenumber="54" sourceendlinenumber="54">Additionally, the <strong>&quot;TestStartup&quot;</strong> class no longer needs this call:</p>
-<pre sourcefile="tutorial/options.md" sourcestartlinenumber="56" sourceendlinenumber="58"><code class="lang-c#">services.AddScoped&lt;IOptions&lt;AppSettings&gt;, OptionsManager&lt;AppSettings&gt;&gt;();
-</code></pre><p sourcefile="tutorial/options.md" sourcestartlinenumber="60" sourceendlinenumber="60">Our <strong>&quot;ConfigureTestServices&quot;</strong> should now contain the following:</p>
-<pre sourcefile="tutorial/options.md" sourcestartlinenumber="62" sourceendlinenumber="72"><code class="lang-c#">public void ConfigureTestServices(IServiceCollection services)
+</code></pre><p>Much more readable! :)</p>
+<p>Additionally, the <strong>&quot;TestStartup&quot;</strong> class no longer needs this call:</p>
+<pre><code class="lang-c#">services.AddScoped&lt;IOptions&lt;AppSettings&gt;, OptionsManager&lt;AppSettings&gt;&gt;();
+</code></pre><p>Our <strong>&quot;ConfigureTestServices&quot;</strong> should now contain the following:</p>
+<pre><code class="lang-c#">public void ConfigureTestServices(IServiceCollection services)
 {
     base.ConfigureServices(services);
 
     services.ReplaceLifetime&lt;IMemoryCache&gt;(ServiceLifetime.Scoped);
 
-    services.ReplaceSingleton&lt;SignInManager&lt;ApplicationUser&gt;&gt;(sp =&gt; 
+    services.ReplaceSingleton&lt;SignInManager&lt;ApplicationUser&gt;&gt;(sp =&gt;
         MockProvider.SignInManager(sp.GetRequiredService&lt;UserManager&lt;ApplicationUser&gt;&gt;()));
 }
-</code></pre><h2 id="section-summary" sourcefile="tutorial/options.md" sourcestartlinenumber="74" sourceendlinenumber="74">Section summary</h2>
-<p sourcefile="tutorial/options.md" sourcestartlinenumber="76" sourceendlinenumber="76">Well, this was easy. In fact, it&#39;s the easiest part of this tutorial. Let&#39;s move to <a href="/tutorial/sessioncache.html" sourcefile="tutorial/options.md" sourcestartlinenumber="76" sourceendlinenumber="76">Session &amp; Cache</a> where we will use the options setup one more time.</p>
-
-            </article>
+</code></pre><h2 id="section-summary">Section summary</h2>
+<p>Well, this was easy. In fact, it&#39;s the easiest part of this tutorial. Let&#39;s move to <a href="/tutorial/sessioncache.html">Session &amp; Cache</a> where we will use the options setup one more time.</p>
+</article>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">
@@ -131,7 +139,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/tutorial/docs/_docfx/tutorial/options.md/#L1" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/tmollov/MyTested.AspNetCore.Mvc/blob/development/docs/_docfx/tutorial/options.md/#L1" class="contribution-link">Improve this Doc</a>
                   </li>
                 </ul>
               </div>

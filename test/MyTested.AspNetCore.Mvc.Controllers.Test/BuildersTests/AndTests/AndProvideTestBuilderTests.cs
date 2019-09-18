@@ -28,7 +28,6 @@
         public void AndProvideTheControllerAttributesShouldReturnProperAttributes()
         {
             MyController<MvcController>
-                .Instance()
                 .ShouldHave()
                 .Attributes()
                 .ShouldPassForThe<ControllerAttributes>(attributes =>
@@ -48,7 +47,7 @@
                 .AndAlso()
                 .ShouldPassForThe<ActionAttributes>(attributes =>
                 {
-                    Assert.Equal(8, attributes.Count());
+                    Assert.Equal(9, attributes.Count());
                 });
         }
 

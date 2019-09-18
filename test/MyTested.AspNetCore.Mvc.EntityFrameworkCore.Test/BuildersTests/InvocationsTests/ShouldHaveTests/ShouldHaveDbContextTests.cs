@@ -21,7 +21,6 @@
                 });
 
             MyViewComponent<CreateDataComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke(new CustomModel { Id = 1, Name = "Test" }))
                 .ShouldHave()
                 .Data(dbContext => dbContext
@@ -47,7 +46,6 @@
                 });
 
             MyViewComponent<CreateDataComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke(new CustomModel { Id = 1, Name = "Test" }))
                 .ShouldHave()
                 .Data(dbContext => dbContext
@@ -70,7 +68,6 @@
                 });
 
             MyViewComponent<CreateDataComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke(new CustomModel { Id = 1, Name = "Test" }))
                 .ShouldHave()
                 .Data(dbContext => dbContext
@@ -82,7 +79,6 @@
             Test.AssertException<DataProviderAssertionException>(() =>
             {
                 MyViewComponent<CreateDataComponent>
-                    .Instance()
                     .InvokedWith(c => c.Invoke(new CustomModel { Id = 2, Name = "Test" }))
                     .ShouldHave()
                     .Data(dbContext => dbContext

@@ -21,7 +21,6 @@
                 });
 
             MyViewComponent<NormalComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .NoSession()
@@ -48,7 +47,6 @@
                 () =>
                 {
                     MyViewComponent<AddSessionComponent>
-                       .Instance()
                        .InvokedWith(c => c.Invoke())
                        .ShouldHave()
                        .NoSession()
@@ -74,7 +72,6 @@
                 });
 
             MyViewComponent<AddSessionComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .Session()
@@ -101,7 +98,6 @@
                 () =>
                 {
                     MyViewComponent<NormalComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .Session()
@@ -127,7 +123,6 @@
                 });
 
             MyViewComponent<AddSessionComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .Session(withNumberOfEntries: 3)
@@ -154,7 +149,6 @@
                 () =>
                 {
                     MyViewComponent<NormalComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .Session(1)
@@ -183,7 +177,6 @@
                 () =>
                 {
                     MyViewComponent<AddSessionComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .Session(4)
@@ -209,7 +202,6 @@
                 });
 
             MyViewComponent<AddSessionComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .Session(session => session

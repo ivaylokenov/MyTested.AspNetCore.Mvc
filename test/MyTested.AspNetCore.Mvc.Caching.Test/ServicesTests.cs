@@ -68,7 +68,6 @@
                 .View();
 
             MyViewComponent<MemoryCacheComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .Content("No cache");

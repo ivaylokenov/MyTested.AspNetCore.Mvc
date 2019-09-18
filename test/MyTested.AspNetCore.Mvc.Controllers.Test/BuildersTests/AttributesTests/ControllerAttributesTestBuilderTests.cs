@@ -14,7 +14,6 @@
         public void ContainingAttributeOfTypeShouldNotThrowExceptionWithControllerWithTheAttribute()
         {
             MyController<MvcController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes.ContainingAttributeOfType<AuthorizeAttribute>());
         }
@@ -26,7 +25,6 @@
                 () =>
                 {
                     MyController<MvcController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes.ContainingAttributeOfType<AllowAnonymousAttribute>());
                 },
@@ -37,7 +35,6 @@
         public void PassingForShouldNotThrowExceptionWithCorrectAssertions()
         {
             MyController<MvcController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .PassingFor<AuthorizeAttribute>(authorize => Assert.Equal("Admin,Moderator", authorize.Roles)));
@@ -50,7 +47,6 @@
                 () =>
                 {
                     MyController<MvcController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .PassingFor<AuthorizeAttribute>(authorize => Assert.Equal("Admin", authorize.Roles)));
@@ -64,7 +60,6 @@
                 () =>
                 {
                     MyController<MvcController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .PassingFor<ActionNameAttribute>(authorize => Assert.Equal("Admin", authorize.Name)));
@@ -76,7 +71,6 @@
         public void PassingForShouldNotThrowExceptionWithCorrectPredicate()
         {
             MyController<MvcController>
-                .Instance()
                 .ShouldHave()
                 .Attributes(attributes => attributes
                     .PassingFor<AuthorizeAttribute>(authorize => authorize.Roles == "Admin,Moderator"));
@@ -89,7 +83,6 @@
                 () =>
                 {
                     MyController<MvcController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .PassingFor<AuthorizeAttribute>(authorize => authorize.Roles == "Admin"));
@@ -104,7 +97,6 @@
                 () =>
                 {
                     MyController<MvcController>
-                        .Instance()
                         .ShouldHave()
                         .Attributes(attributes => attributes
                             .PassingFor<AuthorizeAttribute>(authorize => authorize.Roles == "Admin,Moderator")

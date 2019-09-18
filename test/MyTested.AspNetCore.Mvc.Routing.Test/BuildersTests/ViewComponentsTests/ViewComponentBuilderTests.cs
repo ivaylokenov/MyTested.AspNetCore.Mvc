@@ -51,7 +51,6 @@
                 () =>
                 {
                     MyViewComponent<RouteDataComponent>
-                       .Instance()
                        .InvokedWith(c => c.Invoke())
                        .ShouldReturn()
                        .View()
