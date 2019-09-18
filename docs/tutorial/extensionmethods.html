@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!--[if IE]><![endif]-->
 <html>
   <head>
@@ -7,13 +7,13 @@
     <title>Extension Methods </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Extension Methods ">
-    <meta name="generator" content="docfx 2.6.3.0">
+    <meta name="generator" content="docfx 2.45.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
     <link rel="stylesheet" href="../styles/main.css">
-    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:navrel" content="">
     <meta property="docfx:tocrel" content="toc.html">
     <meta property="docfx:rel" content="../">
     <meta property="og:title" content="Flexible and asynchronous testing framework for ASP.NET Core MVC">
@@ -30,7 +30,7 @@
     <meta property="twitter:url" content="https://mytestedasp.net/">
     <meta property="twitter:image" content="https://mytestedasp.net/Content/Images/logosocial.jpg">
   </head>
-  <body data-spy="scroll" data-target="#affix">
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
         <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
@@ -75,19 +75,19 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-              <h1 id="extension-methods" sourcefile="tutorial/extensionmethods.md" sourcestartlinenumber="1" sourceendlinenumber="1">Extension Methods</h1>
-              
-<p sourcefile="tutorial/extensionmethods.md" sourcestartlinenumber="3" sourceendlinenumber="3">In this final section of the tutorial we will learn how to extend the functionality of My Tested ASP.NET Core MVC.</p>
-<h2 id="extending-existing-test-builders" sourcefile="tutorial/extensionmethods.md" sourcestartlinenumber="5" sourceendlinenumber="5">Extending existing test builders</h2>
-<p sourcefile="tutorial/extensionmethods.md" sourcestartlinenumber="7" sourceendlinenumber="7">Let&#39;s add an extension method which allows as to assert collection models like:</p>
-<pre sourcefile="tutorial/extensionmethods.md" sourcestartlinenumber="9" sourceendlinenumber="12"><code class="lang-c#">.WithModelOfType&lt;List&lt;Album&gt;&gt;()
+<h1 id="extension-methods">Extension Methods</h1>
+
+<p>In this final section of the tutorial we will learn how to extend the functionality of My Tested ASP.NET Core MVC.</p>
+<h2 id="extending-existing-test-builders">Extending existing test builders</h2>
+<p>Let&#39;s add an extension method which allows as to assert collection models like:</p>
+<pre><code class="lang-c#">.WithModelOfType&lt;List&lt;Album&gt;&gt;()
 .Passing(albums =&gt; albums.Count == 6)
-</code></pre><p sourcefile="tutorial/extensionmethods.md" sourcestartlinenumber="14" sourceendlinenumber="14">But on a single line:</p>
-<pre sourcefile="tutorial/extensionmethods.md" sourcestartlinenumber="16" sourceendlinenumber="18"><code class="lang-c#">.WithCollectionModelOfType&lt;Albums&gt;(albums =&gt; albums.Count == 6)
-</code></pre><p sourcefile="tutorial/extensionmethods.md" sourcestartlinenumber="20" sourceendlinenumber="20">If we take a look at the <strong>&quot;WithModelOfType&quot;</strong> signature, we will see it is an extension method to the <strong>&quot;IBaseTestBuilderWithResponseModel&quot;</strong> interface:</p>
-<pre sourcefile="tutorial/extensionmethods.md" sourcestartlinenumber="22" sourceendlinenumber="24"><code class="lang-c#">public static IAndModelDetailsTestBuilder&lt;TModel&gt; WithModelOfType&lt;TModel&gt;(this IBaseTestBuilderWithResponseModel builder);
-</code></pre><p sourcefile="tutorial/extensionmethods.md" sourcestartlinenumber="26" sourceendlinenumber="26">We will extend the same interface so that all action results with models are extended. Create a folder <strong>&quot;Extensions&quot;</strong> in the test project and add <strong>&quot;ResponseModelExtensions&quot;</strong> class containing the code below. </p>
-<pre sourcefile="tutorial/extensionmethods.md" sourcestartlinenumber="28" sourceendlinenumber="68"><code class="lang-c#">using MyTested.AspNetCore.Mvc.Builders.Base;
+</code></pre><p>But on a single line:</p>
+<pre><code class="lang-c#">.WithCollectionModelOfType&lt;Albums&gt;(albums =&gt; albums.Count == 6)
+</code></pre><p>If we take a look at the <strong>&quot;WithModelOfType&quot;</strong> signature, we will see it is an extension method to the <strong>&quot;IBaseTestBuilderWithResponseModel&quot;</strong> interface:</p>
+<pre><code class="lang-c#">public static IAndModelDetailsTestBuilder&lt;TModel&gt; WithModelOfType&lt;TModel&gt;(this IBaseTestBuilderWithResponseModel builder);
+</code></pre><p>We will extend the same interface so that all action results with models are extended. Create a folder <strong>&quot;Extensions&quot;</strong> in the test project and add <strong>&quot;ResponseModelExtensions&quot;</strong> class containing the code below.</p>
+<pre><code class="lang-c#">using MyTested.AspNetCore.Mvc.Builders.Base;
 using MyTested.AspNetCore.Mvc.Builders.Contracts.Base;
 using MyTested.AspNetCore.Mvc.Exceptions;
 using MyTested.AspNetCore.Mvc.Utilities;
@@ -104,15 +104,15 @@ public static class ResponseModelExtensions
         Func&lt;ICollection&lt;TModel&gt;, bool&gt; predicate = null)
     {
         // cast to the actual class behind the interface
-        var actualBuilder = (BaseTestBuilderWithResponseModel)builder; 
+        var actualBuilder = (BaseTestBuilderWithResponseModel)builder;
         // helper method validating the model type
-        var modelCollection = actualBuilder.GetActualModel&lt;ICollection&lt;TModel&gt;&gt;(); 
+        var modelCollection = actualBuilder.GetActualModel&lt;ICollection&lt;TModel&gt;&gt;();
 
         // execute the predicate if exists
-        if (predicate != null &amp;&amp; !predicate(modelCollection)) 
+        if (predicate != null &amp;&amp; !predicate(modelCollection))
         {
             // get the current test context
-            var testContext = actualBuilder.TestContext; 
+            var testContext = actualBuilder.TestContext;
 
             // throw exception for invalid predicate
             throw new ResponseModelAssertionException(string.Format(
@@ -123,41 +123,41 @@ public static class ResponseModelExtensions
         }
 
         // return the same test builder
-        return actualBuilder; 
+        return actualBuilder;
     }
 }
-</code></pre><p sourcefile="tutorial/extensionmethods.md" sourcestartlinenumber="70" sourceendlinenumber="70">Let&#39;s break it down and explain the most important parts of this extension method:</p>
-<ul sourcefile="tutorial/extensionmethods.md" sourcestartlinenumber="72" sourceendlinenumber="75">
-<li sourcefile="tutorial/extensionmethods.md" sourcestartlinenumber="72" sourceendlinenumber="72"><strong>&quot;IBaseTestBuilderWithComponent&quot;</strong> is a base interface containing <strong>&quot;ShouldPassFor&quot;</strong> methods allowing you to continue the fluent API.</li>
-<li sourcefile="tutorial/extensionmethods.md" sourcestartlinenumber="73" sourceendlinenumber="73"><strong>&quot;actualBuilder&quot;</strong> is a variable holding the actual class behind the <strong>&quot;IBaseTestBuilderWithResponseModel&quot;</strong> interface. The class&#39; name is the same as the interface but without the &#39;I&#39; in front of it. After the casting you will receive more functionality you can use - methods like the <strong>&quot;GetActualModel&quot;</strong> used above. Their purpose is to help you execute the test but not to be part of the actual fluent API.</li>
-<li sourcefile="tutorial/extensionmethods.md" sourcestartlinenumber="74" sourceendlinenumber="74">The <strong>&quot;TestContext&quot;</strong> is part of every single test builder class. It contains information about the currently executed test. For example in the scope of a controller test, the <strong>&quot;Component&quot;</strong> property will contain the controller instance and the <strong>&quot;MethodName&quot;</strong> property will contain the name of the tested action. More information available <a href="/guide/testcontext.html" sourcefile="tutorial/extensionmethods.md" sourcestartlinenumber="74" sourceendlinenumber="74">HERE</a>.</li>
-<li sourcefile="tutorial/extensionmethods.md" sourcestartlinenumber="75" sourceendlinenumber="75">The <strong>&quot;GetName&quot;</strong> and <strong>&quot;ToFriendlyTypeName&quot;</strong> extension methods can be used to format various display names.</li>
+</code></pre><p>Let&#39;s break it down and explain the most important parts of this extension method:</p>
+<ul>
+<li><strong>&quot;IBaseTestBuilderWithComponent&quot;</strong> is a base interface containing <strong>&quot;ShouldPassFor&quot;</strong> methods allowing you to continue the fluent API.</li>
+<li><strong>&quot;actualBuilder&quot;</strong> is a variable holding the actual class behind the <strong>&quot;IBaseTestBuilderWithResponseModel&quot;</strong> interface. The class&#39; name is the same as the interface but without the &#39;I&#39; in front of it. After the casting you will receive more functionality you can use - methods like the <strong>&quot;GetActualModel&quot;</strong> used above. Their purpose is to help you execute the test but not to be part of the actual fluent API.</li>
+<li>The <strong>&quot;TestContext&quot;</strong> is part of every single test builder class. It contains information about the currently executed test. For example in the scope of a controller test, the <strong>&quot;Component&quot;</strong> property will contain the controller instance and the <strong>&quot;MethodName&quot;</strong> property will contain the name of the tested action. More information available <a href="/guide/testcontext.html">HERE</a>.</li>
+<li>The <strong>&quot;GetName&quot;</strong> and <strong>&quot;ToFriendlyTypeName&quot;</strong> extension methods can be used to format various display names.</li>
 </ul>
-<h2 id="using-existing-methods" sourcefile="tutorial/extensionmethods.md" sourcestartlinenumber="77" sourceendlinenumber="77">Using existing methods</h2>
-<p sourcefile="tutorial/extensionmethods.md" sourcestartlinenumber="79" sourceendlinenumber="79">Let&#39;s add new testing functionality based on existing methods. For example instead of this call:</p>
-<pre sourcefile="tutorial/extensionmethods.md" sourcestartlinenumber="81" sourceendlinenumber="85"><code class="lang-c#">.ShouldHave()
+<h2 id="using-existing-methods">Using existing methods</h2>
+<p>Let&#39;s add new testing functionality based on existing methods. For example instead of this call:</p>
+<pre><code class="lang-c#">.ShouldHave()
 .Attributes(attributes =&gt; attributes
     .SpecifyingArea(&quot;Admin&quot;))
-</code></pre><p sourcefile="tutorial/extensionmethods.md" sourcestartlinenumber="87" sourceendlinenumber="87">We remove the magic string:</p>
-<pre sourcefile="tutorial/extensionmethods.md" sourcestartlinenumber="89" sourceendlinenumber="93"><code class="lang-c#">.ShouldHave()
+</code></pre><p>We remove the magic string:</p>
+<pre><code class="lang-c#">.ShouldHave()
 .Attributes(attributes =&gt; attributes
     .SpecifyingAdminArea())
-</code></pre><p sourcefile="tutorial/extensionmethods.md" sourcestartlinenumber="95" sourceendlinenumber="95">We need to extend the <strong>&quot;IControllerActionAttributesTestBuilder<tattributestestbuilder>&quot;</tattributestestbuilder></strong> interface. Add <strong>&quot;ControllerActionAttributeExtensions&quot;</strong> class with the following code in it:</p>
-<pre sourcefile="tutorial/extensionmethods.md" sourcestartlinenumber="97" sourceendlinenumber="107"><code class="lang-c#">using MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes;
+</code></pre><p>We need to extend the <strong>&quot;IControllerActionAttributesTestBuilder<tattributestestbuilder>&quot;</tattributestestbuilder></strong> interface. Add <strong>&quot;ControllerActionAttributeExtensions&quot;</strong> class with the following code in it:</p>
+<pre><code class="lang-c#">using MyTested.AspNetCore.Mvc;
+using MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes;
 
 public static class ControllerActionAttributeExtensions
 {
     public static TAttributesTestBuilder SpecifyingAdminArea&lt;TAttributesTestBuilder&gt;(
         this IControllerActionAttributesTestBuilder&lt;TAttributesTestBuilder&gt; builder)
-        where TAttributesTestBuilder : IBaseAttributesTestBuilder&lt;TAttributesTestBuilder&gt;
+        where TAttributesTestBuilder : IControllerActionAttributesTestBuilder&lt;TAttributesTestBuilder&gt;
         =&gt; builder.SpecifyingArea(&quot;Admin&quot;);
 }
-</code></pre><h2 id="final-words" sourcefile="tutorial/extensionmethods.md" sourcestartlinenumber="109" sourceendlinenumber="109">Final words</h2>
-<p sourcefile="tutorial/extensionmethods.md" sourcestartlinenumber="111" sourceendlinenumber="111">With this section we conclude the tutorial successfully! The final source code with all tests is available <a href="https://raw.githubusercontent.com/ivaylokenov/MyTested.AspNetCore.Mvc/master/docs/files/MusicStore-Tutorial-Final.zip" sourcefile="tutorial/extensionmethods.md" sourcestartlinenumber="111" sourceendlinenumber="111">HERE</a>. But before we say goodbye let&#39;s rebuild and rerun all tests again just for the sake of it. Do the same with the CLI by running <strong>&quot;dotnet test&quot;</strong>. Everything passes? Good!</p>
-<p sourcefile="tutorial/extensionmethods.md" sourcestartlinenumber="113" sourceendlinenumber="113">Hopefully, you fell in love with My Tested ASP.NET Core MVC and if not - ideas and suggestions are <a href="https://mytestedasp.net/#contact" sourcefile="tutorial/extensionmethods.md" sourcestartlinenumber="113" sourceendlinenumber="113">always welcome</a>!</p>
-<p sourcefile="tutorial/extensionmethods.md" sourcestartlinenumber="115" sourceendlinenumber="115">Thank you for reading the whole tutorial and have fun testing your web applications! :)</p>
-
-            </article>
+</code></pre><h2 id="final-words">Final words</h2>
+<p>With this section we conclude the tutorial successfully! The final source code with all tests is available <a href="https://raw.githubusercontent.com/ivaylokenov/MyTested.AspNetCore.Mvc/master/docs/files/MusicStore-Tutorial-Final.zip">HERE</a>. But before we say goodbye let&#39;s rebuild and rerun all tests again just for the sake of it. Do the same with the CLI by running <strong>&quot;dotnet test&quot;</strong>. Everything passes? Good!</p>
+<p>Hopefully, you fell in love with My Tested ASP.NET Core MVC and if not - ideas and suggestions are <a href="https://mytestedasp.net/#contact">always welcome</a>!</p>
+<p>Thank you for reading the whole tutorial and have fun testing your web applications! :)</p>
+</article>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">
@@ -165,7 +165,7 @@ public static class ControllerActionAttributeExtensions
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/tutorial/docs/_docfx/tutorial/extensionmethods.md/#L1" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/tmollov/MyTested.AspNetCore.Mvc/blob/development/docs/_docfx/tutorial/extensionmethods.md/#L1" class="contribution-link">Improve this Doc</a>
                   </li>
                 </ul>
               </div>
