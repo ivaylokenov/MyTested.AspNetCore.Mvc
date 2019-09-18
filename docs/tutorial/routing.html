@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!--[if IE]><![endif]-->
 <html>
   <head>
@@ -7,13 +7,13 @@
     <title>Routing </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Routing ">
-    <meta name="generator" content="docfx 2.6.3.0">
+    <meta name="generator" content="docfx 2.45.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
     <link rel="stylesheet" href="../styles/main.css">
-    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:navrel" content="">
     <meta property="docfx:tocrel" content="toc.html">
     <meta property="docfx:rel" content="../">
     <meta property="og:title" content="Flexible and asynchronous testing framework for ASP.NET Core MVC">
@@ -30,7 +30,7 @@
     <meta property="twitter:url" content="https://mytestedasp.net/">
     <meta property="twitter:image" content="https://mytestedasp.net/Content/Images/logosocial.jpg">
   </head>
-  <body data-spy="scroll" data-target="#affix">
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
         <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
@@ -75,81 +75,90 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-              <h1 id="routing" sourcefile="tutorial/routing.md" sourcestartlinenumber="1" sourceendlinenumber="1">Routing</h1>
-              
-<p sourcefile="tutorial/routing.md" sourcestartlinenumber="3" sourceendlinenumber="3">If you have a single route mapping (for example the default one), it will be not hard for you to validate and assert whether all controllers and actions resolve correctly. However, when your application gets bigger and bigger, and you start to map different kinds of routes and introduce various changes to them, it can be quite challenging and messy to guarantee their integrity. Here route testing comes in handy.</p>
-<h2 id="validating-controllers-and-actions" sourcefile="tutorial/routing.md" sourcestartlinenumber="5" sourceendlinenumber="5">Validating controllers and actions</h2>
-<p sourcefile="tutorial/routing.md" sourcestartlinenumber="7" sourceendlinenumber="7">Go to the <strong>&quot;project.json&quot;</strong> file and add the <strong>&quot;MyTested.AspNetCore.Mvc.Routing&quot;</strong> dependency:</p>
-<pre sourcefile="tutorial/routing.md" sourcestartlinenumber="9" sourceendlinenumber="30"><code class="lang-json">&quot;dependencies&quot;: {
-  &quot;dotnet-test-xunit&quot;: &quot;2.2.0-*&quot;,
-  &quot;xunit&quot;: &quot;2.2.0-*&quot;,
-  &quot;Moq&quot;: &quot;4.6.38-*&quot;,
-  &quot;MyTested.AspNetCore.Mvc.Authentication&quot;: &quot;1.0.0&quot;,
-  &quot;MyTested.AspNetCore.Mvc.Caching&quot;: &quot;1.0.0&quot;,
-  &quot;MyTested.AspNetCore.Mvc.Controllers&quot;: &quot;1.0.0&quot;,
-  &quot;MyTested.AspNetCore.Mvc.DependencyInjection&quot;: &quot;1.0.0&quot;,
-  &quot;MyTested.AspNetCore.Mvc.EntityFrameworkCore&quot;: &quot;1.0.0&quot;,
-  &quot;MyTested.AspNetCore.Mvc.Http&quot;: &quot;1.0.0&quot;,
-  &quot;MyTested.AspNetCore.Mvc.ModelState&quot;: &quot;1.0.0&quot;,
-  &quot;MyTested.AspNetCore.Mvc.Models&quot;: &quot;1.0.0&quot;,
-  &quot;MyTested.AspNetCore.Mvc.Options&quot;: &quot;1.0.0&quot;,
-  &quot;MyTested.AspNetCore.Mvc.Routing&quot;: &quot;1.0.0&quot;, // &lt;---
-  &quot;MyTested.AspNetCore.Mvc.Session&quot;: &quot;1.0.0&quot;,
-  &quot;MyTested.AspNetCore.Mvc.ViewActionResults&quot;: &quot;1.0.0&quot;,
-  &quot;MyTested.AspNetCore.Mvc.ViewComponents&quot;: &quot;1.0.0&quot;,
-  &quot;MyTested.AspNetCore.Mvc.ViewData&quot;: &quot;1.0.0&quot;,
-  &quot;MusicStore&quot;: &quot;*&quot;
-},
-</code></pre><p sourcefile="tutorial/routing.md" sourcestartlinenumber="32" sourceendlinenumber="32">Create <strong>&quot;Routing&quot;</strong> folder at the root of the test project and add <strong>&quot;HomeRouteTest&quot;</strong> class in it. We will start with something easy and validate the <strong>&quot;Error&quot;</strong> action in <strong>&quot;HomeController&quot;</strong>:</p>
-<pre sourcefile="tutorial/routing.md" sourcestartlinenumber="34" sourceendlinenumber="39"><code class="lang-c#">public IActionResult Error()
+<h1 id="routing">Routing</h1>
+
+<p>If you have a single route mapping (for example the default one), it will be not hard for you to validate and assert whether all controllers and actions resolve correctly. However, when your application gets bigger and bigger, and you start to map different kinds of routes and introduce various changes to them, it can be quite challenging and messy to guarantee their integrity. Here route testing comes in handy.</p>
+<h2 id="validating-controllers-and-actions">Validating controllers and actions</h2>
+<p>Go to the <strong>&quot;MusicStore.Test.csproj&quot;</strong> file and add the <strong>&quot;MyTested.AspNetCore.Mvc.Routing&quot;</strong> dependency:</p>
+<pre><code class="lang-xml">&lt;!-- Other ItemGroups --&gt;
+
+  &lt;ItemGroup&gt;
+    &lt;PackageReference Include=&quot;Microsoft.AspNetCore.App&quot; /&gt;
+    &lt;PackageReference Include=&quot;Microsoft.NET.Test.Sdk&quot; Version=&quot;16.0.1&quot; /&gt;
+    &lt;PackageReference Include=&quot;Moq&quot; Version=&quot;4.13.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Authentication&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Caching&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Controllers&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Controllers.ActionResults&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Controllers.Attributes&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Controllers.Views&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Controllers.Views.ActionResults&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.DependencyInjection&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.EntityFrameworkCore&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Http&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Models&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.ModelState&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Options&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;!-- MyTested.AspNetCore.Mvc.Routing package --&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Routing&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Session&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.ViewComponents&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.ViewData&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;xunit&quot; Version=&quot;2.4.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;xunit.runner.visualstudio&quot; Version=&quot;2.4.0&quot; /&gt;
+  &lt;/ItemGroup&gt;
+
+&lt;!-- Other ItemGroups --&gt;
+</code></pre><p>Create <strong>&quot;Routing&quot;</strong> folder at the root of the test project and add <strong>&quot;HomeRouteTest&quot;</strong> class in it. We will start with something easy and validate the <strong>&quot;Error&quot;</strong> action in <strong>&quot;HomeController&quot;</strong>:</p>
+<pre><code class="lang-c#">public IActionResult Error()
 {
     // action code skipped for brevity
 }
-</code></pre><p sourcefile="tutorial/routing.md" sourcestartlinenumber="41" sourceendlinenumber="41">The simplest route test possible:</p>
-<pre sourcefile="tutorial/routing.md" sourcestartlinenumber="43" sourceendlinenumber="50"><code class="lang-c#">[Fact]
+</code></pre><p>The simplest route test possible:</p>
+<pre><code class="lang-c#">[Fact]
 public void GetErrorActionShouldBeRoutedSuccessfuly()
     =&gt; MyRouting
         .Configuration()
         .ShouldMap(&quot;/Home/Error&quot;)
         .To&lt;HomeController&gt;(c =&gt; c.Error());
-</code></pre><p sourcefile="tutorial/routing.md" sourcestartlinenumber="52" sourceendlinenumber="52">My Tested ASP.NET Core MVC gets the routing configuration from the provided <strong>&quot;TestStartup&quot;</strong> class. Note that the route testing will not fire any application middleware components or MVC filters. It is simply validating whether the MVC router will select the correct controller and action based on the HTTP request data. Works with both conventional and attribute routing. Additionally, the testing framework uses the same services ASP.NET Core uses, so if you make any customizations to the route selection process, it will not interfere with the assertions logic and tests should still validate your mappings.</p>
-<h2 id="validating-route-values" sourcefile="tutorial/routing.md" sourcestartlinenumber="54" sourceendlinenumber="54">Validating route values</h2>
-<p sourcefile="tutorial/routing.md" sourcestartlinenumber="56" sourceendlinenumber="56">We will now going to validate route values next to controllers and actions. The <strong>&quot;AddToCart&quot;</strong> action in the <strong>&quot;ShoppingCartController&quot;</strong> looks perfect for that purpose:</p>
-<pre sourcefile="tutorial/routing.md" sourcestartlinenumber="58" sourceendlinenumber="63"><code class="lang-c#">public async Task&lt;IActionResult&gt; AddToCart(int id)
+</code></pre><p>My Tested ASP.NET Core MVC gets the routing configuration from the provided <strong>&quot;TestStartup&quot;</strong> class. Note that the route testing will not fire any application middleware components, but it will run the MVC filters. It is validating whether the MVC router will select the correct controller and action based on the HTTP request data. Works with both conventional and attribute routing. Additionally, the testing framework uses the same services ASP.NET Core uses, so if you make any customizations to the route selection process, it will not interfere with the assertions logic and tests should still validate your mappings.</p>
+<h2 id="validating-route-values">Validating route values</h2>
+<p>We will now going to validate route values next to controllers and actions. The <strong>&quot;AddToCart&quot;</strong> action in the <strong>&quot;ShoppingCartController&quot;</strong> looks perfect for that purpose:</p>
+<pre><code class="lang-c#">public async Task&lt;IActionResult&gt; AddToCart(int id)
 {
     // action code skipped for brevity
 }
-</code></pre><p sourcefile="tutorial/routing.md" sourcestartlinenumber="65" sourceendlinenumber="65">Create <strong>&quot;ShoppingCartRouteTest&quot;&quot;</strong> class and add the following test:</p>
-<pre sourcefile="tutorial/routing.md" sourcestartlinenumber="67" sourceendlinenumber="74"><code class="lang-c#">[Fact]
+</code></pre><p>Create <strong>&quot;ShoppingCartRouteTest&quot;&quot;</strong> class and add the following test:</p>
+<pre><code class="lang-c#">[Fact]
 public void GetAddToCartActionShouldBeRoutedSuccessfuly()
     =&gt; MyRouting
         .Configuration()
         .ShouldMap(&quot;/ShoppingCart/AddToCart/1&quot;)
-        .To&lt;ShoppingCartController&gt;(c =&gt; c.AddToCart(1));
-</code></pre><p sourcefile="tutorial/routing.md" sourcestartlinenumber="76" sourceendlinenumber="76">Query strings are also easy. Let&#39;s test the <strong>&quot;Browse&quot;</strong> action in the <strong>&quot;StoreController&quot;</strong>:</p>
-<pre sourcefile="tutorial/routing.md" sourcestartlinenumber="78" sourceendlinenumber="83"><code class="lang-c#">public async Task&lt;IActionResult&gt; Browse(string genre)
+        .To&lt;ShoppingCartController&gt;(c =&gt; c.AddToCart(1, CancellationToken.None));
+</code></pre><p>Query strings are also easy. Let&#39;s test the <strong>&quot;Browse&quot;</strong> action in the <strong>&quot;StoreController&quot;</strong>:</p>
+<pre><code class="lang-c#">public async Task&lt;IActionResult&gt; Browse(string genre)
 {
     // action code skipped for brevity
 }
-</code></pre><p sourcefile="tutorial/routing.md" sourcestartlinenumber="85" sourceendlinenumber="85">Create <strong>&quot;StoreRouteTest&quot;&quot;</strong> class and add the following test:</p>
-<pre sourcefile="tutorial/routing.md" sourcestartlinenumber="87" sourceendlinenumber="94"><code class="lang-c#">[Fact]
+</code></pre><p>Create <strong>&quot;StoreRouteTest&quot;&quot;</strong> class and add the following test:</p>
+<pre><code class="lang-c#">[Fact]
 public void GetBrowseActionShouldBeRoutedSuccessfuly()
     =&gt; MyRouting
         .Configuration()
         .ShouldMap(&quot;/Store/Browse?genre=HipHop&quot;)
         .To&lt;StoreController&gt;(c =&gt; c.Browse(&quot;HipHop&quot;));
-</code></pre><p sourcefile="tutorial/routing.md" sourcestartlinenumber="96" sourceendlinenumber="96">And if you change <strong>&quot;HipHop&quot;</strong> with <strong>&quot;Rock&quot;</strong>, for example, you will see the following error message:</p>
-<pre sourcefile="tutorial/routing.md" sourcestartlinenumber="98" sourceendlinenumber="100"><code class="lang-text">Expected route &#39;/Store/Browse&#39; to contain route value with &#39;genre&#39; key and the provided value but the value was different.
-</code></pre><h2 id="ignoring-route-values" sourcefile="tutorial/routing.md" sourcestartlinenumber="102" sourceendlinenumber="102">Ignoring route values</h2>
-<p sourcefile="tutorial/routing.md" sourcestartlinenumber="104" sourceendlinenumber="104">Some action parameters do not have to be tested. They come from the service provider, not the MVC routers. Let&#39;s take a look at the <strong>&quot;Index&quot;</strong> action in the <strong>&quot;HomeController&quot;</strong>:</p>
-<pre sourcefile="tutorial/routing.md" sourcestartlinenumber="106" sourceendlinenumber="113"><code class="lang-c#">public async Task&lt;IActionResult&gt; Index(
+</code></pre><p>And if you change <strong>&quot;HipHop&quot;</strong> with <strong>&quot;Rock&quot;</strong>, for example, you will see the following error message:</p>
+<pre><code class="lang-text">Expected route &#39;/Store/Browse&#39; to contain route value with &#39;genre&#39; key and the provided value but the value was different.
+</code></pre><h2 id="ignoring-route-values">Ignoring route values</h2>
+<p>Some action parameters do not have to be tested. They come from the service provider, not the MVC routers. Let&#39;s take a look at the <strong>&quot;Index&quot;</strong> action in the <strong>&quot;HomeController&quot;</strong>:</p>
+<pre><code class="lang-c#">public async Task&lt;IActionResult&gt; Index(
     [FromServices] MusicStoreContext dbContext,
     [FromServices] IMemoryCache cache)
 {
     // action code skipped for brevity
 }
-</code></pre><p sourcefile="tutorial/routing.md" sourcestartlinenumber="115" sourceendlinenumber="115">We do not want to test the <strong>&quot;MusicStoreContext&quot;</strong> and the <strong>&quot;IMemoryCache&quot;</strong> action parameters. Ignoring them is a piece of cake - just use the helper method <strong>&quot;With.Any&quot;</strong> wherever you want to skip assertion:</p>
-<pre sourcefile="tutorial/routing.md" sourcestartlinenumber="117" sourceendlinenumber="126"><code class="lang-c#">[Fact]
+</code></pre><p>We do not want to test the <strong>&quot;MusicStoreContext&quot;</strong> and the <strong>&quot;IMemoryCache&quot;</strong> action parameters. Ignoring them is a piece of cake - just use the helper method <strong>&quot;With.Any&quot;</strong> wherever you want to skip assertion:</p>
+<pre><code class="lang-c#">[Fact]
 public void GetIndexActionShouldBeRoutedSuccessfuly()
     =&gt; MyRouting
         .Configuration()
@@ -157,18 +166,18 @@ public void GetIndexActionShouldBeRoutedSuccessfuly()
         .To&lt;HomeController&gt;(c =&gt; c.Index(
             With.Any&lt;MusicStoreContext&gt;(), // &lt;---
             With.Any&lt;IMemoryCache&gt;())); // &lt;---
-</code></pre><p sourcefile="tutorial/routing.md" sourcestartlinenumber="128" sourceendlinenumber="128"><strong>&quot;With.Any&quot;</strong> can be used on any action parameter expected in a route test.</p>
-<h2 id="more-specific-requests" sourcefile="tutorial/routing.md" sourcestartlinenumber="130" sourceendlinenumber="130">More specific requests</h2>
-<p sourcefile="tutorial/routing.md" sourcestartlinenumber="132" sourceendlinenumber="132">All of the above examples are using HTTP Get method and the provided path as request data to test with. However, without adding more specific information, some actions cannot be routed correctly. For example <strong>&quot;RemoveFromCart&quot;</strong> in <strong>&quot;ShoppingCartController&quot;</strong>:</p>
-<pre sourcefile="tutorial/routing.md" sourcestartlinenumber="134" sourceendlinenumber="142"><code class="lang-c#">[HttpPost]
+</code></pre><p><strong>&quot;With.Any&quot;</strong> can be used on any action parameter expected in a route test.</p>
+<h2 id="action-filters">Action filters</h2>
+<p>All of the above examples are using HTTP Get method and the provided path as request data to test with. However, without adding more specific information, some actions cannot be routed correctly. For example <strong>&quot;RemoveFromCart&quot;</strong> in the <strong>&quot;ShoppingCartController&quot;</strong>:</p>
+<pre><code class="lang-c#">[HttpPost]
 public async Task&lt;IActionResult&gt; RemoveFromCart(
     int id,
     CancellationToken requestAborted)
 {
     // action code skipped for brevity
 }
-</code></pre><p sourcefile="tutorial/routing.md" sourcestartlinenumber="144" sourceendlinenumber="144">The following test will fail right away:</p>
-<pre sourcefile="tutorial/routing.md" sourcestartlinenumber="146" sourceendlinenumber="155"><code class="lang-c#">[Fact]
+</code></pre><p>The following test will fail right away:</p>
+<pre><code class="lang-c#">[Fact]
 public void PostRemoveFromCartActionShouldBeRoutedSuccessfuly()
     =&gt; MyRouting
         .Configuration()
@@ -176,8 +185,8 @@ public void PostRemoveFromCartActionShouldBeRoutedSuccessfuly()
         .To&lt;ShoppingCartController&gt;(c =&gt; c.RemoveFromCart(
             1,
             With.Any&lt;CancellationToken&gt;()));
-</code></pre><p sourcefile="tutorial/routing.md" sourcestartlinenumber="157" sourceendlinenumber="157">We are testing with HTTP Get request while the action is restricted only to HTTP Post one. Let&#39;s fix the issue:</p>
-<pre sourcefile="tutorial/routing.md" sourcestartlinenumber="159" sourceendlinenumber="170"><code class="lang-c#">[Fact]
+</code></pre><p>We are testing with HTTP Get request while the action is restricted only for HTTP Post ones. Let&#39;s fix the issue:</p>
+<pre><code class="lang-c#">[Fact]
 public void PostRemoveFromCartActionShouldBeRoutedSuccessfuly()
     =&gt; MyRouting
         .Configuration()
@@ -187,17 +196,109 @@ public void PostRemoveFromCartActionShouldBeRoutedSuccessfuly()
         .To&lt;ShoppingCartController&gt;(c =&gt; c.RemoveFromCart(
             1,
             With.Any&lt;CancellationToken&gt;()));
-</code></pre><p sourcefile="tutorial/routing.md" sourcestartlinenumber="172" sourceendlinenumber="172">This way we are explicitly setting the request to have HTTP Post method making the routing match the specified controller, action and route value.</p>
-<h2 id="model-binding" sourcefile="tutorial/routing.md" sourcestartlinenumber="174" sourceendlinenumber="174">Model Binding</h2>
-<p sourcefile="tutorial/routing.md" sourcestartlinenumber="176" sourceendlinenumber="176">Besides route values, you can also assert that all request properties (like its body for example) are bound to the action parameters and models. For example for fields in the HTTP Post overload of the <strong>&quot;Login&quot;</strong> action in the <strong>&quot;AccountController&quot;</strong>:</p>
-<pre sourcefile="tutorial/routing.md" sourcestartlinenumber="178" sourceendlinenumber="184"><code class="lang-c#">[HttpPost]
+</code></pre><p>This way we are explicitly setting the request to have HTTP Post method making the routing match the specified controller, action and route value.</p>
+<p>However, running the test produces the following error:</p>
+<pre><code class="lang-text">Expected route &#39;/ShoppingCart/RemoveFromCart/1&#39; to match RemoveFromCart action in ShoppingCartController but action could not be invoked because of the declared filters. You must set the request properties so that they will pass through the pipeline.
+</code></pre><p>As it was mentioned earlier, route testing executes the MVC action filters (even the globally registered ones in your <strong>&quot;Startup&quot;</strong> class). The <strong>&quot;RemoveFromCart&quot;</strong> action is defined with a <strong>&quot;ValidateAntiForgeryToken&quot;</strong> attribute, and we need to change our test a bit in order for it to pass. The anti-forgery token features of the library are located in the <strong>&quot;MyTested.AspNetCore.Mvc.ViewFeatures&quot;</strong> package, so let&#39;s install it:</p>
+<pre><code class="lang-xml">&lt;!-- Other ItemGroups --&gt;
+
+  &lt;ItemGroup&gt;
+    &lt;PackageReference Include=&quot;Microsoft.AspNetCore.App&quot; /&gt;
+    &lt;PackageReference Include=&quot;Microsoft.NET.Test.Sdk&quot; Version=&quot;16.0.1&quot; /&gt;
+    &lt;PackageReference Include=&quot;Moq&quot; Version=&quot;4.13.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Authentication&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Caching&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Controllers&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Controllers.ActionResults&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Controllers.Attributes&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Controllers.Views&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Controllers.Views.ActionResults&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.DependencyInjection&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.EntityFrameworkCore&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Http&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Models&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.ModelState&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Options&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Routing&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.Session&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.ViewComponents&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.ViewData&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;!-- MyTested.AspNetCore.Mvc.ViewFeatures package --&gt;
+    &lt;PackageReference Include=&quot;MyTested.AspNetCore.Mvc.ViewFeatures&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;xunit&quot; Version=&quot;2.4.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;xunit.runner.visualstudio&quot; Version=&quot;2.4.0&quot; /&gt;
+  &lt;/ItemGroup&gt;
+
+&lt;!-- Other ItemGroups --&gt;
+</code></pre><p>Let&#39;s update the test to make it pass:</p>
+<pre><code class="lang-c#">[Fact]
+public void PostRemoveFromCartActionShouldBeRoutedSuccessfuly()
+    =&gt; MyRouting
+        .Configuration()
+        .ShouldMap(request =&gt; request
+            .WithMethod(HttpMethod.Post)
+            .WithLocation(&quot;/ShoppingCart/RemoveFromCart/1&quot;)
+            .WithAntiForgeryToken()) // &lt;---
+        .To&lt;ShoppingCartController&gt;(c =&gt; c.RemoveFromCart(
+            1,
+            With.Any&lt;CancellationToken&gt;()));
+</code></pre><p><em>Keep in mind that if you register the **&quot;AutoValidateAntiforgeryTokenAttribute&quot;</em>* globally, you will still need to call <strong>&quot;WithAntiForgeryToken&quot;</strong> on your route tests.*</p>
+<p>Another commonly used action filter you need to be aware of in your route tests is the <strong>&quot;Authorize&quot;</strong> attribute. </p>
+<p>Let&#39;s test a <strong>&quot;CheckoutController&quot;</strong> action, because all actions in that controller are for authorized users only. Create a <strong>&quot;CheckoutRouteTest&quot;</strong> class and add the following code in it:</p>
+<pre><code class="lang-c#">[Fact]
+public void GetAddressAndPaymentActionShouldBeRoutedSuccessfuly()
+    =&gt; MyRouting
+        .Configuration()
+        .ShouldMap(request =&gt; request
+            .WithLocation(&quot;/Checkout/AddressAndPayment&quot;)
+            .WithUser()) // &lt;---
+        .To&lt;CheckoutController&gt;(c =&gt; c.AddressAndPayment());
+</code></pre><p>By calling <strong>&quot;WithUser&quot;</strong>, we are providing the router all the information it needs to match and validate the action. </p>
+<p>Sometimes we need to provide a user with a specific role or authorization policy. Take a look at the <strong>&quot;StoreManagerController&quot;</strong> in the <strong>&quot;Admin&quot;</strong> area:</p>
+<pre><code class="lang-c#">[Area(&quot;Admin&quot;)]
+[Authorize(&quot;ManageStore&quot;)]
+public class StoreManagerController : Controller
+{
+    // controller code skipped for brevity
+}
+</code></pre><p>This controller is authorized only for the users who have a <strong>&quot;ManageStore&quot;</strong> claim with a value of &quot;Allowed&quot;. This policy is defined in the web application&#39;s <strong>&quot;Startup&quot;</strong> class:</p>
+<pre><code class="lang-c#">// class code skipped for brevity
+
+// Configure Auth
+services.AddAuthorization(options =&gt;
+{
+    options.AddPolicy(
+        &quot;ManageStore&quot;,
+        authBuilder =&gt;
+        {
+            authBuilder.RequireClaim(&quot;ManageStore&quot;, &quot;Allowed&quot;);
+        });
+});
+
+// class code skipped for brevity
+</code></pre><p>Let&#39;s test that route! In <strong>&quot;Routing&quot;</strong>, create an <strong>&quot;Admin&quot;</strong> folder. In it create a <strong>&quot;StoreManagerRouteTest&quot;</strong> class, add the necessary usings, and write the following test:</p>
+<pre><code class="lang-c#">[Fact]
+public void GetIndexActionShouldBeRoutedSuccessfuly()
+    =&gt; MyRouting
+        .Configuration()
+        .ShouldMap(request =&gt; request
+            .WithLocation(&quot;/Admin/StoreManager&quot;)
+            .WithUser(user =&gt; user
+                .WithClaim(&quot;ManageStore&quot;, &quot;Allowed&quot;))) // &lt;---
+        .To&lt;StoreManagerController&gt;(c =&gt; c.Index());
+</code></pre><p>Action filters covered! :)</p>
+<h2 id="model-binding">Model binding</h2>
+<p>Besides route values, you can also assert that all request properties (like its body for example) are bound to the action parameters and models. For example, the form fields in the HTTP Post overload of the <strong>&quot;Login&quot;</strong> action in the <strong>&quot;AccountController&quot;</strong>:</p>
+<pre><code class="lang-c#">[HttpPost]
+[AllowAnonymous]
+[ValidateAntiForgeryToken]
 public async Task&lt;IActionResult&gt; Login(LoginViewModel model, string returnUrl = null)
 {
     // action code skipped for brevity
 }
-</code></pre><p sourcefile="tutorial/routing.md" sourcestartlinenumber="186" sourceendlinenumber="186">The login view model should come form the request from so we may decide to ignore it by using <strong>&quot;With.Any&quot;</strong> or provide it like so:</p>
-<pre sourcefile="tutorial/routing.md" sourcestartlinenumber="188" sourceendlinenumber="210"><code class="lang-c#">[Fact]
-public void PostLoginShouldBeRoutedSuccessfuly()
+</code></pre><p>The login view model should come from the request form so we may decide to ignore it by using <strong>&quot;With.Any&quot;</strong> or provide it like so:</p>
+<pre><code class="lang-c#">[Fact]
+public void PostLoginActionShouldBeRoutedSuccessfuly()
     =&gt; MyRouting
         .Configuration()
         .ShouldMap(request =&gt; request
@@ -208,7 +309,8 @@ public void PostLoginShouldBeRoutedSuccessfuly()
                 Email = &quot;test@test.com&quot;,
                 Password = &quot;123456&quot;,
                 RememberMe = &quot;true&quot;
-            }))
+            })
+            .WithAntiForgeryToken())
         .To&lt;AccountController&gt;(c =&gt; c.Login(
             new LoginViewModel
             {
@@ -217,14 +319,14 @@ public void PostLoginShouldBeRoutedSuccessfuly()
                 RememberMe = true
             },
             &quot;Test&quot;));
-</code></pre><p sourcefile="tutorial/routing.md" sourcestartlinenumber="212" sourceendlinenumber="212">Note that the <strong>&quot;RememberMe&quot;</strong> property value is provided as a string. This is the correct way because in HTTP requests hold form fields in a simple text format. If you by mistake provide it as a C# boolean value, you will receive an error.</p>
-<p sourcefile="tutorial/routing.md" sourcestartlinenumber="214" sourceendlinenumber="214">The <strong>&quot;WithFormFields&quot;</strong> method call does some magic behind the scenes and it&#39;s just a shorter way to write:</p>
-<pre sourcefile="tutorial/routing.md" sourcestartlinenumber="216" sourceendlinenumber="220"><code class="lang-c#">.WithFormField(&quot;Email&quot;, &quot;test@test.com&quot;)
+</code></pre><p><em>Note that the **&quot;RememberMe&quot;</em>* property value is provided as a string. This is the correct way because HTTP requests hold form fields in a simple text format. If you by mistake provide it as a C# boolean value, you will receive an error.*</p>
+<p>The <strong>&quot;WithFormFields&quot;</strong> method call does some magic behind the scenes and it&#39;s just a shorter way to write:</p>
+<pre><code class="lang-c#">.WithFormField(&quot;Email&quot;, &quot;test@test.com&quot;)
 .WithFormField(&quot;Password&quot;, &quot;123456&quot;)
 .WithFormField(&quot;RememberMe&quot;, &quot;true&quot;))
-</code></pre><h2 id="json-body" sourcefile="tutorial/routing.md" sourcestartlinenumber="222" sourceendlinenumber="222">JSON body</h2>
-<p sourcefile="tutorial/routing.md" sourcestartlinenumber="224" sourceendlinenumber="224">The <strong>&quot;Music Store&quot;</strong> web application does not have any JSON-based model binding, but it is not hard to test with one:</p>
-<pre sourcefile="tutorial/routing.md" sourcestartlinenumber="226" sourceendlinenumber="239"><code class="lang-c#">MyRouting
+</code></pre><h2 id="json-body">JSON body</h2>
+<p>The <strong>&quot;Music Store&quot;</strong> web application does not have any JSON-based model binding, but it is not hard to test with one:</p>
+<pre><code class="lang-c#">MyRouting
     .Configuration()
     .ShouldMap(request =&gt; request
         .WithMethod(HttpMethod.Post)
@@ -236,8 +338,8 @@ public void PostLoginShouldBeRoutedSuccessfuly()
             MyNumber = 1,
             MyString = &quot;MyText&quot;
         }));
-</code></pre><p sourcefile="tutorial/routing.md" sourcestartlinenumber="241" sourceendlinenumber="241">There is also an anonymous object overload:</p>
-<pre sourcefile="tutorial/routing.md" sourcestartlinenumber="243" sourceendlinenumber="260"><code class="lang-c#">MyRouting
+</code></pre><p>There is also an anonymous object overload:</p>
+<pre><code class="lang-c#">MyRouting
     .Configuration()
     .ShouldMap(request =&gt; request
         .WithMethod(HttpMethod.Post)
@@ -253,19 +355,18 @@ public void PostLoginShouldBeRoutedSuccessfuly()
             MyNumber = 1,
             MyString = &quot;MyText&quot;
         }));
-</code></pre><p sourcefile="tutorial/routing.md" sourcestartlinenumber="262" sourceendlinenumber="262">It may seem a bit strange at first, but My Tested ASP.NET Core MVC serializes the anonymous object to JSON string, attach it to the HTTP request body as a stream and pass it to the routing system.</p>
-<p sourcefile="tutorial/routing.md" sourcestartlinenumber="264" sourceendlinenumber="264">Of course, you can always ignore model binding and just assert controllers and actions:</p>
-<pre sourcefile="tutorial/routing.md" sourcestartlinenumber="266" sourceendlinenumber="273"><code class="lang-c#">MyRouting
+</code></pre><p>It may seem a bit strange at first, but My Tested ASP.NET Core MVC serializes the anonymous object to JSON string, attach it to the HTTP request body as a stream and pass it to the routing system.</p>
+<p>Of course, you can always choose to ignore model binding and just assert controllers and actions:</p>
+<pre><code class="lang-c#">MyRouting
     .Configuration()
     .ShouldMap(request =&gt; request
         .WithMethod(HttpMethod.Post)
         .WithLocation(&quot;/My/Action&quot;))
     .To&lt;MyController&gt;(c =&gt; c.Action(With.Any&lt;MyModel&gt;()));
-</code></pre><h2 id="section-summary" sourcefile="tutorial/routing.md" sourcestartlinenumber="275" sourceendlinenumber="275">Section summary</h2>
-<p sourcefile="tutorial/routing.md" sourcestartlinenumber="277" sourceendlinenumber="277">Still not convinced about route testing and its capabilities? Check this <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/development/test/MyTested.AspNetCore.Mvc.Routing.Test/BuildersTests/RoutingTests/RouteTestBuilderTests.cs#L766" sourcefile="tutorial/routing.md" sourcestartlinenumber="277" sourceendlinenumber="277">ultimate crazy model binding test</a> which asserts JSON body, route values, query string parameters, form fields and headers at the same time. I hope no one writes such actions, though...</p>
-<p sourcefile="tutorial/routing.md" sourcestartlinenumber="279" sourceendlinenumber="279">We are almost at the finish line. Next section will cover various test <a href="/tutorial/helpers.html" sourcefile="tutorial/routing.md" sourcestartlinenumber="279" sourceendlinenumber="279">Helpers</a> which do not fall within a particular tutorial section.</p>
-
-            </article>
+</code></pre><h2 id="section-summary">Section summary</h2>
+<p>Still not convinced about the route testing and its capabilities? Check this <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/development/test/MyTested.AspNetCore.Mvc.Routing.Test/BuildersTests/RoutingTests/RouteTestBuilderTests.cs#L766">ultimate crazy model binding test</a> which asserts JSON body, route values, query string parameters, form fields and headers at the same time. I hope no one writes such actions, though...</p>
+<p>We are almost at the finish line. Next section will cover various test <a href="/tutorial/helpers.html">Helpers</a> which do not fall within a particular tutorial section.</p>
+</article>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">
@@ -273,7 +374,7 @@ public void PostLoginShouldBeRoutedSuccessfuly()
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/tutorial/docs/_docfx/tutorial/routing.md/#L1" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/tmollov/MyTested.AspNetCore.Mvc/blob/development/docs/_docfx/tutorial/routing.md/#L1" class="contribution-link">Improve this Doc</a>
                   </li>
                 </ul>
               </div>

@@ -24,8 +24,8 @@ public void IndexShouldReturnViewWithGenres()
         .Instance()
         .Calling(c => c.Index())
         .ShouldReturn()
-        .View()
-        .WithModelOfType<List<Genre>>();
+        .View(result => result
+            .WithModelOfType<List<Genre>>());
 ``` 
 
 A nice little test. With a big "KABOOM"!
@@ -46,19 +46,26 @@ Not cool for sure! The exception occurs because our **"config.json"** file conta
 
 And we should be happy about it! The last thing we want is our tests knowing where the application database is.
 
-But we still need to write a test against the **"DbContext"**! Fear no more - go to the **"project.json"** file and add ""*MyTested.AspNetCore.Mvc.EntityFrameworkCore*"" as a dependency:
+But we still need to write a test against the **"DbContext"**! Fear no more - go to the **"MusicStore.Test.csproj"** file and add **"MyTested.AspNetCore.Mvc.EntityFrameworkCore"** as a dependency:
 
-```json
-"dependencies": {
-  "dotnet-test-xunit": "2.2.0-*",
-  "xunit": "2.2.0-*",
-  "MyTested.AspNetCore.Mvc.Controllers": "1.0.0",
-  "MyTested.AspNetCore.Mvc.EntityFrameworkCore": "1.0.0", // <---
-  "MyTested.AspNetCore.Mvc.ModelState": "1.0.0",
-  "MyTested.AspNetCore.Mvc.Models": "1.0.0",
-  "MyTested.AspNetCore.Mvc.ViewActionResults": "1.0.0",
-  "MusicStore": "*"
-},
+```xml
+<!-- Other ItemGroups -->
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.ActionResults" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.Views" Version="2.2.0" />
+	<!-- MyTested.AspNetCore.Mvc.EntityFrameworkCore package -->
+    <PackageReference Include="MyTested.AspNetCore.Mvc.EntityFrameworkCore" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Models" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.ModelState" Version="2.2.0" />
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+  </ItemGroup>
+
+<!-- Other ItemGroups -->
 ```
 
 Now run the test again and see the magic! :)
@@ -72,51 +79,65 @@ Our test passes but it will be better if we assert the action with actual data. 
 ```c#
 MyController<StoreController>
     .Instance()
-    .WithDbContext(dbContext => dbContext // <---
+    .WithData(data => data // <---
         .WithEntities(entities => entities.AddRange(
             new Genre { Name = "FirstGenre" },
             new Genre { Name = "SecondGenre" })))
     .Calling(c => c.Index())
     .ShouldReturn()
-    .View()
-    .WithModelOfType<List<Genre>>()
-    .Passing(model => model.Count == 2);
+    .View(result => result
+        .WithModelOfType<List<Genre>>()
+        .Passing(model => model.Count == 2));
+```
+
+A shorter syntax is also available:
+
+```c#
+MyController<StoreController>
+    .Instance()
+    .WithData( // <---
+        new Genre { Name = "FirstGenre" },
+        new Genre { Name = "SecondGenre" })
+    .Calling(c => c.Index())
+    .ShouldReturn()
+    .View(result => result
+        .WithModelOfType<List<Genre>>()
+        .Passing(model => model.Count == 2));
 ```
 
 The good part of this test is the fact that these data objects live only in-memory and are not stored anywhere.
 
-The best part of this test is the fact that these data objects live in scoped per test lifetime. We will dive deeper into scoped services in the next tutorial section. For now, write these two tests and run them:
+The best part of this test is the fact that these data objects live in "scoped per test lifetime". We will dive deeper into scoped services during the next tutorial section. For now, write these two tests and run them:
 
 ```c#
 [Fact]
 public void IndexShouldReturnViewWithGenres()
     => MyController<StoreController>
         .Instance()
-        .WithDbContext(dbContext => dbContext // <---
-            .WithEntities(entities => entities.AddRange(
-                new Genre { Name = "FirstGenre" },
-                new Genre { Name = "SecondGenre" })))
+        .WithData(
+            new Genre { Name = "FirstGenre" },
+            new Genre { Name = "SecondGenre" })
         .Calling(c => c.Index())
         .ShouldReturn()
-        .View()
-        .WithModelOfType<List<Genre>>()
-        .Passing(model => model.Count == 2); // <---
-        
+        .View(result => result
+            .WithModelOfType<List<Genre>>()
+            .Passing(model => model.Count == 2));
+
 [Fact]
 public void IWillShowScopedDatabaseServices()
     => MyController<StoreController>
         .Instance()
-        .WithDbContext(dbContext => dbContext // <---
-            .WithEntities(entities => entities.AddRange(
-                new Genre { Name = "ThirdGenre" })))
+        .WithData(new Genre { Name = "ThirdGenre" })
         .Calling(c => c.Index())
         .ShouldReturn()
-        .View()
-        .WithModelOfType<List<Genre>>()
-        .Passing(model => model.Count == 1 && model.All(g => g.Name == "ThirdGenre")); // <---
+        .View(result => result
+            .WithModelOfType<List<Genre>>()
+            .Passing(model => 
+                model.Count == 1 &&
+                model.TrueForAll(g => g.Name == "ThirdGenre")));
 ```
 
-Both tests pass successfully. They are almost the same, but you can notice the difference in the database objects. The first test adds two entities and passes the predicate expecting two objects in the returned list. The second test adds another entity and passes the expectation of having a single genre with a specific name. It is evident the database is fresh, clean and empty while running each test. This is the power of scoped test services - they allow each test to be run in an isolated and asynchronous environment. 
+Both tests pass successfully. They are almost the same, but you can notice the difference in the database objects. The first test adds two entities and passes the predicate expecting two objects in the returned list. The second test adds another entity and passes the expectation of having a single genre with a specific name. It is evident the database is fresh, clean, and empty while running each test. This is the power of the scoped test services - they allow each test to be run in an isolated and asynchronous environment.
 
 ## Asserting saved database changes
 
@@ -141,23 +162,30 @@ public async Task<IActionResult> Create(
 }
 ```
 
-The action expects an **"IMemoryCache"** service, and since we will cover caching later in this tutorial, we will need a cache mock. Add **"Moq"** to the **"project.json"** dependencies:
+The action expects an **"IMemoryCache"** service, and since we will cover caching later in this tutorial, we will need a cache mock. Add **"Moq"** to the **"MusicStore.Test.csproj"** dependencies:
 
-```json
-"dependencies": {
-  "dotnet-test-xunit": "2.2.0-*",
-  "xunit": "2.2.0-*",
-  "Moq": "4.6.38-*", // <---
-  "MyTested.AspNetCore.Mvc.Controllers": "1.0.0",
-  "MyTested.AspNetCore.Mvc.EntityFrameworkCore": "1.0.0",
-  "MyTested.AspNetCore.Mvc.ModelState": "1.0.0",
-  "MyTested.AspNetCore.Mvc.Models": "1.0.0",
-  "MyTested.AspNetCore.Mvc.ViewActionResults": "1.0.0",
-  "MusicStore": "*"
-},
+```xml
+<!-- Other ItemGroups -->
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
+	<!-- Moq package -->
+    <PackageReference Include="Moq" Version="4.13.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.ActionResults" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Controllers.Views" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.EntityFrameworkCore" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.Models" Version="2.2.0" />
+    <PackageReference Include="MyTested.AspNetCore.Mvc.ModelState" Version="2.2.0" />
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+  </ItemGroup>
+
+<!-- Other ItemGroups -->
 ```
 
-Create a **"StoreManagerControllerTest"** class, add the necessary usings and write the following test:
+In **"Controllers"**, create an **"Admin"** folder. In it create a **"StoreManagerControllerTest"** class, add the necessary usings, and write the following test:
 
 ```c#
 [Fact]
@@ -169,7 +197,7 @@ public void CreateShouldSaveAlbumWithValidModelStateAndRedirect()
         Title = "TestAlbum",
         Price = 50
     };
-            
+
     MyController<StoreManagerController>
         .Instance()
         .Calling(c => c.Create(
@@ -180,13 +208,13 @@ public void CreateShouldSaveAlbumWithValidModelStateAndRedirect()
         .ValidModelState()
         .AndAlso()
         .ShouldHave()
-        .DbContext(db => db
+        .Data(data => data
             .WithSet<Album>(albums => albums
-                .Any(a => a.AlbumId == album.AlbumId)))
+                .Any(dataAlbum => dataAlbum.AlbumId == album.AlbumId)))
         .AndAlso()
         .ShouldReturn()
-        .Redirect()
-        .ToAction(nameof(StoreManagerController.Index));
+        .Redirect(result => result
+            .ToAction(nameof(StoreManagerController.Index)));
 }
 ```
 
@@ -194,16 +222,16 @@ The actual database assertion is in the following lines:
 
 ```c#
 .ShouldHave()
-.DbContext(db => db
-	.WithSet<Album>(albums => albums
-		.Any(a => a.AlbumId == album.AlbumId)))
+.Data(data => data
+    .WithSet<Album>(albums => albums
+        .Any(dataAlbum => dataAlbum.AlbumId == album.AlbumId)))
 ```
 
 My Tested ASP.NET Core MVC validates that the database set of albums should have the saved album with the correct **"AlbumdId"**. As with the previous example, the in-memory database will be empty before the test runs. You may notice the **"With.Default"** call. It's just a more expressive way to write **"new CancellationToken()"**. Providing **"CancellationToken.None"** is also an option.
 
 ## Repository pattern
 
-We will take a look at the repository pattern as a small deviation from the Music Store web application. As long as you use the Entity Framework Core **"DbContext"** class in your web application, the scoped in-memory database will work correctly no matter the data abstraction layer. Imagine we had the following repository registered as a service in our web application:
+We will take a look at the repository pattern as a small deviation from the Music Store web application. As long as you use the Entity Framework Core's **"DbContext"** class in your web application, the scoped in-memory database will work correctly no matter the data abstraction layer. Imagine we had the following repository registered as a service in our web application:
 
 ```c#
 public class Repository<T> : IRepository<T>
@@ -250,17 +278,17 @@ Testing the **"Index"** action does not require anything more than adding lots o
 ```c#
 MyController<HomeController>
     .Instance()
-    .WithDbContext(db => db // <---
+    .WithData(data => data
         .WithSet<Album>(set => AddAlbums(set)))
     .Calling(c => c.Index())
     .ShouldReturn()
-    .Ok()
-    .WithModelOfType<List<Album>>()
-    .Passing(model => model.Count == 10);
+    .Ok(result => result
+        .WithModelOfType<List<Album>>()
+        .Passing(model => model.Count == 10));
 ```
 
 Piece of cake! :)
 
 ## Section summary
 
-This section showed you one of the many useful built-in services suitable for writing fast and asynchronous tests for the ASP.NET Core Framework. A lot of web applications use a database layer, so it is a crucial point to have a nice and easy way to assert it without having to lose a lot of development time in writing mocks or stubs. Now, head over to the next important part of our journey - the test [Services](/tutorial/services.html)!
+This section showed you one of the many useful built-in services suitable for writing fast and asynchronous tests for the ASP.NET Core Framework. A lot of web applications use a database layer, so it is a crucial point to have a friendly and easy way to assert it without having to lose a lot of development time in writing mocks or stubs. Now, head over to the next important part of our journey - the test [Services](/tutorial/services.html)!
