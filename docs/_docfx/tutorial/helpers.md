@@ -88,7 +88,7 @@ It is up to you!
 
 ## Model state expression-based assertions
 
-Instead of string-based model state assertions like in the **"ManageControllerTest"**:
+For example, in the **"ManageControllerTest"** we may use string-based model state assertions for the **"ChangePassword"** action:
 
 ```c#
 .Calling(c => c.ChangePassword(model))
@@ -102,10 +102,10 @@ Instead of string-based model state assertions like in the **"ManageControllerTe
     .AndAlso()
     .ContainingNoError(nameof(ChangePasswordViewModel.ConfirmPassword)))
 
-// or .InvalidModelState(withNumberOfErrors: 2)
+// instead of .InvalidModelState(withNumberOfErrors: 2)
 ```
 
-You may use expression-based ones:
+But you may also use expression-based ones:
 
 ```c#
 .Calling(c => c.ChangePassword(model))
@@ -127,16 +127,16 @@ Instead of testing for redirects by using multiple method calls like in the **"M
 
 ```c#
 .ShouldReturn()
-.Redirect()
-.ToAction(nameof(ManageController.ManageLogins))
-.ContainingRouteValues(new { Message = ManageController.ManageMessageId.Error });
+.Redirect(result => result
+    .ToAction(nameof(ManageController.ManageLogins))
+    .ContainingRouteValues(new { Message = ManageController.ManageMessageId.Error }));
 ```
 
 You may use a single expression-based assertion call:
 
 ```c#
 .ShouldReturn()
-.Redirect(r => r
+.Redirect(result => result
     .To<ManageController>(c => c
         .ManageLogins(ManageController.ManageMessageId.Error)));
 ```
@@ -146,24 +146,28 @@ You may use a single expression-based assertion call:
 Let's test the **"AddressAndPayment"** action in the **"CheckoutController"**. We will validate for correct redirection:
 
 ```c#
-[Fact]
-public void AddressAndPaymentShouldRerurnRedirectWithValidData()
+[Theory]
+[InlineData(1, 1, "TestCart")]
+public void AddressAndPaymentShouldRerurnRedirectWithValidData(
+    int albumId, 
+    int orderId,
+    string cartSession)
     => MyController<CheckoutController>
         .Instance()
         .WithHttpRequest(request => request
             .WithFormField("PromoCode", "FREE"))
         .WithSession(session => session
-            .WithEntry("Session", "TestCart"))
+            .WithEntry("Session", cartSession))
         .WithUser()
-        .WithData(db => db
+        .WithData(data => data
             .WithEntities(entities =>
             {
-                var album = new Album { AlbumId = 1, Price = 10 };
+                var album = new Album { AlbumId = albumId, Price = 10 };
                 var cartItem = new CartItem
                 {
                     Count = 1,
-                    CartId = "TestCart",
-                    AlbumId = 1,
+                    CartId = cartSession,
+                    AlbumId = albumId,
                     Album = album
                 };
                 entities.Add(album);
@@ -172,12 +176,12 @@ public void AddressAndPaymentShouldRerurnRedirectWithValidData()
         .WithoutValidation()
         .Calling(c => c.AddressAndPayment(
             From.Services<MusicStoreContext>(),
-            new Order { OrderId = 1 },
+            new Order { OrderId = orderId },
             With.No<CancellationToken>()))
         .ShouldReturn()
-        .Redirect(r => r
+        .Redirect(result => result
             .To<CheckoutController>(c => c
-            .Complete(With.Any<MusicStoreContext>(), 1)));
+                .Complete(With.Any<MusicStoreContext>(), orderId)));
 ```
 
 Running this test will give us the following strange error message:
@@ -188,41 +192,43 @@ Running this test will give us the following strange error message:
 The problem is that the request path is empty which makes the action route data being invalid. For that reason, we are receiving wrong redirection location. The fix is easy - just call **"WithRouteData"**:
 
 ```c#
-[Fact]
-public void AddressAndPaymentShouldRerurnRedirectWithValidData()
+[Theory]
+[InlineData(1, 1, "TestCart")]
+public void AddressAndPaymentShouldRerurnRedirectWithValidData(
+    int albumId,
+    int orderId,
+    string cartSession)
     => MyController<CheckoutController>
         .Instance()
         .WithHttpRequest(request => request
             .WithFormField("PromoCode", "FREE"))
         .WithSession(session => session
-            .WithEntry("Session", "TestCart"))
+            .WithEntry("Session", cartSession))
         .WithUser()
         .WithRouteData() // <---
-        .WithData(db => db
+        .WithData(data => data
             .WithEntities(entities =>
             {
-                var album = new Album { AlbumId = 1, Price = 10 };
-
+                var album = new Album { AlbumId = albumId, Price = 10 };
                 var cartItem = new CartItem
                 {
                     Count = 1,
-                    CartId = "TestCart",
-                    AlbumId = 1,
+                    CartId = cartSession,
+                    AlbumId = albumId,
                     Album = album
                 };
-
                 entities.Add(album);
                 entities.Add(cartItem);
             }))
         .WithoutValidation()
         .Calling(c => c.AddressAndPayment(
             From.Services<MusicStoreContext>(),
-            new Order { OrderId = 1 },
+            new Order { OrderId = orderId },
             With.No<CancellationToken>()))
         .ShouldReturn()
-        .Redirect(r => r
+        .Redirect(result => result
             .To<CheckoutController>(c => c
-            .Complete(With.Any<MusicStoreContext>(), 1)));
+                .Complete(With.Any<MusicStoreContext>(), orderId)));
 ```
 
 The method call will resolve all the route values for you. The reason it is not done by default is because of performance considerations. You may manually provide route data values if you need:
@@ -231,7 +237,7 @@ The method call will resolve all the route values for you. The reason it is not 
 .WithRouteData(new { controller = "Checkout" })
 ```
 
-The above issue may show when testing for the **"Created"** and **"Redirect"** action results. In some cases, the testing framework may catch the error and suggest you a fix:
+The above issue may appear again when testing for the **"Accepted"**, **"Created"** and **"Redirect"** action results. In some cases, the testing framework may catch the error and suggest you a fix:
 
 ``` Route values are not present in the method call but are needed for successful pass of this test case. Consider calling 'WithRouteData' on the component builder to resolve them from the provided lambda expression or set the HTTP request path by using 'WithHttpRequest'.
 ```
