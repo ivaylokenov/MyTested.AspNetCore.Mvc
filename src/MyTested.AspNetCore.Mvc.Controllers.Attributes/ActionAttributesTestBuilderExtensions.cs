@@ -28,7 +28,7 @@
         public static IAndActionAttributesTestBuilder ChangingActionNameTo(
             this IActionAttributesTestBuilder actionAttributesTestBuilder,
             string actionName)
-        => SpecifyingActionName(actionAttributesTestBuilder, actionName);
+            => SpecifyingActionName(actionAttributesTestBuilder, actionName);
 
         /// <summary>
         /// Tests whether the action attributes contain <see cref="ActionNameAttribute"/>.
