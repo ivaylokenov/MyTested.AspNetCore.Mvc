@@ -6,9 +6,7 @@
     using Microsoft.Extensions.Caching.Memory;
     using Utilities.Extensions;
 
-    /// <summary>
-    /// Used for building mocked <see cref="IMemoryCache"/>.
-    /// </summary>
+    /// <inheritdoc />
     public class MemoryCacheWithBuilder : MemoryCacheBaseBuilder, IAndWithMemoryCacheBuilder
     {
         /// <summary>
