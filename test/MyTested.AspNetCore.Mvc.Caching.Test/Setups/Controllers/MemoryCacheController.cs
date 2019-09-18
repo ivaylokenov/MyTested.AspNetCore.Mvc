@@ -38,5 +38,10 @@
         {
             return this.Ok((cache as IMemoryCacheMock).GetCacheAsDictionary().Count);
         }
+
+        public IActionResult GetAllEntities([FromServices]IMemoryCache cache)
+        {
+            return this.Ok((cache as IMemoryCacheMock).GetCacheAsDictionary());
+        }
     }
 }
