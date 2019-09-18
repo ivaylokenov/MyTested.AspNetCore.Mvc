@@ -16,7 +16,7 @@
         {
             MyController<AttributesController>
                 .ShouldHave()
-                .Attributes(attributes => attributes.ChangingRouteTo("api/test"));
+                .Attributes(attributes => attributes.SpecifyingRoute("api/test"));
         }
 
         [Fact]
@@ -24,7 +24,7 @@
         {
             MyController<AttributesController>
                 .ShouldHave()
-                .Attributes(attributes => attributes.ChangingRouteTo("api/Test"));
+                .Attributes(attributes => attributes.SpecifyingRoute("api/Test"));
         }
 
         [Fact]
@@ -33,7 +33,7 @@
             MyController<AttributesController>
                 .ShouldHave()
                 .Attributes(attributes => attributes
-                    .ChangingRouteTo(route => route
+                    .SpecifyingRoute(route => route
                         .WithOrder(1)
                         .AndAlso()
                         .WithName("TestRouteAttributes")
@@ -49,7 +49,7 @@
                 {
                     MyController<AttributesController>
                         .ShouldHave()
-                        .Attributes(attributes => attributes.ChangingRouteTo("api/another"));
+                        .Attributes(attributes => attributes.SpecifyingRoute("api/another"));
                 },
                 "When testing AttributesController was expected to have RouteAttribute with 'api/another' template, but in fact found 'api/test'.");
         }
@@ -59,7 +59,7 @@
         {
             MyController<AttributesController>
                 .ShouldHave()
-                .Attributes(attributes => attributes.ChangingRouteTo("api/test", withName: "TestRouteAttributes"));
+                .Attributes(attributes => attributes.SpecifyingRoute("api/test", withName: "TestRouteAttributes"));
         }
 
         [Fact]
@@ -70,7 +70,7 @@
                 {
                     MyController<AttributesController>
                         .ShouldHave()
-                        .Attributes(attributes => attributes.ChangingRouteTo("api/test", withName: "AnotherRoute"));
+                        .Attributes(attributes => attributes.SpecifyingRoute("api/test", withName: "AnotherRoute"));
                 },
                 "When testing AttributesController was expected to have RouteAttribute with 'AnotherRoute' name, but in fact found 'TestRouteAttributes'.");
         }
@@ -80,7 +80,7 @@
         {
             MyController<AttributesController>
                 .ShouldHave()
-                .Attributes(attributes => attributes.ChangingRouteTo("api/test", withOrder: 1));
+                .Attributes(attributes => attributes.SpecifyingRoute("api/test", withOrder: 1));
         }
 
         [Fact]
@@ -91,7 +91,7 @@
                 {
                     MyController<AttributesController>
                         .ShouldHave()
-                        .Attributes(attributes => attributes.ChangingRouteTo("api/test", withOrder: 2));
+                        .Attributes(attributes => attributes.SpecifyingRoute("api/test", withOrder: 2));
                 },
                 "When testing AttributesController was expected to have RouteAttribute with order of 2, but in fact found 1.");
         }
@@ -104,7 +104,7 @@
                 {
                     MyController<AreaController>
                         .ShouldHave()
-                        .Attributes(attributes => attributes.ChangingRouteTo("api/test"));
+                        .Attributes(attributes => attributes.SpecifyingRoute("api/test"));
                 },
                 "When testing AreaController was expected to have RouteAttribute, but in fact such was not found.");
         }
@@ -1496,7 +1496,7 @@
                     => attributes
                         .AllowingAnonymousRequests()
                         .AndAlso()
-                        .ChangingRouteTo("api/test"));
+                        .SpecifyingRoute("api/test"));
         }
     }
 }

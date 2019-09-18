@@ -20,7 +20,7 @@
                 .Instance()
                 .Calling(c => c.VariousAttributesAction())
                 .ShouldHave()
-                .ActionAttributes(attributes => attributes.ChangingRouteTo("/api/test"));
+                .ActionAttributes(attributes => attributes.SpecifyingRoute("/api/test"));
         }
 
         [Fact]
@@ -30,7 +30,7 @@
                 .Instance()
                 .Calling(c => c.VariousAttributesAction())
                 .ShouldHave()
-                .ActionAttributes(attributes => attributes.ChangingRouteTo("/api/Test"));
+                .ActionAttributes(attributes => attributes.SpecifyingRoute("/api/Test"));
         }
 
         [Fact]
@@ -43,7 +43,7 @@
                         .Instance()
                         .Calling(c => c.VariousAttributesAction())
                         .ShouldHave()
-                        .ActionAttributes(attributes => attributes.ChangingRouteTo("/api/another"));
+                        .ActionAttributes(attributes => attributes.SpecifyingRoute("/api/another"));
                 },
                 "When calling VariousAttributesAction action in MvcController expected action to have RouteAttribute with '/api/another' template, but in fact found '/api/test'.");
         }
@@ -55,7 +55,7 @@
                 .Instance()
                 .Calling(c => c.VariousAttributesAction())
                 .ShouldHave()
-                .ActionAttributes(attributes => attributes.ChangingRouteTo("/api/test", withName: "TestRoute"));
+                .ActionAttributes(attributes => attributes.SpecifyingRoute("/api/test", withName: "TestRoute"));
         }
 
         [Fact]
@@ -68,7 +68,7 @@
                         .Instance()
                         .Calling(c => c.VariousAttributesAction())
                         .ShouldHave()
-                        .ActionAttributes(attributes => attributes.ChangingRouteTo("/api/test", withName: "AnotherRoute"));
+                        .ActionAttributes(attributes => attributes.SpecifyingRoute("/api/test", withName: "AnotherRoute"));
                 },
                 "When calling VariousAttributesAction action in MvcController expected action to have RouteAttribute with 'AnotherRoute' name, but in fact found 'TestRoute'.");
         }
@@ -80,7 +80,7 @@
                 .Instance()
                 .Calling(c => c.VariousAttributesAction())
                 .ShouldHave()
-                .ActionAttributes(attributes => attributes.ChangingRouteTo("/api/test", withOrder: 1));
+                .ActionAttributes(attributes => attributes.SpecifyingRoute("/api/test", withOrder: 1));
         }
 
         [Fact]
@@ -93,7 +93,7 @@
                         .Instance()
                         .Calling(c => c.VariousAttributesAction())
                         .ShouldHave()
-                        .ActionAttributes(attributes => attributes.ChangingRouteTo("/api/test", withOrder: 2));
+                        .ActionAttributes(attributes => attributes.SpecifyingRoute("/api/test", withOrder: 2));
                 },
                 "When calling VariousAttributesAction action in MvcController expected action to have RouteAttribute with order of 2, but in fact found 1.");
         }
@@ -108,7 +108,7 @@
                         .Instance()
                         .Calling(c => c.NormalActionWithAttributes())
                         .ShouldHave()
-                        .ActionAttributes(attributes => attributes.ChangingRouteTo("/api/test"));
+                        .ActionAttributes(attributes => attributes.SpecifyingRoute("/api/test"));
                 },
                 "When calling NormalActionWithAttributes action in MvcController expected action to have RouteAttribute, but in fact such was not found.");
         }
@@ -120,7 +120,7 @@
                 .Instance()
                 .Calling(c => c.VariousAttributesAction())
                 .ShouldHave()
-                .ActionAttributes(attributes => attributes.ChangingActionNameTo("NormalAction"));
+                .ActionAttributes(attributes => attributes.SpecifyingActionName("NormalAction"));
         }
 
         [Fact]
@@ -133,7 +133,7 @@
                         .Instance()
                         .Calling(c => c.VariousAttributesAction())
                         .ShouldHave()
-                        .ActionAttributes(attributes => attributes.ChangingActionNameTo("AnotherAction"));
+                        .ActionAttributes(attributes => attributes.SpecifyingActionName("AnotherAction"));
                 },
                 "When calling VariousAttributesAction action in MvcController expected action to have ActionNameAttribute with 'AnotherAction' name, but in fact found 'NormalAction'.");
         }
@@ -148,7 +148,7 @@
                         .Instance()
                         .Calling(c => c.NormalActionWithAttributes())
                         .ShouldHave()
-                        .ActionAttributes(attributes => attributes.ChangingActionNameTo("NormalAction"));
+                        .ActionAttributes(attributes => attributes.SpecifyingActionName("NormalAction"));
                 },
                 "When calling NormalActionWithAttributes action in MvcController expected action to have ActionNameAttribute, but in fact such was not found.");
         }
@@ -1850,7 +1850,7 @@
                 .Instance()
                 .Calling(c => c.EmptyActionWithParameters(With.No<int>(), With.No<RequestModel>()))
                 .ShouldHave()
-                .ActionAttributes(attributes => attributes.ChangingActionNameTo("Test"));
+                .ActionAttributes(attributes => attributes.SpecifyingActionName("Test"));
         }
 
         [Fact]
@@ -1865,7 +1865,7 @@
                         .AllowingAnonymousRequests()
                         .AndAlso()
                         .DisablingActionCall()
-                        .ChangingActionNameTo("NormalAction"));
+                        .SpecifyingActionName("NormalAction"));
         }
     }
 }
