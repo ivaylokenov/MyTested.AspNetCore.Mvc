@@ -1,6 +1,6 @@
 # Test Configuration
 
-In this section we are going to examine the test configuration or the **"testconfig.json"** file we used to provide a license key for the library.
+In this section we are going to examine the test configuration or the **"testsettings.json"** file we used to provide a license key for the library.
 
 ## Startup class
 
@@ -43,6 +43,7 @@ Various general settings are available for you to explore:
     "AsynchronousTests": false,
     "WebAssemblyName": "MyApp",
     "TestAssemblyName": "MyApp.Test",
+	"AutomaticApplicationParts": true
   }
 }
 ```

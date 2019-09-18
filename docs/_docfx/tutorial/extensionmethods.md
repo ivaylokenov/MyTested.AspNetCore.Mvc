@@ -95,13 +95,14 @@ We remove the magic string:
 We need to extend the **"IControllerActionAttributesTestBuilder<TAttributesTestBuilder>"** interface. Add **"ControllerActionAttributeExtensions"** class with the following code in it:
 
 ```c#
+using MyTested.AspNetCore.Mvc;
 using MyTested.AspNetCore.Mvc.Builders.Contracts.Attributes;
 
 public static class ControllerActionAttributeExtensions
 {
     public static TAttributesTestBuilder SpecifyingAdminArea<TAttributesTestBuilder>(
         this IControllerActionAttributesTestBuilder<TAttributesTestBuilder> builder)
-        where TAttributesTestBuilder : IBaseAttributesTestBuilder<TAttributesTestBuilder>
+        where TAttributesTestBuilder : IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
         => builder.SpecifyingArea("Admin");
 }
 ```
