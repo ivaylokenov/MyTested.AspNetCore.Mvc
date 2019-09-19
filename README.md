@@ -10,6 +10,11 @@
           <img width="148px" src="https://softuni.org/platform/assets/icons/logo.svg">
         </a>
       </td>
+	    <td align="center" valign="middle">
+        <a href="http://bit.ly/30xsnsC" target="_blank">
+          <img width="148px" src="https://user-images.githubusercontent.com/3391906/65251792-dd848800-daef-11e9-8857-637a48048cda.png">
+        </a>
+      </td>
     </tr>
   </tbody>
 </table>
