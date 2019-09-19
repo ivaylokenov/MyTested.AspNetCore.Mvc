@@ -14,7 +14,9 @@
 
 #### What's the difference between Patreon and OpenCollective?
 
-Funds donated via both platforms are used for development and marketing purposes. Funds donated via OpenCollective are managed with transparent expenses. Your name/logo will receive proper recognition and exposure by donating on either platform.
+Funds donated via both platforms are used for development and marketing purposes. Funds donated via [OpenCollective](https://opencollective.com/mytestedaspnet) are managed with transparent expenses. Your name/logo will receive proper recognition and exposure by donating on either platform.
+
+Additionally, funds donated via [Patreon](https://www.patreon.com/ivaylokenov) (see the stretch goals) give me the freedom to add more features to the free `Lite` edition of the library.
 
 ## Gold Sponsors
 
