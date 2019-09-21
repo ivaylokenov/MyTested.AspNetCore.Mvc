@@ -258,7 +258,7 @@
         }
 
         [Fact]
-        public void MockDistributedCacheShouldBeDifferentForEveryCallSynchronouslyWithCachedControllerBuilder()
+        public void MockDistributedCacheShouldBeSameForEveryCallSynchronouslyWithCachedControllerBuilder()
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()
@@ -277,7 +277,7 @@
                 .WithDistributedCache(cache => cache.WithEntry(string.Empty, new byte[] { }))
                 .Calling(c => c.DistributedCacheAction())
                 .ShouldReturn()
-                .BadRequest();
+                .Ok();
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -329,7 +329,7 @@
         }
 
         [Fact]
-        public void MockDistributedCacheShouldBeDifferentForEveryCallAsynchronously()
+        public void MockDistributedCacheShouldBeSameForAsyncronousCallToTestProvider()
         {
             Task
                 .Run(async () =>
@@ -354,36 +354,36 @@
                         Task.Run(() =>
                         {
                             var distributedCache = TestServiceProvider.GetService<IDistributedCache>();
-                            distributedCache.Set("test", new byte[]{ 1 });
-                            firstValue = TestServiceProvider.GetService<IDistributedCache>().Get("test");
+                            distributedCache.Set("test1", new byte[]{ 1 });
+                            firstValue = TestServiceProvider.GetService<IDistributedCache>().Get("test1");
                             TestHelper.ExecuteTestCleanup();
                         }),
                         Task.Run(() =>
                         {
                             var distributedCache = TestServiceProvider.GetService<IDistributedCache>();
-                            distributedCache.Set("test", new byte[]{ 2 });
-                            secondValue = TestServiceProvider.GetService<IDistributedCache>().Get("test");
+                            distributedCache.Set("test2", new byte[]{ 2 });
+                            secondValue = TestServiceProvider.GetService<IDistributedCache>().Get("test2");
                             TestHelper.ExecuteTestCleanup();
                         }),
                         Task.Run(() =>
                         {
                             var distributedCache = TestServiceProvider.GetService<IDistributedCache>();
-                            distributedCache.Set("test", new byte[]{ 3 });
-                            thirdValue = TestServiceProvider.GetService<IDistributedCache>().Get("test");
+                            distributedCache.Set("test3", new byte[]{ 3 });
+                            thirdValue = TestServiceProvider.GetService<IDistributedCache>().Get("test3");
                             TestHelper.ExecuteTestCleanup();
                         }),
                         Task.Run(() =>
                         {
                             var distributedCache = TestServiceProvider.GetService<IDistributedCache>();
-                            distributedCache.Set("test", new byte[]{ 4 });
-                            fourthValue = TestServiceProvider.GetService<IDistributedCache>().Get("test");
+                            distributedCache.Set("test4", new byte[]{ 4 });
+                            fourthValue = TestServiceProvider.GetService<IDistributedCache>().Get("test4");
                             TestHelper.ExecuteTestCleanup();
                         }),
                         Task.Run(() =>
                         {
                             var distributedCache = TestServiceProvider.GetService<IDistributedCache>();
-                            distributedCache.Set("test", new byte[]{ 5 });
-                            fifthValue = TestServiceProvider.GetService<IDistributedCache>().Get("test");
+                            distributedCache.Set("test5", new byte[]{ 5 });
+                            fifthValue = TestServiceProvider.GetService<IDistributedCache>().Get("test5");
                             TestHelper.ExecuteTestCleanup();
                         })
                     };
