@@ -1,6 +1,4 @@
-﻿using MyTested.AspNetCore.Mvc.Internal.Caching;
-
-namespace MyTested.AspNetCore.Mvc.Builders.Data.DistributedCache
+﻿namespace MyTested.AspNetCore.Mvc.Builders.Data.DistributedCache
 {
     using System;
     using System.Collections.Generic;
@@ -14,6 +12,7 @@ namespace MyTested.AspNetCore.Mvc.Builders.Data.DistributedCache
     using Internal.Contracts;
     using Utilities;
     using Utilities.Extensions;
+    using Internal.Caching;
 
     /// <summary>
     /// Used for testing <see cref="IDistributedCache"/>.

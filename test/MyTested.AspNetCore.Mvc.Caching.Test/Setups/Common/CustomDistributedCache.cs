@@ -1,10 +1,9 @@
-﻿using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Caching.Distributed;
-
-namespace MyTested.AspNetCore.Mvc.Test.Setups.Common
+﻿namespace MyTested.AspNetCore.Mvc.Test.Setups.Common
 {
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.Extensions.Caching.Distributed;
+
     public class CustomDistributedCache : IDistributedCache
     {
         public byte[] Get(string key) => new byte[0];

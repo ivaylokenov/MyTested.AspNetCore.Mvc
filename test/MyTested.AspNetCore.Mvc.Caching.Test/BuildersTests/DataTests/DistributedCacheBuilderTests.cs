@@ -268,7 +268,6 @@
                 .Ok();
         }
 
-
         public void Dispose() => MyApplication.StartsFrom<DefaultStartup>();
     }
 }

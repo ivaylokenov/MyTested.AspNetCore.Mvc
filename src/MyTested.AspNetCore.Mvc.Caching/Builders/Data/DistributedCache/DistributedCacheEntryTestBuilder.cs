@@ -1,8 +1,4 @@
-﻿using MyTested.AspNetCore.Mvc.Exceptions;
-using MyTested.AspNetCore.Mvc.Internal.Caching;
-using MyTested.AspNetCore.Mvc.Utilities.Extensions;
-
-namespace MyTested.AspNetCore.Mvc.Builders.Data.DistributedCache
+﻿namespace MyTested.AspNetCore.Mvc.Builders.Data.DistributedCache
 {
     using System;
     using Contracts.Data.DistributedCache;
@@ -10,6 +6,9 @@ namespace MyTested.AspNetCore.Mvc.Builders.Data.DistributedCache
     using Internal.TestContexts;
     using Utilities;
     using Utilities.Validators;
+    using Exceptions;
+    using Internal.Caching;
+    using Utilities.Extensions;
 
     public class DistributedCacheEntryTestBuilder : DistributedCacheEntryBuilder, IDistributedCacheEntryKeyTestBuilder, IAndDistributedCacheEntryTestBuilder
     {
@@ -24,7 +23,6 @@ namespace MyTested.AspNetCore.Mvc.Builders.Data.DistributedCache
         }
 
         internal ComponentTestContext TestContext { get; private set; }
-
 
         public new IAndDistributedCacheEntryTestBuilder WithKey(string key)
         {

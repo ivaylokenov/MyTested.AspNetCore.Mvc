@@ -46,7 +46,6 @@
             return this.Ok();
         }
 
-
         private IActionResult InternalServerError() => this.StatusCode(500);
     }
 }

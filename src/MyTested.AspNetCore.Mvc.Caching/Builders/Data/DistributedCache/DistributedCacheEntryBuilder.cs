@@ -13,7 +13,6 @@
         public DistributedCacheEntryBuilder()
             => this.DistributedCacheEntry = new DistributedCacheEntry();
         
-
         public IAndDistributedCacheEntryBuilder WithKey(string key)
         {
             this.EntryKey = key;
