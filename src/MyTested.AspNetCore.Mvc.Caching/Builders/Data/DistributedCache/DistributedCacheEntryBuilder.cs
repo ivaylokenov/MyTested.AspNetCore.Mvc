@@ -2,37 +2,47 @@
 {
     using System;
     using Contracts.Data.DistributedCache;
+    using Internal.Caching;
 
     public class DistributedCacheEntryBuilder : IDistributedCacheEntryKeyBuilder, IAndDistributedCacheEntryBuilder
     {
+        internal DistributedCacheEntry DistributedCacheEntry { get; set; }
+        internal string EntryKey { get; set; }
+
+        public DistributedCacheEntryBuilder()
+            => this.DistributedCacheEntry = new DistributedCacheEntry();
+        
+
         public IAndDistributedCacheEntryBuilder WithKey(string key)
         {
-            throw new NotImplementedException();
+            this.EntryKey = key;
+            return this;
         }
 
         public IAndDistributedCacheEntryBuilder WithValue(byte[] value)
         {
-            throw new NotImplementedException();
+            this.DistributedCacheEntry.Value = value;
+            return this;
         }
 
         public IAndDistributedCacheEntryBuilder WithAbsoluteExpiration(DateTimeOffset? absoluteExpiration)
         {
-            throw new NotImplementedException();
+            this.DistributedCacheEntry.Options.AbsoluteExpiration = absoluteExpiration;
+            return this;
         }
 
         public IAndDistributedCacheEntryBuilder WithAbsoluteExpirationRelativeToNow(TimeSpan? absoluteExpirationRelativeToNow)
         {
-            throw new NotImplementedException();
+            this.DistributedCacheEntry.Options.AbsoluteExpirationRelativeToNow = absoluteExpirationRelativeToNow;
+            return this;
         }
 
         public IAndDistributedCacheEntryBuilder WithSlidingExpiration(TimeSpan? slidingExpiration)
         {
-            throw new NotImplementedException();
+            this.DistributedCacheEntry.Options.SlidingExpiration = slidingExpiration;
+            return this;
         }
 
-        public IDistributedCacheEntryBuilder AndAlso()
-        {
-            throw new NotImplementedException();
-        }
+        public IDistributedCacheEntryBuilder AndAlso() => this;
     }
 }

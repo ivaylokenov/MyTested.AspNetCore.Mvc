@@ -1,4 +1,6 @@
-﻿namespace MyTested.AspNetCore.Mvc.Builders.Data.DistributedCache
+﻿using MyTested.AspNetCore.Mvc.Internal.Caching;
+
+namespace MyTested.AspNetCore.Mvc.Builders.Data.DistributedCache
 {
     using System;
     using System.Collections.Generic;
@@ -90,7 +92,26 @@
 
         public IAndDistributedCacheTestBuilder ContainingEntry(Action<IDistributedCacheEntryKeyTestBuilder> distributedCacheEntryTestBuilder)
         {
-            throw new NotImplementedException();
+            var mockedDistributedCache = this.GetDistributedCacheMock();
+
+            var newDistributedCacheEntryBuilder = new DistributedCacheEntryTestBuilder(this.TestContext);
+            distributedCacheEntryTestBuilder(newDistributedCacheEntryBuilder);
+
+            var expectedDistributedCacheEntry = newDistributedCacheEntryBuilder.DistributedCacheEntry;
+            var entryKey = newDistributedCacheEntryBuilder.EntryKey;
+            
+            this.ContainingEntryWithKey(entryKey);
+
+            mockedDistributedCache.TryGetCacheEntryOptions(entryKey, out var actualDistributedCacheEntryOptions);
+            var actualDistributedCacheEntryValue
+                = mockedDistributedCache.Get(entryKey);
+
+            var actualDistributedCacheEntry = new DistributedCacheEntry(actualDistributedCacheEntryValue, actualDistributedCacheEntryOptions);
+
+            var validations = newDistributedCacheEntryBuilder.GetDistributedCacheEntryValidations();
+            validations.ForEach(v => v(expectedDistributedCacheEntry, actualDistributedCacheEntry));
+
+            return this;
         }
 
         /// <inheritdoc />

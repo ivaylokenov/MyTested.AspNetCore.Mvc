@@ -1,38 +1,123 @@
-﻿namespace MyTested.AspNetCore.Mvc.Builders.Data.DistributedCache
+﻿using MyTested.AspNetCore.Mvc.Exceptions;
+using MyTested.AspNetCore.Mvc.Internal.Caching;
+using MyTested.AspNetCore.Mvc.Utilities.Extensions;
+
+namespace MyTested.AspNetCore.Mvc.Builders.Data.DistributedCache
 {
     using System;
     using Contracts.Data.DistributedCache;
+    using System.Collections.Generic;
+    using Microsoft.Extensions.Caching.Memory;
+    using Internal.TestContexts;
+    using Utilities;
+    using Utilities.Validators;
 
     public class DistributedCacheEntryTestBuilder : DistributedCacheEntryBuilder, IDistributedCacheEntryKeyTestBuilder, IAndDistributedCacheEntryTestBuilder
     {
+        private readonly ICollection<Action<DistributedCacheEntry, DistributedCacheEntry>> validations;
+
+        public DistributedCacheEntryTestBuilder(ComponentTestContext testContext)
+        {
+            CommonValidator.CheckForNullReference(testContext, nameof(ComponentTestContext));
+
+            this.validations = new List<Action<DistributedCacheEntry, DistributedCacheEntry>>();
+            this.TestContext = testContext;
+        }
+
+        internal ComponentTestContext TestContext { get; private set; }
+
+
         public new IAndDistributedCacheEntryTestBuilder WithKey(string key)
         {
-            throw new NotImplementedException();
+            base.WithKey(key);
+            return this;
         }
 
         public new IAndDistributedCacheEntryTestBuilder WithValue(byte[] value)
         {
-            throw new NotImplementedException();
+            this.validations.Add((expected, actual) =>
+            {
+                if (Reflection.AreNotDeeplyEqual(expected.Value, actual.Value))
+                {
+                    this.ThrowNewDataProviderAssertionException(
+                        $"to have entry with '{this.EntryKey}' key and the given value",
+                        "in fact it was different");
+                }
+            });
+
+            base.WithValue(value);
+            return this;
         }
 
         public new IAndDistributedCacheEntryTestBuilder WithAbsoluteExpiration(DateTimeOffset? absoluteExpiration)
         {
-            throw new NotImplementedException();
+            this.validations.Add((expected, actual) =>
+            {
+                var expectedExpiration = expected.Options.AbsoluteExpiration;
+                var actualExpiration = actual.Options.AbsoluteExpiration;
+
+                if (expectedExpiration != actualExpiration)
+                {
+                    this.ThrowNewDataProviderAssertionException(
+                        $"to have entry with '{this.EntryKey}' key and {expectedExpiration.ToFormattedString().GetErrorMessageName()} absolute expiration",
+                        $"in fact found {actualExpiration.ToFormattedString().GetErrorMessageName()}");
+                }
+            });
+
+            base.WithAbsoluteExpiration(absoluteExpiration);
+            return this;
         }
 
         public new IAndDistributedCacheEntryTestBuilder WithAbsoluteExpirationRelativeToNow(TimeSpan? absoluteExpirationRelativeToNow)
         {
-            throw new NotImplementedException();
+            this.validations.Add((expected, actual) =>
+            {
+                var expectedRelativeExpiration = expected.Options.AbsoluteExpirationRelativeToNow;
+                var actualRelativeExpiration = actual.Options.AbsoluteExpirationRelativeToNow;
+
+                if (expectedRelativeExpiration != actualRelativeExpiration)
+                {
+                    this.ThrowNewDataProviderAssertionException(
+                        $"to have entry with '{this.EntryKey}' key and {expectedRelativeExpiration.GetErrorMessageName()} absolute expiration relative to now",
+                        $"in fact found {actualRelativeExpiration.GetErrorMessageName()}");
+                }
+            });
+
+            base.WithAbsoluteExpirationRelativeToNow(absoluteExpirationRelativeToNow);
+            return this;
         }
 
         public new IAndDistributedCacheEntryTestBuilder WithSlidingExpiration(TimeSpan? slidingExpiration)
         {
-            throw new NotImplementedException();
+            this.validations.Add((expected, actual) =>
+            {
+                var expectedSlidingExpiration = expected.Options.SlidingExpiration;
+                var actualSlidingExpiration = actual.Options.SlidingExpiration;
+
+                if (expectedSlidingExpiration != actualSlidingExpiration)
+                {
+                    this.ThrowNewDataProviderAssertionException(
+                        $"to have entry with '{this.EntryKey}' key and {expectedSlidingExpiration.GetErrorMessageName()} sliding expiration",
+                        $"in fact found {actualSlidingExpiration.GetErrorMessageName()}");
+                }
+            });
+
+            base.WithSlidingExpiration(slidingExpiration);
+            return this;
         }
 
-        public new IDistributedCacheEntryTestBuilder AndAlso()
+        public new IDistributedCacheEntryTestBuilder AndAlso() => this;
+
+        internal ICollection<Action<DistributedCacheEntry, DistributedCacheEntry>> GetDistributedCacheEntryValidations()
+            => this.validations;
+
+        internal void ThrowNewDataProviderAssertionException(string expectedValue, string actualValue)
         {
-            throw new NotImplementedException();
+            throw new DataProviderAssertionException(string.Format(
+                "{0} memory cache {1}, but {2}.",
+                this.TestContext.ExceptionMessagePrefix,
+                expectedValue,
+                actualValue));
         }
     }
 }

@@ -40,7 +40,18 @@
 
         public IAndDistributedCacheBuilder WithEntry(Action<IDistributedCacheEntryKeyBuilder> distributedCacheEntryBuilder)
         {
-            throw new NotImplementedException();
+            var newDistributedCacheEntryBuilder = new DistributedCacheEntryBuilder();
+            distributedCacheEntryBuilder(newDistributedCacheEntryBuilder);
+
+            var distributedCacheKey = newDistributedCacheEntryBuilder.EntryKey;
+            var distributedCacheEntry = newDistributedCacheEntryBuilder.DistributedCacheEntry;
+
+            return this.WithEntry(distributedCacheKey, distributedCacheEntry.Value, new DistributedCacheEntryOptions()
+            {
+                AbsoluteExpiration = distributedCacheEntry.Options.AbsoluteExpiration,
+                AbsoluteExpirationRelativeToNow = distributedCacheEntry.Options.AbsoluteExpirationRelativeToNow,
+                SlidingExpiration = distributedCacheEntry.Options.SlidingExpiration
+            });
         }
 
         /// <inheritdoc />
