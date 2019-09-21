@@ -94,6 +94,43 @@
         }
 
         [Fact]
+        public void WithValueShouldNotThrowExceptionWithCorrectStringValue()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.AddDistributedCacheActionWithStringValueEntries())
+                .ShouldHave()
+                .DistributedCache(distributedCache => distributedCache
+                    .ContainingEntry(entry => entry
+                        .WithKey("test")
+                        .WithValue("testValue")))
+                .AndAlso()
+                .ShouldReturn()
+                .Ok();
+        }
+
+        [Fact]
+        public void WithValueShouldThrowExceptionWithIncorrectStringValue()
+        {
+            Test.AssertException<DataProviderAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.AddDistributedCacheActionWithStringValueEntries())
+                        .ShouldHave()
+                        .DistributedCache(distributedCache => distributedCache
+                            .ContainingEntry(entry => entry
+                                .WithKey("test")
+                                .WithValue("invalidValue")))
+                        .AndAlso()
+                        .ShouldReturn()
+                        .Ok();
+                },
+                "When calling AddDistributedCacheActionWithStringValueEntries action in MvcController expected distributed cache to have an entry with 'test' key and the given value, but in fact it was different.");
+        }
+
+        [Fact]
         public void WithAbsoluteExpirationShouldNotThrowExceptionWithCorrectValue()
         {
             MyController<MvcController>

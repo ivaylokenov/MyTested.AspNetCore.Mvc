@@ -1071,6 +1071,21 @@
             });
         }
 
+        public IActionResult AddDistributedCacheActionWithStringValueEntries()
+        {
+            var distributedCache = this.HttpContext.RequestServices.GetService<IDistributedCache>();
+            distributedCache.SetString("test", "testValue", new DistributedCacheEntryOptions
+            { 
+                AbsoluteExpiration = new DateTimeOffset(new DateTime(2020, 1, 1, 1, 1, 1, DateTimeKind.Utc)),
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(1),
+                SlidingExpiration = TimeSpan.FromMinutes(5)
+            });
+
+            distributedCache.SetString("another", "anotherValue");
+
+            return this.Ok();
+        }
+
         public IActionResult AddDistributedCacheAction()
         {
             var distributedCache = this.HttpContext.RequestServices.GetService<IDistributedCache>();

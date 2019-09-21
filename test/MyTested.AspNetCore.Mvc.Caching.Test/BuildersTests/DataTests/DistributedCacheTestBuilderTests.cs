@@ -56,6 +56,39 @@
         }
 
         [Fact]
+        public void ContainingEntryWithStringValueShouldNotThrowExceptionWithCorrectEntry()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.AddDistributedCacheActionWithStringValueEntries())
+                .ShouldHave()
+                .DistributedCache(cache => cache
+                    .ContainingEntry("test", "testValue"))
+                .AndAlso()
+                .ShouldReturn()
+                .Ok();
+        }
+
+        [Fact]
+        public void ContainingEntryWithStringValueShouldThrowExceptionWithIncorrectEntry()
+        {
+            Test.AssertException<DataProviderAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.AddDistributedCacheActionWithStringValueEntries())
+                        .ShouldHave()
+                        .DistributedCache(cache => cache
+                            .ContainingEntry("invalid", "bad"))
+                        .AndAlso()
+                        .ShouldReturn()
+                        .Ok();
+                },
+                "When calling AddDistributedCacheActionWithStringValueEntries action in MvcController expected distributed cache to have an entry with the given key, but such was not found.");
+        }
+
+        [Fact]
         public void ContainingEntryWithKeyShouldNotThrowExceptionWithCorrectKey()
         {
             MyController<MvcController>
@@ -128,6 +161,39 @@
         }
 
         [Fact]
+        public void ContainingEntryWithStringValueShouldNotThrowExceptionWithCorrectValue()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.AddDistributedCacheActionWithStringValueEntries())
+                .ShouldHave()
+                .DistributedCache(cache => cache
+                    .ContainingEntryWithValue("testValue"))
+                .AndAlso()
+                .ShouldReturn()
+                .Ok();
+        }
+
+        [Fact]
+        public void ContainingEntryWithStringValueShouldThrowExceptionWithIncorrectValue()
+        {
+            Test.AssertException<DataProviderAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.AddDistributedCacheActionWithStringValueEntries())
+                        .ShouldHave()
+                        .DistributedCache(cache => cache
+                            .ContainingEntryWithValue("badValue"))
+                        .AndAlso()
+                        .ShouldReturn()
+                        .Ok();
+                },
+                "When calling AddDistributedCacheActionWithStringValueEntries action in MvcController expected distributed cache to have an entry with the given value, but such was not found.");
+        }
+
+        [Fact]
         public void ContainingEntryWithOptionsShouldNotThrowExceptionWithCorrectEntry()
         {
             var cacheValue = new byte[] { 127, 127, 127 };
@@ -152,7 +218,7 @@
         public void ContainingEntryWithOptionsShouldThrowExceptionWithIncorrectAbsoluteExpiration()
         {
             var cacheValue = new byte[] { 127, 127, 127 };
-            
+
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
@@ -178,7 +244,7 @@
         public void ContainingEntryWithOptionsShouldThrowExceptionWithIncorrectAbsoluteExpirationRelativeToNow()
         {
             var cacheValue = new byte[] { 127, 127, 127 };
-            
+
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
@@ -204,7 +270,7 @@
         public void ContainingEntryWithOptionsShouldThrowExceptionWithIncorrectSlidingExpiration()
         {
             var cacheValue = new byte[] { 127, 127, 127 };
-            
+
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
@@ -229,8 +295,6 @@
         [Fact]
         public void ContainingEntriesShouldNotThrowExceptionWithCorrectEntries()
         {
-            var cacheValue = new byte[] { 127, 127, 127 };
-
             MyController<MvcController>
                 .Instance()
                 .Calling(c => c.AddDistributedCacheAction())
@@ -249,8 +313,6 @@
         [Fact]
         public void ContainingEntriesShouldThrowExceptionWithIncorrectFewEntriesCount()
         {
-            var cacheValue = new byte[] { 127, 127, 127 };
-
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
@@ -273,8 +335,6 @@
         [Fact]
         public void ContainingEntriesShouldThrowExceptionWithIncorrectManyEntriesCount()
         {
-            var cacheValue = new byte[] { 127, 127, 127 };
-
             Test.AssertException<DataProviderAssertionException>(
                 () =>
                 {
@@ -294,6 +354,70 @@
                         .Ok();
                 },
                 "When calling AddDistributedCacheAction action in MvcController expected distributed cache to have 3 entries, but in fact found 2.");
+        }
+
+        [Fact]
+        public void ContainingEntriesWithStringValuesShouldNotThrowExceptionWithCorrectEntries()
+        {
+            MyController<MvcController>
+                .Instance()
+                .Calling(c => c.AddDistributedCacheActionWithStringValueEntries())
+                .ShouldHave()
+                .DistributedCache(cache => cache
+                    .ContainingEntries(new Dictionary<string, string>
+                    {
+                        {"test", "testValue"},
+                        {"another", "anotherValue"},
+                    }))
+                .AndAlso()
+                .ShouldReturn()
+                .Ok();
+        }
+
+        [Fact]
+        public void ContainingEntriesWithStringValuesShouldThrowExceptionWithIncorrectFewEntriesCount()
+        {
+            Test.AssertException<DataProviderAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.AddDistributedCacheActionWithStringValueEntries())
+                        .ShouldHave()
+                        .DistributedCache(cache => cache
+                            .ContainingEntries(new Dictionary<string, string>
+                            {
+                                {"test", "testValue"}
+                            }))
+                        .AndAlso()
+                        .ShouldReturn()
+                        .Ok();
+                },
+                "When calling AddDistributedCacheActionWithStringValueEntries action in MvcController expected distributed cache to have 1 entry, but in fact found 2.");
+        }
+
+        [Fact]
+        public void ContainingEntriesWithStringValuesShouldThrowExceptionWithIncorrectManyEntriesCount()
+        {
+            Test.AssertException<DataProviderAssertionException>(
+                () =>
+                {
+                    MyController<MvcController>
+                        .Instance()
+                        .Calling(c => c.AddDistributedCacheActionWithStringValueEntries())
+                        .ShouldHave()
+                        .DistributedCache(cache => cache
+                            .ContainingEntries(new Dictionary<string, string>
+                            {
+                                {"test", "testValue"},
+                                {"another", "anotherValue"},
+                                {"missing", "missingValue"}
+                            }))
+                        .AndAlso()
+                        .ShouldReturn()
+                        .Ok();
+                },
+                "When calling AddDistributedCacheActionWithStringValueEntries action in MvcController expected distributed cache to have 3 entries, but in fact found 2.");
         }
 
         [Fact]

@@ -56,6 +56,20 @@
         }
 
         [Fact]
+        public void WithEntryWithStringValueShouldSetCorrectValues()
+        {
+            MyController<DistributedCacheController>
+                .Instance()
+                .WithDistributedCache(distributedCache => distributedCache
+                    .WithEntry("FirstEntry", "FirstValue")
+                    .WithEntry("SecondEntry", "SecondValue")
+                    .WithEntry("ThirdEntry", "ThirdValue"))
+                .Calling(c => c.ValidDistributedCacheEntriesAction(From.Services<IDistributedCache>()))
+                .ShouldReturn()
+                .Ok();
+        }
+
+        [Fact]
         public void WithEntriesShouldSetCorrectValues()
         {
             var val = new byte[] { 127, 127, 127 };
@@ -68,6 +82,23 @@
                         {"FirstEntry", val},
                         {"SecondEntry", val},
                         {"ThirdEntry", val},
+                    }))
+                .Calling(c => c.ValidDistributedCacheEntriesAction(From.Services<IDistributedCache>()))
+                .ShouldReturn()
+                .Ok();
+        }
+
+        [Fact]
+        public void WithEntriesWithStringValuesShouldSetCorrectValues()
+        {
+            MyController<DistributedCacheController>
+                .Instance()
+                .WithDistributedCache(distributedCache => distributedCache
+                    .WithEntries(new Dictionary<string, string>()
+                    {
+                        {"FirstEntry", "FirstValue"},
+                        {"SecondEntry", "SecondValue"},
+                        {"ThirdEntry", "ThirdValue"},
                     }))
                 .Calling(c => c.ValidDistributedCacheEntriesAction(From.Services<IDistributedCache>()))
                 .ShouldReturn()
@@ -116,6 +147,26 @@
         }
 
         [Fact]
+        public void AndAlsoWithStringsShouldWorkCorrectly()
+        {
+            MyController<DistributedCacheController>
+                .Instance()
+                .WithDistributedCache(distributedCache => distributedCache
+                    .WithEntry("FirstEntry", "FirstValue")
+                    .AndAlso()
+                    .WithEntry("SecondEntry", "SecondValue")
+                    .AndAlso()
+                    .WithEntries(new Dictionary<string, string>()
+                    {
+                        {"ThirdEntry", "ThirdValue"},
+                        {"FourthEntry", "FourthValue"},
+                    }))
+                .Calling(c => c.ValidDistributedCacheEntriesAction(From.Services<IDistributedCache>()))
+                .ShouldReturn()
+                .Ok();
+        }
+
+        [Fact]
         public void WithCacheBuilderWithKeyShouldSetCorrectValues()
         {
             MyController<DistributedCacheController>
@@ -145,6 +196,20 @@
         }
 
         [Fact]
+        public void WithCacheBuilderWithKeyWithStringValueShouldSetCorrectValues()
+        {
+            MyController<DistributedCacheController>
+                .Instance()
+                .WithDistributedCache(distributedCache => distributedCache
+                    .WithEntry(entry => entry
+                        .WithKey("FirstEntry")
+                        .WithValue("FirstValue")))
+                .Calling(c => c.ValidDistributedCacheEntryAction(From.Services<IDistributedCache>()))
+                .ShouldReturn()
+                .Ok();
+        }
+
+        [Fact]
         public void WithCacheBuilderWithKeyBuilderShouldSetCorrectValues()
         {
             var val = new byte[] { 127, 127, 127 };
@@ -155,6 +220,23 @@
                     .WithEntry(entry => entry
                         .WithKey("FirstEntry")
                         .WithValue(val)
+                        .WithAbsoluteExpiration(DateTimeOffset.MaxValue)
+                        .WithAbsoluteExpirationRelativeToNow(TimeSpan.MaxValue)
+                        .WithSlidingExpiration(TimeSpan.MaxValue)))
+                .Calling(c => c.ValidDistributedCacheEntryAction(From.Services<IDistributedCache>()))
+                .ShouldReturn()
+                .Ok();
+        }
+
+        [Fact]
+        public void WithCacheBuilderWithKeyBuilderAndStringValueShouldSetCorrectValues()
+        {
+            MyController<DistributedCacheController>
+                .Instance()
+                .WithDistributedCache(distributedCache => distributedCache
+                    .WithEntry(entry => entry
+                        .WithKey("FirstEntry")
+                        .WithValue("FirstValue")
                         .WithAbsoluteExpiration(DateTimeOffset.MaxValue)
                         .WithAbsoluteExpirationRelativeToNow(TimeSpan.MaxValue)
                         .WithSlidingExpiration(TimeSpan.MaxValue)))
