@@ -2,7 +2,7 @@
 {
     using System;
     using Microsoft.Extensions.Caching.Distributed;
-    using MyTested.AspNetCore.Mvc.Internal.Contracts;
+    using Internal.Contracts;
 
     public static class DistributedCacheExtensions
     {

@@ -7,7 +7,6 @@ namespace MyTested.AspNetCore.Mvc.Builders.Data.DistributedCache
     using System;
     using Contracts.Data.DistributedCache;
     using System.Collections.Generic;
-    using Microsoft.Extensions.Caching.Memory;
     using Internal.TestContexts;
     using Utilities;
     using Utilities.Validators;
@@ -40,7 +39,7 @@ namespace MyTested.AspNetCore.Mvc.Builders.Data.DistributedCache
                 if (Reflection.AreNotDeeplyEqual(expected.Value, actual.Value))
                 {
                     this.ThrowNewDataProviderAssertionException(
-                        $"to have entry with '{this.EntryKey}' key and the given value",
+                        $"to have an entry with '{this.EntryKey}' key and the given value",
                         "in fact it was different");
                 }
             });
@@ -59,7 +58,7 @@ namespace MyTested.AspNetCore.Mvc.Builders.Data.DistributedCache
                 if (expectedExpiration != actualExpiration)
                 {
                     this.ThrowNewDataProviderAssertionException(
-                        $"to have entry with '{this.EntryKey}' key and {expectedExpiration.ToFormattedString().GetErrorMessageName()} absolute expiration",
+                        $"to have an entry with '{this.EntryKey}' key and {expectedExpiration.ToFormattedString().GetErrorMessageName()} absolute expiration",
                         $"in fact found {actualExpiration.ToFormattedString().GetErrorMessageName()}");
                 }
             });
@@ -78,7 +77,7 @@ namespace MyTested.AspNetCore.Mvc.Builders.Data.DistributedCache
                 if (expectedRelativeExpiration != actualRelativeExpiration)
                 {
                     this.ThrowNewDataProviderAssertionException(
-                        $"to have entry with '{this.EntryKey}' key and {expectedRelativeExpiration.GetErrorMessageName()} absolute expiration relative to now",
+                        $"to have an entry with '{this.EntryKey}' key and {expectedRelativeExpiration.GetErrorMessageName()} absolute expiration relative to now",
                         $"in fact found {actualRelativeExpiration.GetErrorMessageName()}");
                 }
             });
@@ -97,7 +96,7 @@ namespace MyTested.AspNetCore.Mvc.Builders.Data.DistributedCache
                 if (expectedSlidingExpiration != actualSlidingExpiration)
                 {
                     this.ThrowNewDataProviderAssertionException(
-                        $"to have entry with '{this.EntryKey}' key and {expectedSlidingExpiration.GetErrorMessageName()} sliding expiration",
+                        $"to have an entry with '{this.EntryKey}' key and {expectedSlidingExpiration.GetErrorMessageName()} sliding expiration",
                         $"in fact found {actualSlidingExpiration.GetErrorMessageName()}");
                 }
             });
@@ -114,7 +113,7 @@ namespace MyTested.AspNetCore.Mvc.Builders.Data.DistributedCache
         internal void ThrowNewDataProviderAssertionException(string expectedValue, string actualValue)
         {
             throw new DataProviderAssertionException(string.Format(
-                "{0} memory cache {1}, but {2}.",
+                "{0} distributed cache {1}, but {2}.",
                 this.TestContext.ExceptionMessagePrefix,
                 expectedValue,
                 actualValue));
