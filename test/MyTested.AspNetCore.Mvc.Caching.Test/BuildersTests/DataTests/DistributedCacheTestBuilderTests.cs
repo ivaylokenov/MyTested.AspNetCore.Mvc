@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using Microsoft.Extensions.Caching.Distributed;
     using Microsoft.Extensions.DependencyInjection;
-    using MyTested.AspNetCore.Mvc.Exceptions;
+    using Exceptions;
     using Setups;
     using Setups.Controllers;
     using Xunit;

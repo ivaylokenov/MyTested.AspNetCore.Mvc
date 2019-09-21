@@ -16,6 +16,21 @@
             return this.Ok();
         }
 
+        public IActionResult ValidDistributedCacheEntryAction([FromServices] IDistributedCache cache)
+        {
+            if (!(cache is IDistributedCacheMock distributedCache))
+            {
+                return this.InternalServerError();
+            }
+
+            if (distributedCache.Count != 1)
+            {
+                return this.InternalServerError();
+            }
+
+            return this.Ok();
+        }
+
         public IActionResult ValidDistributedCacheEntriesAction([FromServices] IDistributedCache cache)
         {
             if (!(cache is IDistributedCacheMock distributedCache))

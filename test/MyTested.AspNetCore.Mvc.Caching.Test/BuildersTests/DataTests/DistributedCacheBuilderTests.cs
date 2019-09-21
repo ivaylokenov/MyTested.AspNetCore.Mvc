@@ -33,7 +33,7 @@
 
             MyController<DistributedCacheController>
                 .Instance()
-                .WithDistributedCache(distributedCache => {})
+                .WithDistributedCache(distributedCache => { })
                 .Calling(c => c.ValidDistributedCacheAction(From.Services<IDistributedCache>()))
                 .ShouldReturn()
                 .Ok();
@@ -114,6 +114,78 @@
                 .ShouldReturn()
                 .Ok();
         }
+
+        [Fact]
+        public void WithCacheBuilderWithKeyShouldSetCorrectValues()
+        {
+            MyController<DistributedCacheController>
+                .Instance()
+                .WithDistributedCache(distributedCache => distributedCache
+                    .WithEntry(entry => entry
+                        .WithKey("FirstEntry")))
+                .Calling(c => c.ValidDistributedCacheEntryAction(From.Services<IDistributedCache>()))
+                .ShouldReturn()
+                .Ok();
+        }
+
+        [Fact]
+        public void WithCacheBuilderWithKeyWithValueShouldSetCorrectValues()
+        {
+            var val = new byte[] { 127, 127, 127 };
+
+            MyController<DistributedCacheController>
+                .Instance()
+                .WithDistributedCache(distributedCache => distributedCache
+                    .WithEntry(entry => entry
+                        .WithKey("FirstEntry")
+                        .WithValue(val)))
+                .Calling(c => c.ValidDistributedCacheEntryAction(From.Services<IDistributedCache>()))
+                .ShouldReturn()
+                .Ok();
+        }
+
+        [Fact]
+        public void WithCacheBuilderWithKeyBuilderShouldSetCorrectValues()
+        {
+            var val = new byte[] { 127, 127, 127 };
+
+            MyController<DistributedCacheController>
+                .Instance()
+                .WithDistributedCache(distributedCache => distributedCache
+                    .WithEntry(entry => entry
+                        .WithKey("FirstEntry")
+                        .WithValue(val)
+                        .WithAbsoluteExpiration(DateTimeOffset.MaxValue)
+                        .WithAbsoluteExpirationRelativeToNow(TimeSpan.MaxValue)
+                        .WithSlidingExpiration(TimeSpan.MaxValue)))
+                .Calling(c => c.ValidDistributedCacheEntryAction(From.Services<IDistributedCache>()))
+                .ShouldReturn()
+                .Ok();
+        }
+
+        [Fact]
+        public void WithCacheBuilderWithKeyBuilderAndAlsoShouldSetCorrectValues()
+        {
+            var val = new byte[] { 127, 127, 127 };
+
+            MyController<DistributedCacheController>
+                .Instance()
+                .WithDistributedCache(distributedCache => distributedCache
+                    .WithEntry(entry => entry
+                        .WithKey("FirstEntry")
+                        .AndAlso()
+                        .WithValue(val)
+                        .AndAlso()
+                        .WithAbsoluteExpiration(DateTimeOffset.MaxValue)
+                        .AndAlso()
+                        .WithAbsoluteExpirationRelativeToNow(TimeSpan.MaxValue)
+                        .AndAlso()
+                        .WithSlidingExpiration(TimeSpan.MaxValue)))
+                .Calling(c => c.ValidDistributedCacheEntryAction(From.Services<IDistributedCache>()))
+                .ShouldReturn()
+                .Ok();
+        }
+
 
         public void Dispose() => MyApplication.StartsFrom<DefaultStartup>();
     }
