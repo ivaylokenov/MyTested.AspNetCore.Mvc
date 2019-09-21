@@ -21,10 +21,27 @@
         /// Adds cache entry to the mocked <see cref="IDistributedCache"/>.
         /// </summary>
         /// <param name="key">Key of the cache entry.</param>
+        /// <param name="value">String value of the cache entry.</param>
+        /// <returns>The same <see cref="IAndDistributedCacheBuilder"/>.</returns>
+        IAndDistributedCacheBuilder WithEntry(string key, string value);
+
+        /// <summary>
+        /// Adds cache entry to the mocked <see cref="IDistributedCache"/>.
+        /// </summary>
+        /// <param name="key">Key of the cache entry.</param>
         /// <param name="value">Value of the cache entry.</param>
         /// <param name="options"><see cref="DistributedCacheEntryOptions"/> of the cache entry.</param>
         /// <returns>The same <see cref="IAndDistributedCacheBuilder"/>.</returns>
         IAndDistributedCacheBuilder WithEntry(string key, byte[] value, DistributedCacheEntryOptions options);
+
+        /// <summary>
+        /// Adds cache entry to the mocked <see cref="IDistributedCache"/>.
+        /// </summary>
+        /// <param name="key">Key of the cache entry.</param>
+        /// <param name="value">String value of the cache entry.</param>
+        /// <param name="options"><see cref="DistributedCacheEntryOptions"/> of the cache entry.</param>
+        /// <returns>The same <see cref="IAndDistributedCacheBuilder"/>.</returns>
+        IAndDistributedCacheBuilder WithEntry(string key, string value, DistributedCacheEntryOptions options);
 
         /// <summary>
         /// Adds cache entry to the mocked <see cref="IDistributedCache"/>.
@@ -39,6 +56,13 @@
         /// <param name="entries">Dictionary of cache entries.</param>
         /// <returns>The same <see cref="IAndDistributedCacheBuilder"/>.</returns>
         IAndDistributedCacheBuilder WithEntries(IDictionary<string, byte[]> entries);
+
+        /// <summary>
+        /// Adds cache entries to the mocked <see cref="IDistributedCache"/>.
+        /// </summary>
+        /// <param name="entries">Dictionary of cache entries.</param>
+        /// <returns>The same <see cref="IAndDistributedCacheBuilder"/>.</returns>
+        IAndDistributedCacheBuilder WithEntries(IDictionary<string, string> entries);
 
     }
 }

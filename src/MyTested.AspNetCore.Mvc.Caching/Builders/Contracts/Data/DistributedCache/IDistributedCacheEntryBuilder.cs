@@ -16,6 +16,13 @@
         IAndDistributedCacheEntryBuilder WithValue(byte[] value);
 
         /// <summary>
+        /// Sets the value of the built <see cref="IDistributedCache"/> entry.
+        /// </summary>
+        /// <param name="value">Cache entry string value to set.</param>
+        /// <returns>The same <see cref="IAndDistributedCacheEntryBuilder"/>.</returns>
+        IAndDistributedCacheEntryBuilder WithValue(string value);
+
+        /// <summary>
         /// Sets the <see cref="DistributedCacheEntryOptions.AbsoluteExpiration"/> value to the built <see cref="IDistributedCache"/> entry.
         /// </summary>
         /// <param name="absoluteExpiration">Absolute expiration value to set.</param>
