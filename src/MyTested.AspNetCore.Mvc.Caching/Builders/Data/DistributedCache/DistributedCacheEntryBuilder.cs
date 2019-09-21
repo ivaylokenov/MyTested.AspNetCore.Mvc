@@ -3,6 +3,7 @@
     using System;
     using Contracts.Data.DistributedCache;
     using Internal.Caching;
+    using Utilities;
 
     public class DistributedCacheEntryBuilder : IDistributedCacheEntryKeyBuilder, IAndDistributedCacheEntryBuilder
     {
@@ -22,6 +23,12 @@
         public IAndDistributedCacheEntryBuilder WithValue(byte[] value)
         {
             this.DistributedCacheEntry.Value = value;
+            return this;
+        }
+
+        public IAndDistributedCacheEntryBuilder WithValue(string value)
+        {
+            this.WithValue(BytesHelper.GetBytes(value));
             return this;
         }
 

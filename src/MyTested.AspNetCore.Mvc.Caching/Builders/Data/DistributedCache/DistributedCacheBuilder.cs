@@ -31,10 +31,22 @@
             return this;
         }
 
+        public IAndDistributedCacheBuilder WithEntry(string key, string value)
+        {
+            this.DistributedCache.SetString(key, value);
+            return this;
+        }
+
         /// <inheritdoc />
         public IAndDistributedCacheBuilder WithEntry(string key, byte[] value, DistributedCacheEntryOptions options)
         {
             this.DistributedCache.Set(key, value, options);
+            return this;
+        }
+
+        public IAndDistributedCacheBuilder WithEntry(string key, string value, DistributedCacheEntryOptions options)
+        {
+            this.DistributedCache.SetString(key, value, options);
             return this;
         }
 
@@ -56,6 +68,12 @@
 
         /// <inheritdoc />
         public IAndDistributedCacheBuilder WithEntries(IDictionary<string, byte[]> entries)
+        {
+            entries.ForEach(e => this.WithEntry(e.Key, e.Value));
+            return this;
+        }
+
+        public IAndDistributedCacheBuilder WithEntries(IDictionary<string, string> entries)
         {
             entries.ForEach(e => this.WithEntry(e.Key, e.Value));
             return this;

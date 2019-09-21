@@ -48,6 +48,12 @@ namespace MyTested.AspNetCore.Mvc.Builders.Data.DistributedCache
             return this;
         }
 
+        public new IAndDistributedCacheEntryTestBuilder WithValue(string value)
+        {
+            this.WithValue(BytesHelper.GetBytes(value));
+            return this;
+        }
+
         public new IAndDistributedCacheEntryTestBuilder WithAbsoluteExpiration(DateTimeOffset? absoluteExpiration)
         {
             this.validations.Add((expected, actual) =>

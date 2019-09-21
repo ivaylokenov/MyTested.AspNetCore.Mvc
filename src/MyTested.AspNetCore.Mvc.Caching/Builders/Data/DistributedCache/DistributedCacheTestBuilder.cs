@@ -39,11 +39,34 @@ namespace MyTested.AspNetCore.Mvc.Builders.Data.DistributedCache
             this.distributedCacheDictionary = this.GetDistributedCacheDictionary();
         }
 
+        public IAndDistributedCacheTestBuilder ContainingEntryWithValue(string value)
+        {
+            this.ContainingEntryWithValue(BytesHelper.GetBytes(value));
+            return this;
+        }
+
         /// <inheritdoc />
         public IAndDistributedCacheTestBuilder ContainingEntries(IDictionary<string, byte[]> entries)
         {
             var expectedItems = entries.Count;
-            var actualItems = ((IDistributedCacheMock)distributedCache).Count; //TODO: check where count is needed and either copy mem cache implementation or provide way to get count.
+            var actualItems = this.GetDistributedCacheMock().Count;
+
+            if (expectedItems != actualItems)
+            {
+                this.ThrowNewDataProviderAssertionException(
+                    DistributedCacheName,
+                    $"to have {expectedItems} {(expectedItems != 1 ? "entries" : "entry")}",
+                    $"in fact found {actualItems}");
+            }
+
+            entries.ForEach(e => this.ContainingEntry(e.Key, e.Value));
+            return this;
+        }
+
+        public IAndDistributedCacheTestBuilder ContainingEntries(IDictionary<string, string> entries)
+        {
+            var expectedItems = entries.Count;
+            var actualItems = this.GetDistributedCacheMock().Count;
 
             if (expectedItems != actualItems)
             {
@@ -72,6 +95,12 @@ namespace MyTested.AspNetCore.Mvc.Builders.Data.DistributedCache
             return this;
         }
 
+        public IAndDistributedCacheTestBuilder ContainingEntry(string key, string value)
+        {
+            this.ContainingEntry(key, BytesHelper.GetBytes(value));
+            return this;
+        }
+
         /// <inheritdoc />
         public IAndDistributedCacheTestBuilder ContainingEntry(string key, byte[] value, DistributedCacheEntryOptions options)
         {
@@ -87,6 +116,12 @@ namespace MyTested.AspNetCore.Mvc.Builders.Data.DistributedCache
                     "in fact they were different");
             }
 
+            return this;
+        }
+
+        public IAndDistributedCacheTestBuilder ContainingEntry(string key, string value, DistributedCacheEntryOptions options)
+        {
+            this.ContainingEntry(key, BytesHelper.GetBytes(value), options);
             return this;
         }
 
