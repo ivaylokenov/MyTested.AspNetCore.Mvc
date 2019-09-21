@@ -1,6 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Plugins
 {
     using System;
+    using System.Linq;
     using Internal;
     using Internal.Contracts;
     using Microsoft.Extensions.Caching.Memory;
@@ -17,32 +18,18 @@
         private readonly Type defaultDistributedCachingServiceType = typeof(IDistributedCache);
         private readonly Type defaultDistributedCachingImplementationType = typeof(MemoryDistributedCache);
 
-        private bool shouldReplaceMemoryCache = false;
-        private bool shouldReplaceDistributedCache = false;
-
         public Func<ServiceDescriptor, bool> ServiceSelectorPredicate
             => serviceDescriptor =>
             {
-                var isValidServiceType = 
+                var isSupportedService = 
                     serviceDescriptor.ServiceType == this.defaultCachingServiceType ||
                     serviceDescriptor.ServiceType == this.defaultDistributedCachingServiceType;
 
-                var isValidImplementationType =
+                var isSupportedImplementation =
                     serviceDescriptor.ImplementationType == this.defaultCachingImplementationType ||
                     serviceDescriptor.ImplementationType == this.defaultDistributedCachingImplementationType;
 
-                if (serviceDescriptor.ServiceType == this.defaultCachingServiceType)
-                {
-                    this.shouldReplaceMemoryCache = serviceDescriptor.ImplementationType == defaultCachingImplementationType;
-                }
-
-                if (serviceDescriptor.ServiceType == this.defaultDistributedCachingServiceType)
-                {
-                    this.shouldReplaceDistributedCache = serviceDescriptor.ImplementationType == defaultDistributedCachingImplementationType;
-                }
-                        
-
-                return isValidServiceType && isValidImplementationType;
+                return isSupportedService && isSupportedImplementation;
             };
                 
         public Action<IServiceCollection> ServiceRegistrationDelegate
@@ -53,13 +40,13 @@
                 {
                     CommonValidator.CheckForNullReference(serviceCollection);
 
-                    if (this.shouldReplaceMemoryCache)
+                    if (this.ShouldReplace(serviceCollection, this.defaultCachingServiceType, this.defaultCachingImplementationType))
                     {
                         serviceCollection.ReplaceMemoryCache();
                         TestHelper.GlobalTestCleanup += () => TestServiceProvider.GetService<IMemoryCache>()?.Dispose();
                     }
 
-                    if (this.shouldReplaceDistributedCache)
+                    if (this.ShouldReplace(serviceCollection, this.defaultDistributedCachingServiceType, this.defaultDistributedCachingImplementationType))
                     {
                         serviceCollection.ReplaceDistributedCache();
                         TestHelper.GlobalTestCleanup += () => TestServiceProvider.GetService<IDistributedCacheMock>()?.Dispose();
@@ -67,5 +54,15 @@
                 };
             }
         }
+
+        private bool ShouldReplace(IServiceCollection serviceCollection, Type serviceType, Type implementationType)
+        {
+            var existingService = serviceCollection
+                .FirstOrDefault(s => s.ServiceType == serviceType);
+
+            return existingService == null || 
+                   existingService.ImplementationType == implementationType;
+        }
+            
     }
 }
