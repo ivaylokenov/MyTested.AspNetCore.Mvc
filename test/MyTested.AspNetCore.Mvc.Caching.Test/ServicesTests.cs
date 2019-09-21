@@ -3,18 +3,18 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Internal;
-    using Internal.Services;
     using Internal.Caching;
-    using Microsoft.Extensions.DependencyInjection;
+    using Internal.Contracts;
+    using Internal.Services;
+    using Microsoft.Extensions.Caching.Distributed;
     using Microsoft.Extensions.Caching.Memory;
+    using Microsoft.Extensions.DependencyInjection;
+    using Setups;
     using Setups.Common;
     using Setups.Controllers;
     using Setups.Startups;
-    using Xunit;
     using Setups.ViewComponents;
-    using Setups;
-    using Microsoft.Extensions.Caching.Distributed;
-    using Internal.Contracts;
+    using Xunit;
 
     public class ServicesTests
     {

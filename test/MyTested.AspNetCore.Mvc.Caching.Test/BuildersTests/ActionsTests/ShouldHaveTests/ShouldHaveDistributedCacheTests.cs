@@ -1,10 +1,10 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.BuildersTests.ActionsTests.ShouldHaveTests
 {
     using System;
-    using Microsoft.Extensions.DependencyInjection;
     using Exceptions;
-    using Test.Setups;
-    using Test.Setups.Controllers;
+    using Microsoft.Extensions.DependencyInjection;
+    using Setups;
+    using Setups.Controllers;
     using Xunit;
 
     public class ShouldHaveDistributedCacheTests : IDisposable
