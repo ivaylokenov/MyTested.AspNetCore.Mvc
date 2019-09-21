@@ -2,10 +2,12 @@
 {
     using System;
     using Internal;
+    using Internal.Contracts;
     using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.DependencyInjection;
     using Internal.Services;
     using Microsoft.Extensions.Caching.Distributed;
+    using Utilities.Validators;
 
     public class CachingTestPlugin : IServiceRegistrationPlugin
     {
@@ -14,6 +16,9 @@
 
         private readonly Type defaultDistributedCachingServiceType = typeof(IDistributedCache);
         private readonly Type defaultDistributedCachingImplementationType = typeof(MemoryDistributedCache);
+
+        private bool shouldReplaceMemoryCache = false;
+        private bool shouldReplaceDistributedCache = false;
 
         public Func<ServiceDescriptor, bool> ServiceSelectorPredicate
             => serviceDescriptor =>
@@ -26,6 +31,16 @@
                     serviceDescriptor.ImplementationType == this.defaultCachingImplementationType ||
                     serviceDescriptor.ImplementationType == this.defaultDistributedCachingImplementationType;
 
+                if (serviceDescriptor.ServiceType == this.defaultCachingServiceType)
+                {
+                    this.shouldReplaceMemoryCache = serviceDescriptor.ImplementationType == defaultCachingImplementationType;
+                }
+
+                if (serviceDescriptor.ServiceType == this.defaultDistributedCachingServiceType)
+                {
+                    this.shouldReplaceDistributedCache = serviceDescriptor.ImplementationType == defaultDistributedCachingImplementationType;
+                }
+                        
 
                 return isValidServiceType && isValidImplementationType;
             };
@@ -36,10 +51,19 @@
             {
                 return serviceCollection =>
                 {
-                    serviceCollection.ReplaceMemoryCache();
-                    serviceCollection.ReplaceDistributedCache();
+                    CommonValidator.CheckForNullReference(serviceCollection);
 
-                    TestHelper.GlobalTestCleanup += () => TestServiceProvider.GetService<IMemoryCache>()?.Dispose();
+                    if (this.shouldReplaceMemoryCache)
+                    {
+                        serviceCollection.ReplaceMemoryCache();
+                        TestHelper.GlobalTestCleanup += () => TestServiceProvider.GetService<IMemoryCache>()?.Dispose();
+                    }
+
+                    if (this.shouldReplaceDistributedCache)
+                    {
+                        serviceCollection.ReplaceDistributedCache();
+                        TestHelper.GlobalTestCleanup += () => TestServiceProvider.GetService<IDistributedCacheMock>()?.Dispose();
+                    }
                 };
             }
         }
