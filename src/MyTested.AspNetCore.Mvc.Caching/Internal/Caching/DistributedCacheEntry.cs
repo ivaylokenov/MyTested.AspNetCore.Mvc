@@ -6,6 +6,7 @@
     {
         internal DistributedCacheEntry()
         {
+            this.Options = new DistributedCacheEntryOptions();
         }
 
         internal DistributedCacheEntry(byte[] value, DistributedCacheEntryOptions options)
