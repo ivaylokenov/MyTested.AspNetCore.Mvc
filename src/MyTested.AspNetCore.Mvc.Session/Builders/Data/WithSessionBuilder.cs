@@ -11,22 +11,16 @@
     /// <summary>
     /// Used for building <see cref="ISession"/>.
     /// </summary>
-    public class SessionBuilder : IAndSessionBuilder
+    public class WithSessionBuilder : SessionBaseBuilder, IAndWithSessionBuilder
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SessionBuilder"/> class.
+        /// Initializes a new instance of the <see cref="WithSessionBuilder"/> class.
         /// </summary>
         /// <param name="session"><see cref="ISession"/> to built.</param>
-        public SessionBuilder(ISession session) => this.Session = session;
-
-        /// <summary>
-        /// Gets the <see cref="ISession"/>.
-        /// </summary>
-        /// <value>The built <see cref="ISession"/>.</value>
-        protected ISession Session { get; }
+        public WithSessionBuilder(ISession session) : base(session) { }
 
         /// <inheritdoc />
-        public IAndSessionBuilder WithId(string sessionId)
+        public IAndWithSessionBuilder WithId(string sessionId)
         {
             if (!(this.Session is ISessionMock mockedSession))
             {
@@ -38,28 +32,28 @@
         }
 
         /// <inheritdoc />
-        public IAndSessionBuilder WithEntry(string key, byte[] value)
+        public IAndWithSessionBuilder WithEntry(string key, byte[] value)
         {
             this.Session.Set(key, value);
             return this;
         }
 
         /// <inheritdoc />
-        public IAndSessionBuilder WithEntry(string key, string value)
+        public IAndWithSessionBuilder WithEntry(string key, string value)
         {
             this.Session.SetString(key, value);
             return this;
         }
 
         /// <inheritdoc />
-        public IAndSessionBuilder WithEntry(string key, int value)
+        public IAndWithSessionBuilder WithEntry(string key, int value)
         {
             this.Session.SetInt32(key, value);
             return this;
         }
 
         /// <inheritdoc />
-        public IAndSessionBuilder WithEntries(object entries)
+        public IAndWithSessionBuilder WithEntries(object entries)
         {
             var entriesAsDictionary = new RouteValueDictionary(entries);
             entriesAsDictionary.ForEach(e =>
@@ -83,27 +77,27 @@
         }
 
         /// <inheritdoc />
-        public IAndSessionBuilder WithEntries(IDictionary<string, byte[]> entries)
+        public IAndWithSessionBuilder WithEntries(IDictionary<string, byte[]> entries)
         {
             entries.ForEach(e => this.WithEntry(e.Key, e.Value));
             return this;
         }
 
         /// <inheritdoc />
-        public IAndSessionBuilder WithEntries(IDictionary<string, string> entries)
+        public IAndWithSessionBuilder WithEntries(IDictionary<string, string> entries)
         {
             entries.ForEach(e => this.WithEntry(e.Key, e.Value));
             return this;
         }
 
         /// <inheritdoc />
-        public IAndSessionBuilder WithEntries(IDictionary<string, int> entries)
+        public IAndWithSessionBuilder WithEntries(IDictionary<string, int> entries)
         {
             entries.ForEach(e => this.WithEntry(e.Key, e.Value));
             return this;
         }
 
         /// <inheritdoc />
-        public ISessionBuilder AndAlso() => this;
+        public IWithSessionBuilder AndAlso() => this;
     }
 }
