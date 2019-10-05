@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Test.PlungsTests
+﻿namespace MyTested.AspNetCore.Mvc.Test.PluginsTests
 {
     using System;
     using Microsoft.AspNetCore.Mvc.Formatters.Json.Internal;
