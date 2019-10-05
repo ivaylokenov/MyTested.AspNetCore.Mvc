@@ -16,7 +16,7 @@
                 .Instance()
                 .Calling(c => c.OkResultAction())
                 .ShouldReturn()
-                .Ok(ок => ок
+                .Ok(ok => ok
                     .WithNoModel());
         }
 
@@ -30,7 +30,7 @@
                         .Instance()
                         .Calling(c => c.OkResultWithResponse())
                         .ShouldReturn()
-                        .Ok(ок => ок
+                        .Ok(ok => ok
                             .WithNoModel());
                 },
                 "When calling OkResultWithResponse action in MvcController expected to not have a response model but in fact such was found.");
@@ -46,7 +46,7 @@
                 .NoActionAttributes()
                 .AndAlso()
                 .ShouldReturn()
-                .Ok(ок => ок
+                .Ok(ok => ok
                     .WithModelOfType<List<ResponseModel>>());
         }
 
@@ -60,7 +60,7 @@
                 .NoActionAttributes()
                 .AndAlso()
                 .ShouldReturn()
-                .Ok(ок => ок
+                .Ok(ok => ok
                     .WithModelOfType(typeof(IList<>))
                     .AndAlso()
                     .ShouldPassForThe<ICollection<ResponseModel>>(m => m != null));
