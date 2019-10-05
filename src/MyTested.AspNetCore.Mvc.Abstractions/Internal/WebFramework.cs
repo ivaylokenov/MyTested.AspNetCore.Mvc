@@ -188,6 +188,26 @@
                     return type;
                 }
             }
+
+            public static Type IAntiforgeryFeature
+            {
+                get
+                {
+                    var assembly = Assembly.Load(new AssemblyName("Microsoft.AspNetCore.Antiforgery"));
+                    var type = assembly.GetType("Microsoft.AspNetCore.Antiforgery.IAntiforgeryFeature");
+                    return type;
+                }
+            }
+
+            public static Type AntiforgeryFeature
+            {
+                get
+                {
+                    var assembly = Assembly.Load(new AssemblyName("Microsoft.AspNetCore.Antiforgery"));
+                    var type = assembly.GetType("Microsoft.AspNetCore.Antiforgery.AntiforgeryFeature");
+                    return type;
+                }
+            }
         }
 
         // Copied from the ASP.NET Core source code.
