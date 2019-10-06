@@ -8,7 +8,11 @@
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Features;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Routing;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Options;
+    using Utilities.Extensions;
 
     /// <summary>
     /// Mock of <see cref="IApplicationBuilder"/>. Used for extracting registered routes.
@@ -19,6 +23,8 @@
         private const string ApplicationServicesPropertyName = "application.Services";
 
         private readonly IList<Func<RequestDelegate, RequestDelegate>> components = new List<Func<RequestDelegate, RequestDelegate>>();
+
+        private bool endpointsEnabled = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApplicationBuilderMock"/> class.
@@ -33,13 +39,15 @@
 
             this.Routes = new RouteCollection();
             this.ApplicationServices = serviceProvider;
+
+            this.CheckForEndpointRouting(serviceProvider);
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApplicationBuilderMock"/> class.
         /// </summary>
         /// <param name="builder">Application builder to copy properties from.</param>
-        public ApplicationBuilderMock(IApplicationBuilder builder) 
+        public ApplicationBuilderMock(IApplicationBuilder builder)
             => this.Properties = builder.Properties;
 
         /// <summary>
@@ -69,7 +77,7 @@
         /// </summary>
         /// <value>Result of <see cref="RouteCollection"/> type.</value>
         public RouteCollection Routes { get; set; }
-        
+
         /// <summary>
         /// Extracts registered routes from the provided middleware, if such are found.
         /// </summary>
@@ -77,7 +85,8 @@
         /// <returns>The same <see cref="IApplicationBuilder"/>.</returns>
         public IApplicationBuilder Use(Func<RequestDelegate, RequestDelegate> middleware)
         {
-            this.ExtractRoutes(middleware);
+            this.ExtractEndpointRoutes(middleware);
+            this.ExtractLegacyRoutes(middleware);
 
             this.components.Add(middleware);
             return this;
@@ -109,12 +118,89 @@
             return app;
         }
 
-        private T GetProperty<T>(string key) 
-            => this.Properties.TryGetValue(key, out var value) ? (T)value : default(T);
+        private T GetProperty<T>(string key)
+            => this.Properties.TryGetValue(key, out var value) ? (T)value : default;
 
         private void SetProperty<T>(string key, T value) => this.Properties[key] = value;
 
-        private void ExtractRoutes(Func<RequestDelegate, RequestDelegate> middleware)
+        private void CheckForEndpointRouting(IServiceProvider serviceProvider)
+        {
+            var options = serviceProvider.GetService<IOptions<MvcOptions>>()?.Value;
+
+            this.endpointsEnabled = options?.EnableEndpointRouting ?? false;
+        }
+
+        private void ExtractEndpointRoutes(Func<RequestDelegate, RequestDelegate> middleware)
+        {
+            var middlewareTypeField = middleware
+               .Target
+               .GetType()
+               .GetTypeInfo()
+               .DeclaredFields
+               .FirstOrDefault(m => m.Name == "middleware");
+
+            if (!(middlewareTypeField?.GetValue(middleware.Target) is Type middlewareType)
+                || middlewareType.Name != "EndpointMiddleware")
+            {
+                return;
+            }
+
+            var routeOptions = this.ApplicationServices.GetService<IOptions<RouteOptions>>()?.Value;
+
+            if (routeOptions == null)
+            {
+                return;
+            }
+
+            var routeBuilder = new RouteBuilder(this)
+            {
+                DefaultHandler = new RouteHandler(c => Task.CompletedTask)
+            };
+
+            var endpointDataSources = routeOptions.Exposed().EndpointDataSources;
+
+            foreach (EndpointDataSource endpointDataSource in endpointDataSources)
+            {
+                var routeEndpoints = endpointDataSource
+                    .Endpoints
+                    .OfType<RouteEndpoint>()
+                    .Where(e => e.DisplayName.StartsWith("Route: "))
+                    .OrderBy(e => e.Order);
+
+                foreach (var routeEndpoint in routeEndpoints)
+                {
+                    var routeName = routeEndpoint
+                        .Metadata
+                        .OfType<RouteNameMetadata>()
+                        .FirstOrDefault()
+                        ?.RouteName;
+
+                    if (routeName == null)
+                    {
+                        return;
+                    }
+
+                    routeBuilder.MapRoute(
+                        name: routeName,
+                        routeEndpoint.RoutePattern.RawText);
+                }
+            }
+
+            var attributeRoutingType = WebFramework.Internals.AttributeRouting;
+            var createAttributeMegaRouteMethod = attributeRoutingType.GetMethod("CreateAttributeMegaRoute");
+            var router = (IRouter)createAttributeMegaRouteMethod.Invoke(null, new[] { this.ApplicationServices });
+
+            routeBuilder.Routes.Insert(0, router);
+
+            var routes = routeBuilder.Routes;
+
+            for (int i = 0; i < routes.Count; i++)
+            {
+                this.Routes.Add(routes[i]);
+            }
+        }
+
+        private void ExtractLegacyRoutes(Func<RequestDelegate, RequestDelegate> middleware)
         {
             var middlewareArguments = middleware
                .Target
