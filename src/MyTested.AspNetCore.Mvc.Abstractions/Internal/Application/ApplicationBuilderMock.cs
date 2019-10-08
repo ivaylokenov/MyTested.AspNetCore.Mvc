@@ -222,12 +222,6 @@
                 }
             }
 
-            var attributeRoutingType = WebFramework.Internals.AttributeRouting;
-            var createAttributeMegaRouteMethod = attributeRoutingType.GetMethod("CreateAttributeMegaRoute");
-            var router = (IRouter)createAttributeMegaRouteMethod.Invoke(null, new[] { this.ApplicationServices });
-
-            routeBuilder.Routes.Insert(0, router);
-
             var routes = routeBuilder.Routes;
 
             for (int i = 0; i < routes.Count; i++)

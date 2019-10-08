@@ -43,17 +43,23 @@
             
             AdditionalRouting?.Invoke(routeBuilder);
 
-            if (StartupType == null || routeBuilder.Routes.Count == 0)
+            var routeBuilderRoutes = routeBuilder.Routes;
+
+            if (StartupType == null || routeBuilderRoutes.Count == 0)
             {
                 routeBuilder.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+            }
 
-                var attributeRoutingType = WebFramework.Internals.AttributeRouting;
+            var attributeRoutingType = WebFramework.Internals.AttributeRouting;
+
+            if (routeBuilderRoutes[0].GetType() != attributeRoutingType)
+            {
                 var createAttributeMegaRouteMethod = attributeRoutingType.GetMethod("CreateAttributeMegaRoute");
                 var router = (IRouter)createAttributeMegaRouteMethod.Invoke(null, new[] { serviceProvider });
 
-                routeBuilder.Routes.Insert(0, router);
+                routeBuilderRoutes.Insert(0, router);
             }
 
             router = routeBuilder.Build();
