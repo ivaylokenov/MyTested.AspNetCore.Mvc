@@ -161,28 +161,64 @@
 
             foreach (EndpointDataSource endpointDataSource in endpointDataSources)
             {
-                var routeEndpoints = endpointDataSource
+                var routeEndpoints = new Dictionary<string, RouteEndpoint>();
+
+                var allRouteEndpoints = endpointDataSource
                     .Endpoints
                     .OfType<RouteEndpoint>()
-                    .Where(e => e.DisplayName.StartsWith("Route: "))
-                    .OrderBy(e => e.Order);
-
-                foreach (var routeEndpoint in routeEndpoints)
-                {
-                    var routeName = routeEndpoint
-                        .Metadata
-                        .OfType<RouteNameMetadata>()
-                        .FirstOrDefault()
-                        ?.RouteName;
-
-                    if (routeName == null)
+                    .OrderBy(route => route.Order)
+                    .ForEach(route =>
                     {
-                        return;
-                    }
+                        var routeNameMetadata = route.Metadata.GetMetadata<IRouteNameMetadata>();
+                        var routeName = routeNameMetadata?.RouteName;
+                        if (routeName != null && !routeEndpoints.ContainsKey(routeName))
+                        {
+                            routeEndpoints[routeName] = route;
+                        }
+                    });
+
+                foreach (var routeEndpointData in routeEndpoints)
+                {
+                    var routeName = routeEndpointData.Key;
+                    var routeEndpoint = routeEndpointData.Value;
+
+                    var routePattern = routeEndpoint.RoutePattern;
+                    var rawRouteText = routePattern.RawText;
+
+                    var defaultValues = new Dictionary<string, object>(routePattern.Defaults);
+
+                    routePattern.Defaults.ForEach(defaultValue =>
+                    {
+                        if (rawRouteText.Contains($"{defaultValue.Key}="))
+                        {
+                            defaultValues.Remove(defaultValue.Key);
+                        }
+                    });
+
+                    var constraints = new Dictionary<string, object>();
+
+                    routePattern.Parameters.ForEach(parameter =>
+                    {
+                        parameter.ParameterPolicies.ForEach(policy =>
+                        {
+                            if (policy.ParameterPolicy is IRouteConstraint routeConstraintPolicy)
+                            {
+                                constraints[parameter.Name] = routeConstraintPolicy;
+                            }
+                        });
+                    });
+
+                    var dataTokens = routeEndpoint
+                        .Metadata
+                        .GetMetadata<IDataTokensMetadata>()
+                        ?.DataTokens;
 
                     routeBuilder.MapRoute(
-                        name: routeName,
-                        routeEndpoint.RoutePattern.RawText);
+                        routeName,
+                        rawRouteText,
+                        defaultValues,
+                        constraints,
+                        dataTokens);
                 }
             }
 
