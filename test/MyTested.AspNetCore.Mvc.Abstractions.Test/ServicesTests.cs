@@ -15,6 +15,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.AspNetCore.Routing;
+    using Microsoft.AspNetCore.Routing.Constraints;
     using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -768,6 +769,76 @@
 
             Assert.NotNull(attributeRoute);
             Assert.Contains(nameof(Attribute), attributeRoute.GetType().Name);
+        }
+
+        [Fact]
+        public void EndpointRoutesShouldRegisterCorrectValues()
+        {
+            MyApplication.StartsFrom<EndpointsRoutingStartup>();
+
+            var routes = TestApplication.Router as RouteCollection;
+
+            Assert.NotNull(routes);
+            Assert.Equal(3, routes.Count);
+
+            var attributeRoute = routes[0];
+
+            Assert.Contains(nameof(Attribute), attributeRoute.GetType().Name);
+
+            var areaRoute = routes[1] as Route;
+
+            Assert.NotNull(areaRoute); 
+            Assert.Equal("files", areaRoute.Name);
+            Assert.Equal("Files/{controller=Default}/{action=Test}/{fileName=None}", areaRoute.RouteTemplate);
+
+            var areaRouteDefaults = areaRoute.Defaults;
+
+            Assert.Equal(4, areaRouteDefaults.Count);
+
+            var areaKey = "area";
+
+            Assert.Contains(areaKey, areaRouteDefaults.Keys);
+            Assert.Equal("Files", areaRouteDefaults[areaKey]);
+
+            var normalRoute = routes[2] as Route;
+
+            Assert.NotNull(normalRoute);
+            Assert.Equal("test", normalRoute.Name);
+            Assert.Equal("Test/{action=Index}/{id?}", normalRoute.RouteTemplate);
+
+            var normalRouteDefaults = normalRoute.Defaults;
+            var controllerKey = "controller";
+
+            Assert.Contains(controllerKey, normalRouteDefaults.Keys);
+            Assert.Equal("Test", normalRouteDefaults[controllerKey]);
+
+            var normalRouteConstraints = normalRoute.Constraints;
+            var idKey = "id";
+
+            Assert.Contains(idKey, normalRouteConstraints.Keys);
+
+            var optionalRouteConstraint = normalRouteConstraints[idKey] as OptionalRouteConstraint;
+
+            Assert.NotNull(optionalRouteConstraint);
+
+            var regexRouteConstraint = optionalRouteConstraint.InnerConstraint as RegexRouteConstraint;
+
+            Assert.NotNull(regexRouteConstraint);
+            Assert.Equal(@"^(\d)$", regexRouteConstraint.Constraint.ToString());
+
+            var normalRouteDataTokens = normalRoute.DataTokens;
+
+            Assert.Equal(2, normalRouteDataTokens.Count);
+
+            var firstDataTokenKey = "random";
+            var secondDataTokenKey = "another";
+
+            Assert.Contains(firstDataTokenKey, normalRouteDataTokens.Keys);
+            Assert.Equal("value", normalRouteDataTokens[firstDataTokenKey]);
+            Assert.Contains(secondDataTokenKey, normalRouteDataTokens.Keys);
+            Assert.Equal("token", normalRouteDataTokens[secondDataTokenKey]);
+
+            MyApplication.StartsFrom<DefaultStartup>();
         }
     }
 }
