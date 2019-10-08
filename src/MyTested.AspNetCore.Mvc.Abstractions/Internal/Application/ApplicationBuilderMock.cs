@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Reflection;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Http;
@@ -132,12 +131,7 @@
 
         private void ExtractEndpointRoutes(Func<RequestDelegate, RequestDelegate> middleware)
         {
-            var middlewareTypeField = middleware
-               .Target
-               .GetType()
-               .GetTypeInfo()
-               .DeclaredFields
-               .FirstOrDefault(m => m.Name == "middleware");
+            var middlewareTypeField = middleware.GetTargetField("middleware");
 
             if (!(middlewareTypeField?.GetValue(middleware.Target) is Type middlewareType)
                 || middlewareType.Name != "EndpointMiddleware")
@@ -232,12 +226,7 @@
 
         private void ExtractLegacyRoutes(Func<RequestDelegate, RequestDelegate> middleware)
         {
-            var middlewareArguments = middleware
-               .Target
-               .GetType()
-               .GetTypeInfo()
-               .DeclaredFields
-               .FirstOrDefault(m => m.Name == "args");
+            var middlewareArguments = middleware.GetTargetField("args");
 
             if (middlewareArguments?.GetValue(middleware.Target) is object[] argumentsValues)
             {
