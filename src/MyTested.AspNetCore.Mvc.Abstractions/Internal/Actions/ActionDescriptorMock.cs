@@ -7,7 +7,7 @@
     using Microsoft.AspNetCore.Mvc.Abstractions;
     using Microsoft.AspNetCore.Mvc.Filters;
 
-    public class ActionDescriptorMock : ActionDescriptor
+    public class ActionDescriptorMock
     {
         public static ActionDescriptor Default
             => new ControllerActionDescriptor

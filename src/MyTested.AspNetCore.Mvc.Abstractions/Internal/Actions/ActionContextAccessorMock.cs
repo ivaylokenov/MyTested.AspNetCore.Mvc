@@ -3,7 +3,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
 
-    public class ActionContextAccessorMock : ActionContextAccessor
+    public class ActionContextAccessorMock
     {
         internal static readonly IActionContextAccessor Null = new NullActionContextAccessor();
 

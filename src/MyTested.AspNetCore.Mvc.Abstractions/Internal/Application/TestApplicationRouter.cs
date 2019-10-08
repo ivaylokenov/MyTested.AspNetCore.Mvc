@@ -1,14 +1,12 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.Application
 {
     using System;
+    using Internal.Routing;
     using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Routing;
 
     public static partial class TestApplication
     {
-        private static readonly RequestDelegate NullHandler;
-
         private static volatile IRouter router;
 
         public static IRouter Router
@@ -32,7 +30,7 @@
 
             var routeBuilder = new RouteBuilder(applicationBuilder)
             {
-                DefaultHandler = new RouteHandler(NullHandler)
+                DefaultHandler = RouteHandlerMock.Null
             };
 
             for (int i = 0; i < applicationBuilder.Routes.Count; i++)

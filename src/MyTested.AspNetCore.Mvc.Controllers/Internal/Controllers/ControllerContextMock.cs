@@ -11,11 +11,9 @@
     public class ControllerContextMock : ControllerContext
     {
         private ControllerContextMock(ActionContext actionContext)
-            : base(actionContext)
-        {
-            this.PrepareControllerContext(actionContext);
-        }
-        
+            : base(actionContext) 
+            => this.PrepareControllerContext(actionContext);
+
         public static ControllerContext Default(HttpTestContext testContext)
             => FromActionContext(testContext, new ActionContext());
 

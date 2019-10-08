@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Internal.Routing;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Features;
@@ -88,6 +89,7 @@
             this.ExtractLegacyRoutes(middleware);
 
             this.components.Add(middleware);
+
             return this;
         }
 
@@ -148,7 +150,7 @@
 
             var routeBuilder = new RouteBuilder(this)
             {
-                DefaultHandler = new RouteHandler(c => Task.CompletedTask)
+                DefaultHandler = RouteHandlerMock.Null
             };
 
             var endpointDataSources = routeOptions.Exposed().EndpointDataSources;
@@ -165,6 +167,7 @@
                     {
                         var routeNameMetadata = route.Metadata.GetMetadata<IRouteNameMetadata>();
                         var routeName = routeNameMetadata?.RouteName;
+
                         if (routeName != null && !routeEndpoints.ContainsKey(routeName))
                         {
                             routeEndpoints[routeName] = route;

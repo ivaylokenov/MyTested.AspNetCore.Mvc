@@ -1,13 +1,12 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Internal.Application
 {
     using System;
+    using System.Globalization;
     using Configuration;
     using Licensing;
     using Microsoft.AspNetCore.Builder;
-    using Services;
-    using System.Globalization;
-    using System.Threading.Tasks;
     using Server;
+    using Services;
 
     public static partial class TestApplication
     {
@@ -18,8 +17,6 @@
         static TestApplication()
         {
             Sync = new object();
-
-            NullHandler = c => Task.CompletedTask;
 
             TestWebServer.TryFindTestAssembly();
         }
