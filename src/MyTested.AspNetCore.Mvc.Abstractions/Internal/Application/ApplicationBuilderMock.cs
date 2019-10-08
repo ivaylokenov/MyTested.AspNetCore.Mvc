@@ -9,9 +9,11 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Features;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Routing;
     using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Options;
+    using Utilities;
     using Utilities.Extensions;
 
     /// <summary>
@@ -162,6 +164,8 @@
                 var allRouteEndpoints = endpointDataSource
                     .Endpoints
                     .OfType<RouteEndpoint>()
+                    .Where(route => route.Metadata.All(m => 
+                        Reflection.AreNotAssignable(typeof(IRouteTemplateProvider), m.GetType())))
                     .OrderBy(route => route.Order)
                     .ForEach(route =>
                     {

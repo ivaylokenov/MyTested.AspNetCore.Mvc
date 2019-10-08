@@ -301,7 +301,7 @@
             var setRoutes = TestApplication.Router as RouteCollection;
 
             Assert.NotNull(setRoutes);
-            Assert.Equal(1, setRoutes.Count);
+            Assert.Equal(3, setRoutes.Count);
         }
 
         [Fact]
@@ -406,7 +406,7 @@
             var routesCollection = TestApplication.Router as RouteCollection;
 
             Assert.NotNull(routesCollection);
-            Assert.Equal(1, routesCollection.Count);
+            Assert.Equal(3, routesCollection.Count);
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
@@ -736,6 +736,38 @@
             Assert.IsAssignableFrom<AnotherInjectedService>(anotherInjectedService);
 
             MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void LegacyRoutesShouldHaveAttributeRouteRegistered()
+        {
+            MyApplication.StartsFrom<NoEndpointsStartup>();
+
+            var routes = TestApplication.Router as RouteCollection;
+
+            Assert.NotNull(routes);
+
+            var attributeRoute = routes[0];
+
+            Assert.NotNull(attributeRoute);
+            Assert.Contains(nameof(Attribute), attributeRoute.GetType().Name);
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void EndpointRoutesShouldHaveAttributeRouteRegistered()
+        {
+            MyApplication.StartsFrom<DefaultStartup>();
+
+            var routes = TestApplication.Router as RouteCollection;
+
+            Assert.NotNull(routes);
+
+            var attributeRoute = routes[0];
+
+            Assert.NotNull(attributeRoute);
+            Assert.Contains(nameof(Attribute), attributeRoute.GetType().Name);
         }
     }
 }

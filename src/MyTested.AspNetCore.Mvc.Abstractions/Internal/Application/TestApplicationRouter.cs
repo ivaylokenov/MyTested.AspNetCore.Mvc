@@ -52,7 +52,7 @@
 
             var attributeRoutingType = WebFramework.Internals.AttributeRouting;
 
-            if (routeBuilderRoutes[0].GetType() != attributeRoutingType)
+            if (!routeBuilderRoutes[0].GetType().Name.StartsWith(nameof(Attribute)))
             {
                 var createAttributeMegaRouteMethod = attributeRoutingType.GetMethod("CreateAttributeMegaRoute");
                 var router = (IRouter)createAttributeMegaRouteMethod.Invoke(null, new[] { serviceProvider });
