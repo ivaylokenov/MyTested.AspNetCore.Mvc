@@ -5,6 +5,7 @@
     <Copyright>2015-2019 Ivaylo Kenov</Copyright>
     <AssemblyTitle>MyTested.AspNetCore.Mvc.Helpers</AssemblyTitle>
     <VersionPrefix>3.0.0</VersionPrefix>
+    <VersionSuffix>preview</VersionSuffix>
     <Authors>Ivaylo Kenov</Authors>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
@@ -16,7 +17,7 @@
     <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
     <PackageId>MyTested.AspNetCore.Mvc.Helpers</PackageId>
     <PackageTags>aspnetcore;aspnetcoremvc;testing;unit;tests;fluent;testing;framework;asp;net;core;mvc;test;mymvc;mytested</PackageTags>
-    <PackageIconUrl>https://raw.githubusercontent.com/ivaylokenov/MyTested.AspNetCore.Mvc/master/tools/nuget-logo.png</PackageIconUrl>
+    <PackageIcon>nuget-logo.png</PackageIcon>
     <PackageProjectUrl>https://mytestedasp.net/</PackageProjectUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
@@ -40,6 +41,7 @@
 
   <ItemGroup>
     <None Include="../../LICENSE" Pack="true" PackagePath="" />
+    <None Include="../../tools/nuget-logo.png" Pack="true" PackagePath="" />
   </ItemGroup>
 
 </Project>

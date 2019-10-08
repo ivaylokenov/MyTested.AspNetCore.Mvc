@@ -19,10 +19,7 @@
         private static DateTime releaseDate;
         private static string projectNamespace;
 
-        static TestCounter()
-        {
-            Sync = new object();
-        }
+        static TestCounter() => Sync = new object();
 
         public static void IncrementAndValidate()
         {
