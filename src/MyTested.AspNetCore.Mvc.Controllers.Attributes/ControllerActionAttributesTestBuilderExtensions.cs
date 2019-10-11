@@ -25,14 +25,49 @@
         /// <param name="withName">Optional expected route name.</param>
         /// <param name="withOrder">Optional expected route order.</param>
         /// <returns>The same attributes test builder.</returns>
+       [Obsolete("This method will be removed in the next major version, please use SpecifyingRoute")]
         public static TAttributesTestBuilder ChangingRouteTo<TAttributesTestBuilder>(
             this IControllerActionAttributesTestBuilder<TAttributesTestBuilder> controllerActionAttributesTestBuilder,
             string template,
             string withName = null,
             int? withOrder = null)
             where TAttributesTestBuilder : IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
+            => SpecifyingRoute(controllerActionAttributesTestBuilder, template, withName, withOrder);
+
+
+        /// <summary>
+        /// Tests whether the collected attributes contain <see cref="RouteAttribute"/>.
+        /// </summary>
+        /// <param name="controllerActionAttributesTestBuilder">
+        /// Instance of <see cref="IControllerActionAttributesTestBuilder{TAttributesTestBuilder}"/> type.
+        /// </param>
+        /// <param name="routeAttributeBuilder">Expected <see cref="RouteAttribute"/> builder.</param>
+        /// <returns>The same attributes test builder.</returns>
+        [Obsolete("This method will be removed in the next major version, please use SpecifyingRoute")]
+        public static TAttributesTestBuilder ChangingRouteTo<TAttributesTestBuilder>(
+            this IControllerActionAttributesTestBuilder<TAttributesTestBuilder> controllerActionAttributesTestBuilder,
+            Action<IRouteAttributeTestBuilder> routeAttributeBuilder)
+            where TAttributesTestBuilder : IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
+            => SpecifyingRoute(controllerActionAttributesTestBuilder, routeAttributeBuilder);
+
+        /// <summary>
+        /// Tests whether the collected attributes contain <see cref="RouteAttribute"/>.
+        /// </summary>
+        /// <param name="controllerActionAttributesTestBuilder">
+        /// Instance of <see cref="IControllerActionAttributesTestBuilder{TAttributesTestBuilder}"/> type.
+        /// </param>
+        /// <param name="template">Expected overridden route template of the controller.</param>
+        /// <param name="withName">Optional expected route name.</param>
+        /// <param name="withOrder">Optional expected route order.</param>
+        /// <returns>The same attributes test builder.</returns>
+        public static TAttributesTestBuilder SpecifyingRoute<TAttributesTestBuilder>(
+            this IControllerActionAttributesTestBuilder<TAttributesTestBuilder> controllerActionAttributesTestBuilder,
+            string template,
+            string withName = null,
+            int? withOrder = null)
+            where TAttributesTestBuilder : IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
             => controllerActionAttributesTestBuilder
-                .ChangingRouteTo(route => route
+                .SpecifyingRoute(route => route
                     .WithTemplate(template)
                     .WithName(withName)
                     .WithOrder(withOrder ?? 0));
@@ -45,7 +80,7 @@
         /// </param>
         /// <param name="routeAttributeBuilder">Expected <see cref="RouteAttribute"/> builder.</param>
         /// <returns>The same attributes test builder.</returns>
-        public static TAttributesTestBuilder ChangingRouteTo<TAttributesTestBuilder>(
+        public static TAttributesTestBuilder SpecifyingRoute<TAttributesTestBuilder>(
             this IControllerActionAttributesTestBuilder<TAttributesTestBuilder> controllerActionAttributesTestBuilder,
             Action<IRouteAttributeTestBuilder> routeAttributeBuilder)
             where TAttributesTestBuilder : IControllerActionAttributesTestBuilder<TAttributesTestBuilder>
