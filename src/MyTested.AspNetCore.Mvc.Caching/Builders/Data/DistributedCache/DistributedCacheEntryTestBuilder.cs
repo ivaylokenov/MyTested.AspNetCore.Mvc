@@ -1,13 +1,13 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Data.DistributedCache
 {
     using System;
-    using Contracts.Data.DistributedCache;
     using System.Collections.Generic;
+    using Contracts.Data.DistributedCache;
+    using Exceptions;
+    using Internal.Caching;
     using Internal.TestContexts;
     using Utilities;
     using Utilities.Validators;
-    using Exceptions;
-    using Internal.Caching;
     using Utilities.Extensions;
 
     public class DistributedCacheEntryTestBuilder : DistributedCacheEntryBuilder, IDistributedCacheEntryKeyTestBuilder, IAndDistributedCacheEntryTestBuilder
@@ -115,12 +115,10 @@
             => this.validations;
 
         internal void ThrowNewDataProviderAssertionException(string expectedValue, string actualValue)
-        {
-            throw new DataProviderAssertionException(string.Format(
+            => throw new DataProviderAssertionException(string.Format(
                 "{0} distributed cache {1}, but {2}.",
                 this.TestContext.ExceptionMessagePrefix,
                 expectedValue,
                 actualValue));
-        }
     }
 }

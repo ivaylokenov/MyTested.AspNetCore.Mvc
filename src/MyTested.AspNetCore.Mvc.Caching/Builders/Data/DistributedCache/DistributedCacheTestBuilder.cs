@@ -137,8 +137,7 @@
             this.ContainingEntryWithKey(entryKey);
 
             mockedDistributedCache.TryGetCacheEntryOptions(entryKey, out var actualDistributedCacheEntryOptions);
-            var actualDistributedCacheEntryValue
-                = mockedDistributedCache.Get(entryKey);
+            var actualDistributedCacheEntryValue = mockedDistributedCache.Get(entryKey);
 
             var actualDistributedCacheEntry = new DistributedCacheEntry(actualDistributedCacheEntryValue, actualDistributedCacheEntryOptions);
 
@@ -178,12 +177,10 @@
         public IDistributedCacheTestBuilder AndAlso() => this;
 
         private IDistributedCache GetDistributedCache()
-        {
-            return this.TestContext
+            => this.TestContext
                 .HttpContext
                 .RequestServices
                 .GetRequiredService<IDistributedCache>();
-        }
 
         private IDistributedCacheMock GetDistributedCacheMock()
         {
@@ -214,13 +211,11 @@
         }
 
         private void ThrowNewDataProviderAssertionException(string propertyName, string expectedValue, string actualValue)
-        {
-            throw new DataProviderAssertionException(string.Format(
+            => throw new DataProviderAssertionException(string.Format(
                 "{0} {1} {2}, but {3}.",
                 this.TestContext.ExceptionMessagePrefix,
                 propertyName,
                 expectedValue,
                 actualValue));
-        }
     }
 }

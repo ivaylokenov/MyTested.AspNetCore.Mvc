@@ -63,6 +63,5 @@
         /// <param name="entries">Dictionary of cache entries.</param>
         /// <returns>The same <see cref="IAndDistributedCacheBuilder"/>.</returns>
         IAndDistributedCacheBuilder WithEntries(IDictionary<string, string> entries);
-
     }
 }

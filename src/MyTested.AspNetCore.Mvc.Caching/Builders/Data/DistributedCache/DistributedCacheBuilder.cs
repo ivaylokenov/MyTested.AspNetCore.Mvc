@@ -14,9 +14,7 @@
         /// </summary>
         /// <param name="services"><see cref="IServiceProvider"/> providing the current <see cref="IDistributedCache"/>.</param>
         public DistributedCacheBuilder(IServiceProvider services)
-        {
-            this.DistributedCache = services.GetRequiredService<IDistributedCache>();
-        }
+            => this.DistributedCache = services.GetRequiredService<IDistributedCache>();
 
         /// <summary>
         /// Gets the mocked <see cref="IDistributedCache"/>.

@@ -81,8 +81,6 @@
             => this.cache.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Value);
 
         public void Dispose()
-        {
-            this.cache.Clear();
-        }
+            => this.cache.Clear();
     }
 }
