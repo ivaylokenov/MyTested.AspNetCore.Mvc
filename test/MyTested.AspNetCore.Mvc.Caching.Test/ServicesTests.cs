@@ -17,7 +17,7 @@
     public class ServicesTests
     {
         [Fact]
-        public void MockMemoryCacheShouldBeRegistedWithAddedCaching()
+        public void MockMemoryCacheShouldBeRegisteredWithAddedCaching()
         {
             MyApplication
                 .StartsFrom<DefaultStartup>()

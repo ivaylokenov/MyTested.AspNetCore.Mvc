@@ -44,7 +44,7 @@
         public void WithModelStateWithErrorsObjectShouldWorkCorrectly()
         {
             var requestBody = TestObjectFactory.GetValidRequestModel();
-            var errorsObjcet = new
+            var errorsObject = new
             {
                 First = "SomeError",
                 Second = "AnotherError",
@@ -53,7 +53,7 @@
             MyController<MvcController>
                 .Instance()
                 .WithModelState(modelState => modelState
-                    .WithErrors(errorsObjcet))
+                    .WithErrors(errorsObject))
                 .Calling(c => c.BadRequestWithModelState(requestBody))
                 .ShouldReturn()
                 .BadRequest();
