@@ -7,8 +7,8 @@
     using Internal.Caching;
     using Internal.TestContexts;
     using Utilities;
-    using Utilities.Validators;
     using Utilities.Extensions;
+    using Utilities.Validators;
 
     public class DistributedCacheEntryTestBuilder : DistributedCacheEntryBuilder, IDistributedCacheEntryKeyTestBuilder, IAndDistributedCacheEntryTestBuilder
     {
