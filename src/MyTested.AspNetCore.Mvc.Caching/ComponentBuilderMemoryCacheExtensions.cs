@@ -2,14 +2,14 @@
 {
     using System;
     using Builders.Contracts.Base;
-    using Builders.Contracts.Data;
-    using Builders.Data;
     using Builders.Base;
+    using Builders.Contracts.Data.MemoryCache;
+    using Builders.Data.MemoryCache;
 
     /// <summary>
     /// Contains <see cref="Microsoft.Extensions.Caching.Memory.IMemoryCache"/> extension methods for <see cref="IBaseTestBuilderWithComponentBuilder{TBuilder}"/>.
     /// </summary>
-    public static class ComponentBuilderCachingExtensions
+    public static class ComponentBuilderMemoryCacheExtensions
     {
         /// <summary>
         /// Sets initial values to the <see cref="Microsoft.Extensions.Caching.Memory.IMemoryCache"/> service.

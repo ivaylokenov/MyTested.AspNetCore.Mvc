@@ -3,15 +3,15 @@
     using System;
     using Builders.Base;
     using Builders.Contracts.Base;
-    using Builders.Contracts.Data;
-    using Builders.Data;
+    using Builders.Contracts.Data.MemoryCache;
+    using Builders.Data.MemoryCache;
     using Internal.TestContexts;
     using Utilities.Validators;
 
     /// <summary>
     /// Contains <see cref="Microsoft.Extensions.Caching.Memory.IMemoryCache"/> extension methods for <see cref="IBaseTestBuilderWithComponentShouldHaveTestBuilder{TBuilder}"/>.
     /// </summary>
-    public static class ComponentShouldHaveTestBuilderCachingExtensions
+    public static class ComponentShouldHaveTestBuilderMemoryCacheExtensions
     {
         /// <summary>
         /// Tests whether the component does not set any <see cref="Microsoft.Extensions.Caching.Memory.IMemoryCache"/> entries.

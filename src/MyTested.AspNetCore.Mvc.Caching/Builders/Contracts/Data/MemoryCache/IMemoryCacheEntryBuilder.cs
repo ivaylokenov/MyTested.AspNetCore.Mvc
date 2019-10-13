@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Data
+﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Data.MemoryCache
 {
     using System;
     using Microsoft.Extensions.Caching.Memory;

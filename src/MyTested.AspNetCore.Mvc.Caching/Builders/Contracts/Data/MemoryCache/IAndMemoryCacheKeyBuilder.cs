@@ -1,4 +1,4 @@
-﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Data
+﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Data.MemoryCache
 {
     /// <summary>
     /// Used for setting <see cref="Microsoft.Extensions.Caching.Memory.IMemoryCache"/> key.

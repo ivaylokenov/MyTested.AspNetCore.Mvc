@@ -207,7 +207,7 @@ This package will include all available assertion methods in your test project, 
  - `MyTested.AspNetCore.Mvc.DataAnnotations` - Contains setup and assertion methods for data annotation validations
  - `MyTested.AspNetCore.Mvc.EntityFrameworkCore` - Contains setup and assertion methods for `DbContext`
  - `MyTested.AspNetCore.Mvc.DependencyInjection` - Contains setup methods for dependency injection services
- - `MyTested.AspNetCore.Mvc.Caching` - Contains setup and assertion methods for `IMemoryCache`
+ - `MyTested.AspNetCore.Mvc.Caching` - Contains setup and assertion methods for `IMemoryCache` and `IDistributedCache`
  - `MyTested.AspNetCore.Mvc.Session` - Contains setup and assertion methods for `ISession`
  - `MyTested.AspNetCore.Mvc.Options` - Contains setup and assertion methods for `IOptions`
  - `MyTested.AspNetCore.Mvc.Helpers` - Contains additional helper methods for easier assertions

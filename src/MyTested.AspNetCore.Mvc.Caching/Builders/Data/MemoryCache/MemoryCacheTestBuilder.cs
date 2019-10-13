@@ -1,9 +1,9 @@
-﻿namespace MyTested.AspNetCore.Mvc.Builders.Data
+﻿namespace MyTested.AspNetCore.Mvc.Builders.Data.MemoryCache
 {
     using System;
     using System.Collections.Generic;
     using Base;
-    using Contracts.Data;
+    using Contracts.Data.MemoryCache;
     using Exceptions;
     using Internal.Contracts;
     using Internal.TestContexts;
