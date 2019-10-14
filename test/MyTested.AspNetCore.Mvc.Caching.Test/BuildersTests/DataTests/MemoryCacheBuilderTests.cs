@@ -286,6 +286,32 @@
                     .WithModel(entities));
         }
 
+        [Fact]
+        public void WithoutMemoryCacheByParamKeysShouldReturnCorrectCacheData()
+        {
+            var entities = new Dictionary<object, object>
+            {
+                ["first"] = "firstValue",
+                ["second"] = "secondValue",
+                ["third"] = "thirdValue"
+            };
+
+            var entriesToDelete = entities.Select(x => x.Key).ToList();
+            entriesToDelete.RemoveAt(0);
+
+            MyController<MemoryCacheController>
+                .Instance()
+                .WithMemoryCache(memoryCache => memoryCache.WithEntries(entities))
+                .WithoutMemoryCache(entriesToDelete[0], entriesToDelete[1])
+                .Calling(c => c.GetAllEntities(From.Services<IMemoryCache>()))
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .WithModel(new Dictionary<object, object>
+                    {
+                        ["first"] = "firstValue"
+                    }));
+        }
+
         public void Dispose() => MyApplication.StartsFrom<DefaultStartup>();
     }
 }

@@ -11,7 +11,7 @@
     /// <summary>
     /// Used for building <see cref="ISession"/>.
     /// </summary>
-    public class WithSessionBuilder : SessionBaseBuilder, IAndWithSessionBuilder
+    public class WithSessionBuilder : BaseSessionBuilder, IAndWithSessionBuilder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="WithSessionBuilder"/> class.

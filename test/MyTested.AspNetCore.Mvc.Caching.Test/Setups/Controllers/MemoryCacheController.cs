@@ -19,8 +19,7 @@
                 return this.Ok("Normal");
             }
 
-            ICacheEntry fullEntry;
-            if (mockedMemoryCache.TryGetCacheEntry("FullEntry", out fullEntry))
+            if (mockedMemoryCache.TryGetCacheEntry("FullEntry", out ICacheEntry fullEntry))
             {
                 return this.Ok(fullEntry);
             }

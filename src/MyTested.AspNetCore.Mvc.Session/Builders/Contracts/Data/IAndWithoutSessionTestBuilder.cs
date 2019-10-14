@@ -3,7 +3,7 @@
     /// <summary>
     /// Used for adding AndAlso() method to the <see cref="Microsoft.AspNetCore.Http.ISession"/> builder.
     /// </summary>
-    public interface IAndWithoutSessionBuilder : IWithoutSessionBuilder
+    public interface IAndWithoutSessionTestBuilder : IWithoutSessionBuilder
     {
         /// <summary>
         /// AndAlso method for better readability when building <see cref="Microsoft.AspNetCore.Http.ISession"/>.

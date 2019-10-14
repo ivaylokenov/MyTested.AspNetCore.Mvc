@@ -7,13 +7,16 @@
     using Utilities.Extensions;
 
     /// <inheritdoc />
-    public class MemoryCacheWithBuilder : MemoryCacheBaseBuilder, IAndWithMemoryCacheBuilder
+    public class WithMemoryCacheBuilder : BaseMemoryCacheBuilder, IAndWithMemoryCacheBuilder
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MemoryCacheWithBuilder"/> class.
+        /// Initializes a new instance of the <see cref="WithMemoryCacheBuilder"/> class.
         /// </summary>
         /// <param name="services"><see cref="IServiceProvider"/> providing the current <see cref="IMemoryCache"/>.</param>
-        public MemoryCacheWithBuilder(IServiceProvider services) : base(services) { }
+        public WithMemoryCacheBuilder(IServiceProvider services)
+            : base(services)
+        {
+        }
 
         /// <inheritdoc />
         public IAndWithMemoryCacheBuilder WithEntry(object key, object value)

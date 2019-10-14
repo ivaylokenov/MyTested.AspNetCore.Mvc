@@ -7,13 +7,16 @@
     using Utilities.Extensions;
 
     /// <inheritdoc />
-    public class MemoryCacheWithoutBuilder : MemoryCacheBaseBuilder, IAndWithoutMemoryCacheBuilder
+    public class WithoutMemoryCacheBuilder : BaseMemoryCacheBuilder, IAndWithoutMemoryCacheBuilder
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MemoryCacheWithoutBuilder"/> class.
+        /// Initializes a new instance of the <see cref="WithoutMemoryCacheBuilder"/> class.
         /// </summary>
         /// <param name="services"><see cref="IServiceProvider"/> providing the current <see cref="IMemoryCache"/>.</param>
-        public MemoryCacheWithoutBuilder(IServiceProvider services) : base(services) { }
+        public WithoutMemoryCacheBuilder(IServiceProvider services) 
+            : base(services)
+        {
+        }
 
         /// <inheritdoc />
         public IAndWithoutMemoryCacheBuilder WithoutEntry(object key)
@@ -30,9 +33,16 @@
         }
 
         /// <inheritdoc />
-        public IAndWithoutMemoryCacheBuilder ClearCache()
+        public IAndWithoutMemoryCacheBuilder WithoutAllEntries()
         {
             this.MemoryCache.AsMemoryCacheMock().ClearCache();
+            return this;
+        }
+
+        /// <inheritdoc />
+        public IAndWithoutMemoryCacheBuilder WithoutEntries(params object[] keys)
+        {
+            this.MemoryCache.AsMemoryCacheMock().RemoveKeys(keys);
             return this;
         }
 

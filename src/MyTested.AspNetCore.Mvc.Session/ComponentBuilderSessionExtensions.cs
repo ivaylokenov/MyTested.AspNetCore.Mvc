@@ -1,10 +1,11 @@
 ﻿namespace MyTested.AspNetCore.Mvc
 {
+    using System;
+    using System.Collections.Generic;
     using Builders.Base;
     using Builders.Contracts.Base;
     using Builders.Contracts.Data;
     using Builders.Data;
-    using System;
 
     /// <summary>
     /// Contains <see cref="Microsoft.AspNetCore.Http.ISession"/> extension methods for <see cref="IBaseTestBuilderWithComponentBuilder{TBuilder}"/>.
@@ -39,7 +40,46 @@
         public static TBuilder WithoutSession<TBuilder>(
             this IBaseTestBuilderWithComponentBuilder<TBuilder> builder)
             where TBuilder : IBaseTestBuilder
-            => builder.WithoutSession(session => session.ClearSession());
+            => builder.WithoutSession(session => session.WithoutAllEntries());
+
+        /// <summary>
+        /// Remove session key from the HTTP <see cref="Microsoft.AspNetCore.Http.ISession"/>.
+        /// </summary>
+        /// <typeparam name="TBuilder">Class representing ASP.NET Core MVC test builder.</typeparam>
+        /// <param name="builder">Instance of <see cref="IBaseTestBuilderWithComponentBuilder{TBuilder}"/> type.</param>
+        /// <param name="key">Session key to remove.</param>
+        /// <returns>The same component builder.</returns>
+        public static TBuilder WithoutSession<TBuilder>(
+            this IBaseTestBuilderWithComponentBuilder<TBuilder> builder,
+            string key)
+            where TBuilder : IBaseTestBuilder
+            => builder.WithoutSession(session => session.WithoutEntry(key));
+
+        /// <summary>
+        /// Remove collection of session key entries from the HTTP <see cref="Microsoft.AspNetCore.Http.ISession"/>.
+        /// </summary>
+        /// <typeparam name="TBuilder">Class representing ASP.NET Core MVC test builder.</typeparam>
+        /// <param name="builder">Instance of <see cref="IBaseTestBuilderWithComponentBuilder{TBuilder}"/> type.</param>
+        /// <param name="keys">Session key entries to remove.</param>
+        /// <returns>The same component builder.</returns>
+        public static TBuilder WithoutSession<TBuilder>(
+            this IBaseTestBuilderWithComponentBuilder<TBuilder> builder,
+            IEnumerable<string> keys)
+            where TBuilder : IBaseTestBuilder
+            => builder.WithoutSession(session => session.WithoutEntries(keys));
+
+        /// <summary>
+        /// Remove collection of session key entries from the HTTP <see cref="Microsoft.AspNetCore.Http.ISession"/>.
+        /// </summary>
+        /// <typeparam name="TBuilder">Class representing ASP.NET Core MVC test builder.</typeparam>
+        /// <param name="builder">Instance of <see cref="IBaseTestBuilderWithComponentBuilder{TBuilder}"/> type.</param>
+        /// <param name="keys">Session key entries to remove.</param>
+        /// <returns>The same component builder.</returns>
+        public static TBuilder WithoutSession<TBuilder>(
+            this IBaseTestBuilderWithComponentBuilder<TBuilder> builder,
+            params string[] keys)
+            where TBuilder : IBaseTestBuilder
+            => builder.WithoutSession(session => session.WithoutEntries(keys));
 
         /// <summary>
         /// Remove session key from the HTTP <see cref="Microsoft.AspNetCore.Http.ISession"/>.

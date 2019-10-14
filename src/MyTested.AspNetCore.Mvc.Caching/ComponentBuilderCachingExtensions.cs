@@ -1,11 +1,11 @@
 ﻿namespace MyTested.AspNetCore.Mvc
 {
     using System;
+    using System.Collections.Generic;
     using Builders.Contracts.Base;
     using Builders.Contracts.Data;
     using Builders.Data;
     using Builders.Base;
-    using System.Collections.Generic;
 
     /// <summary>
     /// Contains <see cref="Microsoft.Extensions.Caching.Memory.IMemoryCache"/> extension methods for <see cref="IBaseTestBuilderWithComponentBuilder{TBuilder}"/>.
@@ -26,7 +26,7 @@
         {
             var actualBuilder = (BaseTestBuilderWithComponentBuilder<TBuilder>)builder;
 
-            memoryCacheBuilder(new MemoryCacheWithBuilder(actualBuilder.TestContext.HttpContext.RequestServices));
+            memoryCacheBuilder(new WithMemoryCacheBuilder(actualBuilder.TestContext.HttpContext.RequestServices));
 
             return actualBuilder.Builder;
         }
@@ -40,7 +40,7 @@
         public static TBuilder WithoutMemoryCache<TBuilder>(
             this IBaseTestBuilderWithComponentBuilder<TBuilder> builder)
             where TBuilder : IBaseTestBuilder
-            => builder.WithoutMemoryCache(cache => cache.ClearCache());
+            => builder.WithoutMemoryCache(cache => cache.WithoutAllEntries());
 
         /// <summary>
         /// Remove given entity with key from <see cref="Microsoft.Extensions.Caching.Memory.IMemoryCache"/> service.
@@ -69,6 +69,19 @@
             => builder.WithoutMemoryCache(cache => cache.WithoutEntries(keys));
 
         /// <summary>
+        /// Remove given entities from <see cref="Microsoft.Extensions.Caching.Memory.IMemoryCache"/> service.
+        /// </summary>
+        /// <typeparam name="TBuilder">Class representing ASP.NET Core MVC test builder.</typeparam>
+        /// <param name="builder">Instance of <see cref="IBaseTestBuilderWithComponentBuilder{TBuilder}"/> type.</param>
+        /// <param name="keys">Keys of the entities that will be removed.</param>
+        /// <returns>The same component builder.</returns>
+        public static TBuilder WithoutMemoryCache<TBuilder>(
+            this IBaseTestBuilderWithComponentBuilder<TBuilder> builder,
+            params object[] keys)
+            where TBuilder : IBaseTestBuilder
+            => builder.WithoutMemoryCache(cache => cache.WithoutEntries(keys));
+
+        /// <summary>
         /// Remove entity or entities from <see cref="Microsoft.Extensions.Caching.Memory.IMemoryCache"/> service.
         /// </summary>
         /// <typeparam name="TBuilder">Class representing ASP.NET Core MVC test builder.</typeparam>
@@ -82,7 +95,7 @@
         {
             var actualBuilder = (BaseTestBuilderWithComponentBuilder<TBuilder>)builder;
 
-            memoryCacheBuilder(new MemoryCacheWithoutBuilder(actualBuilder.TestContext.HttpContext.RequestServices));
+            memoryCacheBuilder(new WithoutMemoryCacheBuilder(actualBuilder.TestContext.HttpContext.RequestServices));
 
             return actualBuilder.Builder;
         }

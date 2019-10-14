@@ -1,8 +1,8 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Data
 {
-    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
+    using Microsoft.EntityFrameworkCore;
 
     public interface IWithoutDbContextBuilder
     {
@@ -75,9 +75,9 @@
             where TEntity : class;
 
         /// <summary>
-        /// Wipe the whole database data, returning it to a clean state.
+        /// Wipes the whole database data, returning it to a clean state.
         /// </summary>
         /// <returns>The same <see cref="DbContext"/> builder.</returns>
-        IAndWithoutDbContextBuilder WipeDatabase();
+        IAndWithoutDbContextBuilder WithoutAllEntities();
     }
 }

@@ -1,7 +1,7 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Contracts.Data
 {
-    using Microsoft.Extensions.Caching.Memory;
     using System.Collections.Generic;
+    using Microsoft.Extensions.Caching.Memory;
 
     /// <summary>
     /// Used for building mocked <see cref="IMemoryCache"/>.
@@ -23,9 +23,16 @@
         IAndWithoutMemoryCacheBuilder WithoutEntries(IEnumerable<object> keys);
 
         /// <summary>
+        /// Remove cache params to the mocked <see cref="IMemoryCache"/>.
+        /// </summary>
+        /// <param name="keys">Keys of the cache entries.</param>
+        /// <returns>The same <see cref="IAndWithoutMemoryCacheBuilder"/>.</returns>
+        IAndWithoutMemoryCacheBuilder WithoutEntries(params object[] keys);
+
+        /// <summary>
         /// Clear all entries persisted into the <see cref="IMemoryCache"/>.
         /// </summary>
         /// <returns>The same <see cref="IAndWithoutMemoryCacheBuilder"/>.</returns>
-        IAndWithoutMemoryCacheBuilder ClearCache();
+        IAndWithoutMemoryCacheBuilder WithoutAllEntries();
     }
 }

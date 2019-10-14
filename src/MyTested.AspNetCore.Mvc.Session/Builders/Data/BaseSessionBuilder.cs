@@ -2,7 +2,7 @@
 {
     using Microsoft.AspNetCore.Http;
 
-    public abstract class SessionBaseBuilder
+    public abstract class BaseSessionBuilder
     {
         /// <summary>
         /// Gets the <see cref="ISession"/>.
@@ -11,9 +11,9 @@
         protected ISession Session { get; }
 
         /// <summary>
-        /// Abstract base <see cref="SessionBaseBuilder"/> class.
+        /// Abstract base <see cref="BaseSessionBuilder"/> class.
         /// </summary>
         /// <param name="session"><see cref="ISession"/> to built.</param>
-        public SessionBaseBuilder(ISession session) => this.Session = session;
+        public BaseSessionBuilder(ISession session) => this.Session = session;
     }
 }

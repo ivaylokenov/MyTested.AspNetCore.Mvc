@@ -1,13 +1,13 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Builders.Data
 {
-    using Microsoft.EntityFrameworkCore;
-    using MyTested.AspNetCore.Mvc.Builders.Base;
-    using MyTested.AspNetCore.Mvc.Builders.Contracts.Data;
-    using MyTested.AspNetCore.Mvc.Internal.TestContexts;
-    using MyTested.AspNetCore.Mvc.Utilities.Validators;
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Base;
+    using Contracts.Data;
+    using Internal.TestContexts;
+    using Microsoft.EntityFrameworkCore;
+    using Utilities.Validators;
 
     /// <summary>
     /// Used for building <see cref="DbContext"/>.
@@ -46,7 +46,7 @@
             => this.WithoutEntities<DbContext>(dbContextSetup);
 
         /// <inheritdoc />
-        public IAndWithoutDbContextBuilder WipeDatabase()
+        public IAndWithoutDbContextBuilder WithoutAllEntities()
             => this.WithoutEntities<DbContext>(dbContext => dbContext.Database.EnsureDeleted());
 
         /// <inheritdoc />

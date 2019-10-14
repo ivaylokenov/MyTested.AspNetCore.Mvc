@@ -101,7 +101,7 @@
         }
 
         [Fact]
-        public void RemovingSessionEntryByKeyShouldReturnCorrectSession()
+        public void RemovingSessionEntryByKeyFromBuilderShouldReturnCorrectSession()
         {
             this.SetDefaultSession();
 
@@ -127,6 +127,102 @@
                 .ShouldReturn()
                 .Ok(ok => ok
                     .WithModel(keys));
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void RemovingSessionEntryByKeyShouldReturnCorrectSession()
+        {
+            this.SetDefaultSession();
+
+            IDictionary<string, string> entries = new Dictionary<string, string>
+            {
+                { "testKey1", "testValue1" },
+                { "testKey2", "testValue2" }
+            };
+
+            var keyToRemove = "testKey1";
+
+            var keys = entries.Keys.ToList();
+            keys.Remove(keyToRemove);
+
+            MyController<MvcController>
+                .Instance()
+                .WithSession(session =>
+                {
+                    session.WithEntries(entries);
+                })
+                .WithoutSession(keyToRemove)
+                .Calling(c => c.GetSessionKeys())
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .WithModel(keys));
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void RemovingSessionEntriesShouldReturnCorrectSession()
+        {
+            this.SetDefaultSession();
+
+            IDictionary<string, string> entries = new Dictionary<string, string>
+            {
+                { "testKey1", "testValue1" },
+                { "testKey2", "testValue2" },
+                { "testKey3", "testValue3" },
+                { "testKey4", "testValue4" }
+            };
+
+            var keyToPersist = "testKey1";
+
+            var keys = entries.Keys.ToList();
+            keys.Remove(keyToPersist);
+
+            MyController<MvcController>
+                .Instance()
+                .WithSession(session =>
+                {
+                    session.WithEntries(entries);
+                })
+                .WithoutSession(keys)
+                .Calling(c => c.GetSessionKeys())
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .WithModel(new List<string> { keyToPersist }));
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void RemovingSessionEntriesByProvidedParamsShouldReturnCorrectSession()
+        {
+            this.SetDefaultSession();
+
+            IDictionary<string, string> entries = new Dictionary<string, string>
+            {
+                { "testKey1", "testValue1" },
+                { "testKey2", "testValue2" },
+                { "testKey3", "testValue3" }
+            };
+
+            var keyToPersist = "testKey1";
+
+            var keys = entries.Keys.ToList();
+            keys.Remove(keyToPersist);
+
+            MyController<MvcController>
+                .Instance()
+                .WithSession(session =>
+                {
+                    session.WithEntries(entries);
+                })
+                .WithoutSession(keys[0], keys[1])
+                .Calling(c => c.GetSessionKeys())
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .WithModel(new List<string> { keyToPersist }));
 
             MyApplication.StartsFrom<DefaultStartup>();
         }

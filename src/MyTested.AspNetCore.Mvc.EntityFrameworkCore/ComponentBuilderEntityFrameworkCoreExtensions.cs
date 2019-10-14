@@ -125,7 +125,7 @@
             where TBuilder : IBaseTestBuilder
             => builder
                 .WithoutData(data => data
-                    .WipeDatabase());
+                    .WithoutAllEntities());
 
         /// <summary>
         /// Remove values from the <see cref="Microsoft.EntityFrameworkCore.DbContext"/> on the tested component or wipes all tables from it.
