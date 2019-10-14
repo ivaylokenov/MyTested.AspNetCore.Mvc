@@ -7,6 +7,22 @@
     public interface IWithoutDbContextBuilder
     {
         /// <summary>
+        /// Remove entity from the registered <see cref="DbContext"/>.
+        /// </summary>
+        /// <param name="entity">Entity to remove from the registered <see cref="DbContext"/>.</param>
+        /// <returns>The same <see cref="DbContext"/> builder.</returns>
+        IAndWithoutDbContextBuilder WithoutEntity(object entity);
+
+        /// <summary>
+        /// Remove entity from the registered <see cref="DbContext"/>.
+        /// </summary>
+        /// <typeparam name="TDbContext">Type of <see cref="DbContext"/> to set up.</typeparam>
+        /// <param name="entity">Entity to remove from the registered <see cref="DbContext"/>.</param>
+        /// <returns>The same <see cref="DbContext"/> builder.</returns>
+        IAndWithoutDbContextBuilder WithoutEntity<TDbContext>(object entity)
+            where TDbContext : DbContext;
+
+        /// <summary>
         /// Remove values from the registered <see cref="DbContext"/>.
         /// </summary>
         /// <param name="entities">Values to remove from the registered <see cref="DbContext"/>.</param>

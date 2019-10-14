@@ -75,6 +75,25 @@
         }
 
         /// <summary>
+        /// Remove entity from the <see cref="Microsoft.EntityFrameworkCore.DbContext"/> on the tested component.
+        /// </summary>
+        /// <typeparam name="TBuilder">Class representing ASP.NET Core MVC test builder.</typeparam>
+        /// <param name="builder">
+        /// Instance of <see cref="IBaseTestBuilderWithComponentBuilder{TBuilder}"/> type.
+        /// </param>
+        /// <param name="entity">
+        /// Remove entity from the registered <see cref="Microsoft.EntityFrameworkCore.DbContext"/>.
+        /// </param>
+        /// <returns>The same component builder.</returns>
+        public static TBuilder WithoutData<TBuilder>(
+            this IBaseTestBuilderWithComponentBuilder<TBuilder> builder,
+            object entity)
+            where TBuilder : IBaseTestBuilder
+            => builder
+                .WithoutData(data => data
+                    .WithoutEntity(entity));
+
+        /// <summary>
         /// Remove values from the <see cref="Microsoft.EntityFrameworkCore.DbContext"/> on the tested component.
         /// </summary>
         /// <typeparam name="TBuilder">Class representing ASP.NET Core MVC test builder.</typeparam>

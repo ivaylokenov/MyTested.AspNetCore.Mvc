@@ -420,6 +420,36 @@
                 .StartsFrom<TestStartup>()
                 .WithServices(services => services.AddDbContext<CustomDbContext>());
 
+            var model1 = new CustomModel
+            {
+                Id = 1,
+                Name = "Test1"
+            };
+
+            var model2 = new CustomModel
+            {
+                Id = 2,
+                Name = "Test2"
+            };
+
+            MyController<DbContextController>
+                .Instance()
+                .WithData(model1)
+                .AndAlso()
+                .WithData(model2)
+                .WithoutData(model1, model2)
+                .Calling(c => c.Get(model1.Id))
+                .ShouldReturn()
+                .NotFound();
+        }
+
+        [Fact]
+        public void WithoutDataWithSingleEntityReturnsCorrectResultWhenAllProvidedDataIsDeleted()
+        {
+            MyApplication
+                .StartsFrom<TestStartup>()
+                .WithServices(services => services.AddDbContext<CustomDbContext>());
+
             var model = new CustomModel
             {
                 Id = 1,

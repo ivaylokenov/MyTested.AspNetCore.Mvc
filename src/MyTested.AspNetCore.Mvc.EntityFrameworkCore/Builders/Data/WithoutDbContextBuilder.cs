@@ -24,6 +24,15 @@
         }
 
         /// <inheritdoc />
+        public IAndWithoutDbContextBuilder WithoutEntity(object entity)
+            => this.WithoutEntity<DbContext>(entity);
+
+        /// <inheritdoc />
+        public IAndWithoutDbContextBuilder WithoutEntity<TDbContext>(object entity)
+            where TDbContext : DbContext
+            => this.WithoutEntities<TDbContext>(entity);
+            
+        /// <inheritdoc />
         public IAndWithoutDbContextBuilder WithoutEntities(IEnumerable<object> entities)
             => this.WithoutEntities(dbContext => dbContext.RemoveRange(entities));
 
@@ -63,7 +72,7 @@
             }
             catch (DbUpdateConcurrencyException)
             {
-                // Intentional silent fail.
+                // Intentional silent fail, when deleting entities that does not exist in the database or have been already deleted.
             }
 
             return this;
@@ -90,7 +99,7 @@
             }
             catch (DbUpdateConcurrencyException)
             {
-                // Intentional silent fail.
+                // Intentional silent fail, when deleting entities that does not exist in the database or have been already deleted.
             }
 
             return this;
