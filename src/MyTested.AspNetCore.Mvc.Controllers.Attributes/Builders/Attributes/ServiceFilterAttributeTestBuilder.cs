@@ -4,7 +4,6 @@
     using Microsoft.AspNetCore.Mvc;
     using Contracts.Attributes;
     using Internal.TestContexts;
-    using Utilities;
 
     /// <summary>
     /// Used for testing <see cref="ServiceFilterAttribute"/>.
@@ -21,7 +20,7 @@
             ComponentTestContext testContext,
             Action<string, string> failedValidationAction)
             : base(testContext, nameof(ServiceFilterAttribute), failedValidationAction)
-        => this.Attribute = new ServiceFilterAttribute(typeof(object));
+                => this.Attribute = new ServiceFilterAttribute(typeof(object));
 
         /// <inheritdoc />
         public IAndServiceFilterAttributeTestBuilder OfType(Type type)

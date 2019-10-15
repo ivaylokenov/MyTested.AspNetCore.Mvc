@@ -24,7 +24,7 @@
             ComponentTestContext testContext,
             Action<string, string> failedValidationAction)
             : base(testContext, nameof(TypeFilterAttribute), failedValidationAction)
-        => this.Attribute = new TypeFilterAttribute(typeof(object));
+                => this.Attribute = new TypeFilterAttribute(typeof(object));
 
         /// <inheritdoc />
         public IAndTypeFilterAttributeTestBuilder OfType(Type type)

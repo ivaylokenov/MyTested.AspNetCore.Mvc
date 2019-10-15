@@ -1,8 +1,8 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test.Setups.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
-    using Models;
     using ActionFilters;
+    using Models;
     using Pipelines;
 
     [ApiController]
