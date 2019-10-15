@@ -7,12 +7,50 @@
     public interface IWithoutDbContextBuilder
     {
         /// <summary>
+        /// Remove entity by providing its primary key from the registered <see cref="DbContext"/>.
+        /// </summary>
+        /// <typeparam name="TEntity">Entity model type for which the provided key is related to.</typeparam>
+        /// <param name="key">Primary key of entity to remove from the registered <see cref="DbContext"/>.</param>
+        /// <returns>The same <see cref="DbContext"/> builder.</returns>
+        IAndWithoutDbContextBuilder WithoutEntityByKey<TEntity>(object key)
+            where TEntity : class;
+
+        /// <summary>
+        /// Remove entity by providing its primary key from the registered <see cref="DbContext"/>.
+        /// </summary>
+        /// <typeparam name="TDbContext">Type of <see cref="DbContext"/> to set up.</typeparam>
+        /// <typeparam name="TEntity">Entity model type for which the provided key is related to.</typeparam>
+        /// <param name="key">Primary key of entity to remove from the registered <see cref="DbContext"/>.</param>
+        /// <returns>The same <see cref="DbContext"/> builder.</returns>
+        IAndWithoutDbContextBuilder WithoutEntityByKey<TDbContext, TEntity>(object key)
+            where TDbContext : DbContext;
+
+        /// <summary>
+        /// Remove entities by providing their primary keys from the registered <see cref="DbContext"/>.
+        /// </summary>
+        /// <typeparam name="TEntity">Entity model type for which the provided key is related to.</typeparam>
+        /// <param name="keys">Primary keys for entities to remove from the registered <see cref="DbContext"/>.</param>
+        /// <returns>The same <see cref="DbContext"/> builder.</returns>
+        IAndWithoutDbContextBuilder WithoutEntitiesByKeys<TEntity>(IEnumerable<object> keys)
+            where TEntity : class;
+
+        /// <summary>
+        /// Remove entities by providing their primary keys from the registered <see cref="DbContext"/>.
+        /// </summary>
+        /// <typeparam name="TDbContext">Type of <see cref="DbContext"/> to set up.</typeparam>
+        /// <typeparam name="TEntity">Entity model type for which the provided keys are related to.</typeparam>
+        /// <param name="keys">Primary keys for entities to remove from the registered <see cref="DbContext"/>.</param>
+        /// <returns>The same <see cref="DbContext"/> builder.</returns>
+        IAndWithoutDbContextBuilder WithoutEntitiesByKeys<TDbContext, TEntity>(IEnumerable<object> keys)
+            where TDbContext : DbContext;
+
+        /// <summary>
         /// Remove entity from the registered <see cref="DbContext"/>.
         /// </summary>
         /// <param name="entity">Entity to remove from the registered <see cref="DbContext"/>.</param>
         /// <returns>The same <see cref="DbContext"/> builder.</returns>
         IAndWithoutDbContextBuilder WithoutEntity(object entity);
-
+            
         /// <summary>
         /// Remove entity from the registered <see cref="DbContext"/>.
         /// </summary>

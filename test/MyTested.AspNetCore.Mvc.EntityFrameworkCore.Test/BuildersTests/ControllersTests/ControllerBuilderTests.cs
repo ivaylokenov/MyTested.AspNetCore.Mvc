@@ -705,5 +705,111 @@
                 .ShouldReturn()
                 .NotFound();
         }
+
+        [Fact]
+        public void WithoutDataByProvidingModelAndKeyInBuilderShouldRemoveTheCorrectObject()
+        {
+            MyApplication
+                .StartsFrom<TestStartup>()
+                .WithServices(services => services.AddDbContext<CustomDbContext>());
+
+            var model = new CustomModel
+            {
+                Id = 1,
+                Name = "Test"
+            };
+
+            MyController<DbContextController>
+                .Instance()
+                .WithData(model)
+                .WithoutData(data => data.WithoutEntityByKey<CustomModel>(model.Id))
+                .Calling(c => c.Get(model.Id))
+                .ShouldReturn()
+                .NotFound();
+        }
+
+        [Fact]
+        public void WithoutDataByProvidingNonExistingModelAndKeyInBuilderShouldRemoveTheCorrectObject()
+        {
+            MyApplication
+                .StartsFrom<TestStartup>()
+                .WithServices(services => services.AddDbContext<CustomDbContext>());
+
+            var model = new CustomModel
+            {
+                Id = 1,
+                Name = "Test"
+            };
+
+            var keyToRemove = int.MaxValue;
+            MyController<DbContextController>
+                .Instance()
+                .WithData(model)
+                .WithoutData(data => data.WithoutEntityByKey<CustomModel>(keyToRemove))
+                .Calling(c => c.Get(model.Id))
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .WithModelOfType<CustomModel>()
+                    .Passing(cm => cm.Name.Equals(model.Name)));
+        }
+
+        [Fact]
+        public void WithoutDataByProvidingModelAndMultpleKeysInBuilderShouldRemoveTheCorrectObjects()
+        {
+            MyApplication
+                .StartsFrom<TestStartup>()
+                .WithServices(services => services.AddDbContext<CustomDbContext>());
+
+            var models = new List<CustomModel>
+            {
+                new CustomModel
+                {
+                    Id = 1,
+                    Name = "Test1"
+                },
+                new CustomModel
+                {
+                    Id = 2,
+                    Name = "Test2"
+                },
+            };
+
+            var keys = models.Select(x => x.Id as object).ToList();
+            MyController<DbContextController>
+                .Instance()
+                .WithData(models)
+                .WithoutData(data => data.WithoutEntitiesByKeys<CustomModel>(keys))
+                .Calling(c => c.Get(models[0].Id))
+                .ShouldReturn()
+                .NotFound();
+        }
+
+        [Fact]
+        public void WithoutDataByProvidingNonExistingModelAndMultpleKeysInBuilderShouldRemoveTheCorrectObjects()
+        {
+            MyApplication
+                .StartsFrom<TestStartup>()
+                .WithServices(services => services.AddDbContext<CustomDbContext>());
+
+            var models = new List<CustomModel>
+            {
+                new CustomModel
+                {
+                    Id = 1,
+                    Name = "Test1"
+                }
+            };
+
+            var keys = new List<object> { int.MaxValue };
+            MyController<DbContextController>
+                .Instance()
+                .WithData(models)
+                .WithoutData(data => data.WithoutEntitiesByKeys<CustomModel>(keys))
+                .Calling(c => c.Get(models[0].Id))
+                .ShouldReturn()
+                .Ok(ok => ok
+                    .WithModelOfType<CustomModel>()
+                    .Passing(cm => cm.Name.Equals(models[0].Name)));
+        }
     }
 }

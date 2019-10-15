@@ -24,6 +24,52 @@
         }
 
         /// <inheritdoc />
+        public IAndWithoutDbContextBuilder WithoutEntityByKey<TEntity>(object key)
+            where TEntity : class
+            => this.WithoutEntityByKey<DbContext, TEntity>(key);
+
+        /// <inheritdoc />
+        public IAndWithoutDbContextBuilder WithoutEntityByKey<TDbContext, TEntity>(object key)
+            where TDbContext : DbContext
+        {
+            var dbContext = this.TestContext.GetDbContext<TDbContext>();
+
+            var entity = dbContext.Find(typeof(TEntity), key);
+            if (entity == null)
+                return this;
+
+            dbContext.Remove(entity);
+            dbContext.SaveChanges();
+
+            return this;
+        }
+
+        /// <inheritdoc />
+        public IAndWithoutDbContextBuilder WithoutEntitiesByKeys<TEntity>(IEnumerable<object> keys)
+            where TEntity : class
+            => this.WithoutEntitiesByKeys<DbContext, TEntity>(keys);
+
+        /// <inheritdoc />
+        public IAndWithoutDbContextBuilder WithoutEntitiesByKeys<TDbContext, TEntity>(IEnumerable<object> keys)
+            where TDbContext : DbContext
+        {
+            var dbContext = this.TestContext.GetDbContext<TDbContext>();
+
+            var entityType = typeof(TEntity);
+            var entities = keys
+                .Select(key => dbContext.Find(entityType, key))
+                .Where(entity => entity != null);
+
+            if (entities.Any() == false)
+                return this;
+
+            dbContext.RemoveRange(entities);
+            dbContext.SaveChanges();
+
+            return this;
+        }
+
+        /// <inheritdoc />
         public IAndWithoutDbContextBuilder WithoutEntity(object entity)
             => this.WithoutEntity<DbContext>(entity);
 
@@ -31,7 +77,7 @@
         public IAndWithoutDbContextBuilder WithoutEntity<TDbContext>(object entity)
             where TDbContext : DbContext
             => this.WithoutEntities<TDbContext>(entity);
-            
+
         /// <inheritdoc />
         public IAndWithoutDbContextBuilder WithoutEntities(IEnumerable<object> entities)
             => this.WithoutEntities(dbContext => dbContext.RemoveRange(entities));
