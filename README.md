@@ -168,7 +168,7 @@ namespace MyApp.Tests.Controllers
                 .Controller<HomeController>()
                 .Calling(c => c.Index())
                 .ShouldReturn()
-                .View();
+                .Ok();
     }
 }
 ```
@@ -286,7 +286,7 @@ MyController<MyMvcController>
             .Passing(cacheModel => cacheModel.Id == 1)))
     .AndAlso()
     .ShouldReturn()
-    .View(result => result
+    .Ok(result => result
         .WithModelOfType<MyResponseModel>());
 
 // Instantiates controller with the registered global services,
@@ -316,7 +316,7 @@ MyController<MyMvcController>
         .ContainingEntryWithKey(ControllerConstants.SuccessMessage))
     .AndAlso()
     .ShouldReturn()
-    .Redirect(redirect => redirect
+    .Redirect(result => result
         .To<AnotherController>(c => c.AnotherAction()));
 ```
 
@@ -337,7 +337,7 @@ MyController<MyMvcController>
         From.Services<IYetAnotherService>()) // Provides a global service.
     .Calling(c => c.MyAction())
     .ShouldReturn()
-    .View();
+    .Accepted();
 	
 // Instantiates controller with the provided service mocks,
 // and tests for view result.
@@ -494,7 +494,7 @@ MyMvc
 			
     // Assert
     .ShouldReturn()
-    .Redirect(redirect => redirect
+    .Redirect(result => result
         .To<AnotherController>(c => c.AnotherAction(
             With.No<MyDataContext>(),
             id)));
@@ -513,7 +513,7 @@ var call = controller.Calling(c => c.MyAction(id));
 // Assert
 call
     .ShouldReturn()
-    .View(view => view
+    .Json(result => result
         .WithModelOfType<MyModel>()
         .Passing(model => model.Id == id));
 ```
@@ -570,9 +570,9 @@ MyMvc
             .WithDomain("mydomain.com")
             .WithExpiration(myDateTimeOffset)
             .WithPath("/")))
-	.AndAlso()
+    .AndAlso()
     .ShouldReturn()
-    .Ok();
+    .BadRequest();
 ```
 
 ## Versioning
