@@ -15,6 +15,11 @@
           <img width="148px" src="https://user-images.githubusercontent.com/3391906/65251792-dd848800-daef-11e9-8857-637a48048cda.png">
         </a>
       </td>
+      <td align="center" valign="middle">
+          <a href="http://noblehire.io?utm_medium=social&utm_source=projects&utm_campaign=platform-leads-knv" target="_blank">
+          <img width="148px" src="https://user-images.githubusercontent.com/3391906/66911480-4260ce80-f019-11e9-9048-9aef112a1512.png">
+        </a>
+      </td>
     </tr>
   </tbody>
 </table>
