@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!--[if IE]><![endif]-->
 <html>
   <head>
@@ -7,13 +7,13 @@
     <title>Test Configuration </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Test Configuration ">
-    <meta name="generator" content="docfx 2.6.3.0">
+    <meta name="generator" content="docfx 2.45.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
     <link rel="stylesheet" href="../styles/main.css">
-    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:navrel" content="">
     <meta property="docfx:tocrel" content="toc.html">
     <meta property="docfx:rel" content="../">
     <meta property="og:title" content="Flexible and asynchronous testing framework for ASP.NET Core MVC">
@@ -30,7 +30,7 @@
     <meta property="twitter:url" content="https://mytestedasp.net/">
     <meta property="twitter:image" content="https://mytestedasp.net/Content/Images/logosocial.jpg">
   </head>
-  <body data-spy="scroll" data-target="#affix">
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
         <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
@@ -75,34 +75,34 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-              <h1 id="test-configuration" sourcefile="tutorial/testconfig.md" sourcestartlinenumber="1" sourceendlinenumber="1">Test Configuration</h1>
-              
-<p sourcefile="tutorial/testconfig.md" sourcestartlinenumber="3" sourceendlinenumber="3">In this section we are going to examine the test configuration or the <strong>&quot;testconfig.json&quot;</strong> file we used to provide a license key for the library.</p>
-<h2 id="startup-class" sourcefile="tutorial/testconfig.md" sourcestartlinenumber="5" sourceendlinenumber="5">Startup class</h2>
-<p sourcefile="tutorial/testconfig.md" sourcestartlinenumber="7" sourceendlinenumber="7">One of the features you can control from the test configuration is how you register the application services. There are three ways:</p>
-<ul sourcefile="tutorial/testconfig.md" sourcestartlinenumber="9" sourceendlinenumber="11">
-<li sourcefile="tutorial/testconfig.md" sourcestartlinenumber="9" sourceendlinenumber="9"><p sourcefile="tutorial/testconfig.md" sourcestartlinenumber="9" sourceendlinenumber="9"><strong>Automatic Startup class</strong> - the default option, we used it during this tutorial</p>
+<h1 id="test-configuration">Test Configuration</h1>
+
+<p>In this section we are going to examine the test configuration or the <strong>&quot;testsettings.json&quot;</strong> file we used to provide a license key for the library.</p>
+<h2 id="startup-class">Startup class</h2>
+<p>One of the features you can control from the test configuration is how you register the application services. There are three ways:</p>
+<ul>
+<li><p><strong>Automatic Startup class</strong> - the default option, we used it during this tutorial</p>
 </li>
-<li sourcefile="tutorial/testconfig.md" sourcestartlinenumber="11" sourceendlinenumber="11"><p sourcefile="tutorial/testconfig.md" sourcestartlinenumber="11" sourceendlinenumber="11"><strong>Manual Startup class</strong> - if the test runner of your choice supports assembly initialization you may choose to use this option like in the <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/tree/development/samples/ApplicationParts" sourcefile="tutorial/testconfig.md" sourcestartlinenumber="11" sourceendlinenumber="11">ApplicationParts</a> sample</p>
+<li><p><strong>Manual Startup class</strong> - if the test runner of your choice supports assembly initialization you may choose to use this option like in the <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/tree/development/samples/ApplicationParts">ApplicationParts</a> sample</p>
 </li>
 </ul>
-<pre sourcefile="tutorial/testconfig.md" sourcestartlinenumber="13" sourceendlinenumber="19"><code class="lang-json">{
+<pre><code class="lang-json">{
   &quot;General&quot;: {
     &quot;AutomaticStartup&quot;: false
   }
 }
-</code></pre><ul sourcefile="tutorial/testconfig.md" sourcestartlinenumber="21" sourceendlinenumber="21">
-<li sourcefile="tutorial/testconfig.md" sourcestartlinenumber="21" sourceendlinenumber="21"><strong>No Startup class</strong> - you may choose not to use global services at all and provide them in each test explicitly like in the <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/tree/development/samples/NoStartup" sourcefile="tutorial/testconfig.md" sourcestartlinenumber="21" sourceendlinenumber="21">NoStartup</a> sample</li>
+</code></pre><ul>
+<li><strong>No Startup class</strong> - you may choose not to use global services at all and provide them in each test explicitly like in the <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/tree/development/samples/NoStartup">NoStartup</a> sample</li>
 </ul>
-<pre sourcefile="tutorial/testconfig.md" sourcestartlinenumber="23" sourceendlinenumber="29"><code class="lang-json">{
+<pre><code class="lang-json">{
   &quot;General&quot;: {
     &quot;NoStartup&quot;: true
   }
 }
-</code></pre><p sourcefile="tutorial/testconfig.md" sourcestartlinenumber="31" sourceendlinenumber="31">More information is available <a href="/guide/startuptypes.html" sourcefile="tutorial/testconfig.md" sourcestartlinenumber="31" sourceendlinenumber="31">HERE</a>!</p>
-<h2 id="general-settings" sourcefile="tutorial/testconfig.md" sourcestartlinenumber="33" sourceendlinenumber="33">General settings</h2>
-<p sourcefile="tutorial/testconfig.md" sourcestartlinenumber="35" sourceendlinenumber="35">Various general settings are available for you to explore:</p>
-<pre sourcefile="tutorial/testconfig.md" sourcestartlinenumber="37" sourceendlinenumber="48"><code class="lang-json">{
+</code></pre><p>More information is available <a href="/guide/startuptypes.html">HERE</a>!</p>
+<h2 id="general-settings">General settings</h2>
+<p>Various general settings are available for you to explore:</p>
+<pre><code class="lang-json">{
   &quot;General&quot;: {
     &quot;Environment&quot;: &quot;CustomEnvironment&quot;,
     &quot;ApplicationName&quot;: &quot;Custom Application Name&quot;,
@@ -110,21 +110,21 @@
     &quot;AsynchronousTests&quot;: false,
     &quot;WebAssemblyName&quot;: &quot;MyApp&quot;,
     &quot;TestAssemblyName&quot;: &quot;MyApp.Test&quot;,
+    &quot;AutomaticApplicationParts&quot;: true
   }
 }
-</code></pre><p sourcefile="tutorial/testconfig.md" sourcestartlinenumber="50" sourceendlinenumber="50">More information is available <a href="/guide/testconfig.html" sourcefile="tutorial/testconfig.md" sourcestartlinenumber="50" sourceendlinenumber="50">HERE</a>.</p>
-<h2 id="specific-settings" sourcefile="tutorial/testconfig.md" sourcestartlinenumber="52" sourceendlinenumber="52">Specific settings</h2>
-<p sourcefile="tutorial/testconfig.md" sourcestartlinenumber="54" sourceendlinenumber="54">Different components have different test configuration. For example, you may disable the automatic model validation in every action call:</p>
-<pre sourcefile="tutorial/testconfig.md" sourcestartlinenumber="56" sourceendlinenumber="62"><code class="lang-json">{
+</code></pre><p>More information is available <a href="/guide/testconfig.html">HERE</a>.</p>
+<h2 id="specific-settings">Specific settings</h2>
+<p>Different components have different test configuration. For example, you may disable the automatic model validation in every action call:</p>
+<pre><code class="lang-json">{
   &quot;Controllers&quot;: {
     &quot;ModelStateValidation&quot;: false
   }
 }
-</code></pre><p sourcefile="tutorial/testconfig.md" sourcestartlinenumber="64" sourceendlinenumber="64">More information is available <a href="/guide/testconfig.html" sourcefile="tutorial/testconfig.md" sourcestartlinenumber="64" sourceendlinenumber="64">HERE</a>.</p>
-<h2 id="section-summary" sourcefile="tutorial/testconfig.md" sourcestartlinenumber="66" sourceendlinenumber="66">Section summary</h2>
-<p sourcefile="tutorial/testconfig.md" sourcestartlinenumber="68" sourceendlinenumber="68">This section introduced you to the test configuration. We have one last part - custom <a href="/tutorial/extensionmethods.html" sourcefile="tutorial/testconfig.md" sourcestartlinenumber="68" sourceendlinenumber="68">Extension Methods</a>!</p>
-
-            </article>
+</code></pre><p>More information is available <a href="/guide/testconfig.html">HERE</a>.</p>
+<h2 id="section-summary">Section summary</h2>
+<p>This section introduced you to the test configuration. We have one last part - custom <a href="/tutorial/extensionmethods.html">Extension Methods</a>!</p>
+</article>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">
@@ -132,7 +132,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc/blob/tutorial/docs/_docfx/tutorial/testconfig.md/#L1" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/tmollov/MyTested.AspNetCore.Mvc/blob/development/docs/_docfx/tutorial/testconfig.md/#L1" class="contribution-link">Improve this Doc</a>
                   </li>
                 </ul>
               </div>

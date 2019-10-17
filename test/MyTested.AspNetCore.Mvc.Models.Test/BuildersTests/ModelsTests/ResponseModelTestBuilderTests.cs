@@ -17,7 +17,7 @@
                 .Instance()
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
-                .Ok(ок => ок
+                .Ok(ok => ok
                     .WithModelOfType<ICollection<ResponseModel>>());
         }
 
@@ -28,7 +28,7 @@
                 .Instance()
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
-                .Ok(ок => ок
+                .Ok(ok => ok
                     .WithModelOfType<IList<ResponseModel>>());
         }
 
@@ -39,7 +39,7 @@
                 .Instance()
                 .Calling(c => c.OkResultWithResponse())
                 .ShouldReturn()
-                .Ok(ок => ок
+                .Ok(ok => ok
                     .WithModelOfType<List<ResponseModel>>());
         }
 

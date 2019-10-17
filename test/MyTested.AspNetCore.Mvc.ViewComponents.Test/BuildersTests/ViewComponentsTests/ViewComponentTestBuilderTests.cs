@@ -29,7 +29,7 @@
         }
 
         [Fact]
-        public void AttributesShouldNotThrowEceptionWithControllerContainingAttributes()
+        public void AttributesShouldNotThrowExceptionWithControllerContainingAttributes()
         {
             MyViewComponent<AttributesComponent>
                 .ShouldHave()
@@ -37,7 +37,7 @@
         }
 
         [Fact]
-        public void AttributesShouldThrowEceptionWithControllerContainingNoAttributes()
+        public void AttributesShouldThrowExceptionWithControllerContainingNoAttributes()
         {
             Test.AssertException<AttributeAssertionException>(
                 () =>
@@ -50,7 +50,7 @@
         }
 
         [Fact]
-        public void AttributesShouldNotThrowEceptionWithControllerContainingNumberOfAttributes()
+        public void AttributesShouldNotThrowExceptionWithControllerContainingNumberOfAttributes()
         {
             MyViewComponent<AttributesComponent>
                 .ShouldHave()
@@ -58,7 +58,7 @@
         }
 
         [Fact]
-        public void AttributesShouldThrowEceptionWithControllerContainingNumberOfAttributes()
+        public void AttributesShouldThrowExceptionWithControllerContainingNumberOfAttributes()
         {
             Test.AssertException<AttributeAssertionException>(
                 () =>
@@ -71,7 +71,7 @@
         }
 
         [Fact]
-        public void AttributesShouldThrowEceptionWithControllerContainingNumberOfAttributesTestingWithOne()
+        public void AttributesShouldThrowExceptionWithControllerContainingNumberOfAttributesTestingWithOne()
         {
             Test.AssertException<AttributeAssertionException>(
                 () =>

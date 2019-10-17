@@ -11,7 +11,6 @@
         public void NoViewBagShouldNotThrowExceptionWithNoEntries()
         {
             MyViewComponent<NormalComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .NoViewBag()
@@ -27,7 +26,6 @@
                 () =>
                 {
                     MyViewComponent<AddViewBagComponent>
-                       .Instance()
                        .InvokedWith(c => c.Invoke())
                        .ShouldHave()
                        .NoViewBag()
@@ -42,7 +40,6 @@
         public void ViewBagWithNoNumberShouldNotThrowExceptionWithAnyEntries()
         {
             MyViewComponent<AddViewBagComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .ViewBag()
@@ -58,7 +55,6 @@
                 () =>
                 {
                     MyViewComponent<NormalComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .ViewBag()
@@ -73,7 +69,6 @@
         public void ViewBagWithNumberShouldNotThrowExceptionWithCorrectEntries()
         {
             MyViewComponent<AddViewBagComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .ViewBag(withNumberOfEntries: 2)
@@ -89,7 +84,6 @@
                 () =>
                 {
                     MyViewComponent<NormalComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .ViewBag(1)
@@ -107,7 +101,6 @@
                 () =>
                 {
                     MyViewComponent<AddViewBagComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldHave()
                         .ViewBag(3)
@@ -122,7 +115,6 @@
         public void ViewBagWithBuilderShouldWorkCorrectly()
         {
             MyViewComponent<AddViewBagComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldHave()
                 .ViewBag(viewBag => viewBag

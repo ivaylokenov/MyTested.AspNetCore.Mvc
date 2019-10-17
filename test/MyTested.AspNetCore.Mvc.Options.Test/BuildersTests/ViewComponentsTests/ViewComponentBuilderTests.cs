@@ -32,7 +32,6 @@
                 .View();
 
             MyViewComponent<OptionsComponent>
-                .Instance()
                 .InvokedWith(c => c.Invoke())
                 .ShouldReturn()
                 .Content();

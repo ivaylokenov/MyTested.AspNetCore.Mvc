@@ -1,22 +1,42 @@
 ﻿namespace MyTested.AspNetCore.Mvc.Test
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Exceptions;
+    using Internal.Contracts;
     using Internal.ViewComponents;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Abstractions;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.AspNetCore.Mvc.ViewComponents;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.Extensions.DependencyInjection;
     using Setups;
     using Setups.Services;
     using Setups.ViewComponents;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
     using Xunit;
 
     public class ServicesTests
     {
+        [Fact]
+        public void ViewComponentBuilderWithEmptyConstructorShouldNotBeNull()
+        {
+            var viewComponentBuilder = new MyViewComponent<NormalComponent>();
+
+            Assert.NotNull(viewComponentBuilder);
+        }
+
+        [Fact]
+        public void ViewComponentBuilderWithConstructorWithViewComponentShouldNotBeNull()
+        {
+            var viewComponent = new NormalComponent();
+            var viewComponentBuilder = new MyViewComponent<NormalComponent>(viewComponent);
+
+            Assert.NotNull(viewComponentBuilder);
+            Assert.IsAssignableFrom<NormalComponent>(viewComponentBuilder.TestContext.Component);
+        }
+
         [Fact]
         public void ViewComponentWithoutConstructorFunctionShouldPopulateCorrectNewInstanceOfViewComponentType()
         {
@@ -89,7 +109,6 @@
                 () =>
                 {
                     MyViewComponent<ServicesComponent>
-                        .Instance()
                         .InvokedWith(c => c.Invoke())
                         .ShouldReturn()
                         .View();
@@ -306,7 +325,85 @@
 
             MyApplication.StartsFrom<DefaultStartup>();
         }
-        
+
+        [Fact]
+        public void WithViewContextWithoutViewDataShouldSetItToAccessor()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+                });
+
+            ViewDataDictionary viewData = null;
+
+            MyViewComponent<AccessorComponent>
+                .Instance()
+                .WithViewContext(viewContext =>
+                {
+                    viewContext.ViewData = null;
+                })
+                .ShouldPassForThe<AccessorComponent>(viewComponent =>
+                {
+                    viewData = viewComponent.ViewContext.ViewData;
+                });
+
+            Assert.NotNull(viewData);
+            Assert.IsAssignableFrom<ViewDataDictionaryMock>(viewData);
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithViewComponentContextWithoutViewComponentDescriptorShouldSetItToAccessor()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+                });
+
+            var context = new ViewComponentContext { ViewComponentDescriptor = null };
+
+            MyViewComponent<AccessorComponent>
+                .Instance()
+                .WithViewComponentContext(context)
+                .ShouldPassForThe<AccessorComponent>(viewComponent =>
+                {
+                    Assert.NotNull(viewComponent);
+                    Assert.NotNull(viewComponent.ViewComponentContext);
+                    Assert.NotNull(viewComponent.ViewComponentContext.ViewComponentDescriptor);
+                });
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithViewComponentContextWithoutViewContextShouldSetItToAccessor()
+        {
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+                });
+
+            var context = new ViewComponentContext { ViewContext = null };
+
+            MyViewComponent<AccessorComponent>
+                .Instance()
+                .WithViewComponentContext(context)
+                .ShouldPassForThe<AccessorComponent>(viewComponent =>
+                {
+                    Assert.NotNull(viewComponent);
+                    Assert.NotNull(viewComponent.ViewContext);
+                });
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
         [Fact]
         public void WithViewComponentContextFuncShouldSetItToAccessor()
         {
@@ -362,6 +459,72 @@
         }
 
         [Fact]
+        public void WithViewContextWithoutValidationMessageElementShouldSetItToAccessor()
+        {
+            var mvcOptions = new MvcViewOptions()
+            {
+                HtmlHelperOptions = new HtmlHelperOptions()
+            };
+
+            mvcOptions.HtmlHelperOptions.ValidationMessageElement = "Test";
+
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddSingleton(mvcOptions);
+                    services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+                });
+
+            MyViewComponent<AccessorComponent>
+                .Instance()
+                .WithViewContext(viewContext =>
+                {
+                    viewContext.ValidationMessageElement = null;
+                })
+                .ShouldPassForThe<AccessorComponent>(viewComponent =>
+                {
+                    Assert.NotNull(viewComponent.ViewContext.ValidationMessageElement);
+                    Assert.True(viewComponent.ViewContext.ValidationMessageElement == "Test");
+                });
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void WithViewContextWithoutValidationSummaryMessageElementShouldSetItToAccessor()
+        {
+            var mvcOptions = new MvcViewOptions()
+            {
+                HtmlHelperOptions = new HtmlHelperOptions()
+            };
+
+            mvcOptions.HtmlHelperOptions.ValidationSummaryMessageElement = "Test";
+
+            MyApplication
+                .StartsFrom<DefaultStartup>()
+                .WithServices(services =>
+                {
+                    services.AddSingleton(mvcOptions);
+                    services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+                });
+
+            MyViewComponent<AccessorComponent>
+                .Instance()
+                .WithViewContext(viewContext =>
+                {
+                    viewContext.ValidationSummaryMessageElement = null;
+                })
+                .ShouldPassForThe<AccessorComponent>(viewComponent =>
+                {
+                    Assert.NotNull(viewComponent.ViewContext.ValidationSummaryMessageElement);
+                    Assert.True(viewComponent.ViewContext.ValidationSummaryMessageElement == "Test");
+                });
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
         public void WithViewContextFuncShouldSetItToAccessor()
         {
             MyApplication
@@ -384,6 +547,24 @@
                     Assert.NotNull(viewComponent);
                     Assert.NotNull(viewComponent.ActionContext);
                     Assert.Equal("Test", viewComponent.ActionContext.ActionDescriptor.DisplayName);
+                });
+
+            MyApplication.StartsFrom<DefaultStartup>();
+        }
+
+        [Fact]
+        public void ViewComponentDescriptorCacheShouldWorkCorrectlyAndReturnDescriptor()
+        {
+            MyApplication.StartsFrom<DefaultStartup>();
+
+            MyViewComponent<NormalComponent>
+                .InvokedWith(c => c.Invoke())
+                .ShouldPassForThe<NormalComponent>(vc =>
+                {
+                    var cache = vc.HttpContext.RequestServices.GetService<IViewComponentDescriptorCache>();
+                    var viewComponentDescriptor = cache.GetViewComponentDescriptor(vc.GetType().GetMethod("Invoke"));
+
+                    Assert.True(viewComponentDescriptor.GetType() == typeof(ViewComponentDescriptor));
                 });
 
             MyApplication.StartsFrom<DefaultStartup>();

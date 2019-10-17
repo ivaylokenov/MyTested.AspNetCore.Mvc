@@ -90,7 +90,7 @@
         }
 
         [Fact]
-        public void EngingWithShouldNotThrowExceptionWhenProvidedMessageIsValid()
+        public void EndingWithShouldNotThrowExceptionWhenProvidedMessageIsValid()
         {
             var requestModelWithErrors = TestObjectFactory.GetRequestModelWithErrors();
 
@@ -105,7 +105,7 @@
         }
 
         [Fact]
-        public void EngingWithShouldThrowExceptionWhenProvidedMessageIsValid()
+        public void EndingWithShouldThrowExceptionWhenProvidedMessageIsValid()
         {
             var requestModelWithErrors = TestObjectFactory.GetRequestModelWithErrors();
 
